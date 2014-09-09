@@ -1,18 +1,15 @@
 
-package com.girlsofsteelrobotics.atlas.commands;
-
-import edu.wpi.first.wpilibj.command.Command;
-
-import com.girlsofsteelrobotics.atlas.Robot;
+package girlsofsteel.commands;
 
 /**
  *
+ * @author bradmiller
  */
-public class ExampleCommand extends Command {
+public class ExampleCommand extends CommandBase {
 
     public ExampleCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -35,5 +32,6 @@ public class ExampleCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }
