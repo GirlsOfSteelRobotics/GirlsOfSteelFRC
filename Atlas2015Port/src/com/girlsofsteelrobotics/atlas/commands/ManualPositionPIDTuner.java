@@ -4,7 +4,7 @@
  *
  * DIFFERENT P'S ON THE PRACTICE BOT AND COMPETITION BOT
  */
-package girlsofsteel.commands;
+package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

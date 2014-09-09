@@ -6,7 +6,7 @@ NOTE!!!: The starting configuration of the pivot arm is STRAIGHT UP because
 the pivot arm has to stay within the perimeter restraints
 
  */
-package girlsofsteel.commands;
+package com.girlsofsteelrobotics.atlas.commands;
 import girlsofsteel.Configuration;
 import girlsofsteel.OI;
 /**

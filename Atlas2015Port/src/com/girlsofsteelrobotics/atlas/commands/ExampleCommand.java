@@ -1,5 +1,5 @@
 
-package girlsofsteel.commands;
+package com.girlsofsteelrobotics.atlas.commands;
 
 /**
  *

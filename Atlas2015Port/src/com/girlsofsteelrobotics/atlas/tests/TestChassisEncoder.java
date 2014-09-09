@@ -4,7 +4,7 @@
 // * and open the template in the editor.
 // */
 //
-//package girlsofsteel.tests;
+package com.girlsofsteelrobotics.atlas.tests;
 //
 //import girlsofsteel.commands.CommandBase;
 //

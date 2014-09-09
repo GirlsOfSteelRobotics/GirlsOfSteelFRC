@@ -1,4 +1,4 @@
-package girlsofsteel.commands;
+package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

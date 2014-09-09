@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package girlsofsteel.subsystems;
+package com.girlsofsteelrobotics.atlas.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 

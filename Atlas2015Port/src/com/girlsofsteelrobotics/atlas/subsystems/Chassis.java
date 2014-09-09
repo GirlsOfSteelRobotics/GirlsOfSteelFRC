@@ -5,7 +5,7 @@
 
  move right side slower to match the left
  */
-package girlsofsteel.subsystems;
+package com.girlsofsteelrobotics.atlas.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;

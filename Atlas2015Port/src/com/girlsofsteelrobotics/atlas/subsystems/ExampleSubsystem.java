@@ -1,5 +1,5 @@
 
-package girlsofsteel.subsystems;
+package com.girlsofsteelrobotics.atlas.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 

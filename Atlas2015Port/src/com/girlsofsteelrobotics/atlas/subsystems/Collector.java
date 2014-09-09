@@ -1,7 +1,7 @@
 /*
  * CHANGE TO NOT USE AN ENCODER
  */
-package girlsofsteel.subsystems;
+package com.girlsofsteelrobotics.atlas.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Jaguar;

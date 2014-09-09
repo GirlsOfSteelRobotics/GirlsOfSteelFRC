@@ -7,7 +7,7 @@
 
  We have a 4 k4x limit on encoders
  */
-package girlsofsteel.subsystems;
+package com.girlsofsteelrobotics.atlas.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package girlsofsteel.commands;
+package com.girlsofsteelrobotics.atlas.commands;
 
 /**
  * This stops the collector wheel.
