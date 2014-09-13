@@ -1,6 +1,6 @@
 package com.girlsofsteelrobotics.atlas.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.SensorBase;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -57,10 +57,10 @@ public class UltrasonicSensor extends SensorBase {///*
     private double voltage_range; //The range of the voltages returned by the sensor (maximum - minimum)
     private double min_distance;  //Minimum distance the ultrasonic sensor can return in inches
     private double distance_range;//The range of the distances returned by this class in inches (maximum - minimum)
-    AnalogChannel channel;
+    AnalogInput channel;
     //constructor
     public UltrasonicSensor() {
-        channel = new AnalogChannel(RobotMap.ULTRASONIC_SENSOR_PORT);
+        channel = new AnalogInput(RobotMap.ULTRASONIC_SENSOR_PORT);
       //  default values
 		use_units = true;
 		min_voltage = 2.5;
@@ -71,7 +71,7 @@ public class UltrasonicSensor extends SensorBase {///*
    // constructor
     public UltrasonicSensor(int _channel, boolean _use_units, double _min_voltage,
             double _max_voltage, double _min_distance, double _max_distance) {
-        channel = new AnalogChannel(_channel);
+        channel = new AnalogInput(_channel);
      //   only use unit-specific variables if we're using units
         if (_use_units) {
             use_units = true;
