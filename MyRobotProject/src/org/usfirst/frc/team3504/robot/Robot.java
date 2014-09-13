@@ -28,8 +28,8 @@ public class Robot extends IterativeRobot {
     	stick = new Joystick(1);
     	
     	
-    	Jaguar rightDrive  = new Jaguar(2);
-    	Jaguar leftDrive   = new Jaguar(3);
+    	Jaguar rightDrive  = new Jaguar(0);
+    	Jaguar leftDrive   = new Jaguar(1);
     	
     	myRobot = new RobotDrive( rightDrive , leftDrive );
     	
