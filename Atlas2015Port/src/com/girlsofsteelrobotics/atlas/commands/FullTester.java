@@ -79,9 +79,7 @@ public class FullTester extends CommandBase {
     protected void end() {
         chassis.stopJags();
         chassis.disablePositionPID();
-        chassis.stopEncoders();
         manipulator.stopJag();
-        manipulator.stopEncoder();
         manipulator.disablePID();
         collector.stopCollector();
         collector.stopCollectorWheel();

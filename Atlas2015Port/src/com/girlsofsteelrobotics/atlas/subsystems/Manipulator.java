@@ -189,7 +189,6 @@ public class Manipulator extends Subsystem {
 
     public void initEncoder() {
         bobTheArmEncoder.reset();
-        bobTheArmEncoder.start();
         //bobTheArmEncoder.setPIDSourceParameter(PIDSource.PIDSourceParameter.kDistance); //possibly not necessary
         //initialize encoder. I will probably need this. TODO: see if this is needed
     }
@@ -269,9 +268,6 @@ public class Manipulator extends Subsystem {
         manipulatorPID.setSetPoint(setpoint);
     }
     
-    public void stopEncoder() {
-        bobTheArmEncoder.stop();
-    }
     public void disablePID() {
         manipulatorPID.disable();
     }

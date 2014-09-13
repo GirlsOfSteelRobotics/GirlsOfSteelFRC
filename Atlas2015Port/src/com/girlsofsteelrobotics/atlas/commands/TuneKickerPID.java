@@ -101,7 +101,6 @@ public class TuneKickerPID extends CommandBase {
     protected void end() {
         getBest();
         chassis.stopJags();
-        chassis.stopEncoders();
         chassis.disablePositionPID();
         //print the good p and setpoint values
         

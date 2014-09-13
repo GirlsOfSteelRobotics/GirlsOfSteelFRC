@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.girlsofsteelrobotics.atlas.RobotMap;
 import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.PIDOutput;
 import com.girlsofsteelrobotics.atlas.Configuration;
 import com.girlsofsteelrobotics.atlas.objects.EncoderGoSPIDController;
@@ -155,10 +154,6 @@ public class Chassis extends Subsystem {
     public void initEncoders() {
         rightEncoder.setDistancePerPulse(rightDistancePerPulsePosition);
         leftEncoder.setDistancePerPulse(leftDistancePerPulsePosition);
-
-        rightEncoder.start();
-        leftEncoder.start();
-
     }
 
     public double getLeftEncoderDistance() {
@@ -184,11 +179,6 @@ public class Chassis extends Subsystem {
 
     public double getRightEncoder() {
         return rightEncoder.get();
-    }
-
-    public void stopEncoders() {
-        rightEncoder.stop();
-        leftEncoder.stop();
     }
 
     public double getLeftRaw() {

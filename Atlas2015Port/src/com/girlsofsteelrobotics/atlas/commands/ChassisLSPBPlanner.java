@@ -64,7 +64,6 @@ public class ChassisLSPBPlanner extends CommandBase {
     protected void end() {
         chassis.stopJags();
         chassis.disablePositionPID();
-        chassis.stopEncoders();
     }
 
     protected void interrupted() {

@@ -68,7 +68,6 @@ public class TuneManipulatorPID extends CommandBase {
 
     protected void end() {
         manipulator.stopManipulator();
-        manipulator.stopEncoder();
         if (pid) {
             manipulator.disablePID();
         }

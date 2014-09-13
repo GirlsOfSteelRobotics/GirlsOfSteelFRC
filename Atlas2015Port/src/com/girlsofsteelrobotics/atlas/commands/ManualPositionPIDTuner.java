@@ -87,7 +87,6 @@ public class ManualPositionPIDTuner extends CommandBase {
         if (pid) {
             chassis.disablePositionPID();
         }
-        chassis.stopEncoders();
     }
 
     protected void interrupted() {

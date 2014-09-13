@@ -49,7 +49,6 @@ public class MoveToPosition extends CommandBase{
 
     protected void end() {
         chassis.disablePositionPID();
-        chassis.stopEncoders();
         chassis.stopJags();
     }
 
