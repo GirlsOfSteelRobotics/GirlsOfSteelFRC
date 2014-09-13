@@ -4,7 +4,6 @@ import org.usfirst.frc3504.shifterbot.RobotMap;
 //import org.usfirst.frc3504.shifterbot.commands.*;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 
 /**
@@ -23,16 +22,22 @@ public class Shifters extends Subsystem {
 	}
 	
 	public void shiftLeft(boolean highgear) {
-		if (highgear)
-			shifterLeft.set(Value.kForward);
-		else
-			shifterLeft.set(Value.kReverse);
+		if (highgear) {
+			shifterLeft.set(DoubleSolenoid.Value.kForward);
+			System.out.println("Shifting left side into high gear (fwd)");
+		} else {
+			shifterLeft.set(DoubleSolenoid.Value.kReverse);
+			System.out.println("Shifting left side into low gear (rev)");
+		}
 	}
 	
 	public void shiftRight(boolean highgear) {
-		if (highgear)
-			shifterRight.set(Value.kForward);
-		else
-			shifterRight.set(Value.kReverse);
+		if (highgear) {
+			shifterRight.set(DoubleSolenoid.Value.kForward);
+			System.out.println("Shifting right side into high gear (fwd)");
+		} else {
+			shifterRight.set(DoubleSolenoid.Value.kReverse);
+			System.out.println("Shifting right side into low gear (rev)");
+		}
 	}
 }

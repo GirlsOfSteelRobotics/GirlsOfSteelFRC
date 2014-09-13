@@ -32,7 +32,7 @@ public class RobotMap {
 		driveSystemRobotDrive2.setExpiration(0.1);
 		driveSystemRobotDrive2.setSensitivity(0.5);
 		driveSystemRobotDrive2.setMaxOutput(1.0);
-		driveSystemRobotDrive2.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);        
+		//driveSystemRobotDrive2.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);        
 
 		accessoryMotorsAccessoryLeft = new Victor(2);
 		LiveWindow.addActuator("Accessory Motors", "Accessory Left", (Victor) accessoryMotorsAccessoryLeft);
@@ -40,7 +40,7 @@ public class RobotMap {
 		accessoryMotorsAccessoryRight = new Victor(3);
 		LiveWindow.addActuator("Accessory Motors", "Accessory Right", (Victor) accessoryMotorsAccessoryRight);
 
-		shiftersShifterLeft = new DoubleSolenoid(1, 0, 1);
-		shiftersShifterRight = new DoubleSolenoid(1, 2, 3);      
+		shiftersShifterLeft = new DoubleSolenoid(0, 1);
+		shiftersShifterRight = new DoubleSolenoid(2, 3);      
 	}
 }

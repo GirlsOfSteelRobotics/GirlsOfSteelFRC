@@ -43,7 +43,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 
-	public JoystickButton joystickButton5;
+	public JoystickButton joystickButton3;
 	public JoystickButton joystickButton2;
 	public JoystickButton joystickButton6;
 	public JoystickButton joystickButton7;
@@ -64,8 +64,8 @@ public class OI {
 		joystickButton6.whileHeld(new AccessoryLeftFwd());
 		joystickButton2 = new JoystickButton(driveStick, 2);
 		joystickButton2.whenPressed(new ShiftDown());
-		joystickButton5 = new JoystickButton(driveStick, 5);
-		joystickButton5.whenPressed(new ShiftUp());
+		joystickButton3 = new JoystickButton(driveStick, 3);
+		joystickButton3.whenPressed(new ShiftUp());
 
 		// SmartDashboard Buttons
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
