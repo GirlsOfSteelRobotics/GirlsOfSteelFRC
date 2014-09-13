@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import girlsofsteel.Configuration;
-import girlsofsteel.RobotMap;
-import girlsofsteel.objects.EncoderGoSPIDController;
+import com.girlsofsteelrobotics.atlas.Configuration;
+import com.girlsofsteelrobotics.atlas.RobotMap;
+import com.girlsofsteelrobotics.atlas.objects.EncoderGoSPIDController;
 
 /**
  *

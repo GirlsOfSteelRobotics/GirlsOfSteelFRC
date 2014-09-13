@@ -4,7 +4,7 @@
  */
 package com.girlsofsteelrobotics.atlas.tests;
 
-import girlsofsteel.commands.CommandBase;
+import com.girlsofsteelrobotics.atlas.commands.CommandBase;
 
 /**
  *

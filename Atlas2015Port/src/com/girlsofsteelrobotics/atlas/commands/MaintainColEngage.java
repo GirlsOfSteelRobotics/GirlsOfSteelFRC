@@ -5,7 +5,7 @@
  */
 package com.girlsofsteelrobotics.atlas.commands;
 
-import girlsofsteel.Configuration;
+import com.girlsofsteelrobotics.atlas.Configuration;
 
 /**
  *

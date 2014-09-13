@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import girlsofsteel.commands.ArcadeDrive;
-import girlsofsteel.commands.AutonomousLowGoalHot;
-import girlsofsteel.commands.CommandBase;
-import girlsofsteel.commands.DoNothing;
-import girlsofsteel.commands.KickerUsingLimitSwitch;
-import girlsofsteel.commands.ManualPositionPIDTuner;
-import girlsofsteel.commands.TestKickerEncoder;
-import girlsofsteel.commands.TuneManipulatorPID;
-import girlsofsteel.objects.AutonomousChooser;
-import girlsofsteel.objects.Camera;
+import com.girlsofsteelrobotics.atlas.commands.ArcadeDrive;
+import com.girlsofsteelrobotics.atlas.commands.AutonomousLowGoalHot;
+import com.girlsofsteelrobotics.atlas.commands.CommandBase;
+import com.girlsofsteelrobotics.atlas.commands.DoNothing;
+import com.girlsofsteelrobotics.atlas.commands.KickerUsingLimitSwitch;
+import com.girlsofsteelrobotics.atlas.commands.ManualPositionPIDTuner;
+import com.girlsofsteelrobotics.atlas.commands.TestKickerEncoder;
+import com.girlsofsteelrobotics.atlas.commands.TuneManipulatorPID;
+import com.girlsofsteelrobotics.atlas.objects.AutonomousChooser;
+import com.girlsofsteelrobotics.atlas.objects.Camera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +29,7 @@ import girlsofsteel.objects.Camera;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class GOS2014 extends IterativeRobot {
+public class Robot extends IterativeRobot {
 
     AutonomousChooser auto;
     Command autonomousCommand;

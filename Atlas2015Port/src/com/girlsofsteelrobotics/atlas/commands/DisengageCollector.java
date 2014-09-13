@@ -4,7 +4,7 @@
  */
 package com.girlsofsteelrobotics.atlas.commands;
 
-import girlsofsteel.Configuration;
+import com.girlsofsteelrobotics.atlas.Configuration;
 
 /**
  * This command disengages the collector arm on the manipulator.  It moves the

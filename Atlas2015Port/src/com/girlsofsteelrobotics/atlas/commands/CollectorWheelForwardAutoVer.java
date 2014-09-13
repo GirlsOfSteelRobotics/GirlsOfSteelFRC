@@ -7,7 +7,7 @@
 package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import girlsofsteel.objects.Camera;
+import com.girlsofsteelrobotics.atlas.objects.Camera;
 
 /**
  * Moves the collector wheel forward for autonomous and has an is finished case

@@ -5,7 +5,7 @@
 package com.girlsofsteelrobotics.atlas.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import girlsofsteel.commands.CommandBase;
+import com.girlsofsteelrobotics.atlas.commands.CommandBase;
 
 /**
  *

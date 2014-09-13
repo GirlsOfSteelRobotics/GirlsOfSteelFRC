@@ -1,16 +1,15 @@
 package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import girlsofsteel.OI;
-import girlsofsteel.RobotMap;
-import girlsofsteel.objects.Camera;
-import girlsofsteel.subsystems.Chassis;
-import girlsofsteel.subsystems.Collector;
-import girlsofsteel.subsystems.Driving;
-import girlsofsteel.subsystems.Kicker;
-//import girlsofsteel.subsystems.Kicker;
-import girlsofsteel.subsystems.Manipulator;
-import girlsofsteel.subsystems.UltrasonicSensor;
+import com.girlsofsteelrobotics.atlas.OI;
+import com.girlsofsteelrobotics.atlas.RobotMap;
+import com.girlsofsteelrobotics.atlas.objects.Camera;
+import com.girlsofsteelrobotics.atlas.subsystems.Chassis;
+import com.girlsofsteelrobotics.atlas.subsystems.Collector;
+import com.girlsofsteelrobotics.atlas.subsystems.Driving;
+import com.girlsofsteelrobotics.atlas.subsystems.Kicker;
+import com.girlsofsteelrobotics.atlas.subsystems.Manipulator;
+import com.girlsofsteelrobotics.atlas.subsystems.UltrasonicSensor;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.

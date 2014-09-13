@@ -6,7 +6,7 @@ package com.girlsofsteelrobotics.atlas.tests;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
-import girlsofsteel.commands.CommandBase;
+import com.girlsofsteelrobotics.atlas.commands.CommandBase;
 
 /**
  *

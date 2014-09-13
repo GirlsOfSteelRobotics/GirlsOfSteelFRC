@@ -6,7 +6,7 @@
 package com.girlsofsteelrobotics.atlas;
 
 import edu.wpi.first.wpilibj.Relay;
-import girlsofsteel.commands.CommandBase;
+import com.girlsofsteelrobotics.atlas.commands.CommandBase;
 
 /**
  *

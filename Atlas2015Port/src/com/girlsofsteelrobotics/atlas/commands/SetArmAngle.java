@@ -7,8 +7,8 @@ the pivot arm has to stay within the perimeter restraints
 
  */
 package com.girlsofsteelrobotics.atlas.commands;
-import girlsofsteel.Configuration;
-import girlsofsteel.OI;
+import com.girlsofsteelrobotics.atlas.Configuration;
+import com.girlsofsteelrobotics.atlas.OI;
 /**
  *
  * @author Sophia, Sam, and Abby

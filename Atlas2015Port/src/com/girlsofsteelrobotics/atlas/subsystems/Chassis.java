@@ -10,13 +10,13 @@ package com.girlsofsteelrobotics.atlas.subsystems;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import girlsofsteel.RobotMap;
+import com.girlsofsteelrobotics.atlas.RobotMap;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.PIDOutput;
-import girlsofsteel.Configuration;
-import girlsofsteel.objects.EncoderGoSPIDController;
-import girlsofsteel.objects.LSPBPIDPlanner;
+import com.girlsofsteelrobotics.atlas.Configuration;
+import com.girlsofsteelrobotics.atlas.objects.EncoderGoSPIDController;
+import com.girlsofsteelrobotics.atlas.objects.LSPBPIDPlanner;
 
 /**
  *

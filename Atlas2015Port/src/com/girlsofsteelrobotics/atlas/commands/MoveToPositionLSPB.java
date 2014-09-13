@@ -6,7 +6,7 @@
 package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import girlsofsteel.Configuration;
+import com.girlsofsteelrobotics.atlas.Configuration;
 
 /**
  *

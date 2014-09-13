@@ -2,19 +2,19 @@ package com.girlsofsteelrobotics.atlas;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import girlsofsteel.commands.CollectorDownAndWheelIn;
-import girlsofsteel.commands.CollectorDownWheelOut;
-import girlsofsteel.commands.CollectorWheelForward;
-import girlsofsteel.commands.DisengageCollector;
-import girlsofsteel.commands.HoldChassisInPlace;
-import girlsofsteel.commands.KickerUsingLimitSwitch;
-import girlsofsteel.commands.ManipulatorArmDownPID;
-import girlsofsteel.commands.ManipulatorArmUpPID;
-import girlsofsteel.commands.ManipulatorManualDown;
-import girlsofsteel.commands.ManipulatorManualUp;
-import girlsofsteel.commands.STOPKICKER;
-import girlsofsteel.commands.TrussShot;
-import girlsofsteel.tests.TestingDrivingStraight;
+import com.girlsofsteelrobotics.atlas.commands.CollectorDownAndWheelIn;
+import com.girlsofsteelrobotics.atlas.commands.CollectorDownWheelOut;
+import com.girlsofsteelrobotics.atlas.commands.CollectorWheelForward;
+import com.girlsofsteelrobotics.atlas.commands.DisengageCollector;
+import com.girlsofsteelrobotics.atlas.commands.HoldChassisInPlace;
+import com.girlsofsteelrobotics.atlas.commands.KickerUsingLimitSwitch;
+import com.girlsofsteelrobotics.atlas.commands.ManipulatorArmDownPID;
+import com.girlsofsteelrobotics.atlas.commands.ManipulatorArmUpPID;
+import com.girlsofsteelrobotics.atlas.commands.ManipulatorManualDown;
+import com.girlsofsteelrobotics.atlas.commands.ManipulatorManualUp;
+import com.girlsofsteelrobotics.atlas.commands.STOPKICKER;
+import com.girlsofsteelrobotics.atlas.commands.TrussShot;
+import com.girlsofsteelrobotics.atlas.tests.TestingDrivingStraight;
 
 /**
  * This class is the glue that binds the controls on the physical operator

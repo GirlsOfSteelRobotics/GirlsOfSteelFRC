@@ -2,7 +2,7 @@ package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import girlsofsteel.objects.Camera;
+import com.girlsofsteelrobotics.atlas.objects.Camera;
 
 public class AutoTuneCamera extends CommandBase {
 

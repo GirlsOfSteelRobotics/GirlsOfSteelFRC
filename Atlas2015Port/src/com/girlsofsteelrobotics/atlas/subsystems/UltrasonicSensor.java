@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.SensorBase;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import girlsofsteel.RobotMap;
+import com.girlsofsteelrobotics.atlas.RobotMap;
 
 //Created by FRC team 3357
 //2008
