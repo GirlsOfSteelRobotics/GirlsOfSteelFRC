@@ -1,6 +1,5 @@
 package com.girlsofsteelrobotics.atlas.objects;
 
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
@@ -177,8 +176,12 @@ public class EncoderGoSPIDController implements Runnable {
         } else if (type == POSITION) {
             currentValue = getSignedDistance();//encoder.getDistance();
         } else {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6,
+        	/* The DriverStationLCD call was removed in 2015 WPIlib because the
+        	 * LCD area of the driver station interface was removed. 
+        	 * Should be changed to SmartDashboard instead.
+        	DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6,
                     1, "Error: The encoder is not set to rate (1) or position (2)");
+            */
         }
         error = setPoint - currentValue;
     }
