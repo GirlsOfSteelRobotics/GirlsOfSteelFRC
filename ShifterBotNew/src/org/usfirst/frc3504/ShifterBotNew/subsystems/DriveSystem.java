@@ -13,8 +13,8 @@ package org.usfirst.frc3504.ShifterBotNew.subsystems;
 
 import org.usfirst.frc3504.ShifterBotNew.RobotMap;
 import org.usfirst.frc3504.ShifterBotNew.commands.*;
-import edu.wpi.first.wpilibj.*;
 
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -39,5 +39,12 @@ public class DriveSystem extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    public void takeJoystickInputs(Joystick joystk) {
+		robotDrive2.arcadeDrive(joystk);
+	}
+
+	public void stop() {
+		robotDrive2.drive(/*speed*/0, /*curve*/0);
+	}
 }
 

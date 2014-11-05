@@ -38,4 +38,22 @@ public class AccessoryMotors extends Subsystem {
         // Set the default command for a subsystem here.
        
 }
+	public void driveAccessoryLeft(boolean fwd) {
+		if (fwd)
+			accessoryLeft.set(1.0);
+		else
+			accessoryLeft.set(-1.0);
+	}
 
+	public void driveAccessoryRight(boolean fwd) {
+		if (fwd)
+			accessoryRight.set(1.0);
+		else
+			accessoryRight.set(-1.0);
+	}
+
+	public void stop() {
+		accessoryLeft.set(0.0);
+		accessoryRight.set(0.0);
+	}
+}
