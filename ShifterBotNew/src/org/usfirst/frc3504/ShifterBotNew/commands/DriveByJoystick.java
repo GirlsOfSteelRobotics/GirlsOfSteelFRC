@@ -34,6 +34,8 @@ public class  DriveByJoystick extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.driveSystem.takeJoystickInputs(Robot.oi.getDriveStick());
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -43,6 +45,7 @@ public class  DriveByJoystick extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveSystem.stop();
     }
 
     // Called when another command which requires one or more of the same
@@ -50,3 +53,4 @@ public class  DriveByJoystick extends Command {
     protected void interrupted() {
     }
 }
+

@@ -30,6 +30,8 @@ public class  ShiftDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shifters.shiftLeft(false);
+		Robot.shifters.shiftRight(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
