@@ -8,7 +8,7 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in th future.
 
-
+//Shifter Bot New
 package org.usfirst.frc3504.ShifterBotNew.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -43,10 +43,12 @@ public class  AccessoryLeftFwd extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.accessoryMotors.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
