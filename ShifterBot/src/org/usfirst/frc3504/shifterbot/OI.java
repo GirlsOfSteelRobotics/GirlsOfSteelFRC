@@ -52,7 +52,7 @@ public class OI {
 	public Joystick driveStick;
 
 	public OI() {
-		driveStick = new Joystick(1);
+		driveStick = new Joystick(0);
 
 		joystickButton10 = new JoystickButton(driveStick, 10);
 		joystickButton10.whileHeld(new AccessoryRightRev());
