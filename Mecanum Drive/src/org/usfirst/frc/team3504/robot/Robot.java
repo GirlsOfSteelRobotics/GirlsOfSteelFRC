@@ -34,6 +34,7 @@ public class Robot extends SampleRobot {
     	robotDrive.setInvertedMotor(MotorType.kRearLeft, true);		// you may need to change or remove this to match your robot
 
         stick = new Joystick(joystickChannel);
+        robotGyro = new Gyro(gyro);
     }
         
 
