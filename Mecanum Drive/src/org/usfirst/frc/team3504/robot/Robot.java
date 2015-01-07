@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
@@ -14,12 +15,14 @@ public class Robot extends SampleRobot {
 	
     RobotDrive robotDrive;
     Joystick stick;
+    Gyro robotGyro;
 
     // Channels for the wheels
     final int frontLeftChannel	= 2;
     final int rearLeftChannel	= 3;
     final int frontRightChannel	= 1;
     final int rearRightChannel	= 0;
+    final int gyro = 0;
     
     // The channel on the driver station that the joystick is connected to
     final int joystickChannel	= 0;
@@ -43,7 +46,7 @@ public class Robot extends SampleRobot {
         	
         	// Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
         	// This sample does not use field-oriented drive, so the gyro input is set to zero.
-            robotDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getZ(), 0);
+            robotDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getZ(), robotGyro.getAngle());
             
             Timer.delay(0.005);	// wait 5ms to avoid hogging CPU cycles
         }
