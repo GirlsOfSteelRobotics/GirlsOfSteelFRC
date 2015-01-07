@@ -3,6 +3,7 @@ package org.usfirst.frc3504.shifterbot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import java.util.Vector;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -18,8 +19,13 @@ public class RobotMap {
 	public static SpeedController accessoryMotorsAccessoryRight;
 	public static DoubleSolenoid shiftersShifterLeft;
 	public static DoubleSolenoid shiftersShifterRight;
+	
+	public static final int DRIVE_LEFT_ENCODER_A = 0;
+	public static final int DRIVE_LEFT_ENCODER_B = 1;
+	public static final int DRIVE_RIGHT_ENCODER_A = 2;
+	public static final int DRIVE_RIGHT_ENCODER_B = 3;
 
-	public static void init() {
+ static void init() {
 		driveSystemDriveLeft = new Talon(0);
 		LiveWindow.addActuator("Drive System", "Drive Left", (Talon) driveSystemDriveLeft);
 
@@ -41,6 +47,8 @@ public class RobotMap {
 		LiveWindow.addActuator("Accessory Motors", "Accessory Right", (Victor) accessoryMotorsAccessoryRight);
 
 		shiftersShifterLeft = new DoubleSolenoid(0, 1);
-		shiftersShifterRight = new DoubleSolenoid(2, 3);      
+		shiftersShifterRight = new DoubleSolenoid(2, 3);  
+		
+
 	}
 }

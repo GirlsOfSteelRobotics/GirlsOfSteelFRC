@@ -19,13 +19,15 @@ public class  AutonomousCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		setTimeout(1.0);
+		Robot.driveSystem.resetEncoders();
+		setTimeout(1.5);
 		Robot.accessoryMotors.driveAccessoryLeft(true);
-		Robot.accessoryMotors.driveAccessoryRight(false);
+		Robot.accessoryMotors.driveAccessoryRight(false);	
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		Robot.driveSystem.forward();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -36,6 +38,7 @@ public class  AutonomousCommand extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.accessoryMotors.stop();
+		Robot.driveSystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same

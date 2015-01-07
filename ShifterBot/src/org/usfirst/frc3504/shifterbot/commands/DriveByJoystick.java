@@ -1,6 +1,8 @@
 package org.usfirst.frc3504.shifterbot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc3504.shifterbot.Robot;
 
 /**
@@ -22,6 +24,9 @@ public class  DriveByJoystick extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.driveSystem.takeJoystickInputs(Robot.oi.getDriveStick());
+		
+		SmartDashboard.putNumber("Drive Left Encoder ", Robot.driveSystem.getEncoderLeft());
+		SmartDashboard.putNumber("Drive Right Encoder ", Robot.driveSystem.getEncoderRight());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
