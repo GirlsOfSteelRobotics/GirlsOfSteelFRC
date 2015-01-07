@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc3504.shifterbot.commands.*;
 import org.usfirst.frc3504.shifterbot.subsystems.*;
 
@@ -38,6 +40,8 @@ public class Robot extends IterativeRobot {
 		// yet. Thus, their requires() statements may grab null pointers. Bad
 		// news. Don't move it.
 		oi = new OI();
+		
+		SmartDashboard.putData(new DriveByJoystick());
 
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new AutonomousCommand();
