@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 /**
  * This is a demo program showing how to use Mecanum control with the RobotDrive class.
  */
-public class Robot extends SampleRobot {
+public   class Robot extends SampleRobot {
 	
     RobotDrive robotDrive;
     Joystick stick;
@@ -28,9 +28,9 @@ public class Robot extends SampleRobot {
     final int joystickChannel	= 0;
 
     public Robot() {
-    	robotDrive = new RobotDrive(frontLeftChannel, rearLeftChannel, frontRightChannel, rearRightChannel);
     	robotDrive.setExpiration(0.1);
-    	robotDrive.setInvertedMotor(MotorType.kFrontLeft, true);	// invert the left side motors
+    	robotDrive = new RobotDrive(frontLeftChannel, rearLeftChannel, frontRightChannel, rearRightChannel);	
+        robotDrive.setInvertedMotor(MotorType.kFrontLeft, true);	// invert the left side motors
     	robotDrive.setInvertedMotor(MotorType.kRearLeft, true);		// you may need to change or remove this to match your robot
 
         stick = new Joystick(joystickChannel);
