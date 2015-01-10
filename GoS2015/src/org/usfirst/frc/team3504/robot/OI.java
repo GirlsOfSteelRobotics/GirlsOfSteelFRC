@@ -2,7 +2,10 @@ package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team3504.robot.commands.DriveBackward;
+import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 
 /**
@@ -40,6 +43,9 @@ public class OI {
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
 	
+	private JoystickButton driveForward;
+	private JoystickButton driveBackward;
+	
 	//Put Sucker buttons here
 	
 	//Put Manipulator buttons here
@@ -48,6 +54,11 @@ public class OI {
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
+		driveForward = new JoystickButton(chassisJoystick, 5);
+		driveBackward = new JoystickButton(chassisJoystick, 6);
+		
+		driveForward.whenPressed(new DriveForward());
+		driveBackward.whenPressed(new DriveBackward());
 	}
 	
 	public Joystick getOperatorJoystick()

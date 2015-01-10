@@ -21,9 +21,9 @@ public class RobotMap {
 	public static final int CHASSIS_JOYSTICK = 2;
 	
 	//Drive ports
-	public static final int FRONT_LEFT_CHANNEL = 2;
-    public static final int REAR_LEFT_CHANNEL	= 3;
-    public static final int FRONT_RIGHT_CHANNEL = 1;
-    public static final int REAR_RIGHT_CHANNEL = 0;
+	public static final int FRONT_LEFT_CHANNEL = 0;
+    public static final int REAR_LEFT_CHANNEL	= 1;
+    public static final int FRONT_RIGHT_CHANNEL = 3;
+    public static final int REAR_RIGHT_CHANNEL = 2;
     public static final int GYRO_PORT = 0;
 }

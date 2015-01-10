@@ -21,11 +21,11 @@ public class Chassis extends Subsystem {
 	
 	public Chassis()
 	{
-		gosDrive.setExpiration(0.1);
         gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
         							RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
-    	gosDrive.setInvertedMotor(MotorType.kFrontLeft, true);	// invert the left side motors
-    	gosDrive.setInvertedMotor(MotorType.kRearLeft, true);		// may need to change or remove this to match robot
+        gosDrive.setExpiration(0.1);
+        gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
+    	gosDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
     	gosDrive.setSafetyEnabled(true);
     	
         robotGyro = new Gyro(RobotMap.GYRO_PORT);
@@ -33,12 +33,26 @@ public class Chassis extends Subsystem {
 	
 	public void moveByJoystick(Joystick stick)
 	{
-		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getZ(), robotGyro.getAngle());
+		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getZ(), 0);//robotGyro.getAngle());
+	}
+	
+	public void driveForward()
+	{
+		gosDrive.mecanumDrive_Cartesian(0, -.5, 0, 0);
 	}
 
+	public void driveBackward()
+	{
+		gosDrive.mecanumDrive_Cartesian(0, .5, 0, 0);
+	}
+	
+	public void stop()
+	{
+		gosDrive.stopMotor();
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
 }
-
