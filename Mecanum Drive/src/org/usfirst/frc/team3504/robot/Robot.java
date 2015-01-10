@@ -18,20 +18,21 @@ public   class Robot extends SampleRobot {
     Gyro robotGyro;
 
     // Channels for the wheels
-    final int frontLeftChannel	= 2;
-    final int rearLeftChannel	= 3;
-    final int frontRightChannel	= 1;
-    final int rearRightChannel	= 0;
+    final int frontLeftChannel	= 0;
+    final int rearLeftChannel	= 1;
+    final int frontRightChannel	= 3;
+    final int rearRightChannel	= 2;
     final int gyro = 0;
     
     // The channel on the driver station that the joystick is connected to
     final int joystickChannel	= 0;
 
     public Robot() {
-    	robotDrive.setExpiration(0.1);
+    	
     	robotDrive = new RobotDrive(frontLeftChannel, rearLeftChannel, frontRightChannel, rearRightChannel);	
-        robotDrive.setInvertedMotor(MotorType.kFrontLeft, true);	// invert the left side motors
-    	robotDrive.setInvertedMotor(MotorType.kRearLeft, true);		// you may need to change or remove this to match your robot
+    	robotDrive.setExpiration(0.1);
+    	robotDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
+    	robotDrive.setInvertedMotor(MotorType.kRearRight, true);		// you may need to change or remove this to match your robot
 
         stick = new Joystick(joystickChannel);
         robotGyro = new Gyro(gyro);
