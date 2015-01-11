@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
@@ -23,9 +24,9 @@ public class Chassis extends Subsystem {
 	{
         gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
         							RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
-        gosDrive.setExpiration(0.1);
         gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
+    	gosDrive.setExpiration(0.1);
     	gosDrive.setSafetyEnabled(true);
     	
         robotGyro = new Gyro(RobotMap.GYRO_PORT);
@@ -54,5 +55,6 @@ public class Chassis extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new DriveByJoystick());
     }
 }

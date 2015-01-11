@@ -18,7 +18,7 @@ public class RobotMap {
 	
 	//Joystick ports -> should align with driver station
 	public static final int OPERATOR_JOYSTICK = 1;
-	public static final int CHASSIS_JOYSTICK = 2;
+	public static final int CHASSIS_JOYSTICK = 0;
 	
 	//Drive ports
 	public static final int FRONT_LEFT_CHANNEL = 0;

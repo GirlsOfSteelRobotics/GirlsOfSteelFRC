@@ -6,12 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
-import org.usfirst.frc.team3504.robot.subsystems.Sucker;
+import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -62,8 +58,6 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        
-        new DriveByJoystick().start();
     }
 
     /**
