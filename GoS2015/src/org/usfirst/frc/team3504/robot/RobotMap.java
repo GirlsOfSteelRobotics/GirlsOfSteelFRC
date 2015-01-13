@@ -26,12 +26,12 @@ public class RobotMap {
     public static final int FRONT_RIGHT_CHANNEL = 3;
     public static final int REAR_RIGHT_CHANNEL = 2;
     public static final int GYRO_PORT = 0; //Gyro
-    public static final int FRONT_LEFT_ENCODER_A = 0; //Encoders
-    public static final int FRONT_LEFT_ENCODER_B = 0; //Change the ports
-    public static final int REAR_LEFT_ENCODER_A = 1;
-    public static final int REAR_LEFT_ENCODER_B = 1;
-    public static final int FRONT_RIGHT_ENCODER_A = 2;
-    public static final int FRONT_RIGHT_ENCODER_B = 2;
-    public static final int REAR_RIGHT_ENCODER_A = 3;
+    public static final int FRONT_LEFT_ENCODER_A = 6; //Encoders
+    public static final int FRONT_LEFT_ENCODER_B = 7; //Change the ports
+    public static final int REAR_LEFT_ENCODER_A = 4;
+    public static final int REAR_LEFT_ENCODER_B = 5;
+    public static final int FRONT_RIGHT_ENCODER_A = 0;
+    public static final int FRONT_RIGHT_ENCODER_B = 1;
+    public static final int REAR_RIGHT_ENCODER_A = 2;
     public static final int REAR_RIGHT_ENCODER_B = 3;
 }
