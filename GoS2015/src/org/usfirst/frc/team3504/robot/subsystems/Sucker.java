@@ -50,7 +50,15 @@ public class Sucker extends Subsystem {
 		suckerAngleLeft.set(0.5);
 	}
 	
+	public void stopSucking(){
+		rightSucker.set(0.0);
+		leftSucker.set(0.0);
+	}
 	
+	public void stopAngle (){
+		suckerAngleRight.set(0.0);
+		suckerAngleLeft.set(0.0);
+	}
 	//check to see if this is written correctly and in the right place...
 	//
     public void initDefaultCommand() {
