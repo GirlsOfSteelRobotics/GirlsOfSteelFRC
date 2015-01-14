@@ -33,7 +33,7 @@ public class AngleSuckerIn extends Command {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
+		end();
 		
 	}
 
