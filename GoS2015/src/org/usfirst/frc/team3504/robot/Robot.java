@@ -21,6 +21,7 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
 	public static final Chassis chassis = new Chassis();
 	public static final Sucker sucker = new Sucker();
+	public static final TrianglePegs pegs = new TrianglePegs();
 	public static final ClawArms clawArms = new ClawArms();
 	public static final Forklift forklift = new Forklift();
 	public static OI oi;

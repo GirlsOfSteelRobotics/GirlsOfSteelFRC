@@ -47,15 +47,15 @@ public class Sucker extends Subsystem {
 	}
 	
 	public void stopSucking(){
-		rightSucker.stopMotor();;
-		leftSucker.stopMotor();;
+		rightSucker.set(0.0);
+		leftSucker.set(0.0);
 	}
 	
 	public void stopAngle (){
-		suckerAngleRight.stopMotor(); //.set(0.0);
-		suckerAngleLeft.stopMotor();;
+		suckerAngleRight.set(0.0);
+		suckerAngleLeft.set(0.0);
 	}
-
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

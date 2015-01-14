@@ -38,6 +38,18 @@ public class RobotMap {
     //Forklift ports
     public static final int FORKLIFT_CHANNEL = 1;
     
+    public static final int RIGHT_TALON_PEG_A = 99;
+    public static final int LEFT_TALON_PEG_A = 99;
+    public static final int RIGHT_ENCODER_A = 99;
+    public static final int LEFT_ENCODER_A = 99;
+    public static final int RIGHT_LIMIT_A = 99;
+    public static final int LEFT_LIMIT_A = 99;
+    public static final int LEFT_ENCODER_B = 99;
+    public static final int LEFT_TALON_PEG_B = 99;
+    public static final int RIGHT_ENCODER_B = 99;
+    public static final int RIGHT_TALON_B = 99;
+    public static final int RIGHT_LIMIT_B = 99;
+    public static final int LEFT_LIMIT_B = 99;
     //Claw ports
     public static final int LEFT_CLAW_CHANNEL = 0; //Motors
     public static final int RIGHT_CLAW_CHANNEL = 1;
