@@ -16,6 +16,8 @@ import org.usfirst.frc.team3504.robot.commands.DriveRight;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.commands.StopCollection;
+import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -65,6 +67,8 @@ public class OI {
 	private JoystickButton pushOut;
 	private JoystickButton angleIn;
 	private JoystickButton angleOut;
+	private JoystickButton stopCollection;
+	private JoystickButton stopSuckerAngle;
 	
 	//Put Manipulator buttons here
 	
@@ -93,12 +97,15 @@ public class OI {
 		pushOut = new JoystickButton(operatorJoystick, 8);    // FIXME: make sure this is for the correct Joystick and port
 		angleIn = new JoystickButton(operatorJoystick, 9);    // FIXME: make sure this is for the correct Joystick and port
 		angleOut = new JoystickButton(operatorJoystick, 10);  // FIXME: make sure this is for the correct Joystick and port
+		stopCollection = new JoystickButton(operatorJoystick, 11); // FIXME: make sure this is for the correct Joystick and port
+		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 		
 		suckIn.whenPressed (new CollectTote());
 		pushOut.whenPressed (new ReleaseTote());
 		angleIn.whenPressed (new AngleSuckerIn());
 		angleOut.whenPressed (new AngleSuckerOut());
-		
+		stopCollection.whenPressed (new StopCollection());
+		stopSuckerAngle.whenPressed(new StopSuckerAngle());
 	}
 	
 	public Joystick getOperatorJoystick()
