@@ -17,9 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
- *
-  @annika
-  @ziya
+ * @authors annika and ziya
  */
 public class TrianglePegs extends Subsystem {
 	
@@ -32,27 +30,27 @@ public class TrianglePegs extends Subsystem {
 	
 	public TrianglePegs()
 	{
-		LeftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B);
-		RightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B);
-		LeftTalon = new Talon(RobotMap.LEFT_TALON_PEG_A);
-		RightTalon = new Talon(RobotMap.RIGHT_TALON_PEG_A);
-		LeftLimit = new DigitalInput(RobotMap.LEFT_LIMIT_A);
-		RightLimit = new DigitalInput(RobotMap.RIGHT_LIMIT_A);
+		LeftEncoder = new Encoder(RobotMap.LEFT_PEG_ENCODER_A, RobotMap.LEFT_PEG_ENCODER_B);
+		RightEncoder = new Encoder(RobotMap.RIGHT_PEG_ENCODER_A, RobotMap.RIGHT_PEG_ENCODER_B);
+		LeftTalon = new Talon(RobotMap.LEFT_PEG_TALON);
+		RightTalon = new Talon(RobotMap.RIGHT_PEG_TALON);
+		LeftLimit = new DigitalInput(RobotMap.LEFT_PEG_LIMIT);
+		RightLimit = new DigitalInput(RobotMap.RIGHT_PEG_LIMIT);
 	}
 	
-	public void PegDown()
+	public void pegDown()
 	{
 		LeftTalon.set(.23);
 		RightTalon.set(.23);
 	}
 	
-	public void PegStop()
+	public void pegStop()
 	{
 		LeftTalon.stopMotor();
 		RightTalon.stopMotor();
 	}
 	
-	public boolean GetLimit()
+	public boolean getLimit()
 	{
 		return (LeftLimit.get() && RightLimit.get());
 	}
@@ -65,10 +63,5 @@ public class TrianglePegs extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-
-	public void TrianglePegs() {
-		// TODO Auto-generated method stub
-		
-	}
 }
 
