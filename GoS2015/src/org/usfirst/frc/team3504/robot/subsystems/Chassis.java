@@ -7,14 +7,14 @@ import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDSource;
+//import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SpeedController;
+//import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Sonia
@@ -25,7 +25,7 @@ public class Chassis extends Subsystem {
     // here. Call these from Commands.
 	
 	private RobotDrive gosDrive;
-    private Gyro robotGyro;
+	private Gyro robotGyro;
  
     private Encoder frontLeftEncoder;
     private Encoder rearLeftEncoder;
@@ -93,6 +93,17 @@ public class Chassis extends Subsystem {
 	public void driveBackward()
 	{
 		gosDrive.mecanumDrive_Cartesian(0, .5, 0, 0);
+	}
+	
+	public void driveRight()
+	{
+		gosDrive.mecanumDrive_Cartesian( 0.5, 0, 0, 0);
+	}
+	
+	public void driveLeft()
+	{
+		gosDrive.mecanumDrive_Cartesian(-0.5, 0, 0,0);
+		
 	}
 	
 	public void stop()
