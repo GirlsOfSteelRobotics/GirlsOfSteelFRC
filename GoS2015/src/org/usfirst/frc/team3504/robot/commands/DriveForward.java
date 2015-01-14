@@ -14,33 +14,25 @@ public class DriveForward extends Command {
 	
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		
-		
 	}
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		Robot.chassis.driveForward();
-		Timer.delay(2);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
 		Robot.chassis.stop();
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		end();
 	}
 

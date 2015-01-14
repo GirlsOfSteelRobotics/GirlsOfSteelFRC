@@ -12,7 +12,6 @@ public class PIDSpeedController implements SpeedController {
 	double Kd;
 
 	public PIDSpeedController(SpeedController controller, double Kp, double Ki, double Kd, PIDSource source) {
-		// TODO Auto-generated constructor stub
 		this.Kp = Kp;
 		this.Ki = Ki;
 		this.Kd = Kd;
@@ -22,31 +21,26 @@ public class PIDSpeedController implements SpeedController {
 	
 	@Override
 	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
 		pid.setSetpoint(output/Kp);
 	}
 
 	@Override
 	public double get() {
-		// TODO Auto-generated method stub
 		return (pid.getSetpoint()*Kp);
 	}
 
 	@Override
 	public void set(double speed, byte syncGroup) {
-		// TODO Auto-generated method stub
 		pidWrite(speed);
 	}
 
 	@Override
 	public void set(double speed) {
-		// TODO Auto-generated method stub
 		pidWrite(speed);
 	}
 
 	@Override
 	public void disable() {
-		// TODO Auto-generated method stub
 		pid.disable();
 	}
 

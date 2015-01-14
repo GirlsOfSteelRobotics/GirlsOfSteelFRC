@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * author Alexa Corinne Sarah
+ * @authors Alexa, Corinne, Sarah
  */
 public class ClawArms extends Subsystem {
     
@@ -15,8 +15,8 @@ public class ClawArms extends Subsystem {
 	private Talon rightTalon;
 	
 	public ClawArms () {
-		leftTalon = new Talon(RobotMap.LEFT_CHANNEL);
-		rightTalon = new Talon(RobotMap.RIGHT_CHANNEL); 
+		leftTalon = new Talon(RobotMap.LEFT_CLAW_CHANNEL);
+		rightTalon = new Talon(RobotMap.RIGHT_CLAW_CHANNEL); 
 	}
 	
 	public void moveIn()
@@ -25,18 +25,17 @@ public class ClawArms extends Subsystem {
 		rightTalon.set(-.5);
 	}
 	
-	public void moveOut(){
+	public void moveOut()
+	{
 		leftTalon.set(-.5);
 		rightTalon.set(.5);
 	}
 	
-	public void stop(){
+	public void stop()
+	{
 		leftTalon.stopMotor();
 		rightTalon.stopMotor();
-		
 	}
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.

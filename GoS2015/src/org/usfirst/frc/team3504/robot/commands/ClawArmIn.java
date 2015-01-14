@@ -5,7 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Need to add limit switch implementation
  */
 public class ClawArmIn extends Command {
 
@@ -29,7 +29,6 @@ public class ClawArmIn extends Command {
         return false; //Add limit switch implementation
     }
     
-
     // Called once after isFinished returns true
     protected void end() {
     	Robot.clawArms.stop();

@@ -20,8 +20,6 @@ public class Forklift extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public void up(double speed) {

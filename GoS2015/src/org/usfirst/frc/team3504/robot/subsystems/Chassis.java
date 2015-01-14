@@ -35,8 +35,6 @@ public class Chassis extends Subsystem {
     double Kp;
     double Ki;
     double Kd;
-    
-    
 	
 	public Chassis()
 	{
@@ -44,10 +42,10 @@ public class Chassis extends Subsystem {
 	    Ki = .0000001;//SmartDashboard.getNumber("i value");
 	    Kd = .0000001;//SmartDashboard.getNumber("d value");
 		
-		frontLeftEncoder = new Encoder(RobotMap.FRONT_LEFT_ENCODER_A, RobotMap.FRONT_LEFT_ENCODER_B);
-    	rearLeftEncoder = new Encoder(RobotMap.REAR_LEFT_ENCODER_A, RobotMap.REAR_LEFT_ENCODER_B);
-    	frontRightEncoder = new Encoder(RobotMap.FRONT_RIGHT_ENCODER_A, RobotMap.FRONT_RIGHT_ENCODER_B);
-    	rearRightEncoder = new Encoder(RobotMap.REAR_RIGHT_ENCODER_A, RobotMap.REAR_RIGHT_ENCODER_B);
+		frontLeftEncoder = new Encoder(RobotMap.FRONT_LEFT_WHEEL_ENCODER_A, RobotMap.FRONT_LEFT_WHEEL_ENCODER_B);
+    	rearLeftEncoder = new Encoder(RobotMap.REAR_LEFT_WHEEL_ENCODER_A, RobotMap.REAR_LEFT_WHEEL_ENCODER_B);
+    	frontRightEncoder = new Encoder(RobotMap.FRONT_RIGHT_WHEEL_ENCODER_A, RobotMap.FRONT_RIGHT_WHEEL_ENCODER_B);
+    	rearRightEncoder = new Encoder(RobotMap.REAR_RIGHT_WHEEL_ENCODER_A, RobotMap.REAR_RIGHT_WHEEL_ENCODER_B);
 		
     	frontLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
     	rearLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
@@ -56,10 +54,10 @@ public class Chassis extends Subsystem {
     	
        // gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
         						//	RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
-        gosDrive = new RobotDrive(new PIDSpeedController(new Talon(RobotMap.FRONT_LEFT_CHANNEL), Kp, Ki, Kd, frontLeftEncoder), 
-        							new PIDSpeedController(new Talon(RobotMap.REAR_LEFT_CHANNEL), Kp, Ki, Kd, rearLeftEncoder), 
-        							new PIDSpeedController(new Talon(RobotMap.FRONT_RIGHT_CHANNEL), Kp, Ki, Kd, frontRightEncoder),
-        							new PIDSpeedController(new Talon(RobotMap.REAR_RIGHT_CHANNEL), Kp, Ki, Kd, rearRightEncoder));
+        gosDrive = new RobotDrive(new PIDSpeedController(new Talon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL), Kp, Ki, Kd, frontLeftEncoder), 
+        							new PIDSpeedController(new Talon(RobotMap.REAR_LEFT_WHEEL_CHANNEL), Kp, Ki, Kd, rearLeftEncoder), 
+        							new PIDSpeedController(new Talon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL), Kp, Ki, Kd, frontRightEncoder),
+        							new PIDSpeedController(new Talon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL), Kp, Ki, Kd, rearRightEncoder));
         gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
     	gosDrive.setExpiration(0.1);

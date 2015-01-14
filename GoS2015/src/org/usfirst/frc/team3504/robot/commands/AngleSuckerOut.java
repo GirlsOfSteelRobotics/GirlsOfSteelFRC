@@ -4,37 +4,36 @@ import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/*
+ * Change this -> no need for stop command, should just be a while held button
+ */
 public class AngleSuckerOut extends Command{
 
+	public AngleSuckerOut() {
+		requires(Robot.sucker);
+	}
+	
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		requires(Robot.sucker);
 	}
 
 	@Override
 	protected void execute() {
-		
 		Robot.sucker.suckerAngleOut();
-		
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void interrupted() {
-		end();
-		
+		end();	
 	}
 
 }

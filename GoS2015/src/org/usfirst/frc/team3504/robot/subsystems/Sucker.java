@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * @author Sonia
+ * @author Kriti
  */
 public class Sucker extends Subsystem {
     
@@ -20,10 +20,10 @@ public class Sucker extends Subsystem {
 	
 	public Sucker()                //this is the constructor
 	{
-		rightSucker = new Talon(RobotMap.Right_Wheel_Talon_Sucker);
-		leftSucker = new Talon(RobotMap.Left_Wheel_Talon_Sucker);
-		suckerAngleRight = new Talon(RobotMap.Right_Angle_Talon_Sucker);
-		suckerAngleLeft = new Talon(RobotMap.Left_Angle_Talon_Sucker);
+		rightSucker = new Talon(RobotMap.RIGHT_SUCKER_WHEEL);
+		leftSucker = new Talon(RobotMap.LEFT_SUCKER_WHEEL);
+		suckerAngleRight = new Talon(RobotMap.RIGHT_SUCKER_ANGLE_WHEEL);
+		suckerAngleLeft = new Talon(RobotMap.LEFT_SUCKER_ANGLE_WHEEL);
 	}
 	
 	public void suckToteIn (){              //creating method suckToteIn which suck a tote inside the robot
@@ -47,16 +47,15 @@ public class Sucker extends Subsystem {
 	}
 	
 	public void stopSucking(){
-		rightSucker.set(0.0);
-		leftSucker.set(0.0);
+		rightSucker.stopMotor();;
+		leftSucker.stopMotor();;
 	}
 	
 	public void stopAngle (){
-		suckerAngleRight.set(0.0);
-		suckerAngleLeft.set(0.0);
+		suckerAngleRight.stopMotor(); //.set(0.0);
+		suckerAngleLeft.stopMotor();;
 	}
-	//check to see if this is written correctly and in the right place...
-	//
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

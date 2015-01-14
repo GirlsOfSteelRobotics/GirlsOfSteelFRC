@@ -54,15 +54,17 @@ public class OI {
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
 	
+	//Drive Buttons
 	private JoystickButton driveForward;
 	private JoystickButton driveBackward;
 	private JoystickButton driveRight;
 	private JoystickButton driveLeft;
 	
+	//Forklift Buttons
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
-	//Put Sucker buttons here
 	
+	//Sucker buttons
 	private JoystickButton suckIn;
 	private JoystickButton pushOut;
 	private JoystickButton angleIn;
@@ -70,34 +72,35 @@ public class OI {
 	private JoystickButton stopCollection;
 	private JoystickButton stopSuckerAngle;
 	
-	//Put Manipulator buttons here
-	
 	public OI()
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
-		driveForward = new JoystickButton(chassisJoystick, 5);
-		driveBackward = new JoystickButton(chassisJoystick, 6);
-		driveRight = new JoystickButton(chassisJoystick, 4);
-		driveLeft = new JoystickButton(chassisJoystick, 3);
-		liftUp = new JoystickButton(operatorJoystick, 5);
-		liftDown = new JoystickButton(operatorJoystick, 6);
 		
+		//Drive buttons initialization
+		driveForward = new JoystickButton(chassisJoystick, 5); 	// FIXME: fix port
+		driveBackward = new JoystickButton(chassisJoystick, 6); // FIXME: fix port
+		driveRight = new JoystickButton(chassisJoystick, 4); 	// FIXME: fix port
+		driveLeft = new JoystickButton(chassisJoystick, 3); 	// FIXME: fix port
 		
-		liftUp.whenPressed(new LiftUp());
-		liftDown.whenPressed(new LiftDown());
-		driveForward.whenPressed(new DriveForward());
-		driveBackward.whenPressed(new DriveBackward());
-		
+		driveForward.whileHeld(new DriveForward());
+		driveBackward.whileHeld(new DriveBackward());
 		driveRight.whileHeld(new DriveRight());
 		driveLeft.whileHeld(new DriveLeft());
 		
-		//sucker buttons are being initialized here
-		suckIn = new JoystickButton(operatorJoystick, 7);     // FIXME: make sure this is for the correct Joystick and port
-		pushOut = new JoystickButton(operatorJoystick, 8);    // FIXME: make sure this is for the correct Joystick and port
-		angleIn = new JoystickButton(operatorJoystick, 9);    // FIXME: make sure this is for the correct Joystick and port
-		angleOut = new JoystickButton(operatorJoystick, 10);  // FIXME: make sure this is for the correct Joystick and port
-		stopCollection = new JoystickButton(operatorJoystick, 11); // FIXME: make sure this is for the correct Joystick and port
+		//Lifter buttons initialization
+		liftUp = new JoystickButton(operatorJoystick, 5);	// FIXME: make sure this is for the correct Joystick and port
+		liftDown = new JoystickButton(operatorJoystick, 6);	// FIXME: make sure this is for the correct Joystick and port
+		
+		liftUp.whenPressed(new LiftUp());
+		liftDown.whenPressed(new LiftDown());
+		
+		//Sucker buttons initialization
+		suckIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
+		pushOut = new JoystickButton(operatorJoystick, 8);  	  	// FIXME: make sure this is for the correct Joystick and port
+		angleIn = new JoystickButton(operatorJoystick, 9);    		// FIXME: make sure this is for the correct Joystick and port
+		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
+		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
 		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 		
 		suckIn.whenPressed (new CollectTote());
