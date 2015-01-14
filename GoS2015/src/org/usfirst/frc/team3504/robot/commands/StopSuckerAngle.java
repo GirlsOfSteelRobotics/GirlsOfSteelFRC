@@ -9,7 +9,7 @@ public class StopSuckerAngle extends Command {
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		
+		requires(Robot.sucker);
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class StopSuckerAngle extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class StopSuckerAngle extends Command {
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
-		
+		end();
 	}
 
 }

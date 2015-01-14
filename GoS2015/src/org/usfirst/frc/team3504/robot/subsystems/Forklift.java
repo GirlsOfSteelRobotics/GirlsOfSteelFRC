@@ -32,6 +32,8 @@ public class Forklift extends Subsystem {
 		liftTalon.set(speed);
 	}
 	
+	//Add Stop methods
+	
 	public void upPneum() {
 		liftSD.set(true); //?
 	}

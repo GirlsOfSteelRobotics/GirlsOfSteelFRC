@@ -5,6 +5,8 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
+//Make changes from lift Down
+
 public class LiftUp extends Command {
 	Timer upTime = new Timer();
 	public LiftUp() {

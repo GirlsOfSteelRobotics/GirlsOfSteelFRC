@@ -9,7 +9,7 @@ public class AngleSuckerIn extends Command {
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		
+		requires(Robot.sucker);
 	}
 
 	@Override

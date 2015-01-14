@@ -24,10 +24,6 @@ public class Sucker extends Subsystem {
 		leftSucker = new Talon(RobotMap.Left_Wheel_Talon_Sucker);
 		suckerAngleRight = new Talon(RobotMap.Right_Angle_Talon_Sucker);
 		suckerAngleLeft = new Talon(RobotMap.Left_Angle_Talon_Sucker);
-		/*suckToteIn ();                  //calling method suckTotein
-		suckToteOut ();                 //calling method suckToteOut
-		suckerAngleOut ();
-		suckerAngleIn ();*/
 	}
 	
 	public void suckToteIn (){              //creating method suckToteIn which suck a tote inside the robot
