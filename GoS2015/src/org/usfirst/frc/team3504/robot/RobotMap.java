@@ -34,4 +34,10 @@ public class RobotMap {
     public static final int FRONT_RIGHT_ENCODER_B = 1;
     public static final int REAR_RIGHT_ENCODER_A = 2;
     public static final int REAR_RIGHT_ENCODER_B = 3;
+    
+    //Sucker ports
+    public static final int Right_Wheel_Talon_Sucker = 0;
+    public static final int Left_Wheel_Talon_Sucker = 1;
+    public static final int Right_Angle_Talon_Sucker = 2;
+    public static final int Left_Angle_Talon_Sucker = 3;
 }

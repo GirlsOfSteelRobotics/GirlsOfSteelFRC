@@ -4,9 +4,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team3504.robot.commands.AngleSuckerIn;
+import org.usfirst.frc.team3504.robot.commands.AngleSuckerOut;
+import org.usfirst.frc.team3504.robot.commands.CollectTote;
 import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.commands.ReleaseTote;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,6 +52,11 @@ public class OI {
 	
 	//Put Sucker buttons here
 	
+	private JoystickButton suckIn;
+	private JoystickButton pushOut;
+	private JoystickButton angleIn;
+	private JoystickButton angleOut;
+	
 	//Put Manipulator buttons here
 	
 	public OI()
@@ -59,6 +68,17 @@ public class OI {
 		
 		driveForward.whenPressed(new DriveForward());
 		driveBackward.whenPressed(new DriveBackward());
+		
+		//sucker buttons are being initialized here
+		suckIn = new JoystickButton(operatorJoystick, 7);     // FIXME: make sure this is for the correct Joystick and port
+		pushOut = new JoystickButton(operatorJoystick, 8);    // FIXME: make sure this is for the correct Joystick and port
+		angleIn = new JoystickButton(operatorJoystick, 9);    // FIXME: make sure this is for the correct Joystick and port
+		angleOut = new JoystickButton(operatorJoystick, 10);  // FIXME: make sure this is for the correct Joystick and port
+		
+		suckIn.whenPressed (new CollectTote());
+		pushOut.whenPressed (new ReleaseTote());
+		angleIn.whenPressed (new AngleSuckerIn());
+		angleOut.whenPressed (new AngleSuckerOut());
 	}
 	
 	public Joystick getOperatorJoystick()
