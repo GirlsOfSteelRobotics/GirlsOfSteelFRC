@@ -1,12 +1,16 @@
 package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
+//import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.commands.DriveLeft;
+import org.usfirst.frc.team3504.robot.commands.DriveRight;
+import org.usfirst.frc.team3504.robot.commands.LiftDown;
+import org.usfirst.frc.team3504.robot.commands.LiftUp;
+//import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,7 +49,11 @@ public class OI {
 	
 	private JoystickButton driveForward;
 	private JoystickButton driveBackward;
+	private JoystickButton driveRight;
+	private JoystickButton driveLeft;
 	
+	private JoystickButton liftUp;
+	private JoystickButton liftDown;
 	//Put Sucker buttons here
 	
 	//Put Manipulator buttons here
@@ -56,9 +64,18 @@ public class OI {
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 		driveForward = new JoystickButton(chassisJoystick, 5);
 		driveBackward = new JoystickButton(chassisJoystick, 6);
+		driveRight = new JoystickButton(chassisJoystick, 4);
+		driveLeft = new JoystickButton(chassisJoystick, 3);
+		liftUp = new JoystickButton(operatorJoystick, 5);
+		liftDown = new JoystickButton(operatorJoystick, 6);
 		
+		
+		liftUp.whenPressed(new LiftUp());
+		liftDown.whenPressed(new LiftDown());
 		driveForward.whenPressed(new DriveForward());
 		driveBackward.whenPressed(new DriveBackward());
+		driveRight.whileHeld(new DriveRight());
+		driveLeft.whileHeld(new DriveLeft());
 	}
 	
 	public Joystick getOperatorJoystick()
