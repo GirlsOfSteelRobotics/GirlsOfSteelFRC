@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
 	public static final Chassis chassis = new Chassis();
 	public static final Manipulator manipulator = new Manipulator();
 	public static final Sucker sucker = new Sucker();
+	public static final Forklift forklift = new Forklift();
 	public static OI oi;
 
     Command autonomousCommand;
