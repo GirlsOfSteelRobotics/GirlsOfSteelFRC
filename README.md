@@ -5,9 +5,9 @@ This repository contains all the projects from the 2015 FRC preseason, build, an
 ### [GitHub Wiki](https://github.com/GirlsOfSteelRobotics/2015season/wiki)
 
    Follow the link above to view our collection of programmer's documentation, including:
-   * Eclipse/GitHub set up directions
-   * Troubleshooting problems building your project
-   * Procedures for making and sharing changes to the code
+   * Eclipse Help
+   * FRC Programming Help
+   * Commit Messages / Comments Help
 
 ### Projects in this repository:
 

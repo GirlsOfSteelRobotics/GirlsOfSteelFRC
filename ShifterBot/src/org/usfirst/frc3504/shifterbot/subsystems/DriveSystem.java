@@ -13,7 +13,12 @@ public class DriveSystem extends Subsystem {
 	SpeedController driveLeft = RobotMap.driveSystemDriveLeft;
 	SpeedController driveRight = RobotMap.driveSystemDriveRight;
 	RobotDrive robotDrive2 = RobotMap.driveSystemRobotDrive2;
-
+	Encoder driveLeftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A, RobotMap.DRIVE_LEFT_ENCODER_B, true, CounterBase.EncodingType.k2X);
+	Encoder driveRightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A, RobotMap.DRIVE_RIGHT_ENCODER_B, true, CounterBase.EncodingType.k2X);
+	
+	private double pulsePerRevolution = 360;  //correct
+    private double distancePerPulse = 1.0 / pulsePerRevolution;
+    
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
@@ -28,7 +33,41 @@ public class DriveSystem extends Subsystem {
 		robotDrive2.arcadeDrive(joystk);
 	}
 
+	public void forward(){
+		robotDrive2.drive(1.0, 0);
+	}
+	
 	public void stop() {
 		robotDrive2.drive(/*speed*/0, /*curve*/0);
 	}
+	
+	  public void initEncoders() {
+	        driveLeftEncoder.setDistancePerPulse(distancePerPulse);
+	    }
+
+	    public double getEncoderDistance() {
+	        return driveLeftEncoder.getDistance();
+	    }
+
+	    public double getRateEncoder() {
+	        return driveLeftEncoder.getRate();
+	    }
+
+	    public double getEncoderLeft() {
+	        return driveLeftEncoder.get();
+	    }
+	    
+	    public double getEncoderRight() {
+	        return driveRightEncoder.get();
+	    }
+
+	    public double getRaw() {
+	        return driveLeftEncoder.getRaw();
+	    }
+	    
+	    public void resetEncoders() {
+	        driveLeftEncoder.reset();
+	        driveRightEncoder.reset();
+	    }
+
 }
