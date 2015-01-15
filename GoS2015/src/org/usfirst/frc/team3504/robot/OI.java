@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team3504.robot.commands.AngleSuckerIn;
 import org.usfirst.frc.team3504.robot.commands.AngleSuckerOut;
+import org.usfirst.frc.team3504.robot.commands.AutonomousCircleTest;
 import org.usfirst.frc.team3504.robot.commands.CollectTote;
 import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
@@ -72,6 +73,9 @@ public class OI {
 	private JoystickButton stopCollection;
 	private JoystickButton stopSuckerAngle;
 	
+	//Autonomous buttons
+	private JoystickButton autoCircle;
+	
 	public OI()
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
@@ -95,6 +99,10 @@ public class OI {
 		liftUp.whenPressed(new LiftUp());
 		liftDown.whenPressed(new LiftDown());
 		
+		//Autonomous buttons initialization
+		autoCircle = new JoystickButton(chassisJoystick,1);
+		autoCircle.whileHeld(new AutonomousCircleTest());
+		
 		//Sucker buttons initialization
 		suckIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
 		pushOut = new JoystickButton(operatorJoystick, 8);  	  	// FIXME: make sure this is for the correct Joystick and port
@@ -109,6 +117,8 @@ public class OI {
 		angleOut.whenPressed (new AngleSuckerOut());
 		stopCollection.whenPressed (new StopCollection());
 		stopSuckerAngle.whenPressed(new StopSuckerAngle());
+		
+		
 	}
 	
 	public Joystick getOperatorJoystick()
