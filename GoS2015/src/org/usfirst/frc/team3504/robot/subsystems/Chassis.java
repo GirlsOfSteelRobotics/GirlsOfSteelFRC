@@ -79,28 +79,29 @@ public class Chassis extends Subsystem {
 	public void moveByJoystick(Joystick stick)
 	{
 		//if(stick.getMagnitude() > 0.02)
-			//gosDrive.mecanumDrive_Polar(0.2, stick.getDirectionDegrees(), stick.getTwist());
-		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), 0);//robotGyro.getAngle());
+		gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
+		//gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), 0);//robotGyro.getAngle());
+		
 	}
 	
-	public void driveForward()
+	public void driveForward(Joystick stick)
 	{
-		gosDrive.mecanumDrive_Cartesian(0, -.5, 0, 0);
+		gosDrive.mecanumDrive_Cartesian(0, -((stick.getThrottle() + 1) / 2), 0, 0); //-.5
 	}
 
-	public void driveBackward()
+	public void driveBackward(Joystick stick)
 	{
-		gosDrive.mecanumDrive_Cartesian(0, .5, 0, 0);
+		gosDrive.mecanumDrive_Cartesian(0, ((stick.getThrottle() + 1) / 2), 0, 0); //.5
 	}
 	
-	public void driveRight()
+	public void driveRight(Joystick stick)
 	{
-		gosDrive.mecanumDrive_Cartesian( 0.5, 0, 0, 0);
+		gosDrive.mecanumDrive_Cartesian(((stick.getThrottle() + 1) / 2), 0, 0, 0); //.5
 	}
 	
 	public void driveLeft()
 	{
-		gosDrive.mecanumDrive_Cartesian(-0.5, 0, 0,0);
+		gosDrive.mecanumDrive_Cartesian(-((stick.getThrottle() + 1) / 2), 0, 0,0); //.-5
 		
 	}
 	

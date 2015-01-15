@@ -36,32 +36,32 @@ public class RobotMap {
     public static final int REAR_RIGHT_WHEEL_ENCODER_B = 3;
     
     //Forklift ports
-    public static final int FORKLIFT_CHANNEL = 1;
-    public static final int LEFT_FORKLIFT_LIMIT = 99;
-    public static final int RIGHT_FORKLIFT_LIMIT = 99;
+    public static final int FORKLIFT_CHANNEL = 4;
+    public static final int LEFT_FORKLIFT_LIMIT = 8;
+    public static final int RIGHT_FORKLIFT_LIMIT = 9;
     
     //Peg ports
-    public static final int RIGHT_PEG_TALON = 99; //Motors
-    public static final int LEFT_PEG_TALON = 99;
-    public static final int RIGHT_PEG_ENCODER_A = 99; //Encoders
-    public static final int RIGHT_PEG_ENCODER_B = 99;
-    public static final int LEFT_PEG_ENCODER_A = 99;
-    public static final int LEFT_PEG_ENCODER_B = 99;
-    public static final int RIGHT_PEG_LIMIT = 99; //Limit Switches
-    public static final int LEFT_PEG_LIMIT = 99;
+    public static final int RIGHT_PEG_TALON = 5; //Motors
+    public static final int LEFT_PEG_TALON = 6;
+    public static final int RIGHT_PEG_ENCODER_A = 10; //Encoders
+    public static final int RIGHT_PEG_ENCODER_B = 11;
+    public static final int LEFT_PEG_ENCODER_A = 12;
+    public static final int LEFT_PEG_ENCODER_B = 13;
+    public static final int RIGHT_PEG_LIMIT = 14; //Limit Switches
+    public static final int LEFT_PEG_LIMIT = 15;
     
     //Claw ports
-    public static final int LEFT_CLAW_CHANNEL = 0; //Motors
-    public static final int RIGHT_CLAW_CHANNEL = 1;
-    public static final int LEFT_CLAW_LIMIT = 99;
-    public static final int RIGHT_CLAW_LIMIT = 99;
+    public static final int LEFT_CLAW_CHANNEL = 7; //Motors
+    public static final int RIGHT_CLAW_CHANNEL = 8;
+    public static final int LEFT_CLAW_LIMIT = 16;
+    public static final int RIGHT_CLAW_LIMIT = 17;
     
 
     //Sucker ports
-    public static final int RIGHT_SUCKER_WHEEL = 0; //Motors
-    public static final int LEFT_SUCKER_WHEEL = 1;
-    public static final int RIGHT_SUCKER_ANGLE_WHEEL = 2;
-    public static final int LEFT_SUCKER_ANGLE_WHEEL = 3;
-    public static final int LEFT_SUCKER_LIMIT = 99;
-    public static final int RIGHT_SUCKER_LIMIT = 99;
+    public static final int RIGHT_SUCKER_WHEEL = 9; //Motors
+    public static final int LEFT_SUCKER_WHEEL = 10;
+    public static final int RIGHT_SUCKER_ANGLE_WHEEL = 11;
+    public static final int LEFT_SUCKER_ANGLE_WHEEL = 12;
+    public static final int LEFT_SUCKER_LIMIT = 18;
+    public static final int RIGHT_SUCKER_LIMIT = 19;
 }
