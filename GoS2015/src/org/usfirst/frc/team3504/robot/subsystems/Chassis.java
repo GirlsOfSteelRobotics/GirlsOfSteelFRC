@@ -104,26 +104,55 @@ public class Chassis extends Subsystem {
 		
 	}
 	
+	public void driveInCircle()
+	{
+		gosDrive.mecanumDrive_Cartesian(75, 25, 0, robotGyro.getAngle()); //May be equal -> change x and y vals
+	}
+	
 	public void stop()
 	{
 		gosDrive.stopMotor();
+	}
+	
+	public double getGyroAngle()
+	{
+		return robotGyro.getAngle();
 	}
 	
 	public double getFrontLeftEncoderRate()
 	{
 		return frontLeftEncoder.getRate();
 	}
+	
+	public double getFrontLeftEncoderDistance(){
+		return frontLeftEncoder.getDistance();
+	}
+	
 	public double getRearLeftEncoderRate()
 	{
 		return rearLeftEncoder.getRate();
 	}
+	
+	public double getRearLeftEncoderDistance(){
+		return rearLeftEncoder.getDistance();
+	}
+	
 	public double getFrontRightEncoderRate()
 	{
 		return frontRightEncoder.getRate();
 	}
+	
+	public double getFrontRightEncoderDistance(){
+		return frontRightEncoder.getDistance();
+	}
+	
 	public double getRearRightEncoderRate()
 	{
 		return rearRightEncoder.getRate();
+	}
+	
+	public double getRearRightEncoderDistance(){
+		return rearRightEncoder.getDistance();
 	}
 	
     public void initDefaultCommand() {
