@@ -5,7 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /*
- * Make sure that this is a while held button
+ * 
  */
 public class DriveRight extends Command {
 	

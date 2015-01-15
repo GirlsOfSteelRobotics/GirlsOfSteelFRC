@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /*
- * Consider using limit switches; need to add a stop talons method in the subsystem
+ * 
  */
 public class LiftDown extends Command{
 
@@ -26,12 +26,14 @@ public class LiftDown extends Command{
 
 	@Override
 	protected boolean isFinished() {
+		Robot.forklift.getLimit(); //might not be useds, depends 
 		return isTimedOut();
 	}
 
 	@Override
 	protected void end() {
 		//Stop talons
+		Robot.forklift.stop();
 	}
 
 	@Override

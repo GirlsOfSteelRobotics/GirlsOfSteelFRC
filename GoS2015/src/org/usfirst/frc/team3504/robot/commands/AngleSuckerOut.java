@@ -5,7 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /*
- * Change this -> no need for stop command, should just be a while held button
+ * 
  */
 public class AngleSuckerOut extends Command{
 

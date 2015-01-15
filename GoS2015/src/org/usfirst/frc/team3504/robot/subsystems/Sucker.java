@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,6 +18,8 @@ public class Sucker extends Subsystem {
 	private Talon leftSucker;             // defining a Talon motor and naming it leftSucker
 	private Talon suckerAngleRight;       // defining a Talon motor and naming it suckerAngleRight
 	private Talon suckerAngleLeft;        // defining a Talon motor and naming it suckerAngleLeft
+	private DigitalInput leftLimit;
+	private DigitalInput rightLimit;
 	
 	public Sucker()                //this is the constructor
 	{
@@ -24,6 +27,8 @@ public class Sucker extends Subsystem {
 		leftSucker = new Talon(RobotMap.LEFT_SUCKER_WHEEL);
 		suckerAngleRight = new Talon(RobotMap.RIGHT_SUCKER_ANGLE_WHEEL);
 		suckerAngleLeft = new Talon(RobotMap.LEFT_SUCKER_ANGLE_WHEEL);
+		leftLimit = new DigitalInput(RobotMap.LEFT_SUCKER_LIMIT);
+		rightLimit = new DigitalInput(RobotMap.RIGHT_SUCKER_LIMIT);
 	}
 	
 	public void suckToteIn (){              //creating method suckToteIn which suck a tote inside the robot
@@ -54,6 +59,11 @@ public class Sucker extends Subsystem {
 	public void stopAngle (){
 		suckerAngleRight.set(0.0);
 		suckerAngleLeft.set(0.0);
+	}
+	
+	public boolean getLimit()
+	{
+		return(leftLimit.get() && rightLimit.get());
 	}
 	
     public void initDefaultCommand() {

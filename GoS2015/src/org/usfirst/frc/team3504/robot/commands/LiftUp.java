@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /*
- * Add stop to subsystem
+ * 
  */
 public class LiftUp extends Command {
 
@@ -32,6 +32,7 @@ public class LiftUp extends Command {
 	@Override
 	protected void end() {
 		//Stop motors
+		Robot.forklift.stop();
 	}
 
 	@Override

@@ -2,10 +2,11 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
+
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Need to add limit switch implementation
+/*
+ * 
  */
 public class ClawArmIn extends Command {
 
@@ -26,7 +27,8 @@ public class ClawArmIn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false; //Add limit switch implementation
+    	Robot.clawArms.getLimit();
+    	return false; //Add limit switch implementation
     }
     
     // Called once after isFinished returns true

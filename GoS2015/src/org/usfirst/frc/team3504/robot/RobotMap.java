@@ -37,6 +37,8 @@ public class RobotMap {
     
     //Forklift ports
     public static final int FORKLIFT_CHANNEL = 1;
+    public static final int LEFT_FORKLIFT_LIMIT = 99;
+    public static final int RIGHT_FORKLIFT_LIMIT = 99;
     
     //Peg ports
     public static final int RIGHT_PEG_TALON = 99; //Motors
@@ -51,6 +53,8 @@ public class RobotMap {
     //Claw ports
     public static final int LEFT_CLAW_CHANNEL = 0; //Motors
     public static final int RIGHT_CLAW_CHANNEL = 1;
+    public static final int LEFT_CLAW_LIMIT = 99;
+    public static final int RIGHT_CLAW_LIMIT = 99;
     
 
     //Sucker ports
@@ -58,4 +62,6 @@ public class RobotMap {
     public static final int LEFT_SUCKER_WHEEL = 1;
     public static final int RIGHT_SUCKER_ANGLE_WHEEL = 2;
     public static final int LEFT_SUCKER_ANGLE_WHEEL = 3;
+    public static final int LEFT_SUCKER_LIMIT = 99;
+    public static final int RIGHT_SUCKER_LIMIT = 99;
 }
