@@ -5,7 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /*
- * Should add limit switch implementation
+ * 
  */
 public class CollectTote extends Command {
 
@@ -24,6 +24,7 @@ public class CollectTote extends Command {
 
 	@Override
 	protected boolean isFinished() {
+		Robot.sucker.getLimit();
 		return false;
 	}
 
