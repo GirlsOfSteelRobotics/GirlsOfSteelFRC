@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveBackward extends Command {
-
+	
 	public DriveBackward()
 	{
 		requires(Robot.chassis);
@@ -18,7 +18,7 @@ public class DriveBackward extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.chassis.driveBackward();
+		Robot.chassis.driveBackward(Robot.oi.getChassisJoystick());
 	}
 
 	@Override
