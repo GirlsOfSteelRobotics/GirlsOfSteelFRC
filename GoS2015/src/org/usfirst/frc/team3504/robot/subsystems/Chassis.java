@@ -99,7 +99,7 @@ public class Chassis extends Subsystem {
 		gosDrive.mecanumDrive_Cartesian(((stick.getThrottle() + 1) / 2), 0, 0, 0); //.5
 	}
 	
-	public void driveLeft()
+	public void driveLeft(Joystick stick)
 	{
 		gosDrive.mecanumDrive_Cartesian(-((stick.getThrottle() + 1) / 2), 0, 0,0); //.-5
 		
