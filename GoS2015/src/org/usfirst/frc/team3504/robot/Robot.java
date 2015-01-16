@@ -4,6 +4,7 @@ package org.usfirst.frc.team3504.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3504.robot.commands.*;
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
 	public static final TrianglePegs pegs = new TrianglePegs();
 	public static final ClawArms clawArms = new ClawArms();
 	public static final Forklift forklift = new Forklift();
+	public static final UltrasonicSensor ultrasonicsensor = new UltrasonicSensor();
 	public static OI oi;
 
     Command autonomousCommand;
