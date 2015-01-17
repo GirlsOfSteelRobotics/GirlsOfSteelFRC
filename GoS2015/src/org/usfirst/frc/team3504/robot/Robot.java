@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
+import edu.wpi.first.wpilibj.CameraServer;
 import org.usfirst.frc.team3504.robot.commands.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -21,11 +21,13 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
 	public static final Chassis chassis = new Chassis();
+	public static final Camera camera = new Camera();
 	public static final Sucker sucker = null; //= new Sucker();
 	public static final TrianglePegs pegs = null;//= new TrianglePegs();
 	public static final ClawArms clawArms = null;//= new ClawArms();
 	public static final Forklift forklift = null;//new Forklift();
 	public static OI oi;
+	CameraServer server; 
 
     Command autonomousCommand;
 
@@ -37,6 +39,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
+
+
     }
 	
 	public void disabledPeriodic() {
@@ -84,4 +88,11 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
+  /**  public void Cam1() {
+        server = CameraServer.getInstance();
+        server.setQuality(50);
+        server.startAutomaticCapture("cam1");
+    } **/
+    
 }

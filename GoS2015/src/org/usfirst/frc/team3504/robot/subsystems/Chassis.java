@@ -85,6 +85,14 @@ public class Chassis extends Subsystem {
 		
 	}
 	
+	public void autoDriveSideways(double speed){
+		gosDrive.mecanumDrive_Polar(speed, 180, 0);//figure out what the angle should be
+	}
+	
+	public void autoDriveForward(double speed){
+		gosDrive.mecanumDrive_Polar(speed, 90, 0);
+	}
+	
 	public void driveForward(Joystick stick)
 	{
 		gosDrive.mecanumDrive_Cartesian(0, -((stick.getThrottle() + 1) / 2), 0, 0); //-.5
@@ -119,6 +127,13 @@ public class Chassis extends Subsystem {
 	public double getGyroAngle()
 	{
 		return robotGyro.getAngle();
+	}
+	
+	public void resetEncoders(){
+		frontLeftEncoder.reset();
+		frontRightEncoder.reset();
+		rearLeftEncoder.reset();
+		rearRightEncoder.reset();
 	}
 	
 	public double getFrontLeftEncoderRate()
