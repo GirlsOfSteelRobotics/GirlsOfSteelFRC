@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class AutoSucker extends Command {
+	//sucker will run constantly through the AutoPlow command
 
     public AutoSucker() {
        requires(Robot.sucker);
