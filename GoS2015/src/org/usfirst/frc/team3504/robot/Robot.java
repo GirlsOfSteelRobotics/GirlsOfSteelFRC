@@ -26,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static final TrianglePegs pegs = null;//= new TrianglePegs();
 	public static final ClawArms clawArms = null;//= new ClawArms();
 	public static final Forklift forklift = null;//new Forklift();
+	public static final Doors doors = null;//new Door();
 	public static OI oi;
 	CameraServer server; 
 
