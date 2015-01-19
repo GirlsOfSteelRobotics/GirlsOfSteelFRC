@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoPlow extends CommandGroup {
     
     public  AutoPlow() {
-    	addParallel(new AutoSucker());
+    	
+    	addSequential(new AutoSucker());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());
-    	addParallel(new AutoSucker());
+    	addSequential(new AutoSucker());
     	addSequential(new Lifting());
      	//used to get first can and tote
 

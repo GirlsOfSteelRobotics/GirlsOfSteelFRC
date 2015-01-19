@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static final ClawArms clawArms = null;//= new ClawArms();
 	public static final Forklift forklift = null;//new Forklift();
 	public static final Doors doors = null;//new Door();
+	public static final UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
 	public static OI oi;
 	CameraServer server; 
 

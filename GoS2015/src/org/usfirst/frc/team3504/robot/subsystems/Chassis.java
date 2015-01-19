@@ -93,6 +93,7 @@ public class Chassis extends Subsystem {
 		gosDrive.mecanumDrive_Polar(speed, 90, 0);
 	}
 	
+	//TODO; move Joystick to subsystem
 	public void driveForward(Joystick stick)
 	{
 		gosDrive.mecanumDrive_Cartesian(0, -((stick.getThrottle() + 1) / 2), 0, 0); //-.5

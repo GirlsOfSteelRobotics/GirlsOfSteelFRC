@@ -1,18 +1,19 @@
-package org.usfirst.frc.team3504.robot.commands;
+package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * 
+ * @author Arushi
  */
-public class DoorsOut extends Command {
-
-    public DoorsOut() {
-    	requires(Robot.doors);
+public class AutoDriveForwardUltra extends Command {
+	
+    public AutoDriveForwardUltra() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.chassis);
+    	requires(Robot.ultrasonicsensor);
     }
 
     // Called just before this Command runs the first time
@@ -22,12 +23,12 @@ public class DoorsOut extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.doors.doorsOut();
+    	Robot.chassis.driveForward(Robot.oi.getChassisJoystick());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return (Robot.ultrasonicsensor.getDistanceInches() == 2);
     }
 
     // Called once after isFinished returns true
