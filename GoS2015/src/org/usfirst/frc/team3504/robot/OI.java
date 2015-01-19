@@ -75,6 +75,10 @@ public class OI {
 	private JoystickButton stopCollection;
 	private JoystickButton stopSuckerAngle;
 	
+	//Door buttons
+	private JoystickButton doorIn;
+	private JoystickButton doorOut;
+	
 	private JoystickButton switchCamera;
 	
 	public OI()
@@ -117,6 +121,10 @@ public class OI {
 	//	angleOut.whenPressed (new AngleSuckerOut());
 	//	stopCollection.whenPressed (new StopCollection());
 	//	stopSuckerAngle.whenPressed(new StopSuckerAngle());
+		
+		//Door Buttons
+		doorIn = new JoystickButton(chassisJoystick,7);
+		doorOut = new JoystickButton(chassisJoystick,8);
 	}
 	
 	public Joystick getOperatorJoystick()
