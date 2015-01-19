@@ -19,7 +19,7 @@ public class DriveRightForX extends Command{
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		Robot.chassis.driveRight();
+		Robot.chassis.driveRight(Robot.oi.getChassisJoystick());
 	}
 
 	@Override
