@@ -8,7 +8,6 @@ public class FindObjectUltrasonicSensor extends CommandGroup{
 	
 	public FindObjectUltrasonicSensor() {
 		//requires(Robot.ultrasonicsensor);
-		
 	}
 	
 }

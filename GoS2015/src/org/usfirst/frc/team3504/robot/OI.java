@@ -19,6 +19,10 @@ import org.usfirst.frc.team3504.robot.commands.LiftUp;
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3504.robot.commands.StopCollection;
 import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -56,6 +60,16 @@ public class OI {
 	private Joystick chassisJoystick;
 	
 	
+	//Auto Buttons
+	private JoystickButton autoDriveForward;
+	private JoystickButton autoDriveForwardUltra;
+	private JoystickButton autoFirstPickup;
+	private JoystickButton autoInterval;
+	private JoystickButton autoLiftUp;
+	private JoystickButton autoPlow;
+	private JoystickButton autoSucker;
+	private JoystickButton autoTurnLeft;
+	private JoystickButton autoTurnLeftTimer;
 	
 	//Drive Buttons
 	private JoystickButton driveForward;
@@ -74,6 +88,10 @@ public class OI {
 	private JoystickButton angleOut;
 	private JoystickButton stopCollection;
 	private JoystickButton stopSuckerAngle;
+	
+	//Door buttons
+	private JoystickButton doorIn;
+	private JoystickButton doorOut;
 	
 	private JoystickButton switchCamera;
 	
@@ -109,6 +127,18 @@ public class OI {
 		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 		
 		switchCamera = new JoystickButton(chassisJoystick, 7);
+	
+		//Autonomous 
+		autoDriveForward = new JoystickButton(chassisJoystick, 9);
+		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
+		autoSucker = new JoystickButton(chassisJoystick, 11);
+		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
+		
+		autoDriveForward.whenPressed(new AutoDriveForward());
+		autoFirstPickup.whenPressed(new AutoFirstPickup());
+		autoSucker.whenPressed(new AutoSucker()); 
+		autoTurnLeft.whenPressed(new AutoTurnLeft());
+		
 		
 		switchCamera.whenPressed (new CameraSwitch());
 	//	suckIn.whenPressed (new CollectTote());
@@ -117,6 +147,10 @@ public class OI {
 	//	angleOut.whenPressed (new AngleSuckerOut());
 	//	stopCollection.whenPressed (new StopCollection());
 	//	stopSuckerAngle.whenPressed(new StopSuckerAngle());
+		
+		//Door Buttons
+		doorIn = new JoystickButton(chassisJoystick,7);
+		doorOut = new JoystickButton(chassisJoystick,8);
 	}
 	
 	public Joystick getOperatorJoystick()
