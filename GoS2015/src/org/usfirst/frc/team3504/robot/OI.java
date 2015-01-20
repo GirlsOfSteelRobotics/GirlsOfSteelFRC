@@ -19,6 +19,7 @@ import org.usfirst.frc.team3504.robot.commands.LiftUp;
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3504.robot.commands.StopCollection;
 import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
+import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
@@ -93,6 +94,9 @@ public class OI {
 	private JoystickButton doorIn;
 	private JoystickButton doorOut;
 	
+	//Ultrasonic buttons
+	private JoystickButton getDistance;
+	
 	private JoystickButton switchCamera;
 	
 	public OI()
@@ -125,6 +129,10 @@ public class OI {
 		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
 		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
+		
+		//Ultrasonic buttons initialization
+		getDistance = new JoystickButton(chassisJoystick, 13);
+		getDistance.whenPressed(new TestUltrasonic());
 		
 		switchCamera = new JoystickButton(chassisJoystick, 7);
 	

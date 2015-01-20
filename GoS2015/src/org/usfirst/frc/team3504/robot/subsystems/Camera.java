@@ -1,8 +1,11 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap.*;
+
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
  *
@@ -43,6 +46,7 @@ public class Camera extends Subsystem {
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam1");
         name = camera1;
+        SmartDashboard.putData("cam1", (Sendable) CameraServer.getInstance());
     }
     
     public void Cam2() {
@@ -52,6 +56,7 @@ public class Camera extends Subsystem {
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam2");
         name = camera2;
+        SmartDashboard.putData("cam2", (Sendable) CameraServer.getInstance());
 }
 
 	@Override

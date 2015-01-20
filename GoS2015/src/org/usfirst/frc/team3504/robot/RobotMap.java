@@ -34,8 +34,8 @@ public class RobotMap {
     public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 1;
     public static final int REAR_RIGHT_WHEEL_ENCODER_A = 2;
     public static final int REAR_RIGHT_WHEEL_ENCODER_B = 3;
-    public static final int ULTRASONICSENSOR_PING_CHANNEL = 10;
-    public static final int ULTRASONICSENSOR_ECHO_CHANNEL = 11;
+    public static final int ULTRASONICSENSOR_PING_CHANNEL = 9;
+    public static final int ULTRASONICSENSOR_ECHO_CHANNEL = 4;
     
     //Forklift ports
     public static final int FORKLIFT_CHANNEL = 4;
