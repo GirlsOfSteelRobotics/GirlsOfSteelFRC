@@ -1,28 +1,16 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.CameraSwitch;
+import org.usfirst.frc.team3504.robot.commands.DriveBackward;
+import org.usfirst.frc.team3504.robot.commands.DriveForward;
+import org.usfirst.frc.team3504.robot.commands.DriveLeft;
+import org.usfirst.frc.team3504.robot.commands.DriveRight;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
+
 import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import org.usfirst.frc.team3504.robot.commands.AngleSuckerIn;
-import org.usfirst.frc.team3504.robot.commands.AngleSuckerOut;
-import org.usfirst.frc.team3504.robot.commands.CameraSwitch;
-import org.usfirst.frc.team3504.robot.commands.CollectTote;
-import org.usfirst.frc.team3504.robot.commands.DriveBackward;
-import org.usfirst.frc.team3504.robot.commands.DriveForward;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3504.robot.commands.ReleaseTote;
-import org.usfirst.frc.team3504.robot.commands.DriveLeft;
-import org.usfirst.frc.team3504.robot.commands.DriveRight;
-import org.usfirst.frc.team3504.robot.commands.LiftDown;
-import org.usfirst.frc.team3504.robot.commands.LiftUp;
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3504.robot.commands.StopCollection;
-import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -134,10 +122,10 @@ public class OI {
 		autoSucker = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
 		
-		autoDriveForward.whenPressed(new AutoDriveForward());
-		autoFirstPickup.whenPressed(new AutoFirstPickup());
+	//	autoDriveForward.whenPressed(new AutoDriveForward());
+	//	autoFirstPickup.whenPressed(new AutoFirstPickup());
 		autoSucker.whenPressed(new AutoSucker()); 
-		autoTurnLeft.whenPressed(new AutoTurnLeft());
+	//	autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
 		switchCamera.whenPressed (new CameraSwitch());
