@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class FindObjectUltrasonicSensor extends CommandGroup{
 	
 	public FindObjectUltrasonicSensor() {
-	//	requires(Robot.ultrasonicsensor);
-		
+		//requires(Robot.ultrasonicsensor);
 	}
 	
 }

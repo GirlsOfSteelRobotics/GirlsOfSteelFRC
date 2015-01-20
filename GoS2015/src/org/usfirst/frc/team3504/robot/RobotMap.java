@@ -66,4 +66,9 @@ public class RobotMap {
     public static final int LEFT_SUCKER_ANGLE_WHEEL = 12;
     public static final int LEFT_SUCKER_LIMIT = 18;
     public static final int RIGHT_SUCKER_LIMIT = 19;
+    
+    //Door ports
+    public static final int LEFT_DOOR_CHANNEL = 20;
+    public static final int RIGHT_DOOR_CHANNEL = 21;
+    
 }
