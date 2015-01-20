@@ -13,6 +13,7 @@ public class AutoPlow extends CommandGroup {
     
     public  AutoPlow() {
     	
+    	
     	addSequential(new AutoSucker());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());

@@ -22,8 +22,9 @@ import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
 import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.*;
+//github.com/GirlsOfSteelRobotics/2015season.git
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 
 /**
  * This class is the glue that binds the controls on the physical operator
