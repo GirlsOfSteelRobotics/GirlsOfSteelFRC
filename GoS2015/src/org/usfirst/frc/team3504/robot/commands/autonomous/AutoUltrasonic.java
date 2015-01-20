@@ -3,11 +3,11 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *  Authors: Alexa, Corinne, Kyra, Sarah
+ *
  */
-public class AutoPlow extends CommandGroup {
+public class AutoUltrasonic extends CommandGroup {
     
-    public  AutoPlow() {
+    public  AutoUltrasonic() {
     	addSequential(new AutoSucker());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());
@@ -27,9 +27,10 @@ public class AutoPlow extends CommandGroup {
     	
     	addSequential(new AutoTurnLeft());
     	addSequential(new Lifting()); //just down 
-    	//turn into the autozone to get robot set
-        
-    	// Add Commands here:
+    	
+    	
+    	
+        // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
