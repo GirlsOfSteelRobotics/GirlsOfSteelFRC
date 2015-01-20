@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoInterval extends CommandGroup {
+public class Release extends CommandGroup {
     
-    public  AutoInterval() {
+    public  Release() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

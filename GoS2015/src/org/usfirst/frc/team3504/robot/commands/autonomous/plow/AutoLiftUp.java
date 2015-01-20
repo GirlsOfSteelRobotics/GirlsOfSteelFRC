@@ -1,13 +1,13 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands.autonomous.plow;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoFirstPickup extends Command {
+public class AutoLiftUp extends Command {
 
-    public AutoFirstPickup() {
+    public AutoLiftUp() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

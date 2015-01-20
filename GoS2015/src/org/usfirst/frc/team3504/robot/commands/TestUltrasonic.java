@@ -3,16 +3,18 @@ package org.usfirst.frc.team3504.robot.commands;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * 
+ * @author Arushi, Isabella
  */
-public class DoorsOut extends Command {
+public class TestUltrasonic extends Command {
 
-    public DoorsOut() {
-    	requires(Robot.doors);
+	
+    public TestUltrasonic() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.ultrasonicsensor);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +24,7 @@ public class DoorsOut extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.doors.doorsOut();
+    	SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -21,6 +21,12 @@ import org.usfirst.frc.team3504.robot.commands.LiftUp;
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3504.robot.commands.StopCollection;
 import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
+import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.*;
+//github.com/GirlsOfSteelRobotics/2015season.git
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -57,6 +63,17 @@ public class OI {
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
 	
+	//Auto Buttons
+	private JoystickButton autoDriveForward;
+	private JoystickButton autoDriveForwardUltra;
+	private JoystickButton autoFirstPickup;
+	private JoystickButton autoInterval;
+	private JoystickButton autoLiftUp;
+	private JoystickButton autoPlow;
+	private JoystickButton autoSucker;
+	private JoystickButton autoTurnLeft;
+	private JoystickButton autoTurnLeftTimer;
+	
 	//Drive Buttons
 	private JoystickButton driveForward;
 	private JoystickButton driveBackward;
@@ -78,6 +95,9 @@ public class OI {
 	//Door buttons
 	private JoystickButton doorIn;
 	private JoystickButton doorOut;
+	
+	//Ultrasonic buttons
+	private JoystickButton getDistance;
 	
 	//Camera buttons
 	private JoystickButton switchCamera;
@@ -114,13 +134,30 @@ public class OI {
 		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
 		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
-		
+
 		//suckIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
 		//pushOut.whenPressed (new ReleaseTote());
 		//angleIn.whenPressed (new AngleSuckerIn());
 		//angleOut.whenPressed (new AngleSuckerOut());
 		//stopCollection.whenPressed (new StopCollection());
 		//stopSuckerAngle.whenPressed(new StopSuckerAngle());
+		
+		//Ultrasonic buttons initialization
+		getDistance = new JoystickButton(chassisJoystick, 13);
+		getDistance.whenPressed(new TestUltrasonic());
+		
+		switchCamera = new JoystickButton(chassisJoystick, 7);
+	
+		//Autonomous 
+		autoDriveForward = new JoystickButton(chassisJoystick, 9);
+		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
+		autoSucker = new JoystickButton(chassisJoystick, 11);
+		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
+		
+		autoDriveForward.whenPressed(new AutoDriveForward());
+		autoFirstPickup.whenPressed(new AutoFirstPickup());
+		autoSucker.whenPressed(new AutoSucker()); 
+		autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
 		//Door Buttons
