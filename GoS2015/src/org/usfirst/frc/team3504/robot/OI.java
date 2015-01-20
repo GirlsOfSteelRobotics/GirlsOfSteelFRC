@@ -8,6 +8,8 @@ import org.usfirst.frc.team3504.robot.commands.AngleSuckerIn;
 import org.usfirst.frc.team3504.robot.commands.AngleSuckerOut;
 import org.usfirst.frc.team3504.robot.commands.CameraSwitch;
 import org.usfirst.frc.team3504.robot.commands.CollectTote;
+import org.usfirst.frc.team3504.robot.commands.DoorsIn;
+import org.usfirst.frc.team3504.robot.commands.DoorsOut;
 import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
@@ -55,8 +57,6 @@ public class OI {
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
 	
-	
-	
 	//Drive Buttons
 	private JoystickButton driveForward;
 	private JoystickButton driveBackward;
@@ -79,6 +79,7 @@ public class OI {
 	private JoystickButton doorIn;
 	private JoystickButton doorOut;
 	
+	//Camera buttons
 	private JoystickButton switchCamera;
 	
 	public OI()
@@ -97,12 +98,14 @@ public class OI {
 		driveRight.whileHeld(new DriveRight());
 		driveLeft.whileHeld(new DriveLeft());
 		
+		
 		//Lifter buttons initialization
 		liftUp = new JoystickButton(operatorJoystick, 5);	// FIXME: make sure this is for the correct Joystick and port
 		liftDown = new JoystickButton(operatorJoystick, 6);	// FIXME: make sure this is for the correct Joystick and port
 		
-	//	liftUp.whenPressed(new LiftUp());
-	//	liftDown.whenPressed(new LiftDown());
+		//liftUp.whenPressed(new LiftUp());		//Uncomment when the lifter is ready to be tested
+		//liftDown.whenPressed(new LiftDown());
+		
 		
 		//Sucker buttons initialization
 		suckIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
@@ -112,19 +115,26 @@ public class OI {
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
 		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 		
-		switchCamera = new JoystickButton(chassisJoystick, 7);
+		//suckIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
+		//pushOut.whenPressed (new ReleaseTote());
+		//angleIn.whenPressed (new AngleSuckerIn());
+		//angleOut.whenPressed (new AngleSuckerOut());
+		//stopCollection.whenPressed (new StopCollection());
+		//stopSuckerAngle.whenPressed(new StopSuckerAngle());
 		
-		switchCamera.whenPressed (new CameraSwitch());
-	//	suckIn.whenPressed (new CollectTote());
-	//	pushOut.whenPressed (new ReleaseTote());
-	//	angleIn.whenPressed (new AngleSuckerIn());
-	//	angleOut.whenPressed (new AngleSuckerOut());
-	//	stopCollection.whenPressed (new StopCollection());
-	//	stopSuckerAngle.whenPressed(new StopSuckerAngle());
 		
 		//Door Buttons
-		doorIn = new JoystickButton(chassisJoystick,7);
-		doorOut = new JoystickButton(chassisJoystick,8);
+		doorIn = new JoystickButton(operatorJoystick,7);	// FIXME: make sure this is for the correct Joystick and port
+		doorOut = new JoystickButton(operatorJoystick,8);	// FIXME: make sure this is for the correct Joystick and port
+		
+		//doorIn.whenPressed(new DoorsIn());	//Uncomment when the doors are ready to be tested
+		//doorOut.whenPressed(new DoorsOut());
+		
+		
+		//Camera buttons initialization
+		switchCamera = new JoystickButton(operatorJoystick, 7);	// FIXME: make sure this is for the correct Joystick and port
+		
+		switchCamera.whenPressed (new CameraSwitch());
 	}
 	
 	public Joystick getOperatorJoystick()
