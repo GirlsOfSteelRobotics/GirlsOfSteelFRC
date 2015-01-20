@@ -1,4 +1,7 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands.autonomous.plow;
+
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -7,6 +10,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoPlow extends CommandGroup {
     
+	//collects one container and three totes and takes them to the autozone
+	
     public  AutoPlow() {
     	addSequential(new AutoSucker());
     	addSequential(new Lifting()); 
@@ -26,7 +31,7 @@ public class AutoPlow extends CommandGroup {
     	//gets last tote assuming partner cleared third can  
     	
     	addSequential(new AutoTurnLeft());
-    	addSequential(new Lifting()); //just down 
+    	addSequential(new Release()); 
     	//turn into the autozone to get robot set
         
     	// Add Commands here:

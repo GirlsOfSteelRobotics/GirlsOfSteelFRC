@@ -1,17 +1,17 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands.autonomous.onetote;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Authors: Alexa, Corinne, Kyra, Sarah
+ * Authors: Alexa, Corinne, Sarah
  */
-public class AutoTurnLeft extends Command {
-
-    public AutoTurnLeft() {
-        requires(Robot.chassis); 
-    	// Use requires() here to declare subsystem dependencies
+public class AutoTurnRight extends Command {
+	
+    public AutoTurnRight() {
+    	requires(Robot.chassis); 
+        // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
@@ -22,25 +22,25 @@ public class AutoTurnLeft extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveForward(.5);
+    	Robot.chassis.autoDriveForward(-.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if  (Robot.chassis.getFrontLeftEncoderDistance() == 108)
-        	return true;
+    	if (Robot.chassis.getFrontLeftEncoderDistance() == 108)
+    		return false;
     	else 
-    		return false; 
+    		return true; 
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.chassis.stop();
+    	Robot.chassis.stop(); 
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	end (); 
     }
 }

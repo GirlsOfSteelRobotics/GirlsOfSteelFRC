@@ -1,34 +1,24 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands.autonomous.onetote;
+
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoSucker;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Authors: Alexa, Corinne, Sarah
  */
-public class AutoUltrasonic extends CommandGroup {
+public class AutoOneTote extends CommandGroup {
     
-    public  AutoUltrasonic() {
-    	addSequential(new AutoSucker());
-    	addSequential(new Lifting()); 
-    	addSequential(new AutoFirstPickup());
+    //Collects one tote/container and takes it to the auto zone
+	
+	public  AutoOneTote() {
     	addSequential(new AutoSucker());
     	addSequential(new Lifting());
-     	//used to get first can and tote
-
-    	addSequential(new AutoSucker());
-    	addSequential(new AutoDriveForward());
-    	addSequential(new Lifting()); 
-    	//gets middle tote assuming partner cleared second can
-    	
-    	addSequential(new AutoSucker());
-    	addSequential(new AutoDriveForward());
-    	addSequential(new Lifting());
-    	//gets last tote assuming partner cleared third can  
-    	
-    	addSequential(new AutoTurnLeft());
-    	addSequential(new Lifting()); //just down 
-    	
-    	
+    	addSequential(new AutoTurnRight());
+    	addSequential(new Release()); 
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
