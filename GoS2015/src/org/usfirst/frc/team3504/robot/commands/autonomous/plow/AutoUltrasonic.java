@@ -1,18 +1,15 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands.autonomous.plow;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoTurnLeft;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *  Authors: Alexa, Corinne, Kyra, Sarah
+ * Authors: Alexa, Corinne, Sarah
  */
-public class AutoPlow extends CommandGroup {
+public class AutoUltrasonic extends CommandGroup {
     
-    public  AutoPlow() {
-    	
+    public  AutoUltrasonic() {
     	addSequential(new AutoSucker());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());
@@ -20,21 +17,22 @@ public class AutoPlow extends CommandGroup {
     	addSequential(new Lifting());
      	//used to get first can and tote
 
-    	addParallel(new AutoSucker());
+    	addSequential(new AutoSucker());
     	addSequential(new AutoDriveForward());
     	addSequential(new Lifting()); 
     	//gets middle tote assuming partner cleared second can
     	
-    	addParallel(new AutoSucker());
+    	addSequential(new AutoSucker());
     	addSequential(new AutoDriveForward());
     	addSequential(new Lifting());
     	//gets last tote assuming partner cleared third can  
     	
     	addSequential(new AutoTurnLeft());
     	addSequential(new Lifting()); //just down 
-    	//turn into the autozone to get robot set
-        
-    	// Add Commands here:
+    	
+    	
+    	
+        // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.

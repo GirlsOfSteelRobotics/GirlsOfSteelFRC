@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands.autonomous.plow;
 
 import edu.wpi.first.wpilibj.command.Command;
 
