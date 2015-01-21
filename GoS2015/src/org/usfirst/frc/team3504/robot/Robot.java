@@ -19,6 +19,7 @@ import org.usfirst.frc.team3504.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
+	//Add pusher
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
 	public static final Chassis chassis = new Chassis();
 	public static final Camera camera = new Camera();
@@ -29,7 +30,6 @@ public class Robot extends IterativeRobot {
 	public static final Doors doors = null;//new Door();
 	public static final UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
 	public static OI oi;
-	CameraServer server; 
 
     Command autonomousCommand;
 

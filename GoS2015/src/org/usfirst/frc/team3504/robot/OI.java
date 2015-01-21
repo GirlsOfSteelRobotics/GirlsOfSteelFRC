@@ -1,32 +1,21 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.CameraSwitch;
+import org.usfirst.frc.team3504.robot.commands.DriveBackward;
+import org.usfirst.frc.team3504.robot.commands.DriveForward;
+import org.usfirst.frc.team3504.robot.commands.DriveLeft;
+import org.usfirst.frc.team3504.robot.commands.DriveRight;
+import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
+//github.com/GirlsOfSteelRobotics/2015season.git
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoFirstPickup;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoTurnLeft;
+
 import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import org.usfirst.frc.team3504.robot.commands.AngleSuckerIn;
-import org.usfirst.frc.team3504.robot.commands.AngleSuckerOut;
-import org.usfirst.frc.team3504.robot.commands.CameraSwitch;
-import org.usfirst.frc.team3504.robot.commands.CollectTote;
-import org.usfirst.frc.team3504.robot.commands.DoorsIn;
-import org.usfirst.frc.team3504.robot.commands.DoorsOut;
-import org.usfirst.frc.team3504.robot.commands.DriveBackward;
-import org.usfirst.frc.team3504.robot.commands.DriveForward;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3504.robot.commands.ReleaseTote;
-import org.usfirst.frc.team3504.robot.commands.DriveLeft;
-import org.usfirst.frc.team3504.robot.commands.DriveRight;
-import org.usfirst.frc.team3504.robot.commands.LiftDown;
-import org.usfirst.frc.team3504.robot.commands.LiftUp;
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3504.robot.commands.StopCollection;
-import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
-import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.*;
-//github.com/GirlsOfSteelRobotics/2015season.git
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -102,6 +91,11 @@ public class OI {
 	//Camera buttons
 	private JoystickButton switchCamera;
 	
+	/*
+	 * Add pusher buttons
+	 * Add Triangle pegs buttons (fingers)
+	 */
+	
 	public OI()
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
@@ -142,13 +136,15 @@ public class OI {
 		//stopCollection.whenPressed (new StopCollection());
 		//stopSuckerAngle.whenPressed(new StopSuckerAngle());
 		
+		
 		//Ultrasonic buttons initialization
 		getDistance = new JoystickButton(chassisJoystick, 13);
 		getDistance.whenPressed(new TestUltrasonic());
 		
 		switchCamera = new JoystickButton(chassisJoystick, 7);
 	
-		//Autonomous 
+		
+		//Autonomous
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoSucker = new JoystickButton(chassisJoystick, 11);
