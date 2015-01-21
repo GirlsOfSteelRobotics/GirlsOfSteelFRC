@@ -5,7 +5,9 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Alexa Sarah Corinne Kyra
+ * turn sucker on for 1 second and when that second is over it turns off
+ * 
  */
 public class AutoSucker extends Command {
 	//sucker will run constantly through the AutoPlow command
@@ -24,7 +26,7 @@ public class AutoSucker extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.sucker.suckToteIn(); //if you need angle add it 
+    	Robot.sucker.suckToteIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()
