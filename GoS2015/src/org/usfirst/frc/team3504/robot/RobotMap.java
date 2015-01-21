@@ -25,7 +25,7 @@ public class RobotMap {
     public static final int REAR_LEFT_WHEEL_CHANNEL	= 1;
     public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
     public static final int REAR_RIGHT_WHEEL_CHANNEL = 2;
-    public static final int GYRO_PORT = 0; //Gyro
+    public static final int GYRO_PORT = 23; //Gyro
     public static final int FRONT_LEFT_WHEEL_ENCODER_A = 6; //Encoders
     public static final int FRONT_LEFT_WHEEL_ENCODER_B = 7;
     public static final int REAR_LEFT_WHEEL_ENCODER_A = 4;
@@ -34,13 +34,15 @@ public class RobotMap {
     public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 1;
     public static final int REAR_RIGHT_WHEEL_ENCODER_A = 2;
     public static final int REAR_RIGHT_WHEEL_ENCODER_B = 3;
-    public static final int ULTRASONICSENSOR_PING_CHANNEL = 10;
-    public static final int ULTRASONICSENSOR_ECHO_CHANNEL = 11;
+    
+    //Ultrasonic sensor ports
+    public static final int ULTRASONICSENSOR_PING_CHANNEL = 9;
+    public static final int ULTRASONICSENSOR_ECHO_CHANNEL = 4;
     
     //Forklift ports
-    public static final int FORKLIFT_CHANNEL = 4;
-    public static final int LEFT_FORKLIFT_LIMIT = 8;
-    public static final int RIGHT_FORKLIFT_LIMIT = 9;
+    public static final int FORKLIFT_CHANNEL = 4;  //Motors
+    public static final int LEFT_FORKLIFT_LIMIT = 8;  //Limit Switches
+    public static final int RIGHT_FORKLIFT_LIMIT = 22;
     
     //Peg ports
     public static final int RIGHT_PEG_TALON = 5; //Motors
@@ -55,20 +57,19 @@ public class RobotMap {
     //Claw ports
     public static final int LEFT_CLAW_CHANNEL = 7; //Motors
     public static final int RIGHT_CLAW_CHANNEL = 8;
-    public static final int LEFT_CLAW_LIMIT = 16;
+    public static final int LEFT_CLAW_LIMIT = 16;  //Limit Switches
     public static final int RIGHT_CLAW_LIMIT = 17;
-    
 
     //Sucker ports
     public static final int RIGHT_SUCKER_WHEEL = 9; //Motors
     public static final int LEFT_SUCKER_WHEEL = 10;
     public static final int RIGHT_SUCKER_ANGLE_WHEEL = 11;
     public static final int LEFT_SUCKER_ANGLE_WHEEL = 12;
-    public static final int LEFT_SUCKER_LIMIT = 18;
+    public static final int LEFT_SUCKER_LIMIT = 18;  //Limit Switches
     public static final int RIGHT_SUCKER_LIMIT = 19;
     
     //Door ports
-    public static final int LEFT_DOOR_CHANNEL = 20;
+    public static final int LEFT_DOOR_CHANNEL = 20;  //Motors
     public static final int RIGHT_DOOR_CHANNEL = 21;
     
 }

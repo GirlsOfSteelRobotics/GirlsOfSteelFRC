@@ -1,50 +1,44 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous.plow;
+package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Authors: Alexa, Corinne, Sarah
- * found distance between first container and tote aka diameter of container 
- * and make robot go that distance
- * 
+ * @author Arushi, Isabella
  */
-public class AutoFirstPickup extends Command {
+public class TestUltrasonic extends Command {
 
-    public AutoFirstPickup() {
-    	requires(Robot.chassis); 
+	
+    public TestUltrasonic() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.ultrasonicsensor);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoders(); 
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveSideways(.5);
+    	System.out.println(Robot.ultrasonicsensor.getDistanceInches());
+    	//SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if  (Robot.chassis.getFrontLeftEncoderDistance() == 18) 
-    		return true;
-    	else 
-    		return false; 
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.chassis.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
-    
 }
