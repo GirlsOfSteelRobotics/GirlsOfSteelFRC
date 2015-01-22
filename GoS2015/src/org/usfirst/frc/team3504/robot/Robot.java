@@ -19,6 +19,7 @@ import org.usfirst.frc.team3504.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
+	//Add pusher
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
 	public static final Chassis chassis = new Chassis();
 	public static final Camera camera = new Camera();
@@ -31,7 +32,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	CameraServer server; 
 	public static final Pusher pusher = null;//new Pusher();
-
     Command autonomousCommand;
 
     /**
@@ -91,11 +91,5 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
-    
-  /**  public void Cam1() {
-        server = CameraServer.getInstance();
-        server.setQuality(50);
-        server.startAutomaticCapture("cam1");
-    } **/
     
 }

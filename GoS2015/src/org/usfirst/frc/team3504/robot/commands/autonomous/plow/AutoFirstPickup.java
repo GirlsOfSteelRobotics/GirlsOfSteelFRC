@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Authors: Alexa, Corinne, Sarah
+ * found distance between first container and tote aka diameter of container 
+ * and make robot go that distance
+ * 
  */
 public class AutoFirstPickup extends Command {
 

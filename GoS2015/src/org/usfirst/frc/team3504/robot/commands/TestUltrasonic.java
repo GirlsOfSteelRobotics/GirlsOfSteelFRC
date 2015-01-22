@@ -24,7 +24,8 @@ public class TestUltrasonic extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
+    	System.out.println(Robot.ultrasonicsensor.getDistanceInches());
+    	//SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
     }
 
     // Make this return true when this Command no longer needs to run execute()
