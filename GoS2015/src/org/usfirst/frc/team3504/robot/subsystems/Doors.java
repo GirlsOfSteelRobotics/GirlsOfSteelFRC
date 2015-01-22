@@ -11,8 +11,8 @@ public class Doors extends Subsystem{
 	private Talon rightTalon;
 	
 	public Doors() {
-		leftTalon = new Talon(RobotMap.LEFT_DOOR_CHANNEL);
-		rightTalon = new Talon(RobotMap.RIGHT_DOOR_CHANNEL);
+	//	leftTalon = new Talon(RobotMap.LEFT_DOOR_CHANNEL);
+	//	rightTalon = new Talon(RobotMap.RIGHT_DOOR_CHANNEL);
 	}
 
 	public void doorsIn() {

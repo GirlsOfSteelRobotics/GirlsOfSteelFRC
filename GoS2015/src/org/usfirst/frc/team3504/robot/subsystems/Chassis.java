@@ -65,7 +65,7 @@ public class Chassis extends Subsystem {
     	
     	
     	
-        robotGyro = new Gyro(RobotMap.GYRO_PORT);
+   //     robotGyro = new Gyro(RobotMap.GYRO_PORT);
 	}
 	
 	public double twistDeadZone(double rawVal)

@@ -19,10 +19,10 @@ public class ClawArms extends Subsystem {
 	
 	
 	public ClawArms () {
-		leftTalon = new Talon(RobotMap.LEFT_CLAW_CHANNEL);
-		rightTalon = new Talon(RobotMap.RIGHT_CLAW_CHANNEL); 
-		leftLimit = new DigitalInput(RobotMap.LEFT_CLAW_LIMIT);
-		rightLimit = new DigitalInput(RobotMap.RIGHT_CLAW_LIMIT);
+	//	leftTalon = new Talon(RobotMap.LEFT_CLAW_CHANNEL);
+	//	rightTalon = new Talon(RobotMap.RIGHT_CLAW_CHANNEL); 
+	//	leftLimit = new DigitalInput(RobotMap.LEFT_CLAW_LIMIT);
+	//	rightLimit = new DigitalInput(RobotMap.RIGHT_CLAW_LIMIT);
 	}
 	
 	public void moveIn()

@@ -30,12 +30,14 @@ public class TrianglePegs extends Subsystem {
 	
 	public TrianglePegs()
 	{
+		/*
 		LeftEncoder = new Encoder(RobotMap.LEFT_PEG_ENCODER_A, RobotMap.LEFT_PEG_ENCODER_B);
 		RightEncoder = new Encoder(RobotMap.RIGHT_PEG_ENCODER_A, RobotMap.RIGHT_PEG_ENCODER_B);
 		LeftTalon = new Talon(RobotMap.LEFT_PEG_TALON);
 		RightTalon = new Talon(RobotMap.RIGHT_PEG_TALON);
 		LeftLimit = new DigitalInput(RobotMap.LEFT_PEG_LIMIT);
 		RightLimit = new DigitalInput(RobotMap.RIGHT_PEG_LIMIT);
+		**/
 	}
 	
 	public void pegDown()

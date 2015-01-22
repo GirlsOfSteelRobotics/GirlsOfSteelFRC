@@ -11,7 +11,11 @@ import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-
+import org.usfirst.frc.team3504.robot.commands.StopCollection;
+import org.usfirst.frc.team3504.robot.commands.StopSuckerAngle;
+import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.*;
+//github.com/GirlsOfSteelRobotics/2015season.git
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -81,6 +85,9 @@ public class OI {
 	private JoystickButton doorIn;
 	private JoystickButton doorOut;
 	
+	//Ultrasonic buttons
+	private JoystickButton getDistance;
+	
 	private JoystickButton switchCamera;
 	
 	public OI()
@@ -114,17 +121,21 @@ public class OI {
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
 		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 		
+		//Ultrasonic buttons initialization
+		getDistance = new JoystickButton(chassisJoystick, 12);
+		getDistance.whenPressed(new TestUltrasonic());
+		
 		switchCamera = new JoystickButton(chassisJoystick, 7);
 	
 		//Autonomous 
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoSucker = new JoystickButton(chassisJoystick, 11);
-		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
+		//autoTurnLeft = new JoystickButton(chassisJoystick, 12);
 		
 	//	autoDriveForward.whenPressed(new AutoDriveForward());
 	//	autoFirstPickup.whenPressed(new AutoFirstPickup());
-		autoSucker.whenPressed(new AutoSucker()); 
+	//	autoSucker.whenPressed(new AutoSucker()); 
 	//	autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
@@ -137,8 +148,8 @@ public class OI {
 	//	stopSuckerAngle.whenPressed(new StopSuckerAngle());
 		
 		//Door Buttons
-		doorIn = new JoystickButton(chassisJoystick,7);
-		doorOut = new JoystickButton(chassisJoystick,8);
+		//doorIn = new JoystickButton(chassisJoystick,7);
+		//doorOut = new JoystickButton(chassisJoystick,8);
 	}
 	
 	public Joystick getOperatorJoystick()

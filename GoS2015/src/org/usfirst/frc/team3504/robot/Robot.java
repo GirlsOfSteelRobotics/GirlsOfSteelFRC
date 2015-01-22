@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	public static final UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
 	public static OI oi;
 	CameraServer server; 
-	public static final Pusher pusher = new Pusher();
+	public static final Pusher pusher = null;//new Pusher();
 
     Command autonomousCommand;
 

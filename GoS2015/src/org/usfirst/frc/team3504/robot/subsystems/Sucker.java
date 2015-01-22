@@ -23,12 +23,15 @@ public class Sucker extends Subsystem {
 	
 	public Sucker()                //this is the constructor
 	{
+		/*
 		rightSucker = new Talon(RobotMap.RIGHT_SUCKER_WHEEL);
 		leftSucker = new Talon(RobotMap.LEFT_SUCKER_WHEEL);
 		suckerAngleRight = new Talon(RobotMap.RIGHT_SUCKER_ANGLE_WHEEL);
 		suckerAngleLeft = new Talon(RobotMap.LEFT_SUCKER_ANGLE_WHEEL);
 		leftLimit = new DigitalInput(RobotMap.LEFT_SUCKER_LIMIT);
 		rightLimit = new DigitalInput(RobotMap.RIGHT_SUCKER_LIMIT);
+		
+		**/
 	}
 	
 	public void suckToteIn (){              //creating method suckToteIn which suck a tote inside the robot
