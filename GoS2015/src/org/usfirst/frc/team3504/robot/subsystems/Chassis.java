@@ -101,9 +101,9 @@ public class Chassis extends Subsystem {
 		gosDrive.mecanumDrive_Cartesian(0, -((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0); //-.5
 	}
 
-	public void driveBackward(Joystick stick)
+	public void driveBackward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, ((stick.getThrottle() + 1) / 2), 0, 0); //.5
+		gosDrive.mecanumDrive_Cartesian(0, ((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0); //.5
 	}
 	
 	public void driveRight()
@@ -111,9 +111,9 @@ public class Chassis extends Subsystem {
 		gosDrive.mecanumDrive_Cartesian(((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0, 0); //.5
 	}
 	
-	public void driveLeft(Joystick stick)
+	public void driveLeft()
 	{
-		gosDrive.mecanumDrive_Cartesian(-((stick.getThrottle() + 1) / 2), 0, 0,0); //.-5
+		gosDrive.mecanumDrive_Cartesian(-((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0,0); //.-5
 		
 	}
 	
