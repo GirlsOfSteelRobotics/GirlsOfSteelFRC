@@ -1,4 +1,7 @@
 package org.usfirst.frc.team3504.robot;
+
+import edu.wpi.first.wpilibj.CANTalon;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -21,10 +24,10 @@ public class RobotMap {
 	public static final int CHASSIS_JOYSTICK = 0;
 	
 	//Drive ports
-	public static final int FRONT_LEFT_WHEEL_CHANNEL = 0; //Motors
-    public static final int REAR_LEFT_WHEEL_CHANNEL	= 1;
-    public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
-    public static final int REAR_RIGHT_WHEEL_CHANNEL = 2;
+	//public static final int FRONT_LEFT_WHEEL_CHANNEL = 0; //Motors
+    //public static final int REAR_LEFT_WHEEL_CHANNEL	= 1;
+    //public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
+    //public static final int REAR_RIGHT_WHEEL_CHANNEL = 2;
     public static final int GYRO_PORT = 23; //Gyro
     public static final int FRONT_LEFT_WHEEL_ENCODER_A = 6; //Encoders
     public static final int FRONT_LEFT_WHEEL_ENCODER_B = 7;
@@ -72,4 +75,22 @@ public class RobotMap {
     public static final int LEFT_DOOR_CHANNEL = 20;  //Motors
     public static final int RIGHT_DOOR_CHANNEL = 21;
     
+    //CANTalons
+    public static CANTalon rightFrontWheel0;
+    public static CANTalon leftFrontWheel2;
+    public static CANTalon rightBackWheel1;
+    public static CANTalon leftBackWheel3;
+    
+
+static void init() {
+	rightFrontWheel0 = new CANTalon(0);
+	leftFrontWheel2 = new CANTalon(2);
+	rightBackWheel1 = new CANTalon(1);
+	leftBackWheel3 = new CANTalon(3);
+	
+	leftBackWheel3.changeControlMode(CANTalon.ControlMode.Follower);
+	rightBackWheel1.changeControlMode(CANTalon.ControlMode.Follower);
+	leftBackWheel3.set(2);
+	rightBackWheel1.set(0);
+}
 }
