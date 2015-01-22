@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
@@ -95,9 +96,9 @@ public class Chassis extends Subsystem {
 	}
 	
 	//TODO; move Joystick to subsystem
-	public void driveForward(Joystick stick)
+	public void driveForward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, -((stick.getThrottle() + 1) / 2), 0, 0); //-.5
+		gosDrive.mecanumDrive_Cartesian(0, -((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0); //-.5
 	}
 
 	public void driveBackward(Joystick stick)
@@ -105,9 +106,9 @@ public class Chassis extends Subsystem {
 		gosDrive.mecanumDrive_Cartesian(0, ((stick.getThrottle() + 1) / 2), 0, 0); //.5
 	}
 	
-	public void driveRight(Joystick stick)
+	public void driveRight()
 	{
-		gosDrive.mecanumDrive_Cartesian(((stick.getThrottle() + 1) / 2), 0, 0, 0); //.5
+		gosDrive.mecanumDrive_Cartesian(((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0, 0); //.5
 	}
 	
 	public void driveLeft(Joystick stick)
