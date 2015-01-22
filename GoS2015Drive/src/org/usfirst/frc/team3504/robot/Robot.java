@@ -23,7 +23,6 @@ public class Robot extends IterativeRobot {
 	//Add pusher
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
 	public static final Chassis chassis = new Chassis();
-	public static final Camera camera = new Camera();
 	public static OI oi;
 
     Command autonomousCommand;
