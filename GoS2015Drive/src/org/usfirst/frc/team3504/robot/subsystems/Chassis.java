@@ -64,9 +64,7 @@ public class Chassis extends Subsystem {
     	gosDrive.setExpiration(0.1);
     	gosDrive.setSafetyEnabled(true);
     	
-    	
-    	
-        //robotGyro = new Gyro(RobotMap.GYRO_PORT);
+    	robotGyro = new Gyro(RobotMap.GYRO_PORT);
 	}
 	
 	public double twistDeadZone(double rawVal)
@@ -79,98 +77,12 @@ public class Chassis extends Subsystem {
 	
 	public void moveByJoystick(Joystick stick)
 	{
-		//if(stick.getMagnitude() > 0.02)
-		gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-		//gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), 0);//robotGyro.getAngle());
-		
-	}
-	
-	public void autoDriveSideways(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 180, 0);//figure out what the angle should be
-	}
-	
-	public void autoDriveForward(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 90, 0);
-	}
-	
-	//TODO; move Joystick to subsystem
-	public void driveForward(Joystick stick)
-	{
-		gosDrive.mecanumDrive_Cartesian(0, -((stick.getThrottle() + 1) / 2), 0, 0); //-.5
-	}
-
-	public void driveBackward(Joystick stick)
-	{
-		gosDrive.mecanumDrive_Cartesian(0, ((stick.getThrottle() + 1) / 2), 0, 0); //.5
-	}
-	
-	public void driveRight(Joystick stick)
-	{
-		gosDrive.mecanumDrive_Cartesian(((stick.getThrottle() + 1) / 2), 0, 0, 0); //.5
-	}
-	
-	public void driveLeft(Joystick stick)
-	{
-		gosDrive.mecanumDrive_Cartesian(-((stick.getThrottle() + 1) / 2), 0, 0,0); //.-5
-		
-	}
-	
-	public void driveInCircle()
-	{
-		gosDrive.mecanumDrive_Cartesian(75, 25, 0, robotGyro.getAngle()); //May be equal -> change x and y vals
+		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), 0);
 	}
 	
 	public void stop()
 	{
 		gosDrive.stopMotor();
-	}
-	
-	public double getGyroAngle()
-	{
-		return robotGyro.getAngle();
-	}
-	
-	public void resetEncoders(){
-		frontLeftEncoder.reset();
-		frontRightEncoder.reset();
-		rearLeftEncoder.reset();
-		rearRightEncoder.reset();
-	}
-	
-	public double getFrontLeftEncoderRate()
-	{
-		return frontLeftEncoder.getRate();
-	}
-	
-	public double getFrontLeftEncoderDistance(){
-		return frontLeftEncoder.getDistance();
-	}
-	
-	public double getRearLeftEncoderRate()
-	{
-		return rearLeftEncoder.getRate();
-	}
-	
-	public double getRearLeftEncoderDistance(){
-		return rearLeftEncoder.getDistance();
-	}
-	
-	public double getFrontRightEncoderRate()
-	{
-		return frontRightEncoder.getRate();
-	}
-	
-	public double getFrontRightEncoderDistance(){
-		return frontRightEncoder.getDistance();
-	}
-	
-	public double getRearRightEncoderRate()
-	{
-		return rearRightEncoder.getRate();
-	}
-	
-	public double getRearRightEncoderDistance(){
-		return rearRightEncoder.getDistance();
 	}
 	
     public void initDefaultCommand() {
