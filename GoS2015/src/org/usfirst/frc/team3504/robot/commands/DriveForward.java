@@ -16,7 +16,7 @@ public class DriveForward extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.chassis.driveForward(Robot.oi.getChassisJoystick());
+		Robot.chassis.driveForward();
 	}
 
 	@Override

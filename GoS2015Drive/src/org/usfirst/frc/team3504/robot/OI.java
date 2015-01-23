@@ -1,11 +1,6 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.DriveBackward;
-import org.usfirst.frc.team3504.robot.commands.DriveForward;
-import org.usfirst.frc.team3504.robot.commands.DriveLeft;
-import org.usfirst.frc.team3504.robot.commands.DriveRight;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -42,32 +37,10 @@ public class OI {
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
 	
-	//Drive Buttons
-	private JoystickButton driveForward;
-	private JoystickButton driveBackward;
-	private JoystickButton driveRight;
-	private JoystickButton driveLeft;
-	
-	/*
-	 * Add pusher buttons
-	 * Add Triangle pegs buttons (fingers)
-	 */
-	
 	public OI()
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
-				
-		//Drive buttons initialization
-		driveForward = new JoystickButton(chassisJoystick, 5); 	// FIXME: fix port
-		driveBackward = new JoystickButton(chassisJoystick, 6); // FIXME: fix port
-		driveRight = new JoystickButton(chassisJoystick, 4); 	// FIXME: fix port
-		driveLeft = new JoystickButton(chassisJoystick, 3); 	// FIXME: fix port
-		
-		driveForward.whileHeld(new DriveForward());
-		driveBackward.whileHeld(new DriveBackward());
-		driveRight.whileHeld(new DriveRight());
-		driveLeft.whileHeld(new DriveLeft());
 	}
 	
 	public Joystick getOperatorJoystick()
