@@ -2,18 +2,17 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /*
  * 
  */
-public class ClawArmIn extends Command {
+public class WedgeOut extends Command {
 
-    public ClawArmIn() {
+    public WedgeOut() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.clawArms);
+    	requires(Robot.wedges); 
     }
 
     // Called just before this Command runs the first time
@@ -21,19 +20,19 @@ public class ClawArmIn extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute(){
-    	Robot.clawArms.moveIn(); 
-    }  
+    protected void execute() {
+    	Robot.wedges.moveOut();
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	Robot.clawArms.getLimit();
-    	return false; //Add limit switch implementation
+    	Robot.wedges.getLimit();
+        return false; //Limit switches
     }
-    
+
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.clawArms.stop();
+    	 Robot.wedges.stop();
     }
 
     // Called when another command which requires one or more of the same

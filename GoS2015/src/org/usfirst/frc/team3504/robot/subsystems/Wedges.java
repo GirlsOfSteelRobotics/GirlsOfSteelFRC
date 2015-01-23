@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * @authors Alexa, Corinne, Sarah
  */
-public class ClawArms extends Subsystem {
+public class Wedges extends Subsystem {
     
 	private Talon leftTalon;
 	private Talon rightTalon;
@@ -18,11 +18,11 @@ public class ClawArms extends Subsystem {
 	private DigitalInput rightLimit;
 	
 	
-	public ClawArms () {
-	//	leftTalon = new Talon(RobotMap.LEFT_CLAW_CHANNEL);
-	//	rightTalon = new Talon(RobotMap.RIGHT_CLAW_CHANNEL); 
-	//	leftLimit = new DigitalInput(RobotMap.LEFT_CLAW_LIMIT);
-	//	rightLimit = new DigitalInput(RobotMap.RIGHT_CLAW_LIMIT);
+	public Wedges () {
+	//	leftTalon = new Talon(RobotMap.LEFT_WEDGE_CHANNEL);
+	//	rightTalon = new Talon(RobotMap.RIGHT_WEDGE_CHANNEL); 
+	//	leftLimit = new DigitalInput(RobotMap.LEFT_WEDGE_LIMIT);
+	//	rightLimit = new DigitalInput(RobotMap.RIGHT_WEDGE_LIMIT);
 	}
 	
 	public void moveIn()

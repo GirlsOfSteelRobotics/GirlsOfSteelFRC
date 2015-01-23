@@ -1,17 +1,19 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous.plow;
+package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Authors: Alexa, Corinne, Sarah
+ * Alexa Sarah Corinne Kyra
+ * turn sucker on for 1 second and when that second is over it turns off
+ * 
  */
-public class AutoSucker extends Command {
+public class AutoCollector extends Command {
 	//sucker will run constantly through the AutoPlow command
 
-    public AutoSucker() {
-       requires(Robot.sucker);
+    public AutoCollector() {
+       requires(Robot.collector);
     	// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
    
@@ -24,17 +26,17 @@ public class AutoSucker extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.sucker.suckToteIn(); //if you need angle add it 
+    	Robot.collector.collectorToteIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return isTimedOut();
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.sucker.stopSucking();
+    	Robot.collector.stopCollecting();
     }
 
     // Called when another command which requires one or more of the same

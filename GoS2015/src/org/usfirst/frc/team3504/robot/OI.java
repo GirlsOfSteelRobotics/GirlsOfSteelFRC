@@ -69,13 +69,13 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	
-	//Sucker buttons
-	private JoystickButton suckIn;
+	//Collector buttons
+	private JoystickButton collectIn;
 	private JoystickButton pushOut;
 	private JoystickButton angleIn;
 	private JoystickButton angleOut;
 	private JoystickButton stopCollection;
-	private JoystickButton stopSuckerAngle;
+	private JoystickButton stopCollectorAngle;
 	
 	//Door buttons
 	private JoystickButton doorIn;
@@ -89,7 +89,7 @@ public class OI {
 	
 	/*
 	 * Add pusher buttons
-	 * Add Triangle pegs buttons (fingers)
+	 * Add Finger buttons (fingers)
 	 */
 	
 	public OI()
@@ -117,20 +117,20 @@ public class OI {
 		//liftDown.whenPressed(new LiftDown());
 		
 		
-		//Sucker buttons initialization
-		suckIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
+		//collector buttons initialization
+		collectIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
 		pushOut = new JoystickButton(operatorJoystick, 8);  	  	// FIXME: make sure this is for the correct Joystick and port
 		angleIn = new JoystickButton(operatorJoystick, 9);    		// FIXME: make sure this is for the correct Joystick and port
 		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
-		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
+		stopCollectorAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 
-		//suckIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
+		//collectorIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
 		//pushOut.whenPressed (new ReleaseTote());
 		//angleIn.whenPressed (new AngleSuckerIn());
 		//angleOut.whenPressed (new AngleSuckerOut());
 		//stopCollection.whenPressed (new StopCollection());
-		//stopSuckerAngle.whenPressed(new StopSuckerAngle());
+		//stopCollectorAngle.whenPressed(new StopSuckerAngle());
 		
 		
 		//Ultrasonic buttons initialization
