@@ -10,19 +10,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoUltrasonic extends CommandGroup {
     
     public  AutoUltrasonic() {
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new Lifting());
      	//used to get first can and tote
 
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new AutoDriveForward());
     	addSequential(new Lifting()); 
     	//gets middle tote assuming partner cleared second can
     	
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new AutoDriveForward());
     	addSequential(new Lifting());
     	//gets last tote assuming partner cleared third can  

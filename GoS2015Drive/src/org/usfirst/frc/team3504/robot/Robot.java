@@ -1,14 +1,14 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.CameraServer;
-import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,18 +19,11 @@ import org.usfirst.frc.team3504.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
+	//Add pusher
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
 	public static final Chassis chassis = new Chassis();
-	public static final Camera camera = new Camera();
-	public static final Collector collector = null; //= new Sucker();
-	public static final Fingers fingers = null;//= new TrianglePegs();
-	public static final Wedges wedges = null;//= new ClawArms();
-	public static final Forklift forklift = null;//new Forklift();
-	public static final Doors doors = null;//new Door();
-	public static final UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
 	public static OI oi;
-	CameraServer server; 
-	public static final Pusher pusher = null;//new Pusher();
+
     Command autonomousCommand;
 
     /**

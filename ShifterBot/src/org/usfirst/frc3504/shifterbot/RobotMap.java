@@ -12,8 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * floating around.
  */
 public class RobotMap {
-	public static SpeedController driveSystemDriveLeft;
-	public static SpeedController driveSystemDriveRight;
+	public static CANTalon driveSystemDriveLeft0;
+	public static CANTalon driveSystemDriveRight0;
+	public static CANTalon driveSystemDriveLeft1;
+	public static CANTalon driveSystemDriveRight1;
+	public static CANTalon driveSystemDriveLeft2;
+	public static CANTalon driveSystemDriveRight2;
 	public static RobotDrive driveSystemRobotDrive2;
 	public static SpeedController accessoryMotorsAccessoryLeft;
 	public static SpeedController accessoryMotorsAccessoryRight;
@@ -26,13 +30,42 @@ public class RobotMap {
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
 
  static void init() {
-		driveSystemDriveLeft = new Talon(0);
-		LiveWindow.addActuator("Drive System", "Drive Left", (Talon) driveSystemDriveLeft);
+		driveSystemDriveLeft0 = new CANTalon(0);
+		// LiveWindow.addActuator("Drive System", "Drive Left0",
+		// driveSystemDriveLeft0);
 
-		driveSystemDriveRight = new Talon(1);
-		LiveWindow.addActuator("Drive System", "Drive Right", (Talon) driveSystemDriveRight);
+		driveSystemDriveRight0 = new CANTalon(3);
+		// LiveWindow.addActuator("Drive System", "Drive Right0",
+		// driveSystemDriveRight0);
 
-		driveSystemRobotDrive2 = new RobotDrive(driveSystemDriveLeft, driveSystemDriveRight);
+		driveSystemDriveLeft1 = new CANTalon(1);
+		// LiveWindow.addActuator("Drive System", "Drive Left1",
+		// driveSystemDriveLeft1);
+
+		driveSystemDriveRight1 = new CANTalon(4);
+		// LiveWindow.addActuator("Drive System", "Drive Right1",
+		// driveSystemDriveRight1);
+
+		driveSystemDriveLeft2 = new CANTalon(2);
+		// LiveWindow.addActuator("Drive System", "Drive Left2",
+		// driveSystemDriveLeft2);
+
+		driveSystemDriveRight2 = new CANTalon(5);
+		// LiveWindow.addActuator("Drive System", "Drive Right2",
+		// driveSystemDriveRight2);
+
+		// Follower: The m_motor will run at the same throttle as the specified
+		// other talon.
+		driveSystemDriveLeft1.changeControlMode(CANTalon.ControlMode.Follower);
+		driveSystemDriveLeft2.changeControlMode(CANTalon.ControlMode.Follower);
+		driveSystemDriveRight1.changeControlMode(CANTalon.ControlMode.Follower);
+		driveSystemDriveRight2.changeControlMode(CANTalon.ControlMode.Follower);
+		driveSystemDriveLeft1.set(0);
+		driveSystemDriveRight1.set(3);
+		driveSystemDriveLeft2.set(0);
+		driveSystemDriveRight2.set(3);
+	    
+		driveSystemRobotDrive2 = new RobotDrive(driveSystemDriveLeft0, driveSystemDriveRight0);
 
 		driveSystemRobotDrive2.setSafetyEnabled(true);
 		driveSystemRobotDrive2.setExpiration(0.1);

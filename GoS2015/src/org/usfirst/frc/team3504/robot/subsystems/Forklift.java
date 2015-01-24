@@ -20,10 +20,10 @@ public class Forklift extends Subsystem {
 	
 	
 	public Forklift() {
-		liftTalon = new Talon(RobotMap.FORKLIFT_CHANNEL);
-		liftSD = new Solenoid(0); //Assume 0 for PCM ID
-		leftLimit = new DigitalInput(RobotMap.LEFT_FORKLIFT_LIMIT);
-		rightLimit = new DigitalInput(RobotMap.RIGHT_FORKLIFT_LIMIT);
+	//	liftTalon = new Talon(RobotMap.FORKLIFT_CHANNEL);
+		//liftSD = new Solenoid(0); //Assume 0 for PCM ID
+		//leftLimit = new DigitalInput(RobotMap.LEFT_FORKLIFT_LIMIT);
+		//rightLimit = new DigitalInput(RobotMap.RIGHT_FORKLIFT_LIMIT);
 	}
 
 	@Override

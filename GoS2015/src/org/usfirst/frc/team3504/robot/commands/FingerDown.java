@@ -1,42 +1,42 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Alexa Sarah Corinne Kyra
- * turn sucker on for 1 second and when that second is over it turns off
- * 
+ *@annika
+ *@ziya
  */
-public class AutoSucker extends Command {
-	//sucker will run constantly through the AutoPlow command
+public class FingerDown extends Command {
 
-    public AutoSucker() {
-       requires(Robot.sucker);
-    	// Use requires() here to declare subsystem dependencies
+    public FingerDown() {
+        // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-   
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(1);
+    	
+    	requires(Robot.fingers);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.sucker.suckToteIn();
+    	Robot.fingers.fingerDown();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+    	
+    	return Robot.fingers.getLimit();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.sucker.stopSucking();
+    	
+    	Robot.fingers.fingerStop();
     }
 
     // Called when another command which requires one or more of the same

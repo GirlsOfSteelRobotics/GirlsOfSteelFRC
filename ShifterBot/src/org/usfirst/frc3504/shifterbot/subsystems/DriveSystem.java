@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveSystem extends Subsystem {
-	SpeedController driveLeft = RobotMap.driveSystemDriveLeft;
-	SpeedController driveRight = RobotMap.driveSystemDriveRight;
+	SpeedController driveLeft = RobotMap.driveSystemDriveLeft0;
+	SpeedController driveRight = RobotMap.driveSystemDriveRight0;
 	RobotDrive robotDrive2 = RobotMap.driveSystemRobotDrive2;
 	Encoder driveLeftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A, RobotMap.DRIVE_LEFT_ENCODER_B, true, CounterBase.EncodingType.k2X);
 	Encoder driveRightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A, RobotMap.DRIVE_RIGHT_ENCODER_B, true, CounterBase.EncodingType.k2X);

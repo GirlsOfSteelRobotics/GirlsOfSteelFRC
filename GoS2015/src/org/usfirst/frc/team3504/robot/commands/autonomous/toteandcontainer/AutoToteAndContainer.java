@@ -2,7 +2,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous.toteandcontainer;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
 import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoSucker;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoTurnLeft;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -15,10 +15,10 @@ public class AutoToteAndContainer extends CommandGroup {
 	//collects one tote and one container and takes them to the auto zone 
 	
     public  AutoToteAndContainer() {
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new Lifting());
     	addSequential(new AutoTurnLeft()); 
     	

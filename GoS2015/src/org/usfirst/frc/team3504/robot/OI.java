@@ -6,17 +6,13 @@ import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.DriveLeft;
 import org.usfirst.frc.team3504.robot.commands.DriveRight;
 import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
-//github.com/GirlsOfSteelRobotics/2015season.git
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoTurnLeft;
 
 import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+//github.com/GirlsOfSteelRobotics/2015season.git
 //import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-
+//github.com/GirlsOfSteelRobotics/2015season.git
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -73,13 +69,13 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	
-	//Sucker buttons
-	private JoystickButton suckIn;
+	//Collector buttons
+	private JoystickButton collectIn;
 	private JoystickButton pushOut;
 	private JoystickButton angleIn;
 	private JoystickButton angleOut;
 	private JoystickButton stopCollection;
-	private JoystickButton stopSuckerAngle;
+	private JoystickButton stopCollectorAngle;
 	
 	//Door buttons
 	private JoystickButton doorIn;
@@ -93,7 +89,7 @@ public class OI {
 	
 	/*
 	 * Add pusher buttons
-	 * Add Triangle pegs buttons (fingers)
+	 * Add Finger buttons (fingers)
 	 */
 	
 	public OI()
@@ -121,24 +117,24 @@ public class OI {
 		//liftDown.whenPressed(new LiftDown());
 		
 		
-		//Sucker buttons initialization
-		suckIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
+		//collector buttons initialization
+		collectIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
 		pushOut = new JoystickButton(operatorJoystick, 8);  	  	// FIXME: make sure this is for the correct Joystick and port
 		angleIn = new JoystickButton(operatorJoystick, 9);    		// FIXME: make sure this is for the correct Joystick and port
 		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
-		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
+		stopCollectorAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 
-		//suckIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
+		//collectorIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
 		//pushOut.whenPressed (new ReleaseTote());
 		//angleIn.whenPressed (new AngleSuckerIn());
 		//angleOut.whenPressed (new AngleSuckerOut());
 		//stopCollection.whenPressed (new StopCollection());
-		//stopSuckerAngle.whenPressed(new StopSuckerAngle());
+		//stopCollectorAngle.whenPressed(new StopSuckerAngle());
 		
 		
 		//Ultrasonic buttons initialization
-		getDistance = new JoystickButton(chassisJoystick, 13);
+		getDistance = new JoystickButton(chassisJoystick, 12);
 		getDistance.whenPressed(new TestUltrasonic());
 		
 		switchCamera = new JoystickButton(chassisJoystick, 7);
@@ -148,17 +144,18 @@ public class OI {
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoSucker = new JoystickButton(chassisJoystick, 11);
-		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
+		//autoTurnLeft = new JoystickButton(chassisJoystick, 12);
 		
-		autoDriveForward.whenPressed(new AutoDriveForward());
-		autoFirstPickup.whenPressed(new AutoFirstPickup());
-		autoSucker.whenPressed(new AutoSucker()); 
-		autoTurnLeft.whenPressed(new AutoTurnLeft());
+	//	autoDriveForward.whenPressed(new AutoDriveForward());
+	//	autoFirstPickup.whenPressed(new AutoFirstPickup());
+	//	autoSucker.whenPressed(new AutoSucker()); 
+	//	autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
 		//Door Buttons
-		doorIn = new JoystickButton(operatorJoystick,7);	// FIXME: make sure this is for the correct Joystick and port
-		doorOut = new JoystickButton(operatorJoystick,8);	// FIXME: make sure this is for the correct Joystick and port
+		//doorIn = new JoystickButton(chassisJoystick,7);
+		//doorOut = new JoystickButton(chassisJoystick,8);
+
 		
 		//doorIn.whenPressed(new DoorsIn());	//Uncomment when the doors are ready to be tested
 		//doorOut.whenPressed(new DoorsOut());
