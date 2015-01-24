@@ -158,8 +158,10 @@ public class OI {
 		doorIn = new JoystickButton(operatorJoystick,7);	// FIXME: make sure this is for the correct Joystick and port
 		doorOut = new JoystickButton(operatorJoystick,8);	// FIXME: make sure this is for the correct Joystick and port
 		
-		//doorIn.whenPressed(new DoorsIn());	//Uncomment when the doors are ready to be tested
-		//doorOut.whenPressed(new DoorsOut());
+		//autoDriveForward.whenPressed(new AutoDriveForward());
+		//autoFirstPickup.whenPressed(new AutoFirstPickup());
+		autoSucker.whenPressed(new AutoSucker()); 
+		autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
 		//Camera buttons initialization
