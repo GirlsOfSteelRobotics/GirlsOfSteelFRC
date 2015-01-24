@@ -7,7 +7,7 @@ import org.usfirst.frc.team3504.robot.commands.DriveLeft;
 import org.usfirst.frc.team3504.robot.commands.DriveRight;
 import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
 //github.com/GirlsOfSteelRobotics/2015season.git
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSucker;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoFirstPickup;
 import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoTurnLeft;
@@ -59,7 +59,7 @@ public class OI {
 	private JoystickButton autoInterval;
 	private JoystickButton autoLiftUp;
 	private JoystickButton autoPlow;
-	private JoystickButton autoSucker;
+	private JoystickButton autoCollector;
 	private JoystickButton autoTurnLeft;
 	private JoystickButton autoTurnLeftTimer;
 	
@@ -74,12 +74,12 @@ public class OI {
 	private JoystickButton liftDown;
 	
 	//Sucker buttons
-	private JoystickButton suckIn;
+	private JoystickButton collectIn;
 	private JoystickButton pushOut;
 	private JoystickButton angleIn;
 	private JoystickButton angleOut;
 	private JoystickButton stopCollection;
-	private JoystickButton stopSuckerAngle;
+	private JoystickButton stopCollectorAngle;
 	private JoystickButton doorIn;
 	private JoystickButton doorOut;
 	
@@ -120,12 +120,12 @@ public class OI {
 		
 		
 		//Sucker buttons initialization
-		suckIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
+		collectIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
 		pushOut = new JoystickButton(operatorJoystick, 8);  	  	// FIXME: make sure this is for the correct Joystick and port
 		angleIn = new JoystickButton(operatorJoystick, 9);    		// FIXME: make sure this is for the correct Joystick and port
 		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
-		stopSuckerAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
+		stopCollectorAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 
 		//suckIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
 		//pushOut.whenPressed (new ReleaseTote());
@@ -145,12 +145,12 @@ public class OI {
 		//Autonomous
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
-		autoSucker = new JoystickButton(chassisJoystick, 11);
+		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
 		
 		autoDriveForward.whenPressed(new AutoDriveForward());
 		autoFirstPickup.whenPressed(new AutoFirstPickup());
-		autoSucker.whenPressed(new AutoSucker()); 
+		autoCollector.whenPressed(new AutoCollector()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
