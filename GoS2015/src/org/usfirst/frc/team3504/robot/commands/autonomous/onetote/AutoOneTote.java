@@ -1,10 +1,9 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous.onetote;
 
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
 import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoSucker;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -15,7 +14,7 @@ public class AutoOneTote extends CommandGroup {
     //Collects one tote/container and takes it to the auto zone
 	
 	public  AutoOneTote() {
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new Lifting());
     	addSequential(new AutoTurnRight());
     	addSequential(new Release()); 

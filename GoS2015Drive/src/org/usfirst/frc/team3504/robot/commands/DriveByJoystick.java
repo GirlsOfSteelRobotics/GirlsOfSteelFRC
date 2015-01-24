@@ -1,44 +1,44 @@
 package org.usfirst.frc.team3504.robot.commands;
-
 import org.usfirst.frc.team3504.robot.Robot;
 
-
+import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-/*
- * 
+/**
+ * @author Sonia
  */
-public class ClawArmIn extends Command {
+public class DriveByJoystick extends Command {
 
-    public ClawArmIn() {
+	Joystick chassisJoystick;
+	
+    public DriveByJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.clawArms);
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	chassisJoystick = Robot.oi.getChassisJoystick();
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute(){
-    	Robot.clawArms.moveIn(); 
-    }  
+    protected void execute() {
+    	Robot.chassis.moveByJoystick(chassisJoystick);  	
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	Robot.clawArms.getLimit();
-    	return false; //Add limit switch implementation
+        return false;
     }
-    
+
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.clawArms.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

@@ -19,7 +19,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 /**
  * @authors annika and ziya
  */
-public class TrianglePegs extends Subsystem {
+public class Fingers extends Subsystem {
 	
 	private Talon LeftTalon;
 	private Talon RightTalon;
@@ -28,23 +28,25 @@ public class TrianglePegs extends Subsystem {
 	private DigitalInput LeftLimit;
 	private DigitalInput RightLimit;
 	
-	public TrianglePegs()
+	public Fingers()
 	{
-		LeftEncoder = new Encoder(RobotMap.LEFT_PEG_ENCODER_A, RobotMap.LEFT_PEG_ENCODER_B);
-		RightEncoder = new Encoder(RobotMap.RIGHT_PEG_ENCODER_A, RobotMap.RIGHT_PEG_ENCODER_B);
-		LeftTalon = new Talon(RobotMap.LEFT_PEG_TALON);
-		RightTalon = new Talon(RobotMap.RIGHT_PEG_TALON);
-		LeftLimit = new DigitalInput(RobotMap.LEFT_PEG_LIMIT);
-		RightLimit = new DigitalInput(RobotMap.RIGHT_PEG_LIMIT);
+		/*
+		LeftEncoder = new Encoder(RobotMap.LEFT_FINGER_ENCODER_A, RobotMap.LEFT_FINGER_ENCODER_B);
+		RightEncoder = new Encoder(RobotMap.RIGHT_FINGER_ENCODER_A, RobotMap.RIGHT_FINGER_ENCODER_B);
+		LeftTalon = new Talon(RobotMap.LEFT_FINGER_TALON);
+		RightTalon = new Talon(RobotMap.RIGHT_FINGER_TALON);
+		LeftLimit = new DigitalInput(RobotMap.LEFT_FINGER_LIMIT);
+		RightLimit = new DigitalInput(RobotMap.RIGHT_FINGER_LIMIT);
+		**/
 	}
 	
-	public void pegDown()
+	public void fingerDown()
 	{
 		LeftTalon.set(.23);
 		RightTalon.set(.23);
 	}
 	
-	public void pegStop()
+	public void fingerStop()
 	{
 		LeftTalon.stopMotor();
 		RightTalon.stopMotor();

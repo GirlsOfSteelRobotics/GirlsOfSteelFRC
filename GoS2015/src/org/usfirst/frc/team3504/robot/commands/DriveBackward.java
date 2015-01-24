@@ -1,8 +1,6 @@
-package org.usfirst.frc.team3504.robot.commands;
+         package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveBackward extends Command {
@@ -18,7 +16,7 @@ public class DriveBackward extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.chassis.driveBackward(Robot.oi.getChassisJoystick());
+		Robot.chassis.driveBackward();
 	}
 
 	@Override

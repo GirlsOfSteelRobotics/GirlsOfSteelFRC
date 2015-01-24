@@ -5,21 +5,22 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /*
- * 
+ * Command order for suckers should be changed based on what
+ * the drivers want -> could use a command group
  */
-public class AngleSuckerOut extends Command{
-
-	public AngleSuckerOut() {
-		requires(Robot.sucker);
-	}
+public class AngleCollectorIn extends Command {
 	
+	public AngleCollectorIn() {
+		requires(Robot.collector);
+	}
+
 	@Override
 	protected void initialize() {
 	}
 
 	@Override
 	protected void execute() {
-		Robot.sucker.suckerAngleOut();
+		Robot.collector.suckerAngleIn();
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class AngleSuckerOut extends Command{
 
 	@Override
 	protected void interrupted() {
-		end();	
+		end();		
 	}
 
 }

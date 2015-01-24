@@ -13,25 +13,28 @@ public class AutoPlow extends CommandGroup {
     
     public  AutoPlow() {
     	
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());
-    	addSequential(new AutoSucker());
+    	addSequential(new AutoCollector());
     	addSequential(new Lifting());
      	//used to get first can and tote
 
-    	addParallel(new AutoSucker());
+    	/*
+    	 * Change this to drive far enough to pass where the tote was
+    	 */
+    	addParallel(new AutoCollector());
     	addSequential(new AutoDriveForward());
     	addSequential(new Lifting()); 
     	//gets middle tote assuming partner cleared second can
     	
-    	addParallel(new AutoSucker());
+    	addParallel(new AutoCollector());
     	addSequential(new AutoDriveForward());
     	addSequential(new Lifting());
     	//gets last tote assuming partner cleared third can  
     	
     	addSequential(new AutoTurnLeft());
-    	addSequential(new Lifting()); //just down 
+    	addSequential(new Release()); //just down 
     	//turn into the autozone to get robot set
         
     	// Add Commands here:
