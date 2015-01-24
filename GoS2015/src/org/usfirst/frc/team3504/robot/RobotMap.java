@@ -23,7 +23,11 @@ public class RobotMap {
 	public static final int OPERATOR_JOYSTICK = 1;
 	public static final int CHASSIS_JOYSTICK = 0;
 	
-	//Drive ports (Note: CANTalons are below in their own section)
+	//Drive ports
+	public static final int FRONT_LEFT_WHEEL_CHANNEL = 0; //Motors
+    public static final int REAR_LEFT_WHEEL_CHANNEL	= 1;
+    public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
+    public static final int REAR_RIGHT_WHEEL_CHANNEL = 2;
     public static final int GYRO_PORT = 23; //Gyro
     public static final int FRONT_LEFT_WHEEL_ENCODER_A = 6; //Encoders
     public static final int FRONT_LEFT_WHEEL_ENCODER_B = 7;
@@ -33,43 +37,43 @@ public class RobotMap {
     public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 1;
     public static final int REAR_RIGHT_WHEEL_ENCODER_A = 2;
     public static final int REAR_RIGHT_WHEEL_ENCODER_B = 3;
+    public static final int ULTRASONICSENSOR_PING_CHANNEL = 4;
+    public static final int ULTRASONICSENSOR_ECHO_CHANNEL = 9;
     
-    //Ultrasonic sensor ports
-    public static final int ULTRASONICSENSOR_PING_CHANNEL = 9;
-    public static final int ULTRASONICSENSOR_ECHO_CHANNEL = 4;
-    
+    /*
     //Forklift ports
     public static final int FORKLIFT_CHANNEL = 4;  //Motors
     public static final int LEFT_FORKLIFT_LIMIT = 8;  //Limit Switches
     public static final int RIGHT_FORKLIFT_LIMIT = 22;
     
-    //Peg ports
-    public static final int RIGHT_PEG_TALON = 5; //Motors
-    public static final int LEFT_PEG_TALON = 6;
-    public static final int RIGHT_PEG_ENCODER_A = 10; //Encoders
-    public static final int RIGHT_PEG_ENCODER_B = 11;
-    public static final int LEFT_PEG_ENCODER_A = 12;
-    public static final int LEFT_PEG_ENCODER_B = 13;
-    public static final int RIGHT_PEG_LIMIT = 14; //Limit Switches
-    public static final int LEFT_PEG_LIMIT = 15;
+    //Finger ports
+    public static final int RIGHT_FINGER_TALON = 5; //Motors
+    public static final int LEFT_FINGER_TALON = 6;
+    public static final int RIGHT_FINGER_ENCODER_A = 10; //Encoders
+    public static final int RIGHT_FINGER_ENCODER_B = 11;
+    public static final int LEFT_FINGER_ENCODER_A = 12;
+    public static final int LEFT_FINGER_ENCODER_B = 13;
+    public static final int RIGHT_FINGER_LIMIT = 14; //Limit Switches
+    public static final int LEFT_FINGER_LIMIT = 15;
     
-    //Claw ports
-    public static final int LEFT_CLAW_CHANNEL = 7; //Motors
-    public static final int RIGHT_CLAW_CHANNEL = 8;
-    public static final int LEFT_CLAW_LIMIT = 16;  //Limit Switches
-    public static final int RIGHT_CLAW_LIMIT = 17;
-
-    //Sucker ports
-    public static final int RIGHT_SUCKER_WHEEL = 9; //Motors
-    public static final int LEFT_SUCKER_WHEEL = 10;
-    public static final int RIGHT_SUCKER_ANGLE_WHEEL = 11;
-    public static final int LEFT_SUCKER_ANGLE_WHEEL = 12;
-    public static final int LEFT_SUCKER_LIMIT = 18;  //Limit Switches
-    public static final int RIGHT_SUCKER_LIMIT = 19;
+    //Wedge ports
+    /**    public static final int LEFT_WEDGE_CHANNEL = 7; //Motors
+    public static final int RIGHT_WEDGE_CHANNEL = 8;
+    public static final int LEFT_WEDGE_LIMIT = 16;  //Limit Switches
+    public static final int RIGHT_WEDGE_LIMIT = 17;
+    
+    //Collector ports
+    public static final int RIGHT_COLLECTOR_WHEEL = 19; //Motors
+    public static final int LEFT_COLLECTOR_WHEEL = 10;
+    public static final int RIGHT_COLLECTOR_ANGLE_WHEEL = 11;
+    public static final int LEFT_COLLECTOR_ANGLE_WHEEL = 12;
+    public static final int LEFT_COLLECTOR_LIMIT = 18;  //Limit Switches
+    public static final int RIGHT_COLLECTOR_LIMIT = 19;
     
     //Door ports
     public static final int LEFT_DOOR_CHANNEL = 20;  //Motors
     public static final int RIGHT_DOOR_CHANNEL = 21;
+    */
     
     //CANTalons
     public static CANTalon rightFrontWheel0;

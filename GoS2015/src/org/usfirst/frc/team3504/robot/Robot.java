@@ -19,18 +19,18 @@ import org.usfirst.frc.team3504.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-	//Add pusher
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
 	public static final Chassis chassis = new Chassis();
 	public static final Camera camera = new Camera();
-	public static final Sucker sucker = null; //= new Sucker();
-	public static final TrianglePegs pegs = null;//= new TrianglePegs();
-	public static final ClawArms clawArms = null;//= new ClawArms();
+	public static final Collector collector = null; //= new Sucker();
+	public static final Fingers fingers = null;//= new TrianglePegs();
+	public static final Wedges wedges = null;//= new ClawArms();
 	public static final Forklift forklift = null;//new Forklift();
 	public static final Doors doors = null;//new Door();
 	public static final UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
 	public static OI oi;
-
+	CameraServer server; 
+	public static final Pusher pusher = null;//new Pusher();
     Command autonomousCommand;
 
     /**

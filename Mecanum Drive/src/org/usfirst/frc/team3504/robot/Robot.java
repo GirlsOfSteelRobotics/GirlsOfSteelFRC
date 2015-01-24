@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 
-import org.usfirst.frc.team3504.robot.PIDSpeedController;
+import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
