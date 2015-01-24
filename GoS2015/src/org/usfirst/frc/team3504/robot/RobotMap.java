@@ -28,7 +28,7 @@ public class RobotMap {
 	public static final int REAR_LEFT_WHEEL_CHANNEL = 2;
 	public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
 	public static final int REAR_RIGHT_WHEEL_CHANNEL = 4;
-	public static final int GYRO_PORT = 23; // Gyro
+	public static final int GYRO_PORT = 0; // Gyro
 	public static final int FRONT_LEFT_WHEEL_ENCODER_A = 0; // Encoders
 	public static final int FRONT_LEFT_WHEEL_ENCODER_B = 1;
 	public static final int REAR_LEFT_WHEEL_ENCODER_A = 2;
@@ -37,8 +37,7 @@ public class RobotMap {
 	public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 5;
 	public static final int REAR_RIGHT_WHEEL_ENCODER_A = 6;
 	public static final int REAR_RIGHT_WHEEL_ENCODER_B = 7;
-	public static final int ULTRASONICSENSOR_PING_CHANNEL = 4;
-	public static final int ULTRASONICSENSOR_ECHO_CHANNEL = 9;
+	public static final int ULTRASONICSENSOR_CHANNEL = 8;
 
 	/*
 	 * //Forklift ports public static final int FORKLIFT_CHANNEL = 4; //Motors

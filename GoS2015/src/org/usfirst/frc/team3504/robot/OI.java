@@ -137,7 +137,7 @@ public class OI {
 		
 		//Ultrasonic buttons initialization
 		getDistance = new JoystickButton(chassisJoystick, 13);
-		getDistance.whenPressed(new TestUltrasonic());
+		//getDistance.whenPressed(new TestUltrasonic());
 		
 		switchCamera = new JoystickButton(chassisJoystick, 7);
 	
@@ -149,8 +149,8 @@ public class OI {
 		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
 		
 		autoDriveForward.whenPressed(new AutoDriveForward());
-		autoFirstPickup.whenPressed(new AutoFirstPickup());
-		autoCollector.whenPressed(new AutoCollector()); 
+		//autoFirstPickup.whenPressed(new AutoFirstPickup());
+		//autoCollector.whenPressed(new AutoCollector()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		

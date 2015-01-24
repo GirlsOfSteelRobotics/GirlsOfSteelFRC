@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
 	//Add pusher
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
-	public static final Chassis chassis = new Chassis();
+	public static ExampleSubsystem exampleSubsystem;
+	public static Chassis chassis;
 	public static OI oi;
 
     Command autonomousCommand;
@@ -31,6 +31,9 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	RobotMap.init();
+    	exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
+    	chassis = new Chassis();
 		oi = new OI();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();

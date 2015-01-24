@@ -1,4 +1,7 @@
 package org.usfirst.frc.team3504.robot;
+
+import edu.wpi.first.wpilibj.CANTalon;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -23,16 +26,30 @@ public class RobotMap {
 	public static final int GYRO_PORT = 0;
 	
 	//Drive ports
-	public static final int FRONT_LEFT_WHEEL_CHANNEL = 0; //Motors
-    public static final int REAR_LEFT_WHEEL_CHANNEL	= 1;
-    public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
-    public static final int REAR_RIGHT_WHEEL_CHANNEL = 2;
-    public static final int FRONT_LEFT_WHEEL_ENCODER_A = 6; //Encoders
-    public static final int FRONT_LEFT_WHEEL_ENCODER_B = 7;
-    public static final int REAR_LEFT_WHEEL_ENCODER_A = 4;
-    public static final int REAR_LEFT_WHEEL_ENCODER_B = 5;
-    public static final int FRONT_RIGHT_WHEEL_ENCODER_A = 0;
-    public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 1;
-    public static final int REAR_RIGHT_WHEEL_ENCODER_A = 2;
-    public static final int REAR_RIGHT_WHEEL_ENCODER_B = 3;
+	public static final int FRONT_LEFT_WHEEL_CHANNEL = 1; // Motors
+	public static final int REAR_LEFT_WHEEL_CHANNEL = 2;
+	public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
+	public static final int REAR_RIGHT_WHEEL_CHANNEL = 4;
+	public static final int FRONT_LEFT_WHEEL_ENCODER_A = 0; // Encoders
+	public static final int FRONT_LEFT_WHEEL_ENCODER_B = 1;
+	public static final int REAR_LEFT_WHEEL_ENCODER_A = 2;
+	public static final int REAR_LEFT_WHEEL_ENCODER_B = 3;
+	public static final int FRONT_RIGHT_WHEEL_ENCODER_A = 4;
+	public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 5;
+	public static final int REAR_RIGHT_WHEEL_ENCODER_A = 6;
+	public static final int REAR_RIGHT_WHEEL_ENCODER_B = 7;
+	public static final int ULTRASONICSENSOR_CHANNEL = 8;
+    
+	// CANTalons
+	public static CANTalon rightFrontWheel;
+	public static CANTalon leftFrontWheel;
+	public static CANTalon rightBackWheel;
+	public static CANTalon leftBackWheel;
+
+	static void init() {
+		rightFrontWheel = new CANTalon(FRONT_RIGHT_WHEEL_CHANNEL);
+		leftFrontWheel = new CANTalon(FRONT_LEFT_WHEEL_CHANNEL);
+		rightBackWheel = new CANTalon(REAR_RIGHT_WHEEL_CHANNEL);
+		leftBackWheel = new CANTalon(REAR_LEFT_WHEEL_CHANNEL);
+	}
 }

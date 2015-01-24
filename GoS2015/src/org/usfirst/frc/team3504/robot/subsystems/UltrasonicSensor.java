@@ -11,11 +11,11 @@ public class UltrasonicSensor extends Subsystem{
 	private Ultrasonic ultrasonicSensor;
 	
 	public UltrasonicSensor() {
-		ultrasonicSensor = new Ultrasonic(RobotMap.ULTRASONICSENSOR_PING_CHANNEL, RobotMap.ULTRASONICSENSOR_ECHO_CHANNEL);
+		//ultrasonicSensor = new Ultrasonic(RobotMap.ULTRASONICSENSOR_CHANNEL);
 	}
 
 	public double getDistanceInches() {
-		return ultrasonicSensor.getRangeInches();
+		return 0.0; //ultrasonicSensor.getRangeInches();
 	}
 	
 	

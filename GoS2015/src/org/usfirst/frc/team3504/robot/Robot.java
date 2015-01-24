@@ -19,18 +19,17 @@ import org.usfirst.frc.team3504.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
-	public static final Chassis chassis = new Chassis();
-	public static final Camera camera = new Camera();
-	public static final Collector collector = null; //= new Sucker();
-	public static final Fingers fingers = null;//= new TrianglePegs();
-	public static final Wedges wedges = null;//= new ClawArms();
-	public static final Forklift forklift = null;//new Forklift();
-	public static final Doors doors = null;//new Door();
-	public static final UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
+	public static ExampleSubsystem exampleSubsystem; //Need to remove eventually
+	public static Chassis chassis;
+	public static Camera camera = null;
+	public static Collector collector = null; //= new Sucker();
+	public static Fingers fingers = null;//= new TrianglePegs();
+	public static Wedges wedges = null;//= new ClawArms();
+	public static Forklift forklift = null;//new Forklift();
+	public static Doors doors = null;//new Door();
+	public static UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
 	public static OI oi;
-	CameraServer server; 
-	public static final Pusher pusher = null;//new Pusher();
+	public static Pusher pusher = null;//new Pusher();
     Command autonomousCommand;
 
     /**
@@ -38,11 +37,15 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+    	RobotMap.init();
+		exampleSubsystem = new ExampleSubsystem();
+		chassis = new Chassis();
+		//camera = new Camera();
+		
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
-
-
+        
+        oi = new OI();
     }
 	
 	public void disabledPeriodic() {
