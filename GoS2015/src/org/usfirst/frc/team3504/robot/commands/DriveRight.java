@@ -19,7 +19,7 @@ public class DriveRight extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.chassis.driveRight(Robot.oi.getChassisJoystick());
+		Robot.chassis.driveRight();
 	}
 
 	@Override

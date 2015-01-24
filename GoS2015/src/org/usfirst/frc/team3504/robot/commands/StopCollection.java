@@ -8,12 +8,12 @@ public class StopCollection extends Command {
 
 	@Override
 	protected void initialize() {
-		requires(Robot.sucker);
+		requires(Robot.collector);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.sucker.stopSucking();
+		Robot.collector.stopCollecting();
 	}
 
 	@Override

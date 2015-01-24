@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class CollectTote extends Command {
 
 	public CollectTote() {
-		requires(Robot.sucker);
+		requires(Robot.collector);
 	}
 	
 	@Override
@@ -19,12 +19,12 @@ public class CollectTote extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.sucker.suckToteIn();
+		Robot.collector.collectorToteIn();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		Robot.sucker.getLimit();
+		Robot.collector.getLimit();
 		return false;
 	}
 

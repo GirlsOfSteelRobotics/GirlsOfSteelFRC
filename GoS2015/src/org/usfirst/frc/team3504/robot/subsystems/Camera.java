@@ -46,7 +46,7 @@ public class Camera extends Subsystem {
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam1");
         name = camera1;
-        SmartDashboard.putData("cam1", (Sendable) CameraServer.getInstance());
+       // SmartDashboard.putData("cam1", (Sendable) CameraServer.getInstance());
     }
     
     public void Cam2() {
@@ -56,7 +56,7 @@ public class Camera extends Subsystem {
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam2");
         name = camera2;
-        SmartDashboard.putData("cam2", (Sendable) CameraServer.getInstance());
+        //SmartDashboard.putData("cam2", (Sendable) CameraServer.getInstance());
 }
 
 	@Override

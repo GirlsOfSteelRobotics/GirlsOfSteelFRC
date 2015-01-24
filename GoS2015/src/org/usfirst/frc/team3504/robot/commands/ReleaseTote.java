@@ -11,17 +11,17 @@ public class ReleaseTote extends Command {
 
 	@Override
 	protected void initialize() {
-		requires(Robot.sucker);
+		requires(Robot.collector);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.sucker.suckToteOut();
+		Robot.collector.collectorToteOut();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		Robot.sucker.getLimit();
+		Robot.collector.getLimit();
 		return false;
 	}
 

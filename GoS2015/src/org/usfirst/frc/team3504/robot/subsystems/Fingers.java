@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.Talon;
@@ -20,7 +19,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 /**
  * @authors annika and ziya
  */
-public class TrianglePegs extends Subsystem {
+public class Fingers extends Subsystem {
 	
 	private Talon LeftTalon;
 	private Talon RightTalon;
@@ -28,38 +27,26 @@ public class TrianglePegs extends Subsystem {
 	private Encoder RightEncoder;
 	private DigitalInput LeftLimit;
 	private DigitalInput RightLimit;
-	private Solenoid liftSD;
 	
-	public TrianglePegs()
+	public Fingers()
 	{
-		LeftEncoder = new Encoder(RobotMap.LEFT_PEG_ENCODER_A, RobotMap.LEFT_PEG_ENCODER_B);
-		RightEncoder = new Encoder(RobotMap.RIGHT_PEG_ENCODER_A, RobotMap.RIGHT_PEG_ENCODER_B);
-		LeftTalon = new Talon(RobotMap.LEFT_PEG_TALON);
-		RightTalon = new Talon(RobotMap.RIGHT_PEG_TALON);
-		LeftLimit = new DigitalInput(RobotMap.LEFT_PEG_LIMIT);
-		RightLimit = new DigitalInput(RobotMap.RIGHT_PEG_LIMIT);
-		liftSD = new Solenoid(RobotMap.TRIANGLE_PEG_SOLENOID); 
+		/*
+		LeftEncoder = new Encoder(RobotMap.LEFT_FINGER_ENCODER_A, RobotMap.LEFT_FINGER_ENCODER_B);
+		RightEncoder = new Encoder(RobotMap.RIGHT_FINGER_ENCODER_A, RobotMap.RIGHT_FINGER_ENCODER_B);
+		LeftTalon = new Talon(RobotMap.LEFT_FINGER_TALON);
+		RightTalon = new Talon(RobotMap.RIGHT_FINGER_TALON);
+		LeftLimit = new DigitalInput(RobotMap.LEFT_FINGER_LIMIT);
+		RightLimit = new DigitalInput(RobotMap.RIGHT_FINGER_LIMIT);
+		**/
 	}
 	
-	public void pegDown()
+	public void fingerDown()
 	{
 		LeftTalon.set(.23);
 		RightTalon.set(.23);
 	}
-
-	public void upPneum()
-	{
-		liftSD.set(true);
 	
-	}
-	
-	public void downPneum()
-	{
-		liftSD.set(false);
-	
-	}
-	
-	public void pegStop()
+	public void fingerStop()
 	{
 		LeftTalon.stopMotor();
 		RightTalon.stopMotor();

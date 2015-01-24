@@ -80,8 +80,6 @@ public class OI {
 	private JoystickButton angleOut;
 	private JoystickButton stopCollection;
 	private JoystickButton stopSuckerAngle;
-	
-	//Door buttons
 	private JoystickButton doorIn;
 	private JoystickButton doorOut;
 	
