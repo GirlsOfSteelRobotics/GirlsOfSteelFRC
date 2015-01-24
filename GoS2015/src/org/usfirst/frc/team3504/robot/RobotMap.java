@@ -53,6 +53,7 @@ public class RobotMap {
     public static final int LEFT_PEG_ENCODER_B = 13;
     public static final int RIGHT_PEG_LIMIT = 14; //Limit Switches
     public static final int LEFT_PEG_LIMIT = 15;
+    public static final int TRIANGLE_PEG_SOLENOID = 24;
     
     //Claw ports
     public static final int LEFT_CLAW_CHANNEL = 7; //Motors
@@ -71,5 +72,6 @@ public class RobotMap {
     //Door ports
     public static final int LEFT_DOOR_CHANNEL = 20;  //Motors
     public static final int RIGHT_DOOR_CHANNEL = 21;
+	
     
 }
