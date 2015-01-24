@@ -160,7 +160,7 @@ public class OI {
 		
 		//autoDriveForward.whenPressed(new AutoDriveForward());
 		//autoFirstPickup.whenPressed(new AutoFirstPickup());
-		autoSucker.whenPressed(new AutoSucker()); 
+		//autoSucker.whenPressed(new AutoSucker()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
