@@ -70,19 +70,42 @@ public class Chassis extends Subsystem {
 	public double twistDeadZone(double rawVal)
 	{
 		if(Math.abs(rawVal) > .9)
-			return rawVal/5;
+			return rawVal/3;
 		else
 			return 0.0;
 	}
 	
 	public void moveByJoystick(Joystick stick)
 	{
-		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), 0);
+	//	gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
+		
+		gosDrive.mecanumDrive_Cartesian(stick.getX()* ((stick.getThrottle() + 1) / 2), stick.getY()* ((stick.getThrottle() + 1) / 2), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
+
 	}
 	
 	public void stop()
 	{
 		gosDrive.stopMotor();
+	}
+	
+	public double getFrontLeftEncoderRate()
+	{
+		return frontLeftEncoder.getRate();
+	}
+	
+	public double getRearLeftEncoderRate()
+	{
+		return rearLeftEncoder.getRate();
+	}
+	
+	public double getFrontRightEncoderRate()
+	{
+		return frontRightEncoder.getRate();
+	}
+	
+	public double getRearRightEncoderRate()
+	{
+		return rearRightEncoder.getRate();
 	}
 	
     public void initDefaultCommand() {

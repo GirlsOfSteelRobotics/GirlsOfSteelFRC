@@ -1,14 +1,22 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
+import org.usfirst.frc.team3504.robot.subsystems.Doors;
+import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3504.robot.subsystems.Fingers;
+import org.usfirst.frc.team3504.robot.subsystems.Forklift;
+import org.usfirst.frc.team3504.robot.subsystems.Pusher;
+import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
+import org.usfirst.frc.team3504.robot.subsystems.Wedges;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.CameraServer;
-import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,11 +49,10 @@ public class Robot extends IterativeRobot {
 		exampleSubsystem = new ExampleSubsystem();
 		chassis = new Chassis();
 		//camera = new Camera();
-		
+		oi = new OI();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
         
-        oi = new OI();
     }
 	
 	public void disabledPeriodic() {
