@@ -61,6 +61,7 @@ public class RobotMap {
     public static final int RIGHT_WEDGE_CHANNEL = 8;
     public static final int LEFT_WEDGE_LIMIT = 16;  //Limit Switches
     public static final int RIGHT_WEDGE_LIMIT = 17;
+    public static final int TRIANGLE_PEG_SOLENOID = 24;
     
     //Collector ports
     public static final int RIGHT_COLLECTOR_WHEEL = 19; //Motors
@@ -73,7 +74,7 @@ public class RobotMap {
     //Door ports
     public static final int LEFT_DOOR_CHANNEL = 20;  //Motors
     public static final int RIGHT_DOOR_CHANNEL = 21;
-    */
+	*/
     
     //CANTalons
     public static CANTalon rightFrontWheel0;
