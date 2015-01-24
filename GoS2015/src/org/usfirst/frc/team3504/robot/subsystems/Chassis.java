@@ -56,10 +56,10 @@ public class Chassis extends Subsystem {
     	
        // gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
         						//	RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
-        gosDrive = new RobotDrive  (new PIDSpeedController(RobotMap.leftFrontWheel2, Kp, Ki, Kd, frontLeftEncoder),
-        							new PIDSpeedController(RobotMap.leftBackWheel3, Kp, Ki, Kd, rearLeftEncoder),
-        							new PIDSpeedController(RobotMap.rightFrontWheel0, Kp, Ki, Kd, frontRightEncoder),
-        							new PIDSpeedController(RobotMap.rightBackWheel1, Kp, Ki, Kd, rearRightEncoder));
+        gosDrive = new RobotDrive  (new PIDSpeedController(RobotMap.leftFrontWheel, Kp, Ki, Kd, frontLeftEncoder),
+        							new PIDSpeedController(RobotMap.leftBackWheel, Kp, Ki, Kd, rearLeftEncoder),
+        							new PIDSpeedController(RobotMap.rightFrontWheel, Kp, Ki, Kd, frontRightEncoder),
+        							new PIDSpeedController(RobotMap.rightBackWheel, Kp, Ki, Kd, rearRightEncoder));
         gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
     	gosDrive.setExpiration(0.1);

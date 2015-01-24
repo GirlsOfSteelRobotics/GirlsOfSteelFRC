@@ -77,21 +77,21 @@ public class RobotMap {
 	*/
     
     //CANTalons
-    public static CANTalon rightFrontWheel0;
-    public static CANTalon leftFrontWheel2;
-    public static CANTalon rightBackWheel1;
-    public static CANTalon leftBackWheel3;
+    public static CANTalon rightFrontWheel;
+    public static CANTalon leftFrontWheel;
+    public static CANTalon rightBackWheel;
+    public static CANTalon leftBackWheel;
     
 
 static void init() {
-	rightFrontWheel0 = new CANTalon(0);
-	leftFrontWheel2 = new CANTalon(2);
-	rightBackWheel1 = new CANTalon(1);
-	leftBackWheel3 = new CANTalon(3);
+	rightFrontWheel = new CANTalon(0);
+	leftFrontWheel = new CANTalon(2);
+	rightBackWheel = new CANTalon(1);
+	leftBackWheel = new CANTalon(3);
 	
-	leftBackWheel3.changeControlMode(CANTalon.ControlMode.Follower);
-	rightBackWheel1.changeControlMode(CANTalon.ControlMode.Follower);
-	leftBackWheel3.set(2);
-	rightBackWheel1.set(0);
+	leftBackWheel.changeControlMode(CANTalon.ControlMode.Follower);
+	rightBackWheel.changeControlMode(CANTalon.ControlMode.Follower);
+	leftBackWheel.set(2);
+	rightBackWheel.set(0);
 }
 }
