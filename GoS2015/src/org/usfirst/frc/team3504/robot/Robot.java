@@ -11,7 +11,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Fingers;
 import org.usfirst.frc.team3504.robot.subsystems.Forklift;
 import org.usfirst.frc.team3504.robot.subsystems.Pusher;
 import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
-import org.usfirst.frc.team3504.robot.subsystems.Wedges;
+import org.usfirst.frc.team3504.robot.subsystems.Grippers;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 	public static Camera camera = null;
 	public static Collector collector = null; //= new Sucker();
 	public static Fingers fingers = null;//= new TrianglePegs();
-	public static Wedges wedges = null;//= new ClawArms();
+	public static Grippers gripper = null;//= new ClawArms();
 	public static Forklift forklift = null;//new Forklift();
 	public static Doors doors = null;//new Door();
 	public static UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
