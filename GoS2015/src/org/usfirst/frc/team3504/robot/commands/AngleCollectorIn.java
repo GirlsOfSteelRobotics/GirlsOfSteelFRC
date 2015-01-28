@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Command order for suckers should be changed based on what
  * the drivers want -> could use a command group
  */
-public class AngleCollectorIn extends Command {
+//public class AngleCollectorIn extends Command {
 	
 	public AngleCollectorIn() {
 		requires(Robot.collector);
