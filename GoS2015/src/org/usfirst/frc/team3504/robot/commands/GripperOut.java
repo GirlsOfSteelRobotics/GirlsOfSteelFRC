@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /*
  * 
  */
-public class WedgeOut extends Command {
+public class GripperOut extends Command {
 
-    public WedgeOut() {
+    public GripperOut() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.wedges); 
+    	requires(Robot.gripper); 
     }
 
     // Called just before this Command runs the first time
@@ -21,18 +21,18 @@ public class WedgeOut extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.wedges.moveOut();
+    	Robot.gripper.moveOut();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	Robot.wedges.getLimit();
+    	Robot.gripper.getLimit();
         return false; //Limit switches
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	 Robot.wedges.stop();
+    	 Robot.gripper.stop();
     }
 
     // Called when another command which requires one or more of the same

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * @authors Alexa, Corinne, Sarah
  */
-public class Wedges extends Subsystem {
+public class Grippers extends Subsystem {
     
 	private Talon leftTalon;
 	private Talon rightTalon;
@@ -18,7 +18,7 @@ public class Wedges extends Subsystem {
 	private DigitalInput rightLimit;
 	
 	
-	public Wedges () {
+	public Grippers () {
 	//	leftTalon = new Talon(RobotMap.LEFT_WEDGE_CHANNEL);
 	//	rightTalon = new Talon(RobotMap.RIGHT_WEDGE_CHANNEL); 
 	//	leftLimit = new DigitalInput(RobotMap.LEFT_WEDGE_LIMIT);

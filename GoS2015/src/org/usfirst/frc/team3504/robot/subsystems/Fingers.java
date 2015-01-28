@@ -27,6 +27,7 @@ public class Fingers extends Subsystem {
 	private Encoder RightEncoder;
 	private DigitalInput LeftLimit;
 	private DigitalInput RightLimit;
+	private Solenoid FingersDown;
 	
 	public Fingers()
 	{
@@ -37,15 +38,19 @@ public class Fingers extends Subsystem {
 		RightTalon = new Talon(RobotMap.RIGHT_FINGER_TALON);
 		LeftLimit = new DigitalInput(RobotMap.LEFT_FINGER_LIMIT);
 		RightLimit = new DigitalInput(RobotMap.RIGHT_FINGER_LIMIT);
+		FingersDown = new Solenoid(0);
 		**/
 	}
 	
-	public void fingerDown()
-	{
-		LeftTalon.set(.23);
-		RightTalon.set(.23);
-	}
+	//public void fingerDown()
+	//{
+	//	LeftTalon.set(.23);
+	//	RightTalon.set(.23);
+	//}
 	
+	public void FingersDown(){
+		fingersDown.set(true);				//pushes the fingers down using pneumatics
+	}
 	public void fingerStop()
 	{
 		LeftTalon.stopMotor();
