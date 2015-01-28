@@ -8,7 +8,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Doors;
 import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3504.robot.subsystems.Fingers;
-import org.usfirst.frc.team3504.robot.subsystems.Forklift;
+import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 import org.usfirst.frc.team3504.robot.subsystems.Pusher;
 import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
 import org.usfirst.frc.team3504.robot.subsystems.Grippers;
@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	public static Collector collector = null; //= new Sucker();
 	public static Fingers fingers = null;//= new TrianglePegs();
 	public static Grippers gripper = null;//= new ClawArms();
-	public static Forklift forklift = null;//new Forklift();
+	public static Lifter forklift = null;//new Forklift();
 	public static Doors doors = null;//new Door();
 	public static UltrasonicSensor ultrasonicsensor = null; //new UltrasonicSensor();
 	public static OI oi;
