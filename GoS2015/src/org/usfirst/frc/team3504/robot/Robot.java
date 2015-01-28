@@ -30,14 +30,14 @@ public class Robot extends IterativeRobot {
 	public static ExampleSubsystem exampleSubsystem; //Need to remove eventually
 	public static Chassis chassis;
 	public static Camera camera;
-	public static Collector collector; //= new Sucker();
-	public static Fingers fingers;//= new TrianglePegs();
-	public static Wedges wedges;//= new ClawArms();
-	public static Forklift forklift;//new Forklift();
-	public static Doors doors;//new Door();
-	public static UltrasonicSensor ultrasonicsensor; //new UltrasonicSensor();
+	public static Collector collector;
+	public static Fingers fingers;
+	public static Wedges wedges;
+	public static Forklift forklift;
+	public static Doors doors;
+	public static UltrasonicSensor ultrasonicsensor; 
 	public static OI oi;
-	public static Pusher pusher;//new Pusher();
+	public static Pusher pusher;
     Command autonomousCommand;
 
     /**
