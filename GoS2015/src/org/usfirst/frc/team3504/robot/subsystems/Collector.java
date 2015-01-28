@@ -16,10 +16,10 @@ public class Collector extends Subsystem {
 
 	private Talon rightCollector;            // defining a Talon and naming it rightSucker
 	private Talon leftCollector;             // defining a Talon motor and naming it leftSucker
-	private Talon collectorAngleRight;       // defining a Talon motor and naming it suckerAngleRight
-	private Talon collectorAngleLeft;        // defining a Talon motor and naming it suckerAngleLeft
 	private DigitalInput leftLimit;
 	private DigitalInput rightLimit;
+	private Solenoid collectorIn;
+	private Solenoid collectorOut;
 	
 	public Collector()                //this is the constructor
 	{
@@ -30,8 +30,10 @@ public class Collector extends Subsystem {
 		collectorAngleLeft = new Talon(RobotMap.LEFT_COLLECTOR_ANGLE_WHEEL);
 		leftLimit = new DigitalInput(RobotMap.LEFT_COLLECTOR_LIMIT);
 		rightLimit = new DigitalInput(RobotMap.RIGHT_COLLECTOR_LIMIT);
-		
+		collectorIn = new Solenoid(0);
+		collectorOut = new Solenoid(0);
 		**/
+		
 	}
 	
 	public void collectorToteIn (){              //creating method suckToteIn which suck a tote inside the robot
@@ -44,14 +46,17 @@ public class Collector extends Subsystem {
 		leftCollector.set(0.5);
 	}
 	
-	public void collectorAngleOut (){
-		collectorAngleRight.set(0.5);
-		collectorAngleLeft.set(-0.5);
+	public void collectorToteRotate (){			//creating method collectorToteRotate which rotates the tote inside the trifold
+		rightCollector.set(0.5);
+		leftCollector.set(0.5);
 	}
 	
-	public void suckerAngleIn (){
-		collectorAngleRight.set(-0.5);
-		collectorAngleLeft.set(0.5);
+	public void CollectorIn (){
+		collectorIn.set(true);
+	}
+	
+	public void CollectorOut (){
+		collectorOut.set(false);
 	}
 	
 	public void stopCollecting(){

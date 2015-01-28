@@ -27,8 +27,8 @@ public class GripperIn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	Robot.gripper.getLimit();
-    	return false; //Add limit switch implementation
+    	return Robot.gripper.getLimit();
+    	//return false; //Add limit switch implementation
     }
     
     // Called once after isFinished returns true
