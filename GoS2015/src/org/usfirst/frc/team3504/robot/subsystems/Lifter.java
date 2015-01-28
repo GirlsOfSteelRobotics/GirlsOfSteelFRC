@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /*
  * @authors
  */
-public class Forklift extends Subsystem {
+public class Lifter extends Subsystem {
 	
 	private Talon liftTalon;
 	private Solenoid liftSD;
@@ -19,7 +19,7 @@ public class Forklift extends Subsystem {
 	private DigitalInput rightLimit; //might not be used? i dunno
 	
 	
-	public Forklift() {
+	public Lifter() {
 	//	liftTalon = new Talon(RobotMap.FORKLIFT_CHANNEL);
 		//liftSD = new Solenoid(0); //Assume 0 for PCM ID
 		//leftLimit = new DigitalInput(RobotMap.LEFT_FORKLIFT_LIMIT);
