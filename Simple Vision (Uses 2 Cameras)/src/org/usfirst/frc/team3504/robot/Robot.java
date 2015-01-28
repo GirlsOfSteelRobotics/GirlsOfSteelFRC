@@ -31,7 +31,6 @@ public class Robot extends SampleRobot {
         	//the camera name (ex "cam0") can be found through the roborio web interface
             server.startAutomaticCapture("cam0");
             Timer.delay(10);		
-            
             server.startAutomaticCapture("cam1");
             Timer.delay(10);
             
