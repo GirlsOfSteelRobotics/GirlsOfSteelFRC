@@ -6,5 +6,4 @@
 */build/
 */dist/
 */nbproject/private/
-/Mecanum Drive/
-/PDP-PCM-Demo/
+*/sysProps.xml
