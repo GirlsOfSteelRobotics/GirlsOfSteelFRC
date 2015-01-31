@@ -77,17 +77,4 @@ public class RobotMap {
 	 * //Door ports public static final int LEFT_DOOR_CHANNEL = 20; //Motors
 	 * public static final int RIGHT_DOOR_CHANNEL = 21;
 	 */
-
-	// CANTalons
-	public static CANTalon rightFrontWheel;
-	public static CANTalon leftFrontWheel;
-	public static CANTalon rightBackWheel;
-	public static CANTalon leftBackWheel;
-
-	static void init() {
-		rightFrontWheel = new CANTalon(FRONT_RIGHT_WHEEL_CHANNEL);
-		leftFrontWheel = new CANTalon(FRONT_LEFT_WHEEL_CHANNEL);
-		rightBackWheel = new CANTalon(REAR_RIGHT_WHEEL_CHANNEL);
-		leftBackWheel = new CANTalon(REAR_LEFT_WHEEL_CHANNEL);
-	}
 }
