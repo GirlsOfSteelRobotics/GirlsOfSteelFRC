@@ -69,12 +69,12 @@ public class Chassis extends Subsystem {
     	
        // gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
         						//	RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
-        gosDrive = new RobotDrive  (new PIDSpeedController(leftFrontWheel, Kp, Ki, Kd, frontLeftEncoder),
-				new PIDSpeedController(leftBackWheel, Kp, Ki, Kd, rearLeftEncoder),
-				new PIDSpeedController(rightFrontWheel, Kp, Ki, Kd, frontRightEncoder),
-				new PIDSpeedController(rightBackWheel, Kp, Ki, Kd, rearRightEncoder));
-        gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
-    	gosDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
+        gosDrive = new RobotDrive  (new PIDSpeedController(leftBackWheel, Kp, Ki, Kd, rearLeftEncoder),
+				new PIDSpeedController(rightBackWheel, Kp, Ki, Kd, rearRightEncoder),
+				new PIDSpeedController(leftFrontWheel, Kp, Ki, Kd, frontLeftEncoder),
+				new PIDSpeedController(rightFrontWheel, Kp, Ki, Kd, frontRightEncoder));
+        gosDrive.setInvertedMotor(MotorType.kRearRight, true);	// invert the left side motors
+    	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);		// may need to change or remove this to match robot
     	gosDrive.setExpiration(0.1);
     	gosDrive.setSafetyEnabled(true);
 
@@ -95,11 +95,19 @@ public class Chassis extends Subsystem {
 			return 0.0;
 	}
 	
+	public double deadZone(double rawVal)
+	{
+		if(Math.abs(rawVal) > .1)
+			return rawVal-.1;
+		else
+			return 0.0;
+	}
+	
 	public void moveByJoystick(Joystick stick)
 	{
 		//if(stick.getMagnitude() > 0.02)
 		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
+		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
 	}
 	
 	public void autoDriveSideways(double speed){

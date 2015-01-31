@@ -55,8 +55,8 @@ public class Robot extends IterativeRobot {
 		forklift = new Lifter();
 		doors = new Doors();
 		ultrasonicsensor = new UltrasonicSensor();
-		oi = new OI();
 		pusher = new Pusher();
+		oi = new OI();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
         
