@@ -79,6 +79,11 @@ public class Chassis extends Subsystem {
         robotGyro = new Gyro(RobotMap.GYRO_PORT);
 	}
 	
+	/* twistDeadZone
+	 * 
+	 * Only activate twist action if the control is turned 90% of the way.
+	 * At that point, reduce the value by a factor of 5 so the robot doesn't twist too fast.
+	 */
 	public double twistDeadZone(double rawVal)
 	{
 		if(Math.abs(rawVal) > .9)
@@ -91,8 +96,7 @@ public class Chassis extends Subsystem {
 	{
 		//if(stick.getMagnitude() > 0.02)
 		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getTwist(), robotGyro.getAngle());
-		
+		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
 	}
 	
 	public void autoDriveSideways(double speed){
