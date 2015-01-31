@@ -1,9 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous.onetote;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
-import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
-import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

@@ -1,9 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous.toteandcontainer;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoCollector;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoTurnLeft;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
