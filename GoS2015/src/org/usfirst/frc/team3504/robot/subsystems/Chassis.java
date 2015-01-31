@@ -75,10 +75,8 @@ public class Chassis extends Subsystem {
     	gosDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
     	gosDrive.setExpiration(0.1);
     	gosDrive.setSafetyEnabled(true);
-    	
-    	
-    	
-   //     robotGyro = new Gyro(RobotMap.GYRO_PORT);
+
+        robotGyro = new Gyro(RobotMap.GYRO_PORT);
 	}
 	
 	public double twistDeadZone(double rawVal)
@@ -92,8 +90,8 @@ public class Chassis extends Subsystem {
 	public void moveByJoystick(Joystick stick)
 	{
 		//if(stick.getMagnitude() > 0.02)
-		gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-		//gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), twistDeadZone(stick.getTwist()), 0);//robotGyro.getAngle());
+		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
+		gosDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getTwist(), robotGyro.getAngle());
 		
 	}
 	
