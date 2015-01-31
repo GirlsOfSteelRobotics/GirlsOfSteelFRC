@@ -19,8 +19,8 @@ public class Collector extends Subsystem {
 	private Talon leftCollector;             // defining a Talon motor and naming it leftSucker
 	private DigitalInput leftLimit;
 	private DigitalInput rightLimit;
-	private Solenoid collectorIn;
-	private Solenoid collectorOut;
+	private Solenoid collectorInSolenoid;
+	private Solenoid collectorOutSolenoid;
 	
 	public Collector()                //this is the constructor
 	{
@@ -52,12 +52,12 @@ public class Collector extends Subsystem {
 		leftCollector.set(0.5);
 	}
 	
-	public void CollectorIn (){
-		collectorIn.set(true);
+	public void collectorIn (){
+		collectorInSolenoid.set(true);
 	}
 	
-	public void CollectorOut (){
-		collectorOut.set(false);
+	public void collectorOut (){
+		collectorOutSolenoid.set(false);
 	}
 	
 	public void stopCollecting(){

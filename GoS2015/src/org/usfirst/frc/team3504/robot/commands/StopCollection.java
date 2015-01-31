@@ -5,15 +5,18 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class StopCollection extends Command {
+	
+	public StopCollection() {
+		requires(Robot.collector);		
+	}
 
 	@Override
 	protected void initialize() {
-		requires(Robot.collector);
+		Robot.collector.stopCollecting();
 	}
 
 	@Override
 	protected void execute() {
-		Robot.collector.stopCollecting();
 	}
 
 	@Override

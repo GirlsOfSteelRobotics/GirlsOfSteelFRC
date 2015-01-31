@@ -24,8 +24,7 @@ public class CollectTote extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		Robot.collector.getLimit();
-		return false;
+		return Robot.collector.getLimit();
 	}
 
 	@Override
