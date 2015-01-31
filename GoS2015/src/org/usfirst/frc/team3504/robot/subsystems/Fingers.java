@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.Talon;
@@ -21,13 +22,13 @@ import org.usfirst.frc.team3504.robot.RobotMap;
  */
 public class Fingers extends Subsystem {
 	
-	private Talon LeftTalon;
-	private Talon RightTalon;
-	private Encoder LeftEncoder;
-	private Encoder RightEncoder;
-	private DigitalInput LeftLimit;
-	private DigitalInput RightLimit;
-	private Solenoid FingersDown;
+	private Talon leftTalon;
+	private Talon rightTalon;
+	private Encoder leftEncoder;
+	private Encoder rightEncoder;
+	private DigitalInput leftLimit;
+	private DigitalInput rightLimit;
+	private Solenoid fingersDownSolenoid;
 	
 	public Fingers()
 	{
@@ -48,18 +49,18 @@ public class Fingers extends Subsystem {
 	//	RightTalon.set(.23);
 	//}
 	
-	public void FingersDown(){
-		fingersDown.set(true);				//pushes the fingers down using pneumatics
+	public void fingersDown(){
+		fingersDownSolenoid.set(true);				//pushes the fingers down using pneumatics
 	}
 	public void fingerStop()
 	{
-		LeftTalon.stopMotor();
-		RightTalon.stopMotor();
+		leftTalon.stopMotor();
+		rightTalon.stopMotor();
 	}
 	
 	public boolean getLimit()
 	{
-		return (LeftLimit.get() && RightLimit.get());
+		return (leftLimit.get() && rightLimit.get());
 	}
 	
     

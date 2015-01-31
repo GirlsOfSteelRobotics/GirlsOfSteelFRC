@@ -1,22 +1,17 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Collector;
-import org.usfirst.frc.team3504.robot.subsystems.Doors;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team3504.robot.subsystems.Fingers;
-import org.usfirst.frc.team3504.robot.subsystems.Lifter;
-import org.usfirst.frc.team3504.robot.subsystems.Pusher;
-import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
-import org.usfirst.frc.team3504.robot.subsystems.Grippers;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,17 +22,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
-	public static ExampleSubsystem exampleSubsystem; //Need to remove eventually
-	public static Chassis chassis;
-	public static Camera camera;
-	public static Collector collector;
-	public static Fingers fingers;
-	public static Grippers gripper;
-	public static Lifter forklift;
-	public static Doors doors;
-	public static UltrasonicSensor ultrasonicsensor; 
-	public static Pusher pusher;
+	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static UltrasonicSensor ultrasonicsensor;
 	public static OI oi;
+
     Command autonomousCommand;
 
     /**
@@ -45,21 +33,10 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	RobotMap.init();
-		exampleSubsystem = new ExampleSubsystem();
-		chassis = new Chassis();
-		camera = new Camera();
-		collector = new Collector();
-		fingers = new Fingers();
-		gripper = new Grippers(); 
-		forklift = new Lifter();
-		doors = new Doors();
-		ultrasonicsensor = new UltrasonicSensor();
+    	ultrasonicsensor = new UltrasonicSensor();
 		oi = new OI();
-		pusher = new Pusher();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
-        
     }
 	
 	public void disabledPeriodic() {
@@ -107,5 +84,4 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
-    
 }

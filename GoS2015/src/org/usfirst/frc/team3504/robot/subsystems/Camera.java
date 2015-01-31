@@ -15,24 +15,24 @@ public class Camera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	//private camera camera1
-	//private camera camera2 (?) check 
+	//private camera camera1 (?) check
+	//private camera camera0
  
 	private String name;
-	private String camera2 = "cam2";
+	private String camera0 = "cam0";
 	private String camera1 = "cam1";
 	
 	
 	public Camera()
 	{
-		Cam2();
+		Cam0();
 	}
 	
 	//method for stuff from robot.java
 
     public void switchCam() {
     	if (name==camera1)
-    		Cam2();
+    		Cam0();
     	else
     		Cam1();
     }
@@ -49,14 +49,14 @@ public class Camera extends Subsystem {
        // SmartDashboard.putData("cam1", (Sendable) CameraServer.getInstance());
     }
     
-    public void Cam2() {
+    public void Cam0() {
         CameraServer server;
         server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
-        server.startAutomaticCapture("cam2");
-        name = camera2;
-        //SmartDashboard.putData("cam2", (Sendable) CameraServer.getInstance());
+        server.startAutomaticCapture("cam0");
+        name = camera0;
+        //SmartDashboard.putData("cam0", (Sendable) CameraServer.getInstance());
 }
 
 	@Override

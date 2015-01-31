@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -64,10 +65,10 @@ public class Collector extends Subsystem {
 		leftCollector.set(0.0);
 	}
 	
-	public void stopAngle (){
-		collectorAngleRight.set(0.0);
-		collectorAngleLeft.set(0.0);
-	}
+	//public void stopAngle (){
+		//collectorAngleRight.set(0.0);
+		//collectorAngleLeft.set(0.0);
+	//}
 	
 	public boolean getLimit()
 	{
