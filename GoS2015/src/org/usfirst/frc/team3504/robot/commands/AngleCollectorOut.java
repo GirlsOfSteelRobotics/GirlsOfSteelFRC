@@ -15,11 +15,11 @@ public class AngleCollectorOut extends Command{
 	
 	@Override
 	protected void initialize() {
+		Robot.collector.collectorOut();
 	}
 
 	@Override
 	protected void execute() {
-		Robot.collector.collectorAngleOut();
 	}
 
 	@Override
