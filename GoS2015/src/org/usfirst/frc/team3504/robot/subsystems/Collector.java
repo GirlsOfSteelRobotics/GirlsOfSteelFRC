@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -19,22 +20,19 @@ public class Collector extends Subsystem {
 	private Talon leftCollector;             // defining a Talon motor and naming it leftSucker
 	private DigitalInput leftLimit;
 	private DigitalInput rightLimit;
-	private Solenoid collectorInSolenoid;
-	private Solenoid collectorOutSolenoid;
+	private DoubleSolenoid collectorLeftSolenoid;
+	private DoubleSolenoid collectorRightSolenoid;
 	
 	public Collector()                //this is the constructor
 	{
-		/*
 		rightCollector = new Talon(RobotMap.RIGHT_COLLECTOR_WHEEL);
 		leftCollector = new Talon(RobotMap.LEFT_COLLECTOR_WHEEL);
-		collectorAngleRight = new Talon(RobotMap.RIGHT_COLLECTOR_ANGLE_WHEEL);
-		collectorAngleLeft = new Talon(RobotMap.LEFT_COLLECTOR_ANGLE_WHEEL);
 		leftLimit = new DigitalInput(RobotMap.LEFT_COLLECTOR_LIMIT);
 		rightLimit = new DigitalInput(RobotMap.RIGHT_COLLECTOR_LIMIT);
-		collectorIn = new Solenoid(0);
-		collectorOut = new Solenoid(0);
-		**/
-		
+		collectorLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
+													RobotMap.LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL);
+		collectorRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
+													RobotMap.RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL);
 	}
 	
 	public void collectorToteIn (){              //creating method suckToteIn which suck a tote inside the robot
@@ -53,11 +51,13 @@ public class Collector extends Subsystem {
 	}
 	
 	public void collectorIn (){
-		collectorInSolenoid.set(true);
+		collectorRightSolenoid.set(DoubleSolenoid.Value.kForward);
+		collectorLeftSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	public void collectorOut (){
-		collectorOutSolenoid.set(false);
+		collectorRightSolenoid.set(DoubleSolenoid.Value.kReverse);
+		collectorLeftSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void stopCollecting(){

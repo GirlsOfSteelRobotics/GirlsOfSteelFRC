@@ -57,14 +57,23 @@ public class RobotMap {
 	 * final int LEFT_WEDGE_LIMIT = 16; //Limit Switches public static final int
 	 * RIGHT_WEDGE_LIMIT = 17; public static final int TRIANGLE_PEG_SOLENOID =
 	 * 24;
-	 * 
-	 * //Collector ports public static final int RIGHT_COLLECTOR_WHEEL = 19;
-	 * //Motors public static final int LEFT_COLLECTOR_WHEEL = 10; public static
-	 * final int RIGHT_COLLECTOR_ANGLE_WHEEL = 11; public static final int
-	 * LEFT_COLLECTOR_ANGLE_WHEEL = 12; public static final int
-	 * LEFT_COLLECTOR_LIMIT = 18; //Limit Switches public static final int
-	 * RIGHT_COLLECTOR_LIMIT = 19;
-	 * 
+	 */
+
+	// Collector ports
+
+	// Motors
+	public static final int LEFT_COLLECTOR_WHEEL = 10;
+	public static final int RIGHT_COLLECTOR_WHEEL = 19;
+	// Pistons
+	public static final int RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL = 0;
+	public static final int RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL = 1;
+	public static final int LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL = 2;
+	public static final int LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL = 3;
+	// Limit Switches
+	public static final int LEFT_COLLECTOR_LIMIT = 18;
+	public static final int RIGHT_COLLECTOR_LIMIT = 19;
+
+	/*
 	 * //Door ports public static final int LEFT_DOOR_CHANNEL = 20; //Motors
 	 * public static final int RIGHT_DOOR_CHANNEL = 21;
 	 */
