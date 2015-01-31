@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import edu.wpi.first.wpilibj.SpeedController;
 //import edu.wpi.first.wpilibj.PIDSource;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -77,6 +79,7 @@ public class Chassis extends Subsystem {
     	gosDrive.setSafetyEnabled(true);
 
         robotGyro = new Gyro(RobotMap.GYRO_PORT);
+        LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
 	}
 	
 	/* twistDeadZone
