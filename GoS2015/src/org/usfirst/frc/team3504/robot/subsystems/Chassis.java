@@ -197,7 +197,9 @@ public class Chassis extends Subsystem {
 	public double getRearRightEncoderDistance(){
 		return rearRightEncoder.getDistance();
 	}
-	
+	public void resetGyro() {
+		robotGyro.reset();
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

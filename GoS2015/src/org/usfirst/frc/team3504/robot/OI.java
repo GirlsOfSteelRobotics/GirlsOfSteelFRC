@@ -79,6 +79,9 @@ public class OI {
 	//Camera buttons
 	private JoystickButton switchCamera;
 	
+	// Gyro Button
+	private JoystickButton resetGyro;
+	
 	/*
 	 * Add pusher buttons
 	 * Add Triangle pegs buttons (fingers)
@@ -158,6 +161,9 @@ public class OI {
 		switchCamera = new JoystickButton(operatorJoystick, 7);	// FIXME: make sure this is for the correct Joystick and port
 		
 		switchCamera.whenPressed (new CameraSwitch());
+		
+		//Gyro Button initialization
+		resetGyro = new JoystickButton(chassisJoystick, 13);
 	}
 	
 	public Joystick getOperatorJoystick()
