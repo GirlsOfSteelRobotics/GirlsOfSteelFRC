@@ -1,21 +1,11 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.CameraSwitch;
-import org.usfirst.frc.team3504.robot.commands.DriveBackward;
-import org.usfirst.frc.team3504.robot.commands.DriveForward;
-import org.usfirst.frc.team3504.robot.commands.DriveLeft;
-import org.usfirst.frc.team3504.robot.commands.DriveRight;
-import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
-//github.com/GirlsOfSteelRobotics/2015season.git
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoTurnLeft;
+import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.*;
 
 import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-//import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator

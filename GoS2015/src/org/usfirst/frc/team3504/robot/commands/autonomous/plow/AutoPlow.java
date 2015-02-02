@@ -1,9 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous.plow;
 
 import org.usfirst.frc.team3504.robot.commands.DoorsOut;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
-import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
-import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
