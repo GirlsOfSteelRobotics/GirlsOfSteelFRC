@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ResetGyro extends Command {
 
     public ResetGyro() {
+    requires(Robot.chassis);
+    }
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	requires(Robot.chassis);
     }
 
     // Called repeatedly when this Command is scheduled to run
