@@ -93,8 +93,8 @@ public class Chassis extends Subsystem {
 	 */
 	public double twistDeadZone(double rawVal)
 	{
-		if(Math.abs(rawVal) > .9)
-			return rawVal/5;
+		if(Math.abs(rawVal) > .5)
+			return rawVal-.5;
 		else
 			return 0.0;
 	}
@@ -112,9 +112,9 @@ public class Chassis extends Subsystem {
 		if (getGyro)
 		//if(stick.getMagnitude() > 0.02)
 		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
+			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()*((-stick.getThrottle() + 1) / 2)), robotGyro.getAngle());
 		else
-			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), 0);
+			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()*((-stick.getThrottle() + 1) / 2)), 0);
 	}
 	
 	public void autoDriveSideways(double speed){

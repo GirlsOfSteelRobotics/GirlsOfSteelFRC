@@ -83,6 +83,8 @@ public class OI {
 	private JoystickButton resetGyro;
 	private JoystickButton getGyro;
 	
+	//photosensor button
+	private JoystickButton testPSensor;
 	/*
 	 * Add pusher buttons
 	 * Add Triangle pegs buttons (fingers)
@@ -140,7 +142,7 @@ public class OI {
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
-		autoTurnLeft = new JoystickButton(chassisJoystick, 12);
+		//autoTurnLeft = new JoystickButton(chassisJoystick, 12);
 		
 		autoDriveForward.whenPressed(new AutoDriveForward());
 		//autoFirstPickup.whenPressed(new AutoFirstPickup());
@@ -167,6 +169,10 @@ public class OI {
 		resetGyro.whenPressed(new ResetGyro());
 		getGyro = new JoystickButton(chassisJoystick, 12);
 		getGyro.whenPressed(new GetGyro());
+		
+		//photosensorbuttons
+		testPSensor = new JoystickButton(chassisJoystick, 7);
+		testPSensor.whenPressed(new TestPhotoSensor());
 	}
 	
 	public Joystick getOperatorJoystick()
