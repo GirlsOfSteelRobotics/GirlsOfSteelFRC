@@ -38,7 +38,7 @@ public class RobotMap {
 	public static final int REAR_RIGHT_WHEEL_ENCODER_A = 6;
 	public static final int REAR_RIGHT_WHEEL_ENCODER_B = 7;
 	public static final int ULTRASONICSENSOR_CHANNEL = 8;
-
+	public static final int PHOTOSENSOR_CHANNEL = 0;
 	/* shaft port = 5 lift port = 17
 	 * //Forklift ports public static final int FORKLIFT_CHANNEL = 4; //Motors
 	 * public static final int LEFT_FORKLIFT_LIMIT = 8; //Limit Switches public
