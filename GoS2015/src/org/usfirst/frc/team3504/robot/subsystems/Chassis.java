@@ -40,6 +40,8 @@ public class Chassis extends Subsystem {
     double Ki;
     double Kd;
     
+    boolean getGyro;
+    
 	// CANTalons
 	public static CANTalon rightFrontWheel;
 	public static CANTalon leftFrontWheel;
@@ -56,6 +58,8 @@ public class Chassis extends Subsystem {
 		Kp = .0001;//SmartDashboard.getNumber("p value");
 	    Ki = .0000001;//SmartDashboard.getNumber("i value");
 	    Kd = .0000001;//SmartDashboard.getNumber("d value");
+	    
+	    getGyro = true;
 		
 		frontLeftEncoder = new Encoder(RobotMap.FRONT_LEFT_WHEEL_ENCODER_A, RobotMap.FRONT_LEFT_WHEEL_ENCODER_B);
     	rearLeftEncoder = new Encoder(RobotMap.REAR_LEFT_WHEEL_ENCODER_A, RobotMap.REAR_LEFT_WHEEL_ENCODER_B);
@@ -105,9 +109,12 @@ public class Chassis extends Subsystem {
 	
 	public void moveByJoystick(Joystick stick)
 	{
+		if (getGyro)
 		//if(stick.getMagnitude() > 0.02)
 		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
+			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
+		else
+			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), 0);
 	}
 	
 	public void autoDriveSideways(double speed){
@@ -197,7 +204,13 @@ public class Chassis extends Subsystem {
 	public double getRearRightEncoderDistance(){
 		return rearRightEncoder.getDistance();
 	}
+	public void resetGyro() {
+		robotGyro.reset();
+	}
 	
+	public void getGyro() {
+		getGyro = !getGyro;
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
