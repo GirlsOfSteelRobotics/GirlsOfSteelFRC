@@ -142,7 +142,7 @@ public class OI {
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
-		//autoTurnLeft = new JoystickButton(chassisJoystick, 12);
+		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
 		
 		autoDriveForward.whenPressed(new AutoDriveForward());
 		//autoFirstPickup.whenPressed(new AutoFirstPickup());
@@ -154,10 +154,6 @@ public class OI {
 		doorIn = new JoystickButton(operatorJoystick,7);	// FIXME: make sure this is for the correct Joystick and port
 		doorOut = new JoystickButton(operatorJoystick,8);	// FIXME: make sure this is for the correct Joystick and port
 		
-		//autoDriveForward.whenPressed(new AutoDriveForward());
-		//autoFirstPickup.whenPressed(new AutoFirstPickup());
-		//autoSucker.whenPressed(new AutoSucker()); 
-		autoTurnLeft.whenPressed(new AutoTurnLeft());
 		
 		
 		//Camera buttons initialization
