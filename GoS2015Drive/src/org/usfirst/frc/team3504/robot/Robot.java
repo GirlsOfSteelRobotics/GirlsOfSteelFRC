@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	RobotMap.init();
+    	//RobotMap.init();
     	exampleSubsystem = new ExampleSubsystem(); //Need to remove eventually
     	chassis = new Chassis();
 		oi = new OI();
