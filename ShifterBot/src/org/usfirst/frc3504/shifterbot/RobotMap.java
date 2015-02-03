@@ -29,30 +29,38 @@ public class RobotMap {
 	public static final int DRIVE_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
 
+    
  static void init() {
+	 
 		driveSystemDriveLeft0 = new CANTalon(0);
 		// LiveWindow.addActuator("Drive System", "Drive Left0",
 		// driveSystemDriveLeft0);
+		driveSystemDriveLeft0.setPID(.0001, .0000001, .0000001);
 
 		driveSystemDriveRight0 = new CANTalon(3);
 		// LiveWindow.addActuator("Drive System", "Drive Right0",
 		// driveSystemDriveRight0);
-
+		driveSystemDriveRight0.setPID(.0001, .0000001, .0000001);
+		
 		driveSystemDriveLeft1 = new CANTalon(1);
 		// LiveWindow.addActuator("Drive System", "Drive Left1",
 		// driveSystemDriveLeft1);
-
+		driveSystemDriveLeft1.setPID(.0001, .0000001, .0000001);
+		
 		driveSystemDriveRight1 = new CANTalon(4);
 		// LiveWindow.addActuator("Drive System", "Drive Right1",
 		// driveSystemDriveRight1);
-
+		driveSystemDriveRight1.setPID(.0001, .0000001, .0000001);
+		
 		driveSystemDriveLeft2 = new CANTalon(2);
 		// LiveWindow.addActuator("Drive System", "Drive Left2",
 		// driveSystemDriveLeft2);
+		driveSystemDriveLeft2.setPID(.0001, .0000001, .0000001);
 
 		driveSystemDriveRight2 = new CANTalon(5);
 		// LiveWindow.addActuator("Drive System", "Drive Right2",
 		// driveSystemDriveRight2);
+		driveSystemDriveRight2.setPID(.0001, .0000001, .0000001);
 
 		// Follower: The m_motor will run at the same throttle as the specified
 		// other talon.
@@ -82,6 +90,6 @@ public class RobotMap {
 		shiftersShifterLeft = new DoubleSolenoid(0, 1);
 		shiftersShifterRight = new DoubleSolenoid(2, 3);  
 		
-
+    	
 	}
 }
