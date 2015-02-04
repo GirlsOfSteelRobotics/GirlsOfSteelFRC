@@ -1,4 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands;
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -18,6 +19,7 @@ public class TestPhotoSensor extends Command {
     public TestPhotoSensor() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.chassis);
     	psensor_lightinput = new DigitalInput(RobotMap.PHOTOSENSOR_CHANNEL_LIGHTINPUT);
     	psensor_darkinput = new DigitalInput(RobotMap.PHOTOSENSOR_CHANNEL_DARKINPUT);
     }
@@ -28,8 +30,8 @@ public class TestPhotoSensor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putBoolean("photosensor", psensor_lightinput.get());
-    	SmartDashboard.putBoolean("photosensor", psensor_darkinput.get());
+    	SmartDashboard.putBoolean("photosensorlight", psensor_lightinput.get());
+    	SmartDashboard.putBoolean("photosensordark", psensor_darkinput.get());
     }
 
     // Make this return true when this Command no longer needs to run execute()

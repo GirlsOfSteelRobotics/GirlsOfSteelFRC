@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.TestPhotoSensor;
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -215,5 +216,6 @@ public class Chassis extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveByJoystick());
+    	//setDefaultCommand(new TestPhotoSensor());
     }
 }

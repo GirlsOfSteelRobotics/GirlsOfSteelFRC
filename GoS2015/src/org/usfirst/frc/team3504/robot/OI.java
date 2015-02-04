@@ -135,7 +135,7 @@ public class OI {
 		getDistance = new JoystickButton(chassisJoystick, 13);
 		//getDistance.whenPressed(new TestUltrasonic());
 		
-		switchCamera = new JoystickButton(chassisJoystick, 7);
+		
 	
 		
 		//Autonomous
@@ -156,19 +156,20 @@ public class OI {
 		
 		
 		
-		//Camera buttons initialization
-		switchCamera = new JoystickButton(operatorJoystick, 7);	// FIXME: make sure this is for the correct Joystick and port
+		//Camera buttons initialization	
+		switchCamera = new JoystickButton(chassisJoystick, 2);
 		switchCamera.whenPressed (new CameraSwitch());
+		 // FIXME: make sure this is for the correct Joystick and port
 		
 		//Gyro Button initialization
-		resetGyro = new JoystickButton(chassisJoystick, 13);
+		resetGyro = new JoystickButton(chassisJoystick, 1);
 		resetGyro.whenPressed(new ResetGyro());
 		getGyro = new JoystickButton(chassisJoystick, 12);
 		getGyro.whenPressed(new GetGyro());
 		
 		//photosensorbuttons
-		testPSensor = new JoystickButton(chassisJoystick, 7);
-		testPSensor.whenPressed(new TestPhotoSensor());
+		//testPSensor = new JoystickButton(chassisJoystick, 7);
+		//testPSensor.whenPressed(new TestPhotoSensor());
 	}
 	
 	public Joystick getOperatorJoystick()
