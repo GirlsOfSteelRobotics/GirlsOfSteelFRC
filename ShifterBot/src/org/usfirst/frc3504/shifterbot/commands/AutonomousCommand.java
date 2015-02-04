@@ -19,7 +19,7 @@ public class  AutonomousCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveSystem.resetEncoders();
+		Robot.driveSystem.resetDistance();
 		setTimeout(1.5);
 		Robot.accessoryMotors.driveAccessoryLeft(true);
 		Robot.accessoryMotors.driveAccessoryRight(false);	
