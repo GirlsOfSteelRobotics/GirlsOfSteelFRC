@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -9,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Arushi, Isabella
  */
 public class TestUltrasonic extends Command {
-
 	
     public TestUltrasonic() {
         // Use requires() here to declare subsystem dependencies
@@ -24,8 +24,8 @@ public class TestUltrasonic extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(Robot.ultrasonicsensor.getDistanceInches());
-    	//SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
+    	//System.out.println(Robot.ultrasonicsensor.getDistanceInches());
+    	SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
     }
 
     // Make this return true when this Command no longer needs to run execute()
