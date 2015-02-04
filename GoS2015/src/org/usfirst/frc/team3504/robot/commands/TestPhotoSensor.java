@@ -12,16 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TestPhotoSensor extends Command {
 
-	private DigitalInput psensor_lightinput;
-	private DigitalInput psensor_darkinput;
 	
 	
     public TestPhotoSensor() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.chassis);
-    	psensor_lightinput = new DigitalInput(RobotMap.PHOTOSENSOR_CHANNEL_LIGHTINPUT);
-    	psensor_darkinput = new DigitalInput(RobotMap.PHOTOSENSOR_CHANNEL_DARKINPUT);
+    	requires(Robot.photosensor);
+   	
     }
 
     // Called just before this Command runs the first time
@@ -30,8 +27,8 @@ public class TestPhotoSensor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putBoolean("photosensorlight", psensor_lightinput.get());
-    	SmartDashboard.putBoolean("photosensordark", psensor_darkinput.get());
+    	SmartDashboard.putBoolean("photosensor light", Robot.photosensor.getLightValue());
+    	SmartDashboard.putBoolean("photosensor dark", Robot.photosensor.getDarkValue());
     }
 
     // Make this return true when this Command no longer needs to run execute()

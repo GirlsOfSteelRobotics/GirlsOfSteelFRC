@@ -9,6 +9,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Doors;
 import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3504.robot.subsystems.Fingers;
 import org.usfirst.frc.team3504.robot.subsystems.Lifter;
+import org.usfirst.frc.team3504.robot.subsystems.PhotoSensor;
 import org.usfirst.frc.team3504.robot.subsystems.Pusher;
 import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
 import org.usfirst.frc.team3504.robot.subsystems.Grippers;
@@ -16,6 +17,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Grippers;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static UltrasonicSensor ultrasonicsensor; 
 	public static Pusher pusher;
 	public static OI oi;
+	public static PhotoSensor photosensor;
     Command autonomousCommand;
 
     /**
@@ -56,7 +59,9 @@ public class Robot extends IterativeRobot {
 		doors = new Doors();
 		ultrasonicsensor = new UltrasonicSensor();
 		pusher = new Pusher();
+		photosensor = new PhotoSensor();
 		oi = new OI();
+		
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
         
