@@ -32,10 +32,10 @@ public class Chassis extends Subsystem {
 	private RobotDrive gosDrive;
 	private Gyro robotGyro;
  
-    private Encoder frontLeftEncoder;
-    private Encoder rearLeftEncoder;
-    private Encoder frontRightEncoder;
-    private Encoder rearRightEncoder;
+    private TalonEncoder frontLeftEncoder;
+    private TalonEncoder rearLeftEncoder;
+    private TalonEncoder frontRightEncoder;
+    private TalonEncoder rearRightEncoder;
     
     double Kp;
     double Ki;
@@ -62,15 +62,15 @@ public class Chassis extends Subsystem {
 	    
 	    getGyro = true;
 		
-		frontLeftEncoder = new Encoder(RobotMap.FRONT_LEFT_WHEEL_ENCODER_A, RobotMap.FRONT_LEFT_WHEEL_ENCODER_B);
-    	rearLeftEncoder = new Encoder(RobotMap.REAR_LEFT_WHEEL_ENCODER_A, RobotMap.REAR_LEFT_WHEEL_ENCODER_B);
-    	frontRightEncoder = new Encoder(RobotMap.FRONT_RIGHT_WHEEL_ENCODER_A, RobotMap.FRONT_RIGHT_WHEEL_ENCODER_B);
-    	rearRightEncoder = new Encoder(RobotMap.REAR_RIGHT_WHEEL_ENCODER_A, RobotMap.REAR_RIGHT_WHEEL_ENCODER_B);
+		frontLeftEncoder = new TalonEncoder(leftFrontWheel);
+    	rearLeftEncoder = new TalonEncoder(leftBackWheel);
+    	frontRightEncoder = new TalonEncoder(rightFrontWheel);
+    	rearRightEncoder = new TalonEncoder(leftBackWheel);
 		
-    	frontLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	rearLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	frontRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	rearRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//frontLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//rearLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//frontRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//rearRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
     	
        // gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
         						//	RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
