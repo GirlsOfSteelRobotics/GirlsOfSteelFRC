@@ -164,46 +164,46 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void resetEncoders(){
-		frontLeftEncoder.reset();
-		frontRightEncoder.reset();
-		rearLeftEncoder.reset();
-		rearRightEncoder.reset();
+		//leftFrontWheel.reset();
+		//rightFrontWheel.reset();
+		//leftBackWheel.reset();
+		//rightBackWheel.reset();
 	}
-	
+	//need to change getEncVelocity to getDistance later
 	public double getFrontLeftEncoderRate()
 	{
-		return frontLeftEncoder.getRate();
+		return leftFrontWheel.getEncVelocity();
 	}
 	
 	public double getFrontLeftEncoderDistance(){
-		return frontLeftEncoder.getDistance();
+		return leftFrontWheel.getEncPosition();
 	}
 	
 	public double getRearLeftEncoderRate()
 	{
-		return rearLeftEncoder.getRate();
+		return leftBackWheel.getEncVelocity();
 	}
 	
 	public double getRearLeftEncoderDistance(){
-		return rearLeftEncoder.getDistance();
+		return leftBackWheel.getEncPosition();
 	}
 	
 	public double getFrontRightEncoderRate()
 	{
-		return frontRightEncoder.getRate();
+		return rightFrontWheel.getEncVelocity();
 	}
 	
 	public double getFrontRightEncoderDistance(){
-		return frontRightEncoder.getDistance();
+		return rightFrontWheel.getEncPosition();
 	}
 	
 	public double getRearRightEncoderRate()
 	{
-		return rearRightEncoder.getRate();
+		return rightBackWheel.getEncVelocity();
 	}
 	
 	public double getRearRightEncoderDistance(){
-		return rearRightEncoder.getDistance();
+		return rightBackWheel.getEncPosition();
 	}
 	public void resetGyro() {
 		robotGyro.reset();
