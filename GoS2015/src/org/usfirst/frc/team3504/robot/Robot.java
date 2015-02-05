@@ -2,6 +2,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
@@ -63,7 +64,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        autonomousCommand = new AutoDriveForward();
         
     }
 	

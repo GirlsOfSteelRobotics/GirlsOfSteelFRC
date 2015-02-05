@@ -27,8 +27,8 @@ public class TestPhotoSensor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putBoolean("photosensor light", Robot.photosensor.getLightValue());
-    	SmartDashboard.putBoolean("photosensor dark", Robot.photosensor.getDarkValue());
+    	SmartDashboard.putNumber("photosensor light", Robot.photosensor.getLightValue());
+    	SmartDashboard.putNumber("photosensor dark", Robot.photosensor.getDarkValue());
     }
 
     // Make this return true when this Command no longer needs to run execute()

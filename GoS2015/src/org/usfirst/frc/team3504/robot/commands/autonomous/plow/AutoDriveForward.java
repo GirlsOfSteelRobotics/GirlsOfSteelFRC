@@ -20,6 +20,7 @@ public class AutoDriveForward extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {   	
     	Robot.chassis.resetEncoders();
+    	setTimeout(3.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,13 +30,15 @@ public class AutoDriveForward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.chassis.getFrontLeftEncoderDistance() == 53.7) /**Tote/Container Distances:
+    	return isTimedOut();
+    	/**if (Robot.chassis.getFrontLeftEncoderDistance() == 10.7) //Tote/Container Distances:
 																	Tote+Container(in): 26.9+18=44.9
 																	Tote(in): 26.9
-																	Distance Between w/o Container(in): 18+35.75=53.75 */
+																	Distance Between w/o Container(in): 18+35.75=53.75 
     		return true;
     	else 
     		return false;
+    	*/
     }
 
     // Called once after isFinished returns true
