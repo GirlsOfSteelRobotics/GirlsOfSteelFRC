@@ -14,7 +14,7 @@ public class AutoTurnLeft extends Command {
     	// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
-
+    // see autodriveforward for explanation
     // Called just before this Command runs the first time
     protected void initialize() {
     	initialDistance = Robot.chassis.getFrontLeftEncoderDistance(); 

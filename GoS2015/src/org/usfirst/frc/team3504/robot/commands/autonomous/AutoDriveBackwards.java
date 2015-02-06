@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoDriveBackwards extends Command {
 	double initialDistance; 
+	
     public AutoDriveBackwards() {
-    
+    //set variable because no other way to reset encoders 
     	
     	requires(Robot.chassis);
         // Use requires() here to declare subsystem dependencies
@@ -20,6 +21,8 @@ public class AutoDriveBackwards extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	initialDistance = Robot.chassis.getFrontLeftEncoderDistance();
+    	//come back to because encoder distance is not being printed on smart dashboard
+    	//need to make this method
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,6 +33,7 @@ public class AutoDriveBackwards extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if (Robot.chassis.getFrontLeftEncoderDistance() == (initialDistance + 36))
+    		//check to make sure 36 is correct distance
     		return true;
     	else
         return false;
