@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Authors: Alexa, Corinne, Sarah
  */
 public class AutoTurnRight extends Command {
-	
+	double initialDistance;
     public AutoTurnRight() {
     	requires(Robot.chassis); 
         // Use requires() here to declare subsystem dependencies
@@ -17,7 +17,7 @@ public class AutoTurnRight extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoders();
+    	initialDistance = Robot.chassis.getFrontLeftEncoderDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
