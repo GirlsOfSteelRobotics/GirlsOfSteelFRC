@@ -65,9 +65,7 @@ public class Robot extends IterativeRobot {
 		photosensor = new PhotoSensor();
 		shack = new Shack(); 
 		oi = new OI();
-		
-		
-        // instantiate the command used for the autonomous period
+		Robot.chassis.resetGyro();
         autonomousCommand = new AutoDriveForward();
         
     }
