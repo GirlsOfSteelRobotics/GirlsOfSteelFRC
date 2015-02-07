@@ -63,6 +63,11 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	
+	//Shack Buttons
+	private JoystickButton shackIn;
+	private JoystickButton shackOut;
+	
+	
 	//Sucker buttons
 	private JoystickButton collectIn;
 	private JoystickButton pushOut;
@@ -135,6 +140,9 @@ public class OI {
 		getDistance = new JoystickButton(chassisJoystick, 13);
 		//getDistance.whenPressed(new TestUltrasonic());
 		
+		//Shack buttons init
+		//shackIn = new JoystickButton(operatorJoystick, 13);
+		//shackOut = new JoystickButton(operatorJoystick,12)
 		
 	
 		

@@ -110,7 +110,7 @@ public class Chassis extends Subsystem {
 	
 	public double deadZone(double rawVal)
 	{
-		if(Math.abs(rawVal) > .1)
+		if(Math.abs(rawVal) > .3)
 			return rawVal-.1;
 		else
 			return 0.0;
@@ -138,7 +138,7 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void autoDriveForward(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 180, 0);
+		gosDrive.mecanumDrive_Polar(speed, 90, 0);
 	}
 	
 	//TODO; move Joystick to subsystem

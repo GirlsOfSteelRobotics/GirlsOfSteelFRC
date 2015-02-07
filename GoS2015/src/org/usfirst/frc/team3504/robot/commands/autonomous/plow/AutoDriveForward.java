@@ -29,7 +29,7 @@ public class AutoDriveForward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.chassis.getFrontLeftEncoderDistance() == 53.7) /**Tote/Container Distances:
+    	if (Robot.chassis.getFrontLeftEncoderDistance() == 1) /**Tote/Container Distances:
 																	Tote+Container(in): 26.9+18=44.9
 																	Tote(in): 26.9
 																	Distance Between w/o Container(in): 18+35.75=53.75 */
