@@ -40,6 +40,12 @@ public class Chassis extends Subsystem {
     double Kp;
     double Ki;
     double Kd;
+    //variables used to reset the encoders
+    double initialFrontLeftEncoderDistance;
+    double initialFrontRightEncoderDistance;
+    double initialRearLeftEncoderDistance;
+    double initialRearRightEncoderDistance;
+    
     
     boolean getGyro;
     
@@ -48,9 +54,11 @@ public class Chassis extends Subsystem {
 	public static CANTalon leftFrontWheel;
 	public static CANTalon rightBackWheel;
 	public static CANTalon leftBackWheel;
-	
 	public Chassis()
 	{
+	//use to reset the encoders
+	
+		
 		rightFrontWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
 		leftFrontWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
 		rightBackWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
@@ -224,5 +232,19 @@ public class Chassis extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveByJoystick());
     	//setDefaultCommand(new TestPhotoSensor());
+   
     }
-}
+    public void resetFrontLeftEncoder() {
+    	initialFrontLeftEncoderDistance = 0;
+    }
+    public void resetFrontRightEncoderDistance(){
+		initialFrontRightEncoderDistance = 0;
+    }
+    public void resetRearLeftEncoderDistance(){
+		initialRearLeftEncoderDistance = 0;
+    }
+    public void resetRearRightEncoderDistance(){
+		initialRearRightEncoderDistance = 0;
+    	 }
+    }
+
