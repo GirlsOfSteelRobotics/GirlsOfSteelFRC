@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 		pusher = new Pusher();
 		photosensor = new PhotoSensor();
 		oi = new OI();
-		
+		Robot.chassis.resetGyro();
         // instantiate the command used for the autonomous period
         autonomousCommand = new AutoDriveForward();
         
