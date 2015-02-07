@@ -1,52 +1,45 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
- * Authors Alexa, Kyra, Sarah
+ *
  */
-public class AutoDriveBackwards extends Command {
-	double initialDistance; 
-	
-    public AutoDriveBackwards() {
-    //set variable because no other way to reset encoders 
-    	
-    	requires(Robot.chassis);
+public class TestEncoder extends Command {
+
+    public TestEncoder() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	initialDistance = Robot.chassis.getFrontLeftEncoderDistance();
-    	//come back to because encoder distance is not being printed on smart dashboard
-    	//need to make this method
+    	Robot.chassis.resetEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveSideways(-.5);
+    	SmartDashboard.putNumber("rear left encoder distance", Robot.chassis.getRearLeftEncoderDistance());
+    	SmartDashboard.putNumber("rear right encoder distance", Robot.chassis.getRearRightEncoderDistance());
+    	SmartDashboard.putNumber("front left encoder distance", Robot.chassis.getFrontLeftEncoderDistance());
+    	SmartDashboard.putNumber("front right encoder distance", Robot.chassis.getFrontRightEncoderDistance()); 	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.chassis.getFrontLeftEncoderDistance() == (initialDistance + 36))
-    		//check to make sure 36 is correct distance
-    		return true;
-    	else
         return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.chassis.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end ();
     }
 }

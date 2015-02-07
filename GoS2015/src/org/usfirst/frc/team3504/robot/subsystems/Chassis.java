@@ -119,15 +119,18 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void autoDriveSideways(double speed){
+		gosDrive.mecanumDrive_Polar(speed, 90, 0);//figure out what the angle should be
+
 		gosDrive.mecanumDrive_Polar(0.75, 90, 0);//figure out what the angle should be
 	}
 	
 	public void autoDriveBackward(double speed){
 		gosDrive.mecanumDrive_Polar(speed, 45, 0);
+
 	}
 	
 	public void autoDriveForward(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 90, 0);
+		gosDrive.mecanumDrive_Polar(speed, 180, 0);
 	}
 	
 	//TODO; move Joystick to subsystem

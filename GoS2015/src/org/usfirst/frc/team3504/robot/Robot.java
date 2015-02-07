@@ -12,6 +12,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Fingers;
 import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 import org.usfirst.frc.team3504.robot.subsystems.PhotoSensor;
 import org.usfirst.frc.team3504.robot.subsystems.Pusher;
+import org.usfirst.frc.team3504.robot.subsystems.Shack;
 import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
 import org.usfirst.frc.team3504.robot.subsystems.Grippers;
 
@@ -42,6 +43,7 @@ public class Robot extends IterativeRobot {
 	public static Pusher pusher;
 	public static OI oi;
 	public static PhotoSensor photosensor;
+	public static Shack shack; 
     Command autonomousCommand;
 
     /**
@@ -61,9 +63,9 @@ public class Robot extends IterativeRobot {
 		ultrasonicsensor = new UltrasonicSensor();
 		pusher = new Pusher();
 		photosensor = new PhotoSensor();
+		shack = new Shack(); 
 		oi = new OI();
-		
-        // instantiate the command used for the autonomous period
+		Robot.chassis.resetGyro();
         autonomousCommand = new AutoDriveForward();
         
     }

@@ -20,25 +20,22 @@ public class AutoDriveForward extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {   	
     	Robot.chassis.resetEncoders();
-    	setTimeout(3.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveSideways(.5);// what is the speed, .5 is guestimate, speed is between 0 and 1
+    	Robot.chassis.autoDriveForward(.5);// what is the speed, .5 is guestimate, speed is between 0 and 1
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return isTimedOut();
-    	/**if (Robot.chassis.getFrontLeftEncoderDistance() == 10.7) //Tote/Container Distances:
+    	if (Robot.chassis.getFrontLeftEncoderDistance() == 53.7) /**Tote/Container Distances:
 																	Tote+Container(in): 26.9+18=44.9
 																	Tote(in): 26.9
-																	Distance Between w/o Container(in): 18+35.75=53.75 
+																	Distance Between w/o Container(in): 18+35.75=53.75 */
     		return true;
     	else 
     		return false;
-    	*/
     }
 
     // Called once after isFinished returns true
