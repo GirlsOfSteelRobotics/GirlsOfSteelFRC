@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.TestPhotoSensor;
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -31,14 +32,16 @@ public class Chassis extends Subsystem {
 	private RobotDrive gosDrive;
 	private Gyro robotGyro;
  
-    private Encoder frontLeftEncoder;
-    private Encoder rearLeftEncoder;
-    private Encoder frontRightEncoder;
-    private Encoder rearRightEncoder;
+    private TalonEncoder frontLeftEncoder;
+    private TalonEncoder rearLeftEncoder;
+    private TalonEncoder frontRightEncoder;
+    private TalonEncoder rearRightEncoder;
     
     double Kp;
     double Ki;
     double Kd;
+    
+    boolean getGyro;
     
 	// CANTalons
 	public static CANTalon rightFrontWheel;
@@ -56,16 +59,18 @@ public class Chassis extends Subsystem {
 		Kp = .0001;//SmartDashboard.getNumber("p value");
 	    Ki = .0000001;//SmartDashboard.getNumber("i value");
 	    Kd = .0000001;//SmartDashboard.getNumber("d value");
+	    
+	    getGyro = true;
 		
-		frontLeftEncoder = new Encoder(RobotMap.FRONT_LEFT_WHEEL_ENCODER_A, RobotMap.FRONT_LEFT_WHEEL_ENCODER_B);
-    	rearLeftEncoder = new Encoder(RobotMap.REAR_LEFT_WHEEL_ENCODER_A, RobotMap.REAR_LEFT_WHEEL_ENCODER_B);
-    	frontRightEncoder = new Encoder(RobotMap.FRONT_RIGHT_WHEEL_ENCODER_A, RobotMap.FRONT_RIGHT_WHEEL_ENCODER_B);
-    	rearRightEncoder = new Encoder(RobotMap.REAR_RIGHT_WHEEL_ENCODER_A, RobotMap.REAR_RIGHT_WHEEL_ENCODER_B);
+		frontLeftEncoder = new TalonEncoder(leftFrontWheel);
+    	rearLeftEncoder = new TalonEncoder(leftBackWheel);
+    	frontRightEncoder = new TalonEncoder(rightFrontWheel);
+    	rearRightEncoder = new TalonEncoder(leftBackWheel);
 		
-    	frontLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	rearLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	frontRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	rearRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//frontLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//rearLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//frontRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+    	//rearRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
     	
        // gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
         						//	RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
@@ -89,8 +94,8 @@ public class Chassis extends Subsystem {
 	 */
 	public double twistDeadZone(double rawVal)
 	{
-		if(Math.abs(rawVal) > .9)
-			return rawVal/5;
+		if(Math.abs(rawVal) > .5)
+			return rawVal-.5;
 		else
 			return 0.0;
 	}
@@ -105,13 +110,20 @@ public class Chassis extends Subsystem {
 	
 	public void moveByJoystick(Joystick stick)
 	{
+		if (getGyro)
 		//if(stick.getMagnitude() > 0.02)
 		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
+			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()*((-stick.getThrottle() + 1) / 2)), robotGyro.getAngle());
+		else
+			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()*((-stick.getThrottle() + 1) / 2)), 0);
 	}
 	
 	public void autoDriveSideways(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 180, 0);//figure out what the angle should be
+		gosDrive.mecanumDrive_Polar(0.75, 90, 0);//figure out what the angle should be
+	}
+	
+	public void autoDriveBackward(double speed){
+		gosDrive.mecanumDrive_Polar(speed, 45, 0);
 	}
 	
 	public void autoDriveForward(double speed){
@@ -156,51 +168,58 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void resetEncoders(){
-		frontLeftEncoder.reset();
-		frontRightEncoder.reset();
-		rearLeftEncoder.reset();
-		rearRightEncoder.reset();
+		//leftFrontWheel.reset();
+		//rightFrontWheel.reset();
+		//leftBackWheel.reset();
+		//rightBackWheel.reset();
 	}
-	
+	//need to change getEncVelocity to getDistance later
 	public double getFrontLeftEncoderRate()
 	{
-		return frontLeftEncoder.getRate();
+		return leftFrontWheel.getEncVelocity();
 	}
 	
 	public double getFrontLeftEncoderDistance(){
-		return frontLeftEncoder.getDistance();
+		return leftFrontWheel.getEncPosition();
 	}
 	
 	public double getRearLeftEncoderRate()
 	{
-		return rearLeftEncoder.getRate();
+		return leftBackWheel.getEncVelocity();
 	}
 	
 	public double getRearLeftEncoderDistance(){
-		return rearLeftEncoder.getDistance();
+		return leftBackWheel.getEncPosition();
 	}
 	
 	public double getFrontRightEncoderRate()
 	{
-		return frontRightEncoder.getRate();
+		return rightFrontWheel.getEncVelocity();
 	}
 	
 	public double getFrontRightEncoderDistance(){
-		return frontRightEncoder.getDistance();
+		return rightFrontWheel.getEncPosition();
 	}
 	
 	public double getRearRightEncoderRate()
 	{
-		return rearRightEncoder.getRate();
+		return rightBackWheel.getEncVelocity();
 	}
 	
 	public double getRearRightEncoderDistance(){
-		return rearRightEncoder.getDistance();
+		return rightBackWheel.getEncPosition();
+	}
+	public void resetGyro() {
+		robotGyro.reset();
 	}
 	
+	public void getGyro() {
+		getGyro = !getGyro;
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveByJoystick());
+    	//setDefaultCommand(new TestPhotoSensor());
     }
 }

@@ -1,26 +1,29 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.TestUltrasonic;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class UltrasonicSensor extends Subsystem{
 
-	private Ultrasonic ultrasonicSensor;
+	private AnalogInput ultrasonicSensor;
 	
 	public UltrasonicSensor() {
-		//ultrasonicSensor = new Ultrasonic(RobotMap.ULTRASONICSENSOR_CHANNEL);
+		ultrasonicSensor = new AnalogInput(RobotMap.ULTRASONICSENSOR_CHANNEL);
 	}
 
 	public double getDistanceInches() {
-		return 0.0; //ultrasonicSensor.getRangeInches();
+		return ultrasonicSensor.getVoltage()*(512/5); //5 volts/512 per inch
 	}
 	
 	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new TestUltrasonic());
 		// TODO Auto-generated method stub
 		
 	}

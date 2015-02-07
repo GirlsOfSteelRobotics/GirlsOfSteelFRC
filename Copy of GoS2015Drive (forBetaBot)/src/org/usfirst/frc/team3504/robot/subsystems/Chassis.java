@@ -49,7 +49,7 @@ public class Chassis extends Subsystem {
 	    Ki = .0000001;//SmartDashboard.getNumber("i value");
 	    Kd = .0000001;//SmartDashboard.getNumber("d value");
 		
-	/*	frontLeftEncoder = new Encoder(RobotMap.FRONT_LEFT_WHEEL_ENCODER_A, RobotMap.FRONT_LEFT_WHEEL_ENCODER_B);
+		frontLeftEncoder = new Encoder(RobotMap.FRONT_LEFT_WHEEL_ENCODER_A, RobotMap.FRONT_LEFT_WHEEL_ENCODER_B);
     	rearLeftEncoder = new Encoder(RobotMap.REAR_LEFT_WHEEL_ENCODER_A, RobotMap.REAR_LEFT_WHEEL_ENCODER_B);
     	frontRightEncoder = new Encoder(RobotMap.FRONT_RIGHT_WHEEL_ENCODER_A, RobotMap.FRONT_RIGHT_WHEEL_ENCODER_B);
     	rearRightEncoder = new Encoder(RobotMap.REAR_RIGHT_WHEEL_ENCODER_A, RobotMap.REAR_RIGHT_WHEEL_ENCODER_B);
@@ -59,20 +59,17 @@ public class Chassis extends Subsystem {
     	frontRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
     	rearRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
     	
-       // gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
-        						//	RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
-        gosDrive = new RobotDrive  (new PIDSpeedController(RobotMap.leftFrontWheel, Kp, Ki, Kd, frontLeftEncoder),
-				new PIDSpeedController(RobotMap.leftBackWheel, Kp, Ki, Kd, rearLeftEncoder),
-				new PIDSpeedController(RobotMap.rightFrontWheel, Kp, Ki, Kd, frontRightEncoder),
-				new PIDSpeedController(RobotMap.rightBackWheel, Kp, Ki, Kd, rearRightEncoder));
-       */
-	    
 	    rightFrontWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
 		leftFrontWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
 		rightBackWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
 		leftBackWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
 		
-		
+       // gosDrive = new RobotDrive(RobotMap.FRONT_LEFT_CHANNEL, RobotMap.REAR_LEFT_CHANNEL,
+        						//	RobotMap.FRONT_RIGHT_CHANNEL, RobotMap.REAR_RIGHT_CHANNEL);
+       // gosDrive = new RobotDrive  (new PIDSpeedController(leftFrontWheel, Kp, Ki, Kd, frontLeftEncoder),
+	//			new PIDSpeedController(leftBackWheel, Kp, Ki, Kd, rearLeftEncoder),
+	//			new PIDSpeedController(rightFrontWheel, Kp, Ki, Kd, frontRightEncoder),
+	//			new PIDSpeedController(rightBackWheel, Kp, Ki, Kd, rearRightEncoder));
 		
 		
 	    gosDrive = new RobotDrive(leftBackWheel, rightBackWheel, leftFrontWheel, rightFrontWheel);
@@ -82,13 +79,10 @@ public class Chassis extends Subsystem {
     	gosDrive.setExpiration(0.1);
     	gosDrive.setSafetyEnabled(true);
     	
-    		
-    	
     	leftBackWheel.setPID(Kp, Ki, Kd);
     	rightBackWheel.setPID(Kp, Ki, Kd);
     	leftFrontWheel.setPID(Kp, Ki, Kd);
     	rightFrontWheel.setPID(Kp, Ki, Kd);
-    	
     	robotGyro = new Gyro(RobotMap.GYRO_PORT);
 	}
 	
@@ -108,11 +102,11 @@ public class Chassis extends Subsystem {
 			return 0.0;
 	}
 	
-	public void moveByJoystick(Joystick stick)
+	public void moveByJoystick(Joystick joystk)
 	{
 		//if(stick.getMagnitude() > 0.02)
 		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
-		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()* ((-stick.getThrottle() + 1) / 2)), deadZone(stick.getX()* ((-stick.getThrottle() + 1) / 2)), twistDeadZone(stick.getTwist()), robotGyro.getAngle());
+		gosDrive.arcadeDrive(joystk);
 	}
 	
 	public double getRightFrontEncoderRate(){

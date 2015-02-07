@@ -3,6 +3,7 @@ package org.usfirst.frc3504.shifterbot.commands;
 import org.usfirst.frc3504.shifterbot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import org.usfirst.frc3504.shifterbot.Robot;
 
 /**
@@ -19,7 +20,7 @@ public class  AutonomousCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveSystem.resetEncoders();
+		Robot.driveSystem.resetDistance();
 		setTimeout(1.5);
 		Robot.accessoryMotors.driveAccessoryLeft(true);
 		Robot.accessoryMotors.driveAccessoryRight(false);	
@@ -29,6 +30,7 @@ public class  AutonomousCommand extends Command {
 
 	protected void execute() {
 		Robot.driveSystem.forward();
+		SmartDashboard.putNumber("Encoder Distance", Robot.driveSystem.getEncoderDistance());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

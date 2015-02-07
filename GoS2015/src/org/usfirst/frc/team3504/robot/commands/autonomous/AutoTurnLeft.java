@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Authors: Alexa, Corinne, Kyra, Sarah
  */
 public class AutoTurnLeft extends Command {
-
+	double initialDistance;
     public AutoTurnLeft() {
         requires(Robot.chassis); 
     	// Use requires() here to declare subsystem dependencies
@@ -17,7 +17,7 @@ public class AutoTurnLeft extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoders();
+    	initialDistance = Robot.chassis.getFrontLeftEncoderDistance(); 
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,8 +27,9 @@ public class AutoTurnLeft extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if  (Robot.chassis.getFrontLeftEncoderDistance() == 108) //end once the robot is in the autozone
-        	return true; 
+    	if (Robot.chassis.getFrontLeftEncoderDistance() == (initialDistance + 108))
+
+    	return true; 
     	else 
     		return false; 
     }

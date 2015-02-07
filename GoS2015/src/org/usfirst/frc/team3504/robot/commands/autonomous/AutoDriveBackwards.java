@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
  * Authors Alexa, Kyra, Sarah
  */
 public class AutoDriveBackwards extends Command {
-
+	double initialDistance; 
     public AutoDriveBackwards() {
+    
     	
     	requires(Robot.chassis);
         // Use requires() here to declare subsystem dependencies
@@ -18,7 +19,7 @@ public class AutoDriveBackwards extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoders();
+    	initialDistance = Robot.chassis.getFrontLeftEncoderDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,7 +29,7 @@ public class AutoDriveBackwards extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.chassis.getFrontLeftEncoderDistance() == 36)
+    	if (Robot.chassis.getFrontLeftEncoderDistance() == (initialDistance + 36))
     		return true;
     	else
         return false;

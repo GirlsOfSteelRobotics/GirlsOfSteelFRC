@@ -28,31 +28,48 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_ENCODER_B = 1;
 	public static final int DRIVE_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
-
+	
+	// Encoder-to-distance constants
+	// How many ticks are there on the encoder wheel?
+	private static final double pulsePerRevolution = 360;
+	// How far to we travel when the encoder turns one full revolution?
+	// Gear ratio is turns of the wheel per turns of the encoder
+	//FIXME - gear ratio is just a swag
+	private static final double distancePerRevolution = 8.0/*wheel size*/ * Math.PI * (16/16)/*gear ratio*/;
+    // Given our set of wheels and gear box, how many inches do we travel per pulse?
+	public static final double DISTANCE_PER_PULSE = distancePerRevolution / pulsePerRevolution;
+    
  static void init() {
+	 
 		driveSystemDriveLeft0 = new CANTalon(0);
 		// LiveWindow.addActuator("Drive System", "Drive Left0",
 		// driveSystemDriveLeft0);
+		//driveSystemDriveLeft0.setPID(.0001, .0000001, .0000001);
 
 		driveSystemDriveRight0 = new CANTalon(3);
 		// LiveWindow.addActuator("Drive System", "Drive Right0",
 		// driveSystemDriveRight0);
-
+		//driveSystemDriveRight0.setPID(.0001, .0000001, .0000001);
+		
 		driveSystemDriveLeft1 = new CANTalon(1);
 		// LiveWindow.addActuator("Drive System", "Drive Left1",
 		// driveSystemDriveLeft1);
-
+		//driveSystemDriveLeft1.setPID(.0001, .0000001, .0000001);
+		
 		driveSystemDriveRight1 = new CANTalon(4);
 		// LiveWindow.addActuator("Drive System", "Drive Right1",
 		// driveSystemDriveRight1);
-
+		//driveSystemDriveRight1.setPID(.0001, .0000001, .0000001);
+		
 		driveSystemDriveLeft2 = new CANTalon(2);
 		// LiveWindow.addActuator("Drive System", "Drive Left2",
 		// driveSystemDriveLeft2);
+		//driveSystemDriveLeft2.setPID(.0001, .0000001, .0000001);
 
 		driveSystemDriveRight2 = new CANTalon(5);
 		// LiveWindow.addActuator("Drive System", "Drive Right2",
 		// driveSystemDriveRight2);
+		//driveSystemDriveRight2.setPID(.0001, .0000001, .0000001);
 
 		// Follower: The m_motor will run at the same throttle as the specified
 		// other talon.
@@ -82,6 +99,6 @@ public class RobotMap {
 		shiftersShifterLeft = new DoubleSolenoid(0, 1);
 		shiftersShifterRight = new DoubleSolenoid(2, 3);  
 		
-
+    	
 	}
 }
