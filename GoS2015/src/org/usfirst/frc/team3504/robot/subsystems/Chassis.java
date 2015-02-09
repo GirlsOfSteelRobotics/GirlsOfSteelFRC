@@ -207,20 +207,41 @@ public class Chassis extends Subsystem {
    
     }
     
-    public void resetFrontLeftEncoder() {
-    	initialFrontLeftEncoderDistance = 0;
+    public void resetFrontLeftEncoder(double newVal) {
+    	initialFrontLeftEncoderDistance = newVal;
     }
     
-    public void resetFrontRightEncoderDistance(){
-		initialFrontRightEncoderDistance = 0;
+    public boolean isFrontLeftEncoderFinished(double finalVal, double currentVal)
+    {
+    	return Math.abs(currentVal)- Math.abs(initialFrontLeftEncoderDistance) == finalVal;
     }
     
-    public void resetRearLeftEncoderDistance(){
-		initialRearLeftEncoderDistance = 0;
+    public void resetFrontRightEncoderDistance(double newVal){
+		initialFrontRightEncoderDistance = newVal;
     }
     
-    public void resetRearRightEncoderDistance(){
-		initialRearRightEncoderDistance = 0;
+    public boolean isFrontRightEncoderFinished(double finalVal, double currentVal)
+    {
+    	return Math.abs(currentVal)- Math.abs(initialFrontRightEncoderDistance) == finalVal;
     }
+    
+    public void resetRearLeftEncoderDistance(double newVal){
+		initialRearLeftEncoderDistance = newVal;
+    }
+    
+    public boolean isRearLeftEncoderFinished(double finalVal, double currentVal)
+    {
+    	return Math.abs(currentVal)- Math.abs(initialRearLeftEncoderDistance) == finalVal;
+    }
+  
+    public void resetRearRightEncoderDistance(double newVal){
+		initialRearRightEncoderDistance = newVal;
+    }
+    
+    public boolean isRearRightEncoderFinished(double finalVal, double currentVal)
+    {
+    	return Math.abs(currentVal)- Math.abs(initialRearRightEncoderDistance) == finalVal;
+    }
+    
 }
 
