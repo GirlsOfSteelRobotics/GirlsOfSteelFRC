@@ -1,22 +1,12 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap.*;
-
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
- *
+ * author Kriti
  */
 public class Camera extends Subsystem {
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	
-	//private camera camera1 (?) check
-	//private camera camera0
  
 	private String name;
 	private String camera0 = "cam0";
@@ -27,8 +17,6 @@ public class Camera extends Subsystem {
 	{
 		Cam0();
 	}
-	
-	//method for stuff from robot.java
 
     public void switchCam() {
     	if (name==camera1)

@@ -3,62 +3,52 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.commands.TestPhotoSensor;
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-//import edu.wpi.first.wpilibj.SpeedController;
-//import edu.wpi.first.wpilibj.PIDSource;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Sonia
  */
 public class Chassis extends Subsystem {
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	
-	private RobotDrive gosDrive;
-	private Gyro robotGyro;
- 
+	//CANTalons
+	public static CANTalon rightFrontWheel;
+	public static CANTalon leftFrontWheel;
+	public static CANTalon rightBackWheel;
+	public static CANTalon leftBackWheel;
+	
+	//PID Values
+    double Kp;
+    double Ki;
+    double Kd;
+	
+    //Gyro
+    private Gyro robotGyro;
+    boolean getGyro;
+	
+	//Encoders
     private TalonEncoder frontLeftEncoder;
     private TalonEncoder rearLeftEncoder;
     private TalonEncoder frontRightEncoder;
     private TalonEncoder rearRightEncoder;
     
-    double Kp;
-    double Ki;
-    double Kd;
-    //variables used to reset the encoders
+    //Variables used to reset the encoders
     double initialFrontLeftEncoderDistance;
     double initialFrontRightEncoderDistance;
     double initialRearLeftEncoderDistance;
     double initialRearRightEncoderDistance;
     
-    
-    boolean getGyro;
-    
-	// CANTalons
-	public static CANTalon rightFrontWheel;
-	public static CANTalon leftFrontWheel;
-	public static CANTalon rightBackWheel;
-	public static CANTalon leftBackWheel;
-	public Chassis()
-	{
-	//use to reset the encoders
+    private RobotDrive gosDrive;
 	
-		
+	public Chassis()
+	{	
 		rightFrontWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
 		leftFrontWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
 		rightBackWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
@@ -68,37 +58,28 @@ public class Chassis extends Subsystem {
 	    Ki = .00000001;//SmartDashboard.getNumber("i value");//.0000001
 	    Kd = .00000001;//SmartDashboard.getNumber("d value");//.0000001
 	    
+	    robotGyro = new Gyro(RobotMap.GYRO_PORT);
+        LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
 	    getGyro = true;
 		
 		frontLeftEncoder = new TalonEncoder(leftFrontWheel);
     	rearLeftEncoder = new TalonEncoder(leftBackWheel);
     	frontRightEncoder = new TalonEncoder(rightFrontWheel);
     	rearRightEncoder = new TalonEncoder(leftBackWheel);
-		
-    	//frontLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	//rearLeftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	//frontRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
-    	//rearRightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
     	
-        //gosDrive = new RobotDrive(leftBackWheel, rightBackWheel,
-        	//						leftFrontWheel, rightFrontWheel);
         gosDrive = new RobotDrive  (new PIDSpeedController(leftBackWheel, Kp, Ki, Kd, rearLeftEncoder),
 				new PIDSpeedController(rightBackWheel, Kp, Ki, Kd, rearRightEncoder),
 				new PIDSpeedController(leftFrontWheel, Kp, Ki, Kd, frontLeftEncoder),
 				new PIDSpeedController(rightFrontWheel, Kp, Ki, Kd, frontRightEncoder));
-        gosDrive.setInvertedMotor(MotorType.kRearRight, true);	// invert the left side motors
-    	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);		// may need to change or remove this to match robot
+        gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
+    	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
-    	gosDrive.setSafetyEnabled(true);
-
-        robotGyro = new Gyro(RobotMap.GYRO_PORT);
-        LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
+    	gosDrive.setSafetyEnabled(true); 
 	}
 	
-	/* twistDeadZone
+	/* Twist Dead Zone
 	 * 
-	 * Only activate twist action if the control is turned 90% of the way.
-	 * At that point, reduce the value by a factor of 5 so the robot doesn't twist too fast.
+	 * Only activate twist action if the control is turned 50% of the way.
 	 */
 	public double twistDeadZone(double rawVal)
 	{
@@ -119,8 +100,6 @@ public class Chassis extends Subsystem {
 	public void moveByJoystick(Joystick stick)
 	{
 		if (getGyro)
-		//if(stick.getMagnitude() > 0.02)
-		//gosDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
 			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY())* ((-stick.getThrottle() + 1) / 2), deadZone(stick.getX())* ((-stick.getThrottle() + 1) / 2), twistDeadZone(stick.getTwist())*((-stick.getThrottle() + 1) / 2), robotGyro.getAngle());
 		else
 			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY())* ((-stick.getThrottle() + 1) / 2), deadZone(stick.getX())* ((-stick.getThrottle() + 1) / 2), twistDeadZone(stick.getTwist())*((-stick.getThrottle() + 1) / 2), 0);
@@ -128,20 +107,16 @@ public class Chassis extends Subsystem {
 	
 	public void autoDriveSideways(double speed){
 		gosDrive.mecanumDrive_Polar(speed, 90, 0);//figure out what the angle should be
-
-		gosDrive.mecanumDrive_Polar(0.75, 90, 0);//figure out what the angle should be
 	}
 	
 	public void autoDriveBackward(double speed){
 		gosDrive.mecanumDrive_Polar(speed, 45, 0);
-
 	}
 	
 	public void autoDriveForward(double speed){
 		gosDrive.mecanumDrive_Polar(speed, 90, 0);
 	}
 	
-	//TODO; move Joystick to subsystem
 	public void driveForward()
 	{
 		gosDrive.mecanumDrive_Cartesian(0, -((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0); //-.5
@@ -159,8 +134,7 @@ public class Chassis extends Subsystem {
 	
 	public void driveLeft()
 	{
-		gosDrive.mecanumDrive_Cartesian(-((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0,0); //.-5
-		
+		gosDrive.mecanumDrive_Cartesian(-((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0,0); //.-5	
 	}
 	
 	public void driveInCircle()
@@ -178,13 +152,10 @@ public class Chassis extends Subsystem {
 		return robotGyro.getAngle();
 	}
 	
+	//Need to implement
 	public void resetEncoders(){
-		//leftFrontWheel.reset();
-		//rightFrontWheel.reset();
-		//leftBackWheel.reset();
-		//rightBackWheel.reset();
 	}
-	//need to change getEncVelocity to getDistance later
+	
 	public double getFrontLeftEncoderRate()
 	{
 		return leftFrontWheel.getEncVelocity();
@@ -227,6 +198,7 @@ public class Chassis extends Subsystem {
 	public void getGyro() {
 		getGyro = !getGyro;
 	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -234,17 +206,21 @@ public class Chassis extends Subsystem {
     	//setDefaultCommand(new TestPhotoSensor());
    
     }
+    
     public void resetFrontLeftEncoder() {
     	initialFrontLeftEncoderDistance = 0;
     }
+    
     public void resetFrontRightEncoderDistance(){
 		initialFrontRightEncoderDistance = 0;
     }
+    
     public void resetRearLeftEncoderDistance(){
 		initialRearLeftEncoderDistance = 0;
     }
+    
     public void resetRearRightEncoderDistance(){
 		initialRearRightEncoderDistance = 0;
-    	 }
     }
+}
 

@@ -1,13 +1,11 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Doors;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3504.robot.subsystems.Fingers;
 import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 import org.usfirst.frc.team3504.robot.subsystems.PhotoSensor;
@@ -19,7 +17,6 @@ import org.usfirst.frc.team3504.robot.subsystems.Grippers;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -31,7 +28,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
-	public static ExampleSubsystem exampleSubsystem; //Need to remove eventually
 	public static Chassis chassis;
 	public static Camera camera;
 	public static Collector collector;
@@ -51,8 +47,6 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	//RobotMap.init();
-		exampleSubsystem = new ExampleSubsystem();
 		chassis = new Chassis();
 		camera = new Camera();
 		collector = new Collector();
@@ -68,7 +62,6 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new AutoDriveForward();
         
         oi = new OI();
-        
     }
 	
 	public void disabledPeriodic() {
@@ -100,7 +93,6 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
     }
 
     /**

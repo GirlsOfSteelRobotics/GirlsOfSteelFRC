@@ -1,31 +1,13 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
  * @authors annika and ziya
  */
 public class Fingers extends Subsystem {
-	
-	private Talon leftTalon;
-	private Talon rightTalon;
-	private Encoder leftEncoder;
-	private Encoder rightEncoder;
 	private DigitalInput leftLimit;
 	private DigitalInput rightLimit;
 	private Solenoid fingersDownSolenoid;
@@ -54,8 +36,8 @@ public class Fingers extends Subsystem {
 	}
 	public void fingerStop()
 	{
-		leftTalon.stopMotor();
-		rightTalon.stopMotor();
+		//leftTalon.stopMotor();
+		//rightTalon.stopMotor();
 	}
 	
 	public boolean getLimit()
