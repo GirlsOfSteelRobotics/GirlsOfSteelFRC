@@ -199,21 +199,13 @@ public class Chassis extends Subsystem {
 		getGyro = !getGyro;
 	}
 	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new DriveByJoystick());
-    	//setDefaultCommand(new TestPhotoSensor());
-   
-    }
-    
     public void resetFrontLeftEncoder(double newVal) {
     	initialFrontLeftEncoderDistance = newVal;
     }
     
     public boolean isFrontLeftEncoderFinished(double finalVal, double currentVal)
     {
-    	return Math.abs(currentVal)- Math.abs(initialFrontLeftEncoderDistance) == finalVal;
+    	return Math.abs(getFrontLeftEncoderDistance())- Math.abs(initialFrontLeftEncoderDistance) == finalVal;
     }
     
     public void resetFrontRightEncoderDistance(double newVal){
@@ -222,7 +214,7 @@ public class Chassis extends Subsystem {
     
     public boolean isFrontRightEncoderFinished(double finalVal, double currentVal)
     {
-    	return Math.abs(currentVal)- Math.abs(initialFrontRightEncoderDistance) == finalVal;
+    	return Math.abs(getFrontRightEncoderDistance())- Math.abs(initialFrontRightEncoderDistance) == finalVal;
     }
     
     public void resetRearLeftEncoderDistance(double newVal){
@@ -231,7 +223,7 @@ public class Chassis extends Subsystem {
     
     public boolean isRearLeftEncoderFinished(double finalVal, double currentVal)
     {
-    	return Math.abs(currentVal)- Math.abs(initialRearLeftEncoderDistance) == finalVal;
+    	return Math.abs(getRearLeftEncoderDistance())- Math.abs(initialRearLeftEncoderDistance) == finalVal;
     }
   
     public void resetRearRightEncoderDistance(double newVal){
@@ -240,7 +232,43 @@ public class Chassis extends Subsystem {
     
     public boolean isRearRightEncoderFinished(double finalVal, double currentVal)
     {
-    	return Math.abs(currentVal)- Math.abs(initialRearRightEncoderDistance) == finalVal;
+    	return Math.abs(getRearRightEncoderDistance())- Math.abs(initialRearRightEncoderDistance) == finalVal;
+    }
+ 
+    public double RearRightEncoderDistance()
+    {
+    	return Math.abs(getRearRightEncoderDistance())- Math.abs(initialRearRightEncoderDistance);
+    }
+    
+    public double FrontRightEncoderDistance()
+    {
+    	return Math.abs(getFrontRightEncoderDistance())- Math.abs(initialFrontRightEncoderDistance);
+    }
+    
+    public double FrontLeftEncoderDistance()
+    {
+    	return Math.abs(getFrontLeftEncoderDistance())- Math.abs(initialFrontLeftEncoderDistance);
+    }
+    
+    public double RearLeftEncoderDistance()
+    {
+    	return Math.abs(getRearLeftEncoderDistance())- Math.abs(initialRearLeftEncoderDistance);
+    }
+    
+    public double getDistanceLeft() {
+    	return 0;
+    }
+    
+    public double getDistanceRight() {
+    	return 0;
+    }
+    
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new DriveByJoystick());
+    	//setDefaultCommand(new TestPhotoSensor());
+   
     }
     
 }
