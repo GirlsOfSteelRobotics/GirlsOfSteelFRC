@@ -255,6 +255,11 @@ public class Chassis extends Subsystem {
     	return Math.abs(getRearLeftEncoderDistance())- Math.abs(initialRearLeftEncoderDistance);
     }
     
+    public double AverageOfEncoderDistance()
+    {	
+    	return (initialRearLeftEncoderDistance + initialFrontLeftEncoderDistance + initialRearRightEncoderDistance + initialFrontRightEncoderDistance)/4; 
+    			
+    }
     public double getDistanceLeft() {
     	return 0;
     }
