@@ -21,7 +21,7 @@ public class AutoDriveBackwards extends Command {
     	//Robot.chassis.r(Robot.chassis.getFrontLeftEncoderDistance());
     	//come back to because encoder distance is not being printed on smart dashboard
     	//need to make this method
-    	Robot.chassis.resetFrontLeftEncoder();
+    	Robot.chassis.resetFrontLeftEncoder(Robot.chassis.getFrontLeftEncoderDistance());
     }
 
     // Called repeatedly when this Command is scheduled to run
