@@ -255,11 +255,11 @@ public class Chassis extends Subsystem {
     	return Math.abs(getRearLeftEncoderDistance())- Math.abs(initialRearLeftEncoderDistance);
     }
     
-    public double getDistanceLeft() {
-    	return 0;
+    public double getDistanceHorizontal() {
+    	return ((RearLeftEncoderDistance() + FrontLeftEncoderDistance() + FrontRightEncoderDistance() + RearRightEncoderDistance())/4);
     }
     
-    public double getDistanceRight() {
+    public double getDistanceVertical() {
     	return 0;
     }
     
