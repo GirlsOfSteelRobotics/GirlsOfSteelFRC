@@ -47,7 +47,28 @@ public class OI {
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
 	
-	//Auto Buttons
+	//Collector
+	private JoystickButton collectTote;
+	private JoystickButton releaseTote;
+	private JoystickButton angleIn;
+	private JoystickButton angleOut;
+	
+	//Finger
+	private JoystickButton fingersDown;
+	
+	//Shack
+	private JoystickButton shackIn;
+	private JoystickButton shackOut; 
+	
+	//Lifting
+	private JoystickButton liftUp;
+	private JoystickButton liftDown; 
+	
+	//Doors
+	private JoystickButton doorsOpen;
+	private JoystickButton doorsClose;
+	
+	/*//Auto Buttons
 	private JoystickButton autoDriveForward;
 	private JoystickButton autoDriveForwardUltra;
 	private JoystickButton autoFirstPickup;
@@ -71,7 +92,6 @@ public class OI {
 	//Shack Buttons
 	private JoystickButton shackIn;
 	private JoystickButton shackOut;
-	
 	
 	//Sucker buttons
 	private JoystickButton collectIn;
@@ -104,8 +124,29 @@ public class OI {
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
+		
+		//Collectors
+		collectTote = new JoystickButton(operatorJoystick, 1);
+		releaseTote = new JoystickButton(operatorJoystick, 2);
+		angleIn = new JoystickButton(operatorJoystick, 3);
+		angleOut = new JoystickButton(operatorJoystick, 4);
+		
+		//Fingers
+		fingersDown = new JoystickButton(operatorJoystick, 5);
+		
+		//Shack
+		shackIn = new JoystickButton(operatorJoystick, 6);
+		shackOut = new JoystickButton(operatorJoystick, 7);
+		
+		//Lifting
+		liftUp = new JoystickButton(operatorJoystick, 8);
+		liftDown = new JoystickButton(operatorJoystick, 9);
+		
+		//Doors
+		doorsOpen = new JoystickButton(operatorJoystick, 10);
+		doorsClose = new JoystickButton(operatorJoystick, 11);
 				
-		//Drive buttons initialization
+		/*Drive buttons initialization
 		driveForward = new JoystickButton(chassisJoystick, 5); 	// FIXME: fix port
 		driveBackward = new JoystickButton(chassisJoystick, 6); // FIXME: fix port
 		driveRight = new JoystickButton(chassisJoystick, 4); 	// FIXME: fix port
@@ -194,5 +235,6 @@ public class OI {
 	{
 		return chassisJoystick;
 	}
+	*/ 
 }
 
