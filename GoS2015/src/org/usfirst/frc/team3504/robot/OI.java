@@ -145,6 +145,7 @@ public class OI {
 		//Doors
 		doorsOpen = new JoystickButton(operatorJoystick, 10);
 		doorsClose = new JoystickButton(operatorJoystick, 11);
+	}
 				
 		/*Drive buttons initialization
 		driveForward = new JoystickButton(chassisJoystick, 5); 	// FIXME: fix port
@@ -225,7 +226,7 @@ public class OI {
 		//testPSensor = new JoystickButton(chassisJoystick, 7);
 		//testPSensor.whenPressed(new TestPhotoSensor());
 	}
-	
+	*/
 	public Joystick getOperatorJoystick()
 	{
 		return operatorJoystick;
@@ -235,6 +236,5 @@ public class OI {
 	{
 		return chassisJoystick;
 	}
-	*/ 
 }
 
