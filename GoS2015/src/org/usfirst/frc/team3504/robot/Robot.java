@@ -12,7 +12,7 @@ import org.usfirst.frc.team3504.robot.subsystems.PhotoSensor;
 import org.usfirst.frc.team3504.robot.subsystems.Pusher;
 import org.usfirst.frc.team3504.robot.subsystems.Shack;
 import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
-import org.usfirst.frc.team3504.robot.subsystems.Grippers;
+
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -32,7 +32,6 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static Collector collector;
 	public static Fingers fingers;
-	public static Grippers gripper;
 	public static Lifter forklift;
 	public static Doors doors;
 	public static UltrasonicSensor ultrasonicsensor; 
@@ -51,7 +50,6 @@ public class Robot extends IterativeRobot {
 		camera = new Camera();
 		collector = new Collector();
 		fingers = new Fingers();
-		gripper = new Grippers(); 
 		forklift = new Lifter();
 		doors = new Doors();
 		ultrasonicsensor = new UltrasonicSensor();
