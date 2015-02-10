@@ -15,7 +15,7 @@ public class Shack extends Subsystem {
 	
 	private DigitalInput leftLimit;
 	private DigitalInput rightLimit; 
-	
+
 	public static final double SHACK_SPEED = .5; 
 	
 	public Shack(){ 
