@@ -46,7 +46,7 @@ public class AutoDriveForward extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//return isTimedOut();
-    	Robot.chassis.isFrontLeftEncoderFinished(6000, initialVal);
+    	return Robot.chassis.isFrontLeftEncoderFinished(6000, initialVal);
     	
     }
 
