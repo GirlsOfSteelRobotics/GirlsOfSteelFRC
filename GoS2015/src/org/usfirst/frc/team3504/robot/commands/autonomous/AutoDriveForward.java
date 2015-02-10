@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.commands.collector.ReleaseTote;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

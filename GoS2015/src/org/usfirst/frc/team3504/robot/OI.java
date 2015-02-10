@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveForward;
