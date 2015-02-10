@@ -9,7 +9,6 @@ import org.usfirst.frc.team3504.robot.commands.drive.DriveLeft;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveRight;
 import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
 import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
