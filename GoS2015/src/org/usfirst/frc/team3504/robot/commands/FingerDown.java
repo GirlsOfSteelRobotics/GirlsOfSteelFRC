@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.commands.fingers;
+package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 

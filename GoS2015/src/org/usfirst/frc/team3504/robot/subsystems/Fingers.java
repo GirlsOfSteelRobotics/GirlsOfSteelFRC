@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Fingers extends Subsystem {
 	private DigitalInput leftLimit;
 	private DigitalInput rightLimit;
-	private Solenoid fingersDownSolenoid;
+	private Solenoid fingersLeftSolenoid;
+	private Solenoid fingersRightSolenoid;
 	
 	public Fingers()
 	{
@@ -25,14 +26,22 @@ public class Fingers extends Subsystem {
 		**/
 	}
 	
-	//public void fingerDown()
-	//{
-	//	LeftTalon.set(.23);
-	//	RightTalon.set(.23);
-	//}
+	public void fingerDown(){
+		fingersLeftSolenoid.set(false);
+		fingersRightSolenoid.set(false);
+	}
 	
-	public void fingersDown(){
-		fingersDownSolenoid.set(true);				//pushes the fingers down using pneumatics
+	public void fingerUp(){	
+		fingersLeftSolenoid.set(true);
+		fingersRightSolenoid.set(true);
+	}
+	
+	public void fingersLeftSolenoid(){
+		fingersLeftSolenoid.set(true);				//pushes the fingers down using pneumatics
+	}
+	
+	public void fingersRightSolenoid(){
+		fingersRightSolenoid.set(true);
 	}
 	public void fingerStop()
 	{
