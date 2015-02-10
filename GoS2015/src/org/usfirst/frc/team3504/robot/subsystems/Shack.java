@@ -14,7 +14,7 @@ public class Shack extends Subsystem {
 	private DigitalInput leftLimit;
 	private DigitalInput rightLimit; 
 	
-	public void Shack(){ 
+	public Shack(){ 
 		// shackCANTalon = new CANTalon(); //insert port number
 	}
 	
