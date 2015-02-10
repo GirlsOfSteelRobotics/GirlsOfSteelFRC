@@ -2,7 +2,13 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.*;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.*;
+import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
+import org.usfirst.frc.team3504.robot.commands.drive.DriveBackward;
+import org.usfirst.frc.team3504.robot.commands.drive.DriveForward;
+import org.usfirst.frc.team3504.robot.commands.drive.DriveLeft;
+import org.usfirst.frc.team3504.robot.commands.drive.DriveRight;
+import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
+import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;

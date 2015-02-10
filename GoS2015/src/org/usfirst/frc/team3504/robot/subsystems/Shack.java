@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Authors: Corinne, Sarah 
  */
 public class Shack extends Subsystem {
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	
 	private CANTalon shackCANTalon; 
 	

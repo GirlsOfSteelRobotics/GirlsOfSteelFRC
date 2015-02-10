@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.plow.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
@@ -9,7 +9,6 @@ import org.usfirst.frc.team3504.robot.subsystems.Doors;
 import org.usfirst.frc.team3504.robot.subsystems.Fingers;
 import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 import org.usfirst.frc.team3504.robot.subsystems.PhotoSensor;
-import org.usfirst.frc.team3504.robot.subsystems.Pusher;
 import org.usfirst.frc.team3504.robot.subsystems.Shack;
 import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
 import org.usfirst.frc.team3504.robot.subsystems.Grippers;
@@ -36,7 +35,6 @@ public class Robot extends IterativeRobot {
 	public static Lifter forklift;
 	public static Doors doors;
 	public static UltrasonicSensor ultrasonicsensor; 
-	public static Pusher pusher;
 	public static OI oi;
 	public static PhotoSensor photosensor;
 	public static Shack shack; 
@@ -55,7 +53,6 @@ public class Robot extends IterativeRobot {
 		forklift = new Lifter();
 		doors = new Doors();
 		ultrasonicsensor = new UltrasonicSensor();
-		pusher = new Pusher();
 		photosensor = new PhotoSensor();
 		shack = new Shack(); 
 		Robot.chassis.resetGyro();
