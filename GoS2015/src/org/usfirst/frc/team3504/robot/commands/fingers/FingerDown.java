@@ -13,12 +13,12 @@ public class FingerDown extends Command {
     public FingerDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.fingers);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	//setTimeout(3.5);
-    	requires(Robot.fingers);
     	//probs change time
     }
 
