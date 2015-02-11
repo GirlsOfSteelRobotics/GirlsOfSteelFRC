@@ -1,27 +1,30 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Doors extends Subsystem{
 	
-	private CANTalon leftTalon;
-	private CANTalon rightTalon;
+	private DoubleSolenoid leftDoor;
+	private DoubleSolenoid rightDoor;
 	
 	public Doors() {
-		//leftTalon = new CANTalon(RobotMap.LEFT_DOOR_CHANNEL);
-		//rightTalon = new CANTalon(RobotMap.RIGHT_DOOR_CHANNEL);
+		leftDoor = new DoubleSolenoid(RobotMap.LEFT_DOOR_CHANNEL_A, RobotMap.LEFT_DOOR_CHANNEL_B);
+		rightDoor = new DoubleSolenoid(RobotMap.RIGHT_DOOR_CHANNEL_A, RobotMap.RIGHT_DOOR_CHANNEL_B);
 	}
 
 	public void doorsIn() {
-		leftTalon.set(-0.5);
-		rightTalon.set(0.5);
+		leftDoor.set(DoubleSolenoid.Value.kForward);
+		rightDoor.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	public void doorsOut() {
-		leftTalon.set(0.5);
-		rightTalon.set(- 0.5);
+		leftDoor.set(DoubleSolenoid.Value.kReverse);
+		rightDoor.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	@Override

@@ -30,19 +30,10 @@ public class RobotMap {
 	public static final int SHACK_RIGHT_LIMIT = 7; 
 	
 	
-	/* shaft port = 5
-	 * //Forklift ports
-	 * public static final int FORKLIFT_CHANNEL = 17; //Motors
+	/*
 	 * 
-	 * //Finger ports
-	 * public static final int RIGHT_FINGER_PISTON = 5; //Pistons
-	 * public static final int LEFT_FINGER_PISTON = 6;
-	 * public static final int RIGHT_FINGER_ENCODER_A = 10; //Encoders
-	 * public static final int RIGHT_FINGER_ENCODER_B = 11;
-	 * public static final int LEFT_FINGER_ENCODER_A = 12;
-	 * public static final int LEFT_FINGER_ENCODER_B = 13;
-	 * public static final int RIGHT_FINGER_LIMIT = 14; //Limit Switches
-	 * public static final int LEFT_FINGER_LIMIT = 15;
+	 * 
+	 * 
 	 * 
 	 * 
 	 * public static final int LEFT_WEDGE_CHANNEL = 7; //Motors
@@ -50,11 +41,20 @@ public class RobotMap {
 	 * public static final int LEFT_WEDGE_LIMIT = 16; //Limit Switches
 	 * public static final int RIGHT_WEDGE_LIMIT = 17;
 	 * public static final int TRIANGLE_PEG_SOLENOID = 24;
-	 * 
-	 * //Door ports
-	 * public static final int LEFT_DOOR_CHANNEL = 20; //Motors
-	 * public static final int RIGHT_DOOR_CHANNEL = 21;
 	 */
+	
+	//Forklift ports
+	public static final int FORKLIFT_CHANNEL = 17; //Motors
+	
+	//Finger ports
+	public static final int RIGHT_FINGER_PISTON = 5; //Pistons
+	public static final int LEFT_FINGER_PISTON = 6;
+	
+	//Door ports
+	public static final int LEFT_DOOR_CHANNEL_A = 20; //Motors
+	public static final int LEFT_DOOR_CHANNEL_B = 20; //Motors
+	public static final int RIGHT_DOOR_CHANNEL_A = 21;
+	public static final int RIGHT_DOOR_CHANNEL_B = 21;
 
 	//Collector ports
 	public static final int LEFT_COLLECTOR_WHEEL = 10; //Motors
