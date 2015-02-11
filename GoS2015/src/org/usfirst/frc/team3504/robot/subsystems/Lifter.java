@@ -14,15 +14,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lifter extends Subsystem {
 	
 	private CANTalon liftTalon;
-	private DigitalInput leftLimit;
-	private DigitalInput rightLimit; //might not be used? i dunno
 	private TalonEncoder liftEncoder;
 	
 	public Lifter() {
-	//	liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL);
-		//liftSD = new Solenoid(0); //Assume 0 for PCM ID
-		//leftLimit = new DigitalInput(RobotMap.LEFT_FORKLIFT_LIMIT);
-		//rightLimit = new DigitalInput(RobotMap.RIGHT_FORKLIFT_LIMIT);
+		liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL);
 		liftEncoder = new TalonEncoder(liftTalon);
 	}
 	
@@ -38,15 +33,11 @@ public class Lifter extends Subsystem {
 	public double getLiftEncoder() {
 		return liftTalon.getEncPosition();
 	}
-	//Add Stop methods
+
 	public void stop()
 	{
 		liftTalon.set(0.0);
 	}
-	
-//	public boolean getLimit() {
-//		return(leftLimit.get() && rightLimit.get());
-
 	
 	@Override
 	protected void initDefaultCommand() {
