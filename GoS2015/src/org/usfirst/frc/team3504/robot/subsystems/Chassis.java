@@ -241,24 +241,33 @@ public class Chassis extends Subsystem {
  
     public double RearRightEncoderDistance()
     {
-    	return Math.abs(getRearRightEncoderDistance())- Math.abs(initialRearRightEncoderDistance);
+    	return Math.abs((getRearRightEncoderDistance())- (initialRearRightEncoderDistance));
     }
     
     public double FrontRightEncoderDistance()
     {
-    	return Math.abs(getFrontRightEncoderDistance())- Math.abs(initialFrontRightEncoderDistance);
+    	return Math.abs((getFrontRightEncoderDistance())- (initialFrontRightEncoderDistance));
     }
     
     public double FrontLeftEncoderDistance()
     {
-    	return Math.abs(getFrontLeftEncoderDistance())- Math.abs(initialFrontLeftEncoderDistance);
+    	return Math.abs((getFrontLeftEncoderDistance())- (initialFrontLeftEncoderDistance));
     }
     
     public double RearLeftEncoderDistance()
     {
-    	return Math.abs(getRearLeftEncoderDistance())- Math.abs(initialRearLeftEncoderDistance);
+    	return Math.abs((getRearLeftEncoderDistance())- (initialRearLeftEncoderDistance));
     }
     
+    public double AverageOfEncoderDistance()
+    {	
+    	return (initialRearLeftEncoderDistance + initialFrontLeftEncoderDistance + initialRearRightEncoderDistance + initialFrontRightEncoderDistance)/4; 
+    			
+    }
+    public double getDistanceLeft() {
+    	return 0;
+    }
+
     public double getDistanceHorizontal() {
     	return ((RearLeftEncoderDistance() + FrontLeftEncoderDistance() + FrontRightEncoderDistance() + RearRightEncoderDistance())/4);
     }
@@ -276,4 +285,3 @@ public class Chassis extends Subsystem {
     }
     
 }
-

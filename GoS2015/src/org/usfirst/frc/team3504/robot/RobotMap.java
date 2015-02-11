@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.CANTalon;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -22,11 +24,15 @@ public class RobotMap {
 	public static final int PHOTOSENSOR_CHANNEL_LIGHTINPUT = 1; //Photosensor
 	public static final int PHOTOSENSOR_CHANNEL_DARKINPUT = 2;
 
+	//Shack ports
+	public static final int SHACK_TALON = 5; //Motor 
+	public static final int SHACK_LEFT_LIMIT = 6; //Limit Switches
+	public static final int SHACK_RIGHT_LIMIT = 7; 
+	
+	
 	/* shaft port = 5
 	 * //Forklift ports
 	 * public static final int FORKLIFT_CHANNEL = 17; //Motors
-	 * public static final int LEFT_FORKLIFT_LIMIT = 8; //Limit Switches
-	 * public static final int RIGHT_FORKLIFT_LIMIT = 22;
 	 * 
 	 * //Finger ports
 	 * public static final int RIGHT_FINGER_PISTON = 5; //Pistons
@@ -38,7 +44,7 @@ public class RobotMap {
 	 * public static final int RIGHT_FINGER_LIMIT = 14; //Limit Switches
 	 * public static final int LEFT_FINGER_LIMIT = 15;
 	 * 
-	 * //Shack ports
+	 * 
 	 * public static final int LEFT_WEDGE_CHANNEL = 7; //Motors
 	 * public static final int RIGHT_WEDGE_CHANNEL = 8;
 	 * public static final int LEFT_WEDGE_LIMIT = 16; //Limit Switches

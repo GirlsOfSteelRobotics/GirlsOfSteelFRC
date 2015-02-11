@@ -42,10 +42,10 @@ public   class Robot extends SampleRobot {
     public static final int REAR_RIGHT_WHEEL_ENCODER_A = 2;
     public static final int REAR_RIGHT_WHEEL_ENCODER_B = 3;
     
-    public static final int FRONT_LEFT_WHEEL_CHANNEL = 1; //Motors
-    public static final int REAR_LEFT_WHEEL_CHANNEL	= 2;
-    public static final int FRONT_RIGHT_WHEEL_CHANNEL = 3;
-    public static final int REAR_RIGHT_WHEEL_CHANNEL = 4;
+    public static final int FRONT_LEFT_WHEEL_CHANNEL = 0; //Motors
+    public static final int REAR_LEFT_WHEEL_CHANNEL	= 1;
+    public static final int FRONT_RIGHT_WHEEL_CHANNEL = 2;
+    public static final int REAR_RIGHT_WHEEL_CHANNEL = 3;
     
     double Kp;
     double Ki;

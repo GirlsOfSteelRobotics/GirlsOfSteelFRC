@@ -25,7 +25,7 @@ public class LiftDown extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		Robot.forklift.getLimit(); //might not be used, depends 
+		//Robot.forklift.getLimit();
 		return isTimedOut();
 	}
 

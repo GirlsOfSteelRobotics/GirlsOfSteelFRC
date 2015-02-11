@@ -17,8 +17,8 @@ public class Collector extends Subsystem {
 	private Talon leftCollector;
 	
 	//Limit Switches
-	private DigitalInput leftLimit;
-	private DigitalInput rightLimit;
+	//private DigitalInput leftLimit;
+	//private DigitalInput rightLimit;
 	
 	//Pistons
 	private DoubleSolenoid collectorLeftSolenoid;
@@ -29,8 +29,8 @@ public class Collector extends Subsystem {
 		rightCollector = new Talon(RobotMap.RIGHT_COLLECTOR_WHEEL);
 		leftCollector = new Talon(RobotMap.LEFT_COLLECTOR_WHEEL);
 		
-		leftLimit = new DigitalInput(RobotMap.LEFT_COLLECTOR_LIMIT);
-		rightLimit = new DigitalInput(RobotMap.RIGHT_COLLECTOR_LIMIT);
+	//	leftLimit = new DigitalInput(RobotMap.LEFT_COLLECTOR_LIMIT);
+	//	rightLimit = new DigitalInput(RobotMap.RIGHT_COLLECTOR_LIMIT);
 		
 		collectorLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
 													RobotMap.LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL);
@@ -71,9 +71,9 @@ public class Collector extends Subsystem {
 		leftCollector.set(0.0);
 	}
 	
-	public boolean getLimit()
+//	public boolean getLimit()
 	{
-		return(leftLimit.get() && rightLimit.get());
+//		return(leftLimit.get() && rightLimit.get());
 	}
 	
     public void initDefaultCommand() {
