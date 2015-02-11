@@ -47,8 +47,10 @@ public class RobotMap {
 	public static final int FORKLIFT_CHANNEL = 17; //Motors
 	
 	//Finger ports
-	public static final int RIGHT_FINGER_PISTON = 5; //Pistons
-	public static final int LEFT_FINGER_PISTON = 6;
+	public static final int RIGHT_FINGER_PISTON_A = 5; //Pistons
+	public static final int RIGHT_FINGER_PISTON_B = 5;
+	public static final int LEFT_FINGER_PISTON_A = 6;
+	public static final int LEFT_FINGER_PISTON_B = 7;
 	
 	//Door ports
 	public static final int LEFT_DOOR_CHANNEL_A = 20; //Motors
