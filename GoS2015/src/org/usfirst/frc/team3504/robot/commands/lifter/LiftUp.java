@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LiftUp extends Command {
 
+	double initialVal;
+	
 	public LiftUp() {
 		requires(Robot.forklift);
+		//initialVal = Robot.forklift.getLiftEncoder();
 	}
 
 	@Override
@@ -26,6 +29,8 @@ public class LiftUp extends Command {
 	@Override
 	protected boolean isFinished() {
 		return isTimedOut();
+		//return (Robot.forklift.getLiftEncoder-initialVal)==50; TODO: set to distance lifter needs to go up to be able to drop tote back down to fingers
+		
 	}
 
 	@Override
