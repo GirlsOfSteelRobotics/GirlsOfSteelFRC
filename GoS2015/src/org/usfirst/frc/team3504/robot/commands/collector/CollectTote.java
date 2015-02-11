@@ -15,7 +15,7 @@ public class CollectTote extends Command {
 	
 	@Override
 	protected void initialize() {
-		setTimeout(2.5);
+		//setTimeout(2.5);
 	}
 
 	@Override
@@ -26,11 +26,13 @@ public class CollectTote extends Command {
 	@Override
 	protected boolean isFinished() {
 //		return Robot.collector.getLimit();
-		return isTimedOut();
+		//return isTimedOut();
+		return false;
 	}
 
 	@Override
 	protected void end() {
+		Robot.collector.stopCollecting();
 	}
 
 	@Override

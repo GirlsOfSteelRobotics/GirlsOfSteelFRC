@@ -27,6 +27,7 @@ public class ReleaseTote extends Command {
 
 	@Override
 	protected void end() {
+		Robot.collector.stopCollecting();
 	}
 
 	@Override
