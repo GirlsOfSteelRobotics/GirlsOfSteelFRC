@@ -46,6 +46,23 @@ public class OI {
 	
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
+
+	//Collector
+	private JoystickButton collectTote;
+	private JoystickButton releaseTote;
+	private JoystickButton angleIn;
+	private JoystickButton angleOut;
+		
+	//Finger
+	private JoystickButton fingersDown;
+		
+	//Lifting
+	private JoystickButton liftUp;
+	private JoystickButton liftDown; 
+		
+	//Doors
+	private JoystickButton doorsOpen;
+	private JoystickButton doorsClose;
 	
 	//Auto Buttons
 	private JoystickButton autoDriveForward;
@@ -64,10 +81,6 @@ public class OI {
 	private JoystickButton driveRight;
 	private JoystickButton driveLeft;
 	
-	//Forklift Buttons
-	private JoystickButton liftUp;
-	private JoystickButton liftDown;
-	
 	//Shack Buttons
 	private JoystickButton shackIn;
 	private JoystickButton shackOut;
@@ -76,8 +89,6 @@ public class OI {
 	//Sucker buttons
 	private JoystickButton collectIn;
 	private JoystickButton pushOut;
-	private JoystickButton angleIn;
-	private JoystickButton angleOut;
 	private JoystickButton stopCollection;
 	private JoystickButton stopCollectorAngle;
 	private JoystickButton doorIn;
@@ -105,6 +116,29 @@ public class OI {
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 				
+		//Collectors
+		collectTote = new JoystickButton(operatorJoystick, 1);
+		releaseTote = new JoystickButton(operatorJoystick, 2);
+		angleIn = new JoystickButton(operatorJoystick, 3);
+		angleOut = new JoystickButton(operatorJoystick, 4);
+				
+		//Fingers
+		fingersDown = new JoystickButton(operatorJoystick, 5);
+				
+		//Shack
+		shackIn = new JoystickButton(operatorJoystick, 6);
+		shackOut = new JoystickButton(operatorJoystick, 7);
+		
+		
+				
+		//Lifting
+		liftUp = new JoystickButton(operatorJoystick, 8);
+		liftDown = new JoystickButton(operatorJoystick, 9);
+				
+		//Doors
+		doorsOpen = new JoystickButton(operatorJoystick, 10);
+		doorsClose = new JoystickButton(operatorJoystick, 11);
+		
 		//Drive buttons initialization
 		driveForward = new JoystickButton(chassisJoystick, 5); 	// FIXME: fix port
 		driveBackward = new JoystickButton(chassisJoystick, 6); // FIXME: fix port
@@ -117,7 +151,7 @@ public class OI {
 		driveLeft.whileHeld(new DriveLeft());
 		
 		
-		//Lifter buttons initialization
+		//*Lifter buttons initialization
 		liftUp = new JoystickButton(operatorJoystick, 5);	// FIXME: make sure this is for the correct Joystick and port
 		liftDown = new JoystickButton(operatorJoystick, 6);	// FIXME: make sure this is for the correct Joystick and port
 		
@@ -183,6 +217,7 @@ public class OI {
 		//photosensorbuttons
 		//testPSensor = new JoystickButton(chassisJoystick, 7);
 		//testPSensor.whenPressed(new TestPhotoSensor());
+		
 	}
 	
 	public Joystick getOperatorJoystick()
