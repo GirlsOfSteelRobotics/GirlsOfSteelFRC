@@ -19,7 +19,7 @@ public class Lifter extends Subsystem {
 	private TalonEncoder liftEncoder;
 	
 	public Lifter() {
-	//	liftTalon = new Talon(RobotMap.FORKLIFT_CHANNEL);
+	//	liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL);
 		//liftSD = new Solenoid(0); //Assume 0 for PCM ID
 		//leftLimit = new DigitalInput(RobotMap.LEFT_FORKLIFT_LIMIT);
 		//rightLimit = new DigitalInput(RobotMap.RIGHT_FORKLIFT_LIMIT);

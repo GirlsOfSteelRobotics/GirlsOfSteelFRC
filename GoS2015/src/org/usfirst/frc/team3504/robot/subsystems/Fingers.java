@@ -16,10 +16,6 @@ public class Fingers extends Subsystem {
 	public Fingers()
 	{
 		/*
-		LeftEncoder = new Encoder(RobotMap.LEFT_FINGER_ENCODER_A, RobotMap.LEFT_FINGER_ENCODER_B);
-		RightEncoder = new Encoder(RobotMap.RIGHT_FINGER_ENCODER_A, RobotMap.RIGHT_FINGER_ENCODER_B);
-		LeftTalon = new Talon(RobotMap.LEFT_FINGER_TALON);
-		RightTalon = new Talon(RobotMap.RIGHT_FINGER_TALON);
 		LeftLimit = new DigitalInput(RobotMap.LEFT_FINGER_LIMIT);
 		RightLimit = new DigitalInput(RobotMap.RIGHT_FINGER_LIMIT);
 		FingersDown = new Solenoid(0);

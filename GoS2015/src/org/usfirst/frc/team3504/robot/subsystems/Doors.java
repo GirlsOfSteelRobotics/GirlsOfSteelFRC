@@ -10,8 +10,8 @@ public class Doors extends Subsystem{
 	private CANTalon rightTalon;
 	
 	public Doors() {
-	//	leftTalon = new Talon(RobotMap.LEFT_DOOR_CHANNEL);
-	//	rightTalon = new Talon(RobotMap.RIGHT_DOOR_CHANNEL);
+		//leftTalon = new CANTalon(RobotMap.LEFT_DOOR_CHANNEL);
+		//rightTalon = new CANTalon(RobotMap.RIGHT_DOOR_CHANNEL);
 	}
 
 	public void doorsIn() {
