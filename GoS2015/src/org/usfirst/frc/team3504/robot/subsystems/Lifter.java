@@ -39,9 +39,9 @@ public class Lifter extends Subsystem {
 		liftTalon.stopMotor();
 	}
 	
-	public boolean getLimit() {
-		return(leftLimit.get() && rightLimit.get());
-	}
+//	public boolean getLimit() {
+//		return(leftLimit.get() && rightLimit.get());
+
 	
 	@Override
 	protected void initDefaultCommand() {

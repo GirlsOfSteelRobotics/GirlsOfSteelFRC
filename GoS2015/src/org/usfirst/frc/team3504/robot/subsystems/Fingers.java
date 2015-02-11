@@ -49,9 +49,9 @@ public class Fingers extends Subsystem {
 		//rightTalon.stopMotor();
 	}
 	
-	public boolean getLimit()
+//	public boolean getLimit()
 	{
-		return (leftLimit.get() && rightLimit.get());
+//		return (leftLimit.get() && rightLimit.get());
 	}
 	
     
