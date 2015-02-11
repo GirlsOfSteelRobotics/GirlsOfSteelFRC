@@ -3,12 +3,25 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
+import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
+import org.usfirst.frc.team3504.robot.commands.collector.ReleaseTote;
+import org.usfirst.frc.team3504.robot.commands.doors.DoorsIn;
+import org.usfirst.frc.team3504.robot.commands.doors.DoorsOut;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveLeft;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveRight;
 import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
 import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
+import org.usfirst.frc.team3504.robot.commands.fingers.FingerDown;
+import org.usfirst.frc.team3504.robot.commands.fingers.FingerUp;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftDown;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftUp;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -55,6 +68,7 @@ public class OI {
 		
 	//Finger
 	private JoystickButton fingersDown;
+	private JoystickButton fingersUp;
 		
 	//Lifting
 	private JoystickButton liftUp;
@@ -118,26 +132,39 @@ public class OI {
 				
 		//Collectors
 		collectTote = new JoystickButton(operatorJoystick, 1);
+		collectTote.whileHeld(new CollectTote());
 		releaseTote = new JoystickButton(operatorJoystick, 2);
+		releaseTote.whileHeld(new ReleaseTote());
 		angleIn = new JoystickButton(operatorJoystick, 3);
+		angleIn.whenPressed(new AngleCollectorIn());
 		angleOut = new JoystickButton(operatorJoystick, 4);
+		angleOut.whenPressed(new AngleCollectorOut());
 				
 		//Fingers
 		fingersDown = new JoystickButton(operatorJoystick, 5);
+		fingersDown.whenPressed(new FingerDown());
+		fingersUp = new JoystickButton(operatorJoystick, 10);
+		fingersUp.whenPressed(new FingerUp());
+		
 				
 		//Shack
 		shackIn = new JoystickButton(operatorJoystick, 6);
+		shackIn.whileHeld(new ShackIn());
 		shackOut = new JoystickButton(operatorJoystick, 7);
-		
+		shackOut.whileHeld(new ShackOut());
 		
 				
 		//Lifting
 		liftUp = new JoystickButton(operatorJoystick, 8);
+		liftUp.whenPressed(new LiftUp());
 		liftDown = new JoystickButton(operatorJoystick, 9);
+		liftDown.whenPressed(new LiftDown());
 				
 		//Doors
 		doorsOpen = new JoystickButton(operatorJoystick, 10);
+		doorsOpen.whenPressed(new DoorsOut());
 		doorsClose = new JoystickButton(operatorJoystick, 11);
+		doorsClose.whenPressed(new DoorsIn());
 		
 		//Drive buttons initialization
 		driveForward = new JoystickButton(chassisJoystick, 5); 	// FIXME: fix port
@@ -150,24 +177,17 @@ public class OI {
 		driveRight.whileHeld(new DriveRight());
 		driveLeft.whileHeld(new DriveLeft());
 		
-		
-		//*Lifter buttons initialization
-		liftUp = new JoystickButton(operatorJoystick, 5);	// FIXME: make sure this is for the correct Joystick and port
-		liftDown = new JoystickButton(operatorJoystick, 6);	// FIXME: make sure this is for the correct Joystick and port
-		
 		//liftUp.whenPressed(new LiftUp());		//Uncomment when the lifter is ready to be tested
 		//liftDown.whenPressed(new LiftDown());
 		
 		
 		//Sucker buttons initialization
-		collectIn = new JoystickButton(operatorJoystick, 7);     		// FIXME: make sure this is for the correct Joystick and port
 		pushOut = new JoystickButton(operatorJoystick, 8);  	  	// FIXME: make sure this is for the correct Joystick and port
 		angleIn = new JoystickButton(operatorJoystick, 9);    		// FIXME: make sure this is for the correct Joystick and port
 		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
 		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
 		stopCollectorAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
 
-		//suckIn.whenPressed (new CollectTote());	//Uncomment when the sucker is ready to be tested
 		//pushOut.whenPressed (new ReleaseTote());
 		//angleIn.whenPressed (new AngleSuckerIn());
 		//angleOut.whenPressed (new AngleSuckerOut());
@@ -187,7 +207,7 @@ public class OI {
 		
 		//Autonomous
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
-		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
+		//autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
 		
