@@ -63,6 +63,4 @@ public class RobotMap {
 	public static final int RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL = 1;
 	public static final int LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL = 2;
 	public static final int LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL = 3;
-	public static final int LEFT_COLLECTOR_LIMIT = 18; //Limit Switches
-	public static final int RIGHT_COLLECTOR_LIMIT = 19;
 }
