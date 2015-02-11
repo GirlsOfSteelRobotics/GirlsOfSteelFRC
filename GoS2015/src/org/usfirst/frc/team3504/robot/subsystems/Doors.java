@@ -13,8 +13,8 @@ public class Doors extends Subsystem{
 	private DoubleSolenoid rightDoor;
 	
 	public Doors() {
-		leftDoor = new DoubleSolenoid(RobotMap.LEFT_DOOR_CHANNEL_A, RobotMap.LEFT_DOOR_CHANNEL_B);
-		rightDoor = new DoubleSolenoid(RobotMap.RIGHT_DOOR_CHANNEL_A, RobotMap.RIGHT_DOOR_CHANNEL_B);
+		leftDoor = new DoubleSolenoid(RobotMap.LEFT_DOOR_MODULE, RobotMap.LEFT_DOOR_CHANNEL_A, RobotMap.LEFT_DOOR_CHANNEL_B);
+		rightDoor = new DoubleSolenoid(RobotMap.RIGHT_DOOR_MODULE, RobotMap.RIGHT_DOOR_CHANNEL_A, RobotMap.RIGHT_DOOR_CHANNEL_B);
 	}
 
 	public void doorsIn() {

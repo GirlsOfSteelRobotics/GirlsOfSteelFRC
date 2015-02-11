@@ -17,8 +17,8 @@ public class Fingers extends Subsystem {
 	
 	public Fingers()
 	{
-		fingersLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_FINGER_PISTON_A, RobotMap.LEFT_FINGER_PISTON_B);
-		fingersRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_FINGER_PISTON_A, RobotMap.RIGHT_FINGER_PISTON_B);
+		fingersLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_FINGER_MODULE, RobotMap.LEFT_FINGER_PISTON_A, RobotMap.LEFT_FINGER_PISTON_B);
+		fingersRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_FINGER_MODULE, RobotMap.RIGHT_FINGER_PISTON_A, RobotMap.RIGHT_FINGER_PISTON_B);
 	}
 	
 	public void fingerDown(){

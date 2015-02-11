@@ -26,9 +26,11 @@ public class Collector extends Subsystem {
 		rightCollector = new CANTalon(RobotMap.RIGHT_COLLECTOR_WHEEL);
 		leftCollector = new CANTalon(RobotMap.LEFT_COLLECTOR_WHEEL);
 		
-		collectorLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
+		collectorLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_COLLECTOR_MODULE,
+													RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
 													RobotMap.LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL);
-		collectorRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
+		collectorRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_COLLECTOR_MODULE,
+													RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
 													RobotMap.RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL);
 	}
 	
