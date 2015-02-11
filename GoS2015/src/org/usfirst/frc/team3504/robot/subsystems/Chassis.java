@@ -83,7 +83,9 @@ public class Chassis extends Subsystem {
 	 */
 	public double twistDeadZone(double rawVal)
 	{
-		if(Math.abs(rawVal) > .5)
+		if((rawVal) > .5)
+			return rawVal;
+		else if((rawVal) < -.5)
 			return rawVal;
 		else
 			return 0.0;
@@ -91,8 +93,10 @@ public class Chassis extends Subsystem {
 	
 	public double deadZone(double rawVal)
 	{
-		if(Math.abs(rawVal) > .3)
+		if((rawVal) > .3)
 			return rawVal-.1;
+		else if((rawVal) < -.3)
+			return rawVal +.1;
 		else
 			return 0.0;
 	}
