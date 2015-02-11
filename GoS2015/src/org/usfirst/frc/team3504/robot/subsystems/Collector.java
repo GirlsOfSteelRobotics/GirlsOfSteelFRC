@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Talon;
@@ -13,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Collector extends Subsystem {
 
 	//Talons
-	private Talon rightCollector;
-	private Talon leftCollector;
+	private CANTalon rightCollector;
+	private CANTalon leftCollector;
 	
 	//Limit Switches
 	private DigitalInput leftLimit;
@@ -26,8 +27,8 @@ public class Collector extends Subsystem {
 	
 	public Collector()                //this is the constructor
 	{
-		rightCollector = new Talon(RobotMap.RIGHT_COLLECTOR_WHEEL);
-		leftCollector = new Talon(RobotMap.LEFT_COLLECTOR_WHEEL);
+		rightCollector = new CANTalon(RobotMap.RIGHT_COLLECTOR_WHEEL);
+		leftCollector = new CANTalon(RobotMap.LEFT_COLLECTOR_WHEEL);
 		
 		leftLimit = new DigitalInput(RobotMap.LEFT_COLLECTOR_LIMIT);
 		rightLimit = new DigitalInput(RobotMap.RIGHT_COLLECTOR_LIMIT);

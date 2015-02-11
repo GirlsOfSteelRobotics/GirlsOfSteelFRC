@@ -1,12 +1,13 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Doors extends Subsystem{
 	
-	private Talon leftTalon;
-	private Talon rightTalon;
+	private CANTalon leftTalon;
+	private CANTalon rightTalon;
 	
 	public Doors() {
 	//	leftTalon = new Talon(RobotMap.LEFT_DOOR_CHANNEL);

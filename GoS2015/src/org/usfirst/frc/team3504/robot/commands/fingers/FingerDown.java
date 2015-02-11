@@ -17,8 +17,9 @@ public class FingerDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	setTimeout(3.5);
     	requires(Robot.fingers);
+    	//probs change time
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +30,7 @@ public class FingerDown extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-    	return Robot.fingers.getLimit();
+    	return isTimedOut();
     }
 
     // Called once after isFinished returns true

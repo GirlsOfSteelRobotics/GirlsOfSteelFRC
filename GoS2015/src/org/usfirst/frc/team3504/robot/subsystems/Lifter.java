@@ -44,9 +44,9 @@ public class Lifter extends Subsystem {
 		liftTalon.set(0.0);
 	}
 	
-	public boolean getLimit() {
-		return(leftLimit.get() && rightLimit.get());
-	}
+//	public boolean getLimit() {
+//		return(leftLimit.get() && rightLimit.get());
+
 	
 	@Override
 	protected void initDefaultCommand() {
