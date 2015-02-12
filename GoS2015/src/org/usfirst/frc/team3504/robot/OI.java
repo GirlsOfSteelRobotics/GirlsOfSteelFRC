@@ -194,7 +194,7 @@ public class OI {
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
-		autoLifting = new JoystickButton(chassisJoystick, 13);
+		autoLifting = new JoystickButton(chassisJoystick, 2sx);
 		autoReleasing = new JoystickButton(operatorJoystick, 13);
 		
 		
