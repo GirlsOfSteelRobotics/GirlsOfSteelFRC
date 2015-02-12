@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
+import org.usfirst.frc.team3504.robot.commands.doors.DoorsOut;
+import org.usfirst.frc.team3504.robot.commands.fingers.FingerDown;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -8,6 +11,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Release extends CommandGroup {
     
     public  Release() {
+    	addSequential(new FingerDown());
+    	addSequential(new AutoLowerLifter());
+    	addSequential(new DoorsOut());
+    	addSequential(new AutoReleaseGripper());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

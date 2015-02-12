@@ -30,7 +30,7 @@ public class AutoDriveForward extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.autoDriveForward(.75);// what is the speed, .5 is guestimate, speed is between 0 and 1
-    	
+    	//TODO speed and distance
     	SmartDashboard.putNumber("Drive Front Left Encoder ", Robot.chassis.getFrontLeftEncoderRate());
 		SmartDashboard.putNumber("Drive Front Right Encoder ", Robot.chassis.getFrontRightEncoderRate());
 		SmartDashboard.putNumber("Drive Rear Left Encoder ", Robot.chassis.getRearLeftEncoderRate());
