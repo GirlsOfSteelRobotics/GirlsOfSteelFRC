@@ -156,9 +156,9 @@ public class OI {
 				
 		//Lifting
 		liftUp = new JoystickButton(operatorJoystick, 8);
-		liftUp.whenPressed(new LiftUp());
+		liftUp.whileHeld(new LiftUp());
 		liftDown = new JoystickButton(operatorJoystick, 9);
-		liftDown.whenPressed(new LiftDown());
+		liftDown.whileHeld(new LiftDown());
 				
 		//Doors
 		doorsOpen = new JoystickButton(operatorJoystick, 10);
