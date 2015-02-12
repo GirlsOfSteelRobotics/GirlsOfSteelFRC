@@ -14,7 +14,7 @@ public class Release extends CommandGroup {
     	addSequential(new FingerDown());
     	addSequential(new AutoLowerLifter());
     	addSequential(new DoorsOut());
-    	addSequential(new AutoReleaseGrippers());
+    	addSequential(new AutoReleaseGripper());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
