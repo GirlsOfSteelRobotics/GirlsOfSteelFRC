@@ -28,6 +28,7 @@ public class AutoTurnRight extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if (Robot.chassis.getFrontLeftEncoderDistance() == 108)
+    		//TODO speed and distance
     		return false;
     	else 
     		return true; 

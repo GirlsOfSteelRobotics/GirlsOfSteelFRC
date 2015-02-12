@@ -28,10 +28,11 @@ public class AutoDriveBackwards extends Command {
     protected void execute() {
     	Robot.chassis.autoDriveSideways(-.5);
     }
-
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if (Robot.chassis.getFrontLeftEncoderDistance() == 36)
+    		//TODO find encoder distance
     		//check to make sure 36 is correct distance
     		return true;
     	else

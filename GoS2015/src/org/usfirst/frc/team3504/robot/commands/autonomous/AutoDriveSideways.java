@@ -28,6 +28,7 @@ public class AutoDriveSideways extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if (Robot.chassis.getFrontLeftEncoderDistance() == 53.7)
+    		//TODO distance
         return true; 
     	else
     	return false;
