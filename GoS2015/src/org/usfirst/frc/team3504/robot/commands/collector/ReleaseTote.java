@@ -21,7 +21,6 @@ public class ReleaseTote extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		//Robot.collector.getLimit();
 		return false;
 	}
 
