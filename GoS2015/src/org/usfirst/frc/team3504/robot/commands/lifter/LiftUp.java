@@ -10,15 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftUp extends Command {
 
 	double initialVal;
-	//whileheld: create new command for lift up on encoders and timer.
 	public LiftUp() {
 		requires(Robot.forklift);
-		//initialVal = Robot.forklift.getLiftEncoder(); 
 	}
 
 	@Override
 	protected void initialize() {
-		//setTimeout(2);
+		
 	}
 
 	@Override
@@ -29,13 +27,10 @@ public class LiftUp extends Command {
 	@Override
 	protected boolean isFinished() {
 		return false;
-		//return (Robot.forklift.getLiftEncoder-initialVal)==50; TODO: set to distance lifter needs to go up to be able to drop tote back down to fingers
-		
 	}
 
 	@Override
 	protected void end() {
-		//Stop motors
 		Robot.forklift.stop();
 	}
 
