@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
+import org.usfirst.frc.team3504.robot.commands.doors.DoorsIn;
 import org.usfirst.frc.team3504.robot.commands.doors.DoorsOut;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,12 +11,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Lifting extends CommandGroup {
     
     public  Lifting() {
-    	addSequential(new DoorsOut));
+    	addSequential(new DoorsOut());
     	
-    	addSequential(new AutoBringInGrippers));
+    	addSequential(new AutoBringInGrippers());
     	
-    	addSequential());
-   
+    	addSequential(new AutoLift());
+    	
+    	addSequential(new DoorsIn());
     
     	
     	//Will include both up and down
