@@ -92,6 +92,8 @@ public class OI {
 	private JoystickButton autoCollector;
 	private JoystickButton autoTurnLeft;
 	private JoystickButton autoTurnLeftTimer;
+	private JoystickButton autoLifting;
+	private JoystickButton autoReleasing;
 	
 	//Drive Buttons
 	private JoystickButton driveForward;
@@ -159,7 +161,7 @@ public class OI {
 		liftDown.whileHeld(new LiftDown());
 				
 		//Doors
-		doorsOpen = new JoystickButton(operatorJoystick, 10);
+		doorsOpen = new JoystickButton(operatorJoystick, 12);
 		doorsOpen.whenPressed(new DoorsOut());
 		doorsClose = new JoystickButton(operatorJoystick, 11);
 		doorsClose.whenPressed(new DoorsIn());
@@ -174,6 +176,14 @@ public class OI {
 		driveLeft = new JoystickButton(chassisJoystick, 3);
 		driveLeft.whileHeld(new DriveLeft());
 		
+		//Gyro Button initialization
+		resetGyro = new JoystickButton(chassisJoystick, 1);
+		resetGyro.whenPressed(new ResetGyro());
+		getGyro = new JoystickButton(chassisJoystick, 12);
+		getGyro.whenPressed(new GetGyro());
+		
+		
+		
 		/**
 		//Ultrasonic buttons initialization
 		getDistance = new JoystickButton(chassisJoystick, 13);
@@ -184,21 +194,20 @@ public class OI {
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
+		autoLifting = new JoystickButton(chassisJoystick, 2);
+		autoReleasing = new JoystickButton(operatorJoystick, 13);
+		
 		
 		autoDriveForward.whenPressed(new AutoDriveForward());
 		autoFirstPickup.whenPressed(new AutoFirstPickup());
 		autoCollector.whenPressed(new AutoCollector()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
+		autoLifting.whenPressed(new Lifting());
+		autoReleasing.whenPressed(new Release());
 		
 		//Camera buttons initialization	
 		switchCamera = new JoystickButton(chassisJoystick, 2);
 		switchCamera.whenPressed (new CameraSwitch());
-		
-		//Gyro Button initialization
-		resetGyro = new JoystickButton(chassisJoystick, 1);
-		resetGyro.whenPressed(new ResetGyro());
-		getGyro = new JoystickButton(chassisJoystick, 12);
-		getGyro.whenPressed(new GetGyro());
 		
 		//Photosensor Buttons
 		testPSensor = new JoystickButton(chassisJoystick, 7);
