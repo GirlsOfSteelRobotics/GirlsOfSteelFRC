@@ -174,6 +174,12 @@ public class OI {
 		driveLeft = new JoystickButton(chassisJoystick, 3);
 		driveLeft.whileHeld(new DriveLeft());
 		
+		//Gyro Button initialization
+		resetGyro = new JoystickButton(chassisJoystick, 1);
+		resetGyro.whenPressed(new ResetGyro());
+		getGyro = new JoystickButton(chassisJoystick, 12);
+		getGyro.whenPressed(new GetGyro());
+		
 		/**
 		//Ultrasonic buttons initialization
 		getDistance = new JoystickButton(chassisJoystick, 13);
@@ -193,12 +199,6 @@ public class OI {
 		//Camera buttons initialization	
 		switchCamera = new JoystickButton(chassisJoystick, 2);
 		switchCamera.whenPressed (new CameraSwitch());
-		
-		//Gyro Button initialization
-		resetGyro = new JoystickButton(chassisJoystick, 1);
-		resetGyro.whenPressed(new ResetGyro());
-		getGyro = new JoystickButton(chassisJoystick, 12);
-		getGyro.whenPressed(new GetGyro());
 		
 		//Photosensor Buttons
 		testPSensor = new JoystickButton(chassisJoystick, 7);
