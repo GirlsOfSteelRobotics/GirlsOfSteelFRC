@@ -15,7 +15,7 @@ public class LiftDown extends Command{
 	
 	@Override
 	protected void initialize() {
-		setTimeout(2);
+		//setTimeout(2);
 	}
 
 	@Override
@@ -26,7 +26,8 @@ public class LiftDown extends Command{
 	@Override
 	protected boolean isFinished() {
 		//Robot.forklift.getLimit();
-		return isTimedOut();
+		//return isTimedOut();
+		return false;
 	}
 
 	@Override
