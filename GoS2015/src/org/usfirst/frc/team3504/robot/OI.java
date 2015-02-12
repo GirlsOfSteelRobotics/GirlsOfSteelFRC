@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
@@ -21,6 +23,8 @@ import org.usfirst.frc.team3504.robot.commands.lifter.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.lifter.LiftUp;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
+import org.usfirst.frc.team3504.robot.commands.tests.TestPhotoSensor;
+import org.usfirst.frc.team3504.robot.commands.tests.TestUltrasonic;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -120,10 +124,6 @@ public class OI {
 	
 	//photosensor button
 	private JoystickButton testPSensor;
-	/*
-	 * Add pusher buttons
-	 * Add Triangle pegs buttons (fingers)
-	 */
 	
 	public OI()
 	{
@@ -146,13 +146,11 @@ public class OI {
 		fingersUp = new JoystickButton(operatorJoystick, 10);
 		fingersUp.whenPressed(new FingerUp());
 		
-				
 		//Shack
 		shackIn = new JoystickButton(operatorJoystick, 6);
 		shackIn.whileHeld(new ShackIn());
 		shackOut = new JoystickButton(operatorJoystick, 7);
 		shackOut.whileHeld(new ShackOut());
-		
 				
 		//Lifting
 		liftUp = new JoystickButton(operatorJoystick, 8);
@@ -167,66 +165,34 @@ public class OI {
 		doorsClose.whenPressed(new DoorsIn());
 		
 		//Drive buttons initialization
-		driveForward = new JoystickButton(chassisJoystick, 5); 	// FIXME: fix port
-		driveBackward = new JoystickButton(chassisJoystick, 6); // FIXME: fix port
-		driveRight = new JoystickButton(chassisJoystick, 4); 	// FIXME: fix port
-		driveLeft = new JoystickButton(chassisJoystick, 3); 	// FIXME: fix port
-		
+		driveForward = new JoystickButton(chassisJoystick, 5);
 		driveForward.whileHeld(new DriveForward());
+		driveBackward = new JoystickButton(chassisJoystick, 6);
 		driveBackward.whileHeld(new DriveBackward());
+		driveRight = new JoystickButton(chassisJoystick, 4);
 		driveRight.whileHeld(new DriveRight());
+		driveLeft = new JoystickButton(chassisJoystick, 3);
 		driveLeft.whileHeld(new DriveLeft());
 		
-		//liftUp.whenPressed(new LiftUp());		//Uncomment when the lifter is ready to be tested
-		//liftDown.whenPressed(new LiftDown());
-		
-		
-		//Sucker buttons initialization
-		pushOut = new JoystickButton(operatorJoystick, 8);  	  	// FIXME: make sure this is for the correct Joystick and port
-		angleIn = new JoystickButton(operatorJoystick, 9);    		// FIXME: make sure this is for the correct Joystick and port
-		angleOut = new JoystickButton(operatorJoystick, 10);  		// FIXME: make sure this is for the correct Joystick and port
-		stopCollection = new JoystickButton(operatorJoystick, 11); 	// FIXME: make sure this is for the correct Joystick and port
-		stopCollectorAngle = new JoystickButton(operatorJoystick, 12); //FIXME: make sure this is for the correct Joystick and port
-
-		//pushOut.whenPressed (new ReleaseTote());
-		//angleIn.whenPressed (new AngleSuckerIn());
-		//angleOut.whenPressed (new AngleSuckerOut());
-		//stopCollection.whenPressed (new StopCollection());
-		//stopSuckerAngle.whenPressed(new StopSuckerAngle());
-		
-		
+		/**
 		//Ultrasonic buttons initialization
 		getDistance = new JoystickButton(chassisJoystick, 13);
-		//getDistance.whenPressed(new TestUltrasonic());
-		
-		//Shack buttons init
-		//shackIn = new JoystickButton(operatorJoystick, 13);
-		//shackOut = new JoystickButton(operatorJoystick,12)
-		
+		getDistance.whenPressed(new TestUltrasonic());
 	
-		
 		//Autonomous
 		autoDriveForward = new JoystickButton(chassisJoystick, 9);
-		//autoFirstPickup = new JoystickButton(chassisJoystick, 10);
+		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
 		
 		autoDriveForward.whenPressed(new AutoDriveForward());
-		//autoFirstPickup.whenPressed(new AutoFirstPickup());
-		//autoCollector.whenPressed(new AutoCollector()); 
+		autoFirstPickup.whenPressed(new AutoFirstPickup());
+		autoCollector.whenPressed(new AutoCollector()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
-		
-		
-		//Door Buttons
-		doorIn = new JoystickButton(operatorJoystick,7);	// FIXME: make sure this is for the correct Joystick and port
-		doorOut = new JoystickButton(operatorJoystick,8);	// FIXME: make sure this is for the correct Joystick and port
-		
-		
 		
 		//Camera buttons initialization	
 		switchCamera = new JoystickButton(chassisJoystick, 2);
 		switchCamera.whenPressed (new CameraSwitch());
-		 // FIXME: make sure this is for the correct Joystick and port
 		
 		//Gyro Button initialization
 		resetGyro = new JoystickButton(chassisJoystick, 1);
@@ -234,10 +200,10 @@ public class OI {
 		getGyro = new JoystickButton(chassisJoystick, 12);
 		getGyro.whenPressed(new GetGyro());
 		
-		//photosensorbuttons
-		//testPSensor = new JoystickButton(chassisJoystick, 7);
-		//testPSensor.whenPressed(new TestPhotoSensor());
-		
+		//Photosensor Buttons
+		testPSensor = new JoystickButton(chassisJoystick, 7);
+		testPSensor.whenPressed(new TestPhotoSensor());
+		**/
 	}
 	
 	public Joystick getOperatorJoystick()
