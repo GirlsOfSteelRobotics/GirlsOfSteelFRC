@@ -145,9 +145,9 @@ public class OI {
 		angleOut.whenPressed(new AngleCollectorOut());
 		
 		//Fingers
-		fingersDown = new JoystickButton(chassisJoystick, 7);
+		fingersDown = new JoystickButton(chassisJoystick, 8);
 		fingersDown.whenPressed(new FingerDown());
-		fingersUp = new JoystickButton(chassisJoystick, 8);
+		fingersUp = new JoystickButton(chassisJoystick, 7);
 		fingersUp.whenPressed(new FingerUp());
 		
 		//Shack
@@ -155,7 +155,7 @@ public class OI {
 		shackIn.whileHeld(new ShackIn());
 		shackOut = new JoystickButton(operatorJoystick, 2);
 		shackOut.whileHeld(new ShackOut());
-				
+		
 		//Lifting
 		liftUp = new JoystickButton(operatorJoystick, 7);
 		liftUp.whileHeld(new LiftUp());
