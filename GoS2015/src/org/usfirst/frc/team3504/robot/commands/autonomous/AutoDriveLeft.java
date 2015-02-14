@@ -1,15 +1,15 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team3504.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoSideways extends Command {
+public class AutoDriveLeft extends Command {
 
-    public AutoSideways() {
+    public AutoDriveLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
@@ -17,18 +17,17 @@ public class AutoSideways extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoders();
+    	Robot.chassis.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveBackward(.5);
-    	//TODO speed?
+    	Robot.chassis.autoDriveLeft();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return isTimedOut();
+        return (Robot.chassis.getDistanceLeft() > 50);
     }
 
     // Called once after isFinished returns true

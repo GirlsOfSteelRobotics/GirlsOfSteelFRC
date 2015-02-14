@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Sonia
@@ -28,6 +29,11 @@ public class Chassis extends Subsystem {
     double Kp;
     double Ki;
     double Kd;
+    
+    double ticksPerInch;
+    double ticksPerInchStrafing;
+    
+    double autoSpeed;
 	
     //Gyro
     private Gyro robotGyro;
@@ -49,6 +55,10 @@ public class Chassis extends Subsystem {
 	
 	public Chassis()
 	{	
+		ticksPerInch = Math.PI*8/(4*250);
+		ticksPerInchStrafing = Math.PI*8/(4*250*4);
+		autoSpeed = 0.75;
+		
 		rightFrontWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
 		leftFrontWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
 		rightBackWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
@@ -99,22 +109,39 @@ public class Chassis extends Subsystem {
 	
 	public void moveByJoystick(Joystick stick)
 	{
-		if (getGyro)
-			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY())* ((-stick.getThrottle() + 1) / 2), deadZone(stick.getX())* ((-stick.getThrottle() + 1) / 2), twistDeadZone(stick.getTwist())*((-stick.getThrottle() + 1) / 2), robotGyro.getAngle());
-		else
-			gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY())* ((-stick.getThrottle() + 1) / 2), deadZone(stick.getX())* ((-stick.getThrottle() + 1) / 2), twistDeadZone(stick.getTwist())*((-stick.getThrottle() + 1) / 2), 0);
+		
+		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY())* ((-stick.getThrottle() + 1) / 2),
+										deadZone(stick.getX())*((-stick.getThrottle() + 1) / 2),
+										twistDeadZone(stick.getTwist())*((-stick.getThrottle() + 1) / 2),
+										getGyro ? robotGyro.getAngle() : 0);
+		
 	}
 	
-	public void autoDriveSideways(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 90, 0);//figure out what the angle should be
+	public void autoDriveRight(){
+		gosDrive.mecanumDrive_Polar(autoSpeed, 180, 0);//figure out what the angle should be
 	}
 	
-	public void autoDriveBackward(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 45, 0); //check to make sure this angle is correcct
+	public void autoDriveLeft()
+	{
+		gosDrive.mecanumDrive_Polar(autoSpeed, 0, 0);
 	}
 	
-	public void autoDriveForward(double speed){
-		gosDrive.mecanumDrive_Polar(speed, 90, 0);
+	public void autoDriveBackward(){
+		gosDrive.mecanumDrive_Polar(autoSpeed, 270, 0); //check to make sure this angle is correcct
+	}
+	
+	public void autoDriveForward(){
+		gosDrive.mecanumDrive_Polar(autoSpeed, 90, 0);
+	}
+	
+	public void autoTurnClockwise()
+	{
+		gosDrive.mecanumDrive_Cartesian(0, 0, autoSpeed, 0);
+	}
+	
+	public void autoTurnCounterclockwise()
+	{
+		gosDrive.mecanumDrive_Cartesian(0, 0, -autoSpeed, 0);
 	}
 	
 	public void driveForward()
@@ -152,45 +179,38 @@ public class Chassis extends Subsystem {
 		return robotGyro.getAngle();
 	}
 	
-	//Need to implement
-	public void resetEncoders(){
-	}
-	
-	public double getFrontLeftEncoderRate()
+	public void printPositionsToSmartDashboard()
 	{
-		return leftFrontWheel.getEncVelocity();
+		SmartDashboard.putNumber("Drive Front Left Encoder Distance ", getFrontLeftEncoderPosition());
+		SmartDashboard.putNumber("Drive Front Right Encoder Distance ", getFrontRightEncoderPosition());
+		SmartDashboard.putNumber("Drive Rear Left Encoder Distance ", getRearLeftEncoderPosition());
+		SmartDashboard.putNumber("Drive Rear Right Encoder Distance ", getRearRightEncoderPosition());
 	}
 	
-	public double getFrontLeftEncoderDistance(){
+	//Need to implement
+	public void resetDistance(){
+		initialFrontLeftEncoderDistance = leftFrontWheel.getEncPosition();
+		initialFrontRightEncoderDistance = rightFrontWheel.getEncPosition();
+		initialRearLeftEncoderDistance = leftBackWheel.getEncPosition();
+		initialRearRightEncoderDistance = rightBackWheel.getEncPosition();
+	}
+	
+	private double getFrontLeftEncoderPosition(){
 		return leftFrontWheel.getEncPosition();
 	}
 	
-	public double getRearLeftEncoderRate()
-	{
-		return leftBackWheel.getEncVelocity();
-	}
-	
-	public double getRearLeftEncoderDistance(){
+	private double getRearLeftEncoderPosition(){
 		return leftBackWheel.getEncPosition();
 	}
 	
-	public double getFrontRightEncoderRate()
-	{
-		return rightFrontWheel.getEncVelocity();
-	}
-	
-	public double getFrontRightEncoderDistance(){
+	private double getFrontRightEncoderPosition(){
 		return rightFrontWheel.getEncPosition();
 	}
 	
-	public double getRearRightEncoderRate()
-	{
-		return rightBackWheel.getEncVelocity();
-	}
-	
-	public double getRearRightEncoderDistance(){
+	private double getRearRightEncoderPosition(){
 		return rightBackWheel.getEncPosition();
 	}
+	
 	public void resetGyro() {
 		robotGyro.reset();
 	}
@@ -198,76 +218,53 @@ public class Chassis extends Subsystem {
 	public void getGyro() {
 		getGyro = !getGyro;
 	}
-	
-    public void resetFrontLeftEncoder(double newVal) {
-    	initialFrontLeftEncoderDistance = newVal;
-    }
-    
-    public boolean isFrontLeftEncoderFinished(double finalVal, double currentVal)
-    {
-    	return Math.abs(getFrontLeftEncoderDistance())- Math.abs(initialFrontLeftEncoderDistance) == finalVal;
-    }
-    
-    public void resetFrontRightEncoderDistance(double newVal){
-		initialFrontRightEncoderDistance = newVal;
-    }
-    
-    public boolean isFrontRightEncoderFinished(double finalVal, double currentVal)
-    {
-    	return Math.abs(getFrontRightEncoderDistance())- Math.abs(initialFrontRightEncoderDistance) == finalVal;
-    }
-    
-    public void resetRearLeftEncoderDistance(double newVal){
-		initialRearLeftEncoderDistance = newVal;
-    }
-    
-    public boolean isRearLeftEncoderFinished(double finalVal, double currentVal)
-    {
-    	return Math.abs(getRearLeftEncoderDistance())- Math.abs(initialRearLeftEncoderDistance) == finalVal;
-    }
-  
-    public void resetRearRightEncoderDistance(double newVal){
-		initialRearRightEncoderDistance = newVal;
-    }
-    
-    public boolean isRearRightEncoderFinished(double finalVal, double currentVal)
-    {
-    	return Math.abs(getRearRightEncoderDistance())- Math.abs(initialRearRightEncoderDistance) == finalVal;
-    }
  
-    public double RearRightEncoderDistance()
+    private double rearRightEncoderDistance()
     {
-    	return Math.abs(getRearRightEncoderDistance())- Math.abs(initialRearRightEncoderDistance);
+    	return Math.abs(getRearRightEncoderPosition())- Math.abs(initialRearRightEncoderDistance);
     }
     
-    public double FrontRightEncoderDistance()
+    private double frontRightEncoderDistance()
     {
-    	return Math.abs(getFrontRightEncoderDistance())- Math.abs(initialFrontRightEncoderDistance);
+    	return Math.abs(getFrontRightEncoderPosition())- Math.abs(initialFrontRightEncoderDistance);
     }
     
-    public double FrontLeftEncoderDistance()
+    private double frontLeftEncoderDistance()
     {
-    	return Math.abs(getFrontLeftEncoderDistance())- Math.abs(initialFrontLeftEncoderDistance);
+    	return Math.abs(getFrontLeftEncoderPosition())- Math.abs(initialFrontLeftEncoderDistance);
     }
     
-    public double RearLeftEncoderDistance()
+    private double rearLeftEncoderDistance()
     {
-    	return Math.abs(getRearLeftEncoderDistance())- Math.abs(initialRearLeftEncoderDistance);
+    	return Math.abs(getRearLeftEncoderPosition())- Math.abs(initialRearLeftEncoderDistance);
     }
     
-    public double getDistanceHorizontal() {
-    	return ((RearLeftEncoderDistance() + FrontLeftEncoderDistance() + FrontRightEncoderDistance() + RearRightEncoderDistance())/4);
+    public double getDistanceForward()
+    {
+    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/(2*ticksPerInchStrafing);
     }
     
-    public double getDistanceVertical() {
-    	return 0;
+    public double getDistanceBackwards()
+    {
+    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/(2*ticksPerInchStrafing);
+    }
+    
+    public double getDistanceLeft()
+    {
+    	//calculates the average of the encoder distances
+    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/(4*ticksPerInch));
+    }
+    
+    public double getDistanceRight()
+    {
+    	//calculates the average of the encoder distances
+    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/(4*ticksPerInch));
     }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveByJoystick());
-    	//setDefaultCommand(new TestPhotoSensor());
    
     }
     

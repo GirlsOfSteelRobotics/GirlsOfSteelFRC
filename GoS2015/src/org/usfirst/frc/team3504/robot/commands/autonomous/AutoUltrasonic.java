@@ -25,7 +25,7 @@ public class AutoUltrasonic extends CommandGroup {
     	addSequential(new Lifting());
     	//gets last tote assuming partner cleared third can  
     	
-    	addSequential(new AutoTurnLeft());
+    	addSequential(new AutoDriveLeft());
     	addSequential(new Lifting()); //just down 
     	
     	

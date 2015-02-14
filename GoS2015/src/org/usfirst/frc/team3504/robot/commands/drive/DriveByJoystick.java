@@ -27,12 +27,6 @@ public class DriveByJoystick extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.moveByJoystick(chassisJoystick);
-		SmartDashboard.putNumber("Drive Front Left Encoder ", Robot.chassis.getFrontLeftEncoderRate());
-		SmartDashboard.putNumber("Drive Front Right Encoder ", Robot.chassis.getFrontRightEncoderRate());
-		SmartDashboard.putNumber("Drive Rear Left Encoder ", Robot.chassis.getRearLeftEncoderRate());
-		SmartDashboard.putNumber("Drive Rear Right Encoder ", Robot.chassis.getRearRightEncoderRate());
-		
-
     }
 
     // Make this return true when this Command no longer needs to run execute()

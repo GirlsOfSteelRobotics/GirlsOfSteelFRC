@@ -3,7 +3,6 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
 import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
@@ -144,17 +143,17 @@ public class OI {
 		angleIn.whenPressed(new AngleCollectorIn());
 		angleOut = new JoystickButton(operatorJoystick, 6);
 		angleOut.whenPressed(new AngleCollectorOut());
-				/*
+		
 		//Fingers
-		fingersDown = new JoystickButton(operatorJoystick, 3);
+		fingersDown = new JoystickButton(chassisJoystick, 7);
 		fingersDown.whenPressed(new FingerDown());
-		fingersUp = new JoystickButton(operatorJoystick, 4);
+		fingersUp = new JoystickButton(chassisJoystick, 8);
 		fingersUp.whenPressed(new FingerUp());
-		/*
+		
 		//Shack
-		shackIn = new JoystickButton(operatorJoystick, 6);
+		shackIn = new JoystickButton(operatorJoystick, 1);
 		shackIn.whileHeld(new ShackIn());
-		shackOut = new JoystickButton(operatorJoystick, 7);
+		shackOut = new JoystickButton(operatorJoystick, 2);
 		shackOut.whileHeld(new ShackOut());
 				
 		//Lifting
@@ -186,7 +185,9 @@ public class OI {
 		getGyro = new JoystickButton(chassisJoystick, 12);
 		getGyro.whenPressed(new GetGyro());
 		
-		
+		//Camera button
+		switchCamera = new JoystickButton(chassisJoystick, 2);
+		switchCamera.whenPressed (new CameraSwitch());
 		
 		/**
 		//Ultrasonic buttons initialization
@@ -198,7 +199,7 @@ public class OI {
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
-		*/
+		
 		autoLifting = new JoystickButton(operatorJoystick, 1);
 		autoReleasing = new JoystickButton(operatorJoystick, 2);
 		/*
@@ -208,12 +209,12 @@ public class OI {
 		autoCollector.whenPressed(new AutoCollector()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
 		*/
+		/*
 		autoLifting.whenPressed(new Lifting());
 		autoReleasing.whenPressed(new Release());
 		/*
 		//Camera buttons initialization	
-		switchCamera = new JoystickButton(chassisJoystick, 2);
-		switchCamera.whenPressed (new CameraSwitch());
+		
 		
 		//Photosensor Buttons
 		testPSensor = new JoystickButton(chassisJoystick, 7);
