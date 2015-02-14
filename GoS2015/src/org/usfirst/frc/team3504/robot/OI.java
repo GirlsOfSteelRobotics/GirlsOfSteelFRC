@@ -180,7 +180,7 @@ public class OI {
 		driveLeft.whileHeld(new DriveLeft());
 		
 		//Gyro Button initialization
-		resetGyro = new JoystickButton(chassisJoystick, 1);
+		resetGyro = new JoystickButton(chassisJoystick, 11);
 		resetGyro.whenPressed(new ResetGyro());
 		getGyro = new JoystickButton(chassisJoystick, 12);
 		getGyro.whenPressed(new GetGyro());
