@@ -17,7 +17,7 @@ public class AutoLowerLifter extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(8);
+    	setTimeout(2.5);
     }
 
     // Called repeatedly when this Command is scheduled to run

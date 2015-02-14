@@ -24,7 +24,7 @@ public class AutoDriveForward extends Command {
     protected void initialize() {   	
     	initialVal = Robot.chassis.getFrontLeftEncoderDistance();
     	//Robot.chassis.resetEncoders();
-    	//setTimeout(2.5);
+    	setTimeout(3);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -44,8 +44,8 @@ public class AutoDriveForward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//return isTimedOut();
-    	return Robot.chassis.isFrontLeftEncoderFinished(6000, initialVal);
+    	return isTimedOut();
+    	//return Robot.chassis.isFrontLeftEncoderFinished(600, initialVal);
     }
 
     // Called once after isFinished returns true

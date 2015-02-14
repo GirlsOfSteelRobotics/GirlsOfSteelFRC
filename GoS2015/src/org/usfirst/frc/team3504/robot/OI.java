@@ -4,6 +4,8 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
 import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
@@ -131,23 +133,24 @@ public class OI {
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
-				
-		//Collectors
-		collectTote = new JoystickButton(operatorJoystick, 1);
-		collectTote.whileHeld(new CollectTote());
-		releaseTote = new JoystickButton(operatorJoystick, 2);
-		releaseTote.whileHeld(new ReleaseTote());
-		angleIn = new JoystickButton(operatorJoystick, 3);
-		angleIn.whenPressed(new AngleCollectorIn());
-		angleOut = new JoystickButton(operatorJoystick, 4);
-		angleOut.whenPressed(new AngleCollectorOut());
-				
-		//Fingers
-		fingersDown = new JoystickButton(operatorJoystick, 5);
-		fingersDown.whenPressed(new FingerDown());
-		fingersUp = new JoystickButton(operatorJoystick, 10);
-		fingersUp.whenPressed(new FingerUp());
 		
+		
+		//Collectors
+		collectTote = new JoystickButton(operatorJoystick, 3);
+		collectTote.whileHeld(new CollectTote());
+		releaseTote = new JoystickButton(operatorJoystick, 4);
+		releaseTote.whileHeld(new ReleaseTote());
+		angleIn = new JoystickButton(operatorJoystick, 5);
+		angleIn.whenPressed(new AngleCollectorIn());
+		angleOut = new JoystickButton(operatorJoystick, 6);
+		angleOut.whenPressed(new AngleCollectorOut());
+				/*
+		//Fingers
+		fingersDown = new JoystickButton(operatorJoystick, 3);
+		fingersDown.whenPressed(new FingerDown());
+		fingersUp = new JoystickButton(operatorJoystick, 4);
+		fingersUp.whenPressed(new FingerUp());
+		/*
 		//Shack
 		shackIn = new JoystickButton(operatorJoystick, 6);
 		shackIn.whileHeld(new ShackIn());
@@ -155,16 +158,17 @@ public class OI {
 		shackOut.whileHeld(new ShackOut());
 				
 		//Lifting
-		liftUp = new JoystickButton(operatorJoystick, 8);
+		liftUp = new JoystickButton(operatorJoystick, 7);
 		liftUp.whileHeld(new LiftUp());
-		liftDown = new JoystickButton(operatorJoystick, 9);
+		liftDown = new JoystickButton(operatorJoystick, 8);
 		liftDown.whileHeld(new LiftDown());
-				
+		/*	
 		//Doors
 		doorsOpen = new JoystickButton(operatorJoystick, 12);
 		doorsOpen.whenPressed(new DoorsOut());
 		doorsClose = new JoystickButton(operatorJoystick, 11);
 		doorsClose.whenPressed(new DoorsIn());
+		*/
 		
 		//Drive buttons initialization
 		driveForward = new JoystickButton(chassisJoystick, 5);
@@ -194,17 +198,19 @@ public class OI {
 		autoFirstPickup = new JoystickButton(chassisJoystick, 10);
 		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
-		autoLifting = new JoystickButton(chassisJoystick, 2);
-		autoReleasing = new JoystickButton(operatorJoystick, 13);
-		
+		*/
+		autoLifting = new JoystickButton(operatorJoystick, 1);
+		autoReleasing = new JoystickButton(operatorJoystick, 2);
+		/*
 		
 		autoDriveForward.whenPressed(new AutoDriveForward());
 		autoFirstPickup.whenPressed(new AutoFirstPickup());
 		autoCollector.whenPressed(new AutoCollector()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
+		*/
 		autoLifting.whenPressed(new Lifting());
 		autoReleasing.whenPressed(new Release());
-		
+		/*
 		//Camera buttons initialization	
 		switchCamera = new JoystickButton(chassisJoystick, 2);
 		switchCamera.whenPressed (new CameraSwitch());

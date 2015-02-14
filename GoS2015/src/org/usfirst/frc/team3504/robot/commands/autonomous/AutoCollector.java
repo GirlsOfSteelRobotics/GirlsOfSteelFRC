@@ -21,7 +21,7 @@ public class AutoCollector extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(1);
+    	setTimeout(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
