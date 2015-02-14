@@ -161,13 +161,12 @@ public class OI {
 		liftUp.whileHeld(new LiftUp());
 		liftDown = new JoystickButton(operatorJoystick, 8);
 		liftDown.whileHeld(new LiftDown());
-		/*	
+		
 		//Doors
-		doorsOpen = new JoystickButton(operatorJoystick, 12);
+		doorsOpen = new JoystickButton(operatorJoystick, 9);
 		doorsOpen.whenPressed(new DoorsOut());
-		doorsClose = new JoystickButton(operatorJoystick, 11);
+		doorsClose = new JoystickButton(operatorJoystick, 10);
 		doorsClose.whenPressed(new DoorsIn());
-		*/
 		
 		//Drive buttons initialization
 		driveForward = new JoystickButton(chassisJoystick, 5);
