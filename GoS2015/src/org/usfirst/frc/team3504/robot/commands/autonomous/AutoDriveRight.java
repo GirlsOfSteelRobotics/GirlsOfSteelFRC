@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *Kyra and Alexa
  */
-public class AutoDriveSideways extends Command {
+public class AutoDriveRight extends Command {
 
-    public AutoDriveSideways() {
+    public AutoDriveRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
@@ -17,21 +17,17 @@ public class AutoDriveSideways extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoders();
+    	Robot.chassis.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveSideways(.5);
+    	Robot.chassis.autoDriveRight();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.chassis.getFrontLeftEncoderDistance() == 53.7)
-        return true; 
-    	else
-    	return false;
-    	
+    	return (Robot.chassis.getDistanceRight() > 50);
     }
 
     // Called once after isFinished returns true

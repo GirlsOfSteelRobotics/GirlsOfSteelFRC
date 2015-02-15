@@ -3,7 +3,8 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
 import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
@@ -92,6 +93,8 @@ public class OI {
 	private JoystickButton autoCollector;
 	private JoystickButton autoTurnLeft;
 	private JoystickButton autoTurnLeftTimer;
+	private JoystickButton autoLifting;
+	private JoystickButton autoReleasing;
 	
 	//Drive Buttons
 	private JoystickButton driveForward;
@@ -129,39 +132,40 @@ public class OI {
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
-				
+		
+		
 		//Collectors
-		collectTote = new JoystickButton(operatorJoystick, 1);
+		collectTote = new JoystickButton(operatorJoystick, 3);
 		collectTote.whileHeld(new CollectTote());
-		releaseTote = new JoystickButton(operatorJoystick, 2);
+		releaseTote = new JoystickButton(operatorJoystick, 4);
 		releaseTote.whileHeld(new ReleaseTote());
-		angleIn = new JoystickButton(operatorJoystick, 3);
+		angleIn = new JoystickButton(operatorJoystick, 5);
 		angleIn.whenPressed(new AngleCollectorIn());
-		angleOut = new JoystickButton(operatorJoystick, 4);
+		angleOut = new JoystickButton(operatorJoystick, 6);
 		angleOut.whenPressed(new AngleCollectorOut());
-				
+		
 		//Fingers
-		fingersDown = new JoystickButton(operatorJoystick, 5);
+		fingersDown = new JoystickButton(chassisJoystick, 7);
 		fingersDown.whenPressed(new FingerDown());
-		fingersUp = new JoystickButton(operatorJoystick, 10);
+		fingersUp = new JoystickButton(chassisJoystick, 8);
 		fingersUp.whenPressed(new FingerUp());
 		
 		//Shack
-		shackIn = new JoystickButton(operatorJoystick, 6);
+		shackIn = new JoystickButton(operatorJoystick, 1);
 		shackIn.whileHeld(new ShackIn());
-		shackOut = new JoystickButton(operatorJoystick, 7);
+		shackOut = new JoystickButton(operatorJoystick, 2);
 		shackOut.whileHeld(new ShackOut());
 				
 		//Lifting
-		liftUp = new JoystickButton(operatorJoystick, 8);
+		liftUp = new JoystickButton(operatorJoystick, 7);
 		liftUp.whileHeld(new LiftUp());
-		liftDown = new JoystickButton(operatorJoystick, 9);
+		liftDown = new JoystickButton(operatorJoystick, 8);
 		liftDown.whileHeld(new LiftDown());
-				
+		
 		//Doors
-		doorsOpen = new JoystickButton(operatorJoystick, 10);
+		doorsOpen = new JoystickButton(operatorJoystick, 9);
 		doorsOpen.whenPressed(new DoorsOut());
-		doorsClose = new JoystickButton(operatorJoystick, 11);
+		doorsClose = new JoystickButton(operatorJoystick, 10);
 		doorsClose.whenPressed(new DoorsIn());
 		
 		//Drive buttons initialization
@@ -174,6 +178,16 @@ public class OI {
 		driveLeft = new JoystickButton(chassisJoystick, 3);
 		driveLeft.whileHeld(new DriveLeft());
 		
+		//Gyro Button initialization
+		resetGyro = new JoystickButton(chassisJoystick, 11);
+		resetGyro.whenPressed(new ResetGyro());
+		getGyro = new JoystickButton(chassisJoystick, 12);
+		getGyro.whenPressed(new GetGyro());
+		
+		//Camera button
+		switchCamera = new JoystickButton(chassisJoystick, 2);
+		switchCamera.whenPressed (new CameraSwitch());
+		
 		/**
 		//Ultrasonic buttons initialization
 		getDistance = new JoystickButton(chassisJoystick, 13);
@@ -185,20 +199,21 @@ public class OI {
 		autoCollector = new JoystickButton(chassisJoystick, 11);
 		autoTurnLeft = new JoystickButton(chassisJoystick, 8);
 		
+		autoLifting = new JoystickButton(operatorJoystick, 1);
+		autoReleasing = new JoystickButton(operatorJoystick, 2);
+		/*
+		
 		autoDriveForward.whenPressed(new AutoDriveForward());
 		autoFirstPickup.whenPressed(new AutoFirstPickup());
 		autoCollector.whenPressed(new AutoCollector()); 
 		autoTurnLeft.whenPressed(new AutoTurnLeft());
-		
+		*/
+		/*
+		autoLifting.whenPressed(new Lifting());
+		autoReleasing.whenPressed(new Release());
+		/*
 		//Camera buttons initialization	
-		switchCamera = new JoystickButton(chassisJoystick, 2);
-		switchCamera.whenPressed (new CameraSwitch());
 		
-		//Gyro Button initialization
-		resetGyro = new JoystickButton(chassisJoystick, 1);
-		resetGyro.whenPressed(new ResetGyro());
-		getGyro = new JoystickButton(chassisJoystick, 12);
-		getGyro.whenPressed(new GetGyro());
 		
 		//Photosensor Buttons
 		testPSensor = new JoystickButton(chassisJoystick, 7);

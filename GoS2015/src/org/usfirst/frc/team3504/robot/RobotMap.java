@@ -51,10 +51,10 @@ public class RobotMap {
 	//Collector ports
 	public static final int LEFT_COLLECTOR_WHEEL = 10; //Motors
 	public static final int RIGHT_COLLECTOR_WHEEL = 19;
-	public static final int RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL = 0; //Pistons
-	public static final int RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL = 1;
+	public static final int RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL = 1; //Pistons
+	public static final int RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL = 0;
 	public static final int RIGHT_COLLECTOR_MODULE = 0;
-	public static final int LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL = 2;
-	public static final int LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL = 3;
+	public static final int LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL = 3;
+	public static final int LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL = 2;
 	public static final int LEFT_COLLECTOR_MODULE = 0;
 }

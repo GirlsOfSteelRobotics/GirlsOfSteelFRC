@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ReleaseTote extends Command {
 
-	public ReleaseTote() {
+	public ReleaseTote()
+	{
 		requires(Robot.collector);
 	}
 	
