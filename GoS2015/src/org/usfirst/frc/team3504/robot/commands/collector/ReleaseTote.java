@@ -9,9 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ReleaseTote extends Command {
 
+	public ReleaseTote() {
+		requires(Robot.collector);
+	}
+	
 	@Override
 	protected void initialize() {
-		requires(Robot.collector);
 	}
 
 	@Override
