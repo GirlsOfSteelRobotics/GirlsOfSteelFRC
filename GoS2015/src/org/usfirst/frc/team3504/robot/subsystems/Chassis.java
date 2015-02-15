@@ -20,15 +20,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Chassis extends Subsystem {
 	
 	//CANTalons
-	public static CANTalon rightFrontWheel;
-	public static CANTalon leftFrontWheel;
-	public static CANTalon rightBackWheel;
-	public static CANTalon leftBackWheel;
+	public static CANTalon frontRightWheel;
+	public static CANTalon frontLeftWheel;
+	public static CANTalon backRightWheel;
+	public static CANTalon backLeftWheel;
 	
 	//PID Values
-    double Kp;
-    double Ki;
-    double Kd;
+    double kP;
+    double kI;
+    double kD;
     
     double ticksPerInch;
     double ticksPerInchStrafing;
@@ -52,6 +52,7 @@ public class Chassis extends Subsystem {
     double initialRearRightEncoderDistance;
     
     private RobotDrive gosDrive;
+    private Joystick controlStick;
 	
 	public Chassis()
 	{	
@@ -59,39 +60,41 @@ public class Chassis extends Subsystem {
 		ticksPerInchStrafing = Math.PI*8/(4*250*4);
 		autoSpeed = 0.75;
 		
-		rightFrontWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
-		leftFrontWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
-		rightBackWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
-		leftBackWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
+		frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
+		frontLeftWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
+		backRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
+		backLeftWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
 		
-		Kp = .0001;//SmartDashboard.getNumber("p value");//.0001
-	    Ki = .00000001;//SmartDashboard.getNumber("i value");//.0000001
-	    Kd = .00000001;//SmartDashboard.getNumber("d value");//.0000001
+		kP = .0001;//SmartDashboard.getNumber("p value");//.0001
+	    kI = .00000001;//SmartDashboard.getNumber("i value");//.0000001
+	    kD = .00000001;//SmartDashboard.getNumber("d value");//.0000001
 	    
 	    robotGyro = new Gyro(RobotMap.GYRO_PORT);
         LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
 	    getGyro = true;
 		
-		frontLeftEncoder = new TalonEncoder(leftFrontWheel);
-    	rearLeftEncoder = new TalonEncoder(leftBackWheel);
-    	frontRightEncoder = new TalonEncoder(rightFrontWheel);
-    	rearRightEncoder = new TalonEncoder(leftBackWheel);
+		frontLeftEncoder = new TalonEncoder(frontLeftWheel);
+    	rearLeftEncoder = new TalonEncoder(backLeftWheel);
+    	frontRightEncoder = new TalonEncoder(frontRightWheel);
+    	rearRightEncoder = new TalonEncoder(backLeftWheel);
     	
-        gosDrive = new RobotDrive  (new PIDSpeedController(leftBackWheel, Kp, Ki, Kd, rearLeftEncoder),
-				new PIDSpeedController(rightBackWheel, Kp, Ki, Kd, rearRightEncoder),
-				new PIDSpeedController(leftFrontWheel, Kp, Ki, Kd, frontLeftEncoder),
-				new PIDSpeedController(rightFrontWheel, Kp, Ki, Kd, frontRightEncoder));
+        gosDrive = new RobotDrive  (new PIDSpeedController(backLeftWheel, kP, kI, kD, rearLeftEncoder),
+				new PIDSpeedController(backRightWheel, kP, kI, kD, rearRightEncoder),
+				new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
+				new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
         gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
     	gosDrive.setSafetyEnabled(true); 
+    	
+    	controlStick = Robot.oi.getChassisJoystick();
 	}
 	
 	/* Twist Dead Zone
 	 * 
 	 * Only activate twist action if the control is turned 50% of the way.
 	 */
-	public double twistDeadZone(double rawVal)
+	private double twistDeadZone(double rawVal)
 	{
 		if(Math.abs(rawVal) > .5)
 			return rawVal;
@@ -99,7 +102,7 @@ public class Chassis extends Subsystem {
 			return 0.0;
 	}
 	
-	public double deadZone(double rawVal)
+	private double deadZone(double rawVal)
 	{
 		if(Math.abs(rawVal) > .3)
 			return rawVal-.1;
@@ -107,14 +110,33 @@ public class Chassis extends Subsystem {
 			return 0.0;
 	}
 	
+	private double beattieDeadBand(double x)
+	{
+		// X^(1/1.75X)
+		if (x > 0)
+			return (Math.pow(x, 7.0 / (4.0 * x)));
+		else if (x < 0)
+			return -beattieDeadBand(-x);
+		else
+			return 0;
+	}
+
+	/** 
+	 * Translate throttle value from joystick (range -1..+1) into motor speed (range 0..+1)
+	 * The joystick value in the top position is -1, opposite of what might be expected,
+	 * so multiply by negative one to invert the readings.
+	 */
+	private double throttleSpeed(Joystick stick)
+	{
+		return (-stick.getThrottle() + 1) / 2;
+	}
+	
 	public void moveByJoystick(Joystick stick)
 	{
-		
-		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY())* ((-stick.getThrottle() + 1) / 2),
-										deadZone(stick.getX())*((-stick.getThrottle() + 1) / 2),
-										twistDeadZone(stick.getTwist())*((-stick.getThrottle() + 1) / 2),
+		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
+										deadZone(stick.getX()) * throttleSpeed(stick),
+										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
-		
 	}
 	
 	public void autoDriveRight(){
@@ -146,22 +168,22 @@ public class Chassis extends Subsystem {
 	
 	public void driveForward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, -((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0); //-.5
+		gosDrive.mecanumDrive_Cartesian(0, throttleSpeed(controlStick), 0, 0); //-.5
 	}
 
 	public void driveBackward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, ((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0); //.5
+		gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(controlStick), 0, 0); //.5
 	}
 	
 	public void driveRight()
 	{
-		gosDrive.mecanumDrive_Cartesian(((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0, 0); //.5
+		gosDrive.mecanumDrive_Cartesian(-throttleSpeed(controlStick), 0, 0, 0); //.5
 	}
 	
 	public void driveLeft()
 	{
-		gosDrive.mecanumDrive_Cartesian(-((Robot.oi.getChassisJoystick().getThrottle() + 1) / 2), 0, 0,0); //.-5	
+		gosDrive.mecanumDrive_Cartesian(throttleSpeed(controlStick), 0, 0,0); //.-5	
 	}
 	
 	public void driveInCircle()
@@ -181,34 +203,18 @@ public class Chassis extends Subsystem {
 	
 	public void printPositionsToSmartDashboard()
 	{
-		SmartDashboard.putNumber("Drive Front Left Encoder Distance ", getFrontLeftEncoderPosition());
-		SmartDashboard.putNumber("Drive Front Right Encoder Distance ", getFrontRightEncoderPosition());
-		SmartDashboard.putNumber("Drive Rear Left Encoder Distance ", getRearLeftEncoderPosition());
-		SmartDashboard.putNumber("Drive Rear Right Encoder Distance ", getRearRightEncoderPosition());
+		SmartDashboard.putNumber("Drive Front Left Encoder Distance ", frontLeftWheel.getEncPosition());
+		SmartDashboard.putNumber("Drive Front Right Encoder Distance ", frontRightWheel.getEncPosition());
+		SmartDashboard.putNumber("Drive Rear Left Encoder Distance ", backLeftWheel.getEncPosition());
+		SmartDashboard.putNumber("Drive Rear Right Encoder Distance ", backRightWheel.getEncPosition());
 	}
 	
 	//Need to implement
 	public void resetDistance(){
-		initialFrontLeftEncoderDistance = leftFrontWheel.getEncPosition();
-		initialFrontRightEncoderDistance = rightFrontWheel.getEncPosition();
-		initialRearLeftEncoderDistance = leftBackWheel.getEncPosition();
-		initialRearRightEncoderDistance = rightBackWheel.getEncPosition();
-	}
-	
-	private double getFrontLeftEncoderPosition(){
-		return leftFrontWheel.getEncPosition();
-	}
-	
-	private double getRearLeftEncoderPosition(){
-		return leftBackWheel.getEncPosition();
-	}
-	
-	private double getFrontRightEncoderPosition(){
-		return rightFrontWheel.getEncPosition();
-	}
-	
-	private double getRearRightEncoderPosition(){
-		return rightBackWheel.getEncPosition();
+		initialFrontLeftEncoderDistance = frontLeftWheel.getEncPosition();
+		initialFrontRightEncoderDistance = frontRightWheel.getEncPosition();
+		initialRearLeftEncoderDistance = backLeftWheel.getEncPosition();
+		initialRearRightEncoderDistance = backRightWheel.getEncPosition();
 	}
 	
 	public void resetGyro() {
@@ -221,22 +227,22 @@ public class Chassis extends Subsystem {
  
     private double rearRightEncoderDistance()
     {
-    	return Math.abs(getRearRightEncoderPosition())- Math.abs(initialRearRightEncoderDistance);
+    	return Math.abs(backRightWheel.getEncPosition() - initialRearRightEncoderDistance);
     }
     
     private double frontRightEncoderDistance()
     {
-    	return Math.abs(getFrontRightEncoderPosition())- Math.abs(initialFrontRightEncoderDistance);
+    	return Math.abs(frontRightWheel.getEncPosition() - initialFrontRightEncoderDistance);
     }
     
     private double frontLeftEncoderDistance()
     {
-    	return Math.abs(getFrontLeftEncoderPosition())- Math.abs(initialFrontLeftEncoderDistance);
+    	return Math.abs(frontLeftWheel.getEncPosition() - initialFrontLeftEncoderDistance);
     }
     
     private double rearLeftEncoderDistance()
     {
-    	return Math.abs(getRearLeftEncoderPosition())- Math.abs(initialRearLeftEncoderDistance);
+    	return Math.abs(backLeftWheel.getEncPosition() - initialRearLeftEncoderDistance);
     }
     
     public double getDistanceForward()
