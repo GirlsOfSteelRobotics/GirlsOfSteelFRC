@@ -129,7 +129,7 @@ public class OI {
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
-		autonomousJoystick = new Joystick(RobotMap.AUTO_JOYSTICK)
+		autonomousJoystick = new Joystick(RobotMap.AUTO_JOYSTICK);
 		
 		
 		//Collectors
@@ -211,7 +211,6 @@ public class OI {
 	public Joystick getAutonomousJoystick()
 	{
 		return autonomousJoystick;
-	}
 	}
 }
 
