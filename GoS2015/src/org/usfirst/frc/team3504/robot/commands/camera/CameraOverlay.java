@@ -22,7 +22,10 @@ public class CameraOverlay extends Command {
 	
     public CameraOverlay() {
     	requires(Robot.camera);
-    	
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
     	top = new NIVision.Rect(296, 0, 14, 384);
     	side = new NIVision.Rect(296, 384, (480-296), 14);
     	
@@ -32,10 +35,7 @@ public class CameraOverlay extends Command {
         session = NIVision.IMAQdxOpenCamera("cam0",
                 NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         NIVision.IMAQdxConfigureGrab(session);
-    }
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
+    	
         NIVision.IMAQdxStartAcquisition(session);
     }
 
