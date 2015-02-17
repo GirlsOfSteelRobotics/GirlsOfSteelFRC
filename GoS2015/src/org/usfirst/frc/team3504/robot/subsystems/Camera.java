@@ -18,7 +18,7 @@ public class Camera extends Subsystem {
 	public Camera() {
 		server = CameraServer.getInstance();
 		server.setQuality(50);
-		Cam0();
+		Cam1();
 	}
 
 	public void switchCam() {
