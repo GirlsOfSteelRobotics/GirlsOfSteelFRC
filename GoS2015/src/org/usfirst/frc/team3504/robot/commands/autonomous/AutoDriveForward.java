@@ -16,8 +16,8 @@ public class AutoDriveForward extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.chassis.resetDistance();
-    	setTimeout(3);
+    	Robot.chassis.resetDistance();
+    	//setTimeout(3);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,8 +30,8 @@ public class AutoDriveForward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return isTimedOut();
-    	//return (Robot.chassis.getDistanceForward() > 50);
+    	//return isTimedOut();
+    	return (Robot.chassis.getDistanceForward() > 50);
     }
 
     // Called once after isFinished returns true
