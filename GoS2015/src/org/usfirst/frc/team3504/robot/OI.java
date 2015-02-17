@@ -8,7 +8,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
-import org.usfirst.frc.team3504.robot.commands.camera.CameraSwitch;
+import org.usfirst.frc.team3504.robot.commands.camera.CameraOverlay;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
 import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
@@ -193,7 +193,7 @@ public class OI {
 		
 		//Camera button
 		switchCamera = new JoystickButton(chassisJoystick, 2);
-		switchCamera.whenPressed (new CameraSwitch());
+		switchCamera.whenPressed (new CameraOverlay());
 	}
 	
 	public Joystick getOperatorJoystick()
