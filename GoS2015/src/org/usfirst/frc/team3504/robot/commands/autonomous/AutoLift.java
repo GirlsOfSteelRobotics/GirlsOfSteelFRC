@@ -17,12 +17,12 @@ public class AutoLift extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(2.5);
+    	setTimeout(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.forklift.up(.5);
+    	Robot.forklift.up(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()

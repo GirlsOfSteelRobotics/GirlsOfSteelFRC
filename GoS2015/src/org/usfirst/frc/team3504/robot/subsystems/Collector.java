@@ -48,12 +48,12 @@ public class Collector extends Subsystem {
 	
 	//Method collectorToteRotate which rotates the tote inside the trifold
 	public void collectorToteRotateRight(){
-		rightCollector.set(-1);
+		rightCollector.set(1);
 		leftCollector.set(1);
 	}
 	
 	public void collectorToteRotateLeft(){
-		rightCollector.set(1);
+		rightCollector.set(-1);
 		leftCollector.set(-1);
 	}
 	

@@ -30,7 +30,8 @@ public class RobotMap {
 	public static final int PCM_MODULE_1 = 1;
 	
 	//Forklift ports
-	public static final int FORKLIFT_CHANNEL = 17; //Motors
+	public static final int FORKLIFT_CHANNEL_A = 17; //Motors
+	//public static final int FORKLIFT_CHANNEL_B = ;
 	
 	//Finger ports
 	public static final int RIGHT_FINGER_PISTON_A = 6; //Pistons

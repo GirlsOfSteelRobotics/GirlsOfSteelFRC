@@ -10,18 +10,14 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  */
 public class AutoCollector extends Command {
-	//sucker will run constantly through the AutoPlow command
 
     public AutoCollector() {
        requires(Robot.collector);
-    	// Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-   
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(2);
+    	setTimeout(2.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
