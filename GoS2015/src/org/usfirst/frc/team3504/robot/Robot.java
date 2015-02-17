@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 		photosensor = new PhotoSensor();
 		shack = new Shack(); 
 		Robot.chassis.resetGyro();
-        autonomousCommand = new AutoDriveForward();
+        autonomousCommand = new AutoDriveForward(0);
         
         oi = new OI();
     }

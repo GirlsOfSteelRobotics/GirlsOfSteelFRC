@@ -11,8 +11,9 @@ public class AutoPlow extends CommandGroup {
     
 	//collects one container and three totes and takes them to the autozone
 	
-    public  AutoPlow() {
-    	
+
+    public AutoPlow() {
+
     	addSequential(new AutoCollector());
     	addSequential(new Lifting()); 
     	addSequential(new AutoFirstPickup());
@@ -21,12 +22,12 @@ public class AutoPlow extends CommandGroup {
      	//used to get first can and tote
 
     	addSequential(new AutoCollector());
-    	addSequential(new AutoDriveForward());
+    	addSequential(new AutoDriveForward(55.25));
     	addSequential(new Lifting()); 
     	//gets middle tote assuming partner cleared second can
     	
     	addSequential(new AutoCollector());
-    	addSequential(new AutoDriveForward());
+    	addSequential(new AutoDriveForward(55.25));
     	addSequential(new Lifting());
     	//gets last tote assuming partner cleared third can  
     	

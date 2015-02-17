@@ -16,12 +16,14 @@ public class AutoUltrasonic extends CommandGroup {
      	//used to get first can and tote
 
     	addSequential(new AutoCollector());
-    	addSequential(new AutoDriveForward());
+    	//commented out to eliminate errors, not deleted because we don't know if we need it still or not
+    	//addSequential(new AutoDriveForward()); 
     	addSequential(new Lifting()); 
     	//gets middle tote assuming partner cleared second can
     	
     	addSequential(new AutoCollector());
-    	addSequential(new AutoDriveForward());
+    	//commented out to eliminate errors, not deleted because we don't know if we need it still or not
+    	//addSequential(new AutoDriveForward());
     	addSequential(new Lifting());
     	//gets last tote assuming partner cleared third can  
     	
