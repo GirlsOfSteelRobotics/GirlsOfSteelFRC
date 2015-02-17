@@ -13,30 +13,37 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Lifter extends Subsystem {
 	
-	private CANTalon liftTalon;
-	private TalonEncoder liftEncoder;
+	private CANTalon liftTalonA;
+	//private CANTalon liftTalonB;
+	private TalonEncoder liftEncoderA;
+	//private TalonEncoder liftEncoderB;
 	
 	public Lifter() {
-		liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL);
-		liftEncoder = new TalonEncoder(liftTalon);
+		liftTalonA = new CANTalon(RobotMap.FORKLIFT_CHANNEL_A);
+		liftEncoderA = new TalonEncoder(liftTalonA);
+		//liftTalonB = new CANTalon(RobotMap.FORKLIFT_CHANNEL_B);
+		//liftEncoderB = new TalonEncoder(liftTalonB);
 	}
 	
 	public void up(double speed) {
-		liftTalon.set(speed);
+		liftTalonA.set(speed);
+		//liftTalonB.set(speed);
 	}
 	
 	public void down(double speed) {
-		liftTalon.set(speed);
+		liftTalonA.set(speed);
+		//liftTalonB.set(speed);
 	}
 	
 	
 	public double getLiftEncoder() {
-		return liftTalon.getEncPosition();
+		return liftTalonA.getEncPosition();
 	}
 
 	public void stop()
 	{
-		liftTalon.set(0.0);
+		liftTalonA.set(0.0);
+		//liftTalonB.set(0.0);
 	}
 	
 	@Override
