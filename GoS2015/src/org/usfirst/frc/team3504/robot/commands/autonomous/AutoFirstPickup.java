@@ -28,7 +28,7 @@ public class AutoFirstPickup extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (Robot.chassis.getDistanceLeft() > 18);
+    	return (Robot.chassis.getDistanceLeft() > 22.25);
     }
 
     // Called once after isFinished returns true
