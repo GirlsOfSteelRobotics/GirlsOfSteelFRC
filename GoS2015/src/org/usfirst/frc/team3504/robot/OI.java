@@ -171,7 +171,7 @@ public class OI {
 		autoDriveLeft = new JoystickButton(chassisJoystick, 6);
 		autoDriveLeft.whenPressed(new AutoDriveLeft());
 		autoDriveForward = new JoystickButton(chassisJoystick, 4);
-		autoDriveForward.whenPressed(new AutoDriveForward());
+		autoDriveForward.whenPressed(new AutoDriveForward(6));
 		autoDriveBackwards = new JoystickButton(chassisJoystick, 3);
 		autoDriveBackwards.whenReleased(new AutoDriveBackwards());
 		

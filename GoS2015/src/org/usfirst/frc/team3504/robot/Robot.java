@@ -46,7 +46,6 @@ public class Robot extends IterativeRobot {
 		shack = new Shack(); 
 		Robot.chassis.resetGyro();
         autonomousCommand = new AutoSelect();
-        
         oi = new OI();
     }
 	

@@ -16,7 +16,7 @@ public class AutoSelect extends CommandGroup {
     	Joystick autoJoystick = Robot.oi.getAutonomousJoystick();
     	if (autoJoystick.getRawButton(1)){
     		autoJoystick.setOutput(1, true);
-    		addSequential(new AutoDriveForward(48));
+    		addSequential(new AutoDriveForward(6));
     	} else if (autoJoystick.getRawButton(2)){
     		autoJoystick.setOutput(2, true);
     		addSequential(new AutoDriveBackwards());
@@ -39,7 +39,7 @@ public class AutoSelect extends CommandGroup {
     		autoJoystick.setOutput(4, true);
     		autoJoystick.setOutput(5, true);
     		autoJoystick.setOutput(6, true);
-    		addSequential(new AutoDriveForward());
+    		addSequential(new AutoDriveForward(1));
     	}
     
     	
