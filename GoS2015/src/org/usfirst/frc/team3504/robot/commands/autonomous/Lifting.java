@@ -18,7 +18,7 @@ public class Lifting extends CommandGroup {
     	
     	addSequential(new DoorsIn());
     	
-    	addSequential(new FingerDown());
+    	addSequential(new FingerUp());
     	
     	addSequential(new AutoReleaseGripper());
     	
@@ -32,7 +32,7 @@ public class Lifting extends CommandGroup {
     	
     	addSequential(new AutoLift());
     	
-    	addSequential(new AutoReleaseGripper());
+    	//addSequential(new AutoReleaseGripper());
     	
     	addSequential(new AutoLowerLifter());
     	

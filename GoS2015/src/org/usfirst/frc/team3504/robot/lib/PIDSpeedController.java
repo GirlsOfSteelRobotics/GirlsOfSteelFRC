@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.lib;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDSpeedController implements SpeedController {
 	
@@ -21,11 +22,14 @@ public class PIDSpeedController implements SpeedController {
 	
 	@Override
 	public void pidWrite(double output) {
+		SmartDashboard.putNumber("output", output);
 		pid.setSetpoint(output/Kp);
+		//pid.setSetpoint(output/SmartDashboard.getNumber("P val"));
 	}
 
 	@Override
 	public double get() {
+		//return pid.getSetpoint()*SmartDashboard.getNumber("P val");
 		return (pid.getSetpoint()*Kp);
 	}
 

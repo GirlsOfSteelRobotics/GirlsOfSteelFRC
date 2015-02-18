@@ -169,7 +169,7 @@ public class OI {
 		autoDriveLeft = new JoystickButton(chassisJoystick, 6);
 		autoDriveLeft.whenPressed(new AutoDriveLeft());
 		autoDriveForward = new JoystickButton(chassisJoystick, 4);
-		autoDriveForward.whenPressed(new AutoDriveForward());
+		autoDriveForward.whenPressed(new Lifting());
 		autoDriveBackwards = new JoystickButton(chassisJoystick, 3);
 		autoDriveBackwards.whenReleased(new AutoDriveBackwards());
 		
@@ -192,8 +192,8 @@ public class OI {
 		getGyro.whenPressed(new GetGyro());
 		
 		//Camera button
-		switchCamera = new JoystickButton(chassisJoystick, 2);
-		switchCamera.whenPressed (new CameraOverlay());
+		//switchCamera = new JoystickButton(chassisJoystick, 2);
+		//switchCamera.whenPressed (new CameraOverlay());
 	}
 	
 	public Joystick getOperatorJoystick()

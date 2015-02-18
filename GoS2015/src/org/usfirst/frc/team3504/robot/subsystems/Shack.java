@@ -16,7 +16,7 @@ public class Shack extends Subsystem {
 	//private DigitalInput leftLimit;
 	//private DigitalInput rightLimit; 
 	
-	public static final double SHACK_SPEED = 1; 
+	public static final double SHACK_SPEED = 0.5; 
 	
 	public Shack(){ 
 		shackCANTalon = new CANTalon(RobotMap.SHACK_TALON); 
