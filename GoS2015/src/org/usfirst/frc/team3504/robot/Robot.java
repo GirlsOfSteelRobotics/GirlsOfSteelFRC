@@ -1,16 +1,9 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Collector;
-import org.usfirst.frc.team3504.robot.subsystems.Doors;
-import org.usfirst.frc.team3504.robot.subsystems.Fingers;
-import org.usfirst.frc.team3504.robot.subsystems.Lifter;
-import org.usfirst.frc.team3504.robot.subsystems.PhotoSensor;
-import org.usfirst.frc.team3504.robot.subsystems.Shack;
-import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSelect;
+import org.usfirst.frc.team3504.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -52,9 +45,8 @@ public class Robot extends IterativeRobot {
 		photosensor = new PhotoSensor();
 		shack = new Shack(); 
 		Robot.chassis.resetGyro();
-        
         oi = new OI();
-        autonomousCommand = new AutoDriveForward();
+        autonomousCommand = new AutoSelect();
     }
 	
 	public void disabledPeriodic() {
