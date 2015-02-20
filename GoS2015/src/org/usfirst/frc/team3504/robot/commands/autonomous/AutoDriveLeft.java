@@ -5,33 +5,29 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Author: Corinne 
+ *
  */
-public class AutoTest extends Command {
+public class AutoDriveLeft extends Command {
 
-    public AutoTest() {
-    	requires(Robot.chassis);     	
+    public AutoDriveLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoders();
+    	Robot.chassis.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveForward(-.5);
+    	Robot.chassis.autoDriveLeft();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.chassis.getFrontLeftEncoderDistance() == 108)
-    		//TODO speed and distance
-    		return true;
-    	else 
-    		return false;
+        return (Robot.chassis.getDistanceLeft() > 107);
     }
 
     // Called once after isFinished returns true
@@ -42,6 +38,6 @@ public class AutoTest extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end(); 
+    	end();
     }
 }

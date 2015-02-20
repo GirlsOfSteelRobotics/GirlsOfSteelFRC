@@ -20,7 +20,7 @@ public class LiftDown extends Command{
 
 	@Override
 	protected void execute() {
-		Robot.forklift.down(-0.5);
+		Robot.forklift.down(-1);
 	}
 
 	@Override

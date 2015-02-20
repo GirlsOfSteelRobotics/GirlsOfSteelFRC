@@ -12,7 +12,7 @@ public class AutoOneTote extends CommandGroup {
 	public  AutoOneTote() {
     	addSequential(new AutoCollector());
     	addSequential(new Lifting());
-    	addSequential(new AutoTurnRight());
+    	addSequential(new AutoDriveRight());
     	addSequential(new Release()); 
     	
         // Add Commands here:

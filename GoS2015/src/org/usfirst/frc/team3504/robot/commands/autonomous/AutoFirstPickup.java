@@ -11,32 +11,24 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  */
 public class AutoFirstPickup extends Command {
-	double initialDistance;
-
 
     public AutoFirstPickup() {
-    	requires(Robot.chassis); 
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	initialDistance = Robot.chassis.getFrontLeftEncoderDistance();
+    	Robot.chassis.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveSideways(.5);
+    	Robot.chassis.autoDriveRight();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.chassis.getFrontLeftEncoderDistance() == (initialDistance + 18))
-    		//TODO change 18?
-    		return true;
-    	else 
-    		return false; 
+    	return (Robot.chassis.getDistanceLeft() > 22.25);
     }
 
     // Called once after isFinished returns true
