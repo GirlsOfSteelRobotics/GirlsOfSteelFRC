@@ -15,24 +15,23 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Lifting extends CommandGroup {
     
     public  Lifting() {
-    	
     	addSequential(new DoorsIn());
     	
-    	addSequential(new FingerDown());
+    	addSequential(new FingerUp());
     	
     	addSequential(new AutoReleaseGripper());
     	
     	addSequential(new AngleCollectorIn());
     	
     	addSequential(new AutoCollector());
-    	
+
     	addSequential(new AutoBringInGrippers());
     	
     	addSequential(new AngleCollectorOut());
     	
     	addSequential(new AutoLift());
     	
-    	addSequential(new AutoReleaseGripper());
+    	//addSequential(new AutoReleaseGripper());
     	
     	addSequential(new AutoLowerLifter());
     	

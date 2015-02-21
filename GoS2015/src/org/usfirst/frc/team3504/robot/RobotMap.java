@@ -25,6 +25,8 @@ public class RobotMap {
 
 	//Shack ports
 	public static final int SHACK_TALON = 5; //Motor 
+	public static final int SHACK_TOP_LIMIT = 11 ;
+	public static final int SHACK_BOTTOM_LIMIT = 12 ;
 	
 	//PCM Module Ports
 	public static final int PCM_MODULE_0 = 0;

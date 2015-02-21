@@ -46,13 +46,13 @@ public class Chassis extends Subsystem {
     //private Joystick controlStick;
 	
 	//PID Constants
-    private static final double kP = .0001;
-    private static final double kI = .00000001;
-    private static final double kD = .00000001;
+    private static final double kP = .00015;
+    private static final double kI = .00000001;//.00000001;
+    private static final double kD = .00000001;//.00000001;
     
     //Encoder to Distance Constants
-    private static final double inchesPerTick = Math.PI*8/(4*256);
-    private static final double inchesPerTickStrafing = inchesPerTick/1.8;
+    private static final double inchesPerTick = Math.PI*6/(4*256);
+    private static final double inchesPerTickStrafing = inchesPerTick/2;
     
     //Speed constant for autonomous driving (
     //(may need to change for strafing vs. normal driving)
@@ -167,6 +167,7 @@ public class Chassis extends Subsystem {
 	public void getGyro() 
 	{
 		getGyro = !getGyro;
+		SmartDashboard.putBoolean("Gyro: ", getGyro);
 	}
  
 	public void moveByJoystick(Joystick stick)
@@ -175,6 +176,8 @@ public class Chassis extends Subsystem {
 										deadZone(stick.getX()) * throttleSpeed(stick),
 										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
+		
+		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
 	}
 	
 	public void autoDriveRight(){
@@ -187,11 +190,11 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void autoDriveBackward(){
-		gosDrive.mecanumDrive_Polar(.5, 270, 0); //check to make sure this angle is correct
+		gosDrive.mecanumDrive_Polar(1, 270, 0); //check to make sure this angle is correct
 	}
 	
 	public void autoDriveForward(){
-		gosDrive.mecanumDrive_Polar(.5, 90, 0);
+		gosDrive.mecanumDrive_Polar(1, 90, 0);
 	}
 	
 	public void autoTurnClockwise()
@@ -206,7 +209,8 @@ public class Chassis extends Subsystem {
 	
 	public void driveForward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, throttleSpeed(Robot.oi.getChassisJoystick()),0,0);//controlStick), 0, 0);
+		//gosDrive.mecanumDrive_Cartesian(0, throttleSpeed(Robot.oi.getChassisJoystick()),0,0);//controlStick), 0, 0);
+		gosDrive.mecanumDrive_Polar(1, 90, 0);
 	}
 
 	public void driveBackward()
@@ -231,6 +235,12 @@ public class Chassis extends Subsystem {
 	
 	public void printPositionsToSmartDashboard()
 	{
+		SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getEncVelocity());
+		SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getEncVelocity());
+		SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncVelocity());
+		SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncVelocity());
+		
+		
 		SmartDashboard.putNumber("Drive Front Left Encoder ", frontLeftWheel.getEncPosition());
 		SmartDashboard.putNumber("Drive Front Right Encoder ", frontRightWheel.getEncPosition());
 		SmartDashboard.putNumber("Drive Rear Left Encoder ", rearLeftWheel.getEncPosition());
@@ -242,6 +252,7 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Rear Right Distance", rearRightEncoderDistance());
 		
 		SmartDashboard.putNumber("Distance Right", getDistanceRight());
+		
 	}
 	
 	/**
@@ -318,4 +329,5 @@ public class Chassis extends Subsystem {
         // Set the default command for a subsystem here.
     	setDefaultCommand(new DriveByJoystick());
     }
-}
+    
+   } 

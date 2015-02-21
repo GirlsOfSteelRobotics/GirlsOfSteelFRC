@@ -129,7 +129,7 @@ public class OI {
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
-		autonomousJoystick = new Joystick(RobotMap.AUTO_JOYSTICK)
+		autonomousJoystick = new Joystick(RobotMap.AUTO_JOYSTICK);
 		
 		
 		//Collectors
@@ -171,7 +171,7 @@ public class OI {
 		autoDriveLeft = new JoystickButton(chassisJoystick, 6);
 		autoDriveLeft.whenPressed(new AutoDriveLeft());
 		autoDriveForward = new JoystickButton(chassisJoystick, 4);
-		autoDriveForward.whenPressed(new AutoDriveForward());
+		autoDriveForward.whenPressed(new AutoDriveForward(6));
 		autoDriveBackwards = new JoystickButton(chassisJoystick, 3);
 		autoDriveBackwards.whenReleased(new AutoDriveBackwards());
 		
@@ -194,8 +194,8 @@ public class OI {
 		getGyro.whenPressed(new GetGyro());
 		
 		//Camera button
-		switchCamera = new JoystickButton(chassisJoystick, 2);
-		switchCamera.whenPressed (new CameraOverlay());
+		//switchCamera = new JoystickButton(chassisJoystick, 2);
+		//switchCamera.whenPressed (new CameraOverlay());
 	}
 	
 	public Joystick getOperatorJoystick()
@@ -211,7 +211,6 @@ public class OI {
 	public Joystick getAutonomousJoystick()
 	{
 		return autonomousJoystick;
-	}
 	}
 }
 
