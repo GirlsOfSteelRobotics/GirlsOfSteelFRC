@@ -191,9 +191,9 @@ public class Chassis extends Subsystem {
  
 	public void moveByJoystick(Joystick stick)
 	{
-		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
-										deadZone(stick.getX()) * throttleSpeed(stick),
-										(twistDeadZone(stick.getTwist()) * throttleSpeed(stick))+determineTwistFromGyro(stick),
+		gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
+										beattieDeadBand(stick.getX()) * throttleSpeed(stick),
+										beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
 		
 		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
