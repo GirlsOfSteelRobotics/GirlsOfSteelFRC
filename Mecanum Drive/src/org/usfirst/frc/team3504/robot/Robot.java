@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,14 +34,14 @@ public   class Robot extends SampleRobot {
     private Encoder frontRightEncoder;
     private Encoder rearRightEncoder;
     
-    public static final int FRONT_LEFT_WHEEL_ENCODER_A = 6; //Encoders
-    public static final int FRONT_LEFT_WHEEL_ENCODER_B = 7;
-    public static final int REAR_LEFT_WHEEL_ENCODER_A = 4;
-    public static final int REAR_LEFT_WHEEL_ENCODER_B = 5;
-    public static final int FRONT_RIGHT_WHEEL_ENCODER_A = 0;
-    public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 1;
-    public static final int REAR_RIGHT_WHEEL_ENCODER_A = 2;
-    public static final int REAR_RIGHT_WHEEL_ENCODER_B = 3;
+    public static final int FRONT_LEFT_WHEEL_ENCODER_A = 0; //Encoders
+    public static final int FRONT_LEFT_WHEEL_ENCODER_B = 1;
+    public static final int REAR_LEFT_WHEEL_ENCODER_A = 2;
+    public static final int REAR_LEFT_WHEEL_ENCODER_B = 3;
+    public static final int FRONT_RIGHT_WHEEL_ENCODER_A = 4;
+    public static final int FRONT_RIGHT_WHEEL_ENCODER_B = 5;
+    public static final int REAR_RIGHT_WHEEL_ENCODER_A = 6;
+    public static final int REAR_RIGHT_WHEEL_ENCODER_B = 7;
     
     public static final int FRONT_LEFT_WHEEL_CHANNEL = 0; //Motors
     public static final int REAR_LEFT_WHEEL_CHANNEL	= 1;
@@ -60,19 +61,23 @@ public   class Robot extends SampleRobot {
 	    Ki = .0000001;//SmartDashboard.getNumber("i value");
 	    Kd = .0000001;//SmartDashboard.getNumber("d value");
     	
-	    robotDrive = new RobotDrive(new PIDSpeedController(new Talon(FRONT_LEFT_WHEEL_CHANNEL), Kp, Ki, Kd, frontLeftEncoder), 
-				new PIDSpeedController(new Talon(REAR_LEFT_WHEEL_CHANNEL), Kp, Ki, Kd, rearLeftEncoder), 
-				new PIDSpeedController(new Talon(FRONT_RIGHT_WHEEL_CHANNEL), Kp, Ki, Kd, frontRightEncoder),
-				new PIDSpeedController(new Talon(REAR_RIGHT_WHEEL_CHANNEL), Kp, Ki, Kd, rearRightEncoder));
-	    robotDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
-	    robotDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
-	    robotDrive.setExpiration(0.1);
-	    robotDrive.setSafetyEnabled(true);
-	    
 		frontLeftEncoder = new Encoder(FRONT_LEFT_WHEEL_ENCODER_A, FRONT_LEFT_WHEEL_ENCODER_B);
     	rearLeftEncoder = new Encoder(REAR_LEFT_WHEEL_ENCODER_A, REAR_LEFT_WHEEL_ENCODER_B);
     	frontRightEncoder = new Encoder(FRONT_RIGHT_WHEEL_ENCODER_A, FRONT_RIGHT_WHEEL_ENCODER_B);
     	rearRightEncoder = new Encoder(REAR_RIGHT_WHEEL_ENCODER_A, REAR_RIGHT_WHEEL_ENCODER_B);
+
+//	    robotDrive = new RobotDrive(new PIDSpeedController(new Talon(FRONT_LEFT_WHEEL_CHANNEL), Kp, Ki, Kd, frontLeftEncoder), 
+//				new PIDSpeedController(new Talon(REAR_LEFT_WHEEL_CHANNEL), Kp, Ki, Kd, rearLeftEncoder), 
+//				new PIDSpeedController(new Talon(FRONT_RIGHT_WHEEL_CHANNEL), Kp, Ki, Kd, frontRightEncoder),
+//				new PIDSpeedController(new Talon(REAR_RIGHT_WHEEL_CHANNEL), Kp, Ki, Kd, rearRightEncoder));
+	    robotDrive = new RobotDrive(new CANTalon(FRONT_LEFT_WHEEL_CHANNEL), 
+				new CANTalon(REAR_LEFT_WHEEL_CHANNEL), 
+				new CANTalon(FRONT_RIGHT_WHEEL_CHANNEL),
+				new CANTalon(REAR_RIGHT_WHEEL_CHANNEL));
+	    robotDrive.setInvertedMotor(MotorType.kFrontRight, true);	// invert the left side motors
+	    robotDrive.setInvertedMotor(MotorType.kRearRight, true);		// may need to change or remove this to match robot
+	    robotDrive.setExpiration(0.1);
+	    robotDrive.setSafetyEnabled(true);
 
         stick = new Joystick(joystickChannel);
         robotGyro = new Gyro(gyro);
@@ -88,8 +93,8 @@ public   class Robot extends SampleRobot {
         	
         	// Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
         	// This sample does not use field-oriented drive, so the gyro input is set to zero.
-            //robotDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getZ(), robotGyro.getAngle());
-            robotDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
+            robotDrive.mecanumDrive_Cartesian(stick.getX(), stick.getY(), stick.getZ(), robotGyro.getAngle());
+            //robotDrive.mecanumDrive_Polar(stick.getMagnitude() * ((stick.getThrottle() + 1) / 2), stick.getDirectionDegrees(), stick.getTwist());
             
             
             Timer.delay(0.005);	// wait 5ms to avoid hogging CPU cycles
