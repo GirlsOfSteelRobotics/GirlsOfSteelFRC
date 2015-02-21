@@ -39,7 +39,7 @@ public class Robot extends SampleRobot {
     	// Use SerialPort.Port.kMXP if connecting navX MXP to the RoboRio MXP port
     	// Use SerialPort.Port.kUSB if connecting nav6 or navX MXP to the RoboRio USB port
     		
-    	serial_port = new SerialPort(57600,SerialPort.Port.kMXP);
+    	serial_port = new SerialPort(57600,SerialPort.Port.kUSB);
 		
 		// You can add a second parameter to modify the 
 		// update rate (in hz) from.  The minimum is 4.  
