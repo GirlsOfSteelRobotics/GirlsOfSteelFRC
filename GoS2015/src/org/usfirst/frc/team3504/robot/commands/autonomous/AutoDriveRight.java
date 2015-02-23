@@ -22,7 +22,7 @@ public class AutoDriveRight extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveRight();
+    	Robot.chassis.autoDriveRight(107);
     	Robot.chassis.printPositionsToSmartDashboard();
     }
 

@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Lifting extends CommandGroup {
     
     public  Lifting() {
-    	
     	addSequential(new DoorsIn());
     	
     	addSequential(new FingerUp());
@@ -25,7 +24,7 @@ public class Lifting extends CommandGroup {
     	addSequential(new AngleCollectorIn());
     	
     	addSequential(new AutoCollector());
-    	
+
     	addSequential(new AutoBringInGrippers());
     	
     	addSequential(new AngleCollectorOut());

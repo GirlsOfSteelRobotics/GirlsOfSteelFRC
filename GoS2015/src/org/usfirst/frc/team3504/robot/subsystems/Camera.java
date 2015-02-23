@@ -13,7 +13,8 @@ public class Camera extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new CameraOverlay());
-
+		// This causes too much control lag, leading to stuttering drive wheels
+		// Leave this disabled until we fix the camera code!
+		if (false) setDefaultCommand(new CameraOverlay());
 	}
 }

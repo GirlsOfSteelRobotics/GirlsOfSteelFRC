@@ -59,6 +59,11 @@ public class Chassis extends Subsystem {
     private static final double autoSpeed = 0.25;
     
     private static final double autoDiff = 12;
+    
+    private static final double MIN_SPEED = .25;
+    private static final double MAX_SPEED = .75;
+    private static final double RAMP_UP_DISTANCE = 6;
+    private static final double RAMP_DOWN_DISTANCE = 6;
 	
 	public Chassis()
 	{	
@@ -172,35 +177,63 @@ public class Chassis extends Subsystem {
 		getGyro = !getGyro;
 		SmartDashboard.putBoolean("Gyro: ", getGyro);
 	}
+	
+	public double determineTwistFromGyro(Joystick stick)
+	{
+		double desiredDirection = stick.getDirectionDegrees();
+		double currentDirection = robotGyro.getAngle();
+		double diff = desiredDirection-currentDirection;
+		
+		if (diff > 0)
+			return 1-(1/diff);
+		else if (diff < 0)
+			return -(1-(1/Math.abs(diff)));
+		else
+			return 0;
+	}
  
 	public void moveByJoystick(Joystick stick)
 	{
 		SmartDashboard.putNumber("x dir", deadZone(-stick.getY()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("y dir", deadZone(-stick.getX()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("rot", twistDeadZone(stick.getTwist()) * throttleSpeed(stick));
+		
 		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
 										deadZone(stick.getX()) * throttleSpeed(stick),
 										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
+		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
+			//							beattieDeadBand(stick.getX()) * throttleSpeed(stick),
+				//						beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
 		
 		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
 	}
 	
-	public void autoDriveRight(){
-		gosDrive.mecanumDrive_Polar(autoSpeed, 180, 0);//figure out what the angle should be
-	}
-	
-	public void autoDriveLeft()
+	public double calculateSpeed(double goalDist, double currentDist)
 	{
-		gosDrive.mecanumDrive_Polar(autoSpeed, 0, 0);
+		if (currentDist < RAMP_UP_DISTANCE)
+			return (((MAX_SPEED-MIN_SPEED)/RAMP_UP_DISTANCE)*currentDist+MIN_SPEED);
+		else if (goalDist-currentDist < RAMP_DOWN_DISTANCE)
+			return (((MAX_SPEED-MIN_SPEED)/RAMP_DOWN_DISTANCE)*currentDist+MIN_SPEED);
+		else
+			return MAX_SPEED;
 	}
 	
-	public void autoDriveBackward(){
-		gosDrive.mecanumDrive_Polar(1, 270, 0); //check to make sure this angle is correct
+	public void autoDriveRight(double goalDist){
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);//figure out what the angle should be
 	}
 	
-	public void autoDriveForward(){
-		gosDrive.mecanumDrive_Polar(1, 90, 0);
+	public void autoDriveLeft(double goalDist)
+	{
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceLeft()), 0, 0);
+	}
+	
+	public void autoDriveBackward(double goalDist){
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceBackwards()), 270, 0); //check to make sure this angle is correct
+	}
+	
+	public void autoDriveForward(double goalDist){
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceForward()), 90, 0);
 	}
 	
 	public void autoTurnClockwise()
@@ -335,4 +368,5 @@ public class Chassis extends Subsystem {
         // Set the default command for a subsystem here.
     	setDefaultCommand(new DriveByJoystick());
     }
-}
+    
+   } 
