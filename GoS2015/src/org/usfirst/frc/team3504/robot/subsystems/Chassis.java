@@ -78,10 +78,13 @@ public class Chassis extends Subsystem {
     	frontRightEncoder = new TalonEncoder(frontRightWheel);
     	rearRightEncoder = new TalonEncoder(rearLeftWheel);
     	
-        gosDrive = new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
+        gosDrive = new RobotDrive(rearLeftWheel, rearRightWheel, frontLeftWheel, frontRightWheel);
+        /*		
+        		new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
 				new PIDSpeedController(rearRightWheel, kP, kI, kD, rearRightEncoder),
 				new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
 				new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
+				**/
         gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
@@ -104,7 +107,7 @@ public class Chassis extends Subsystem {
 	private double deadZone(double rawVal)
 	{
 		if(Math.abs(rawVal) > .3)
-			return rawVal-.1;
+			return rawVal;//.1;
 		else
 			return 0.0;
 	}
@@ -172,6 +175,9 @@ public class Chassis extends Subsystem {
  
 	public void moveByJoystick(Joystick stick)
 	{
+		SmartDashboard.putNumber("x dir", deadZone(-stick.getY()) * throttleSpeed(stick));
+		SmartDashboard.putNumber("y dir", deadZone(-stick.getX()) * throttleSpeed(stick));
+		SmartDashboard.putNumber("rot", twistDeadZone(stick.getTwist()) * throttleSpeed(stick));
 		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
 										deadZone(stick.getX()) * throttleSpeed(stick),
 										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
