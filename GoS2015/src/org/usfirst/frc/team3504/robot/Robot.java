@@ -1,13 +1,16 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSelect;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static PhotoSensor photosensor;
 	public static Shack shack; 
     Command autonomousCommand;
+    SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -46,7 +50,10 @@ public class Robot extends IterativeRobot {
 		shack = new Shack(); 
 		Robot.chassis.resetGyro();
         oi = new OI();
-        autonomousCommand = new AutoSelect();
+        autoChooser = new SendableChooser();
+        autoChooser.addDefault("AutoDriveRight", new AutoDriveRight());
+        autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft());
+        SmartDashboard.putData("Auto mode", autoChooser);
     }
 	
 	public void disabledPeriodic() {
@@ -55,6 +62,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+    	autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 

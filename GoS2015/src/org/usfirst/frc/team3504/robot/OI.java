@@ -67,7 +67,6 @@ public class OI {
 	
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
-	private Joystick autonomousJoystick;
 
 	//Collector
 	private JoystickButton collectTote;
@@ -129,7 +128,6 @@ public class OI {
 	{
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
-		autonomousJoystick = new Joystick(RobotMap.AUTO_JOYSTICK);
 		
 		
 		//Collectors
@@ -206,11 +204,6 @@ public class OI {
 	public Joystick getChassisJoystick()
 	{
 		return chassisJoystick;
-	}
-	
-	public Joystick getAutonomousJoystick()
-	{
-		return autonomousJoystick;
 	}
 }
 

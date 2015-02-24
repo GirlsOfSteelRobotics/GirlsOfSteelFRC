@@ -51,19 +51,19 @@ public class Chassis extends Subsystem {
     private static final double kD = .00000001;//.00000001;
     
     //Encoder to Distance Constants
-    private static final double inchesPerTick = Math.PI*6/(4*256);
+    private static final double inchesPerTick = Math.PI*8/(4*256);
     private static final double inchesPerTickStrafing = inchesPerTick/2;
     
     //Speed constant for autonomous driving (
     //(may need to change for strafing vs. normal driving)
     private static final double autoSpeed = 0.25;
     
-    private static final double autoDiff = 12;
+    private static final double MIN_SPEED = .15;
+    private static final double MAX_SPEED = .5;
+    private static final double RAMP_UP_DISTANCE = 5;
+    private static final double RAMP_DOWN_DISTANCE = 40;
     
-    private static final double MIN_SPEED = .25;
-    private static final double MAX_SPEED = .75;
-    private static final double RAMP_UP_DISTANCE = 6;
-    private static final double RAMP_DOWN_DISTANCE = 6;
+    private double timer = 0;
 	
 	public Chassis()
 	{	
@@ -93,7 +93,7 @@ public class Chassis extends Subsystem {
         gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
-    	gosDrive.setSafetyEnabled(true); 
+    	//gosDrive.setSafetyEnabled(true); 
 	}
 	
 	/* Twist Dead Zone
@@ -202,8 +202,8 @@ public class Chassis extends Subsystem {
 										deadZone(stick.getX()) * throttleSpeed(stick),
 										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
 		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
-			//							beattieDeadBand(stick.getX()) * throttleSpeed(stick),
-				//						beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
+		//								beattieDeadBand(stick.getX()) * throttleSpeed(stick),
+		//								beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
 		
 		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
@@ -211,12 +211,27 @@ public class Chassis extends Subsystem {
 	
 	public double calculateSpeed(double goalDist, double currentDist)
 	{
+		double speed;
 		if (currentDist < RAMP_UP_DISTANCE)
-			return (((MAX_SPEED-MIN_SPEED)/RAMP_UP_DISTANCE)*currentDist+MIN_SPEED);
+		{
+			speed = (((MAX_SPEED-MIN_SPEED)/RAMP_UP_DISTANCE)*currentDist+MIN_SPEED);
+		}
 		else if (goalDist-currentDist < RAMP_DOWN_DISTANCE)
-			return (((MAX_SPEED-MIN_SPEED)/RAMP_DOWN_DISTANCE)*currentDist+MIN_SPEED);
+		{
+			speed = (((MIN_SPEED-MAX_SPEED)/RAMP_DOWN_DISTANCE)*(currentDist-(goalDist-RAMP_DOWN_DISTANCE))+MAX_SPEED);
+		}
 		else
-			return MAX_SPEED;
+		{
+			speed = MAX_SPEED;
+		}
+		
+		SmartDashboard.putNumber("speed", speed);
+		System.out.print("Speed " + speed);
+		SmartDashboard.putNumber("current distance", currentDist);
+		System.out.println(" Current distance " + currentDist);
+		SmartDashboard.putNumber("goal distance", goalDist);
+		
+		return speed;
 	}
 	
 	public void autoDriveRight(double goalDist){
@@ -335,7 +350,7 @@ public class Chassis extends Subsystem {
      */
     public double getDistanceForward()
     {
-    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/2*inchesPerTickStrafing+autoDiff;
+    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/2*inchesPerTickStrafing;
     }
     
     /**
@@ -343,7 +358,7 @@ public class Chassis extends Subsystem {
      */
     public double getDistanceBackwards()
     {
-    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/2*inchesPerTickStrafing+autoDiff;
+    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/2*inchesPerTickStrafing;
     }
     
     /**
@@ -352,7 +367,7 @@ public class Chassis extends Subsystem {
     public double getDistanceLeft()
     {
     	//calculates the average of the encoder distances
-    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/4*inchesPerTick)+autoDiff;
+    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/4*inchesPerTick);
     }
     
     /**
@@ -361,7 +376,7 @@ public class Chassis extends Subsystem {
     public double getDistanceRight()
     {
     	//calculates the average of the encoder distances
-    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/4*inchesPerTick)+autoDiff;
+    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/4*inchesPerTick);
     }
     
     public void initDefaultCommand() {
