@@ -21,7 +21,7 @@ public class LiftUp extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.forklift.up(0.5);
+		Robot.forklift.up(1);
 	}
 
 	@Override

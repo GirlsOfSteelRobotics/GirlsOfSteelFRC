@@ -36,24 +36,24 @@ public class Collector extends Subsystem {
 	
 	//Method suckToteIn which suck a tote inside the robot
 	public void collectorToteIn(){
-		rightCollector.set(-1);
+		rightCollector.set(1);
 		leftCollector.set(-1);
 	}
 
 	//Method suckToteOut which pushes a Tote out
 	public void collectorToteOut(){
-		rightCollector.set(1);
+		rightCollector.set(-1);
 		leftCollector.set(1);
 	}
 	
 	//Method collectorToteRotate which rotates the tote inside the trifold
 	public void collectorToteRotateRight(){
-		rightCollector.set(-1);
+		rightCollector.set(1);
 		leftCollector.set(1);
 	}
 	
 	public void collectorToteRotateLeft(){
-		rightCollector.set(1);
+		rightCollector.set(-1);
 		leftCollector.set(-1);
 	}
 	

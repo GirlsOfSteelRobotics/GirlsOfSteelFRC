@@ -10,14 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoBringInGrippers extends Command {
 
     public AutoBringInGrippers() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.shack);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(.5);
+    	setTimeout(3.5);
     }
 
     // Called repeatedly when this Command is scheduled to run

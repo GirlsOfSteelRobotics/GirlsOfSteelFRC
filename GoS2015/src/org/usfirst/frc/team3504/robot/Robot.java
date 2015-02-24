@@ -1,20 +1,24 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Collector;
-import org.usfirst.frc.team3504.robot.subsystems.Doors;
-import org.usfirst.frc.team3504.robot.subsystems.Fingers;
-import org.usfirst.frc.team3504.robot.subsystems.Lifter;
-import org.usfirst.frc.team3504.robot.subsystems.PhotoSensor;
-import org.usfirst.frc.team3504.robot.subsystems.Shack;
-import org.usfirst.frc.team3504.robot.subsystems.UltrasonicSensor;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoOneTote;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPlow;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoToteAndContainer;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnClockwise;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnCounterClockwise;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoUltrasonic;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
+import org.usfirst.frc.team3504.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static PhotoSensor photosensor;
 	public static Shack shack; 
     Command autonomousCommand;
+    SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -52,9 +57,21 @@ public class Robot extends IterativeRobot {
 		photosensor = new PhotoSensor();
 		shack = new Shack(); 
 		Robot.chassis.resetGyro();
-        autonomousCommand = new AutoDriveForward();
-        
         oi = new OI();
+        autoChooser = new SendableChooser();
+        autoChooser.addDefault("AutoDriveRight", new AutoDriveRight());
+        autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft());
+        autoChooser.addObject("AutoOneTote", new AutoOneTote());
+        autoChooser.addObject("AutoTurnClockwise", new AutoTurnClockwise());
+        autoChooser.addObject("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());
+        autoChooser.addObject("AutoPlow", new AutoPlow());
+        autoChooser.addObject("AutoToteAndContainer", new AutoToteAndContainer());
+        autoChooser.addObject("AutoUltrasonic", new AutoUltrasonic());
+        autoChooser.addObject("Lifting", new Lifting());
+        autoChooser.addObject("Release", new Release());
+        
+        
+        SmartDashboard.putData("Auto mode", autoChooser);
     }
 	
 	public void disabledPeriodic() {
@@ -63,6 +80,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+    	autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 

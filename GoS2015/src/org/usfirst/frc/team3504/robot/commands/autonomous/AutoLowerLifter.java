@@ -11,18 +11,16 @@ public class AutoLowerLifter extends Command {
 
     public AutoLowerLifter() {
     	requires(Robot.forklift);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(2.5);
+    	setTimeout(.4);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.forklift.down(.5);
+    	Robot.forklift.up(1);
     	//TODO speed
     }
 

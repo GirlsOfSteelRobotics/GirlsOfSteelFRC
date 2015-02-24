@@ -13,15 +13,15 @@ public class Shack extends Subsystem {
 	
 	private CANTalon shackCANTalon; 
 	
-	//private DigitalInput leftLimit;
-	//private DigitalInput rightLimit; 
+	private DigitalInput topLimit;
+	private DigitalInput bottomLimit; 
 	
-	public static final double SHACK_SPEED = 1; 
+	public static final double SHACK_SPEED = 0.5; 
 	
 	public Shack(){ 
 		shackCANTalon = new CANTalon(RobotMap.SHACK_TALON); 
-		//leftLimit = new DigitalInput(RobotMap.SHACK_LEFT_LIMIT);
-		//rightLimit = new DigitalInput(RobotMap.SHACK_RIGHT_LIMIT); 
+		topLimit = new DigitalInput(RobotMap.SHACK_TOP_LIMIT);
+		bottomLimit = new DigitalInput(RobotMap.SHACK_BOTTOM_LIMIT); 
 	}
 	
 	public void out(){
@@ -45,5 +45,13 @@ public class Shack extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    public boolean topLimitFinished() {
+    	return topLimit.get();
+    	
+    }
+    
+    public boolean bottomLimitFinished() {
+    	return bottomLimit.get();
+    } 
 }
 

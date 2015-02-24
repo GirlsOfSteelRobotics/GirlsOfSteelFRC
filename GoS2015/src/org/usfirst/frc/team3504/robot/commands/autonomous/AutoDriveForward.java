@@ -10,8 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AutoDriveForward extends Command {
 
-    public AutoDriveForward() {
+	private double distance; 
+	
+    public AutoDriveForward(double distance) {
        requires(Robot.chassis);
+       this.distance = distance; 
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +25,7 @@ public class AutoDriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveForward();
+    	Robot.chassis.autoDriveForward(50);
     	//TODO speed and distance
 		
     	Robot.chassis.printPositionsToSmartDashboard();
@@ -31,7 +34,7 @@ public class AutoDriveForward extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//return isTimedOut();
-    	return (Robot.chassis.getDistanceForward() > 50);
+    	return (Robot.chassis.getDistanceForward() >distance);
     }
 
     // Called once after isFinished returns true

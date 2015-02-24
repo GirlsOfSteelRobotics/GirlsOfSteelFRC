@@ -26,6 +26,7 @@ public class Chassis extends Subsystem {
 	public static CANTalon rearLeftWheel;
 	
     //Gyro
+	
     private Gyro robotGyro;
     boolean getGyro;
 	
@@ -42,23 +43,32 @@ public class Chassis extends Subsystem {
     double initialRearRightEncoderDistance;
     
     private RobotDrive gosDrive;
-    private Joystick controlStick = Robot.oi.getChassisJoystick();
+    //private Joystick controlStick;
 	
 	//PID Constants
-    private static final double kP = .0001;
-    private static final double kI = .00000001;
-    private static final double kD = .00000001;
+    private static final double kP = .00015;
+    private static final double kI = .00000001;//.00000001;
+    private static final double kD = .00000001;//.00000001;
     
     //Encoder to Distance Constants
-    private static final double ticksPerInch = Math.PI*8/(4*250);
-    private static final double ticksPerInchStrafing = Math.PI*8/(4*250*4);
+    private static final double inchesPerTick = Math.PI*8/(4*256);
+    private static final double inchesPerTickStrafing = inchesPerTick/2;
     
     //Speed constant for autonomous driving (
     //(may need to change for strafing vs. normal driving)
-    private static final double autoSpeed = 0.75;
+    private static final double autoSpeed = 0.25;
+    
+    private static final double MIN_SPEED = .15;
+    private static final double MAX_SPEED = .5;
+    private static final double RAMP_UP_DISTANCE = 5;
+    private static final double RAMP_DOWN_DISTANCE = 40;
+    
+    private double timer = 0;
 	
 	public Chassis()
 	{	
+		//controlStick = Robot.oi.getChassisJoystick();
+		
 		frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
 		frontLeftWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
 		rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
@@ -73,14 +83,17 @@ public class Chassis extends Subsystem {
     	frontRightEncoder = new TalonEncoder(frontRightWheel);
     	rearRightEncoder = new TalonEncoder(rearLeftWheel);
     	
-        gosDrive = new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
+        gosDrive = new RobotDrive(rearLeftWheel, rearRightWheel, frontLeftWheel, frontRightWheel);
+        /*		
+        		new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
 				new PIDSpeedController(rearRightWheel, kP, kI, kD, rearRightEncoder),
 				new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
 				new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
+				**/
         gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
-    	gosDrive.setSafetyEnabled(true); 
+    	//gosDrive.setSafetyEnabled(true); 
 	}
 	
 	/* Twist Dead Zone
@@ -99,7 +112,7 @@ public class Chassis extends Subsystem {
 	private double deadZone(double rawVal)
 	{
 		if(Math.abs(rawVal) > .3)
-			return rawVal-.1;
+			return rawVal;//.1;
 		else
 			return 0.0;
 	}
@@ -162,31 +175,80 @@ public class Chassis extends Subsystem {
 	public void getGyro() 
 	{
 		getGyro = !getGyro;
+		SmartDashboard.putBoolean("Gyro: ", getGyro);
+	}
+	
+	public double determineTwistFromGyro(Joystick stick)
+	{
+		double desiredDirection = stick.getDirectionDegrees();
+		double currentDirection = robotGyro.getAngle();
+		double diff = desiredDirection-currentDirection;
+		
+		if (diff > 0)
+			return 1-(1/diff);
+		else if (diff < 0)
+			return -(1-(1/Math.abs(diff)));
+		else
+			return 0;
 	}
  
 	public void moveByJoystick(Joystick stick)
 	{
+		SmartDashboard.putNumber("x dir", deadZone(-stick.getY()) * throttleSpeed(stick));
+		SmartDashboard.putNumber("y dir", deadZone(-stick.getX()) * throttleSpeed(stick));
+		SmartDashboard.putNumber("rot", twistDeadZone(stick.getTwist()) * throttleSpeed(stick));
+		
 		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
 										deadZone(stick.getX()) * throttleSpeed(stick),
 										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
+		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
+		//								beattieDeadBand(stick.getX()) * throttleSpeed(stick),
+		//								beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
+		
+		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
 	}
 	
-	public void autoDriveRight(){
-		gosDrive.mecanumDrive_Polar(autoSpeed, 180, 0);//figure out what the angle should be
-	}
-	
-	public void autoDriveLeft()
+	public double calculateSpeed(double goalDist, double currentDist)
 	{
-		gosDrive.mecanumDrive_Polar(autoSpeed, 0, 0);
+		double speed;
+		if (currentDist < RAMP_UP_DISTANCE)
+		{
+			speed = (((MAX_SPEED-MIN_SPEED)/RAMP_UP_DISTANCE)*currentDist+MIN_SPEED);
+		}
+		else if (goalDist-currentDist < RAMP_DOWN_DISTANCE)
+		{
+			speed = (((MIN_SPEED-MAX_SPEED)/RAMP_DOWN_DISTANCE)*(currentDist-(goalDist-RAMP_DOWN_DISTANCE))+MAX_SPEED);
+		}
+		else
+		{
+			speed = MAX_SPEED;
+		}
+		
+		SmartDashboard.putNumber("speed", speed);
+		System.out.print("Speed " + speed);
+		SmartDashboard.putNumber("current distance", currentDist);
+		System.out.println(" Current distance " + currentDist);
+		SmartDashboard.putNumber("goal distance", goalDist);
+		
+		return speed;
 	}
 	
-	public void autoDriveBackward(){
-		gosDrive.mecanumDrive_Polar(autoSpeed, 270, 0); //check to make sure this angle is correct
+	public void autoDriveRight(double goalDist){
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);//figure out what the angle should be
 	}
 	
-	public void autoDriveForward(){
-		gosDrive.mecanumDrive_Polar(autoSpeed, 90, 0);
+	public void autoDriveLeft(double goalDist)
+	{
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceLeft()), 0, 0);
+	}
+	
+	public void autoDriveBackward(double goalDist){
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceBackwards()), 270, 0); //check to make sure this angle is correct
+	}
+	
+	public void autoDriveForward(double goalDist){
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceForward()), 90, 0);
 	}
 	
 	public void autoTurnClockwise()
@@ -201,35 +263,50 @@ public class Chassis extends Subsystem {
 	
 	public void driveForward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, throttleSpeed(controlStick), 0, 0);
+		//gosDrive.mecanumDrive_Cartesian(0, throttleSpeed(Robot.oi.getChassisJoystick()),0,0);//controlStick), 0, 0);
+		gosDrive.mecanumDrive_Polar(1, 90, 0);
 	}
 
 	public void driveBackward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(controlStick), 0, 0);
+		gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(Robot.oi.getChassisJoystick()),0,0);//controlStick), 0, 0);
 	}
 	
 	public void driveRight()
 	{
-		gosDrive.mecanumDrive_Cartesian(-throttleSpeed(controlStick), 0, 0, 0);
+		gosDrive.mecanumDrive_Cartesian(-throttleSpeed(Robot.oi.getChassisJoystick()),0,0,0);//controlStick), 0, 0, 0);
 	}
 	
 	public void driveLeft()
 	{
-		gosDrive.mecanumDrive_Cartesian(throttleSpeed(controlStick), 0, 0,0);	
+		gosDrive.mecanumDrive_Cartesian(throttleSpeed(Robot.oi.getChassisJoystick()),0,0,0);//controlStick), 0, 0,0);	
 	}
 	
 	public void stop()
 	{
-		gosDrive.stopMotor();
+		gosDrive.mecanumDrive_Polar(0, 0, 0);
 	}
 	
 	public void printPositionsToSmartDashboard()
 	{
-		SmartDashboard.putNumber("Drive Front Left Encoder Distance ", frontLeftWheel.getEncPosition());
-		SmartDashboard.putNumber("Drive Front Right Encoder Distance ", frontRightWheel.getEncPosition());
-		SmartDashboard.putNumber("Drive Rear Left Encoder Distance ", rearLeftWheel.getEncPosition());
-		SmartDashboard.putNumber("Drive Rear Right Encoder Distance ", rearRightWheel.getEncPosition());
+		SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getEncVelocity());
+		SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getEncVelocity());
+		SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncVelocity());
+		SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncVelocity());
+		
+		
+		SmartDashboard.putNumber("Drive Front Left Encoder ", frontLeftWheel.getEncPosition());
+		SmartDashboard.putNumber("Drive Front Right Encoder ", frontRightWheel.getEncPosition());
+		SmartDashboard.putNumber("Drive Rear Left Encoder ", rearLeftWheel.getEncPosition());
+		SmartDashboard.putNumber("Drive Rear Right Encoder ", rearRightWheel.getEncPosition());
+		
+		SmartDashboard.putNumber("Front Left Distance", frontLeftEncoderDistance());
+		SmartDashboard.putNumber("Front Right Distance", frontRightEncoderDistance());
+		SmartDashboard.putNumber("Rear Left Distance", rearLeftEncoderDistance());
+		SmartDashboard.putNumber("Rear Right Distance", rearRightEncoderDistance());
+		
+		SmartDashboard.putNumber("Distance Right", getDistanceRight());
+		
 	}
 	
 	/**
@@ -273,7 +350,7 @@ public class Chassis extends Subsystem {
      */
     public double getDistanceForward()
     {
-    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/(2*ticksPerInchStrafing);
+    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/2*inchesPerTickStrafing;
     }
     
     /**
@@ -281,7 +358,7 @@ public class Chassis extends Subsystem {
      */
     public double getDistanceBackwards()
     {
-    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/(2*ticksPerInchStrafing);
+    	return (rearLeftEncoderDistance()+frontRightEncoderDistance())/2*inchesPerTickStrafing;
     }
     
     /**
@@ -290,7 +367,7 @@ public class Chassis extends Subsystem {
     public double getDistanceLeft()
     {
     	//calculates the average of the encoder distances
-    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/(4*ticksPerInch));
+    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/4*inchesPerTick);
     }
     
     /**
@@ -299,11 +376,12 @@ public class Chassis extends Subsystem {
     public double getDistanceRight()
     {
     	//calculates the average of the encoder distances
-    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/(4*ticksPerInch));
+    	return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance())/4*inchesPerTick);
     }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
     	setDefaultCommand(new DriveByJoystick());
     }
-}
+    
+   } 

@@ -11,6 +11,7 @@ public class RobotMap {
 	// Joystick ports -> should align with driver station
 	public static final int OPERATOR_JOYSTICK = 1;
 	public static final int CHASSIS_JOYSTICK = 0;
+	public static final int AUTO_JOYSTICK = 2;
 
 	// Drive ports
 	public static final int FRONT_LEFT_WHEEL_CHANNEL = 0; //Motors
@@ -24,20 +25,23 @@ public class RobotMap {
 
 	//Shack ports
 	public static final int SHACK_TALON = 5; //Motor 
+	public static final int SHACK_TOP_LIMIT = 11 ;
+	public static final int SHACK_BOTTOM_LIMIT = 12 ;
 	
 	//PCM Module Ports
 	public static final int PCM_MODULE_0 = 0;
 	public static final int PCM_MODULE_1 = 1;
 	
 	//Forklift ports
-	public static final int FORKLIFT_CHANNEL = 17; //Motors
+	public static final int FORKLIFT_CHANNEL_A = 17; //Motors
+	//public static final int FORKLIFT_CHANNEL_B = ;
 	
 	//Finger ports
-	public static final int RIGHT_FINGER_PISTON_A = 7; //Pistons
-	public static final int RIGHT_FINGER_PISTON_B = 6;
+	public static final int RIGHT_FINGER_PISTON_A = 6; //Pistons
+	public static final int RIGHT_FINGER_PISTON_B = 7;
 	public static final int RIGHT_FINGER_MODULE = 0;
-	public static final int LEFT_FINGER_PISTON_A = 2;
-	public static final int LEFT_FINGER_PISTON_B = 3;
+	public static final int LEFT_FINGER_PISTON_A = 3;
+	public static final int LEFT_FINGER_PISTON_B = 2;
 	public static final int LEFT_FINGER_MODULE = 1;
 	
 	//Door ports

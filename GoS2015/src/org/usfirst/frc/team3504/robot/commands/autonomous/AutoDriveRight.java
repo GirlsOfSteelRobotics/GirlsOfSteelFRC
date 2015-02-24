@@ -9,10 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoDriveRight extends Command {
 
+	private double distance;
+	
     public AutoDriveRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
+    	distance = 50;//107
     }
 
     // Called just before this Command runs the first time
@@ -22,12 +25,13 @@ public class AutoDriveRight extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveRight();
+    	Robot.chassis.autoDriveRight(distance);
+    	Robot.chassis.printPositionsToSmartDashboard();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (Robot.chassis.getDistanceRight() > 50);
+    	return (Robot.chassis.getDistanceRight() > distance);
     }
 
     // Called once after isFinished returns true
