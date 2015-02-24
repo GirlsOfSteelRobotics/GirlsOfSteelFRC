@@ -3,6 +3,14 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoOneTote;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPlow;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoToteAndContainer;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnClockwise;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnCounterClockwise;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoUltrasonic;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -53,6 +61,16 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         autoChooser.addDefault("AutoDriveRight", new AutoDriveRight());
         autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft());
+        autoChooser.addObject("AutoOneTote", new AutoOneTote());
+        autoChooser.addObject("AutoTurnClockwise", new AutoTurnClockwise());
+        autoChooser.addObject("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());
+        autoChooser.addObject("AutoPlow", new AutoPlow());
+        autoChooser.addObject("AutoToteAndContainer", new AutoToteAndContainer());
+        autoChooser.addObject("AutoUltrasonic", new AutoUltrasonic());
+        autoChooser.addObject("Lifting", new Lifting());
+        autoChooser.addObject("Release", new Release());
+        
+        
         SmartDashboard.putData("Auto mode", autoChooser);
     }
 	
