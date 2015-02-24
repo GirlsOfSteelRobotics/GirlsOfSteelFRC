@@ -9,6 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoDriveLeft extends Command {
 
+	private double distance; 
+	
+    public AutoDriveLeft(double distance) {
+       requires(Robot.chassis);
+       this.distance = distance; 
+    }
+	
     public AutoDriveLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,12 +29,12 @@ public class AutoDriveLeft extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveLeft(107);
+    	Robot.chassis.autoDriveLeft(distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Robot.chassis.getDistanceLeft() > 107);
+        return (Robot.chassis.getDistanceLeft() > distance); //107 
     }
 
     // Called once after isFinished returns true

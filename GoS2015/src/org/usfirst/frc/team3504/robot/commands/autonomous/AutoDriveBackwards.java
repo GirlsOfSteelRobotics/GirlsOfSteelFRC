@@ -9,6 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoDriveBackwards extends Command {
 		
+	private double distance; 
+	
+    public AutoDriveBackwards(double distance) {
+       requires(Robot.chassis);
+       this.distance = distance; 
+    }
+    
     public AutoDriveBackwards() {
         	
     	requires(Robot.chassis);
@@ -26,12 +33,12 @@ public class AutoDriveBackwards extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveBackward(50);
+    	Robot.chassis.autoDriveBackward(distance);
     }
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (Robot.chassis.getDistanceBackwards() > 50);
+    	return (Robot.chassis.getDistanceBackwards() > distance); //50
     }
 
     // Called once after isFinished returns true

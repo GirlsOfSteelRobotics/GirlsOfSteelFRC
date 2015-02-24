@@ -11,11 +11,9 @@ public class AutoDriveRight extends Command {
 
 	private double distance;
 	
-    public AutoDriveRight() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public AutoDriveRight(double distance) {
     	requires(Robot.chassis);
-    	distance = 50;//107
+    	// distance = 50;//107
     }
 
     // Called just before this Command runs the first time
