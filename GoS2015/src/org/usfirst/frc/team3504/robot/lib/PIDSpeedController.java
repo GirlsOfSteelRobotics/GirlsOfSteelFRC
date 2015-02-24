@@ -1,8 +1,12 @@
 package org.usfirst.frc.team3504.robot.lib;
 
+import org.usfirst.frc.team3504.robot.Robot;
+
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDSpeedController implements SpeedController {
 	
@@ -10,7 +14,7 @@ public class PIDSpeedController implements SpeedController {
 	double Kp;
 	double Ki;
 	double Kd;
-
+	
 	public PIDSpeedController(SpeedController controller, double Kp, double Ki, double Kd, PIDSource source) {
 		this.Kp = Kp;
 		this.Ki = Ki;
@@ -23,7 +27,7 @@ public class PIDSpeedController implements SpeedController {
 	public void pidWrite(double output) {
 		pid.setSetpoint(output/Kp);
 	}
-
+	
 	@Override
 	public double get() {
 		return (pid.getSetpoint()*Kp);
