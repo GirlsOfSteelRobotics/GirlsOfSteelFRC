@@ -202,15 +202,15 @@ public class Chassis extends Subsystem {
 		
 		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
 										deadZone(stick.getX()) * throttleSpeed(stick),
-										(twistDeadZone(stick.getTwist()) + ((gyroAngleCounter % 2 == 0) ? determineTwistFromGyro(stick):0))* throttleSpeed(stick),
+										(twistDeadZone(stick.getTwist()) *throttleSpeed(stick)),//+ ((gyroAngleCounter % 2 == 0) ? determineTwistFromGyro(stick):0))* throttleSpeed(stick),
 		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
 		//								beattieDeadBand(stick.getX()) * throttleSpeed(stick),
 		//								beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
 		
-		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
-		oldDirection = robotGyro.getAngle();
-		gyroAngleCounter++;
+		//SmartDashboard.putNumber("Desired Velocity", -stick.getY());
+		//oldDirection = robotGyro.getAngle();
+		//gyroAngleCounter++;
 	}
 	
 	public double calculateSpeed(double goalDist, double currentDist)
