@@ -17,10 +17,11 @@ public class AutoPlow extends CommandGroup {
 	double distanceFirst1; 
 
     public AutoPlow() {
-    	distanceFwd1 = 55.25;
-    	distanceFwd2 = 55.25; 
+    	distanceFwd1 = 82.15;
+    	distanceFwd2 = 82.15; 
     	distanceLeft1 = 107; 
     	distanceBack1 = 50; 
+    	distanceFirst1 = 22.25;
     	
     	addSequential(new AutoCollector());
     	addSequential(new Lifting()); 
