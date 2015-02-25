@@ -14,18 +14,18 @@ public class ShackOut extends Command {
     }
 
     protected void initialize() {
+    	Robot.shack.ShackOut();
     }
 
     protected void execute() {
-    	Robot.shack.out();
+    
     }
 
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     protected void end() {
-    	Robot.shack.stop();
     }
 
     protected void interrupted() {

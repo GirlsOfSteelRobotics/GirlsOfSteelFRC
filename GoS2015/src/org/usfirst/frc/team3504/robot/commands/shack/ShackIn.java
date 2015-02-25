@@ -14,18 +14,18 @@ public class ShackIn extends Command {
     }
 
     protected void initialize() {
+    	Robot.shack.ShackIn();
     }
 
     protected void execute() {
-    	Robot.shack.in(); 
+    
     }
 
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     protected void end() {
-    	Robot.shack.stop();
     }
 
     protected void interrupted() {

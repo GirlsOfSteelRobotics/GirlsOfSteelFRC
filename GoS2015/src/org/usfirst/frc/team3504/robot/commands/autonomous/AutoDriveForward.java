@@ -25,7 +25,7 @@ public class AutoDriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.autoDriveForward(50);
+    	Robot.chassis.autoDriveForward(distance);
     	//TODO speed and distance
 		
     	Robot.chassis.printPositionsToSmartDashboard();

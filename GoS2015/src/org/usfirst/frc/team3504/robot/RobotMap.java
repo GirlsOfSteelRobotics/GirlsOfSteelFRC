@@ -24,9 +24,16 @@ public class RobotMap {
 	public static final int PHOTOSENSOR_CHANNEL_DARKINPUT = 2;
 
 	//Shack ports
-	public static final int SHACK_TALON = 5; //Motor 
-	public static final int SHACK_TOP_LIMIT = 11 ;
-	public static final int SHACK_BOTTOM_LIMIT = 12 ;
+	//public static final int SHACK_TALON = 5; //Motor 
+	//public static final int SHACK_TOP_LIMIT = 11 ;
+	//public static final int SHACK_BOTTOM_LIMIT = 12 ;
+	public static final int LEFT_SHACK_CHANNEL_A = 4; //In
+	public static final int LEFT_SHACK_CHANNEL_B = 5; //Out
+	public static final int LEFT_SHACK_MODULE = 1;
+	public static final int RIGHT_SHACK_CHANNEL_A = 6; //In
+	public static final int RIGHT_SHACK_CHANNEL_B = 7; //Out
+	public static final int RIGHT_SHACK_MODULE = 0;
+	
 	
 	//PCM Module Ports
 	public static final int PCM_MODULE_0 = 0;
