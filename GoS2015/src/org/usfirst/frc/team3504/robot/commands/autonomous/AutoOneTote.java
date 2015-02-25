@@ -8,11 +8,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoOneTote extends CommandGroup {
     
     //Collects one tote/container and takes it to the auto zone
+	double distanceRight1;
 	
 	public  AutoOneTote() {
+		distanceRight1 = 50; //107 (50 being used for testing)
+		
     	addSequential(new AutoCollector());
     	addSequential(new Lifting());
-    	addSequential(new AutoDriveRight());
+    	addSequential(new AutoDriveRight(distanceRight1));
     	addSequential(new Release()); 
     	
         // Add Commands here:

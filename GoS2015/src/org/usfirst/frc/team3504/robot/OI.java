@@ -165,7 +165,7 @@ public class OI {
 		doorsClose.whenPressed(new DoorsIn());
 		
 		autoDriveRight = new JoystickButton(chassisJoystick, 5);
-		autoDriveRight.whenPressed(new AutoDriveRight());
+		//autoDriveRight.whenPressed(new AutoDriveRight());
 		autoDriveLeft = new JoystickButton(chassisJoystick, 6);
 		autoDriveLeft.whenPressed(new AutoDriveLeft());
 		autoDriveForward = new JoystickButton(chassisJoystick, 4);

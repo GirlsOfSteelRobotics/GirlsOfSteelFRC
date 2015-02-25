@@ -29,6 +29,7 @@ public class Chassis extends Subsystem {
 	
     private Gyro robotGyro;
     boolean getGyro;
+    double oldDirection;
 	
 	//Encoders
     private TalonEncoder frontLeftEncoder;
@@ -64,6 +65,8 @@ public class Chassis extends Subsystem {
     private static final double RAMP_DOWN_DISTANCE = 40;
     
     private double timer = 0;
+    
+    private double gyroAngleCounter = 0;
 	
 	public Chassis()
 	{	
@@ -102,8 +105,8 @@ public class Chassis extends Subsystem {
 	 */
 	private double twistDeadZone(double rawVal)
 	{
-		if(Math.abs(rawVal) > .5)
-			return rawVal;
+		if(Math.abs(rawVal) > .4)
+			return rawVal - .1;
 		else
 			return 0.0;
 	}
@@ -181,15 +184,14 @@ public class Chassis extends Subsystem {
 	public double determineTwistFromGyro(Joystick stick)
 	{
 		double desiredDirection = stick.getDirectionDegrees();
-		double currentDirection = robotGyro.getAngle();
-		double diff = desiredDirection-currentDirection;
+		double change = (oldDirection - robotGyro.getAngle());	
 		
-		if (diff > 0)
-			return 1-(1/diff);
-		else if (diff < 0)
-			return -(1-(1/Math.abs(diff)));
-		else
-			return 0;
+		if ((desiredDirection - change) > 0)   				//the robot angle is less than the desired angle (to the right of)
+			return 0.05;
+		else if ((desiredDirection - change) < 0)  			//robot angle is greater than the desired angle (to the left)
+			return -0.05;
+		else 
+			return 0;										//robot angle = desired angle
 	}
  
 	public void moveByJoystick(Joystick stick)
@@ -200,13 +202,15 @@ public class Chassis extends Subsystem {
 		
 		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
 										deadZone(stick.getX()) * throttleSpeed(stick),
-										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
+										(twistDeadZone(stick.getTwist()) + ((gyroAngleCounter % 2 == 0) ? determineTwistFromGyro(stick):0))* throttleSpeed(stick),
 		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
 		//								beattieDeadBand(stick.getX()) * throttleSpeed(stick),
 		//								beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
 		
 		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
+		oldDirection = robotGyro.getAngle();
+		gyroAngleCounter++;
 	}
 	
 	public double calculateSpeed(double goalDist, double currentDist)

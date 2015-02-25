@@ -8,6 +8,7 @@ import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -21,6 +22,7 @@ public class CameraOverlay extends Command {
     private NIVision.Rect side; 
 	
     public CameraOverlay() {
+    	
     	requires(Robot.camera);
     	
     	top = new NIVision.Rect(296, 0, 14, 384);
