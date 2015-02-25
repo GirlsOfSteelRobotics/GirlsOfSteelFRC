@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot {
 		Robot.chassis.resetGyro();
         oi = new OI();
         autoChooser = new SendableChooser();
-        autoChooser.addDefault("AutoDriveRight", new AutoDriveRight());
+       // autoChooser.addDefault("AutoDriveRight", new AutoDriveRight());
         autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft());
         autoChooser.addObject("AutoOneTote", new AutoOneTote());
         autoChooser.addObject("AutoTurnClockwise", new AutoTurnClockwise());
