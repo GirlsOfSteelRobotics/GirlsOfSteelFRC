@@ -29,6 +29,7 @@ public class Chassis extends Subsystem {
 	
     private Gyro robotGyro;
     boolean getGyro;
+    double currentDirection;
 	
 	//Encoders
     private TalonEncoder frontLeftEncoder;
@@ -181,9 +182,9 @@ public class Chassis extends Subsystem {
 	public double determineTwistFromGyro(Joystick stick)
 	{
 		double desiredDirection = stick.getDirectionDegrees();
-		double currentDirection = robotGyro.getAngle();
-		double diff = desiredDirection-currentDirection;
-		
+		double oldDirection = currentDirection;
+		double diff = desiredDirection-oldDirection;
+
 		if (diff > 0)
 			return 1-(1/diff);
 		else if (diff < 0)
@@ -200,13 +201,14 @@ public class Chassis extends Subsystem {
 		
 		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
 										deadZone(stick.getX()) * throttleSpeed(stick),
-										twistDeadZone(stick.getTwist()) * throttleSpeed(stick),
+										twistDeadZone(stick.getTwist()) * throttleSpeed(stick) * determineTwistFromGyro(stick),
 		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
 		//								beattieDeadBand(stick.getX()) * throttleSpeed(stick),
 		//								beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
 										getGyro ? robotGyro.getAngle() : 0);
 		
 		SmartDashboard.putNumber("Desired Velocity", -stick.getY());
+		currentDirection = stick.getDirectionDegrees();
 	}
 	
 	public double calculateSpeed(double goalDist, double currentDist)
