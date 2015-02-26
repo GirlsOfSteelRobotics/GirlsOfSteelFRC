@@ -30,7 +30,7 @@ public class AutoDriveRight extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (Robot.chassis.getDistanceRight() > distance);
+    	return (Robot.chassis.getDistanceRight() >= distance);
     }
 
     // Called once after isFinished returns true

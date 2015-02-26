@@ -32,7 +32,7 @@ public class RobotMap {
 	public static final int LEFT_SHACK_MODULE = 1;
 	public static final int RIGHT_SHACK_CHANNEL_A = 6; //In
 	public static final int RIGHT_SHACK_CHANNEL_B = 7; //Out
-	public static final int RIGHT_SHACK_MODULE = 0;
+	public static final int RIGHT_SHACK_MODULE = 1;
 	
 	
 	//PCM Module Ports

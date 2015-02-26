@@ -288,7 +288,7 @@ public class Chassis extends Subsystem {
 	
 	public void stop()
 	{
-		gosDrive.mecanumDrive_Polar(0, 0, 0);
+		gosDrive.stopMotor();
 	}
 	
 	public void printPositionsToSmartDashboard()
