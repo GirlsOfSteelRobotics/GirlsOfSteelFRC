@@ -64,6 +64,9 @@ public class Chassis extends Subsystem {
     private static final double RAMP_UP_DISTANCE = 5;
     private static final double RAMP_DOWN_DISTANCE = 40;
     
+    private static final double MIN_SPEED_STRAFING = .3;
+    private static final double MAX_SPEED_STRAFING = .7;
+    
     private double timer = 0;
     
     private double gyroAngleCounter = 0;
@@ -97,6 +100,7 @@ public class Chassis extends Subsystem {
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
     	//gosDrive.setSafetyEnabled(true); 
+    	
 	}
 	
 	/* Twist Dead Zone
@@ -213,6 +217,33 @@ public class Chassis extends Subsystem {
 		//gyroAngleCounter++;
 	}
 	
+	
+	public double calculateSpeedStrafing(double goalDist, double currentDist)
+	{
+		double speed;
+		if (currentDist < RAMP_UP_DISTANCE)
+		{
+			speed = (((MAX_SPEED_STRAFING - MIN_SPEED_STRAFING)/RAMP_UP_DISTANCE)*currentDist+MIN_SPEED_STRAFING);
+		}
+		else if (goalDist-currentDist < RAMP_DOWN_DISTANCE)
+		{
+			speed = (((MIN_SPEED_STRAFING - MAX_SPEED_STRAFING)/RAMP_DOWN_DISTANCE)*(currentDist-(goalDist-RAMP_DOWN_DISTANCE))+MAX_SPEED_STRAFING);
+		}
+		else
+		{
+			speed = MAX_SPEED_STRAFING;
+		}
+		
+		SmartDashboard.putNumber("speed", speed);
+		System.out.print("Speed " + speed);
+		SmartDashboard.putNumber("current distance", currentDist);
+		System.out.println(" Current distance " + currentDist);
+		SmartDashboard.putNumber("goal distance", goalDist);
+		
+		return speed;
+	}
+	
+	
 	public double calculateSpeed(double goalDist, double currentDist)
 	{
 		double speed;
@@ -248,11 +279,11 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void autoDriveBackward(double goalDist){
-		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceBackwards()), 270, 0); //check to make sure this angle is correct
+		gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), 270, 0); //check to make sure this angle is correct
 	}
 	
 	public void autoDriveForward(double goalDist){
-		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceForward()), 90, 0);
+		gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceForward()), 90, 0);
 	}
 	
 	public void autoTurnClockwise()
