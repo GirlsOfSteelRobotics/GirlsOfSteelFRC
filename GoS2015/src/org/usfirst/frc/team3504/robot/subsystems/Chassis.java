@@ -30,7 +30,7 @@ public class Chassis extends Subsystem {
     private Gyro robotGyro;
     boolean getGyro;
     double oldDirection;
-	
+
 	//Encoders
     private TalonEncoder frontLeftEncoder;
     private TalonEncoder rearLeftEncoder;
@@ -83,7 +83,7 @@ public class Chassis extends Subsystem {
 	    robotGyro = new Gyro(RobotMap.GYRO_PORT);
         LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
 	    getGyro = true;
-		
+
 		frontLeftEncoder = new TalonEncoder(frontLeftWheel);
     	rearLeftEncoder = new TalonEncoder(rearLeftWheel);
     	frontRightEncoder = new TalonEncoder(frontRightWheel);
