@@ -40,8 +40,8 @@ public class RobotMap {
 	//Forklift ports
 	public static final int FORKLIFT_CHANNEL_A = 17; //Motors
 	//public static final int FORKLIFT_CHANNEL_B = ;
-	public static final int FORKLIFT_TOP_LIMIT = 11;
-	public static final int FORKLIFT_BOTTOM_LIMIT = 12;
+	public static final int FORKLIFT_TOP_LIMIT = 0;
+	public static final int FORKLIFT_BOTTOM_LIMIT = 1;
 	
 	//Finger ports
 	public static final int RIGHT_FINGER_PISTON_A = 6; //Pistons
