@@ -2,12 +2,18 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBringInGrippers;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLift;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLiftContainer;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLowerLifter;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoOneTote;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPlow;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoReleaseGripper;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoToteAndContainer;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnClockwise;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnCounterClockwise;
@@ -78,6 +84,25 @@ public class Robot extends IterativeRobot {
         
         
         SmartDashboard.putData("Auto mode", autoChooser);
+        SmartDashboard.putData("AutoBringInGrippers", new AutoBringInGrippers());
+        SmartDashboard.putData("AutoCollector", new AutoCollector());
+        SmartDashboard.putData("AutoDriveBackwards", new AutoDriveBackwards(50));
+        SmartDashboard.putData("AutoDriveForward", new AutoDriveForward(50));
+        SmartDashboard.putData("AutoDriveLeft", new AutoDriveLeft(50));
+        SmartDashboard.putData("AutoDriveRight", new AutoDriveRight(50));
+        SmartDashboard.putData("AutoFirstPickup", new AutoFirstPickup());
+        SmartDashboard.putData("AutLift", new AutoLift());
+        SmartDashboard.putData("AutoLiftContainer", new AutoLiftContainer());
+        SmartDashboard.putData("AutoLowerLifter", new AutoLowerLifter());
+        SmartDashboard.putData("AutoOneTote", new AutoOneTote());
+        SmartDashboard.putData("AutoPlow", new AutoPlow());
+        SmartDashboard.putData("AutoReleaseGripper", new AutoReleaseGripper());
+        SmartDashboard.putData("AutoToteAndContaienr", new AutoToteAndContainer());
+        SmartDashboard.putData("AutoTurnClockwise", new AutoTurnClockwise());
+        SmartDashboard.putData("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());
+        SmartDashboard.putData("AutoUltrasonic", new AutoUltrasonic());
+        SmartDashboard.putData("Lifting", new Lifting());
+        SmartDashboard.putData("Release", new Release());
     }
 	
 	public void disabledPeriodic() {
