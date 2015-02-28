@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBringInGrippers;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
@@ -13,6 +14,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnCounterClockwi
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoUltrasonic;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
+import org.usfirst.frc.team3504.robot.commands.drive.DriveBackward;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
