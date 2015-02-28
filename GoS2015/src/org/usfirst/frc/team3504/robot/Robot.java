@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoOneTote;
@@ -59,8 +61,10 @@ public class Robot extends IterativeRobot {
 		Robot.chassis.resetGyro();
         oi = new OI();
         autoChooser = new SendableChooser();
-       // autoChooser.addDefault("AutoDriveRight", new AutoDriveRight());
-        autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft());
+        autoChooser.addDefault("AutoDriveRight", new AutoDriveRight(150));
+        autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft(150));
+        autoChooser.addObject("AutoDriveForward", new AutoDriveForward(50));
+        autoChooser.addObject("AutoDriveBackwards", new AutoDriveBackwards(50));
         autoChooser.addObject("AutoOneTote", new AutoOneTote());
         autoChooser.addObject("AutoTurnClockwise", new AutoTurnClockwise());
         autoChooser.addObject("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());

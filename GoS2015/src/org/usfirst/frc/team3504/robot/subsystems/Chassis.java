@@ -5,11 +5,17 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 
+import com.kauailabs.nav6.frc.IMU;
+import com.kauailabs.nav6.frc.IMUAdvanced;
+import com.kauailabs.navx_mxp.AHRS;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,10 +33,12 @@ public class Chassis extends Subsystem {
 	
     //Gyro
 	
-    private Gyro robotGyro;
+   // private Gyro robotGyro;
     boolean getGyro;
     double oldDirection;
-
+	
+    private AHRS IMUGyro;
+    
 	//Encoders
     private TalonEncoder frontLeftEncoder;
     private TalonEncoder rearLeftEncoder;
@@ -59,8 +67,8 @@ public class Chassis extends Subsystem {
     //(may need to change for strafing vs. normal driving)
     private static final double autoSpeed = 0.25;
     
-    private static final double MIN_SPEED = .15;
-    private static final double MAX_SPEED = .5;
+    private static final double MIN_SPEED = .5;//.15;
+    private static final double MAX_SPEED = .75;//.3;
     private static final double RAMP_UP_DISTANCE = 5;
     private static final double RAMP_DOWN_DISTANCE = 40;
     
@@ -70,9 +78,12 @@ public class Chassis extends Subsystem {
     private double timer = 0;
     
     private double gyroAngleCounter = 0;
+    
+    private double oldXGyroDisplacement = 0;
+    private double oldYGyroDisplacement = 0;
 	
 	public Chassis()
-	{	
+	{
 		//controlStick = Robot.oi.getChassisJoystick();
 		
 		frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
@@ -80,27 +91,36 @@ public class Chassis extends Subsystem {
 		rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
 		rearLeftWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
 		
-	    robotGyro = new Gyro(RobotMap.GYRO_PORT);
-        LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
+		frontRightWheel.enableBrakeMode(true);
+		frontLeftWheel.enableBrakeMode(true);
+		rearRightWheel.enableBrakeMode(true);
+		rearLeftWheel.enableBrakeMode(true);
+		
+	//    robotGyro = new Gyro(RobotMap.GYRO_PORT);
+     //   LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
 	    getGyro = true;
-
+	    
+	    SerialPort temp = new SerialPort(57600, edu.wpi.first.wpilibj.SerialPort.Port.kMXP);
+	    
+	    IMUGyro = new AHRS(temp);
+	    
+	    IMUGyro.zeroYaw();
+	    
 		frontLeftEncoder = new TalonEncoder(frontLeftWheel);
     	rearLeftEncoder = new TalonEncoder(rearLeftWheel);
     	frontRightEncoder = new TalonEncoder(frontRightWheel);
     	rearRightEncoder = new TalonEncoder(rearLeftWheel);
     	
         gosDrive = new RobotDrive(rearLeftWheel, rearRightWheel, frontLeftWheel, frontRightWheel);
-        /*		
-        		new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
-				new PIDSpeedController(rearRightWheel, kP, kI, kD, rearRightEncoder),
-				new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
-				new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
-				**/
+        	//	   new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
+			//	   new PIDSpeedController(rearRightWheel, kP, kI, kD, rearRightEncoder),
+			//	   new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
+			//	   new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
+				
         gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
     	//gosDrive.setSafetyEnabled(true); 
-    	
 	}
 	
 	/* Twist Dead Zone
@@ -167,12 +187,14 @@ public class Chassis extends Subsystem {
 	
 	public double getGyroAngle()
 	{
-		return robotGyro.getAngle();
+		return IMUGyro.getYaw();
+	//	return robotGyro.getAngle();
 	}
 	
 	public void resetGyro() 
 	{
-		robotGyro.reset();
+		IMUGyro.zeroYaw();
+		//robotGyro.reset();
 	}
 	
 	/**
@@ -187,33 +209,65 @@ public class Chassis extends Subsystem {
 	
 	public double determineTwistFromGyro(Joystick stick)
 	{
-		double desiredDirection = stick.getDirectionDegrees();
-		double change = (oldDirection - robotGyro.getAngle());	
+		double desiredDirection;
+		double temp = stick.getDirectionDegrees();
+		if (temp < 0)
+			desiredDirection = temp-360;
+		else
+			desiredDirection = temp;
+		double change = (oldDirection - IMUGyro.getYaw());	
+		
+		SmartDashboard.putNumber("Desired Direction", desiredDirection);
+		SmartDashboard.putNumber("Change", change);
 		
 		if ((desiredDirection - change) > 0)   				//the robot angle is less than the desired angle (to the right of)
-			return 0.05;
+			return -0.2;
 		else if ((desiredDirection - change) < 0)  			//robot angle is greater than the desired angle (to the left)
-			return -0.05;
+			return 0.2;
 		else 
 			return 0;										//robot angle = desired angle
 	}
  
 	public void moveByJoystick(Joystick stick)
 	{
+		double temp = IMUGyro.getYaw();
+		if (temp < 0)
+			temp = temp+360;
+		else
+			temp = temp;
+		
+		SmartDashboard.putNumber("GYRO Get Yaw", temp);
+		
 		SmartDashboard.putNumber("x dir", deadZone(-stick.getY()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("y dir", deadZone(-stick.getX()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("rot", twistDeadZone(stick.getTwist()) * throttleSpeed(stick));
 		
-		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
-										deadZone(stick.getX()) * throttleSpeed(stick),
-										(twistDeadZone(stick.getTwist()) *throttleSpeed(stick)),//+ ((gyroAngleCounter % 2 == 0) ? determineTwistFromGyro(stick):0))* throttleSpeed(stick),
-		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
-		//								beattieDeadBand(stick.getX()) * throttleSpeed(stick),
-		//								beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
-										getGyro ? robotGyro.getAngle() : 0);
+		double tempX = IMUGyro.getDisplacementX();
+		double tempXCorrected = tempX - oldXGyroDisplacement;
+		double tempY = IMUGyro.getDisplacementY();
+		double tempYCorrected = tempY - oldYGyroDisplacement;
+		
+		SmartDashboard.putNumber("X Displacement Gyro", tempX);
+		SmartDashboard.putNumber("Y Displacement Gyro", tempY);
+		
+		SmartDashboard.putNumber("X Displacement Gyro Corrected", tempXCorrected);
+		SmartDashboard.putNumber("Y Displacement Gyro Corrected", tempYCorrected);
+		
+		SmartDashboard.putNumber("FUSED HEADING!!!!!", IMUGyro.getFusedHeading());
+		
+		SmartDashboard.putNumber("Direction we want to go", stick.getDirectionDegrees());
+		SmartDashboard.putNumber("Direction headed from Gyro", Math.atan(tempY/tempX));
+		SmartDashboard.putNumber("Direction headed from Gyro Corrected", Math.atan(tempYCorrected/tempXCorrected));
+		
+		SmartDashboard.putNumber("Gyro Compass Heading", IMUGyro.getCompassHeading());
+		
+		gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
+										beattieDeadBand(stick.getX()) * throttleSpeed(stick),
+										(beattieTwistDeadBand(stick.getTwist()))*throttleSpeed(stick),
+										getGyro ? temp : 0);
 		
 		//SmartDashboard.putNumber("Desired Velocity", -stick.getY());
-		//oldDirection = robotGyro.getAngle();
+		//oldDirection = IMUGyro.getYaw();
 		//gyroAngleCounter++;
 	}
 	
