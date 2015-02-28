@@ -25,8 +25,6 @@ public class RobotMap {
 
 	//Shack ports
 	//public static final int SHACK_TALON = 5; //Motor 
-	//public static final int SHACK_TOP_LIMIT = 11 ;
-	//public static final int SHACK_BOTTOM_LIMIT = 12 ;
 	public static final int LEFT_SHACK_CHANNEL_A = 4; //In
 	public static final int LEFT_SHACK_CHANNEL_B = 5; //Out
 	public static final int LEFT_SHACK_MODULE = 1;
@@ -42,6 +40,8 @@ public class RobotMap {
 	//Forklift ports
 	public static final int FORKLIFT_CHANNEL_A = 17; //Motors
 	//public static final int FORKLIFT_CHANNEL_B = ;
+	public static final int FORKLIFT_TOP_LIMIT = 11;
+	public static final int FORKLIFT_BOTTOM_LIMIT = 12;
 	
 	//Finger ports
 	public static final int RIGHT_FINGER_PISTON_A = 6; //Pistons

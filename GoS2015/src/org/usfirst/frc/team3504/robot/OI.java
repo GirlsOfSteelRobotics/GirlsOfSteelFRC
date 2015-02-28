@@ -1,34 +1,23 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
-import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
-import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
-import org.usfirst.frc.team3504.robot.commands.camera.CameraOverlay;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
 import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
 import org.usfirst.frc.team3504.robot.commands.collector.ReleaseTote;
 import org.usfirst.frc.team3504.robot.commands.doors.DoorsIn;
 import org.usfirst.frc.team3504.robot.commands.doors.DoorsOut;
-import org.usfirst.frc.team3504.robot.commands.drive.DriveBackward;
-import org.usfirst.frc.team3504.robot.commands.drive.DriveForward;
-import org.usfirst.frc.team3504.robot.commands.drive.DriveLeft;
-import org.usfirst.frc.team3504.robot.commands.drive.DriveRight;
 import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
 import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerDown;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerUp;
-import org.usfirst.frc.team3504.robot.commands.lifter.LiftDown;
-import org.usfirst.frc.team3504.robot.commands.lifter.LiftUp;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftDownWhileHeld;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftUpWhileHeld;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
-import org.usfirst.frc.team3504.robot.commands.tests.TestPhotoSensor;
-import org.usfirst.frc.team3504.robot.commands.tests.TestUltrasonic;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -65,6 +54,7 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	
+	//Joysticks
 	private Joystick operatorJoystick;
 	private Joystick chassisJoystick;
 
@@ -102,20 +92,8 @@ public class OI {
 	private JoystickButton shackIn;
 	private JoystickButton shackOut;
 	
-	
-	//Sucker buttons
-	private JoystickButton collectIn;
-	private JoystickButton pushOut;
-	private JoystickButton stopCollection;
-	private JoystickButton stopCollectorAngle;
-	private JoystickButton doorIn;
-	private JoystickButton doorOut;
-	
 	//Ultrasonic buttons
 	private JoystickButton getDistance;
-	
-	//Camera buttons
-	private JoystickButton switchCamera;
 	
 	// Gyro Button
 	private JoystickButton resetGyro;
@@ -126,14 +104,14 @@ public class OI {
 	
 	public OI()
 	{
+		//Joysticks
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 		
-		
 		//Collectors
-		collectTote = new JoystickButton(operatorJoystick, 3);
+		collectTote = new JoystickButton(chassisJoystick, 8);
 		collectTote.whileHeld(new CollectTote());
-		releaseTote = new JoystickButton(operatorJoystick, 4);
+		releaseTote = new JoystickButton(chassisJoystick, 7);
 		releaseTote.whileHeld(new ReleaseTote());
 		angleIn = new JoystickButton(operatorJoystick, 5);
 		angleIn.whenPressed(new AngleCollectorIn());
@@ -141,9 +119,9 @@ public class OI {
 		angleOut.whenPressed(new AngleCollectorOut());
 		
 		//Fingers
-		fingersDown = new JoystickButton(chassisJoystick, 8);
+		fingersDown = new JoystickButton(operatorJoystick, 3);
 		fingersDown.whenPressed(new FingerDown());
-		fingersUp = new JoystickButton(chassisJoystick, 7);
+		fingersUp = new JoystickButton(operatorJoystick, 4);
 		fingersUp.whenPressed(new FingerUp());
 		
 		//Shack
@@ -154,9 +132,9 @@ public class OI {
 		
 		//Lifting
 		liftUp = new JoystickButton(operatorJoystick, 7);
-		liftUp.whileHeld(new LiftUp());
+		liftUp.whileHeld(new LiftUpWhileHeld());
 		liftDown = new JoystickButton(operatorJoystick, 8);
-		liftDown.whileHeld(new LiftDown());
+		liftDown.whileHeld(new LiftDownWhileHeld());
 		
 		//Doors
 		doorsOpen = new JoystickButton(chassisJoystick, 9);
@@ -165,13 +143,13 @@ public class OI {
 		doorsClose.whenPressed(new DoorsIn());
 		
 		autoDriveRight = new JoystickButton(chassisJoystick, 5);
-		//autoDriveRight.whenPressed(new AutoDriveRight());
+		autoDriveRight.whenPressed(new AutoDriveRight(50));
 		autoDriveLeft = new JoystickButton(chassisJoystick, 6);
-		autoDriveLeft.whenPressed(new AutoDriveLeft());
+		autoDriveLeft.whenPressed(new AutoDriveLeft(50));
 		autoDriveForward = new JoystickButton(chassisJoystick, 4);
-		autoDriveForward.whenPressed(new Lifting());//AutoDriveForward(6));
+		autoDriveForward.whenPressed(new AutoDriveForward(50));
 		autoDriveBackwards = new JoystickButton(chassisJoystick, 3);
-		autoDriveBackwards.whenReleased(new AutoDriveBackwards());
+		autoDriveBackwards.whenReleased(new AutoDriveBackwards(50));
 		
 		/*
 		//Drive buttons initialization
@@ -185,15 +163,11 @@ public class OI {
 		driveLeft.whileHeld(new DriveLeft());
 		*/
 		
-		//Gyro Button initialization
+		//Gyro Buttons
 		resetGyro = new JoystickButton(chassisJoystick, 11);
 		resetGyro.whenPressed(new ResetGyro());
 		getGyro = new JoystickButton(chassisJoystick, 12);
 		getGyro.whenPressed(new GetGyro());
-		
-		//Camera button
-		//switchCamera = new JoystickButton(chassisJoystick, 2);
-		//switchCamera.whenPressed (new CameraOverlay());
 	}
 	
 	public Joystick getOperatorJoystick()

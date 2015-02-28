@@ -4,38 +4,37 @@ import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/*
- * 
+/**
+ *
  */
-public class LiftDown extends Command{
+public class LiftDown extends Command {
 
-	public LiftDown() {
-		requires(Robot.forklift);
-	}
-	
-	@Override
-	protected void initialize() {
-		
-	}
+    public LiftDown() {
+    	requires(Robot.forklift);
+    }
 
-	@Override
-	protected void execute() {
-		Robot.forklift.down(-1);
-	}
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	Robot.forklift.down(1);
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    }
 
-	@Override
-	protected void end() {
-		Robot.forklift.stop();
-	}
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return Robot.forklift.isAtTop();
+    }
 
-	@Override
-	protected void interrupted() {
-		end();
-	}
+    // Called once after isFinished returns true
+    protected void end() {
+    	Robot.forklift.stop();
+    }
 
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    	end();
+    }
 }
