@@ -6,6 +6,8 @@ import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
 
 import com.kauailabs.nav6.frc.IMU;
+import com.kauailabs.nav6.frc.IMUAdvanced;
+import com.kauailabs.navx_mxp.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Gyro;
@@ -35,7 +37,7 @@ public class Chassis extends Subsystem {
     boolean getGyro;
     double oldDirection;
 	
-    private IMU IMUGyro;
+    private AHRS IMUGyro;
     
 	//Encoders
     private TalonEncoder frontLeftEncoder;
@@ -76,6 +78,9 @@ public class Chassis extends Subsystem {
     private double timer = 0;
     
     private double gyroAngleCounter = 0;
+    
+    private double oldXGyroDisplacement = 0;
+    private double oldYGyroDisplacement = 0;
 	
 	public Chassis()
 	{
@@ -92,7 +97,7 @@ public class Chassis extends Subsystem {
 	    
 	    SerialPort temp = new SerialPort(57600, edu.wpi.first.wpilibj.SerialPort.Port.kMXP);
 	    
-	    IMUGyro = new IMU(temp);
+	    IMUGyro = new AHRS(temp);
 	    
 	    IMUGyro.zeroYaw();
 	    
@@ -102,11 +107,10 @@ public class Chassis extends Subsystem {
     	rearRightEncoder = new TalonEncoder(rearLeftWheel);
     	
         gosDrive = new RobotDrive(rearLeftWheel, rearRightWheel, frontLeftWheel, frontRightWheel);
-        		
-        	//	new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
-			//	new PIDSpeedController(rearRightWheel, kP, kI, kD, rearRightEncoder),
-			//	new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
-			//	new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
+        	//	   new RobotDrive  (new PIDSpeedController(rearLeftWheel, kP, kI, kD, rearLeftEncoder),
+			//	   new PIDSpeedController(rearRightWheel, kP, kI, kD, rearRightEncoder),
+			//	   new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
+			//	   new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
 				
         gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
@@ -227,23 +231,39 @@ public class Chassis extends Subsystem {
 		else
 			temp = temp;
 		
-		SmartDashboard.putNumber("GYROOOOOO", temp);
+		SmartDashboard.putNumber("GYRO Get Yaw", temp);
 		
 		SmartDashboard.putNumber("x dir", deadZone(-stick.getY()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("y dir", deadZone(-stick.getX()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("rot", twistDeadZone(stick.getTwist()) * throttleSpeed(stick));
 		
-		gosDrive.mecanumDrive_Cartesian(deadZone(-stick.getY()) * throttleSpeed(stick),
-										deadZone(stick.getX()) * throttleSpeed(stick),
-										(twistDeadZone(stick.getTwist()))*throttleSpeed(stick),//+ determineTwistFromGyro(stick))* throttleSpeed(stick),
-		//gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
-		//								beattieDeadBand(stick.getX()) * throttleSpeed(stick),
-		//								beattieTwistDeadBand(stick.getTwist()) * throttleSpeed(stick),
-										getGyro ? temp : 0);//IMUGyro.getYaw() : 0);
+		double tempX = IMUGyro.getDisplacementX();
+		double tempXCorrected = tempX - oldXGyroDisplacement;
+		double tempY = IMUGyro.getDisplacementY();
+		double tempYCorrected = tempY - oldYGyroDisplacement;
+		
+		SmartDashboard.putNumber("X Displacement Gyro", tempX);
+		SmartDashboard.putNumber("Y Displacement Gyro", tempY);
+		
+		SmartDashboard.putNumber("X Displacement Gyro Corrected", tempXCorrected);
+		SmartDashboard.putNumber("Y Displacement Gyro Corrected", tempYCorrected);
+		
+		SmartDashboard.putNumber("FUSED HEADING!!!!!", IMUGyro.getFusedHeading());
+		
+		SmartDashboard.putNumber("Direction we want to go", stick.getDirectionDegrees());
+		SmartDashboard.putNumber("Direction headed from Gyro", Math.atan(tempY/tempX));
+		SmartDashboard.putNumber("Direction headed from Gyro Corrected", Math.atan(tempYCorrected/tempXCorrected));
+		
+		SmartDashboard.putNumber("Gyro Compass Heading", IMUGyro.getCompassHeading());
+		
+		gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
+										beattieDeadBand(stick.getX()) * throttleSpeed(stick),
+										(beattieTwistDeadBand(stick.getTwist()))*throttleSpeed(stick),
+										getGyro ? temp : 0);
 		
 		//SmartDashboard.putNumber("Desired Velocity", -stick.getY());
-		oldDirection = IMUGyro.getYaw();
-		gyroAngleCounter++;
+		//oldDirection = IMUGyro.getYaw();
+		//gyroAngleCounter++;
 	}
 	
 	
