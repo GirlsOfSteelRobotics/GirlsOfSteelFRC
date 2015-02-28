@@ -14,6 +14,7 @@ public class AutoDriveRight extends Command {
     public AutoDriveRight(double distance) {
     	requires(Robot.chassis);
     	// distance = 50;//107
+    	this.distance = distance;
     }
 
     // Called just before this Command runs the first time
