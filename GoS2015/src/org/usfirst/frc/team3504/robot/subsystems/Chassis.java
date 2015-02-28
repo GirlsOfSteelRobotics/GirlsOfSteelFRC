@@ -91,6 +91,11 @@ public class Chassis extends Subsystem {
 		rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
 		rearLeftWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
 		
+		frontRightWheel.enableBrakeMode(true);
+		frontLeftWheel.enableBrakeMode(true);
+		rearRightWheel.enableBrakeMode(true);
+		rearLeftWheel.enableBrakeMode(true);
+		
 	//    robotGyro = new Gyro(RobotMap.GYRO_PORT);
      //   LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
 	    getGyro = true;
