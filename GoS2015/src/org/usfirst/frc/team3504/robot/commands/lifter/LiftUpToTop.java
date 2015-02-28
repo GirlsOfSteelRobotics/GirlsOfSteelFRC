@@ -7,15 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LiftDown extends Command {
+public class LiftUpToTop extends Command {
 
-    public LiftDown() {
+    public LiftUpToTop() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     	requires(Robot.forklift);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.forklift.down(1);
+    	Robot.forklift.up(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -24,7 +26,7 @@ public class LiftDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.forklift.isAtTop();
+        return Robot.forklift.isAtBottom();
     }
 
     // Called once after isFinished returns true

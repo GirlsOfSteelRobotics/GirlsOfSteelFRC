@@ -25,7 +25,7 @@ public class LiftDownWhileHeld extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return Robot.forklift.isAtBottom();
 	}
 
 	@Override
