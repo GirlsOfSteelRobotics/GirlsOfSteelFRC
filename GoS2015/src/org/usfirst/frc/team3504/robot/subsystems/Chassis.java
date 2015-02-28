@@ -3,22 +3,15 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.lib.PIDSpeedController;
-
-import com.kauailabs.nav6.frc.IMU;
-import com.kauailabs.nav6.frc.IMUAdvanced;
 import com.kauailabs.navx_mxp.AHRS;
-
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 
 /**
  * @author Sonia
@@ -32,12 +25,11 @@ public class Chassis extends Subsystem {
 	public static CANTalon rearLeftWheel;
 	
     //Gyro
-	
-   // private Gyro robotGyro;
     boolean getGyro;
     double oldDirection;
-	
     private AHRS IMUGyro;
+    private double oldXGyroDisplacement = 0;
+    private double oldYGyroDisplacement = 0;
     
 	//Encoders
     private TalonEncoder frontLeftEncoder;
@@ -52,7 +44,6 @@ public class Chassis extends Subsystem {
     double initialRearRightEncoderDistance;
     
     private RobotDrive gosDrive;
-    //private Joystick controlStick;
 	
 	//PID Constants
     private static final double kP = .00015;
@@ -75,17 +66,10 @@ public class Chassis extends Subsystem {
     private static final double MIN_SPEED_STRAFING = .3;
     private static final double MAX_SPEED_STRAFING = .7;
     
-    private double timer = 0;
-    
-    private double gyroAngleCounter = 0;
-    
-    private double oldXGyroDisplacement = 0;
-    private double oldYGyroDisplacement = 0;
+    private double counter = 0;
 	
 	public Chassis()
 	{
-		//controlStick = Robot.oi.getChassisJoystick();
-		
 		frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
 		frontLeftWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
 		rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
@@ -96,11 +80,9 @@ public class Chassis extends Subsystem {
 		rearRightWheel.enableBrakeMode(true);
 		rearLeftWheel.enableBrakeMode(true);
 		
-	//    robotGyro = new Gyro(RobotMap.GYRO_PORT);
-     //   LiveWindow.addSensor("Chassis", "Gyro", robotGyro);
 	    getGyro = true;
 	    
-	    SerialPort temp = new SerialPort(57600, edu.wpi.first.wpilibj.SerialPort.Port.kMXP);
+	    SerialPort temp = new SerialPort(57600, Port.kMXP);
 	    
 	    IMUGyro = new AHRS(temp);
 	    
@@ -188,13 +170,11 @@ public class Chassis extends Subsystem {
 	public double getGyroAngle()
 	{
 		return IMUGyro.getYaw();
-	//	return robotGyro.getAngle();
 	}
 	
 	public void resetGyro() 
 	{
 		IMUGyro.zeroYaw();
-		//robotGyro.reset();
 	}
 	
 	/**
@@ -233,8 +213,6 @@ public class Chassis extends Subsystem {
 		double temp = IMUGyro.getYaw();
 		if (temp < 0)
 			temp = temp+360;
-		else
-			temp = temp;
 		
 		SmartDashboard.putNumber("GYRO Get Yaw", temp);
 		
@@ -256,8 +234,8 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("FUSED HEADING!!!!!", IMUGyro.getFusedHeading());
 		
 		SmartDashboard.putNumber("Direction we want to go", stick.getDirectionDegrees());
-		SmartDashboard.putNumber("Direction headed from Gyro", Math.atan(tempY/tempX));
-		SmartDashboard.putNumber("Direction headed from Gyro Corrected", Math.atan(tempYCorrected/tempXCorrected));
+		SmartDashboard.putNumber("Direction headed from Gyro", Math.toDegrees(Math.atan(tempY/tempX)));
+		SmartDashboard.putNumber("Direction headed from Gyro Corrected", Math.toDegrees(Math.atan(tempYCorrected/tempXCorrected)));
 		
 		SmartDashboard.putNumber("Gyro Compass Heading", IMUGyro.getCompassHeading());
 		
@@ -266,7 +244,6 @@ public class Chassis extends Subsystem {
 										(beattieTwistDeadBand(stick.getTwist()))*throttleSpeed(stick),
 										getGyro ? temp : 0);
 		
-		//SmartDashboard.putNumber("Desired Velocity", -stick.getY());
 		//oldDirection = IMUGyro.getYaw();
 		//gyroAngleCounter++;
 	}
@@ -352,23 +329,22 @@ public class Chassis extends Subsystem {
 	
 	public void driveForward()
 	{
-		//gosDrive.mecanumDrive_Cartesian(0, throttleSpeed(Robot.oi.getChassisJoystick()),0,0);//controlStick), 0, 0);
 		gosDrive.mecanumDrive_Polar(1, 90, 0);
 	}
 
 	public void driveBackward()
 	{
-		gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(Robot.oi.getChassisJoystick()),0,0);//controlStick), 0, 0);
+		gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(Robot.oi.getChassisJoystick()),0,0);
 	}
 	
 	public void driveRight()
 	{
-		gosDrive.mecanumDrive_Cartesian(-throttleSpeed(Robot.oi.getChassisJoystick()),0,0,0);//controlStick), 0, 0, 0);
+		gosDrive.mecanumDrive_Cartesian(-throttleSpeed(Robot.oi.getChassisJoystick()),0,0,0);
 	}
 	
 	public void driveLeft()
 	{
-		gosDrive.mecanumDrive_Cartesian(throttleSpeed(Robot.oi.getChassisJoystick()),0,0,0);//controlStick), 0, 0,0);	
+		gosDrive.mecanumDrive_Cartesian(throttleSpeed(Robot.oi.getChassisJoystick()),0,0,0);	
 	}
 	
 	public void stop()
