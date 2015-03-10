@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftDownWhileHeld extends Command{
 
 	public LiftDownWhileHeld() {
-		requires(Robot.forklift);
+		requires(Robot.lifter);
 	}
 	
 	@Override
@@ -20,17 +20,17 @@ public class LiftDownWhileHeld extends Command{
 
 	@Override
 	protected void execute() {
-		Robot.forklift.down(1);
+		Robot.lifter.down(1);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.forklift.isAtBottom();
+		return Robot.lifter.isAtBottom();
 	}
 
 	@Override
 	protected void end() {
-		Robot.forklift.stop();
+		Robot.lifter.stop();
 	}
 
 	@Override

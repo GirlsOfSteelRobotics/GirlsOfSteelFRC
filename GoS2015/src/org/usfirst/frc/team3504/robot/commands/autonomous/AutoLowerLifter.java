@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoLowerLifter extends Command {
 
     public AutoLowerLifter() {
-    	requires(Robot.forklift);
+    	requires(Robot.lifter);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +20,7 @@ public class AutoLowerLifter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.forklift.up(1);
+    	Robot.lifter.up(1);
     	//TODO speed
     }
 
@@ -31,7 +31,7 @@ public class AutoLowerLifter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.forklift.stop();
+    	Robot.lifter.stop();
     }
 
     // Called when another command which requires one or more of the same

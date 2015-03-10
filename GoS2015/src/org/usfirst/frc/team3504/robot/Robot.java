@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static Collector collector;
 	public static Fingers fingers;
-	public static Lifter forklift;
+	public static Lifter lifter;
 	public static Doors doors;
 	public static UltrasonicSensor ultrasonicsensor; 
 	public static OI oi;
@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
 		camera = new Camera();
 		collector = new Collector();
 		fingers = new Fingers();
-		forklift = new Lifter();
+		lifter = new Lifter();
 		doors = new Doors();
 		ultrasonicsensor = new UltrasonicSensor();
 		photosensor = new PhotoSensor();

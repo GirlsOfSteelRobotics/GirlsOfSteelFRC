@@ -11,7 +11,7 @@ public class LiftUpWhileHeld extends Command {
 
 	double initialVal;
 	public LiftUpWhileHeld() {
-		requires(Robot.forklift);
+		requires(Robot.lifter);
 	}
 
 	@Override
@@ -21,17 +21,17 @@ public class LiftUpWhileHeld extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.forklift.up(1);
+		Robot.lifter.up(1);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.forklift.isAtTop();
+		return Robot.lifter.isAtTop();
 	}
 
 	@Override
 	protected void end() {
-		Robot.forklift.stop();
+		Robot.lifter.stop();
 	}
 
 	@Override

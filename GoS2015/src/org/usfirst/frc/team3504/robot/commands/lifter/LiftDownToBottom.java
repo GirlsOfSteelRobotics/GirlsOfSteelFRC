@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftDownToBottom extends Command {
 
     public LiftDownToBottom() {
-    	requires(Robot.forklift);
+    	requires(Robot.lifter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.forklift.down(1);
+    	Robot.lifter.down(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -24,12 +24,12 @@ public class LiftDownToBottom extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.forklift.isAtTop();
+        return Robot.lifter.isAtTop();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.forklift.stop();
+    	Robot.lifter.stop();
     }
 
     // Called when another command which requires one or more of the same
