@@ -71,10 +71,12 @@ public class OI {
 	//Lifting
 	private JoystickButton liftUp;
 	private JoystickButton liftDown; 
+	private JoystickButton liftOneTote; 
 		
-	//Doors
+	/*//Doors
 	private JoystickButton doorsOpen;
 	private JoystickButton doorsClose;
+	*/
 	
 	//Auto Buttons
 	private JoystickButton autoDriveForward;
@@ -135,12 +137,15 @@ public class OI {
 		liftUp.whileHeld(new LiftUpWhileHeld());
 		liftDown = new JoystickButton(operatorJoystick, 8);
 		liftDown.whileHeld(new LiftDownWhileHeld());
+		liftOneTote = new JoystickButton(chassisJoystick, 9);
 		
-		//Doors
+		
+		/*//Doors
 		doorsOpen = new JoystickButton(chassisJoystick, 9);
 		doorsOpen.whenPressed(new DoorsOut());
 		doorsClose = new JoystickButton(chassisJoystick, 10);
 		doorsClose.whenPressed(new DoorsIn());
+		*/
 		
 		autoDriveRight = new JoystickButton(chassisJoystick, 5);
 		autoDriveRight.whenPressed(new AutoDriveRight(50));
