@@ -43,6 +43,10 @@ public class Lifter extends Subsystem {
 	public double getLiftEncoder() {
 		return liftTalonA.getEncPosition();
 	}
+	
+	public double getLiftUp(){
+		return liftTalonA.getEncPosition();
+	}
 
 	public void stop()
 	{
