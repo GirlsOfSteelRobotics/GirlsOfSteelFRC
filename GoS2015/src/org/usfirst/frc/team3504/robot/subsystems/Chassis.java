@@ -3,8 +3,12 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.tests.TestWheels;
+
 import com.kauailabs.navx_mxp.AHRS;
+
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
@@ -43,6 +47,8 @@ public class Chassis extends Subsystem {
     double initialRearLeftEncoderDistance;
     double initialRearRightEncoderDistance;
     
+    private double topSpeed = 400;
+    
     private RobotDrive gosDrive;
 	
 	//PID Constants
@@ -51,7 +57,7 @@ public class Chassis extends Subsystem {
     private static final double kD = .00000001;//.00000001;
     
     //Encoder to Distance Constants
-    private static final double inchesPerTick = Math.PI*8/(4*256);
+    private static final double inchesPerTick = Math.PI*6/(4*256);
     private static final double inchesPerTickStrafing = inchesPerTick/2;
     
     //Speed constant for autonomous driving (
@@ -80,6 +86,33 @@ public class Chassis extends Subsystem {
 		rearRightWheel.enableBrakeMode(true);
 		rearLeftWheel.enableBrakeMode(true);
 		
+		SmartDashboard.putNumber("P value", 1);
+		SmartDashboard.putNumber("I value", 0.01);
+		SmartDashboard.putNumber("D value", 20);
+		//SmartDashboard.putNumber("F value", 0.0);
+		
+		
+		frontRightWheel.changeControlMode(ControlMode.Speed);
+		frontRightWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
+				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		frontRightWheel.reverseSensor(true);
+		
+		frontLeftWheel.changeControlMode(ControlMode.Speed);
+		frontLeftWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
+				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		frontLeftWheel.reverseSensor(true);
+		
+		rearRightWheel.changeControlMode(ControlMode.Speed);
+		rearRightWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
+				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		rearRightWheel.reverseSensor(true);
+		
+		rearLeftWheel.changeControlMode(ControlMode.Speed);
+		rearLeftWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
+				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		rearLeftWheel.reverseSensor(true);
+		
+		
 	    getGyro = true;
 	    
 	    SerialPort temp = new SerialPort(57600, Port.kMXP);
@@ -98,11 +131,37 @@ public class Chassis extends Subsystem {
 			//	   new PIDSpeedController(rearRightWheel, kP, kI, kD, rearRightEncoder),
 			//	   new PIDSpeedController(frontLeftWheel, kP, kI, kD, frontLeftEncoder),
 			//	   new PIDSpeedController(frontRightWheel, kP, kI, kD, frontRightEncoder));
-				
+      
+        gosDrive.setMaxOutput(topSpeed);
+        
         gosDrive.setInvertedMotor(MotorType.kRearRight, true);	//Invert the left side motors
     	gosDrive.setInvertedMotor(MotorType.kFrontRight, true);	
     	gosDrive.setExpiration(0.1);
-    	//gosDrive.setSafetyEnabled(true); 
+    	gosDrive.setSafetyEnabled(false); 
+    	SmartDashboard.putNumber("Front Left", 0.0);
+    	SmartDashboard.putNumber("Front Right", 0.0);
+    	SmartDashboard.putNumber("Rear Right", 0.0);
+    	SmartDashboard.putNumber("Rear Left", 0.0);
+    	SmartDashboard.putBoolean("Velocity?", true);
+	}
+	
+	public void spinWheelsSlowly()
+	{
+		if(SmartDashboard.getBoolean("Velocity?"))
+			frontRightWheel.changeControlMode(ControlMode.Speed);
+		else
+			frontRightWheel.changeControlMode(ControlMode.PercentVbus);
+		SmartDashboard.putNumber("Bus Voltage", frontRightWheel.getBusVoltage());
+		SmartDashboard.putNumber("Closed Loop Error", frontRightWheel.getClosedLoopError());
+		
+		
+	//	frontRightWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
+		//		SmartDashboard.getNumber("D value"));
+		printPositionsToSmartDashboard();
+		frontLeftWheel.set((SmartDashboard.getNumber("Front Left"))*750);
+		frontRightWheel.set((SmartDashboard.getNumber("Front Right"))*750);
+		rearRightWheel.set((SmartDashboard.getNumber("Rear Right"))*750);
+		rearLeftWheel.set(SmartDashboard.getNumber("Rear Left")*750);
 	}
 	
 	/* Twist Dead Zone
@@ -122,6 +181,7 @@ public class Chassis extends Subsystem {
 	{
 		if(Math.abs(rawVal) > .3)
 			return rawVal;//.1;
+		
 		else
 			return 0.0;
 	}
@@ -164,7 +224,15 @@ public class Chassis extends Subsystem {
 	 */
 	private double throttleSpeed(Joystick stick)
 	{
-		return (-stick.getThrottle() + 1) / 2;
+		double temp = (-stick.getThrottle() + 1) / 2;
+		if (temp < .1)
+			return .1;
+		//else if(temp > .7)
+			//return .7;
+		else
+			return temp;
+		//double min = 0.01;
+		//return //(stick.getThrottle()*(1-min))/2 + min;
 	}
 	
 	public double getGyroAngle()
@@ -214,11 +282,15 @@ public class Chassis extends Subsystem {
 		if (temp < 0)
 			temp = temp+360;
 		
+		SmartDashboard.putNumber("I valueeeee", frontRightWheel.getI());
+		
 		SmartDashboard.putNumber("GYRO Get Yaw", temp);
 		
 		SmartDashboard.putNumber("x dir", deadZone(-stick.getY()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("y dir", deadZone(-stick.getX()) * throttleSpeed(stick));
 		SmartDashboard.putNumber("rot", twistDeadZone(stick.getTwist()) * throttleSpeed(stick));
+		
+		SmartDashboard.putNumber("Throttle Speeddddd", throttleSpeed(stick));
 		
 		double tempX = IMUGyro.getDisplacementX();
 		double tempXCorrected = tempX - oldXGyroDisplacement;
@@ -239,10 +311,18 @@ public class Chassis extends Subsystem {
 		
 		SmartDashboard.putNumber("Gyro Compass Heading", IMUGyro.getCompassHeading());
 		
+		SmartDashboard.putNumber("Closed Loop Error", frontRightWheel.getClosedLoopError());
+		
 		gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
 										beattieDeadBand(stick.getX()) * throttleSpeed(stick),
 										(beattieTwistDeadBand(stick.getTwist()))*throttleSpeed(stick),
 										getGyro ? temp : 0);
+		
+		
+		SmartDashboard.putNumber("Sending Val Front Left", frontLeftWheel.getSetpoint());
+		SmartDashboard.putNumber("Sending Val Rear Left", rearLeftWheel.getSetpoint());
+		SmartDashboard.putNumber("Sending Val Front Right", frontRightWheel.getSetpoint());
+		SmartDashboard.putNumber("Sending Val Rear Right", rearRightWheel.getSetpoint());
 		
 		//oldDirection = IMUGyro.getYaw();
 		//gyroAngleCounter++;
@@ -354,10 +434,10 @@ public class Chassis extends Subsystem {
 	
 	public void printPositionsToSmartDashboard()
 	{
-		SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getEncVelocity());
-		SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getEncVelocity());
-		SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncVelocity());
-		SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncVelocity());
+		SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getSpeed());
+		SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getSpeed());
+		SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getSpeed());
+		SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getSpeed());
 		
 		
 		SmartDashboard.putNumber("Drive Front Left Encoder ", frontLeftWheel.getEncPosition());
@@ -447,6 +527,7 @@ public class Chassis extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
     	setDefaultCommand(new DriveByJoystick());
+    	//setDefaultCommand(new TestWheels());
     }
     
    } 

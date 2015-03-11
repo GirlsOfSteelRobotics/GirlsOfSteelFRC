@@ -26,14 +26,14 @@ public class PIDSpeedController implements SpeedController {
 	@Override
 	public void pidWrite(double output) {
 		SmartDashboard.putNumber("output", output);
-		pid.setSetpoint(output/Kp);
+		pid.setSetpoint(output);
 		//pid.setSetpoint(output/SmartDashboard.getNumber("P val"));
 	}
 	
 	@Override
 	public double get() {
 		//return pid.getSetpoint()*SmartDashboard.getNumber("P val");
-		return (pid.getSetpoint()*Kp);
+		return (pid.getSetpoint());
 	}
 
 	@Override
