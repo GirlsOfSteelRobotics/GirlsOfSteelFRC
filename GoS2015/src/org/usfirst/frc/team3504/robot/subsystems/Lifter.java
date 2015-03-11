@@ -15,17 +15,15 @@ public class Lifter extends Subsystem {
 	
 	private CANTalon liftTalonA;
 	//private CANTalon liftTalonB;
-	private TalonEncoder liftEncoderA;
-	//private TalonEncoder liftEncoderB;
 	
 	private DigitalInput liftTopLimit;
 	private DigitalInput liftBottomLimit;
 	
+	private double initEncoder; 
+	
 	public Lifter() {
 		liftTalonA = new CANTalon(RobotMap.FORKLIFT_CHANNEL_A);
-		liftEncoderA = new TalonEncoder(liftTalonA);
 		//liftTalonB = new CANTalon(RobotMap.FORKLIFT_CHANNEL_B);
-		//liftEncoderB = new TalonEncoder(liftTalonB);
 		liftTopLimit = new DigitalInput(RobotMap.FORKLIFT_TOP_LIMIT);
 		liftBottomLimit = new DigitalInput(RobotMap.FORKLIFT_BOTTOM_LIMIT);
 	}
@@ -40,16 +38,12 @@ public class Lifter extends Subsystem {
 		//liftTalonB.set(speed);
 	}
 	
-	public double getLiftEncoder() {
-		return liftTalonA.getEncPosition();
+	public double getLiftTravel() {
+		return Math.abs(liftTalonA.getEncPosition() - initEncoder); 
 	}
 	
-	public double getLiftUp(){
-		return liftTalonA.getEncPosition();
-	}
-
-	public double getLiftDown(){
-		return liftTalonA.getEncPosition();
+	public void zeroLiftTravel(){
+		initEncoder = liftTalonA.getEncPosition(); 
 	}
 	
 	public void stop()
