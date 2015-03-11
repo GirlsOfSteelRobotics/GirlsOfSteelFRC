@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoLift extends Command {
 
     public AutoLift() {
-    	requires(Robot.forklift);
+    	requires(Robot.lifter);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,7 +22,7 @@ public class AutoLift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.forklift.up(1);
+    	Robot.lifter.up(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,7 +32,7 @@ public class AutoLift extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.forklift.stop();
+    	Robot.lifter.stop();
     }
 
     // Called when another command which requires one or more of the same
