@@ -50,6 +50,10 @@ public class Chassis extends Subsystem {
     private double topSpeed = 400;
     
     private RobotDrive gosDrive;
+    
+    private double p;
+    private double i;
+    private double d;
 	
 	//PID Constants
     private static final double kP = .00015;
@@ -86,30 +90,26 @@ public class Chassis extends Subsystem {
 		rearRightWheel.enableBrakeMode(true);
 		rearLeftWheel.enableBrakeMode(true);
 		
-		SmartDashboard.putNumber("P value", 1);
-		SmartDashboard.putNumber("I value", 0.01);
-		SmartDashboard.putNumber("D value", 20);
+		//SmartDashboard.putNumber("P value", 1);
+		//SmartDashboard.putNumber("I value", 0.01);
+		//SmartDashboard.putNumber("D value", 20);
 		//SmartDashboard.putNumber("F value", 0.0);
 		
 		
 		frontRightWheel.changeControlMode(ControlMode.Speed);
-		frontRightWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
-				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		frontRightWheel.setPID(p, i, d, 0, 0, 0, 0);
 		frontRightWheel.reverseSensor(true);
 		
 		frontLeftWheel.changeControlMode(ControlMode.Speed);
-		frontLeftWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
-				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		frontLeftWheel.setPID(p, i, d, 0, 0, 0, 0);
 		frontLeftWheel.reverseSensor(true);
 		
 		rearRightWheel.changeControlMode(ControlMode.Speed);
-		rearRightWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
-				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		rearRightWheel.setPID(p, i, d, 0, 0, 0, 0);
 		rearRightWheel.reverseSensor(true);
 		
 		rearLeftWheel.changeControlMode(ControlMode.Speed);
-		rearLeftWheel.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
-				SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+		rearLeftWheel.setPID(p, i, d, 0, 0, 0, 0);
 		rearLeftWheel.reverseSensor(true);
 		
 		
