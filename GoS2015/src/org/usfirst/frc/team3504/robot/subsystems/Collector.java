@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Kriti
@@ -32,18 +33,22 @@ public class Collector extends Subsystem {
 		collectorRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_COLLECTOR_MODULE,
 													RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
 													RobotMap.RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL);
+		
+		SmartDashboard.putBoolean("Collector On", false);
 	}
 	
 	//Method suckToteIn which suck a tote inside the robot
 	public void collectorToteIn(){
 		rightCollector.set(1);
 		leftCollector.set(-1);
+		SmartDashboard.putBoolean("Collecter On", true);
 	}
 
 	//Method suckToteOut which pushes a Tote out
 	public void collectorToteOut(){
 		rightCollector.set(-1);
 		leftCollector.set(1);
+		SmartDashboard.putBoolean("Collecter On", true);
 	}
 	
 	//Method collectorToteRotate which rotates the tote inside the trifold
@@ -70,6 +75,7 @@ public class Collector extends Subsystem {
 	public void stopCollecting(){
 		rightCollector.set(0.0);
 		leftCollector.set(0.0);
+		SmartDashboard.putBoolean("Collector Off", false);
 	}
 	
 	
@@ -77,5 +83,7 @@ public class Collector extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    
 }
 
