@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.lifter;
 
 import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,17 +17,16 @@ public class LiftUpWhileHeld extends Command {
 
 	@Override
 	protected void initialize() {
-		
+		Robot.lifter.setPosition(Lifter.DISTANCE_FOUR_TOTES);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.lifter.up(1);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.lifter.isAtTop();
+		return (Robot.lifter.isAtTop() || Robot.lifter.isAtPosition());
 	}
 
 	@Override

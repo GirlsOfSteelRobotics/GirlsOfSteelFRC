@@ -7,6 +7,7 @@ import org.usfirst.frc.team3504.robot.commands.doors.DoorsOut;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerDown;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerUp;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
+import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -16,9 +17,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Lifting extends CommandGroup {
     
     public  Lifting() {
-    	addSequential(new DoorsIn());
-    	
-    	addSequential(new FingerUp());
     	
     	addSequential(new AutoReleaseGripper());
     	
@@ -32,11 +30,11 @@ public class Lifting extends CommandGroup {
     	
     	addSequential(new AngleCollectorOut());
     	
-    	addSequential(new AutoLift());
+    	addSequential(new AutoLift(Lifter.DISTANCE_ONE_TOTE));
     	
     	//addSequential(new AutoReleaseGripper());
     	
-    	addSequential(new AutoLowerLifter());
+    	addSequential(new AutoLift(Lifter.DISTANCE_ZERO_TOTES));
     	
     	addSequential(new DoorsIn());
     }

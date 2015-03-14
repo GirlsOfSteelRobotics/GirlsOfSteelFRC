@@ -15,17 +15,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Lifter extends Subsystem {
 	
-	private CANTalon liftTalonA;
-	//private CANTalon liftTalonB;
+	private CANTalon liftTalon;
 	
-	private DigitalInput liftTopLimit;
+	private DigitalInput liftTopLimit; 
 	private DigitalInput liftBottomLimit;
 	
 	private double initEncoder; 
 	
+	public static final double DISTANCE_ZERO_TOTES=100;
+	public static final double DISTANCE_ONE_TOTE=10453;
+	public static final double DISTANCE_TWO_TOTES=20906;
+	public static final double DISTANCE_THREE_TOTES=31359;
+	public static final double DISTANCE_FOUR_TOTES=41812;
+	
 	public Lifter() {
-		liftTalonA = new CANTalon(RobotMap.FORKLIFT_CHANNEL_A);
-		//liftTalonB = new CANTalon(RobotMap.FORKLIFT_CHANNEL_B);
+		liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL_A);
 		liftTopLimit = new DigitalInput(RobotMap.FORKLIFT_TOP_LIMIT);
 		liftBottomLimit = new DigitalInput(RobotMap.FORKLIFT_BOTTOM_LIMIT);
 		
@@ -33,8 +37,8 @@ public class Lifter extends Subsystem {
 		SmartDashboard.putNumber("I value", 0.01);
 		SmartDashboard.putNumber("D value", 20);
 		
-		liftTalonA.changeControlMode(ControlMode.Position);
-		liftTalonA.setPID(SmartDashboard.getNumber("P value"),
+		liftTalon.changeControlMode(ControlMode.Position);
+		liftTalon.setPID(SmartDashboard.getNumber("P value"),
 						  SmartDashboard.getNumber("I value"),
 						  SmartDashboard.getNumber("D value"),
 						  0, 0, 0, 0);
@@ -42,35 +46,32 @@ public class Lifter extends Subsystem {
 	
 	public void tunePID()
 	{
-		liftTalonA.setPID(SmartDashboard.getNumber("P value"),
+		liftTalon.setPID(SmartDashboard.getNumber("P value"),
 				  SmartDashboard.getNumber("I value"),
 				  SmartDashboard.getNumber("D value"),
 				  0, 0, 0, 0);
-		liftTalonA.set(5); //Number of encoder ticks
+		liftTalon.set(5); //Number of encoder ticks
 	}
 	
-	public void up(double speed) {
-		liftTalonA.set(speed);
-		//liftTalonB.set(speed);
+	public void setPosition(double distance) {
+		liftTalon.set(distance);
 	}
-	
-	public void down(double speed) {
-		liftTalonA.set(-speed);
-		//liftTalonB.set(speed);
+	public boolean isAtPosition()
+	{
+		return Math.abs(liftTalon.get()-liftTalon.getSetpoint()) <= .01*liftTalon.getSetpoint();
 	}
 	
 	public double getLiftTravel() {
-		return Math.abs(liftTalonA.getEncPosition() - initEncoder); 
+		return Math.abs(liftTalon.getEncPosition() - initEncoder); 
 	}
 	
 	public void zeroLiftTravel(){
-		initEncoder = liftTalonA.getEncPosition(); 
+		initEncoder = liftTalon.getEncPosition(); 
 	}
 	
 	public void stop()
 	{
-		liftTalonA.set(0.0);
-		//liftTalonB.set(0.0);
+		liftTalon.set(liftTalon.get());
 	}
 	
 	public boolean isAtTop()
