@@ -440,18 +440,6 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getSpeed());
 		
 		
-		SmartDashboard.putNumber("Drive Front Left Encoder ", frontLeftWheel.getEncPosition());
-		SmartDashboard.putNumber("Drive Front Right Encoder ", frontRightWheel.getEncPosition());
-		SmartDashboard.putNumber("Drive Rear Left Encoder ", rearLeftWheel.getEncPosition());
-		SmartDashboard.putNumber("Drive Rear Right Encoder ", rearRightWheel.getEncPosition());
-		
-		SmartDashboard.putNumber("Front Left Distance", frontLeftEncoderDistance());
-		SmartDashboard.putNumber("Front Right Distance", frontRightEncoderDistance());
-		SmartDashboard.putNumber("Rear Left Distance", rearLeftEncoderDistance());
-		SmartDashboard.putNumber("Rear Right Distance", rearRightEncoderDistance());
-		
-		SmartDashboard.putNumber("Distance Right", getDistanceRight());
-		
 	}
 	
 	/**
