@@ -73,10 +73,6 @@ public class OI {
 	private JoystickButton liftDown; 
 	private JoystickButton liftOneTote; 
 		
-	/*//Doors
-	private JoystickButton doorsOpen;
-	private JoystickButton doorsClose;
-	*/
 	
 	//Auto Buttons
 	private JoystickButton autoDriveForward;
@@ -139,13 +135,6 @@ public class OI {
 		liftDown.whileHeld(new LiftDownWhileHeld());
 		liftOneTote = new JoystickButton(chassisJoystick, 9);
 		
-		
-		/*//Doors
-		doorsOpen = new JoystickButton(chassisJoystick, 9);
-		doorsOpen.whenPressed(new DoorsOut());
-		doorsClose = new JoystickButton(chassisJoystick, 10);
-		doorsClose.whenPressed(new DoorsIn());
-		*/
 		
 		autoDriveRight = new JoystickButton(chassisJoystick, 5);
 		autoDriveRight.whenPressed(new AutoDriveRight(50));

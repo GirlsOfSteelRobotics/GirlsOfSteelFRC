@@ -1,4 +1,5 @@
 
+
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBringInGrippers;
@@ -103,6 +104,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("AutoUltrasonic", new AutoUltrasonic());
         SmartDashboard.putData("Lifting", new Lifting());
         SmartDashboard.putData("Release", new Release());
+        
     }
 	
 	public void disabledPeriodic() {
