@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.commands.lifter;
+package org.usfirst.frc.team3504.robot.commands.tests;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
