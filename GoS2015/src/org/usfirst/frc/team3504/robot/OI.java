@@ -18,6 +18,7 @@ import org.usfirst.frc.team3504.robot.commands.lifter.LiftDownWhileHeld;
 import org.usfirst.frc.team3504.robot.commands.lifter.LiftUpWhileHeld;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
+import org.usfirst.frc.team3504.robot.commands.tests.PIDLifterTesting;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -97,8 +98,9 @@ public class OI {
 	private JoystickButton resetGyro;
 	private JoystickButton getGyro;
 	
-	//photosensor button
-	private JoystickButton testPSensor;
+	//PID button
+	private JoystickButton pidLifterTesting;
+	
 	
 	public OI()
 	{
@@ -162,6 +164,10 @@ public class OI {
 		resetGyro.whenPressed(new ResetGyro());
 		getGyro = new JoystickButton(chassisJoystick, 12);
 		getGyro.whenPressed(new GetGyro());
+		
+		//Pid TESTING
+		pidLifterTesting = new JoystickButton(chassisJoystick, 10);
+		pidLifterTesting.whenPressed(new PIDLifterTesting());
 	}
 	
 	public Joystick getOperatorJoystick()
