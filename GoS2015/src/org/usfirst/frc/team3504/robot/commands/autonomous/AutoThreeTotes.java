@@ -5,20 +5,18 @@ import org.usfirst.frc.team3504.robot.commands.doors.DoorsOut;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *  Authors: Alexa, Corinne, Kyra, Sarah
+ *
  */
-public class AutoPlow extends CommandGroup {
-    
-	//collects one container and three totes and takes them to the autozone
+public class AutoThreeTotes extends CommandGroup {
 	double distanceFwd1;
 	double distanceFwd2;
 	double distanceLeft1;
 	double distanceBack1; 
 	double distanceFirst1; 
-
-    public AutoPlow() {
-    	distanceFwd1 = 55;//was 82.15 distance on field is actually 55in
-    	distanceFwd2 = 55; //was 82.15 distance on field is actually 55in
+	
+    public  AutoThreeTotes() {
+    	distanceFwd1 = 55; 
+    	distanceFwd2 = 55; 
     	distanceLeft1 = 107; 
     	distanceBack1 = 50; 
     	distanceFirst1 = 22.25;
