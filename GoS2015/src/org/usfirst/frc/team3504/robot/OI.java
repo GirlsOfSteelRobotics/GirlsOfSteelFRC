@@ -109,20 +109,14 @@ public class OI {
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 		
 		//Collectors
-		collectTote = new JoystickButton(chassisJoystick, 8);
+		collectTote = new JoystickButton(operatorJoystick, 4);
 		collectTote.whileHeld(new CollectTote());
-		releaseTote = new JoystickButton(chassisJoystick, 7);
+		releaseTote = new JoystickButton(operatorJoystick, 3);
 		releaseTote.whileHeld(new ReleaseTote());
 		angleIn = new JoystickButton(operatorJoystick, 5);
 		angleIn.whenPressed(new AngleCollectorIn());
 		angleOut = new JoystickButton(operatorJoystick, 6);
 		angleOut.whenPressed(new AngleCollectorOut());
-		
-		//Fingers
-		fingersDown = new JoystickButton(operatorJoystick, 3);
-		fingersDown.whenPressed(new FingerDown());
-		fingersUp = new JoystickButton(operatorJoystick, 4);
-		fingersUp.whenPressed(new FingerUp());
 		
 		//Shack
 		shackIn = new JoystickButton(operatorJoystick, 1);
@@ -138,14 +132,14 @@ public class OI {
 		liftOneTote = new JoystickButton(chassisJoystick, 9);
 		
 		
-		autoDriveRight = new JoystickButton(chassisJoystick, 5);
-		autoDriveRight.whenPressed(new AutoDriveRight(50));
-		autoDriveLeft = new JoystickButton(chassisJoystick, 6);
-		autoDriveLeft.whenPressed(new AutoDriveLeft(50));
-		autoDriveForward = new JoystickButton(chassisJoystick, 4);
-		autoDriveForward.whenPressed(new AutoDriveForward(50));
-		autoDriveBackwards = new JoystickButton(chassisJoystick, 3);
-		autoDriveBackwards.whenReleased(new AutoDriveBackwards(50));
+		//autoDriveRight = new JoystickButton(chassisJoystick, 5);
+		//autoDriveRight.whenPressed(new AutoDriveRight(50));
+		//autoDriveLeft = new JoystickButton(chassisJoystick, 6);
+		//autoDriveLeft.whenPressed(new AutoDriveLeft(50));
+		//autoDriveForward = new JoystickButton(chassisJoystick, 4);
+		//autoDriveForward.whenPressed(new AutoDriveForward(50));
+		//autoDriveBackwards = new JoystickButton(chassisJoystick, 3);
+		//autoDriveBackwards.whenReleased(new AutoDriveBackwards(50));
 		
 		/*
 		//Drive buttons initialization
