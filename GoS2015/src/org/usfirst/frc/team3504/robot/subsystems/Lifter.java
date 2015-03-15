@@ -25,20 +25,20 @@ public class Lifter extends Subsystem {
 	
 	//170 is one rotation
 	
-	public static final double DISTANCE_ZERO_TOTES = 0;//-100;
+	public static final double DISTANCE_ZERO_TOTES = -3000;//-100;
 	public static final double DISTANCE_ONE_TOTE = -3000;//-10453;
 	public static final double DISTANCE_TWO_TOTES = -3000;//-20906;
 	public static final double DISTANCE_THREE_TOTES = -3000;//-31359;
-	public static final double DISTANCE_FOUR_TOTES = -3000;//-41812;
+	public static final double DISTANCE_FOUR_TOTES = -14000;//-41812;
 	
 	public Lifter() {
 		liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL_A);
 		liftTopLimit = new DigitalInput(RobotMap.FORKLIFT_TOP_LIMIT);
 		liftBottomLimit = new DigitalInput(RobotMap.FORKLIFT_BOTTOM_LIMIT);
 		
-		SmartDashboard.putNumber("P value", 1);
-		SmartDashboard.putNumber("I value", 0.01);
-		SmartDashboard.putNumber("D value", 20);
+		SmartDashboard.putNumber("P value", 3);
+		SmartDashboard.putNumber("I value", 0);
+		SmartDashboard.putNumber("D value", 0);
 		
 		liftTalon.changeControlMode(ControlMode.Position);
 		liftTalon.setPID(SmartDashboard.getNumber("P value"),
@@ -61,9 +61,20 @@ public class Lifter extends Subsystem {
 	public void setPosition(double distance) {
 		liftTalon.set(distance);
 	}
+	
+	public void moveUp()
+	{
+		liftTalon.set(.5);
+	}
+	
+	public void moveDown()
+	{
+		liftTalon.set(-.5);
+	}
+	
 	public boolean isAtPosition()
 	{
-		return Math.abs(liftTalon.get()-liftTalon.getSetpoint()) <= .1*liftTalon.getSetpoint();
+		return (Math.abs(liftTalon.get() - liftTalon.getSetpoint()) <= 1000);
 	}
 	
 	public double getLiftTravel() {
@@ -77,6 +88,8 @@ public class Lifter extends Subsystem {
 	public void printLifter()
 	{
 		SmartDashboard.putNumber("Lifter encoder", liftTalon.getEncPosition());
+		SmartDashboard.putBoolean("Top Limit Switch", liftTopLimit.get());
+		SmartDashboard.putBoolean("Bottom Limit", liftBottomLimit.get());
 	}
 	
 	public void stop()
@@ -86,12 +99,12 @@ public class Lifter extends Subsystem {
 	
 	public boolean isAtTop()
 	{
-		return liftTopLimit.get();
+		return !liftTopLimit.get();//liftTopLimit.get();
 	}
 	
 	public boolean isAtBottom()
 	{
-		return liftBottomLimit.get();
+		return !liftBottomLimit.get();//liftBottomLimit.get();
 	}
 	
 	@Override

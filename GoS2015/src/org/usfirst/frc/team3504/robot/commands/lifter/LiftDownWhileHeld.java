@@ -17,7 +17,7 @@ public class LiftDownWhileHeld extends Command{
 	@Override
 	protected void initialize() {
 		Robot.lifter.setPosition(Lifter.DISTANCE_ZERO_TOTES);
-		
+		//Robot.lifter.moveDown();
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class LiftDownWhileHeld extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		return (Robot.lifter.isAtBottom() || Robot.lifter.isAtPosition());
+		return (Robot.lifter.isAtPosition());
 	}
 
 	@Override

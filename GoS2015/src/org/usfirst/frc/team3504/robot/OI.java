@@ -126,9 +126,9 @@ public class OI {
 		
 		//Lifting
 		liftUp = new JoystickButton(operatorJoystick, 7);
-		liftUp.whileHeld(new LiftUpWhileHeld());
+		liftUp.whenPressed(new LiftUpWhileHeld());
 		liftDown = new JoystickButton(operatorJoystick, 8);
-		liftDown.whileHeld(new LiftDownWhileHeld());
+		liftDown.whenPressed(new LiftDownWhileHeld());
 		liftOneTote = new JoystickButton(chassisJoystick, 9);
 		
 		

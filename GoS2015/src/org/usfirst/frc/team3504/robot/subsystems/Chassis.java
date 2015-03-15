@@ -51,9 +51,9 @@ public class Chassis extends Subsystem {
     
     private RobotDrive gosDrive;
     
-    private double p;
-    private double i;
-    private double d;
+    private double p = 1.0;
+    private double i = 0.01;
+    private double d = 20;
 	
 	//PID Constants
     private static final double kP = .00015;

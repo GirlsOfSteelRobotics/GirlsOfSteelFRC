@@ -18,6 +18,7 @@ public class LiftUpWhileHeld extends Command {
 	@Override
 	protected void initialize() {
 		Robot.lifter.setPosition(Lifter.DISTANCE_FOUR_TOTES);
+	//	Robot.lifter.moveUp();
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class LiftUpWhileHeld extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return (Robot.lifter.isAtTop() || Robot.lifter.isAtPosition());
+		return (Robot.lifter.isAtPosition());
 	}
 
 	@Override
