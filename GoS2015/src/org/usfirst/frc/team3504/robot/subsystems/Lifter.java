@@ -25,11 +25,11 @@ public class Lifter extends Subsystem {
 	
 	//170 is one rotation
 	
-	public static final double DISTANCE_ZERO_TOTES = -3000;//-100;
+	public static final double DISTANCE_ZERO_TOTES = -500;//-3000;//-100;
 	public static final double DISTANCE_ONE_TOTE = -3000;//-10453;
 	public static final double DISTANCE_TWO_TOTES = -3000;//-20906;
 	public static final double DISTANCE_THREE_TOTES = -3000;//-31359;
-	public static final double DISTANCE_FOUR_TOTES = -14000;//-41812;
+	public static final double DISTANCE_FOUR_TOTES = -12500;//-41812;
 	
 	public Lifter() {
 		liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL_A);
@@ -41,6 +41,7 @@ public class Lifter extends Subsystem {
 		SmartDashboard.putNumber("D value", 0);
 		
 		liftTalon.changeControlMode(ControlMode.Position);
+		//liftTalon.changeControlMode(ControlMode.Speed);
 		liftTalon.setPID(SmartDashboard.getNumber("P value"),
 						  SmartDashboard.getNumber("I value"),
 						  SmartDashboard.getNumber("D value"),
@@ -55,6 +56,7 @@ public class Lifter extends Subsystem {
 				  SmartDashboard.getNumber("I value"),
 				  SmartDashboard.getNumber("D value"),
 				  0, 0, 0, 0);
+		
 		liftTalon.set(SmartDashboard.getNumber("Lifter Setpoint")); //Number of encoder ticks
 	}
 	
@@ -88,23 +90,23 @@ public class Lifter extends Subsystem {
 	public void printLifter()
 	{
 		SmartDashboard.putNumber("Lifter encoder", liftTalon.getEncPosition());
-		SmartDashboard.putBoolean("Top Limit Switch", liftTopLimit.get());
-		SmartDashboard.putBoolean("Bottom Limit", liftBottomLimit.get());
+		SmartDashboard.putBoolean("Top Limit Switch", !liftTopLimit.get());
+		SmartDashboard.putBoolean("Bottom Limit", !liftBottomLimit.get());
 	}
 	
 	public void stop()
 	{
-		liftTalon.set(liftTalon.get());
+		liftTalon.set(liftTalon.get());//0.0);
 	}
 	
 	public boolean isAtTop()
 	{
-		return !liftTopLimit.get();//liftTopLimit.get();
+		return !liftTopLimit.get();//!liftTopLimit.get();//liftTopLimit.get();
 	}
 	
 	public boolean isAtBottom()
 	{
-		return !liftBottomLimit.get();//liftBottomLimit.get();
+		return !liftBottomLimit.get();//!liftBottomLimit.get();//liftBottomLimit.get();
 	}
 	
 	@Override
