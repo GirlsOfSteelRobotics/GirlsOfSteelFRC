@@ -1,11 +1,15 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.collector.CollectReleaseTote;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,6 +26,9 @@ public class Collector extends Subsystem {
 	private DoubleSolenoid collectorLeftSolenoid;
 	private DoubleSolenoid collectorRightSolenoid;
 	
+	//Triggers (Collect/Release Tote Buttons)
+	private Joystick collectorTrigger;
+	
 	public Collector()                //this is the constructor
 	{
 		rightCollector = new CANTalon(RobotMap.RIGHT_COLLECTOR_WHEEL);
@@ -34,8 +41,22 @@ public class Collector extends Subsystem {
 													RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
 													RobotMap.RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL);
 		
+		collectorTrigger = new Joystick(RobotMap.OPERATOR_JOYSTICK);
+		
 		SmartDashboard.putBoolean("Collector On", false);
 	}
+	
+	public void collectReleaseTote() {
+		if (collectorTrigger.getZ() < -0.5)	//release
+			collectorToteOut();
+		else if (collectorTrigger.getZ() > 0.5)	//collect
+			collectorToteIn();
+		else {
+			rightCollector.set(0);
+			leftCollector.set(0);
+		}
+			
+	}	
 	
 	//Method suckToteIn which suck a tote inside the robot
 	public void collectorToteIn(){
@@ -82,6 +103,7 @@ public class Collector extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	new CollectReleaseTote();
     }
     
     
