@@ -27,7 +27,7 @@ public class LiftDownWhileHeld extends Command{
 	@Override
 	protected boolean isFinished() {
 		//return (Robot.lifter.isAtBottom());
-		return (Robot.lifter.isAtPosition());
+		return (Robot.lifter.isAtPosition() || Robot.lifter.isAtBottom());
 	}
 
 	@Override

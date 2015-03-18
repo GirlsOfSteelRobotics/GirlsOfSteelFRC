@@ -14,7 +14,9 @@ import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
 import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerDown;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerUp;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftDownHeld;
 import org.usfirst.frc.team3504.robot.commands.lifter.LiftDownWhileHeld;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftUpHeld;
 import org.usfirst.frc.team3504.robot.commands.lifter.LiftUpWhileHeld;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
@@ -126,9 +128,11 @@ public class OI {
 		
 		//Lifting
 		liftUp = new JoystickButton(operatorJoystick, 7);
-		liftUp.whenPressed(new LiftUpWhileHeld());
+		//liftUp.whenPressed(new LiftUpWhileHeld());
+		liftUp.whileHeld(new LiftUpHeld());
 		liftDown = new JoystickButton(operatorJoystick, 8);
-		liftDown.whenPressed(new LiftDownWhileHeld());
+		//liftDown.whenPressed(new LiftDownWhileHeld());
+		liftDown.whileHeld(new LiftDownHeld());
 		liftOneTote = new JoystickButton(chassisJoystick, 9);
 		
 		
