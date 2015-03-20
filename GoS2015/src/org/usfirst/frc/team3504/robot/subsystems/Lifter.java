@@ -93,7 +93,7 @@ public class Lifter extends Subsystem {
 			else if(isAtBottom() && Robot.oi.getOperatorJoystick().getY() > .2)
 				liftTalon.set(liftTalon.getSetpoint());
 			else
-				liftTalon.set(liftTalon.get() - (202*Robot.oi.getOperatorJoystick().getY()));// - (Robot.oi.getOperatorJoystick().getY()));
+				liftTalon.set(liftTalon.get() - (200*Robot.oi.getOperatorJoystick().getY()));// - (Robot.oi.getOperatorJoystick().getY()));
 			SmartDashboard.putString("In", "not in throttle zero");
 		}
 	}
