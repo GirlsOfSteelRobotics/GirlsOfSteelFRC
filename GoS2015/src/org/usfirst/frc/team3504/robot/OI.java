@@ -4,6 +4,8 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLifterDownToBottom;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLifterUpToTop;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
 import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
 import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
@@ -14,10 +16,7 @@ import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
 import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerDown;
 import org.usfirst.frc.team3504.robot.commands.fingers.FingerUp;
-import org.usfirst.frc.team3504.robot.commands.lifter.LiftDownHeld;
-import org.usfirst.frc.team3504.robot.commands.lifter.LiftDownWhileHeld;
-import org.usfirst.frc.team3504.robot.commands.lifter.LiftUpHeld;
-import org.usfirst.frc.team3504.robot.commands.lifter.LiftUpWhileHeld;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftByJoystick;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
 import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
 import org.usfirst.frc.team3504.robot.commands.tests.PIDLifterTesting;
@@ -127,13 +126,13 @@ public class OI {
 		shackOut.whileHeld(new ShackOut());
 		
 		//Lifting
-		liftUp = new JoystickButton(operatorJoystick, 7);
+		//liftUp = new JoystickButton(operatorJoystick, 7);
 		//liftUp.whenPressed(new LiftUpWhileHeld());
-		liftUp.whileHeld(new LiftUpHeld());
-		liftDown = new JoystickButton(operatorJoystick, 8);
+		//liftUp.whileHeld(new LiftUpHeld());
+		//liftDown = new JoystickButton(operatorJoystick, 8);
 		//liftDown.whenPressed(new LiftDownWhileHeld());
-		liftDown.whileHeld(new LiftDownHeld());
-		liftOneTote = new JoystickButton(chassisJoystick, 9);
+		//liftDown.whileHeld(new LiftDownHeld());
+		//liftOneTote = new JoystickButton(chassisJoystick, 9);
 		
 		
 		//autoDriveRight = new JoystickButton(chassisJoystick, 5);
@@ -164,8 +163,8 @@ public class OI {
 		getGyro.whenPressed(new GetGyro());
 		
 		//Pid TESTING
-		pidLifterTesting = new JoystickButton(chassisJoystick, 10);
-		pidLifterTesting.whenPressed(new PIDLifterTesting());
+		//pidLifterTesting = new JoystickButton(chassisJoystick, 10);
+		//pidLifterTesting.whenPressed(new PIDLifterTesting());
 	}
 	
 	public Joystick getOperatorJoystick()

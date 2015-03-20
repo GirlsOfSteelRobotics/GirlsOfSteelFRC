@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LiftDownHeld extends Command {
+public class LiftByJoystick extends Command {
 
-    public LiftDownHeld() {
+    public LiftByJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.lifter);
@@ -21,13 +21,14 @@ public class LiftDownHeld extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifter.moveDownHeld();
+    	Robot.lifter.moveByJoystick();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        //return (Robot.lifter.isAtBottomLevel() || Robot.lifter.isAtBottom());
-    	return (Robot.lifter.isAtBottom());
+        //return (Robot.lifter.isAtTopLevel() || Robot.lifter.isAtTop());
+    	//return (Robot.lifter.isAtTop() || Robot.lifter.isAtTopLevel()); //|| Robot.lifter.isAtBottom());
+    	return false;
     }
 
     // Called once after isFinished returns true

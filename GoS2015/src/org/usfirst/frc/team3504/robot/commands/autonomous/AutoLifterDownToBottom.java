@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.commands.lifter;
+package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.subsystems.Lifter;
@@ -8,27 +8,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /*
  * 
  */
-public class LiftUpWhileHeld extends Command {
+public class AutoLifterDownToBottom extends Command{
 
-	double initialVal;
-	public LiftUpWhileHeld() {
+	public AutoLifterDownToBottom() {
 		requires(Robot.lifter);
 	}
-
+	
 	@Override
 	protected void initialize() {
-		Robot.lifter.setPosition(Lifter.DISTANCE_FOUR_TOTES);
+		Robot.lifter.setPosition(Lifter.DISTANCE_ZERO_TOTES);
 	}
 
 	@Override
 	protected void execute() {
-		//Robot.lifter.moveUp();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return (Robot.lifter.isAtPosition() || Robot.lifter.isAtTop());
-		//return (Robot.lifter.isAtPosition());
+		return (Robot.lifter.isAtPosition() || Robot.lifter.isAtBottom());
 	}
 
 	@Override
@@ -40,5 +37,5 @@ public class LiftUpWhileHeld extends Command {
 	protected void interrupted() {
 		end();
 	}
-	
+
 }

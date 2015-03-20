@@ -2,7 +2,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.lifter.LiftUpHeld;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftByJoystick;
 import org.usfirst.frc.team3504.robot.commands.tests.LifterTests;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -43,7 +43,6 @@ public class Lifter extends Subsystem {
 		SmartDashboard.putNumber("D value", 0);
 		
 		liftTalon.changeControlMode(ControlMode.Position);
-		//liftTalon.changeControlMode(ControlMode.Speed);
 		liftTalon.setPID(SmartDashboard.getNumber("P value"),
 						  SmartDashboard.getNumber("I value"),
 						  SmartDashboard.getNumber("D value"),
@@ -76,7 +75,7 @@ public class Lifter extends Subsystem {
 		return (liftTalon.get() == DISTANCE_ZERO_TOTES);
 	}
 	
-	public void moveUpHeld()
+	public void moveByJoystick()
 	{
 		printLifter();
 		
@@ -93,39 +92,29 @@ public class Lifter extends Subsystem {
 			else if(isAtBottom() && Robot.oi.getOperatorJoystick().getY() > .2)
 				liftTalon.set(liftTalon.getSetpoint());
 			else
-				liftTalon.set(liftTalon.get() - (200*Robot.oi.getOperatorJoystick().getY()));// - (Robot.oi.getOperatorJoystick().getY()));
+				liftTalon.set(liftTalon.get() - (200*Robot.oi.getOperatorJoystick().getY()));
 			SmartDashboard.putString("In", "not in throttle zero");
 		}
 	}
 	
-	public void moveDownHeld()
-	{
-		liftTalon.set(liftTalon.get() + 101);
-	}
-	
-	public void moveUp()
+	public void moveUpVelocityControl()
 	{
 		liftTalon.set(.5);
 	}
 	
-	public void moveDown()
+	public void moveDownVelocityControl()
 	{
 		liftTalon.set(-.5);
+	}
+	
+	public void stopMotorsVelocityControl()
+	{
+		liftTalon.set(0);
 	}
 	
 	public boolean isAtPosition()
 	{
 		return (Math.abs(liftTalon.get() - liftTalon.getSetpoint()) <= 100);
-	}
-	
-	public double getLiftTravel() {
-		
-		
-		return Math.abs(liftTalon.getEncPosition() - initEncoder); 
-	}
-	
-	public void zeroLiftTravel(){
-		initEncoder = liftTalon.getEncPosition(); 
 	}
 	
 	public void printLifter()
@@ -137,22 +126,22 @@ public class Lifter extends Subsystem {
 	
 	public void stop()
 	{
-		liftTalon.set(liftTalon.get());//0.0);
+		liftTalon.set(liftTalon.get());
 	}
 	
 	public boolean isAtTop()
 	{
-		return !liftTopLimit.get();//!liftTopLimit.get();//liftTopLimit.get();
+		return !liftTopLimit.get();
 	}
 	
 	public boolean isAtBottom()
 	{
-		return !liftBottomLimit.get();//!liftBottomLimit.get();//liftBottomLimit.get();
+		return !liftBottomLimit.get();
 	}
 	
 	@Override
 	protected void initDefaultCommand() {
 		//setDefaultCommand(new LifterTests());
-		setDefaultCommand(new LiftUpHeld());
+		setDefaultCommand(new LiftByJoystick());
 	}
 }
