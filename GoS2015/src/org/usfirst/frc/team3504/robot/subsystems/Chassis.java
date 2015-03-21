@@ -259,13 +259,8 @@ public class Chassis extends Subsystem {
 	}
 
 	public void autoDriveRight(double goalDist) {
-		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);// figure
-																							// out
-																							// what
-																							// the
-																							// angle
-																							// should
-																							// be
+		// figure out what the angle should be
+		gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);
 	}
 
 	public void autoDriveLeft(double goalDist) {
@@ -273,14 +268,8 @@ public class Chassis extends Subsystem {
 	}
 
 	public void autoDriveBackward(double goalDist) {
-		gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), 270, 0); // check
-																										// to
-																										// make
-																										// sure
-																										// this
-																										// angle
-																										// is
-																										// correct
+		// check to make sure this angle is correct
+		gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), 270, 0); 
 	}
 
 	public void autoDriveForward(double goalDist) {
@@ -393,7 +382,5 @@ public class Chassis extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		setDefaultCommand(new DriveByJoystick());
-		// setDefaultCommand(new TestWheels());
 	}
-
 }
