@@ -93,9 +93,9 @@ public class OI {
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 
 		//Collectors: collect/release tote on z-axis
-		collectTote = new LTButton();
+		collectTote = new LTButton(operatorJoystick);
 		collectTote.whileActive(new CollectTote());
-		releaseTote = new RTButton();
+		releaseTote = new RTButton(operatorJoystick);
 		releaseTote.whileActive(new ReleaseTote());
 		angleIn = new JoystickButton(operatorJoystick, 5);
 		angleIn.whenPressed(new AngleCollectorIn());
