@@ -22,12 +22,8 @@ public class Robot extends IterativeRobot {
 	public static Chassis chassis;
 	public static Camera camera;
 	public static Collector collector;
-	public static Fingers fingers;
 	public static Lifter lifter;
-	public static Doors doors;
-	public static UltrasonicSensor ultrasonicsensor;
 	public static OI oi;
-	public static PhotoSensor photosensor;
 	public static Shack shack;
 	Command autonomousCommand;
 	SendableChooser autoChooser;
@@ -40,11 +36,7 @@ public class Robot extends IterativeRobot {
 		chassis = new Chassis();
 		camera = new Camera();
 		collector = new Collector();
-		fingers = new Fingers();
 		lifter = new Lifter();
-		doors = new Doors();
-		ultrasonicsensor = new UltrasonicSensor();
-		photosensor = new PhotoSensor();
 		shack = new Shack();
 		Robot.chassis.resetGyro();
 		oi = new OI();
