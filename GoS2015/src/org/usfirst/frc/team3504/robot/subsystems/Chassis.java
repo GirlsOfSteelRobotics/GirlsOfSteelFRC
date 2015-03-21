@@ -35,11 +35,6 @@ public class Chassis extends Subsystem {
 	private double oldXGyroDisplacement = 0;
 	private double oldYGyroDisplacement = 0;
 
-	// Encoders
-	private TalonEncoder frontLeftEncoder;
-	private TalonEncoder rearLeftEncoder;
-	private TalonEncoder frontRightEncoder;
-	private TalonEncoder rearRightEncoder;
 
 	// Variables used to reset the encoders
 	double initialFrontLeftEncoderDistance;
@@ -51,14 +46,10 @@ public class Chassis extends Subsystem {
 
 	private RobotDrive gosDrive;
 
-	private double p = 1.0;
-	private double i = 0.01;
-	private double d = 20;
-
 	// PID Constants
-	private static final double kP = .00015;
-	private static final double kI = .00000001;// .00000001;
-	private static final double kD = .00000001;// .00000001;
+	private static final double kP = 1.0;
+	private static final double kI = 0.01;
+	private static final double kD = 20;
 
 	// Encoder to Distance Constants
 	private static final double inchesPerTick = Math.PI * 6 / (4 * 256);
@@ -95,19 +86,19 @@ public class Chassis extends Subsystem {
 		// SmartDashboard.putNumber("F value", 0.0);
 
 		frontRightWheel.changeControlMode(ControlMode.Speed);
-		frontRightWheel.setPID(p, i, d, 0, 0, 0, 0);
+		frontRightWheel.setPID(kP, kI, kD, 0, 0, 0, 0);
 		frontRightWheel.reverseSensor(true);
 
 		frontLeftWheel.changeControlMode(ControlMode.Speed);
-		frontLeftWheel.setPID(p, i, d, 0, 0, 0, 0);
+		frontLeftWheel.setPID(kP, kI, kD, 0, 0, 0, 0);
 		frontLeftWheel.reverseSensor(true);
 
 		rearRightWheel.changeControlMode(ControlMode.Speed);
-		rearRightWheel.setPID(p, i, d, 0, 0, 0, 0);
+		rearRightWheel.setPID(kP, kI, kD, 0, 0, 0, 0);
 		rearRightWheel.reverseSensor(true);
 
 		rearLeftWheel.changeControlMode(ControlMode.Speed);
-		rearLeftWheel.setPID(p, i, d, 0, 0, 0, 0);
+		rearLeftWheel.setPID(kP, kI, kD, 0, 0, 0, 0);
 		rearLeftWheel.reverseSensor(true);
 
 		getGyro = true;
@@ -117,11 +108,6 @@ public class Chassis extends Subsystem {
 		IMUGyro = new AHRS(temp);
 
 		IMUGyro.zeroYaw();
-
-		frontLeftEncoder = new TalonEncoder(frontLeftWheel);
-		rearLeftEncoder = new TalonEncoder(rearLeftWheel);
-		frontRightEncoder = new TalonEncoder(frontRightWheel);
-		rearRightEncoder = new TalonEncoder(rearLeftWheel);
 
 		gosDrive = new RobotDrive(rearLeftWheel, rearRightWheel, frontLeftWheel, frontRightWheel);
 		// new RobotDrive (new PIDSpeedController(rearLeftWheel, kP, kI, kD,
