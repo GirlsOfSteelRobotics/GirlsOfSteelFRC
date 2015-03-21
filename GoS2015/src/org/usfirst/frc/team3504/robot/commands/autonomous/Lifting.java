@@ -16,19 +16,11 @@ public class Lifting extends CommandGroup {
 	public Lifting() {
 
 		addSequential(new AutoReleaseGripper());
-
 		addSequential(new AngleCollectorIn());
-
 		addSequential(new AutoCollector());
-
 		addSequential(new ShackIn());
-
-		// addSequential(new AutoBringInGrippers());
-
 		addSequential(new AngleCollectorOut());
-
 		addSequential(new AutoLift(Lifter.DISTANCE_ONE_TOTE));
-
 		// addSequential(new AutoReleaseGripper());
 
 		addSequential(new AutoLift(Lifter.DISTANCE_ZERO_TOTES));

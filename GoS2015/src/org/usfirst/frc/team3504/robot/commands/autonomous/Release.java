@@ -11,11 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Release extends CommandGroup {
 
 	public Release() {
-
-		// addSequential(new AutoReleaseGripper());
-
 		addSequential(new ShackOut());
-
 		addSequential(new AngleCollectorOut());
 
 	}

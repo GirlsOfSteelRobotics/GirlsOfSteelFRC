@@ -5,7 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * @author Arushi
+ * 
  */
 public class ShackOut extends Command {
 
