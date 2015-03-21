@@ -54,7 +54,6 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Release", new Release());
 
 		SmartDashboard.putData("Auto mode", autoChooser);
-		SmartDashboard.putData("AutoBringInGrippers", new AutoBringInGrippers());
 		SmartDashboard.putData("AutoCollector", new AutoCollector());
 		SmartDashboard.putData("AutoDriveBackwards", new AutoDriveBackwards(50));
 		SmartDashboard.putData("AutoDriveForward", new AutoDriveForward(50));
@@ -68,7 +67,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("AutoLift 4", new AutoLift(Lifter.DISTANCE_FOUR_TOTES));
 		SmartDashboard.putData("AutoOneTote", new AutoOneTote());
 		SmartDashboard.putData("AutoPlow", new AutoPlow());
-		SmartDashboard.putData("AutoReleaseGripper", new AutoReleaseGripper());
 		SmartDashboard.putData("AutoToteAndContaienr", new AutoToteAndContainer());
 		SmartDashboard.putData("AutoTurnClockwise", new AutoTurnClockwise());
 		SmartDashboard.putData("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());
