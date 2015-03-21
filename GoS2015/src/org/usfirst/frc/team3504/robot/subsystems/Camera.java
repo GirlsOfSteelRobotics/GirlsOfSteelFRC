@@ -3,9 +3,6 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/*
- * author Kriti
- */
 public class Camera extends Subsystem {
 
 	CameraServer server;
