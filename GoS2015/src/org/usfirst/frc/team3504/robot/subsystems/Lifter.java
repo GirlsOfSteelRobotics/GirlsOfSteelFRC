@@ -3,19 +3,15 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.lifter.LiftByJoystick;
-import org.usfirst.frc.team3504.robot.commands.tests.LifterTests;
+
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/*
- * @author Arushi
- */
+
 public class Lifter extends Subsystem {
 
 	private CANTalon liftTalon;
@@ -23,7 +19,6 @@ public class Lifter extends Subsystem {
 	private DigitalInput liftTopLimit;
 	private DigitalInput liftBottomLimit;
 
-	private double initEncoder;
 
 	// 170 is one rotation
 

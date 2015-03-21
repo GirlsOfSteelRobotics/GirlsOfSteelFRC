@@ -3,7 +3,6 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.commands.tests.TestWheels;
 
 import com.kauailabs.navx_mxp.AHRS;
 
@@ -17,9 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 
-/**
- * @author Sonia
- */
+
 public class Chassis extends Subsystem {
 
 	// CANTalons
@@ -66,8 +63,6 @@ public class Chassis extends Subsystem {
 
 	private static final double MIN_SPEED_STRAFING = .3;
 	private static final double MAX_SPEED_STRAFING = .7;
-
-	private double counter = 0;
 
 	public Chassis() {
 		frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
