@@ -92,11 +92,11 @@ public class OI {
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 
-		// Collectors: collect/release tote on z-axis
-		// collectTote = new JoystickButton(operatorJoystick, 4);
-		// collectTote.whileHeld(new CollectTote());
-		// releaseTote = new JoystickButton(operatorJoystick, 3);
-		// releaseTote.whileHeld(new ReleaseTote());
+		//Collectors: collect/release tote on z-axis
+		collectTote = new JoystickButton(operatorJoystick, 3);
+		collectTote.whileHeld(new CollectTote());
+		releaseTote = new JoystickButton(operatorJoystick, 4);
+		releaseTote.whileHeld(new ReleaseTote());
 		angleIn = new JoystickButton(operatorJoystick, 5);
 		angleIn.whenPressed(new AngleCollectorIn());
 		angleOut = new JoystickButton(operatorJoystick, 6);

@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		chassis = new Chassis();
-		camera = new Camera();
+		//camera = new Camera();
 		collector = new Collector();
 		lifter = new Lifter();
 		shack = new Shack();

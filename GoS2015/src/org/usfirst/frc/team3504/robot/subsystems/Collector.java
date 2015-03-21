@@ -25,6 +25,8 @@ public class Collector extends Subsystem {
 	// Triggers (Collect/Release Tote Buttons)
 	private Joystick collectorTrigger;
 
+	private final static double speed = .5;
+	
 	public Collector() // this is the constructor
 	{
 		rightCollector = new CANTalon(RobotMap.RIGHT_COLLECTOR_WHEEL);
@@ -54,27 +56,27 @@ public class Collector extends Subsystem {
 
 	// Method suckToteIn which suck a tote inside the robot
 	public void collectorToteIn() {
-		rightCollector.set(1);
-		leftCollector.set(-1);
+		rightCollector.set(speed);
+		leftCollector.set(-speed);
 		SmartDashboard.putBoolean("Collecter On", true);
 	}
 
 	// Method suckToteOut which pushes a Tote out
 	public void collectorToteOut() {
-		rightCollector.set(-1);
-		leftCollector.set(1);
+		rightCollector.set(-speed);
+		leftCollector.set(speed);
 		SmartDashboard.putBoolean("Collecter On", true);
 	}
 
 	// Method collectorToteRotate which rotates the tote inside the trifold
 	public void collectorToteRotateRight() {
-		rightCollector.set(1);
-		leftCollector.set(1);
+		rightCollector.set(speed);
+		leftCollector.set(speed);
 	}
 
 	public void collectorToteRotateLeft() {
-		rightCollector.set(-1);
-		leftCollector.set(-1);
+		rightCollector.set(-speed);
+		leftCollector.set(-speed);
 	}
 
 	public void collectorIn() {
