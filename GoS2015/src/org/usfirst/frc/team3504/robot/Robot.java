@@ -50,7 +50,6 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());
 		autoChooser.addObject("AutoPlow", new AutoPlow());
 		autoChooser.addObject("AutoToteAndContainer", new AutoToteAndContainer());
-		autoChooser.addObject("AutoUltrasonic", new AutoUltrasonic());
 		autoChooser.addObject("Lifting", new Lifting());
 		autoChooser.addObject("Release", new Release());
 
@@ -73,7 +72,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("AutoToteAndContaienr", new AutoToteAndContainer());
 		SmartDashboard.putData("AutoTurnClockwise", new AutoTurnClockwise());
 		SmartDashboard.putData("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());
-		SmartDashboard.putData("AutoUltrasonic", new AutoUltrasonic());
 		SmartDashboard.putData("Lifting", new Lifting());
 		SmartDashboard.putData("Release", new Release());
 
