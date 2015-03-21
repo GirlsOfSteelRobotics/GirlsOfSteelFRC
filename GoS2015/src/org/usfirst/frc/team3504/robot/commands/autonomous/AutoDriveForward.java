@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Author: Alexa, Corinne, Kyra, Sarah
+ * 
  */
 public class AutoDriveForward extends Command {
 
@@ -26,7 +26,7 @@ public class AutoDriveForward extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.chassis.autoDriveForward(distance);
-		// TODO speed and distance
+	
 
 		Robot.chassis.printPositionsToSmartDashboard();
 	}

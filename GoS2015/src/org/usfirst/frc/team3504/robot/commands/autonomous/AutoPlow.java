@@ -4,7 +4,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * Authors: Alexa, Corinne, Kyra, Sarah
+ *
  */
 public class AutoPlow extends CommandGroup {
 

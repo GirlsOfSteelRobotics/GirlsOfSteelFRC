@@ -5,7 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Authors Alexa, Kyra, Sarah
+
  */
 public class AutoDriveBackwards extends Command {
 

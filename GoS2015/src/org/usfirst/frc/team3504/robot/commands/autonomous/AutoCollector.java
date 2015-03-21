@@ -5,8 +5,6 @@ import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Alexa Sarah Corinne Kyra turn sucker on for 1 second and when that second is
- * over it turns off
  * 
  */
 public class AutoCollector extends Command {
