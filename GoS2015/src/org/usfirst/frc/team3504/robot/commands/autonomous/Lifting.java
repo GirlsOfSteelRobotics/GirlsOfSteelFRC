@@ -36,6 +36,5 @@ public class Lifting extends CommandGroup {
 
 		addSequential(new AutoLift(Lifter.DISTANCE_ZERO_TOTES));
 
-		addSequential(new DoorsIn());
 	}
 }

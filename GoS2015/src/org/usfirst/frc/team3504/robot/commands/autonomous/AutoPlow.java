@@ -41,7 +41,6 @@ public class AutoPlow extends CommandGroup {
 		// gets last tote assuming partner cleared third can
 
 		addSequential(new AutoDriveLeft(distanceLeft1));
-		addParallel(new DoorsOut());
 		addSequential(new Release());
 		addSequential(new AutoDriveBackwards(distanceBack1));
 		// turn into the autozone to get robot set

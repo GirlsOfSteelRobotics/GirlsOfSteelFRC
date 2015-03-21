@@ -20,8 +20,5 @@ public class Release extends CommandGroup {
 
 		addSequential(new AngleCollectorOut());
 
-		addSequential(new FingerDown());
-
-		addSequential(new DoorsOut());
 	}
 }
