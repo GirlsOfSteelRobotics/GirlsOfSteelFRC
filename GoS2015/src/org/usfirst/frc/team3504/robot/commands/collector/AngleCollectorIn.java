@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  */
 public class AngleCollectorIn extends Command {
-	
+
 	public AngleCollectorIn() {
 		requires(Robot.collector);
 	}
@@ -36,7 +36,7 @@ public class AngleCollectorIn extends Command {
 
 	@Override
 	protected void interrupted() {
-		end();		
+		end();
 	}
 
 }

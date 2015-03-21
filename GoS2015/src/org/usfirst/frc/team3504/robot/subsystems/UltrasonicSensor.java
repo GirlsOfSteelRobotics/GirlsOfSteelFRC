@@ -10,23 +10,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author arushibandi
  */
 
-public class UltrasonicSensor extends Subsystem{
+public class UltrasonicSensor extends Subsystem {
 
 	private AnalogInput ultrasonicSensor;
-	
+
 	public UltrasonicSensor() {
 		ultrasonicSensor = new AnalogInput(RobotMap.ULTRASONICSENSOR_CHANNEL);
 	}
 
 	public double getDistanceInches() {
-		return ultrasonicSensor.getVoltage()*(512/5); //5 volts/512 per inch
+		return ultrasonicSensor.getVoltage() * (512 / 5); // 5 volts/512 per
+															// inch
 	}
-	
-	
+
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new TestUltrasonic());
 		// TODO Auto-generated method stub
-		
+
 	}
 }

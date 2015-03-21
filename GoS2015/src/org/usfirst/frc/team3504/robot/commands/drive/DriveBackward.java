@@ -1,15 +1,14 @@
-         package org.usfirst.frc.team3504.robot.commands.drive;
+package org.usfirst.frc.team3504.robot.commands.drive;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveBackward extends Command {
-	
-	public DriveBackward()
-	{
+
+	public DriveBackward() {
 		requires(Robot.chassis);
 	}
-	
+
 	@Override
 	protected void initialize() {
 	}

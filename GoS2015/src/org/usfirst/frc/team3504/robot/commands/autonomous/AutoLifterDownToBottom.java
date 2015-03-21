@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /*
  * 
  */
-public class AutoLifterDownToBottom extends Command{
+public class AutoLifterDownToBottom extends Command {
 
 	public AutoLifterDownToBottom() {
 		requires(Robot.lifter);
 	}
-	
+
 	@Override
 	protected void initialize() {
 		Robot.lifter.setPosition(Lifter.DISTANCE_ZERO_TOTES);

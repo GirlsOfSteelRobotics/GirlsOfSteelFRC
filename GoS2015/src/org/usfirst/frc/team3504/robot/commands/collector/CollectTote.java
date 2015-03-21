@@ -12,7 +12,7 @@ public class CollectTote extends Command {
 	public CollectTote() {
 		requires(Robot.collector);
 	}
-	
+
 	@Override
 	protected void initialize() {
 	}

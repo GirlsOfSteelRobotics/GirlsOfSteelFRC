@@ -5,11 +5,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveForward extends Command {
 
-	public DriveForward()
-	{
+	public DriveForward() {
 		requires(Robot.chassis);
 	}
-	
+
 	@Override
 	protected void initialize() {
 	}

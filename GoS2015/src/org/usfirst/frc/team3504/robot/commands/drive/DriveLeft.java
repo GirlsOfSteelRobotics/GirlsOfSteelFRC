@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  */
 public class DriveLeft extends Command {
-	
+
 	public DriveLeft() {
 		requires(Robot.chassis);
 	}
@@ -36,5 +36,5 @@ public class DriveLeft extends Command {
 	protected void interrupted() {
 		end();
 	}
-	
+
 }

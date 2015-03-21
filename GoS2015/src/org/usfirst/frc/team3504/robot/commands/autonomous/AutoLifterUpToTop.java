@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoLifterUpToTop extends Command {
 
 	double initialVal;
+
 	public AutoLifterUpToTop() {
 		requires(Robot.lifter);
 	}
@@ -38,5 +39,5 @@ public class AutoLifterUpToTop extends Command {
 	protected void interrupted() {
 		end();
 	}
-	
+
 }

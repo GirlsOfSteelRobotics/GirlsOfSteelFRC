@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.PIDSource;
 public class TalonEncoder implements PIDSource {
 
 	private static CANTalon talon;
-	  
+
 	public TalonEncoder(CANTalon talon) {
-	     this.talon = talon;
+		this.talon = talon;
 	}
-	  
+
 	public double pidGet() {
-	    return talon.getEncVelocity();
+		return talon.getEncVelocity();
 	}
 
 }

@@ -9,35 +9,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Arushi, Isabella
  */
 public class TestUltrasonic extends Command {
-	
-    public TestUltrasonic() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.ultrasonicsensor);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	
-    }
+	public TestUltrasonic() {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.ultrasonicsensor);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	//System.out.println(Robot.ultrasonicsensor.getDistanceInches());
-    	SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		// System.out.println(Robot.ultrasonicsensor.getDistanceInches());
+		SmartDashboard.putNumber("distance to nearest object:", Robot.ultrasonicsensor.getDistanceInches());
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

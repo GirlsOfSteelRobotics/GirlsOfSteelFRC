@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DoorsIn extends Command{
+public class DoorsIn extends Command {
 
 	public DoorsIn() {
 		requires(Robot.doors);
@@ -31,5 +31,5 @@ public class DoorsIn extends Command{
 	@Override
 	protected void interrupted() {
 	}
-	
+
 }

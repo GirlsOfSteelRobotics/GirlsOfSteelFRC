@@ -9,26 +9,26 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShackOut extends Command {
 
-    public ShackOut() {
-    	requires(Robot.shack);
-    }
+	public ShackOut() {
+		requires(Robot.shack);
+	}
 
-    protected void initialize() {
-    	Robot.shack.ShackOut();
-    }
+	protected void initialize() {
+		Robot.shack.ShackOut();
+	}
 
-    protected void execute() {
-    
-    }
+	protected void execute() {
 
-    protected boolean isFinished() {
-        return true;
-    }
+	}
 
-    protected void end() {
-    }
+	protected boolean isFinished() {
+		return true;
+	}
 
-    protected void interrupted() {
-    	end();
-    }
+	protected void end() {
+	}
+
+	protected void interrupted() {
+		end();
+	}
 }
