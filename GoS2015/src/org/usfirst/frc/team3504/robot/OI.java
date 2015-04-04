@@ -97,16 +97,16 @@ public class OI {
 		collectTote.whileActive(new CollectTote());
 		releaseTote = new RTButton(operatorJoystick);
 		releaseTote.whileActive(new ReleaseTote());
-		angleIn = new JoystickButton(operatorJoystick, 5);
-		angleIn.whenPressed(new AngleCollectorIn());
-		angleOut = new JoystickButton(operatorJoystick, 6);
-		angleOut.whenPressed(new AngleCollectorOut());
+		angleIn = new JoystickButton(operatorJoystick, 5); //hello sonia i am so interested in ur life please tell me everything 
+		angleIn.whenPressed(new AngleCollectorIn()); //omg sonia u dont even exist in real life am i just dreaming i think im loopy
+		angleOut = new JoystickButton(operatorJoystick, 6); //what is going on i am so confused what does this even mean
+		angleOut.whenPressed(new AngleCollectorOut()); //lolol lets rap 
 
 		// Shack
 		shackIn = new JoystickButton(operatorJoystick, 1);
-		shackIn.whileHeld(new ShackIn());
+		shackIn.whenPressed(new ShackIn());
 		shackOut = new JoystickButton(operatorJoystick, 2);
-		shackOut.whileHeld(new ShackOut());
+		shackOut.whenPressed(new ShackOut());
 
 		// Lifting
 		// liftUp = new JoystickButton(operatorJoystick, 7);

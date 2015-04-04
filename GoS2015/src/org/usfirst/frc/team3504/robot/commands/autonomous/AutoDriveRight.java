@@ -13,7 +13,7 @@ public class AutoDriveRight extends Command {
 
 	public AutoDriveRight(double distance) {
 		requires(Robot.chassis);
-		this.distance = distance;
+		//this.distance = distance;
 		// distance = 50;//107
 		this.distance = distance;
 	}

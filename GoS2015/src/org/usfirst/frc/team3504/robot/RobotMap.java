@@ -24,13 +24,9 @@ public class RobotMap {
 	public static final int PHOTOSENSOR_CHANNEL_DARKINPUT = 2;
 
 	// Shack ports
-	// public static final int SHACK_TALON = 5; //Motor
 	public static final int LEFT_SHACK_CHANNEL_A = 4; // In
 	public static final int LEFT_SHACK_CHANNEL_B = 5; // Out
 	public static final int LEFT_SHACK_MODULE = 1;
-	public static final int RIGHT_SHACK_CHANNEL_A = 6; // In
-	public static final int RIGHT_SHACK_CHANNEL_B = 7; // Out
-	public static final int RIGHT_SHACK_MODULE = 1;
 
 	// PCM Module Ports
 	public static final int PCM_MODULE_0 = 0;
@@ -38,25 +34,8 @@ public class RobotMap {
 
 	// Forklift ports
 	public static final int FORKLIFT_CHANNEL_A = 17; // Motors
-	// public static final int FORKLIFT_CHANNEL_B = ;
 	public static final int FORKLIFT_TOP_LIMIT = 0;
 	public static final int FORKLIFT_BOTTOM_LIMIT = 1;
-
-	// Finger ports
-	public static final int RIGHT_FINGER_PISTON_A = 6; // Pistons
-	public static final int RIGHT_FINGER_PISTON_B = 7;
-	public static final int RIGHT_FINGER_MODULE = 0;
-	public static final int LEFT_FINGER_PISTON_A = 3;
-	public static final int LEFT_FINGER_PISTON_B = 2;
-	public static final int LEFT_FINGER_MODULE = 1;
-
-	// Door ports
-	public static final int LEFT_DOOR_CHANNEL_A = 1;
-	public static final int LEFT_DOOR_CHANNEL_B = 0;
-	public static final int LEFT_DOOR_MODULE = 1;
-	public static final int RIGHT_DOOR_CHANNEL_A = 4;
-	public static final int RIGHT_DOOR_CHANNEL_B = 5;
-	public static final int RIGHT_DOOR_MODULE = 0;
 
 	// Collector ports
 	public static final int LEFT_COLLECTOR_WHEEL = 10; // Motors

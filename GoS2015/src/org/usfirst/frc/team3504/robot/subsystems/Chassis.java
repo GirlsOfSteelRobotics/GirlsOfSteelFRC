@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.tests.TestWheels;
 
 import com.kauailabs.navx_mxp.AHRS;
 
@@ -114,20 +115,39 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("Rear Left", 0.0);
 		SmartDashboard.putBoolean("Velocity?", true);
 		SmartDashboard.putBoolean("Gyro: ", getGyro);
+		
+		SmartDashboard.putNumber("F val", 0);
 	}
 
 	public void spinWheelsSlowly() {
-		if (SmartDashboard.getBoolean("Velocity?"))
-			frontRightWheel.changeControlMode(ControlMode.Speed);
-		else
-			frontRightWheel.changeControlMode(ControlMode.PercentVbus);
 		SmartDashboard.putNumber("Bus Voltage", frontRightWheel.getBusVoltage());
 		SmartDashboard.putNumber("Closed Loop Error", frontRightWheel.getClosedLoopError());
 
-		// frontRightWheel.setPID(SmartDashboard.getNumber("P value"),
-		// SmartDashboard.getNumber("I value"),
-		// SmartDashboard.getNumber("D value"));
+		frontRightWheel.setPID(SmartDashboard.getNumber("P value"),
+		SmartDashboard.getNumber("I value"),
+		SmartDashboard.getNumber("D value"),
+		SmartDashboard.getNumber("F val"),
+		0, 0, 0);
 		printPositionsToSmartDashboard();
+		
+		frontLeftWheel.setPID(SmartDashboard.getNumber("P value"),
+		SmartDashboard.getNumber("I value"),
+		SmartDashboard.getNumber("D value"),
+		SmartDashboard.getNumber("F val"),
+		0, 0, 0);
+		
+		rearRightWheel.setPID(SmartDashboard.getNumber("P value"),
+		SmartDashboard.getNumber("I value"),
+		SmartDashboard.getNumber("D value"),
+		SmartDashboard.getNumber("F val"),
+		0, 0, 0);
+		
+		rearLeftWheel.setPID(SmartDashboard.getNumber("P value"),
+		SmartDashboard.getNumber("I value"),
+		SmartDashboard.getNumber("D value"),
+		SmartDashboard.getNumber("F val"),
+		0, 0, 0);
+		
 		frontLeftWheel.set((SmartDashboard.getNumber("Front Left")) * 750);
 		frontRightWheel.set((SmartDashboard.getNumber("Front Right")) * 750);
 		rearRightWheel.set((SmartDashboard.getNumber("Rear Right")) * 750);
@@ -305,11 +325,15 @@ public class Chassis extends Subsystem {
 	}
 
 	public void printPositionsToSmartDashboard() {
+	//	SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getEncPosition());//frontLeftWheel.getSpeed());
+	//	SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getEncPosition());//frontRightWheel.getSpeed());
+	//	SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncPosition());//rearLeftWheel.getSpeed());
+	//	SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncPosition());//rearRightWheel.getSpeed());
+		
 		SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getSpeed());
 		SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getSpeed());
 		SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getSpeed());
 		SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getSpeed());
-
 	}
 
 	/**
