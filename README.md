@@ -1,3 +1,6 @@
-# 2016GirlsOfSteel
+Each folder above needs to have a short description in this README.md file
 
-This repository will house all the FRC robot code for the 2016 Girls of Steel season.
+| Project             | Description
+|---------|---------
+| TestBoardEncoders   | Short demonstration of the test electronics board. Drives the motor via joystick buttons and reports encoder values
+| 2016GitLesson       | Project for learning about Git for managing our code
