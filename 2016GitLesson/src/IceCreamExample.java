@@ -13,9 +13,20 @@ public class IceCreamExample {
 			System.out.println("Happy"); 
 		}
 		else if (icecreamScoops<=9 && icecreamScoops>=5) {
-			System.out.println("Sad");
+			int i = 1;
+			if (i<=10) {
+				i++;
+				System.out.println("Sad");
+			}
+			else {
+				
+			}
 		} else {
+			int i = 1;
+			if (i<=10) {
+				i++;
 			System.out.println("Super Sad");
+			}
 		}
 
 	}
