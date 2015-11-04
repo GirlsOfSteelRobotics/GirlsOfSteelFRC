@@ -8,15 +8,19 @@ public class IceCreamExample {
 	private static void iceCream(int icecreamScoops) {
 		if (icecreamScoops>10) 
 		{
-			System.out.println("Very very very Happy"); 
+			System.out.println("VERY VERY VERY HAPPY"); 
 		} else if (icecreamScoops==10) {
+
 			System.out.println("really happy"); 
+
+			System.out.println("HAPPY"); 
+ 
 		}
 		else if (icecreamScoops<=9 && icecreamScoops>=5) {
 			int i = 1;
 			if (i<=10) {
 				i++;
-				System.out.println("Sad");
+				System.out.println("SAD");
 			}
 			else {
 				
@@ -25,8 +29,9 @@ public class IceCreamExample {
 			int i = 1;
 			if (i<=10) {
 				i++;
-			System.out.println("Super Sad");
+			System.out.println("SUPER SAD");
 			}
+
 		}
 
 	}
