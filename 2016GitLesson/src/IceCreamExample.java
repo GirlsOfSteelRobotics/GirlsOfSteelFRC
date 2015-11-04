@@ -9,7 +9,7 @@ public class IceCreamExample {
 			System.out.println("Happy"); 
 		}
 		else if (icecreamScoops<=9 && icecreamScoops>=5) {
-			System.out.println("Sad");
+			System.out.println("A little bummed");
 		} else {
 			System.out.println("Super Sad");
 		}
