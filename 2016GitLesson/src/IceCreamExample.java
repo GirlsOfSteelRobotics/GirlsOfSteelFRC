@@ -12,6 +12,7 @@ public class IceCreamExample {
 			System.out.println("very super very very happy"); 
 		} else if (icecreamScoops==10) {
 
+
 			System.out.println("happy"); 
 
 		}
