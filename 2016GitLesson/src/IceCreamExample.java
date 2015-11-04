@@ -4,14 +4,14 @@ public class IceCreamExample {
 		int icecreamScoops = Integer.parseInt(args[0]);
 		if (icecreamScoops>10) 
 		{
-			System.out.println("Very very very Happy"); 
+			System.out.println("VERY VERY VERY HAPPY"); 
 		} else if (icecreamScoops==10) {
-			System.out.println("Happy"); 
+			System.out.println("HAPPY"); 
 		}
 		else if (icecreamScoops<=9 && icecreamScoops>=5) {
-			System.out.println("Sad");
+			System.out.println("SAD");
 		} else {
-			System.out.println("Super Sad");
+			System.out.println("SUPER SAD");
 		}
 
 	}
