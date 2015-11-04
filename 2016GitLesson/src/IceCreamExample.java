@@ -6,7 +6,7 @@ public class IceCreamExample {
 		{
 			System.out.println("Super Happy"); 
 		} else if (icecreamScoops==10) {
-			System.out.println("Happy"); 
+			System.out.println("Really Happy"); 
 		}
 		else if (icecreamScoops<=9 && icecreamScoops>=5) {
 			System.out.println("Sad");
