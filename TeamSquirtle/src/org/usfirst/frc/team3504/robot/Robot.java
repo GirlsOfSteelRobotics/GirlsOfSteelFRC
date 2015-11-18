@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		chassis = new Chassis();
+		Chassis chassis = new Chassis();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
     }
