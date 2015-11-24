@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+//ok this is cool but I dont have any of the FRC function things so i have a ton of errors.
+//~Rozie
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
