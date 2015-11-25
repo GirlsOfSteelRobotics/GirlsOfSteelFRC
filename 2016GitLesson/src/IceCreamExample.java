@@ -1,22 +1,27 @@
 
 public class IceCreamExample {
 	public static void main(String[] args) {
-		int icecreamScoops = Integer.parseInt(args[0]);
-		iceCream(icecreamScoops);
+		int iceCreamScoops = Integer.parseInt(args[0]);
+		iceCream(iceCreamScoops);
 	}
 	
-	private static void iceCream(int icecreamScoops) {
-		if (icecreamScoops>10) 
+	private static void iceCream(int iceCreamScoops) {
+		if (iceCreamScoops>10) 
 		{
-			System.out.println("Very very very Happy"); 
-		} else if (icecreamScoops==10) {
-			System.out.println("Happy"); 
+
+			System.out.println("very super very very happy"); 
+		} else if (iceCreamScoops==10) {
+
+
+			System.out.println("happy"); 
+
 		}
+
 		
-		else if (icecreamScoops<=9 && icecreamScoops>=5) {
+		else if (iceCreamScoops<=9 && iceCreamScoops>=5) {
 			
 			System.out.println("Sad");
-		} else if (icecreamScoops<=15 && icecreamScoops>=11) {
+		} else if (iceCreamScoops<=15 && iceCreamScoops>=11) {
 			System.out.println("Lovely");
 		}
 		else {
@@ -27,14 +32,16 @@ public class IceCreamExample {
 			}
 			else {
 	
-			int i = 1;
+			
 			if (i<=10) {
 				i++;
 			System.out.println("Super Sad");
 			}
 			}
-		}
+
+	
 
 	}
-}
+	}
+	}
 
