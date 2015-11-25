@@ -6,8 +6,10 @@ public class IceCreamExample {
 	}
 	
 	private static void iceCream(int iceCreamScoops) {
-		if (iceCreamScoops>10) 
-		{
+		if (iceCreamScoops>10) {
+
+			System.out.println("Very very very super duper"
+					+ "Happy"); 
 
 			System.out.println("very super very very happy"); 
 		} else if (iceCreamScoops==10) {
