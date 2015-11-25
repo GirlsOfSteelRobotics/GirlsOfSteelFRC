@@ -33,5 +33,17 @@ public class Chassis extends Subsystem{
 		
 	}
 	
+	public double driveForward() {
+		driveSystem.drive(.5, 0); //TODO: don't know actual values 
+		return 0; //FIXME: some encoder number 
+	}
+	
+	public double resetDistance() {
+		return 0; //FIXME: don't know what it should return
+	}
+
+	public void stop() {
+		//TODO: Figure out what goes here
+	}
 	
 }
