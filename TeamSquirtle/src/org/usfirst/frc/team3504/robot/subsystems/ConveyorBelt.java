@@ -16,5 +16,14 @@ public class ConveyorBelt extends Subsystem{
 			
 	}
 	
+	public void conveyorBeltUp(){
+		ct1.set(0.5);
+		ct2.set(-0.5);
+	}
+	
+	public void conveyorBeltDown(){
+		ct1.set(-0.5);
+		ct2.set(0.5);
+	}
 
 }
