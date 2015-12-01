@@ -27,6 +27,8 @@ public class RobotMap {
 	public static CANTalon rightTalon3;
 	public static CANTalon leftTalon3;
 	public static RobotDrive driveSystem;
+	public static CANTalon conveyorTalon1;
+	public static CANTalon conveyorTalon2;
 	
 	static void init() {
 		rightTalon1 = new CANTalon(0);
@@ -36,5 +38,8 @@ public class RobotMap {
 		rightTalon3 = new CANTalon(4);
 		leftTalon3 = new CANTalon(5);
 		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
+		conveyorTalon1 = new CANTalon(6);
+		conveyorTalon2 = new CANTalon(7);
+		
 	}
 }
