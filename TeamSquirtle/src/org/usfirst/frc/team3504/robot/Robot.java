@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.ConveyorBelt;
 import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Chassis chassis;
 	public static ConveyorBelt conveyorbelt;
+	public static Camera camera; 
 
     Command autonomousCommand;
 
@@ -36,8 +38,10 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		chassis = new Chassis();
 		conveyorbelt = new ConveyorBelt();
-        // instantiate the command used for the autonomous period
+        camera = new Camera(); 
+		// instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
+        
     }
 	
 	public void disabledPeriodic() {
