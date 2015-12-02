@@ -6,9 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+
 import org.usfirst.frc.team3504.robot.subsystems.Drive;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,7 +24,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Drive drive;
 	public static Manipulator manipulator;
-
+	public static Shifters shifters;
     Command autonomousCommand;
 
     /**
