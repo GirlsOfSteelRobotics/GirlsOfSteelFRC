@@ -10,7 +10,6 @@ import org.usfirst.frc.team3504.robot.Robot;
  *
  */
 public class DriveCommand extends Command {
-	Joystick driveJoystick;
 	
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -23,7 +22,7 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.moveByJoystick(driveJoystick);
+    	Robot.drive.moveByJoystick(Robot.oi.getDriveStick());
     }
 
     // Make this return true when this Command no longer needs to run execute()
