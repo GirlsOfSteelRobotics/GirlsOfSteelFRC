@@ -12,6 +12,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.ConveyorBelt;
 import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static Chassis chassis;
 	public static ConveyorBelt conveyorbelt;
 	public static Camera camera; 
+	public static Shifters shifters;
 
     Command autonomousCommand;
 
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
 		chassis = new Chassis();
 		conveyorbelt = new ConveyorBelt();
         camera = new Camera(); 
+        shifters = new Shifters();
 		// instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
         
