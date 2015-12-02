@@ -13,7 +13,6 @@ package org.usfirst.frc.team3504.robot.subsystems;
 	 *
 	 */
 	public class Manipulator extends Subsystem {
-	    RobotManipulator robotManipulator = RobotMap.manipulatorRobotManipulator;
 	    
 	    // Put methods for controlling this subsystem
 	    // here. Call these from Commands.
@@ -24,8 +23,24 @@ package org.usfirst.frc.team3504.robot.subsystems;
 	    	setDefaultCommand(new ManipulatorCommand());
 	    }
 	    
-	    public void moveByJoystick(Joystick joystick) {
-	    	robotDrive.arcadeDrive(joystick);
+	    public void manipulatorConveyorBeltMotorRight (Joystick joystick) {
+	    	if (fwd) {
+	    	    conveyorBeltMotorRight.set(1.0);	
+	    	}
+	    	else{
+	    		conveyorBeltMotorRight.set(-1.0);
+	    	}
+	    	
+	    }
+	    
+	    public void manipulatorConveyorBeltMotorLeft (Joystick joystick) {
+	    	if (fwd) {
+	    	    conveyorBeltMotorLeft.set(1.0);	
+	    	}
+	    	else{
+	    		conveyorBeltMotorLeft.set(-1.0);
+	    	}
+	    	
 	    }
 	    
 	    public void stop(Joystick joystick) {

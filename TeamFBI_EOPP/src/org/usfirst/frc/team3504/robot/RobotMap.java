@@ -18,7 +18,6 @@ public class RobotMap {
 	public static CANTalon driveSystemDriveRight3;
 	
 	public static RobotDrive driveRobotDrive;
-	public static RobotManipulator manipulatorRobotManipulator;
 	
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
