@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import org.usfirst.frc.team3504.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,6 +12,7 @@ public class ConveyorBeltUp extends Command {
     public ConveyorBeltUp() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.conveyorbelt);
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +21,7 @@ public class ConveyorBeltUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.conveyorbelt.conveyorBeltUp();
     }
 
     // Make this return true when this Command no longer needs to run execute()
