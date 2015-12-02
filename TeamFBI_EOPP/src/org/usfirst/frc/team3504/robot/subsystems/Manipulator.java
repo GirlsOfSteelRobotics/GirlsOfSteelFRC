@@ -13,7 +13,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 	 *
 	 */
 	public class Manipulator extends Subsystem {
-	    RobotDrive robotDrive = RobotMap.driveRobotDrive;
+	    RobotManipulator robotManipulator = RobotMap.manipulatorRobotManipulator;
 	    
 	    // Put methods for controlling this subsystem
 	    // here. Call these from Commands.

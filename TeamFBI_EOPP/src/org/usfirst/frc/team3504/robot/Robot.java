@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3504.robot.subsystems.Drive;
 import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
