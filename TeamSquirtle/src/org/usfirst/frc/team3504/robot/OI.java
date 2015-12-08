@@ -1,6 +1,11 @@
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team3504.robot.commands.ConveyorBeltDown;
+import org.usfirst.frc.team3504.robot.commands.ConveyorBeltUp;
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 
 /**
@@ -34,5 +39,21 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
+	
+	public Joystick stick;
+	
+	public JoystickButton btnBeltUp;
+	public JoystickButton btnBeltDown;
+	
+	public OI(){
+		
+		stick = new Joystick(0);
+		
+		btnBeltUp = new JoystickButton(stick,5);
+		btnBeltUp.whileHeld(new ConveyorBeltUp());
+		btnBeltDown = new JoystickButton(stick,6);
+		btnBeltDown.whileHeld(new ConveyorBeltDown());
+		
+	}
 }
 
