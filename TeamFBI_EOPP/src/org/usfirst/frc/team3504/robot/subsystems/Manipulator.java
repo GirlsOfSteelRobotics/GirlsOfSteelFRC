@@ -45,13 +45,11 @@ package org.usfirst.frc.team3504.robot.subsystems;
 	    	
 	    }
 	    
-	    public void stopConveyorBeltMotorRight() {
+	    public void stopConveyorBeltMotor() {
 	    	conveyorBeltMotorRight.set(0.0);
-	    }
-	    
-	    public void stopConveyorBeltMotorLeft() {
 	    	conveyorBeltMotorLeft.set(0.0);
 	    }
+
 	}
 
 
