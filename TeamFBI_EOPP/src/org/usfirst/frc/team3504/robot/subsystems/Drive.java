@@ -27,7 +27,7 @@ public class Drive extends Subsystem {
     	robotDrive.arcadeDrive(joystick);
     }
     
-    public void stop(Joystick joystick) {
+    public void stop() {
     	robotDrive.drive(0,0);
     }
 }

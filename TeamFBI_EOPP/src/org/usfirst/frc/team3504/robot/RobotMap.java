@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
@@ -18,6 +19,13 @@ public class RobotMap {
 	public static CANTalon driveSystemDriveRight3;
 	
 	public static RobotDrive driveRobotDrive;
+	
+	public static DoubleSolenoid shiftersShifterLeft;
+	public static DoubleSolenoid shiftersShifterRight;
+	
+	public static CANTalon conveyorBeltMotorRight;
+	public static CANTalon conveyorBeltMotorLeft;
+	
 	
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
