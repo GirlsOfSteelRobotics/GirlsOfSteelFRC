@@ -2,7 +2,6 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 
 	import org.usfirst.frc.team3504.robot.RobotMap;
-	import org.usfirst.frc.team3504.robot.commands.ManipulatorCommand;
 
 	import edu.wpi.first.wpilibj.Joystick;
 	import edu.wpi.first.wpilibj.RobotDrive;
@@ -22,7 +21,6 @@ package org.usfirst.frc.team3504.robot.subsystems;
 	    public void initDefaultCommand() {
 	        // Set the default command for a subsystem here.
 	        //setDefaultCommand(new MySpecialCommand());
-	    	setDefaultCommand(new ManipulatorCommand());
 	    }
 	    
 	    public void manipulatorConveyorBeltMotorRight (boolean fwd) {
