@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
@@ -29,6 +30,8 @@ public class RobotMap {
 	public static RobotDrive driveSystem;
 	public static CANTalon conveyorTalon1;
 	public static CANTalon conveyorTalon2;
+	public static DoubleSolenoid DSLeft;
+	public static DoubleSolenoid DSRight;
 	
 	static void init() {
 		rightTalon1 = new CANTalon(0);
@@ -38,8 +41,10 @@ public class RobotMap {
 		rightTalon3 = new CANTalon(4);
 		leftTalon3 = new CANTalon(5);
 		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
-		conveyorTalon1 = new CANTalon(6);
-		conveyorTalon2 = new CANTalon(7);
+		conveyorTalon1 = new CANTalon(6); //TODO: put in real value
+		conveyorTalon2 = new CANTalon(7); //TODO: put in real value
+		DSLeft = new DoubleSolenoid(0,1);
+		DSRight = new DoubleSolenoid(2,3);
 		
 	}
 }
