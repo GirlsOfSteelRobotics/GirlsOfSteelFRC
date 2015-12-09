@@ -24,14 +24,15 @@ public class Camera extends Subsystem {
 	NIVision.Range TUBE_HUE_RANGE = new NIVision.Range(136, 182);
 	NIVision.Range TUBE_SATURATION_RANGE = new NIVision.Range(45, 255);
 	NIVision.Range TUBE_LUMINANCE_RANGE = new NIVision.Range(116, 255);
-	
-	//USBCamera cam;
+
 	public Camera() {
+
 		server = CameraServer.getInstance();  
 		cam = new USBCamera(); 
 		
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_HSL, 0);
 		resultFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
+
 		// the camera name (ex "cam0") can be found through the roborio web
 		// interface
 	}
@@ -48,12 +49,12 @@ public class Camera extends Subsystem {
 	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	/*
+
 	public void findTube() {
 		cam.getImageData(null);
 		
 	}
-	*/
+
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
