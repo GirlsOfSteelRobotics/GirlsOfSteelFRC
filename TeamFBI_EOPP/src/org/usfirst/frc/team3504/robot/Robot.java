@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+
 import org.usfirst.frc.team3504.robot.subsystems.Drive;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +24,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Drive drive;
 	public static Manipulator manipulator;
-
+	public static Shifters shifters;
     Command autonomousCommand;
 
     /**
@@ -32,9 +32,14 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+    	RobotMap.init();
+    	drive = new Drive();
+    	manipulator = new Manipulator();
+    	shifters = new Shifters();
+		//Leave this after creating subsystem objects
+    	oi = new OI();
         // instantiate the command used for the autonomous period
-        //autonomousCommand = new ExampleCommand();
+        //autonomousCommand = new AutonomousCommand();
     }
 	
 	public void disabledPeriodic() {
