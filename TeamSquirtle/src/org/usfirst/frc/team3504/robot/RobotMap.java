@@ -31,12 +31,12 @@ public class RobotMap {
 	public static CANTalon conveyorTalon2;
 	
 	static void init() {
-		rightTalon1 = new CANTalon(0);
-		leftTalon1 = new CANTalon(1);
-		rightTalon2 = new CANTalon(2);
-		leftTalon2 = new CANTalon(3);
-		rightTalon3 = new CANTalon(4);
-		leftTalon3 = new CANTalon(5);
+		rightTalon1 = new CANTalon(4);
+		leftTalon1 = new CANTalon(0);
+		rightTalon2 = new CANTalon(11);
+		leftTalon2 = new CANTalon(1);
+		rightTalon3 = new CANTalon(13);
+		leftTalon3 = new CANTalon(2);
 		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
 		conveyorTalon1 = new CANTalon(6);
 		conveyorTalon2 = new CANTalon(7);

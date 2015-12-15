@@ -34,7 +34,7 @@ public class Chassis extends Subsystem{
 	}
 	
 	public double driveForward() {
-		driveSystem.drive(.5, 0); //TODO: don't know actual values 
+		driveSystem.drive(.5, 0); 
 		return 0; //FIXME: some encoder number 
 	}
 	
