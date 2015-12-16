@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team3504.robot.commands.ConveyorBeltDown;
 import org.usfirst.frc.team3504.robot.commands.ConveyorBeltUp;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.commands.ShiftHighGear;
+import org.usfirst.frc.team3504.robot.commands.ShiftLowGear;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -44,15 +45,21 @@ public class OI {
 	
 	public JoystickButton btnBeltUp;
 	public JoystickButton btnBeltDown;
+	public JoystickButton btnShiftUp;
+	public JoystickButton btnShiftDown;
 	
 	public OI(){
 		
 		stick = new Joystick(0);
+		btnShiftUp = new JoystickButton(stick, 5);
+		btnShiftUp.whenPressed(new ShiftHighGear());
+		btnShiftDown = new JoystickButton(stick, 6);
+		btnShiftDown.whenPressed(new ShiftLowGear());
 		
-		btnBeltUp = new JoystickButton(stick,5);
-		btnBeltUp.whileHeld(new ConveyorBeltUp());
-		btnBeltDown = new JoystickButton(stick,6);
-		btnBeltDown.whileHeld(new ConveyorBeltDown());
+		//btnBeltUp = new JoystickButton(stick,5);
+		//btnBeltUp.whileHeld(new ConveyorBeltUp());
+		//btnBeltDown = new JoystickButton(stick,6);
+		//btnBeltDown.whileHeld(new ConveyorBeltDown());
 		
 	}
 }

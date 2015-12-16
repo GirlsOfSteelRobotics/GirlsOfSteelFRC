@@ -34,12 +34,12 @@ public class RobotMap {
 	public static DoubleSolenoid DSRight;
 	
 	static void init() {
-		rightTalon1 = new CANTalon(0);
-		leftTalon1 = new CANTalon(1);
+		rightTalon1 = new CANTalon(1);
+		leftTalon1 = new CANTalon(4);
 		rightTalon2 = new CANTalon(2);
-		leftTalon2 = new CANTalon(3);
-		rightTalon3 = new CANTalon(4);
-		leftTalon3 = new CANTalon(5);
+		leftTalon2 = new CANTalon(5);
+		rightTalon3 = new CANTalon(3);
+		leftTalon3 = new CANTalon(6);
 		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
 		conveyorTalon1 = new CANTalon(6); //TODO: put in real value
 		conveyorTalon2 = new CANTalon(7); //TODO: put in real value
