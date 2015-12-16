@@ -40,6 +40,7 @@ public class RobotMap {
 		leftTalon2 = new CANTalon(5);
 		rightTalon3 = new CANTalon(3);
 		leftTalon3 = new CANTalon(6);
+
 		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
 		conveyorTalon1 = new CANTalon(6); //TODO: put in real value
 		conveyorTalon2 = new CANTalon(7); //TODO: put in real value
