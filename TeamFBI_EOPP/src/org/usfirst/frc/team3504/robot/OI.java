@@ -1,6 +1,12 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -9,12 +15,12 @@ import edu.wpi.first.wpilibj.Joystick;
 
 
 public class OI {
-	public Joystick driveStick;
+	public Joystick driveStick; {
 	
-	public OI() {
+	//public OI() {
 		driveStick= new Joystick(0);
-	}
 	
+	}
 	public Joystick getDriveStick() {
 		return driveStick;
 	}
@@ -23,8 +29,12 @@ public class OI {
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
     // number it is.
-  
-    // Button button = new JoystickButton(stick, buttonNumber);
+	 // Button button = new JoystickButton(drivestick, buttonNumber);
+	 Button button1 = new JoystickButton(driveStick, 1),
+	  button2 = new JoystickButton(driveStick, 2),  
+	  button3 = new JoystickButton(driveStick, 3),
+	 button4 = new JoystickButton (driveStick, 4);
+	 
     
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -33,6 +43,10 @@ public class OI {
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
+	 public OI(){
+	 button1.whenPressed(new ShiftDown());
+	 button2.whenPressed(new ShiftUp());
+	 }
     
     // Start the command when the button is pressed and let it run the command
     // until it is finished as determined by it's isFinished method.
