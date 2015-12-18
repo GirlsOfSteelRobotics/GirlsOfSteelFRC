@@ -1,9 +1,13 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.OI;
 import org.usfirst.frc.team3504.robot.RobotMap;
 //ok this is cool but I dont have any of the FRC function things so i have a ton of errors.
 //~Rozie
 
+
+
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,7 +23,6 @@ public class Chassis extends Subsystem{
 	CANTalon lt2 = RobotMap.leftTalon2;
 	CANTalon lt3 = RobotMap.leftTalon3;
 	RobotDrive driveSystem = RobotMap.driveSystem;
-	Joystick stick;
 	
 	public Chassis() {
 		
@@ -30,7 +33,7 @@ public class Chassis extends Subsystem{
 	}
 	
 	public void initDefaultCommand() {
-		
+		setDefaultCommand(new DriveByJoystick());
 	}
 	
 	public double driveForward() {
