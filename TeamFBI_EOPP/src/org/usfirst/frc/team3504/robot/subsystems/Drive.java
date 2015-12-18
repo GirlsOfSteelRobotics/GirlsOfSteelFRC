@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drive extends Subsystem {
     RobotDrive robotDrive = RobotMap.driveRobotDrive;
+    public static final double AUTO_DRIVE_DISTANCE = 60;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -25,6 +26,10 @@ public class Drive extends Subsystem {
     
     public void moveByJoystick(Joystick joystick) {
     	robotDrive.arcadeDrive(joystick);
+    }
+    
+    public void driveAuto() {
+    	robotDrive.drive(AUTO_DRIVE_DISTANCE, 0);
     }
     
     public void stop() {

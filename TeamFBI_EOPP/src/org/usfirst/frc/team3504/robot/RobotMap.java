@@ -1,8 +1,12 @@
 package org.usfirst.frc.team3504.robot;
 
+import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Image;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -11,6 +15,10 @@ import edu.wpi.first.wpilibj.RobotDrive;
  * floating around.
  */
 public class RobotMap {
+	// Joystick ports -> should align with driver station
+	public static final int OPERATOR_JOYSTICK = 1;
+	public static final int CHASSIS_JOYSTICK = 0;
+		
 	public static CANTalon driveSystemDriveLeft0;
 	public static CANTalon driveSystemDriveRight0;
 	public static CANTalon driveSystemDriveLeft1;
@@ -26,14 +34,7 @@ public class RobotMap {
 	public static CANTalon conveyorBeltMotorRight;
 	public static CANTalon conveyorBeltMotorLeft;
 	
+	//public static Image cameraFrame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+	//public static int cameraSession = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 	
-    // For example to map the left and right motors, you could define the
-    // following variables to use with your drivetrain subsystem.
-    // public static int leftMotor = 1;
-    // public static int rightMotor = 2;
-    
-    // If you are using multiple modules, make sure to define both the port
-    // number and the module. For example you with a rangefinder:
-    // public static int rangefinderPort = 1;
-    // public static int rangefinderModule = 1;
-}
+} 

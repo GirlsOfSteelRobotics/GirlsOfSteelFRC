@@ -1,6 +1,10 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.ConveyorDown;
+import org.usfirst.frc.team3504.robot.commands.ConveyorUp;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -9,14 +13,31 @@ import edu.wpi.first.wpilibj.Joystick;
 
 
 public class OI {
-	public Joystick driveStick;
+	// Joysticks
+	private Joystick operatorJoystick;
+	private Joystick chassisJoystick;
+	
+	//Collector
+	private JoystickButton conveyorUp;
+	private JoystickButton conveyorDown;
 	
 	public OI() {
-		driveStick= new Joystick(0);
+		// Joysticks
+		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
+		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
+		
+		conveyorUp = new JoystickButton(operatorJoystick, 1); //TODO: change these
+		conveyorUp.whenPressed(new ConveyorUp());
+		conveyorDown = new JoystickButton(operatorJoystick, 2); //TODO: change these
+		conveyorDown.whenPressed(new ConveyorDown());
 	}
 	
-	public Joystick getDriveStick() {
-		return driveStick;
+	public Joystick getChassisJoystick() {
+		return chassisJoystick;
+	}
+	
+	public Joystick getOperatorJoystick() {
+		return operatorJoystick;
 	}
 	
     //// CREATING BUTTONS

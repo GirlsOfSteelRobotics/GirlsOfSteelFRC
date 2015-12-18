@@ -5,8 +5,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
-
+import org.usfirst.frc.team3504.robot.commands.AutoDrive;
 import org.usfirst.frc.team3504.robot.subsystems.Drive;
 import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
@@ -26,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static Manipulator manipulator;
 	public static Shifters shifters;
     Command autonomousCommand;
+    SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -33,6 +35,11 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
+		drive = new Drive();
+		manipulator = new Manipulator();
+		shifters = new Shifters();
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Auto Drive", new AutoDrive());
         // instantiate the command used for the autonomous period
         //autonomousCommand = new ExampleCommand();
     }
@@ -43,7 +50,9 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+    	autonomousCommand = (Command) autoChooser.getSelected();
+		if (autonomousCommand != null)
+			autonomousCommand.start();
     }
 
     /**
@@ -58,7 +67,8 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+    	if (autonomousCommand != null)
+			autonomousCommand.cancel();
     }
 
     /**
