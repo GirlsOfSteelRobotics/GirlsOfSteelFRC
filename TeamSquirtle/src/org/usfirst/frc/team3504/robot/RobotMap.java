@@ -42,8 +42,8 @@ public class RobotMap {
 		leftTalon3 = new CANTalon(6);
 
 		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
-		conveyorTalon1 = new CANTalon(6); //TODO: put in real value
-		conveyorTalon2 = new CANTalon(7); //TODO: put in real value
+		conveyorTalon1 = new CANTalon(7); //TODO: put in real value
+		conveyorTalon2 = new CANTalon(9); //TODO: put in real value
 		DSLeft = new DoubleSolenoid(0,1);
 		DSRight = new DoubleSolenoid(2,3);
 		
