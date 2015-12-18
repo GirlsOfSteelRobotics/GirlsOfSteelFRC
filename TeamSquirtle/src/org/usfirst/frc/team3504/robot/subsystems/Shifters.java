@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -11,8 +13,9 @@ public class Shifters extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	private DoubleSolenoid shifterLeft;
-	private DoubleSolenoid shifterRight;
+	private DoubleSolenoid shifterLeft = RobotMap.DSLeft;
+	private DoubleSolenoid shifterRight = RobotMap.DSRight;
+	
 	
 	public void shiftLeft(boolean highgear) {
 		if(highgear==true) {

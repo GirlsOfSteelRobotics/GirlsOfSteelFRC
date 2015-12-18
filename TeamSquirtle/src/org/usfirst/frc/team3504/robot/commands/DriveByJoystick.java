@@ -21,6 +21,7 @@ public class DriveByJoystick extends Command {
 
 	// Called just before this Command runs the first time
     protected void initialize() {
+    	stick = Robot.oi.stick;
     }
 
     // Called repeatedly when this Command is scheduled to run

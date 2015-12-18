@@ -34,14 +34,13 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+		RobotMap.init();
 		oi = new OI();
 		drive = new Drive();
 		manipulator = new Manipulator();
 		shifters = new Shifters();
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Auto Drive", new AutoDrive());
-        // instantiate the command used for the autonomous period
-        //autonomousCommand = new ExampleCommand();
     }
 	
 	public void disabledPeriodic() {

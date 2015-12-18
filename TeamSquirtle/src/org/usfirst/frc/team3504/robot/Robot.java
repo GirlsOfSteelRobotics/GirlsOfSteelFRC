@@ -7,11 +7,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.ConveyorBelt;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 /**
@@ -23,10 +21,8 @@ import org.usfirst.frc.team3504.robot.subsystems.Shifters;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static Chassis chassis;
-	public static ConveyorBelt conveyorbelt;
 	public static Camera camera; 
 	public static Shifters shifters;
 
@@ -37,13 +33,13 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+		RobotMap.init();
 		chassis = new Chassis();
-		conveyorbelt = new ConveyorBelt();
         camera = new Camera(); 
         shifters = new Shifters();
 		// instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        oi = new OI();
+        autonomousCommand = new AutoDrive();
         
     }
 	
