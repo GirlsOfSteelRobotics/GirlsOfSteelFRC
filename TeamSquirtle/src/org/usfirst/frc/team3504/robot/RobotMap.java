@@ -32,6 +32,8 @@ public class RobotMap {
 	public static CANTalon conveyorTalon2;
 	public static DoubleSolenoid DSLeft;
 	public static DoubleSolenoid DSRight;
+	public static DoubleSolenoid DSRightRamp;
+	public static DoubleSolenoid DSLeftRamp;
 	
 	static void init() {
 		rightTalon1 = new CANTalon(1);
@@ -46,6 +48,8 @@ public class RobotMap {
 		conveyorTalon2 = new CANTalon(9); //TODO: put in real value
 		DSLeft = new DoubleSolenoid(0,1);
 		DSRight = new DoubleSolenoid(2,3);
+		DSLeftRamp = new DoubleSolenoid(4,5);
+		DSRightRamp = new DoubleSolenoid(6,7);
 		
 	}
 }

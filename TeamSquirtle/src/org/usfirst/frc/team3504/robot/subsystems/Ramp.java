@@ -1,16 +1,21 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class RampUp extends Subsystem {
-    public static DoubleSolenoid leftramp=RobotMap.
+public class Ramp extends Subsystem {
+    public static DoubleSolenoid leftramp=RobotMap.DSLeftRamp;
+    public static DoubleSolenoid rightramp=RobotMap.DSRightRamp;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public void Up(){
-		
+		leftramp.set(.5);
+		rightramp.set(.5);
 		
 	}
 
