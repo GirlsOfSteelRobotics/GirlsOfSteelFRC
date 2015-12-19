@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team3504.robot.commands.RampUp;
 import org.usfirst.frc.team3504.robot.commands.ShiftHighGear;
 import org.usfirst.frc.team3504.robot.commands.ShiftLowGear;
 
@@ -44,6 +45,9 @@ public class OI {
 	public JoystickButton btnShiftUp;
 	public JoystickButton btnShiftDown;
 	
+	public JoystickButton rampUp;
+	public JoystickButton rampDown;
+	
 	public OI(){
 		
 		stick = new Joystick(0);
@@ -51,6 +55,10 @@ public class OI {
 		btnShiftUp.whenPressed(new ShiftHighGear());
 		btnShiftDown = new JoystickButton(stick, 6);
 		btnShiftDown.whenPressed(new ShiftLowGear());
+		rampUp = new JoystickButton(stick, 3);
+		rampUp.whenPressed(new RampUp());
+		rampDown = new JoystickButton(stick, 4);
+		rampDown.whenPressed(new RampUp());
 		
 
 		

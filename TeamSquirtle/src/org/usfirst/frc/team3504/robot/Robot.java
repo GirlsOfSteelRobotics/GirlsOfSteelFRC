@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Ramp;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 /**
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static Chassis chassis;
 	public static Camera camera; 
 	public static Shifters shifters;
+	public static Ramp ramp;
 
     Command autonomousCommand;
 
@@ -37,6 +39,7 @@ public class Robot extends IterativeRobot {
 		chassis = new Chassis();
         camera = new Camera(); 
         shifters = new Shifters();
+        ramp = new Ramp();
 		// instantiate the command used for the autonomous period
         oi = new OI();
         autonomousCommand = new AutoDrive();
