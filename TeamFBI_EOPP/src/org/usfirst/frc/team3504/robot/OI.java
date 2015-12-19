@@ -36,25 +36,20 @@ public class OI {
 		
 		conveyorUp = new JoystickButton(operatorJoystick, 5); //TODO: change 
 		conveyorUp.whileHeld(new ConveyorUp());
-		conveyorDown = new JoystickButton(operatorJoystick, 6); //TODO: change 
+		conveyorDown = new JoystickButton(operatorJoystick, 4); //TODO: change 
 		conveyorDown.whileHeld(new ConveyorDown());
 		
-		shiftUp = new JoystickButton(chassisJoystick, 3); //TODO: change 
+		shiftUp = new JoystickButton(chassisJoystick, 5); //TODO: change 
 		shiftUp.whenPressed(new ShiftUp());
-		shiftDown = new JoystickButton(chassisJoystick, 4); //TODO: change
+		shiftDown = new JoystickButton(chassisJoystick, 3); //TODO: change
 		shiftDown.whenPressed(new ShiftDown());
-		
 	}
 
 	public Joystick getChassisJoystick() {
 		return chassisJoystick;
 	}
-	
+
 	public Joystick getOperatorJoystick() {
 		return operatorJoystick;
-
 	}
-
-
 }
-

@@ -66,7 +66,10 @@ public class RobotMap {
 		driveRobotDrive.setExpiration(0.1);
 		driveRobotDrive.setSensitivity(0.5);
 		driveRobotDrive.setMaxOutput(1.0);
-		//driveSystemRobotDrive2.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);  
+		//driveSystemRobotDrive2.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+		
+		shiftersShifterLeft = new DoubleSolenoid(0, 1);
+		shiftersShifterRight = new DoubleSolenoid(2, 3);  
 	}
 }
 
