@@ -9,12 +9,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Ramp extends Subsystem {
-    public static DoubleSolenoid rightramp=RobotMap.DSRightRamp;
+    public static DoubleSolenoid rightramp = RobotMap.DSRightRamp;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public void Up(){
 		rightramp.set(DoubleSolenoid.Value.kForward);
-		
 	}
 
 	public void Down(){
