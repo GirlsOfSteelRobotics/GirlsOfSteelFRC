@@ -36,7 +36,7 @@ public class RobotMap {
 	
 
 	//public static Image cameraFrame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-	//public static int cameraSession = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+	//public static int cameraSession = NIVision.IMAtQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 
 
 	static void init() {
@@ -46,7 +46,8 @@ public class RobotMap {
 		driveSystemDriveRight1 = new CANTalon(3);
 		driveSystemDriveLeft2 = new CANTalon(4);
 		driveSystemDriveRight2 = new CANTalon(5);
-		
+		conveyorBeltMotorRight = new CANTalon(6);
+		conveyorBeltMotorLeft = new CANTalon(7);
 		// Follower: The m_motor will run at the same throttle as the specified
 		// other talon.
 		driveSystemDriveLeft1.changeControlMode(CANTalon.ControlMode.Follower);
