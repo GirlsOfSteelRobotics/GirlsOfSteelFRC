@@ -34,14 +34,14 @@ public class OI {
 		operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 		chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 		
-		conveyorUp = new JoystickButton(operatorJoystick, 1); //TODO: change 
+		conveyorUp = new JoystickButton(operatorJoystick, 5); //TODO: change 
 		conveyorUp.whenPressed(new ConveyorUp());
-		conveyorDown = new JoystickButton(operatorJoystick, 2); //TODO: change 
+		conveyorDown = new JoystickButton(operatorJoystick, 6); //TODO: change 
 		conveyorDown.whenPressed(new ConveyorDown());
 		
-		shiftUp = new JoystickButton(chassisJoystick, 1); //TODO: change 
+		shiftUp = new JoystickButton(chassisJoystick, 3); //TODO: change 
 		shiftUp.whenPressed(new ShiftUp());
-		shiftDown = new JoystickButton(chassisJoystick, 2); //TODO: change
+		shiftDown = new JoystickButton(chassisJoystick, 4); //TODO: change
 		shiftDown.whenPressed(new ShiftDown());
 		
 	}
