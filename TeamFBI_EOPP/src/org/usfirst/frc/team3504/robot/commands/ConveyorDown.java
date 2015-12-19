@@ -12,34 +12,26 @@ public class ConveyorDown extends Command {
 	
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+	}
+
+	@Override
+	protected void execute() {
 		Robot.manipulator.manipulatorConveyorBeltMotorLeft(false);
 		Robot.manipulator.manipulatorConveyorBeltMotorRight(false);
 	}
 
 	@Override
-	protected void execute() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	protected void end() {
 		Robot.manipulator.stopConveyorBeltMotor();
-
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		end();
-
 	}
-
 }
