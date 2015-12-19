@@ -36,9 +36,8 @@ public class Chassis extends Subsystem{
 		setDefaultCommand(new DriveByJoystick());
 	}
 	
-	public double driveForward() {
+	public void driveForward() {
 		driveSystem.drive(.5, 0); 
-		return 0; //FIXME: some encoder number 
 	}
 	
 	public double resetDistance() {
