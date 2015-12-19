@@ -47,7 +47,7 @@ public class RobotMap {
 		conveyorTalon2 = new CANTalon(9); //TODO: put in real value
 		DSLeft = new DoubleSolenoid(0,1);
 		DSRight = new DoubleSolenoid(2,3);
-		DSRightRamp = new DoubleSolenoid(4,5);
+		DSRightRamp = new DoubleSolenoid(6,7);
 		
 	}
 }
