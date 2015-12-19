@@ -31,7 +31,7 @@ public class ConveyorDown extends Command {
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
+		Robot.manipulator.stopConveyorBeltMotor();
 
 	}
 

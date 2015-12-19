@@ -35,12 +35,12 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		RobotMap.init();
-		oi = new OI();
 		drive = new Drive();
 		manipulator = new Manipulator();
 		shifters = new Shifters();
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Auto Drive", new AutoDrive());
+		oi = new OI();
     }
 	
 	public void disabledPeriodic() {
