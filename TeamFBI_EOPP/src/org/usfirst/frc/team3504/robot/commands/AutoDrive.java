@@ -11,6 +11,8 @@ public class AutoDrive extends Command {
 	}
 	@Override
 	protected void initialize() {
+		setTimeout(3);
+		
 		
 	}
 
@@ -23,19 +25,19 @@ public class AutoDrive extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return isTimedOut();
 	}
 
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-
+		Robot.drive.stop();
 	}
 
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
-
+		end();
 	}
 
 }

@@ -38,9 +38,10 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		manipulator = new Manipulator();
 		shifters = new Shifters();
-		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Auto Drive", new AutoDrive());
+		//autoChooser = new SendableChooser();
+		//autoChooser.addDefault("Auto Drive", new AutoDrive());
 		oi = new OI();
+		autonomousCommand = new AutoDrive();
     }
 	
 	public void disabledPeriodic() {
@@ -49,7 +50,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	autonomousCommand = (Command) autoChooser.getSelected();
+    	//autonomousCommand = (Command) autoChooser.getSelected();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
     }
