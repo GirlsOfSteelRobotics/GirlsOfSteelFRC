@@ -1,4 +1,4 @@
-
+// This file is used during preseason training on Git and GitHub
 public class IceCreamExample {
 	public static void main(String[] args) {
 		int iceCreamScoops = Integer.parseInt(args[0]);
