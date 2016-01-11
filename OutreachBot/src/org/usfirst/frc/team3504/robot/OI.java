@@ -1,7 +1,10 @@
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3504.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -34,5 +37,44 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
+
+	public JoystickButton joystickButton3;
+	public JoystickButton joystickButton2;
+	public JoystickButton joystickButton6;
+	public JoystickButton joystickButton7;
+	public JoystickButton joystickButton11;
+	public JoystickButton joystickButton10;
+	public Joystick driveStick;
+
+	public OI() {
+		driveStick = new Joystick(0);
+
+		joystickButton10 = new JoystickButton(driveStick, 10);
+		joystickButton10.whileHeld(new AccessoryRightRev());
+		joystickButton11 = new JoystickButton(driveStick, 11);
+		joystickButton11.whileHeld(new AccessoryRightFwd());
+		joystickButton7 = new JoystickButton(driveStick, 7);
+		joystickButton7.whileHeld(new AccessoryLeftRev());
+		joystickButton6 = new JoystickButton(driveStick, 6);
+		joystickButton6.whileHeld(new AccessoryLeftFwd());
+		joystickButton2 = new JoystickButton(driveStick, 2);
+		joystickButton2.whenPressed(new ShiftDown());
+		joystickButton3 = new JoystickButton(driveStick, 3);
+		joystickButton3.whenPressed(new ShiftUp());
+
+		// SmartDashboard Buttons
+		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
+		SmartDashboard.putData("DriveByJoystick", new DriveByJoystick());
+		SmartDashboard.putData("Shift Up", new ShiftUp());
+		SmartDashboard.putData("Shift Down", new ShiftDown());
+		SmartDashboard.putData("Accessory Left Fwd", new AccessoryLeftFwd());
+		SmartDashboard.putData("Accessory Left Rev", new AccessoryLeftRev());
+		SmartDashboard.putData("Accessory Right Fwd", new AccessoryRightFwd());
+		SmartDashboard.putData("Accessory Right Rev", new AccessoryRightRev());
+	}
+
+	public Joystick getDriveStick() {
+		return driveStick;
+	}
 }
 

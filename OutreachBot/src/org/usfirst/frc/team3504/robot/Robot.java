@@ -1,12 +1,13 @@
-
 package org.usfirst.frc.team3504.robot;
+
+import org.usfirst.frc.team3504.robot.OI;
+import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,7 +20,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	// Declare and initialize each subsystem
+	// The constructor will create motor and sensor objects and do other setup
+	public static final DriveSystem driveSystem = new DriveSystem();
+	public static final AccessoryMotors accessoryMotors = new AccessoryMotors();
+	public static final Shifters shifters = new Shifters();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -30,11 +35,15 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	// Initialize the operator interface (joysticks and button mappings)
 		oi = new OI();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+
+		// Allow the driver to choose the autonomous command from a SmartDashboard menu
+		chooser = new SendableChooser();
+        chooser.addDefault("Default Auto", new AutonomousCommand());
+        // chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData(new DriveByJoystick());
     }
 	
 	/**
@@ -52,27 +61,13 @@ public class Robot extends IterativeRobot {
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
-	 * below the Gyro
+	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard.
 	 *
 	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
-	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
         
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
