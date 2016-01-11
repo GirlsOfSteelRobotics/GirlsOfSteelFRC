@@ -33,7 +33,7 @@ public class Shifters extends Subsystem {
     // here. Call these from Commands.
 
 	public void shiftLeft(Speed speed) {
-		if (speed == kHigh) {
+		if (speed == Speed.kHigh) {
 			shifterLeft.set(DoubleSolenoid.Value.kForward);
 			System.out.println("Shifting left side into high gear (fwd)");
 		} else {
@@ -43,7 +43,7 @@ public class Shifters extends Subsystem {
 	}
 	
 	public void shiftRight(Speed speed) {
-		if (speed == kHigh) {
+		if (speed == Speed.kHigh) {
 			shifterRight.set(DoubleSolenoid.Value.kForward);
 			System.out.println("Shifting right side into high gear (fwd)");
 		} else {
