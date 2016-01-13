@@ -48,7 +48,7 @@ public class OI {
 
 	public OI() {
 		driveStick = new Joystick(0);
-
+//for attack3 joystick
 		joystickButton10 = new JoystickButton(driveStick, 10);
 		joystickButton10.whileHeld(new AccessoryRightRev());
 		joystickButton11 = new JoystickButton(driveStick, 11);

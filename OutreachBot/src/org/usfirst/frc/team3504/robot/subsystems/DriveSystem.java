@@ -33,11 +33,11 @@ public class DriveSystem extends Subsystem {
 		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
 		LiveWindow.addActuator("Drive System", "Drive Left C", driveLeftC);
 
-		driveRightA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
+		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
 		LiveWindow.addActuator("Drive System", "Drive Right A", driveRightA);
-		driveRightB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
+		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
 		LiveWindow.addActuator("Drive System", "Drive Right B", driveRightB);
-		driveRightC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
+		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
 		LiveWindow.addActuator("Drive System", "Drive Right C", driveRightC);
 
 		// On each side, all three drive motors MUST run at the same speed.
@@ -61,7 +61,8 @@ public class DriveSystem extends Subsystem {
 		robotDrive.setExpiration(0.1);
 		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
-		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);        
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 	}
 	
 	public void initDefaultCommand() {
