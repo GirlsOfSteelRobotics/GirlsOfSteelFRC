@@ -27,26 +27,26 @@ public class DriveSystem extends Subsystem {
 	
 	public DriveSystem() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
-		LiveWindow.addActuator("Drive System", "Drive Left A", driveLeftA);
+		//LiveWindow.addActuator("Drive System", "Drive Left A", driveLeftA);
 		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
-		LiveWindow.addActuator("Drive System", "Drive Left B", driveLeftB);
+		//LiveWindow.addActuator("Drive System", "Drive Left B", driveLeftB);
 		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
-		LiveWindow.addActuator("Drive System", "Drive Left C", driveLeftC);
+		//LiveWindow.addActuator("Drive System", "Drive Left C", driveLeftC);
 
 		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
-		LiveWindow.addActuator("Drive System", "Drive Right A", driveRightA);
+		//LiveWindow.addActuator("Drive System", "Drive Right A", driveRightA);
 		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
-		LiveWindow.addActuator("Drive System", "Drive Right B", driveRightB);
+		//LiveWindow.addActuator("Drive System", "Drive Right B", driveRightB);
 		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
-		LiveWindow.addActuator("Drive System", "Drive Right C", driveRightC);
+		//LiveWindow.addActuator("Drive System", "Drive Right C", driveRightC);
 
 		// On each side, all three drive motors MUST run at the same speed.
 		// Use the CAN Talon Follower mode to set the speed of B and C,
 		// making always run at the same speed as A.
-		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		//driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		//driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		//driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		//driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveLeftB.set(driveLeftA.getDeviceID());
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
