@@ -63,6 +63,8 @@ public class DriveSystem extends Subsystem {
 		robotDrive.setMaxOutput(1.0);
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
 	}
 	
 	public void initDefaultCommand() {
