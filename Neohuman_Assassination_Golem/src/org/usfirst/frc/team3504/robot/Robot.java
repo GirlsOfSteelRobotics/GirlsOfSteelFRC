@@ -25,11 +25,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
-	public static Chassis chassis;
-	public static Shifters shifters;
-	public static Flap flap;
-	public static Claw claw;
-	public static Pivot pivot;
+	public static final Chassis chassis = new Chassis();
+	public static final  Shifters shifters = new Shifters();
+	public static Flap flap = new Flap();
+	public static Claw claw = new Claw();
+	public static Pivot pivot = new Pivot();
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -40,11 +40,11 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		chassis = new Chassis();
-		shifters = new Shifters();
-        flap = new Flap();
-		claw = new Claw();
-		pivot = new Pivot();
+		//chassis = new Chassis();
+		//shifters = new Shifters();
+        //flap = new Flap();
+		//claw = new Claw();
+		//pivot = new Pivot();
         chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand()); TODO: add this back in when we make a real autonomous
 //        chooser.addObject("My Auto", new MyAutoCommand());

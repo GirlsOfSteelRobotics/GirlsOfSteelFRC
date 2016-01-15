@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3504.robot.commands.CollectBall;
 import org.usfirst.frc.team3504.robot.commands.FlapDown;
 import org.usfirst.frc.team3504.robot.commands.FlapUp;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -39,6 +41,9 @@ public class OI {
 	private JoystickButton flapUpButton;
 	private JoystickButton flapDownButton;
 	
+	private JoystickButton shiftUpButton;
+	private JoystickButton shiftDownButton;
+	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
 		collectBallButton.whileHeld(new CollectBall());
@@ -50,6 +55,10 @@ public class OI {
 		flapDownButton = new JoystickButton(operatorStick, 4);
 		flapDownButton.whileHeld(new FlapDown());
 		
+		shiftUpButton = new JoystickButton(drivingStick, 3);
+		shiftUpButton.whenPressed(new ShiftUp());
+		shiftDownButton = new JoystickButton(drivingStick, 4);
+		shiftDownButton.whenPressed(new ShiftDown());
 	}
 	
     // Start the command when the button is pressed and let it run the command
