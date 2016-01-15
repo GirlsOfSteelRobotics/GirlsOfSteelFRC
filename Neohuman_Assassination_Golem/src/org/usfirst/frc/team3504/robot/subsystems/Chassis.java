@@ -31,6 +31,11 @@ public class Chassis extends Subsystem {
 		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
 		
 		robotDrive = new RobotDrive(driveLeftA, driveRightA);
+		
+		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
 	}
 	
     public void initDefaultCommand() {
