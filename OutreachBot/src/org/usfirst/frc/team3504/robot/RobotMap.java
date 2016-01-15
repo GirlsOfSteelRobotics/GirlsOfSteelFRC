@@ -18,13 +18,13 @@ public class RobotMap {
 	
 	// Each side of the drive system has three motors,
 	// all driven at the same speed
-	public static final int DRIVE_LEFT_A_CAN_ID = 1; 
-	public static final int DRIVE_LEFT_B_CAN_ID = 2;
-	public static final int DRIVE_LEFT_C_CAN_ID = 3;
+	public static final int DRIVE_LEFT_A_CAN_ID = 4; 
+	public static final int DRIVE_LEFT_B_CAN_ID = 5;
+	public static final int DRIVE_LEFT_C_CAN_ID = 6;
 
-	public static final int DRIVE_RIGHT_A_CAN_ID = 4;
-	public static final int DRIVE_RIGHT_B_CAN_ID = 5;
-	public static final int DRIVE_RIGHT_C_CAN_ID = 6;
+	public static final int DRIVE_RIGHT_A_CAN_ID = 1;
+	public static final int DRIVE_RIGHT_B_CAN_ID = 2;
+	public static final int DRIVE_RIGHT_C_CAN_ID = 3;
 	//public static final int SPARE_A_CAN_ID = 14;
 	//public static final int SPARE_B_CAN_ID = 15;
 	

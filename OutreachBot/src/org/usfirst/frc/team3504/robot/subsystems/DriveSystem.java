@@ -43,10 +43,10 @@ public class DriveSystem extends Subsystem {
 		// On each side, all three drive motors MUST run at the same speed.
 		// Use the CAN Talon Follower mode to set the speed of B and C,
 		// making always run at the same speed as A.
-		//driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		//driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-		//driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		//driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveLeftB.set(driveLeftA.getDeviceID());
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
@@ -61,8 +61,8 @@ public class DriveSystem extends Subsystem {
 		robotDrive.setExpiration(0.1);
 		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
+		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
 	}
