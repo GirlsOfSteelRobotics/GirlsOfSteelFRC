@@ -32,16 +32,26 @@ public class Chassis extends Subsystem {
 		
 		robotDrive = new RobotDrive(driveLeftA, driveRightA);
 		
+		// Set some safety controls for the drive system
+		robotDrive.setSafetyEnabled(true);
+		robotDrive.setExpiration(0.1);
+		robotDrive.setSensitivity(0.5);
+		robotDrive.setMaxOutput(1.0);
+		
 		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftB.set(driveLeftA.getDeviceID());
+		driveLeftC.set(driveLeftA.getDeviceID());
+		driveRightB.set(driveRightA.getDeviceID());
+		driveRightC.set(driveRightA.getDeviceID());
 	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand( new DriveByJoystick());
+    	setDefaultCommand( new DriveByJoystick() );
     }
     
     public void driveByJoystick(Joystick stick) {

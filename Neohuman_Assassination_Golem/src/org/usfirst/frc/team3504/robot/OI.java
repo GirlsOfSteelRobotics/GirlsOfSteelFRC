@@ -16,7 +16,7 @@ public class OI {
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
     
-	Joystick drivingStick = new Joystick(1);
+	Joystick drivingStick = new Joystick(0);
 	
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
