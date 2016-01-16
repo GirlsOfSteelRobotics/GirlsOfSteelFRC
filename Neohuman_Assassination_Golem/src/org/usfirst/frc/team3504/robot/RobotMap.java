@@ -31,4 +31,9 @@ public class RobotMap {
 	public static final int SHIFTER_RIGHT_A = 2;
 	public static final int SHIFTER_RIGHT_B = 3;
 
+	//talons for flap
+	public static final int FLAP_A = 7; //TODO: fix these numbers
+	public static final int FLAP_B = 8;
+
+	
 }
