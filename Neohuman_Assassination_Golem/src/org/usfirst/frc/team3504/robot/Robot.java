@@ -6,10 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Claw;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3504.robot.subsystems.Flap;
 import org.usfirst.frc.team3504.robot.subsystems.Pivot;
 
@@ -25,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static Chassis chassis;
 	public static Flap flap;
@@ -46,7 +43,7 @@ public class Robot extends IterativeRobot {
 		claw = new Claw();
 		pivot = new Pivot();
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
+        //chooser.addDefault("Default Auto", new ExampleCommand()); TODO: add this back in when we make a real autonomous
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     }
