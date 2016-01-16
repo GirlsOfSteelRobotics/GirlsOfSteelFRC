@@ -2,6 +2,9 @@ package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team3504.robot.commands.CollectBall;
 import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 
 /**
@@ -17,6 +20,7 @@ public class OI {
     // Button button = new JoystickButton(stick, buttonNumber);
     
 	Joystick drivingStick = new Joystick(1);
+	Joystick operatorStick = new Joystick(2);
 	
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -26,6 +30,17 @@ public class OI {
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
     
+	//JOYSTICK BUTTONS
+	private JoystickButton collectBallButton;
+	private JoystickButton releaseBallButton;
+	
+	public OI() {
+		collectBallButton = new JoystickButton(operatorStick, 1);
+		collectBallButton.whileHeld(new CollectBall());
+		releaseBallButton = new JoystickButton(operatorStick, 2);
+		releaseBallButton.whileHeld(new CollectBall());
+	}
+	
     // Start the command when the button is pressed and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenPressed(new ExampleCommand());
