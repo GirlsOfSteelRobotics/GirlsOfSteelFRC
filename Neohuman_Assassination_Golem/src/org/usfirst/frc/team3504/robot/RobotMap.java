@@ -25,6 +25,11 @@ public class RobotMap {
 	public static final int DRIVE_RIGHT_B = 2;
 	public static final int DRIVE_RIGHT_C = 3;
 	
+
+	//Talons for claw
+	public static final int CLAW_MOTOR = 7;
+	
+
 	//solenoids for shifters
 	public static final int SHIFTER_LEFT_A = 0;
 	public static final int SHIFTER_LEFT_B = 1;
@@ -34,6 +39,4 @@ public class RobotMap {
 	//talons for flap
 	public static final int FLAP_A = 7; //TODO: fix these numbers
 	public static final int FLAP_B = 8;
-
-	
 }
