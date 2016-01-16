@@ -27,9 +27,11 @@ public class RobotMap {
 	
 
 	//Talons for claw
-	public static final int CLAW_MOTOR = 7;
+	public static final int CLAW_MOTOR = 10;
 	
-
+	//Talons for pivot
+	public static final int PIVOT_MOTOR = 9;
+	
 	//solenoids for shifters
 	public static final int SHIFTER_LEFT_A = 0;
 	public static final int SHIFTER_LEFT_B = 1;

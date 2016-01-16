@@ -11,6 +11,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Claw;
 import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3504.robot.subsystems.Flap;
+import org.usfirst.frc.team3504.robot.subsystems.Pivot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static Chassis chassis;
 	public static Flap flap;
 	public static Claw claw;
+	public static Pivot pivot;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot {
 		chassis = new Chassis();
         flap = new Flap();
 		claw = new Claw();
+		pivot = new Pivot();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
