@@ -10,6 +10,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Claw;
 import org.usfirst.frc.team3504.robot.subsystems.Flap;
 import org.usfirst.frc.team3504.robot.subsystems.Pivot;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Chassis chassis;
+	public static Shifters shifters;
 	public static Flap flap;
 	public static Claw claw;
 	public static Pivot pivot;
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		chassis = new Chassis();
+		shifters = new Shifters();
         flap = new Flap();
 		claw = new Claw();
 		pivot = new Pivot();
