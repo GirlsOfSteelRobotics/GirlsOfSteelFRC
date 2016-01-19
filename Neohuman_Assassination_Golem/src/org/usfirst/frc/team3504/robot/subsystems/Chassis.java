@@ -57,7 +57,9 @@ public class Chassis extends Subsystem {
     public void driveByJoystick(Joystick stick) {
     	robotDrive.arcadeDrive(stick);
     }
-    
+    public void drive(double moveValue, double rotateValue){
+    	robotDrive.arcadeDrive(moveValue, rotateValue);
+    }
     public void stop() {
     	robotDrive.arcadeDrive(0, 0);
     }
