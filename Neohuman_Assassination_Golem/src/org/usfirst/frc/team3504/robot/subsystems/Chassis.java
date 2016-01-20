@@ -60,6 +60,12 @@ public class Chassis extends Subsystem {
     public void drive(double moveValue, double rotateValue){
     	robotDrive.arcadeDrive(moveValue, rotateValue);
     }
+    
+    public void driveSpeed(double speed){
+    	driveLeftA.set(speed);
+    	driveRightA.set(speed);
+    }
+    
     public void stop() {
     	robotDrive.arcadeDrive(0, 0);
     }
