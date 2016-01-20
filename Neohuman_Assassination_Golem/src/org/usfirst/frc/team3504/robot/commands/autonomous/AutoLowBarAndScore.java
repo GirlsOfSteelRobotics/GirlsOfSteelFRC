@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.commands.Drive;
+import org.usfirst.frc.team3504.robot.commands.PivotDown;
+import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -13,6 +15,8 @@ public class AutoLowBarAndScore extends CommandGroup {
     	addSequential(new Drive(15,0)); //FIXME: Find real values 
     	addSequential(new Drive(0,45)); 
     	addSequential(new Drive(5,0)); 
+    	addSequential(new PivotDown());
+    	addSequential(new ReleaseBall()); 
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
