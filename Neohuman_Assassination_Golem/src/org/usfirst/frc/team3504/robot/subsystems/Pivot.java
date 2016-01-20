@@ -22,6 +22,10 @@ public class Pivot extends Subsystem {
 		pivotMotor.set(speed);
 	}
 	
+	public void pivotDown(double distance) {
+		pivotMotor.set(distance);
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
