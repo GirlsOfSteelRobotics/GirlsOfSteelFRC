@@ -25,8 +25,8 @@ public class RobotMap {
 	public static final int DRIVE_RIGHT_A_CAN_ID = 1;
 	public static final int DRIVE_RIGHT_B_CAN_ID = 2;
 	public static final int DRIVE_RIGHT_C_CAN_ID = 3;
-	//public static final int SPARE_A_CAN_ID = 14;
-	//public static final int SPARE_B_CAN_ID = 15;
+	public static final int ARM_PIVOT_CAN_ID = 14;
+	public static final int COLLECTOR_CAN_ID = 15;
 	
 	// The output shaft of the drive system has a quadrature encoder
 	public static final int DRIVE_LEFT_ENCODER_A = 0;
@@ -40,6 +40,10 @@ public class RobotMap {
 	public static final int SHIFTER_LEFT_B = 1;
 	public static final int SHIFTER_RIGHT_A = 2;
 	public static final int SHIFTER_RIGHT_B = 3;
+	public static final int ARM_PISTON_A = 4;
+	public static final int ARM_PISTON_B = 5;
+	public static final int SHOOTER_PISTON_A = 6;
+	public static final int SHOOTER_PISTON_B = 7;
 	
 	// Accessory motors, left and right, are on a Victor motor controller
 	public static final int ACCESSORY_LEFT_PORT = 2;
