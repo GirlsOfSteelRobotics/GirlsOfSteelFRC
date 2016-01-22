@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team3504.robot.commands.*;
 
 /**
@@ -40,28 +41,44 @@ public class OI {
 
 	public JoystickButton joystickButton3;
 	public JoystickButton joystickButton2;
-	public JoystickButton joystickButton6;
-	public JoystickButton joystickButton7;
-	public JoystickButton joystickButton11;
-	public JoystickButton joystickButton10;
+	
+	public JoystickButton closeArm;
+	public JoystickButton openArm;
+	public JoystickButton collectBall;
+	public JoystickButton releaseBall;
+	public JoystickButton shootBall;
+	public JoystickButton shooterIn;
+	public JoystickButton pivotUp;
+	public JoystickButton pivotDown;
+	
 	public Joystick driveStick;
 
 	public OI() {
 		driveStick = new Joystick(0);
 //for attack3 joystick
-		joystickButton10 = new JoystickButton(driveStick, 10);
-		joystickButton10.whileHeld(new AccessoryRightRev());
-		joystickButton11 = new JoystickButton(driveStick, 11);
-		joystickButton11.whileHeld(new AccessoryRightFwd());
-		joystickButton7 = new JoystickButton(driveStick, 7);
-		joystickButton7.whileHeld(new AccessoryLeftRev());
-		joystickButton6 = new JoystickButton(driveStick, 6);
-		joystickButton6.whileHeld(new AccessoryLeftFwd());
+
 		joystickButton2 = new JoystickButton(driveStick, 2);
 		joystickButton2.whenPressed(new ShiftDown());
 		joystickButton3 = new JoystickButton(driveStick, 3);
 		joystickButton3.whenPressed(new ShiftUp());
-
+		
+		closeArm = new JoystickButton(driveStick, 4);
+		closeArm.whenPressed(new CloseArm());
+		openArm = new JoystickButton(driveStick, 5);
+		openArm.whenPressed(new OpenArm());
+		collectBall = new JoystickButton(driveStick, 6);
+		collectBall.whileHeld(new CollectBall());
+		releaseBall = new JoystickButton(driveStick, 7);
+		releaseBall.whileHeld(new ReleaseBall());
+		shootBall = new JoystickButton(driveStick, 8);
+		shootBall.whenPressed(new ShootBall());
+		shooterIn = new JoystickButton(driveStick, 9);
+		shooterIn.whenPressed(new ShooterIn());
+		pivotUp = new JoystickButton(driveStick, 10);
+		pivotUp.whileHeld(new PivotUp());
+		pivotDown = new JoystickButton(driveStick, 11);
+		pivotDown.whileHeld(new PivotDown());
+		
 		// SmartDashboard Buttons
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
 		SmartDashboard.putData("DriveByJoystick", new DriveByJoystick());

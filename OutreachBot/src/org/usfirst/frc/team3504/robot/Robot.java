@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 	public static final DriveSystem driveSystem = new DriveSystem();
 	public static final AccessoryMotors accessoryMotors = new AccessoryMotors();
 	public static final Shifters shifters = new Shifters();
+	public static final Manipulator manipulator = new Manipulator();
 	public static OI oi;
 
     Command autonomousCommand;
