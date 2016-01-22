@@ -27,8 +27,37 @@ public class Manipulator extends Subsystem {
 	}
 	
 	public void openArm(){
-	
+		arm.set(DoubleSolenoid.Value.kForward);
 	}
+	
+	public void closeArm(){
+		arm.set(DoubleSolenoid.Value.kReverse);
+	}
+	
+	public void shootBall() {
+		shooter.set(DoubleSolenoid.Value.kForward);
+	}
+	
+	public void shooterIn() {
+		shooter.set(DoubleSolenoid.Value.kReverse);
+	}
+	
+	public void collectBall() {
+		collectorMotor.set(-1);
+	}
+	
+	public void releaseBall() {
+		collectorMotor.set(1);
+	}
+	
+	public void pivotUp() {
+		pivotMotor.set(1);
+	}
+	
+	public void pivotDown() {
+		pivotMotor.set(-1);
+	}
+	
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
