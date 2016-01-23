@@ -50,7 +50,6 @@ public class Chassis extends Subsystem {
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand( new DriveByJoystick() );
     }
     
@@ -62,12 +61,11 @@ public class Chassis extends Subsystem {
     }
     
     public void driveSpeed(double speed){
-    	driveLeftA.set(speed);
-    	driveRightA.set(speed);
+    	robotDrive.drive(speed, 0);
     }
     
     public void stop() {
-    	robotDrive.arcadeDrive(0, 0);
+    	robotDrive.drive(0, 0);
     }
 }
 
