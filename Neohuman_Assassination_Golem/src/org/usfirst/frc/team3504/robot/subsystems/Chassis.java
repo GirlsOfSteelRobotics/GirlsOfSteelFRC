@@ -22,6 +22,8 @@ public class Chassis extends Subsystem {
 	
 	private RobotDrive robotDrive;
 
+	private double encOffsetValue = 0;
+	
 	public Chassis() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
 		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
@@ -67,6 +69,22 @@ public class Chassis extends Subsystem {
     public void stop() {
     	robotDrive.drive(0, 0);
     }
+    
+	public double getEncoderRight() {
+		return driveRightA.getEncPosition();
+	}
+
+	public double getEncoderLeft() {
+		return driveLeftA.getEncPosition();
+	}
+
+	public double getEncoderDistance() {
+		return (getEncoderLeft() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+	}
+
+	public void resetDistance() {
+		encOffsetValue = getEncoderLeft();
+	}
 }
 
 

@@ -4,12 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team3504.robot.commands.CollectBall;
-import org.usfirst.frc.team3504.robot.commands.FlapDown;
-import org.usfirst.frc.team3504.robot.commands.FlapUp;
-import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
-import org.usfirst.frc.team3504.robot.commands.ShiftDown;
-import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator

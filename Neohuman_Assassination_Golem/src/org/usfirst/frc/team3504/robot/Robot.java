@@ -37,7 +37,8 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         chooser = new SendableChooser();
-        chooser.addDefault("AutoLowBarAndScore", new AutoLowBarAndScore()); 
+        chooser.addDefault("AutoDriveDistance 36 inches", new AutoDriveDistance(36));
+        chooser.addObject("AutoLowBarAndScore", new AutoLowBarAndScore()); 
         chooser.addObject("AutoSpyBot", new AutoSpyBot());
         SmartDashboard.putData("Auto mode", chooser);
     }
@@ -83,6 +84,8 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        shifters.shiftLeft(Shifters.Speed.kLow);
+        shifters.shiftRight(Shifters.Speed.kLow);
     }
 
     /**
