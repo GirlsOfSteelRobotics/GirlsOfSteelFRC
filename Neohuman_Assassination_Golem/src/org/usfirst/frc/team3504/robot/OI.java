@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3504.robot.commands.CollectBall;
 import org.usfirst.frc.team3504.robot.commands.FlapDown;
 import org.usfirst.frc.team3504.robot.commands.FlapUp;
+import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 
@@ -48,7 +49,7 @@ public class OI {
 		collectBallButton = new JoystickButton(operatorStick, 1);
 		collectBallButton.whileHeld(new CollectBall());
 		releaseBallButton = new JoystickButton(operatorStick, 2);
-		releaseBallButton.whileHeld(new CollectBall());
+		releaseBallButton.whileHeld(new ReleaseBall());
 		
 		flapUpButton = new JoystickButton(operatorStick, 3);
 		flapUpButton.whileHeld(new FlapUp());

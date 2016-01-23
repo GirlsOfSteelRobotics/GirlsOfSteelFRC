@@ -5,15 +5,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Claw;
-import org.usfirst.frc.team3504.robot.subsystems.Flap;
-import org.usfirst.frc.team3504.robot.subsystems.Pivot;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team3504.robot.subsystems.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,9 +23,9 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static final Chassis chassis = new Chassis();
 	public static final  Shifters shifters = new Shifters();
-	public static Flap flap = new Flap();
-	public static Claw claw = new Claw();
-	public static Pivot pivot = new Pivot();
+	public static final Flap flap = new Flap();
+	public static final Claw claw = new Claw();
+	public static final Pivot pivot = new Pivot();
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -40,14 +36,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		//chassis = new Chassis();
-		//shifters = new Shifters();
-        //flap = new Flap();
-		//claw = new Claw();
-		//pivot = new Pivot();
         chooser = new SendableChooser();
-        //chooser.addDefault("Default Auto", new ExampleCommand()); TODO: add this back in when we make a real autonomous
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        chooser.addDefault("AutoLowBarAndScore", new AutoLowBarAndScore()); 
+        chooser.addObject("AutoSpyBot", new AutoSpyBot());
         SmartDashboard.putData("Auto mode", chooser);
     }
 	
@@ -75,18 +66,6 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
