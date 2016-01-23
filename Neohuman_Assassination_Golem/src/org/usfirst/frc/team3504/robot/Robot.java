@@ -38,9 +38,9 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("AutoDriveDistance 36 inches", new AutoDriveDistance(36));
-        chooser.addObject("AutoLowBarAndScore", new AutoLowBarAndScore()); 
-        chooser.addObject("AutoSpyBot", new AutoSpyBot());
-        SmartDashboard.putData("Auto mode", chooser);
+        //chooser.addObject("AutoLowBarAndScore", new AutoLowBarAndScore()); 
+        //chooser.addObject("AutoSpyBot", new AutoSpyBot());
+        //SmartDashboard.putData("Auto mode", chooser);
     }
 	
 	/**
@@ -66,7 +66,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+       autonomousCommand = new AutoDriveDistance(36);
+    	   // autonomousCommand = (Command) chooser.getSelected();
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
