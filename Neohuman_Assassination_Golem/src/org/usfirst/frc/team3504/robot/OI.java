@@ -81,7 +81,6 @@ public class OI {
 		testAutonomous = new JoystickButton(drivingStickForward, 5);
 		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
 		
-
 		switchCam = new JoystickButton(drivingStickForward, 10);
 		switchCam.whenPressed(new SwitchCam());
 
@@ -106,20 +105,32 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	
-	public Joystick getChassisJoystick() {
+	public double getDrivingJoystickY() {
 		if (driveDirection == DriveDirection.kFWD){
-			return drivingStickForward;
+			return drivingStickForward.getY();
 		}
 		else {
-			return drivingStickBackward; 
+			return -drivingStickBackward.getY(); 
 		}
-			
+	}
+	
+	public double getDrivingJoystickX() {
+		if (driveDirection == DriveDirection.kFWD){
+			return drivingStickForward.getX();
+		}
+		else {
+			return -drivingStickBackward.getX(); 
+		}
 	}
 	
 	public void setDriveDirection(DriveDirection driveDirection) {
 		this.driveDirection = driveDirection; 
+		System.out.println("Drive direction set to: " + driveDirection);
 	}
 	
+	public boolean isJoystickReversed() {
+		return (driveDirection == DriveDirection.kREV); 
+	}
 	
 }
 
