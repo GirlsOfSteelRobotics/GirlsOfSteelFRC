@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -40,6 +41,8 @@ public class OI {
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
 	
+	private JoystickButton testAutonomous;
+	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
 		collectBallButton.whileHeld(new CollectBall());
@@ -55,6 +58,9 @@ public class OI {
 		shiftUpButton.whenPressed(new ShiftUp());
 		shiftDownButton = new JoystickButton(drivingStick, 4);
 		shiftDownButton.whenPressed(new ShiftDown());
+		
+		testAutonomous = new JoystickButton(drivingStick, 5);
+		testAutonomous.whenPressed(new AutoDriveDistance(36));
 	}
 	
     // Start the command when the button is pressed and let it run the command
