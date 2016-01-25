@@ -50,6 +50,10 @@ public class Manipulator extends Subsystem {
 		collectorMotor.set(1);
 	}
 	
+	public void stopCollecting() {
+		collectorMotor.set(0);
+	}
+	
 	public void pivotUp() {
 		pivotMotor.set(1);
 	}
@@ -58,7 +62,9 @@ public class Manipulator extends Subsystem {
 		pivotMotor.set(-1);
 	}
 	
-
+	public void stopPivot() {
+		pivotMotor.set(0);
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
