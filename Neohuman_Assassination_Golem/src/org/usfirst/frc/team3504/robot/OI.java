@@ -60,7 +60,7 @@ public class OI {
 		shiftDownButton.whenPressed(new ShiftDown());
 		
 		testAutonomous = new JoystickButton(drivingStick, 5);
-		testAutonomous.whenPressed(new AutoDriveDistance(36));
+		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
 	}
 	
     // Start the command when the button is pressed and let it run the command

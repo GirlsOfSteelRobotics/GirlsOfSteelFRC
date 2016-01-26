@@ -18,6 +18,7 @@ public class ShootBall extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.manipulator.shootBall();
+    	System.out.println("Shoot ball");
     }
 
     // Called repeatedly when this Command is scheduled to run
