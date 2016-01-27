@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 
 public class FlapDown extends Command {
+	
+	private static final double EncoderValue = 9; //TODO: fix this
 
     public FlapDown() {
         // Use requires() here to declare subsystem dependencies
@@ -16,6 +18,7 @@ public class FlapDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.flap.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,7 +28,7 @@ public class FlapDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return EncoderValue == Robot.flap.getFlapEncoderDistance();
     }
 
     // Called once after isFinished returns true
