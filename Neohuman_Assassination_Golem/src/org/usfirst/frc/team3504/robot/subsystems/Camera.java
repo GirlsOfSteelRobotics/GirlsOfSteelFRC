@@ -23,7 +23,7 @@ public class Camera extends Subsystem {
 	
 	public Camera() {
 		
-		server.getInstance();
+		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
 	}
