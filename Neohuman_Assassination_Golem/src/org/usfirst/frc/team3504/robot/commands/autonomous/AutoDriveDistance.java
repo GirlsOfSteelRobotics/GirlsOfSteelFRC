@@ -11,20 +11,25 @@ public class AutoDriveDistance extends Command {
 
 	private double inches;
 	
-    public AutoDriveDistance(double inches) {
+    public AutoDriveDistance(double distance) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
-        inches = this.inches;
+        inches = distance;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.chassis.resetDistance();
+    	System.out.println("Encoder distance initially: " + Robot.chassis.getEncoderDistance());
+    	System.out.println("Inches: " + inches);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.driveSpeed(.1);
+
+    	System.out.println("Encoder distance: " + Robot.chassis.getEncoderDistance());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,6 +40,7 @@ public class AutoDriveDistance extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.chassis.stop();
+    	System.out.println("Stopped");
     }
 
     // Called when another command which requires one or more of the same

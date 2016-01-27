@@ -62,21 +62,21 @@ public class OI {
 		joystickButton3 = new JoystickButton(driveStick, 3);
 		joystickButton3.whenPressed(new ShiftUp());
 		
-		closeArm = new JoystickButton(driveStick, 4);
+		closeArm = new JoystickButton(driveStick, 4); //good
 		closeArm.whenPressed(new CloseArm());
-		openArm = new JoystickButton(driveStick, 5);
+		openArm = new JoystickButton(driveStick, 5); //good
 		openArm.whenPressed(new OpenArm());
-		collectBall = new JoystickButton(driveStick, 6);
+		collectBall = new JoystickButton(driveStick, 6); //good
 		collectBall.whileHeld(new CollectBall());
-		releaseBall = new JoystickButton(driveStick, 7);
+		releaseBall = new JoystickButton(driveStick, 7); //good
 		releaseBall.whileHeld(new ReleaseBall());
 		shootBall = new JoystickButton(driveStick, 8);
 		shootBall.whenPressed(new ShootBall());
 		shooterIn = new JoystickButton(driveStick, 9);
 		shooterIn.whenPressed(new ShooterIn());
-		pivotUp = new JoystickButton(driveStick, 10);
+		pivotUp = new JoystickButton(driveStick, 10); //good
 		pivotUp.whileHeld(new PivotUp());
-		pivotDown = new JoystickButton(driveStick, 11);
+		pivotDown = new JoystickButton(driveStick, 11); //good
 		pivotDown.whileHeld(new PivotDown());
 		
 		// SmartDashboard Buttons

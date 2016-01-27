@@ -17,6 +17,7 @@ public class Flap extends Subsystem {
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+	private double encOffsetValue = 0;
 	
 	 public void initDefaultCommand() {
 	        // Set the default command for a subsystem here.
@@ -46,7 +47,18 @@ public class Flap extends Subsystem {
 	public boolean getBottomLimitSwitch(){
 		return flapTalon.isRevLimitSwitchClosed();
 	}
-	
+	 
+		public double getFlapEncoder() {
+			return flapTalon.getEncPosition();
+		}
+
+		public double getFlapEncoderDistance() {
+			return (getFlapEncoder() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+		}
+
+		public void resetDistance() {
+			encOffsetValue = getFlapEncoder();
+		}
 	
 
    

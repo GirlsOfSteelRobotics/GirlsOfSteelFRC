@@ -58,12 +58,13 @@ public class Chassis extends Subsystem {
     public void driveByJoystick(Joystick stick) {
     	robotDrive.arcadeDrive(stick);
     }
+    
     public void drive(double moveValue, double rotateValue){
     	robotDrive.arcadeDrive(moveValue, rotateValue);
     }
     
     public void driveSpeed(double speed){
-    	robotDrive.drive(speed, 0);
+    	robotDrive.drive(-speed, 0);
     }
     
     public void stop() {
@@ -79,11 +80,11 @@ public class Chassis extends Subsystem {
 	}
 
 	public double getEncoderDistance() {
-		return (getEncoderLeft() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+		return (getEncoderRight() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
 	}
 
 	public void resetDistance() {
-		encOffsetValue = getEncoderLeft();
+		encOffsetValue = getEncoderRight();
 	}
 }
 
