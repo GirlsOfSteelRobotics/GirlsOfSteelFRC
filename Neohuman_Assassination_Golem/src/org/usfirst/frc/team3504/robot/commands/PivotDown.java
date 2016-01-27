@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class PivotDown extends Command {
 
+	public static final double EncoderValue = 10; //TODO: Fix this
     public PivotDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -15,6 +16,7 @@ public class PivotDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.pivot.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -24,7 +26,7 @@ public class PivotDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return EncoderValue == Robot.pivot.getEncoderDistance();
     }
 
     // Called once after isFinished returns true
