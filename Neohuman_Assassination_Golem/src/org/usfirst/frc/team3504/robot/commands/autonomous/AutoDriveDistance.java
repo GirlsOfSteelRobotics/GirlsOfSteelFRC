@@ -27,7 +27,9 @@ public class AutoDriveDistance extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.driveSpeed(.1);
+
     	System.out.println("Encoder distance: " + Robot.chassis.getEncoderDistance());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
