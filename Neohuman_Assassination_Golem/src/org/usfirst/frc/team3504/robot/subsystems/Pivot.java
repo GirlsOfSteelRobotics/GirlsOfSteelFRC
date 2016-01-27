@@ -14,6 +14,8 @@ public class Pivot extends Subsystem {
     // here. Call these from Commands.
 	private CANTalon pivotMotor;
 	
+	private double encOffsetValue = 0;
+	
 	public Pivot() {
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
 	}
@@ -31,5 +33,17 @@ public class Pivot extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	
     }
+    
+    public double getEncoderRight() {
+		return pivotMotor.getEncPosition();
+	}
+
+	public double getEncoderDistance() {
+		return (getEncoderRight() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+	}
+
+	public void resetDistance() {
+		encOffsetValue = getEncoderRight();
+	}
 }
 
