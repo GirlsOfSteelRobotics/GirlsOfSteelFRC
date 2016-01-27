@@ -26,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static final Flap flap = new Flap();
 	public static final Claw claw = new Claw();
 	public static final Pivot pivot = new Pivot();
+	public static final Camera camera = new Camera();
 
     Command autonomousCommand;
     SendableChooser chooser;
