@@ -39,7 +39,7 @@ public class Pivot extends Subsystem {
 	}
 
 	public double getEncoderDistance() {
-		return (getEncoderRight() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+		return (getEncoderRight() - encOffsetValue); //TODO: Know where encoder is
 	}
 
 	public void resetDistance() {
