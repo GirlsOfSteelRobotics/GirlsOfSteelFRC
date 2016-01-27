@@ -53,7 +53,7 @@ public class Flap extends Subsystem {
 		}
 
 		public double getFlapEncoderDistance() {
-			return (getFlapEncoder() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+			return (getFlapEncoder() - encOffsetValue); //TODO: know how far encoder is
 		}
 
 		public void resetDistance() {
