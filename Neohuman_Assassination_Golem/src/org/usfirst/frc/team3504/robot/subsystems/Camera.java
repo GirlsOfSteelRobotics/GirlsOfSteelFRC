@@ -17,15 +17,26 @@ public class Camera extends Subsystem {
     // here. Call these from Commands.
 	
 	CameraServer server;
-	//Image frame;
-	//CameraServer camFlap;
-	//private int camFlap; //camFlap ID
+	private int camPivot;
+	private int camFlap;
+	Image frame;
 	
 	public Camera() {
 		
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
+		camPivot = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+		camFlap = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+	}
+	
+	public void switchToCamFlap() {
+		NIVision.IMAQdxStopAcquisition(camPivot);
+		NIVision.IMAQdxConfigureGrab(camFlap);
+		NIVision.IMAQdxStartAcquisition(camFlap);
+		NIVision.IMAQdxGrab(camFlap, frame, 1);
+		server.setImage(frame);
 	}
 	
     public void initDefaultCommand() {
