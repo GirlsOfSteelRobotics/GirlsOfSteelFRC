@@ -26,9 +26,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends SampleRobot {
     
     SerialPort serial_port;
-    //IMU imu;			// This class can be used w/nav6 and navX MXP.
-    //IMUAdvanced imu;	// This class can be used w/nav6 and navX MXP.
-    AHRS imu;			// This class can only be used w/the navX MXP.
+    IMU imu;			// This class can be used w/nav6 and navX MXP.
+    //AHRS imu;			// This class can only be used w/the navX MXP.
     boolean first_iteration;
     
     public Robot() {
@@ -39,7 +38,7 @@ public class Robot extends SampleRobot {
     	// Use SerialPort.Port.kMXP if connecting navX MXP to the RoboRio MXP port
     	// Use SerialPort.Port.kUSB if connecting nav6 or navX MXP to the RoboRio USB port
     		
-    	serial_port = new SerialPort(57600,SerialPort.Port.kUSB);
+    	serial_port = new SerialPort(57600,SerialPort.Port.kOnboard);
 		
 		// You can add a second parameter to modify the 
 		// update rate (in hz) from.  The minimum is 4.  
@@ -59,10 +58,11 @@ public class Robot extends SampleRobot {
     	// navX MXP Aero.
 		
 		byte update_rate_hz = 50;
-		//imu = new IMU(serial_port,update_rate_hz);
+		imu = new IMU(serial_port,update_rate_hz);
 		//imu = new IMUAdvanced(serial_port,update_rate_hz);
-		imu = new AHRS(serial_port,update_rate_hz);
-    	} catch( Exception ex ) {
+		//imu = new AHRS(serial_port,update_rate_hz);
+    	} 
+    	catch( Exception ex ) {
     		
     	}
         if ( imu != null ) {
@@ -112,7 +112,7 @@ public class Robot extends SampleRobot {
             // If you are using the IMUAdvanced class, you can also access the following
             // additional functions, at the expense of some extra processing
             // that occurs on the CRio processor
-            
+            /*
             SmartDashboard.putNumber(   "IMU_Accel_X",          imu.getWorldLinearAccelX());
             SmartDashboard.putNumber(   "IMU_Accel_Y",          imu.getWorldLinearAccelY());
             SmartDashboard.putBoolean(  "IMU_IsMoving",         imu.isMoving());
@@ -122,7 +122,7 @@ public class Robot extends SampleRobot {
             SmartDashboard.putNumber(   "Velocity_Y",       	imu.getVelocityY() );
             SmartDashboard.putNumber(   "Displacement_X",       imu.getDisplacementX() );
             SmartDashboard.putNumber(   "Displacement_Y",       imu.getDisplacementY() );
-            
+            */ 
             Timer.delay(0.2);
         }
      }
