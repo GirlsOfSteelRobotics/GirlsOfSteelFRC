@@ -43,6 +43,8 @@ public class OI {
 	
 	private JoystickButton testAutonomous;
 	
+	private JoystickButton switchCam;
+	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
 		collectBallButton.whileHeld(new CollectBall());
@@ -61,6 +63,9 @@ public class OI {
 		
 		testAutonomous = new JoystickButton(drivingStick, 5);
 		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
+		
+		switchCam = new JoystickButton(drivingStick, 10);
+		switchCam.whenPressed(new SwitchCameraFeed());
 	}
 	
     // Start the command when the button is pressed and let it run the command
