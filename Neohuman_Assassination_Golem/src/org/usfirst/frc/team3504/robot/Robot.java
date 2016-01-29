@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -9,6 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3504.robot.subsystems.*;
+
+import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Image;
+
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 
 /**
@@ -55,6 +60,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**
