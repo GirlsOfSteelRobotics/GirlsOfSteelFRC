@@ -16,11 +16,11 @@ public class Camera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	CameraServer server;
+	public CameraServer server;
 	private int camPivot;
 	private int camFlap;
 	private int curCam;
-	Image frame;
+	public Image frame;
 	
 	public Camera() {
 		
@@ -34,7 +34,6 @@ public class Camera extends Subsystem {
 		server.setQuality(50);
 		//server.startAutomaticCapture("cam0");
 
-		
 	}
 	
 	public void switchToCamFlap() {
