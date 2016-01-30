@@ -18,6 +18,7 @@ public class AutoSpyBot extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
+    	
     	addSequential(new Drive(132,0));  //Drive x inches until across from goal. Goal should be on right side (possibly) of robot.
     	addSequential(new Drive(10, 0));  //TO DO: Change Drive. This line should turn the robot 90 degrees.
     	addSequential(new Drive (160,0)); //Robot drives halfway across field
@@ -26,7 +27,8 @@ public class AutoSpyBot extends CommandGroup {
     	addSequential(new PivotDown()); //The pivot goes down.
     	addSequential(new ReleaseBall()); //The claws open and the ball is released.
     	addSequential(new PivotUp()); //The pivot goes back up.
-        // To run multiple commands at the same time,
+       
+    	// To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());
