@@ -25,8 +25,6 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.*;
  */
 public class Robot extends IterativeRobot {
 
-	public CameraServer server;
-	public Image frame;
 	public static OI oi;
 	public static final Chassis chassis = new Chassis();
 	public static final  Shifters shifters = new Shifters();
@@ -43,8 +41,6 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	server = Robot.camera.server;
-    	frame = Robot.camera.frame;
 		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("AutoDriveDistance 36 inches", new AutoDriveDistance(36));
@@ -105,7 +101,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        server.setImage(frame);
     }
     
     /**
