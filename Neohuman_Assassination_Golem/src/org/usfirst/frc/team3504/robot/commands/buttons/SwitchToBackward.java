@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.buttons;
 
 import org.usfirst.frc.team3504.robot.commands.DriveBackward;
-import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
+import org.usfirst.frc.team3504.robot.commands.camera.SwitchToCamFlap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class SwitchToBackward extends CommandGroup {
     
     public  SwitchToBackward() {
-    	addParallel(new SwitchCam());
+    	addParallel(new SwitchToCamFlap());
     	addParallel(new DriveBackward());
         // Add Commands here:
         // e.g. addSequential(new Command1());
