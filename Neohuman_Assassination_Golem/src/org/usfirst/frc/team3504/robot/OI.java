@@ -1,11 +1,17 @@
 package org.usfirst.frc.team3504.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.commands.CollectBall;
+import org.usfirst.frc.team3504.robot.commands.FlapDown;
+import org.usfirst.frc.team3504.robot.commands.FlapUp;
+import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,8 +54,9 @@ public class OI {
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 	
-	private JoystickButton switchCamFlap;
-	private JoystickButton switchCamPivot;
+	private JoystickButton switchToForward; 
+	private JoystickButton switchToBackward; 
+	
 	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
@@ -70,11 +77,11 @@ public class OI {
 		testAutonomous = new JoystickButton(drivingStickForward, 5);
 		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
 		
-		switchCamFlap = new JoystickButton(drivingStick, 10);
-		switchCamFlap.whenPressed(new SwitchToCamFlap());
+		switchToForward = new JoystickButton(drivingStickForward, 1); 
+		switchToForward.whenPressed(new SwitchToForward()); 
 		
-		switchCamPivot = new JoystickButton(drivingStick, 11);
-		switchCamPivot.whenPressed(new SwitchToCamPivot());
+		switchToBackward = new JoystickButton(drivingStickBackward, 1);
+		switchToBackward.whenPressed(new SwitchToBackward());
 		
 	}
 	
