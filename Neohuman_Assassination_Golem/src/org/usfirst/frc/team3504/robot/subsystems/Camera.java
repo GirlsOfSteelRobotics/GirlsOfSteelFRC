@@ -38,17 +38,18 @@ public class Camera extends Subsystem {
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		
-		getImage();
+		//getImage();
 		//server.startAutomaticCapture("cam0");
 
 	}
 	
 	public void switchCam() {
-		if (frontCam == true)
+		if (frontCam == true) {
 			switchToCamFlap();
-		if (frontCam == false)
-			frontCam = true;
+			frontCam = false; }
+		else {
 			switchToCamPivot();
+			frontCam = true; }
 		
 	}
 	
@@ -57,7 +58,6 @@ public class Camera extends Subsystem {
 		NIVision.IMAQdxConfigureGrab(camFlap);
 		NIVision.IMAQdxStartAcquisition(camFlap);
 		curCam = camFlap;
-		frontCam = false;
 		getImage();
 	}
 	
@@ -66,7 +66,6 @@ public class Camera extends Subsystem {
 		NIVision.IMAQdxConfigureGrab(camPivot);
 		NIVision.IMAQdxStartAcquisition(camPivot);
 		curCam = camPivot;
-		frontCam = true;
 		getImage();
 	}
 	
