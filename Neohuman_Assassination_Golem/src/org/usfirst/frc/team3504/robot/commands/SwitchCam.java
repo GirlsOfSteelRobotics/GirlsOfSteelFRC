@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwitchToCamFlap extends Command {
+public class SwitchCam extends Command {
 
-    public SwitchToCamFlap() {
+    public SwitchCam() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.camera);

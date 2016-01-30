@@ -43,8 +43,7 @@ public class OI {
 	
 	private JoystickButton testAutonomous;
 	
-	private JoystickButton switchCamFlap;
-	private JoystickButton switchCamPivot;
+	private JoystickButton switchCam;
 	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
@@ -65,11 +64,9 @@ public class OI {
 		testAutonomous = new JoystickButton(drivingStick, 5);
 		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
 		
-		switchCamFlap = new JoystickButton(drivingStick, 10);
-		switchCamFlap.whenPressed(new SwitchToCamFlap());
+		switchCam = new JoystickButton(drivingStick, 10);
+		switchCam.whenPressed(new SwitchCam());
 		
-		switchCamPivot = new JoystickButton(drivingStick, 11);
-		switchCamPivot.whenPressed(new SwitchToCamPivot());
 		
 	}
 	

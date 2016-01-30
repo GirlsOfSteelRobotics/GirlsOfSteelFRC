@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.commands.UpdateCam;
+
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
@@ -20,9 +22,12 @@ public class Camera extends Subsystem {
 	private int camPivot;
 	private int camFlap;
 	private int curCam;
+	private boolean frontCam;
 	public Image frame;
 	
 	public Camera() {
+		
+		frontCam = true; //front = pivot side = true
 		
 		camPivot = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 		camFlap = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
@@ -32,8 +37,19 @@ public class Camera extends Subsystem {
 		
 		server = CameraServer.getInstance();
 		server.setQuality(50);
+		
+		getImage();
 		//server.startAutomaticCapture("cam0");
 
+	}
+	
+	public void switchCam() {
+		if (frontCam == true)
+			switchToCamFlap();
+		if (frontCam == false)
+			frontCam = true;
+			switchToCamPivot();
+		
 	}
 	
 	public void switchToCamFlap() {
@@ -41,8 +57,8 @@ public class Camera extends Subsystem {
 		NIVision.IMAQdxConfigureGrab(camFlap);
 		NIVision.IMAQdxStartAcquisition(camFlap);
 		curCam = camFlap;
-		NIVision.IMAQdxGrab(camFlap, frame, 1);
-		server.setImage(frame);
+		frontCam = false;
+		getImage();
 	}
 	
 	public void switchToCamPivot() {
@@ -50,13 +66,18 @@ public class Camera extends Subsystem {
 		NIVision.IMAQdxConfigureGrab(camPivot);
 		NIVision.IMAQdxStartAcquisition(camPivot);
 		curCam = camPivot;
-		NIVision.IMAQdxGrab(camPivot, frame, 1);
+		frontCam = true;
+		getImage();
+	}
+	
+	public void getImage() {
+		NIVision.IMAQdxGrab(curCam, frame, 1);
 		server.setImage(frame);
 	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        //setDefaultCommand(new UpdateCam());
     }
 }
 
