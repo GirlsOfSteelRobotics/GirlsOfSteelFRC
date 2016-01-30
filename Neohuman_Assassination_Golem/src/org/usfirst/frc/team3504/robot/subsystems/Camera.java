@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.commands.UpdateCam;
+import org.usfirst.frc.team3504.robot.commands.camera.UpdateCam;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
@@ -46,10 +46,10 @@ public class Camera extends Subsystem {
 	public void switchCam() {
 		if (frontCam == true) {
 			switchToCamFlap();
-			frontCam = false; }
+			 }
 		else {
 			switchToCamPivot();
-			frontCam = true; }
+			 }
 		
 	}
 	
@@ -58,6 +58,7 @@ public class Camera extends Subsystem {
 		NIVision.IMAQdxConfigureGrab(camFlap);
 		NIVision.IMAQdxStartAcquisition(camFlap);
 		curCam = camFlap;
+		frontCam = false;
 		getImage();
 	}
 	
@@ -66,6 +67,7 @@ public class Camera extends Subsystem {
 		NIVision.IMAQdxConfigureGrab(camPivot);
 		NIVision.IMAQdxStartAcquisition(camPivot);
 		curCam = camPivot;
+		frontCam = true;
 		getImage();
 	}
 	

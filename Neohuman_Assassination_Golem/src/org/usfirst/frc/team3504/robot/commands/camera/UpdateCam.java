@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.commands;
+package org.usfirst.frc.team3504.robot.commands.camera;
 
 import org.usfirst.frc.team3504.robot.Robot;
 

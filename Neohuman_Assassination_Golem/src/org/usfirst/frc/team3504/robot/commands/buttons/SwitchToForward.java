@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.buttons;
 
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
-import org.usfirst.frc.team3504.robot.commands.SwitchCam;
+import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
