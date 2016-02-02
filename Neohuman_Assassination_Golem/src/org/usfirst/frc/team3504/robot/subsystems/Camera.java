@@ -1,14 +1,11 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.commands.camera.UpdateCam;
-
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  *
@@ -41,6 +38,17 @@ public class Camera extends Subsystem {
 		//getImage();
 		//server.startAutomaticCapture("cam0");
 
+		
+		
+	}
+	
+	/*  TODO: looking at documentation, this is what the format is supposed to look like, after that
+	 *  the documentation becomes very vague, it doesn't give any ideas to what is supposed to
+	 *  go in the method
+	 */ 
+	
+	public void startAutomaticCamera(USBCamera camPivot){
+		 
 	}
 	
 	public void switchCam() {
@@ -74,6 +82,10 @@ public class Camera extends Subsystem {
 	public void getImage() {
 		NIVision.IMAQdxGrab(curCam, frame, 1);
 		server.setImage(frame);
+	}
+	
+	void loop() {
+		getImage(); 
 	}
 	
     public void initDefaultCommand() {
