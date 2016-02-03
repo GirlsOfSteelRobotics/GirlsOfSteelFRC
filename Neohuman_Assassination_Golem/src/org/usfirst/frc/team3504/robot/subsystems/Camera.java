@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.commands.camera.UpdateCam;
+
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
@@ -24,7 +26,6 @@ public class Camera extends Subsystem {
 	
 	public Camera() {
 		
-		frontCam = true; //front = pivot side = true
 		
 		camPivot = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 		camFlap = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
@@ -35,9 +36,12 @@ public class Camera extends Subsystem {
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		
+		curCam = camFlap;
+		NIVision.IMAQdxStartAcquisition(curCam);
+		frontCam = true; //front = pivot side = true
 		//getImage();
 		//server.startAutomaticCapture("cam0");
-
+	
 		
 		
 	}
@@ -82,6 +86,7 @@ public class Camera extends Subsystem {
 	public void getImage() {
 		NIVision.IMAQdxGrab(curCam, frame, 1);
 		server.setImage(frame);
+		
 	}
 	
 	void loop() {
