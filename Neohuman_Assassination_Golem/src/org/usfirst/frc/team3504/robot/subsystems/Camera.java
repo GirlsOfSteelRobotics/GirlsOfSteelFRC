@@ -25,10 +25,8 @@ public class Camera extends Subsystem {
 	public Image frame;
 	
 	public Camera() {
-		
-		
-		camPivot = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-		camFlap = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+		//camPivot = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+		//camFlap = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 		curCam = camPivot;
 		
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
@@ -37,13 +35,10 @@ public class Camera extends Subsystem {
 		server.setQuality(50);
 		
 		curCam = camFlap;
-		NIVision.IMAQdxStartAcquisition(curCam);
+		//NIVision.IMAQdxStartAcquisition(curCam);
 		frontCam = true; //front = pivot side = true
 		//getImage();
 		//server.startAutomaticCapture("cam0");
-	
-		
-		
 	}
 	
 	/*  TODO: looking at documentation, this is what the format is supposed to look like, after that
@@ -62,7 +57,6 @@ public class Camera extends Subsystem {
 		else {
 			switchToCamPivot();
 			 }
-		
 	}
 	
 	public void switchToCamFlap() {
