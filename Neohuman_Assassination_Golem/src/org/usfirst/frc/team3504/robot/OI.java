@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.commands.CollectBall;
 import org.usfirst.frc.team3504.robot.commands.FlapDown;
 import org.usfirst.frc.team3504.robot.commands.FlapUp;
 import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
+import org.usfirst.frc.team3504.robot.commands.RotateToDesiredAngle;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
@@ -55,11 +56,12 @@ public class OI {
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 	
-
 	private JoystickButton switchCam;
 
 	private JoystickButton switchToForward; 
 	private JoystickButton switchToBackward; 
+	
+	private JoystickButton testDesiredRotationAngle;
 	
 	
 	public OI() {
@@ -90,6 +92,8 @@ public class OI {
 		switchToBackward = new JoystickButton(drivingStickBackward, 1);
 		switchToBackward.whenPressed(new SwitchToBackward());
 
+		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 6);
+		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 		
 	}
 	
