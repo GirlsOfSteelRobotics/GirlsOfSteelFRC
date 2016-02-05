@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwitchToCamPivot extends Command {
+public class SwitchToCamClaw extends Command {
 
-    public SwitchToCamPivot() {
+    public SwitchToCamClaw() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.camera);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.camera.switchToCamPivot();
+    	Robot.camera.switchToCamClaw();
     }
 
     // Called repeatedly when this Command is scheduled to run
