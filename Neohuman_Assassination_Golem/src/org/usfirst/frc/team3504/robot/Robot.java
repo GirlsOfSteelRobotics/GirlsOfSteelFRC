@@ -8,6 +8,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Claw;
 import org.usfirst.frc.team3504.robot.subsystems.Flap;
 import org.usfirst.frc.team3504.robot.subsystems.Pivot;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public static Claw claw;
 	public static Pivot pivot;
 	public static Camera camera;
+	public static TestBoardPID testboard;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -53,6 +55,7 @@ public class Robot extends IterativeRobot {
     	claw = new Claw();
     	pivot = new Pivot();
     	camera = new Camera();
+    	testboard = new TestBoardPID();
     	
     	// After all subsystems are set up, create the Operator Interface.
     	// If you call new OI() before the subsystems are created, it will fail.
