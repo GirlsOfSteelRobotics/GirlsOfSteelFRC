@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Flap extends Subsystem {
     
 	private CANTalon flapTalon;
-	private CANTalon flapTalon2;
 
 	
     // Put methods for controlling this subsystem
@@ -26,11 +25,7 @@ public class Flap extends Subsystem {
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_A);
-		 flapTalon2 = new CANTalon(RobotMap.FLAP_B);
 		 
-		 //We think a second talon is a slave... but we aren't sure
-		 flapTalon2.changeControlMode(CANTalon.TalonControlMode.Follower);
-		 flapTalon2.set(flapTalon.getDeviceID());
 	 }
 	public void setTalon(double speed){
 		flapTalon.set(speed);
