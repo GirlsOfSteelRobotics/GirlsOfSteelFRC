@@ -27,10 +27,10 @@ public class RobotMap {
 	
 
 	//Talons for claw
-	public static final int CLAW_MOTOR = 10;
+	public static final int CLAW_MOTOR = 9; //9
 	
 	//Talons for pivot
-	public static final int PIVOT_MOTOR = 9;
+	public static final int PIVOT_MOTOR = 8; //8
 	
 	//solenoids for shifters
 	public static final int SHIFTER_LEFT_A = 0;
@@ -40,7 +40,6 @@ public class RobotMap {
 
 	//talons for flap
 	public static final int FLAP_A = 7; //TODO: fix these numbers
-	public static final int FLAP_B = 8;
 	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
