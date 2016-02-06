@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.commands.*;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.commands.buttons.*;
 import org.usfirst.frc.team3504.robot.commands.camera.*;
+import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -46,6 +47,7 @@ public class OI {
 	private JoystickButton shiftDownButton;
 	
 	private JoystickButton testAutonomous;
+	private JoystickButton testBoardPID;
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 	
@@ -88,6 +90,10 @@ public class OI {
 		
 		switchToCamPivot = new JoystickButton(drivingStickForward, 6);
 		switchToCamPivot.whenPressed(new UpdateCam());
+		
+		testBoardPID = new JoystickButton(drivingStickForward,12);
+		testBoardPID.whenPressed(new TestBoardPositionPID());
+		
 
 		
 	}

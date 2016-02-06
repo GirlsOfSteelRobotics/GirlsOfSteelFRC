@@ -17,9 +17,9 @@ public class TestBoardPID extends Subsystem {
 	private double encOffSetValue = 0;
 	
 	public TestBoardPID() {
-		testMotor = new CANTalon(12);
+		testMotor = new CANTalon(1);
 		testMotor.changeControlMode(CANTalon.TalonControlMode.Position);
-		testMotor.setPID(0.0, 0.0, 0.0);
+		testMotor.setPID(0.0001, 0.0, 0.0);
 	}
 	
 	public void setPosition(double output) {
@@ -27,11 +27,13 @@ public class TestBoardPID extends Subsystem {
 	}
 	
 	public double getEncoder() {
-		return testMotor.getEncPosition();
+		System.out.println(testMotor.getEncVelocity());
+		return testMotor.getEncVelocity();
+		
 	}
 	
 	public double getEncoderDistance() {
-		return (getEncoder() - encOffSetValue) * RobotMap.DISTANCE_PER_PULSE;
+		return (getEncoder() - encOffSetValue);
 	}
 	
 	public void resetEncoder() {
