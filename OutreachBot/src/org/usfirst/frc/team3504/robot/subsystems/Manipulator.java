@@ -65,9 +65,18 @@ public class Manipulator extends Subsystem {
 	public void stopPivot() {
 		pivotMotor.set(0);
 	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+	public boolean getTopLimitSwitch(){
+		return pivotMotor.isFwdLimitSwitchClosed();
+	}
+	
+	public boolean getBottomLimitSwitch(){
+		return collectorMotor.isRevLimitSwitchClosed();
+	}
 }
 

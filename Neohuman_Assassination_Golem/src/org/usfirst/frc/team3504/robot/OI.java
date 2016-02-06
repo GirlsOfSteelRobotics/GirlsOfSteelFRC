@@ -1,15 +1,9 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.CollectBall;
-import org.usfirst.frc.team3504.robot.commands.FlapDown;
-import org.usfirst.frc.team3504.robot.commands.FlapUp;
-import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
-import org.usfirst.frc.team3504.robot.commands.ShiftDown;
-import org.usfirst.frc.team3504.robot.commands.ShiftUp;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
-import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
-import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
-import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
+import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.commands.buttons.*;
+import org.usfirst.frc.team3504.robot.commands.camera.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -61,6 +55,8 @@ public class OI {
 	private JoystickButton switchToForward; 
 	private JoystickButton switchToBackward; 
 	
+	private JoystickButton switchToCamPivot;
+	
 	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
@@ -89,6 +85,9 @@ public class OI {
 
 		switchToBackward = new JoystickButton(drivingStickBackward, 1);
 		switchToBackward.whenPressed(new SwitchToBackward());
+		
+		switchToCamPivot = new JoystickButton(drivingStickForward, 6);
+		switchToCamPivot.whenPressed(new UpdateCam());
 
 		
 	}
