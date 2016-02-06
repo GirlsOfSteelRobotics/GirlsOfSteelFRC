@@ -24,6 +24,10 @@ public class Claw extends Subsystem {
 		
 	}
 	
+	public void stopCollecting(){
+		clawMotor.set(0.0);
+		SmartDashboard.putBoolean("Claw Off", false);
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
