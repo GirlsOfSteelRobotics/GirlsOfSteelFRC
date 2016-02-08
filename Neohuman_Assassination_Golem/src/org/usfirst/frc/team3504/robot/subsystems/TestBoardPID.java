@@ -17,7 +17,7 @@ public class TestBoardPID extends Subsystem {
 	private double encOffSetValue = 0;
 	
 	public TestBoardPID() {
-		testMotor = new CANTalon(1);
+		testMotor = new CANTalon(11);
 		testMotor.changeControlMode(CANTalon.TalonControlMode.Position);
 		testMotor.setPID(0.0001, 0.0, 0.0);
 	}
