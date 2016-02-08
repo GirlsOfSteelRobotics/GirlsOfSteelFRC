@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
@@ -58,7 +59,6 @@ public class Chassis extends Subsystem {
     public void driveByJoystick(Joystick stick) {
     	robotDrive.arcadeDrive(stick);
     }
-    
     public void drive(double moveValue, double rotateValue){
     	robotDrive.arcadeDrive(moveValue, rotateValue);
     }
@@ -80,7 +80,10 @@ public class Chassis extends Subsystem {
 	}
 
 	public double getEncoderDistance() {
-		return (getEncoderRight() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+		if (Robot.shifters.getGearSpeed())
+			return (getEncoderRight() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
+		else
+			return (getEncoderRight() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
 	}
 
 	public void resetDistance() {

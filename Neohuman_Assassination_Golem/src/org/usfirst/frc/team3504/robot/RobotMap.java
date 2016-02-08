@@ -27,10 +27,10 @@ public class RobotMap {
 	
 
 	//Talons for claw
-	public static final int CLAW_MOTOR = 10;
+	public static final int CLAW_MOTOR = 9;
 	
 	//Talons for pivot
-	public static final int PIVOT_MOTOR = 9;
+	public static final int PIVOT_MOTOR = 8;
 	
 	//solenoids for shifters
 	public static final int SHIFTER_LEFT_A = 0;
@@ -39,8 +39,7 @@ public class RobotMap {
 	public static final int SHIFTER_RIGHT_B = 3;
 
 	//talons for flap
-	public static final int FLAP_A = 7; //TODO: fix these numbers
-	public static final int FLAP_B = 8;
+	public static final int FLAP_MOTOR = 7; //TODO: fix these numbers
 	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
@@ -48,7 +47,9 @@ public class RobotMap {
 	// How far to we travel when the encoder turns one full revolution?
 	// Gear ratio is turns of the wheel per turns of the encoder
 	//FIXME - gear ratio is just a swag
-	private static final double distancePerRevolution = 8.0/*wheel size*/ * Math.PI * (16/16)/*gear ratio*/;
+	private static final double distancePerRevolutionHighGear = 8.0/*wheel size*/ * Math.PI * (9.07/1)/*gear ratio*/;
+	private static final double distancePerRevolutionLowGear = 8.0/*wheel size*/ * Math.PI * (33.33/1)/*gear ratio*/;
     // Given our set of wheels and gear box, how many inches do we travel per pulse?
-	public static final double DISTANCE_PER_PULSE = distancePerRevolution / pulsePerRevolution;
+	public static final double DISTANCE_PER_PULSE_HIGH_GEAR = distancePerRevolutionHighGear / pulsePerRevolution;
+	public static final double DISTANCE_PER_PULSE_LOW_GEAR = distancePerRevolutionLowGear / pulsePerRevolution;
 }
