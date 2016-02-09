@@ -56,6 +56,8 @@ public class OI {
 	
 	private JoystickButton switchToCamPivot;
 	
+	//TODO: figure out how to write buttons for button board:
+	//Flap: Rocker + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);

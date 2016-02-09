@@ -1,49 +1,43 @@
 package org.usfirst.frc.team3504.robot.commands;
- 
 
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ *
+ */
+public class FlapDown extends Command {
+	
+	private boolean rocker; //driveteam wants 4 buttons to control flap - while held up/down, when pressed all the way up/down
 
-public class FlapPosition extends Command {
-	
-	private double encoderVal = 0; //TODO: fix this
-	private double speed = 0;
-	
-    public FlapPosition() {
+    public FlapDown(boolean isRocker) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.flap);
+    	rocker = isRocker;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	encoderVal = Robot.flap.getThrottle() * Robot.flap.getMaxEnc();
-    	if (encoderVal > Robot.flap.getFlapEncoder())
-    		speed = 1;
-    	else if (encoderVal < Robot.flap.getFlapEncoder())
-    		speed = -1;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.flap.setTalon(speed);
+    	Robot.flap.setTalon(-1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (speed > 0)
-    		return encoderVal >= Robot.flap.getFlapEncoder();
-    	else if (speed < 0)
-    		return encoderVal <= Robot.flap.getFlapEncoder();
-    	else
-    		return true;
+    	if (rocker == true) 
+    		return false;
+    	else 
+    		return Robot.flap.getBottomLimitSwitch() == true;
     }
 
     // Called once after isFinished returns true
-    protected void end(){
-    	Robot.flap.stopTalon();
+    protected void end() {
+    	Robot.flap.setTalon(0);
     }
 
     // Called when another command which requires one or more of the same
