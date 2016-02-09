@@ -49,6 +49,7 @@ public class Chassis extends Subsystem {
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
+		
 	}
 	
     public void initDefaultCommand() {
@@ -56,8 +57,8 @@ public class Chassis extends Subsystem {
     	setDefaultCommand( new DriveByJoystick() );
     }
     
-    public void driveByJoystick(Joystick stick) {
-    	robotDrive.arcadeDrive(stick);
+    public void driveByJoystick(double Y, double X) {
+    	robotDrive.arcadeDrive(Y,X);
     }
     public void drive(double moveValue, double rotateValue){
     	robotDrive.arcadeDrive(moveValue, rotateValue);

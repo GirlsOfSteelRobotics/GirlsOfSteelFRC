@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -24,6 +25,10 @@ public class Claw extends Subsystem {
 		
 	}
 	
+	public void stopCollecting(){
+		clawMotor.set(0.0);
+		SmartDashboard.putBoolean("Claw Off", false);
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

@@ -25,8 +25,6 @@ public class Flap extends Subsystem {
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
-		 
-		 //We think a second talon is a slave... but we aren't sure
 	 }
 	public void setTalon(double speed){
 		flapTalon.set(speed);

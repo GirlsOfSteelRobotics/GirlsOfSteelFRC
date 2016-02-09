@@ -48,7 +48,16 @@ public class Shifters extends Subsystem {
 			System.out.println("Shifting right side into low gear (rev)");
 			inHighGear = false;
 		}
-	}    
+	
+	}   
+	
+	public boolean getRightShifterValue() {
+		return shifterRight.get() != DoubleSolenoid.Value.kForward;
+	}
+	
+	public boolean getLeftShifterValue() {
+		return shifterLeft.get() != DoubleSolenoid.Value.kForward;
+	}
 	
 	public boolean getGearSpeed() {
 		return inHighGear;

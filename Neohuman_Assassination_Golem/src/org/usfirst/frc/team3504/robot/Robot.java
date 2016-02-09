@@ -1,15 +1,21 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Claw;
+import org.usfirst.frc.team3504.robot.subsystems.Flap;
+import org.usfirst.frc.team3504.robot.subsystems.Pivot;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
+
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team3504.robot.subsystems.*;
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,12 +26,19 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.*;
  */
 public class Robot extends IterativeRobot {
 
+	/* Declare variables for all subsystems and OI here, 
+	 * but don't initialize them until robotInit() is called.
+	 * (Initializing them here leads to very unclear error messages
+	 * if any of them throw an exception.)
+	 */
 	public static OI oi;
-	public static final Chassis chassis = new Chassis();
-	public static final  Shifters shifters = new Shifters();
-	public static final Flap flap = new Flap();
-	public static final Claw claw = new Claw();
-	public static final Pivot pivot = new Pivot();
+	public static Chassis chassis;
+	public static Shifters shifters;
+	public static Flap flap;
+	public static Claw claw;
+	public static Pivot pivot;
+	public static Camera camera;
+	public static TestBoardPID testboard;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -35,8 +48,21 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	// Start by initializing each subsystem
+    	chassis = new Chassis();
+    	shifters = new Shifters();
+    	flap = new Flap();
+    	claw = new Claw();
+    	pivot = new Pivot();
+    	camera = new Camera();
+    	testboard = new TestBoardPID();
+    	
+    	// After all subsystems are set up, create the Operator Interface.
+    	// If you call new OI() before the subsystems are created, it will fail.
 		oi = new OI();
-        chooser = new SendableChooser();
+
+		// Populate the SmartDashboard menu for choosing the autonomous command to run
+		chooser = new SendableChooser();
         chooser.addDefault("AutoDriveDistance 36 inches", new AutoDriveDistance(36));
         //chooser.addObject("AutoLowBarAndScore", new AutoLowBarAndScore()); 
         //chooser.addObject("AutoSpyBot", new AutoSpyBot());
@@ -54,6 +80,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**
@@ -85,8 +112,10 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        shifters.shiftLeft(Shifters.Speed.kLow);
-        shifters.shiftRight(Shifters.Speed.kLow);
+		
+        // Start the robot out in low gear when changing from auto to tele-op
+		shifters.shiftLeft(Shifters.Speed.kLow);
+		shifters.shiftRight(Shifters.Speed.kLow);
     }
 
     /**

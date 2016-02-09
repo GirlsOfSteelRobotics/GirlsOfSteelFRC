@@ -27,6 +27,7 @@ public class RobotMap {
 	
 
 	//Talons for claw
+
 	public static final int CLAW_MOTOR = 9;
 	
 	//Talons for pivot
@@ -40,7 +41,7 @@ public class RobotMap {
 
 	//talons for flap
 	public static final int FLAP_MOTOR = 7; //TODO: fix these numbers
-	
+
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
 	private static final double pulsePerRevolution = 360;
