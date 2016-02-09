@@ -40,9 +40,6 @@ public class OI {
 	private JoystickButton collectBallButton;
 	private JoystickButton releaseBallButton;
 	
-	private JoystickButton flapUpButton;
-	private JoystickButton flapDownButton;
-	
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
 	
@@ -68,11 +65,6 @@ public class OI {
 		collectBallButton.whileHeld(new CollectBall());
 		releaseBallButton = new JoystickButton(operatorStick, 2);
 		releaseBallButton.whileHeld(new ReleaseBall());
-		
-		flapUpButton = new JoystickButton(operatorStick, 3);
-		flapUpButton.whileHeld(new FlapUp());
-		flapDownButton = new JoystickButton(operatorStick, 4);
-		flapDownButton.whileHeld(new FlapDown());
 		
 		shiftUpButton = new JoystickButton(drivingStickForward, 3);
 		shiftUpButton.whenPressed(new ShiftUp());
@@ -132,8 +124,12 @@ public class OI {
 			return drivingStickForward.getX();
 		}
 		else {
-			return -drivingStickBackward.getX(); 
+			return drivingStickBackward.getX(); 
 		}
+	}
+	
+	public double getOperatorStickThrottle() {
+		return operatorStick.getThrottle();
 	}
 	
 	public void setDriveDirection(DriveDirection driveDirection) {

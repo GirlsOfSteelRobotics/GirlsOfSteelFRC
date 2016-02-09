@@ -18,14 +18,20 @@ public class Pivot extends Subsystem {
 	
 	public Pivot() {
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
-	}
-
-	public void tiltUpandDown(double speed) {
-		pivotMotor.set(speed);
+		pivotMotor.changeControlMode(CANTalon.TalonControlMode.Position);
 	}
 	
-	public void pivotDown(double distance) {
-		pivotMotor.set(distance);
+	public int getPosition() {
+		if (getTopLimitSwitch() == true) 
+			return 1;
+		else if(getBottomLimitSwitch() == true)
+			return -1;
+		else
+			return 0;
+	}
+	
+	public void tiltUpandDown(double speed) {
+		pivotMotor.set(speed);
 	}
 	
     public void initDefaultCommand() {
