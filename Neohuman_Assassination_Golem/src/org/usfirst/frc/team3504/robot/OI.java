@@ -1,15 +1,10 @@
 package org.usfirst.frc.team3504.robot;
 
 
-import org.usfirst.frc.team3504.robot.commands.CollectBall;
-import org.usfirst.frc.team3504.robot.commands.FlapDown;
-import org.usfirst.frc.team3504.robot.commands.FlapUp;
-import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
-import org.usfirst.frc.team3504.robot.commands.RotateToDesiredAngle;
-import org.usfirst.frc.team3504.robot.commands.ShiftDown;
-import org.usfirst.frc.team3504.robot.commands.ShiftUp;
-import org.usfirst.frc.team3504.robot.commands.TestBoardPositionPID;
+import org.usfirst.frc.team3504.robot.commands.*;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
+import org.usfirst.frc.team3504.robot.commands.buttons.ChevalDeFrise;
+import org.usfirst.frc.team3504.robot.commands.buttons.Portcullis;
 import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
 import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
 import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
@@ -32,7 +27,7 @@ public class OI {
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
 
-	Joystick operatorStick = new Joystick(2);
+	Joystick buttonBoard = new Joystick(2); //the button board gets plugged into USB and acts like a Joystick
 	Joystick drivingStickForward = new Joystick(0);
 	Joystick drivingStickBackward = new Joystick(1); 
 
@@ -46,11 +41,13 @@ public class OI {
     // three ways:
     
 	//JOYSTICK BUTTONS
-	private JoystickButton collectBallButton;
-	private JoystickButton releaseBallButton;
+	
 	
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
+	
+	private JoystickButton shiftUp2Button;
+	private JoystickButton shiftDown2Button;
 	
 	private JoystickButton testAutonomous;
 	private JoystickButton testBoardPID;
@@ -68,19 +65,37 @@ public class OI {
 		
 	private JoystickButton switchToCamPivot;
 	
-	//TODO: figure out how to write buttons for button board:
-	//Flap: Rocker + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
+	private JoystickButton resetEncoderDistance;
+	private JoystickButton resetEncoderDistance2;
+	
+	//buttonboard
+	
+	private JoystickButton collectBallButton;
+	private JoystickButton releaseBallButton;
+	private JoystickButton flapUp;
+	private JoystickButton flapDown;
+	private JoystickButton flapUpRocker;
+	private JoystickButton flapDownRocker;
+	private JoystickButton pivotUp;
+	private JoystickButton pivotDown;
+	private JoystickButton pivotMiddle;
+	private JoystickButton portcullis;
+	private JoystickButton chevalDeFrise;
+	
+	//Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 	
 	public OI() {
-		collectBallButton = new JoystickButton(operatorStick, 1);
-		collectBallButton.whileHeld(new CollectBall());
-		releaseBallButton = new JoystickButton(operatorStick, 2);
-		releaseBallButton.whileHeld(new ReleaseBall());
+		
 		
 		shiftUpButton = new JoystickButton(drivingStickForward, 3);
 		shiftUpButton.whenPressed(new ShiftUp());
 		shiftDownButton = new JoystickButton(drivingStickForward, 4);
 		shiftDownButton.whenPressed(new ShiftDown());
+		
+		shiftUp2Button = new JoystickButton(drivingStickBackward, 3);
+		shiftUp2Button.whenPressed(new ShiftUp());
+		shiftDown2Button = new JoystickButton(drivingStickBackward, 4);
+		shiftDown2Button.whenPressed(new ShiftDown());
 		
 		testAutonomous = new JoystickButton(drivingStickForward, 5);
 		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
@@ -100,6 +115,39 @@ public class OI {
 		testBoardPID = new JoystickButton(drivingStickForward,12);
 		testBoardPID.whenPressed(new TestBoardPositionPID());
 		
+		resetEncoderDistance = new JoystickButton(drivingStickForward, 7);
+		resetEncoderDistance.whenPressed(new ResetEncoderDistance());
+		
+		//button board buttons
+		//roboclaw
+		collectBallButton = new JoystickButton(buttonBoard, 1);
+		collectBallButton.whileHeld(new CollectBall());
+		releaseBallButton = new JoystickButton(buttonBoard, 2);
+		releaseBallButton.whileHeld(new ReleaseBall());
+		
+		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
+		flapUp = new JoystickButton(buttonBoard, 3);
+		flapUp.whenPressed(new FlapUp(false)); //false because it is not rocker button
+		flapDown = new JoystickButton(buttonBoard, 4);
+		flapDown.whenPressed(new FlapUp(false));
+		flapUpRocker = new JoystickButton(buttonBoard, 5);
+		flapUpRocker.whenPressed(new FlapUp(true)); //true because using rocker
+		flapDownRocker = new JoystickButton(buttonBoard, 6);
+		flapDownRocker.whenPressed(new FlapUp(true));//^^
+		
+		//pivot
+		pivotUp = new JoystickButton(buttonBoard, 7);
+		pivotUp.whenPressed(new PivotUp());
+		pivotDown = new JoystickButton(buttonBoard, 8);
+		pivotDown.whenPressed(new PivotDown());
+		pivotMiddle = new JoystickButton(buttonBoard, 9);
+		pivotMiddle.whenPressed(new PivotMiddle());
+		
+		//defenses: skipped 2 numbers for shooter
+		portcullis = new JoystickButton(buttonBoard, 10);
+		portcullis.whenPressed(new Portcullis());
+		chevalDeFrise = new JoystickButton(buttonBoard, 11);
+		chevalDeFrise.whenPressed(new ChevalDeFrise());
 
 		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 6);
 		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
@@ -137,7 +185,7 @@ public class OI {
 	}
 	
 	public double getOperatorStickThrottle() {
-		return operatorStick.getThrottle();
+		return buttonBoard.getThrottle();
 	}
 	
 	public void setDriveDirection(DriveDirection driveDirection) {

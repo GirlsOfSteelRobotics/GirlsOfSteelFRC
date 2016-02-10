@@ -34,9 +34,10 @@ public class Robot extends IterativeRobot {
 	public static Pivot pivot;
 	public static Camera camera;
 	public static TestBoardPID testboard;
+	public static LEDLights ledlights; 
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -51,17 +52,20 @@ public class Robot extends IterativeRobot {
     	pivot = new Pivot();
     	camera = new Camera();
     	testboard = new TestBoardPID();
+    	ledlights = new LEDLights(); 
     	
     	// After all subsystems are set up, create the Operator Interface.
     	// If you call new OI() before the subsystems are created, it will fail.
 		oi = new OI();
 
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
-		chooser = new SendableChooser();
-        chooser.addDefault("AutoDriveDistance 36 inches", new AutoDriveDistance(36));
-        //chooser.addObject("AutoLowBarAndScore", new AutoLowBarAndScore()); 
-        //chooser.addObject("AutoSpyBot", new AutoSpyBot());
-        SmartDashboard.putData("Auto mode", chooser);
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("AutoDriveDistance", new AutoDriveDistance(110));
+		autoChooser.addObject("AutoDriveSlowly", new AutoDriveSlowly(55));
+		
+		
+        
+        
     }
 	
 	/**
@@ -88,7 +92,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	autonomousCommand = (Command) chooser.getSelected();
+    	autonomousCommand = (Command) autoChooser.getSelected();
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -106,6 +110,12 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+		
+        // Start the robot out in low gear when changing from auto to tele-op
+		shifters.shiftLeft(Shifters.Speed.kLow);
+		shifters.shiftRight(Shifters.Speed.kLow);
+		
+		Robot.chassis.resetEncoderDistance();
     }
 
     /**
@@ -113,9 +123,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-		// Start the robot out in low gear when changing from auto to tele-op
-		shifters.shiftLeft(Shifters.Speed.kLow);
-		shifters.shiftRight(Shifters.Speed.kLow);
     }
     
     /**

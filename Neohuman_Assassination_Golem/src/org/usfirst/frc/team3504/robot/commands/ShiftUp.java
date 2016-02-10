@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
@@ -19,6 +20,10 @@ public class ShiftUp extends Command {
     protected void initialize() {
 		Robot.shifters.shiftLeft(Speed.kHigh);
 		Robot.shifters.shiftRight(Speed.kHigh);
+		System.out.println("Shifting Up");
+		SmartDashboard.putString("Shifting", "UP!");
+		SmartDashboard.putString("Shifting Left", "" + Robot.shifters.getLeftShifterValue());
+		SmartDashboard.putString("Shifting Right", "" + Robot.shifters.getRightShifterValue());
     }
 
     // Called repeatedly when this Command is scheduled to run

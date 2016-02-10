@@ -15,23 +15,29 @@ public class LEDLights extends Subsystem {
 	public LEDLights() {
 	}
 	
-	public void redLight(){
-		byte[] buffer = new byte[3];
-		buffer[0] = (byte) 255; //red
-		buffer[1] = 0; //green
-		buffer[2] = 0; //blue
-		serialPort.write(buffer, 3); 
+	public void blueLight(){
+		serialPort.writeString("b"); 
 	}
-	
 	public void greenLight(){
-		byte[] buffer = new byte[3];
-		buffer[0] = 0; //red
-		buffer[1] = (byte) 255; //green
-		buffer[2] = 0; //blue 
-		serialPort.write(buffer, 3); 
+		serialPort.writeString("g");
 	}
 	
-
+	public void redLight(){
+		serialPort.writeString("r");
+	}
+	
+	public void whiteLight(){
+		serialPort.writeString("w"); 
+	}
+	
+	public void rainbowLights(){
+		serialPort.writeString("a"); 
+	}
+	
+	public void dotLights(){
+		serialPort.writeString("p"); 
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
