@@ -1,24 +1,25 @@
 package org.usfirst.frc.team3504.robot.commands;
- 
 
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-
+/**
+ *
+ */
 public class FlapDown extends Command {
 	
-	private static final double EncoderValue = 9; //TODO: fix this
+	private boolean rocker; //driveteam wants 4 buttons to control flap - while held up/down, when pressed all the way up/down
 
-    public FlapDown() {
+    public FlapDown(boolean isRocker) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.flap);
+    	rocker = isRocker;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.flap.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,12 +29,15 @@ public class FlapDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return EncoderValue == Robot.flap.getFlapEncoderDistance();
+    	if (rocker == true) 
+    		return false;
+    	else 
+    		return Robot.flap.getBottomLimitSwitch() == true;
     }
 
     // Called once after isFinished returns true
-    protected void end(){
-    	Robot.flap.stopTalon();
+    protected void end() {
+    	Robot.flap.setTalon(0);
     }
 
     // Called when another command which requires one or more of the same

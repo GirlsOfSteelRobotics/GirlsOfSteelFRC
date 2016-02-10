@@ -4,16 +4,19 @@ import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ *
+ */
+public class PivotMiddle extends Command {
 
-public class PivotDown extends Command {
-
-	/*private static final double EncoderValueUp = -60; //based on initial position
-	private static final double EncoderValueMiddle = -30; //TODO: fix these depending on which way is positive for motor
-	private static final double EncoderValueDown = 0; //TODO: fix values
+	private static final double EncoderValueUp = -30; //based on initial position
+	private static final double EncoderValueMiddle = 0; //TODO: fix these depending on which way is positive for motor
+	private static final double EncoderValueDown = 30; //TODO: fix values
 	private double encoderToUse = 0;
-	*/
+	private double speed = 0;
+	private boolean up = true;
 	
-    public PivotDown() {
+    public PivotMiddle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.pivot);
@@ -21,25 +24,33 @@ public class PivotDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	/*if (Robot.pivot.getPosition() == 1)
+    	if (Robot.pivot.getPosition() == 1) {
     		encoderToUse = EncoderValueUp;
+    		speed = -1;}
     	else if (Robot.pivot.getPosition() == 0)
     		encoderToUse = EncoderValueMiddle;
-    	else
+    	else {
     		encoderToUse = EncoderValueDown;
+    		speed = 1; }
+    	
 
     	Robot.pivot.resetDistance();
-    	*/
+    
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.pivot.tiltUpandDown(-1);
+    	Robot.pivot.tiltUpandDown(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	 return Robot.pivot.getBottomLimitSwitch() == true;
+    	if (speed == 1) 
+    		return Robot.pivot.getEncoderDistance() <= encoderToUse;
+    	else if (speed == -1)
+    		return Robot.pivot.getEncoderDistance() >= encoderToUse;
+    	else
+    		return true;
     }
 
     // Called once after isFinished returns true

@@ -40,9 +40,6 @@ public class OI {
 	private JoystickButton collectBallButton;
 	private JoystickButton releaseBallButton;
 	
-	private JoystickButton flapUpButton;
-	private JoystickButton flapDownButton;
-	
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
 	
@@ -59,17 +56,14 @@ public class OI {
 	
 	private JoystickButton switchToCamPivot;
 	
+	//TODO: figure out how to write buttons for button board:
+	//Flap: Rocker + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
 		collectBallButton.whileHeld(new CollectBall());
 		releaseBallButton = new JoystickButton(operatorStick, 2);
 		releaseBallButton.whileHeld(new ReleaseBall());
-		
-		flapUpButton = new JoystickButton(operatorStick, 3);
-		flapUpButton.whileHeld(new FlapUp());
-		flapDownButton = new JoystickButton(operatorStick, 4);
-		flapDownButton.whileHeld(new FlapDown());
 		
 		shiftUpButton = new JoystickButton(drivingStickForward, 3);
 		shiftUpButton.whenPressed(new ShiftUp());
@@ -124,8 +118,12 @@ public class OI {
 			return drivingStickForward.getX();
 		}
 		else {
-			return -drivingStickBackward.getX(); 
+			return drivingStickBackward.getX(); 
 		}
+	}
+	
+	public double getOperatorStickThrottle() {
+		return operatorStick.getThrottle();
 	}
 	
 	public void setDriveDirection(DriveDirection driveDirection) {
