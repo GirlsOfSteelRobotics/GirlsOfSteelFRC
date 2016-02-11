@@ -122,9 +122,9 @@ public class OI {
 		pivotMiddle.whenPressed(new PivotMiddle());
 		
 		//defenses: skipped 2 numbers for shooter
-		portcullis = new JoystickButton(buttonBoard, 12);
+		portcullis = new JoystickButton(buttonBoard, 10);
 		portcullis.whenPressed(new Portcullis());
-		chevalDeFrise = new JoystickButton(buttonBoard, 13);
+		chevalDeFrise = new JoystickButton(buttonBoard, 11);
 		chevalDeFrise.whenPressed(new ChevalDeFrise());
 		
 		
