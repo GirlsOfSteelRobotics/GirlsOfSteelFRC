@@ -34,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Pivot pivot;
 	public static Camera camera;
 	public static TestBoardPID testboard;
+	public static LEDLights ledlights; 
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -51,6 +52,7 @@ public class Robot extends IterativeRobot {
     	pivot = new Pivot();
     	camera = new Camera();
     	testboard = new TestBoardPID();
+    	ledlights = new LEDLights(); 
     	
     	// After all subsystems are set up, create the Operator Interface.
     	// If you call new OI() before the subsystems are created, it will fail.
