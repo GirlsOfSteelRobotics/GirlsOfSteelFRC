@@ -35,11 +35,11 @@ public class Manipulator extends Subsystem {
 	}
 	
 	public void shootBall() {
-		shooter.set(DoubleSolenoid.Value.kForward);
+		shooter.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void shooterIn() {
-		shooter.set(DoubleSolenoid.Value.kReverse);
+		shooter.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	public void collectBall() {
