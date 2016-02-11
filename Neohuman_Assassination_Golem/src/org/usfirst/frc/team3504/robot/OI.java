@@ -6,6 +6,7 @@ import org.usfirst.frc.team3504.robot.commands.buttons.*;
 import org.usfirst.frc.team3504.robot.commands.camera.*;
 import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
 
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -48,11 +49,12 @@ public class OI {
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 	
-
 	private JoystickButton switchCam;
 
 	private JoystickButton switchToForward; 
 	private JoystickButton switchToBackward; 
+	
+	private JoystickButton testDesiredRotationAngle;
 	
 	private JoystickButton switchToCamPivot;
 	
@@ -89,6 +91,8 @@ public class OI {
 		testBoardPID.whenPressed(new TestBoardPositionPID());
 		
 
+		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 6);
+		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 		
 	}
 	
