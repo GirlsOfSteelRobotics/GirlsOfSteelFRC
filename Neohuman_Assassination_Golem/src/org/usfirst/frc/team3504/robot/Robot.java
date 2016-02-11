@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	public static LEDLights ledlights; 
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -59,11 +59,13 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
-		chooser = new SendableChooser();
-        chooser.addDefault("AutoDriveDistance 36 inches", new AutoDriveDistance(36));
-        //chooser.addObject("AutoLowBarAndScore", new AutoLowBarAndScore()); 
-        //chooser.addObject("AutoSpyBot", new AutoSpyBot());
-        SmartDashboard.putData("Auto mode", chooser);
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("AutoDriveDistance", new AutoDriveDistance(110));
+		autoChooser.addObject("AutoDriveSlowly", new AutoDriveSlowly(55));
+		
+		
+        
+        
     }
 	
 	/**
@@ -90,7 +92,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	autonomousCommand = (Command) chooser.getSelected();
+    	autonomousCommand = (Command) autoChooser.getSelected();
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
