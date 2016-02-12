@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.commands;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -22,7 +23,7 @@ public class DriveByJoystick extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.driveByJoystick(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
-    	
+    	Robot.chassis.printEncoderValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
