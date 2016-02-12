@@ -48,12 +48,8 @@ public class OI {
 	private JoystickButton testAutonomous;
 	private JoystickButton testBoardPID;
 
-	private DriveDirection driveDirection = DriveDirection.kFWD; 
-<<<<<<< HEAD
+	private DriveDirection driveDirection = DriveDirection.kFWD;
 
-=======
-	
->>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2016GirlsOfSteel.git
 	private JoystickButton switchCam;
 
 	private JoystickButton switchToForward; 
@@ -61,10 +57,9 @@ public class OI {
 	
 	private JoystickButton switchToCamPivot;
 	
-<<<<<<< HEAD
 	private JoystickButton resetEncoderDistance;
 	private JoystickButton resetEncoderDistance2;
-=======
+	
 	//buttonboard
 	
 	private JoystickButton collectBallButton;
@@ -80,7 +75,6 @@ public class OI {
 	private JoystickButton chevalDeFrise;
 	
 	//Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
->>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2016GirlsOfSteel.git
 	
 	public OI() {
 		
