@@ -116,6 +116,8 @@ public class Robot extends IterativeRobot {
         // Start the robot out in low gear when changing from auto to tele-op
 		shifters.shiftLeft(Shifters.Speed.kLow);
 		shifters.shiftRight(Shifters.Speed.kLow);
+		
+		Robot.chassis.resetEncoderDistance();
     }
 
     /**

@@ -50,7 +50,6 @@ public class OI {
 	private JoystickButton testBoardPID;
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
-	
 
 	private JoystickButton switchCam;
 
@@ -59,6 +58,8 @@ public class OI {
 	
 	private JoystickButton switchToCamPivot;
 	
+	private JoystickButton resetEncoderDistance;
+	private JoystickButton resetEncoderDistance2;
 	
 	public OI() {
 		collectBallButton = new JoystickButton(operatorStick, 1);
@@ -94,7 +95,11 @@ public class OI {
 		testBoardPID = new JoystickButton(drivingStickForward,12);
 		testBoardPID.whenPressed(new TestBoardPositionPID());
 		
-
+		resetEncoderDistance = new JoystickButton(drivingStickForward, 7);
+		resetEncoderDistance.whenPressed(new ResetEncoderDistance());
+		
+		resetEncoderDistance2 = new JoystickButton(drivingStickBackward, 7);
+		resetEncoderDistance2.whenPressed(new ResetEncoderDistance());
 		
 	}
 	
