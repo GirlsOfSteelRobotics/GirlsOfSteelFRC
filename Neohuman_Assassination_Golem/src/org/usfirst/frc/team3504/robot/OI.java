@@ -113,13 +113,12 @@ public class OI {
 		testBoardPID = new JoystickButton(drivingStickForward,12);
 		testBoardPID.whenPressed(new TestBoardPositionPID());
 		
-<<<<<<< HEAD
 		resetEncoderDistance = new JoystickButton(drivingStickForward, 7);
 		resetEncoderDistance.whenPressed(new ResetEncoderDistance());
 		
 		resetEncoderDistance2 = new JoystickButton(drivingStickBackward, 7);
 		resetEncoderDistance2.whenPressed(new ResetEncoderDistance());
-=======
+		
 		//button board buttons
 		//roboclaw
 		collectBallButton = new JoystickButton(buttonBoard, 1);
@@ -150,8 +149,7 @@ public class OI {
 		portcullis.whenPressed(new Portcullis());
 		chevalDeFrise = new JoystickButton(buttonBoard, 11);
 		chevalDeFrise.whenPressed(new ChevalDeFrise());
-		
->>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2016GirlsOfSteel.git
+
 		
 	}
 	
