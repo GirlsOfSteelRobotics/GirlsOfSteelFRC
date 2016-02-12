@@ -1,14 +1,8 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Claw;
-import org.usfirst.frc.team3504.robot.subsystems.Flap;
-import org.usfirst.frc.team3504.robot.subsystems.Pivot;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
-import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -16,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,9 +34,10 @@ public class Robot extends IterativeRobot {
 	public static Pivot pivot;
 	public static Camera camera;
 	public static TestBoardPID testboard;
+	public static LEDLights ledlights; 
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -56,17 +52,20 @@ public class Robot extends IterativeRobot {
     	pivot = new Pivot();
     	camera = new Camera();
     	testboard = new TestBoardPID();
+    	ledlights = new LEDLights(); 
     	
     	// After all subsystems are set up, create the Operator Interface.
     	// If you call new OI() before the subsystems are created, it will fail.
 		oi = new OI();
 
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
-		chooser = new SendableChooser();
-        chooser.addDefault("AutoDriveDistance 36 inches", new AutoDriveDistance(36));
-        //chooser.addObject("AutoLowBarAndScore", new AutoLowBarAndScore()); 
-        //chooser.addObject("AutoSpyBot", new AutoSpyBot());
-        //SmartDashboard.putData("Auto mode", chooser);
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("AutoDriveDistance", new AutoDriveDistance(110));
+		autoChooser.addObject("AutoDriveSlowly", new AutoDriveSlowly(55));
+		
+		
+        
+        
     }
 	
 	/**
@@ -93,8 +92,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-       autonomousCommand = new AutoDriveDistance(36);
-    	   // autonomousCommand = (Command) chooser.getSelected();
+    	autonomousCommand = (Command) autoChooser.getSelected();
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }

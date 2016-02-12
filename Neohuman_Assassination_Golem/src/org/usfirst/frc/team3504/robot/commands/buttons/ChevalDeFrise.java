@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.buttons;
 
 import org.usfirst.frc.team3504.robot.commands.Drive;
-import org.usfirst.frc.team3504.robot.commands.FlapPosition;
+import org.usfirst.frc.team3504.robot.commands.FlapDown;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ChevalDeFrise extends CommandGroup {
     
     public  ChevalDeFrise() {
-    	addSequential(new FlapPosition());
+    	addSequential(new FlapDown(false));
     	addSequential(new Drive(10,0)); //FIXME: correct values
         // Add Commands here:
         // e.g. addSequential(new Command1());
