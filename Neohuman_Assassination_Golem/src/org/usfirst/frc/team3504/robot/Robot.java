@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
@@ -64,8 +63,6 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("AutoDriveSlowly", new AutoDriveSlowly(55));
 		autoChooser.addObject("AutoLowBar", new AutoLowBar(110));
 		SmartDashboard.putData("Autochooser: ", autoChooser);
-		
-        
         
     }
 	
@@ -123,7 +120,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        //Robot.chassis.ahrsToSmartDashboard();
     }
     
     /**

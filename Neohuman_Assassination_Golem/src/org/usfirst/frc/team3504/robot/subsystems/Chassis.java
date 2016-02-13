@@ -4,16 +4,25 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
+import com.kauailabs.navx_mxp.AHRS;
+
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Chassis extends Subsystem {
+public class Chassis extends Subsystem implements PIDOutput {
 	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
 	private CANTalon driveLeftC;
@@ -26,6 +35,22 @@ public class Chassis extends Subsystem {
 
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
+	
+	//using the Nav board
+	public AHRS ahrs;
+	public PIDController turnController;
+	
+	static final double kP = 0.03; //TODO: adjust these
+	static final double kI = 0.00;
+	static final double kD = 0.00;
+	static final double kF = 0.00;
+
+	static final double kToleranceDegrees = 2.0f;
+
+	boolean rotateToAngle = false;
+	
+	double rotateToAngleRate;
+	
 	
 	public Chassis() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
@@ -52,6 +77,23 @@ public class Chassis extends Subsystem {
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
 		
+		//for the NavBoard
+		
+		SerialPort temp = new SerialPort(9600, SerialPort.Port.kMXP); //TODO: fix the "baud rate" = first parameter
+		
+        try {
+            /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
+            /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+            /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+            ahrs = new AHRS(temp); 
+        } catch (RuntimeException ex ) {
+            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+        }
+        turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+        turnController.setInputRange(-180.0f,  180.0f);
+        turnController.setOutputRange(-1.0, 1.0);
+        turnController.setAbsoluteTolerance(kToleranceDegrees);
+        turnController.setContinuous(true);
 	}
 	
     public void initDefaultCommand() {
@@ -103,6 +145,30 @@ public class Chassis extends Subsystem {
 		encOffsetValueRight = getEncoderRight();
 		encOffsetValueLeft = getEncoderLeft();
 	}
+	
+	public double getRotationAngleRate() {
+		return rotateToAngleRate;
+	}
+	
+	public double getGyroAngle() {
+		return ahrs.getYaw();
+	}
+	
+	public void resetGyro() {
+		ahrs.zeroYaw();
+	}
+	@Override
+	public void pidWrite(double output) {
+		rotateToAngleRate = output;
+	}
+	
+	public void ahrsToSmartDashboard() {
+		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
+	    SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
+	    SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+	            
+	}
+	
 }
 
 

@@ -1,10 +1,14 @@
 package org.usfirst.frc.team3504.robot;
 
+
 import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.commands.buttons.*;
-import org.usfirst.frc.team3504.robot.commands.camera.*;
-import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
+import org.usfirst.frc.team3504.robot.commands.buttons.ChevalDeFrise;
+import org.usfirst.frc.team3504.robot.commands.buttons.Portcullis;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
+import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
+import org.usfirst.frc.team3504.robot.commands.camera.UpdateCam;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -48,13 +52,17 @@ public class OI {
 	private JoystickButton testAutonomous;
 	private JoystickButton testBoardPID;
 
-	private DriveDirection driveDirection = DriveDirection.kFWD;
-
+	private DriveDirection driveDirection = DriveDirection.kFWD; 
+	
 	private JoystickButton switchCam;
 
 	private JoystickButton switchToForward; 
 	private JoystickButton switchToBackward; 
 	
+	private JoystickButton testDesiredRotationAngle;
+	
+	
+		
 	private JoystickButton switchToCamPivot;
 	
 	private JoystickButton resetEncoderDistance;
@@ -110,9 +118,6 @@ public class OI {
 		resetEncoderDistance = new JoystickButton(drivingStickForward, 7);
 		resetEncoderDistance.whenPressed(new ResetEncoderDistance());
 		
-		resetEncoderDistance2 = new JoystickButton(drivingStickBackward, 7);
-		resetEncoderDistance2.whenPressed(new ResetEncoderDistance());
-		
 		//button board buttons
 		//roboclaw
 		collectBallButton = new JoystickButton(buttonBoard, 1);
@@ -144,6 +149,8 @@ public class OI {
 		chevalDeFrise = new JoystickButton(buttonBoard, 11);
 		chevalDeFrise.whenPressed(new ChevalDeFrise());
 
+		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 6);
+		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 		
 	}
 	
