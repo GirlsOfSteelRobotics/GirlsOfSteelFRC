@@ -62,6 +62,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("AutoDriveDistance", new AutoDriveDistance(110));
 		autoChooser.addObject("AutoDriveSlowly", new AutoDriveSlowly(55));
+		autoChooser.addObject("AutoLowBar", new AutoLowBar(110));
 		SmartDashboard.putData("Autochooser: ", autoChooser);
 		
         
