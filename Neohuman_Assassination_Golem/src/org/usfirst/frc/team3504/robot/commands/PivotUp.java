@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.commands;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class PivotUp extends Command {
@@ -34,12 +35,14 @@ public class PivotUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.pivot.tiltUpandDown(0.2);
+    	Robot.pivot.tiltUpandDown(0.5);
+    	SmartDashboard.putBoolean("Bottom Pivot LS:", Robot.pivot.getBottomLimitSwitch());
+    	SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.pivot.getTopLimitSwitch() == true;
+        return Robot.pivot.getBottomLimitSwitch() == true;
     }
 
     // Called once after isFinished returns true

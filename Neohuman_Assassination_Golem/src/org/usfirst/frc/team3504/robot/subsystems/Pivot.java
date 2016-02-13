@@ -41,10 +41,10 @@ public class Pivot extends Subsystem {
     }
     
     public boolean getTopLimitSwitch(){
-		return pivotMotor.isFwdLimitSwitchClosed();
+		return !pivotMotor.isFwdLimitSwitchClosed();
 	}
 	public boolean getBottomLimitSwitch(){
-		return pivotMotor.isRevLimitSwitchClosed();
+		return !pivotMotor.isRevLimitSwitchClosed();
 	}
     
     public double getEncoderRight() {

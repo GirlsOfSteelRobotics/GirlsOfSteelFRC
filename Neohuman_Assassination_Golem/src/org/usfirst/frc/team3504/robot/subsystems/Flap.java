@@ -26,6 +26,7 @@ public class Flap extends Subsystem {
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
+		 flapTalon.changeControlMode(CANTalon.TalonControlMode.Voltage);
 	 }
 	public void setTalon(double speed){
 		flapTalon.set(speed);
@@ -45,10 +46,10 @@ public class Flap extends Subsystem {
 	
 	//assuming that going forward will raise the flap and going backwards will lower the flap
 	public boolean getTopLimitSwitch(){
-		return flapTalon.isFwdLimitSwitchClosed();
+		return !flapTalon.isFwdLimitSwitchClosed();
 	}
 	public boolean getBottomLimitSwitch(){
-		return flapTalon.isRevLimitSwitchClosed();
+		return !flapTalon.isRevLimitSwitchClosed();
 	}
 	 
 		public double getFlapEncoder() {

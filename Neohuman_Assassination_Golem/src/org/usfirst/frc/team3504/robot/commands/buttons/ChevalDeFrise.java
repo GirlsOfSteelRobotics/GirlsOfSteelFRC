@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ChevalDeFrise extends CommandGroup {
     
     public  ChevalDeFrise() {
-    	addSequential(new FlapDown(false));
+    	addSequential(new FlapDown());
     	addSequential(new Drive(10,0)); //FIXME: correct values
         // Add Commands here:
         // e.g. addSequential(new Command1());

@@ -124,6 +124,10 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putBoolean("Bottom Flap LS:", Robot.flap.getBottomLimitSwitch());
+    	SmartDashboard.putBoolean("Top Flap LS:", Robot.flap.getTopLimitSwitch());
+    	SmartDashboard.putBoolean("Bottom Pivot LS:", Robot.pivot.getTopLimitSwitch());
+    	SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getBottomLimitSwitch());
     }
     
     /**
