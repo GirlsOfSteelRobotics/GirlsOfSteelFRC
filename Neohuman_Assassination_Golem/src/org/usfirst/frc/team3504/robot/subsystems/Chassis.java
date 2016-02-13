@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,7 +37,7 @@ public class Chassis extends Subsystem implements PIDOutput {
 	private double encOffsetValueLeft = 0;
 	
 	//using the Nav board
-	private AHRS ahrs;
+	public AHRS ahrs;
 	public PIDController turnController;
 	
 	static final double kP = 0.03; //TODO: adjust these
@@ -159,6 +160,13 @@ public class Chassis extends Subsystem implements PIDOutput {
 	@Override
 	public void pidWrite(double output) {
 		rotateToAngleRate = output;
+	}
+	
+	public void ahrsToSmartDashboard() {
+		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
+	    SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
+	    SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+	            
 	}
 	
 }

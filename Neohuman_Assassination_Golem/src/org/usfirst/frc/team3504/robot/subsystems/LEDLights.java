@@ -7,12 +7,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class LEDLights extends Subsystem {
-    
-	SerialPort serialPort = new SerialPort(9600, SerialPort.Port.kUSB);
+    SerialPort serialPort = null;
+	
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
 	public LEDLights() {
+	    try {
+			serialPort = new SerialPort(9600, SerialPort.Port.kUSB);
+		} catch (Exception ex){
+			System.out.println("LEDLights() failed to open!!");
+		}
 	}
 	
 	public void blueLight(){
