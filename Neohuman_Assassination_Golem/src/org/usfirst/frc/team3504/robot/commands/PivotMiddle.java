@@ -26,12 +26,12 @@ public class PivotMiddle extends Command {
     protected void initialize() {
     	if (Robot.pivot.getPosition() == 1) {
     		encoderToUse = EncoderValueUp;
-    		speed = -1;}
+    		speed = -.1;}
     	else if (Robot.pivot.getPosition() == 0)
     		encoderToUse = EncoderValueMiddle;
     	else {
     		encoderToUse = EncoderValueDown;
-    		speed = 1; }
+    		speed = .1; }
     	
 
     	Robot.pivot.resetDistance();
