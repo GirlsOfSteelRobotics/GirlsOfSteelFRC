@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoDriveDistance extends Command {
+public class AutoLowBar extends Command {
 
 	private double inches;
 	
-    public AutoDriveDistance(double distance) {
+    public AutoLowBar(double distance) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
         inches = distance;
@@ -28,7 +28,7 @@ public class AutoDriveDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveSpeed(.4);
+    	Robot.chassis.driveSpeed(-.1);
     	Robot.chassis.printEncoderValues();
     }
 
