@@ -149,8 +149,7 @@ public class OI {
 		chevalDeFrise = new JoystickButton(buttonBoard, 11);
 		chevalDeFrise.whenPressed(new ChevalDeFrise());
 
-		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 6);
-		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
+		
 		
 	}
 	

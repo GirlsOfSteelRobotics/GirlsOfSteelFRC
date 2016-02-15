@@ -4,7 +4,6 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-import com.kauailabs.navx_mxp.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -22,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Chassis extends Subsystem implements PIDOutput {
+public class Chassis extends Subsystem {
 	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
 	private CANTalon driveLeftC;
@@ -37,7 +36,6 @@ public class Chassis extends Subsystem implements PIDOutput {
 	private double encOffsetValueLeft = 0;
 	
 	//using the Nav board
-	public AHRS ahrs;
 	public PIDController turnController;
 	
 	static final double kP = 0.03; //TODO: adjust these
@@ -77,24 +75,8 @@ public class Chassis extends Subsystem implements PIDOutput {
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
 		
-		//for the NavBoard
-		
-		SerialPort temp = new SerialPort(9600, SerialPort.Port.kMXP); //TODO: fix the "baud rate" = first parameter
-		
-        try {
-            /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
-            /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
-            /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-            ahrs = new AHRS(temp); 
-        } catch (RuntimeException ex ) {
-            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-        }
-        turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
-        turnController.setInputRange(-180.0f,  180.0f);
-        turnController.setOutputRange(-1.0, 1.0);
-        turnController.setAbsoluteTolerance(kToleranceDegrees);
-        turnController.setContinuous(true);
 	}
+		//for the NavBoards
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -150,24 +132,7 @@ public class Chassis extends Subsystem implements PIDOutput {
 		return rotateToAngleRate;
 	}
 	
-	public double getGyroAngle() {
-		return ahrs.getYaw();
-	}
 	
-	public void resetGyro() {
-		ahrs.zeroYaw();
-	}
-	@Override
-	public void pidWrite(double output) {
-		rotateToAngleRate = output;
-	}
-	
-	public void ahrsToSmartDashboard() {
-		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
-	    SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
-	    SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
-	            
-	}
 	
 }
 
