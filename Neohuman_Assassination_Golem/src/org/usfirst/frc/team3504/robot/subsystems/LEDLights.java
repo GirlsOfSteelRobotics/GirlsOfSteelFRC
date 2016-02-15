@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class LEDLights extends Subsystem {
     
-	SerialPort serialPort = new SerialPort(9600, SerialPort.Port.kUSB);
+	SerialPort serialPort = new SerialPort(9600, SerialPort.Port.kMXP);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

@@ -110,6 +110,8 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        shifters.shiftLeft(Shifters.Speed.kLow);
+		shifters.shiftRight(Shifters.Speed.kLow);
     }
 
     /**
@@ -118,8 +120,9 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 		// Start the robot out in low gear when changing from auto to tele-op
-		shifters.shiftLeft(Shifters.Speed.kLow);
-		shifters.shiftRight(Shifters.Speed.kLow);
+        SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
+    	SmartDashboard.putBoolean("Bottom Pivot LS", Robot.pivot.getBottomLimitSwitch());
+		
     }
     
     /**

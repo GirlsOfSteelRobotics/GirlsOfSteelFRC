@@ -105,19 +105,19 @@ public class OI {
 		
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 		flapUp = new JoystickButton(buttonBoard, 3);
-		flapUp.whenPressed(new FlapUp(false)); //false because it is not rocker button
+		flapUp.whenPressed(new FlapUp()); //false because it is not rocker button
 		flapDown = new JoystickButton(buttonBoard, 4);
-		flapDown.whenPressed(new FlapUp(false));
-		flapUpRocker = new JoystickButton(buttonBoard, 5);
-		flapUpRocker.whenPressed(new FlapUp(true)); //true because using rocker
-		flapDownRocker = new JoystickButton(buttonBoard, 6);
-		flapDownRocker.whenPressed(new FlapUp(true));//^^
+		flapDown.whenPressed(new FlapUp());
+		//flapUpRocker = new JoystickButton(buttonBoard, 5);
+		//flapUpRocker.whenPressed(new FlapUp(true)); //true because using rocker
+		//flapDownRocker = new JoystickButton(buttonBoard, 6);
+		//flapDownRocker.whenPressed(new FlapUp(true));//^^
 		
 		//pivot
 		pivotUp = new JoystickButton(buttonBoard, 7);
-		pivotUp.whenPressed(new PivotUp());
+		pivotUp.whileHeld(new PivotUp());
 		pivotDown = new JoystickButton(buttonBoard, 8);
-		pivotDown.whenPressed(new PivotDown());
+		pivotDown.whileHeld(new PivotDown());
 		pivotMiddle = new JoystickButton(buttonBoard, 9);
 		pivotMiddle.whenPressed(new PivotMiddle());
 		

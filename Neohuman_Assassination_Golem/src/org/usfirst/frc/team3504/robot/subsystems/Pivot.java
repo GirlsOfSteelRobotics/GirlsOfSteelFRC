@@ -18,7 +18,7 @@ public class Pivot extends Subsystem {
 	
 	public Pivot() {
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
-		pivotMotor.changeControlMode(CANTalon.TalonControlMode.Position);
+		pivotMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
 	}
 	
 	public int getPosition() {
@@ -41,10 +41,11 @@ public class Pivot extends Subsystem {
     }
     
     public boolean getTopLimitSwitch(){
-		return pivotMotor.isFwdLimitSwitchClosed();
+		return !pivotMotor.isRevLimitSwitchClosed();
 	}
 	public boolean getBottomLimitSwitch(){
-		return pivotMotor.isRevLimitSwitchClosed();
+		return !pivotMotor.isFwdLimitSwitchClosed();
+		
 	}
     
     public double getEncoderRight() {

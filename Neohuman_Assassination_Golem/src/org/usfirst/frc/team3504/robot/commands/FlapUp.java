@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.commands;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -11,11 +12,11 @@ public class FlapUp extends Command {
 
 	private boolean rocker; //driveteam wants 4 buttons to control flap - while held up/down, when pressed all the way up/down
 	
-    public FlapUp(boolean isRocker) {
+    public FlapUp() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.flap);
-    	rocker = isRocker;
+    	//rocker = isRocker;
     }
 
     // Called just before this Command runs the first time
@@ -25,13 +26,14 @@ public class FlapUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.flap.setTalon(1);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (rocker == true) 
+    	/*if (rocker == true) 
     		return false;
-    	else 
+    	else */
     		return Robot.flap.getTopLimitSwitch() == true;
     }
 
