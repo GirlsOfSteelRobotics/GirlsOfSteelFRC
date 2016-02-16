@@ -64,6 +64,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("AutoLowBar", new AutoLowBar(110));
 		SmartDashboard.putData("Autochooser: ", autoChooser);
         
+		SmartDashboard.putBoolean("Drive by Joystick", false);
     }
 	
 	/**
@@ -120,7 +121,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        //Robot.chassis.ahrsToSmartDashboard();
+        Robot.chassis.ahrsToSmartDashboard();
     }
     
     /**
