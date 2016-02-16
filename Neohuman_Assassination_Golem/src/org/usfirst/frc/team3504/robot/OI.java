@@ -1,14 +1,10 @@
 package org.usfirst.frc.team3504.robot;
 
-
 import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveDistance;
-import org.usfirst.frc.team3504.robot.commands.buttons.ChevalDeFrise;
-import org.usfirst.frc.team3504.robot.commands.buttons.Portcullis;
-import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
-import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
-import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
-import org.usfirst.frc.team3504.robot.commands.camera.UpdateCam;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.commands.buttons.*;
+import org.usfirst.frc.team3504.robot.commands.camera.*;
+import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -46,9 +42,6 @@ public class OI {
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
 	
-	private JoystickButton shiftUp2Button;
-	private JoystickButton shiftDown2Button;
-	
 	private JoystickButton testAutonomous;
 	private JoystickButton testBoardPID;
 
@@ -59,14 +52,7 @@ public class OI {
 	private JoystickButton switchToForward; 
 	private JoystickButton switchToBackward; 
 	
-	private JoystickButton testDesiredRotationAngle;
-	
-	
-		
 	private JoystickButton switchToCamPivot;
-	
-	private JoystickButton resetEncoderDistance;
-	private JoystickButton resetEncoderDistance2;
 	
 	//buttonboard
 	
@@ -92,11 +78,6 @@ public class OI {
 		shiftDownButton = new JoystickButton(drivingStickForward, 4);
 		shiftDownButton.whenPressed(new ShiftDown());
 		
-		shiftUp2Button = new JoystickButton(drivingStickBackward, 3);
-		shiftUp2Button.whenPressed(new ShiftUp());
-		shiftDown2Button = new JoystickButton(drivingStickBackward, 4);
-		shiftDown2Button.whenPressed(new ShiftDown());
-		
 		testAutonomous = new JoystickButton(drivingStickForward, 5);
 		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
 		
@@ -115,9 +96,6 @@ public class OI {
 		testBoardPID = new JoystickButton(drivingStickForward,12);
 		testBoardPID.whenPressed(new TestBoardPositionPID());
 		
-		resetEncoderDistance = new JoystickButton(drivingStickForward, 7);
-		resetEncoderDistance.whenPressed(new ResetEncoderDistance());
-		
 		//button board buttons
 		//roboclaw
 		collectBallButton = new JoystickButton(buttonBoard, 1);
@@ -127,30 +105,28 @@ public class OI {
 		
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 		flapUp = new JoystickButton(buttonBoard, 3);
-		flapUp.whenPressed(new FlapUp(false)); //false because it is not rocker button
+		flapUp.whenPressed(new FlapUp()); //false because it is not rocker button
 		flapDown = new JoystickButton(buttonBoard, 4);
-		flapDown.whenPressed(new FlapUp(false));
-		flapUpRocker = new JoystickButton(buttonBoard, 5);
-		flapUpRocker.whenPressed(new FlapUp(true)); //true because using rocker
-		flapDownRocker = new JoystickButton(buttonBoard, 6);
-		flapDownRocker.whenPressed(new FlapUp(true));//^^
+		flapDown.whenPressed(new FlapUp());
+		//flapUpRocker = new JoystickButton(buttonBoard, 5);
+		//flapUpRocker.whenPressed(new FlapUp(true)); //true because using rocker
+		//flapDownRocker = new JoystickButton(buttonBoard, 6);
+		//flapDownRocker.whenPressed(new FlapUp(true));//^^
 		
 		//pivot
 		pivotUp = new JoystickButton(buttonBoard, 7);
-		pivotUp.whenPressed(new PivotUp());
+		pivotUp.whileHeld(new PivotUp());
 		pivotDown = new JoystickButton(buttonBoard, 8);
-		pivotDown.whenPressed(new PivotDown());
+		pivotDown.whileHeld(new PivotDown());
 		pivotMiddle = new JoystickButton(buttonBoard, 9);
 		pivotMiddle.whenPressed(new PivotMiddle());
 		
 		//defenses: skipped 2 numbers for shooter
-		portcullis = new JoystickButton(buttonBoard, 10);
+		portcullis = new JoystickButton(buttonBoard, 12);
 		portcullis.whenPressed(new Portcullis());
-		chevalDeFrise = new JoystickButton(buttonBoard, 11);
+		chevalDeFrise = new JoystickButton(buttonBoard, 13);
 		chevalDeFrise.whenPressed(new ChevalDeFrise());
-
-		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 6);
-		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
+		
 		
 	}
 	
@@ -198,4 +174,3 @@ public class OI {
 	}
 	
 }
-
