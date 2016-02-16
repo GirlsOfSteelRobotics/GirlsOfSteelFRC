@@ -1,13 +1,12 @@
+
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
-
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.usfirst.frc.team3504.robot.commands.TestTalon;
+import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,49 +19,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	/* Declare variables for all subsystems and OI here, 
-	 * but don't initialize them until robotInit() is called.
-	 * (Initializing them here leads to very unclear error messages
-	 * if any of them throw an exception.)
-	 */
+	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	public static Chassis chassis;
-	public static Shifters shifters;
-	public static Flap flap;
-	public static Claw claw;
-	public static Pivot pivot;
-	public static Camera camera;
-	public static LEDLights ledlights; 
 
     Command autonomousCommand;
-    SendableChooser autoChooser;
+    SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	// Start by initializing each subsystem
-    	chassis = new Chassis();
-    	shifters = new Shifters();
-    	flap = new Flap();
-    	claw = new Claw();
-    	pivot = new Pivot();
-    	camera = new Camera();
-    	ledlights = new LEDLights(); 
-    	
-    	// After all subsystems are set up, create the Operator Interface.
-    	// If you call new OI() before the subsystems are created, it will fail.
 		oi = new OI();
-
-		// Populate the SmartDashboard menu for choosing the autonomous command to run
-		autoChooser = new SendableChooser();
-		autoChooser.addDefault("AutoDriveDistance", new AutoDriveDistance(110));
-		autoChooser.addObject("AutoDriveSlowly", new AutoDriveSlowly(55));
-		autoChooser.addObject("AutoLowBar", new AutoLowBar(110));
-		SmartDashboard.putData("Autochooser: ", autoChooser);
-        
-		SmartDashboard.putBoolean("Drive by Joystick", false);
+        chooser = new SendableChooser();
+        chooser.addDefault("Default Auto", new TestTalon());
+//        chooser.addObject("My Auto", new MyAutoCommand());
+        SmartDashboard.putData("Auto mode", chooser);
     }
 	
 	/**
@@ -76,7 +48,6 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		
 	}
 
 	/**
@@ -89,7 +60,19 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	autonomousCommand = (Command) autoChooser.getSelected();
+        autonomousCommand = (Command) chooser.getSelected();
+        
+		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+		switch(autoSelected) {
+		case "My Auto":
+			autonomousCommand = new MyAutoCommand();
+			break;
+		case "Default Auto":
+		default:
+			autonomousCommand = new ExampleCommand();
+			break;
+		} */
+    	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -107,23 +90,13 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-		
-        // Start the robot out in low gear when changing from auto to tele-op
-		shifters.shiftLeft(Shifters.Speed.kLow);
-		shifters.shiftRight(Shifters.Speed.kLow);
-		
-		Robot.chassis.resetEncoderDistance();
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        //Robot.chassis.ahrsToSmartDashboard();
         Scheduler.getInstance().run();
-		// Start the robot out in low gear when changing from auto to tele-op
-        SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
-    	SmartDashboard.putBoolean("Bottom Pivot LS", Robot.pivot.getBottomLimitSwitch());
     }
     
     /**
