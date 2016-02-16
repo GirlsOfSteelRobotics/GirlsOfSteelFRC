@@ -25,8 +25,7 @@ public class Flap extends Subsystem {
 	 }
 	
 	 public Flap(){
-		 flapTalon = new CANTalon(RobotMap.FLAP_A);
-		 
+		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
 	 }
 	public void setTalon(double speed){
 		flapTalon.set(speed);

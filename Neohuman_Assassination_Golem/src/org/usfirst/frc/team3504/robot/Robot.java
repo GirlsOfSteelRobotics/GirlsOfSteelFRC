@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
@@ -62,9 +61,8 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("AutoDriveDistance", new AutoDriveDistance(110));
 		autoChooser.addObject("AutoDriveSlowly", new AutoDriveSlowly(55));
-		
-		
-        
+		autoChooser.addObject("AutoLowBar", new AutoLowBar(110));
+		SmartDashboard.putData("Autochooser: ", autoChooser);
         
     }
 	
@@ -110,8 +108,12 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        shifters.shiftLeft(Shifters.Speed.kLow);
+		
+        // Start the robot out in low gear when changing from auto to tele-op
+		shifters.shiftLeft(Shifters.Speed.kLow);
 		shifters.shiftRight(Shifters.Speed.kLow);
+		
+		Robot.chassis.resetEncoderDistance();
     }
 
     /**

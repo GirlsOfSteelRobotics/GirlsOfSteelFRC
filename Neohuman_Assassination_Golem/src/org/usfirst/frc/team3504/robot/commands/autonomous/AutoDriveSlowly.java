@@ -19,7 +19,7 @@ public class AutoDriveSlowly extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetDistance();
+    	Robot.chassis.resetEncoderDistance();
     	System.out.println("Encoder distance initially: " + Robot.chassis.getEncoderDistance());
     	System.out.println("Inches: " + inches);
     }
