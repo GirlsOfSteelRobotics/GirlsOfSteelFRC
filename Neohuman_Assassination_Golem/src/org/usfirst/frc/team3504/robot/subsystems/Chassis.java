@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
+import com.kauailabs.navx_mxp.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -21,7 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Chassis extends Subsystem {
+public class Chassis extends Subsystem implements PIDOutput{
 	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
 	private CANTalon driveLeftC;
@@ -37,6 +38,7 @@ public class Chassis extends Subsystem {
 	
 	//using the Nav board
 	public PIDController turnController;
+	public AHRS ahrs;
 	
 	static final double kP = 0.03; //TODO: adjust these
 	static final double kI = 0.00;
@@ -132,7 +134,17 @@ public class Chassis extends Subsystem {
 		return rotateToAngleRate;
 	}
 	
-	
+	public void ahrsToSmartDashboard() {
+		//SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
+        //SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
+       // SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+	}
+
+	@Override
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 

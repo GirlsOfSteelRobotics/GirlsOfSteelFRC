@@ -64,6 +64,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("AutoLowBar", new AutoLowBar(110));
 		SmartDashboard.putData("Autochooser: ", autoChooser);
         
+		SmartDashboard.putBoolean("Drive by Joystick", false);
     }
 	
 	/**
@@ -120,11 +121,11 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        //Robot.chassis.ahrsToSmartDashboard();
         Scheduler.getInstance().run();
 		// Start the robot out in low gear when changing from auto to tele-op
         SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
     	SmartDashboard.putBoolean("Bottom Pivot LS", Robot.pivot.getBottomLimitSwitch());
-		
     }
     
     /**
