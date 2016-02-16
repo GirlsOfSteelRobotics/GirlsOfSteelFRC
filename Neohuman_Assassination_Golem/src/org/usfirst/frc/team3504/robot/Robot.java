@@ -32,7 +32,6 @@ public class Robot extends IterativeRobot {
 	public static Claw claw;
 	public static Pivot pivot;
 	public static Camera camera;
-	public static TestBoardPID testboard;
 	public static LEDLights ledlights; 
 
     Command autonomousCommand;
@@ -50,7 +49,6 @@ public class Robot extends IterativeRobot {
     	claw = new Claw();
     	pivot = new Pivot();
     	camera = new Camera();
-    	testboard = new TestBoardPID();
     	ledlights = new LEDLights(); 
     	
     	// After all subsystems are set up, create the Operator Interface.

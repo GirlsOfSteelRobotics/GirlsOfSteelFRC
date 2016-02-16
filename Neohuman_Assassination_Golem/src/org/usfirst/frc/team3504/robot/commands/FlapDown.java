@@ -10,13 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class FlapDown extends Command {
 	
-	private boolean rocker; //driveteam wants 4 buttons to control flap - while held up/down, when pressed all the way up/down
-
     public FlapDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.flap);
-    	//rocker = isRocker;
     }
 
     // Called just before this Command runs the first time
@@ -30,10 +27,10 @@ public class FlapDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	/*if (rocker == true) 
+    	if (Robot.flap.getTopLimitSwitch() == true)
+    		return true;
+    	else 
     		return false;
-    	else */
-    		return Robot.flap.getBottomLimitSwitch() == true;
     }
 
     // Called once after isFinished returns true

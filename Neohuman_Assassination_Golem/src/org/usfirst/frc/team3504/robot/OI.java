@@ -4,7 +4,6 @@ import org.usfirst.frc.team3504.robot.commands.*;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.commands.buttons.*;
 import org.usfirst.frc.team3504.robot.commands.camera.*;
-import org.usfirst.frc.team3504.robot.subsystems.TestBoardPID;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -43,7 +42,6 @@ public class OI {
 	private JoystickButton shiftDownButton;
 	
 	private JoystickButton testAutonomous;
-	private JoystickButton testBoardPID;
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 	
@@ -93,9 +91,6 @@ public class OI {
 		switchToCamPivot = new JoystickButton(drivingStickForward, 6);
 		switchToCamPivot.whenPressed(new UpdateCam());
 		
-		testBoardPID = new JoystickButton(drivingStickForward,12);
-		testBoardPID.whenPressed(new TestBoardPositionPID());
-		
 		//button board buttons
 		//roboclaw
 		collectBallButton = new JoystickButton(buttonBoard, 1);
@@ -109,9 +104,9 @@ public class OI {
 		flapDown = new JoystickButton(buttonBoard, 4);
 		flapDown.whenPressed(new FlapUp());
 		//flapUpRocker = new JoystickButton(buttonBoard, 5);
-		//flapUpRocker.whenPressed(new FlapUp(true)); //true because using rocker
+		//flapUpRocker.whileHeld(new FlapUp(true)); //true because using rocker
 		//flapDownRocker = new JoystickButton(buttonBoard, 6);
-		//flapDownRocker.whenPressed(new FlapUp(true));//^^
+		//flapDownRocker.whileHeld(new FlapUp(true));//^^
 		
 		//pivot
 		pivotUp = new JoystickButton(buttonBoard, 7);
