@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
         _talon.setF(0.0);
         _talon.setP(8.0);
         _talon.setI(0.003); 
-        _talon.setD(0.08);    
+        _talon.setD(0.08);  //this might have been 0.8  
 
 	}
     /**
