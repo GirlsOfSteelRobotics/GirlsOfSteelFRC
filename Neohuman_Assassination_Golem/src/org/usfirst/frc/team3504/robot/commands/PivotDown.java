@@ -31,6 +31,7 @@ public class PivotDown extends Command {
 
     	Robot.pivot.resetDistance();
     	*/
+    	SmartDashboard.putString("pivot down", "initializing");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -47,6 +48,7 @@ public class PivotDown extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	SmartDashboard.putString("pivot down", "ending");
     	Robot.pivot.tiltUpandDown(0);
     }
 

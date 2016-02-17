@@ -19,17 +19,23 @@ public class Flap extends Subsystem {
     // here. Call these from Commands.
 	private double encOffsetValue = 0;
 	
-	 public void initDefaultCommand() {
-	        // Set the default command for a subsystem here.
-	        //setDefaultCommand(new MySpecialCommand());
-	 }
+	 
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
+		 flapTalon.ConfigFwdLimitSwitchNormallyOpen(false);
+		 flapTalon.ConfigRevLimitSwitchNormallyOpen(false);
 	 }
-	public void setTalon(double speed){
+	 
+	 public void initDefaultCommand() {
+	        // Set the default command for a subsystem here.
+	        //setDefaultCommand(new MySpecialCommand());
+		
+	 }
+	 
+	 public void setTalon(double speed){
 		flapTalon.set(speed);
-	}
+	 }
 	
 	public void stopTalon(){
 		flapTalon.set(0.0);

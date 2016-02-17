@@ -31,6 +31,8 @@ public class PivotUp extends Command {
 
     	Robot.pivot.resetDistance();
     	*/
+    	SmartDashboard.putString("pivot up", "initializing");
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -47,6 +49,7 @@ public class PivotUp extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	SmartDashboard.putString("pivot up", "ending");
     	Robot.pivot.tiltUpandDown(0);
     }
 

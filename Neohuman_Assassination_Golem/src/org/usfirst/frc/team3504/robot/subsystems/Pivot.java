@@ -18,7 +18,8 @@ public class Pivot extends Subsystem {
 	
 	public Pivot() {
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
-		pivotMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
+		pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
 	}
 	
 	public int getPosition() {

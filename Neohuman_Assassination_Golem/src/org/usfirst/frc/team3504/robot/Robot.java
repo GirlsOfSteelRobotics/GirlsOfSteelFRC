@@ -122,8 +122,8 @@ public class Robot extends IterativeRobot {
         //Robot.chassis.ahrsToSmartDashboard();
         Scheduler.getInstance().run();
 		// Start the robot out in low gear when changing from auto to tele-op
-        SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
-    	SmartDashboard.putBoolean("Bottom Pivot LS", Robot.pivot.getBottomLimitSwitch());
+        SmartDashboard.putBoolean("Top Flap LS", Robot.flap.getTopLimitSwitch());
+        SmartDashboard.putBoolean("Bottom Flap LS", Robot.flap.getBottomLimitSwitch());
     }
     
     /**
