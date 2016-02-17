@@ -68,6 +68,8 @@ public class OI {
 	private JoystickButton portcullis;
 	private JoystickButton chevalDeFrise;
 	
+	private static final int AXIS_DPAD = 6;
+	
 	//Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 	
 	public OI() {
@@ -98,15 +100,15 @@ public class OI {
 		
 		//button board buttons
 		//roboclaw
-		collectBallButton = new JoystickButton(buttonBoard, 1);
+		collectBallButton = new JoystickButton(buttonBoard, 5);
 		collectBallButton.whileHeld(new CollectBall());
-		releaseBallButton = new JoystickButton(buttonBoard, 2);
+		releaseBallButton = new JoystickButton(buttonBoard, 6);
 		releaseBallButton.whileHeld(new ReleaseBall());
 		
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
-		flapUp = new JoystickButton(buttonBoard, 3);
+		flapUp = new JoystickButton(buttonBoard, 7);
 		flapUp.whenPressed(new FlapUp()); //false because it is not rocker button
-		flapDown = new JoystickButton(buttonBoard, 4);
+		flapDown = new JoystickButton(buttonBoard, 8);
 		flapDown.whenPressed(new FlapUp());
 		//flapUpRocker = new JoystickButton(buttonBoard, 5);
 		//flapUpRocker.whenPressed(new FlapUp(true)); //true because using rocker
@@ -114,11 +116,11 @@ public class OI {
 		//flapDownRocker.whenPressed(new FlapUp(true));//^^
 		
 		//pivot
-		pivotUp = new JoystickButton(buttonBoard, 7);
+		pivotUp = new JoystickButton(buttonBoard, 2);
 		pivotUp.whileHeld(new PivotUp());
-		pivotDown = new JoystickButton(buttonBoard, 8);
+		pivotDown = new JoystickButton(buttonBoard, 3);
 		pivotDown.whileHeld(new PivotDown());
-		pivotMiddle = new JoystickButton(buttonBoard, 9);
+		pivotMiddle = new JoystickButton(buttonBoard, 4);
 		pivotMiddle.whenPressed(new PivotMiddle());
 		
 		//defenses: skipped 2 numbers for shooter
@@ -126,6 +128,7 @@ public class OI {
 		portcullis.whenPressed(new Portcullis());
 		chevalDeFrise = new JoystickButton(buttonBoard, 13);
 		chevalDeFrise.whenPressed(new ChevalDeFrise());
+		
 		
 		
 	}
@@ -172,5 +175,20 @@ public class OI {
 	public boolean isJoystickReversed() {
 		return (driveDirection == DriveDirection.kREV); 
 	}
+	
+	 public double getDPadX() {
+		    return buttonBoard.getRawAxis(AXIS_DPAD);
+	}
+	
+
+	public boolean getDPadLeft() {
+	    double x = getDPadX();
+	    return (x < -0.5);
+	  }
+
+	  public boolean getDPadRight() {
+	    double x = getDPadX();
+	    return (x > 0.5);
+	  }
 	
 }

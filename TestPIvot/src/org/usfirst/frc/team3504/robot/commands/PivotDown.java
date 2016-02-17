@@ -1,21 +1,18 @@
-
 package org.usfirst.frc.team3504.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team3504.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TestTalon extends Command {
-	
-	boolean fwd;
+public class PivotDown extends Command {
 
-    public TestTalon(boolean fwd) {
-    	this.fwd=fwd;
+    public PivotDown() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.testFlapSubsystem);
+        // eg. requires(chassis);
+    	requires(Robot.pivot);
     }
 
     // Called just before this Command runs the first time
@@ -24,12 +21,7 @@ public class TestTalon extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (fwd) {
-    		Robot.testFlapSubsystem.setTalon(0.5);
-    	}
-    	else{
-    	Robot.testFlapSubsystem.setTalon(-0.5);
-    	}
+    	Robot.pivot.setTalon(-0.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,7 +31,7 @@ public class TestTalon extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.testFlapSubsystem.setTalon(0.0);
+    	Robot.pivot.setTalon(0);
     }
 
     // Called when another command which requires one or more of the same
