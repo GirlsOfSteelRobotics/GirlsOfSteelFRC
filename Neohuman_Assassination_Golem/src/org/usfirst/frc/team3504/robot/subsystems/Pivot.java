@@ -18,37 +18,13 @@ public class Pivot extends Subsystem {
 	private CANTalon pivotMotor;
 	
 	private double encOffsetValue = 0;
-	
-	/** save the target position to servo to */
-	private double targetPositionRotations;
-	
-	//printouts to Smart Dashboard for PIDs
-	private double output;
-	private double position;
-	private double trg;
-	private int errNative;
-	
+
 	public Pivot() {
 		
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
 		pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
 		pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
-		
-		pivotMotor.setEncPosition(0);
-        pivotMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder); 
-        pivotMotor.reverseSensor(true);
-        pivotMotor.configEncoderCodesPerRev(256);
-        
-        pivotMotor.configNominalOutputVoltage(+0.0, -0.0);
-        pivotMotor.configPeakOutputVoltage(+12.0, -12.0);
 
-        pivotMotor.setAllowableClosedLoopErr(0);
-       
-        pivotMotor.setProfile(0);
-        pivotMotor.setF(0.0);
-        pivotMotor.setP(8.0);
-        pivotMotor.setI(0.003); 
-        pivotMotor.setD(0.08);  
 	}
 	
 	public int getPosition() {
@@ -60,25 +36,8 @@ public class Pivot extends Subsystem {
 			return 0;
 	}
 	
-	public void tiltUpandDown(double position) {
-		//pivotMotor.set(speed);
-		setPIDs(position);
-	}
-	
-	private void setPIDs(double desiredPosition) {
-		double motorOutput = pivotMotor.getOutputVoltage() / pivotMotor.getBusVoltage();
-		output = motorOutput;
-		
-		position = pivotMotor.getPosition();
-		
-		targetPositionRotations = desiredPosition * 1.0;
-		pivotMotor.changeControlMode(TalonControlMode.Position);
-    	pivotMotor.set(targetPositionRotations);
-    	
-    	errNative = pivotMotor.getClosedLoopError();
-    	trg = targetPositionRotations;
-    	
-    	printPIDValues();
+	public void tiltUpandDown(double speed) {
+		pivotMotor.set(-speed);
 	}
 	
     public void initDefaultCommand() {
@@ -105,13 +64,6 @@ public class Pivot extends Subsystem {
 
 	public void resetDistance() {
 		encOffsetValue = getEncoderRight();
-	}
-	
-	private void printPIDValues() {
-		SmartDashboard.putNumber("PID_output", output);
-		SmartDashboard.putNumber("PID_position", position);
-		SmartDashboard.putNumber("PID_ErrNative", errNative);
-		SmartDashboard.putNumber("PID_trg", trg);
 	}
 }
 

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
 public class Robot extends IterativeRobot {
 	  
-	CANTalon _talon = new CANTalon(1);	
+	CANTalon _talon = new CANTalon(7);	
 	Joystick _joy = new Joystick(0);	
 	StringBuilder _sb = new StringBuilder();
 	int _loops = 0;
@@ -26,11 +26,11 @@ public class Robot extends IterativeRobot {
         
         /* choose the sensor and sensor direction */
         // Competition/practice robots have Cross The Road Electronics encoders
-        //_talon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);  
+        _talon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);  
         // Test board has QuadEncoder
-        _talon.setFeedbackDevice(FeedbackDevice.QuadEncoder); 
+        //_talon.setFeedbackDevice(FeedbackDevice.QuadEncoder); 
         _talon.reverseSensor(true);
-        _talon.configEncoderCodesPerRev(256); // if using FeedbackDevice.QuadEncoder, otherwise comment out
+        //_talon.configEncoderCodesPerRev(256); // if using FeedbackDevice.QuadEncoder, otherwise comment out
         //_talon.configPotentiometerTurns(XXX); // if using FeedbackDevice.AnalogEncoder or AnalogPot
 
         /* set the peak and nominal outputs, 12V means full */
@@ -44,9 +44,9 @@ public class Robot extends IterativeRobot {
         /* set closed loop gains in slot0 */
         _talon.setProfile(0);
         _talon.setF(0.0);
-        _talon.setP(8.0);
-        _talon.setI(0.003); 
-        _talon.setD(0.08);  //this might have been 0.8  
+        _talon.setP(.5);
+        _talon.setI(0.0); 
+        _talon.setD(0.0);  //this might have been 0.8  
 
 	}
     /**
@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot {
         /* on button1 press enter closed-loop mode on target position */
         if(!_lastButton1 && button1) {
         	/* Position mode - button just pressed */
-        	targetPositionRotations = leftYstick * 1.0; /* 50 Rotations in either direction */
+        	targetPositionRotations = leftYstick * 0.5; /* 50 Rotations in either direction */
         	_talon.changeControlMode(TalonControlMode.Position);
         	_talon.set(targetPositionRotations); /* 50 rotations in either direction */
         }
@@ -80,6 +80,7 @@ public class Robot extends IterativeRobot {
         	/* Percent voltage mode */
         	_talon.changeControlMode(TalonControlMode.PercentVbus);
         	_talon.set(leftYstick);
+        	
         }
         /* if Talon is in position closed-loop, print some more info */
         if( _talon.getControlMode() == TalonControlMode.Position) {
