@@ -20,7 +20,7 @@ public class CollectBall extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.claw.collectRelease(.1);
+    	Robot.claw.collectRelease(.5);
     	
     }
 
