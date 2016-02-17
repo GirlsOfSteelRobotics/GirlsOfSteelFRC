@@ -81,7 +81,7 @@ public class OI {
 		shiftDownButton.whenPressed(new ShiftDown());
 		
 		testAutonomous = new JoystickButton(drivingStickForward, 5);
-		testAutonomous.whenPressed(new AutoDriveDistance(60.0));
+		testAutonomous.whenPressed(new AutoDriveSlowly(60.0));
 		
 		switchCam = new JoystickButton(drivingStickForward, 10);
 		switchCam.whenPressed(new SwitchCam());
