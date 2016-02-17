@@ -40,6 +40,8 @@ public class OI {
 	
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
+	private JoystickButton shiftUpButton2;
+	private JoystickButton shiftDownButton2;
 	
 	private JoystickButton testAutonomous;
 
@@ -67,6 +69,9 @@ public class OI {
 	private JoystickButton chevalDeFrise;
 	private JoystickButton testDesiredRotationAngle;
 	private JoystickButton resetGyro;
+	private JoystickButton shooterShoot;
+	private JoystickButton shooterCollect;
+	private JoystickButton shooterStop;
 	
 	private static final int AXIS_DPAD = 6;
 	
@@ -79,6 +84,11 @@ public class OI {
 		shiftUpButton.whenPressed(new ShiftUp());
 		shiftDownButton = new JoystickButton(drivingStickForward, 4);
 		shiftDownButton.whenPressed(new ShiftDown());
+		
+		shiftUpButton2 = new JoystickButton (drivingStickBackward, 3);
+		shiftUpButton2.whenPressed (new ShiftUp());
+		shiftDownButton2 = new JoystickButton (drivingStickBackward, 4);
+		shiftDownButton2.whenPressed(new ShiftDown());
 		
 		testAutonomous = new JoystickButton(drivingStickForward, 5);
 		testAutonomous.whenPressed(new AutoDriveSlowly(60.0));
@@ -121,10 +131,10 @@ public class OI {
 		pivotMiddle.whenPressed(new PivotMiddle());
 		
 		//defenses: skipped 2 numbers for shooter
-		portcullis = new JoystickButton(buttonBoard, 12);
-		portcullis.whenPressed(new Portcullis());
-		chevalDeFrise = new JoystickButton(buttonBoard, 13);
-		chevalDeFrise.whenPressed(new ChevalDeFrise());
+		//portcullis = new JoystickButton(buttonBoard, 12);
+		//portcullis.whenPressed(new Portcullis());
+		//chevalDeFrise = new JoystickButton(buttonBoard, 13);
+		//chevalDeFrise.whenPressed(new ChevalDeFrise());
 		
 		//test nav board
 		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
@@ -133,6 +143,14 @@ public class OI {
 		resetGyro = new JoystickButton(drivingStickForward, 8);
 		resetGyro.whenPressed(new ResetGyro());
 		
+		shooterShoot = new JoystickButton(buttonBoard, 11);
+		shooterShoot.whenPressed(new SpinShooterWheels());
+		
+		shooterCollect = new JoystickButton(buttonBoard, 12);
+		shooterCollect.whenPressed(new ShooterCollect());
+		
+		shooterStop = new JoystickButton(drivingStickBackward, 11);
+		shooterStop.whenPressed(new StopShooterWheels());
 	}
 	
     // Start the command when the button is pressed and let it run the command

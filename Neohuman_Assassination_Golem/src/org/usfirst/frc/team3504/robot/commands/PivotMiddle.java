@@ -33,7 +33,6 @@ public class PivotMiddle extends Command {
     		encoderToUse = EncoderValueDown;
     		speed = .1; }
     	
-
     	Robot.pivot.resetDistance();
     
     }
