@@ -114,9 +114,6 @@ public class OI {
 		releaseBallButton = new JoystickButton(buttonBoard, 6);
 		releaseBallButton.whileHeld(new ReleaseBall());
 		
-		//roboshooter
-		spinShooterWheels = new JoystickButton(buttonBoard, 1);
-		spinShooterWheels.whileHeld(new SpinShooterWheels());
 		
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 		flapUp = new JoystickButton(buttonBoard, 7);
@@ -149,13 +146,13 @@ public class OI {
 		resetGyro = new JoystickButton(drivingStickForward, 8);
 		resetGyro.whenPressed(new ResetGyro());
 		
-		shooterShoot = new JoystickButton(buttonBoard, 11);
+		shooterShoot = new JoystickButton(drivingStickForward, 11);
 		shooterShoot.whenPressed(new SpinShooterWheels());
 		
-		shooterCollect = new JoystickButton(buttonBoard, 12);
+		shooterCollect = new JoystickButton(drivingStickForward, 12);
 		shooterCollect.whenPressed(new ShooterCollect());
 		
-		shooterStop = new JoystickButton(drivingStickBackward, 11);
+		shooterStop = new JoystickButton(drivingStickForward, 2);
 		shooterStop.whenPressed(new StopShooterWheels());
 	}
 	
