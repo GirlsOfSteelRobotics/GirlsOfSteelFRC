@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("AutoDriveSlowly 110", new AutoDriveSlowly(110));
 		autoChooser.addObject("AutoDriveSlowly 55", new AutoDriveSlowly(55));
-		autoChooser.addObject("AutoLowBar", new AutoLowBar(110));
+		autoChooser.addObject("AutoLowBar", new AutoLowBar(55));
 		SmartDashboard.putData("Autochooser: ", autoChooser);
         
 		SmartDashboard.putBoolean("Drive by Joystick", false);
@@ -92,6 +92,10 @@ public class Robot extends IterativeRobot {
     	autonomousCommand = (Command) autoChooser.getSelected();
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+        
+        // Start the robot out in low gear when changing from auto to tele-op
+        shifters.shiftLeft(Shifters.Speed.kLow);
+        shifters.shiftRight(Shifters.Speed.kLow);
     }
 
     /**

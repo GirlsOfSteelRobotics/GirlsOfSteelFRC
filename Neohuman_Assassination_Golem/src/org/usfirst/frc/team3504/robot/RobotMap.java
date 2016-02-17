@@ -17,7 +17,7 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 	
 	//Talons for Driving
-	public static final int DRIVE_LEFT_A = 4; //TODO: fix these numbers
+	public static final int DRIVE_LEFT_A = 4;
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
 	
