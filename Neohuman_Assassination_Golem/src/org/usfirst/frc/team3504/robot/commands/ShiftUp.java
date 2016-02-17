@@ -19,13 +19,11 @@ public class ShiftUp extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
 		Robot.shifters.shiftLeft(Speed.kHigh);
-		Robot.shifters.shiftRight(Speed.kHigh);
-		System.out.println("Shifting Up");
-		SmartDashboard.putString("Shifting", "UP!");
-		SmartDashboard.putString("Shifting Left", "" + Robot.shifters.getLeftShifterValue());
-		SmartDashboard.putString("Shifting Right", "" + Robot.shifters.getRightShifterValue());
-		
+		Robot.shifters.shiftRight(Speed.kHigh);	
 		Robot.ledlights.greenLight();
+
+		
+
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -60,14 +60,14 @@ public class OI {
 	public OI() {
 
 
-		shiftUpButton = new JoystickButton(drivingStickForward, 3);
+		shiftUpButton = new JoystickButton(drivingStickForward, 4);
 		shiftUpButton.whenPressed(new ShiftUp());
-		shiftDownButton = new JoystickButton(drivingStickForward, 4);
+		shiftDownButton = new JoystickButton(drivingStickForward, 3);
 		shiftDownButton.whenPressed(new ShiftDown());
 
-		shiftUpButton2 = new JoystickButton (drivingStickBackward, 3);
+		shiftUpButton2 = new JoystickButton (drivingStickBackward, 4);
 		shiftUpButton2.whenPressed (new ShiftUp());
-		shiftDownButton2 = new JoystickButton (drivingStickBackward, 4);
+		shiftDownButton2 = new JoystickButton (drivingStickBackward, 3);
 		shiftDownButton2.whenPressed(new ShiftDown());
 
 		switchCam = new JoystickButton(drivingStickForward, 10);
@@ -96,9 +96,9 @@ public class OI {
 		}
 
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
-		flapUp = new JoystickButton(buttonBoard, 7);
+		flapUp = new JoystickButton(buttonBoard, 3);
 		flapUp.whileHeld(new FlapUp()); //false because it is not rocker button
-		flapDown = new JoystickButton(buttonBoard, 8);
+		flapDown = new JoystickButton(buttonBoard, 2);
 		flapDown.whileHeld(new FlapDown());
 		//flapUpRocker = new JoystickButton(buttonBoard, 5);
 		//flapUpRocker.whileHeld(new FlapUp(true)); //true because using rocker
@@ -106,9 +106,9 @@ public class OI {
 		//flapDownRocker.whileHeld(new FlapUp(true));//^^
 
 		//pivot
-		pivotUp = new JoystickButton(buttonBoard, 3);
+		pivotUp = new JoystickButton(buttonBoard, 7);
 		pivotUp.whileHeld(new PivotUp());
-		pivotDown = new JoystickButton(buttonBoard, 2);
+		pivotDown = new JoystickButton(buttonBoard, 8);
 		pivotDown.whileHeld(new PivotDown());
 		pivotMiddle = new JoystickButton(buttonBoard, 4);
 		pivotMiddle.whenPressed(new PivotMiddle());
