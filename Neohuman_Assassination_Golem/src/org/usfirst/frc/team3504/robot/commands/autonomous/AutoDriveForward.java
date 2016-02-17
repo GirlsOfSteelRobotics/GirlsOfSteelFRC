@@ -7,14 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoDriveSlowly extends Command {
+public class AutoDriveForward extends Command {
 
 	private double inches;
+	private double speed;
 	
-    public AutoDriveSlowly(double distance) {
+    public AutoDriveForward(double distance, double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
         inches = distance;
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
@@ -26,7 +28,7 @@ public class AutoDriveSlowly extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveSpeed(.2);
+    	Robot.chassis.driveSpeed(speed);
 
     	System.out.println("Encoder distance: " + Robot.chassis.getEncoderDistance());
 

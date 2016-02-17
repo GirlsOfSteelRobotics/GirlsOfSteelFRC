@@ -8,14 +8,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoLowBar extends Command {
+public class AutoDriveBackwards extends Command {
 
 	private double inches;
+	private double speed;
 	
-    public AutoLowBar(double distance) {
+    public AutoDriveBackwards(double distance, double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
         inches = distance;
+        this.speed = speed;
         SmartDashboard.putBoolean("Autonomous is Finished!", false);
     }
 
@@ -28,7 +30,7 @@ public class AutoLowBar extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveSpeed(-.4);
+    	Robot.chassis.driveSpeed(-speed);
     	Robot.chassis.printEncoderValues();
     }
 
