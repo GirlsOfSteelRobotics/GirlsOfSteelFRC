@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-//import com.kauailabs.navx_mxp.AHRS;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -38,7 +38,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 	
 	//using the Nav board
 	public PIDController turnController;
-	//public AHRS ahrs;
+	public AHRS ahrs;
 	
 	static final double kP = 0.03; //TODO: adjust these
 	static final double kI = 0.00;
@@ -78,21 +78,22 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveRightC.set(driveRightA.getDeviceID());
 
 		//for the NavBoards
-		SerialPort temp = new SerialPort(9600, SerialPort.Port.kMXP); //TODO: fix the "baud rate" = first parameter
+
 
 		try {
 			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
 			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-			//ahrs = new AHRS(temp); 
+			ahrs = new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 		}
-//		turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
-//		turnController.setInputRange(-180.0f,  180.0f);
-//		turnController.setOutputRange(-1.0, 1.0);
-//		turnController.setAbsoluteTolerance(kToleranceDegrees);
-//		turnController.setContinuous(true);
+		turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+		turnController.setInputRange(-180.0f,  180.0f);
+		turnController.setOutputRange(-1.0, 1.0);
+		turnController.setAbsoluteTolerance(kToleranceDegrees);
+		turnController.setContinuous(true);
+		turnController.enable();
 	}
 	
 	
@@ -102,7 +103,9 @@ public class Chassis extends Subsystem implements PIDOutput{
     }
     
     public void driveByJoystick(double Y, double X) {
+    	SmartDashboard.putString("driveByJoystick?", Y + "," + X);
     	robotDrive.arcadeDrive(Y,X);
+
     }
     public void drive(double moveValue, double rotateValue){
     	robotDrive.arcadeDrive(moveValue, rotateValue);
@@ -151,11 +154,11 @@ public class Chassis extends Subsystem implements PIDOutput{
 	}
 	
 	public double getGyroAngle() {
-		return 0.0; // ahrs.getYaw();
+		return ahrs.getYaw();
 	}
 
 	public void resetGyro() {
-		//ahrs.zeroYaw();
+		ahrs.zeroYaw();
 	}
 	
 	@Override
@@ -164,9 +167,11 @@ public class Chassis extends Subsystem implements PIDOutput{
 	}
 
 	public void ahrsToSmartDashboard() {
-//		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
-//		SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
-//		SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+		SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
+		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
+		SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
+		SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+		SmartDashboard.putNumber(	"IMU_RotateToAngleRate",	rotateToAngleRate);
 
 	}
 

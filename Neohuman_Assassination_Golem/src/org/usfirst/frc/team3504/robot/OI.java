@@ -65,6 +65,8 @@ public class OI {
 	private JoystickButton pivotMiddle;
 	private JoystickButton portcullis;
 	private JoystickButton chevalDeFrise;
+	private JoystickButton testDesiredRotationAngle;
+	private JoystickButton resetGyro;
 	
 	private static final int AXIS_DPAD = 6;
 	
@@ -124,7 +126,12 @@ public class OI {
 		chevalDeFrise = new JoystickButton(buttonBoard, 13);
 		chevalDeFrise.whenPressed(new ChevalDeFrise());
 		
+		//test nav board
+		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
+		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 		
+		resetGyro = new JoystickButton(drivingStickForward, 8);
+		resetGyro.whenPressed(new ResetGyro());
 		
 	}
 	
