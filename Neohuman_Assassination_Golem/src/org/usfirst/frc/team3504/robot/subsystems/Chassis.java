@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-import com.kauailabs.navx_mxp.AHRS;
+//import com.kauailabs.navx_mxp.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -38,7 +38,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 	
 	//using the Nav board
 	public PIDController turnController;
-	public AHRS ahrs;
+	//public AHRS ahrs;
 	
 	static final double kP = 0.03; //TODO: adjust these
 	static final double kI = 0.00;
@@ -76,9 +76,25 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
-		
-	}
+
 		//for the NavBoards
+		SerialPort temp = new SerialPort(9600, SerialPort.Port.kMXP); //TODO: fix the "baud rate" = first parameter
+
+		try {
+			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
+			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+			//ahrs = new AHRS(temp); 
+		} catch (RuntimeException ex ) {
+			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+		}
+//		turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+//		turnController.setInputRange(-180.0f,  180.0f);
+//		turnController.setOutputRange(-1.0, 1.0);
+//		turnController.setAbsoluteTolerance(kToleranceDegrees);
+//		turnController.setContinuous(true);
+	}
+	
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -134,18 +150,26 @@ public class Chassis extends Subsystem implements PIDOutput{
 		return rotateToAngleRate;
 	}
 	
-	public void ahrsToSmartDashboard() {
-		//SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
-        //SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
-       // SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+	public double getGyroAngle() {
+		return 0.0; // ahrs.getYaw();
 	}
 
-	@Override
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		
+	public void resetGyro() {
+		//ahrs.zeroYaw();
 	}
 	
+	@Override
+	public void pidWrite(double output) {
+		rotateToAngleRate = output;
+	}
+
+	public void ahrsToSmartDashboard() {
+//		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
+//		SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
+//		SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+
+	}
+
 }
 
 

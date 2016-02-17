@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3504.robot.commands.TestTalon;
-import org.usfirst.frc.team3504.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3504.robot.subsystems.TestFlapSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final TestFlapSubsystem testFlapSubsystem = new TestFlapSubsystem();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -32,8 +32,8 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new TestTalon());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        chooser.addDefault("Default Auto", new TestTalon(true));
+//        chooser.addObject("My Auto", new MyAutoCommand());-+
         SmartDashboard.putData("Auto mode", chooser);
     }
 	
