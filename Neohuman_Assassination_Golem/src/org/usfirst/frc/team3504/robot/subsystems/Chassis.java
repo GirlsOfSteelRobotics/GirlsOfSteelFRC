@@ -93,6 +93,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 		turnController.setOutputRange(-1.0, 1.0);
 		turnController.setAbsoluteTolerance(kToleranceDegrees);
 		turnController.setContinuous(true);
+		turnController.enable();
 	}
 	
 	
@@ -170,6 +171,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
 		SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
 		SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+		SmartDashboard.putNumber(	"IMU_RotateToAngleRate",	rotateToAngleRate);
 
 	}
 
