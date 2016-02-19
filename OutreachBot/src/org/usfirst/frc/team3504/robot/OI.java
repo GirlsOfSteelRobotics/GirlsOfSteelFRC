@@ -52,6 +52,7 @@ public class OI {
 	public JoystickButton pivotDown;
 	
 	public Joystick driveStick;
+	public Joystick operatorGamePad;
 
 	public OI() {
 		driveStick = new Joystick(0);
@@ -62,21 +63,21 @@ public class OI {
 		joystickButton3 = new JoystickButton(driveStick, 3);
 		joystickButton3.whenPressed(new ShiftUp());
 		
-		closeArm = new JoystickButton(driveStick, 4); //good
+		closeArm = new JoystickButton(operatorGamePad, 6); //good
 		closeArm.whenPressed(new CloseArm());
-		openArm = new JoystickButton(driveStick, 5); //good
+		openArm = new JoystickButton(operatorGamePad, 5); //good
 		openArm.whenPressed(new OpenArm());
-		collectBall = new JoystickButton(driveStick, 6); //good
+		collectBall = new JoystickButton(operatorGamePad, 3); //good
 		collectBall.whileHeld(new CollectBall());
-		releaseBall = new JoystickButton(driveStick, 7); //good
+		releaseBall = new JoystickButton(operatorGamePad, 4); //good
 		releaseBall.whileHeld(new ReleaseBall());
-		shootBall = new JoystickButton(driveStick, 8);
+		shootBall = new JoystickButton(operatorGamePad, 2);
 		shootBall.whenPressed(new ShootBall());
-		shooterIn = new JoystickButton(driveStick, 9);
+		shooterIn = new JoystickButton(operatorGamePad, 1);
 		shooterIn.whenPressed(new ShooterIn());
-		pivotUp = new JoystickButton(driveStick, 10); //good
+		pivotUp = new JoystickButton(operatorGamePad, 7); //good
 		pivotUp.whileHeld(new PivotUp());
-		pivotDown = new JoystickButton(driveStick, 11); //good
+		pivotDown = new JoystickButton(operatorGamePad, 8); //good
 		pivotDown.whileHeld(new PivotDown());
 		
 		// SmartDashboard Buttons
