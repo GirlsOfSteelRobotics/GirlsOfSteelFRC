@@ -68,6 +68,8 @@ public class OI {
 	private JoystickButton testDesiredRotationAngle;
 	private JoystickButton resetGyro;
 	
+	private JoystickButton spinShooterWheels;
+	
 	private static final int AXIS_DPAD = 6;
 	
 	//Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
@@ -101,6 +103,10 @@ public class OI {
 		collectBallButton.whileHeld(new CollectBall());
 		releaseBallButton = new JoystickButton(buttonBoard, 6);
 		releaseBallButton.whileHeld(new ReleaseBall());
+		
+		//roboshooter
+		spinShooterWheels = new JoystickButton(buttonBoard, 1);
+		spinShooterWheels.whileHeld(new SpinShooterWheels());
 		
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 		flapUp = new JoystickButton(buttonBoard, 7);

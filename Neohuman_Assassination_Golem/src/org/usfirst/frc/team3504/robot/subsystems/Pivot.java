@@ -32,7 +32,7 @@ public class Pivot extends Subsystem {
 	}
 	
 	public void tiltUpandDown(double speed) {
-		pivotMotor.set(speed);
+		pivotMotor.set(-speed);
 	}
 	
     public void initDefaultCommand() {
