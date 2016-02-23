@@ -119,9 +119,9 @@ public class OI {
 		//flapDownRocker.whileHeld(new FlapUp(true));//^^
 		
 		//pivot
-		pivotUp = new JoystickButton(buttonBoard, 2);
+		pivotUp = new JoystickButton(buttonBoard, 3);
 		pivotUp.whileHeld(new PivotUp());
-		pivotDown = new JoystickButton(buttonBoard, 3);
+		pivotDown = new JoystickButton(buttonBoard, 2);
 		pivotDown.whileHeld(new PivotDown());
 		pivotMiddle = new JoystickButton(buttonBoard, 4);
 		pivotMiddle.whenPressed(new PivotMiddle());

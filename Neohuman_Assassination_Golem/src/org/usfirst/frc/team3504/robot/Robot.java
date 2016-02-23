@@ -65,6 +65,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autochooser: ", autoChooser);
         
 		SmartDashboard.putBoolean("Drive by Joystick", false);
+		
+		Robot.ledlights.dotLights();
     }
 	
 	/**
