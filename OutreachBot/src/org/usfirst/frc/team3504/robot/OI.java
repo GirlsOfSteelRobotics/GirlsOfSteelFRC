@@ -56,6 +56,7 @@ public class OI {
 
 	public OI() {
 		driveStick = new Joystick(0);
+		operatorGamePad = new Joystick(1);
 //for attack3 joystick
 
 		joystickButton2 = new JoystickButton(driveStick, 2);

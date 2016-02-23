@@ -25,6 +25,7 @@ public class Flap extends Subsystem {
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
 		 flapTalon.ConfigFwdLimitSwitchNormallyOpen(false);
 		 flapTalon.ConfigRevLimitSwitchNormallyOpen(false);
+		 flapTalon.enableBrakeMode(true);
 	 }
 	 
 	 public void initDefaultCommand() {

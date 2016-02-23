@@ -28,7 +28,7 @@ public class AutoLowBar extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveSpeed(-.1);
+    	Robot.chassis.driveSpeed(-.4);
     	Robot.chassis.printEncoderValues();
     }
 
