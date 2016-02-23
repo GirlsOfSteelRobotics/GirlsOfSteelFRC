@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -9,7 +11,11 @@ public class ShootBall extends CommandGroup {
     
     public  ShootBall() {
     	addSequential(new PivotMiddle()); //tilt shooter partially so that ball doesn't fall out
- 
+    	addParallel(new SpinShooterWheels()); //spins shooter wheels
+    	addSequential(new WaitCommand(3)); //need to test exact seconds for delay
+    	addSequential (new PivotUp()); //tilts shooter all the way up
+    	addSequential (new StopShooterWheels());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
