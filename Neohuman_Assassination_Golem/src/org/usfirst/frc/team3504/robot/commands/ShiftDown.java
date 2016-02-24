@@ -24,6 +24,8 @@ public class ShiftDown extends Command {
 		SmartDashboard.putString("Shifting", "DOWN!");
 		SmartDashboard.putString("Shifting Left", "" + Robot.shifters.getLeftShifterValue());
 		SmartDashboard.putString("Shifting Right", "" + Robot.shifters.getRightShifterValue());
+		
+		Robot.ledlights.redLight();
     }
 
     // Called repeatedly when this Command is scheduled to run
