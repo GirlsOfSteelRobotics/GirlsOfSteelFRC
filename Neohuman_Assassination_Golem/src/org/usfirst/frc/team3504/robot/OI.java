@@ -41,6 +41,9 @@ public class OI {
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
 	
+	private JoystickButton shiftUpButton2;
+	private JoystickButton shiftDownButton2;
+	
 	private JoystickButton testAutonomous;
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
@@ -81,6 +84,11 @@ public class OI {
 		shiftUpButton.whenPressed(new ShiftUp());
 		shiftDownButton = new JoystickButton(drivingStickForward, 4);
 		shiftDownButton.whenPressed(new ShiftDown());
+		
+		shiftUpButton2 = new JoystickButton(drivingStickBackward, 3);
+		shiftUpButton2.whenPressed(new ShiftUp());
+		shiftDownButton2 = new JoystickButton(drivingStickBackward, 4);
+		shiftDownButton2.whenPressed(new ShiftDown());
 		
 		testAutonomous = new JoystickButton(drivingStickForward, 5);
 		testAutonomous.whenPressed(new AutoDriveSlowly(60.0));

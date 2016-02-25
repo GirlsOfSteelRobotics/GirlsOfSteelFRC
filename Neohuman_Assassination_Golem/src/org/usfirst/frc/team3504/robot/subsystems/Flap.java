@@ -23,7 +23,7 @@ public class Flap extends Subsystem {
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
-		 flapTalon.ConfigFwdLimitSwitchNormallyOpen(false);
+		 flapTalon.ConfigFwdLimitSwitchNormallyOpen(true); //this limit switch should be normally closed, the limit switch just broke
 		 flapTalon.ConfigRevLimitSwitchNormallyOpen(false);
 		 flapTalon.enableBrakeMode(true);
 	 }
