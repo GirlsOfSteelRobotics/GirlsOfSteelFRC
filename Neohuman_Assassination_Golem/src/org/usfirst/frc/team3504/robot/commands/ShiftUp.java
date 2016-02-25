@@ -24,6 +24,8 @@ public class ShiftUp extends Command {
 		SmartDashboard.putString("Shifting", "UP!");
 		SmartDashboard.putString("Shifting Left", "" + Robot.shifters.getLeftShifterValue());
 		SmartDashboard.putString("Shifting Right", "" + Robot.shifters.getRightShifterValue());
+		
+		Robot.ledlights.greenLight();
     }
 
     // Called repeatedly when this Command is scheduled to run

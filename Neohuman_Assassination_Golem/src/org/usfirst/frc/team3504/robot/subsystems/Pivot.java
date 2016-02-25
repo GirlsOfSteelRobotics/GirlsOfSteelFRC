@@ -3,7 +3,10 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,11 +18,13 @@ public class Pivot extends Subsystem {
 	private CANTalon pivotMotor;
 	
 	private double encOffsetValue = 0;
-	
+
 	public Pivot() {
+		
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
 		pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
 		pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
+
 	}
 	
 	public int getPosition() {
@@ -44,9 +49,9 @@ public class Pivot extends Subsystem {
     public boolean getTopLimitSwitch(){
 		return !pivotMotor.isRevLimitSwitchClosed();
 	}
+    
 	public boolean getBottomLimitSwitch(){
 		return !pivotMotor.isFwdLimitSwitchClosed();
-		
 	}
     
     public double getEncoderRight() {

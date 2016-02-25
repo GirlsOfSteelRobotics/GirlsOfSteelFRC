@@ -28,14 +28,15 @@ public class RobotMap {
 
 	//Talons for claw
 
-	public static final int CLAW_MOTOR = 9;
+	//public static final int CLAW_MOTOR = 9;
 	
 	//Talons for pivot
 	public static final int PIVOT_MOTOR = 8;
 	
 	//Talons for shooter:
-	public static final int SHOOTER_MOTOR_A = 10; //TODO: fix these numbers...
-	public static final int SHOOTER_MOTOR_B = 11;
+	public static final int SHOOTER_MOTOR_A = 9; //TODO: fix these numbers...
+	public static final int SHOOTER_MOTOR_B = 10;
+	
 	//solenoids for shifters
 	public static final int SHIFTER_LEFT_A = 0;
 	public static final int SHIFTER_LEFT_B = 1;
