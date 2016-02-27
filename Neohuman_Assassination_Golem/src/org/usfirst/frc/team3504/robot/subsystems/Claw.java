@@ -17,8 +17,7 @@ public class Claw extends Subsystem {
 	
 	
 	public Claw() {
-		clawMotor = null;
-		//clawMotor = new CANTalon(RobotMap.CLAW_MOTOR);
+		clawMotor = new CANTalon(RobotMap.CLAW_MOTOR);
 	}
 
 	public void collectRelease(double speed) {
