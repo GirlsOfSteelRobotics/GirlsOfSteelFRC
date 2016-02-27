@@ -48,13 +48,10 @@ public class OI {
 	private JoystickButton pivotMiddle;
 	private JoystickButton portcullis;
 	private JoystickButton chevalDeFrise;
-	private JoystickButton testDesiredRotationAngle;  //with NavBoard
+	private JoystickButton testDesiredRotationAngle;  //for NavBoard
 	private JoystickButton resetGyro;
-	private JoystickButton shooterShoot;
-	private JoystickButton shooterCollect;
 	private JoystickButton shooterStop;
 
-	private JoystickButton spinShooterWheels;
 
 	private static final int AXIS_DPAD = 6;
 
