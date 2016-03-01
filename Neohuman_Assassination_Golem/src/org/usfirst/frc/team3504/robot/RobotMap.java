@@ -17,24 +17,27 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 	
 	//Talons for Driving
-	public static final int DRIVE_LEFT_A = 4;
-	public static final int DRIVE_LEFT_B = 5;
-	public static final int DRIVE_LEFT_C = 6;
-	
 	public static final int DRIVE_RIGHT_A = 1;
 	public static final int DRIVE_RIGHT_B = 2;
 	public static final int DRIVE_RIGHT_C = 3;
 	
-
-	//Talons for claw
-
-	//public static final int CLAW_MOTOR = 9;
+	public static final int DRIVE_LEFT_A = 4;
+	public static final int DRIVE_LEFT_B = 5;
+	public static final int DRIVE_LEFT_C = 6;
 	
+	//talons for flap
+	public static final int FLAP_MOTOR = 7;
+		
 	//Talons for pivot
 	public static final int PIVOT_MOTOR = 8;
 	
+	//Talons for claw
+	public static final int CLAW_MOTOR = 9;
+	
+	//Watch out! Talon numbers for Shooter and Claw are shared because they won't be used at the same time.
+	
 	//Talons for shooter:
-	public static final int SHOOTER_MOTOR_A = 9; //TODO: fix these numbers...
+	public static final int SHOOTER_MOTOR_A = 9; 
 	public static final int SHOOTER_MOTOR_B = 10;
 	
 	//solenoids for shifters
@@ -43,8 +46,8 @@ public class RobotMap {
 	public static final int SHIFTER_RIGHT_A = 2;
 	public static final int SHIFTER_RIGHT_B = 3;
 
-	//talons for flap
-	public static final int FLAP_MOTOR = 7; //TODO: fix these numbers
+	public static final boolean USING_CLAW = true; //false if using shooter
+	
 
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?

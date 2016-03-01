@@ -11,7 +11,7 @@ public class ShootBall extends CommandGroup {
     
     public  ShootBall() {
     	addSequential(new PivotMiddle()); //tilt shooter partially so that ball doesn't fall out
-    	addParallel(new SpinShooterWheels()); //spins shooter wheels
+    	addParallel(new ReleaseBall()); //spins shooter wheels
     	addSequential(new WaitCommand(3)); //need to test exact seconds for delay
     	addSequential (new PivotUp()); //tilts shooter all the way up
     	addSequential (new StopShooterWheels());
