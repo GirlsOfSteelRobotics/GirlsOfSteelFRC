@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -24,6 +25,7 @@ public class Pivot extends Subsystem {
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
 		pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
 		pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
+		LiveWindow.addActuator("Pivot", "Talon", pivotMotor);
 
 	}
 	
