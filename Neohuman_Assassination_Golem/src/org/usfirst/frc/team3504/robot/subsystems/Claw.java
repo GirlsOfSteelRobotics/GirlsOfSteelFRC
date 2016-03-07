@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -17,8 +18,8 @@ public class Claw extends Subsystem {
 	
 	
 	public Claw() {
-		clawMotor = null;
-		//clawMotor = new CANTalon(RobotMap.CLAW_MOTOR);
+		clawMotor = new CANTalon(RobotMap.CLAW_MOTOR);
+		LiveWindow.addActuator("Claw", "Talon", clawMotor);
 	}
 
 	public void collectRelease(double speed) {

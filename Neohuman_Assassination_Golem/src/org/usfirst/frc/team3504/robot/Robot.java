@@ -37,6 +37,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser autoChooser;
+    
+    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -47,11 +49,19 @@ public class Robot extends IterativeRobot {
     	chassis = new Chassis();
     	shifters = new Shifters();
     	flap = new Flap();
-    	claw = new Claw();
     	pivot = new Pivot();
     	camera = new Camera();
     	ledlights = new LEDLights(); 
-    	shooter = new Shooter();
+
+    	if (RobotMap.USING_CLAW) {
+    		claw = new Claw();
+    		shooter = null;
+    	}
+    	else {
+    		claw = null;
+    		shooter = new Shooter();
+    	}
+    	
     	
     	// After all subsystems are set up, create the Operator Interface.
     	// If you call new OI() before the subsystems are created, it will fail.
@@ -59,12 +69,15 @@ public class Robot extends IterativeRobot {
 
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("AutoDriveSlowly 110", new AutoDriveSlowly(110));
-		autoChooser.addObject("AutoDriveSlowly 55", new AutoDriveSlowly(55));
-		autoChooser.addObject("AutoLowBar", new AutoLowBar(55));
+		//drive backwards:
+		autoChooser.addObject("LowBar", new AutoDriveBackwards(55, .4)); //works
+		autoChooser.addObject("Moat", new AutoDriveBackwards(55, .4));
+		//drive forwards:
+		autoChooser.addObject("Rough Terrain", new AutoDriveForward(55, .4));
+		autoChooser.addObject("Ramparts", new AutoDriveForward(55, .4));
+		autoChooser.addObject("RockWall", new AutoDriveForward(55, .4));
+				
 		SmartDashboard.putData("Autochooser: ", autoChooser);
-        
-		SmartDashboard.putBoolean("Drive by Joystick", false);
 		
 		Robot.ledlights.dotLights();
     }
@@ -98,8 +111,9 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.start();
         Robot.ledlights.autoLights();
         
-        // Start the robot out in low gear when changing from auto to tele-op
+        // Start the robot out in low gear when starting autonomous
         shifters.shiftLeft(Shifters.Speed.kLow);
+        shifters.shiftRight(Shifters.Speed.kLow);
 
     }
 
@@ -117,7 +131,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
 		
-        // Start the robot out in low gear when changing from auto to tele-op
+        // Start the robot out in low gear when starting teleop
 		shifters.shiftLeft(Shifters.Speed.kLow);
 		shifters.shiftRight(Shifters.Speed.kLow);
 		
@@ -128,11 +142,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        Robot.chassis.ahrsToSmartDashboard();
+        //Robot.chassis.ahrsToSmartDashboard();
         Scheduler.getInstance().run();
-		// Start the robot out in low gear when changing from auto to tele-op
-        SmartDashboard.putBoolean("Top Flap LS", Robot.flap.getTopLimitSwitch());
-        SmartDashboard.putBoolean("Bottom Flap LS", Robot.flap.getBottomLimitSwitch());
     }
     
     /**

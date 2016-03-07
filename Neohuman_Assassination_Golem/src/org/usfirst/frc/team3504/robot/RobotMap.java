@@ -17,24 +17,27 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 	
 	//Talons for Driving
-	public static final int DRIVE_LEFT_A = 4;
-	public static final int DRIVE_LEFT_B = 5;
-	public static final int DRIVE_LEFT_C = 6;
-	
 	public static final int DRIVE_RIGHT_A = 1;
 	public static final int DRIVE_RIGHT_B = 2;
 	public static final int DRIVE_RIGHT_C = 3;
 	
-
-	//Talons for claw
-
-	//public static final int CLAW_MOTOR = 9;
+	public static final int DRIVE_LEFT_A = 4;
+	public static final int DRIVE_LEFT_B = 5;
+	public static final int DRIVE_LEFT_C = 6;
 	
+	//talons for flap
+	public static final int FLAP_MOTOR = 7;
+		
 	//Talons for pivot
 	public static final int PIVOT_MOTOR = 8;
 	
+	//Talons for claw
+	public static final int CLAW_MOTOR = 9;
+	
+	//Watch out! Talon numbers for Shooter and Claw are shared because they won't be used at the same time.
+	
 	//Talons for shooter:
-	public static final int SHOOTER_MOTOR_A = 9; //TODO: fix these numbers...
+	public static final int SHOOTER_MOTOR_A = 9; 
 	public static final int SHOOTER_MOTOR_B = 10;
 	
 	//solenoids for shifters
@@ -43,16 +46,16 @@ public class RobotMap {
 	public static final int SHIFTER_RIGHT_A = 2;
 	public static final int SHIFTER_RIGHT_B = 3;
 
-	//talons for flap
-	public static final int FLAP_MOTOR = 7; //TODO: fix these numbers
+	public static final boolean USING_CLAW = true; //false if using shooter
+	
 
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
 	private static final double pulsePerRevolution = 360;
 	// How far to we travel when the encoder turns one full revolution?
 	// Gear ratio is turns of the wheel per turns of the encoder
-	private static final double distancePerRevolutionHighGear = 8.0/*wheel size*/ * Math.PI * (1/27.21)/*gear ratio*/; //9.07
-	private static final double distancePerRevolutionLowGear = 8.0/*wheel size*/ * Math.PI * (1/28.33)/*gear ratio*/; //33.33
+	private static final double distancePerRevolutionHighGear = 8.0/*wheel size*/ * Math.PI * (1/27.21)/*gear ratio*/; //9.07 
+	private static final double distancePerRevolutionLowGear = 8.0/*wheel size*/ * Math.PI * (1/15.9)/*gear ratio*/; //33.33 
     // Given our set of wheels and gear box, how many inches do we travel per pulse?
 	public static final double DISTANCE_PER_PULSE_HIGH_GEAR = distancePerRevolutionHighGear / pulsePerRevolution;
 	public static final double DISTANCE_PER_PULSE_LOW_GEAR = distancePerRevolutionLowGear / pulsePerRevolution;

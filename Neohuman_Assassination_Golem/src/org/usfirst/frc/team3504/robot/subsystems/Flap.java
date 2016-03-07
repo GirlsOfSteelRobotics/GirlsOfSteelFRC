@@ -5,6 +5,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -23,7 +24,12 @@ public class Flap extends Subsystem {
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
+<<<<<<< HEAD
 		 flapTalon.ConfigFwdLimitSwitchNormallyOpen(true); //this limit switch should be normally closed, the limit switch just broke
+=======
+		 LiveWindow.addActuator("Flap", "Talon", flapTalon);
+		 flapTalon.ConfigFwdLimitSwitchNormallyOpen(false);
+>>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2016GirlsOfSteel.git
 		 flapTalon.ConfigRevLimitSwitchNormallyOpen(false);
 		 flapTalon.enableBrakeMode(true);
 	 }

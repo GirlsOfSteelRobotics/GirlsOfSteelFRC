@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,17 +11,22 @@ public class CollectBall extends Command {
     public CollectBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.claw);
+    	if(RobotMap.USING_CLAW)
+    		requires(Robot.claw);
+    	else
+    		requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.claw.collectRelease(.5);
+    	if(RobotMap.USING_CLAW)
+    		Robot.claw.collectRelease(.5);
+    	else
+    		Robot.shooter.spinWheels(.8);
     	
     }
 
@@ -31,7 +37,10 @@ public class CollectBall extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.claw.stopCollecting();
+    	if(RobotMap.USING_CLAW)
+    		Robot.claw.stopCollecting();
+    	else
+    		Robot.shooter.stop();
     }
 
     // Called when another command which requires one or more of the same
