@@ -20,11 +20,6 @@ public class ShiftDown extends Command {
     protected void initialize() {
 		Robot.shifters.shiftLeft(Speed.kLow);
 		Robot.shifters.shiftRight(Speed.kLow);
-		System.out.println("Shifting Down!");
-		SmartDashboard.putString("Shifting", "DOWN!");
-		SmartDashboard.putString("Shifting Left", "" + Robot.shifters.getLeftShifterValue());
-		SmartDashboard.putString("Shifting Right", "" + Robot.shifters.getRightShifterValue());
-		
 		Robot.ledlights.redLight();
     }
 

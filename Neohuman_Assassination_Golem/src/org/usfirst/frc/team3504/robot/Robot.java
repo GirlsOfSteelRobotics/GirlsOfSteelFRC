@@ -69,9 +69,14 @@ public class Robot extends IterativeRobot {
 
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("AutoDriveSlowly 110", new AutoDriveSlowly(110));
-		autoChooser.addObject("AutoDriveSlowly 55", new AutoDriveSlowly(55));
-		autoChooser.addObject("AutoLowBar", new AutoLowBar(55));
+		//drive backwards:
+		autoChooser.addObject("LowBar", new AutoDriveBackwards(55, .4)); //works
+		autoChooser.addObject("Moat", new AutoDriveBackwards(55, .4));
+		//drive forwards:
+		autoChooser.addObject("Rough Terrain", new AutoDriveForward(55, .4));
+		autoChooser.addObject("Ramparts", new AutoDriveForward(55, .4));
+		autoChooser.addObject("RockWall", new AutoDriveForward(55, .4));
+				
 		SmartDashboard.putData("Autochooser: ", autoChooser);
 		
 		Robot.ledlights.dotLights();

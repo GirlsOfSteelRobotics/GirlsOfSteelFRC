@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -76,6 +77,13 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
+		
+		LiveWindow.addActuator("Chassis", "Talon", driveRightA);
+		LiveWindow.addActuator("Chassis", "Talon", driveRightB);
+		LiveWindow.addActuator("Chassis", "Talon", driveRightC);
+		LiveWindow.addActuator("Chassis", "Talon", driveLeftA);
+		LiveWindow.addActuator("Chassis", "Talon", driveLeftB);
+		LiveWindow.addActuator("Chassis", "Talon", driveLeftC);
 
 		//for the NavBoards
 
