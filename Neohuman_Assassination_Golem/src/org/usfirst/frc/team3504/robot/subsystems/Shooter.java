@@ -32,26 +32,15 @@ public class Shooter extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-<<<<<<< HEAD
-    public void spinWheels() {
-    	shooterMotor1.set(1.0);
-    	shooterMotor2.set(1.0);
-=======
     public void spinWheels(double speed) {
     	shooterMotor1.set(speed);
     	shooterMotor2.set(-speed);
->>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2016GirlsOfSteel.git
     }
     
-<<<<<<< HEAD
-    public void collectWheels() {
-    	shooterMotor1.set(-0.4);
-    	shooterMotor2.set(-0.4);
-=======
+
     public void collectWheels(double speed) {
     	shooterMotor1.set(-speed);
     	shooterMotor2.set(speed);
->>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2016GirlsOfSteel.git
     }
     
     public void stop() {
