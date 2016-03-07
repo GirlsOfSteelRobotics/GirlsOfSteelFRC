@@ -43,8 +43,6 @@ public class OI {
 	private JoystickButton shiftUpButton2;
 	private JoystickButton shiftDownButton2;
 	
-	private JoystickButton shiftUpButton2;
-	private JoystickButton shiftDownButton2;
 	
 	private JoystickButton testAutonomous;
 
@@ -154,13 +152,13 @@ public class OI {
 		resetGyro = new JoystickButton(drivingStickForward, 8);
 		resetGyro.whenPressed(new ResetGyro());
 		
-		shooterShoot = new JoystickButton(drivingStickForward, 11);
+		shooterShoot = new JoystickButton(buttonBoard, 11);
 		shooterShoot.whenPressed(new SpinShooterWheels());
 		
-		shooterCollect = new JoystickButton(drivingStickForward, 12);
+		shooterCollect = new JoystickButton(buttonBoard, 12);
 		shooterCollect.whenPressed(new ShooterCollect());
 		
-		shooterStop = new JoystickButton(drivingStickForward, 2);
+		shooterStop = new JoystickButton(buttonBoard, 1);
 		shooterStop.whenPressed(new StopShooterWheels());
 	}
 	

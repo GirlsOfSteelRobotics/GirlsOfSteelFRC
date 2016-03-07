@@ -34,13 +34,13 @@ public class Shooter extends Subsystem {
     }
     
     public void spinWheels() {
-    	shooterMotor1.set(0.8);
-    	shooterMotor2.set(-0.8);
+    	shooterMotor1.set(1.0);
+    	shooterMotor2.set(1.0);
     }
     
     public void collectWheels() {
-    	shooterMotor1.set(-0.8);
-    	shooterMotor2.set(0.8);
+    	shooterMotor1.set(-0.4);
+    	shooterMotor2.set(-0.4);
     }
     
     public void stop() {
