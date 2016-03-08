@@ -70,12 +70,13 @@ public class Robot extends IterativeRobot {
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
 		autoChooser = new SendableChooser();
 		//drive backwards:
-		autoChooser.addObject("LowBar", new AutoDriveBackwards(55, .4)); //works
-		autoChooser.addObject("Moat", new AutoDriveBackwards(55, .4));
+		autoChooser.addObject("Reach Defense", new AutoDriveBackwards(55, .4));
+		autoChooser.addObject("LowBar", new FlapThenLowBar(110, .4)); //works
+		autoChooser.addObject("Moat", new AutoDriveBackwards(60, .8)); //works
 		//drive forwards:
-		autoChooser.addObject("Rough Terrain", new AutoDriveForward(55, .4));
-		autoChooser.addObject("Ramparts", new AutoDriveForward(55, .4));
-		autoChooser.addObject("RockWall", new AutoDriveForward(55, .4));
+		autoChooser.addObject("Rough Terrain", new AutoDriveBackwards(110, .4)); //works
+		//autoChooser.addObject("Ramparts", new AutoDriveForward(140, .6));
+		autoChooser.addObject("RockWall", new AutoDriveBackwards(150, .6)); //works
 				
 		SmartDashboard.putData("Autochooser: ", autoChooser);
 		
@@ -122,6 +123,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        Robot.chassis.ahrsToSmartDashboard();
     }
 
     public void teleopInit() {
@@ -142,7 +144,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        //Robot.chassis.ahrsToSmartDashboard();
+       Robot.chassis.ahrsToSmartDashboard();
         Scheduler.getInstance().run();
     }
     

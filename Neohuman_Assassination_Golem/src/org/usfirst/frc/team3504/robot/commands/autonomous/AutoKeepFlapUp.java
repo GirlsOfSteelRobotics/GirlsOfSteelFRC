@@ -1,20 +1,16 @@
-package org.usfirst.frc.team3504.robot.commands;
-
-import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.RobotMap;
+package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class StopShooterWheels extends Command {
+public class AutoKeepFlapUp extends Command {
 
-    public StopShooterWheels() {
-    	if(RobotMap.USING_CLAW)
-    		requires(Robot.claw);
-    	else
-    		requires(Robot.shooter);    }
+    public AutoKeepFlapUp() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -22,10 +18,6 @@ public class StopShooterWheels extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(RobotMap.USING_CLAW)
-    		Robot.claw.stopCollecting();
-    	else
-    		Robot.shooter.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()

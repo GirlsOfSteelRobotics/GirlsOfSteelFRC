@@ -20,7 +20,7 @@ public class Flap extends Subsystem {
     // here. Call these from Commands.
 	private double encOffsetValue = 0;
 	
-	private boolean LIMIT_SWITCHES_WORK = true;
+	private boolean LIMIT_SWITCHES_WORK = false;
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
@@ -32,8 +32,8 @@ public class Flap extends Subsystem {
 		 }
 		 else {
 			 flapTalon.enableLimitSwitch(false, false);
-			 flapTalon.enableBrakeMode(true);
 		 }
+		 flapTalon.enableBrakeMode(true);
 	 }
 	 
 	 public void initDefaultCommand() {

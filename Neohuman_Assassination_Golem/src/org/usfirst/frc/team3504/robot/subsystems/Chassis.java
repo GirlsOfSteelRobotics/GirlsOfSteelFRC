@@ -61,6 +61,13 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
 		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
 		
+		driveLeftA.enableBrakeMode(true);
+		driveLeftB.enableBrakeMode(true);
+		driveLeftC.enableBrakeMode(true);
+		driveRightA.enableBrakeMode(true);
+		driveRightB.enableBrakeMode(true);
+		driveRightC.enableBrakeMode(true);
+		
 		robotDrive = new RobotDrive(driveLeftA, driveRightA);
 		
 		// Set some safety controls for the drive system
@@ -136,7 +143,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 	}
 
 	public double getEncoderLeft() {
-		return driveLeftA.getEncPosition();
+		return -driveLeftA.getEncPosition();
 	}
 
 	public double getEncoderDistance() {
@@ -155,6 +162,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 	public void resetEncoderDistance() {
 		encOffsetValueRight = getEncoderRight();
 		encOffsetValueLeft = getEncoderLeft();
+		ahrs.resetDisplacement();
 	}
 	
 	public double getRotationAngleRate() {
@@ -180,6 +188,9 @@ public class Chassis extends Subsystem implements PIDOutput{
 		SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
 		SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
 		SmartDashboard.putNumber(	"IMU_RotateToAngleRate",	rotateToAngleRate);
+		SmartDashboard.putNumber("IMU_X_Displacement", ahrs.getDisplacementX());
+		SmartDashboard.putNumber("IMU_Y_Displacement", ahrs.getDisplacementY());
+		SmartDashboard.putNumber("IMU_Z_Displacement", ahrs.getDisplacementZ());
 
 	}
 

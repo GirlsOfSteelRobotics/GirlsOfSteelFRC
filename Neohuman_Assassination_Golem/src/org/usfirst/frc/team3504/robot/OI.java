@@ -70,8 +70,7 @@ public class OI {
 
 		shiftUpButton2 = new JoystickButton (drivingStickBackward, 4);
 		shiftUpButton2.whenPressed (new ShiftUp());
-
-		shiftDownButton2 = new JoystickButton (drivingStickBackward, 4);
+		shiftDownButton2 = new JoystickButton (drivingStickBackward, 3);
 		shiftDownButton2.whenPressed(new ShiftDown());
 
 		switchCam = new JoystickButton(drivingStickForward, 10);
