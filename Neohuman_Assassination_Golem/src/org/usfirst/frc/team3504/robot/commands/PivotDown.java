@@ -36,7 +36,7 @@ public class PivotDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.pivot.tiltUpandDown(-0.3);
+    	Robot.pivot.tiltUpandDown(0.3);
     	SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
     	SmartDashboard.putBoolean("Bottom Pivot LS", Robot.pivot.getBottomLimitSwitch());
     }

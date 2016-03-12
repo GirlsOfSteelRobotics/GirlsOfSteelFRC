@@ -24,7 +24,7 @@ public class ReleaseBall extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(RobotMap.USING_CLAW)
-    		Robot.claw.collectRelease(-.5);
+    		Robot.claw.collectRelease(.5);
     	else
     		Robot.shooter.spinWheels(.8);
     }

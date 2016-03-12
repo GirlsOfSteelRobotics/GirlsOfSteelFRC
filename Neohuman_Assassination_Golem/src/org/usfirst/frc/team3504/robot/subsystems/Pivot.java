@@ -23,9 +23,16 @@ public class Pivot extends Subsystem {
 	public Pivot() {
 		
 		pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
-		pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
-		pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
 		LiveWindow.addActuator("Pivot", "Talon", pivotMotor);
+		
+		if(RobotMap.USING_LIMIT_SWITCHES) {
+			pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
+			pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
+		}
+		else {
+			pivotMotor.enableLimitSwitch(false, false);
+		}
+		pivotMotor.enableBrakeMode(true);
 
 	}
 	

@@ -47,7 +47,7 @@ public class RobotMap {
 	public static final int SHIFTER_RIGHT_B = 3;
 
 	public static final boolean USING_CLAW = true; //false if using shooter
-	
+	public static final boolean USING_LIMIT_SWITCHES = false; 
 
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
@@ -55,7 +55,7 @@ public class RobotMap {
 	// How far to we travel when the encoder turns one full revolution?
 	// Gear ratio is turns of the wheel per turns of the encoder
 	private static final double distancePerRevolutionHighGear = 8.0/*wheel size*/ * Math.PI * (1/27.21)/*gear ratio*/; //(9.07)
-	private static final double distancePerRevolutionLowGear = 8.0/*wheel size*/ * Math.PI * (1/15.9)/*gear ratio*/; //28.33 (33.33) 
+	private static final double distancePerRevolutionLowGear = 8.0/*wheel size*/ * Math.PI * (1/28.33)/*gear ratio*/; //28.33/15.9 (33.33) 
     // Given our set of wheels and gear box, how many inches do we travel per pulse?
 	public static final double DISTANCE_PER_PULSE_HIGH_GEAR = distancePerRevolutionHighGear / pulsePerRevolution;
 	public static final double DISTANCE_PER_PULSE_LOW_GEAR = distancePerRevolutionLowGear / pulsePerRevolution;

@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autoChooser;
     
+    String autoSelected;
     
 
     /**
@@ -70,13 +71,16 @@ public class Robot extends IterativeRobot {
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
 		autoChooser = new SendableChooser();
 		//drive backwards:
-		autoChooser.addObject("Reach Defense", new AutoDriveBackwards(55, .4));
-		autoChooser.addObject("LowBar", new FlapThenLowBar(110, .4)); //works
-		autoChooser.addObject("Moat", new AutoDriveBackwards(60, .8)); //works
+		autoChooser.addDefault("Do Nothing", new AutoDoNothing());
+		autoChooser.addObject("Reach Defense", new AutoDriveBackwards(101, .4)); //55
+		autoChooser.addObject("LowBar", new FlapThenLowBar(156, .4)); //works 110
+		autoChooser.addObject("Moat", new AutoDriveBackwards(136, 1)); //works 60
 		//drive forwards:
-		autoChooser.addObject("Rough Terrain", new AutoDriveBackwards(110, .4)); //works
-		//autoChooser.addObject("Ramparts", new AutoDriveForward(140, .6));
-		autoChooser.addObject("RockWall", new AutoDriveBackwards(150, .6)); //works
+		autoChooser.addObject("Rough Terrain", new AutoDriveBackwards(156, .4)); //works 110
+		//autoChooser.addObject("Ramparts", new AutoDriveForward(186, .6)); //140
+		autoChooser.addObject("RockWall", new AutoDriveBackwards(196, .6)); //works //150
+		
+		//autoChooser.addObject("Slow Drive", new AutoDriveSlowly(100));
 				
 		SmartDashboard.putData("Autochooser: ", autoChooser);
 		
@@ -108,6 +112,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	autonomousCommand = (Command) autoChooser.getSelected();
+
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
         Robot.ledlights.autoLights();
@@ -123,6 +128,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+
         Robot.chassis.ahrsToSmartDashboard();
     }
 

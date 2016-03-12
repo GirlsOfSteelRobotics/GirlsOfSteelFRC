@@ -28,11 +28,11 @@ public class Shifters extends Subsystem {
 	
     public void shiftLeft(Speed speed) {
 		if (speed == Speed.kHigh) {
-			shifterLeft.set(DoubleSolenoid.Value.kForward);
+			shifterLeft.set(DoubleSolenoid.Value.kReverse);
 			System.out.println("Shifting left side into high gear (fwd)");
 			inHighGear = true;
 		} else {
-			shifterLeft.set(DoubleSolenoid.Value.kReverse);
+			shifterLeft.set(DoubleSolenoid.Value.kForward);
 			System.out.println("Shifting left side into low gear (rev)");
 			inHighGear = false;
 		}
@@ -40,11 +40,11 @@ public class Shifters extends Subsystem {
 	
 	public void shiftRight(Speed speed) {
 		if (speed == Speed.kHigh) {
-			shifterRight.set(DoubleSolenoid.Value.kForward);
+			shifterRight.set(DoubleSolenoid.Value.kReverse);
 			System.out.println("Shifting right side into high gear (fwd)");
 			inHighGear = true;
 		} else {
-			shifterRight.set(DoubleSolenoid.Value.kReverse);
+			shifterRight.set(DoubleSolenoid.Value.kForward);
 			System.out.println("Shifting right side into low gear (rev)");
 			inHighGear = false;
 		}

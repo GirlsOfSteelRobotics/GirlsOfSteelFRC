@@ -20,13 +20,12 @@ public class Flap extends Subsystem {
     // here. Call these from Commands.
 	private double encOffsetValue = 0;
 	
-	private boolean LIMIT_SWITCHES_WORK = false;
 	
 	 public Flap(){
 		 flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
 		 LiveWindow.addActuator("Flap", "Talon", flapTalon);
 		 
-		 if(LIMIT_SWITCHES_WORK) {
+		 if(RobotMap.USING_LIMIT_SWITCHES) {
 			 flapTalon.ConfigFwdLimitSwitchNormallyOpen(false);
 			 flapTalon.ConfigRevLimitSwitchNormallyOpen(false);
 		 }

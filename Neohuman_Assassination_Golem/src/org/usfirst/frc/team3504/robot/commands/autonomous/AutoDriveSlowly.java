@@ -26,7 +26,7 @@ public class AutoDriveSlowly extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveSpeed(.4);
+    	Robot.chassis.driveSpeed(-.4);
 
     	System.out.println("Encoder distance: " + Robot.chassis.getEncoderDistance());
 
@@ -34,7 +34,7 @@ public class AutoDriveSlowly extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.chassis.getEncoderDistance() >= inches;
+        return Robot.chassis.getEncoderDistance() <= -inches;
     }
 
     // Called once after isFinished returns true

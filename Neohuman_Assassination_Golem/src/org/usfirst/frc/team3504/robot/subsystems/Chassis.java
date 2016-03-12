@@ -139,11 +139,11 @@ public class Chassis extends Subsystem implements PIDOutput{
     }
     
 	public double getEncoderRight() {
-		return driveRightA.getEncPosition();
+		return -driveRightA.getEncPosition();
 	}
 
 	public double getEncoderLeft() {
-		return -driveLeftA.getEncPosition();
+		return driveLeftA.getEncPosition();
 	}
 
 	public double getEncoderDistance() {
@@ -163,6 +163,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 		encOffsetValueRight = getEncoderRight();
 		encOffsetValueLeft = getEncoderLeft();
 		ahrs.resetDisplacement();
+		getEncoderDistance();
 	}
 	
 	public double getRotationAngleRate() {
@@ -191,7 +192,8 @@ public class Chassis extends Subsystem implements PIDOutput{
 		SmartDashboard.putNumber("IMU_X_Displacement", ahrs.getDisplacementX());
 		SmartDashboard.putNumber("IMU_Y_Displacement", ahrs.getDisplacementY());
 		SmartDashboard.putNumber("IMU_Z_Displacement", ahrs.getDisplacementZ());
-
+		
+		getEncoderDistance();
 	}
 
 }
