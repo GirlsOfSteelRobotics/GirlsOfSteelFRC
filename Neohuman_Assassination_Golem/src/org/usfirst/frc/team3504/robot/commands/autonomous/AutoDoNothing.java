@@ -1,20 +1,18 @@
-package org.usfirst.frc.team3504.robot.commands;
+package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ *
+ */
+public class AutoDoNothing extends Command {
 
-public class ReleaseBall extends Command {
-
-    public ReleaseBall() {
+    public AutoDoNothing() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	if(RobotMap.USING_CLAW)
-    		requires(Robot.claw);
-    	else
-    		requires(Robot.shooter);
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
@@ -23,28 +21,19 @@ public class ReleaseBall extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(RobotMap.USING_CLAW)
-    		Robot.claw.collectRelease(.8);
-    	else
-    		Robot.shooter.spinWheels(.8);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	if(RobotMap.USING_CLAW)
-    		Robot.claw.stopCollecting();
-    	else
-    		Robot.shooter.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
