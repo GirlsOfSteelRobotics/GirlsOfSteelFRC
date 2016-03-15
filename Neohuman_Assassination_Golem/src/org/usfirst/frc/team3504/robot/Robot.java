@@ -38,8 +38,6 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autoChooser;
     
-    String autoSelected;
-    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -112,7 +110,6 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	autonomousCommand = (Command) autoChooser.getSelected();
-
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
         Robot.ledlights.autoLights();
@@ -128,7 +125,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-
         Robot.chassis.ahrsToSmartDashboard();
     }
 
