@@ -8,14 +8,10 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,20 +23,20 @@ public class Chassis extends Subsystem implements PIDOutput{
 	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
 	private CANTalon driveLeftC;
-	
+
 	private CANTalon driveRightA;
 	private CANTalon driveRightB;
 	private CANTalon driveRightC;
-	
+
 	private RobotDrive robotDrive;
 
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
-	
+
 	//using the Nav board
 	public PIDController turnController;
 	public AHRS ahrs;
-	
+
 	static final double kP = 0.03; //TODO: adjust these
 	static final double kI = 0.00;
 	static final double kD = 0.00;
@@ -49,10 +45,9 @@ public class Chassis extends Subsystem implements PIDOutput{
 	static final double kToleranceDegrees = 2.0f;
 
 	boolean rotateToAngle = false;
-	
+
 	double rotateToAngleRate;
-	
-	
+
 	public Chassis() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
 		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
@@ -60,22 +55,22 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
 		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
 		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
-		
+
 		driveLeftA.enableBrakeMode(true);
 		driveLeftB.enableBrakeMode(true);
 		driveLeftC.enableBrakeMode(true);
 		driveRightA.enableBrakeMode(true);
 		driveRightB.enableBrakeMode(true);
 		driveRightC.enableBrakeMode(true);
-		
+
 		robotDrive = new RobotDrive(driveLeftA, driveRightA);
-		
+
 		// Set some safety controls for the drive system
 		robotDrive.setSafetyEnabled(true);
 		robotDrive.setExpiration(0.1);
 		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
-		
+
 		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -84,16 +79,11 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
-		
-		LiveWindow.addActuator("Chassis", "Talon", driveRightA);
-		LiveWindow.addActuator("Chassis", "Talon", driveRightB);
-		LiveWindow.addActuator("Chassis", "Talon", driveRightC);
-		LiveWindow.addActuator("Chassis", "Talon", driveLeftA);
-		LiveWindow.addActuator("Chassis", "Talon", driveLeftB);
-		LiveWindow.addActuator("Chassis", "Talon", driveLeftC);
+
+		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
+		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
 
 		//for the NavBoards
-
 
 		try {
 			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
@@ -110,34 +100,33 @@ public class Chassis extends Subsystem implements PIDOutput{
 		turnController.setContinuous(true);
 		turnController.enable();
 	}
-	
-	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-    	setDefaultCommand( new DriveByJoystick() );
-    }
-    
-    public void driveByJoystick(double Y, double X) {
-    	SmartDashboard.putString("driveByJoystick?", Y + "," + X);
-    	robotDrive.arcadeDrive(Y,X);
 
-    }
-    public void drive(double moveValue, double rotateValue){
-    	robotDrive.arcadeDrive(moveValue, rotateValue);
-    }
-    
-    public void driveSpeed(double speed){
-    	robotDrive.drive(-speed, 0);
-    }
-    
-    public void stop() {
-    	robotDrive.drive(0, 0);
-    }
-    
-    public void printEncoderValues() {
-    	getEncoderDistance();
-    }
-    
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		setDefaultCommand( new DriveByJoystick() );
+	}
+
+	public void driveByJoystick(double Y, double X) {
+		SmartDashboard.putString("driveByJoystick?", Y + "," + X);
+		robotDrive.arcadeDrive(Y,X);
+	}
+
+	public void drive(double moveValue, double rotateValue){
+		robotDrive.arcadeDrive(moveValue, rotateValue);
+	}
+
+	public void driveSpeed(double speed){
+		robotDrive.drive(-speed, 0);
+	}
+
+	public void stop() {
+		robotDrive.drive(0, 0);
+	}
+
+	public void printEncoderValues() {
+		getEncoderDistance();
+	}
+
 	public double getEncoderRight() {
 		return -driveRightA.getEncPosition();
 	}
@@ -165,11 +154,11 @@ public class Chassis extends Subsystem implements PIDOutput{
 		ahrs.resetDisplacement();
 		getEncoderDistance();
 	}
-	
+
 	public double getRotationAngleRate() {
 		return rotateToAngleRate;
 	}
-	
+
 	public double getGyroAngle() {
 		return ahrs.getYaw();
 	}
@@ -177,7 +166,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 	public void resetGyro() {
 		ahrs.zeroYaw();
 	}
-	
+
 	@Override
 	public void pidWrite(double output) {
 		rotateToAngleRate = output;
@@ -192,10 +181,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 		SmartDashboard.putNumber("IMU_X_Displacement", ahrs.getDisplacementX());
 		SmartDashboard.putNumber("IMU_Y_Displacement", ahrs.getDisplacementY());
 		SmartDashboard.putNumber("IMU_Z_Displacement", ahrs.getDisplacementZ());
-		
+
 		getEncoderDistance();
 	}
-
 }
-
-
