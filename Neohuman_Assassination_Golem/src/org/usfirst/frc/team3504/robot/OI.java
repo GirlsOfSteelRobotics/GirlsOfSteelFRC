@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.commands.buttons.*;
 import org.usfirst.frc.team3504.robot.commands.camera.*;
 
@@ -15,17 +14,16 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	public enum DriveDirection {kFWD, kREV}; 
 
-	Joystick buttonBoard = new Joystick(2); //the button board gets plugged into USB and acts like a Joystick
-	Joystick drivingStickForward = new Joystick(0);
-	Joystick drivingStickBackward = new Joystick(1); 
+	private Joystick drivingStickForward = new Joystick(0);
+	private Joystick drivingStickBackward = new Joystick(1); 
+	// The button board gets plugged into USB and acts like a Joystick
+	private Joystick buttonBoard = new Joystick(2); 
+	// The autonomous command selector is uses buttons 2-5
+	private Joystick autonSelector = new Joystick(3);
 
 	//JOYSTICK BUTTONS
-
-
 	private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
-
-	private JoystickButton testAutonomous;
 
 	private JoystickButton shiftUpButton2; //for backwards joystick
 	private JoystickButton shiftDownButton2; //for backwards joystick
@@ -54,15 +52,12 @@ public class OI {
 	private JoystickButton testDesiredRotationAngle;  //for NavBoard
 	private JoystickButton resetGyro;
 	private JoystickButton shooterStop;
-
-
+	
 	private static final int AXIS_DPAD = 6;
 
 	//Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 
 	public OI() {
-
-
 		shiftUpButton = new JoystickButton(drivingStickForward, 4);
 		shiftUpButton.whenPressed(new ShiftUp());
 		shiftDownButton = new JoystickButton(drivingStickForward, 3);
@@ -84,18 +79,19 @@ public class OI {
 
 		switchToBackward = new JoystickButton(drivingStickBackward, 1);
 		switchToBackward.whenPressed(new SwitchToBackward());
+		
+		// Button board buttons
 
-		//works for both claw and shooter
+		// these work for both claw and shooter
 		collectBallButton = new JoystickButton(buttonBoard, 5);
 		collectBallButton.whileHeld(new CollectBall());
 		releaseBallButton = new JoystickButton(buttonBoard, 6);
 		releaseBallButton.whileHeld(new ReleaseBall());
-		
-		//button board buttons
+		shooterStop = new JoystickButton(buttonBoard, 1);
+		shooterStop.whenPressed(new StopShooterWheels());
+
 		if(!RobotMap.USING_CLAW) {
-			//shooter
-			shooterStop = new JoystickButton(buttonBoard, 1);
-			shooterStop.whenPressed(new StopShooterWheels());
+			// Put any claw-specific button assignments in here
 		}
 
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
@@ -129,9 +125,6 @@ public class OI {
 
 		resetGyro = new JoystickButton(drivingStickForward, 8);
 		resetGyro.whenPressed(new ResetGyro());
-		
-		shooterStop = new JoystickButton(buttonBoard, 1);
-		shooterStop.whenPressed(new StopShooterWheels());
 	}
 
 	public double getDrivingJoystickY() {
@@ -179,4 +172,20 @@ public class OI {
 		return (x > 0.5);
 	}
 
+	/** Get Autonomous Mode Selector
+	 * 
+	 * Read a physical pushbutton switch attached to a USB gamepad controller,
+	 * returning an integer that matches the current readout of the switch.
+	 * @return int ranging 0-15
+	 */
+	public int getAutonSelector() {
+		// Each of the four "button" inputs corresponds to a bit of a binary number
+		// encoding the current selection. To simplify wiring, buttons 2-5 were used.
+		int value = 
+				1 * (autonSelector.getRawButton(2) ? 1 : 0) +
+				2 * (autonSelector.getRawButton(3) ? 1 : 0) +
+				4 * (autonSelector.getRawButton(4) ? 1 : 0) +
+				8 *	(autonSelector.getRawButton(5) ? 1 : 0);
+		return value;
+	}
 }
