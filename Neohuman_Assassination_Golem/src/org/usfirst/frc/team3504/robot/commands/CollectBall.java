@@ -24,9 +24,9 @@ public class CollectBall extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(RobotMap.USING_CLAW)
-    		Robot.claw.collectRelease(-.8);
+    		Robot.claw.collectRelease(-1);
     	else
-    		Robot.shooter.spinWheels(.8);
+    		Robot.shooter.spinWheels(.9);
     	
     }
 
