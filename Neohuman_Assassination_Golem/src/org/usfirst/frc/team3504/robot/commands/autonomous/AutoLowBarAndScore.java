@@ -12,12 +12,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoLowBarAndScore extends CommandGroup {
     
     public  AutoLowBarAndScore() {
-    	addSequential(new Drive(15,0)); //FIXME: Find real values 
-    	addSequential(new Drive(0,45)); 
-    	addSequential(new Drive(5,0)); 
-    	addSequential(new PivotDown());
-    	addSequential(new ReleaseBall()); 
-    	
+    	addSequential(new FlapThenLowBar(156, .6)); //FIXME: Find real values 
+    	addSequential(new AutoTurn(20, 0.3));
+    	addSequential(new AutoDriveForward(140, .6));
+    	//addSequential(new AutoPivotDown(0.5));
+    	addSequential(new AutoReleaseBall(2.0));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

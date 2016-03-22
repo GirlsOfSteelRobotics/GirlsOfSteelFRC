@@ -36,7 +36,8 @@ public class AutoDriveForward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.chassis.getEncoderDistance() >= inches;
+        //return Robot.chassis.getEncoderDistance() >= inches; //competition bot
+    	return Robot.chassis.getEncoderDistance() <= -inches; //practice bot
     }
 
     // Called once after isFinished returns true
