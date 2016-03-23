@@ -1,8 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.commands.Drive;
-import org.usfirst.frc.team3504.robot.commands.PivotDown;
-import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
+import org.usfirst.frc.team3504.robot.commands.NudgeFlapDown;
+import org.usfirst.frc.team3504.robot.commands.NudgeFlapUp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -12,10 +11,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoLowBarAndScore extends CommandGroup {
     
     public  AutoLowBarAndScore() {
-    	addSequential(new FlapThenLowBar(156, .6)); //FIXME: Find real values 
-    	addSequential(new AutoTurn(20, 0.3));
+    	addSequential(new NudgeFlapDown());
+    	addSequential(new AutoDriveBackwards(156, .6));
+    	addSequential(new NudgeFlapUp()); 
+    	addSequential(new AutoTurn(21, 0.3));
     	addSequential(new AutoDriveForward(140, .6));
-    	//addSequential(new AutoPivotDown(0.5));
+    	addSequential(new AutoPivotDown(0.5));
     	addSequential(new AutoReleaseBall(2.0));
         // Add Commands here:
         // e.g. addSequential(new Command1());

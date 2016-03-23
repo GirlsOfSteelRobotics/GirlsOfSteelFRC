@@ -1,42 +1,41 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoReleaseBall extends Command {
-
-	private Timer tim;
-	private double time;
+public class NudgeFlapUp extends Command {
+	Timer time = new Timer();
 	
-    public AutoReleaseBall(double time) {
+    public NudgeFlapUp() {
+    	
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.claw);
-        this.time = time;
-        tim = new Timer();
+        requires(Robot.flap);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	tim.start();
+    	time.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.claw.collectRelease(.9);
+    	Robot.flap.setTalon(-.5);
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false; //tim.get() >= time;
+        return time.get() >= .5;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.claw.collectRelease(0);
+    	Robot.flap.stopTalon();
     }
 
     // Called when another command which requires one or more of the same
