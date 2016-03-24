@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.BlueLight;
+import org.usfirst.frc.team3504.robot.commands.RedLight;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -36,6 +38,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser autoChooser;
+    SendableChooser lightChooser; 
     
 
     /**
@@ -71,8 +74,9 @@ public class Robot extends IterativeRobot {
 		autoChooser.addDefault("Do Nothing", new AutoDoNothing());
 		autoChooser.addObject("Reach Defense", new AutoDriveBackwards(101, .4)); //55
 		autoChooser.addObject("LowBar", new FlapThenLowBar(156, .4)); //works 110
-		autoChooser.addObject("Moat", new AutoDriveBackwards(136, 1)); //works 60
+		autoChooser.addObject("Moat", new AutoDriveBackwards(156, 1)); //works 60
 		autoChooser.addObject("LowBar and Score", new AutoLowBarAndScore());
+		autoChooser.addObject("LowBar and Turn", new AutoLowBarAndTurn());
 		//drive forwards:
 		autoChooser.addObject("Rough Terrain", new AutoDriveBackwards(156, .4)); //works 110
 		//autoChooser.addObject("Ramparts", new AutoDriveForward(186, .6)); //140
@@ -81,6 +85,12 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addObject("Slow Drive", new AutoDriveSlowly(100));
 				
 		SmartDashboard.putData("Autochooser: ", autoChooser);
+		
+		lightChooser = new SendableChooser(); 
+		//alliance colors:
+		lightChooser.addObject("RedAlliance", new RedLight());
+		lightChooser.addObject("BlueAlliance", new BlueLight());
+		
 		
 		Robot.ledlights.dotLights();
     }
@@ -91,7 +101,8 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
+    	Robot.ledlights.blueLight();
+    	
     }
 	
 	public void disabledPeriodic() {
