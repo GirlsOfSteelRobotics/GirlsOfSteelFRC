@@ -38,6 +38,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser autoChooser;
+   
+    Command allianceColor; 
     SendableChooser lightChooser; 
     
 
@@ -91,6 +93,8 @@ public class Robot extends IterativeRobot {
 		lightChooser.addObject("RedAlliance", new RedLight());
 		lightChooser.addObject("BlueAlliance", new BlueLight());
 		
+		//allianceColor = (Command) lightChooser.getSelected();
+		
 		
 		Robot.ledlights.dotLights();
     }
@@ -101,8 +105,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-    	Robot.ledlights.blueLight();
-    	
     }
 	
 	public void disabledPeriodic() {
