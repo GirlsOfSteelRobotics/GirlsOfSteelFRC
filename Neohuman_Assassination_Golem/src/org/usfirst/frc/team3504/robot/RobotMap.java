@@ -40,6 +40,12 @@ public class RobotMap {
 	public static final int SHOOTER_MOTOR_A = 9; 
 	public static final int SHOOTER_MOTOR_B = 10;
 	
+	//solenoids for shooter:
+	public static final int SHOOTER_PISTON_LEFT_A = 20; //TO DO: fix
+	public static final int SHOOTER_PISTON_LEFT_B = 21; //TO DO: fix
+	public static final int SHOOTER_PISTON_RIGHT_A = 22; //TO DO: fix
+	public static final int SHOOTER_PISTON_RIGHT_B = 23; //TO DO: fix
+	
 	//solenoids for shifters
 	public static final int SHIFTER_LEFT_A = 0;
 	public static final int SHIFTER_LEFT_B = 1;
