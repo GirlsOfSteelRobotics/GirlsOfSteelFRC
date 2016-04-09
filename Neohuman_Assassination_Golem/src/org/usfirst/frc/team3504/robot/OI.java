@@ -45,6 +45,10 @@ public class OI {
 	private JoystickButton pivotUpButtonBoard;
 	private JoystickButton pivotDownButtonBoard; 
 	private JoystickButton shootBallButtonBoard;
+	private JoystickButton shooterPistonsOutButtonBoard;
+	private JoystickButton shooterPistonsInButtonBoard;
+	private JoystickButton rollersInButtonBoard;
+	private	JoystickButton rollersOutButtonBoard;
 	
 	//game pad 
 	private JoystickButton collectBallButton;
@@ -58,7 +62,6 @@ public class OI {
 	private JoystickButton pivotMiddle;
 	private JoystickButton testDesiredRotationAngle;  //for NavBoard
 	private JoystickButton resetGyro;
-	//private JoystickButton shooterStop;
 	private JoystickButton shootBall;
 	private JoystickButton shooterPistonsOut;
 	private JoystickButton shooterPistonsIn;
@@ -98,14 +101,26 @@ public class OI {
 		switchToBackward.whenPressed(new SwitchToBackward());
 		
 		// Button board buttons
-		collectBallButtonBoard = new JoystickButton(buttonBoard, 4); 
-		releaseBallButtonBoard = new JoystickButton(buttonBoard, 5); 
+		if (buttonBoard.getButtonCount() > 0){
+		shooterPistonsOut = new JoystickButton(buttonBoard, 3);
+		shooterPistonsOut.whenPressed(new ShooterPistonsOut());
+		shooterPistonsIn = new JoystickButton(buttonBoard, 4);
+		shooterPistonsIn.whenPressed(new ShooterPistonsIn());
 		shootBallButtonBoard = new JoystickButton(buttonBoard, 6); 
+		shootBallButtonBoard.whenPressed(new ShootBall()); 
 		pivotUpButtonBoard = new JoystickButton(buttonBoard, 7);
+		pivotUpButtonBoard.whileHeld(new PivotUp());
+		collectBallButtonBoard = new JoystickButton(buttonBoard, 8); 
+		collectBallButtonBoard.whileHeld(new CollectBall());
+		releaseBallButtonBoard = new JoystickButton(buttonBoard, 9); 
+		releaseBallButtonBoard.whileHeld(new ReleaseBall());
 		pivotDownButtonBoard = new JoystickButton(buttonBoard, 10);
+		pivotDownButtonBoard.whileHeld(new PivotDown());
 		flapUpButtonBoard = new JoystickButton(buttonBoard, 11);
+		flapUpButtonBoard.whileHeld(new FlapUp());
 		flapDownButtonBoard = new JoystickButton(buttonBoard, 12); 
-		
+		flapDownButtonBoard.whileHeld(new FlapDown());
+		}
 		
 		//GamePad Buttons
 		
@@ -116,12 +131,7 @@ public class OI {
 		releaseBallButton.whileHeld(new ReleaseBall());
 		shooterStop = new JoystickButton(gamePad, 1);
 		shooterStop.whenPressed(new StopShooterWheels());
-		shootBall = new JoystickButton(buttonBoard, 12);
-		shootBall.whenPressed(new ShootBall());
-		shooterPistonsOut = new JoystickButton(buttonBoard, 13);
-		shooterPistonsOut.whenPressed(new ShooterPistonsOut());
-		shooterPistonsIn = new JoystickButton(buttonBoard, 14);
-		shooterPistonsIn.whenPressed(new ShooterPistonsIn());
+		
 
 		if(!RobotMap.USING_CLAW) {
 			// Put any claw-specific button assignments in here
