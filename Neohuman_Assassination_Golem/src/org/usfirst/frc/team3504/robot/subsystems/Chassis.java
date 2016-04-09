@@ -71,6 +71,8 @@ public class Chassis extends Subsystem implements PIDOutput{
 		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
 
+		driveLeftA.changeControlMode(CANTalon.TalonControlMode.Speed);
+		driveRightA.changeControlMode(CANTalon.TalonControlMode.Speed);
 		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -80,6 +82,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
 
+		
 		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
 		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
 

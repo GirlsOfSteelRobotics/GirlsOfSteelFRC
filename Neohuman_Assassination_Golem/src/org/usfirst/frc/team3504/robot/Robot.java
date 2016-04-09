@@ -168,6 +168,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         Robot.chassis.ahrsToSmartDashboard();
         SmartDashboard.putNumber("FlapEncoder",Robot.flap.getFlapEncoderDistance());
+        SmartDashboard.putNumber("Pivot Encoder", Robot.pivot.getEncoderDistance());
     }
 
     public void teleopInit() {
@@ -190,6 +191,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
        Robot.chassis.ahrsToSmartDashboard();
        SmartDashboard.putNumber("FlapEncoder",Robot.flap.getFlapEncoderDistance());
+       SmartDashboard.putNumber("Pivot Encoder", Robot.pivot.getEncoderDistance());
         Scheduler.getInstance().run();
     }
     

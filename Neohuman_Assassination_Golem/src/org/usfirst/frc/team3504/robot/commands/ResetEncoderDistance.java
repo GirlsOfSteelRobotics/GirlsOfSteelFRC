@@ -19,6 +19,7 @@ public class ResetEncoderDistance extends Command {
     protected void initialize() {
     	Robot.chassis.resetEncoderDistance();
     	Robot.flap.resetDistance();
+    	Robot.pivot.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
