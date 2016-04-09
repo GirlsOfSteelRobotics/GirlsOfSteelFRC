@@ -47,11 +47,12 @@ public class OI {
 	private JoystickButton pivotUp;
 	private JoystickButton pivotDown;
 	private JoystickButton pivotMiddle;
-	private JoystickButton portcullis;
-	private JoystickButton chevalDeFrise;
 	private JoystickButton testDesiredRotationAngle;  //for NavBoard
 	private JoystickButton resetGyro;
-	private JoystickButton shooterStop;
+	//private JoystickButton shooterStop;
+	private JoystickButton shootBall;
+	private JoystickButton shooterPistonsOut;
+	private JoystickButton shooterPistonsIn;
 	
 	private static final int AXIS_DPAD = 6;
 
@@ -88,8 +89,14 @@ public class OI {
 		collectBallButton.whileHeld(new CollectBall());
 		releaseBallButton = new JoystickButton(buttonBoard, 6);
 		releaseBallButton.whileHeld(new ReleaseBall());
-		shooterStop = new JoystickButton(buttonBoard, 1);
-		shooterStop.whenPressed(new StopShooterWheels());
+		//shooterStop = new JoystickButton(buttonBoard, 1);
+		//shooterStop.whenPressed(new StopShooterWheels());
+		shootBall = new JoystickButton(buttonBoard, 12);
+		shootBall.whenPressed(new ShootBall());
+		shooterPistonsOut = new JoystickButton(buttonBoard, 13);
+		shooterPistonsOut.whenPressed(new ShooterPistonsOut());
+		shooterPistonsIn = new JoystickButton(buttonBoard, 14);
+		shooterPistonsIn.whenPressed(new ShooterPistonsIn());
 
 		if(!RobotMap.USING_CLAW) {
 			// Put any claw-specific button assignments in here
@@ -113,12 +120,6 @@ public class OI {
 		pivotDown.whileHeld(new PivotDown());
 		pivotMiddle = new JoystickButton(buttonBoard, 4);
 		pivotMiddle.whileHeld(new PivotMiddle());
-
-		//defenses: skipped 2 numbers for shooter
-		//portcullis = new JoystickButton(buttonBoard, 12);
-		//portcullis.whenPressed(new Portcullis());
-		//chevalDeFrise = new JoystickButton(buttonBoard, 13);
-		//chevalDeFrise.whenPressed(new ChevalDeFrise());
 
 		//test nav board
 		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
