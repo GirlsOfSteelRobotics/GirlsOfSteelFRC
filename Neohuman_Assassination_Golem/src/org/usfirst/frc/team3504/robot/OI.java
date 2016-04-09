@@ -17,9 +17,10 @@ public class OI {
 	private Joystick drivingStickForward = new Joystick(0);
 	private Joystick drivingStickBackward = new Joystick(1); 
 	// The button board gets plugged into USB and acts like a Joystick
-	private Joystick buttonBoard = new Joystick(2); 
+	private Joystick gamePad = new Joystick(2); 
+	private Joystick buttonBoard = new Joystick(3); 
 	// The autonomous command selector is uses buttons 2-5
-	private Joystick autonSelector = new Joystick(3);
+	private Joystick autonSelector = new Joystick(4);
 
 	//JOYSTICK BUTTONS
 	private JoystickButton shiftUpButton;
@@ -37,7 +38,15 @@ public class OI {
 	private JoystickButton switchToBackward; 
 
 	//button board
-
+	private JoystickButton collectBallButtonBoard;
+	private JoystickButton releaseBallButtonBoard;
+	private JoystickButton flapUpButtonBoard;
+	private JoystickButton flapDownButtonBoard;
+	private JoystickButton pivotUpButtonBoard;
+	private JoystickButton pivotDownButtonBoard; 
+	private JoystickButton shootBallButtonBoard;
+	
+	//game pad 
 	private JoystickButton collectBallButton;
 	private JoystickButton releaseBallButton;
 	private JoystickButton flapUp;
@@ -53,11 +62,15 @@ public class OI {
 	private JoystickButton resetEncoders;
 	private JoystickButton shooterStop;
 	
+	
 	private static final int AXIS_DPAD = 6;
 
 	//Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 
 	public OI() {
+		
+		//DriveStick Buttons
+		
 		//shiftUpButton = new JoystickButton(drivingStickForward, 4);
 		//shiftUpButton.whenPressed(new ShiftUp());
 		shiftDownButton = new JoystickButton(drivingStickForward, 3);
@@ -82,13 +95,23 @@ public class OI {
 		switchToBackward.whenPressed(new SwitchToBackward());
 		
 		// Button board buttons
-
+		collectBallButtonBoard = new JoystickButton(buttonBoard, 4); 
+		releaseBallButtonBoard = new JoystickButton(buttonBoard, 5); 
+		shootBallButtonBoard = new JoystickButton(buttonBoard, 6); 
+		pivotUpButtonBoard = new JoystickButton(buttonBoard, 7);
+		pivotDownButtonBoard = new JoystickButton(buttonBoard, 10);
+		flapUpButtonBoard = new JoystickButton(buttonBoard, 11);
+		flapDownButtonBoard = new JoystickButton(buttonBoard, 12); 
+		
+		
+		//GamePad Buttons
+		
 		// these work for both claw and shooter
-		collectBallButton = new JoystickButton(buttonBoard, 5);
+		collectBallButton = new JoystickButton(gamePad, 5);
 		collectBallButton.whileHeld(new CollectBall());
-		releaseBallButton = new JoystickButton(buttonBoard, 6);
+		releaseBallButton = new JoystickButton(gamePad, 6);
 		releaseBallButton.whileHeld(new ReleaseBall());
-		shooterStop = new JoystickButton(buttonBoard, 1);
+		shooterStop = new JoystickButton(gamePad, 1);
 		shooterStop.whenPressed(new StopShooterWheels());
 
 		if(!RobotMap.USING_CLAW) {
@@ -97,9 +120,9 @@ public class OI {
 
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 
-		flapUp = new JoystickButton(buttonBoard, 8); //TODO: change to 3 for Cincy
+		flapUp = new JoystickButton(gamePad, 8); //TODO: change to 3 for Cincy
 		flapUp.whileHeld(new FlapUp()); //false because it is not rocker button
-		flapDown = new JoystickButton(buttonBoard, 7); //TODO: change to 2 for Cincy
+		flapDown = new JoystickButton(gamePad, 7); //TODO: change to 2 for Cincy
 		flapDown.whileHeld(new FlapDown());
 		//flapUpRocker = new JoystickButton(buttonBoard, 5);
 		//flapUpRocker.whileHeld(new FlapUp(true); //true because using rocker
@@ -107,11 +130,11 @@ public class OI {
 		//flapDownRocker.whileHeld(new FlapUp(true));//^^
 
 		//pivot
-		pivotUp = new JoystickButton(buttonBoard, 3); //TODO: change to 7 for Cincy
+		pivotUp = new JoystickButton(gamePad, 3); //TODO: change to 7 for Cincy
 		pivotUp.whileHeld(new PivotUp());
-		pivotDown = new JoystickButton(buttonBoard, 2);// TODO: change to 8 for Cincy
+		pivotDown = new JoystickButton(gamePad, 2);// TODO: change to 8 for Cincy
 		pivotDown.whileHeld(new PivotDown());
-		pivotMiddle = new JoystickButton(buttonBoard, 4);
+		pivotMiddle = new JoystickButton(gamePad, 4);
 		pivotMiddle.whileHeld(new PivotMiddle());
 
 		//defenses: skipped 2 numbers for shooter
@@ -124,7 +147,7 @@ public class OI {
 		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
 		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 
-		resetEncoders = new JoystickButton(buttonBoard, 9);
+		resetEncoders = new JoystickButton(gamePad, 9);
 		resetEncoders.whenPressed(new ResetGyro());
 	}
 
@@ -147,7 +170,7 @@ public class OI {
 	}
 
 	public double getOperatorStickThrottle() {
-		return buttonBoard.getThrottle();
+		return gamePad.getThrottle();
 	}
 
 	public void setDriveDirection(DriveDirection driveDirection) {
@@ -160,7 +183,7 @@ public class OI {
 	}
 
 	public double getDPadX() {
-		return buttonBoard.getRawAxis(AXIS_DPAD);
+		return gamePad.getRawAxis(AXIS_DPAD);
 	}
 
 	public boolean getDPadLeft() {
