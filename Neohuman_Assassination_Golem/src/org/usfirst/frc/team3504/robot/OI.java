@@ -139,9 +139,9 @@ public class OI {
 
 		//flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 
-		flapUp = new JoystickButton(gamePad, 8); //TODO: change to 3 for Cincy
+		flapUp = new JoystickButton(gamePad, 7);
 		flapUp.whileHeld(new FlapUp()); //false because it is not rocker button
-		flapDown = new JoystickButton(gamePad, 7); //TODO: change to 2 for Cincy
+		flapDown = new JoystickButton(gamePad, 8); 
 		flapDown.whileHeld(new FlapDown());
 		//flapUpRocker = new JoystickButton(buttonBoard, 5);
 		//flapUpRocker.whileHeld(new FlapUp(true); //true because using rocker
@@ -149,9 +149,9 @@ public class OI {
 		//flapDownRocker.whileHeld(new FlapUp(true));//^^
 
 		//pivot
-		pivotUp = new JoystickButton(gamePad, 3); //TODO: change to 7 for Cincy
+		pivotUp = new JoystickButton(gamePad, 2); 
 		pivotUp.whileHeld(new PivotUp());
-		pivotDown = new JoystickButton(gamePad, 2);// TODO: change to 8 for Cincy
+		pivotDown = new JoystickButton(gamePad, 3);
 		pivotDown.whileHeld(new PivotDown());
 		pivotMiddle = new JoystickButton(gamePad, 4);
 		pivotMiddle.whileHeld(new PivotMiddle());
