@@ -50,7 +50,7 @@ public class OI {
 	private JoystickButton portcullis;
 	private JoystickButton chevalDeFrise;
 	private JoystickButton testDesiredRotationAngle;  //for NavBoard
-	private JoystickButton resetGyro;
+	private JoystickButton resetEncoders;
 	private JoystickButton shooterStop;
 	
 	private static final int AXIS_DPAD = 6;
@@ -123,8 +123,8 @@ public class OI {
 		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
 		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 
-		resetGyro = new JoystickButton(drivingStickForward, 8);
-		resetGyro.whenPressed(new ResetGyro());
+		resetEncoders = new JoystickButton(drivingStickForward, 8);
+		resetEncoders.whenPressed(new ResetGyro());
 	}
 
 	public double getDrivingJoystickY() {
