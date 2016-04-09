@@ -53,6 +53,8 @@ public class OI {
 	private JoystickButton shootBall;
 	private JoystickButton shooterPistonsOut;
 	private JoystickButton shooterPistonsIn;
+	private JoystickButton resetEncoders;
+	private JoystickButton shooterStop;
 	
 	private static final int AXIS_DPAD = 6;
 
@@ -125,8 +127,8 @@ public class OI {
 		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
 		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 
-		resetGyro = new JoystickButton(drivingStickForward, 8);
-		resetGyro.whenPressed(new ResetGyro());
+		resetEncoders = new JoystickButton(buttonBoard, 9);
+		resetEncoders.whenPressed(new ResetGyro());
 	}
 
 	public double getDrivingJoystickY() {
