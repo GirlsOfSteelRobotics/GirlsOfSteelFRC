@@ -30,14 +30,13 @@ public class AutoDriveBackwards extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveSpeed(-speed);
+    	Robot.chassis.driveSpeed(-speed); 
     	Robot.chassis.printEncoderValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return Robot.chassis.getEncoderDistance() <= -inches;	//for competition bot
-    	//return Robot.chassis.getEncoderDistance() >= inches;	//for practice bot
     }
 
     // Called once after isFinished returns true

@@ -12,7 +12,7 @@ public class AutoLowBarAndScore extends CommandGroup {
     
     public  AutoLowBarAndScore() {
     	addSequential(new NudgeFlapDown());
-    	addSequential(new AutoDriveBackwards(156, .6));
+    	addSequential(new AutoDriveBackwards(186, .6));
     	addSequential(new NudgeFlapUp()); 
     	addSequential(new AutoTurn(21, 0.3));
     	addSequential(new AutoDriveForward(140, .6));
