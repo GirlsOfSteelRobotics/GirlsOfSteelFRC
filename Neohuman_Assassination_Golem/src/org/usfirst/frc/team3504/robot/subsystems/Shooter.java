@@ -53,22 +53,12 @@ public class Shooter extends Subsystem {
     }
     
     public void spinWheels(double speed) {
-    	pistonsOut();
     	//add a wait
     	shooterMotor1.set(speed);
     	shooterMotor2.set(-speed);
     }
     
-
-    public void collectWheels(double speed) {
-    	pistonsIn();
-    	//add a wait
-    	shooterMotor1.set(-speed);
-    	shooterMotor2.set(speed);
-    }
-    
     public void stop() {
-    	pistonsIn();
     	//add a wait
     	shooterMotor1.set(0.0);
     	shooterMotor2.set(0.0);
