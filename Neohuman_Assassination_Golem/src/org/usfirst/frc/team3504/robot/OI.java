@@ -58,13 +58,13 @@ public class OI {
 	//Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 
 	public OI() {
-		shiftUpButton = new JoystickButton(drivingStickForward, 4);
-		shiftUpButton.whenPressed(new ShiftUp());
+		//shiftUpButton = new JoystickButton(drivingStickForward, 4);
+		//shiftUpButton.whenPressed(new ShiftUp());
 		shiftDownButton = new JoystickButton(drivingStickForward, 3);
 		shiftDownButton.whenPressed(new ShiftDown());
 
-		shiftUpButton2 = new JoystickButton (drivingStickBackward, 4);
-		shiftUpButton2.whenPressed (new ShiftUp());
+		//shiftUpButton2 = new JoystickButton (drivingStickBackward, 4);
+		//shiftUpButton2.whenPressed (new ShiftUp());
 		shiftDownButton2 = new JoystickButton (drivingStickBackward, 3);
 		shiftDownButton2.whenPressed(new ShiftDown());
 
@@ -77,6 +77,7 @@ public class OI {
 		switchToForward = new JoystickButton(drivingStickForward, 1); 
 		switchToForward.whenPressed(new SwitchToForward()); 
 
+		
 		switchToBackward = new JoystickButton(drivingStickBackward, 1);
 		switchToBackward.whenPressed(new SwitchToBackward());
 		
@@ -101,7 +102,7 @@ public class OI {
 		flapDown = new JoystickButton(buttonBoard, 7); //TODO: change to 2 for Cincy
 		flapDown.whileHeld(new FlapDown());
 		//flapUpRocker = new JoystickButton(buttonBoard, 5);
-		//flapUpRocker.whileHeld(new FlapUp(true)); //true because using rocker
+		//flapUpRocker.whileHeld(new FlapUp(true); //true because using rocker
 		//flapDownRocker = new JoystickButton(buttonBoard, 6);
 		//flapDownRocker.whileHeld(new FlapUp(true));//^^
 
