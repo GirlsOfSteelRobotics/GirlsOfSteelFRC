@@ -70,9 +70,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 		robotDrive.setExpiration(0.1);
 		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
-
-		driveLeftA.changeControlMode(CANTalon.TalonControlMode.Speed);
-		driveRightA.changeControlMode(CANTalon.TalonControlMode.Speed);
+		
 		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
