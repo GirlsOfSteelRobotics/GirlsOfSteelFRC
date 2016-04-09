@@ -124,7 +124,7 @@ public class OI {
 		testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
 		testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
 
-		resetEncoders = new JoystickButton(drivingStickForward, 8);
+		resetEncoders = new JoystickButton(buttonBoard, 9);
 		resetEncoders.whenPressed(new ResetGyro());
 	}
 

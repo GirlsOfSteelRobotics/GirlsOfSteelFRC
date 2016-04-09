@@ -189,6 +189,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
        Robot.chassis.ahrsToSmartDashboard();
+       SmartDashboard.putNumber("FlapEncoder",Robot.flap.getFlapEncoderDistance());
         Scheduler.getInstance().run();
     }
     
