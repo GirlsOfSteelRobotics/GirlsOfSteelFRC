@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("LowBar and Turn", new AutoLowBarAndTurn());
 		//drive forwards:
 		autoChooser.addObject("Rough Terrain", new AutoDriveBackwards(156, .4)); //works 110
-		//autoChooser.addObject("Ramparts", new AutoDriveForward(186, .6)); //140
+		autoChooser.addObject("Ramparts", new AutoDriveBackwards(186, .4)); //140
 		autoChooser.addObject("RockWall", new AutoDriveBackwards(196, .6)); //works //150
 		
 		//autoChooser.addObject("Slow Drive", new AutoDriveSlowly(100));
