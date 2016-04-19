@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -40,6 +43,21 @@ public class LEDLights extends Subsystem {
 	
 	public void dotLights(){
 		serialPort.writeString("p"); 
+	}
+	
+	public void initLights(){
+		switch (DriverStation.getInstance().getAlliance()) {
+		case Red:
+			Robot.ledlights.redLight();
+		break;
+		case Blue:
+			Robot.ledlights.blueLight();
+		break;
+		case Invalid:
+			Robot.ledlights.whiteLight();
+		default:
+		break;
+		}
 	}
 	
     public void initDefaultCommand() {

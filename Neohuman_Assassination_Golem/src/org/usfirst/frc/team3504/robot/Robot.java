@@ -93,10 +93,8 @@ public class Robot extends IterativeRobot {
 		lightChooser.addObject("RedAlliance", new RedLight());
 		lightChooser.addObject("BlueAlliance", new BlueLight());
 		
-		//allianceColor = (Command) lightChooser.getSelected();
 		
-		
-		Robot.ledlights.dotLights();
+		Robot.ledlights.initLights();
     }
 	
 	/**
@@ -123,6 +121,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	autonomousCommand = (Command) autoChooser.getSelected();
+    	allianceColor = (Command) lightChooser.getSelected(); 
     	
     	/*
     	// Alternative method of choosing auton mode using a physical switch
@@ -154,6 +153,7 @@ public class Robot extends IterativeRobot {
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+       
         Robot.ledlights.autoLights();
         
         // Start the robot out in low gear when starting autonomous
