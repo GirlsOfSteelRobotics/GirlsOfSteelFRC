@@ -54,7 +54,7 @@ public class LEDLights extends Subsystem {
 			Robot.ledlights.blueLight();
 		break;
 		case Invalid:
-			Robot.ledlights.whiteLight();
+			Robot.ledlights.autoLights();
 		default:
 		break;
 		}

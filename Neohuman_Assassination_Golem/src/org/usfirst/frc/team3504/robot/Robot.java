@@ -37,10 +37,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 
     Command autonomousCommand;
-    SendableChooser autoChooser;
-   
-    Command allianceColor; 
-    SendableChooser lightChooser; 
+    SendableChooser autoChooser; 
     
 
     /**
@@ -88,11 +85,6 @@ public class Robot extends IterativeRobot {
 				
 		SmartDashboard.putData("Autochooser: ", autoChooser);
 		
-		lightChooser = new SendableChooser(); 
-		//alliance colors:
-		lightChooser.addObject("RedAlliance", new RedLight());
-		lightChooser.addObject("BlueAlliance", new BlueLight());
-		
 		
 		Robot.ledlights.initLights();
     }
@@ -121,7 +113,6 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	autonomousCommand = (Command) autoChooser.getSelected();
-    	allianceColor = (Command) lightChooser.getSelected(); 
     	
     	/*
     	// Alternative method of choosing auton mode using a physical switch
