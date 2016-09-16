@@ -137,9 +137,9 @@ public class OI {
 		 */
 
 		// Gyro Buttons
-		resetGyro = new JoystickButton(chassisJoystick, 11);
+		resetGyro = new JoystickButton(chassisJoystick, 17);
 		resetGyro.whenPressed(new ResetGyro());
-		getGyro = new JoystickButton(chassisJoystick, 12);
+		getGyro = new JoystickButton(chassisJoystick, 18);
 		getGyro.whenPressed(new GetGyro());
 
 		// Pid TESTING
