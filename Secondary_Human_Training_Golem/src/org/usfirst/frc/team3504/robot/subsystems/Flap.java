@@ -15,7 +15,7 @@ public class Flap extends Subsystem {
 	private static final double maxEncoder = 360; //max encoder val
 	private double encOffsetValue = 0;
     
-	
+/*
 	public Flap (){
 		flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
 		LiveWindow.addActuator("Flap", "Talon", flapTalon);
@@ -36,5 +36,6 @@ public class Flap extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    */
 }
 
