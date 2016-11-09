@@ -1,4 +1,8 @@
 package org.usfirst.frc.team3504.robot;
+
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.RobotDrive;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -29,5 +33,11 @@ public class RobotMap {
 	private static final double distancePerRevolution = 8.0/*wheel size*/ * Math.PI * (16/16)/*gear ratio*/;
 	    // Given our set of wheels and gear box, how many inches do we travel per pulse?
 	public static final double DISTANCE_PER_PULSE = distancePerRevolution / pulsePerRevolution;
-
+	public static CANTalon rightTalon1;
+	public static CANTalon leftTalon1;
+	public static RobotDrive driveSystem;
+	
+	static void init() {
+		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
+	}
 }
