@@ -62,6 +62,7 @@ public class DriveSystem extends Subsystem {
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+		robotDrive = RobotMap.driveSystem;
 	}
 	
 	public void initDefaultCommand() {
@@ -98,5 +99,10 @@ public class DriveSystem extends Subsystem {
 
 	public void resetDistance() {
 		encOffsetValue = getEncoderLeft();
+	}
+	
+	public void driveByJoystick(Joystick stick) {
+		robotDrive.arcadeDrive(stick);
+		
 	}
 }
