@@ -36,8 +36,4 @@ public class RobotMap {
 	public static CANTalon rightTalon1;
 	public static CANTalon leftTalon1;
 	public static RobotDrive driveSystem;
-	
-	static void init() {
-		driveSystem = new RobotDrive(rightTalon1, leftTalon1);
-	}
 }
