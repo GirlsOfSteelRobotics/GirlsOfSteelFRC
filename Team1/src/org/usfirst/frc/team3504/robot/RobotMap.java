@@ -33,21 +33,6 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_ENCODER_B = 1;
 	public static final int DRIVE_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
-	
-	// There's a pneumatic shifter on each side of the drive system
-	// controlled by a double solenoid (so two ports each)
-	public static final int SHIFTER_LEFT_A = 0;
-	public static final int SHIFTER_LEFT_B = 1;
-	public static final int SHIFTER_RIGHT_A = 2;
-	public static final int SHIFTER_RIGHT_B = 3;
-	public static final int ARM_PISTON_A = 5;
-	public static final int ARM_PISTON_B = 4;
-	public static final int SHOOTER_PISTON_A = 6;
-	public static final int SHOOTER_PISTON_B = 7;
-	
-	// Accessory motors, left and right, are on a Victor motor controller
-	public static final int ACCESSORY_LEFT_PORT = 2;
-	public static final int ACCESSORY_RIGHT_PORT = 3;
 		
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
