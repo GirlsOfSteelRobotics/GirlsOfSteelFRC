@@ -62,7 +62,6 @@ public class DriveSystem extends Subsystem {
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
 		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-		robotDrive = RobotMap.driveSystem;
 	}
 	
 	public void initDefaultCommand() {

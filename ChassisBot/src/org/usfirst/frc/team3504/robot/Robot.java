@@ -17,13 +17,14 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 	public static OI oi;
-	public static final DriveSystem driveSystem = new DriveSystem();
-
+	public static DriveSystem driveSystem;
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+		driveSystem = new DriveSystem();
 		oi = new OI();
 	
 	/**
