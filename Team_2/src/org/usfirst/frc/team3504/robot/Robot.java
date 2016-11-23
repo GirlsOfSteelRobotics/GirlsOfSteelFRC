@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	public static Chassis chassis;
+	public static Collector collector;
 	public static OI oi;
 	SendableChooser chooser; 
 	Command autonomousCommand; 
@@ -32,6 +35,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	chassis = new Chassis();
+    	collector = new Collector();
     	
     	//Initialize OI after all subsystems are initialized
 		oi = new OI();
