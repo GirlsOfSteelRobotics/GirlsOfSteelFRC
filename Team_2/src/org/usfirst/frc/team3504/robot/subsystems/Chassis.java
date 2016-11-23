@@ -49,7 +49,7 @@ public class Chassis extends Subsystem {
 
 	public void stop() {
 		// TODO Auto-generated method stub
-		
+		robotDrive.drive(/* speed */0, /* curve */0);
 	}
     
 }
