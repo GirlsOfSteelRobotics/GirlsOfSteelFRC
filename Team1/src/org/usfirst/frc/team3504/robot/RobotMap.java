@@ -27,13 +27,26 @@ public class RobotMap {
 	public static final int DRIVE_RIGHT_C_CAN_ID = 3;
 	public static final int ARM_PIVOT_CAN_ID = 15;
 	public static final int COLLECTOR_CAN_ID = 14;
+	public static final int COLLECTOR_MOTOR = 16; //TODO: fix
 	
 	// The output shaft of the drive system has a quadrature encoder
 	public static final int DRIVE_LEFT_ENCODER_A = 0;
 	public static final int DRIVE_LEFT_ENCODER_B = 1;
 	public static final int DRIVE_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
-		
+	
+	//shooter pistons
+	public static final int SHOOTER_PISTON_LEFT_A = 99; //TODO: fix
+	public static final int SHOOTER_PISTON_LEFT_B = 99; //TODO: fix
+	public static final int SHOOTER_PISTON_RIGHT_A = 99; //TODO: fix
+	public static final int SHOOTER_PISTON_RIGHT_B = 99; //TODO: fix
+	public static final int JAW_PISTON_A = 99; //TODO: fix
+	public static final int JAW_PISTON_B = 99; //TODO: fix
+	
+	//arm pistons
+	public static final int ARM_PISTON_A = 99; //TODO: fix
+	public static final int ARM_PISTON_B = 99; //TODO: fix
+	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
 	private static final double pulsePerRevolution = 360;
