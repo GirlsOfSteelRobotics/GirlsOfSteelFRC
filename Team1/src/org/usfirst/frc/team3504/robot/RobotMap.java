@@ -33,7 +33,7 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_ENCODER_B = 1;
 	public static final int DRIVE_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
-		
+	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
 	private static final double pulsePerRevolution = 360;
