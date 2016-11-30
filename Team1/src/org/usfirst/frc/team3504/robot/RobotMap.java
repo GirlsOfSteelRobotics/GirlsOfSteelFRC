@@ -35,12 +35,15 @@ public class RobotMap {
 	public static final int DRIVE_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
 	
-	//pistons
+	//shooter pistons
 	public static final int SHOOTER_PISTON_LEFT_A = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_LEFT_B = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_RIGHT_A = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_RIGHT_B = 99; //TODO: fix
 	
+	//arm pistons
+	public static final int ARM_PISTON_A = 99; //TODO: fix
+	public static final int ARM_PISTON_B = 99; //TODO: fix
 	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
