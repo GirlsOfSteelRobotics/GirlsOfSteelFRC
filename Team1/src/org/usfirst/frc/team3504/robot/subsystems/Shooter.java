@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 /**
  *
  */
-public class ShooterPiston extends Subsystem {
+public class Shooter extends Subsystem {
     
 	private DoubleSolenoid shooterPistonLeft;
 	private DoubleSolenoid shooterPistonRight;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public ShooterPiston()
+	public Shooter()
 	{
 		shooterPistonLeft = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
 		shooterPistonRight = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
