@@ -40,6 +40,8 @@ public class RobotMap {
 	public static final int SHOOTER_PISTON_LEFT_B = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_RIGHT_A = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_RIGHT_B = 99; //TODO: fix
+	public static final int JAW_PISTON_A = 99; //TODO: fix
+	public static final int JAW_PISTON_B = 99; //TODO: fix
 	
 	
 	// Encoder-to-distance constants
