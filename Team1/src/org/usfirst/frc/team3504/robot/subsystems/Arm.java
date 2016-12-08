@@ -18,6 +18,7 @@ public class Arm extends Subsystem {
 	{
 		armPiston = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
 	}
+	
 	public void armUp()
 	{
 		armPiston.set(DoubleSolenoid.Value.kForward);

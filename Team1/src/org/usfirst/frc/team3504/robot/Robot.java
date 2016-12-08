@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Subsystem chassis;
 	public static Shifters shifters;
+	public static Arm arm;
 
     Command autonomousCommand;
     SendableChooser chooser;

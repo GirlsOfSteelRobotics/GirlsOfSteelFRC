@@ -1,7 +1,11 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.ArmDown;
+import org.usfirst.frc.team3504.robot.commands.ArmUp;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -36,8 +40,17 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	public Joystick driveStick;
 	
+	private JoystickButton armUp;
+	private JoystickButton armDown;
+	
 	public OI() {
+		
 		driveStick = new Joystick(0);
+		
+		armUp = new JoystickButton(driveStick, 8); //TODO : fix
+		armUp.whileHeld(new ArmUp()); 
+		armDown = new JoystickButton(driveStick, 7); //TODO: fix
+		armDown.whileHeld(new ArmDown());
 	}
 	
 	public Joystick getDriveStick() {
