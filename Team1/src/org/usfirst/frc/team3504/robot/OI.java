@@ -39,6 +39,7 @@ public class OI {
 	public OI() {
 		driveStick = new Joystick(0);
 	}
+	
 	public Joystick getDriveStick() {
 		return driveStick;
 	}

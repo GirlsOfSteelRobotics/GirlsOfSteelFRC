@@ -35,11 +35,19 @@ public class RobotMap {
 	public static final int DRIVE_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_RIGHT_ENCODER_B = 3;
 	
+	//solenoids for shifters
+	public static final int SHIFTER_LEFT_A = 0;
+	public static final int SHIFTER_LEFT_B = 1;
+	public static final int SHIFTER_RIGHT_A = 2;
+	public static final int SHIFTER_RIGHT_B = 3;
+		
 	//shooter pistons
 	public static final int SHOOTER_PISTON_LEFT_A = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_LEFT_B = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_RIGHT_A = 99; //TODO: fix
 	public static final int SHOOTER_PISTON_RIGHT_B = 99; //TODO: fix
+	
+	//jaw pistons
 	public static final int JAW_PISTON_A = 99; //TODO: fix
 	public static final int JAW_PISTON_B = 99; //TODO: fix
 	
@@ -52,8 +60,9 @@ public class RobotMap {
 	private static final double pulsePerRevolution = 360;
 	// How far to we travel when the encoder turns one full revolution?
 	// Gear ratio is turns of the wheel per turns of the encoder
-	//FIXME - gear ratio is just a swag
-	private static final double distancePerRevolution = 8.0/*wheel size*/ * Math.PI * (16/16)/*gear ratio*/;
+	private static final double distancePerRevolutionHighGear = 8.0/*wheel size*/ * Math.PI * (1/27.21)/*gear ratio*/; //(9.07)
+	private static final double distancePerRevolutionLowGear = 8.0/*wheel size*/ * Math.PI * (1/28.33)/*gear ratio*/; //28.33/15.9 (33.33) 
     // Given our set of wheels and gear box, how many inches do we travel per pulse?
-	public static final double DISTANCE_PER_PULSE = distancePerRevolution / pulsePerRevolution;
+	public static final double DISTANCE_PER_PULSE_HIGH_GEAR = distancePerRevolutionHighGear / pulsePerRevolution;
+	public static final double DISTANCE_PER_PULSE_LOW_GEAR = distancePerRevolutionLowGear / pulsePerRevolution;
 }

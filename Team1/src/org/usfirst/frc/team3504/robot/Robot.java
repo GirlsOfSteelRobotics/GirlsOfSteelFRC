@@ -1,7 +1,7 @@
-
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,6 +23,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSystem driveSystem;
 	public static OI oi;
 	public static Subsystem chassis;
+	public static Shifters shifters;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
     	driveSystem = new DriveSystem();
 		oi = new OI();
         chooser = new SendableChooser();
+        shifters = new Shifters();
         //chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
