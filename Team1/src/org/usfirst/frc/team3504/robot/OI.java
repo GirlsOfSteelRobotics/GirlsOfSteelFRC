@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.ArmDown;
 import org.usfirst.frc.team3504.robot.commands.ArmUp;
+import org.usfirst.frc.team3504.robot.commands.ShootPrep;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -40,8 +41,13 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	public Joystick driveStick;
 	
+	//arm
 	private JoystickButton armUp;
 	private JoystickButton armDown;
+	
+	//shooting
+	private JoystickButton shootPrep;
+	
 	
 	public OI() {
 		
@@ -51,6 +57,9 @@ public class OI {
 		armUp.whileHeld(new ArmUp()); 
 		armDown = new JoystickButton(driveStick, 7); //TODO: fix
 		armDown.whileHeld(new ArmDown());
+		
+		shootPrep = new JoystickButton(driveStick, 9); //TODO : fix
+		shootPrep.whenPressed(new ShootPrep());
 	}
 	
 	public Joystick getDriveStick() {

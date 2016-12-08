@@ -25,6 +25,8 @@ public class Robot extends IterativeRobot {
 	public static Subsystem chassis;
 	public static Shifters shifters;
 	public static Arm arm;
+	public static JawPiston jaw;
+	public static Shooter shooter;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         shifters = new Shifters();
+        
         //chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
