@@ -2,6 +2,8 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.ArmDown;
 import org.usfirst.frc.team3504.robot.commands.ArmUp;
+import org.usfirst.frc.team3504.robot.commands.Collect;
+import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.ShootPrep;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -47,19 +49,28 @@ public class OI {
 	
 	//shooting
 	private JoystickButton shootPrep;
+	private JoystickButton shoot;
+	
+	//collect
+	private JoystickButton collect;
 	
 	
 	public OI() {
 		
 		driveStick = new Joystick(0);
 		
-		armUp = new JoystickButton(driveStick, 8); //TODO : fix
+		armUp = new JoystickButton(driveStick, 8); //TODO: fix
 		armUp.whileHeld(new ArmUp()); 
 		armDown = new JoystickButton(driveStick, 7); //TODO: fix
 		armDown.whileHeld(new ArmDown());
 		
-		shootPrep = new JoystickButton(driveStick, 9); //TODO : fix
+		shootPrep = new JoystickButton(driveStick, 9); //TODO: fix
 		shootPrep.whenPressed(new ShootPrep());
+		shoot = new JoystickButton(driveStick, 10); //TODO: fix
+		shoot.whenPressed(new Shoot());
+		
+		collect = new JoystickButton(driveStick, 11); //TODO: fix
+		collect.whileHeld(new Collect());
 	}
 	
 	public Joystick getDriveStick() {

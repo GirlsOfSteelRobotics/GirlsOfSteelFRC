@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static Arm arm;
 	public static JawPiston jaw;
 	public static Shooter shooter;
+	public static Collector collecter;
 
     Command autonomousCommand;
     SendableChooser chooser;

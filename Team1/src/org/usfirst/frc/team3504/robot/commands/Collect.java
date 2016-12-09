@@ -7,12 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ArmDown extends Command {
+public class Collect extends Command {
 
-    public ArmDown() {
+    public Collect() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.arm);
+    	requires(Robot.jaw);
+    	requires(Robot.collecter);
     }
 
     // Called just before this Command runs the first time
@@ -22,6 +24,8 @@ public class ArmDown extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.arm.armDown();
+    	Robot.jaw.pistonsIn();
+    	Robot.collecter.spinWheels(0.5);// TODO : test
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +35,7 @@ public class ArmDown extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-
+    	Robot.collecter.stop();
     }
 
     // Called when another command which requires one or more of the same
