@@ -3,8 +3,12 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.ArmDown;
 import org.usfirst.frc.team3504.robot.commands.ArmUp;
 import org.usfirst.frc.team3504.robot.commands.Collect;
+import org.usfirst.frc.team3504.robot.commands.JawIn;
+import org.usfirst.frc.team3504.robot.commands.JawOut;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.ShootPrep;
+import org.usfirst.frc.team3504.robot.commands.ShooterIn;
+import org.usfirst.frc.team3504.robot.commands.ShooterOut;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -43,10 +47,6 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	public Joystick driveStick;
 	
-	//arm
-	private JoystickButton armUp;
-	private JoystickButton armDown;
-	
 	//shooting
 	private JoystickButton shootPrep;
 	private JoystickButton shoot;
@@ -54,15 +54,21 @@ public class OI {
 	//collect
 	private JoystickButton collect;
 	
+	//arm
+	private JoystickButton armUp;
+	private JoystickButton armDown;
+	
+	//jaw
+	private JoystickButton jawIn;
+	private JoystickButton jawOut;
+	
+	//shooter piston
+	private JoystickButton shooterIn;
+	private JoystickButton shooterOut;
 	
 	public OI() {
 		
 		driveStick = new Joystick(0);
-		
-		armUp = new JoystickButton(driveStick, 8); //TODO: fix
-		armUp.whileHeld(new ArmUp()); 
-		armDown = new JoystickButton(driveStick, 7); //TODO: fix
-		armDown.whileHeld(new ArmDown());
 		
 		shootPrep = new JoystickButton(driveStick, 9); //TODO: fix
 		shootPrep.whenPressed(new ShootPrep());
@@ -71,6 +77,21 @@ public class OI {
 		
 		collect = new JoystickButton(driveStick, 11); //TODO: fix
 		collect.whileHeld(new Collect());
+		
+		armUp = new JoystickButton(driveStick, 8); //TODO: fix
+		armUp.whileHeld(new ArmUp()); 
+		armDown = new JoystickButton(driveStick, 7); //TODO: fix
+		armDown.whileHeld(new ArmDown());
+		
+		jawIn = new JoystickButton(driveStick, 4); //TODO: fix
+		jawIn.whenPressed(new JawIn());
+		jawOut = new JoystickButton(driveStick, 5); //TODO: fix
+		jawOut.whenPressed(new JawOut());
+		
+		shooterIn = new JoystickButton(driveStick, 2); //TODO: fix
+		shooterIn.whenPressed(new ShooterIn());
+		shooterOut = new JoystickButton(driveStick, 3); //TODO: fix
+		shooterOut.whenPressed(new ShooterOut());
 	}
 	
 	public Joystick getDriveStick() {
