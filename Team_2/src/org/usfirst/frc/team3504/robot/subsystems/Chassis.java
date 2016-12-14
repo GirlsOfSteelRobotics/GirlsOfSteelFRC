@@ -47,10 +47,15 @@ public class Chassis extends Subsystem {
 		robotDrive.arcadeDrive(joystick);
 	}
 
+    public void driveSpeed(double speed) {
+		robotDrive.drive(-speed, 0);
+	}
+    
 	public void stop() {
 		// TODO Auto-generated method stub
 		robotDrive.drive(/* speed */0, /* curve */0);
 	}
-    
+
+	
 }
 
