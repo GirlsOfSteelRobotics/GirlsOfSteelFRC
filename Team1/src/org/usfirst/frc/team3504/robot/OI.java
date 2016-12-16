@@ -46,6 +46,7 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	public Joystick driveStick;
+	public Joystick gamePad;
 	
 	//shooting
 	private JoystickButton shootPrep;
@@ -69,28 +70,29 @@ public class OI {
 	public OI() {
 		
 		driveStick = new Joystick(0);
+		gamePad = new Joystick(1);
 		
-		shootPrep = new JoystickButton(driveStick, 9); //TODO: fix
+		shootPrep = new JoystickButton(gamePad, 2);
 		shootPrep.whenPressed(new ShootPrep());
-		shoot = new JoystickButton(driveStick, 10); //TODO: fix
+		shoot = new JoystickButton(gamePad, 3);
 		shoot.whenPressed(new Shoot());
 		
-		collect = new JoystickButton(driveStick, 11); //TODO: fix
+		collect = new JoystickButton(gamePad, 7);
 		collect.whileHeld(new Collect());
 		
-		armUp = new JoystickButton(driveStick, 8); //TODO: fix
-		armUp.whileHeld(new ArmUp()); 
-		armDown = new JoystickButton(driveStick, 7); //TODO: fix
-		armDown.whileHeld(new ArmDown());
+		armUp = new JoystickButton(gamePad, 10);
+		armUp.whenPressed(new ArmUp()); 
+		armDown = new JoystickButton(gamePad, 9);
+		armDown.whenPressed(new ArmDown());
 		
-		jawIn = new JoystickButton(driveStick, 4); //TODO: fix
+		jawIn = new JoystickButton(gamePad, 5);
 		jawIn.whenPressed(new JawIn());
-		jawOut = new JoystickButton(driveStick, 5); //TODO: fix
+		jawOut = new JoystickButton(gamePad , 6);
 		jawOut.whenPressed(new JawOut());
 		
-		shooterIn = new JoystickButton(driveStick, 2); //TODO: fix
+		shooterIn = new JoystickButton(gamePad, 1);
 		shooterIn.whenPressed(new ShooterIn());
-		shooterOut = new JoystickButton(driveStick, 3); //TODO: fix
+		shooterOut = new JoystickButton(gamePad, 4);
 		shooterOut.whenPressed(new ShooterOut());
 	}
 	
