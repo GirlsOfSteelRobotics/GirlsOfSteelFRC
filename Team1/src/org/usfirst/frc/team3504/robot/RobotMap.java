@@ -42,18 +42,18 @@ public class RobotMap {
 	public static final int SHIFTER_RIGHT_B = 3;
 		
 	//shooter pistons
-	public static final int SHOOTER_PISTON_LEFT_A = 99; //TODO: fix
-	public static final int SHOOTER_PISTON_LEFT_B = 99; //TODO: fix
-	public static final int SHOOTER_PISTON_RIGHT_A = 99; //TODO: fix
-	public static final int SHOOTER_PISTON_RIGHT_B = 99; //TODO: fix
+	public static final int SHOOTER_PISTON_LEFT_A = 0;
+	public static final int SHOOTER_PISTON_LEFT_B = 1; 
+	public static final int SHOOTER_PISTON_RIGHT_A = 4; 
+	public static final int SHOOTER_PISTON_RIGHT_B = 5; 
 	
 	//jaw pistons
-	public static final int JAW_PISTON_A = 99; //TODO: fix
-	public static final int JAW_PISTON_B = 99; //TODO: fix
+	public static final int JAW_PISTON_A = 2; 
+	public static final int JAW_PISTON_B = 3;
 	
 	//arm pistons
-	public static final int ARM_PISTON_A = 99; //TODO: fix
-	public static final int ARM_PISTON_B = 99; //TODO: fix
+	public static final int ARM_PISTON_A = 14; //on other PCM
+	public static final int ARM_PISTON_B = 15; //on other PCM
 	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?

@@ -38,9 +38,13 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	driveSystem = new DriveSystem();
+        shifters = new Shifters();
+        arm = new Arm();
+        jaw = new JawPiston();
+        
+        //all subsystems must be initialized before creating OI
 		oi = new OI();
         chooser = new SendableChooser();
-        shifters = new Shifters();
         
         //chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
