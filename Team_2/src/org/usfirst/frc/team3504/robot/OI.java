@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3504.robot.commands.CollectIn;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.commands.Release;
+import org.usfirst.frc.team3504.robot.commands.Shoot;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,9 +21,10 @@ public class OI {
 	
 	private JoystickButton collectIn;
 	private JoystickButton release; 
+	private JoystickButton shoot; 
 	
     private Joystick stick = new Joystick(0);
-    private Joystick drivingStickForward = new Joystick(0);
+    private Joystick gamePad = new Joystick(1);
     // Button button = new JoystickButton(stick, buttonNumber);
 
 	public Joystick getStickX() {
@@ -42,12 +44,15 @@ public class OI {
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
-	collectIn = new JoystickButton(drivingStickForward, 3); 
+	collectIn = new JoystickButton(gamePad, 5); 
 	collectIn.whileHeld(new CollectIn()); 
 	
-	release = new JoystickButton(drivingStickForward, 4);
+	release = new JoystickButton(gamePad, 6);
 	release.whileHeld(new Release());
     
+	shoot = new JoystickButton(gamePad, 3); 
+	shoot.whenPressed(new Shoot());
+	
     // Start the command when the button is pressed and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenPressed(new ExampleCommand());
