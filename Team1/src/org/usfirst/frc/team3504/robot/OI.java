@@ -56,8 +56,8 @@ public class OI {
 	private JoystickButton collect;
 	
 	//arm
-	private JoystickButton armUp;
-	private JoystickButton armDown;
+	//private JoystickButton armUp;
+	//private JoystickButton armDown;
 	
 	//jaw
 	private JoystickButton jawIn;
@@ -80,10 +80,12 @@ public class OI {
 		collect = new JoystickButton(gamePad, 7);
 		collect.whileHeld(new Collect());
 		
+		/*
 		armUp = new JoystickButton(gamePad, 10);
 		armUp.whenPressed(new ArmUp()); 
 		armDown = new JoystickButton(gamePad, 9);
 		armDown.whenPressed(new ArmDown());
+		*/
 		
 		jawIn = new JoystickButton(gamePad, 5);
 		jawIn.whenPressed(new JawIn());

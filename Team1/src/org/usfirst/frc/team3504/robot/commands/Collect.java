@@ -12,7 +12,7 @@ public class Collect extends Command {
     public Collect() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.arm);
+    	//requires(Robot.arm);
     	requires(Robot.jaw);
     	requires(Robot.collecter);
     }
@@ -23,9 +23,9 @@ public class Collect extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.arm.armDown();
+    	//Robot.arm.armDown();
     	Robot.jaw.pistonsIn();
-    	Robot.collecter.spinWheels(0.5);// TODO : test
+    	Robot.collecter.spinWheels(0.5); //TODO : test
     }
 
     // Make this return true when this Command no longer needs to run execute()

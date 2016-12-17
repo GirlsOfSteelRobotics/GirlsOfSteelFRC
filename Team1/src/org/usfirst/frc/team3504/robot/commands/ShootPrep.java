@@ -12,7 +12,7 @@ public class ShootPrep extends Command {
     public ShootPrep() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.arm);
+    	//requires(Robot.arm);
     	requires(Robot.jaw);
     }
 
@@ -22,7 +22,7 @@ public class ShootPrep extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.arm.armUp();
+    	//Robot.arm.armUp();
     	Robot.jaw.pistonsOut();
     }
 
