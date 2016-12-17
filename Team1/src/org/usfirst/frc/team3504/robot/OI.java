@@ -5,6 +5,8 @@ import org.usfirst.frc.team3504.robot.commands.ArmUp;
 import org.usfirst.frc.team3504.robot.commands.Collect;
 import org.usfirst.frc.team3504.robot.commands.JawIn;
 import org.usfirst.frc.team3504.robot.commands.JawOut;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.ShootPrep;
 import org.usfirst.frc.team3504.robot.commands.ShooterIn;
@@ -67,6 +69,10 @@ public class OI {
 	private JoystickButton shooterIn;
 	private JoystickButton shooterOut;
 	
+	//shifters
+	private JoystickButton shiftUp;
+	private JoystickButton shiftDown;
+	
 	public OI() {
 		
 		driveStick = new Joystick(0);
@@ -86,6 +92,11 @@ public class OI {
 		armDown = new JoystickButton(gamePad, 9);
 		armDown.whenPressed(new ArmDown());
 		*/
+		
+		shiftUp = new JoystickButton(gamePad, 10);
+		shiftUp.whenPressed(new ShiftUp());
+		shiftDown = new JoystickButton(gamePad, 9);
+		shiftDown.whenPressed(new ShiftDown());
 		
 		jawIn = new JoystickButton(gamePad, 5);
 		jawIn.whenPressed(new JawIn());
