@@ -53,7 +53,7 @@ public class OI {
 	private JoystickButton shoot;
 	
 	//collect
-	private JoystickButton collect;
+	//private JoystickButton collect;
 	
 	//arm
 	//private JoystickButton armUp;
@@ -77,8 +77,8 @@ public class OI {
 		shoot = new JoystickButton(gamePad, 3);
 		shoot.whenPressed(new Shoot());
 		
-		collect = new JoystickButton(gamePad, 7);
-		collect.whileHeld(new Collect());
+		//collect = new JoystickButton(gamePad, 7);
+		//collect.whileHeld(new Collect());
 		
 		/*
 		armUp = new JoystickButton(gamePad, 10);
