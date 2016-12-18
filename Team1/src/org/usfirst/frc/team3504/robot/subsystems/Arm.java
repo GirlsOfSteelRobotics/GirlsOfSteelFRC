@@ -16,7 +16,7 @@ public class Arm extends Subsystem {
 	
 	public Arm()
 	{
-		armPiston = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
+		// armPiston = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
 	}
 	
 	public void armUp()

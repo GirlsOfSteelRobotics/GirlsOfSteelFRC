@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -39,14 +40,15 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	driveSystem = new DriveSystem();
         shifters = new Shifters();
-        arm = new Arm();
+       // arm = new Arm();
         jaw = new JawPiston();
+        shooter = new Shooter(); 
         
         //all subsystems must be initialized before creating OI
 		oi = new OI();
         chooser = new SendableChooser();
         
-        //chooser.addDefault("Default Auto", new ExampleCommand());
+        chooser.addDefault("Default Auto", new DriveByJoystick());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     }
