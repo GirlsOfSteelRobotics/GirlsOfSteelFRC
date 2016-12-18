@@ -41,8 +41,8 @@ public class RobotMap {
 	public static final int SHIFTER_RIGHT_B = 3;
 	
 	//pcms
-	public static final int PCM_A = 10; 
-	public static final int PCM_B = 1;
+	public static final int PCM_ARM = 1; 
+	public static final int PCM_SHIFTER = 2;
 		
 	//shooter pistons
 	public static final int SHOOTER_PISTON_LEFT_A = 0; //1

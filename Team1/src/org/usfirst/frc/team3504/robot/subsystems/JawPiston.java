@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class JawPiston extends Subsystem {
     
 	
-	 DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.PCM_B, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
+	private DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
 	
 	public void pistonsOut(){
     	jawPiston.set(DoubleSolenoid.Value.kForward);

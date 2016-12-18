@@ -19,8 +19,8 @@ public class Shifters extends Subsystem {
     public boolean inHighGear;
     
     public Shifters() {
-		shifterLeft = new DoubleSolenoid(RobotMap.PCM_A, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
-		shifterRight = new DoubleSolenoid(RobotMap.PCM_A, RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
+		shifterLeft = new DoubleSolenoid(RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
+		shifterRight = new DoubleSolenoid(RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
 
 	}
     // Put methods for controlling this subsystem

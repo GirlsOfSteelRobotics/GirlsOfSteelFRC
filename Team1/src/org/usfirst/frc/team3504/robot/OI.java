@@ -78,7 +78,7 @@ public class OI {
 		driveStick = new Joystick(0);
 		gamePad = new Joystick(1);
 		
-		shootPrep = new JoystickButton(gamePad, 2);
+	/*	shootPrep = new JoystickButton(gamePad, 2);
 		shootPrep.whenPressed(new ShootPrep());
 		shoot = new JoystickButton(gamePad, 3);
 		shoot.whenPressed(new Shoot());
