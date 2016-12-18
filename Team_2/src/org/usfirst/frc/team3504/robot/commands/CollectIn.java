@@ -12,7 +12,7 @@ public class CollectIn extends Command {
     public CollectIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.collector);
+    	requires(Robot.manipulator);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class CollectIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.collector.collectIn(.5); //need to add whileheld button
+    	Robot.manipulator.collectIn(-.75); //need to add whileheld button
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +31,7 @@ public class CollectIn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.collector.stop();
+    	Robot.manipulator.stopCollector();
     }
 
     // Called when another command which requires one or more of the same

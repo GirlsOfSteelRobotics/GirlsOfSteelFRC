@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team3504.robot.commands.CollectIn;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.PivotDown;
+import org.usfirst.frc.team3504.robot.commands.PivotUp;
+import org.usfirst.frc.team3504.robot.commands.PusherOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 
@@ -22,20 +25,19 @@ public class OI {
 	private JoystickButton collectIn;
 	private JoystickButton release; 
 	private JoystickButton shoot; 
+	private JoystickButton pivotUp; 
+	private JoystickButton pivotDown;
+	private JoystickButton pusherOut; 
 	
-    private Joystick stick = new Joystick(0);
-    private Joystick gamePad = new Joystick(1);
+	private Joystick stick;
+	private Joystick gamePad;
+  
     // Button button = new JoystickButton(stick, buttonNumber);
 
-	public Joystick getStickX() {
-		return stick;
-	}
-	
-	public Joystick getStickY() {
-		return stick; 
-	}
-
 	public OI(){
+	
+	stick = new Joystick(0);
+	gamePad = new Joystick(1);
 		
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -53,6 +55,15 @@ public class OI {
 	shoot = new JoystickButton(gamePad, 3); 
 	shoot.whenPressed(new Shoot());
 	
+	pivotUp = new JoystickButton(gamePad, 4); 
+	pivotUp.whileHeld(new PivotUp()); 
+	
+	pivotDown = new JoystickButton(gamePad, 2);
+	pivotDown.whileHeld(new PivotDown());
+	
+	pusherOut = new JoystickButton(gamePad, 9); 
+	pusherOut.whenPressed(new PusherOut());
+	
     // Start the command when the button is pressed and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenPressed(new ExampleCommand());
@@ -65,5 +76,9 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 
+	}
+	
+	public Joystick getStick() {
+		return stick;
 	}
 }

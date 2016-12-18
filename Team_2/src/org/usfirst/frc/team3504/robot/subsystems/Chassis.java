@@ -2,9 +2,12 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
@@ -30,8 +33,15 @@ public class Chassis extends Subsystem {
 		driveRightA.enableBrakeMode(true);
 		driveRightB.enableBrakeMode(true);
 		
-		robotDrive = new RobotDrive(driveLeftA, driveRightA);
+		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftB.set(driveLeftA.getDeviceID());
+		driveRightB.set(driveRightA.getDeviceID());
+	
 		
+		robotDrive = new RobotDrive(driveLeftA, driveRightA);
+		robotDrive.setInvertedMotor(MotorType.kRearLeft, true);
+		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 	}
     
     // Put methods for controlling this subsystem
@@ -39,11 +49,10 @@ public class Chassis extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new DriveByJoystick());
     }
     
-    public void driveByJoystick(Joystick joystick, Joystick joystick2) {
-		SmartDashboard.putString("driveByJoystick?", joystick + "," + joystick2);
+    public void driveByJoystick(Joystick joystick) {
 		robotDrive.arcadeDrive(joystick);
 	}
 

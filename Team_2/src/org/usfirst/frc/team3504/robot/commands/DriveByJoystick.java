@@ -23,7 +23,7 @@ public class DriveByJoystick extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveByJoystick(Robot.oi.getStickX(), Robot.oi.getStickY());
+    	Robot.chassis.driveByJoystick(Robot.oi.getStick());
     	//Robot.chassis.printEncoderValues();
     }
 
