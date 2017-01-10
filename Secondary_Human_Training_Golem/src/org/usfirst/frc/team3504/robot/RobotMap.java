@@ -9,6 +9,8 @@ public class RobotMap {
 
 	public static final int CLIMB_MOTOR_A = 7;
 	public static final int CLIMB_MOTOR_B = 8;
+	public static final int SHOOTER_MOTOR = 9;
+	public static final int FLAP_MOTOR = 10;
 	
 	
     // For example to map the left and right motors, you could define the
