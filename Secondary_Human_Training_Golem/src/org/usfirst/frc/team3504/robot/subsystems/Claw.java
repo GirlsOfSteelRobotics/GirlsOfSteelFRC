@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
