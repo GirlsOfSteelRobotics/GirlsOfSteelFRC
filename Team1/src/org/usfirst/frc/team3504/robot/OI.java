@@ -1,19 +1,8 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.ArmDown;
-import org.usfirst.frc.team3504.robot.commands.ArmUp;
-import org.usfirst.frc.team3504.robot.commands.Collect;
-import org.usfirst.frc.team3504.robot.commands.JawIn;
-import org.usfirst.frc.team3504.robot.commands.JawOut;
-import org.usfirst.frc.team3504.robot.commands.ShiftDown;
-import org.usfirst.frc.team3504.robot.commands.ShiftUp;
-import org.usfirst.frc.team3504.robot.commands.Shoot;
-import org.usfirst.frc.team3504.robot.commands.ShootPrep;
-import org.usfirst.frc.team3504.robot.commands.ShooterIn;
-import org.usfirst.frc.team3504.robot.commands.ShooterOut;
+import org.usfirst.frc.team3504.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -51,8 +40,8 @@ public class OI {
 	public Joystick gamePad;
 	
 	//shooting
-	private JoystickButton shootPrep;
-	private JoystickButton shoot;
+	//private JoystickButton shootPrep;
+	//private JoystickButton shoot;
 	
 	//collect
 	//private JoystickButton collect;
