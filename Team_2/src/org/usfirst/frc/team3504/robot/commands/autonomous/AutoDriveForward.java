@@ -10,16 +10,17 @@ import org.usfirst.frc.team3504.robot.Robot;
  */
 public class AutoDriveForward extends Command {
     
-    private double inches;
+    @SuppressWarnings("unused")
+	private double inches;
     private double speed;
 
 
-    public AutoDriveForward(double distance, double speed)
+    public AutoDriveForward(double inches, double speed)
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.chassis);
-        inches = distance;
+        this.inches = inches;
         this.speed = speed;
  
     }
