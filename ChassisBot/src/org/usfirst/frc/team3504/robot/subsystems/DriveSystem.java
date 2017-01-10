@@ -3,7 +3,8 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,11 +13,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveSystem extends Subsystem {
 	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
-	private CANTalon driveLeftC;
+	//private CANTalon driveLeftC;
 	
 	private CANTalon driveRightA;
 	private CANTalon driveRightB;
-	private CANTalon driveRightC;
+	//private CANTalon driveRightC;
 	
 	private RobotDrive robotDrive;
 	
