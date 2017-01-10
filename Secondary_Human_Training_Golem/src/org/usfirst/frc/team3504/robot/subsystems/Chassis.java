@@ -113,10 +113,6 @@ public class Chassis extends Subsystem implements PIDOutput{
 		robotDrive.drive(0, 0);
 	}
 
-	public double getEncoderRight() {
-		return -driveRightA.getEncPosition();
-	}
-
 	public double getRotationAngleRate() {
 		return rotateToAngleRate;
 	}
