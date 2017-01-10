@@ -5,6 +5,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -36,6 +37,17 @@ public class Chassis extends Subsystem {
 		driveRightC.enableBrakeMode(true);
 
 		robotDrive = new RobotDrive(driveLeftA, driveRightA);
+		
+		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftB.set(driveLeftA.getDeviceID());
+		driveLeftC.set(driveLeftA.getDeviceID());
+		driveRightB.set(driveRightA.getDeviceID());
+		driveRightC.set(driveRightA.getDeviceID()); 
+		
+		
 	}
 	
     // Put methods for controlling this subsystem
@@ -45,5 +57,24 @@ public class Chassis extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    public void driveByJoystick(double Y, double X) {
+		SmartDashboard.putString("driveByJoystick?", Y + "," + X);
+		robotDrive.arcadeDrive(Y,X);
+	}
+    
+    public void drive(double moveValue, double rotateValue){
+		robotDrive.arcadeDrive(moveValue, rotateValue);
+	}
+
+	public void driveSpeed(double speed){
+		robotDrive.drive(-speed, 0);
+	}
+
+	public void stop() {
+		robotDrive.drive(0, 0);
+	}
+    
+    
 }
 
