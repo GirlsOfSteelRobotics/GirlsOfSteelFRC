@@ -49,12 +49,12 @@ public class Chassis extends Subsystem implements PIDOutput{
 	double rotateToAngleRate;
 
 	public Chassis() {
-		/*driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
+		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
 		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
 		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C);
 		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
 		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
-		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);*/
+		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
 
 		driveLeftA.enableBrakeMode(true);
 		driveLeftB.enableBrakeMode(true);
