@@ -4,7 +4,10 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-import edu.wpi.first.wpilibj.CANTalon;
+
+import com.ctre.CANTalon;
+
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -46,12 +49,12 @@ public class Chassis extends Subsystem implements PIDOutput{
 	double rotateToAngleRate;
 
 	public Chassis() {
-		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
+		/*driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
 		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
 		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C);
 		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
 		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
-		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
+		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);*/
 
 		driveLeftA.enableBrakeMode(true);
 		driveLeftB.enableBrakeMode(true);
@@ -111,10 +114,6 @@ public class Chassis extends Subsystem implements PIDOutput{
 
 	public void stop() {
 		robotDrive.drive(0, 0);
-	}
-
-	public double getEncoderRight() {
-		return -driveRightA.getEncPosition();
 	}
 
 	public double getRotationAngleRate() {

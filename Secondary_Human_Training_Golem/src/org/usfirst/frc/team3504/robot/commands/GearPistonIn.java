@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GearPistonOut extends Command {
+public class GearPistonIn extends Command {
 
-    public GearPistonOut() {
+    public GearPistonIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.gear);

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team3504.robot.OI.DriveDirection;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
