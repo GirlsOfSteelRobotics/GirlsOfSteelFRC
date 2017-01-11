@@ -1,7 +1,13 @@
 package org.usfirst.frc.team3504.robot;
 
+
+import org.usfirst.frc.team3504.robot.commands.GearPistonOut;
+import org.usfirst.frc.team3504.robot.commands.GearPistonIn;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team3504.robot.OI.DriveDirection;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -34,5 +40,50 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
+	
+	public enum DriveDirection {kFWD, kREV}; 
+	private Joystick drivingStickForward = new Joystick(0); //TODO:fix numbers
+	private Joystick drivingStickBackward = new Joystick(1); //TODO:fix numbers
+	
+	private Joystick gamePad = new Joystick(2); //TODO:fix numbers
+	
+	private DriveDirection driveDirection = DriveDirection.kFWD; 
+	
+	private JoystickButton gearPistonOut;
+	private JoystickButton gearPistonIn;
+	
+	public OI()
+	{
+		gearPistonOut = new JoystickButton(gamePad, 1);
+		gearPistonOut.whenPressed(new GearPistonOut());
+		
+		gearPistonIn = new JoystickButton(gamePad, 1);
+		gearPistonIn.whenPressed(new GearPistonIn());
+	}
+
+	public double getDrivingJoystickY() {
+		// TODO Auto-generated method stub
+		if (driveDirection == DriveDirection.kFWD){
+			return drivingStickForward.getY();
+		}
+		else {
+			return -drivingStickBackward.getY(); 
+		}
+	}
+	
+	public double getDrivingJoystickX()
+	{
+		if (driveDirection == DriveDirection.kFWD){
+			return drivingStickForward.getX();
+		}
+		else {
+			return -drivingStickBackward.getX(); 
+		}
+	}
+	
+	public void setDriveDirection(DriveDirection driveDirection) {
+		this.driveDirection = driveDirection; 
+		System.out.println("Drive direction set to: " + driveDirection);
+	}
 }
 
