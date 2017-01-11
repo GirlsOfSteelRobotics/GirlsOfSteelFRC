@@ -2,7 +2,8 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,12 +22,12 @@ public class Chassis extends Subsystem {
 	private RobotDrive robotDrive;
 	
 	public Chassis() {
-		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
+		/*driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
 		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
 		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C);
 		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
 		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
-		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
+		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);*/
 
 		driveLeftA.enableBrakeMode(true);
 		driveLeftB.enableBrakeMode(true);
