@@ -4,9 +4,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-
 import com.ctre.CANTalon;
-
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
@@ -119,8 +117,6 @@ public class Chassis extends Subsystem implements PIDOutput{
 	public double getRotationAngleRate() {
 		return rotateToAngleRate;
 	}
-
-	
 
 	@Override
 	public void pidWrite(double output) {
