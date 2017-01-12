@@ -21,17 +21,22 @@ public class AutoDriveForward extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.resetEncoderDistance();
+    	System.out.println("Encoder distance initially: " + Robot.chassis.getEncoderDistance());
     	System.out.println("Inches: " + inches);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.driveSpeed(speed);
+
+    	System.out.println("Encoder distance: " + Robot.chassis.getEncoderDistance());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return 7 >= Math.abs(inches); //TODO: encoder (change 7 to get encoder value)
+        return Robot.chassis.getEncoderDistance() >= Math.abs(inches); //competition bot
     }
 
     // Called once after isFinished returns true

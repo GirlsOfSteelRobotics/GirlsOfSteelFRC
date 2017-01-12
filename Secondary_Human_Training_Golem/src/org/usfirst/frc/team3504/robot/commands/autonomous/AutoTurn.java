@@ -22,6 +22,7 @@ public class AutoTurn extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.resetEncoderDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,8 +32,7 @@ public class AutoTurn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(7) >= turnAmt; //TODO: encoder (change 7 to get encoder value)
-  
+    	return Math.abs(Robot.chassis.getEncoderDistance()) >= turnAmt; //competition bot
     }
 
     // Called once after isFinished returns true
