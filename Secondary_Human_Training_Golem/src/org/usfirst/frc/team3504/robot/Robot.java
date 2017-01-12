@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Climb;
 import org.usfirst.frc.team3504.robot.subsystems.Gear;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter; 
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +25,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Chassis chassis;
 	public static Gear gear;
+	public static Climb climb; 
+	public static Shooter shooter; 
 
     Command autonomousCommand;
     SendableChooser chooser;
