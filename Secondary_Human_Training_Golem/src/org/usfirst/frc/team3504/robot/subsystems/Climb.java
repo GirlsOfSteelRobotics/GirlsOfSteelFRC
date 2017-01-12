@@ -19,13 +19,13 @@ public class Climb extends Subsystem {
 	}
 	
 	public void collect(double speed) {
-       climbMotorA.set(speed);
-       climbMotorB.set(-speed);
+		climbMotorA.set(speed);
+		climbMotorB.set(-speed);
     }
 	
 	public void stopCollect() {
-	climbMotorA.set(0.0);
-	   climbMotorB.set(0.0);
+		climbMotorA.set(0.0);
+		climbMotorB.set(0.0);
     }
 	
 	public void pistonIn(){

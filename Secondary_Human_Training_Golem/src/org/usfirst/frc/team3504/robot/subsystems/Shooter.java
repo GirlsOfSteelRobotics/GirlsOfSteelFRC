@@ -12,10 +12,10 @@ public class Shooter extends Subsystem {
 	private CANTalon flap;
 	
 	  
-		public Shooter(){
-			shooterMotor = new CANTalon(RobotMap.SHOOTER_MOTOR);
-			flap = new CANTalon(RobotMap.FLAP_MOTOR);
-		}
+	public Shooter(){
+		shooterMotor = new CANTalon(RobotMap.SHOOTER_MOTOR);
+		flap = new CANTalon(RobotMap.FLAP_MOTOR);
+	}
 		
 	public void shootBall(double speed){
 		shooterMotor.set(speed);

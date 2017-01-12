@@ -1,26 +1,23 @@
-
 package org.usfirst.frc.team3504.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ShiftUp extends Command {
+public class ResetEncoderDistance extends Command {
 
-    public ShiftUp() {
+    public ResetEncoderDistance() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.shifters);
+        // eg. requires(chassis);
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		Robot.shifters.shiftLeft(Speed.kHigh);
-		Robot.shifters.shiftRight(Speed.kHigh);	
+    	Robot.chassis.resetEncoderDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,8 +26,7 @@ public class ShiftUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		// The solenoid setting commands should complete immediately
-		return true;
+        return true;
     }
 
     // Called once after isFinished returns true
@@ -40,6 +36,5 @@ public class ShiftUp extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
