@@ -12,11 +12,11 @@ public class AutoBaseLine extends Command {
 	private double inches;
 	private double speed;
 
-    public AutoBaseLine(double distance, double speed) {
+    public AutoBaseLine(double inches, double speed) {
 		// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
-    	inches = distance;
+    	this.inches = inches;
     	this.speed = speed;
     }
 
