@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Climb;
 import org.usfirst.frc.team3504.robot.subsystems.Gear;
-import org.usfirst.frc.team3504.robot.subsystems.Shooter; 
-
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	
 	public static OI oi;
 	public static Chassis chassis;
+	public static Shifters shifters;
 	public static Gear gear;
 	public static Climb climb; 
 	public static Shooter shooter; 
@@ -37,8 +38,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		gear = new Gear();
 		chassis = new Chassis();
+		shifters = new Shifters();
+		gear = new Gear();
         chooser = new SendableChooser();
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);

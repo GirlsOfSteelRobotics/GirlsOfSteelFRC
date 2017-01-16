@@ -7,32 +7,36 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoBaseLine extends Command {
-	
+public class AutoDriveForward extends Command {
+
 	private double inches;
 	private double speed;
-
-    public AutoBaseLine(double inches, double speed) {
-		// Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.chassis);
-    	this.inches = inches;
-    	this.speed = speed;
+	
+    public AutoDriveForward(double distance, double speed) {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.chassis);
+        inches = distance;
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.resetEncoderDistance();
+    	System.out.println("Encoder distance initially: " + Robot.chassis.getEncoderDistance());
     	System.out.println("Inches: " + inches);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.driveSpeed(speed);
+
+    	System.out.println("Encoder distance: " + Robot.chassis.getEncoderDistance());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.chassis.getEncoderDistance() >= Math.abs(inches); //competition bot
     }
 
     // Called once after isFinished returns true

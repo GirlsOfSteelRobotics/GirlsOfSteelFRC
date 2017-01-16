@@ -4,9 +4,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-
 import com.ctre.CANTalon;
-
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
@@ -115,12 +113,33 @@ public class Chassis extends Subsystem implements PIDOutput{
 	public void stop() {
 		robotDrive.drive(0, 0);
 	}
+	
+	public double getEncoderRight() {
+		return -driveRightA.getEncPosition();
+	}
+
+	public double getEncoderLeft() {
+		return driveLeftA.getEncPosition();
+	}
+
+	public double getEncoderDistance() {
+		if (Robot.shifters.getGearSpeed()) {
+			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
+		}
+		else {
+			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
+		}
+	}
+
+	public void resetEncoderDistance() {
+		encOffsetValueRight = getEncoderRight();
+		encOffsetValueLeft = getEncoderLeft();
+		getEncoderDistance();
+	}
 
 	public double getRotationAngleRate() {
 		return rotateToAngleRate;
 	}
-
-	
 
 	@Override
 	public void pidWrite(double output) {
