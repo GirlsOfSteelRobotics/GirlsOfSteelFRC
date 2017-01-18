@@ -114,6 +114,11 @@ public class Chassis extends Subsystem implements PIDOutput{
 		robotDrive.drive(0, 0);
 	}
 	
+	public void printEncoderValues()
+	{
+		getEncoderDistance();
+	}
+	
 	public double getEncoderRight() {
 		return -driveRightA.getEncPosition();
 	}
@@ -124,9 +129,13 @@ public class Chassis extends Subsystem implements PIDOutput{
 
 	public double getEncoderDistance() {
 		if (Robot.shifters.getGearSpeed()) {
+			SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
+			SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
 			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
 		}
 		else {
+			SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
+			SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
 			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
 		}
 	}
