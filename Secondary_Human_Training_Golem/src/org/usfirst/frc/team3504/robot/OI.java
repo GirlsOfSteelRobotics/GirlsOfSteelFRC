@@ -57,7 +57,7 @@ public class OI {
 		gearPistonOut = new JoystickButton(gamePad, 1);
 		gearPistonOut.whenPressed(new GearPistonOut());
 		
-		gearPistonIn = new JoystickButton(gamePad, 1);
+		gearPistonIn = new JoystickButton(gamePad, 2);
 		gearPistonIn.whenPressed(new GearPistonIn());
 	}
 

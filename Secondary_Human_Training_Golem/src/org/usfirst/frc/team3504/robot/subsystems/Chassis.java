@@ -6,11 +6,7 @@ import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Chassis extends Subsystem implements PIDOutput{
+public class Chassis extends Subsystem {
 	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
 	private CANTalon driveLeftC;
@@ -31,9 +27,6 @@ public class Chassis extends Subsystem implements PIDOutput{
 
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
-
-	//using the Nav board
-	public PIDController turnController;
 
 	static final double kP = 0.03; //TODO: adjust these
 	static final double kI = 0.00;
@@ -78,18 +71,11 @@ public class Chassis extends Subsystem implements PIDOutput{
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
 
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 		
 		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
 		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
-
-		//for the NavBoards
-
-		
-		turnController.setInputRange(-180.0f,  180.0f);
-		turnController.setOutputRange(-1.0, 1.0);
-		turnController.setAbsoluteTolerance(kToleranceDegrees);
-		turnController.setContinuous(true);
-		turnController.enable();
 	}
 
 	public void initDefaultCommand() {
@@ -141,9 +127,4 @@ public class Chassis extends Subsystem implements PIDOutput{
 		return rotateToAngleRate;
 	}
 
-	@Override
-	public void pidWrite(double output) {
-		rotateToAngleRate = output;
-	}
-
-   }
+}
