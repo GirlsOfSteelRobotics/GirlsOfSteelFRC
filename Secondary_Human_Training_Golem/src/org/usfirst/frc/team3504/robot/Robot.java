@@ -1,12 +1,19 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Climb;
+import org.usfirst.frc.team3504.robot.subsystems.Gear;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
+//import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,6 +37,9 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser<Command> chooser;
 
+  //  CANLight frameLights;
+  //  DriverStation ds;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -50,6 +60,9 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
         chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
         SmartDashboard.putData("Auto mode", chooser);
+        
+        //frameLights = new CANLight(3);
+        //ds = DriverStation.getInstance();
     }
 	
 	/**
@@ -63,6 +76,13 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		/*if (ds.getAlliance() == DriverStation.Alliance.Red) {
+            frameLights.showRGB(255, 0, 0);
+        } else if (ds.getAlliance() == DriverStation.Alliance.Blue) {
+            frameLights.showRGB(0, 0, 255);
+        } else if (ds.getAlliance() == DriverStation.Alliance.Invalid) {
+            frameLights.showRGB(255, 200, 0); // yellow
+        }*/ 
 	}
 
 	/**
