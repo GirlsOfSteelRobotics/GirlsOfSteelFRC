@@ -47,6 +47,8 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser<Command>();
         chooser.addDefault("Do Nothing", new AutoDoNothing());
         chooser.addObject("Base Line", new AutoBaseLine(10.0, 0.5));
+        chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
+        chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
         SmartDashboard.putData("Auto mode", chooser);
     }
 	
@@ -89,6 +91,7 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
         
+        //start the robot out in low gear when starting autonomous
         shifters.shiftGear(Shifters.Speed.kLow);
     }
 

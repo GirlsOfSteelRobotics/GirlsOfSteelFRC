@@ -9,23 +9,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Climb extends Subsystem {
-	private CANTalon climbMotorA;
-	private CANTalon climbMotorB;
+	private CANTalon climbMotor;
 	private DoubleSolenoid pusher;
     
 	public Climb(){
-		climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
-		climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
+		climbMotor = new CANTalon(RobotMap.CLIMB_MOTOR);
 	}
 	
 	public void collect(double speed) {
-		climbMotorA.set(speed);
-		climbMotorB.set(-speed);
+		climbMotor.set(speed);
     }
 	
 	public void stopCollect() {
-		climbMotorA.set(0.0);
-		climbMotorB.set(0.0);
+		climbMotor.set(0.0);
     }
 	
 	public void pistonIn(){
