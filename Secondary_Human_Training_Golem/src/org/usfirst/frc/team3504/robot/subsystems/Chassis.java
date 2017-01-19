@@ -28,11 +28,6 @@ public class Chassis extends Subsystem {
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
 
-	static final double kP = 0.03; //TODO: adjust these
-	static final double kI = 0.00;
-	static final double kD = 0.00;
-	static final double kF = 0.00;
-
 	static final double kToleranceDegrees = 2.0f;
 
 	boolean rotateToAngle = false;
@@ -130,10 +125,6 @@ public class Chassis extends Subsystem {
 		encOffsetValueRight = getEncoderRight();
 		encOffsetValueLeft = getEncoderLeft();
 		getEncoderDistance();
-	}
-
-	public double getRotationAngleRate() {
-		return rotateToAngleRate;
 	}
 
 }
