@@ -19,14 +19,14 @@ public class RobotMap {
 	public static final int FLAP_MOTOR = 10;
 	
 	//Solenoids for Gears
-	public static final int GEAR_PISTON_A = 20; //TODO: fix
-	public static final int GEAR_PISTON_B = 21; //TODO: fix
+	public static final int GEAR_PISTON_A = 4; //TODO: fix
+	public static final int GEAR_PISTON_B = 5; //TODO: fix
 	
 	//Solenoids for Shifters
-	public static final int SHIFTER_LEFT_A = 99; //TODO: fix
-	public static final int SHIFTER_LEFT_B = 99; //TODO: fix
-	public static final int SHIFTER_RIGHT_A = 99; //TODO: fix
-	public static final int SHIFTER_RIGHT_B = 99; //TODO: fix
+	public static final int SHIFTER_LEFT_A = 0; //TODO: fix
+	public static final int SHIFTER_LEFT_B = 1; //TODO: fix
+	public static final int SHIFTER_RIGHT_A = 2; //TODO: fix
+	public static final int SHIFTER_RIGHT_B = 3; //TODO: fix
 	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?

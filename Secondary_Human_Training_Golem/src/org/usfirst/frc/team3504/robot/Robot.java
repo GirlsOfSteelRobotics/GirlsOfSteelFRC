@@ -11,9 +11,10 @@ import org.usfirst.frc.team3504.robot.subsystems.Climb;
 import org.usfirst.frc.team3504.robot.subsystems.Gear;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
-
-import com.mindsensors.CANLight;
-
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
+//import com.mindsensors.CANLight;
+import org.usfirst.frc.team3504.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -34,7 +35,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter; 
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser<Command> chooser;
 
   //  CANLight frameLights;
   //  DriverStation ds;
@@ -44,12 +45,18 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
 		chassis = new Chassis();
 		shifters = new Shifters();
 		gear = new Gear();
-        chooser = new SendableChooser();
-//        chooser.addObject("My Auto", new MyAutoCommand());
+		climb = new Climb();
+		shooter = new Shooter();
+
+		// Initialize all subsystems before creating the OI
+		oi = new OI();
+
+		chooser = new SendableChooser<Command>();
+        chooser.addDefault("Do Nothing", new AutoDoNothing());
+        chooser.addObject("Base Line", new AutoBaseLine(10.0, 0.5));
         SmartDashboard.putData("Auto mode", chooser);
         
         //frameLights = new CANLight(3);
@@ -101,6 +108,8 @@ public class Robot extends IterativeRobot {
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+        
+        shifters.shiftGear(Shifters.Speed.kLow);
     }
 
     /**
@@ -116,6 +125,11 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
+        //start robot in low gear when starting teleop
+        shifters.shiftGear(Shifters.Speed.kLow);
+        
+        Robot.chassis.resetEncoderDistance();
     }
 
     /**
