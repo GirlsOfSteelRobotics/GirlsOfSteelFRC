@@ -66,8 +66,8 @@ public class Chassis extends Subsystem {
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
 
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false); 
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 		
 		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
 		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
@@ -88,7 +88,7 @@ public class Chassis extends Subsystem {
 	}
 
 	public void driveSpeed(double speed){
-		robotDrive.drive(-speed, 0);
+		robotDrive.drive(speed, 0);
 	}
 
 	public void stop() {
