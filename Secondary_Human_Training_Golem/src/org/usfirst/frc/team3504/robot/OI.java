@@ -65,10 +65,10 @@ public class OI {
 		gearPistonIn.whenPressed(new GearPistonIn());
 		
 		//buttons for shifters
-		shifterUp = new JoystickButton(drivingStickForward, 3); //TODO: set buttons
+		shifterUp = new JoystickButton(drivingStickForward, 3);
 		shifterUp.whenPressed(new ShiftUp());
 		
-		shifterDown = new JoystickButton(drivingStickForward, 2); //TODO: set buttons
+		shifterDown = new JoystickButton(drivingStickForward, 2);
 		shifterDown.whenPressed(new ShiftDown());
 	}
 
