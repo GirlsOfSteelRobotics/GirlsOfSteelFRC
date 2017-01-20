@@ -28,11 +28,11 @@ public class Chassis extends Subsystem {
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
 
-	static final double kToleranceDegrees = 2.0f;
+	//static final double kToleranceDegrees = 2.0f;
 
-	boolean rotateToAngle = false;
+	//boolean rotateToAngle = false;
 
-	double rotateToAngleRate;
+	//double rotateToAngleRate;
 
 	public Chassis() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
