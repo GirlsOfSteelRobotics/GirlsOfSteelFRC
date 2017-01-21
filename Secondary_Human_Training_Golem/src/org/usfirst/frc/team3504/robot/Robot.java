@@ -35,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static Gear gear;
 	public static Climb climb; 
 	public static Shooter shooter; 
+	public static Camera camera;
 
     Command autonomousCommand;
     SendableChooser<Command> chooser;

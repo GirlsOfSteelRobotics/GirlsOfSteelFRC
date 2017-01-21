@@ -8,15 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-
-import org.usfirst.frc.team3504.robot.OI.DriveDirection;
-import org.usfirst.frc.team3504.robot.Robot;
-
-import edu.wpi.first.wpilibj.command.Command;
-
-/**
- *
- */
 public class DriveForward extends Command {
 
     public DriveForward() {
@@ -27,6 +18,7 @@ public class DriveForward extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.oi.setDriveDirection(DriveDirection.kFWD);
+    	Robot.camera.switchToCamClimb();
     }
 
     // Called repeatedly when this Command is scheduled to run
