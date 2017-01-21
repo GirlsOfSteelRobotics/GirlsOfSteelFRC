@@ -2,6 +2,8 @@ package org.usfirst.frc.team3504.robot;
 
 
 import org.usfirst.frc.team3504.robot.commands.GearPistonOut;
+import org.usfirst.frc.team3504.robot.commands.DriveBackwards;
+import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.GearPistonIn;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -49,6 +51,9 @@ public class OI {
 	
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 	
+	private JoystickButton switchToForward; 
+	private JoystickButton switchToBackward; 
+	
 	private JoystickButton gearPistonOut;
 	private JoystickButton gearPistonIn;
 	
@@ -59,6 +64,13 @@ public class OI {
 		
 		gearPistonIn = new JoystickButton(gamePad, 2);
 		gearPistonIn.whenPressed(new GearPistonIn());
+		
+		switchToForward = new JoystickButton(drivingStickForward, 1); 
+		switchToForward.whenPressed(new DriveForward()); 
+
+		
+		switchToBackward = new JoystickButton(drivingStickBackward, 1);
+		switchToBackward.whenPressed(new DriveBackwards());
 	}
 
 	public double getDrivingJoystickY() {
@@ -85,5 +97,10 @@ public class OI {
 		this.driveDirection = driveDirection; 
 		System.out.println("Drive direction set to: " + driveDirection);
 	}
+	
+	public boolean isJoystickReversed() {
+		return (driveDirection == DriveDirection.kREV); 
+	}
+	
 }
 

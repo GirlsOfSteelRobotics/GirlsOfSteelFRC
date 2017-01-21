@@ -136,6 +136,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	SmartDashboard.putNumber("A Chassis Encoder", Robot.chassis.getEncoderDistance());
         Scheduler.getInstance().run();
     }
     
