@@ -92,16 +92,15 @@ public class Chassis extends Subsystem {
 		robotDrive.arcadeDrive(moveValue, rotateValue);
 	}
 
-	public void driveSpeed(double speed){
-		robotDrive.drive(-speed, 0);
+	public void driveSpeed(double speed) {
+		robotDrive.drive(speed, 0);
 	}
 
 	public void stop() {
 		robotDrive.drive(0, 0);
 	}
 	
-	public void printEncoderValues()
-	{
+	public void printEncoderValues() {
 		getEncoderDistance();
 	}
 	
@@ -137,3 +136,4 @@ public class Chassis extends Subsystem {
 	}
 
 }
+

@@ -6,27 +6,22 @@ package org.usfirst.frc.team3504.robot;
  * floating around.
  */
 public class RobotMap {
-	public static final int DRIVE_LEFT_A = 1;
-	public static final int DRIVE_LEFT_B = 2;
-	public static final int DRIVE_LEFT_C = 3;
-	public static final int DRIVE_RIGHT_A = 4; 
-	public static final int DRIVE_RIGHT_B = 5; 
-	public static final int DRIVE_RIGHT_C = 6;
+	public static final int DRIVE_LEFT_A = 4;
+	public static final int DRIVE_LEFT_B = 5;
+	public static final int DRIVE_LEFT_C = 6;
+	public static final int DRIVE_RIGHT_A = 1; 
+	public static final int DRIVE_RIGHT_B = 2; 
+	public static final int DRIVE_RIGHT_C = 3;
 	
-	public static final int CLIMB_MOTOR_A = 7;
-	public static final int CLIMB_MOTOR_B = 8;
-	public static final int SHOOTER_MOTOR = 9;
-	public static final int FLAP_MOTOR = 10;
-	
-	//Solenoids for Gears
-	public static final int GEAR_PISTON_A = 4; //TODO: fix
-	public static final int GEAR_PISTON_B = 5; //TODO: fix
+	public static final int CLIMB_MOTOR = 7;
+	public static final int SHOOTER_MOTOR_A = 8; //TODO: fix
+	public static final int SHOOTER_MOTOR_B = 9;
 	
 	//Solenoids for Shifters
-	public static final int SHIFTER_LEFT_A = 0; //TODO: fix
-	public static final int SHIFTER_LEFT_B = 1; //TODO: fix
-	public static final int SHIFTER_RIGHT_A = 2; //TODO: fix
-	public static final int SHIFTER_RIGHT_B = 3; //TODO: fix
+	public static final int SHIFTER_LEFT_A = 2; 
+	public static final int SHIFTER_LEFT_B = 3; 
+	public static final int SHIFTER_RIGHT_A = 0; 
+	public static final int SHIFTER_RIGHT_B = 1; 
 	
 	// Encoder-to-distance constants
 	// How many ticks are there on the encoder wheel?
@@ -39,3 +34,4 @@ public class RobotMap {
 	public static final double DISTANCE_PER_PULSE_HIGH_GEAR = distancePerRevolutionHighGear / pulsePerRevolution;
 	public static final double DISTANCE_PER_PULSE_LOW_GEAR = distancePerRevolutionLowGear / pulsePerRevolution;
 }
+
