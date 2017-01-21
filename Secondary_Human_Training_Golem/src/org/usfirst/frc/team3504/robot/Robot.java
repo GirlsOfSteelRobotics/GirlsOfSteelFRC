@@ -53,6 +53,7 @@ public class Robot extends IterativeRobot {
 		gear = new Gear();
 		climb = new Climb();
 		shooter = new Shooter();
+		camera = new Camera();
 
 		// Initialize all subsystems before creating the OI
 		oi = new OI();
