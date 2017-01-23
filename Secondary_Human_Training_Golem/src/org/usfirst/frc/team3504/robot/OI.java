@@ -1,19 +1,21 @@
 package org.usfirst.frc.team3504.robot;
 
-
-import org.usfirst.frc.team3504.robot.commands.GearPistonOut;
-import org.usfirst.frc.team3504.robot.commands.ShiftDown;
-import org.usfirst.frc.team3504.robot.commands.ShiftUp;
-import org.usfirst.frc.team3504.robot.commands.GearPistonIn;
+import org.usfirst.frc.team3504.robot.commands.DriveBackwards;
+import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team3504.robot.OI.DriveDirection;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+   
 	public enum DriveDirection {kFWD, kREV}; 
 	private Joystick drivingStickForward = new Joystick(0); //TODO:fix numbers
 	private Joystick drivingStickBackward = new Joystick(1); //TODO:fix numbers
@@ -22,27 +24,28 @@ public class OI {
 	
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 	
-	private JoystickButton gearPistonOut;
-	private JoystickButton gearPistonIn;
+	private JoystickButton switchToForward; 
+	private JoystickButton switchToBackward; 
 	
 	private JoystickButton shifterUp;
-	private JoystickButton shifterDown;
+	private JoystickButton shifterDown; 
 	
-	public OI()
-	{
-		//buttons for gears
-		gearPistonOut = new JoystickButton(gamePad, 1); //TODO: set buttons
-		gearPistonOut.whenPressed(new GearPistonOut());
+	public OI() {
+		//buttons to switch drive joystick
+		switchToForward = new JoystickButton(drivingStickForward, 1); 
+		switchToForward.whenPressed(new DriveForward()); 
 		
-		gearPistonIn = new JoystickButton(gamePad, 2); //TODO: set buttons
-		gearPistonIn.whenPressed(new GearPistonIn());
+		switchToBackward = new JoystickButton(drivingStickBackward, 1);
+		switchToBackward.whenPressed(new DriveBackwards());
 		
+				
 		//buttons for shifters
 		shifterUp = new JoystickButton(drivingStickForward, 3);
 		shifterUp.whenPressed(new ShiftUp());
-		
+				
 		shifterDown = new JoystickButton(drivingStickForward, 2);
 		shifterDown.whenPressed(new ShiftDown());
+		
 	}
 
 	public double getDrivingJoystickY() {
@@ -69,5 +72,10 @@ public class OI {
 		this.driveDirection = driveDirection; 
 		System.out.println("Drive direction set to: " + driveDirection);
 	}
+	
+	public boolean isJoystickReversed() {
+		return (driveDirection == DriveDirection.kREV); 
+	}
+	
 }
 

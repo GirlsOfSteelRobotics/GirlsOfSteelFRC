@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
+
 public class Climb extends Subsystem {
 	private CANTalon climbMotor;
     

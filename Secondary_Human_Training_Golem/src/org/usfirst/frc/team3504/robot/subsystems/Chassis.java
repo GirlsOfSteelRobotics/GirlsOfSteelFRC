@@ -28,11 +28,16 @@ public class Chassis extends Subsystem {
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
 
-	//static final double kToleranceDegrees = 2.0f;
+	static final double kP = 0.03; //TODO: adjust these
+	static final double kI = 0.00;
+	static final double kD = 0.00;
+	static final double kF = 0.00;
 
-	//boolean rotateToAngle = false;
+	static final double kToleranceDegrees = 2.0f;
 
-	//double rotateToAngleRate;
+	boolean rotateToAngle = false;
+
+	double rotateToAngleRate;
 
 	public Chassis() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
@@ -75,7 +80,7 @@ public class Chassis extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new DriveByJoystick());
+		setDefaultCommand( new DriveByJoystick() );
 	}
 
 	public void driveByJoystick(double Y, double X) {
@@ -87,7 +92,7 @@ public class Chassis extends Subsystem {
 		robotDrive.arcadeDrive(moveValue, rotateValue);
 	}
 
-	public void driveSpeed(double speed){
+	public void driveSpeed(double speed) {
 		robotDrive.drive(speed, 0);
 	}
 
@@ -95,8 +100,7 @@ public class Chassis extends Subsystem {
 		robotDrive.drive(0, 0);
 	}
 	
-	public void printEncoderValues()
-	{
+	public void printEncoderValues() {
 		getEncoderDistance();
 	}
 	
@@ -109,7 +113,7 @@ public class Chassis extends Subsystem {
 	}
 
 	public double getEncoderDistance() {
-		if(Robot.shifters.getGearSpeed()) {
+		if (Robot.shifters.getGearSpeed()) {
 			SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
 			SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
 			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
@@ -125,6 +129,10 @@ public class Chassis extends Subsystem {
 		encOffsetValueRight = getEncoderRight(); //TODO: change to 0?
 		encOffsetValueLeft = getEncoderLeft();
 		getEncoderDistance();
+	}
+
+	public double getRotationAngleRate() {
+		return rotateToAngleRate;
 	}
 
 }

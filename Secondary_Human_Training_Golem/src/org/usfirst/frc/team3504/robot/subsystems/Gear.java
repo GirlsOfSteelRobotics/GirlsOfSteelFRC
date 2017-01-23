@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Gear extends Subsystem 
-{
+public class Gear extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -18,17 +17,9 @@ public class Gear extends Subsystem
 		
 	}
 
-	public void pistonOut()	{
-    	
-    }
-    
-    public void pistonIn(){
-    	
-    }
-	    
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
 }
-

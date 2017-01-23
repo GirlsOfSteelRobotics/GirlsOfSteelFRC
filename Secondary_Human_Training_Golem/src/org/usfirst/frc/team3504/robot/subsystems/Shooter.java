@@ -1,11 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
-
 import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 
 public class Shooter extends Subsystem {
 	private CANTalon shooterMotorA;
@@ -28,4 +25,3 @@ public class Shooter extends Subsystem {
     }
 
 }
-
