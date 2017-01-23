@@ -101,7 +101,7 @@ public class Chassis extends Subsystem {
 	}
 	
 	public double getEncoderRight() {
-		return -driveRightA.getEncPosition();
+		return -driveRightA.getEncPosition(); //TODO: check negative (what the heck)
 	}
 
 	public double getEncoderLeft() {
@@ -122,7 +122,7 @@ public class Chassis extends Subsystem {
 	}
 
 	public void resetEncoderDistance() {
-		encOffsetValueRight = getEncoderRight();
+		encOffsetValueRight = getEncoderRight(); //TODO: change to 0?
 		encOffsetValueLeft = getEncoderLeft();
 		getEncoderDistance();
 	}

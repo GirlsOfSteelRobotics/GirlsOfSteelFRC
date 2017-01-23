@@ -14,7 +14,6 @@ public class AutoTurn extends Command {
 	
     public AutoTurn(double turnAmt, double speed) {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.chassis);
     	this.turnAmt = turnAmt;
     	this.speed = speed;
