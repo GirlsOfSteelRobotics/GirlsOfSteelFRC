@@ -10,5 +10,6 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/mindsensors-javadoc.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/mindsensors.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Girls of Steel/wpilib/user/java/lib/user/java/lib/niVisionWPI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
