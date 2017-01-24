@@ -22,7 +22,7 @@ import org.opencv.imgproc.*;
 *
 * @author GRIP
 */
-public class Pipeline {
+public class GearLiftVision {
 
 	//Outputs
 	private Mat resizeImageOutput = new Mat();
