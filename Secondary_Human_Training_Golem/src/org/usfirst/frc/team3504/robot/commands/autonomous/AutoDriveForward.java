@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -24,14 +25,14 @@ public class AutoDriveForward extends Command {
     	Robot.chassis.resetEncoderDistance();
     	System.out.println("Encoder distance initially: " + Robot.chassis.getEncoderDistance());
     	System.out.println("Inches: " + inches);
+    	SmartDashboard.putNumber("Autonomous Distance", inches);
+    	SmartDashboard.putNumber("Encoder distance initially AutoDriveDistance:", Robot.chassis.getEncoderDistance());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.chassis.driveSpeed(speed);
-
     	System.out.println("Encoder distance: " + Robot.chassis.getEncoderDistance());
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -43,6 +44,7 @@ public class AutoDriveForward extends Command {
     protected void end() {
     	Robot.chassis.stop();
     	System.out.println("Stopped");
+    	SmartDashboard.putBoolean("Autonomous is Finished!", true);
     }
 
     // Called when another command which requires one or more of the same

@@ -71,8 +71,8 @@ public class Chassis extends Subsystem {
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
 
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false); 
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 		
 		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
 		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
@@ -105,7 +105,7 @@ public class Chassis extends Subsystem {
 	}
 	
 	public double getEncoderRight() {
-		return -driveRightA.getEncPosition();
+		return -driveRightA.getEncPosition(); //TODO: check negative (what the heck)
 	}
 
 	public double getEncoderLeft() {
@@ -126,7 +126,7 @@ public class Chassis extends Subsystem {
 	}
 
 	public void resetEncoderDistance() {
-		encOffsetValueRight = getEncoderRight();
+		encOffsetValueRight = getEncoderRight(); //TODO: change to 0?
 		encOffsetValueLeft = getEncoderLeft();
 		getEncoderDistance();
 	}
@@ -136,4 +136,3 @@ public class Chassis extends Subsystem {
 	}
 
 }
-
