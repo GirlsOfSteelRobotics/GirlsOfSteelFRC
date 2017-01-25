@@ -20,24 +20,19 @@ public class Camera extends Subsystem {
 		camGear = new UsbCamera("camGear", RobotMap.CAMERA_GEAR);
 		camGear.setResolution(320, 240);
 		camClimb = new UsbCamera("camClimb", RobotMap.CAMERA_CLIMB);
-		camClimb.setResolution(320, 240);
-		//CameraServer.getInstance().startAutomaticCapture(camGear);
+		camClimb.setResolution(320, 240);   
 		CameraServer.getInstance().addCamera(camGear);
 		server = CameraServer.getInstance().addServer("CameraServer", 1181);
-		server.setSource(camGear);
-		
-		//CameraServer.getInstance().removeServer(server.getName());
+		server.setSource(camClimb);
 	}
 
 	public void switchToCamClimb() {
-		//CameraServer.getInstance().removeCamera("camGear");
-		CameraServer.getInstance().startAutomaticCapture(camClimb);
+		server.setSource(camClimb);
 		System.out.println("Cam Climb!");
 	}
 
 	public void switchToCamGear() {
-		//CameraServer.getInstance().removeCamera("camClimb");
-		CameraServer.getInstance().startAutomaticCapture(camGear);
+		server.setSource(camGear);
 		System.out.println("Cam Gear!");
 	}
 
