@@ -5,23 +5,37 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shooter extends Subsystem {
-	private CANTalon shooterMotorA;
-	private CANTalon shooterMotorB;
-	
-	  
+	private CANTalon lowShooterMotorA;
+	private CANTalon lowShooterMotorB;
+	private CANTalon highShooterMotorA;
+	private CANTalon highShooterMotorB;
+
+
 	public Shooter(){
-		shooterMotorA = new CANTalon(RobotMap.SHOOTER_MOTOR_A);
-		shooterMotorB = new CANTalon(RobotMap.SHOOTER_MOTOR_B);
+		lowShooterMotorA = new CANTalon(RobotMap.SHOOTER_MOTOR_A);
+		lowShooterMotorB = new CANTalon(RobotMap.SHOOTER_MOTOR_B);
+		highShooterMotorA = new CANTalon(RobotMap.SHOOTER_MOTOR_C);
+		highShooterMotorB = new CANTalon(RobotMap.SHOOTER_MOTOR_D);	
+
 	}
-		
-	public void shootBall(double speed){
-		shooterMotorA.set(speed);
-		shooterMotorB.set(-speed);
+
+	public void shootBall(double lowSpeed, double highSpeed){
+		lowShooterMotorA.set(lowSpeed);
+		lowShooterMotorB.set(-lowSpeed);
+		highShooterMotorA.set(highSpeed);
+		highShooterMotorB.set(-highSpeed);
 	}
-    
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
+	public void stopShoot(){
+		lowShooterMotorA.set(0);
+		lowShooterMotorB.set(0);
+		highShooterMotorA.set(0);
+		highShooterMotorB.set(0);
+	}
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		//setDefaultCommand(new MySpecialCommand());
+	}
 
 }
