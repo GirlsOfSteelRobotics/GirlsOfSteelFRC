@@ -14,13 +14,15 @@ public class Climb extends Subsystem {
     
 	public Climb(){
 		climbMotor = new CANTalon(RobotMap.CLIMB_MOTOR);
+		
+		climbMotor.enableBrakeMode(true);
 	}
 	
-	public void collect(double speed) {
+	public void climb(double speed) {
 		climbMotor.set(speed);
     }
 	
-	public void stopCollect() {
+	public void stopClimb() {
 		climbMotor.set(0.0);
     }
 	
