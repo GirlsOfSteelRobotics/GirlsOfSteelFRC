@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.Shoot;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,6 +27,8 @@ public class OI {
 	
 	private JoystickButton shifterUp;
 	private JoystickButton shifterDown; 
+	
+	private JoystickButton shoot; 
 	
 	public OI() {
 		// Define the joysticks
@@ -50,7 +53,10 @@ public class OI {
 		shifterUp.whenPressed(new ShiftUp());
 		shifterUp = new JoystickButton(drivingStickBackward, 3);
 		shifterUp.whenPressed(new ShiftUp());
-
+		
+		//operator buttons
+		shoot = new JoystickButton(gamePad, 3);
+		shoot.whileHeld(new Shoot());
 	}
 
 	public double getDrivingJoystickY() {

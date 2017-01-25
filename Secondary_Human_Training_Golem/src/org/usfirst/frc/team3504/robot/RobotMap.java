@@ -17,6 +17,8 @@ public class RobotMap {
 	public static final int CLIMB_MOTOR = 7;
 	public static final int SHOOTER_MOTOR_A = 8; //TODO: fix
 	public static final int SHOOTER_MOTOR_B = 9;
+	public static final int SHOOTER_MOTOR_C = 10;
+	public static final int SHOOTER_MOTOR_D = 11;
 	
 	//Solenoids for Shifters
 	public static final int SHIFTER_RIGHT_A = 0; 
