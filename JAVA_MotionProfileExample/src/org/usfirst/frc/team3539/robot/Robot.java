@@ -34,10 +34,12 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Robot extends IterativeRobot {
 
 	/** The Talon we want to motion profile. */
-	CANTalon _talon = new CANTalon(6);
+	CANTalon _talon = new CANTalon(1);
+	CANTalon _talon1 = new CANTalon(3); 
 
 	/** some example logic on how one can manage an MP */
 	MotionProfileExample _example = new MotionProfileExample(_talon);
+	MotionProfileExample _example1 = new MotionProfileExample(_talon1);
 	
 	/** joystick for testing */
 	Joystick _joy= new Joystick(0);
@@ -50,6 +52,10 @@ public class Robot extends IterativeRobot {
 	public Robot() { // could also use RobotInit()
 		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 		_talon.reverseSensor(false); /* keep sensor and motor in phase */
+		
+		_talon1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+		_talon1.reverseSensor(false); /* keep sensor and motor in phase */
+		
 	}
 	/**  function is called periodically during operator control */
     public void teleopPeriodic() {
@@ -63,6 +69,7 @@ public class Robot extends IterativeRobot {
 
 		/* call this periodically, and catch the output.  Only apply it if user wants to run MP. */
 		_example.control();
+		_example1.control();
 		
 		if (btns[5] == false) { /* Check button 5 (top left shoulder on the logitech gamead). */
 			/*
@@ -74,16 +81,22 @@ public class Robot extends IterativeRobot {
 			_talon.changeControlMode(TalonControlMode.Voltage);
 			_talon.set(12.0 * leftYjoystick);
 
+			_talon1.changeControlMode(TalonControlMode.Voltage);
+			_talon1.set(-12.0 * leftYjoystick);
+			
 			_example.reset();
+			_example1.reset();
+			
 		} else {
 			/* Button5 is held down so switch to motion profile control mode => This is done in MotionProfileControl.
 			 * When we transition from no-press to press,
 			 * pass a "true" once to MotionProfileControl.
 			 */
 			_talon.changeControlMode(TalonControlMode.MotionProfile);
-			
+			_talon1.changeControlMode(TalonControlMode.MotionProfile);
 			CANTalon.SetValueMotionProfile setOutput = _example.getSetValue();
-					
+			CANTalon.SetValueMotionProfile setOutput1 = _example1.getSetValue();		
+			_talon.set(setOutput.value);
 			_talon.set(setOutput.value);
 
 			/* if btn is pressed and was not pressed last time,
@@ -91,6 +104,7 @@ public class Robot extends IterativeRobot {
 			 * This will signal the robot to start a MP */
 			if( (btns[6] == true) && (_btnsLast[6] == false) ) {
 				/* user just tapped button 6 */
+				_example.startMotionProfile();
 				_example.startMotionProfile();
 			}
 		}
@@ -108,7 +122,11 @@ public class Robot extends IterativeRobot {
 		 * BUT if that's what the application/testing requires than modify this accordingly */
 		_talon.changeControlMode(TalonControlMode.PercentVbus);
 		_talon.set( 0 );
+		
+		_talon1.changeControlMode(TalonControlMode.PercentVbus);
+		_talon1.set( 0 );
 		/* clear our buffer and put everything into a known state */
 		_example.reset();
+		_example1.reset();
 	}
 }
