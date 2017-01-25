@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
-
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -20,24 +19,23 @@ public class Camera extends Subsystem {
 		camGear = new UsbCamera("camGear", RobotMap.CAMERA_GEAR);
 		camGear.setResolution(320, 240);
 		camClimb = new UsbCamera("camClimb", RobotMap.CAMERA_CLIMB);
-		camClimb.setResolution(320, 240);
-		//CameraServer.getInstance().startAutomaticCapture(camGear);
+		camClimb.setResolution(320, 240);   
 		CameraServer.getInstance().addCamera(camGear);
 		server = CameraServer.getInstance().addServer("CameraServer", 1181);
-		server.setSource(camGear);
+		server.setSource(camClimb);
 		
-		//CameraServer.getInstance().removeServer(server.getName());
+		//For stream in smartdashboard add a mjpg stream viewer, 
+		//right click, select properties, and add http://roborio-3504-frc.local:1181/stream.mjpg
+		//as the URL
 	}
 
 	public void switchToCamClimb() {
-		//CameraServer.getInstance().removeCamera("camGear");
-		CameraServer.getInstance().startAutomaticCapture(camClimb);
+		server.setSource(camClimb);
 		System.out.println("Cam Climb!");
 	}
 
 	public void switchToCamGear() {
-		//CameraServer.getInstance().removeCamera("camClimb");
-		CameraServer.getInstance().startAutomaticCapture(camGear);
+		server.setSource(camGear);
 		System.out.println("Cam Gear!");
 	}
 
@@ -46,4 +44,3 @@ public class Camera extends Subsystem {
 		//setDefaultCommand(new MySpecialCommand());
 	}
 }
-

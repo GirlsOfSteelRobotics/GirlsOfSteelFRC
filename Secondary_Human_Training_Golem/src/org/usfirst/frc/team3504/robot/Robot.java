@@ -11,9 +11,9 @@ import org.usfirst.frc.team3504.robot.subsystems.Climb;
 import org.usfirst.frc.team3504.robot.subsystems.Gear;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBlueHopper;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoRedHopper;
 //import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.*;
@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 
 		chooser = new SendableChooser<Command>();
         chooser.addDefault("Do Nothing", new AutoDoNothing());
-        chooser.addObject("Base Line", new AutoBaseLine(10.0, 0.5));
+        chooser.addObject("Base Line", new AutoDriveForward(10.0, 0.5)); //TODO: change value
         chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
         chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
         SmartDashboard.putData("Auto mode", chooser);
@@ -100,23 +100,13 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
     	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
-        
         //start the robot out in low gear when starting autonomous
         shifters.shiftGear(Shifters.Speed.kLow);
+        
+    	// schedule the autonomous command (example)
+        if (autonomousCommand != null) autonomousCommand.start();
+       
     }
 
     /**

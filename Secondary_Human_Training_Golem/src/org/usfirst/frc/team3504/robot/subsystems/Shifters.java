@@ -14,7 +14,7 @@ public class Shifters extends Subsystem {
     
     public enum Speed {kHigh, kLow};
     
-    private boolean inHighGear;
+    private Speed speed;
     
     public Shifters() {
 		shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
@@ -25,21 +25,20 @@ public class Shifters extends Subsystem {
     // here. Call these from Commands.
 	
     public void shiftGear(Speed speed) {
-		if (speed == Speed.kHigh) {
+    	this.speed = speed; 
+    	if (speed == Speed.kHigh) {
 			shifterLeft.set(DoubleSolenoid.Value.kReverse);
 			shifterRight.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("Shifting left and right side into high gear (fwd)");
-			inHighGear = true;
+			System.out.println("Shifting left and right side into high gear (rev)");
 		} else {
 			shifterLeft.set(DoubleSolenoid.Value.kForward);
 			shifterRight.set(DoubleSolenoid.Value.kForward);
-			System.out.println("Shifting left and right side into low gear (rev)");
-			inHighGear = false;
+			System.out.println("Shifting left and right side into low gear (fwd)");
 		}
 	}
 	
-	public boolean getGearSpeed() {
-		return inHighGear;
+	public Speed getGearSpeed() {
+		return speed;
 	}
 
     public void initDefaultCommand() {
