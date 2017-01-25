@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
-
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -24,6 +23,10 @@ public class Camera extends Subsystem {
 		CameraServer.getInstance().addCamera(camGear);
 		server = CameraServer.getInstance().addServer("CameraServer", 1181);
 		server.setSource(camClimb);
+		
+		//For stream in smartdashboard add a mjpg stream viewer, 
+		//right click, select properties, and add http://roborio-3504-frc.local:1181/stream.mjpg
+		//as the URL
 	}
 
 	public void switchToCamClimb() {
@@ -41,4 +44,3 @@ public class Camera extends Subsystem {
 		//setDefaultCommand(new MySpecialCommand());
 	}
 }
-
