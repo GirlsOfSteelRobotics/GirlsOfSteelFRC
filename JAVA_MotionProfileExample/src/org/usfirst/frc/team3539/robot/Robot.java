@@ -50,10 +50,10 @@ public class Robot extends IterativeRobot {
 
 
 	public Robot() { // could also use RobotInit()
-		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		_talon.reverseSensor(false); /* keep sensor and motor in phase */
 		
-		_talon1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+		_talon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		_talon1.reverseSensor(false); /* keep sensor and motor in phase */
 		
 	}
@@ -97,7 +97,7 @@ public class Robot extends IterativeRobot {
 			CANTalon.SetValueMotionProfile setOutput = _example.getSetValue();
 			CANTalon.SetValueMotionProfile setOutput1 = _example1.getSetValue();		
 			_talon.set(setOutput.value);
-			_talon.set(setOutput.value);
+			_talon.set(setOutput1.value);
 
 			/* if btn is pressed and was not pressed last time,
 			 * In other words we just detected the on-press event.
@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot {
 			if( (btns[6] == true) && (_btnsLast[6] == false) ) {
 				/* user just tapped button 6 */
 				_example.startMotionProfile();
-				_example.startMotionProfile();
+				_example1.startMotionProfile();
 			}
 		}
 

@@ -25,7 +25,7 @@
 package org.usfirst.frc.team3539.robot;
 import com.ctre.CANTalon;
 
-public class instrumentation {
+public class Instrumentation {
 
 	static double timeout = 0;
 	static int count = 0;
