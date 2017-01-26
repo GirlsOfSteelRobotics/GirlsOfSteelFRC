@@ -7,8 +7,11 @@
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
 	<classpathentry kind="var" path="cscore" sourcepath="cscore.sources"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/Girls of Steel/wpilib/user/java/lib/user/java/lib/niVisionWPI.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/mindsensors-javadoc.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/mindsensors.jar"/>
+=======
+>>>>>>> 2466a6c72ba2da3535f5b8a9512bab7b99391de7
 	<classpathentry kind="output" path="bin"/>
 </classpath>

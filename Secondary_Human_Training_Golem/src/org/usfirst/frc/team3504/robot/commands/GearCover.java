@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.OI.DriveDirection;
+
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,18 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForward extends Command {
+public class GearCover extends Command {
+	
+	private boolean extended;
 
-    public DriveForward() {
+    public GearCover(boolean extended) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.chassis);
+    	requires(Robot.gear);
+    	this.extended = extended;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.oi.setDriveDirection(DriveDirection.kFWD);
-    	Robot.camera.switchToCamClimb();
+    	Robot.gear.coverPosition(extended);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,13 +35,11 @@ public class DriveForward extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end(); 
+    	end();
     }
 }
-

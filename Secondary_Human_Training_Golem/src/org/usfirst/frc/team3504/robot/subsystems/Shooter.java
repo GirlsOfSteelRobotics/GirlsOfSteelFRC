@@ -12,10 +12,10 @@ public class Shooter extends Subsystem {
 
 
 	public Shooter(){
-		lowShooterMotorA = new CANTalon(RobotMap.SHOOTER_MOTOR_A);
-		lowShooterMotorB = new CANTalon(RobotMap.SHOOTER_MOTOR_B);
-		highShooterMotorA = new CANTalon(RobotMap.SHOOTER_MOTOR_C);
-		highShooterMotorB = new CANTalon(RobotMap.SHOOTER_MOTOR_D);	
+		lowShooterMotorA = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR_A);
+		lowShooterMotorB = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR_B);
+		highShooterMotorA = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR_A);
+		highShooterMotorB = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR_B);	
 
 	}
 

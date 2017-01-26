@@ -25,7 +25,9 @@
 package org.usfirst.frc.team3539.robot;
 import com.ctre.CANTalon;
 
-public class instrumentation {
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+public class Instrumentation {
 
 	static double timeout = 0;
 	static int count = 0;
@@ -80,15 +82,21 @@ public class instrumentation {
 			System.out.format("%-9s\t", status1.topBufferCnt);
 			System.out.format("%-9s\t", status1.btmBufferCnt);
 			System.out.format("%-9s\t", StrOutputEnable(status1.outputEnable));
-			System.out.format("%-9s\t", (status1.hasUnderrun ? "1" : ""));
-			System.out.format("%-9s\t", (status1.isUnderrun ? "1" : ""));
-			System.out.format("%-9s\t", (status1.activePointValid ? "1" : ""));
-			System.out.format("%-9s\t", (status1.activePoint.isLastPoint ? "1" : ""));
-			System.out.format("%-9s\t", (status1.activePoint.velocityOnly ? "1" : ""));
+			System.out.format("%-9s\t", (status1.hasUnderrun ? "y" : "n"));
+			System.out.format("%-9s\t", (status1.isUnderrun ? "y" : "n"));
+			System.out.format("%-9s\t", (status1.activePointValid ? "y" : "n"));
+			System.out.format("%-9s\t", (status1.activePoint.isLastPoint ? "y" : "n"));
+			System.out.format("%-9s\t", (status1.activePoint.velocityOnly ? "y" : "n"));
 			System.out.format("%-9s\t", round(status1.activePoint.position));
 			System.out.format("%-9s\t", round(status1.activePoint.velocity));
 
 			System.out.format("\n");
 		}
+	}
+	public static void encoders(CANTalon talon1, CANTalon talon2) {
+		SmartDashboard.putNumber("talon speed", talon1.get());
+		SmartDashboard.putNumber("talon pos", talon1.getEncPosition());
+		SmartDashboard.putNumber("talon1 speed", talon2.get());
+		SmartDashboard.putNumber("talon1 pos", talon2.getEncPosition());		
 	}
 }
