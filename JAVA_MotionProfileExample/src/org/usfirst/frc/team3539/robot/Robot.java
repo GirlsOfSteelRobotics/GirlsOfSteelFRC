@@ -51,10 +51,10 @@ public class Robot extends IterativeRobot {
 
 	public Robot() { // could also use RobotInit()
 		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		_talon.reverseSensor(false); /* keep sensor and motor in phase */
+		_talon.reverseSensor(true); /* keep sensor and motor in phase */
 		
 		_talon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		_talon1.reverseSensor(false); /* keep sensor and motor in phase */
+		_talon1.reverseSensor(true); /* keep sensor and motor in phase */
 		
 	}
 	/**  function is called periodically during operator control */
