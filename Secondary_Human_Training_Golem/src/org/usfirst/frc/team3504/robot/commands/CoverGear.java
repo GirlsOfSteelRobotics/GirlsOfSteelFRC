@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GearCover extends Command {
+public class CoverGear extends Command {
 
-    public GearCover() {
+    public CoverGear() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.gear);
@@ -18,7 +18,7 @@ public class GearCover extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gear.coverPosition();
+    	Robot.gear.coverPosition(false);
     }
 
     // Called repeatedly when this Command is scheduled to run

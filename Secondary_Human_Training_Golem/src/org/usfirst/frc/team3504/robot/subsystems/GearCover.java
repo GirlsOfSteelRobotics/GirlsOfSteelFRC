@@ -10,30 +10,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Gear extends Subsystem {
+public class GearCover extends Subsystem {
 	
 	private Solenoid cover; 
 	
-	private boolean extended;
-	
-	public Gear() {
-		cover = new Solenoid(RobotMap.GEAR_COVER); //ASK WUTS UP
+	public GearCover() {
+		cover = new Solenoid(RobotMap.GEAR_COVER);
 	}
 
     public void coverPosition(boolean extended) {
-    	if (extended == true) { //HERE TOO not right
-			//cover.set(Solenoid..kForward);// AND HERE
-			System.out.println("Is covered");
-			extended = true;
-		} else {
-			//cover.set(Solenoid..kReverse);
-			System.out.println("Cover is Raised");
-			extended = false;
-		}
+		cover.set(extended);
+		System.out.println("cover is extended: " + extended); 
 	}
     
 	public boolean getCoverPosition() {
-		return extended;
+		return cover.get();
 	}
 	
     public void initDefaultCommand() {
