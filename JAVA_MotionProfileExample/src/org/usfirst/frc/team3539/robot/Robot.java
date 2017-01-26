@@ -87,6 +87,7 @@ public class Robot extends IterativeRobot {
 			_example.reset();
 			_example1.reset();
 			
+			Instrumentation.encoders(_talon, _talon1);
 		} else {
 			/* Button5 is held down so switch to motion profile control mode => This is done in MotionProfileControl.
 			 * When we transition from no-press to press,

@@ -91,4 +91,31 @@ public class Instrumentation {
 			System.out.format("\n");
 		}
 	}
+	public static void encoders(CANTalon talon1, CANTalon talon2) {
+		double now = edu.wpi.first.wpilibj.Timer.getFPGATimestamp();
+
+		if((now-timeout) > 0.2){
+			timeout = now;
+			/* fire a loop every 200ms */
+
+			if(--count <= 0){
+				count = 8;
+				/* every 8 loops, print our columns */
+				
+				System.out.format("%-9s\t", "speed1");
+				System.out.format("%-9s\t", "enc_pos1");
+				System.out.format("%-9s\t", "speed2");
+				System.out.format("%-9s\t", "enc_pos2");
+
+				System.out.format("\n");
+			}
+			/* every loop, print our values */
+			System.out.format("%-9s\t", round(talon1.get()));
+			System.out.format("%-9s\t", talon1.getEncPosition());
+			System.out.format("%-9s\t", round(talon2.get()));
+			System.out.format("%-9s\t", talon2.getEncPosition());
+
+			System.out.format("\n");
+		}
+	}
 }
