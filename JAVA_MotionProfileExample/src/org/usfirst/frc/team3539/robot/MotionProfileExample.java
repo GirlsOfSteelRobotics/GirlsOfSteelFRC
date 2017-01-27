@@ -24,6 +24,8 @@
 package org.usfirst.frc.team3539.robot;
 
 
+import java.util.ArrayList;
+
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Notifier;
 import com.ctre.CANTalon.TalonControlMode;
@@ -94,15 +96,16 @@ public class MotionProfileExample {
 	}
 	Notifier _notifer = new Notifier(new PeriodicRunnable());
 	
-
+	MotionProfile _profile; 
 	/**
 	 * C'tor
 	 * 
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
 	 */
-	public MotionProfileExample(CANTalon talon) {
+	public MotionProfileExample(CANTalon talon, String filename) {
 		_talon = talon;
+		_profile = new MotionProfile(filename);
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
@@ -233,11 +236,6 @@ public class MotionProfileExample {
 
 	/** Start filling the MPs to all of the involved Talons. */
 	private void startFilling() {
-		/* since this example only has one talon, just update that one */
-		startFilling(GeneratedMotionProfile.Points, GeneratedMotionProfile.kNumPoints);
-	}
-
-	private void startFilling(double[][] profile, int totalCnt) {
 
 		/* create an empty point */
 		CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
@@ -259,11 +257,13 @@ public class MotionProfileExample {
 		_talon.clearMotionProfileTrajectories();
 
 		/* This is fast since it's just into our TOP buffer */
-		for (int i = 0; i < totalCnt; ++i) {
+		int i = 0;
+		for (ArrayList<Double> arr:_profile.points) {
 			/* for each point, fill our structure and pass it to API */
-			point.position = profile[i][0];
-			point.velocity = profile[i][1];
-			point.timeDurMs = (int) profile[i][2];
+			Double[] a = (Double[]) arr.toArray();
+			point.position = a[0];
+			point.velocity = a[1];
+			point.timeDurMs = a[2].intValue();
 			point.profileSlotSelect = 0; /* which set of gains would you like to use? */
 			point.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
@@ -273,10 +273,11 @@ public class MotionProfileExample {
 				point.zeroPos = true; /* set this to true on the first point */
 
 			point.isLastPoint = false;
-			if ((i + 1) == totalCnt)
+			if ((i + 1) == _profile.points.size())
 				point.isLastPoint = true; /* set this to true on the last point  */
 
 			_talon.pushMotionProfileTrajectory(point);
+			i++;
 		}
 	}
 
