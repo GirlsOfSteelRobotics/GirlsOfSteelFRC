@@ -7,3 +7,4 @@
 */dist/
 */nbproject/private/
 */sysProps.xml
+*.gitignore

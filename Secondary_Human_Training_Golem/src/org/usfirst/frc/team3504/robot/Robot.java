@@ -1,11 +1,13 @@
-
 package org.usfirst.frc.team3504.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+<<<<<<< HEAD
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Climb;
 import org.usfirst.frc.team3504.robot.subsystems.GearCover;
@@ -17,6 +19,8 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoRedHopper;
 //import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.*;
+=======
+>>>>>>> 2fab681d8de0eeed81370d12b97c8a57ca31bdb2
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -40,9 +44,6 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser<Command> chooser;
 
-  //  CANLight frameLights;
-  //  DriverStation ds;
-    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -64,9 +65,6 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
         chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
         SmartDashboard.putData("Auto mode", chooser);
-        
-        //frameLights = new CANLight(3);
-        //ds = DriverStation.getInstance();
     }
 	
 	/**
@@ -80,13 +78,6 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		/*if (ds.getAlliance() == DriverStation.Alliance.Red) {
-            frameLights.showRGB(255, 0, 0);
-        } else if (ds.getAlliance() == DriverStation.Alliance.Blue) {
-            frameLights.showRGB(0, 0, 255);
-        } else if (ds.getAlliance() == DriverStation.Alliance.Invalid) {
-            frameLights.showRGB(255, 200, 0); // yellow
-        }*/ 
 	}
 
 	/**
@@ -133,7 +124,6 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	SmartDashboard.putNumber("A Chassis Encoder", Robot.chassis.getEncoderDistance());
         Scheduler.getInstance().run();
     }
     
