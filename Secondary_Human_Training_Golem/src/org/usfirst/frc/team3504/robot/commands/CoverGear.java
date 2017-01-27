@@ -2,26 +2,19 @@ package org.usfirst.frc.team3504.robot.commands;
 
 
 import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
-public class GearCover extends Command {
+public class CoverGear extends Command {
 	
-	private boolean extended;
-
-    public GearCover(boolean extended) {
-        // Use requires() here to declare subsystem dependencies
+	public CoverGear() {
+    	// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.gear);
-    	this.extended = extended;
+    	requires(Robot.gearCover);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gear.coverPosition(extended);
+    	Robot.gearCover.coverPosition(true);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -12,7 +12,7 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_A = 4;
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
-	
+
 	public static final int CLIMB_MOTOR = 7;
 
 	public static final int LOW_SHOOTER_MOTOR_A = 8; //TODO: fix
