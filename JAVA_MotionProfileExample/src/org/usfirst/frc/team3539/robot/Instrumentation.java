@@ -93,10 +93,12 @@ public class Instrumentation {
 			System.out.format("\n");
 		}
 	}
-	public static void encoders(CANTalon talon1, CANTalon talon2) {
-		SmartDashboard.putNumber("talon speed", talon1.get());
-		SmartDashboard.putNumber("talon pos", talon1.getEncPosition());
-		SmartDashboard.putNumber("talon1 speed", talon2.get());
-		SmartDashboard.putNumber("talon1 pos", talon2.getEncPosition());		
+	public static void encoders(CANTalon talon, CANTalon talon1) {
+		SmartDashboard.putNumber("talon speed", talon.get());
+		SmartDashboard.putNumber("talon pos", talon.getEncPosition());
+		SmartDashboard.putNumber("talon vel", talon.getEncVelocity());		
+		SmartDashboard.putNumber("talon1 speed", talon1.get());
+		SmartDashboard.putNumber("talon1 pos", talon1.getEncPosition());		
+		SmartDashboard.putNumber("talon1 vel", talon1.getEncVelocity());		
 	}
 }

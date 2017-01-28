@@ -35,7 +35,9 @@ public class Robot extends IterativeRobot {
 
 	/** The Talon we want to motion profile. */
 	CANTalon _talon = new CANTalon(1);
-	CANTalon _talon1 = new CANTalon(3); 
+	CANTalon _talonf = new CANTalon(2);
+	CANTalon _talon1 = new CANTalon(3);
+	CANTalon _talon1f = new CANTalon(4);
 
 	/** some example logic on how one can manage an MP */
 	MotionProfileExample _example = new MotionProfileExample(_talon);
@@ -50,12 +52,26 @@ public class Robot extends IterativeRobot {
 
 
 	public Robot() { // could also use RobotInit()
+		// Enable secondary Talons as followers so they don't drag down the main motor
+		_talonf.changeControlMode(CANTalon.TalonControlMode.Follower);
+		_talonf.set(_talon.getDeviceID());
+		_talon1f.changeControlMode(CANTalon.TalonControlMode.Follower);
+		_talon1f.set(_talon1.getDeviceID());
+		
 		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		_talon.reverseSensor(true); /* keep sensor and motor in phase */
 		
 		_talon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		_talon1.reverseSensor(true); /* keep sensor and motor in phase */
 		
+		_talon.setF(3);
+		_talon.setP(0);
+		_talon.setI(0);
+		_talon.setD(0);
+		_talon1.setF(3);
+		_talon1.setP(0);
+		_talon1.setI(0);
+		_talon1.setD(0);
 	}
 	/**  function is called periodically during operator control */
     public void teleopPeriodic() {
