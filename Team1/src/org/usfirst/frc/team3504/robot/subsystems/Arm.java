@@ -1,10 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
@@ -16,8 +13,9 @@ public class Arm extends Subsystem {
 	
 	public Arm()
 	{
-		armPiston = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
+		// armPiston = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
 	}
+	
 	public void armUp()
 	{
 		armPiston.set(DoubleSolenoid.Value.kForward);

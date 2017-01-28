@@ -1,38 +1,101 @@
 package org.usfirst.frc.team3504.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team3504.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3504.robot.commands.CoverGear;
+import org.usfirst.frc.team3504.robot.commands.DriveBackwards;
+import org.usfirst.frc.team3504.robot.commands.DriveForward;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.Shoot;
+import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-    
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
-    
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
-}
+   
+	public enum DriveDirection {kFWD, kREV}; 
+	private Joystick drivingStickForward;
+	private Joystick drivingStickBackward;
+	private Joystick gamePad;
+	
+	private DriveDirection driveDirection = DriveDirection.kFWD; 
+	
+	private JoystickButton switchToForward; 
+	private JoystickButton switchToBackward; 
+	
+	private JoystickButton shifterUp;
+	private JoystickButton shifterDown; 
+	
+	private JoystickButton shoot; 
+	
+	private JoystickButton cover;
+	private JoystickButton uncover;
+	
+	public OI() {
+		// Define the joysticks
+		drivingStickForward = new Joystick(0);
+		drivingStickBackward = new Joystick(1);
+		gamePad = new Joystick(2);
+		
+		// Button to change between drive joysticks on trigger of both joysticks
+		switchToForward = new JoystickButton(drivingStickForward, 1); 
+		switchToForward.whenPressed(new DriveForward()); 
+		
+		switchToBackward = new JoystickButton(drivingStickBackward, 1);
+		switchToBackward.whenPressed(new DriveBackwards());
+			
+		// Buttons for shifters copied to both joysticks
+		shifterDown = new JoystickButton(drivingStickForward, 2);
+		shifterDown.whenPressed(new ShiftDown());
+		shifterDown = new JoystickButton(drivingStickBackward, 2);
+		shifterDown.whenPressed(new ShiftDown());
 
+		shifterUp = new JoystickButton(drivingStickForward, 3);
+		shifterUp.whenPressed(new ShiftUp());
+		shifterUp = new JoystickButton(drivingStickBackward, 3);
+		shifterUp.whenPressed(new ShiftUp());
+		
+		//operator buttons
+		shoot = new JoystickButton(gamePad, 3);
+		shoot.whileHeld(new Shoot());
+		
+		//Buttons for cover
+		cover = new JoystickButton(gamePad, 4); //TODO: get number
+		cover.whenPressed(new CoverGear());
+		uncover = new JoystickButton(gamePad, 5); //TODO: get number
+		uncover.whenPressed(new UncoverGear());
+	}
+
+	public double getDrivingJoystickY() {
+		if (driveDirection == DriveDirection.kFWD){
+			return drivingStickForward.getY();
+		}
+		else {
+			return -drivingStickBackward.getY(); 
+		}
+	}
+	
+	public double getDrivingJoystickX()
+	{
+		if (driveDirection == DriveDirection.kFWD){
+			return drivingStickForward.getX();
+		}
+		else {
+			return -drivingStickBackward.getX(); 
+		}
+	}
+	
+	public void setDriveDirection(DriveDirection driveDirection) {
+		this.driveDirection = driveDirection; 
+		System.out.println("Drive direction set to: " + driveDirection);
+	}
+	
+	public boolean isJoystickReversed() {
+		return (driveDirection == DriveDirection.kREV); 
+	}
+	
+}

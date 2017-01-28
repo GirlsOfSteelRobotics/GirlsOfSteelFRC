@@ -1,7 +1,7 @@
-
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,9 +23,14 @@ public class Robot extends IterativeRobot {
 	public static DriveSystem driveSystem;
 	public static OI oi;
 	public static Subsystem chassis;
+	public static Shifters shifters;
+	public static Arm arm;
+	public static JawPiston jaw;
+	public static Shooter shooter;
+	public static Collector collecter;
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser<Command> chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -33,10 +38,17 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	driveSystem = new DriveSystem();
+        shifters = new Shifters();
+       // arm = new Arm();
+        jaw = new JawPiston();
+        shooter = new Shooter(); 
+        
+        //all subsystems must be initialized before creating OI
 		oi = new OI();
-        chooser = new SendableChooser();
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        chooser = new SendableChooser<Command>();
+        
+        chooser.addDefault("Default: Do Nothing", new AutoDoNothing());
+        chooser.addObject("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(10.0, 0.5));
         SmartDashboard.putData("Auto mode", chooser);
     }
 	
@@ -65,17 +77,6 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
         
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }

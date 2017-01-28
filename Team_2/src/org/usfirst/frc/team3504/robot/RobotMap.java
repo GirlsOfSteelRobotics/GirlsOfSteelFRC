@@ -22,7 +22,10 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_A = 3;
 	public static final int DRIVE_LEFT_B = 4;
 	
-	public static final int COLLECT_RIGHT = 5;
-	public static final int COLLECT_LEFT = 6;
+	public static final int PIVOT_RIGHT = 5;
+	public static final int PIVOT_LEFT = 6; 
+	
+	public static final int COLLECT_RIGHT = 7;
+	public static final int COLLECT_LEFT = 8;
 	
 }

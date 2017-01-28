@@ -3,24 +3,28 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class DriveSystem extends Subsystem {
 	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
-	private CANTalon driveLeftC;
+	//private CANTalon driveLeftC;
 	
 	private CANTalon driveRightA;
 	private CANTalon driveRightB;
-	private CANTalon driveRightC;
+	//private CANTalon driveRightC;
 	
 	private RobotDrive robotDrive;
 	
-	double encOffsetValue = 0;
+	private double encOffsetValueRight = 0;
+	private double encOffsetValueLeft = 0;
+
 	
 	public DriveSystem() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
@@ -85,15 +89,18 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public double getEncoderLeft() {
-		return driveLeftA.getEncPosition();
+		return -driveLeftA.getEncPosition();
 	}
 
 	public double getEncoderDistance() {
-		return (getEncoderLeft() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+		SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE);
+		SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE);
+		return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE;
 	}
 
 	public void resetDistance() {
-		encOffsetValue = getEncoderLeft();
+		encOffsetValueRight = getEncoderRight();
+		encOffsetValueLeft = getEncoderLeft();
 	}
 	
 	public void driveByJoystick(Joystick stick) {

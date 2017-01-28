@@ -1,14 +1,14 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Collector;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,9 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	public static Chassis chassis;
-	public static Collector collector;
+	public static Manipulator manipulator;
 	public static OI oi;
-	SendableChooser chooser; 
+	SendableChooser<Command> chooser; 
 	Command autonomousCommand; 
     
 
@@ -35,13 +35,14 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	chassis = new Chassis();
-    	collector = new Collector();
+    	manipulator = new Manipulator();
     	
     	//Initialize OI after all subsystems are initialized
 		oi = new OI();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new DriveByJoystick());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        chooser = new SendableChooser<Command>();
+        chooser.addDefault("Default: Do Nothing", new AutoDoNothing());
+        chooser.addObject("Drive Forwards(10 in, 0.5 speed)", new AutoDriveForward(10.0, 0.5));
+        chooser.addObject("Drive Backwards(10 in, 0.5 speed)", new AutoDriveBackwards(10.0, 0.5));
         SmartDashboard.putData("Auto mode", chooser);
     }
 	
@@ -69,18 +70,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
+            	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -104,6 +94,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	Robot.chassis.ahrsToSmartDashboard();
+    	
         Scheduler.getInstance().run();
     }
     

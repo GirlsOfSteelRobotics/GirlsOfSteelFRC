@@ -1,14 +1,9 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -16,7 +11,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class JawPiston extends Subsystem {
     
 	
-	 DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
+	private DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
 	
 	public void pistonsOut(){
     	jawPiston.set(DoubleSolenoid.Value.kForward);

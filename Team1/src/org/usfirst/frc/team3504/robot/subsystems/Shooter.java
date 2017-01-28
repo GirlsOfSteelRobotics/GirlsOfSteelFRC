@@ -17,8 +17,8 @@ public class Shooter extends Subsystem {
 	
 	public Shooter()
 	{
-		shooterPistonLeft = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
-		shooterPistonRight = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
+		shooterPistonLeft = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
+		shooterPistonRight = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
 
 	}
 	public void pistonOut()
