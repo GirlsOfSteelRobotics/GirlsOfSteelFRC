@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class GearCover extends Subsystem {
+public class Cover extends Subsystem {
 	
 	private Solenoid cover; 
 	
-	public GearCover() 
+	public Cover() 
 	{
 		cover = new Solenoid(RobotMap.GEAR_COVER);
 	}

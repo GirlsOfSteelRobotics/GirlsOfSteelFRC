@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Climb;
-import org.usfirst.frc.team3504.robot.subsystems.GearCover;
+import org.usfirst.frc.team3504.robot.subsystems.Cover;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBlueHopper;
@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Chassis chassis;
 	public static Shifters shifters;
-	public static GearCover gearCover;
+	public static Cover gearCover;
 	public static Climb climb; 
 	public static Shooter shooter; 
 	public static Camera camera;
@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		chassis = new Chassis();
 		shifters = new Shifters();
-		gearCover = new GearCover();
+		gearCover = new Cover();
 		climb = new Climb();
 		shooter = new Shooter();
 		camera = new Camera();
