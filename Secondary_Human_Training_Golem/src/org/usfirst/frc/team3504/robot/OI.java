@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.CoverGear;
 import org.usfirst.frc.team3504.robot.commands.DriveBackwards;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import edu.wpi.first.wpilibj.Joystick;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
+import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -29,6 +31,9 @@ public class OI {
 	private JoystickButton shifterDown; 
 	
 	private JoystickButton shoot; 
+	
+	private JoystickButton cover;
+	private JoystickButton uncover;
 	
 	public OI() {
 		// Define the joysticks
@@ -57,6 +62,12 @@ public class OI {
 		//operator buttons
 		shoot = new JoystickButton(gamePad, 3);
 		shoot.whileHeld(new Shoot());
+		
+		//Buttons for cover
+		cover = new JoystickButton(gamePad, 4); //TODO: get number
+		cover.whenPressed(new CoverGear());
+		uncover = new JoystickButton(gamePad, 5); //TODO: get number
+		uncover.whenPressed(new UncoverGear());
 	}
 
 	public double getDrivingJoystickY() {
