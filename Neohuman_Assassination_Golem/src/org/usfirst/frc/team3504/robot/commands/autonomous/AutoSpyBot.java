@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.commands.Drive;
 import org.usfirst.frc.team3504.robot.commands.PivotDown;
 import org.usfirst.frc.team3504.robot.commands.PivotUp;

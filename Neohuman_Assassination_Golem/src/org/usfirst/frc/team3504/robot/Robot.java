@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.BlueLight;
-import org.usfirst.frc.team3504.robot.commands.RedLight;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -37,9 +35,8 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 
     Command autonomousCommand;
-    SendableChooser autoChooser; 
+    SendableChooser<Command> autoChooser; 
     
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -68,7 +65,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		// Populate the SmartDashboard menu for choosing the autonomous command to run
-		autoChooser = new SendableChooser();
+		autoChooser = new SendableChooser<Command>();
 		//drive backwards:
 		autoChooser.addDefault("Do Nothing", new AutoDoNothing());
 		autoChooser.addObject("Reach Defense", new AutoDriveBackwards(101, .4)); //55
@@ -113,35 +110,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	autonomousCommand = (Command) autoChooser.getSelected();
-    	
-    	/*
-    	// Alternative method of choosing auton mode using a physical switch
-    	switch(Robot.oi.getAutonSelector()) {
-    	case 1: //Reach Defense
-    		autonomousCommand = new AutoDriveBackwards(101, .4); //55
-    		break;
-    	case 2: //LowBar
-    		autonomousCommand = new FlapThenLowBar(156, .4); //works 110
-    		break;
-    	case 3: //Moat
-    		autonomousCommand = new AutoDriveBackwards(136, 1); //works 60
-    		break;
-    	case 4: //Rough Terrain
-    		autonomousCommand = new AutoDriveBackwards(156, .4); //works 110
-    		break;
-    	case 5: //RockWall
-    		autonomousCommand = new AutoDriveBackwards(196, .6); //works //150
-    		break;
-    	case 6: //Ramparts
-    		autonomousCommand = new AutoDriveForward(186, .6); //140
-    		break;
-    	case 0: //Do Nothing
-    	default:
-    		autonomousCommand = new AutoDoNothing();
-    		break;
-    	}
-    	*/
-    	
+    	    	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
        

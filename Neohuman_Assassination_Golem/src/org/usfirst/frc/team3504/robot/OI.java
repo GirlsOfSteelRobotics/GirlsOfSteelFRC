@@ -23,10 +23,10 @@ public class OI {
 	private Joystick autonSelector = new Joystick(4);
 
 	//JOYSTICK BUTTONS
-	private JoystickButton shiftUpButton;
+	//private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
 
-	private JoystickButton shiftUpButton2; //for backwards joystick
+	//private JoystickButton shiftUpButton2; //for backwards joystick
 	private JoystickButton shiftDownButton2; //for backwards joystick
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
@@ -45,24 +45,24 @@ public class OI {
 	private JoystickButton pivotUpButtonBoard;
 	private JoystickButton pivotDownButtonBoard; 
 	private JoystickButton shootBallButtonBoard;
-	private JoystickButton shooterPistonsOutButtonBoard;
-	private JoystickButton shooterPistonsInButtonBoard;
-	private JoystickButton rollersInButtonBoard;
-	private	JoystickButton rollersOutButtonBoard;
+	//private JoystickButton shooterPistonsOutButtonBoard;
+	//private JoystickButton shooterPistonsInButtonBoard;
+	//private JoystickButton rollersInButtonBoard;
+	//private	JoystickButton rollersOutButtonBoard;
 	
 	//game pad 
 	private JoystickButton collectBallButton;
 	private JoystickButton releaseBallButton;
 	private JoystickButton flapUp;
 	private JoystickButton flapDown;
-	private JoystickButton flapUpRocker;
-	private JoystickButton flapDownRocker;
+	//private JoystickButton flapUpRocker;
+	//private JoystickButton flapDownRocker;
 	private JoystickButton pivotUp;
 	private JoystickButton pivotDown;
 	private JoystickButton pivotMiddle;
 	private JoystickButton testDesiredRotationAngle;  //for NavBoard
-	private JoystickButton resetGyro;
-	private JoystickButton shootBall;
+	//private JoystickButton resetGyro;
+	//private JoystickButton shootBall;
 	private JoystickButton shooterPistonsOut;
 	private JoystickButton shooterPistonsIn;
 	private JoystickButton resetEncoders;

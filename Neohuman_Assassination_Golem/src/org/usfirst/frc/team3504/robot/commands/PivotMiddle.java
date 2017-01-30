@@ -14,7 +14,6 @@ public class PivotMiddle extends Command {
 	private static final double EncoderValueDown = 30; //TODO: fix values
 	private double encoderToUse = 0;
 	private double speed = 0;
-	private boolean up = true;
 	
     public PivotMiddle() {
         // Use requires() here to declare subsystem dependencies
