@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Chassis extends Subsystem {
-	private CANTalon driveLeftA;
+	public CANTalon driveLeftA;//public because needs to be accessible by motion profile
 	private CANTalon driveLeftB;
 	private CANTalon driveLeftC;
 
-	private CANTalon driveRightA;
+	public CANTalon driveRightA;
 	private CANTalon driveRightB;
 	private CANTalon driveRightC;
 
@@ -27,6 +27,7 @@ public class Chassis extends Subsystem {
 
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
+	
 
 	public Chassis() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
@@ -117,5 +118,5 @@ public class Chassis extends Subsystem {
 		encOffsetValueLeft = getEncoderLeft();
 		getEncoderDistance();
 	}
-
+	
 }

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -63,6 +64,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Base Line", new AutoDriveForward(10.0, 0.5)); //TODO: change value
         chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
         chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
+        chooser.addObject("Drive by Motion Profile", new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
         SmartDashboard.putData("Auto mode", chooser);
     }
 	
