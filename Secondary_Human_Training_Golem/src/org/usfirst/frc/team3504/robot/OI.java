@@ -1,8 +1,11 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CoverGear;
 import org.usfirst.frc.team3504.robot.commands.DriveBackwards;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
+import org.usfirst.frc.team3504.robot.commands.LoadBall;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -32,8 +35,12 @@ public class OI {
 	
 	private JoystickButton shoot; 
 	
-	private JoystickButton cover;
-	private JoystickButton uncover;
+	private JoystickButton coverGear;
+	private JoystickButton uncoverGear;
+	
+	private JoystickButton loadBall; 
+	
+	private JoystickButton climb; 
 	
 	public OI() {
 		// Define the joysticks
@@ -60,14 +67,22 @@ public class OI {
 		shifterUp.whenPressed(new ShiftUp());
 		
 		//operator buttons
+		//shooter buttons
+		loadBall = new JoystickButton(gamePad, 2);
+		loadBall.whileHeld(new LoadBall());
 		shoot = new JoystickButton(gamePad, 3);
 		shoot.whileHeld(new Shoot());
 		
-		//Buttons for cover
-		cover = new JoystickButton(gamePad, 4); //TODO: get number
-		cover.whenPressed(new CoverGear());
-		uncover = new JoystickButton(gamePad, 5); //TODO: get number
-		uncover.whenPressed(new UncoverGear());
+		//Buttons for gear cover
+		coverGear = new JoystickButton(gamePad, 5); //TODO: get number
+		coverGear.whenPressed(new CoverGear());
+		uncoverGear = new JoystickButton(gamePad, 6); //TODO: get number
+		uncoverGear.whenPressed(new UncoverGear());
+		
+		//Climb
+		climb = new JoystickButton(gamePad, 7); 
+		climb.whileHeld(new Climb());
+		
 	}
 
 	public double getDrivingJoystickY() {
