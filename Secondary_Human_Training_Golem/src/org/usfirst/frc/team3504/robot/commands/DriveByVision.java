@@ -43,6 +43,7 @@ public class DriveByVision extends Command {
 		double[] height = table.getNumberArray("height", defaultValue);
 		double[] width = table.getNumberArray("width", defaultValue);
 		
+		//double trouble = 100;
 		lastEncDist = encDist;
 		encDist = Robot.chassis.getEncoderDistance();
 		
