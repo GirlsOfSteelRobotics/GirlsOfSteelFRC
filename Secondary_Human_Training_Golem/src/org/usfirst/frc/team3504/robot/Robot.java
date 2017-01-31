@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Climb;
+import org.usfirst.frc.team3504.robot.subsystems.Climber;
 import org.usfirst.frc.team3504.robot.subsystems.Cover;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
 	public static Chassis chassis;
 	public static Shifters shifters;
 	public static Cover gearCover;
-	public static Climb climb; 
+	public static Climber climber; 
 	public static Shooter shooter; 
 	public static Camera camera;
 
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		chassis = new Chassis();
 		shifters = new Shifters();
 		gearCover = new Cover();
-		climb = new Climb();
+		climber = new Climber();
 		shooter = new Shooter();
 		camera = new Camera();
 

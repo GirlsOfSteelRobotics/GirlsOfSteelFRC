@@ -10,21 +10,28 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 
-public class Climb extends Subsystem {
-	private CANTalon climbMotor;
+public class Climber extends Subsystem {
+	private CANTalon climbMotorA;
+	private CANTalon climbMotorB; 
     
-	public Climb(){
-		climbMotor = new CANTalon(RobotMap.CLIMB_MOTOR);
+	public Climber(){
+		climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
+		climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
 		
-		climbMotor.enableBrakeMode(true);
+		climbMotorA.enableBrakeMode(true);
+		climbMotorB.enableBrakeMode(true);
+		
+		
 	}
 	
 	public void climb(double speed) {
-		climbMotor.set(speed);
+		climbMotorA.set(speed);
+		climbMotorB.set(speed);
     }
 	
 	public void stopClimb() {
-		climbMotor.set(0.0);
+		climbMotorA.set(0.0);
+		climbMotorB.set(0.0);
     }
 	
     public void initDefaultCommand() {
