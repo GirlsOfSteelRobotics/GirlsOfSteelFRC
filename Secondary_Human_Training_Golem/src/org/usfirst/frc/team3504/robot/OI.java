@@ -13,6 +13,7 @@ import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -65,6 +66,8 @@ public class OI {
 		shifterUp.whenPressed(new ShiftUp());
 		shifterUp = new JoystickButton(drivingStickBackward, 3);
 		shifterUp.whenPressed(new ShiftUp());
+		
+		
 		
 		//operator buttons
 		//shooter buttons

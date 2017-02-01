@@ -1,24 +1,21 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.OI.DriveDirection;
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveBackwards extends Command {
+public class SwitchToForward extends Command {
 
-    public DriveBackwards() {
+    public SwitchToForward() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.oi.setDriveDirection(DriveDirection.kREV);
+    	new SwitchToCamClimb();
+    	new DriveForward();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,7 +24,7 @@ public class DriveBackwards extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
