@@ -36,6 +36,7 @@ public class DriveByMotionProfile extends Command {
     	try {
     	leftPoints = loadMotionProfile(leftFile);
     	rightPoints = loadMotionProfile(rightFile);
+    	System.out.println("DriveByMotion: Loaded File");
     	} 
     	catch (FileNotFoundException ex){
     		System.err.println("File Not Found: Motion Profile Trajectories");
@@ -51,19 +52,23 @@ public class DriveByMotionProfile extends Command {
     	//Set Talon to MP mode
     	leftTalon.changeControlMode(TalonControlMode.MotionProfile);
     	rightTalon.changeControlMode(TalonControlMode.MotionProfile);
+    	System.out.println("DriveByMotion: Change Talon to MP Mode");
     	
     	//Disable MP
     	leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
     	rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+    	System.out.println("DriveByMotion: Disable MP Mode");
     	
     	//Push Trajectory
     	pushTrajectory(leftTalon, leftPoints);
     	pushTrajectory(rightTalon, rightPoints);
+    	System.out.println("DriveByMotion: Push Trajectory");
     	
     	//Start Periodic Notifier
     	leftTalon.changeMotionControlFramePeriod(5);
     	rightTalon.changeMotionControlFramePeriod(5);
 		notifier.startPeriodic(0.005);
+		System.out.println("DriveByMotion: Start Periodic");
     	
     }
 
