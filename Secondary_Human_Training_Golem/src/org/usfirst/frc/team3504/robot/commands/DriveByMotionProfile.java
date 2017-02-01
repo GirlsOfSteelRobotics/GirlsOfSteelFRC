@@ -31,12 +31,17 @@ public class DriveByMotionProfile extends Command {
 	
     public DriveByMotionProfile(String leftFile, String rightFile) {
     	requires(Robot.chassis);
+    	
+    	//Load trajectory from file into array
     	try {
     	leftPoints = loadMotionProfile(leftFile);
     	rightPoints = loadMotionProfile(rightFile);
-    	} catch (FileNotFoundException ex){
-    		System.err.println("File Not Found");
+    	} 
+    	catch (FileNotFoundException ex){
+    		System.err.println("File Not Found: Motion Profile Trajectories");
     	}
+    	
+    	//Initialize status variables
     	leftStatus = new CANTalon.MotionProfileStatus();
     	rightStatus = new CANTalon.MotionProfileStatus();
     }
@@ -51,10 +56,11 @@ public class DriveByMotionProfile extends Command {
     	leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
     	rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
     	
+    	//Push Trajectory
     	pushTrajectory(leftTalon, leftPoints);
     	pushTrajectory(rightTalon, rightPoints);
     	
-    	//Periodic Notifier
+    	//Start Periodic Notifier
     	leftTalon.changeMotionControlFramePeriod(5);
     	rightTalon.changeMotionControlFramePeriod(5);
 		notifier.startPeriodic(0.005);
@@ -67,6 +73,7 @@ public class DriveByMotionProfile extends Command {
     	leftTalon.getMotionProfileStatus(leftStatus);
     	rightTalon.getMotionProfileStatus(rightStatus);
     	
+    	//Enable MP if not already enabled
     	if(leftStatus.outputEnable == CANTalon.SetValueMotionProfile.Enable){
     		if (leftStatus.btmBufferCnt > kMinPointsInTalon)
     			leftTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
@@ -83,18 +90,25 @@ public class DriveByMotionProfile extends Command {
     protected boolean isFinished() {
     	boolean left = (leftStatus.activePointValid && leftStatus.activePoint.isLastPoint);
     	boolean right = (rightStatus.activePointValid && rightStatus.activePoint.isLastPoint);
+    	
+    	if(left && right){
+    		leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+        	rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+    	}
+    	
         return (left && right);
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	notifier.stop();
+    	
     	leftTalon.clearMotionProfileTrajectories();
     	rightTalon.clearMotionProfileTrajectories();
 		
     	leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
     	rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
     	
-    	notifier.stop();
     }
 
     // Called when another command which requires one or more of the same
