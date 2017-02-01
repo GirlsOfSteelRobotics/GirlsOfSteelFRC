@@ -145,10 +145,10 @@ public class DriveByMotionProfile extends Command {
 		int i = 0;
 		for (ArrayList<Double> arr:points) {
 			/* for each point, fill our structure and pass it to API */
-			Double[] a = (Double[]) arr.toArray();
-			point.position = a[0];
-			point.velocity = a[1];
-			point.timeDurMs = a[2].intValue();
+			//Double[] a = (Double[]) arr.toArray();
+			point.position = arr.get(0);
+			point.velocity = arr.get(1);
+			point.timeDurMs = arr.get(2).intValue();
 			point.profileSlotSelect = 0; /* which set of gains would you like to use? */
 			point.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
