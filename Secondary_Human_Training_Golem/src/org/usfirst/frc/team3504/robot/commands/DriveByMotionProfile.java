@@ -74,19 +74,27 @@ public class DriveByMotionProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	System.out.println("DriveByMotion: Run Execute");
     	//get MP status from each talon
     	leftTalon.getMotionProfileStatus(leftStatus);
     	rightTalon.getMotionProfileStatus(rightStatus);
     	
     	//Enable MP if not already enabled
     	if(leftStatus.outputEnable == CANTalon.SetValueMotionProfile.Enable){
-    		if (leftStatus.btmBufferCnt > kMinPointsInTalon)
+    		if (leftStatus.btmBufferCnt > kMinPointsInTalon){
     			leftTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
+    			System.out.println("DriveByMotion: Enabled left talon");
+    		}
+    			
+    		
     	}
     	
     	if(rightStatus.outputEnable == CANTalon.SetValueMotionProfile.Enable){
-    		if (rightStatus.btmBufferCnt > kMinPointsInTalon)
+    		if (rightStatus.btmBufferCnt > kMinPointsInTalon){
     			rightTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
+    			System.out.println("DriveByMotion: Enabled right talon");
+    		}
+    			
     	}
     		
     }
@@ -99,6 +107,7 @@ public class DriveByMotionProfile extends Command {
     	if(left && right){
     		leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
         	rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+        	System.out.println("DriveByMotion: Finished");
     	}
     	
         return (left && right);
