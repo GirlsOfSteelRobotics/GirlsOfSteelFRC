@@ -2,6 +2,8 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -33,6 +35,10 @@ public class DriveByVision extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//Change more to Percent Vbus
+    	Robot.chassis.driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
+    	Robot.chassis.driveRightA.changeControlMode(TalonControlMode.PercentVbus);
+    	
     	table = NetworkTable.getTable("GRIP/myContoursReport");
     }
     

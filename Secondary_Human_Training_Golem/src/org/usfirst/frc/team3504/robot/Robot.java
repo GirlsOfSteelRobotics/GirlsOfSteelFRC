@@ -66,6 +66,8 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
         chooser.addObject("Drive by Motion Profile", new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
         SmartDashboard.putData("Auto mode", chooser);
+        
+        
     }
 	
 	/**
