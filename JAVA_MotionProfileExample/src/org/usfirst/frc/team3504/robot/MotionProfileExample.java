@@ -21,7 +21,7 @@
  * [1] Calling pushMotionProfileTrajectory() continuously while the Talon executes the motion profile, thereby keeping it going indefinitely.
  * [2] Instead of setting the sensor position to zero at the start of each MP, the program could offset the MP's position based on current position. 
  */
-package org.usfirst.frc.team3539.robot;
+package org.usfirst.frc.team3504.robot;
 
 
 import java.util.ArrayList;

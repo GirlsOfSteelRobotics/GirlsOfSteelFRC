@@ -1,11 +1,11 @@
 		
-package org.usfirst.frc.team3539.robot;		
+package org.usfirst.frc.team3504.robot;		
 import java.lang.Class;
 
 public class GeneratedMotionProfile {	
 	
-	MotionProfile leftTalon = new MotionProfile("talonProfileLeft.csv");
-	MotionProfile rightTalon = new MotionProfile("talonProfileRight.csv");
+	//MotionProfile leftTalon = new MotionProfile("talonProfileLeft.csv");
+	//MotionProfile rightTalon = new MotionProfile("talonProfileRight.csv");
 	
 	public static final int kNumPoints =185;		
 	// Position (rotations)	Velocity (RPM)	Duration (ms)

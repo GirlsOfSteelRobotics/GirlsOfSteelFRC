@@ -24,7 +24,7 @@
  * Release button5 to allow OpenVoltage control with left y axis.
  */
 
-package org.usfirst.frc.team3539.robot;
+package org.usfirst.frc.team3504.robot;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
