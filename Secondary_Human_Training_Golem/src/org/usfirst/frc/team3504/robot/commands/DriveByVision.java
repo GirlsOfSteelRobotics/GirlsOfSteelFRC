@@ -6,6 +6,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -44,24 +45,28 @@ public class DriveByVision extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	    double[] centerX = table.getNumberArray("centerX", defaultValue);
-		double[] centerY = table.getNumberArray("centerY", defaultValue);
-		double[] height = table.getNumberArray("height", defaultValue);
-		double[] width = table.getNumberArray("width", defaultValue);
+	    double[] centerX = new double[2];
+	    centerX = table.getNumberArray("centerX", defaultValue);
+	    double[] centerY = new double[2];
+	    centerY = table.getNumberArray("centerY", defaultValue);
+	    double[] height = new double[2];
+		height = table.getNumberArray("height", defaultValue);
+	    double[] width = new double[2];
+		width = table.getNumberArray("width", defaultValue);
 		
 		
 		lastEncDist = encDist;
 		encDist = Robot.chassis.getEncoderDistance();
 		
 		// the center of the x and y rectangles (the target)
-    	double targetX = (centerX[0] + centerX[1])/2.0;
     	double rotateValue;
     	if (centerX.length !=2){
     		rotateValue = 0;
     	} else {
+    		double targetX = (centerX[0] + centerX[1])/2.0;
     		rotateValue = ((targetX - 160)/160)*MAX_CURVE;
     	}
-    	
+    	SmartDashboard.putNumber("curve value", rotateValue);
     	
     	Robot.chassis.drive(.25, rotateValue); //TODO: change moveValue
     }

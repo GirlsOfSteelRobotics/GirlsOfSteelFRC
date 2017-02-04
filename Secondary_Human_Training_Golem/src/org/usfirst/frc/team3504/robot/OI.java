@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CoverGear;
 import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
+import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.LoadBall;
 
@@ -47,6 +48,8 @@ public class OI {
 	
 	public JoystickButton motionProfile;
 	
+	private JoystickButton driveByVision;
+	
 	public OI() {
 		// Define the joysticks
 		drivingStickForward = new Joystick(0);
@@ -74,6 +77,10 @@ public class OI {
 		
 		
 		//operator buttons
+		//vision
+		driveByVision = new JoystickButton(gamePad, 9); 
+		driveByVision.whenPressed(new DriveByVision());
+		
 		//shooter buttons
 		loadBall = new JoystickButton(gamePad, 2);
 		loadBall.whileHeld(new LoadBall());
@@ -91,7 +98,6 @@ public class OI {
 		climb.whileHeld(new Climb());
 		
 		motionProfile = new JoystickButton(gamePad, 8);
-		
 		motionProfile.whileHeld(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
 	}
 
