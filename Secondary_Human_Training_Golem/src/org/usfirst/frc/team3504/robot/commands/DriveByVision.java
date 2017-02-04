@@ -55,8 +55,14 @@ public class DriveByVision extends Command {
 		
 		// the center of the x and y rectangles (the target)
     	double targetX = (centerX[0] + centerX[1])/2.0;
-    	double rotateValue = ((targetX - 160)/160)*MAX_CURVE;
-    	    	
+    	double rotateValue;
+    	if (centerX.length !=2){
+    		rotateValue = 0;
+    	} else {
+    		rotateValue = ((targetX - 160)/160)*MAX_CURVE;
+    	}
+    	
+    	
     	Robot.chassis.drive(.25, rotateValue); //TODO: change moveValue
     }
 
