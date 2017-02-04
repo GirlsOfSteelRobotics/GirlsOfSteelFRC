@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveBackwards extends Command {
+public class DriveBackward extends Command {
 
-    public DriveBackwards() {
+    public DriveBackward() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
