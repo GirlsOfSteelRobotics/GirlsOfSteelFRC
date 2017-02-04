@@ -15,7 +15,6 @@ public class SwitchToCamClimb extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.camera.switchToCamClimb();
-    	System.out.println("Cam Climb!");
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -16,7 +16,6 @@ public class SwitchToCamGear extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.camera.switchToCamGear();
-    	System.out.println("Cam Gear!");
     }
 
     // Called repeatedly when this Command is scheduled to run
