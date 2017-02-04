@@ -49,22 +49,15 @@ public class DriveByVision extends Command {
 		double[] height = table.getNumberArray("height", defaultValue);
 		double[] width = table.getNumberArray("width", defaultValue);
 		
-		//double trouble = 100;
+		
 		lastEncDist = encDist;
 		encDist = Robot.chassis.getEncoderDistance();
 		
 		// the center of the x and y rectangles (the target)
-    	double targetX = (centerX[0] + centerY[0])/2.0;
-    	double rotateValue;
-    	if(centerX.length != 2)
-    		rotateValue = 0;
-    	else
-    	{	
-    		//if positive move right to meet target on right, if negative move left to meet target on left
-    		rotateValue = ((targetX - (IMAGE_WIDTH/2)))/(IMAGE_WIDTH/2); 
-    	}
-    	
-    	Robot.chassis.drive(.1, rotateValue); //TODO: change moveValue
+    	double targetX = (centerX[0] + centerX[1])/2.0;
+    	double rotateValue = ((targetX - 160)/160)*MAX_CURVE;
+    	    	
+    	Robot.chassis.drive(.25, rotateValue); //TODO: change moveValue
     }
 
     // Make this return true when this Command no longer needs to run execute()
