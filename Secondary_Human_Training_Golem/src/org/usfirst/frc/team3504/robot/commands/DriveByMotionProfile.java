@@ -50,14 +50,14 @@ public class DriveByMotionProfile extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//PID Values
-		leftTalon.setF(3);
-		leftTalon.setP(0);
-		leftTalon.setI(0);
-		leftTalon.setD(0);
-		rightTalon.setF(3);
-		rightTalon.setP(0);
-		rightTalon.setI(0);
-		rightTalon.setD(0);
+    	leftTalon.setF(0.0);
+    	leftTalon.setP(0.1);
+    	leftTalon.setI(0.0); 
+    	leftTalon.setD(0.0);  
+        rightTalon.setF(0.0);
+        rightTalon.setP(0.1);
+        rightTalon.setI(0.0); 
+        rightTalon.setD(0.0);  
 		
     	//Set Talon to MP mode
     	leftTalon.changeControlMode(TalonControlMode.MotionProfile);
