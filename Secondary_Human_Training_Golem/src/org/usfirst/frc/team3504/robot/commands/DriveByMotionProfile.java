@@ -51,11 +51,11 @@ public class DriveByMotionProfile extends Command {
     protected void initialize() {
     	//PID Values
     	leftTalon.setF(0.0);
-    	leftTalon.setP(0.1);
+    	leftTalon.setP(3.6);
     	leftTalon.setI(0.0); 
     	leftTalon.setD(0.0);  
         rightTalon.setF(0.0);
-        rightTalon.setP(0.1);
+        rightTalon.setP(3.6);
         rightTalon.setI(0.0); 
         rightTalon.setD(0.0);  
 		
