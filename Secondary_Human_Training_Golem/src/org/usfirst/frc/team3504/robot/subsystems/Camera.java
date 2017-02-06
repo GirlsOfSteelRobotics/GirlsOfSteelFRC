@@ -23,7 +23,7 @@ public class Camera extends Subsystem {
 		CameraServer.getInstance().addCamera(camGear);
 		CameraServer.getInstance().addCamera(camClimb);
 		server = CameraServer.getInstance().addServer("CameraServer", 1181);
-		server.setSource(camClimb);
+		server.setSource(camGear);
 		
 		//For stream in smartdashboard add a mjpg stream viewer, 
 		//right click, select properties, and add http://roborio-3504-frc.local:1181/stream.mjpg

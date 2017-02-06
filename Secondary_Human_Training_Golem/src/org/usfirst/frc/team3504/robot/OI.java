@@ -2,8 +2,9 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CoverGear;
-import org.usfirst.frc.team3504.robot.commands.DriveBackwards;
+import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
+import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.LoadBall;
 
@@ -13,8 +14,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
+import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
+import org.usfirst.frc.team3504.robot.commands.SwitchForward;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -46,6 +48,8 @@ public class OI {
 	
 	public JoystickButton motionProfile;
 	
+	private JoystickButton driveByVision;
+	
 	public OI() {
 		// Define the joysticks
 		drivingStickForward = new Joystick(0);
@@ -54,10 +58,10 @@ public class OI {
 		
 		// Button to change between drive joysticks on trigger of both joysticks
 		switchToForward = new JoystickButton(drivingStickForward, 1); 
-		switchToForward.whenPressed(new DriveForward()); 
+		switchToForward.whenPressed(new SwitchForward()); 
 		
 		switchToBackward = new JoystickButton(drivingStickBackward, 1);
-		switchToBackward.whenPressed(new DriveBackwards());
+		switchToBackward.whenPressed(new SwitchBackward());
 			
 		// Buttons for shifters copied to both joysticks
 		shifterDown = new JoystickButton(drivingStickForward, 2);
@@ -73,6 +77,10 @@ public class OI {
 		
 		
 		//operator buttons
+		//vision
+		driveByVision = new JoystickButton(gamePad, 9); 
+		driveByVision.whenPressed(new DriveByVision());
+		
 		//shooter buttons
 		loadBall = new JoystickButton(gamePad, 2);
 		loadBall.whileHeld(new LoadBall());
@@ -90,7 +98,6 @@ public class OI {
 		climb.whileHeld(new Climb());
 		
 		motionProfile = new JoystickButton(gamePad, 8);
-		
 		motionProfile.whileHeld(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
 	}
 
