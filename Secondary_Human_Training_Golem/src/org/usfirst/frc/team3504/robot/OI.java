@@ -98,7 +98,7 @@ public class OI {
 		climb.whileHeld(new Climb());
 		
 		motionProfile = new JoystickButton(gamePad, 8);
-		motionProfile.whileHeld(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
+		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
 	}
 
 	public double getDrivingJoystickY() {
