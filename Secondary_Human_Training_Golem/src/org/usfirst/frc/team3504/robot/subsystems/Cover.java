@@ -19,7 +19,7 @@ public class Cover extends Subsystem {
 
     public void coverPosition(boolean extended) {
     	cover.set(extended);
-		System.out.println("cover is extended: " + extended); 
+		System.out.println("Cover is extended: " + extended); 
 		}
     
 	public boolean getCoverPosition() {
