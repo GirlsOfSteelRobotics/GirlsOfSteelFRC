@@ -22,11 +22,9 @@ namespace grip {
 */
 class GripPipeline {
 	private:
-		cv::Mat resizeImageOutput;
 		cv::Mat hsvThresholdOutput;
 		std::vector<std::vector<cv::Point> > findContoursOutput;
 		std::vector<std::vector<cv::Point> > filterContoursOutput;
-		void resizeImage(cv::Mat &, double , double , int , cv::Mat &);
 		void hsvThreshold(cv::Mat &, double [], double [], double [], cv::Mat &);
 		void findContours(cv::Mat &, bool , std::vector<std::vector<cv::Point> > &);
 		void filterContours(std::vector<std::vector<cv::Point> > &, double , double , double , double , double , double , double [], double , double , double , double , std::vector<std::vector<cv::Point> > &);
@@ -34,7 +32,6 @@ class GripPipeline {
 	public:
 		GripPipeline();
 		void process(cv::Mat source0);
-		cv::Mat* getresizeImageOutput();
 		cv::Mat* gethsvThresholdOutput();
 		std::vector<std::vector<cv::Point> >* getfindContoursOutput();
 		std::vector<std::vector<cv::Point> >* getfilterContoursOutput();

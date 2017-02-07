@@ -1,96 +1,111 @@
 <grip:Pipeline>
   <sources>
-    <grip:Camera>
-      <property name="deviceNumber" value="1"/>
-    </grip:Camera>
+    <grip:ImageFile>
+      <property name="path" value="/private/tmp/imageresize.jpg"/>
+    </grip:ImageFile>
   </sources>
   <steps>
-    <grip:Step name="Resize Image">
+    <grip:Step name="HSV Threshold">
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
-        <value>320.0</value>
+        <value>
+          <double>76.07913669064747</double>
+          <double>109.71137521222413</double>
+        </value>
       </grip:Input>
       <grip:Input step="0" socket="2">
-        <value>240.0</value>
-      </grip:Input>
-      <grip:Input step="0" socket="3">
-        <value>CUBIC</value>
-      </grip:Input>
-      <grip:Output step="0" socket="0" previewed="true"/>
-    </grip:Step>
-    <grip:Step name="HSV Threshold">
-      <grip:Input step="1" socket="0"/>
-      <grip:Input step="1" socket="1">
         <value>
-          <double>49.78051457139374</double>
-          <double>64.4544075854392</double>
-        </value>
-      </grip:Input>
-      <grip:Input step="1" socket="2">
-        <value>
-          <double>0.0</double>
-          <double>26.220318059690673</double>
-        </value>
-      </grip:Input>
-      <grip:Input step="1" socket="3">
-        <value>
-          <double>218.99730215827338</double>
+          <double>128.41726618705036</double>
           <double>255.0</double>
         </value>
       </grip:Input>
-      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="3">
+        <value>
+          <double>126.12410071942448</double>
+          <double>255.0</double>
+        </value>
+      </grip:Input>
+      <grip:Output step="0" socket="0" previewed="true"/>
     </grip:Step>
     <grip:Step name="Find Contours">
+      <grip:Input step="1" socket="0"/>
+      <grip:Input step="1" socket="1">
+        <value>false</value>
+      </grip:Input>
+      <grip:Output step="1" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="Filter Contours">
       <grip:Input step="2" socket="0"/>
       <grip:Input step="2" socket="1">
-        <value>false</value>
+        <value>0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="2">
+        <value>0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="3">
+        <value>0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="4">
+        <value>1000</value>
+      </grip:Input>
+      <grip:Input step="2" socket="5">
+        <value>0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="6">
+        <value>1000</value>
+      </grip:Input>
+      <grip:Input step="2" socket="7">
+        <value>
+          <int>0</int>
+          <int>100</int>
+        </value>
+      </grip:Input>
+      <grip:Input step="2" socket="8">
+        <value>1000000</value>
+      </grip:Input>
+      <grip:Input step="2" socket="9">
+        <value>0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="10">
+        <value>0.3</value>
+      </grip:Input>
+      <grip:Input step="2" socket="11">
+        <value>0.5</value>
       </grip:Input>
       <grip:Output step="2" socket="0" previewed="false"/>
     </grip:Step>
-    <grip:Step name="Filter Contours">
+    <grip:Step name="NTPublish ContoursReport">
       <grip:Input step="3" socket="0"/>
       <grip:Input step="3" socket="1">
-        <value>150.0</value>
+        <value>myContoursReport</value>
       </grip:Input>
       <grip:Input step="3" socket="2">
-        <value>10.0</value>
+        <value>true</value>
       </grip:Input>
       <grip:Input step="3" socket="3">
-        <value>0.0</value>
+        <value>true</value>
       </grip:Input>
       <grip:Input step="3" socket="4">
-        <value>1000.0</value>
+        <value>true</value>
       </grip:Input>
       <grip:Input step="3" socket="5">
-        <value>0.0</value>
+        <value>true</value>
       </grip:Input>
       <grip:Input step="3" socket="6">
-        <value>1000.0</value>
+        <value>true</value>
       </grip:Input>
       <grip:Input step="3" socket="7">
-        <value>
-          <double>84.53237410071944</double>
-          <double>100.0</double>
-        </value>
+        <value>true</value>
       </grip:Input>
-      <grip:Input step="3" socket="8">
-        <value>30.0</value>
-      </grip:Input>
-      <grip:Input step="3" socket="9">
-        <value>4.0</value>
-      </grip:Input>
-      <grip:Input step="3" socket="10">
-        <value>0.3</value>
-      </grip:Input>
-      <grip:Input step="3" socket="11">
-        <value>0.5</value>
-      </grip:Input>
-      <grip:Output step="3" socket="0" previewed="true"/>
     </grip:Step>
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
       <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
@@ -100,10 +115,6 @@
     <grip:Connection>
       <grip:Output step="2" socket="0" previewed="false"/>
       <grip:Input step="3" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="true"/>
-      <grip:Input step="2" socket="0"/>
     </grip:Connection>
   </connections>
   <settings>
