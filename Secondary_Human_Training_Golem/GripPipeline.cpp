@@ -14,53 +14,31 @@ GripPipeline::GripPipeline() {
 *
 */
 void GripPipeline::process(cv::Mat source0){
-	//Step Resize_Image0:
-	//input
-	cv::Mat resizeImageInput = source0;
-	double resizeImageWidth = 320.0;  // default Double
-	double resizeImageHeight = 240.0;  // default Double
-	int resizeImageInterpolation = cv::INTER_CUBIC;
-	resizeImage(resizeImageInput, resizeImageWidth, resizeImageHeight, resizeImageInterpolation, this->resizeImageOutput);
 	//Step HSV_Threshold0:
 	//input
-	cv::Mat hsvThresholdInput = resizeImageOutput;
-	double hsvThresholdHue[] = {49.78051457139374, 64.4544075854392};
-	double hsvThresholdSaturation[] = {0.0, 26.220318059690673};
-	double hsvThresholdValue[] = {218.99730215827338, 255.0};
+	cv::Mat hsvThresholdInput = source0;
+	double hsvThresholdHue[] = {76.07913669064747, 109.71137521222413};
+	double hsvThresholdSaturation[] = {128.41726618705036, 255.0};
+	double hsvThresholdValue[] = {126.12410071942448, 255.0};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
-	//Step Blur0:
-	//input
-	cv::Mat blurInput = hsvThresholdOutput;
-	BlurType blurType = BlurType::MEDIAN;
-	double blurRadius = 6.306306306306307;  // default Double
-	blur(blurInput, blurType, blurRadius, this->blurOutput);
-	//Step CV_dilate0:
-	//input
-	cv::Mat cvDilateSrc = blurOutput;
-	cv::Mat cvDilateKernel;
-	cv::Point cvDilateAnchor(-1, -1);
-	double cvDilateIterations = 2.0;  // default Double
-    int cvDilateBordertype = cv::BORDER_CONSTANT;
-	cv::Scalar cvDilateBordervalue(-1);
-	cvDilate(cvDilateSrc, cvDilateKernel, cvDilateAnchor, cvDilateIterations, cvDilateBordertype, cvDilateBordervalue, this->cvDilateOutput);
 	//Step Find_Contours0:
 	//input
-	cv::Mat findContoursInput = cvDilateOutput;
+	cv::Mat findContoursInput = hsvThresholdOutput;
 	bool findContoursExternalOnly = false;  // default Boolean
 	findContours(findContoursInput, findContoursExternalOnly, this->findContoursOutput);
 	//Step Filter_Contours0:
 	//input
 	std::vector<std::vector<cv::Point> > filterContoursContours = findContoursOutput;
-	double filterContoursMinArea = 10.0;  // default Double
-	double filterContoursMinPerimeter = 10.0;  // default Double
-	double filterContoursMinWidth = 0.0;  // default Double
-	double filterContoursMaxWidth = 1000.0;  // default Double
-	double filterContoursMinHeight = 0.0;  // default Double
-	double filterContoursMaxHeight = 1000.0;  // default Double
-	double filterContoursSolidity[] = {0.0, 100.0};
-	double filterContoursMaxVertices = 30.0;  // default Double
-	double filterContoursMinVertices = 2.0;  // default Double
-	double filterContoursMinRatio = 0.2;  // default Double
+	double filterContoursMinArea = 0;  // default Double
+	double filterContoursMinPerimeter = 0;  // default Double
+	double filterContoursMinWidth = 0;  // default Double
+	double filterContoursMaxWidth = 1000;  // default Double
+	double filterContoursMinHeight = 0;  // default Double
+	double filterContoursMaxHeight = 1000;  // default Double
+	double filterContoursSolidity[] = {0, 100};
+	double filterContoursMaxVertices = 1000000;  // default Double
+	double filterContoursMinVertices = 0;  // default Double
+	double filterContoursMinRatio = 0.3;  // default Double
 	double filterContoursMaxRatio = 0.5;  // default Double
 	filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, this->filterContoursOutput);
 }
@@ -73,32 +51,11 @@ void GripPipeline::setsource0(cv::Mat &source0){
 	source0.copyTo(this->source0);
 }
 /**
- * This method is a generated getter for the output of a Resize_Image.
- * @return Mat output from Resize_Image.
- */
-cv::Mat* GripPipeline::getresizeImageOutput(){
-	return &(this->resizeImageOutput);
-}
-/**
  * This method is a generated getter for the output of a HSV_Threshold.
  * @return Mat output from HSV_Threshold.
  */
 cv::Mat* GripPipeline::gethsvThresholdOutput(){
 	return &(this->hsvThresholdOutput);
-}
-/**
- * This method is a generated getter for the output of a Blur.
- * @return Mat output from Blur.
- */
-cv::Mat* GripPipeline::getblurOutput(){
-	return &(this->blurOutput);
-}
-/**
- * This method is a generated getter for the output of a CV_dilate.
- * @return Mat output from CV_dilate.
- */
-cv::Mat* GripPipeline::getcvDilateOutput(){
-	return &(this->cvDilateOutput);
 }
 /**
  * This method is a generated getter for the output of a Find_Contours.
@@ -115,19 +72,6 @@ std::vector<std::vector<cv::Point> >* GripPipeline::getfilterContoursOutput(){
 	return &(this->filterContoursOutput);
 }
 	/**
-	 * Scales and image to an exact size.
-	 *
-	 * @param input The image on which to perform the Resize.
-	 * @param width The width of the output in pixels.
-	 * @param height The height of the output in pixels.
-	 * @param interpolation The type of interpolation.
-	 * @param output The image in which to store the output.
-	 */
-	void GripPipeline::resizeImage(cv::Mat &input, double width, double height, int interpolation, cv::Mat &output) {
-		cv::resize(input, output, cv::Size(width, height), 0.0, 0.0, interpolation);
-	}
-
-	/**
 	 * Segment an image based on hue, saturation, and value ranges.
 	 *
 	 * @param input The image on which to perform the HSL threshold.
@@ -139,49 +83,6 @@ std::vector<std::vector<cv::Point> >* GripPipeline::getfilterContoursOutput(){
 	void GripPipeline::hsvThreshold(cv::Mat &input, double hue[], double sat[], double val[], cv::Mat &out) {
 		cv::cvtColor(input, out, cv::COLOR_BGR2HSV);
 		cv::inRange(out,cv::Scalar(hue[0], sat[0], val[0]), cv::Scalar(hue[1], sat[1], val[1]), out);
-	}
-
-	/**
-	 * Softens an image using one of several filters.
-	 *
-	 * @param input The image on which to perform the blur.
-	 * @param type The blurType to perform.
-	 * @param doubleRadius The radius for the blur.
-	 * @param output The image in which to store the output.
-	 */
-	void GripPipeline::blur(cv::Mat &input, BlurType &type, double doubleRadius, cv::Mat &output) {
-		int radius = (int)(doubleRadius + 0.5);
-		int kernelSize;
-		switch(type) {
-			case BOX:
-				kernelSize = 2 * radius + 1;
-				cv::blur(input,output,cv::Size(kernelSize, kernelSize));
-				break;
-			case GAUSSIAN:
-				kernelSize = 6 * radius + 1;
-				cv::GaussianBlur(input, output, cv::Size(kernelSize, kernelSize), radius);
-				break;
-			case MEDIAN:
-				kernelSize = 2 * radius + 1;
-				cv::medianBlur(input, output, kernelSize);
-				break;
-			case BILATERAL:
-				cv::bilateralFilter(input, output, -1, radius, radius);
-				break;
-        }
-	}
-	/**
-	 * Expands area of higher value in an image.
-	 * @param src the Image to dilate.
-	 * @param kernel the kernel for dilation.
-	 * @param anchor the center of the kernel.
-	 * @param iterations the number of times to perform the dilation.
-	 * @param borderType pixel extrapolation method.
-	 * @param borderValue value to be used for a constant border.
-	 * @param dst Output Image.
-	 */
-	void GripPipeline::cvDilate(cv::Mat &src, cv::Mat &kernel, cv::Point &anchor, double iterations, int borderType, cv::Scalar &borderValue, cv::Mat &dst) {
-		cv::dilate(src, dst, kernel, anchor, (int)iterations, borderType, borderValue);
 	}
 
 	/**
