@@ -10,7 +10,11 @@ public class Robot extends IterativeRobot {
     
     public void robotInit() {
         lights = new CANLight(3);
-        lights.showRGB(255, 255, 255);
+        
+    }
+    
+    public void disabledPeriodic() {
+    	lights.showRGB(255, 0, 0);
     }
     
 }
