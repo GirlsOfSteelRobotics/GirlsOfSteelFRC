@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="FRC Deployment" default="deploy">
+<project name="FRC Deployment" default="deployWithProfile">
 
   <!--
   The following properties can be defined to override system level
@@ -31,5 +31,6 @@
 		<scp file="Resources/talonProfileRight.csv" todir="${username}@${target}:" password="${password}" trust="true"/>
 		<scp file="Resources/talonProfileLeft.csv" todir="${username}@${target}:" password="${password}" trust="true"/>
 	  </target>
+	<target name="deployWithProfile" depends="updateMotionProfiles,deploy" description="Copy the motion profiles over, then build and deploy the Robot code"/>
 	
 </project> 
