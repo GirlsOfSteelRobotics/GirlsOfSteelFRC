@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.ChangeToBlue;
+import org.usfirst.frc.team3504.robot.commands.ChangeToPurple;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -47,6 +50,6 @@ public class OI {
 		purpleLight = new JoystickButton(gamepad, 1);
 		purpleLight.whenPressed(new ChangeToPurple());
 		blueLight = new JoystickButton(gamepad, 2);
-		blueLight.whenPressed(ChangeToBlue());
+		blueLight.whenPressed(new ChangeToBlue());
 	}
 }
