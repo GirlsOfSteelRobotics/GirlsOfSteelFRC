@@ -50,11 +50,11 @@ public class DriveByMotionProfile extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Set Encoder Types
-    	//leftTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	//leftTalon.reverseSensor(true);
+    	leftTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	leftTalon.reverseSensor(true);
     	
-    	//rightTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	//rightTalon.reverseSensor(true);
+    	rightTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	rightTalon.reverseSensor(true);
     	
     	//PID Values
     	leftTalon.setF(0.0);
@@ -102,7 +102,6 @@ public class DriveByMotionProfile extends Command {
     			leftTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
     			System.out.println("DriveByMotion: Enabled left talon");
     		}
-    			
     		
     	}
     	
