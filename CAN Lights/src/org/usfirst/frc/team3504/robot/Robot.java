@@ -9,8 +9,10 @@ import com.mindsensors.CANLight;
 public class Robot extends IterativeRobot {
     
     public static Lights lights;
+    public static OI oi; 
     
     public void robotInit() {
        lights = new Lights();
+       oi = new OI(); 
     } 
 }
