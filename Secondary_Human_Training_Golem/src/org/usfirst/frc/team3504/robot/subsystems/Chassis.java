@@ -93,11 +93,11 @@ public class Chassis extends Subsystem {
 	
 	public double getEncoderRight() {
 		//because the motors are backwards relative to left 
-		return -driveRightA.getEncPosition();
+		return driveRightA.getEncPosition();
 	}
 
 	public double getEncoderLeft() {
-		return driveLeftA.getEncPosition();
+		return -driveLeftA.getEncPosition();
 	}
 
 	public double getEncoderDistance() {
