@@ -10,6 +10,7 @@ import org.usfirst.frc.team3504.robot.commands.LoadBall;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
@@ -99,6 +100,9 @@ public class OI {
 		
 		motionProfile = new JoystickButton(gamePad, 8);
 		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
+
+		motionProfile = new JoystickButton(gamePad, 9);
+		motionProfile.whenPressed(new DriveByVision());
 	}
 
 	public double getDrivingJoystickY() {

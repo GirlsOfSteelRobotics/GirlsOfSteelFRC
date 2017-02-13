@@ -15,8 +15,8 @@ public class DriveByVision extends Command {
 
 	NetworkTable table;
 
-	private static final double MAX_CURVE = 0.5; //TODO: adjust
-	private static final int IMAGE_WIDTH = 160;
+	private static final double MAX_CURVE = 1.0; //TODO: adjust
+	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0; 
 	double[] defaultValue = new double[0];
 
@@ -37,7 +37,7 @@ public class DriveByVision extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		//Change more to Percent Vbus
+		//Change motor control to speed in the -1..+1 range
 		Robot.chassis.driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
 		Robot.chassis.driveRightA.changeControlMode(TalonControlMode.PercentVbus);
 
@@ -63,7 +63,7 @@ public class DriveByVision extends Command {
 
 		// the center of the x and y rectangles (the target)
 		double rotateValue;
-		if (centerX.length !=5){ //TODO: Change back to 2, its set at 5 for testing on 2/9/17
+		if (centerX.length != 2) {
 			rotateValue = 0;
 			SmartDashboard.putBoolean("Gear In Sight", false);
 		} else {
