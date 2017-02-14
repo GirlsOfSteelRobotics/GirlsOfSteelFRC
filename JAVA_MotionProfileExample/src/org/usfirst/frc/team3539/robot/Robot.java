@@ -51,8 +51,8 @@ public class Robot extends IterativeRobot {
 	public Robot() { // could also use RobotInit()
 		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 		_talon.reverseSensor(false); /* keep sensor and motor in phase */
-		_talon.setF(3);
-		_talon.setP(0);
+		_talon.setF(3.0);
+		_talon.setP(2.0);
 		_talon.setI(0);
 		_talon.setD(0);
 	}
