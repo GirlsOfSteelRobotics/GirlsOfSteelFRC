@@ -2,7 +2,6 @@
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/contrib/contrib.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/features2d.hpp>
 #include <iostream>
@@ -31,10 +30,10 @@ class GripPipeline {
 
 	public:
 		GripPipeline();
-		void process(cv::Mat source0);
-		cv::Mat* gethsvThresholdOutput();
-		std::vector<std::vector<cv::Point> >* getfindContoursOutput();
-		std::vector<std::vector<cv::Point> >* getfilterContoursOutput();
+		void Process(cv::Mat& source0);
+		cv::Mat* GetHsvThresholdOutput();
+		std::vector<std::vector<cv::Point> >* GetFindContoursOutput();
+		std::vector<std::vector<cv::Point> >* GetFilterContoursOutput();
 };
 
 
