@@ -16,8 +16,8 @@ public class RobotMap {
 	public static final int CLIMB_MOTOR_A = 7;
 	public static final int CLIMB_MOTOR_B = 8;
 	
-	public static final int LOW_SHOOTER_MOTOR = 9; //TODO: fix
-	public static final int HIGH_SHOOTER_MOTOR = 10;
+	public static final int LOW_SHOOTER_MOTOR = 10; //TODO: fix
+	public static final int HIGH_SHOOTER_MOTOR = 9;
 	
 	public static final int LOADER_MOTOR = 11; 
 	

@@ -23,7 +23,7 @@ public class Shoot extends Command {
     protected void execute() {
     	Robot.shooter.getEncoderHigh();
     	Robot.shooter.getEncoderLow();
-    	Robot.shooter.shootBall(0.5, 1.0); // lowSpeed = 0.5, highSpeed = 1.0
+    	Robot.shooter.shootBall(0.5, -1.0); // lowSpeed = 0.5, highSpeed = 1.0
     }
 
     // Make this return true when this Command no longer needs to run execute()

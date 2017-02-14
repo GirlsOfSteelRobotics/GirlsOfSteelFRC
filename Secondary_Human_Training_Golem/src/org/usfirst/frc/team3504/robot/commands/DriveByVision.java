@@ -80,7 +80,7 @@ public class DriveByVision extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;//(lastEncDist != Double.NaN) && (Math.abs(encDist - lastEncDist) <= MIN_DIST);
+		return (lastEncDist != Double.NaN) && (Math.abs(encDist - lastEncDist) <= MIN_DIST);
 	}
 
 	// Called once after isFinished returns true
