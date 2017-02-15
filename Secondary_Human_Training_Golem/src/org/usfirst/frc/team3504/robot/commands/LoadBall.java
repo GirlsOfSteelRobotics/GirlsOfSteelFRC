@@ -22,7 +22,7 @@ public class LoadBall extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.loadBall(0.75);
+    	Robot.shooter.loadBall(-1.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
