@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Robot extends IterativeRobot {
 
 	/** The Talon we want to motion profile. */
-	CANTalon _talon = new CANTalon(6);
+	CANTalon _talon = new CANTalon(1);
 
 	/** some example logic on how one can manage an MP */
 	MotionProfileExample _example = new MotionProfileExample(_talon);
@@ -49,10 +49,15 @@ public class Robot extends IterativeRobot {
 	
 
 	public Robot() { // could also use RobotInit()
-		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-		_talon.reverseSensor(false); /* keep sensor and motor in phase */
-		_talon.setF(3.0);
-		_talon.setP(2.0);
+//		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+//		_talon.reverseSensor(false); /* keep sensor and motor in phase */
+		_talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		// CPR X 4 = native units per rotation
+		_talon.configEncoderCodesPerRev(256);
+		_talon.reverseSensor(true); /* keep sensor and motor in phase */
+		_talon.setPosition(0); // Not necessary, but convenient for debugging
+		_talon.setF(1.0);
+		_talon.setP(3.25);
 		_talon.setI(0);
 		_talon.setD(0);
 	}
