@@ -57,12 +57,16 @@ public class DriveByMotionProfile extends Command {
     	rightTalon.reverseSensor(true);
     	
     	//PID Values
-    	leftTalon.setF(0.0);
-    	leftTalon.setP(3.6);
+    	leftTalon.configEncoderCodesPerRev(256);
+    	leftTalon.setPosition(0);
+    	leftTalon.setF(1.0);
+    	leftTalon.setP(3.25);
     	leftTalon.setI(0.0); 
-    	leftTalon.setD(0.0);  
-        rightTalon.setF(0.0);
-        rightTalon.setP(3.6);
+    	leftTalon.setD(0.0);
+    	rightTalon.configEncoderCodesPerRev(256);
+    	rightTalon.setPosition(0);
+        rightTalon.setF(1.0);
+        rightTalon.setP(3.25);
         rightTalon.setI(0.0); 
         rightTalon.setD(0.0);  
 		
@@ -97,22 +101,18 @@ public class DriveByMotionProfile extends Command {
     	rightTalon.getMotionProfileStatus(rightStatus);
     	
     	//Enable MP if not already enabled
-    	if(leftStatus.outputEnable != CANTalon.SetValueMotionProfile.Enable){
-    		if (leftStatus.btmBufferCnt > kMinPointsInTalon){
-    			leftTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
-    			System.out.println("DriveByMotion: Enabled left talon");
-    		}
-    		
+    	if((leftStatus.btmBufferCnt > kMinPointsInTalon) && (rightStatus.btmBufferCnt > kMinPointsInTalon)){
+    		leftTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
+    		System.out.println("DriveByMotion: Enabled left talon");
+    		rightTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
+    		System.out.println("DriveByMotion: Enabled right talon");
     	}
-    	
-    	if(rightStatus.outputEnable != CANTalon.SetValueMotionProfile.Enable){
-    		if (rightStatus.btmBufferCnt > kMinPointsInTalon){
-    			rightTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
-    			System.out.println("DriveByMotion: Enabled right talon");
-    		}
-    			
+    	else {
+    		leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+			System.out.println("DriveByMotion: Disabled left talon");
+			rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+			System.out.println("DriveByMotion: Disabled right talon");    		
     	}
-    	
     	
     		
     }
