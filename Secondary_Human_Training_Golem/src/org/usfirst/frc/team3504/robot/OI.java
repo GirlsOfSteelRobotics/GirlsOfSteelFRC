@@ -17,6 +17,7 @@ import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
+import org.usfirst.frc.team3504.robot.commands.UnClimb;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 
 /**
@@ -45,7 +46,8 @@ public class OI {
 	
 	private JoystickButton loadBall; 
 	
-	private JoystickButton climb; 
+	private JoystickButton climb;
+	private JoystickButton unClimb; 
 	
 	public JoystickButton motionProfile;
 	
@@ -97,6 +99,8 @@ public class OI {
 		//Climb
 		climb = new JoystickButton(gamePad, 7); 
 		climb.whileHeld(new Climb());
+		unClimb = new JoystickButton(gamePad, 10); 
+		unClimb.whileHeld(new UnClimb());
 		
 		motionProfile = new JoystickButton(gamePad, 8);
 		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
