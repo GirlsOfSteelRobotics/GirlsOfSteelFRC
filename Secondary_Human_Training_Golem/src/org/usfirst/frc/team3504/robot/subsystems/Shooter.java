@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,6 +13,12 @@ public class Shooter extends Subsystem {
 	private double encOffsetValueHigh = 0;
 	private double encOffsetValueLow = 0;
 	
+	private final double shooterMinSpeed = -0.5;
+	private final double shooterMaxSpeed = -1.0;
+	private final double shooterSpeedStep = -0.05; //percentage up/down per press
+	private final int maxIncrement = 10;
+	private int currentShooterIncrement = 10; //starting speed 
+	//remember to add whenreleased to reset current shooter incret 
 
 	public Shooter(){
 		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
@@ -21,9 +26,9 @@ public class Shooter extends Subsystem {
 		loaderMotor = new CANTalon(RobotMap.LOADER_MOTOR); 
 	}
 
-	public void shootBall(double lowSpeed, double highSpeed){
-		lowShooterMotor.set(lowSpeed);
-		highShooterMotor.set(highSpeed);
+	public void shootBall(){
+		lowShooterMotor.set(0.5);
+		highShooterMotor.set(shooterMinSpeed + shooterSpeedStep * currentShooterIncrement);
 	}
 
 	public void stopShoot(){
@@ -42,6 +47,16 @@ public class Shooter extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
+	}
+	
+	public void incrementHighShooter() {
+		currentShooterIncrement = Math.min(currentShooterIncrement + 1, maxIncrement);
+		System.out.println(currentShooterIncrement);
+	}
+	
+	public void decrementHighShooter() {
+		currentShooterIncrement = Math.max(currentShooterIncrement - 1, 0);
+		System.out.println(currentShooterIncrement);
 	}
 	
 	public double getEncoderHigh() {
