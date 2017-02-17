@@ -28,8 +28,8 @@
   <import file="${wpilib.ant.dir}/build.xml"/>
 	 <target name="updateMotionProfiles" depends="get-target-ip,dependencies" description="Copy the talon motion profiles to the robot">
 	    <echo>[updateMotionProfiles] scp talon files</echo>
-		<scp file="Resources/testRight.csv" todir="${username}@${target}:talonProfileRight.csv" password="${password}" trust="true"/>
-		<scp file="Resources/testLeft.csv" todir="${username}@${target}:talonProfileLeft.csv" password="${password}" trust="true"/>
+		<scp file="Resources/talonRight.csv" todir="${username}@${target}:talonProfileRight.csv" password="${password}" trust="true"/>
+		<scp file="Resources/talonLeft.csv" todir="${username}@${target}:talonProfileLeft.csv" password="${password}" trust="true"/>
 	  </target>
 	<target name="deployWithProfile" depends="updateMotionProfiles,deploy" description="Copy the motion profiles over, then build and deploy the Robot code"/>
 	
