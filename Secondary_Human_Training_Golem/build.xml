@@ -30,7 +30,13 @@
 	    <echo>[updateMotionProfiles] scp talon files</echo>
 		<scp file="Resources/talonRight.csv" todir="${username}@${target}:talonProfileRight.csv" password="${password}" trust="true"/>
 		<scp file="Resources/talonLeft.csv" todir="${username}@${target}:talonProfileLeft.csv" password="${password}" trust="true"/>
-	  </target>
+	 	<scp file="Resources/talonProfileRight01.csv" todir="${username}@${target}:talonProfileRight01.csv" password="${password}" trust="true"/>
+	 	<scp file="Resources/talonProfileLeft01.csv" todir="${username}@${target}:talonProfileLeft01.csv" password="${password}" trust="true"/>
+	 	<scp file="Resources/talonProfileRight02.csv" todir="${username}@${target}:talonProfileRight02.csv" password="${password}" trust="true"/>
+	 	<scp file="Resources/talonProfileLeft02.csv" todir="${username}@${target}:talonProfileLeft02.csv" password="${password}" trust="true"/>
+	 	<scp file="Resources/talonProfileRight03.csv" todir="${username}@${target}:talonProfileRight03.csv" password="${password}" trust="true"/>
+	 	<scp file="Resources/talonProfileLeft03.csv" todir="${username}@${target}:talonProfileLeft03.csv" password="${password}" trust="true"/>  
+	 </target>
 	<target name="deployWithProfile" depends="updateMotionProfiles,deploy" description="Copy the motion profiles over, then build and deploy the Robot code"/>
 	
 </project> 
