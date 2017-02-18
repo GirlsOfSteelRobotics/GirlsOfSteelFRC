@@ -26,6 +26,7 @@ public class DriveByMotionProfile extends Command {
 	private CANTalon.MotionProfileStatus leftStatus;
 	private CANTalon.MotionProfileStatus rightStatus;
 	private static final int kMinPointsInTalon = 5;
+	private CANTalon.SetValueMotionProfile state; 
 	
 	Notifier notifier = new Notifier(new PeriodicRunnable());
 	
@@ -34,8 +35,8 @@ public class DriveByMotionProfile extends Command {
     	
     	//Load trajectory from file into array
     	try {
-    	leftPoints = loadMotionProfile(leftFile);
-    	rightPoints = loadMotionProfile(rightFile);
+    	leftPoints = loadMotionProfile(leftFile, true);
+    	rightPoints = loadMotionProfile(rightFile, false);
     	System.out.println("DriveByMotion: Loaded File");
     	} 
     	catch (FileNotFoundException ex){
@@ -76,8 +77,9 @@ public class DriveByMotionProfile extends Command {
     	System.out.println("DriveByMotion: Change Talon to MP Mode");
     	
     	//Disable MP
-    	leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
-    	rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+    	state = CANTalon.SetValueMotionProfile.Disable; 
+    	leftTalon.set(state.value);
+    	rightTalon.set(state.value);
     	System.out.println("DriveByMotion: Disable MP Mode");
     	
     	//Push Trajectory
@@ -95,36 +97,30 @@ public class DriveByMotionProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("DriveByMotion: Run Execute");
     	//get MP status from each talon
     	leftTalon.getMotionProfileStatus(leftStatus);
     	rightTalon.getMotionProfileStatus(rightStatus);
     	
     	//Enable MP if not already enabled
     	if((leftStatus.btmBufferCnt > kMinPointsInTalon) && (rightStatus.btmBufferCnt > kMinPointsInTalon)){
-    		leftTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
-    		System.out.println("DriveByMotion: Enabled left talon");
-    		rightTalon.set(CANTalon.SetValueMotionProfile.Enable.value);
-    		System.out.println("DriveByMotion: Enabled right talon");
+    		state = CANTalon.SetValueMotionProfile.Enable;
     	}
-    	else {
-    		leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
-			System.out.println("DriveByMotion: Disabled left talon");
-			rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
-			System.out.println("DriveByMotion: Disabled right talon");    		
-    	}
-    	
-    		
+    	leftTalon.set(state.value);
+		rightTalon.set(state.value);  
+	//	System.out.println("DriveByMotion: Execute Setting State: " + state);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean left = (leftStatus.activePointValid && leftStatus.activePoint.isLastPoint);
     	boolean right = (rightStatus.activePointValid && rightStatus.activePoint.isLastPoint);
+    	System.out.println("DriveByMotion: ActiveValid: " + leftStatus.activePointValid + "IsLastPoint: " + leftStatus.activePoint.isLastPoint); ;
+    	
     	
     	if(left && right){
-    		leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
-        	rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+    		state = CANTalon.SetValueMotionProfile.Disable; 
+    		leftTalon.set(state.value);
+        	rightTalon.set(state.value);
         	System.out.println("DriveByMotion: Finished");
     	}
     	
@@ -149,15 +145,15 @@ public class DriveByMotionProfile extends Command {
     	end();
     }
     
-    private ArrayList<ArrayList<Double>> loadMotionProfile(String filename) throws FileNotFoundException {
+    private ArrayList<ArrayList<Double>> loadMotionProfile(String filename, boolean isLeft) throws FileNotFoundException {
     	ArrayList<ArrayList<Double>> points = new ArrayList<ArrayList<Double>>();
 		InputStream is = new FileInputStream(filename);
 		Scanner s = new Scanner(is);
 		while(s.hasNext())
 		{
 			ArrayList<Double> arr = new ArrayList<Double>();
-			arr.add(s.nextDouble()); //p
-			arr.add(s.nextDouble()); //v
+			arr.add(s.nextDouble() * (isLeft?-1.0:1.0)); //p
+			arr.add(s.nextDouble() * (isLeft?-1.0:1.0)); //v
 			arr.add(s.nextDouble()); //d
 			
 			points.add(arr);

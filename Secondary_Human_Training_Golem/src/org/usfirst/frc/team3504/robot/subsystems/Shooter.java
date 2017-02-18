@@ -25,7 +25,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void shootBall(){
-		lowShooterMotor.set(0.5);
+		lowShooterMotor.set(-shooterSpeed);
 		highShooterMotor.set(shooterSpeed);
 	}
 

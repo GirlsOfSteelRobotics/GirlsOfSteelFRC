@@ -111,7 +111,7 @@ public class OI {
 		unClimb.whileHeld(new UnClimb());
 		
 		motionProfile = new JoystickButton(gamePad, 5); //was 8, find value later
-		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
+		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft01.csv", "/home/lvuser/talonProfileRight01.csv"));
 
 		motionProfile = new JoystickButton(gamePad, 9);
 		motionProfile.whenPressed(new DriveByVision());		
