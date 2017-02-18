@@ -134,13 +134,12 @@ public class OI {
 		}
 	}
 	
-	public double getDrivingJoystickX()
-	{
+	public double getDrivingJoystickX() {  //keep the redundancy, it breaks if removed
 		if (driveDirection == DriveDirection.kFWD){
 			return drivingStickForward.getX();
 		}
 		else {
-			return -drivingStickBackward.getX(); 
+			return drivingStickBackward.getX(); 
 		}
 	}
 	
