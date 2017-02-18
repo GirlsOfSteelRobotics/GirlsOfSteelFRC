@@ -20,7 +20,6 @@ public class DriveByVisionVelocity extends Command {
 	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0; 
 	double[] defaultValue = new double[0];
-
 	public CANTalon leftTalon = Robot.chassis.driveLeftA;
 	public CANTalon rightTalon = Robot.chassis.driveRightA;
 	
@@ -28,7 +27,7 @@ public class DriveByVisionVelocity extends Command {
 	//private static final double GOAL_WIDTH = 30; //TODO: test and change
 
 	//distance b/w wheels
-	private static final double WHEEL_BASE = 20; //TODO: measure (in)
+	private static final double WHEEL_BASE = 24.25; //(in)
 
 	//radius of wheel
 	private static final int WHEEL_RADIUS = 2; //(in)
@@ -80,7 +79,7 @@ public class DriveByVisionVelocity extends Command {
 
 		//right and left desired wheel speeds in inches per second
 		double vRight = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
-		double vLeft = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2;
+		double vLeft = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2;
 		
 		//right and left desired wheel speeds in RPM
 		double angVRight = 60 * vRight / (2 * Math.PI * WHEEL_RADIUS); //(RPM)
