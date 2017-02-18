@@ -2,11 +2,14 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CoverGear;
+import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.DriveForward;
+import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.LoadBall;
+import org.usfirst.frc.team3504.robot.commands.ResetHighShooterIncrement;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -49,6 +52,9 @@ public class OI {
 	private JoystickButton climb;
 	private JoystickButton unClimb; 
 	
+	private JoystickButton incrementHighShooter;
+	private JoystickButton decrementHighShooter;
+	
 	public JoystickButton motionProfile;
 	
 	private JoystickButton driveByVision;
@@ -89,12 +95,14 @@ public class OI {
 		loadBall.whileHeld(new LoadBall());
 		shoot = new JoystickButton(gamePad, 3);
 		shoot.whileHeld(new Shoot());
+		shoot.whenReleased(new ResetHighShooterIncrement());
 		
-		//Buttons for gear cover
+		/* Buttons for gear cover
 		coverGear = new JoystickButton(gamePad, 5); //TODO: get number
 		coverGear.whenPressed(new CoverGear());
 		uncoverGear = new JoystickButton(gamePad, 6); //TODO: get number
 		uncoverGear.whenPressed(new UncoverGear());
+		*/
 		
 		//Climb
 		climb = new JoystickButton(gamePad, 7); 
@@ -102,11 +110,19 @@ public class OI {
 		unClimb = new JoystickButton(gamePad, 10); 
 		unClimb.whileHeld(new UnClimb());
 		
-		motionProfile = new JoystickButton(gamePad, 8);
+		motionProfile = new JoystickButton(gamePad, 5); //was 8, find value later
 		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
 
 		motionProfile = new JoystickButton(gamePad, 9);
 		motionProfile.whenPressed(new DriveByVision());
+		
+		//Increment/decrement high shooter
+		incrementHighShooter = new JoystickButton(gamePad, 6);
+		incrementHighShooter.whenPressed(new IncrementHighShooter());
+		
+		decrementHighShooter = new JoystickButton(gamePad, 8);
+		decrementHighShooter.whenPressed(new DecrementHighShooter());
+		
 	}
 
 	public double getDrivingJoystickY() {

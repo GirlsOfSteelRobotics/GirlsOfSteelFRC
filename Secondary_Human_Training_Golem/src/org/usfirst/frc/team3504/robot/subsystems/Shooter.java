@@ -51,12 +51,17 @@ public class Shooter extends Subsystem {
 	
 	public void incrementHighShooter() {
 		currentShooterIncrement = Math.min(currentShooterIncrement + 1, maxIncrement);
-		System.out.println(currentShooterIncrement);
+		System.out.println("currentShooterIncrement: " + currentShooterIncrement);
 	}
 	
 	public void decrementHighShooter() {
 		currentShooterIncrement = Math.max(currentShooterIncrement - 1, 0);
-		System.out.println(currentShooterIncrement);
+		System.out.println("currentShooterIncrement: " + currentShooterIncrement);
+	}
+	
+	public void resetHighShooterIncrement() {
+		currentShooterIncrement = 10;
+		System.out.println("currentShooterIncrement has reset!");
 	}
 	
 	public double getEncoderHigh() {
