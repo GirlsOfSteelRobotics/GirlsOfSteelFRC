@@ -13,11 +13,11 @@ public class Shooter extends Subsystem {
 	private double encOffsetValueHigh = 0;
 	private double encOffsetValueLow = 0;
 	
-	private final double shooterMinSpeed = -0.5;
-	private final double shooterMaxSpeed = -1.0;
-	private final double shooterSpeedStep = -0.05; //percentage up/down per press
-	private final int maxIncrement = 10;
-	private int currentShooterIncrement = 10; //starting speed 
+	private static final double shooterMinSpeed = -0.5;
+	private static final double shooterMaxSpeed = -1.0;
+	private static final double shooterDefaultSpeed = shooterMaxSpeed;
+	private static final double shooterSpeedStep = -0.05; //percentage up/down per press
+	private double shooterSpeed = shooterDefaultSpeed; //starting speed
 	//remember to add whenreleased to reset current shooter incret 
 
 	public Shooter(){
@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 
 	public void shootBall(){
 		lowShooterMotor.set(0.5);
-		highShooterMotor.set(shooterMinSpeed + shooterSpeedStep * currentShooterIncrement);
+		highShooterMotor.set(shooterSpeed);
 	}
 
 	public void stopShoot(){
@@ -49,19 +49,21 @@ public class Shooter extends Subsystem {
 		//setDefaultCommand(new MySpecialCommand());
 	}
 	
-	public void incrementHighShooter() {
-		currentShooterIncrement = Math.min(currentShooterIncrement + 1, maxIncrement);
-		System.out.println("currentShooterIncrement: " + currentShooterIncrement);
+	public void incrementHighShooterSpeed() {
+		if (Math.abs(shooterSpeed + shooterSpeedStep) < Math.abs(shooterMaxSpeed)) 
+			shooterSpeed = shooterSpeed + shooterSpeedStep;
+		System.out.println("currentShooterSpeed: " + shooterSpeed);
 	}
 	
-	public void decrementHighShooter() {
-		currentShooterIncrement = Math.max(currentShooterIncrement - 1, 0);
-		System.out.println("currentShooterIncrement: " + currentShooterIncrement);
+	public void decrementHighShooterSpeed() {
+		if (Math.abs(shooterSpeed - shooterSpeedStep) > Math.abs(shooterMinSpeed))
+			shooterSpeed = shooterSpeed - shooterSpeedStep;
+		System.out.println("currentShooterSpeed: " + shooterSpeed);
 	}
 	
-	public void resetHighShooterIncrement() {
-		currentShooterIncrement = 10;
-		System.out.println("currentShooterIncrement has reset!");
+	public void resetHighShooterSpeed() {
+		shooterSpeed = shooterDefaultSpeed;
+		System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
 	}
 	
 	public double getEncoderHigh() {

@@ -124,7 +124,6 @@ public class Robot extends IterativeRobot {
         shifters.shiftGear(Shifters.Speed.kLow);
         
         Robot.chassis.resetEncoderDistance();
-        Robot.shooter.resetHighShooterIncrement();
     }
 
     /**
