@@ -50,13 +50,13 @@ public class Shooter extends Subsystem {
 	}
 	
 	public void incrementHighShooterSpeed() {
-		if (Math.abs(shooterSpeed + shooterSpeedStep) < Math.abs(shooterMaxSpeed)) 
+		if (Math.abs(shooterSpeed + shooterSpeedStep) - Math.abs(shooterMaxSpeed) < 0.00001) 
 			shooterSpeed = shooterSpeed + shooterSpeedStep;
 		System.out.println("currentShooterSpeed: " + shooterSpeed);
 	}
 	
 	public void decrementHighShooterSpeed() {
-		if (Math.abs(shooterSpeed - shooterSpeedStep) > Math.abs(shooterMinSpeed))
+		if (Math.abs(shooterSpeed - shooterSpeedStep) - Math.abs(shooterMinSpeed) > -0.00001)
 			shooterSpeed = shooterSpeed - shooterSpeedStep;
 		System.out.println("currentShooterSpeed: " + shooterSpeed);
 	}
