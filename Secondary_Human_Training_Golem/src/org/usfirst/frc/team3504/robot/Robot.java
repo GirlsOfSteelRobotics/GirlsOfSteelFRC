@@ -66,7 +66,8 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
         chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
         chooser.addObject("Drive by Vision for gear", new DriveByVision());
-        chooser.addObject("Drive to Gear", new AutoGear());
+        chooser.addObject("Gear with encoders", new AutoDriveForward(15.0, 0.5));
+        chooser.addObject("Drive to Gear with motion", new AutoGear());
         chooser.addObject("Drive by Motion Profile", new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
         SmartDashboard.putData("Auto mode", chooser);
         

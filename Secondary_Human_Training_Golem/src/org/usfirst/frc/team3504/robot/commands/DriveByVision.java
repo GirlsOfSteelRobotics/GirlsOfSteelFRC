@@ -47,8 +47,8 @@ public class DriveByVision extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		//Change motor control to speed in the -1..+1 range
-		Robot.chassis.driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
-		Robot.chassis.driveRightA.changeControlMode(TalonControlMode.PercentVbus);
+		leftTalon.changeControlMode(TalonControlMode.Speed);
+		rightTalon.changeControlMode(TalonControlMode.Speed);
 
 		table = NetworkTable.getTable("GRIP/myContoursReport");
 		encDist = Double.NaN; 
