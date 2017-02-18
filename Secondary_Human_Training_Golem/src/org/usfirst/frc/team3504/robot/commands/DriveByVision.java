@@ -16,7 +16,7 @@ public class DriveByVision extends Command {
 
 	NetworkTable table;
 
-	private static final double MAX_ANGULAR_VELOCITY = 1.0; //TODO: adjust (rad/s)
+	private static final double MAX_ANGULAR_VELOCITY = 0.5; //TODO: adjust (rad/s)
 	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0; 
 	double[] defaultValue = new double[0];
@@ -30,7 +30,7 @@ public class DriveByVision extends Command {
 	private static double encDist;
 	private static double lastEncDist;
 
-	private static final double MIN_DIST = 0.5;
+	private static final double MIN_DIST = 0.75;
 
 	//distance b/w wheels
 	private static final double WHEEL_BASE = 20; //TODO: measure (in)
@@ -47,8 +47,8 @@ public class DriveByVision extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		//Change motor control to speed in the -1..+1 range
-		leftTalon.changeControlMode(TalonControlMode.Speed);
-		rightTalon.changeControlMode(TalonControlMode.Speed);
+		leftTalon.changeControlMode(TalonControlMode.PercentVbus);
+		rightTalon.changeControlMode(TalonControlMode.PercentVbus);
 
 		table = NetworkTable.getTable("GRIP/myContoursReport");
 		encDist = Double.NaN; 
@@ -60,12 +60,12 @@ public class DriveByVision extends Command {
 	protected void execute() {
 		double[] centerX = new double[2];
 		centerX = table.getNumberArray("centerX", defaultValue);
-		/*double[] centerY = new double[2];
+		double[] centerY = new double[2];
 		centerY = table.getNumberArray("centerY", defaultValue);
 		double[] height = new double[2];
 		height = table.getNumberArray("height", defaultValue);
 		double[] width = new double[2];
-		width = table.getNumberArray("width", defaultValue);*/
+		width = table.getNumberArray("width", defaultValue);
 
 		lastEncDist = encDist;
 		encDist = Robot.chassis.getEncoderDistance();
@@ -85,29 +85,13 @@ public class DriveByVision extends Command {
 		}
 		SmartDashboard.putNumber("Gear curve value", goalAngularVelocity);
 
-		//Robot.chassis.drive(.25, goalAngularVelocity); //TODO: change moveValue
-		
-		double goalLinearVelocity = 0; //TODO: change (in/s)
-
-		//right and left desired wheel speeds in inches per second
-		double vRight = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
-		double vLeft = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2;
-		
-		//right and left desired wheel speeds in RPM
-		double angVRight = 60 * vRight / (2 * Math.PI * WHEEL_RADIUS); //(RPM)
-		double angVLeft = 60 * vLeft / (2 * Math.PI * WHEEL_RADIUS);
-		
-		rightTalon.changeControlMode(TalonControlMode.Speed);
-		leftTalon.changeControlMode(TalonControlMode.Speed);
-		
-		//send desired wheel speeds to Talon set to velocity control mode
-		rightTalon.set(angVRight);
-		leftTalon.set(angVLeft);
+		Robot.chassis.drive(.25, goalAngularVelocity); //TODO: change moveValue
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return (lastEncDist != Double.NaN) && (Math.abs(encDist - lastEncDist) <= MIN_DIST);
+		return true;
+				//(lastEncDist != Double.NaN) && (Math.abs(encDist - lastEncDist) <= MIN_DIST);
 	}
 
 	// Called once after isFinished returns true

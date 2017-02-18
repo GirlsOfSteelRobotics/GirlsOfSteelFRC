@@ -12,7 +12,7 @@ public class LoadBall extends Command {
     public LoadBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shooter); 
+    	requires(Robot.loader); 
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +22,7 @@ public class LoadBall extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.loadBall(-1.0);
+    	Robot.loader.loadBall(-1.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,7 +32,7 @@ public class LoadBall extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.shooter.stopLoader();
+    	Robot.loader.stopLoader();
     }
 
     // Called when another command which requires one or more of the same

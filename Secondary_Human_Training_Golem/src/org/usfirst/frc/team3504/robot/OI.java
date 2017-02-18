@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Climb;
+import org.usfirst.frc.team3504.robot.commands.CombinedShoot;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
@@ -87,7 +88,7 @@ public class OI {
 		loadBall = new JoystickButton(gamePad, 2);
 		loadBall.whileHeld(new LoadBall());
 		shoot = new JoystickButton(gamePad, 3);
-		shoot.whileHeld(new Shoot());
+		shoot.whileHeld(new CombinedShoot());
 		
 		//Increment/decrement high shooter speed
 		incrementHighShooter = new JoystickButton(gamePad, 6);

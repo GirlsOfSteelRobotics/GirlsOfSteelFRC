@@ -41,7 +41,8 @@ public class Robot extends IterativeRobot {
 	public static Climber climber; 
 	public static Shooter shooter; 
 	public static Camera camera;
-
+	public static Loader loader; 
+	
     Command autonomousCommand;
     SendableChooser<Command> chooser;
 
@@ -56,6 +57,7 @@ public class Robot extends IterativeRobot {
 		climber = new Climber();
 		shooter = new Shooter();
 		camera = new Camera();
+		loader = new Loader(); 
 
 		// Initialize all subsystems before creating the OI
 		oi = new OI();

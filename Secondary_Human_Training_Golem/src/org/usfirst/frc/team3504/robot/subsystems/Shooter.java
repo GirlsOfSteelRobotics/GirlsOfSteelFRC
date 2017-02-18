@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
 	private CANTalon lowShooterMotor;
-	private CANTalon highShooterMotor;
-	private CANTalon loaderMotor; 
+	private CANTalon highShooterMotor; 
 	
 	private double encOffsetValueHigh = 0;
 	private double encOffsetValueLow = 0;
@@ -22,8 +21,7 @@ public class Shooter extends Subsystem {
 
 	public Shooter(){
 		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
-		highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR);
-		loaderMotor = new CANTalon(RobotMap.LOADER_MOTOR); 
+		highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR); 
 	}
 
 	public void shootBall(){
@@ -34,14 +32,6 @@ public class Shooter extends Subsystem {
 	public void stopShoot(){
 		lowShooterMotor.set(0);
 		highShooterMotor.set(0);
-	}
-
-	public void loadBall(double speed){
-		loaderMotor.set(speed);
-	}
-	
-	public void stopLoader(){
-		loaderMotor.set(0.0); 
 	}
 	
 	public void initDefaultCommand() {
