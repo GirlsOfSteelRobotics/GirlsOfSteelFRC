@@ -12,12 +12,12 @@ public class IncrementHighShooter extends Command {
     public IncrementHighShooter() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shooter);
+    	//doesn't need requires because that would steal shooter from shootball
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.incrementHighShooter();
+    	Robot.shooter.incrementHighShooterSpeed();
     }
 
     // Called repeatedly when this Command is scheduled to run
