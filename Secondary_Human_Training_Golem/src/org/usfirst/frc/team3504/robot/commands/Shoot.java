@@ -22,8 +22,6 @@ public class Shoot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.getEncoderHigh();
-    	Robot.shooter.getEncoderLow();
     	Robot.shooter.shootBall(); // lowSpeed, highSpeed
     }
 

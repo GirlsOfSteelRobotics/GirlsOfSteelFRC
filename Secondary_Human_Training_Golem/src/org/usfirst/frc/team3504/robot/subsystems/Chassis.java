@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Chassis extends Subsystem {
-	public CANTalon driveLeftA;//public because needs to be accessible by motion profile
+	private CANTalon driveLeftA;
 	private CANTalon driveLeftB;
 	private CANTalon driveLeftC;
 
-	public CANTalon driveRightA;
+	private CANTalon driveRightA;
 	private CANTalon driveRightB;
 	private CANTalon driveRightC;
 
@@ -27,6 +27,7 @@ public class Chassis extends Subsystem {
 
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
+	
 	
 
 	public Chassis() {
@@ -90,6 +91,13 @@ public class Chassis extends Subsystem {
 		robotDrive.drive(0, 0);
 	}
 	
+	public CANTalon getLeftTalon(){
+		return driveLeftA; 
+	}
+	
+	public CANTalon getRightTalon(){
+		return driveRightA; 
+	}
 	
 	public double getEncoderRight() {
 		//because the motors are backwards relative to left 
@@ -101,16 +109,7 @@ public class Chassis extends Subsystem {
 	}
 
 	public double getEncoderDistance() {
-		if (Robot.shifters.getGearSpeed() == Shifters.Speed.kHigh) {
-			SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-			SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
-		}
-		else {
-			SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
-			SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
-			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
-		}
+		return -2.5; 
 	}
 
 	public void resetEncoderDistance() {

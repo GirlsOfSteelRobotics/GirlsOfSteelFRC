@@ -20,8 +20,8 @@ public class DriveByVisionVelocity extends Command {
 	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0; 
 	double[] defaultValue = new double[0];
-	public CANTalon leftTalon = Robot.chassis.driveLeftA;
-	public CANTalon rightTalon = Robot.chassis.driveRightA;
+	public CANTalon leftTalon = Robot.chassis.getLeftTalon();
+	public CANTalon rightTalon = Robot.chassis.getRightTalon();
 	
 	//width of X or Y in pixels when the robot is at the lift
 	//private static final double GOAL_WIDTH = 30; //TODO: test and change

@@ -21,8 +21,8 @@ public class DriveByMotionProfile extends Command {
 
 	public ArrayList<ArrayList<Double>> leftPoints;
 	public ArrayList<ArrayList<Double>> rightPoints;
-	public CANTalon leftTalon = Robot.chassis.driveLeftA;
-	public CANTalon rightTalon = Robot.chassis.driveRightA;
+	public CANTalon leftTalon = Robot.chassis.getLeftTalon();
+	public CANTalon rightTalon = Robot.chassis.getRightTalon();
 	private CANTalon.MotionProfileStatus leftStatus;
 	private CANTalon.MotionProfileStatus rightStatus;
 	private static final int kMinPointsInTalon = 5;

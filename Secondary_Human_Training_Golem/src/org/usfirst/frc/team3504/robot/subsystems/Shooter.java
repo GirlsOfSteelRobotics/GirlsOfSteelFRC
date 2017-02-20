@@ -55,28 +55,6 @@ public class Shooter extends Subsystem {
 		shooterSpeed = shooterDefaultSpeed;
 		System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
 	}
-	
-	public double getEncoderHigh() {
-		double encHigh = highShooterMotor.getEncPosition();
-		
-		//might not be DISTANCE_PER_PULSE_HIGH_GEAR
-		SmartDashboard.putNumber("Shooter Encoder High", (encHigh - encOffsetValueHigh) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-		return (encHigh - encOffsetValueHigh) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
-	}
-	
-	public double getEncoderLow() {
-		double encLow = lowShooterMotor.getEncPosition();
-		
-		//might not be DISTANCE_PER_PULSE_HIGH_GEAR
-		SmartDashboard.putNumber("Chassis Encoders Left", (encLow - encOffsetValueLow) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-		return (encLow - encOffsetValueLow) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
-	}
 
-	public void resetEncoderDistance() {
-		encOffsetValueHigh = getEncoderHigh(); 
-		encOffsetValueLow = getEncoderLow();
-		getEncoderHigh();
-		getEncoderLow();
-	}
 
 }

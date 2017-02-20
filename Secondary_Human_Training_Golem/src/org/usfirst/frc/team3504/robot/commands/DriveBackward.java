@@ -22,8 +22,8 @@ public class DriveBackward extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Change more to Percent Vbus
-    	Robot.chassis.driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
-    	Robot.chassis.driveRightA.changeControlMode(TalonControlMode.PercentVbus);
+    	Robot.chassis.getLeftTalon().changeControlMode(TalonControlMode.PercentVbus);
+    	Robot.chassis.getRightTalon().changeControlMode(TalonControlMode.PercentVbus);
     	
     	Robot.oi.setDriveDirection(DriveDirection.kREV);
     }
