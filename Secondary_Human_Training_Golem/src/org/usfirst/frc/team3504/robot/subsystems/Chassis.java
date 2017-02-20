@@ -65,6 +65,9 @@ public class Chassis extends Subsystem {
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false); 
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 		
+		setupEncoder(driveLeftA);
+		setupEncoder(driveRightA);
+        
 		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
 		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
 	}
@@ -116,6 +119,20 @@ public class Chassis extends Subsystem {
 		encOffsetValueRight = getEncoderRight(); 
 		encOffsetValueLeft = getEncoderLeft();
 		getEncoderDistance();
+	}
+	
+	public void setupEncoder(CANTalon talon){ //only call this on non-follower talons
+		//Set Encoder Types
+		talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		talon.reverseSensor(true);
+    	
+    	//PID Values
+    	talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
+    	talon.setPosition(0);
+    	talon.setF(1.0);
+    	talon.setP(3.25);
+    	talon.setI(0.0); 
+    	talon.setD(0.0);
 	}
 	
 }

@@ -50,26 +50,6 @@ public class DriveByMotionProfile extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Set Encoder Types
-    	leftTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	leftTalon.reverseSensor(true);
-    	
-    	rightTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	rightTalon.reverseSensor(true);
-    	
-    	//PID Values
-    	leftTalon.configEncoderCodesPerRev(256);
-    	leftTalon.setPosition(0);
-    	leftTalon.setF(1.0);
-    	leftTalon.setP(3.25);
-    	leftTalon.setI(0.0); 
-    	leftTalon.setD(0.0);
-    	rightTalon.configEncoderCodesPerRev(256);
-    	rightTalon.setPosition(0);
-        rightTalon.setF(1.0);
-        rightTalon.setP(3.25);
-        rightTalon.setI(0.0); 
-        rightTalon.setD(0.0);  
 		
     	//Set Talon to MP mode
     	leftTalon.changeControlMode(TalonControlMode.MotionProfile);
