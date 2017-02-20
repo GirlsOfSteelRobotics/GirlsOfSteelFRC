@@ -7,22 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LoadBall extends Command {
+public class Climb extends Command {
 
-    public LoadBall() {
+    public Climb() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.loader); 
+    	requires(Robot.climber); 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.loader.loadBall(-1.0);
+    	Robot.climber.climb(0.75);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,7 +31,7 @@ public class LoadBall extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.loader.stopLoader();
+    	Robot.climber.stopClimb();
     }
 
     // Called when another command which requires one or more of the same

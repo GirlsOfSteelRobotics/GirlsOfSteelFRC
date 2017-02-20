@@ -1,23 +1,21 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Climb;
-import org.usfirst.frc.team3504.robot.commands.CoverGear;
-import org.usfirst.frc.team3504.robot.commands.DriveBackward;
+import org.usfirst.frc.team3504.robot.commands.CombinedShoot;
+import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
-import org.usfirst.frc.team3504.robot.commands.DriveForward;
+import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.LoadBall;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
-import org.usfirst.frc.team3504.robot.commands.UncoverGear;
+import org.usfirst.frc.team3504.robot.commands.UnClimb;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,7 +43,11 @@ public class OI {
 	
 	private JoystickButton loadBall; 
 	
-	private JoystickButton climb; 
+	private JoystickButton climb;
+	private JoystickButton unClimb; 
+	
+	private JoystickButton incrementHighShooter;
+	private JoystickButton decrementHighShooter;
 	
 	public JoystickButton motionProfile;
 	
@@ -86,23 +88,33 @@ public class OI {
 		loadBall = new JoystickButton(gamePad, 2);
 		loadBall.whileHeld(new LoadBall());
 		shoot = new JoystickButton(gamePad, 3);
-		shoot.whileHeld(new Shoot());
+		shoot.whileHeld(new CombinedShoot());
 		
-		//Buttons for gear cover
+		//Increment/decrement high shooter speed
+		incrementHighShooter = new JoystickButton(gamePad, 6);
+		incrementHighShooter.whenPressed(new IncrementHighShooter());
+		
+		decrementHighShooter = new JoystickButton(gamePad, 8);
+		decrementHighShooter.whenPressed(new DecrementHighShooter());
+		
+		/* Buttons for gear cover
 		coverGear = new JoystickButton(gamePad, 5); //TODO: get number
 		coverGear.whenPressed(new CoverGear());
 		uncoverGear = new JoystickButton(gamePad, 6); //TODO: get number
 		uncoverGear.whenPressed(new UncoverGear());
+		*/
 		
 		//Climb
 		climb = new JoystickButton(gamePad, 7); 
 		climb.whileHeld(new Climb());
+		unClimb = new JoystickButton(gamePad, 10); 
+		unClimb.whileHeld(new UnClimb());
 		
-		motionProfile = new JoystickButton(gamePad, 8);
-		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
+		motionProfile = new JoystickButton(gamePad, 5); //was 8, find value later
+		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft01.csv", "/home/lvuser/talonProfileRight01.csv"));
 
 		motionProfile = new JoystickButton(gamePad, 9);
-		motionProfile.whenPressed(new DriveByVision());
+		motionProfile.whenPressed(new DriveByVision());		
 	}
 
 	public double getDrivingJoystickY() {
@@ -114,13 +126,12 @@ public class OI {
 		}
 	}
 	
-	public double getDrivingJoystickX()
-	{
+	public double getDrivingJoystickX() {  //keep the redundancy, it breaks if removed
 		if (driveDirection == DriveDirection.kFWD){
 			return drivingStickForward.getX();
 		}
 		else {
-			return -drivingStickBackward.getX(); 
+			return drivingStickBackward.getX(); 
 		}
 	}
 	

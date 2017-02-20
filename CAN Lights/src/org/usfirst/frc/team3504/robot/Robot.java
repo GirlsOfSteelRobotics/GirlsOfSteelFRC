@@ -1,10 +1,9 @@
 package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team3504.robot.subsystems.Lights;
-
-import com.mindsensors.CANLight;
 
 public class Robot extends IterativeRobot {
     
@@ -15,4 +14,34 @@ public class Robot extends IterativeRobot {
        lights = new Lights();
        oi = new OI(); 
     } 
+
+    public void disabledInit(){
+
+    }
+	
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+    public void autonomousInit() {
+
+    }
+
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+    }
+
+    public void teleopInit() {
+     //   if (autonomousCommand != null) autonomousCommand.cancel();
+        
+    }
+
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+    }
+    
+    public void testPeriodic() {
+    	
+    }
 }
+ 

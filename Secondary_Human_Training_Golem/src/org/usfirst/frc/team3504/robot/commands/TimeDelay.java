@@ -1,45 +1,45 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-
-
-import org.usfirst.frc.team3504.robot.Robot;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Shoot extends Command {
+public class TimeDelay extends Command {
 
-    public Shoot() {
-         requires(Robot.shooter);
+	private double seconds; 
+	private Timer tim; 
+	
+    public TimeDelay(double seconds) {
+        // Use requires() here to declare subsystem dependencies
+    	tim = new Timer(); 
+    	this.seconds = seconds; 
+     
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.resetHighShooterSpeed();
+    	tim.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.getEncoderHigh();
-    	Robot.shooter.getEncoderLow();
-    	Robot.shooter.shootBall(); // lowSpeed, highSpeed
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return (tim.get() > seconds); 
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.shooter.stopShoot();
+    	tim.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	end(); 
     }
 }

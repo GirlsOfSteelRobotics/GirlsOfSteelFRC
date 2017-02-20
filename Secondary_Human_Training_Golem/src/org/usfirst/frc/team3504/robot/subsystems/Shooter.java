@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -8,40 +7,53 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
 	private CANTalon lowShooterMotor;
-	private CANTalon highShooterMotor;
-	private CANTalon loaderMotor; 
+	private CANTalon highShooterMotor; 
 	
 	private double encOffsetValueHigh = 0;
 	private double encOffsetValueLow = 0;
 	
+	private static final double shooterMinSpeed = -0.5;
+	private static final double shooterMaxSpeed = -1.0;
+	private static final double shooterDefaultSpeed = shooterMaxSpeed;
+	private static final double shooterSpeedStep = -0.05; //percentage up/down per press
+	private double shooterSpeed = shooterDefaultSpeed; //starting speed
+	//remember to add whenreleased to reset current shooter incret 
 
 	public Shooter(){
 		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
-		highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR);
-		loaderMotor = new CANTalon(RobotMap.LOADER_MOTOR); 
+		highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR); 
 	}
 
-	public void shootBall(double lowSpeed, double highSpeed){
-		lowShooterMotor.set(lowSpeed);
-		highShooterMotor.set(highSpeed);
+	public void shootBall(){
+		lowShooterMotor.set(-shooterSpeed);
+		highShooterMotor.set(shooterSpeed);
 	}
 
 	public void stopShoot(){
 		lowShooterMotor.set(0);
 		highShooterMotor.set(0);
 	}
-
-	public void loadBall(double speed){
-		loaderMotor.set(speed);
-	}
-	
-	public void stopLoader(){
-		loaderMotor.set(0.0); 
-	}
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
+	}
+	
+	public void incrementHighShooterSpeed() {
+		if (Math.abs(shooterSpeed + shooterSpeedStep) - Math.abs(shooterMaxSpeed) < 0.00001) 
+			shooterSpeed = shooterSpeed + shooterSpeedStep;
+		System.out.println("currentShooterSpeed: " + shooterSpeed);
+	}
+	
+	public void decrementHighShooterSpeed() {
+		if (Math.abs(shooterSpeed - shooterSpeedStep) - Math.abs(shooterMinSpeed) > -0.00001)
+			shooterSpeed = shooterSpeed - shooterSpeedStep;
+		System.out.println("currentShooterSpeed: " + shooterSpeed);
+	}
+	
+	public void resetHighShooterSpeed() {
+		shooterSpeed = shooterDefaultSpeed;
+		System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
 	}
 	
 	public double getEncoderHigh() {

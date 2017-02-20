@@ -1,6 +1,5 @@
 		
 package org.usfirst.frc.team3539.robot;		
-import java.lang.Class;
 
 public class GeneratedMotionProfile {	
 	
