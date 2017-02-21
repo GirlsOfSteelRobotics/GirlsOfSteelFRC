@@ -11,7 +11,7 @@ public class ShootKey extends Command {
 
     public ShootKey() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.chassis);
+    	requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
