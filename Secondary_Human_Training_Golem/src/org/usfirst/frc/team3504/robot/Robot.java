@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.DriveByVision;
+import org.usfirst.frc.team3504.robot.commands.DriveByVisionVelocity;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -17,7 +17,6 @@ import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBlueHopper;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoRedHopper;
 //import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.*;
@@ -64,11 +63,11 @@ public class Robot extends IterativeRobot {
 
 		chooser = new SendableChooser<Command>();
         chooser.addDefault("Do Nothing", new AutoDoNothing());
-        chooser.addObject("Base Line", new AutoDriveForward(10.0, 0.5)); //TODO: change value
+      //  chooser.addObject("Base Line", new AutoDriveForward(10.0, 0.5)); //TODO: change value
         chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
         chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
-        chooser.addObject("Drive by Vision for gear", new DriveByVision());
-        chooser.addObject("Gear with encoders", new AutoDriveForward(15.0, 0.5));
+        chooser.addObject("Drive by Vision for gear", new DriveByVisionVelocity());
+       // chooser.addObject("Gear with encoders", new AutoDriveForward(15.0, 0.5));
         chooser.addObject("Drive to Gear with motion", new AutoGear());
         chooser.addObject("Drive by Motion Profile", new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
         SmartDashboard.putData("Auto mode", chooser);
@@ -125,8 +124,7 @@ public class Robot extends IterativeRobot {
         
         //start robot in low gear when starting teleop
         shifters.shiftGear(Shifters.Speed.kLow);
-        
-        Robot.chassis.resetEncoderDistance();
+
     }
 
     /**

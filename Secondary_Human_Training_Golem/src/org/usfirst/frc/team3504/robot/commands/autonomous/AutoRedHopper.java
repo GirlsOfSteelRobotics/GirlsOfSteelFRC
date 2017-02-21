@@ -24,14 +24,14 @@ public class AutoRedHopper extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutoDriveForward(156, .6)); //TODO: change //cross baseline
-		addSequential(new AutoTurn(21, 0.1)); //TODO: change
-		addSequential(new AutoDriveForward(156, .6)); //TODO: change //hit hopper 1
-		addSequential(new AutoDriveBackward(156, .6)); //TODO: change
-		addSequential(new AutoTurn(156, .6)); //TODO: change
-		addSequential(new AutoDriveForward(156, .6)); //TODO: change
-		addSequential(new AutoTurn(156, .6)); //TODO: change
-		addSequential(new AutoDriveForward(156, .6)); //TODO: change //hit hopper 2
-		addSequential(new AutoDriveBackward(156, .6)); //TODO: change //hit hopper 2
+//    	addSequential(new AutoDriveForward(156, .6)); //TODO: change //cross baseline
+////		addSequential(new AutoTurn(21, 0.1)); //TODO: change
+//		addSequential(new AutoDriveForward(156, .6)); //TODO: change //hit hopper 1
+//		addSequential(new AutoDriveBackward(156, .6)); //TODO: change
+////		addSequential(new AutoTurn(156, .6)); //TODO: change
+//		addSequential(new AutoDriveForward(156, .6)); //TODO: change
+//	//	addSequential(new AutoTurn(156, .6)); //TODO: change
+//		addSequential(new AutoDriveForward(156, .6)); //TODO: change //hit hopper 2
+//		addSequential(new AutoDriveBackward(156, .6)); //TODO: change //hit hopper 2
     }
 }

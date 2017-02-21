@@ -16,8 +16,10 @@ public class Shooter extends Subsystem {
 	private static final double shooterMaxSpeed = -1.0;
 	private static final double shooterDefaultSpeed = shooterMaxSpeed;
 	private static final double shooterSpeedStep = -0.05; //percentage up/down per press
+	private static final double shooterDefaultSpeedGear = -1.0 - (5.5 * -0.05);
+	private static final double shooterDefaultSpeedKey = -1.0 - (8.0 * -0.05); 
 	private double shooterSpeed = shooterDefaultSpeed; //starting speed
-	//remember to add whenreleased to reset current shooter incret 
+	//remember to add when released to reset current shooter increment 
 
 	public Shooter(){
 		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
@@ -56,27 +58,13 @@ public class Shooter extends Subsystem {
 		System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
 	}
 	
-	public double getEncoderHigh() {
-		double encHigh = highShooterMotor.getEncPosition();
-		
-		//might not be DISTANCE_PER_PULSE_HIGH_GEAR
-		SmartDashboard.putNumber("Shooter Encoder High", (encHigh - encOffsetValueHigh) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-		return (encHigh - encOffsetValueHigh) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
+	public void setSpeedFromGear(){
+		shooterSpeed = shooterDefaultSpeedGear; 
 	}
 	
-	public double getEncoderLow() {
-		double encLow = lowShooterMotor.getEncPosition();
-		
-		//might not be DISTANCE_PER_PULSE_HIGH_GEAR
-		SmartDashboard.putNumber("Chassis Encoders Left", (encLow - encOffsetValueLow) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-		return (encLow - encOffsetValueLow) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
+	public void setSpeedFromKey(){
+		shooterSpeed = shooterDefaultSpeedKey; 
 	}
 
-	public void resetEncoderDistance() {
-		encOffsetValueHigh = getEncoderHigh(); 
-		encOffsetValueLow = getEncoderLow();
-		getEncoderHigh();
-		getEncoderLow();
-	}
 
 }
