@@ -43,6 +43,13 @@ public class DriveByVisionVelocity extends Command {
 		//Change motor control to speed in the -1..+1 range
 		leftTalon.changeControlMode(TalonControlMode.Speed);
 		rightTalon.changeControlMode(TalonControlMode.Speed); //TODO: change to speed
+		
+		//tuned by janet and ziya on 2/20
+		leftTalon.setF(0.17); 
+		leftTalon.setP(0.235);
+		rightTalon.setF(0.17);
+		rightTalon.setP(0.235);
+		
 
 		table = NetworkTable.getTable("GRIP/myContoursReport");
 		
@@ -89,7 +96,7 @@ public class DriveByVisionVelocity extends Command {
 		SmartDashboard.putNumber("Left ANGULAR velocity", angVLeft);
 		//send desired wheel speeds to Talon set to velocity control mode
 		rightTalon.set(angVRight);
-		leftTalon.set(angVLeft);
+		leftTalon.set(-angVLeft);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
