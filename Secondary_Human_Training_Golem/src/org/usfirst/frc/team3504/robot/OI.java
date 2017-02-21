@@ -136,8 +136,8 @@ public class OI {
 		chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
 		chooser.addObject("Drive by Vision for gear", new DriveByVisionVelocity());
 		chooser.addObject("Drive to Gear with motion", new AutoGear());
-		chooser.addObject("Drive by Motion Profile", new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
-
+		chooser.addObject("Drive by Motion Profile", new DriveByMotionProfile("/home/lvuser/talonProfileLeftWM03.dat", "/home/lvuser/talonProfileRightWM03.dat"));
+		chooser.addObject("Drive by Distance", new DriveByDistance(75));
 	}
 
 	public double getDrivingJoystickY() {
