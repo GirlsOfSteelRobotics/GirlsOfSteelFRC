@@ -42,8 +42,8 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static Loader loader; 
 	
-    Command autonomousCommand;
-    SendableChooser<Command> chooser;
+	Command autonomousCommand;
+	SendableChooser<Command> chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -60,19 +60,10 @@ public class Robot extends IterativeRobot {
 
 		// Initialize all subsystems before creating the OI
 		oi = new OI();
-
+		
 		chooser = new SendableChooser<Command>();
-        chooser.addDefault("Do Nothing", new AutoDoNothing());
-      //  chooser.addObject("Base Line", new AutoDriveForward(10.0, 0.5)); //TODO: change value
-        chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
-        chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
-        chooser.addObject("Drive by Vision for gear", new DriveByVisionVelocity());
-       // chooser.addObject("Gear with encoders", new AutoDriveForward(15.0, 0.5));
-        chooser.addObject("Drive to Gear with motion", new AutoGear());
-        chooser.addObject("Drive by Motion Profile", new DriveByMotionProfile("/home/lvuser/talonProfileLeft.csv", "/home/lvuser/talonProfileRight.csv"));
-        SmartDashboard.putData("Auto mode", chooser);
-        
-        
+		oi.populateChooserMenu(chooser);
+		SmartDashboard.putData("Auto mode", chooser);
     }
 	
 	/**
@@ -98,7 +89,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = chooser.getSelected();
     	
         //start the robot out in low gear when starting autonomous
         shifters.shiftGear(Shifters.Speed.kLow);
