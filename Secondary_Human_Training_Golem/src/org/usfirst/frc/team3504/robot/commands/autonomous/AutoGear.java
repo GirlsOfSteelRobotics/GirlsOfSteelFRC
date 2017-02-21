@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.DriveByVision;
+import org.usfirst.frc.team3504.robot.commands.DriveByVisionVelocity;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -14,7 +14,7 @@ public class AutoGear extends CommandGroup {
     	addSequential(new DriveByMotionProfile("/home/lvuser/talonProfileLeft01.csv", "/home/lvuser/talonProfileRight01.csv"));
     	addSequential(new DriveByMotionProfile("/home/lvuser/talonProfileLeft02.csv", "/home/lvuser/talonProfileRight02.csv"));
     	addSequential(new DriveByMotionProfile("/home/lvuser/talonProfileLeft03.csv", "/home/lvuser/talonProfileRight03.csv"));
-    	addSequential(new DriveByVision());
+    	addSequential(new DriveByVisionVelocity());
     	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

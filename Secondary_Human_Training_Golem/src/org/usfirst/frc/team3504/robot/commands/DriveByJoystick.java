@@ -53,9 +53,13 @@ public class DriveByJoystick extends Command {
         return false;
     }
 
+    public void stop(){
+    	robotDrive.drive(0, 0);
+    }
+    
     // Called once after isFinished returns true
     protected void end() {
-    	robotDrive.drive(0, 0); //stops robot lol
+    	stop();
    
     }
 

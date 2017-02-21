@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CombinedShoot;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.DriveByVision;
+import org.usfirst.frc.team3504.robot.commands.DriveByVisionVelocity;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.LoadBall;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
@@ -82,7 +82,7 @@ public class OI {
 		//operator buttons
 		//vision
 		driveByVision = new JoystickButton(gamePad, 9); 
-		driveByVision.whileHeld(new DriveByVision());
+		driveByVision.whileHeld(new DriveByVisionVelocity());
 		
 		//shooter buttons
 		loadBall = new JoystickButton(gamePad, 2);
@@ -112,9 +112,7 @@ public class OI {
 		
 		motionProfile = new JoystickButton(gamePad, 5); //was 8, find value later
 		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeft01.csv", "/home/lvuser/talonProfileRight01.csv"));
-
-		motionProfile = new JoystickButton(gamePad, 9);
-		motionProfile.whenPressed(new DriveByVision());		
+		
 	}
 
 	public double getDrivingJoystickY() {

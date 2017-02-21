@@ -67,6 +67,11 @@ public class Chassis extends Subsystem {
 		return driveRightA; 
 	}
 	
+	public void stop(){
+		driveLeftA.set(0);
+		driveRightA.set(0);
+	}
+	
 	public void setupEncoder(CANTalon talon){ //only call this on non-follower talons
 		//Set Encoder Types
 		talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
