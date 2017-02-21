@@ -53,7 +53,7 @@ public class DriveByJoystick extends Command {
         return false;
     }
 
-    public void stop(){
+    public  void stop(){
     	robotDrive.drive(0, 0);
     }
     

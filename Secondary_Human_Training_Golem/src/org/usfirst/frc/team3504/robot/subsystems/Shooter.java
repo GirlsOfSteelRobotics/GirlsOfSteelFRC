@@ -16,8 +16,10 @@ public class Shooter extends Subsystem {
 	private static final double shooterMaxSpeed = -1.0;
 	private static final double shooterDefaultSpeed = shooterMaxSpeed;
 	private static final double shooterSpeedStep = -0.05; //percentage up/down per press
+	private static final double shooterDefaultSpeedGear = -1.0 - (5.5 * -0.05);
+	private static final double shooterDefaultSpeedKey = -1.0 - (8.0 * -0.05); 
 	private double shooterSpeed = shooterDefaultSpeed; //starting speed
-	//remember to add whenreleased to reset current shooter incret 
+	//remember to add when released to reset current shooter increment 
 
 	public Shooter(){
 		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
@@ -54,6 +56,14 @@ public class Shooter extends Subsystem {
 	public void resetHighShooterSpeed() {
 		shooterSpeed = shooterDefaultSpeed;
 		System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
+	}
+	
+	public void setSpeedFromGear(){
+		shooterSpeed = shooterDefaultSpeedGear; 
+	}
+	
+	public void setSpeedFromKey(){
+		shooterSpeed = shooterDefaultSpeedKey; 
 	}
 
 

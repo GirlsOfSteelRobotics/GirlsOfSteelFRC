@@ -2,6 +2,9 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CombinedShoot;
+import org.usfirst.frc.team3504.robot.commands.CombinedShootGear;
+import org.usfirst.frc.team3504.robot.commands.CombinedShootKey;
+import org.usfirst.frc.team3504.robot.commands.CoverGear;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVisionVelocity;
@@ -13,6 +16,7 @@ import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
+import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -37,6 +41,8 @@ public class OI {
 	private JoystickButton shifterDown; 
 	
 	private JoystickButton shoot; 
+	private JoystickButton shootGear; 
+	private JoystickButton shootKey; 
 	
 	private JoystickButton coverGear;
 	private JoystickButton uncoverGear;
@@ -85,27 +91,27 @@ public class OI {
 		driveByVision.whileHeld(new DriveByVisionVelocity());
 		
 		//shooter buttons
-		loadBall = new JoystickButton(gamePad, 2);
-		loadBall.whileHeld(new LoadBall());
-		shoot = new JoystickButton(gamePad, 3);
+		shootGear = new JoystickButton(gamePad, 2);
+		shootGear.whileHeld(new CombinedShootGear());
+		shootKey = new JoystickButton(gamePad, 3);
+		shootKey.whileHeld(new CombinedShootKey());
+		shoot = new JoystickButton(gamePad, 4);
 		shoot.whileHeld(new CombinedShoot());
 		
 		//Increment/decrement high shooter speed
 		incrementHighShooter = new JoystickButton(gamePad, 6);
 		incrementHighShooter.whenPressed(new IncrementHighShooter());
-		
 		decrementHighShooter = new JoystickButton(gamePad, 8);
 		decrementHighShooter.whenPressed(new DecrementHighShooter());
 		
-		/* Buttons for gear cover
-		coverGear = new JoystickButton(gamePad, 5); //TODO: get number
+		//Buttons for gear cover
+		coverGear = new JoystickButton(gamePad, 5); 
 		coverGear.whenPressed(new CoverGear());
-		uncoverGear = new JoystickButton(gamePad, 6); //TODO: get number
+		uncoverGear = new JoystickButton(gamePad, 7); 
 		uncoverGear.whenPressed(new UncoverGear());
-		*/
 		
 		//Climb
-		climb = new JoystickButton(gamePad, 7); 
+		climb = new JoystickButton(gamePad, 9); 
 		climb.whileHeld(new Climb());
 		unClimb = new JoystickButton(gamePad, 10); 
 		unClimb.whileHeld(new UnClimb());
