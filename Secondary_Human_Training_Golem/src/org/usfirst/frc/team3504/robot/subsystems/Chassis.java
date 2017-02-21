@@ -124,13 +124,13 @@ public class Chassis extends Subsystem {
 	public void setupEncoder(CANTalon talon){ //only call this on non-follower talons
 		//Set Encoder Types
 		talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		talon.reverseSensor(true);
+		talon.reverseSensor(false);
     	
     	//PID Values
     	talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
     	talon.setPosition(0);
-    	talon.setF(1.0);
-    	talon.setP(3.25);
+    	talon.setF(0);
+    	talon.setP(0.64); //0.64 good
     	talon.setI(0.0); 
     	talon.setD(0.0);
 	}
