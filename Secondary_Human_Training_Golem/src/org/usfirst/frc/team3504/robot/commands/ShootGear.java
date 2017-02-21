@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-
-
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,20 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Shoot extends Command {
+public class ShootGear extends Command {
 
-    public Shoot() {
-         requires(Robot.shooter);
+    public ShootGear() {
+        // Use requires() here to declare subsystem dependencies
+    	requires(Robot.shooter);
     }
-    
+
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.resetHighShooterSpeed();
+    	Robot.shooter.setSpeedFromGear();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.shootBall(); // lowSpeed, highSpeed
+    	Robot.shooter.shootBall();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,6 +37,6 @@ public class Shoot extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	end(); 
     }
 }

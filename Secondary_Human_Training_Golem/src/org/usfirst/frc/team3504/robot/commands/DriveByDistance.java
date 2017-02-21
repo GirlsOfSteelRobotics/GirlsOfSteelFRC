@@ -21,11 +21,14 @@ public class DriveByDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.getLeftTalon().setPosition(0); 
+    	Robot.chassis.getRightTalon().setPosition(0); 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//Robot.chassis.set(rotations); 
+    	Robot.chassis.getLeftTalon().set(rotations);
+    	Robot.chassis.getRightTalon().set(rotations); 
     }
 
     // Make this return true when this Command no longer needs to run execute()
