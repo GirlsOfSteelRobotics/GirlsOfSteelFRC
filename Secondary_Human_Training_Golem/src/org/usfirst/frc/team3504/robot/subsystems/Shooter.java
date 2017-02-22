@@ -27,13 +27,16 @@ public class Shooter extends Subsystem {
 	//remember to add when released to reset current shooter increment 
 	
 	//Speed mode constants //TODO: test and change
-	private static final int SHOOTER_MIN_SPEED = 100;
-	private static final int SHOOTER_MAX_SPEED = 200;
-	private static final int SHOOTER_SPEED_STEP = 25;
+	private static final int SHOOTER_MIN_SPEED = 0;
+	private static final int SHOOTER_MAX_SPEED = 100;
+	private static final int SHOOTER_SPEED_STEP = 5;
 	public static final int SHOOTER_DEFAULT_SPEED = SHOOTER_MAX_SPEED;
-	public static final int SHOOTER_SPEED_GEAR = 180;
-	public static final int SHOOTER_SPEED_KEY = 120;
-	private static final int MAX_SHOOTER_ERROR = 5;
+	public static final int SHOOTER_SPEED_GEAR = 80;
+	public static final int SHOOTER_SPEED_KEY = 60;
+	private static final int MAX_SHOOTER_ERROR = 5; //percent
+	private static final int LOW_MAX_RPM = 3400;
+	private static final int HIGH_MAX_RPM = 5000; 
+	
 	private int shooterSpeed = SHOOTER_DEFAULT_SPEED;
 	private boolean lowMotorRunning = false;
 
@@ -41,27 +44,41 @@ public class Shooter extends Subsystem {
 		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
 		highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR); 
 		
-		//lowShooterMotor.changeControlMode(TalonControlMode.Speed);
-		//highShooterMotor.changeControlMode(TalonControlMode.Speed);
-		lowShooterMotor.changeControlMode(TalonControlMode.PercentVbus);
-		highShooterMotor.changeControlMode(TalonControlMode.PercentVbus);
+		lowShooterMotor.changeControlMode(TalonControlMode.Position);
+		highShooterMotor.changeControlMode(TalonControlMode.Position);
+
+		lowShooterMotor.enableBrakeMode(false);
+		highShooterMotor.enableBrakeMode(false);
+
 		setupEncoder(lowShooterMotor);
 		setupEncoder(highShooterMotor);
 		
 		LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
 		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
+		
+    	//PID Values TODO:tune these
+		lowShooterMotor.setF(0.04407); //see p 17 of motion profile manual
+		lowShooterMotor.setP(0.01);
+		lowShooterMotor.setI(0.0); 
+		lowShooterMotor.setD(0.0);
+    	
+    	//PID Values TODO:tune these
+		highShooterMotor.setF(0.02997); //see p 17 of motion profile manual
+		highShooterMotor.setP(0.01);
+		highShooterMotor.setI(0.0); 
+		highShooterMotor.setD(0.0);
 	}
 
 	public void runHighShooterMotor(){
 		//highShooterMotor.set(shooterSpeed);
-		highShooterMotor.set(1);
+		highShooterMotor.set(4000);
 	}
 	
 	public void runLowShooterMotor(){
 		/*if (lowMotorRunning){
 			lowShooterMotor.set(shooterSpeed);
 		}*/
-		lowShooterMotor.set(1);
+		lowShooterMotor.set(4000);
 	}
 	
 	public void startLowShooterMotor(){
@@ -113,12 +130,6 @@ public class Shooter extends Subsystem {
 		//Set Encoder Types
 		talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 		talon.reverseSensor(false);
-    	
-    	//PID Values TODO:tune these
-    	talon.setF(0);
-    	talon.setP(0.5);
-    	talon.setI(0.0); 
-    	talon.setD(0.0);
 	}
 
 
