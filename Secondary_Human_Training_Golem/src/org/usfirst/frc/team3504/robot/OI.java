@@ -95,7 +95,7 @@ public class OI {
 
 		//operator buttons
 		//vision
-		driveByVision = new JoystickButton(gamePad, 9); 
+		driveByVision = new JoystickButton(gamePad, 1); 
 		driveByVision.whileHeld(new DriveByVisionVelocity());
 
 		//shooter buttons
@@ -113,8 +113,8 @@ public class OI {
 		decrementHighShooter.whenPressed(new DecrementHighShooter());
 
 		//Buttons for gear cover
-		coverGear = new JoystickButton(gamePad, 5); 
-		coverGear.whenPressed(new CoverGear());
+		//coverGear = new JoystickButton(gamePad, 5); 
+		//coverGear.whenPressed(new CoverGear());
 		uncoverGear = new JoystickButton(gamePad, 7); 
 		uncoverGear.whenPressed(new UncoverGear());
 
