@@ -99,9 +99,9 @@ public class OI {
 		driveByVision.whileHeld(new DriveByVisionVelocity());
 
 		//shooter buttons
-		shootGear = new JoystickButton(gamePad, 2);
+		shootGear = new JoystickButton(gamePad, 3);
 		shootGear.whileHeld(new CombinedShootGear());
-		shootKey = new JoystickButton(gamePad, 3);
+		shootKey = new JoystickButton(gamePad, 2);
 		shootKey.whileHeld(new CombinedShootKey());
 		shoot = new JoystickButton(gamePad, 4);
 		shoot.whileHeld(new CombinedShoot());
@@ -113,15 +113,15 @@ public class OI {
 		decrementHighShooter.whenPressed(new DecrementHighShooter());
 
 		//Buttons for gear cover
-		coverGear = new JoystickButton(gamePad, 5); 
-		coverGear.whenPressed(new CoverGear());
+		//coverGear = new JoystickButton(gamePad, 5); //TODO: re-enable when the hardware is finished
+		//coverGear.whenPressed(new CoverGear());
 		uncoverGear = new JoystickButton(gamePad, 7); 
 		uncoverGear.whenPressed(new UncoverGear());
 
 		//Climb
-		climb = new JoystickButton(gamePad, 9); 
+		climb = new JoystickButton(gamePad, 10); 
 		climb.whileHeld(new Climb());
-		unClimb = new JoystickButton(gamePad, 10); 
+		unClimb = new JoystickButton(gamePad, 9); 
 		unClimb.whileHeld(new UnClimb());
 
 		motionProfile = new JoystickButton(gamePad, 5); //was 8, find value later
