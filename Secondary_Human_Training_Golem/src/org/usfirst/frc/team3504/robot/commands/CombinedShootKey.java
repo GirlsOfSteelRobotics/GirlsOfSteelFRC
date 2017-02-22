@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -8,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CombinedShootKey extends CommandGroup {
 
     public CombinedShootKey() {
-    	addParallel(new Shoot());
+    	addParallel(new Shoot(Shooter.SHOOTER_SPEED_KEY));
     	addSequential(new TimeDelay(0.5)); //TODO add a time delay of .25 seconds
     	addSequential(new LoadBall()); 
     	
