@@ -16,7 +16,7 @@ public class DriveByVisionVelocity extends Command {
 
 	NetworkTable table;
 
-	private static final double MAX_ANGULAR_VELOCITY = 1.0; //TODO: adjust (rad/s)
+	private static final double MAX_ANGULAR_VELOCITY = 0.5; //TODO: adjust (rad/s)
 	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0; 
 	double[] defaultValue = new double[0];
@@ -45,19 +45,22 @@ public class DriveByVisionVelocity extends Command {
 		rightTalon.changeControlMode(TalonControlMode.Speed); //TODO: change to speed
 		
 		//tuned by janet and ziya on 2/20
-		leftTalon.setF(0.17); 
+		leftTalon.setF(0.22);  //carpet on practice field
 		leftTalon.setP(0.235);
-		rightTalon.setF(0.17);
+		rightTalon.setF(0.2);
 		rightTalon.setP(0.235);
 		
 
-		table = NetworkTable.getTable("GRIP/myContoursReport");
+		
 		
 		System.out.println("DriveByVision Initialized");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		
+		table = NetworkTable.getTable("GRIP/myContoursReport");
+		
 		double[] centerX = new double[2];
 		centerX = table.getNumberArray("centerX", defaultValue);
 		/*double[] centerY = new double[2];
