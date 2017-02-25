@@ -16,7 +16,7 @@ public class DriveByVisionVelocity extends Command {
 
 	NetworkTable table;
 
-	private static final double MAX_ANGULAR_VELOCITY = 0.5; //TODO: adjust (rad/s)
+	private static final double MAX_ANGULAR_VELOCITY = 1.0; //TODO: adjust (rad/s)  current value works
 	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0; 
 	double[] defaultValue = new double[0];
@@ -49,9 +49,6 @@ public class DriveByVisionVelocity extends Command {
 		leftTalon.setP(0.235);
 		rightTalon.setF(0.2);
 		rightTalon.setP(0.235);
-		
-
-		
 		
 		System.out.println("DriveByVision Initialized");
 	}
@@ -88,8 +85,8 @@ public class DriveByVisionVelocity extends Command {
 		double goalLinearVelocity = 20; //TODO: change (in/s)
 
 		//right and left desired wheel speeds in inches per second
-		double vRight = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
-		double vLeft = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2;
+		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
+		double vLeft = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2;
 		SmartDashboard.putNumber("Right velocity", vRight);
 		SmartDashboard.putNumber("Left velocity", vLeft);
 		//right and left desired wheel speeds in RPM
