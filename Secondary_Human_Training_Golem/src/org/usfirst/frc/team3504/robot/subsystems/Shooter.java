@@ -57,13 +57,15 @@ public class Shooter extends Subsystem {
 		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
 		
     	//PID Values TODO:tune these
-		lowShooterMotor.setF(0.04407); //see p 17 of motion profile manual
+		//lowShooterMotor.setF(0.04407); //see p 17 of motion profile manual
+		lowShooterMotor.setF(0); //see p 17 of motion profile manual
 		lowShooterMotor.setP(0.01);
 		lowShooterMotor.setI(0.0); 
 		lowShooterMotor.setD(0.0);
     	
     	//PID Values TODO:tune these
-		highShooterMotor.setF(0.02997); //see p 17 of motion profile manual
+		//highShooterMotor.setF(0.02997); //see p 17 of motion profile manual
+		highShooterMotor.setF(0);
 		highShooterMotor.setP(0.01);
 		highShooterMotor.setI(0.0); 
 		highShooterMotor.setD(0.0);
@@ -130,6 +132,11 @@ public class Shooter extends Subsystem {
 		//Set Encoder Types
 		talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 		talon.reverseSensor(false);
+	}
+	
+	public void resetEncoders(){
+		lowShooterMotor.setPosition(0);
+		highShooterMotor.setPosition(0);
 	}
 
 

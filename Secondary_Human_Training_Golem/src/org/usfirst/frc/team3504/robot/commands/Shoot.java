@@ -24,6 +24,7 @@ public class Shoot extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	loopCounter = 0;
+    	Robot.shooter.resetEncoders();
     	Robot.shooter.setShooterSpeed(shooterSpeed);
     	
     }
