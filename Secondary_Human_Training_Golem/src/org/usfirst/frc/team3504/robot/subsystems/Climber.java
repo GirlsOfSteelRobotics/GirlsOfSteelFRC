@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.Climb;
+import org.usfirst.frc.team3504.robot.commands.StayClimbed;
 
 import com.ctre.CANTalon;
 
@@ -11,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 
 public class Climber extends Subsystem {
-	private CANTalon climbMotorA;
-	private CANTalon climbMotorB; 
+	public CANTalon climbMotorA;
+	public CANTalon climbMotorB; 
     
 	public Climber(){
 		climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
@@ -20,8 +22,6 @@ public class Climber extends Subsystem {
 		
 		climbMotorA.enableBrakeMode(true);
 		climbMotorB.enableBrakeMode(true);
-		
-		
 	}
 	
 	public void climb(double speed) {
@@ -37,6 +37,7 @@ public class Climber extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new StayClimbed());
     }
 }
 
