@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoGear extends CommandGroup {
 
-    public AutoGear() {
+    public AutoGear(String leftFile, String rightFile) {
     	
-    	addSequential(new DriveByMotionProfile("/home/lvuser/talonProfileLeftWM03.csv", "/home/lvuser/talonProfileRightWM03.csv"));
+    	addSequential(new DriveByMotionProfile(leftFile, rightFile));
     	addSequential(new DriveByVisionVelocity());
     	// Add Commands here:
         // e.g. addSequential(new Command1());

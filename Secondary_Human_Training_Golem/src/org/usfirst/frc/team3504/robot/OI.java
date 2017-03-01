@@ -82,14 +82,14 @@ public class OI {
 		switchToBackward.whenPressed(new SwitchBackward());
 
 		// Buttons for shifters copied to both joysticks
-		shifterDown = new JoystickButton(drivingStickForward, 2);
+		shifterDown = new JoystickButton(drivingStickForward, 3);
 		shifterDown.whenPressed(new ShiftDown());
-		shifterDown = new JoystickButton(drivingStickBackward, 2);
+		shifterDown = new JoystickButton(drivingStickBackward, 3);
 		shifterDown.whenPressed(new ShiftDown());
 
-		shifterUp = new JoystickButton(drivingStickForward, 3);
+		shifterUp = new JoystickButton(drivingStickForward, 2);
 		shifterUp.whenPressed(new ShiftUp());
-		shifterUp = new JoystickButton(drivingStickBackward, 3);
+		shifterUp = new JoystickButton(drivingStickBackward, 2);
 		shifterUp.whenPressed(new ShiftUp());
 
 
@@ -135,12 +135,10 @@ public class OI {
 		chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
 		chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
 		chooser.addObject("Drive by Vision for gear", new DriveByVisionVelocity());
-		chooser.addObject("Drive to Gear with motion", new AutoGear());
-		chooser.addObject("Drive by Motion Profile 1", new DriveByMotionProfile("/home/lvuser/talonProfileLeft1.dat", "/home/lvuser/talonProfileRight1.dat"));
-		chooser.addObject("Drive by Motion Profile 2", new DriveByMotionProfile("/home/lvuser/talonProfileLeft2.dat", "/home/lvuser/talonProfileRight2.dat"));
-		chooser.addObject("Drive by Motion Profile 01", new DriveByMotionProfile("/home/lvuser/talonProfileLeftWM01.dat", "/home/lvuser/talonProfileRightWM01.dat"));
-		chooser.addObject("Drive by Motion Profile 02", new DriveByMotionProfile("/home/lvuser/talonProfileLeftWM02.dat", "/home/lvuser/talonProfileRightWM02.dat"));
-		chooser.addObject("Drive by Motion Profile 03", new DriveByMotionProfile("/home/lvuser/talonProfileLeftWM03.dat", "/home/lvuser/talonProfileRightWM03.dat"));
+		chooser.addObject("Auto RedLeftGear", new AutoGear("/home/lvuser/talonProfileLeftRedLeftGear.dat", "/home/lvuser/talonProfileRightRedLeftGear.dat"));
+		chooser.addObject("Auto RedRightGear", new AutoGear("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
+		chooser.addObject("Auto RedCenterGear", new AutoGear("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
+		chooser.addObject("Motion Profile: RedGearBackToKey", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
 		chooser.addObject("Drive by Distance", new DriveByDistance(75));
 	}
 
