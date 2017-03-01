@@ -138,7 +138,7 @@ public class OI {
 		chooser.addObject("Auto RedLeftGear", new AutoGear("/home/lvuser/talonProfileLeftRedLeftGear.dat", "/home/lvuser/talonProfileRightRedLeftGear.dat"));
 		chooser.addObject("Auto RedRightGear", new AutoGear("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
 		chooser.addObject("Auto RedCenterGear", new AutoGear("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
-		chooser.addObject("Motion Profile: RedGearBackToKey", new AutoGear("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
+		chooser.addObject("Motion Profile: RedGearBackToKey", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
 		chooser.addObject("Drive by Distance", new DriveByDistance(75));
 	}
 
