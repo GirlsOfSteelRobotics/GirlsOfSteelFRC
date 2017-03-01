@@ -80,20 +80,15 @@ public class DriveByVisionVelocity extends Command {
 			SmartDashboard.putNumber("CenterX0", centerX[0]);
 			SmartDashboard.putNumber("CenterX1", centerX[1]);
 		}
-		SmartDashboard.putNumber("Goal angular velocity", goalAngularVelocity);
 		
 		double goalLinearVelocity = 20; //TODO: change (in/s)
 
 		//right and left desired wheel speeds in inches per second
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
 		double vLeft = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2;
-		SmartDashboard.putNumber("Right velocity", vRight);
-		SmartDashboard.putNumber("Left velocity", vLeft);
 		//right and left desired wheel speeds in RPM
 		double angVRight = 60 * vRight / (2 * Math.PI * WHEEL_RADIUS); //(RPM)
 		double angVLeft = 60 * vLeft / (2 * Math.PI * WHEEL_RADIUS);
-		SmartDashboard.putNumber("Right ANGULAR velocity", angVRight);
-		SmartDashboard.putNumber("Left ANGULAR velocity", angVLeft);
 		//send desired wheel speeds to Talon set to velocity control mode
 		rightTalon.set(angVRight);
 		leftTalon.set(-angVLeft);
