@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -10,20 +11,27 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Cover extends Subsystem {
 	
-	private Solenoid cover; 
+	private DoubleSolenoid cover; 
+	private boolean coverPosition;
 	
-	public Cover() 
-	{
-		cover = new Solenoid(RobotMap.GEAR_COVER);
+	public Cover() {
+		cover = new DoubleSolenoid(RobotMap.GEAR_COVER_A, RobotMap.GEAR_COVER_B);
+		coverPosition = false;
 	}
 
     public void coverPosition(boolean extended) {
-    	cover.set(extended);
-		System.out.println("Cover is extended: " + extended); 
-		}
+    	if (extended == true) {
+    		cover.set(DoubleSolenoid.Value.kForward);
+    	} 
+    	else{
+    		cover.set(DoubleSolenoid.Value.kReverse);
+    	}
+		coverPosition = extended;
+    	System.out.println("Cover is extended: " + extended); 
+	}
     
 	public boolean getCoverPosition() {
-		return cover.get();
+		return coverPosition;
 	}
 	
     public void initDefaultCommand() {

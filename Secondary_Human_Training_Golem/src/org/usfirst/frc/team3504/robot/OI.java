@@ -113,8 +113,8 @@ public class OI {
 		decrementHighShooter.whenPressed(new DecrementHighShooter());
 
 		//Buttons for gear cover
-		//coverGear = new JoystickButton(gamePad, 5); //TODO: re-enable when the hardware is finished
-		//coverGear.whenPressed(new CoverGear());
+		coverGear = new JoystickButton(gamePad, 5); //TODO: re-enable when the hardware is finished
+		coverGear.whenPressed(new CoverGear());
 		uncoverGear = new JoystickButton(gamePad, 7); 
 		uncoverGear.whenPressed(new UncoverGear());
 
@@ -124,8 +124,8 @@ public class OI {
 		unClimb = new JoystickButton(gamePad, 9); 
 		unClimb.whileHeld(new UnClimb());
 
-		motionProfile = new JoystickButton(gamePad, 5); //was 8, find value later
-		motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeftWM03.dat", "/home/lvuser/talonProfileRightWM03.dat")); 
+		//motionProfile = new JoystickButton(gamePad, 5); //was 8, find value later
+		//motionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/talonProfileLeftWM03.dat", "/home/lvuser/talonProfileRightWM03.dat")); 
 
 	}
 
