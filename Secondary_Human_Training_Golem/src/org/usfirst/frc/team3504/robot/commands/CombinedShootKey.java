@@ -11,7 +11,7 @@ public class CombinedShootKey extends CommandGroup {
 
     public CombinedShootKey() {
     	addParallel(new Shoot(Shooter.SHOOTER_SPEED_KEY));
-    	addSequential(new TimeDelay(0.5)); //TODO add a time delay of .25 seconds
+    	addSequential(new TimeDelay(0.75));
     	addSequential(new LoadBall()); 
     	
         // Add Commands here:

@@ -26,11 +26,11 @@ public class StayClimbed extends Command {
     	Robot.climber.climbMotorB.changeControlMode(TalonControlMode.Position);
 		
     	Robot.climber.climbMotorA.setF(0);
-    	Robot.climber.climbMotorA.setP(1.0); //TODO: adjust
+    	Robot.climber.climbMotorA.setP(1.0); 
     	Robot.climber.climbMotorA.setI(0);
     	Robot.climber.climbMotorA.setD(0);
     	Robot.climber.climbMotorB.setF(0);
-    	Robot.climber.climbMotorB.setP(1.0); //TODO: adjust
+    	Robot.climber.climbMotorB.setP(1.0); 
     	Robot.climber.climbMotorB.setI(0);
     	Robot.climber.climbMotorB.setD(0);
     	

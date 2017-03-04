@@ -12,7 +12,7 @@ public class CombinedShoot extends CommandGroup {
 
     public CombinedShoot() {
     	addParallel(new Shoot(Shooter.SHOOTER_DEFAULT_SPEED));
-    	addSequential(new TimeDelay(0.5)); //TODO add a time delay of .25 seconds
+    	addSequential(new TimeDelay(0.75)); 
     	addSequential(new LoadBall()); 
     	
     	

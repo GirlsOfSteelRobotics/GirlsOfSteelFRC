@@ -96,7 +96,7 @@ public class DriveByVisionVelocity extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return (leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50);
 	}
 
 	// Called once after isFinished returns true

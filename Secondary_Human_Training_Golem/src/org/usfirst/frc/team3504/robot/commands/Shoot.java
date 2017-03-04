@@ -5,6 +5,7 @@ package org.usfirst.frc.team3504.robot.commands;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Shoot extends Command {
 
 	private int loopCounter; //increment each time execute runs
-	private boolean lowMotorSet = false; //if we have started the low motor yet
+	private boolean isLowMotorRunning = false; //if we have started the low motor yet
 	private final int LOOP_TIMEOUT = 50; //~1sec of time
 	private int shooterSpeed;
 	
@@ -24,16 +25,21 @@ public class Shoot extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	loopCounter = 0;
-    	lowMotorSet = false;
+    	isLowMotorRunning = false;
     	Robot.shooter.setShooterSpeed(shooterSpeed);
+    	SmartDashboard.putBoolean("Low Shooter Running", Robot.shooter.isLowShooterMotorRunning());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (((!lowMotorSet) && (Robot.shooter.isHighShooterAtSpeed()) || loopCounter > LOOP_TIMEOUT)){
+    	SmartDashboard.putNumber("High Shooter Speed", Robot.shooter.getHighShooterSpeed());
+    	SmartDashboard.putNumber("Low Shooter Speed", Robot.shooter.getLowShooterSpeed());
+    	if (!isLowMotorRunning && (Robot.shooter.isHighShooterAtSpeed() || loopCounter > LOOP_TIMEOUT)){
+    		System.out.println("LoopCounter timeout: " + loopCounter + "\t" + Robot.shooter.isHighShooterAtSpeed());
     		Robot.shooter.startLowShooterMotor();
-    		lowMotorSet = true;
+    		isLowMotorRunning = true;
     	}
+    	SmartDashboard.putBoolean("Low Shooter Running", Robot.shooter.isLowShooterMotorRunning());
     	Robot.shooter.runHighShooterMotor();
     	Robot.shooter.runLowShooterMotor();
     	loopCounter++;

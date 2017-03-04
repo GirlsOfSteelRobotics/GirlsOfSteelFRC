@@ -27,16 +27,16 @@ public class Shooter extends Subsystem {
 	//remember to add when released to reset current shooter increment 
 	
 	//Speed mode constants //TODO: test and change
+	private static final int LOW_MAX_RPM = 3400;
+	private static final int HIGH_MAX_RPM = 5000;
 	private static final int SHOOTER_MIN_SPEED = 1000;
-	private static final int SHOOTER_MAX_SPEED = 3000;
+	private static final int SHOOTER_MAX_SPEED = HIGH_MAX_RPM;
 	private static final int SHOOTER_SPEED_STEP = 100;
 	public static final int SHOOTER_DEFAULT_SPEED = SHOOTER_MAX_SPEED;
-	public static final int SHOOTER_SPEED_GEAR = 2500;
-	public static final int SHOOTER_SPEED_KEY = 1500;
-	private static final int MAX_SHOOTER_ERROR = 5; //percent
-	private static final int LOW_MAX_RPM = 3400;
-	private static final int HIGH_MAX_RPM = 5000; 
-	
+	public static final int SHOOTER_SPEED_GEAR = 5000;
+	public static final int SHOOTER_SPEED_KEY = 3250;
+	private static final double MAX_SHOOTER_ERROR = 0.05;
+	 
 	private int shooterSpeed = SHOOTER_DEFAULT_SPEED;
 	private boolean lowMotorRunning = false;
 
@@ -44,8 +44,8 @@ public class Shooter extends Subsystem {
 		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
 		highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR); 
 		
-		lowShooterMotor.changeControlMode(TalonControlMode.Position);
-		highShooterMotor.changeControlMode(TalonControlMode.Position);
+		lowShooterMotor.changeControlMode(TalonControlMode.Speed);
+		highShooterMotor.changeControlMode(TalonControlMode.Speed);
 
 		lowShooterMotor.enableBrakeMode(false);
 		highShooterMotor.enableBrakeMode(false);
@@ -56,31 +56,29 @@ public class Shooter extends Subsystem {
 		LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
 		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
 		
-    	//PID Values TODO:tune these
-		//lowShooterMotor.setF(0.04407); //see p 17 of motion profile manual
-		lowShooterMotor.setF(0); //see p 17 of motion profile manual
+    	//PID Values
+		lowShooterMotor.setF(0.08814); //see p 17 of motion profile manual   0.04407
+		//lowShooterMotor.setF(0); //see p 17 of motion profile manual
 		lowShooterMotor.setP(0.01);
 		lowShooterMotor.setI(0.0); 
 		lowShooterMotor.setD(0.0);
     	
-    	//PID Values TODO:tune these
-		//highShooterMotor.setF(0.02997); //see p 17 of motion profile manual
-		highShooterMotor.setF(0);
+    	//PID Values
+		highShooterMotor.setF(0.05994); //see p 17 of motion profile manual    0.02997
+		//highShooterMotor.setF(0);
 		highShooterMotor.setP(0.01);
 		highShooterMotor.setI(0.0); 
 		highShooterMotor.setD(0.0);
 	}
 
 	public void runHighShooterMotor(){
-		//highShooterMotor.set(shooterSpeed);
-		highShooterMotor.set(4000);
+		highShooterMotor.set(shooterSpeed);
 	}
 	
 	public void runLowShooterMotor(){
-		/*if (lowMotorRunning){
+		if (lowMotorRunning){
 			lowShooterMotor.set(shooterSpeed);
-		}*/
-		lowShooterMotor.set(4000);
+		}
 	}
 	
 	public void startLowShooterMotor(){
@@ -91,13 +89,9 @@ public class Shooter extends Subsystem {
 		lowMotorRunning = false;
 	}
 
-	public void shootBall(){
-		highShooterMotor.set(shooterSpeed);
-		lowShooterMotor.set(shooterSpeed);
-	}
 	
-	public boolean isHighShooterAtSpeed(){
-		return (highShooterMotor.getClosedLoopError() < MAX_SHOOTER_ERROR);
+	public boolean isHighShooterAtSpeed(){ //TODO: This is broken, always returning true
+		return ((double)highShooterMotor.getClosedLoopError() / (double)shooterSpeed) < MAX_SHOOTER_ERROR;
 	}
 
 	public void stopShooterMotors(){
@@ -112,13 +106,13 @@ public class Shooter extends Subsystem {
 	
 	public void incrementHighShooterSpeed() {
 		if ((shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED) 
-			shooterSpeed = shooterSpeed + SHOOTER_SPEED_STEP;
+			shooterSpeed += SHOOTER_SPEED_STEP;
 		System.out.println("currentShooterSpeed: " + shooterSpeed);
 	}
 	
 	public void decrementHighShooterSpeed() {
 		if ((shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED)
-			shooterSpeed = shooterSpeed - SHOOTER_SPEED_STEP;
+			shooterSpeed -= SHOOTER_SPEED_STEP;
 		System.out.println("currentShooterSpeed: " + shooterSpeed);
 	}
 	
@@ -134,9 +128,16 @@ public class Shooter extends Subsystem {
 		talon.reverseSensor(false);
 	}
 	
-	public void resetEncoders(){
-		lowShooterMotor.setPosition(0);
-		highShooterMotor.setPosition(0);
+	public int getHighShooterSpeed(){
+		return highShooterMotor.getEncVelocity();
+	}
+	
+	public int getLowShooterSpeed(){
+		return lowShooterMotor.getEncVelocity();
+	}
+	
+	public boolean isLowShooterMotorRunning(){
+		return lowMotorRunning;
 	}
 
 
