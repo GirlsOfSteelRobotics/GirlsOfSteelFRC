@@ -92,6 +92,10 @@ public class DriveByMotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	//get MP status from each talon
+    	leftTalon.getMotionProfileStatus(leftStatus);
+    	rightTalon.getMotionProfileStatus(rightStatus);
+    	
     	boolean left = (leftStatus.activePointValid && leftStatus.activePoint.isLastPoint);
     	boolean right = (rightStatus.activePointValid && rightStatus.activePoint.isLastPoint);
     	System.out.println("DriveByMotion: ActiveValid: " + leftStatus.activePointValid + "IsLastPoint: " + leftStatus.activePoint.isLastPoint); ;
