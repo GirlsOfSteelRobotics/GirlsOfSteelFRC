@@ -27,16 +27,16 @@ public class Shooter extends Subsystem {
 	//remember to add when released to reset current shooter increment 
 	
 	//Speed mode constants //TODO: test and change
+	private static final int LOW_MAX_RPM = 3400;
+	private static final int HIGH_MAX_RPM = 5000;
 	private static final int SHOOTER_MIN_SPEED = 1000;
-	private static final int SHOOTER_MAX_SPEED = 3000;
+	private static final int SHOOTER_MAX_SPEED = HIGH_MAX_RPM;
 	private static final int SHOOTER_SPEED_STEP = 100;
 	public static final int SHOOTER_DEFAULT_SPEED = SHOOTER_MAX_SPEED;
-	public static final int SHOOTER_SPEED_GEAR = 2500;
-	public static final int SHOOTER_SPEED_KEY = 1500;
-	private static final int MAX_SHOOTER_ERROR = 5; //percent
-	private static final int LOW_MAX_RPM = 3400;
-	private static final int HIGH_MAX_RPM = 5000; 
-	
+	public static final int SHOOTER_SPEED_GEAR = 5000;
+	public static final int SHOOTER_SPEED_KEY = 3250;
+	private static final double MAX_SHOOTER_ERROR = 0.05;
+	 
 	private int shooterSpeed = SHOOTER_DEFAULT_SPEED;
 	private boolean lowMotorRunning = false;
 
@@ -57,14 +57,14 @@ public class Shooter extends Subsystem {
 		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
 		
     	//PID Values
-		lowShooterMotor.setF(0.04407); //see p 17 of motion profile manual
+		lowShooterMotor.setF(0.08814); //see p 17 of motion profile manual   0.04407
 		//lowShooterMotor.setF(0); //see p 17 of motion profile manual
 		lowShooterMotor.setP(0.01);
 		lowShooterMotor.setI(0.0); 
 		lowShooterMotor.setD(0.0);
     	
     	//PID Values
-		highShooterMotor.setF(0.02997); //see p 17 of motion profile manual
+		highShooterMotor.setF(0.05994); //see p 17 of motion profile manual    0.02997
 		//highShooterMotor.setF(0);
 		highShooterMotor.setP(0.01);
 		highShooterMotor.setI(0.0); 
@@ -90,8 +90,8 @@ public class Shooter extends Subsystem {
 	}
 
 	
-	public boolean isHighShooterAtSpeed(){
-		return (((double)highShooterMotor.getClosedLoopError()) /shooterSpeed < MAX_SHOOTER_ERROR);
+	public boolean isHighShooterAtSpeed(){ //TODO: This is broken, always returning true
+		return ((double)highShooterMotor.getClosedLoopError() / (double)shooterSpeed) < MAX_SHOOTER_ERROR;
 	}
 
 	public void stopShooterMotors(){
