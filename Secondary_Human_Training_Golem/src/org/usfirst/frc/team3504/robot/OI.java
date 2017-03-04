@@ -82,14 +82,14 @@ public class OI {
 		switchToBackward.whenPressed(new SwitchBackward());
 
 		// Buttons for shifters copied to both joysticks
-		shifterDown = new JoystickButton(drivingStickForward, 3);
+		shifterDown = new JoystickButton(drivingStickForward, 2);
 		shifterDown.whenPressed(new ShiftDown());
-		shifterDown = new JoystickButton(drivingStickBackward, 3);
+		shifterDown = new JoystickButton(drivingStickBackward, 2);
 		shifterDown.whenPressed(new ShiftDown());
 
-		shifterUp = new JoystickButton(drivingStickForward, 2);
+		shifterUp = new JoystickButton(drivingStickForward, 3);
 		shifterUp.whenPressed(new ShiftUp());
-		shifterUp = new JoystickButton(drivingStickBackward, 2);
+		shifterUp = new JoystickButton(drivingStickBackward, 3);
 		shifterUp.whenPressed(new ShiftUp());
 
 
