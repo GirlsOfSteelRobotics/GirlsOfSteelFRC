@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
+import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVisionVelocity;
 
@@ -14,6 +15,7 @@ public class AutoGear extends CommandGroup {
     	
     	addSequential(new DriveByMotionProfile(leftFile, rightFile));
     	addSequential(new DriveByVisionVelocity());
+    	addSequential(new DriveByDistance(4.0));
     	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
