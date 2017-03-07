@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveByVisionVelocity extends Command {
+public class DriveByVision extends Command {
 
 	NetworkTable table;
 
@@ -32,7 +32,7 @@ public class DriveByVisionVelocity extends Command {
 	//radius of wheel
 	private static final int WHEEL_RADIUS = 2; //(in)
 
-	public DriveByVisionVelocity() {
+	public DriveByVision() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.chassis);
