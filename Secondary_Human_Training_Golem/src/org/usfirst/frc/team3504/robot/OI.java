@@ -135,6 +135,9 @@ public class OI {
 		chooser.addObject("Auto RedLeftGear", new AutoGear("/home/lvuser/talonProfileLeftRedLeftGear.dat", "/home/lvuser/talonProfileRightRedLeftGear.dat"));
 		chooser.addObject("Auto RedRightGear", new AutoGear("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
 		chooser.addObject("Auto RedCenterGear", new AutoGear("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
+		chooser.addObject("Auto BlueLeftGear", new AutoGear("/home/lvuser/talonProfileRightRedLeftGear.dat", "/home/lvuser/talonProfileLeftRedLeftGear.dat")); //blue autonomous with flipped left and right values should theoretically work, but TODO: test 
+		chooser.addObject("Auto BlueRightGear", new AutoGear("/home/lvuser/talonProfileRightRedRightGear.dat", "/home/lvuser/talonProfileLeftRedRightGear.dat"));
+		chooser.addObject("Auto BlueCenterGear", new AutoGear("/home/lvuser/talonProfileRightRedCenterGear.dat", "/home/lvuser/talonProfileLeftRedCenterGear.dat"));
 		chooser.addObject("Motion Profile: RedGearBackToKey", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
 		chooser.addObject("Drive by Distance", new DriveByDistance(75));
 	}
