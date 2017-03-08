@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.DriveByVisionVelocity;
+import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 

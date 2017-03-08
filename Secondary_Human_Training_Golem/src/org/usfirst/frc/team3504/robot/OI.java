@@ -8,7 +8,7 @@ import org.usfirst.frc.team3504.robot.commands.CoverGear;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.DriveByVisionVelocity;
+import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.LoadBall;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
@@ -96,7 +96,7 @@ public class OI {
 		//operator buttons
 		//vision
 		driveByVision = new JoystickButton(gamePad, 1); 
-		driveByVision.whileHeld(new DriveByVisionVelocity());
+		driveByVision.whileHeld(new DriveByVision());
 
 		//shooter buttons
 		shootGear = new JoystickButton(gamePad, 3);
@@ -131,10 +131,13 @@ public class OI {
 		chooser.addObject("Base Line", new DriveByDistance(20.0)); //inches TODO: change value
 		chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
 		chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
-		chooser.addObject("Drive by Vision for gear", new DriveByVisionVelocity());
+		chooser.addObject("Drive by Vision for gear", new DriveByVision());
 		chooser.addObject("Auto RedLeftGear", new AutoGear("/home/lvuser/talonProfileLeftRedLeftGear.dat", "/home/lvuser/talonProfileRightRedLeftGear.dat"));
 		chooser.addObject("Auto RedRightGear", new AutoGear("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
 		chooser.addObject("Auto RedCenterGear", new AutoGear("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
+		chooser.addObject("Auto BlueLeftGear", new AutoGear("/home/lvuser/talonProfileRightRedLeftGear.dat", "/home/lvuser/talonProfileLeftRedLeftGear.dat")); //blue autonomous with flipped left and right values should theoretically work, but TODO: test 
+		chooser.addObject("Auto BlueRightGear", new AutoGear("/home/lvuser/talonProfileRightRedRightGear.dat", "/home/lvuser/talonProfileLeftRedRightGear.dat"));
+		chooser.addObject("Auto BlueCenterGear", new AutoGear("/home/lvuser/talonProfileRightRedCenterGear.dat", "/home/lvuser/talonProfileLeftRedCenterGear.dat"));
 		chooser.addObject("Motion Profile: RedGearBackToKey", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
 		chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
 		chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
