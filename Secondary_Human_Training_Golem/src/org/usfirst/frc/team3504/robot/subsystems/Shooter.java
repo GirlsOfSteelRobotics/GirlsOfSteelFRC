@@ -57,14 +57,14 @@ public class Shooter extends Subsystem {
 		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
 		
     	//PID Values
-		lowShooterMotor.setF(0.08814); //see p 17 of motion profile manual   0.04407
+		lowShooterMotor.setF(0.04407); //see p 17 of motion profile manual   0.04407
 		//lowShooterMotor.setF(0); //see p 17 of motion profile manual
 		lowShooterMotor.setP(0.01);
 		lowShooterMotor.setI(0.0); 
 		lowShooterMotor.setD(0.0);
     	
     	//PID Values
-		highShooterMotor.setF(0.05994); //see p 17 of motion profile manual    0.02997
+		highShooterMotor.setF(0.02997); //see p 17 of motion profile manual    0.02997
 		//highShooterMotor.setF(0);
 		highShooterMotor.setP(0.01);
 		highShooterMotor.setI(0.0); 

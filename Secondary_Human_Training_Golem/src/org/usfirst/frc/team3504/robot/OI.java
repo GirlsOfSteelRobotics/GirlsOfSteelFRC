@@ -136,7 +136,8 @@ public class OI {
 		chooser.addObject("Auto RedRightGear", new AutoGear("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
 		chooser.addObject("Auto RedCenterGear", new AutoGear("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
 		chooser.addObject("Motion Profile: RedGearBackToKey", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
-		chooser.addObject("Drive by Distance", new DriveByDistance(75));
+		chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
+		chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
 	}
 
 	public double getDrivingJoystickY() {
