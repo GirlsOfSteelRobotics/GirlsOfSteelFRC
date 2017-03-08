@@ -50,6 +50,9 @@ public class DriveByMotionProfile extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
+    	Robot.chassis.setupFPID(leftTalon);
+    	Robot.chassis.setupFPID(rightTalon);
 		
     	//Set Talon to MP mode
     	leftTalon.changeControlMode(TalonControlMode.MotionProfile);
