@@ -40,11 +40,16 @@ public class DriveByVision extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		
+		//not calling setupFPID because other PID values override
+		leftTalon.setPosition(0);
+		rightTalon.setPosition(0);
+    	
 		//Change motor control to speed in the -1..+1 range
 		leftTalon.changeControlMode(TalonControlMode.Speed);
-		rightTalon.changeControlMode(TalonControlMode.Speed); //TODO: change to speed
+		rightTalon.changeControlMode(TalonControlMode.Speed);
 		
-		//tuned by janet and ziya on 2/20
+		//tuned by janet and ziya on 2/20, overrides PID set in chassis method
 		leftTalon.setF(0.22);  //carpet on practice field
 		leftTalon.setP(0.235);
 		rightTalon.setF(0.2);

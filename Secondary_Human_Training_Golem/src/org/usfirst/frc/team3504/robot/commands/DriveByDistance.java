@@ -3,6 +3,9 @@ package org.usfirst.frc.team3504.robot.commands;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -11,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveByDistance extends Command {
 
 	private double rotations; 
+	private CANTalon leftTalon = Robot.chassis.getLeftTalon();
+	private CANTalon rightTalon = Robot.chassis.getRightTalon();
 	
     public DriveByDistance(double inches){
     	rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI); 
@@ -21,12 +26,11 @@ public class DriveByDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.getLeftTalon().setPosition(0); 
-    	Robot.chassis.getRightTalon().setPosition(0); 
+    	leftTalon.changeControlMode(TalonControlMode.Position); //TODO: check talon control mode, should be okay
+    	rightTalon.changeControlMode(TalonControlMode.Position);
     	
-    	Robot.chassis.getLeftTalon().setF(0.0);
-    	Robot.chassis.getRightTalon().setF(0.0);
-    	
+    	Robot.chassis.setupFPID(leftTalon);
+    	Robot.chassis.setupFPID(rightTalon);
     }
 
     // Called repeatedly when this Command is scheduled to run
