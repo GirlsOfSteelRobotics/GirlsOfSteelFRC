@@ -23,11 +23,15 @@ public class DriveByDistance extends Command {
     protected void initialize() {
     	Robot.chassis.getLeftTalon().setPosition(0); 
     	Robot.chassis.getRightTalon().setPosition(0); 
+    	
+    	Robot.chassis.getLeftTalon().setF(0.0);
+    	Robot.chassis.getRightTalon().setF(0.0);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.getLeftTalon().set(rotations);
+    	Robot.chassis.getLeftTalon().set(-rotations);
     	Robot.chassis.getRightTalon().set(rotations); 
     }
 
@@ -43,5 +47,6 @@ public class DriveByDistance extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end(); 
     }
 }
