@@ -128,7 +128,7 @@ public class OI {
 
 	public void populateChooserMenu(SendableChooser<Command> chooser){
 		chooser.addDefault("Do Nothing", new AutoDoNothing());
-		chooser.addObject("Base Line", new DriveByDistance(20.0)); //inches TODO: change value
+		chooser.addObject("Base Line", new DriveByDistance(10.0)); //inches TODO: change value
 		chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
 		chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
 		chooser.addObject("Drive by Vision for gear", new DriveByVision());
@@ -138,6 +138,9 @@ public class OI {
 		chooser.addObject("Auto BlueLeftGear", new AutoGear("/home/lvuser/talonProfileRightRedLeftGear.dat", "/home/lvuser/talonProfileLeftRedLeftGear.dat")); //blue autonomous with flipped left and right values should theoretically work, but TODO: test 
 		chooser.addObject("Auto BlueRightGear", new AutoGear("/home/lvuser/talonProfileRightRedRightGear.dat", "/home/lvuser/talonProfileLeftRedRightGear.dat"));
 		chooser.addObject("Auto BlueCenterGear", new AutoGear("/home/lvuser/talonProfileRightRedCenterGear.dat", "/home/lvuser/talonProfileLeftRedCenterGear.dat"));
+		chooser.addObject("Motion Profile: RedLeftGear", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedLeftGear.dat", "/home/lvuser/talonProfileRightRedLeftGear.dat"));
+		chooser.addObject("Motion Profile: RedCenterGear", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
+		chooser.addObject("Motion Profile: RedRightGear", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
 		chooser.addObject("Motion Profile: RedGearBackToKey", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
 		chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
 		chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
