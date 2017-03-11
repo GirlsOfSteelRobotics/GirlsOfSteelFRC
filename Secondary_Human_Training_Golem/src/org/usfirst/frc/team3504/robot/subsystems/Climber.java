@@ -34,6 +34,13 @@ public class Climber extends Subsystem {
 		climbMotorB.set(0.0);
     }
 	
+	public void setupEncoder(CANTalon talon){ //call on both talons
+		//Set Encoder Types
+		talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+		talon.reverseSensor(true);
+		talon.setPosition(0);
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
