@@ -132,16 +132,17 @@ public class OI {
 		chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
 		chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
 		chooser.addObject("Drive by Vision for gear", new DriveByVision());
-		chooser.addObject("Auto RedLeftGear", new AutoGear("/home/lvuser/talonProfileLeftRedLeftGear.dat", "/home/lvuser/talonProfileRightRedLeftGear.dat"));
-		chooser.addObject("Auto RedRightGear", new AutoGear("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
-		chooser.addObject("Auto RedCenterGear", new AutoGear("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
-		chooser.addObject("Auto BlueLeftGear", new AutoGear("/home/lvuser/talonProfileRightRedLeftGear.dat", "/home/lvuser/talonProfileLeftRedLeftGear.dat")); //blue autonomous with flipped left and right values should theoretically work, but TODO: test 
-		chooser.addObject("Auto BlueRightGear", new AutoGear("/home/lvuser/talonProfileRightRedRightGear.dat", "/home/lvuser/talonProfileLeftRedRightGear.dat"));
-		chooser.addObject("Auto BlueCenterGear", new AutoGear("/home/lvuser/talonProfileRightRedCenterGear.dat", "/home/lvuser/talonProfileLeftRedCenterGear.dat"));
-		chooser.addObject("Motion Profile: RedLeftGear", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedLeftGear.dat", "/home/lvuser/talonProfileRightRedLeftGear.dat"));
-		chooser.addObject("Motion Profile: RedCenterGear", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedCenterGear.dat", "/home/lvuser/talonProfileRightRedCenterGear.dat"));
-		chooser.addObject("Motion Profile: RedRightGear", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedRightGear.dat", "/home/lvuser/talonProfileRightRedRightGear.dat"));
-		chooser.addObject("Motion Profile: RedGearBackToKey", new DriveByMotionProfile("/home/lvuser/talonProfileLeftRedGearBackToKey.dat", "/home/lvuser/talonProfileRightRedGearBackToKey.dat"));
+		chooser.addObject("Red: Loader Gear", new AutoGear("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
+		chooser.addObject("Red: Boiler Gear", new AutoGear("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
+		chooser.addObject("Red: Center Gear", new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
+		chooser.addObject("Red MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
+		chooser.addObject("Red MP: Boiler Gear", new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
+		chooser.addObject("Red MP: Center Gear", new DriveByMotionProfile("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
+		chooser.addObject("Blue: Loader Gear", new AutoGear("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
+		chooser.addObject("Blue: Boiler Gear", new AutoGear("/home/lvuser/rightBoilerGear.dat", "/home/lvuser/leftBoilerGear.dat"));
+		chooser.addObject("Blue: Center Gear", new AutoGear("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
+		chooser.addObject("Red MP: Back to Key", new DriveByMotionProfile("/home/lvuser/leftBackToKey.dat", "/home/lvuser/rightBackToKey.dat"));
+		chooser.addObject("Blue MP: Back to Key", new DriveByMotionProfile("/home/lvuser/rightBackToKey.dat", "/home/lvuser/leftBackToKey.dat"));
 		chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
 		chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
 	}
