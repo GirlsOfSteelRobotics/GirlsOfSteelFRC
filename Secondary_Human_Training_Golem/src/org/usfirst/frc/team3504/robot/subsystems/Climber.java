@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.StayClimbed;
 
 import com.ctre.CANTalon;
@@ -22,6 +22,14 @@ public class Climber extends Subsystem {
 		
 		climbMotorA.enableBrakeMode(true);
 		climbMotorB.enableBrakeMode(true);
+		
+    	climbMotorA.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+    	climbMotorA.reverseSensor(true);
+    	
+    	climbMotorA.setF(0);
+    	climbMotorA.setP(0.5); 
+    	climbMotorA.setI(0);
+    	climbMotorA.setD(0);
 	}
 	
 	public void climb(double speed) {
@@ -33,13 +41,6 @@ public class Climber extends Subsystem {
 		climbMotorA.set(0.0);
 		climbMotorB.set(0.0);
     }
-	
-	public void setupEncoder(CANTalon talon){ //call on both talons
-		//Set Encoder Types
-		talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-		talon.reverseSensor(true);
-		talon.setPosition(0);
-	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

@@ -15,7 +15,6 @@ public class StayClimbed extends Command {
 	
     public StayClimbed() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.climber);
     }
 
@@ -23,19 +22,12 @@ public class StayClimbed extends Command {
     protected void initialize() {
     	Robot.climber.climbMotorA.changeControlMode(TalonControlMode.Position);
 		
-    	Robot.climber.climbMotorA.setF(0);
-    	Robot.climber.climbMotorA.setP(1.0); 
-    	Robot.climber.climbMotorA.setI(0);
-    	Robot.climber.climbMotorA.setD(0);
-    	
     	Robot.climber.climbMotorB.changeControlMode(TalonControlMode.Follower);
     	Robot.climber.climbMotorB.set(Robot.climber.climbMotorA.getDeviceID());
     	
-    	Robot.climber.setupEncoder(Robot.climber.climbMotorA);
-    	encPosition = Robot.climber.climbMotorA.getEncPosition();
+    	//Robot.climber.climbMotorA.setPosition(0);
+    	encPosition = Robot.climber.climbMotorA.getPosition();
     	System.out.println("Climber Encoder Position: " + encPosition);
-    	
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
