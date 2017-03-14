@@ -7,6 +7,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -44,7 +45,9 @@ public class DriveByDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
+    	SmartDashboard.putNumber("Drive Talon Left Goal", -rotations);
+    	SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getPosition());
+    	SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
