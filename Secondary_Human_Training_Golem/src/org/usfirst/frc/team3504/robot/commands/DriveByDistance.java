@@ -33,18 +33,29 @@ public class DriveByDistance extends Command {
     	leftTalon.changeControlMode(TalonControlMode.Position); //TODO: check talon control mode, should be okay
     	rightTalon.changeControlMode(TalonControlMode.Position);
     	
-    	Robot.chassis.setupFPID(leftTalon);
-    	Robot.chassis.setupFPID(rightTalon);
+    	//Robot.chassis.setupFPID(leftTalon);
+    	//Robot.chassis.setupFPID(rightTalon);
+    	leftTalon.setP(0.17);
+    	rightTalon.setP(0.17);
+
+    	leftTalon.setI(0.0);
+    	rightTalon.setI(0.0);
+    	
+    	leftTalon.setD(0.02);
+    	rightTalon.setD(0.02);
     	
     	leftTalon.setF(0.0);
     	rightTalon.setF(0.0);
     	
-    	leftTalon.set(-rotations); //Move this back to execute
-    	rightTalon.set(rotations); //Move this back to execute
+    	leftTalon.setPosition(0.0);
+    	rightTalon.setPosition(0.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	leftTalon.set(-rotations); //Move this back to execute
+    	rightTalon.set(rotations); //Move this back to execute
+
     	SmartDashboard.putNumber("Drive Talon Left Goal", -rotations);
     	SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getPosition());
     	SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getError());

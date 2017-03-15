@@ -143,6 +143,9 @@ public class OI {
 		chooser.addObject("Blue: Center Gear", new AutoGear("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
 		chooser.addObject("Red MP: Back to Key", new DriveByMotionProfile("/home/lvuser/leftBackToKey.dat", "/home/lvuser/rightBackToKey.dat"));
 		chooser.addObject("Blue MP: Back to Key", new DriveByMotionProfile("/home/lvuser/rightBackToKey.dat", "/home/lvuser/leftBackToKey.dat"));
+		chooser.addObject("Blue MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
+		chooser.addObject("Blue MP: Boiler Gear", new DriveByMotionProfile("/home/lvuser/rightBoilerGear.dat", "/home/lvuser/leftBoilerGear.dat"));
+		chooser.addObject("Blue MP: Center Gear", new DriveByMotionProfile("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
 		chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
 		chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
 	}

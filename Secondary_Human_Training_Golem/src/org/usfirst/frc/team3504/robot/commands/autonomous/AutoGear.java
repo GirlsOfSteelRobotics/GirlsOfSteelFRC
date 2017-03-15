@@ -14,8 +14,8 @@ public class AutoGear extends CommandGroup {
     public AutoGear(String leftFile, String rightFile) {
     	
     	addSequential(new DriveByMotionProfile(leftFile, rightFile));
-    	addSequential(new DriveByVision()); //this is a while held button, so this might not work since it needs to run more than once... TODO: fix?
-    	//addSequential(new DriveByDistance(-4.0)); //TODO: adjust this value
+    	addSequential(new DriveByVision());
+    	addSequential(new DriveByDistance(-4.0));
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());
