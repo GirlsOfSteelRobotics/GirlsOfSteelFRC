@@ -77,7 +77,7 @@ public class Shooter extends Subsystem {
 	
 	public void runLowShooterMotor(){
 		if (lowMotorRunning){
-			lowShooterMotor.set(shooterSpeed);
+			lowShooterMotor.set(shooterSpeed*((double)LOW_MAX_RPM/(double)HIGH_MAX_RPM));
 		}
 	}
 	
