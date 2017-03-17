@@ -10,12 +10,11 @@ import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
-import org.usfirst.frc.team3504.robot.commands.LoadBall;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
-import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
+import org.usfirst.frc.team3504.robot.commands.TestTalons;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBlueHopper;
@@ -27,7 +26,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -149,6 +147,13 @@ public class OI {
 		chooser.addObject("Blue MP: Boiler Corrected", new DriveByMotionProfile("/home/lvuser/rightBoilerCorrected.dat", "/home/lvuser/leftBoilerCorrected.dat"));
 		chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
 		chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
+		chooser.addObject("Test Left Talon A", new TestTalons(1));
+		chooser.addObject("Test Left Talon B", new TestTalons(2));
+		chooser.addObject("Test Left Talon C", new TestTalons(3));
+		chooser.addObject("Test Right Talon A", new TestTalons(4));
+		chooser.addObject("Test Right Talon B", new TestTalons(5));
+		chooser.addObject("Test Right Talon C", new TestTalons(6));
+				
 	}
 
 	public double getDrivingJoystickY() {

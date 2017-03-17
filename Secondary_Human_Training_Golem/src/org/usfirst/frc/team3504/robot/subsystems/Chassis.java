@@ -59,14 +59,33 @@ public class Chassis extends Subsystem {
 		setDefaultCommand( new DriveByJoystick() );
 	}
 	
+	//A
 	public CANTalon getLeftTalon(){
 		return driveLeftA; 
 	}
 	
+	public CANTalon getLeftTalonB()
+	{
+		return driveLeftB;
+	}
+	
+	public CANTalon getLeftTalonC()
+	{
+		return driveLeftC;
+	}
+	
+	//A
 	public CANTalon getRightTalon(){
 		return driveRightA; 
 	}
 	
+	public CANTalon getRightTalonB(){
+		return driveRightB; 
+	}
+	
+	public CANTalon getRightTalonC(){
+		return driveRightC; 
+	}
 	public void stop(){
 		driveLeftA.set(0);
 		driveRightA.set(0);
