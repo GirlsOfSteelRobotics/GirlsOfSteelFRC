@@ -127,28 +127,28 @@ public class OI {
 	}
 
 	public void populateChooserMenu(SendableChooser<Command> chooser){
-		chooser.addDefault("Do Nothing", new AutoDoNothing());
-		chooser.addObject("Base Line", new DriveByDistance(10.0)); //inches TODO: change value
+		chooser.addObject("Do Nothing", new AutoDoNothing());
+		chooser.addDefault("Base Line", new DriveByDistance(112.0)); //inches TODO: change value
 		chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
 		chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
 		chooser.addObject("Drive by Vision for gear", new DriveByVision());
 		chooser.addObject("Red: Loader Gear", new AutoGear("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
 		chooser.addObject("Red: Boiler Gear", new AutoGear("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
 		chooser.addObject("Red: Center Gear", new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
-		chooser.addObject("Red MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
-		chooser.addObject("Red MP: Boiler Gear", new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
-		chooser.addObject("Red MP: Center Gear", new DriveByMotionProfile("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
+		//chooser.addObject("Red MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
+		//chooser.addObject("Red MP: Boiler Gear", new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
+		//chooser.addObject("Red MP: Center Gear", new DriveByMotionProfile("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
 		chooser.addObject("Blue: Loader Gear", new AutoGear("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
 		chooser.addObject("Blue: Boiler Gear", new AutoGear("/home/lvuser/rightBoilerGear.dat", "/home/lvuser/leftBoilerGear.dat"));
 		chooser.addObject("Blue: Center Gear", new AutoGear("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
-		chooser.addObject("Red MP: Back to Key", new DriveByMotionProfile("/home/lvuser/leftBackToKey.dat", "/home/lvuser/rightBackToKey.dat"));
-		chooser.addObject("Blue MP: Back to Key", new DriveByMotionProfile("/home/lvuser/rightBackToKey.dat", "/home/lvuser/leftBackToKey.dat"));
-		chooser.addObject("Blue MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
-		chooser.addObject("Blue MP: Center Gear", new DriveByMotionProfile("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
-		chooser.addObject("Blue MP: Boiler Normal", new DriveByMotionProfile("/home/lvuser/rightBoilerNormal.dat", "/home/lvuser/leftBoilerNormal.dat"));
-		chooser.addObject("Blue MP: Boiler Corrected", new DriveByMotionProfile("/home/lvuser/rightBoilerCorrected.dat", "/home/lvuser/leftBoilerCorrected.dat"));
-		chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
-		chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
+		//chooser.addObject("Red MP: Back to Key", new DriveByMotionProfile("/home/lvuser/leftBackToKey.dat", "/home/lvuser/rightBackToKey.dat"));
+		//chooser.addObject("Blue MP: Back to Key", new DriveByMotionProfile("/home/lvuser/rightBackToKey.dat", "/home/lvuser/leftBackToKey.dat"));
+		//chooser.addObject("Blue MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
+		//chooser.addObject("Blue MP: Center Gear", new DriveByMotionProfile("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
+		//chooser.addObject("Blue MP: Boiler Normal", new DriveByMotionProfile("/home/lvuser/rightBoilerNormal.dat", "/home/lvuser/leftBoilerNormal.dat"));
+		//chooser.addObject("Blue MP: Boiler Corrected", new DriveByMotionProfile("/home/lvuser/rightBoilerCorrected.dat", "/home/lvuser/leftBoilerCorrected.dat"));
+		//chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
+		//chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
 	}
 
 	public double getDrivingJoystickY() {

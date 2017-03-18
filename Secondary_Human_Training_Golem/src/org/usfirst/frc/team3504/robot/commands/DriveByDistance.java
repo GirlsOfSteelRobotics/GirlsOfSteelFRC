@@ -49,26 +49,40 @@ public class DriveByDistance extends Command {
     	
     	leftTalon.setPosition(0.0);
     	rightTalon.setPosition(0.0);
+    	
+    	System.out.println("Drive by Distance Started " + rotations);
+    	
+        leftTalon.set(-rotations);
+        rightTalon.set(rotations);
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	leftTalon.set(-rotations); //Move this back to execute
-    	rightTalon.set(rotations); //Move this back to execute
+    	leftTalon.set(-rotations);
+    	rightTalon.set(rotations);
 
     	SmartDashboard.putNumber("Drive Talon Left Goal", -rotations);
     	SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getPosition());
     	SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getError());
+    	
+      	System.out.println("Drive Talon Left Goal" + -rotations);
+      	System.out.println("Drive Talon Left Position" + leftTalon.getPosition());
+      	System.out.println("Drive Talon Left Error" + leftTalon.getError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(Robot.chassis.getLeftTalon().getClosedLoopError()) < ERROR_LIMIT && 
-    			Math.abs(Robot.chassis.getRightTalon().getClosedLoopError()) < ERROR_LIMIT; //closedLoopError is in integers and represents ticks
+    	return (rotations < rightTalon.getPosition() && -rotations < leftTalon.getPosition()); //compares without error
+    	
+    	//this doesn't work - possibly something wrong with error math
+    	//return Math.abs(Robot.chassis.getLeftTalon().getClosedLoopError()) < ERROR_LIMIT && 
+    			//Math.abs(Robot.chassis.getRightTalon().getClosedLoopError()) < ERROR_LIMIT; //closedLoopError is in integers and represents ticks
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("Drive by Distance Finished");
     }
 
     // Called when another command which requires one or more of the same

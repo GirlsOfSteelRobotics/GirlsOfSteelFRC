@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
@@ -89,8 +90,9 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = chooser.getSelected();
-    	
+        autonomousCommand = new DriveByDistance(80.5); //new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat");//chooser.getSelected();
+    	//80.5in is good
+        
         //start the robot out in low gear when starting autonomous
         shifters.shiftGear(Shifters.Speed.kLow);
         
