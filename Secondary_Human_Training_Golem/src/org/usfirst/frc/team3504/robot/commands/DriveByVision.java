@@ -22,6 +22,7 @@ public class DriveByVision extends Command {
 	double[] defaultValue = new double[0];
 	public CANTalon leftTalon = Robot.chassis.getLeftTalon();
 	public CANTalon rightTalon = Robot.chassis.getRightTalon();
+	private int timeout;
 	
 	//width of X or Y in pixels when the robot is at the lift
 	//private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -56,10 +57,13 @@ public class DriveByVision extends Command {
 		rightTalon.setP(0.235);
 		
 		System.out.println("DriveByVision Initialized");
+		
+		timeout = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		timeout+=1;
 		
 		table = NetworkTable.getTable("GRIP/myContoursReport");
 		
@@ -101,7 +105,10 @@ public class DriveByVision extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return (leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50);
+		if (timeout % 20 == 0){
+			System.out.println("Vision Timeout: " + timeout);
+		}
+		return ((leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50) || (timeout > 200));
 	}
 
 	// Called once after isFinished returns true
