@@ -108,7 +108,7 @@ public class DriveByVision extends Command {
 		if (timeout % 20 == 0){
 			System.out.println("Vision Timeout: " + timeout);
 		}
-		return ((leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50) || (timeout > 200));
+		return ((leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50) /*|| (timeout > 200)*/);
 	}
 
 	// Called once after isFinished returns true
