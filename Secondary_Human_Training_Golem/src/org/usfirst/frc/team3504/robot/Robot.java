@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
+import org.usfirst.frc.team3504.robot.commands.TurnToGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -16,9 +17,6 @@ import org.usfirst.frc.team3504.robot.subsystems.Climber;
 import org.usfirst.frc.team3504.robot.subsystems.Cover;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBlueHopper;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoRedHopper;
 //import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.*;
 
@@ -90,7 +88,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = chooser.getSelected(); //new DriveByDistance(75.5); //new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat");
+        autonomousCommand = new AutoGear(115.5, TurnToGear.Direction.kRight); //new DriveByDistance(75.5); //new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat");
     	//80.5in is good
         
         //start the robot out in low gear when starting autonomous

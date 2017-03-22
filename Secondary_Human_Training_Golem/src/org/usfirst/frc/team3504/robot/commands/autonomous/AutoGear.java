@@ -3,6 +3,8 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
+import org.usfirst.frc.team3504.robot.commands.TurnToGear;
+import org.usfirst.frc.team3504.robot.commands.TurnToGear.Direction;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -11,9 +13,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoGear extends CommandGroup {
 
-    public AutoGear(String leftFile, String rightFile) {
+    public AutoGear(double distance, Direction direction) {
     	
-    	addSequential(new DriveByMotionProfile(leftFile, rightFile));
+    	addSequential(new DriveByDistance(distance)); 
+    	addSequential(new TurnToGear(direction)); 
     	addSequential(new DriveByVision());
     	addSequential(new DriveByDistance(-4.0));
     	

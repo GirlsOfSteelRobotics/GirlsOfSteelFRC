@@ -13,7 +13,7 @@ import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
-import org.usfirst.frc.team3504.robot.commands.TurnRightToGear;
+import org.usfirst.frc.team3504.robot.commands.TurnToGear;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
@@ -61,7 +61,7 @@ public class OI {
 	public JoystickButton motionProfile;
 
 	private JoystickButton driveByVision;
-	private JoystickButton turnRightToGear;
+	private JoystickButton turnLeftToGear;
 
 
 	public OI() {
@@ -121,8 +121,8 @@ public class OI {
 		unClimb.whileHeld(new UnClimb());
 		
 		//Turn to Gear
-		turnRightToGear = new JoystickButton(gamePad, 1);
-		turnRightToGear.whenPressed(new TurnRightToGear());
+		turnLeftToGear = new JoystickButton(gamePad, 1);
+		turnLeftToGear.whenPressed(new TurnToGear(TurnToGear.Direction.kLeft));
 	}
 
 	public void populateChooserMenu(SendableChooser<Command> chooser){
@@ -132,15 +132,15 @@ public class OI {
 		//chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
 		//chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
 		//chooser.addObject("Drive by Vision for gear", new DriveByVision());
-		chooser.addObject("Red: Loader Gear", new AutoGear("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
-		chooser.addObject("Red: Boiler Gear", new AutoGear("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
-		chooser.addObject("Red: Center Gear", new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
+		chooser.addObject("Red Loader Gear", new AutoGear(115.5, TurnToGear.Direction.kLeft));
+		chooser.addObject("Red Boiler Gear", new AutoGear(115.5, TurnToGear.Direction.kRight));
+		chooser.addObject("Red Center Gear", new DriveByVision());
 		//chooser.addObject("Red MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
 		//chooser.addObject("Red MP: Boiler Gear", new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
 		//chooser.addObject("Red MP: Center Gear", new DriveByMotionProfile("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
-		chooser.addObject("Blue: Loader Gear", new AutoGear("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
-		chooser.addObject("Blue: Boiler Gear", new AutoGear("/home/lvuser/rightBoilerGear.dat", "/home/lvuser/leftBoilerGear.dat"));
-		chooser.addObject("Blue: Center Gear", new AutoGear("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
+		chooser.addObject("Blue Loader Gear", new AutoGear(115.5, TurnToGear.Direction.kRight));
+		chooser.addObject("Blue Boiler Gear", new AutoGear(115.5, TurnToGear.Direction.kLeft));
+		chooser.addObject("Blue Center Gear", new DriveByVision());
 		//chooser.addObject("Red MP: Back to Key", new DriveByMotionProfile("/home/lvuser/leftBackToKey.dat", "/home/lvuser/rightBackToKey.dat"));
 		//chooser.addObject("Blue MP: Back to Key", new DriveByMotionProfile("/home/lvuser/rightBackToKey.dat", "/home/lvuser/leftBackToKey.dat"));
 		//chooser.addObject("Blue MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
@@ -149,12 +149,6 @@ public class OI {
 		//chooser.addObject("Blue MP: Boiler Corrected", new DriveByMotionProfile("/home/lvuser/rightBoilerCorrected.dat", "/home/lvuser/leftBoilerCorrected.dat"));
 		//chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
 		//chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
-		//chooser.addObject("Test Left Talon A", new TestTalons(1));
-		//chooser.addObject("Test Left Talon B", new TestTalons(2));
-		//chooser.addObject("Test Left Talon C", new TestTalons(3));
-		//chooser.addObject("Test Right Talon A", new TestTalons(4));
-		//chooser.addObject("Test Right Talon B", new TestTalons(5));
-		//chooser.addObject("Test Right Talon C", new TestTalons(6));
 	}
 
 	public double getDrivingJoystickY() {

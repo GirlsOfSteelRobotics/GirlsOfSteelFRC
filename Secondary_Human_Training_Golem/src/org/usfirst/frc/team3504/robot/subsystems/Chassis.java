@@ -108,18 +108,11 @@ public class Chassis extends Subsystem {
 	}
 	
 	//for TurnRightToGear()
-	public void turnRight(double speed)
+	public void turn(double speed)
 	{
 		driveRightA.set(speed);
 		driveLeftA.set(speed);
 	}
-	
-	//for TurnLeftToGear()
-	public void turnLeft(double speed)
-	{
-		driveLeftA.set(speed);
-		driveRightA.set(speed);
-	}
-		
+
 	
 }
