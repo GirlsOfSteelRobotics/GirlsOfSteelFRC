@@ -14,25 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveByJoystick extends Command {
 	
-	
-	private RobotDrive robotDrive;
 	private CANTalon leftTalon = Robot.chassis.getLeftTalon();
 	private CANTalon rightTalon = Robot.chassis.getRightTalon();
 	
     public DriveByJoystick() {
     	// Use requires() here to declare subsystem dependencies
     	// eg. requires(chassis);
-    	requires(Robot.chassis);
-
-    	robotDrive = new RobotDrive(Robot.chassis.getLeftTalon(), Robot.chassis.getRightTalon());
-    	// Set some safety controls for the drive system
-    	robotDrive.setSafetyEnabled(true);
-    	robotDrive.setExpiration(0.1);
-    	robotDrive.setSensitivity(0.5);
-    	robotDrive.setMaxOutput(1.0);
-    	
-    	robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false); 
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
+    	requires(Robot.chassis);	
     }
 
     // Called just before this Command runs the first time
@@ -48,7 +36,7 @@ public class DriveByJoystick extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	robotDrive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
+    	Robot.chassis.arcadeDrive();
     	SmartDashboard.putNumber("drive by joystick Y?", Robot.oi.getDrivingJoystickY());
     	SmartDashboard.putNumber("drive by joystick X?", Robot.oi.getDrivingJoystickX());
     }
@@ -59,7 +47,7 @@ public class DriveByJoystick extends Command {
     }
 
     public void stop(){
-    	robotDrive.drive(0, 0);
+    	Robot.chassis.stop();
     }
     
     // Called once after isFinished returns true

@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -19,6 +20,9 @@ public class Shifters extends Subsystem {
     public Shifters() {
 		shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
 		shifterRight = new DoubleSolenoid(RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
+		
+		LiveWindow.addActuator("Shifters", "shifterLeft", shifterLeft);
+		LiveWindow.addActuator("Shifters", "shifterRight", shifterRight);
 
 	}
     // Put methods for controlling this subsystem

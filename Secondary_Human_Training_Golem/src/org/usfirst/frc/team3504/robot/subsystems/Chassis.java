@@ -9,6 +9,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -22,6 +23,8 @@ public class Chassis extends Subsystem {
 	private CANTalon driveRightA;
 	private CANTalon driveRightB;
 	private CANTalon driveRightC;
+	
+	private RobotDrive robotDrive;
 
 	public Chassis() {
 		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
@@ -49,9 +52,23 @@ public class Chassis extends Subsystem {
 		
 		setupEncoder(driveLeftA);
 		setupEncoder(driveRightA);
+		
+		robotDrive = new RobotDrive(Robot.chassis.getLeftTalon(), Robot.chassis.getRightTalon());
+    	// Set some safety controls for the drive system
+    	robotDrive.setSafetyEnabled(true);
+    	robotDrive.setExpiration(0.1);
+    	robotDrive.setSensitivity(0.5);
+    	robotDrive.setMaxOutput(1.0);
+    	
+    	robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false); 
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
         
 		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
+		LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
+		LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
 		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
+		LiveWindow.addActuator("Chassis", "driveRightB", driveRightB);
+		LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
 	}
 
 	public void initDefaultCommand() {
@@ -59,33 +76,18 @@ public class Chassis extends Subsystem {
 		setDefaultCommand( new DriveByJoystick() );
 	}
 	
-	//A
 	public CANTalon getLeftTalon(){
 		return driveLeftA; 
 	}
-	
-	public CANTalon getLeftTalonB()
-	{
-		return driveLeftB;
-	}
-	
-	public CANTalon getLeftTalonC()
-	{
-		return driveLeftC;
-	}
-	
-	//A
+
 	public CANTalon getRightTalon(){
 		return driveRightA; 
 	}
 	
-	public CANTalon getRightTalonB(){
-		return driveRightB; 
+	public void arcadeDrive(){
+		robotDrive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
 	}
 	
-	public CANTalon getRightTalonC(){
-		return driveRightC; 
-	}
 	public void stop(){
 		driveLeftA.set(0);
 		driveRightA.set(0);

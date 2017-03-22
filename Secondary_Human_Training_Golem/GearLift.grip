@@ -88,7 +88,7 @@
         <value>0.0</value>
       </grip:Input>
       <grip:Input step="2" socket="10">
-        <value>0.2</value>
+        <value>0.3</value>
       </grip:Input>
       <grip:Input step="2" socket="11">
         <value>0.7</value>
