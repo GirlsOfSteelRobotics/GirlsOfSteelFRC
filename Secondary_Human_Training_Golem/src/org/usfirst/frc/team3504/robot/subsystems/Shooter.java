@@ -69,6 +69,9 @@ public class Shooter extends Subsystem {
 		highShooterMotor.setP(0.01);
 		highShooterMotor.setI(0.0); 
 		highShooterMotor.setD(0.0);
+		
+		LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
+		LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
 	}
 
 	public void runHighShooterMotor(){
