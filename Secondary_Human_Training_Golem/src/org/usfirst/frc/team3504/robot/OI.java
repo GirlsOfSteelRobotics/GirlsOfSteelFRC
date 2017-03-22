@@ -7,20 +7,17 @@ import org.usfirst.frc.team3504.robot.commands.CombinedShootKey;
 import org.usfirst.frc.team3504.robot.commands.CoverGear;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
-import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
-import org.usfirst.frc.team3504.robot.commands.TestTalons;
+import org.usfirst.frc.team3504.robot.commands.TurnRightToGear;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBlueHopper;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoRedHopper;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -64,6 +61,7 @@ public class OI {
 	public JoystickButton motionProfile;
 
 	private JoystickButton driveByVision;
+	private JoystickButton turnRightToGear;
 
 
 	public OI() {
@@ -121,7 +119,10 @@ public class OI {
 		climb.whileHeld(new Climb());
 		unClimb = new JoystickButton(gamePad, 9); 
 		unClimb.whileHeld(new UnClimb());
-
+		
+		//Turn to Gear
+		turnRightToGear = new JoystickButton(gamePad, 1);
+		turnRightToGear.whenPressed(new TurnRightToGear());
 	}
 
 	public void populateChooserMenu(SendableChooser<Command> chooser){

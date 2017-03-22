@@ -107,6 +107,19 @@ public class Chassis extends Subsystem {
     	talon.setD(0.0);
 	}
 	
+	//for TurnRightToGear()
+	public void turnRight(double speed)
+	{
+		driveRightA.set(speed);
+		driveLeftA.set(speed);
+	}
 	
+	//for TurnLeftToGear()
+	public void turnLeft(double speed)
+	{
+		driveLeftA.set(speed);
+		driveRightA.set(speed);
+	}
+		
 	
 }
