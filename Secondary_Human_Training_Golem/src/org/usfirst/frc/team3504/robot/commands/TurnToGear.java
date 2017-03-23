@@ -17,7 +17,7 @@ public class TurnToGear extends Command {
 	//private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0;
 	//private static final double TOLERANCE = 5; //TODO: test this (in pixels)
 	
-	double[] centerX = new double[2];
+	double[] centerX = new double[3];
 	//private double currentX;
 
 	public enum Direction {kLeft, kRight}; 
@@ -32,6 +32,7 @@ public class TurnToGear extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.setModePercentVBus();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,9 +42,11 @@ public class TurnToGear extends Command {
 		centerX = table.getNumberArray("centerX", defaultValue);
 		
 		if (direction == Direction.kRight){
-			Robot.chassis.turn(0.1); //TODO: test
+			Robot.chassis.turn(0.3, 1.0); //TODO: test
+			System.out.println("turning right");
 		} else if (direction == Direction.kLeft){
-			Robot.chassis.turn(-0.1);
+			Robot.chassis.turn(-0.3, -1.0);
+			System.out.println("turning left");
 		}
 		
 		
@@ -59,6 +62,7 @@ public class TurnToGear extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	System.out.println("centerX: " + centerX + " CenterX Length: " + centerX.length);
         return centerX.length == 2;
     }
 

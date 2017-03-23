@@ -5,6 +5,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -53,7 +54,7 @@ public class Chassis extends Subsystem {
 		setupEncoder(driveLeftA);
 		setupEncoder(driveRightA);
 		
-		robotDrive = new RobotDrive(Robot.chassis.getLeftTalon(), Robot.chassis.getRightTalon());
+		robotDrive = new RobotDrive(driveLeftA, driveRightA);
     	// Set some safety controls for the drive system
     	robotDrive.setSafetyEnabled(true);
     	robotDrive.setExpiration(0.1);
@@ -87,11 +88,7 @@ public class Chassis extends Subsystem {
 	public void arcadeDrive(){
 		robotDrive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
 	}
-	
-	public void stop(){
-		driveLeftA.set(0);
-		driveRightA.set(0);
-	}
+
 	
 	public void setupEncoder(CANTalon talon){ //only call this on non-follower talons
 		//Set Encoder Types
@@ -109,12 +106,18 @@ public class Chassis extends Subsystem {
     	talon.setD(0.0);
 	}
 	
-	//for TurnRightToGear()
-	public void turn(double speed)
-	{
-		driveRightA.set(speed);
-		driveLeftA.set(speed);
+	public void turn(double speed, double curve){
+		robotDrive.drive(speed, curve);
+	}
+	
+	public void setModePercentVBus(){
+		driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
+		driveRightA.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
+	public void stop(){
+		driveLeftA.set(0);
+		driveRightA.set(0);
+	}
 	
 }

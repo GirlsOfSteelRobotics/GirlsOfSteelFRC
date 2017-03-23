@@ -91,8 +91,8 @@ public class OI {
 
 		//operator buttons
 		//vision
-		driveByVision = new JoystickButton(gamePad, 1); 
-		driveByVision.whileHeld(new DriveByVision());
+		//driveByVision = new JoystickButton(gamePad, 1); 
+		//driveByVision.whileHeld(new DriveByVision());
 
 		//shooter buttons
 		shootGear = new JoystickButton(gamePad, 3);

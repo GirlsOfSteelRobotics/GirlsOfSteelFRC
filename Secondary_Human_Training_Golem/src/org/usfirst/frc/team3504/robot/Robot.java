@@ -88,7 +88,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = new AutoGear(115.5, TurnToGear.Direction.kRight); //new DriveByDistance(75.5); //new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat");
+        autonomousCommand = new AutoGear(69.5, TurnToGear.Direction.kRight);//new DriveByDistance(69.5);   //new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat");
     	//80.5in is good
         
         //start the robot out in low gear when starting autonomous
