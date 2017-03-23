@@ -42,10 +42,10 @@ public class TurnToGear extends Command {
 		centerX = table.getNumberArray("centerX", defaultValue);
 		
 		if (direction == Direction.kRight){
-			Robot.chassis.turn(0.3, 1.0); //TODO: test
+			Robot.chassis.turn(0.3, -1.0); //TODO: test
 			System.out.println("turning right");
 		} else if (direction == Direction.kLeft){
-			Robot.chassis.turn(-0.3, -1.0);
+			Robot.chassis.turn(0.3, 1.0);
 			System.out.println("turning left");
 		}
 		

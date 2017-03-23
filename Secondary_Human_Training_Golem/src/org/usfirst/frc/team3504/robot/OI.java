@@ -91,8 +91,8 @@ public class OI {
 
 		//operator buttons
 		//vision
-		//driveByVision = new JoystickButton(gamePad, 1); 
-		//driveByVision.whileHeld(new DriveByVision());
+		driveByVision = new JoystickButton(gamePad, 1); 
+		driveByVision.whileHeld(new DriveByVision());
 
 		//shooter buttons
 		shootGear = new JoystickButton(gamePad, 3);
@@ -121,8 +121,8 @@ public class OI {
 		unClimb.whileHeld(new UnClimb());
 		
 		//Turn to Gear
-		turnLeftToGear = new JoystickButton(gamePad, 1);
-		turnLeftToGear.whenPressed(new TurnToGear(TurnToGear.Direction.kLeft));
+		//turnLeftToGear = new JoystickButton(gamePad, 1);
+		//turnLeftToGear.whenPressed(new TurnToGear(TurnToGear.Direction.kRight));
 	}
 
 	public void populateChooserMenu(SendableChooser<Command> chooser){
