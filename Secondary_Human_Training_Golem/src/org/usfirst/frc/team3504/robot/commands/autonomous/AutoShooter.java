@@ -1,27 +1,22 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
-import org.usfirst.frc.team3504.robot.commands.DriveByVision;
-import org.usfirst.frc.team3504.robot.commands.TurnToGear;
-import org.usfirst.frc.team3504.robot.commands.TurnToGear.Direction;
+import org.usfirst.frc.team3504.robot.commands.Shoot;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+
 /**
  *
  */
-public class AutoGear extends CommandGroup {
+public class AutoShooter extends CommandGroup {
 
-    public AutoGear(double distance, Direction direction) {
-    	
-    	addSequential(new DriveByDistance(distance)); 
-    	addSequential(new TurnToGear(direction)); 
-    	addSequential(new DriveByVision());
-    	addSequential(new DriveByDistance(-4.0));
-    	
-    	// Add Commands here:
+    public AutoShooter() {
+        // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
+    	
+    	addSequential(new Shoot(Shooter.SHOOTER_SPEED_KEY));
 
         // To run multiple commands at the same time,
         // use addParallel()
