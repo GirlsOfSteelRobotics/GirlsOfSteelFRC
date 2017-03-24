@@ -16,7 +16,7 @@ public class AutoGear extends CommandGroup {
     	addSequential(new DriveByDistance(distance)); 
     	addSequential(new TurnToGear(direction)); 
     	addSequential(new DriveByVision());
-    	addSequential(new DriveByDistance(-4.0));
+    	addSequential(new DriveByDistance(-3.0));
     	
     	// Add Commands here:
         // e.g. addSequential(new Command1());

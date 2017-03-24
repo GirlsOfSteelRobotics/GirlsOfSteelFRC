@@ -96,8 +96,8 @@ public class DriveByVision extends Command {
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
 		double vLeft = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2;
 		//right and left desired wheel speeds in RPM
-		double angVRight = 60 * vRight / (2 * Math.PI * WHEEL_RADIUS); //(RPM)
-		double angVLeft = 60 * vLeft / (2 * Math.PI * WHEEL_RADIUS);
+		double angVRight = 75 * vRight / (2 * Math.PI * WHEEL_RADIUS); //(RPM)
+		double angVLeft = 75 * vLeft / (2 * Math.PI * WHEEL_RADIUS);
 		//send desired wheel speeds to Talon set to velocity control mode
 		rightTalon.set(angVRight);
 		leftTalon.set(-angVLeft);
@@ -108,11 +108,12 @@ public class DriveByVision extends Command {
 		if (timeout % 20 == 0){
 			System.out.println("Vision Timeout: " + timeout);
 		}
-		return ((leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50) /*|| (timeout > 200)*/);
+		return timeout > 350; //((timeout > 3 && (leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50)) /*|| (timeout > 200)*/);
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		System.out.println("DriveByVision Finished");
 	}
 
 	// Called when another command which requires one or more of the same
