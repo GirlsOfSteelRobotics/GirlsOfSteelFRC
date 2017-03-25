@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CombinedShoot extends CommandGroup {
 
     public CombinedShoot() {
-    	addParallel(new Shoot(Shooter.SHOOTER_DEFAULT_SPEED));
+    	addParallel(new CombinedShootKey());
     	addSequential(new TimeDelay(0.75)); 
     	addSequential(new LoadBall()); 
     	
