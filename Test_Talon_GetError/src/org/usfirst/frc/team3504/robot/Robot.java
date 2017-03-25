@@ -17,7 +17,7 @@ public class Robot extends SampleRobot {
 	double rotations;
 
 	public Robot() {
-		talon = new CANTalon(0);
+		talon = new CANTalon(1);
 		talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		talon.configEncoderCodesPerRev(256);
 		talon.reverseSensor(false);
@@ -27,6 +27,10 @@ public class Robot extends SampleRobot {
 
 	@Override
 	public void robotInit() {
+	}
+
+	@Override
+	public void autonomous() {
 		talon.changeControlMode(TalonControlMode.Position);
 
 		talon.setP(0.17);
@@ -45,10 +49,6 @@ public class Robot extends SampleRobot {
 		System.out.println("Talon Position:          " + talon.getPosition());
 		System.out.println("Talon Closed Loop Error: " + talon.getClosedLoopError());
 		System.out.println("Talon Error:             " + talon.getError());
-	}
-
-	@Override
-	public void autonomous() {
 	}
 
 	@Override

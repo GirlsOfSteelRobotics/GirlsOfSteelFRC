@@ -110,7 +110,7 @@ public class DriveByVision extends Command {
 	protected boolean isFinished() {
 		SmartDashboard.putNumber("Vision Timer", tim.get());
 		
-		return (Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY && 
+		return (tim.get() > 1 && Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY && 
 				Math.abs(rightTalon.getEncVelocity()) < SLIPPING_VELOCITY) ||
 				((tim.get() > TIMEOUT));
 	}
