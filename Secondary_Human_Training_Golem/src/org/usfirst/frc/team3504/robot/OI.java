@@ -18,6 +18,7 @@ import org.usfirst.frc.team3504.robot.commands.UnClimb;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoShooter;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -136,8 +137,9 @@ public class OI {
 		    case 3: return new AutoGear (115.5, TurnToGear.Direction.kLeft); 
 		    case 4: return new AutoGear(115.5, TurnToGear.Direction.kRight);
 		    case 5: return new DriveByVision (); 
-		    case 6: return new AutoGear (115.5, TurnToGear.Direction.kRight); 
+		    case 6: return new AutoGear (75.5, TurnToGear.Direction.kRight); 
 		    case 7: return new AutoGear (115.5, TurnToGear.Direction.kLeft); 
+		    case 8: return new AutoShooter(); 
 		   default: return new AutoDoNothing();
 		}
 	}
