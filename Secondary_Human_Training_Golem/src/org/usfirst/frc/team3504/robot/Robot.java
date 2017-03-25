@@ -42,7 +42,6 @@ public class Robot extends IterativeRobot {
 	public static Loader loader; 
 	
 	Command autonomousCommand;
-	SendableChooser<Command> chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -59,10 +58,7 @@ public class Robot extends IterativeRobot {
 
 		// Initialize all subsystems before creating the OI
 		oi = new OI();
-		
-		chooser = new SendableChooser<Command>();
-		oi.populateChooserMenu(chooser);
-		SmartDashboard.putData("Auto mode", chooser);
+	
     }
 	
 	/**
@@ -88,8 +84,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = new AutoGear(69.5, TurnToGear.Direction.kRight);//new DriveByDistance(69.5);   //new AutoGear("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat");
-    	//80.5in is good
+    	 autonomousCommand = oi.getAutonCommand();   
         
         //start the robot out in low gear when starting autonomous
         shifters.shiftGear(Shifters.Speed.kLow);
