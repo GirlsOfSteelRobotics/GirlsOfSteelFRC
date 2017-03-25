@@ -21,6 +21,9 @@ public class DriveByDistance extends Command {
 	private CANTalon leftTalon = Robot.chassis.getLeftTalon();
 	private CANTalon rightTalon = Robot.chassis.getRightTalon();
 	
+	private double leftInitial;
+	private double rightInitial;
+	
     public DriveByDistance(double inches){
     	rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI); 
     	
@@ -54,6 +57,9 @@ public class DriveByDistance extends Command {
     	
         leftTalon.set(-rotations);
         rightTalon.set(rotations);
+        
+        leftInitial = -leftTalon.getPosition();
+        rightInitial = rightTalon.getPosition();
 
     }
 
@@ -73,7 +79,8 @@ public class DriveByDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (rotations < rightTalon.getPosition() && -rotations < leftTalon.getPosition()); //compares without error
+    	return (rightTalon.getPosition() - rightInitial > rotations && -leftTalon.getPosition() - leftInitial > rotations);
+    	//return (rotations < rightTalon.getPosition()-rightInitial && -rotations < leftTalon.getPosition()); //compares without error
     	
     	//this doesn't work - possibly something wrong with error math
     	//return Math.abs(Robot.chassis.getLeftTalon().getClosedLoopError()) < ERROR_LIMIT && 
