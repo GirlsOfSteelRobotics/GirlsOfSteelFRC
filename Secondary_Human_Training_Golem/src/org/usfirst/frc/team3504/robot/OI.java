@@ -131,16 +131,16 @@ public class OI {
 	
 	public Command getAutonCommand() {
 		  switch (getAutonSelector()) {
-		    case 0: return new AutoDoNothing();
+		    case 0: return new DriveByDistance (75.5);
 		    case 1: return new DriveByDistance(112.0);
-		    case 2: return new DriveByDistance (75.5);
-		    case 3: return new AutoGear (115.5, TurnToGear.Direction.kLeft); 
-		    case 4: return new AutoGear(115.5, TurnToGear.Direction.kRight);
-		    case 5: return new DriveByVision (); 
-		    case 6: return new AutoGear (75.5, TurnToGear.Direction.kRight); 
-		    case 7: return new AutoGear (115.5, TurnToGear.Direction.kLeft); 
-		    case 8: return new AutoShooter(); 
-		   default: return new AutoDoNothing();
+		    case 2: return new DriveByVision (); 
+		    case 3: return new AutoGear (75.5, TurnToGear.Direction.kLeft); 
+		    case 4: return new AutoGear(75.5, TurnToGear.Direction.kRight); 
+		    case 5: return new AutoGear (75.5, TurnToGear.Direction.kRight); 
+		    case 6: return new AutoGear (75.5, TurnToGear.Direction.kLeft); 
+		    case 7: return new AutoShooter();
+		    case 15: return new AutoDoNothing(); 
+		   default: return new DriveByDistance (75.5);
 		}
 	}
 
