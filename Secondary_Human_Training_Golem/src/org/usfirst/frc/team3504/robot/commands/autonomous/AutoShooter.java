@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
+import org.usfirst.frc.team3504.robot.commands.CombinedShootKey;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
@@ -16,7 +17,7 @@ public class AutoShooter extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	
-    	addSequential(new Shoot(Shooter.SHOOTER_SPEED_KEY));
+    	addSequential(new CombinedShootKey());
 
         // To run multiple commands at the same time,
         // use addParallel()
