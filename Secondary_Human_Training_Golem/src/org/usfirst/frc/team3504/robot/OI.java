@@ -34,6 +34,7 @@ public class OI {
 	private Joystick drivingStickForward;
 	private Joystick drivingStickBackward;
 	private Joystick gamePad;
+	private Joystick autonSelector; 
 
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 
@@ -69,6 +70,7 @@ public class OI {
 		drivingStickForward = new Joystick(0);
 		drivingStickBackward = new Joystick(1);
 		gamePad = new Joystick(2);
+		autonSelector = new Joystick(3); 
 
 		// Button to change between drive joysticks on trigger of both joysticks
 		switchToForward = new JoystickButton(drivingStickForward, 1); 
@@ -125,30 +127,19 @@ public class OI {
 		//turnLeftToGear.whenPressed(new TurnToGear(TurnToGear.Direction.kRight));
 	}
 
-	public void populateChooserMenu(SendableChooser<Command> chooser){
-		chooser.addObject("Do Nothing", new AutoDoNothing());
-		chooser.addDefault("Base Line", new DriveByDistance(112.0)); //inches TODO: change value
-		chooser.addObject("Center Gear", new DriveByDistance(75.5));
-		//chooser.addObject("Blue Alliance Hopper", new AutoBlueHopper()); //TODO: change name
-		//chooser.addObject("Red Alliance Hopper", new AutoRedHopper()); //TODO: change name
-		//chooser.addObject("Drive by Vision for gear", new DriveByVision());
-		chooser.addObject("Red Loader Gear", new AutoGear(115.5, TurnToGear.Direction.kLeft));
-		chooser.addObject("Red Boiler Gear", new AutoGear(115.5, TurnToGear.Direction.kRight));
-		chooser.addObject("Red Center Gear", new DriveByVision());
-		//chooser.addObject("Red MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/leftLoaderGear.dat", "/home/lvuser/rightLoaderGear.dat"));
-		//chooser.addObject("Red MP: Boiler Gear", new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat"));
-		//chooser.addObject("Red MP: Center Gear", new DriveByMotionProfile("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat"));
-		chooser.addObject("Blue Loader Gear", new AutoGear(115.5, TurnToGear.Direction.kRight));
-		chooser.addObject("Blue Boiler Gear", new AutoGear(115.5, TurnToGear.Direction.kLeft));
-		chooser.addObject("Blue Center Gear", new DriveByVision());
-		//chooser.addObject("Red MP: Back to Key", new DriveByMotionProfile("/home/lvuser/leftBackToKey.dat", "/home/lvuser/rightBackToKey.dat"));
-		//chooser.addObject("Blue MP: Back to Key", new DriveByMotionProfile("/home/lvuser/rightBackToKey.dat", "/home/lvuser/leftBackToKey.dat"));
-		//chooser.addObject("Blue MP: Loader Gear", new DriveByMotionProfile("/home/lvuser/rightLoaderGear.dat", "/home/lvuser/leftLoaderGear.dat"));
-		//chooser.addObject("Blue MP: Center Gear", new DriveByMotionProfile("/home/lvuser/rightCenterGear.dat", "/home/lvuser/leftCenterGear.dat"));
-		//chooser.addObject("Blue MP: Boiler Normal", new DriveByMotionProfile("/home/lvuser/rightBoilerNormal.dat", "/home/lvuser/leftBoilerNormal.dat"));
-		//chooser.addObject("Blue MP: Boiler Corrected", new DriveByMotionProfile("/home/lvuser/rightBoilerCorrected.dat", "/home/lvuser/leftBoilerCorrected.dat"));
-		//chooser.addObject("Drive by Distance 75in fwd", new DriveByDistance(75));
-		//chooser.addObject("Drive by Distance 4in bkwd", new DriveByDistance(-4));
+	
+	public Command getAutonCommand() {
+		  switch (getAutonSelector()) {
+		    case 0: return new AutoDoNothing();
+		    case 1: return new DriveByDistance(112.0);
+		    case 2: return new DriveByDistance (75.5);
+		    case 3: return new AutoGear (115.5, TurnToGear.Direction.kLeft); 
+		    case 4: return new AutoGear(115.5, TurnToGear.Direction.kRight);
+		    case 5: return new DriveByVision (); 
+		    case 6: return new AutoGear (115.5, TurnToGear.Direction.kRight); 
+		    case 7: return new AutoGear (115.5, TurnToGear.Direction.kLeft); 
+		   default: return new AutoDoNothing();
+		}
 	}
 
 	public double getDrivingJoystickY() {
@@ -178,4 +169,20 @@ public class OI {
 		return (driveDirection == DriveDirection.kREV); 
 	}
 
+	/** Get Autonomous Mode Selector
+	 * 
+	 * Read a physical pushbutton switch attached to a USB gamepad controller,
+	 * returning an integer that matches the current readout of the switch.
+	 * @return int ranging 0-15
+	 */
+	public int getAutonSelector() {
+		// Each of the four "button" inputs corresponds to a bit of a binary number
+		// encoding the current selection. To simplify wiring, buttons 2-5 were used.
+		int value = 
+				1 * (autonSelector.getRawButton(2) ? 1 : 0) +
+				2 * (autonSelector.getRawButton(3) ? 1 : 0) +
+				4 * (autonSelector.getRawButton(4) ? 1 : 0) +
+				8 *	(autonSelector.getRawButton(5) ? 1 : 0);
+		return value;
+	}
 }
