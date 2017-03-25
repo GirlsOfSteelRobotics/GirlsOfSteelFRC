@@ -5,6 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,7 +23,9 @@ public class DriveByVision extends Command {
 	double[] defaultValue = new double[0];
 	public CANTalon leftTalon = Robot.chassis.getLeftTalon();
 	public CANTalon rightTalon = Robot.chassis.getRightTalon();
-	private int timeout;
+	private final int TIMEOUT = 4;
+	private final int SLIPPING_VELOCITY = 40;
+	private Timer tim; 
 	
 	//width of X or Y in pixels when the robot is at the lift
 	//private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -37,6 +40,7 @@ public class DriveByVision extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.chassis);
+		tim = new Timer();
 	}
 
 	// Called just before this Command runs the first time
@@ -58,12 +62,11 @@ public class DriveByVision extends Command {
 		
 		System.out.println("DriveByVision Initialized");
 		
-		timeout = 0;
+		tim.start();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		timeout+=1;
 		
 		table = NetworkTable.getTable("GRIP/myContoursReport");
 		
@@ -105,15 +108,17 @@ public class DriveByVision extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (timeout % 20 == 0){
-			System.out.println("Vision Timeout: " + timeout);
-		}
-		return timeout > 350; //((timeout > 3 && (leftTalon.getEncVelocity() < 50 && rightTalon.getEncVelocity() <50)) /*|| (timeout > 200)*/);
+		SmartDashboard.putNumber("Vision Timer", tim.get());
+		
+		return (Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY && 
+				Math.abs(rightTalon.getEncVelocity()) < SLIPPING_VELOCITY) ||
+				((tim.get() > TIMEOUT));
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
 		System.out.println("DriveByVision Finished");
+		tim.stop();
 	}
 
 	// Called when another command which requires one or more of the same

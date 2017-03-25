@@ -47,17 +47,17 @@ public class CreateMotionProfile extends Command {
     protected void execute() {
     	double leftPosition = (double)leftTalon.getEncPosition() - leftInitial; //TODO: confirm these units (ticks?)
     	double rightPosition = (double)rightTalon.getEncPosition() - rightInitial;
-    	double leftVelocity = (double)leftTalon.getEncVelocity(); //TODO: confirm these units (ticks/minute?)
+    	double leftVelocity = (double)leftTalon.getEncPosition();
     	double rightVelocity = (double)rightTalon.getEncVelocity();
     	
     	//Get encoder position and velocity from left talon
     	leftPoint.add(leftPosition/RobotMap.CODES_PER_WHEEL_REV);
-    	leftPoint.add(leftVelocity/RobotMap.CODES_PER_WHEEL_REV);
+    	leftPoint.add(leftVelocity); //is this in RPM?
     	leftPoint.add(20.0); //should be the frequency of execute()
     	
     	//Get encoder position and velocity from right talon
     	rightPoint.add(rightPosition/RobotMap.CODES_PER_WHEEL_REV);
-    	rightPoint.add(rightVelocity/RobotMap.CODES_PER_WHEEL_REV);
+    	rightPoint.add(rightVelocity); //is this in RPM?
     	rightPoint.add(20.0); //should be the frequency of execute()
     	
     	//Add position and velocity to motion profile
