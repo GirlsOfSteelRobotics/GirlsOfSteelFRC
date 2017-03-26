@@ -30,8 +30,8 @@
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
         <value>
-          <double>59.89208633093525</double>
-          <double>100.5432937181664</double>
+          <double>70.0</double>
+          <double>80.0</double>
         </value>
       </grip:Input>
       <grip:Input step="0" socket="2">
