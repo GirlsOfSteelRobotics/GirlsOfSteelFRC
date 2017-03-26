@@ -11,7 +11,7 @@ void GripPipeline::Process(cv::Mat& source0){
 	//Step HSV_Threshold0:
 	//input
 	cv::Mat hsvThresholdInput = source0;
-	double hsvThresholdHue[] = {59.89208633093525, 100.5432937181664};
+	double hsvThresholdHue[] = {70.0, 80.0};
 	double hsvThresholdSaturation[] = {29.81115107913669, 255.0};
 	double hsvThresholdValue[] = {34.39748201438847, 255.0};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
