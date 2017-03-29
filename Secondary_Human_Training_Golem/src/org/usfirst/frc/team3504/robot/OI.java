@@ -16,6 +16,7 @@ import org.usfirst.frc.team3504.robot.commands.SwitchForward;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
 import org.usfirst.frc.team3504.robot.commands.UncoverGear;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCenterGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoShooter;
@@ -23,7 +24,6 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoShooter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -95,7 +95,7 @@ public class OI {
 		//operator buttons
 		//vision
 		driveByVision = new JoystickButton(gamePad, 1); 
-		driveByVision.whileHeld(new DriveByVision());
+		driveByVision.whenPressed(new AutoCenterGear());
 
 		//shooter buttons
 		shootGear = new JoystickButton(gamePad, 3);
@@ -133,7 +133,7 @@ public class OI {
 		  switch (getAutonSelector()) {
 		    case 0: return new DriveByDistance (75.5);
 		    case 1: return new DriveByDistance(112.0);
-		    case 2: return new DriveByVision (); 
+		    case 2: return new AutoCenterGear();
 		    case 3: return new AutoGear (75.5, TurnToGear.Direction.kLeft); //red boiler
 		    case 4: return new AutoGear(70.5, TurnToGear.Direction.kRight); //red loader
 		    case 5: return new AutoGear (75.5, TurnToGear.Direction.kRight); //blue boiler

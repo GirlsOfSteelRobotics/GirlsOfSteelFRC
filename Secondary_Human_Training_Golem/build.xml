@@ -33,7 +33,7 @@
 	 	      <include name="**/*.dat"/>
 	 	    </fileset>
 	 	  </scp>
-	 	<scp file="GRIPonRoboRIO" todir="${username}@${target}:GRIPonRoboRIO" password="${password}" trust="true"/>
+	 	<scp file="GRIPonRoboRIO" todir="${username}@${target}:GRIPonRoboRIO" password="${password}" trust="true" filemode="555" failonerror="true"/>
 	 	<!--
 		<scp file="Resources/talonRight.csv" todir="${username}@${target}:talonProfileRight.csv" password="${password}" trust="true"/>
 		<scp file="Resources/talonLeft.csv" todir="${username}@${target}:talonProfileLeft.csv" password="${password}" trust="true"/>

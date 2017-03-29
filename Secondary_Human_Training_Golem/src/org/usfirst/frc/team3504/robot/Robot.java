@@ -1,27 +1,20 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
-import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.DriveByVision;
-import org.usfirst.frc.team3504.robot.commands.TurnToGear;
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
+import java.io.IOException;
+
+//import com.mindsensors.CANLight;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Climber;
+import org.usfirst.frc.team3504.robot.subsystems.Cover;
+import org.usfirst.frc.team3504.robot.subsystems.Loader;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Climber;
-import org.usfirst.frc.team3504.robot.subsystems.Cover;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
-import org.usfirst.frc.team3504.robot.subsystems.Shooter;
-//import com.mindsensors.CANLight;
-import org.usfirst.frc.team3504.robot.subsystems.*;
-
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -59,6 +52,19 @@ public class Robot extends IterativeRobot {
 		// Initialize all subsystems before creating the OI
 		oi = new OI();
 	
+		try {
+			Process p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO").start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Process p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "30").start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 	
 	/**

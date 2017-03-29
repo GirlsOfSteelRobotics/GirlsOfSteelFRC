@@ -23,9 +23,11 @@ public class DriveByVision extends Command {
 	double[] defaultValue = new double[0];
 	public CANTalon leftTalon = Robot.chassis.getLeftTalon();
 	public CANTalon rightTalon = Robot.chassis.getRightTalon();
-	private final int TIMEOUT = 4;
+	private final int TIMEOUT = 8;
 	private final int SLIPPING_VELOCITY = 40;
 	private Timer tim; 
+	private double slowLinearVelocity = 20; //TODO: change (in/s)
+	private double fastLinearVelocity = 20; //TODO: change (in/s)
 	
 	//width of X or Y in pixels when the robot is at the lift
 	//private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -73,10 +75,10 @@ public class DriveByVision extends Command {
 		double[] centerX = new double[2];
 		centerX = table.getNumberArray("centerX", defaultValue);
 		/*double[] centerY = new double[2];
-		centerY = table.getNumberArray("centerY", defaultValue);
+		centerY = table.getNumberArray("centerY", defaultValue);*/
 		double[] height = new double[2];
 		height = table.getNumberArray("height", defaultValue);
-		double[] width = new double[2];
+		/*double[] width = new double[2];
 		width = table.getNumberArray("width", defaultValue);*/
 
 		// the center of the x and y rectangles (the target)
@@ -93,7 +95,14 @@ public class DriveByVision extends Command {
 			SmartDashboard.putNumber("CenterX1", centerX[1]);
 		}
 		
-		double goalLinearVelocity = 20; //TODO: change (in/s)
+		
+		double goalLinearVelocity;
+		if ((height[0] + height[1]) / 2 >= 52){
+			goalLinearVelocity = fastLinearVelocity;
+		}
+		else{
+			goalLinearVelocity = slowLinearVelocity;
+		}
 
 		//right and left desired wheel speeds in inches per second
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)

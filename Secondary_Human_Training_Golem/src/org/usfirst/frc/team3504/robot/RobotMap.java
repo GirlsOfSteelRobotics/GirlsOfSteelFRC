@@ -32,8 +32,8 @@ public class RobotMap {
 	public static final int GEAR_COVER_B = 5; 
 	
 	//camera numbers
-	public static final int CAMERA_GEAR = 0;
-	public static final int CAMERA_CLIMB = 1; 
+	public static final int CAMERA_GEAR = 1;
+	public static final int CAMERA_CLIMB = 2; 
 	
 	// Encoder-to-distance constants
 	public static final double CODES_PER_WHEEL_REV = 256.0 * (60.0/24.0) * (36.0/12.0); 
