@@ -50,13 +50,13 @@ public class DriveByDistance extends Command {
     	leftTalon.setF(0.0);
     	rightTalon.setF(0.0);
     	
-    	leftTalon.setPosition(0.0);
-    	rightTalon.setPosition(0.0);
+    	//leftTalon.setPosition(0.0);
+    	//rightTalon.setPosition(0.0);
     	
     	System.out.println("Drive by Distance Started " + rotations);
     	
-        leftTalon.set(-rotations);
-        rightTalon.set(rotations);
+        leftTalon.set(-(rotations+leftInitial));
+        rightTalon.set(rotations+rightInitial);
         
         leftInitial = -leftTalon.getPosition();
         rightInitial = rightTalon.getPosition();

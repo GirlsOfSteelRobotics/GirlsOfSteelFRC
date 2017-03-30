@@ -27,7 +27,7 @@ public class DriveByVision extends Command {
 	private final int SLIPPING_VELOCITY = 40;
 	private Timer tim; 
 	private double slowLinearVelocity = 20; //TODO: change (in/s)
-	private double fastLinearVelocity = 20; //TODO: change (in/s)
+	private double fastLinearVelocity = 21; //TODO: change (in/s)
 	
 	//width of X or Y in pixels when the robot is at the lift
 	//private static final double GOAL_WIDTH = 30; //TODO: test and change
