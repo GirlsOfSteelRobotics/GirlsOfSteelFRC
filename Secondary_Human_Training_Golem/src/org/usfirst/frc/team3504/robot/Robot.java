@@ -53,16 +53,11 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 	
 		try {
-			Process p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO").start();
+			@SuppressWarnings("unused")
+			Process p;
+			p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO").start();
+			p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "20", "-e", "8").start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			Process p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "30").start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

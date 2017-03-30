@@ -18,8 +18,10 @@ public class Camera extends Subsystem {
 	public Camera() {
 		camGear = new UsbCamera("camGear", RobotMap.CAMERA_GEAR);
 		camGear.setResolution(320, 240);
+		camGear.setFPS(10);
 		camClimb = new UsbCamera("camClimb", RobotMap.CAMERA_CLIMB);
 		camClimb.setResolution(320, 240);   
+		camClimb.setFPS(10);
 		CameraServer.getInstance().addCamera(camGear);
 		CameraServer.getInstance().addCamera(camClimb);
 		server = CameraServer.getInstance().addServer("CameraServer", 1181);

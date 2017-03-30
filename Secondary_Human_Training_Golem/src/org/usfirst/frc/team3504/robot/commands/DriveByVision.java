@@ -95,14 +95,13 @@ public class DriveByVision extends Command {
 			SmartDashboard.putNumber("CenterX1", centerX[1]);
 		}
 		
-		
 		double goalLinearVelocity;
-		if ((height[0] + height[1]) / 2 >= 52){
+		if (height.length != 2)
 			goalLinearVelocity = fastLinearVelocity;
-		}
-		else{
+		else if ((height[0] + height[1]) / 2.0 >= 52.0)
+			goalLinearVelocity = fastLinearVelocity;
+		else
 			goalLinearVelocity = slowLinearVelocity;
-		}
 
 		//right and left desired wheel speeds in inches per second
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
@@ -119,9 +118,11 @@ public class DriveByVision extends Command {
 	protected boolean isFinished() {
 		SmartDashboard.putNumber("Vision Timer", tim.get());
 		
-		return (tim.get() > 1 && Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY && 
-				Math.abs(rightTalon.getEncVelocity()) < SLIPPING_VELOCITY) ||
-				((tim.get() > TIMEOUT));
+		return ((tim.get() > 1 && 
+				 Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY && 
+				 Math.abs(rightTalon.getEncVelocity()) < SLIPPING_VELOCITY
+				) ||
+				(tim.get() > TIMEOUT));
 	}
 
 	// Called once after isFinished returns true
