@@ -137,7 +137,7 @@ public class OI {
 		    case 3: return new AutoGear (75.5, TurnToGear.Direction.kLeft); //red boiler
 		    case 4: return new AutoGear(70.5, TurnToGear.Direction.kRight); //red loader
 		    case 5: return new AutoGear (75.5, TurnToGear.Direction.kRight); //blue boiler
-		    case 6: return new AutoGear (75.5, TurnToGear.Direction.kLeft);  //blue loader
+		    case 6: return new AutoGear (70.5, TurnToGear.Direction.kLeft);  //blue loader
 		    case 7: return new AutoShooter();
 		    case 15: return new AutoDoNothing(); 
 		   default: return new DriveByDistance (75.5);

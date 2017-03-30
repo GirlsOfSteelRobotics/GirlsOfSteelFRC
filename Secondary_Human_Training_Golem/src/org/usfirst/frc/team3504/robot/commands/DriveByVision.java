@@ -112,6 +112,9 @@ public class DriveByVision extends Command {
 		//send desired wheel speeds to Talon set to velocity control mode
 		rightTalon.set(angVRight);
 		leftTalon.set(-angVLeft);
+		
+		System.out.println("Number of Contours: " + centerX.length + " Goal Linear Velocity: " + goalLinearVelocity
+				+ " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
