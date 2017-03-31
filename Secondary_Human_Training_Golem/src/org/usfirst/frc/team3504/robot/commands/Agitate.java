@@ -15,8 +15,6 @@ public class Agitate extends Command {
     	// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.agitator);
-    	
-    	tim = new Timer();
     }
 
     // Called just before this Command runs the first time
@@ -25,11 +23,11 @@ public class Agitate extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	tim.start(); //started in execute because the timer needs to be reset every time
     	Robot.agitator.agitateForwards();
-    	if (tim.get() > agitateDelay) {
-    		Robot.agitator.agitateBackwards();
-    	}
+    	Timer.delay(agitateDelay);
+    	Robot.agitator.agitateBackwards();
+    	Timer.delay(agitateDelay);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
