@@ -2,11 +2,12 @@ package org.usfirst.frc.team3504.robot;
 
 import java.io.IOException;
 
+import org.usfirst.frc.team3504.robot.subsystems.Agitator;
 //import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Climber;
-import org.usfirst.frc.team3504.robot.subsystems.Cover;
+import org.usfirst.frc.team3504.robot.subsystems.Agitator;
 import org.usfirst.frc.team3504.robot.subsystems.Loader;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
@@ -28,11 +29,11 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Chassis chassis;
 	public static Shifters shifters;
-	public static Cover gearCover;
+	public static Agitator agitator;
 	public static Climber climber; 
 	public static Shooter shooter; 
 	public static Camera camera;
-	public static Loader loader; 
+	public static Loader loader;
 	
 	Command autonomousCommand;
 
@@ -43,11 +44,11 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		chassis = new Chassis();
 		shifters = new Shifters();
-		gearCover = new Cover();
+		agitator = new Agitator();
 		climber = new Climber();
 		shooter = new Shooter();
 		camera = new Camera();
-		loader = new Loader(); 
+		loader = new Loader();
 
 		// Initialize all subsystems before creating the OI
 		oi = new OI();

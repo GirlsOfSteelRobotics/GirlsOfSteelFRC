@@ -28,8 +28,8 @@ public class RobotMap {
 	public static final int SHIFTER_LEFT_B = 3; 
 	
 	//Solenoids for Gear Cover
-	public static final int GEAR_COVER_A = 4;//TODO: fix
-	public static final int GEAR_COVER_B = 5; 
+	public static final int AGITATOR_A = 4;
+	public static final int AGITATOR_B = 5;
 	
 	//camera numbers
 	public static final int CAMERA_GEAR = 1;

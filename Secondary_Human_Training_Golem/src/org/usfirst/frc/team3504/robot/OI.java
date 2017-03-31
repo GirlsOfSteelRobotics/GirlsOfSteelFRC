@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CombinedShoot;
 import org.usfirst.frc.team3504.robot.commands.CombinedShootGear;
 import org.usfirst.frc.team3504.robot.commands.CombinedShootKey;
-import org.usfirst.frc.team3504.robot.commands.CoverGear;
+import org.usfirst.frc.team3504.robot.commands.Agitate;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
@@ -15,7 +15,6 @@ import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
-import org.usfirst.frc.team3504.robot.commands.UncoverGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCenterGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
@@ -49,8 +48,7 @@ public class OI {
 	private JoystickButton shootGear; 
 	private JoystickButton shootKey; 
 
-	private JoystickButton coverGear;
-	private JoystickButton uncoverGear;
+	private JoystickButton agitate;
 
 	private JoystickButton loadBall; 
 
@@ -91,7 +89,6 @@ public class OI {
 		shifterUp = new JoystickButton(drivingStickBackward, 3);
 		shifterUp.whenPressed(new ShiftUp());
 
-
 		//operator buttons
 		//vision
 		driveByVision = new JoystickButton(gamePad, 1); 
@@ -112,10 +109,8 @@ public class OI {
 		decrementHighShooter.whenPressed(new DecrementHighShooter());
 
 		//Buttons for gear cover
-		coverGear = new JoystickButton(gamePad, 5); //TODO: re-enable when the hardware is finished
-		coverGear.whenPressed(new CoverGear());
-		uncoverGear = new JoystickButton(gamePad, 7); 
-		uncoverGear.whenPressed(new UncoverGear());
+		agitate = new JoystickButton(gamePad, 5); //TODO: re-enable when the hardware is finished
+		agitate.whileHeld(new Agitate());
 
 		//Climb
 		climb = new JoystickButton(gamePad, 10); 
@@ -139,6 +134,7 @@ public class OI {
 		    case 5: return new AutoGear (75.5, TurnToGear.Direction.kRight); //blue boiler
 		    case 6: return new AutoGear (70.5, TurnToGear.Direction.kLeft);  //blue loader
 		    case 7: return new AutoShooter();
+		    case 8: return new DriveByDistance(-3);
 		    case 15: return new AutoDoNothing(); 
 		   default: return new DriveByDistance (75.5);
 		}

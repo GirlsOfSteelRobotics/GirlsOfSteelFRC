@@ -54,32 +54,47 @@ public class DriveByDistance extends Command {
     	//rightTalon.setPosition(0.0);
     	
     	System.out.println("Drive by Distance Started " + rotations);
-    	
-        leftTalon.set(-(rotations+leftInitial));
-        rightTalon.set(rotations+rightInitial);
         
         leftInitial = -leftTalon.getPosition();
         rightInitial = rightTalon.getPosition();
+        
+        leftTalon.set(-(rotations+leftInitial));
+        rightTalon.set(rotations+rightInitial);
+        
+        System.out.println("LeftInitial: " + leftInitial + " RightInitial: " + rightInitial);
 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	leftTalon.set(-rotations);
-    	rightTalon.set(rotations);
+    	 leftTalon.set(-(rotations+leftInitial));
+         rightTalon.set(rotations+rightInitial);
 
     	SmartDashboard.putNumber("Drive Talon Left Goal", -rotations);
     	SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getPosition());
     	SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getError());
     	
-      	System.out.println("Drive Talon Left Goal" + -rotations);
-      	System.out.println("Drive Talon Left Position" + leftTalon.getPosition());
-      	System.out.println("Drive Talon Left Error" + leftTalon.getError());
+      	System.out.println("Drive Talon Left Goal " + (-(rotations+leftInitial)));
+      	System.out.println("Drive Talon Left Position " + leftTalon.getPosition());
+      	System.out.println("Drive Talon Left Error " + leftTalon.getError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (rightTalon.getPosition() - rightInitial > rotations && -leftTalon.getPosition() - leftInitial > rotations);
+    	boolean right = (rightTalon.getPosition() - rightInitial > rotations);
+    	
+    	boolean left = (-leftTalon.getPosition() - leftInitial > rotations);
+    	System.out.println("Right Net Position: " + (rightTalon.getPosition() - rightInitial));
+    	System.out.println("Left Net Position: " + (-leftTalon.getPosition() - leftInitial));
+    	System.out.print("right: " + right + " left: " + left);	
+    	if (rotations > 0){
+    		return ((rightTalon.getPosition()> rotations + rightInitial) && (-leftTalon.getPosition() > rotations + leftInitial));
+    	}
+    	else if (rotations < 0){
+    		return ((rightTalon.getPosition()< rotations + rightInitial) && (-leftTalon.getPosition() < rotations + leftInitial));
+    	}
+    	else
+    		return true;
     	//return (rotations < rightTalon.getPosition()-rightInitial && -rotations < leftTalon.getPosition()); //compares without error
     	
     	//this doesn't work - possibly something wrong with error math
@@ -89,6 +104,7 @@ public class DriveByDistance extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	
     	System.out.println("Drive by Distance Finished");
     }
 

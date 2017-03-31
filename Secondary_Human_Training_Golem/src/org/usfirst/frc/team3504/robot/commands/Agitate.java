@@ -2,23 +2,34 @@ package org.usfirst.frc.team3504.robot.commands;
 
 
 import org.usfirst.frc.team3504.robot.Robot;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CoverGear extends Command {
+public class Agitate extends Command {
 	
-	public CoverGear() {
+	private Timer tim;
+	private double agitateDelay = 0.5; //time in seconds of delay between moving the piston in and out 
+	
+	public Agitate() {
     	// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.gearCover);
+    	requires(Robot.agitator);
+    	
+    	tim = new Timer();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearCover.coverPosition(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	tim.start(); //started in execute because the timer needs to be reset every time
+    	Robot.agitator.agitateForwards();
+    	if (tim.get() > agitateDelay) {
+    		Robot.agitator.agitateBackwards();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
