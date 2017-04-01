@@ -11,11 +11,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Agitator extends Subsystem {
 	
-	private DoubleSolenoid agitator; 
-	private boolean coverPosition;
+	private DoubleSolenoid agitator;
 	
 	public Agitator() {
-		agitator = new DoubleSolenoid(RobotMap.AGITATOR_A, RobotMap.AGITATOR_A);
+		agitator = new DoubleSolenoid(RobotMap.AGITATOR_A, RobotMap.AGITATOR_B);
 		
 		LiveWindow.addActuator("Agitator", "agitator", agitator);
 	}

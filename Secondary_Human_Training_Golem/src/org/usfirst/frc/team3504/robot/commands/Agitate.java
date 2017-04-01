@@ -7,9 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Agitate extends Command {
-	
-	private Timer tim;
-	private double agitateDelay = 0.5; //time in seconds of delay between moving the piston in and out 
+	private double agitateDelay = 0.1; //time in seconds of delay between moving the piston in and out 
 	
 	public Agitate() {
     	// Use requires() here to declare subsystem dependencies
@@ -32,7 +30,7 @@ public class Agitate extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

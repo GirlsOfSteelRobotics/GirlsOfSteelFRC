@@ -12,6 +12,7 @@ public class CombinedShootGear extends CommandGroup {
     public CombinedShootGear() {
     	addParallel(new Shoot(Shooter.SHOOTER_SPEED_GEAR));
     	addSequential(new TimeDelay(0.75)); 
+    	addParallel(new Agitate()); 
     	addSequential(new LoadBall()); 
     	
     	

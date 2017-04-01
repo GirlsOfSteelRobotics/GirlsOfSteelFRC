@@ -27,7 +27,7 @@ public class DriveByVision extends Command {
 	private final int SLIPPING_VELOCITY = 40;
 	private Timer tim; 
 	private double slowLinearVelocity = 20; //TODO: change (in/s)
-	private double fastLinearVelocity = 21; //TODO: change (in/s)
+	private double fastLinearVelocity = 23; //TODO: change (in/s)
 	
 	//width of X or Y in pixels when the robot is at the lift
 	//private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -96,12 +96,12 @@ public class DriveByVision extends Command {
 		}
 		
 		double goalLinearVelocity;
-		if (height.length != 2)
+		if (height.length != 2 && tim.get() < 1)
 			goalLinearVelocity = fastLinearVelocity;
 		else if ((height[0] + height[1]) / 2.0 >= 52.0)
-			goalLinearVelocity = fastLinearVelocity;
-		else
 			goalLinearVelocity = slowLinearVelocity;
+		else
+			goalLinearVelocity = fastLinearVelocity;
 
 		//right and left desired wheel speeds in inches per second
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; //(in/s)
