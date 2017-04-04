@@ -28,6 +28,7 @@ public class Shoot extends Command {
     	isLowMotorRunning = false;
     	Robot.shooter.setShooterSpeed(shooterSpeed);
     	SmartDashboard.putBoolean("Low Shooter Running", Robot.shooter.isLowShooterMotorRunning());
+    	System.out.println("Shoot Initialzed with " + shooterSpeed + " as speed");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -54,6 +55,7 @@ public class Shoot extends Command {
     protected void end() {
     	Robot.shooter.stopLowShooterMotor();
     	Robot.shooter.stopShooterMotors();
+    	System.out.println("Shoot Finished");
     }
 
     // Called when another command which requires one or more of the same

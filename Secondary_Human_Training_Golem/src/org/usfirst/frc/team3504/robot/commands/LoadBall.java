@@ -17,7 +17,7 @@ public class LoadBall extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	System.out.println("LoadBall Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,6 +33,7 @@ public class LoadBall extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.loader.stopLoader();
+    	System.out.println("LoadBall Finished");
     }
 
     // Called when another command which requires one or more of the same

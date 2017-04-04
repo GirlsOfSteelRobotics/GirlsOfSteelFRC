@@ -122,10 +122,6 @@ public class DriveByVision extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		SmartDashboard.putNumber("Vision Timer", tim.get());
-		
-		System.out.println("left Velocity: " + leftTalon.getEncVelocity());
-		System.out.println("right Velocity: " + rightTalon.getEncVelocity());
 		
 		return ((tim.get() > 1 && 
 				 Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY && 

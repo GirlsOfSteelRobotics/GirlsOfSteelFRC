@@ -64,7 +64,7 @@ public class DriveByDistance extends Command {
         rightTalon.set(rotations+rightInitial);
         
         System.out.println("LeftInitial: " + leftInitial + " RightInitial: " + rightInitial);
-
+        
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -83,12 +83,6 @@ public class DriveByDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	boolean right = (rightTalon.getPosition() - rightInitial > rotations);
-    	
-    	boolean left = (-leftTalon.getPosition() - leftInitial > rotations);
-    	System.out.println("Right Net Position: " + (rightTalon.getPosition() - rightInitial));
-    	System.out.println("Left Net Position: " + (-leftTalon.getPosition() - leftInitial));
-    	System.out.print("right: " + right + " left: " + left);	
     	if (rotations > 0){
     		return ((rightTalon.getPosition()> rotations + rightInitial) && (-leftTalon.getPosition() > rotations + leftInitial));
     	}
@@ -97,17 +91,12 @@ public class DriveByDistance extends Command {
     	}
     	else
     		return true;
-    	//return (rotations < rightTalon.getPosition()-rightInitial && -rotations < leftTalon.getPosition()); //compares without error
-    	
-    	//this doesn't work - possibly something wrong with error math
-    	//return Math.abs(Robot.chassis.getLeftTalon().getClosedLoopError()) < ERROR_LIMIT && 
-    			//Math.abs(Robot.chassis.getRightTalon().getClosedLoopError()) < ERROR_LIMIT; //closedLoopError is in integers and represents ticks
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	
-    	System.out.println("Drive by Distance Finished");
+    	System.out.println("DriveByDistance Finished");
     }
 
     // Called when another command which requires one or more of the same

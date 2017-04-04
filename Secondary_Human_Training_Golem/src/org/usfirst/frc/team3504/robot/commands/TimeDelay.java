@@ -18,9 +18,10 @@ public class TimeDelay extends Command {
      
     }
 
-    // Called just before this Command runs the first time
+    // Called just before this Command runs the first times
     protected void initialize() {
     	tim.start();
+    	System.out.println("TimeDelay Initialzed with " + seconds + " seconds as parameter");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,6 +36,7 @@ public class TimeDelay extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	tim.stop();
+    	System.out.println("TimeDelay Finished");
     }
 
     // Called when another command which requires one or more of the same
