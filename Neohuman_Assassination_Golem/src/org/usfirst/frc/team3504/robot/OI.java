@@ -13,7 +13,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public enum DriveDirection {kFWD, kREV}; 
-
+	
+	/**
+	 * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
+	 */
+	//IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
+	boolean rozieDrive = true;
+	
+	
 	private Joystick drivingStickForward = new Joystick(0);
 	private Joystick drivingStickBackward = new Joystick(1); 
 	// The button board gets plugged into USB and acts like a Joystick
@@ -22,13 +29,18 @@ public class OI {
 	// The autonomous command selector is uses buttons 2-5
 	private Joystick autonSelector = new Joystick(4);
 
+	//Rozie's Nonsense: Project Droperation.
+	private Joystick roziePad = new Joystick(5);
+	
+	
+	
 	//JOYSTICK BUTTONS
 	//private JoystickButton shiftUpButton;
 	private JoystickButton shiftDownButton;
 
 	//private JoystickButton shiftUpButton2; //for backwards joystick
-	private JoystickButton shiftDownButton2; //for backwards joystick
-
+	private JoystickButton shiftDownButton2; //for backwards joystick	
+	
 	private DriveDirection driveDirection = DriveDirection.kFWD; 
 
 	private JoystickButton switchCam;
@@ -36,6 +48,13 @@ public class OI {
 
 	private JoystickButton switchToForward; 
 	private JoystickButton switchToBackward; 
+	
+	//ROZIE DECLARATIONS
+	
+	private JoystickButton rozieShiftDownButton;
+	private JoystickButton rozieFlapUp;
+	private JoystickButton rozieFlapDown;
+	
 
 	//button board
 	private JoystickButton collectBallButtonBoard;
@@ -162,10 +181,28 @@ public class OI {
 
 		resetEncoders = new JoystickButton(gamePad, 9);
 		resetEncoders.whenPressed(new ResetEncoderDistance());
+		
+		//ROZIE STUFF!!!!
+		if (rozieDrive == true){
+			rozieShiftDownButton = new JoystickButton(roziePad, 3);
+			rozieShiftDownButton.whenPressed(new ShiftDown());
+			rozieFlapUp = new JoystickButton(roziePad, 8);//switched 7 & 8 again
+			rozieFlapUp.whileHeld(new FlapUp()); //false because it is not rocker button
+			rozieFlapDown = new JoystickButton(roziePad, 7); 
+			rozieFlapDown.whileHeld(new FlapDown());
+		}
+		
+		
+		
 	}
 
+	
+	
 	public double getDrivingJoystickY() {
-		if (driveDirection == DriveDirection.kFWD){
+		if (rozieDrive == true){
+			return roziePad.getY();
+		}
+		else if (driveDirection == DriveDirection.kFWD){
 			return drivingStickForward.getY();
 		}
 		else {
@@ -174,6 +211,9 @@ public class OI {
 	}
 
 	public double getDrivingJoystickX() {
+		if (rozieDrive == true){
+			return roziePad.getX();
+		}
 		if (driveDirection == DriveDirection.kFWD){
 			return drivingStickForward.getX();
 		}
