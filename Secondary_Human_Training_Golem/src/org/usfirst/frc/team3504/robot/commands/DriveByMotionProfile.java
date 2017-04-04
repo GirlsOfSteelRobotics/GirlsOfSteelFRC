@@ -55,8 +55,7 @@ public class DriveByMotionProfile extends Command {
     	Robot.chassis.setupFPID(rightTalon);
 		
     	//Set Talon to MP mode
-    	leftTalon.changeControlMode(TalonControlMode.MotionProfile);
-    	rightTalon.changeControlMode(TalonControlMode.MotionProfile);
+    	Robot.chassis.setMotionProfileMode();
     	System.out.println("DriveByMotion: Change Talon to MP Mode");
     	
     	//Disable MP

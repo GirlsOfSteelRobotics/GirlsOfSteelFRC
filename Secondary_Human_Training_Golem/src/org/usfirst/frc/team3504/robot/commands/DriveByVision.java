@@ -53,8 +53,7 @@ public class DriveByVision extends Command {
 		rightTalon.setPosition(0);
     	
 		//Change motor control to speed in the -1..+1 range
-		leftTalon.changeControlMode(TalonControlMode.Speed);
-		rightTalon.changeControlMode(TalonControlMode.Speed);
+		Robot.chassis.setSpeedMode();
 		
 		//tuned by janet and ziya on 2/20, overrides PID set in chassis method
 		leftTalon.setF(0.22);  //carpet on practice field

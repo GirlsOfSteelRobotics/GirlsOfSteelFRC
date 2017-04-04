@@ -34,9 +34,7 @@ public class DriveByDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	leftTalon.changeControlMode(TalonControlMode.Position); //TODO: check talon control mode, should be okay
-    	rightTalon.changeControlMode(TalonControlMode.Position);
-    	
+    	Robot.chassis.setPositionMode();
     	
     	//Robot.chassis.setupFPID(leftTalon);
     	//Robot.chassis.setupFPID(rightTalon);
