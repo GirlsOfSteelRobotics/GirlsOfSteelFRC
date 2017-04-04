@@ -24,7 +24,7 @@ public class DriveByVision extends Command {
 	public CANTalon leftTalon = Robot.chassis.getLeftTalon();
 	public CANTalon rightTalon = Robot.chassis.getRightTalon();
 	private final int TIMEOUT = 8;
-	private final int SLIPPING_VELOCITY = 40;
+	private final int SLIPPING_VELOCITY = 850;
 	private Timer tim; 
 	private double slowLinearVelocity = 20; //TODO: change (in/s)
 	private double fastLinearVelocity = 23; //TODO: change (in/s)
@@ -98,6 +98,9 @@ public class DriveByVision extends Command {
 		double goalLinearVelocity;
 		if (height.length != 2 && tim.get() < 1)
 			goalLinearVelocity = fastLinearVelocity;
+		else if (height.length != 2){
+			goalLinearVelocity = slowLinearVelocity;
+		}
 		else if ((height[0] + height[1]) / 2.0 >= 52.0)
 			goalLinearVelocity = slowLinearVelocity;
 		else
@@ -120,6 +123,9 @@ public class DriveByVision extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		SmartDashboard.putNumber("Vision Timer", tim.get());
+		
+		System.out.println("left Velocity: " + leftTalon.getEncVelocity());
+		System.out.println("right Velocity: " + rightTalon.getEncVelocity());
 		
 		return ((tim.get() > 1 && 
 				 Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY && 

@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -35,6 +36,7 @@ public class DriveByDistance extends Command {
     protected void initialize() {
     	leftTalon.changeControlMode(TalonControlMode.Position); //TODO: check talon control mode, should be okay
     	rightTalon.changeControlMode(TalonControlMode.Position);
+    	
     	
     	//Robot.chassis.setupFPID(leftTalon);
     	//Robot.chassis.setupFPID(rightTalon);
