@@ -26,8 +26,7 @@ public class DriveByJoystick extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Change mode to Percent Vbus
-    	leftTalon.changeControlMode(TalonControlMode.PercentVbus);
-    	rightTalon.changeControlMode(TalonControlMode.PercentVbus);
+    	Robot.chassis.setPercentVbusMode();
     	
     	//V per sec; 12 = zero to full speed in 1 second
     	leftTalon.setVoltageRampRate(24.0);

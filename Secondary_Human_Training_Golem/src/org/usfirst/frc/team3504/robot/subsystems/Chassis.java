@@ -109,15 +109,30 @@ public class Chassis extends Subsystem {
 	public void turn(double speed, double curve){
 		robotDrive.drive(speed, curve);
 	}
-	
-	public void setModePercentVBus(){
-		driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
-		driveRightA.changeControlMode(TalonControlMode.PercentVbus);
-	}
 
 	public void stop(){
 		driveLeftA.set(0);
 		driveRightA.set(0);
+	}
+	
+	public void setPositionMode(){
+		driveLeftA.changeControlMode(TalonControlMode.Position);
+		driveRightA.changeControlMode(TalonControlMode.Position);
+	}
+	
+	public void setPercentVbusMode(){
+		driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
+		driveRightA.changeControlMode(TalonControlMode.PercentVbus);
+	}
+	
+	public void setSpeedMode(){
+		driveLeftA.changeControlMode(TalonControlMode.Speed);
+		driveRightA.changeControlMode(TalonControlMode.Speed);
+	}
+	
+	public void setMotionProfileMode(){
+		driveLeftA.changeControlMode(TalonControlMode.MotionProfile);
+		driveRightA.changeControlMode(TalonControlMode.MotionProfile);
 	}
 	
 }
