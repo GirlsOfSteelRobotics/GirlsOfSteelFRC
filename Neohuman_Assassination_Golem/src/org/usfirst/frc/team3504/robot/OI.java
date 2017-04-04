@@ -50,10 +50,14 @@ public class OI {
 	private JoystickButton switchToBackward; 
 	
 	//ROZIE DECLARATIONS
-	
+	/**
+	 * ROZIE 
+	 */
 	private JoystickButton rozieShiftDownButton;
 	private JoystickButton rozieFlapUp;
 	private JoystickButton rozieFlapDown;
+	private JoystickButton roziePivotUp;
+	private JoystickButton roziePivotDown;
 	
 
 	//button board
@@ -190,6 +194,10 @@ public class OI {
 			rozieFlapUp.whileHeld(new FlapUp()); //false because it is not rocker button
 			rozieFlapDown = new JoystickButton(roziePad, 7); 
 			rozieFlapDown.whileHeld(new FlapDown());
+			roziePivotUp = new JoystickButton(roziePad, 3); //switched 2 & 3 again
+			roziePivotUp.whileHeld(new PivotUp());
+			roziePivotDown = new JoystickButton(roziePad, 2);
+			roziePivotDown.whileHeld(new PivotDown());
 		}
 		
 		
@@ -214,7 +222,7 @@ public class OI {
 		if (rozieDrive == true){
 			return roziePad.getX();
 		}
-		if (driveDirection == DriveDirection.kFWD){
+		else if (driveDirection == DriveDirection.kFWD){
 			return drivingStickForward.getX();
 		}
 		else {
