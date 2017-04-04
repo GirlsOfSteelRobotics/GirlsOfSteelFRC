@@ -10,8 +10,6 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -24,7 +22,7 @@ public class Chassis extends Subsystem {
 	private CANTalon driveRightA;
 	private CANTalon driveRightB;
 	private CANTalon driveRightC;
-	
+
 	private RobotDrive robotDrive;
 
 	public Chassis() {
@@ -50,20 +48,20 @@ public class Chassis extends Subsystem {
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
 		driveRightC.set(driveRightA.getDeviceID());
-		
+
 		setupEncoder(driveLeftA);
 		setupEncoder(driveRightA);
-		
+
 		robotDrive = new RobotDrive(driveLeftA, driveRightA);
-    	// Set some safety controls for the drive system
-    	robotDrive.setSafetyEnabled(true);
-    	robotDrive.setExpiration(0.1);
-    	robotDrive.setSensitivity(0.5);
-    	robotDrive.setMaxOutput(1.0);
-    	
-    	robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false); 
+		// Set some safety controls for the drive system
+		robotDrive.setSafetyEnabled(true);
+		robotDrive.setExpiration(0.1);
+		robotDrive.setSensitivity(0.5);
+		robotDrive.setMaxOutput(1.0);
+
+		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
-        
+
 		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
 		LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
 		LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
@@ -74,65 +72,66 @@ public class Chassis extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand( new DriveByJoystick() );
-	}
-	
-	public CANTalon getLeftTalon(){
-		return driveLeftA; 
+		setDefaultCommand(new DriveByJoystick());
 	}
 
-	public CANTalon getRightTalon(){
-		return driveRightA; 
+	public CANTalon getLeftTalon() {
+		return driveLeftA;
 	}
-	
-	public void arcadeDrive(){
+
+	public CANTalon getRightTalon() {
+		return driveRightA;
+	}
+
+	public void arcadeDrive() {
 		robotDrive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
 	}
 
-	
-	public void setupEncoder(CANTalon talon){ //only call this on non-follower talons
-		//Set Encoder Types
+	public void setupEncoder(CANTalon talon) { // only call this on non-follower
+												// talons
+		// Set Encoder Types
 		talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
 		talon.reverseSensor(false);
 	}
-	
-	public void setupFPID(CANTalon talon) { //values work with QuadEncoder for drive talons
-		//PID Values
-    	talon.setPosition(0);
+
+	public void setupFPID(CANTalon talon) { // values work with QuadEncoder for
+											// drive talons
+		// PID Values
+		talon.setPosition(0);
 		talon.setF(0);
-    	talon.setP(0.64); //0.64 good
-    	talon.setI(0.0); 
-    	talon.setD(0.0);
+		talon.setP(0.64); // 0.64 good
+		talon.setI(0.0);
+		talon.setD(0.0);
 	}
-	
-	public void turn(double speed, double curve){
+
+	public void turn(double speed, double curve) {
 		robotDrive.drive(speed, curve);
 	}
 
-	public void stop(){
+	public void stop() {
 		driveLeftA.set(0);
 		driveRightA.set(0);
 	}
-	
-	public void setPositionMode(){
+
+	public void setPositionMode() {
 		driveLeftA.changeControlMode(TalonControlMode.Position);
 		driveRightA.changeControlMode(TalonControlMode.Position);
 	}
-	
-	public void setPercentVbusMode(){
+
+	public void setPercentVbusMode() {
 		driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
 		driveRightA.changeControlMode(TalonControlMode.PercentVbus);
 	}
-	
-	public void setSpeedMode(){
+
+	public void setSpeedMode() {
 		driveLeftA.changeControlMode(TalonControlMode.Speed);
 		driveRightA.changeControlMode(TalonControlMode.Speed);
 	}
-	
-	public void setMotionProfileMode(){
+
+	public void setMotionProfileMode() {
 		driveLeftA.changeControlMode(TalonControlMode.MotionProfile);
 		driveRightA.changeControlMode(TalonControlMode.MotionProfile);
 	}
-	
+
 }
