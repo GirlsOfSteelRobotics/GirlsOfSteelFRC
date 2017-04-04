@@ -181,6 +181,7 @@ public class OI {
 				2 * (autonSelector.getRawButton(3) ? 1 : 0) +
 				4 * (autonSelector.getRawButton(4) ? 1 : 0) +
 				8 *	(autonSelector.getRawButton(5) ? 1 : 0);
+		System.out.println("Auto Selector Number: " + value);
 		return value;
 	}
 }

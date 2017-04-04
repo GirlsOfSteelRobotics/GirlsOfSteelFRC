@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class SwitchForward extends CommandGroup {
 
     public SwitchForward() {
-    	addSequential(new DriveForward());
+    	addSequential(new SwitchToDriveForward());
     	addSequential(new SwitchToCamGear()); 
     	
         // Add Commands here:

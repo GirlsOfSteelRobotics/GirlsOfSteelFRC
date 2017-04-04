@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForward extends Command {
+public class SwitchToDriveForward extends Command {
 
-    public DriveForward() {
+    public SwitchToDriveForward() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
     }

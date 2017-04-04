@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class SwitchBackward extends CommandGroup {
 
     public SwitchBackward() {
-    	addSequential(new DriveBackward());
+    	addSequential(new SwitchToDriveBackward());
     	addSequential(new SwitchToCamClimb()); 
     	
         // Add Commands here:

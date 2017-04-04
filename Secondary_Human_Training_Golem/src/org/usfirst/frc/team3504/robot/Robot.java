@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
+    	shifters.shiftGear(Shifters.Speed.kHigh); 
     }
 	
 	public void disabledPeriodic() {
@@ -86,8 +86,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	 autonomousCommand = oi.getAutonCommand();   
-        
+    	autonomousCommand = oi.getAutonCommand();   
+    	
         //start the robot out in low gear when starting autonomous
         shifters.shiftGear(Shifters.Speed.kLow);
         
