@@ -12,9 +12,6 @@ public class Shooter extends Subsystem {
 	private CANTalon lowShooterMotor;
 	private CANTalon highShooterMotor;
 
-	private double encOffsetValueHigh = 0;
-	private double encOffsetValueLow = 0;
-
 	/*
 	 * private static final double shooterMinSpeed = -0.5; private static final
 	 * double shooterMaxSpeed = -1.0; private static final double
