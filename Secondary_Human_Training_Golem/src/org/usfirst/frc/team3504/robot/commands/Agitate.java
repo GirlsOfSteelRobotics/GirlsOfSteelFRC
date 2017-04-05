@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Agitate extends Command {
-	private double agitateDelay = 0.1; // time in seconds of delay between
-										// moving the piston in and out
+	
+	private int loopCounter;
 
 	public Agitate() {
 		// Use requires() here to declare subsystem dependencies
@@ -18,15 +18,17 @@ public class Agitate extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		System.out.println("Agitate Initialzed");
+		loopCounter = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.agitator.agitateForwards();
-		Timer.delay(agitateDelay);
-		Robot.agitator.agitateBackwards();
-		Timer.delay(agitateDelay);
-
+		if (loopCounter % 10 == 0)
+			Robot.agitator.agitateBackwards();
+		else if (loopCounter % 5 == 0)
+			Robot.agitator.agitateForwards();
+			
+		loopCounter++;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
