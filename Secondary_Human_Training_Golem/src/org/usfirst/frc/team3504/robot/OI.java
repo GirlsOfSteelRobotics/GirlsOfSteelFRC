@@ -58,8 +58,6 @@ public class OI {
 	private JoystickButton incrementHighShooter;
 	private JoystickButton decrementHighShooter;
 
-	public JoystickButton motionProfile;
-
 	private JoystickButton driveByVision;
 
 	public OI() {
@@ -68,6 +66,8 @@ public class OI {
 		drivingStickBackward = new Joystick(1);
 		gamePad = new Joystick(2);
 		autonSelector = new Joystick(3);
+
+		// DRIVING BUTTONS
 
 		// Button to change between drive joysticks on trigger of both joysticks
 		switchToForward = new JoystickButton(drivingStickForward, 1);
@@ -87,40 +87,35 @@ public class OI {
 		shifterUp = new JoystickButton(drivingStickBackward, 3);
 		shifterUp.whenPressed(new ShiftUp());
 
-		// operator buttons
-		// vision
+		// OPERATOR BUTTONS
+
+		// Drive by vision (plus back up a few inches when done)
 		driveByVision = new JoystickButton(gamePad, 1);
 		driveByVision.whenPressed(new AutoCenterGear());
 
-		// shooter buttons
-		shootGear = new JoystickButton(gamePad, 3);
-		shootGear.whileHeld(new CombinedShootGear());
+		// Shooter buttons
 		shootKey = new JoystickButton(gamePad, 2);
 		shootKey.whileHeld(new CombinedShootKey());
+		shootGear = new JoystickButton(gamePad, 3);
+		shootGear.whileHeld(new CombinedShootGear());
 		shoot = new JoystickButton(gamePad, 4);
 		shoot.whileHeld(new CombinedShoot());
 
-		// Increment/decrement high shooter speed
+		// Button for loader agitator
+		agitate = new JoystickButton(gamePad, 5);
+		agitate.whileHeld(new Agitate());
+
+		// Increment/decrement shooter speed
 		incrementHighShooter = new JoystickButton(gamePad, 6);
 		incrementHighShooter.whenPressed(new IncrementHighShooter());
 		decrementHighShooter = new JoystickButton(gamePad, 8);
 		decrementHighShooter.whenPressed(new DecrementHighShooter());
 
-		// Buttons for gear cover
-		agitate = new JoystickButton(gamePad, 5); // TODO: re-enable when the
-													// hardware is finished
-		agitate.whileHeld(new Agitate());
-
-		// Climb
-		climb = new JoystickButton(gamePad, 10);
-		climb.whileHeld(new Climb());
+		// Climber
 		unClimb = new JoystickButton(gamePad, 9);
 		unClimb.whileHeld(new UnClimb());
-
-		// Turn to Gear
-		// turnLeftToGear = new JoystickButton(gamePad, 1);
-		// turnLeftToGear.whenPressed(new
-		// TurnToGear(TurnToGear.Direction.kRight));
+		climb = new JoystickButton(gamePad, 10);
+		climb.whileHeld(new Climb());
 	}
 
 	public Command getAutonCommand() {
@@ -132,16 +127,17 @@ public class OI {
 		case 2:
 			return new AutoCenterGear();
 		case 3:
-			return new AutoGear(75.5, TurnToGear.Direction.kLeft); // red boiler
+			// red boiler
+			return new AutoGear(75.5, TurnToGear.Direction.kLeft);
 		case 4:
-			return new AutoGear(70.5, TurnToGear.Direction.kRight); // red
-																	// loader
+			// red loader
+			return new AutoGear(70.5, TurnToGear.Direction.kRight);
 		case 5:
-			return new AutoGear(75.5, TurnToGear.Direction.kRight); // blue
-																	// boiler
+			// blue boiler
+			return new AutoGear(75.5, TurnToGear.Direction.kRight);
 		case 6:
-			return new AutoGear(70.5, TurnToGear.Direction.kLeft); // blue
-																	// loader
+			// blue loader
+			return new AutoGear(70.5, TurnToGear.Direction.kLeft);
 		case 7:
 			return new AutoShooter();
 		case 8:
@@ -189,11 +185,12 @@ public class OI {
 	 */
 	public int getAutonSelector() {
 		// Each of the four "button" inputs corresponds to a bit of a binary
-		// number
-		// encoding the current selection. To simplify wiring, buttons 2-5 were
-		// used.
-		int value = 1 * (autonSelector.getRawButton(2) ? 1 : 0) + 2 * (autonSelector.getRawButton(3) ? 1 : 0)
-				+ 4 * (autonSelector.getRawButton(4) ? 1 : 0) + 8 * (autonSelector.getRawButton(5) ? 1 : 0);
+		// number encoding the current selection. To simplify wiring, buttons
+		// 2-5 were used.
+		int value = 1 * (autonSelector.getRawButton(2) ? 1 : 0)
+				+ 2 * (autonSelector.getRawButton(3) ? 1 : 0)
+				+ 4 * (autonSelector.getRawButton(4) ? 1 : 0)
+				+ 8 * (autonSelector.getRawButton(5) ? 1 : 0);
 		System.out.println("Auto Selector Number: " + value);
 		return value;
 	}

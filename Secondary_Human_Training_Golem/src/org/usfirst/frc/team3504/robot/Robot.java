@@ -55,8 +55,10 @@ public class Robot extends IterativeRobot {
 		try {
 			@SuppressWarnings("unused")
 			Process p;
-			p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO").start();
-			p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "20", "-e", "8").start();
+			p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO")
+					.start();
+			p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "20",
+					"-e", "8").start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,7 +97,6 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-
 	}
 
 	/**
@@ -115,7 +116,6 @@ public class Robot extends IterativeRobot {
 
 		// start robot in low gear when starting teleop
 		shifters.shiftGear(Shifters.Speed.kLow);
-
 	}
 
 	/**
