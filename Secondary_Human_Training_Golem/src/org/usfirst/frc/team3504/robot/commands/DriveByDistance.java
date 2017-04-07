@@ -2,6 +2,8 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.TurnToGear.Direction;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import com.ctre.CANTalon;
 
@@ -20,9 +22,12 @@ public class DriveByDistance extends Command {
 
 	private double leftInitial;
 	private double rightInitial;
+	
+	private Shifters.Speed speed;
 
-	public DriveByDistance(double inches) {
+	public DriveByDistance(double inches, Shifters.Speed speed) {
 		rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
+		this.speed = speed;
 
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.chassis);
@@ -31,20 +36,39 @@ public class DriveByDistance extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.chassis.setPositionMode();
+		
+		Robot.shifters.shiftGear(speed);
 
 		// Robot.chassis.setupFPID(leftTalon);
 		// Robot.chassis.setupFPID(rightTalon);
-		leftTalon.setP(0.17);
-		rightTalon.setP(0.17);
+		
+		if (speed == Shifters.Speed.kLow){
+			leftTalon.setP(0.17);
+			rightTalon.setP(0.17);
 
-		leftTalon.setI(0.0);
-		rightTalon.setI(0.0);
+			leftTalon.setI(0.0);
+			rightTalon.setI(0.0);
 
-		leftTalon.setD(0.02);
-		rightTalon.setD(0.02);
+			leftTalon.setD(0.02);
+			rightTalon.setD(0.02);
 
-		leftTalon.setF(0.0);
-		rightTalon.setF(0.0);
+			leftTalon.setF(0.0);
+			rightTalon.setF(0.0);
+		}
+		else if (speed == Shifters.Speed.kHigh){
+			leftTalon.setP(0.02);
+			rightTalon.setP(0.02);
+
+			leftTalon.setI(0.0);
+			rightTalon.setI(0.0);
+
+			leftTalon.setD(0.04);
+			rightTalon.setD(0.04);
+
+			leftTalon.setF(0.0);
+			rightTalon.setF(0.0);
+		}
+		
 
 		// leftTalon.setPosition(0.0);
 		// rightTalon.setPosition(0.0);
@@ -70,9 +94,10 @@ public class DriveByDistance extends Command {
 		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getPosition());
 		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getError());
 
-		System.out.println("Drive Talon Left Goal " + (-(rotations + leftInitial)));
-		System.out.println("Drive Talon Left Position " + leftTalon.getPosition());
-		System.out.println("Drive Talon Left Error " + leftTalon.getError());
+		//System.out.println("Left Goal " + (-(rotations + leftInitial)) + " Right Goal " + (rotations + rightInitial));
+		//System.out.println("Left Position " + leftTalon.getPosition() + " Right Position " + rightTalon.getPosition());
+		//System.out.println("Left Error " + ((-(rotations + leftInitial)) + leftTalon.getPosition()));
+		//System.out.println("Right Error " + (((rotations + rightInitial)) - rightTalon.getPosition()));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -89,7 +114,7 @@ public class DriveByDistance extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-
+		Robot.shifters.shiftGear(Shifters.Speed.kLow);
 		System.out.println("DriveByDistance Finished");
 	}
 

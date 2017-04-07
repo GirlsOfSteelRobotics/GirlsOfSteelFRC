@@ -70,6 +70,7 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
+		System.out.println("DisabledInit shifting into high gear");
 		shifters.shiftGear(Shifters.Speed.kHigh);
 	}
 
