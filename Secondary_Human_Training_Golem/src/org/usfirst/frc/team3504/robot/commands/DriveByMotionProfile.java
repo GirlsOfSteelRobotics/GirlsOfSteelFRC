@@ -88,6 +88,15 @@ public class DriveByMotionProfile extends Command {
 		leftTalon.set(state.value);
 		rightTalon.set(state.value);
 		// System.out.println("DriveByMotion: Execute Setting State: " + state);
+		
+		// did we get an underrun condition since last time we checked?
+		if (leftStatus.hasUnderrun || rightStatus.hasUnderrun) {
+			// better log it so we know about it
+			System.out.println("DriveByMotion: A Talon has underrun!!! Left Talon: " + leftStatus.hasUnderrun + " Right Talon: " + rightStatus.hasUnderrun);
+			// clear the error. This flag does not auto clear, so this way we never miss logging it.
+			leftTalon.clearMotionProfileHasUnderrun();
+			rightTalon.clearMotionProfileHasUnderrun();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
