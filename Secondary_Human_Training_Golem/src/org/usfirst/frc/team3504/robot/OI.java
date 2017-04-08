@@ -7,6 +7,7 @@ import org.usfirst.frc.team3504.robot.commands.CombinedShootGear;
 import org.usfirst.frc.team3504.robot.commands.CombinedShootKey;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
@@ -18,6 +19,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCenterGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoShooter;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -121,9 +123,9 @@ public class OI {
 	public Command getAutonCommand() {
 		switch (getAutonSelector()) {
 		case 0:
-			return new DriveByDistance(75.5);
+			return new DriveByDistance(75.5, Shifters.Speed.kHigh);
 		case 1:
-			return new DriveByDistance(112.0);
+			return new DriveByDistance(112.0, Shifters.Speed.kHigh);
 		case 2:
 			return new AutoCenterGear();
 		case 3:
@@ -141,11 +143,13 @@ public class OI {
 		case 7:
 			return new AutoShooter();
 		case 8:
-			return new DriveByDistance(-3);
+			return new DriveByDistance(-3, Shifters.Speed.kLow);
+		case 9:
+			return new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat");
 		case 15:
 			return new AutoDoNothing();
 		default:
-			return new DriveByDistance(75.5);
+			return new DriveByDistance(75.5, Shifters.Speed.kLow);
 		}
 	}
 

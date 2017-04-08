@@ -32,6 +32,7 @@ public class Shooter extends Subsystem {
 	public static final int SHOOTER_DEFAULT_SPEED = SHOOTER_MAX_SPEED;
 	public static final int SHOOTER_SPEED_GEAR = 5000;
 	public static final int SHOOTER_SPEED_KEY = 3250;
+	public static final int AUTO_SHOOTER_SPEED_KEY = 3333; 
 	private static final double MAX_SHOOTER_ERROR = 0.05;
 
 	private int shooterSpeed = SHOOTER_DEFAULT_SPEED;

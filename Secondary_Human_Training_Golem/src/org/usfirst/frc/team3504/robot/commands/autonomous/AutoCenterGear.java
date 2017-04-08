@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -29,6 +30,6 @@ public class AutoCenterGear extends CommandGroup {
 		// arm.
 
 		addSequential(new DriveByVision());
-		addSequential(new DriveByDistance(-3.0));
+		addSequential(new DriveByDistance(-3.0, Shifters.Speed.kLow));
 	}
 }
