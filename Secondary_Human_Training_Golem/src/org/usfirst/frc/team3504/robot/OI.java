@@ -7,6 +7,7 @@ import org.usfirst.frc.team3504.robot.commands.CombinedShootGear;
 import org.usfirst.frc.team3504.robot.commands.CombinedShootKey;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
@@ -143,6 +144,8 @@ public class OI {
 			return new AutoShooter();
 		case 8:
 			return new DriveByDistance(-3, Shifters.Speed.kLow);
+		case 9:
+			return new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat");
 		case 15:
 			return new AutoDoNothing();
 		default:
