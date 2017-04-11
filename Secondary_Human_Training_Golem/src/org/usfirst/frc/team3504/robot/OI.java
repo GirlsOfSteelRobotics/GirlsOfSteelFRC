@@ -15,6 +15,7 @@ import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBoilerGearAndShoot;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCenterGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
@@ -143,9 +144,11 @@ public class OI {
 		case 7:
 			return new AutoShooter();
 		case 8:
-			return new DriveByDistance(-3, Shifters.Speed.kLow);
-		case 9:
 			return new DriveByMotionProfile("/home/lvuser/left60degrees.dat", "/home/lvuser/right60degrees.dat");
+		case 9: //red boiler
+			return new AutoBoilerGearAndShoot(75.5, TurnToGear.Direction.kLeft);
+		case 10: //blue boiler
+			return new AutoBoilerGearAndShoot(75.5, TurnToGear.Direction.kRight);
 		case 15:
 			return new AutoDoNothing();
 		default:
