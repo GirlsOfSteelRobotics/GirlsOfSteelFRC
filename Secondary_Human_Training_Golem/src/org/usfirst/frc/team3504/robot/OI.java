@@ -145,7 +145,7 @@ public class OI {
 		case 8:
 			return new DriveByDistance(-3, Shifters.Speed.kLow);
 		case 9:
-			return new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat");
+			return new DriveByMotionProfile("/home/lvuser/left60degrees.dat", "/home/lvuser/right60degrees.dat");
 		case 15:
 			return new AutoDoNothing();
 		default:
