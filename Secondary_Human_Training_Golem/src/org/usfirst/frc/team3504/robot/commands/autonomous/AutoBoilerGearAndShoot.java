@@ -1,7 +1,13 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.commands.CombinedShootGear;
+import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.TurnByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
+import org.usfirst.frc.team3504.robot.commands.DriveByVision;
+import org.usfirst.frc.team3504.robot.commands.TimeDelay;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear.Direction;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -16,7 +22,15 @@ public class AutoBoilerGearAndShoot extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	
-    	addSequential(new AutoGear(distance, direction));
+    	addSequential(new DriveByDistance(distance, Shifters.Speed.kLow));
+		if (direction == Direction.kLeft){
+			addSequential(new DriveByMotionProfile("/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat"));
+		} else if (direction == Direction.kRight){
+			addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat"));
+		}
+		addSequential(new DriveByVision());
+		addParallel(new TurnByDistance(-13.0, 3.0, null));
+		addParallel(new TimeDelay(1.0)); 
     	addSequential(new CombinedShootGear());
 
         // To run multiple commands at the same time,
