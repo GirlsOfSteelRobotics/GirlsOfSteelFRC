@@ -5,7 +5,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.CANTalon;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
@@ -35,7 +35,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 
 	//using the Nav board
 	public PIDController turnController;
-	public AHRS ahrs;
+	//public AHRS ahrs;
 
 	static final double kP = 0.03; //TODO: adjust these
 	static final double kI = 0.00;
@@ -90,16 +90,16 @@ public class Chassis extends Subsystem implements PIDOutput{
 			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
 			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-			ahrs = new AHRS(SPI.Port.kMXP);
+			//ahrs = new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 		}
-		turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
-		turnController.setInputRange(-180.0f,  180.0f);
+		//turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+		/*turnController.setInputRange(-180.0f,  180.0f);
 		turnController.setOutputRange(-1.0, 1.0);
 		turnController.setAbsoluteTolerance(kToleranceDegrees);
 		turnController.setContinuous(true);
-		turnController.enable();
+		turnController.enable();*/
 	}
 
 	public void initDefaultCommand() {
@@ -153,7 +153,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 	public void resetEncoderDistance() {
 		encOffsetValueRight = getEncoderRight();
 		encOffsetValueLeft = getEncoderLeft();
-		ahrs.resetDisplacement();
+		//ahrs.resetDisplacement();
 		getEncoderDistance();
 	}
 
@@ -161,13 +161,13 @@ public class Chassis extends Subsystem implements PIDOutput{
 		return rotateToAngleRate;
 	}
 
-	public double getGyroAngle() {
+	/*public double getGyroAngle() {
 		return ahrs.getYaw();
 	}
 
 	public void resetGyro() {
 		ahrs.zeroYaw();
-	}
+	}*/
 
 	@Override
 	public void pidWrite(double output) {
@@ -175,7 +175,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 	}
 
 	public void ahrsToSmartDashboard() {
-		SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
+	/*	SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
 		SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
 		SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
 		SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
@@ -183,7 +183,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 		SmartDashboard.putNumber("IMU_X_Displacement", ahrs.getDisplacementX());
 		SmartDashboard.putNumber("IMU_Y_Displacement", ahrs.getDisplacementY());
 		SmartDashboard.putNumber("IMU_Z_Displacement", ahrs.getDisplacementZ());
-
+*/
 		getEncoderDistance();
 	}
 }

@@ -18,7 +18,7 @@ public class OI {
 	 * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
 	 */
 	//IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-	boolean rozieDrive = true;
+	boolean rozieDrive = false;
 	
 	
 	private Joystick drivingStickForward = new Joystick(0);

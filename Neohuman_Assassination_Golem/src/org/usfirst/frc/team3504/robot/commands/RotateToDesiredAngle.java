@@ -38,7 +38,7 @@ public class RotateToDesiredAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Robot.chassis.getGyroAngle()) >= Math.abs(desiredAngle);
+        return true;//Math.abs(Robot.chassis.getGyroAngle()) >= Math.abs(desiredAngle);
     }
 
     // Called once after isFinished returns true
