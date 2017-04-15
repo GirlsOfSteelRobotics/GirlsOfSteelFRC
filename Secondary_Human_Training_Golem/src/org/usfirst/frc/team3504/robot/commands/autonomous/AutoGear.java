@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear.Direction;
@@ -14,11 +15,22 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoGear extends CommandGroup {
 
 	public AutoGear(double distance, Direction direction) {
-
+		/*
 		addSequential(new DriveByDistance(distance, Shifters.Speed.kHigh));
 		addSequential(new TurnToGear(direction));
 		addSequential(new DriveByVision());
 		addSequential(new DriveByDistance(-3.0, Shifters.Speed.kLow));
+		*/
+		// Using motion profiles for turns:
+		addSequential(new DriveByDistance(distance, Shifters.Speed.kLow));
+		if (direction == Direction.kLeft){
+			addSequential(new DriveByMotionProfile("/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat"));
+		} else if (direction == Direction.kRight){
+			addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat"));
+		}
+		addSequential(new DriveByVision());
+		addSequential(new DriveByDistance(-3.0, Shifters.Speed.kLow));
+		
 
 		// Add Commands here:
 		// e.g. addSequential(new Command1());

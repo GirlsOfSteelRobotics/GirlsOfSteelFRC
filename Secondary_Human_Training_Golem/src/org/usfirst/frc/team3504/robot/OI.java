@@ -18,8 +18,10 @@ import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
+import org.usfirst.frc.team3504.robot.commands.TurnByDistance;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear;
 import org.usfirst.frc.team3504.robot.commands.UnClimb;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBoilerGearAndShoot;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCenterGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
@@ -167,29 +169,33 @@ public class OI {
 	public Command getAutonCommand() {
 		switch (getAutonSelector()) {
 		case 0:
-			return new DriveByDistance(75.5, Shifters.Speed.kHigh);
+			return new DriveByDistance(45, Shifters.Speed.kHigh);
 		case 1:
 			return new DriveByDistance(112.0, Shifters.Speed.kHigh);
 		case 2:
 			return new AutoCenterGear();
-		case 3:
-			// red boiler
-			return new AutoGear(75.5, TurnToGear.Direction.kLeft);
-		case 4:
-			// red loader
-			return new AutoGear(70.5, TurnToGear.Direction.kRight);
-		case 5:
-			// blue boiler
-			return new AutoGear(75.5, TurnToGear.Direction.kRight);
-		case 6:
-			// blue loader
-			return new AutoGear(70.5, TurnToGear.Direction.kLeft);
+		case 3: // red boiler
+			//return new AutoGear(75.5, TurnToGear.Direction.kLeft);
+			return new AutoGear(65.0, TurnToGear.Direction.kLeft);
+		case 4: // red loader
+			//return new AutoGear(70.5, TurnToGear.Direction.kRight);
+			return new AutoGear(50.0, TurnToGear.Direction.kRight);
+		case 5: // blue boiler
+			//return new AutoGear(75.5, TurnToGear.Direction.kRight);
+			return new AutoGear(50.0, TurnToGear.Direction.kRight);
+		case 6: // blue loader
+			//return new AutoGear(70.5, TurnToGear.Direction.kLeft);
+			return new AutoGear(60.0, TurnToGear.Direction.kLeft);
 		case 7:
 			return new AutoShooter();
 		case 8:
 			return new DriveByDistance(-3, Shifters.Speed.kLow);
-		case 9:
-			return new DriveByMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat");
+		case 9: //red boiler
+			return new AutoBoilerGearAndShoot(65.0, TurnToGear.Direction.kLeft);
+		case 10: //blue boiler
+			return new AutoBoilerGearAndShoot(44.0, TurnToGear.Direction.kRight);
+		case 11: 
+			return new TurnByDistance(-13.0, -3.0, Shifters.Speed.kLow); 
 		case 15:
 			return new AutoDoNothing();
 		default:
