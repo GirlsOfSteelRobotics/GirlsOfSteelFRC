@@ -5,10 +5,15 @@ import org.usfirst.frc.team3504.robot.commands.Climb;
 import org.usfirst.frc.team3504.robot.commands.CombinedShoot;
 import org.usfirst.frc.team3504.robot.commands.CombinedShootGear;
 import org.usfirst.frc.team3504.robot.commands.CombinedShootKey;
+import org.usfirst.frc.team3504.robot.commands.CreateMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
+//import org.usfirst.frc.team3504.robot.commands.FlapDown;
+//import org.usfirst.frc.team3504.robot.commands.FlapUp;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
+//import org.usfirst.frc.team3504.robot.commands.PivotDown;
+//import org.usfirst.frc.team3504.robot.commands.PivotUp;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
@@ -34,6 +39,12 @@ public class OI {
 	public enum DriveDirection {
 		kFWD, kREV
 	};
+	
+	//IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
+		boolean rozieDrive = false;
+		
+		//Rozie's Nonsense: Project Droperation.
+		private Joystick roziePad = new Joystick(5);
 
 	private Joystick drivingStickForward;
 	private Joystick drivingStickBackward;
@@ -60,6 +71,22 @@ public class OI {
 	private JoystickButton incrementHighShooter;
 	private JoystickButton decrementHighShooter;
 
+	
+	
+
+	//ROZIE DECLARATIONS
+	/**
+	 * ROZIE 
+	 */
+	
+	private JoystickButton rozieShiftDownButton;
+	private JoystickButton rozieFlapUp;
+	private JoystickButton rozieFlapDown;
+	private JoystickButton roziePivotUp;
+	private JoystickButton roziePivotDown;
+	
+	
+	
 	private JoystickButton driveByVision;
 
 	public OI() {
@@ -93,7 +120,7 @@ public class OI {
 
 		// Drive by vision (plus back up a few inches when done)
 		driveByVision = new JoystickButton(gamePad, 1);
-		driveByVision.whenPressed(new AutoCenterGear());
+		driveByVision.whenPressed(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));
 
 		// Shooter buttons
 		shootKey = new JoystickButton(gamePad, 2);
@@ -118,8 +145,25 @@ public class OI {
 		unClimb.whileHeld(new UnClimb());
 		climb = new JoystickButton(gamePad, 10);
 		climb.whileHeld(new Climb());
+		
+		//ROZIE STUFF!!!!
+				if (rozieDrive == true){
+					rozieShiftDownButton = new JoystickButton(roziePad, 4); //Y
+					rozieShiftDownButton.whenPressed(new ShiftDown());
+					rozieFlapUp = new JoystickButton(roziePad, 8);//START
+					rozieFlapUp.whileHeld(new Climb()); 
+					rozieFlapDown = new JoystickButton(roziePad, 7);  // BACK
+					rozieFlapDown.whileHeld(new UnClimb());
+					roziePivotUp = new JoystickButton(roziePad, 3); // X
+					roziePivotUp.whileHeld(new CombinedShoot());
+					roziePivotDown = new JoystickButton(roziePad, 2); // B
+					roziePivotDown.whileHeld(new ShiftUp());
+				}
+				
 	}
 
+	
+	
 	public Command getAutonCommand() {
 		switch (getAutonSelector()) {
 		case 0:
@@ -145,7 +189,7 @@ public class OI {
 		case 8:
 			return new DriveByDistance(-3, Shifters.Speed.kLow);
 		case 9:
-			return new DriveByMotionProfile("/home/lvuser/leftBoilerGear.dat", "/home/lvuser/rightBoilerGear.dat");
+			return new DriveByMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat");
 		case 15:
 			return new AutoDoNothing();
 		default:
@@ -154,7 +198,10 @@ public class OI {
 	}
 
 	public double getDrivingJoystickY() {
-		if (driveDirection == DriveDirection.kFWD) {
+		if (rozieDrive == true){
+			return roziePad.getY();
+		}
+		else if (driveDirection == DriveDirection.kFWD) {
 			return drivingStickForward.getY();
 		} else {
 			return -drivingStickBackward.getY();
@@ -162,8 +209,10 @@ public class OI {
 	}
 
 	public double getDrivingJoystickX() { // keep the redundancy, it breaks if
-											// removed
-		if (driveDirection == DriveDirection.kFWD) {
+		if (rozieDrive == true){
+			return roziePad.getX();
+		}									// removed
+		else if (driveDirection == DriveDirection.kFWD) {
 			return drivingStickForward.getX();
 		} else {
 			return drivingStickBackward.getX();

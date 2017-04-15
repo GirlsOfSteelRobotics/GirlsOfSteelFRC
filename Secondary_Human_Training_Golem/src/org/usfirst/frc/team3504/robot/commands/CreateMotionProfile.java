@@ -46,11 +46,21 @@ public class CreateMotionProfile extends Command {
 	protected void initialize() {
 		leftInitial = (double) leftTalon.getPosition();
 		rightInitial = (double) rightTalon.getPosition();
+		
+		leftTrajectory = new ArrayList<ArrayList<Double>>();
+		rightTrajectory = new ArrayList<ArrayList<Double>>();
+		
+		leftPoint = new ArrayList<Double>();
+		rightPoint = new ArrayList<Double>();
+		
 		System.out.println("CreateMotionProfile: Starting to Record MP");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		leftPoint = new ArrayList<Double>();
+		rightPoint = new ArrayList<Double>();
+		
 		double leftPosition = (double) leftTalon.getPosition() - leftInitial; // in
 																				// rotations
 		double rightPosition = (double) rightTalon.getPosition() - rightInitial;
@@ -58,8 +68,8 @@ public class CreateMotionProfile extends Command {
 		double rightVelocity = (double) rightTalon.getEncVelocity();
 
 		// Get encoder position and velocity from left talon
-		leftPoint.add(leftPosition);
-		leftPoint.add(leftVelocity / RobotMap.CODES_PER_WHEEL_REV); // is this
+		leftPoint.add(-leftPosition);
+		leftPoint.add(-leftVelocity / RobotMap.CODES_PER_WHEEL_REV); // is this
 																	// in RPM?
 		leftPoint.add(20.0); // should be the frequency of execute()
 
@@ -133,15 +143,22 @@ public class CreateMotionProfile extends Command {
 	private void cleanTrajectory(ArrayList<ArrayList<Double>> leftMP, ArrayList<ArrayList<Double>> rightMP) {
 		// remove all extra zero positions at the beginning
 		// TODO: does first position need to be exactly zero?
-		while (leftMP.get(1).get(0) <= ERROR && rightMP.get(1).get(0) <= ERROR) {
+		
+		
+		while (leftMP.size() > 1 && rightMP.size() > 1 && leftMP.get(1).get(0) <= ERROR && rightMP.get(1).get(0) <= ERROR) {
 			leftMP.remove(1);
 			rightMP.remove(1);
 		}
 
+		double leftDiff = 0;
+		double rightDiff = 0;
 		// remove repeated final positions at the end
-		double leftDiff = Math.abs(leftMP.get(leftMP.size() - 2).get(0) - leftMP.get(leftMP.size() - 1).get(0));
-		double rightDiff = Math.abs(rightMP.get(rightMP.size() - 2).get(0) - rightMP.get(rightMP.size() - 1).get(0));
-		while (leftDiff <= ERROR && rightDiff <= ERROR) {
+		if (leftMP.size() > 1 && rightMP.size() > 1){
+			leftDiff = Math.abs(leftMP.get(leftMP.size() - 2).get(0) - leftMP.get(leftMP.size() - 1).get(0));
+			rightDiff = Math.abs(rightMP.get(rightMP.size() - 2).get(0) - rightMP.get(rightMP.size() - 1).get(0));
+		}
+		
+		while (leftMP.size() > 1 && rightMP.size() > 1 && leftDiff <= ERROR && rightDiff <= ERROR) {
 			// while the second to last position is the same as the last
 			// position for both motion profiles
 			leftMP.remove(leftMP.size() - 2);
