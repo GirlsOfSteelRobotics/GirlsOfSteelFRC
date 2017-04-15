@@ -75,13 +75,13 @@ public class TurnByDistance extends Command {
 		// leftTalon.setPosition(0.0);
 		// rightTalon.setPosition(0.0);
 
-		System.out.println("Drive by Distance Started " + rotationsRight);
+		System.out.println("TurnByDistance Started " + rotationsRight + rotationsLeft);
 
 		leftInitial = -leftTalon.getPosition();
 		rightInitial = rightTalon.getPosition();
 
-		leftTalon.set(-(rotationsRight + leftInitial));
-		rightTalon.set(rotationsLeft + rightInitial);
+		leftTalon.set(-(rotationsLeft + leftInitial));
+		rightTalon.set(rotationsRight + rightInitial);
 
 		System.out.println("LeftInitial: " + leftInitial + " RightInitial: " + rightInitial);
 
@@ -110,7 +110,7 @@ public class TurnByDistance extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.shifters.shiftGear(Shifters.Speed.kLow);
-		System.out.println("DriveByDistance Finished");
+		System.out.println("TurnByDistance Finished");
 	}
 
 	// Called when another command which requires one or more of the same

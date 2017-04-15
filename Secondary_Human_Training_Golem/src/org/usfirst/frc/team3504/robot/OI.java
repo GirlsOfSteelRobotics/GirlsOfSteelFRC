@@ -149,9 +149,9 @@ public class OI {
 		case 9: //red boiler
 			return new AutoBoilerGearAndShoot(65.0, TurnToGear.Direction.kLeft);
 		case 10: //blue boiler
-			return new AutoBoilerGearAndShoot(75.5, TurnToGear.Direction.kRight);
+			return new AutoBoilerGearAndShoot(44.0, TurnToGear.Direction.kRight);
 		case 11: 
-			return new TurnByDistance(-13.0, -3.0, null); 
+			return new TurnByDistance(-13.0, -3.0, Shifters.Speed.kLow); 
 		case 15:
 			return new AutoDoNothing();
 		default:

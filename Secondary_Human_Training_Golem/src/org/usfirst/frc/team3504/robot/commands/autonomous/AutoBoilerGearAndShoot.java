@@ -29,8 +29,15 @@ public class AutoBoilerGearAndShoot extends CommandGroup {
 			addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat"));
 		}
 		addSequential(new DriveByVision());
-		addParallel(new TurnByDistance(-13.0, 3.0, null));
-		addParallel(new TimeDelay(1.0)); 
+		addSequential(new DriveByMotionProfile("/home/lvuser/BackupFourInches.dat", "/home/lvuser/BackupFourInches.dat"));
+		
+		if (direction == Direction.kLeft){
+			addParallel(new TurnByDistance(-8.0, 3.0, Shifters.Speed.kLow));
+		} else if (direction == Direction.kRight){
+			addParallel(new TurnByDistance(3.0, -4.0, Shifters.Speed.kLow));
+		}
+		
+		addSequential(new TimeDelay(1.5)); 	
     	addSequential(new CombinedShootGear());
 
         // To run multiple commands at the same time,
