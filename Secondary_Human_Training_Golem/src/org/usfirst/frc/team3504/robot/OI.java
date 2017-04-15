@@ -141,7 +141,7 @@ public class OI {
 			return new AutoGear(50.0, TurnToGear.Direction.kRight);
 		case 6: // blue loader
 			//return new AutoGear(70.5, TurnToGear.Direction.kLeft);
-			return new AutoGear(50.0, TurnToGear.Direction.kLeft);
+			return new AutoGear(60.0, TurnToGear.Direction.kLeft);
 		case 7:
 			return new AutoShooter();
 		case 8:
