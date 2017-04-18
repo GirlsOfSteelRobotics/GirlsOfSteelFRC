@@ -24,9 +24,9 @@ public class AutoGear extends CommandGroup {
 		// Using motion profiles for turns:
 		addSequential(new DriveByDistance(distance, Shifters.Speed.kLow));
 		if (direction == Direction.kLeft){
-			addSequential(new DriveByMotionProfile("/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat"));
+			addSequential(new DriveByMotionProfile("/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat", 1.0));
 		} else if (direction == Direction.kRight){
-			addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat"));
+			addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
 		}
 		addSequential(new DriveByVision());
 		addSequential(new DriveByDistance(-3.0, Shifters.Speed.kLow));
