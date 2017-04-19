@@ -149,15 +149,19 @@ public class CreateMotionProfile extends Command {
 	private void cleanTrajectory(ArrayList<ArrayList<Double>> leftMP, ArrayList<ArrayList<Double>> rightMP) {
 		// remove all extra zero positions at the beginning
 		// TODO: does first position need to be exactly zero?
+		double leftDiff = 0;
+		double rightDiff = 0;
 		
+		if (leftMP.size() > 1 && rightMP.size() > 1){
+			leftDiff = Math.abs(leftMP.get(1).get(0) - leftMP.get(0).get(0));
+			rightDiff = Math.abs(rightMP.get(1).get(0) - rightMP.get(0).get(0));
+		}
 		
-		while (leftMP.size() > 1 && rightMP.size() > 1 && leftMP.get(1).get(0) <= ERROR && rightMP.get(1).get(0) <= ERROR) {
+		while (leftMP.size() > 1 && rightMP.size() > 1 && leftDiff <= ERROR && rightDiff <= ERROR) {
 			leftMP.remove(1);
 			rightMP.remove(1);
 		}
-
-		double leftDiff = 0;
-		double rightDiff = 0;
+		
 		// remove repeated final positions at the end
 		if (leftMP.size() > 1 && rightMP.size() > 1){
 			leftDiff = Math.abs(leftMP.get(leftMP.size() - 2).get(0) - leftMP.get(leftMP.size() - 1).get(0));
