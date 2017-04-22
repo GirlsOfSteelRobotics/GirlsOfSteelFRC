@@ -9,11 +9,7 @@ import org.usfirst.frc.team3504.robot.commands.CreateMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DecrementHighShooter;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-//import org.usfirst.frc.team3504.robot.commands.FlapDown;
-//import org.usfirst.frc.team3504.robot.commands.FlapUp;
 import org.usfirst.frc.team3504.robot.commands.IncrementHighShooter;
-//import org.usfirst.frc.team3504.robot.commands.PivotDown;
-//import org.usfirst.frc.team3504.robot.commands.PivotUp;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
@@ -26,6 +22,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCenterGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoShooter;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoShooterAndCrossLine;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -198,6 +195,8 @@ public class OI {
 			return new TurnByDistance(-13.0, -3.0, Shifters.Speed.kLow); 
 		case 12:
 			return new DriveByMotionProfile("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat", 1.0); 
+		case 13:
+			return new AutoShooterAndCrossLine();
 		case 15:
 			return new AutoDoNothing();
 		default:
