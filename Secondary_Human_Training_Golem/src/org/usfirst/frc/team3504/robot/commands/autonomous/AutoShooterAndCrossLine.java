@@ -16,7 +16,7 @@ public class AutoShooterAndCrossLine extends CommandGroup {
 	public AutoShooterAndCrossLine() {
 		addParallel(new CombinedShootKey());
 		addSequential(new TimeDelay(10.0));
-		addSequential(new TurnByDistance(70.0, 30.0, Shifters.Speed.kLow));
-		addSequential(new DriveByDistance(48.0, Shifters.Speed.kLow));
+		addSequential(new TurnByDistance(-10.0, -60.0, Shifters.Speed.kLow));
+		addSequential(new DriveByDistance(-48.0, Shifters.Speed.kLow));
 	}
 }
