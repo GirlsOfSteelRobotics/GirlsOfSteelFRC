@@ -26,11 +26,11 @@ public class DriveByMotionProfile extends Command {
 	private CANTalon.MotionProfileStatus rightStatus;
 	private static final int kMinPointsInTalon = 5;
 	private CANTalon.SetValueMotionProfile state;
-	private double multiplier = 1;
+	private double multiplier = 1.0;
 
 	Notifier notifier = new Notifier(new PeriodicRunnable());
 
-	public DriveByMotionProfile(String leftFile, String rightFile, double mulitplier) {
+	public DriveByMotionProfile(String leftFile, String rightFile, double multiplier) {
 		requires(Robot.chassis);
 
 		this.multiplier = multiplier;
@@ -110,9 +110,7 @@ public class DriveByMotionProfile extends Command {
 
 		boolean left = (leftStatus.activePointValid && leftStatus.activePoint.isLastPoint);
 		boolean right = (rightStatus.activePointValid && rightStatus.activePoint.isLastPoint);
-		System.out.println("DriveByMotion: ActiveValid: " + leftStatus.activePointValid + "IsLastPoint: "
-				+ leftStatus.activePoint.isLastPoint);
-		;
+		
 
 		if (left && right) {
 			state = CANTalon.SetValueMotionProfile.Disable;
@@ -172,8 +170,11 @@ public class DriveByMotionProfile extends Command {
 			/* for each point, fill our structure and pass it to API */
 			// Double[] a = (Double[]) arr.toArray();
 			point.position = arr.get(0);
+			
 			point.velocity = arr.get(1) * multiplier;
 			point.timeDurMs = (int)(arr.get(2) / multiplier);
+			
+			System.out.println("DriveByMotionProfile: " + point.position + " " + point.velocity + " " + point.timeDurMs);
 			point.profileSlotSelect = 0; /*
 											 * which set of gains would you like to
 											 * use?

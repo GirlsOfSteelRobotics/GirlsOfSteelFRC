@@ -55,7 +55,7 @@ public class Chassis extends Subsystem {
 		robotDrive = new RobotDrive(driveLeftA, driveRightA);
 		// Set some safety controls for the drive system
 		robotDrive.setSafetyEnabled(true);
-		robotDrive.setExpiration(0.1);
+		robotDrive.setExpiration(0.2);
 		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
 
@@ -100,7 +100,7 @@ public class Chassis extends Subsystem {
 		// PID Values
 		talon.setPosition(0);
 		talon.setF(0);
-		talon.setP(0.64); // 0.64 good
+		talon.setP(0.32); // 0.64 good
 		talon.setI(0.0);
 		talon.setD(0.0);
 	}
