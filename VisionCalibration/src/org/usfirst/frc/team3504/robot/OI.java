@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3504.robot.commands.Capture;
 
@@ -9,31 +10,46 @@ import org.usfirst.frc.team3504.robot.commands.Capture;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
+	public enum Sides {red, blue};
+	public enum Lifts {boiler, center, loading};
+	public enum Dists {close, medium, far};
+	
+	SendableChooser<Sides> side;
+	SendableChooser<Lifts> lift;
+	SendableChooser<Dists> dist;
 
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
+	public OI() {
+		// Build the location choosers and input fields
+		side = new SendableChooser<>();
+		side.addDefault("Red Side", Sides.red);
+		side.addObject("Blue side", Sides.blue);
+		SmartDashboard.putData("Side", side);
 
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
+		lift = new SendableChooser<>();
+		lift.addDefault("Boiler", Lifts.boiler);
+		lift.addObject("Center", Lifts.center);
+		lift.addObject("Loading Station", Lifts.loading);
+		SmartDashboard.putData("Lift", lift);
 
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
+		dist = new SendableChooser<>();
+		dist.addDefault("Close", Dists.close);
+		dist.addObject("Medium", Dists.medium);
+		dist.addObject("Far", Dists.far);
+		SmartDashboard.putData("Distance", dist);
 
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
+		// Create a button that will start the Capture command
+		SmartDashboard.putData("Capture Images", new Capture());
+	}
 
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
+	public String getSide() {
+		return side.getSelected().toString();
+	}
+
+	public String getLift() {
+		return lift.getSelected().toString();
+	}
+
+	public String getDist() {
+		return dist.getSelected().toString();
+	}
 }
