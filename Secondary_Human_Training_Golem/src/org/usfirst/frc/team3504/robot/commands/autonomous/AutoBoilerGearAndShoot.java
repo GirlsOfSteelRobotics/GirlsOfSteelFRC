@@ -34,7 +34,7 @@ public class AutoBoilerGearAndShoot extends CommandGroup {
 		if (direction == Direction.kLeft){
 			addParallel(new TurnByDistance(-8.0, 3.0, Shifters.Speed.kLow));
 		} else if (direction == Direction.kRight){
-			addParallel(new TurnByDistance(3.0, -4.0, Shifters.Speed.kLow));
+			addParallel(new TurnByDistance(3.0, -2.0, Shifters.Speed.kLow));
 		}
 		
 		addSequential(new TimeDelay(1.5)); 	
