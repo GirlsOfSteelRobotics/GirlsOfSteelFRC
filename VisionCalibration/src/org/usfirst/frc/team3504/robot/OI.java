@@ -1,39 +1,98 @@
 package org.usfirst.frc.team3504.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-
 import org.usfirst.frc.team3504.robot.commands.Capture;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
+	// Define the available values for the robot location UI on the dashboard
+	// Each enum lists the possible choices for a radio button group
+	public enum Sides {
+		red, blue
+	};
 
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
+	public enum Lifts {
+		boiler, center, loading
+	};
 
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
+	public enum Dists {
+		close, medium, far
+	};
 
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
+	SendableChooser<Sides> side;
+	SendableChooser<Lifts> lift;
+	SendableChooser<Dists> dist;
 
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
+	/**
+	 * Construct the OI object. Creates the UI objects and posts them to the
+	 * dashboard so they appear as soon as the program is running on the robot
+	 */
+	public OI() {
+		// Build the location choosers, presenting a set of radio buttons
+		side = new SendableChooser<>();
+		side.addDefault("Red Side", Sides.red);
+		side.addObject("Blue side", Sides.blue);
+		SmartDashboard.putData("Side", side);
 
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
+		lift = new SendableChooser<>();
+		lift.addDefault("Boiler", Lifts.boiler);
+		lift.addObject("Center", Lifts.center);
+		lift.addObject("Loading Station", Lifts.loading);
+		SmartDashboard.putData("Lift", lift);
+
+		dist = new SendableChooser<>();
+		dist.addDefault("Close", Dists.close);
+		dist.addObject("Medium", Dists.medium);
+		dist.addObject("Far", Dists.far);
+		SmartDashboard.putData("Distance", dist);
+
+		// Create a button that will start the Capture command
+		SmartDashboard.putData("Capture Images", new Capture());
+
+		// Initialize the progress bar to zero percent
+		updateProgress(0);
+	}
+
+	/**
+	 * Update the progress bar on the dashboard to this value
+	 * 
+	 * @param percent
+	 *            0 for an empty bar, through 100 for a full bar
+	 */
+	public void updateProgress(int percent) {
+		SmartDashboard.putNumber("Progress", percent);
+	}
+
+	/**
+	 * Get the current selection of the Side radio buttons from the dashboard
+	 * 
+	 * @return The current selection as a string
+	 */
+	public String getSide() {
+		return side.getSelected().toString();
+	}
+
+	/**
+	 * Get the current selection of the Lift radio buttons from the dashboard
+	 * 
+	 * @return The current selection as a string
+	 */
+	public String getLift() {
+		return lift.getSelected().toString();
+	}
+
+	/**
+	 * Get the current selection of the Distance radio buttons from the
+	 * dashboard
+	 * 
+	 * @return The current selection as a string
+	 */
+	public String getDist() {
+		return dist.getSelected().toString();
+	}
 }

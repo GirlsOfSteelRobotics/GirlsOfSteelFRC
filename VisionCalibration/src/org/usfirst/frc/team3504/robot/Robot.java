@@ -1,15 +1,10 @@
-
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team3504.robot.commands.Capture;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,11 +15,8 @@ import org.usfirst.frc.team3504.robot.subsystems.Camera;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Camera exampleSubsystem = new Camera();
+	public static Camera cameraSubsystem;
 	public static OI oi;
-
-	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -32,10 +24,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		cameraSubsystem = new Camera();
+
+		// Initialize OI *after* all subsystems are created
 		oi = new OI();
-		chooser.addDefault("Default Auto", new Capture());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
 	}
 
 	/**
@@ -66,18 +58,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
 	}
 
 	/**
@@ -90,12 +71,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+
 	}
 
 	/**
@@ -112,5 +88,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+
+	/**
+	 * This method is not used in normal robot programs but defining it avoids
+	 * an "Overload me!" message
+	 */
+	@Override
+	public void robotPeriodic() {
+
 	}
 }

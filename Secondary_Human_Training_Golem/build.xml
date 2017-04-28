@@ -26,25 +26,32 @@
   <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
   
   <import file="${wpilib.ant.dir}/build.xml"/>
-	 <target name="updateMotionProfiles" depends="get-target-ip,dependencies" description="Copy the talon motion profiles to the robot">
+	 <target name="updateMotionProfiles" depends="get-target-ip,dependencies" 
+	 	description="Copy the talon motion profiles to the robot">
 	    <echo>[updateMotionProfiles] scp talon files</echo>
 	 	  <scp todir="${username}@${target}:" password="${password}" trust="true">
 	 	    <fileset dir="Resources">
 	 	      <include name="**/*.dat"/>
 	 	    </fileset>
 	 	  </scp>
-	 	<scp file="GRIPonRoboRIO" todir="${username}@${target}:GRIPonRoboRIO" password="${password}" trust="true" filemode="555" failonerror="true"/>
-	 	<!--
-		<scp file="Resources/talonRight.csv" todir="${username}@${target}:talonProfileRight.csv" password="${password}" trust="true"/>
-		<scp file="Resources/talonLeft.csv" todir="${username}@${target}:talonProfileLeft.csv" password="${password}" trust="true"/>
-	 	<scp file="Resources/talonProfileRight01.csv" todir="${username}@${target}:talonProfileRight01.csv" password="${password}" trust="true"/>
-	 	<scp file="Resources/talonProfileLeft01.csv" todir="${username}@${target}:talonProfileLeft01.csv" password="${password}" trust="true"/>
-	 	<scp file="Resources/talonProfileRight02.csv" todir="${username}@${target}:talonProfileRight02.csv" password="${password}" trust="true"/>
-	 	<scp file="Resources/talonProfileLeft02.csv" todir="${username}@${target}:talonProfileLeft02.csv" password="${password}" trust="true"/>
-	 	<scp file="Resources/talonProfileRight03.csv" todir="${username}@${target}:talonProfileRight03.csv" password="${password}" trust="true"/>
-	 	<scp file="Resources/talonProfileLeft03.csv" todir="${username}@${target}:talonProfileLeft03.csv" password="${password}" trust="true"/>
-	 	-->
+	    <echo>[updateGRIPonRoboRIO] copying GRIPonRoboRIO executable file and libraries</echo>
+		<!-- Avoid "text busy" errors by setting aside the executable that may be currently running -->
+	 	<sshexec host="${target}"
+	         username="${username}" password="${password}" trust="true"
+	         command="mv GRIPonRoboRIO GRIPonRoboRIO.old" />
+	 	<scp file="GRIPonRoboRIO" 
+	 		todir="${username}@${target}:GRIPonRoboRIO" 
+	 		password="${password}" trust="true" filemode="755" failonerror="false"/>
+	    <!-- Copy over a dependent library that isn't normally on the RoboRIO -->
+	 	<scp file="${user.home}/wpilib/cpp/${version}/lib/libwpilibc.so" 
+	 		todir="${adminUsername}@${target}:/usr/local/frc/lib/" 
+	 		password="${adminPassword}" trust="true" filemode="755" failonerror="false"/>
+        <!-- Update the cache of available libraries to make the RIO aware of this new one -->
+	 	<sshexec host="${target}"
+	         username="${adminUsername}" password="${adminPassword}" trust="true"
+	         command="ldconfig" />
 	 </target>
-	<target name="deployWithProfile" depends="updateMotionProfiles,deploy" description="Copy the motion profiles over, then build and deploy the Robot code"/>
+	<target name="deployWithProfile" depends="updateMotionProfiles,deploy" 
+		description="Copy the motion profiles over, then build and deploy the Robot code"/>
 	
 </project> 
