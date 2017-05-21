@@ -16,7 +16,7 @@ public class Shooter extends Subsystem {
 	 * private static final double shooterMinSpeed = -0.5; private static final
 	 * double shooterMaxSpeed = -1.0; private static final double
 	 * shooterDefaultSpeed = shooterMaxSpeed; private static final double
-	 * shooterSpeedStep = -0.05; //percentage up/down per press private static
+	 * shooterSpeedStep = -0.05; //percentage up/down per press pridvate  static
 	 * final double shooterDefaultSpeedGear = -1.0 - (5.5 * -0.05); private
 	 * static final double shooterDefaultSpeedKey = -1.0 - (8.0 * -0.05);
 	 * private double shooterSpeed = shooterDefaultSpeed; //starting speed
@@ -30,7 +30,7 @@ public class Shooter extends Subsystem {
 	private static final int SHOOTER_MAX_SPEED = HIGH_MAX_RPM;
 	private static final int SHOOTER_SPEED_STEP = 100;
 	public static final int SHOOTER_DEFAULT_SPEED = SHOOTER_MAX_SPEED;
-	public static final int SHOOTER_SPEED_GEAR = 3710;
+	public static final int SHOOTER_SPEED_GEAR = 3730;
 	public static final int SHOOTER_SPEED_KEY = 3250;
 	public static final int AUTO_SHOOTER_SPEED_KEY = 3333; 
 	private static final double MAX_SHOOTER_ERROR = 0.05;

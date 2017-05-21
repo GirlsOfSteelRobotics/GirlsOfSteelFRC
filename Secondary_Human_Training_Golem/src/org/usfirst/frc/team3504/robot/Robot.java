@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
 			p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO")
 					.start();
 			p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "20",
-					"-e", "8").start();
+					"-e", "0").start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
