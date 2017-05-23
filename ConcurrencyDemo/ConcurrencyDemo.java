@@ -1,7 +1,5 @@
 
 public class ConcurrencyDemo implements Runnable {
-	// Toggle to show synchronized vs. unsynchronized operation
-	static final boolean SYNCED = false;
 
 	// Global counter to be incremented by both threads
 	static int counter = 0;
@@ -14,10 +12,7 @@ public class ConcurrencyDemo implements Runnable {
 	@Override
 	public void run() {
 		for (int i = 0; i < 10000; i++) {
-			if (SYNCED)
-				incrementCounter();
-			else
-				counter++;
+			incrementCounter();
 		}
 	}
 
