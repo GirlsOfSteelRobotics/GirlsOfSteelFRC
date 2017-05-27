@@ -178,21 +178,21 @@ public class OI {
 		case 5: // blue boiler
 			return new AutoGear(44.0, TurnToGear.Direction.kRight); //updated 1:04p 4/47/17
 		case 6: // blue loader
-			return new AutoGear(55.0, TurnToGear.Direction.kLeft);
+			return new AutoGear(50.0, TurnToGear.Direction.kLeft); //was previously 55.0
 		case 7:
 			return new AutoShooter();
-		case 8:
-			return new DriveByDistance(-3, Shifters.Speed.kLow);
+		//case 8:
+			//return new DriveByDistance(-3, Shifters.Speed.kLow);
 		case 9: //red boiler
 			return new AutoBoilerGearAndShoot(44.0, TurnToGear.Direction.kLeft); //updated 1:04p 4/47/17
 		case 10: //blue boiler
 			return new AutoBoilerGearAndShoot(44.0, TurnToGear.Direction.kRight); //updated 1:04p 4/47/17
-		case 11: 
+		/*case 11: 
 			return new TurnByDistance(-13.0, -3.0, Shifters.Speed.kLow); 
 		case 12:
 			return new DriveByMotionProfile("/home/lvuser/leftCenterGear.dat", "/home/lvuser/rightCenterGear.dat", 1.0); 
 		case 13:
-			return new AutoShooterAndCrossLine();
+			return new AutoShooterAndCrossLine();*/
 		case 15:
 			return new AutoDoNothing();
 		default:
