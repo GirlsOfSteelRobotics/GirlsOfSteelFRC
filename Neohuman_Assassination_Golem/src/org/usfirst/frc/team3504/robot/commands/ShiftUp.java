@@ -19,7 +19,7 @@ public class ShiftUp extends Command {
     protected void initialize() {
 		Robot.shifters.shiftLeft(Speed.kHigh);
 		Robot.shifters.shiftRight(Speed.kHigh);	
-		Robot.ledlights.greenLight();
+		//Robot.ledlights.greenLight();
 
 		
 

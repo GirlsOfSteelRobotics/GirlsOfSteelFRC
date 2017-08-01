@@ -19,7 +19,7 @@ public class ShiftDown extends Command {
     protected void initialize() {
 		Robot.shifters.shiftLeft(Speed.kLow);
 		Robot.shifters.shiftRight(Speed.kLow);
-		Robot.ledlights.redLight();
+		//Robot.ledlights.redLight();
     }
 
     // Called repeatedly when this Command is scheduled to run

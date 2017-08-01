@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Claw claw;
 	public static Pivot pivot;
 	public static Camera camera;
-	public static LEDLights ledlights; 
+//	public static LEDLights ledlights; 
 	public static Shooter shooter;
 
     Command autonomousCommand;
@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
     	flap = new Flap();
     	pivot = new Pivot();
     	camera = new Camera();
-    	ledlights = new LEDLights(); 
+    //	ledlights = new LEDLights(); 
 
     	if (RobotMap.USING_CLAW) {
     		claw = new Claw();
@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autochooser: ", autoChooser);
 		
 		
-		Robot.ledlights.initLights();
+		//Robot.ledlights.initLights();
     }
 	
 	/**
@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
        
-        Robot.ledlights.autoLights();
+ //       Robot.ledlights.autoLights();
         
         // Start the robot out in low gear when starting autonomous
         shifters.shiftLeft(Shifters.Speed.kLow);
@@ -126,7 +126,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        Robot.chassis.ahrsToSmartDashboard();
+       // Robot.chassis.ahrsToSmartDashboard();
         SmartDashboard.putNumber("FlapEncoder",Robot.flap.getFlapEncoderDistance());
         SmartDashboard.putNumber("Pivot Encoder", Robot.pivot.getEncoderDistance());
     }
@@ -149,7 +149,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-       Robot.chassis.ahrsToSmartDashboard();
+      // Robot.chassis.ahrsToSmartDashboard();
        SmartDashboard.putNumber("FlapEncoder",Robot.flap.getFlapEncoderDistance());
        SmartDashboard.putNumber("Pivot Encoder", Robot.pivot.getEncoderDistance());
         Scheduler.getInstance().run();
