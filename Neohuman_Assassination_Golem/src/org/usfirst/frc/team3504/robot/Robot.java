@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
     	flap = new Flap();
     	pivot = new Pivot();
     	camera = new Camera();
-    //	ledlights = new LEDLights(); 
+    	//ledlights = new LEDLights(); 
 
     	if (RobotMap.USING_CLAW) {
     		claw = new Claw();
