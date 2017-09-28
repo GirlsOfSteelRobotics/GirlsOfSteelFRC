@@ -39,15 +39,32 @@ public class OI {
 		kFWD, kREV
 	};
 	
+	
+	//DRIVE STYLES
+	int oneStickArcade = 1;
+	int twoStickArcade = 2;
+	int gamePadArcade = 3; 
+	int twoStickTank = 4;
+	int gamePadTank = 5;
+	int droperation = 6; 
+	
+	int driveStyle = oneStickArcade;
+	
 	//IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
 		boolean rozieDrive = false;
 		
 		//Rozie's Nonsense: Project Droperation.
 		private Joystick roziePad = new Joystick(5);
 
+	private Joystick drivingStick; 
+	private Joystick drivingStickTurn; 
 	private Joystick drivingStickForward;
 	private Joystick drivingStickBackward;
+	private Joystick drivingStickRight;
+	private Joystick drivingStickLeft; 
 	private Joystick gamePad;
+	private Joystick drivingGamePad;
+	private Joystick operatingGamePad; 
 	private Joystick autonSelector;
 
 	private DriveDirection driveDirection = DriveDirection.kFWD;
@@ -70,94 +87,121 @@ public class OI {
 	private JoystickButton incrementHighShooter;
 	private JoystickButton decrementHighShooter;
 
-	
-	
-
-	//ROZIE DECLARATIONS
-	/**
-	 * ROZIE 
-	 */
-	
-	private JoystickButton rozieShiftDownButton;
-	private JoystickButton rozieFlapUp;
-	private JoystickButton rozieFlapDown;
-	private JoystickButton roziePivotUp;
-	private JoystickButton roziePivotDown;
-	
-	
-	
 	private JoystickButton driveByVision;
 
 	public OI() {
 		// Define the joysticks
-		drivingStickForward = new Joystick(0);
-		drivingStickBackward = new Joystick(1);
-		gamePad = new Joystick(2);
 		autonSelector = new Joystick(3);
-
+		if (driveStyle == oneStickArcade){
+			drivingStickForward = new Joystick(0);
+			drivingStickBackward = new Joystick(1);
+			gamePad = new Joystick(2);
+		} 
+		if (driveStyle == twoStickArcade){
+			drivingStick = new Joystick(0);
+			drivingStickTurn = new Joystick(1);
+			gamePad = new Joystick(2);
+		}
+		if (driveStyle == gamePadArcade){
+			drivingGamePad = new Joystick(0);
+			operatingGamePad = new Joystick(1); 
+		}
+		if (driveStyle == twoStickTank){
+			drivingStickRight = new Joystick(0);
+			drivingStickLeft = new Joystick(1);
+			gamePad = new Joystick(2);
+		}
+		if (driveStyle == gamePadTank){
+			gamePad = new Joystick(2);
+		}
+		if (driveStyle == droperation){
+			gamePad = new Joystick(0); 
+		}
+		
 		// DRIVING BUTTONS
-
 		// Button to change between drive joysticks on trigger of both joysticks
-		switchToForward = new JoystickButton(drivingStickForward, 1);
 		switchToForward.whenPressed(new SwitchForward());
-
-		switchToBackward = new JoystickButton(drivingStickBackward, 1);
 		switchToBackward.whenPressed(new SwitchBackward());
-
-		// Buttons for shifters copied to both joysticks
-		shifterDown = new JoystickButton(drivingStickForward, 2);
+		// Buttons for shifters
 		shifterDown.whenPressed(new ShiftDown());
-		shifterDown = new JoystickButton(drivingStickBackward, 2);
-		shifterDown.whenPressed(new ShiftDown());
-
-		shifterUp = new JoystickButton(drivingStickForward, 3);
 		shifterUp.whenPressed(new ShiftUp());
-		shifterUp = new JoystickButton(drivingStickBackward, 3);
-		shifterUp.whenPressed(new ShiftUp());
-
+		
 		// OPERATOR BUTTONS
-
-		// Drive by vision (plus back up a few inches when done)
-		driveByVision = new JoystickButton(gamePad, 1);
-		driveByVision.whenPressed(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));
-
 		// Shooter buttons
-		shootKey = new JoystickButton(gamePad, 2);
 		shootKey.whileHeld(new CombinedShootKey());
-		shootGear = new JoystickButton(gamePad, 3);
 		shootGear.whileHeld(new CombinedShootGear());
-		shoot = new JoystickButton(gamePad, 4);
 		shoot.whileHeld(new CombinedShoot());
-
-		// Button for loader agitator
-		agitate = new JoystickButton(gamePad, 5);
-		agitate.whileHeld(new Agitate());
-
-		// Increment/decrement shooter speed
-		incrementHighShooter = new JoystickButton(gamePad, 6);
 		incrementHighShooter.whenPressed(new IncrementHighShooter());
-		decrementHighShooter = new JoystickButton(gamePad, 8);
 		decrementHighShooter.whenPressed(new DecrementHighShooter());
-
-		// Climber
-		unClimb = new JoystickButton(gamePad, 9);
+		//Climb buttons
 		unClimb.whileHeld(new UnClimb());
-		climb = new JoystickButton(gamePad, 10);
 		climb.whileHeld(new Climb());
 		
-		//ROZIE STUFF!!!!
-				if (rozieDrive == true){
-					rozieShiftDownButton = new JoystickButton(roziePad, 4); //Y
-					rozieShiftDownButton.whenPressed(new ShiftDown());
-					rozieFlapUp = new JoystickButton(roziePad, 8);//START
-					rozieFlapUp.whileHeld(new Climb()); 
-					rozieFlapDown = new JoystickButton(roziePad, 7);  // BACK
-					rozieFlapDown.whileHeld(new UnClimb());
-					roziePivotUp = new JoystickButton(roziePad, 3); // X
-					roziePivotUp.whileHeld(new CombinedShoot());
-					roziePivotDown = new JoystickButton(roziePad, 2); // B
-					roziePivotDown.whileHeld(new ShiftUp());
-				}
+		
+		//BUTTON ASSIGNMENTS
+		if (driveStyle == oneStickArcade){
+			//DRIVER BUTTONS
+			// Button to change between drive joysticks on trigger of both joysticks
+			switchToForward = new JoystickButton(drivingStickForward, 1);
+			switchToBackward = new JoystickButton(drivingStickBackward, 1);
+			// Buttons for shifters copied to both joysticks
+			shifterDown = new JoystickButton(drivingStickForward, 2);
+			shifterDown = new JoystickButton(drivingStickBackward, 2);
+			shifterUp = new JoystickButton(drivingStickForward, 3);
+			shifterUp = new JoystickButton(drivingStickBackward, 3);
+			
+			//OPERATOR BUTTONS
+			// Shooter buttons
+			shootKey = new JoystickButton(gamePad, 2);
+			shootGear = new JoystickButton(gamePad, 3);
+			shoot = new JoystickButton(gamePad, 4);
+			incrementHighShooter = new JoystickButton(gamePad, 6);
+			decrementHighShooter = new JoystickButton(gamePad, 8);
+			// Climber
+			unClimb = new JoystickButton(gamePad, 9);
+			climb = new JoystickButton(gamePad, 10);
+		} 
+		if (driveStyle == twoStickArcade){
+			//DRIVER BUTTONS
+			// Buttons for shifters copied to both joysticks
+			shifterDown = new JoystickButton(drivingStickForward, 2);
+			shifterDown = new JoystickButton(drivingStickBackward, 2);
+			shifterUp = new JoystickButton(drivingStickForward, 3);
+			shifterUp = new JoystickButton(drivingStickBackward, 3);
+			
+			//OPERATOR BUTTONS
+			// Shooter buttons
+			shootKey = new JoystickButton(gamePad, 2);
+			shootGear = new JoystickButton(gamePad, 3);
+			shoot = new JoystickButton(gamePad, 4);
+			incrementHighShooter = new JoystickButton(gamePad, 6);
+			decrementHighShooter = new JoystickButton(gamePad, 8);
+			// Climber
+			unClimb = new JoystickButton(gamePad, 9);
+			climb = new JoystickButton(gamePad, 10);
+		}
+		if (driveStyle == gamePadArcade){
+			
+		}
+		if (driveStyle == twoStickTank){
+			
+		}
+		if (driveStyle == gamePadTank){
+			
+		}
+		if (driveStyle == droperation){
+			shifterDown = new JoystickButton(gamePad, 4); //Y
+			shifterUp = new JoystickButton(gamePad, 2); // B
+			climb = new JoystickButton(gamePad, 8);//START
+			unClimb = new JoystickButton(gamePad, 7);  // BACK
+			shoot = new JoystickButton(gamePad, 3); // X
+		}
+		
+		
+		
+		/* Drive by vision (plus back up a few inches when done)
+		driveByVision = new JoystickButton(gamePad, 1);
+		driveByVision.whenPressed(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));*/
 				
 	}
 
@@ -201,25 +245,31 @@ public class OI {
 	}
 
 	public double getDrivingJoystickY() {
-		if (rozieDrive == true){
-			return roziePad.getY();
+		if (driveStyle == droperation || driveStyle == gamePadArcade){
+			return gamePad.getY();
 		}
-		else if (driveDirection == DriveDirection.kFWD) {
-			return drivingStickForward.getY();
-		} else {
-			return -drivingStickBackward.getY();
+		else if (driveStyle == oneStickArcade){
+			if (driveDirection == DriveDirection.kFWD) {
+				return drivingStickForward.getY();
+			} else {
+				return -drivingStickBackward.getY();
+			}
 		}
+		else return drivingStickForward.getX(); 
 	}
 
 	public double getDrivingJoystickX() { // keep the redundancy, it breaks if
-		if (rozieDrive == true){
-			return roziePad.getX();
+		if (driveStyle == droperation || driveStyle == gamePadArcade){
+			return gamePad.getX();
 		}									// removed
-		else if (driveDirection == DriveDirection.kFWD) {
-			return drivingStickForward.getX();
-		} else {
-			return drivingStickBackward.getX();
+		else if (driveStyle == oneStickArcade){
+			if (driveDirection == DriveDirection.kFWD) {
+				return drivingStickForward.getX();
+			} else {
+				return -drivingStickBackward.getX();
+			}
 		}
+		else return drivingStickForward.getX(); 
 	}
 
 	public void setDriveDirection(DriveDirection driveDirection) {
