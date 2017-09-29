@@ -118,25 +118,6 @@ public class OI {
 			gamePad = new Joystick(0); 
 		}
 		
-		// DRIVING BUTTONS
-		// Button to change between drive joysticks on trigger of both joysticks
-		switchToForward.whenPressed(new SwitchForward());
-		switchToBackward.whenPressed(new SwitchBackward());
-		// Buttons for shifters
-		shifterDown.whenPressed(new ShiftDown());
-		shifterUp.whenPressed(new ShiftUp());
-		
-		// OPERATOR BUTTONS
-		// Shooter buttons
-		shootKey.whileHeld(new CombinedShootKey());
-		shootGear.whileHeld(new CombinedShootGear());
-		shoot.whileHeld(new CombinedShoot());
-		incrementHighShooter.whenPressed(new IncrementHighShooter());
-		decrementHighShooter.whenPressed(new DecrementHighShooter());
-		//Climb buttons
-		unClimb.whileHeld(new UnClimb());
-		climb.whileHeld(new Climb());
-		
 		
 		//BUTTON ASSIGNMENTS
 		if (driveStyle == oneStickArcade){
@@ -197,7 +178,24 @@ public class OI {
 			shoot = new JoystickButton(gamePad, 3); // X
 		}
 		
-		
+		// DRIVING BUTTONS
+		// Button to change between drive joysticks on trigger of both joysticks
+		switchToForward.whenPressed(new SwitchForward());
+		switchToBackward.whenPressed(new SwitchBackward());
+		// Buttons for shifters
+		shifterDown.whenPressed(new ShiftDown());
+		shifterUp.whenPressed(new ShiftUp());
+
+		// OPERATOR BUTTONS
+		// Shooter buttons
+		shootKey.whileHeld(new CombinedShootKey());
+		shootGear.whileHeld(new CombinedShootGear());
+		shoot.whileHeld(new CombinedShoot());
+		incrementHighShooter.whenPressed(new IncrementHighShooter());
+		decrementHighShooter.whenPressed(new DecrementHighShooter());
+		//Climb buttons
+		unClimb.whileHeld(new UnClimb());
+		climb.whileHeld(new Climb());
 		
 		/* Drive by vision (plus back up a few inches when done)
 		driveByVision = new JoystickButton(gamePad, 1);
