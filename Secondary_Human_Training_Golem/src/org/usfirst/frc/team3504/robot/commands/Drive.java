@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import org.usfirst.frc.team3504.robot.OI;
+import org.usfirst.frc.team3504.robot.OI.DriveStyle;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import com.ctre.CANTalon;
@@ -10,12 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveByJoystick extends Command {
+public class Drive extends Command {
 
 	private CANTalon leftTalon = Robot.chassis.getLeftTalon();
 	private CANTalon rightTalon = Robot.chassis.getRightTalon();
 
-	public DriveByJoystick() {
+	public Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.chassis);
@@ -33,9 +35,18 @@ public class DriveByJoystick extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.chassis.arcadeDrive();
-		SmartDashboard.putNumber("drive by joystick Y?", Robot.oi.getDrivingJoystickY());
-		SmartDashboard.putNumber("drive by joystick X?", Robot.oi.getDrivingJoystickX());
+		if (OI.driveStyle == DriveStyle.oneStickArcade || OI.driveStyle == DriveStyle.twoStickArcade 
+				|| OI.driveStyle == DriveStyle.gamePadArcade) {
+			Robot.chassis.arcadeDrive();
+			SmartDashboard.putNumber("Drive by Joystick Y: ", Robot.oi.getDrivingJoystickY());
+			SmartDashboard.putNumber("Drive by Joystick X: ", Robot.oi.getDrivingJoystickX());
+		}
+		else {
+			Robot.chassis.tankDrive();
+			SmartDashboard.putNumber("Drive by Joystick Left:", Robot.oi.getDrivingJoystickLeft());
+			SmartDashboard.putNumber("drive by Joystick Right:", Robot.oi.getDrivingJoystickRight());
+		}
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

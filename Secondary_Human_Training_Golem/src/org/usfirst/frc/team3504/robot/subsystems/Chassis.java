@@ -2,7 +2,8 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.OI.DriveStyle;
+import org.usfirst.frc.team3504.robot.commands.Drive;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -72,7 +73,7 @@ public class Chassis extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new DriveByJoystick());
+		setDefaultCommand(new Drive());
 	}
 
 	public CANTalon getLeftTalon() {
@@ -85,6 +86,10 @@ public class Chassis extends Subsystem {
 
 	public void arcadeDrive() {
 		robotDrive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
+	}
+	
+	public void tankDrive() {
+		robotDrive.tankDrive(Robot.oi.getDrivingJoystickLeft(), Robot.oi.getDrivingJoystickRight());
 	}
 
 	public void setupEncoder(CANTalon talon) { // only call this on non-follower
