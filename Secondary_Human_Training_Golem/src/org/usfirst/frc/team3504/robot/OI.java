@@ -39,6 +39,10 @@ public class OI {
 		kFWD, kREV
 	};
 	
+	public enum JoystickScaling {
+		linear, deadband, quadratic
+	};
+	
 	
 	//DRIVE STYLES
 	int oneStickArcade = 1;
@@ -68,6 +72,9 @@ public class OI {
 	private Joystick autonSelector;
 
 	private DriveDirection driveDirection = DriveDirection.kFWD;
+	
+	private JoystickScaling joystickScale = JoystickScaling.linear;
+	private static double DEADBAND = 0.1; //TODO: find a good value
 
 	private JoystickButton switchToForward;
 	private JoystickButton switchToBackward;
@@ -243,36 +250,74 @@ public class OI {
 	}
 
 	public double getDrivingJoystickY() {
+		double unscaledValue;
 		if (driveStyle == droperation || driveStyle == gamePadArcade){
-			return gamePad.getY();
+			unscaledValue = gamePad.getY();
 		}
 		else if (driveStyle == oneStickArcade){
 			if (driveDirection == DriveDirection.kFWD) {
-				return drivingStickForward.getY();
+				unscaledValue = drivingStickForward.getY();
 			} else {
-				return -drivingStickBackward.getY();
+				unscaledValue = -drivingStickBackward.getY();
 			}
 		}
-		else return drivingStickForward.getX(); 
+		else unscaledValue = drivingStickForward.getX(); 
+		
+		return getScaledJoystickValue(unscaledValue);
 	}
 
 	public double getDrivingJoystickX() { // keep the redundancy, it breaks if
+		double unscaledValue;
 		if (driveStyle == droperation || driveStyle == gamePadArcade){
-			return gamePad.getX();
+			unscaledValue = gamePad.getX();
 		}									// removed
 		else if (driveStyle == oneStickArcade){
 			if (driveDirection == DriveDirection.kFWD) {
-				return drivingStickForward.getX();
+				unscaledValue = drivingStickForward.getX();
 			} else {
-				return -drivingStickBackward.getX();
+				unscaledValue = -drivingStickBackward.getX();
 			}
 		}
-		else return drivingStickForward.getX(); 
+		else unscaledValue = drivingStickForward.getX(); 
+		
+		return getScaledJoystickValue(unscaledValue);
+	}
+	
+	public double getScaledJoystickValue(double input)
+	{
+		double output = 0;
+		
+		if (joystickScale == JoystickScaling.linear)
+		{
+			output = input;
+		}
+		else if (joystickScale == JoystickScaling.deadband)
+		{
+			if (Math.abs(input) < DEADBAND)
+				output = 0;
+			else
+			{
+				if (input > 0) output = input - DEADBAND;
+				else output = input + DEADBAND;
+			}
+		}
+		else if (joystickScale == JoystickScaling.quadratic)
+		{
+			if (input > 0) output = Math.pow(input, 2);
+			else output = -1 * Math.pow(input, 2);
+		}
+		
+		return output;
 	}
 
 	public void setDriveDirection(DriveDirection driveDirection) {
 		this.driveDirection = driveDirection;
 		System.out.println("Drive direction set to: " + driveDirection);
+	}
+	
+	public void setJoystickScale(JoystickScaling joystickScale) {
+		this.joystickScale = joystickScale;
+		System.out.println("Joystick direction set to: " + joystickScale);
 	}
 
 	public boolean isJoystickReversed() {
