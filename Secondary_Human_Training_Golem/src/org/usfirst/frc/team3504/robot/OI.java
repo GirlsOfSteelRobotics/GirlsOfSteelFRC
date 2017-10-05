@@ -125,7 +125,6 @@ public class OI {
 			gamePad = new Joystick(0); 
 		}
 		
-		
 		//BUTTON ASSIGNMENTS
 		if (driveStyle == oneStickArcade){
 			//DRIVER BUTTONS
@@ -149,7 +148,7 @@ public class OI {
 			unClimb = new JoystickButton(gamePad, 9);
 			climb = new JoystickButton(gamePad, 10);
 		} 
-		if (driveStyle == twoStickArcade){
+		else if (driveStyle == twoStickArcade) {
 			//DRIVER BUTTONS
 			// Buttons for shifters copied to both joysticks
 			shifterDown = new JoystickButton(drivingStickForward, 2);
@@ -168,22 +167,68 @@ public class OI {
 			unClimb = new JoystickButton(gamePad, 9);
 			climb = new JoystickButton(gamePad, 10);
 		}
-		if (driveStyle == gamePadArcade){
+		else if (driveStyle == gamePadArcade){
+			//DRIVER BUTTONS
+			// Buttons for shifters copied to both joysticks
+			shifterDown = new JoystickButton(gamePad, 1); //TODO: change button value
+			shifterUp = new JoystickButton(gamePad, 11); //TODO: change button value
+			
+			//OPERATOR BUTTONS
+			// Shooter buttons
+			shootKey = new JoystickButton(gamePad, 2);
+			shootGear = new JoystickButton(gamePad, 3);
+			shoot = new JoystickButton(gamePad, 4);
+			incrementHighShooter = new JoystickButton(gamePad, 6);
+			decrementHighShooter = new JoystickButton(gamePad, 8);
+			// Climber
+			unClimb = new JoystickButton(gamePad, 9);
+			climb = new JoystickButton(gamePad, 10);
 			
 		}
-		if (driveStyle == twoStickTank){
+		else if (driveStyle == twoStickTank){
+			//DRIVER BUTTONS
+			// Buttons for shifters copied to both joysticks
+			shifterDown = new JoystickButton(drivingStickRight, 2);
+			shifterDown = new JoystickButton(drivingStickLeft, 2);
+			shifterUp = new JoystickButton(drivingStickRight, 3);
+			shifterUp = new JoystickButton(drivingStickLeft, 3);
 			
+			//OPERATOR BUTTONS
+			// Shooter buttons
+			shootKey = new JoystickButton(gamePad, 2);
+			shootGear = new JoystickButton(gamePad, 3);
+			shoot = new JoystickButton(gamePad, 4);
+			incrementHighShooter = new JoystickButton(gamePad, 6);
+			decrementHighShooter = new JoystickButton(gamePad, 8);
+			// Climber
+			unClimb = new JoystickButton(gamePad, 9);
+			climb = new JoystickButton(gamePad, 10);
 		}
-		if (driveStyle == gamePadTank){
+		else if (driveStyle == gamePadTank){
+			//DRIVER BUTTONS
+			// Buttons for shifters copied to both joysticks
+			shifterDown = new JoystickButton(gamePad, 1); //TODO: change button value
+			shifterUp = new JoystickButton(gamePad, 11); //TODO: change button value
 			
+			//OPERATOR BUTTONS
+			// Shooter buttons
+			shootKey = new JoystickButton(gamePad, 2);
+			shootGear = new JoystickButton(gamePad, 3);
+			shoot = new JoystickButton(gamePad, 4);
+			incrementHighShooter = new JoystickButton(gamePad, 6);
+			decrementHighShooter = new JoystickButton(gamePad, 8);
+			// Climber
+			unClimb = new JoystickButton(gamePad, 9);
+			climb = new JoystickButton(gamePad, 10);
 		}
-		if (driveStyle == droperation){
+		else if (driveStyle == droperation){
 			shifterDown = new JoystickButton(gamePad, 4); //Y
 			shifterUp = new JoystickButton(gamePad, 2); // B
 			climb = new JoystickButton(gamePad, 8);//START
 			unClimb = new JoystickButton(gamePad, 7);  // BACK
 			shoot = new JoystickButton(gamePad, 3); // X
 		}
+		
 		
 		// DRIVING BUTTONS
 		// Button to change between drive joysticks on trigger of both joysticks
@@ -251,10 +296,11 @@ public class OI {
 
 	public double getDrivingJoystickY() {
 		double unscaledValue;
+		
 		if (driveStyle == droperation || driveStyle == gamePadArcade){
 			unscaledValue = gamePad.getY();
 		}
-		else if (driveStyle == oneStickArcade){
+		else if (driveStyle == oneStickArcade) {
 			if (driveDirection == DriveDirection.kFWD) {
 				unscaledValue = drivingStickForward.getY();
 			} else {
@@ -265,20 +311,54 @@ public class OI {
 		
 		return getScaledJoystickValue(unscaledValue);
 	}
-
+	
 	public double getDrivingJoystickX() { // keep the redundancy, it breaks if
 		double unscaledValue;
-		if (driveStyle == droperation || driveStyle == gamePadArcade){
+		
+		if (driveStyle == gamePadArcade) {
+			unscaledValue = gamePad.getZ(); //TODO: this should get the Z rotate value							
+		} else if (driveStyle == droperation) { // removed
 			unscaledValue = gamePad.getX();
-		}									// removed
-		else if (driveStyle == oneStickArcade){
+		} else if (driveStyle == oneStickArcade){
 			if (driveDirection == DriveDirection.kFWD) {
 				unscaledValue = drivingStickForward.getX();
 			} else {
-				unscaledValue = -drivingStickBackward.getX();
+				unscaledValue =  -drivingStickBackward.getX();
 			}
 		}
 		else unscaledValue = drivingStickForward.getX(); 
+		
+		return getScaledJoystickValue(unscaledValue);
+	}
+	
+	public double getDrivingLeft() {
+		double unscaledValue;
+		
+		if (driveStyle == gamePadTank) {
+			unscaledValue = gamePad.getY();							
+		} 
+		else if (driveStyle == twoStickTank) {
+			unscaledValue = drivingStickLeft.getY();
+		} 
+		else {
+			unscaledValue = 0.0; //TODO: may want to return something else
+		}
+		
+		return getScaledJoystickValue(unscaledValue);
+	}
+	
+	public double getDrivingRight() {
+		double unscaledValue;
+		
+		if (driveStyle == gamePadTank) {
+			unscaledValue = gamePad.getZ(); //TODO: this should get the Z vertical/rotate value								
+		}
+		else if (driveStyle == twoStickTank) {
+			unscaledValue = drivingStickRight.getY();
+		}
+		else {
+			unscaledValue = 0.0; //TODO: may want to return something else
+		}
 		
 		return getScaledJoystickValue(unscaledValue);
 	}
