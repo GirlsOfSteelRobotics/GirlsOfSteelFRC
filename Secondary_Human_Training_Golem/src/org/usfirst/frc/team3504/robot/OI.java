@@ -51,8 +51,8 @@ public class OI {
 		//Rozie's Nonsense: Project Droperation.
 		private Joystick roziePad = new Joystick(5);
 
-	private Joystick drivingStick; 
-	private Joystick drivingStickTurn; 
+	private Joystick drivingStickSpeed; 
+	private Joystick drivingStickRotate; 
 	private Joystick drivingStickForward;
 	private Joystick drivingStickBackward;
 	private Joystick drivingStickRight;
@@ -65,7 +65,7 @@ public class OI {
 	private DriveDirection driveDirection = DriveDirection.kFWD;
 	
 	private JoystickScaling joystickScale = JoystickScaling.linear;
-	private static double DEADBAND = 0.1; //TODO: find a good value
+	private static double DEADBAND = 0.3; //TODO: find a good value
 
 	private JoystickButton switchToForward;
 	private JoystickButton switchToBackward;
@@ -96,8 +96,8 @@ public class OI {
 			gamePad = new Joystick(2);
 		} 
 		if (driveStyle == DriveStyle.twoStickArcade){
-			drivingStick = new Joystick(0);
-			drivingStickTurn = new Joystick(1);
+			drivingStickSpeed = new Joystick(0);
+			drivingStickRotate = new Joystick(1);
 			gamePad = new Joystick(2);
 		}
 		if (driveStyle == DriveStyle.gamePadArcade){
@@ -128,6 +128,14 @@ public class OI {
 			shifterUp = new JoystickButton(drivingStickForward, 3);
 			shifterUp = new JoystickButton(drivingStickBackward, 3);
 			
+			// DRIVING BUTTONS
+			// Button to change between drive joysticks on trigger of both joysticks
+			switchToForward.whenPressed(new SwitchForward());
+			switchToBackward.whenPressed(new SwitchBackward());
+			// Buttons for shifters
+			shifterDown.whenPressed(new ShiftDown());
+			shifterUp.whenPressed(new ShiftUp());
+			
 			//OPERATOR BUTTONS
 			// Shooter buttons
 			shootKey = new JoystickButton(gamePad, 2);
@@ -142,10 +150,10 @@ public class OI {
 		else if (driveStyle == DriveStyle.twoStickArcade) {
 			//DRIVER BUTTONS
 			// Buttons for shifters copied to both joysticks
-			shifterDown = new JoystickButton(drivingStickForward, 2);
-			shifterDown = new JoystickButton(drivingStickBackward, 2);
-			shifterUp = new JoystickButton(drivingStickForward, 3);
-			shifterUp = new JoystickButton(drivingStickBackward, 3);
+			shifterDown = new JoystickButton(drivingStickSpeed, 2);
+			shifterDown = new JoystickButton(drivingStickRotate, 2);
+			shifterUp = new JoystickButton(drivingStickSpeed, 3);
+			shifterUp = new JoystickButton(drivingStickRotate, 3);
 			
 			//OPERATOR BUTTONS
 			// Shooter buttons
@@ -219,15 +227,6 @@ public class OI {
 			unClimb = new JoystickButton(gamePad, 7);  // BACK
 			shoot = new JoystickButton(gamePad, 3); // X
 		}
-		
-		
-		// DRIVING BUTTONS
-		// Button to change between drive joysticks on trigger of both joysticks
-		switchToForward.whenPressed(new SwitchForward());
-		switchToBackward.whenPressed(new SwitchBackward());
-		// Buttons for shifters
-		shifterDown.whenPressed(new ShiftDown());
-		shifterUp.whenPressed(new ShiftUp());
 
 		// OPERATOR BUTTONS
 		// Shooter buttons
@@ -298,7 +297,12 @@ public class OI {
 				unscaledValue = -drivingStickBackward.getY();
 			}
 		}
-		else unscaledValue = drivingStickForward.getX(); 
+		else if (driveStyle == DriveStyle.twoStickArcade){
+			unscaledValue = drivingStickSpeed.getY(); 
+		}
+		else {
+			unscaledValue = 0.0;
+		}
 		
 		return getScaledJoystickValue(unscaledValue);
 	}
@@ -317,7 +321,12 @@ public class OI {
 				unscaledValue =  -drivingStickBackward.getX();
 			}
 		}
-		else unscaledValue = drivingStickForward.getX(); 
+		else if (driveStyle == DriveStyle.twoStickArcade){
+			unscaledValue = drivingStickRotate.getX(); 
+		}
+		else {
+			unscaledValue = 0.0;
+		}
 		
 		return getScaledJoystickValue(unscaledValue);
 	}
