@@ -35,7 +35,7 @@ public class Drive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (OI.driveStyle == DriveStyle.oneStickArcade || OI.driveStyle == DriveStyle.twoStickArcade 
+		if (OI.driveStyle == DriveStyle.oneStickArcade 
 				|| OI.driveStyle == DriveStyle.gamePadArcade) {
 			Robot.chassis.arcadeDrive();
 			SmartDashboard.putNumber("Drive by Joystick Y: ", Robot.oi.getDrivingJoystickY());
