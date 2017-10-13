@@ -33,6 +33,7 @@ public class RobotMap {
 	public static final int AGITATOR_B = 5;
 
 	// camera numbers
+	public static final int VISION_CAMERA = 0; 
 	public static final int CAMERA_GEAR = 1;
 	public static final int CAMERA_CLIMB = 2;
 

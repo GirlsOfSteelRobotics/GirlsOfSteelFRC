@@ -14,6 +14,7 @@ public class Camera extends Subsystem {
 
 	private UsbCamera camGear;
 	private UsbCamera camClimb;
+	private UsbCamera visionCam; 
 	private MjpegServer server;
 
 	public Camera() {
@@ -23,8 +24,12 @@ public class Camera extends Subsystem {
 		camClimb = new UsbCamera("camClimb", RobotMap.CAMERA_CLIMB);
 		camClimb.setResolution(320, 240);
 		camClimb.setFPS(10);
+		visionCam = new UsbCamera("visionCam", RobotMap.VISION_CAMERA);
+		visionCam.setResolution(320, 240);
+		visionCam.setFPS(10); 
 		CameraServer.getInstance().addCamera(camGear);
 		CameraServer.getInstance().addCamera(camClimb);
+		CameraServer.getInstance().addCamera(visionCam);
 		server = CameraServer.getInstance().addServer("CameraServer", 1181);
 		server.setSource(camGear);
 

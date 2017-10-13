@@ -2,6 +2,8 @@ package org.usfirst.frc.team3504.robot;
 
 import java.io.IOException;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3504.robot.subsystems.Agitator;
 //import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
@@ -15,6 +17,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.wpilibj.vision.VisionThread;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +40,8 @@ public class Robot extends IterativeRobot {
 	public static Loader loader;
 
 	Command autonomousCommand;
+	
+	private VisionThread visionThread; 
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -62,6 +69,17 @@ public class Robot extends IterativeRobot {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		    
+		/*visionThread = new VisionThread(camera, new GripPipeline(), VisionRunner.Listener<GripPipeline> listener -> {
+			if (!pipeline.filterContoursOutput().isEmpty()) {
+				Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+				synchronized (imgLock) {
+					centerX = r.x + (r.width / 2);
+				}
+			}
+		});
+		visionThread.start();
+		*/
 	}
 
 	/**
