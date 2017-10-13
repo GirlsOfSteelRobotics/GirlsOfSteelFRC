@@ -91,7 +91,7 @@ public class OI {
 		// Define the joysticks
 		operatingGamePad = new Joystick(0);
 		autonSelector = new Joystick(3);
-		
+
 		if (driveStyle == DriveStyle.oneStickArcade){
 			drivingStickForward = new Joystick(1);
 			drivingStickBackward = new Joystick(2);
@@ -109,7 +109,7 @@ public class OI {
 		else if (driveStyle == DriveStyle.droperation){
 			drivingGamePad = new Joystick(1); 
 		}
-		
+	
 		//BUTTON ASSIGNMENTS
 		
 		//OPERATOR BUTTONS
@@ -137,12 +137,19 @@ public class OI {
 			//DRIVER BUTTONS
 			// Button to change between drive joysticks on trigger of both joysticks
 			switchToForward = new JoystickButton(drivingStickForward, 1);
-			switchToBackward = new JoystickButton(drivingStickBackward, 1);
 			// Buttons for shifters copied to both joysticks
 			shifterDown = new JoystickButton(drivingStickForward, 2);
-			shifterDown = new JoystickButton(drivingStickBackward, 2);
 			shifterUp = new JoystickButton(drivingStickForward, 3);
-			shifterUp = new JoystickButton(drivingStickBackward, 3);
+			
+			// BACKWARDS BUTTONS
+			if (drivingStickBackward.getName() != "") {
+				//DRIVER BUTTONS
+				// Button to change between drive joysticks on trigger
+				switchToBackward = new JoystickButton(drivingStickBackward, 1);
+				// Buttons for shifters copied to both joysticks
+				shifterDown = new JoystickButton(drivingStickBackward, 2);
+				shifterUp = new JoystickButton(drivingStickBackward, 3);
+			}
 			
 			// DRIVING BUTTONS
 			// Button to change between drive joysticks on trigger of both joysticks
