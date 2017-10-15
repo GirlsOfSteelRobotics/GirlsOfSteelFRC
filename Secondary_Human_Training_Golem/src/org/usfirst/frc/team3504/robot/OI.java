@@ -137,6 +137,7 @@ public class OI {
 			//DRIVER BUTTONS
 			// Button to change between drive joysticks on trigger of both joysticks
 			switchToForward = new JoystickButton(drivingStickForward, 1);
+			switchToBackward = new JoystickButton(drivingStickBackward, 1); 
 			// Buttons for shifters copied to both joysticks
 			shifterDown = new JoystickButton(drivingStickForward, 2);
 			shifterUp = new JoystickButton(drivingStickForward, 3);

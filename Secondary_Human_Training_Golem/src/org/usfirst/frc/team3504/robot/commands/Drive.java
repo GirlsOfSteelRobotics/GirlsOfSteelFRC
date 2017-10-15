@@ -45,8 +45,8 @@ public class Drive extends Command {
 			Robot.chassis.tankDrive();
 			SmartDashboard.putNumber("Drive by Joystick Left:", Robot.oi.getDrivingJoystickLeft());
 			SmartDashboard.putNumber("drive by Joystick Right:", Robot.oi.getDrivingJoystickRight());
-		}
-		
+		} 
+	
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
