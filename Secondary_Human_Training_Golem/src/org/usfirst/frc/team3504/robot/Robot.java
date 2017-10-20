@@ -1,7 +1,9 @@
 package org.usfirst.frc.team3504.robot;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3504.robot.subsystems.Agitator;
@@ -70,16 +72,24 @@ public class Robot extends IterativeRobot {
 			e.printStackTrace();
 		}
 		    
-		/*visionThread = new VisionThread(camera, new GripPipeline(), VisionRunner.Listener<GripPipeline> listener -> {
+		/*visionThread = new VisionThread(camera.visionCam, new GripPipeline(), pipeline -> {
 			if (!pipeline.filterContoursOutput().isEmpty()) {
 				Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-				synchronized (imgLock) {
-					centerX = r.x + (r.width / 2);
+				synchronized (camera.cameraLock) {
+					ArrayList<MatOfPoint> contours = pipeline.filterContoursOutput(); 
+					
+					if (contours.size() == 2) {
+						  camera.targetX = (contours.get(0) + centerX[1]) / 2.0;
+						  camera.height = (height[0] + height[1]) / 2.0;
+						} else {
+						  camera.targetX = -1;
+						  camera.height = -1;
+						}
 				}
 			}
 		});
-		visionThread.start();
-		*/
+		visionThread.start();*/
+		
 	}
 
 	/**

@@ -14,8 +14,13 @@ public class Camera extends Subsystem {
 
 	private UsbCamera camGear;
 	private UsbCamera camClimb;
-	private UsbCamera visionCam; 
+	public UsbCamera visionCam; 
 	private MjpegServer server;
+	
+	public Object cameraLock; 
+	
+	public double targetX; 
+	public double height; 
 
 	public Camera() {
 		camGear = new UsbCamera("camGear", RobotMap.CAMERA_GEAR);
