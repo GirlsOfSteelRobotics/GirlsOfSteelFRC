@@ -17,11 +17,7 @@ public class Camera extends Subsystem {
 	public UsbCamera visionCam; 
 	private MjpegServer server;
 	
-	public Object cameraLock; 
 	
-	public double targetX; 
-	public double height; 
-
 	public Camera() {
 		camGear = new UsbCamera("camGear", RobotMap.CAMERA_GEAR);
 		camGear.setResolution(320, 240);
@@ -58,4 +54,6 @@ public class Camera extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
+
+
 }

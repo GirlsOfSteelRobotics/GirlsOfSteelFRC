@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Camera camera;
 	public static Loader loader;
+	public static GripPipelineListener listener;
 
 	Command autonomousCommand;
 	
@@ -57,10 +58,11 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		camera = new Camera();
 		loader = new Loader();
+		listener = new GripPipelineListener();
 
 		// Initialize all subsystems before creating the OI
 		oi = new OI();
-
+/*
 		try {
 			@SuppressWarnings("unused")
 			Process p;
@@ -70,25 +72,10 @@ public class Robot extends IterativeRobot {
 					"-e", "8").start();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		    
-		/*visionThread = new VisionThread(camera.visionCam, new GripPipeline(), pipeline -> {
-			if (!pipeline.filterContoursOutput().isEmpty()) {
-				Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-				synchronized (camera.cameraLock) {
-					ArrayList<MatOfPoint> contours = pipeline.filterContoursOutput(); 
-					
-					if (contours.size() == 2) {
-						  camera.targetX = (contours.get(0) + centerX[1]) / 2.0;
-						  camera.height = (height[0] + height[1]) / 2.0;
-						} else {
-						  camera.targetX = -1;
-						  camera.height = -1;
-						}
-				}
-			}
-		});
-		visionThread.start();*/
+		visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
+		visionThread.start();
 		
 	}
 
@@ -159,5 +146,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		LiveWindow.run();
-	}
+	} 
+	
 }
