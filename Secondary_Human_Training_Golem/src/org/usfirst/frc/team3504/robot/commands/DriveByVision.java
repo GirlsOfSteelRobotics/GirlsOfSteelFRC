@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import org.usfirst.frc.team3504.robot.GripPipelineListener;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import com.ctre.CANTalon;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionRunner.Listener;
 
 /**
  *
@@ -17,8 +19,8 @@ public class DriveByVision extends Command {
 	NetworkTable table;
 
 	private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust
-															// (rad/s) current
-															// value works
+	// (rad/s) current
+	// value works
 	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH / 2.0;
 	double[] defaultValue = new double[0];
@@ -70,44 +72,51 @@ public class DriveByVision extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 
-		table = NetworkTable.getTable("GRIP/myContoursReport");
+		/*table = NetworkTable.getTable("GRIP/myContoursReport");
 
 		double[] centerX = new double[2];
-		centerX = table.getNumberArray("centerX", defaultValue);
+		centerX = table.getNumberArray("centerX", defaultValue);*/
 		/*
 		 * double[] centerY = new double[2]; centerY =
 		 * table.getNumberArray("centerY", defaultValue);
-		 */
+
 		double[] height = new double[2];
-		height = table.getNumberArray("height", defaultValue);
+		height = table.getNumberArray("height", defaultValue);*/
 		/*
 		 * double[] width = new double[2]; width = table.getNumberArray("width",
 		 * defaultValue);
 		 */
-
+		double targetX;
+		double height;
+		synchronized(Robot.listener.cameraLock){
+			targetX = Robot.listener.targetX;
+			height = Robot.listener.height;
+		}
 		// the center of the x and y rectangles (the target)
 		double goalAngularVelocity;
-		if (centerX.length != 2) {
+		if (targetX < 0) {
 			goalAngularVelocity = 0;
 			SmartDashboard.putBoolean("Gear In Sight", false);
 		} else {
-			double targetX = (centerX[0] + centerX[1]) / 2.0;
+			//double targetX = (centerX[0] + centerX[1]) / 2.0;
 			double error = (targetX - IMAGE_CENTER) / IMAGE_CENTER;
 			goalAngularVelocity = error * MAX_ANGULAR_VELOCITY;
 			SmartDashboard.putBoolean("Gear In Sight", true);
-			SmartDashboard.putNumber("CenterX0", centerX[0]);
-			SmartDashboard.putNumber("CenterX1", centerX[1]);
+			SmartDashboard.putNumber("TargetX", targetX);
+			SmartDashboard.putNumber("Height", height);
 		}
 
+
 		double goalLinearVelocity;
-		if (height.length != 2 && tim.get() < 1)
+		if (height < 0 && tim.get() < 1)
 			goalLinearVelocity = fastLinearVelocity;
-		else if (height.length != 2) {
+		else if (height < 0) {
 			goalLinearVelocity = slowLinearVelocity;
-		} else if ((height[0] + height[1]) / 2.0 >= 52.0)
+		} else if (height >= 52.0)
 			goalLinearVelocity = slowLinearVelocity;
 		else
 			goalLinearVelocity = fastLinearVelocity;
+
 
 		// right and left desired wheel speeds in inches per second
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; // (in/s)
@@ -119,8 +128,14 @@ public class DriveByVision extends Command {
 		rightTalon.set(angVRight);
 		leftTalon.set(-angVLeft);
 
-		System.out.println("Number of Contours: " + centerX.length + " Goal Linear Velocity: " + goalLinearVelocity
-				+ " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
+		if (targetX >= 0){
+			System.out.println("Number of Contours: " + 2/*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
+					+ " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
+		}
+		else {
+			System.out.println("Number of Contours: " + "not 2" /*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
+					+ " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
