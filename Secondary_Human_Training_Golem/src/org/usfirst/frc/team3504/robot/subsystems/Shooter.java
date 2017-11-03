@@ -2,23 +2,23 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
-import com.ctre.CANTalon;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
-	private CANTalon lowShooterMotor;
-	private CANTalon highShooterMotor;
-	private CANTalon loaderMotor; 
+	private TalonSRX lowShooterMotor;
+	private TalonSRX highShooterMotor;
+	private TalonSRX loaderMotor; 
 	
 	private double encOffsetValueHigh = 0;
 	private double encOffsetValueLow = 0;
 	
 
 	public Shooter(){
-		lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
-		highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR);
-		loaderMotor = new CANTalon(RobotMap.LOADER_MOTOR); 
+		lowShooterMotor = new TalonSRX(RobotMap.LOW_SHOOTER_MOTOR);
+		highShooterMotor = new TalonSRX(RobotMap.HIGH_SHOOTER_MOTOR);
+		loaderMotor = new TalonSRX(RobotMap.LOADER_MOTOR); 
 	}
 
 	public void shootBall(double lowSpeed, double highSpeed){
