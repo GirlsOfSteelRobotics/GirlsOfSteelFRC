@@ -1,8 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import org.firebears.util.CANTalon.TalonControlMode;
 import org.usfirst.frc.team3504.robot.Robot;
-
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;

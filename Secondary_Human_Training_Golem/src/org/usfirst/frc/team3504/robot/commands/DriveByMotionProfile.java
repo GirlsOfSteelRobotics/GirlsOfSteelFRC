@@ -6,10 +6,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.firebears.util.CANTalon;
+import org.firebears.util.CANTalon.TalonControlMode;
 import org.usfirst.frc.team3504.robot.Robot;
-import com.ctre.CANTalon.TalonControlMode;
-
-import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
@@ -58,17 +57,11 @@ public class DriveByMotionProfile extends Command {
     	
     	//PID Values
     	leftTalon.configEncoderCodesPerRev(256);
+    	leftTalon.setPID(3.25, 0.0, 0.0, 0.0, 0, 0, 0);
     	leftTalon.setPosition(0);
-    	leftTalon.setF(1.0);
-    	leftTalon.setP(3.25);
-    	leftTalon.setI(0.0); 
-    	leftTalon.setD(0.0);
     	rightTalon.configEncoderCodesPerRev(256);
+    	rightTalon.setPID(3.25, 0, 0, 1.0, 0, 0, 0);
     	rightTalon.setPosition(0);
-        rightTalon.setF(1.0);
-        rightTalon.setP(3.25);
-        rightTalon.setI(0.0); 
-        rightTalon.setD(0.0);  
 		
     	//Set Talon to MP mode
     	leftTalon.changeControlMode(TalonControlMode.MotionProfile);

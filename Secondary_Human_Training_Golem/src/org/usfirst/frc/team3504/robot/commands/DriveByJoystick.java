@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import org.firebears.util.CANTalon;
+import org.firebears.util.CANTalon.TalonControlMode;
 import org.usfirst.frc.team3504.robot.Robot;
-
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -20,8 +20,8 @@ public class DriveByJoystick extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Change more to Percent Vbus
-    	Robot.chassis.driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
-    	Robot.chassis.driveRightA.changeControlMode(TalonControlMode.PercentVbus);
+    	Robot.chassis.driveLeftA.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+    	Robot.chassis.driveRightA.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     }
 
     // Called repeatedly when this Command is scheduled to run

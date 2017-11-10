@@ -1,9 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
+import org.firebears.util.CANTalon.TalonControlMode;
 import org.usfirst.frc.team3504.robot.OI.DriveDirection;
-
-import com.ctre.CANTalon.TalonControlMode;
-
 import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

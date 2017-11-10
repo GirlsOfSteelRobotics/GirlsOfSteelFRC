@@ -190,5 +190,27 @@ public class CANTalon implements SpeedController, LiveWindowSendable {
 			m_valueEntry.setDouble(getSpeed());
 		}
 	}
+
+	public double getDeviceID() {
+		return talonSRX.getDeviceID();
+	}
+
+	public void setPosition(int i) {
+		setPosition(i);
+	}
+
+	public void changeMotionControlFramePeriod(int i) {
+		changeMotionControlFramePeriod(i);
+	}
+
+	public void clearMotionProfileTrajectories() {
+		clearMotionProfileTrajectories();
+	}
+
+	public void processMotionProfileBuffer() {
+		processMotionProfileBuffer();
+		
+	}
+
 }
 

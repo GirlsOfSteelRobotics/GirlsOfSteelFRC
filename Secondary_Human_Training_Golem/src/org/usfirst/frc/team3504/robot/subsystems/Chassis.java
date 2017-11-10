@@ -1,10 +1,9 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.firebears.util.CANTalon;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-
-import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,13 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Chassis extends Subsystem {
-	public TalonSRX driveLeftA;//public because needs to be accessible by motion profile
-	private TalonSRX driveLeftB;
-	private TalonSRX driveLeftC;
+	public CANTalon driveLeftA;//public because needs to be accessible by motion profile
+	private CANTalon driveLeftB;
+	private CANTalon driveLeftC;
 
-	public TalonSRX driveRightA;
-	private TalonSRX driveRightB;
-	private TalonSRX driveRightC;
+	public CANTalon driveRightA;
+	private CANTalon driveRightB;
+	private CANTalon driveRightC;
 
 	private RobotDrive robotDrive;
 
@@ -30,12 +29,12 @@ public class Chassis extends Subsystem {
 	
 
 	public Chassis() {
-		driveLeftA = new TalonSRX(RobotMap.DRIVE_LEFT_A);
-		driveLeftB = new TalonSRX(RobotMap.DRIVE_LEFT_B);
-		driveLeftC = new TalonSRX(RobotMap.DRIVE_LEFT_C);
-		driveRightA = new TalonSRX(RobotMap.DRIVE_RIGHT_A);
-		driveRightB = new TalonSRX(RobotMap.DRIVE_RIGHT_B);
-		driveRightC = new TalonSRX(RobotMap.DRIVE_RIGHT_C);
+		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
+		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
+		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C);
+		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
+		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
+		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
 
 		driveLeftA.enableBrakeMode(true);
 		driveLeftB.enableBrakeMode(true);
@@ -52,10 +51,10 @@ public class Chassis extends Subsystem {
 		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
 		
-		driveLeftB.changeControlMode(TalonSRX.TalonControlMode.Follower);
-		driveLeftC.changeControlMode(TalonSRX.TalonControlMode.Follower);
-		driveRightB.changeControlMode(TalonSRX.TalonControlMode.Follower);
-		driveRightC.changeControlMode(TalonSRX.TalonControlMode.Follower);
+		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
 		driveLeftB.set(driveLeftA.getDeviceID());
 		driveLeftC.set(driveLeftA.getDeviceID());
 		driveRightB.set(driveRightA.getDeviceID());
