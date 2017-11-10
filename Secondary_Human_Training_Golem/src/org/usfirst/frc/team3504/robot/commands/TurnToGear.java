@@ -11,11 +11,12 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class TurnToGear extends Command {
 
 	NetworkTable table;
-	double[] defaultValue = new double[0];
+	//double[] defaultValue = new double[0];
 	// private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0;
 	// private static final double TOLERANCE = 5; //TODO: test this (in pixels)
 
-	double[] centerX = new double[3];
+	//double[] centerX = new double[3];
+	double targetX;
 	// private double currentX;
 
 	public enum Direction {
@@ -39,10 +40,12 @@ public class TurnToGear extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		table = NetworkTable.getTable("GRIP/myContoursReport");
+/*		table = NetworkTable.getTable("GRIP/myContoursReport");
 
 		centerX = table.getNumberArray("centerX", defaultValue);
-
+*/
+		targetX = Robot.listener.targetX;
+		
 		if (direction == Direction.kRight) {
 			Robot.chassis.turn(0.3, -1.0); // TODO: test
 			System.out.println("turning right");
@@ -61,8 +64,15 @@ public class TurnToGear extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		System.out.println("centerX: " + centerX + " CenterX Length: " + centerX.length);
-		return centerX.length == 2;
+		System.out.println("targetX: " + targetX /*+ " CenterX Length: " + centerX.length*/);
+		
+		//return centerX.length == 2;
+		if (targetX >= 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	// Called once after isFinished returns true

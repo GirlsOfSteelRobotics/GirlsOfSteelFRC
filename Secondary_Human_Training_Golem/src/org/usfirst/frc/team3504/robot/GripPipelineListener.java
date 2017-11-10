@@ -9,7 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
 
 public class GripPipelineListener implements VisionRunner.Listener<GripPipeline> {
-	public Object cameraLock; 
+	public Object cameraLock = new Object(); 
 
 	public double targetX; 
 	public double height; 
