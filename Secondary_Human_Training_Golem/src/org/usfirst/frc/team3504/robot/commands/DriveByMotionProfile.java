@@ -6,9 +6,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.firebears.util.CANTalon;
-import org.firebears.util.CANTalon.TalonControlMode;
+import org.usfirst.frc.team3335.util.CANTalon;
 import org.usfirst.frc.team3504.robot.Robot;
+
+import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
