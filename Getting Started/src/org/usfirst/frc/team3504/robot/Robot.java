@@ -3,7 +3,6 @@ package org.usfirst.frc.team3504.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -21,9 +20,9 @@ public class Robot extends IterativeRobot {
 	CANTalon m_rearLeft = new CANTalon(3);
 	SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft, m_midLeft, m_rearLeft);
 	
-	Talon m_frontRight = new Talon(4);
-	Talon m_midRight = new Talon(5);
-	Talon m_rearRight = new Talon(6);
+	CANTalon m_frontRight = new CANTalon(4);
+	CANTalon m_midRight = new CANTalon(5);
+	CANTalon m_rearRight = new CANTalon(6);
 	SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight, m_midRight, m_rearRight);
 	
 	DifferentialDrive myRobot;
