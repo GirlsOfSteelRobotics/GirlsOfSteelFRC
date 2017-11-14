@@ -2,7 +2,6 @@ package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -15,18 +14,15 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	CANTalon m_frontLeft = new CANTalon(1);
-	CANTalon m_midLeft = new CANTalon(2);
-	CANTalon m_rearLeft = new CANTalon(3);
-	SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft, m_midLeft, m_rearLeft);
+	CANTalon m_leftA = new CANTalon(1);
+	CANTalon m_leftB = new CANTalon(2);
+	CANTalon m_leftC = new CANTalon(3);
 	
-	CANTalon m_frontRight = new CANTalon(4);
-	CANTalon m_midRight = new CANTalon(5);
-	CANTalon m_rearRight = new CANTalon(6);
-	SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight, m_midRight, m_rearRight);
+	CANTalon m_rightA = new CANTalon(4);
+	CANTalon m_rightB = new CANTalon(5);
+	CANTalon m_rightC = new CANTalon(6);
 	
 	DifferentialDrive myRobot;
-	
 	
 	Joystick stick;
 	Timer timer;
@@ -37,7 +33,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		myRobot = new DifferentialDrive(m_left, m_right);
+		/* Make B and C motors follow instructions given to A motors */
+		m_leftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		m_leftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		m_rightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+		m_rightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+		m_leftB.set(m_leftA.getDeviceID());
+		m_leftC.set(m_leftA.getDeviceID());
+		m_rightB.set(m_rightA.getDeviceID());
+		m_rightC.set(m_rightA.getDeviceID());
+
+		myRobot = new DifferentialDrive(m_leftA, m_rightA);
 		stick = new Joystick(0);
 		timer = new Timer();
 	}

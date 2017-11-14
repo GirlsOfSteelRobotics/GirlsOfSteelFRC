@@ -49,6 +49,10 @@ public class CANTalon implements SpeedController, LiveWindowSendable {
 		talonSRX = new TalonSRX(deviceNumber);
 		talonSRX.setControlMode(TalonControlMode.PercentVbus.value);
 	}
+	
+	public int getDeviceID() {
+		return talonSRX.getDeviceID();
+	}
 
 	public void changeControlMode(TalonControlMode controlMode) {
 		talonSRX.changeControlMode(
