@@ -1,7 +1,10 @@
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3335.util.CANTalon;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -18,9 +21,9 @@ public class Robot extends IterativeRobot {
 	CANTalon m_leftB = new CANTalon(2);
 	CANTalon m_leftC = new CANTalon(3);
 	
-	CANTalon m_rightA = new CANTalon(4);
-	CANTalon m_rightB = new CANTalon(5);
-	CANTalon m_rightC = new CANTalon(6);
+	CANTalon m_rightA = new CANTalon(5);
+	CANTalon m_rightB = new CANTalon(6);
+	CANTalon m_rightC = new CANTalon(7);
 	
 	DifferentialDrive myRobot;
 	
@@ -42,7 +45,6 @@ public class Robot extends IterativeRobot {
 		m_leftC.set(m_leftA.getDeviceID());
 		m_rightB.set(m_rightA.getDeviceID());
 		m_rightC.set(m_rightA.getDeviceID());
-
 		myRobot = new DifferentialDrive(m_leftA, m_rightA);
 		stick = new Joystick(0);
 		timer = new Timer();
