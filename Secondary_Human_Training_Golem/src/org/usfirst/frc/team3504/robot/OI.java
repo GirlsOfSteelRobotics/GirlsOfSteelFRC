@@ -1,23 +1,17 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Climb;
-import org.usfirst.frc.team3504.robot.commands.CoverGear;
-import org.usfirst.frc.team3504.robot.commands.DriveBackward;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.DriveByVision;
-import org.usfirst.frc.team3504.robot.commands.DriveForward;
 import org.usfirst.frc.team3504.robot.commands.LoadBall;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
-import org.usfirst.frc.team3504.robot.commands.UncoverGear;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -75,8 +69,6 @@ public class OI {
 		shifterUp = new JoystickButton(drivingStickBackward, 3);
 		shifterUp.whenPressed(new ShiftUp());
 		
-		
-		
 		//operator buttons
 		//vision
 		driveByVision = new JoystickButton(gamePad, 9); 
@@ -87,12 +79,6 @@ public class OI {
 		loadBall.whileHeld(new LoadBall());
 		shoot = new JoystickButton(gamePad, 3);
 		shoot.whileHeld(new Shoot());
-		
-		//Buttons for gear cover
-		coverGear = new JoystickButton(gamePad, 5); //TODO: get number
-		coverGear.whenPressed(new CoverGear());
-		uncoverGear = new JoystickButton(gamePad, 6); //TODO: get number
-		uncoverGear.whenPressed(new UncoverGear());
 		
 		//Climb
 		climb = new JoystickButton(gamePad, 7); 
