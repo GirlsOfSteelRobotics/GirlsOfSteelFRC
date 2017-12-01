@@ -1,26 +1,21 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Climber;
-import org.usfirst.frc.team3504.robot.subsystems.Cover;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
-import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBlueHopper;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoRedHopper;
 //import com.mindsensors.CANLight;
-import org.usfirst.frc.team3504.robot.subsystems.*;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Climber;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,7 +31,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Chassis chassis;
 	public static Shifters shifters;
-	public static Cover gearCover;
 	public static Climber climber; 
 	public static Shooter shooter; 
 	public static Camera camera;
@@ -51,7 +45,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		chassis = new Chassis();
 		shifters = new Shifters();
-		gearCover = new Cover();
 		climber = new Climber();
 		shooter = new Shooter();
 		camera = new Camera();
