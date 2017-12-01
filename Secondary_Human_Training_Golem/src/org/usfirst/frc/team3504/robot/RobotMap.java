@@ -38,6 +38,15 @@ public class RobotMap {
 	public static final int CAMERA_CLIMB = 2;
 	
 	// Encoder-to-distance constants
+	// How many ticks are there on the encoder wheel?
+	private static final double pulsePerRevolution = 360;
+	// How far to we travel when the encoder turns one full revolution?
+	// Gear ratio is turns of the wheel per turns of the encoder
+	private static final double distancePerRevolutionHighGear = 4.0/*wheel size*/ * Math.PI * (1/7.08)/*gear ratio*/; //TODO: check these
+	private static final double distancePerRevolutionLowGear = 4.0/*wheel size*/ * Math.PI * (1/26.04)/*gear ratio*/;
+	// Given our set of wheels and gear box, how many inches do we travel per pulse?
+	public static final double DISTANCE_PER_PULSE_HIGH_GEAR = distancePerRevolutionHighGear / pulsePerRevolution;
+	public static final double DISTANCE_PER_PULSE_LOW_GEAR = distancePerRevolutionLowGear / pulsePerRevolution;
 	public static final double CODES_PER_WHEEL_REV = 256.0 * (60.0 / 24.0)
 			* (36.0 / 12.0);
 	// 256.0 is the number of ticks per revolution on the encoder
