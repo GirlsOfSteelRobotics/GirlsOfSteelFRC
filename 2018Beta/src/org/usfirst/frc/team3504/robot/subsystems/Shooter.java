@@ -2,8 +2,8 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -51,8 +51,8 @@ public class Shooter extends Subsystem {
 		setupEncoder(lowShooterMotor);
 		setupEncoder(highShooterMotor);
 
-		LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
-		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
+//		LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
+//		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
 
 		// PID Values
 		lowShooterMotor.setF(0.04407); // see p 17 of motion profile manual
@@ -70,8 +70,8 @@ public class Shooter extends Subsystem {
 		highShooterMotor.setI(0.0);
 		highShooterMotor.setD(0.0);
 
-		LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
-		LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
+//		LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
+//		LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
 	}
 
 	public void runHighShooterMotor() {

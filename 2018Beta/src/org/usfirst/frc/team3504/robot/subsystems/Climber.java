@@ -3,7 +3,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.StayClimbed;
 
-import com.ctre.CANTalon;
+import org.usfirst.frc.team3335.util.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -31,8 +31,8 @@ public class Climber extends Subsystem {
 		climbMotorA.setI(0);
 		climbMotorA.setD(0);
 
-		LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
-		LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
+//		LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
+//		LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
 	}
 
 	public void climb(double speed) {

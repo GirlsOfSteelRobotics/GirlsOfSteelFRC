@@ -3,7 +3,7 @@ package org.usfirst.frc.team3504.robot.commands;
 import org.usfirst.frc.team3504.robot.GripPipelineListener;
 import org.usfirst.frc.team3504.robot.Robot;
 
-import com.ctre.CANTalon;
+import org.usfirst.frc.team3335.util.CANTalon;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;

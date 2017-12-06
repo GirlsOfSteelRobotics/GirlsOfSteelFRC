@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.OI;
 import org.usfirst.frc.team3504.robot.OI.DriveStyle;
 import org.usfirst.frc.team3504.robot.Robot;
 
-import com.ctre.CANTalon;
+import org.usfirst.frc.team3335.util.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

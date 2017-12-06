@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import com.ctre.CANTalon;
+import org.usfirst.frc.team3335.util.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Command;
 

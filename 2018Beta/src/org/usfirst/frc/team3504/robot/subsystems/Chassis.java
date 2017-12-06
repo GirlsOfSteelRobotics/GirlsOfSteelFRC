@@ -5,8 +5,8 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.OI.DriveStyle;
 import org.usfirst.frc.team3504.robot.commands.Drive;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -64,12 +64,12 @@ public class Chassis extends Subsystem {
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
 		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
-		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
-		LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
-		LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
-		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
-		LiveWindow.addActuator("Chassis", "driveRightB", driveRightB);
-		LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
+//		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
+//		LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
+//		LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
+//		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
+//		LiveWindow.addActuator("Chassis", "driveRightB", driveRightB);
+//		LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
 	}
 
 	public void initDefaultCommand() {
