@@ -32,9 +32,9 @@ public class Shoot extends Command {
 	protected void execute() {
 		SmartDashboard.putNumber("High Shooter Speed", Robot.shooter.getHighShooterSpeed());
 		SmartDashboard.putNumber("Low Shooter Speed", Robot.shooter.getLowShooterSpeed());
-		Robot.shooter.runHighShooterMotor();
-		Robot.shooter.runLowShooterMotor();
-		Robot.shooter.runFeeder();
+		//Robot.shooter.runHighShooterMotor();
+		//Robot.shooter.runLowShooterMotor();
+		//Robot.shooter.runFeeder();
 		Robot.shooter.runConveyor();
 		loopCounter++;
 	}

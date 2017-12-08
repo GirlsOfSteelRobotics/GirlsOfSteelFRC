@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.Shoot;
 import org.usfirst.frc.team3504.robot.commands.SwitchBackward;
 import org.usfirst.frc.team3504.robot.commands.SwitchForward;
 
@@ -47,6 +48,8 @@ public class OI {
 
 	private JoystickButton shifterUp;
 	private JoystickButton shifterDown;
+	
+	private JoystickButton shoot;
 
 	public OI() {
 		// Define the joysticks
@@ -61,6 +64,8 @@ public class OI {
 		// Buttons for shifters copied to both joysticks
 		shifterDown = new JoystickButton(drivingStickForward, 2);
 		shifterUp = new JoystickButton(drivingStickForward, 3);
+		
+		shoot = new JoystickButton(operatingGamePad, 3); //B
 		
 		// BACKWARDS BUTTONS
 		if (drivingStickBackward.getName() != "") {
@@ -79,6 +84,8 @@ public class OI {
 		// Buttons for shifters
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());	
+		
+		shoot.whenPressed(new Shoot(500));
 	}
 
 	public double getDrivingJoystickY() {

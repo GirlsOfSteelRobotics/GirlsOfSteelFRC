@@ -6,7 +6,6 @@ import org.usfirst.frc.team3335.util.CANTalon;
 import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Shooter extends Subsystem {
 	private CANTalon lowShooterMotor;
@@ -16,7 +15,7 @@ public class Shooter extends Subsystem {
 	 * private static final double shooterMinSpeed = -0.5; private static final
 	 * double shooterMaxSpeed = -1.0; private static final double
 	 * shooterDefaultSpeed = shooterMaxSpeed; private static final double
-	 * shooterSpeedStep = -0.05; //percentage up/down per press pridvate  static
+	 * shooterSpeedStep = -0.05; //percentage up/down per press private  static
 	 * final double shooterDefaultSpeedGear = -1.0 - (5.5 * -0.05); private
 	 * static final double shooterDefaultSpeedKey = -1.0 - (8.0 * -0.05);
 	 * private double shooterSpeed = shooterDefaultSpeed; //starting speed
