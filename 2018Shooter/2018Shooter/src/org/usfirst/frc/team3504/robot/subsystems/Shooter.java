@@ -39,16 +39,10 @@ public class Shooter extends Subsystem {
 		shooterLowB.set(ControlMode.Follower, shooterLowA.getDeviceID());
 		shooterHighB.set(ControlMode.Follower, shooterHighA.getDeviceID());
 		
-		//changing control mode
-		conveyorA.changeControlMode(ControlMode.Velocity);
-		feeder.changeControlMode(ControlMode.Velocity);
-		shooterLowA.changeControlMode(ControlMode.Velocity);
-		shooterHighA.changeControlMode(ControlMode.Velocity);
-		
-		conveyorA.enableBrakeMode(false);
-		feeder.enableBrakeMode(false);
-		shooterLowA.enableBrakeMode(false);
-		shooterHighA.enableBrakeMode(false);
+//		conveyorA.enableBrakeMode(false);
+//		feeder.enableBrakeMode(false);
+//		shooterLowA.enableBrakeMode(false);
+//		shooterHighA.enableBrakeMode(false);
 		
 		setupEncoder(conveyorA);
 		setupEncoder(feeder);
@@ -87,26 +81,26 @@ public class Shooter extends Subsystem {
     }
     
     public void runHighShooterMotor() {
-		shooterHighA.set(shooterSpeed);
+		shooterHighA.set(ControlMode.Velocity, shooterSpeed);
 	}
 
 	public void runLowShooterMotor() {
-		shooterLowA.set(shooterSpeed * ((double) LOW_MAX_RPM / (double) HIGH_MAX_RPM));
+		shooterLowA.set(ControlMode.Velocity, shooterSpeed * ((double) LOW_MAX_RPM / (double) HIGH_MAX_RPM));
 	}
 	
 	public void runFeeder() {
-		feeder.set(FEEDER_SPEED);
+		feeder.set(ControlMode.Velocity, FEEDER_SPEED);
 	}
 	
 	public void runConveyor() {
-		conveyorA.set(CONVEYOR_SPEED);
+		conveyorA.set(ControlMode.Velocity, CONVEYOR_SPEED);
 	}
 
 	public void stopShooterMotors() {
-		conveyorA.set(0);
-		feeder.set(0);
-		shooterLowA.set(0);
-		shooterHighA.set(0);
+		conveyorA.set(ControlMode.Velocity, 0);
+		feeder.set(ControlMode.Velocity, 0);
+		shooterLowA.set(ControlMode.Velocity, 0);
+		shooterHighA.set(ControlMode.Velocity, 0);
 	}
 
 	public void incrementHighShooterSpeed() {
@@ -126,18 +120,18 @@ public class Shooter extends Subsystem {
 		System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
 	}
 
-	public void setupEncoder(CANTalon talon) {
+	public void setupEncoder(TalonSRX talon) {
 		// Set Encoder Types
-		talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-		talon.reverseSensor(false);
+		talon.setFeedbackDevice(talon.);
+		talon.setSensorPhase(false);
 	}
 
 	public int getHighShooterSpeed() {
-		return shooterHighA.getEncVelocity();
+		return shooterHighA.getSelectedSensorVelocity();
 	}
 
 	public int getLowShooterSpeed() {
-		return shooterLowA.getEncVelocity();
+		return shooterLowA.getSelectedSensorVelocity();
 	}
 }
 

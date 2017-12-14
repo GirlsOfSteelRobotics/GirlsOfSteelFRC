@@ -18,20 +18,7 @@ public class OI {
 	public enum DriveDirection {
 		kFWD, kREV
 	};
-	
-	public enum JoystickScaling {
-		linear, deadband, quadratic
-	};
-	
-	
-	//Drive Styles
-	//gamepad: tank, split arcade
-	//joystick: tank, one stick arcade
-	public enum DriveStyle {
-		oneStickArcade, gamePadArcade, twoStickTank, gamePadTank, droperation
-	}; 
-	
-	public static DriveStyle driveStyle = DriveStyle.oneStickArcade;
+
 
 	private Joystick drivingStickForward;
 	private Joystick drivingStickBackward;
@@ -40,8 +27,6 @@ public class OI {
 
 	private DriveDirection driveDirection = DriveDirection.kFWD;
 	
-	private JoystickScaling joystickScale = JoystickScaling.linear;
-	private static double DEADBAND = 0.3; //TODO: find a good value
 
 	private JoystickButton switchToForward;
 	private JoystickButton switchToBackward;
@@ -89,67 +74,29 @@ public class OI {
 	}
 
 	public double getDrivingJoystickY() {
-		double unscaledValue;
-		
 		if (driveDirection == DriveDirection.kFWD) {
-			unscaledValue = drivingStickForward.getY();
+			return drivingStickForward.getY();
 		} 
 		else {
-			unscaledValue = -drivingStickBackward.getY();
+			return -drivingStickBackward.getY();
 		}
-	
-		return getScaledJoystickValue(unscaledValue);
 	}
 	
 	public double getDrivingJoystickX() {
-		double unscaledValue;
-		
+
 		if (driveDirection == DriveDirection.kFWD) {
-			unscaledValue = drivingStickForward.getX();
+			return drivingStickForward.getX();
 		} 
 		else {
-			unscaledValue =  -drivingStickBackward.getX();
+			return -drivingStickBackward.getX();
 		}
-		
-		return getScaledJoystickValue(unscaledValue);
 	}
 
-	
-	public double getScaledJoystickValue(double input)
-	{
-		double output = 0;
-		
-		if (joystickScale == JoystickScaling.linear)
-		{
-			output = input;
-		}
-		else if (joystickScale == JoystickScaling.deadband)
-		{
-			if (Math.abs(input) < DEADBAND)
-				output = 0;
-			else
-			{
-				if (input > 0) output = input - DEADBAND;
-				else output = input + DEADBAND;
-			}
-		}
-		else if (joystickScale == JoystickScaling.quadratic)
-		{
-			if (input > 0) output = Math.pow(input, 2);
-			else output = -1 * Math.pow(input, 2);
-		}
-		
-		return output;
-	}
+
 
 	public void setDriveDirection(DriveDirection driveDirection) {
 		this.driveDirection = driveDirection;
 		System.out.println("Drive direction set to: " + driveDirection);
-	}
-	
-	public void setJoystickScale(JoystickScaling joystickScale) {
-		this.joystickScale = joystickScale;
-		System.out.println("Joystick direction set to: " + joystickScale);
 	}
 
 	public boolean isJoystickReversed() {
