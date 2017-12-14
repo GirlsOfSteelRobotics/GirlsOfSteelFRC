@@ -1,9 +1,10 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3335.util.CANTalon;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
+import com.ctre.phoenix.MotorControl.CAN.BaseMotorController;
+import com.ctre.phoenix.MotorControl.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -22,30 +23,27 @@ public class Shooter extends Subsystem {
 	private static final int FEEDER_SPEED = 666; //TODO: also bogus
 	private int shooterSpeed = SHOOTER_DEFAULT_SPEED;
 		
-	private CANTalon conveyorA, conveyorB, feeder, shooterLowA, shooterLowB, shooterHighA, shooterHighB;
+	private TalonSRX conveyorA, conveyorB, feeder, shooterLowA, shooterLowB, shooterHighA, shooterHighB;
 
     public Shooter() {
-    		conveyorA = new CANTalon(RobotMap.CONVEYOR_A);
-		conveyorB = new CANTalon(RobotMap.CONVEYOR_B);
-		feeder = new CANTalon(RobotMap.FEEDER);
-		shooterLowA = new CANTalon(RobotMap.SHOOTER_LOW_A);
-		shooterLowB = new CANTalon(RobotMap.SHOOTER_LOW_B);
-		shooterHighA = new CANTalon(RobotMap.SHOOTER_HIGH_A);
-		shooterHighB = new CANTalon(RobotMap.SHOOTER_HIGH_B);
+    	conveyorA = new TalonSRX(RobotMap.CONVEYOR_A);
+		conveyorB = new TalonSRX(RobotMap.CONVEYOR_B);
+		feeder = new TalonSRX(RobotMap.FEEDER);
+		shooterLowA = new TalonSRX(RobotMap.SHOOTER_LOW_A);
+		shooterLowB = new TalonSRX(RobotMap.SHOOTER_LOW_B);
+		shooterHighA = new TalonSRX(RobotMap.SHOOTER_HIGH_A);
+		shooterHighB = new TalonSRX(RobotMap.SHOOTER_HIGH_B);
     		
 		//setting followers
-		conveyorB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		shooterLowB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		shooterHighB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		conveyorB.set(conveyorA.getDeviceID());
-		shooterLowB.set(shooterLowA.getDeviceID());
-		shooterHighB.set(shooterHighA.getDeviceID());
+		conveyorB.set(ControlMode.Follower, conveyorA.getDeviceID());
+		shooterLowB.set(ControlMode.Follower, shooterLowA.getDeviceID());
+		shooterHighB.set(ControlMode.Follower, shooterHighA.getDeviceID());
 		
 		//changing control mode
-		conveyorA.changeControlMode(TalonControlMode.Speed);
-		feeder.changeControlMode(TalonControlMode.Speed);
-		shooterLowA.changeControlMode(TalonControlMode.Speed);
-		shooterHighA.changeControlMode(TalonControlMode.Speed);
+		conveyorA.changeControlMode(ControlMode.Velocity);
+		feeder.changeControlMode(ControlMode.Velocity);
+		shooterLowA.changeControlMode(ControlMode.Velocity);
+		shooterHighA.changeControlMode(ControlMode.Velocity);
 		
 		conveyorA.enableBrakeMode(false);
 		feeder.enableBrakeMode(false);
