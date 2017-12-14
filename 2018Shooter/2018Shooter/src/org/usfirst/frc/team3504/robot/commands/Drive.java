@@ -1,10 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.OI;
-import org.usfirst.frc.team3504.robot.OI.DriveStyle;
 import org.usfirst.frc.team3504.robot.Robot;
 
-import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Command {
 
-	private CANTalon leftTalon = Robot.chassis.getLeftTalon();
-	private CANTalon rightTalon = Robot.chassis.getRightTalon();
+	private TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+	private TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
 	public Drive() {
 		// Use requires() here to declare subsystem dependencies
@@ -25,12 +23,13 @@ public class Drive extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		// Change mode to Percent Vbus
-		Robot.chassis.setPercentVbusMode();
 
 		// V per sec; 12 = zero to full speed in 1 second
-		leftTalon.setVoltageRampRate(24.0);
-		rightTalon.setVoltageRampRate(24.0);
+		/*leftTalon.setVoltageRampRate(24.0);
+		rightTalon.setVoltageRampRate(24.0);*/
+		
+		leftTalon.configClosedloopRamp(1, 50); //not really sure if this is the right replacement
+		rightTalon.configClosedloopRamp(1, 50);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

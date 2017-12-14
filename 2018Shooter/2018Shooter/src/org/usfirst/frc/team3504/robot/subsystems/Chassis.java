@@ -2,67 +2,60 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.OI.DriveStyle;
 import org.usfirst.frc.team3504.robot.commands.Drive;
 
-import org.usfirst.frc.team3335.util.CANTalon;
-import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
+import com.ctre.phoenix.MotorControl.ControlMode;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  *
  */
 public class Chassis extends Subsystem {
-	private CANTalon driveLeftA;
-	private CANTalon driveLeftB;
-	private CANTalon driveLeftC;
+	private TalonSRX driveLeftA;
+	private TalonSRX driveLeftB;
+	private TalonSRX driveLeftC;
 
-	private CANTalon driveRightA;
-	private CANTalon driveRightB;
-	private CANTalon driveRightC;
+	private TalonSRX driveRightA;
+	private TalonSRX driveRightB;
+	private TalonSRX driveRightC;
 
-	private RobotDrive robotDrive;
+	private DifferentialDrive robotDrive;
 
 	public Chassis() {
-		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
-		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
-		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C);
-		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
-		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
-		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
+		driveLeftA = new TalonSRX(RobotMap.DRIVE_LEFT_A);
+		driveLeftB = new TalonSRX(RobotMap.DRIVE_LEFT_B);
+		driveLeftC = new TalonSRX(RobotMap.DRIVE_LEFT_C);
+		driveRightA = new TalonSRX(RobotMap.DRIVE_RIGHT_A);
+		driveRightB = new TalonSRX(RobotMap.DRIVE_RIGHT_B);
+		driveRightC = new TalonSRX(RobotMap.DRIVE_RIGHT_C);
 
-		driveLeftA.enableBrakeMode(true);
+		/*driveLeftA.enableBrakeMode(true);
 		driveLeftB.enableBrakeMode(true);
 		driveLeftC.enableBrakeMode(true);
 		driveRightA.enableBrakeMode(true);
 		driveRightB.enableBrakeMode(true);
-		driveRightC.enableBrakeMode(true);
+		driveRightC.enableBrakeMode(true);*/
 
-		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveLeftB.set(driveLeftA.getDeviceID());
-		driveLeftC.set(driveLeftA.getDeviceID());
-		driveRightB.set(driveRightA.getDeviceID());
-		driveRightC.set(driveRightA.getDeviceID());
+		driveLeftB.set(ControlMode.Follower, driveLeftA.getDeviceID());
+		driveLeftC.set(ControlMode.Follower, driveLeftA.getDeviceID());
+		driveRightB.set(ControlMode.Follower, driveRightA.getDeviceID());
+		driveRightC.set(ControlMode.Follower, driveRightA.getDeviceID());
 
-		setupEncoder(driveLeftA);
-		setupEncoder(driveRightA);
+		//setupEncoder(driveLeftA);
+		//setupEncoder(driveRightA);
 
-		robotDrive = new RobotDrive(driveLeftA, driveRightA);
+		robotDrive = new DifferentialDrive(driveLeftA.getWPILIB_SpeedController(), driveRightA.getWPILIB_SpeedController());
 		// Set some safety controls for the drive system
 		robotDrive.setSafetyEnabled(true);
 		robotDrive.setExpiration(0.2);
-		robotDrive.setSensitivity(0.5);
+		//robotDrive.setSensitivity(0.5); //not available yet for DifferentialDrive
 		robotDrive.setMaxOutput(1.0);
 
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
-		robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
+		//robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kRearLeft, false); //not available yet for Differential Drive
+		//robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kRearRight, false);
 
 //		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
 //		LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
@@ -77,11 +70,11 @@ public class Chassis extends Subsystem {
 		setDefaultCommand(new Drive());
 	}
 
-	public CANTalon getLeftTalon() {
+	public TalonSRX getLeftTalon() {
 		return driveLeftA;
 	}
 
-	public CANTalon getRightTalon() {
+	public TalonSRX getRightTalon() {
 		return driveRightA;
 	}
 
@@ -89,15 +82,15 @@ public class Chassis extends Subsystem {
 		robotDrive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
 	}
 
-	public void setupEncoder(CANTalon talon) { // only call this on non-follower
+	/* public void setupEncoder(TalonSRX talon) { // only call this on non-follower
 												// talons
 		// Set Encoder Types
-		talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
-		talon.reverseSensor(false);
-	}
+		talon.setFeedbackDevice(TalonSRX.FeedbackDevice.QuadEncoder); //not available yet for Differential Drive
+		talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);//not available yet for Differential Drive
+		talon.setSensorPhase(false);
+	} */
 
-	public void setupFPID(CANTalon talon) { // values work with QuadEncoder for
+	/*public void setupFPID(TalonSRX talon) { // values work with QuadEncoder for
 											// drive talons
 		// PID Values
 		talon.setPosition(0);
@@ -105,35 +98,17 @@ public class Chassis extends Subsystem {
 		talon.setP(0.32); // 0.64 good
 		talon.setI(0.0);
 		talon.setD(0.0);
-	}
+		talon.
+	}*/ //not available yet for Differential Drive
 
 	public void turn(double speed, double curve) {
-		robotDrive.drive(speed, curve);
+		robotDrive.arcadeDrive(speed, curve);
 	}
 
 	public void stop() {
-		driveLeftA.set(0);
-		driveRightA.set(0);
-	}
-
-	public void setPositionMode() {
-		driveLeftA.changeControlMode(TalonControlMode.Position);
-		driveRightA.changeControlMode(TalonControlMode.Position);
-	}
-
-	public void setPercentVbusMode() {
-		driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
-		driveRightA.changeControlMode(TalonControlMode.PercentVbus);
-	}
-
-	public void setSpeedMode() {
-		driveLeftA.changeControlMode(TalonControlMode.Speed);
-		driveRightA.changeControlMode(TalonControlMode.Speed);
-	}
-
-	public void setMotionProfileMode() {
-		driveLeftA.changeControlMode(TalonControlMode.MotionProfile);
-		driveRightA.changeControlMode(TalonControlMode.MotionProfile);
+		
+		driveLeftA.set(ControlMode.Velocity, 0.0);
+		driveRightA.set(ControlMode.Velocity, 0.0);
 	}
 
 }
