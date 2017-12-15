@@ -14,12 +14,11 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
 
-	public static final int CONVEYOR_A = 7; //TODO: fix talon numbers
-	public static final int CONVEYOR_B = 8;
-	public static final int FEEDER = 9;
+	public static final int CONVEYOR_A = 9; //TODO: fix talon numbers
+	public static final int FEEDER = 8;
 	public static final int SHOOTER_LOW_A = 10;
 	//public static final int SHOOTER_LOW_B = 11;
-	public static final int SHOOTER_HIGH_A = 12;
+	public static final int SHOOTER_HIGH_A = 7;
 	//public static final int SHOOTER_HIGH_B = 13;
 	
 	// Solenoids for Shifters
