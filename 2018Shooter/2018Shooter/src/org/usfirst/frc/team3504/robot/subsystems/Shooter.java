@@ -13,20 +13,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 	// Speed mode constants TODO: test and change
 	private static final int LOW_MAX_RPM = 3400;
-	private static final int HIGH_MAX_RPM = 5000;
-	private static final int SHOOTER_MIN_SPEED = 1000;
+	private static final int HIGH_MAX_RPM = 5000; //max speed, default speed, shooter speed
 	private static final int SHOOTER_MAX_SPEED = HIGH_MAX_RPM;
-	private static final int SHOOTER_SPEED_STEP = 100;
 	private static final int SHOOTER_DEFAULT_SPEED = SHOOTER_MAX_SPEED;
 	private static final int CONVEYOR_SPEED = 666; //TODO: this is a bogus number, test
 	private static final int FEEDER_SPEED = 666; //TODO: also bogus
 	private int shooterSpeed = SHOOTER_DEFAULT_SPEED;
 		
-	private TalonSRX conveyorA, conveyorB, feeder, shooterLowA, shooterLowB, shooterHighA, shooterHighB;
+	private TalonSRX conveyorA, feeder, shooterLowA, shooterHighA;
+	//private TalonSRX shooterLowB, shooterHighB;
 
     public Shooter() {
-    	conveyorA = new TalonSRX(RobotMap.CONVEYOR_A);
-		conveyorB = new TalonSRX(RobotMap.CONVEYOR_B);
+    		conveyorA = new TalonSRX(RobotMap.CONVEYOR_A);
 		feeder = new TalonSRX(RobotMap.FEEDER);
 		shooterLowA = new TalonSRX(RobotMap.SHOOTER_LOW_A);
 		//shooterLowB = new TalonSRX(RobotMap.SHOOTER_LOW_B);
@@ -34,9 +32,8 @@ public class Shooter extends Subsystem {
 		//shooterHighB = new TalonSRX(RobotMap.SHOOTER_HIGH_B);
     		
 		//setting followers
-		conveyorB.set(ControlMode.Follower, conveyorA.getDeviceID());
-		shooterLowB.set(ControlMode.Follower, shooterLowA.getDeviceID());
-		shooterHighB.set(ControlMode.Follower, shooterHighA.getDeviceID());
+		//shooterLowB.set(ControlMode.Follower, shooterLowA.getDeviceID());
+		//shooterHighB.set(ControlMode.Follower, shooterHighA.getDeviceID());
 
 		
 //		conveyorA.enableBrakeMode(false);
@@ -97,23 +94,6 @@ public class Shooter extends Subsystem {
 		feeder.set(ControlMode.Velocity, 0);
 		shooterLowA.set(ControlMode.Velocity, 0);
 		shooterHighA.set(ControlMode.Velocity, 0);
-	}
-
-	public void incrementHighShooterSpeed() {
-		if ((shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED)
-			shooterSpeed += SHOOTER_SPEED_STEP;
-		System.out.println("currentShooterSpeed: " + shooterSpeed);
-	}
-
-	public void decrementHighShooterSpeed() {
-		if ((shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED)
-			shooterSpeed -= SHOOTER_SPEED_STEP;
-		System.out.println("currentShooterSpeed: " + shooterSpeed);
-	}
-
-	public void setShooterSpeed(int speed) {
-		shooterSpeed = speed;
-		System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
 	}
 
 	public void setupEncoder(TalonSRX talon) {

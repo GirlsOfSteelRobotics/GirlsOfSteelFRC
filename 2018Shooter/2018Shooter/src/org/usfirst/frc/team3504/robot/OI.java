@@ -12,14 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-
-	public enum DriveDirection {
-		kFWD, kREV
-	};
-
-
 	private Joystick drivingStick;
-
 	private Joystick operatingGamePad;
 
 	private JoystickButton shifterUp;
@@ -44,7 +37,7 @@ public class OI {
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());	
 		
-		shoot.whileHeld(new Shoot(500));
+		shoot.whileHeld(new Shoot());
 	}
 
 	public double getDrivingJoystickY() {

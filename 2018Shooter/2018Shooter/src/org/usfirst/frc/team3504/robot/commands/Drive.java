@@ -27,9 +27,6 @@ public class Drive extends Command {
 		// V per sec; 12 = zero to full speed in 1 second
 		/*leftTalon.setVoltageRampRate(24.0);
 		rightTalon.setVoltageRampRate(24.0);*/
-		
-		leftTalon.configClosedloopRamp(1, 50); //not really sure if this is the right replacement
-		rightTalon.configClosedloopRamp(1, 50);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -43,14 +40,10 @@ public class Drive extends Command {
 	protected boolean isFinished() {
 		return false;
 	}
-
-	public void stop() {
-		Robot.chassis.stop();
-	}
-
+	
 	// Called once after isFinished returns true
 	protected void end() {
-		stop();
+		Robot.chassis.stop();
 	}
 
 	// Called when another command which requires one or more of the same

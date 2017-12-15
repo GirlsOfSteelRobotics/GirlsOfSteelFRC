@@ -26,8 +26,6 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 
 	Command autonomousCommand;
-	
-	private VisionThread visionThread; 
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -40,7 +38,6 @@ public class Robot extends IterativeRobot {
 
 		// Initialize all subsystems before creating the OI
 		oi = new OI();
-		
 	}
 
 	/**

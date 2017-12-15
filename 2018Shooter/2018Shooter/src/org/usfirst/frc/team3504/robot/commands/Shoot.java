@@ -9,17 +9,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Shoot extends Command {
-	private int shooterSpeed;
 
-	public Shoot(int speed) {
+	public Shoot() {
 		requires(Robot.shooter);
-		shooterSpeed = speed;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.shooter.setShooterSpeed(shooterSpeed);
-		System.out.println("Shoot Initialzed with " + shooterSpeed + " as speed");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
