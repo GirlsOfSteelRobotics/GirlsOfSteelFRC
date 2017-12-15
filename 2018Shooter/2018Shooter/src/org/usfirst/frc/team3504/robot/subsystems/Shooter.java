@@ -38,6 +38,7 @@ public class Shooter extends Subsystem {
 		conveyorB.set(ControlMode.Follower, conveyorA.getDeviceID());
 		shooterLowB.set(ControlMode.Follower, shooterLowA.getDeviceID());
 		shooterHighB.set(ControlMode.Follower, shooterHighA.getDeviceID());
+
 		
 //		conveyorA.enableBrakeMode(false);
 //		feeder.enableBrakeMode(false);
@@ -122,7 +123,7 @@ public class Shooter extends Subsystem {
 
 	public void setupEncoder(TalonSRX talon) {
 		// Set Encoder Types
-		talon.setFeedbackDevice(talon.);
+		talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 		talon.setSensorPhase(false);
 	}
 
