@@ -1,12 +1,9 @@
 package org.usfirst.frc.team3504.robot;
 
-import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
-import com.ctre.phoenix.MotorControl.CAN.BaseMotorController;
-import com.ctre.phoenix.MotorControl.ControlMode;
+import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -19,13 +16,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	TalonSRX m_leftA = new TalonSRX(1);
-	TalonSRX m_leftB = new TalonSRX(2);
-	TalonSRX m_leftC = new TalonSRX(3);
+	CANTalon m_leftA = new CANTalon(7);
+	CANTalon m_leftB = new CANTalon(6);
+	CANTalon m_leftC = new CANTalon(5);
 	
-	TalonSRX m_rightA = new TalonSRX(5);
-	TalonSRX m_rightB = new TalonSRX(6);
-	TalonSRX m_rightC = new TalonSRX(7);
+	CANTalon m_rightA = new CANTalon(2);
+	CANTalon m_rightB = new CANTalon(1);
+	CANTalon m_rightC = new CANTalon(3);
 
 	DifferentialDrive myRobot;
 	
@@ -39,12 +36,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		/* Make B and C motors follow instructions given to A motors */
-		
-		m_leftB.set(ControlMode.Follower, m_leftA.getDeviceID());
-		m_leftC.set(ControlMode.Follower, m_leftA.getDeviceID());
-		m_rightB.set(ControlMode.Follower, m_rightA.getDeviceID());
-		m_rightC.set(ControlMode.Follower, m_rightA.getDeviceID());
-		myRobot = new DifferentialDrive(m_leftA.getWPILIB_SpeedController(), m_rightA.getWPILIB_SpeedController());
+		m_leftA.setInverted(true);
+		m_leftB.changeControlMode(TalonControlMode.Follower);
+		m_leftC.changeControlMode(TalonControlMode.Follower);
+		m_rightB.changeControlMode(TalonControlMode.Follower);
+		m_rightC.changeControlMode(TalonControlMode.Follower);
+		m_leftB.set(m_leftA.getDeviceID());
+		m_leftC.set(m_leftA.getDeviceID());
+		m_rightB.set(m_rightA.getDeviceID());
+		m_rightC.set(m_rightA.getDeviceID());
+		myRobot = new DifferentialDrive(m_leftA, m_rightA);
 		stick = new Joystick(0);
 		timer = new Timer();
 	}
@@ -93,6 +94,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+	
+	@Override
+	public void disabledInit() {
+		// Do nothing
 	}
 		
 }
