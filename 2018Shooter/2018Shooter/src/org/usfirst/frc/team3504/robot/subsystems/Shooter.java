@@ -2,10 +2,8 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
-import com.ctre.phoenix.MotorControl.CAN.BaseMotorController;
 import com.ctre.phoenix.MotorControl.ControlMode;
-import com.ctre.phoenix.MotorControl.FeedbackDevice;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 

@@ -44,7 +44,7 @@ public class OI {
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());	
 		
-		shoot.whenPressed(new Shoot(500));
+		shoot.whileHeld(new Shoot(500));
 	}
 
 	public double getDrivingJoystickY() {

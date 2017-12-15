@@ -9,11 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Shoot extends Command {
-
-	private int loopCounter; // increment each time execute runs
-	private boolean isLowMotorRunning = false; // if we have started the low
-												// motor yet
-	private final int LOOP_TIMEOUT = 50; // ~1sec of time
 	private int shooterSpeed;
 
 	public Shoot(int speed) {
@@ -23,7 +18,6 @@ public class Shoot extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		loopCounter = 0;
 		Robot.shooter.setShooterSpeed(shooterSpeed);
 		System.out.println("Shoot Initialzed with " + shooterSpeed + " as speed");
 	}
@@ -32,11 +26,10 @@ public class Shoot extends Command {
 	protected void execute() {
 		SmartDashboard.putNumber("High Shooter Speed", Robot.shooter.getHighShooterSpeed());
 		SmartDashboard.putNumber("Low Shooter Speed", Robot.shooter.getLowShooterSpeed());
-		//Robot.shooter.runHighShooterMotor();
-		//Robot.shooter.runLowShooterMotor();
-		//Robot.shooter.runFeeder();
+		Robot.shooter.runHighShooterMotor();
+		Robot.shooter.runLowShooterMotor();
+		Robot.shooter.runFeeder();
 		Robot.shooter.runConveyor();
-		loopCounter++;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
