@@ -18,9 +18,9 @@ public class RobotMap {
 	public static final int CONVEYOR_B = 8;
 	public static final int FEEDER = 9;
 	public static final int SHOOTER_LOW_A = 10;
-	public static final int SHOOTER_LOW_B = 11;
+	//public static final int SHOOTER_LOW_B = 11;
 	public static final int SHOOTER_HIGH_A = 12;
-	public static final int SHOOTER_HIGH_B = 13;
+	//public static final int SHOOTER_HIGH_B = 13;
 	
 	// Solenoids for Shifters
 	public static final int SHIFTER_RIGHT_A = 0;

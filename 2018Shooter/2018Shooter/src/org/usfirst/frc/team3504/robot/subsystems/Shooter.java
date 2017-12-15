@@ -31,9 +31,9 @@ public class Shooter extends Subsystem {
 		conveyorB = new TalonSRX(RobotMap.CONVEYOR_B);
 		feeder = new TalonSRX(RobotMap.FEEDER);
 		shooterLowA = new TalonSRX(RobotMap.SHOOTER_LOW_A);
-		shooterLowB = new TalonSRX(RobotMap.SHOOTER_LOW_B);
+		//shooterLowB = new TalonSRX(RobotMap.SHOOTER_LOW_B);
 		shooterHighA = new TalonSRX(RobotMap.SHOOTER_HIGH_A);
-		shooterHighB = new TalonSRX(RobotMap.SHOOTER_HIGH_B);
+		//shooterHighB = new TalonSRX(RobotMap.SHOOTER_HIGH_B);
     		
 		//setting followers
 		conveyorB.set(ControlMode.Follower, conveyorA.getDeviceID());
