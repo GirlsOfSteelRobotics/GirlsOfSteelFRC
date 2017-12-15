@@ -20,16 +20,9 @@ public class OI {
 	};
 
 
-	private Joystick drivingStickForward;
-	private Joystick drivingStickBackward;
+	private Joystick drivingStick;
 
 	private Joystick operatingGamePad;
-
-	private DriveDirection driveDirection = DriveDirection.kFWD;
-	
-
-	private JoystickButton switchToForward;
-	private JoystickButton switchToBackward;
 
 	private JoystickButton shifterUp;
 	private JoystickButton shifterDown;
@@ -38,34 +31,17 @@ public class OI {
 
 	public OI() {
 		// Define the joysticks
-		drivingStickForward = new Joystick(1);
-		drivingStickBackward = new Joystick(2);
+		drivingStick = new Joystick(1);
 		operatingGamePad = new Joystick(0);
 		
 		//DRIVER BUTTONS
-		// Button to change between drive joysticks on trigger of both joysticks
-		switchToForward = new JoystickButton(drivingStickForward, 1);
-		switchToBackward = new JoystickButton(drivingStickBackward, 1); 
 		// Buttons for shifters copied to both joysticks
-		shifterDown = new JoystickButton(drivingStickForward, 2);
-		shifterUp = new JoystickButton(drivingStickForward, 3);
+		shifterDown = new JoystickButton(drivingStick, 2);
+		shifterUp = new JoystickButton(drivingStick, 3);
 		
 		shoot = new JoystickButton(operatingGamePad, 3); //B
 		
-		// BACKWARDS BUTTONS
-		if (drivingStickBackward.getName() != "") {
-			//DRIVER BUTTONS
-			// Button to change between drive joysticks on trigger
-			switchToBackward = new JoystickButton(drivingStickBackward, 1);
-			// Buttons for shifters copied to both joysticks
-			shifterDown = new JoystickButton(drivingStickBackward, 2);
-			shifterUp = new JoystickButton(drivingStickBackward, 3);
-		}
-		
 		// DRIVING BUTTONS
-		// Button to change between drive joysticks on trigger of both joysticks
-		switchToForward.whenPressed(new SwitchForward());
-		switchToBackward.whenPressed(new SwitchBackward());
 		// Buttons for shifters
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());	
@@ -74,32 +50,10 @@ public class OI {
 	}
 
 	public double getDrivingJoystickY() {
-		if (driveDirection == DriveDirection.kFWD) {
-			return drivingStickForward.getY();
-		} 
-		else {
-			return -drivingStickBackward.getY();
-		}
+		return drivingStick.getY();
 	}
 	
 	public double getDrivingJoystickX() {
-
-		if (driveDirection == DriveDirection.kFWD) {
-			return drivingStickForward.getX();
-		} 
-		else {
-			return -drivingStickBackward.getX();
-		}
-	}
-
-
-
-	public void setDriveDirection(DriveDirection driveDirection) {
-		this.driveDirection = driveDirection;
-		System.out.println("Drive direction set to: " + driveDirection);
-	}
-
-	public boolean isJoystickReversed() {
-		return (driveDirection == DriveDirection.kREV);
+		return drivingStick.getX();
 	}
 }
