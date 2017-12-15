@@ -44,8 +44,11 @@ public class Chassis extends Subsystem {
 		driveRightB.set(ControlMode.Follower, driveRightA.getDeviceID());
 		driveRightC.set(ControlMode.Follower, driveRightA.getDeviceID());
 
-		//setupEncoder(driveLeftA);
-		//setupEncoder(driveRightA);
+		setupEncoder(driveLeftA);
+		setupEncoder(driveRightA);
+		
+		setupFPID(driveLeftA);
+		setupFPID(driveRightA);
 
 		robotDrive = new DifferentialDrive(driveLeftA.getWPILIB_SpeedController(), driveRightA.getWPILIB_SpeedController());
 		// Set some safety controls for the drive system
@@ -82,24 +85,22 @@ public class Chassis extends Subsystem {
 		robotDrive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
 	}
 
-	/* public void setupEncoder(TalonSRX talon) { // only call this on non-follower
+	public void setupEncoder(TalonSRX talon) { // only call this on non-follower
 												// talons
 		// Set Encoder Types
-		talon.setFeedbackDevice(TalonSRX.FeedbackDevice.QuadEncoder); //not available yet for Differential Drive
-		talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);//not available yet for Differential Drive
+		//talon.setFeedbackDevice(TalonSRX.FeedbackDevice.QuadEncoder); //not available yet for Differential Drive
+		//talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);//not available yet for Differential Drive
 		talon.setSensorPhase(false);
-	} */
+	}
 
-	/*public void setupFPID(TalonSRX talon) { // values work with QuadEncoder for
+	public void setupFPID(TalonSRX talon) { // values work with QuadEncoder for
 											// drive talons
 		// PID Values
-		talon.setPosition(0);
-		talon.setF(0);
-		talon.setP(0.32); // 0.64 good
-		talon.setI(0.0);
-		talon.setD(0.0);
-		talon.
-	}*/ //not available yet for Differential Drive
+		talon.config_kF(0, 0.32, 0);
+		talon.config_kP(0, 0.0, 0);
+		talon.config_kI(0, 0.0, 0);
+		talon.config_kD(0, 0.0, 0);
+	}
 
 	public void turn(double speed, double curve) {
 		robotDrive.arcadeDrive(speed, curve);
