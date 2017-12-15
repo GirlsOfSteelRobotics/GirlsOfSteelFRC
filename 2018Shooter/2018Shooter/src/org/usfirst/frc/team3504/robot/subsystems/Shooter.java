@@ -5,6 +5,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 import com.ctre.phoenix.MotorControl.CAN.BaseMotorController;
 import com.ctre.phoenix.MotorControl.ControlMode;
+import com.ctre.phoenix.MotorControl.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -54,20 +55,16 @@ public class Shooter extends Subsystem {
 //		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
 
 		// PID Values
-		shooterLowA.setF(0.04407); // see p 17 of motion profile manual
-										// 0.04407
-		// lowShooterMotor.setF(0); //see p 17 of motion profile manual
-		shooterLowA.setP(0.01);
-		shooterLowA.setI(0.0);
-		shooterLowA.setD(0.0);
+		shooterLowA.config_kF(0, 0.04407, 0);
+		shooterLowA.config_kP(0, 0.01, 0);
+		shooterLowA.config_kI(0, 0.0, 0);
+		shooterLowA.config_kD(0, 0.0, 0);
 
 		// PID Values
-		shooterHighA.setF(0.02997); // see p 17 of motion profile manual
-										// 0.02997
-		// highShooterMotor.setF(0);
-		shooterHighA.setP(0.01);
-		shooterHighA.setI(0.0);
-		shooterHighA.setD(0.0);
+		shooterHighA.config_kF(0, 0.02997, 0);
+		shooterHighA.config_kP(0, 0.01, 0);
+		shooterHighA.config_kI(0, 0.0, 0);
+		shooterHighA.config_kD(0, 0.0, 0);
 
 //		LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
 //		LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
@@ -123,7 +120,7 @@ public class Shooter extends Subsystem {
 
 	public void setupEncoder(TalonSRX talon) {
 		// Set Encoder Types
-		talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+		//talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		talon.setSensorPhase(false);
 	}
 
