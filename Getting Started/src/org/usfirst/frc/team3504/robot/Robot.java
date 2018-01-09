@@ -1,15 +1,12 @@
 package org.usfirst.frc.team3504.robot;
 
-import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
-import com.ctre.phoenix.MotorControl.CAN.BaseMotorController;
 import com.ctre.phoenix.MotorControl.ControlMode;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,13 +16,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	TalonSRX m_leftA = new TalonSRX(1);
-	TalonSRX m_leftB = new TalonSRX(2);
-	TalonSRX m_leftC = new TalonSRX(3);
+	TalonSRX m_leftA = new TalonSRX(7);
+	TalonSRX m_leftB = new TalonSRX(6);
+	TalonSRX m_leftC = new TalonSRX(5);
 	
-	TalonSRX m_rightA = new TalonSRX(5);
-	TalonSRX m_rightB = new TalonSRX(6);
-	TalonSRX m_rightC = new TalonSRX(7);
+	TalonSRX m_rightA = new TalonSRX(2);
+	TalonSRX m_rightB = new TalonSRX(1);
+	TalonSRX m_rightC = new TalonSRX(3);
 
 	DifferentialDrive myRobot;
 	
@@ -39,7 +36,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		/* Make B and C motors follow instructions given to A motors */
-		
+		m_leftA.setInverted(true);
 		m_leftB.set(ControlMode.Follower, m_leftA.getDeviceID());
 		m_leftC.set(ControlMode.Follower, m_leftA.getDeviceID());
 		m_rightB.set(ControlMode.Follower, m_rightA.getDeviceID());
@@ -92,7 +89,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		//LiveWindow.run();
+	}
+	
+	@Override
+	public void disabledInit() {
+		// Do nothing
 	}
 		
 }
