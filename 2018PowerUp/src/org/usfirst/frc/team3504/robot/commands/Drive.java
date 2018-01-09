@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import java.awt.Robot;
+import org.usfirst.frc.team3504.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
