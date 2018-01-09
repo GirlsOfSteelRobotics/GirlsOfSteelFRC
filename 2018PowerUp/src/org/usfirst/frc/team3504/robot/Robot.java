@@ -23,9 +23,8 @@ import org.usfirst.frc.team3504.robot.subsystems.Chassis;
  */
 public class Robot extends TimedRobot {
 
-	public static final Chassis kExampleSubsystem
-			= new Chassis();
-	public static OI m_oi;
+	public static Chassis chassis;
+	public static OI oi;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -36,7 +35,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_oi = new OI();
+		chassis = new Chassis();
+		oi = new OI();
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
