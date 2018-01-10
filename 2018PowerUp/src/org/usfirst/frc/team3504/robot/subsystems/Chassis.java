@@ -53,4 +53,10 @@ public class Chassis extends Subsystem {
 		talon.config_kI(0, 0, 0);
 		talon.config_kD(0, 0, 0);	
 	}
+	public WPI_TalonSRX getLeftTalon() {
+		return driveLeftA;
+	}
+	public WPI_TalonSRX getRightTalon() {
+		return driveRightA;
+	}
 }

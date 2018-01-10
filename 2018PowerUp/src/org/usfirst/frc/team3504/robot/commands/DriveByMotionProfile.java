@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motion.*;
 
@@ -58,13 +59,12 @@ public class DriveByMotionProfile extends Command {
 		Robot.chassis.setupFPID(rightTalon);
 
 		// Set Talon to MP mode
-		Robot.chassis.setMotionProfileMode();
 		System.out.println("DriveByMotion: Change Talon to MP Mode");
 
 		// Disable MP
 		state = SetValueMotionProfile.Disable;
-		leftTalon.set(state.value);
-		rightTalon.set(state.value);
+		leftTalon.set(ControlMode.MotionProfile, state.value);
+		rightTalon.set(ControlMode.MotionProfile, state.value);
 		System.out.println("DriveByMotion: Disable MP Mode");
 
 		// Push Trajectory
@@ -90,8 +90,8 @@ public class DriveByMotionProfile extends Command {
 		if ((leftStatus.btmBufferCnt > kMinPointsInTalon) && (rightStatus.btmBufferCnt > kMinPointsInTalon)) {
 			state = SetValueMotionProfile.Enable;
 		}
-		leftTalon.set(state.value);
-		rightTalon.set(state.value);
+		leftTalon.set(ControlMode.MotionProfile, state.value);
+		rightTalon.set(ControlMode.MotionProfile, state.value);
 		// System.out.println("DriveByMotion: Execute Setting State: " + state);
 		
 		// did we get an underrun condition since last time we checked?
@@ -116,8 +116,8 @@ public class DriveByMotionProfile extends Command {
 
 		if (left && right) {
 			state = SetValueMotionProfile.Disable;
-			leftTalon.set(state.value);
-			rightTalon.set(state.value);
+			leftTalon.set(ControlMode.MotionProfile, state.value);
+			rightTalon.set(ControlMode.MotionProfile, state.value);
 			System.out.println("DriveByMotion: Finished");
 		}
 
@@ -131,8 +131,8 @@ public class DriveByMotionProfile extends Command {
 		leftTalon.clearMotionProfileTrajectories();
 		rightTalon.clearMotionProfileTrajectories();
 
-		leftTalon.set(SetValueMotionProfile.Disable.value);
-		rightTalon.set(SetValueMotionProfile.Disable.value);
+		leftTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
+		rightTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 
 	}
 
