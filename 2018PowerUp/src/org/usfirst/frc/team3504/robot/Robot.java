@@ -7,12 +7,14 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,6 +26,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 public class Robot extends TimedRobot {
 
 	public static Chassis chassis;
+	public static Shifters shifters;
 	public static OI oi;
 
 	Command m_autonomousCommand;
@@ -36,6 +39,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		chassis = new Chassis();
+		shifters = new Shifters();
 		oi = new OI();
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
