@@ -7,7 +7,9 @@
 
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.Drive;
 
 import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -32,11 +34,23 @@ public class Chassis extends Subsystem {
 	private SpeedControllerGroup rightGroup = new SpeedControllerGroup(driveRightA, driveRightB, driveRightC);
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
+	private DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
+	
 	public Chassis() {
-		DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
+		setDefaultCommand(new Drive());
+	}
+	public void arcadeDrive() {
+		drive.arcadeDrive(Robot.oi.getDrivingJoystickY(),Robot.oi.getDrivingJoystickX());
 	}
 	public void initDefaultCommand() {
 		// Set the command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+	}
+	public void setupFPID(WPI_TalonSRX talon) {
+		//talon.setPosition (0); TODO figure out new syntax
+		talon.config_kF(0, 0, 0);
+		talon.config_kP(0, 0, 0);
+		talon.config_kI(0, 0, 0);
+		talon.config_kD(0, 0, 0);	
 	}
 }
