@@ -37,12 +37,13 @@ public class Chassis extends Subsystem {
 	private DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
 	
 	public Chassis() {
-		setDefaultCommand(new Drive());
+		
 	}
 	public void arcadeDrive() {
 		drive.arcadeDrive(Robot.oi.getDrivingJoystickY(),Robot.oi.getDrivingJoystickX());
 	}
 	public void initDefaultCommand() {
+		setDefaultCommand(new Drive());
 		// Set the command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
