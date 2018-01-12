@@ -37,7 +37,9 @@ public class Chassis extends Subsystem {
 	private DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
 	
 	public Chassis() {
-		
+		leftGroup.setInverted(true);
+		rightGroup.setInverted(true);
+		driveLeftA.setSensorPhase(true);
 	}
 	public void arcadeDrive() {
 		drive.arcadeDrive(Robot.oi.getDrivingJoystickY(),Robot.oi.getDrivingJoystickX());
@@ -59,5 +61,22 @@ public class Chassis extends Subsystem {
 	}
 	public WPI_TalonSRX getRightTalon() {
 		return driveRightA;
+	}
+	public SpeedControllerGroup getLeftGroup() {
+		return leftGroup;
+	}
+	public SpeedControllerGroup getRightGroup() {
+		return rightGroup;
+	}
+	public void stop()
+	{
+		drive.stopMotor();
+	}
+	public void setFollowerMode() {
+		driveLeftB.follow(driveLeftA);
+		driveLeftC.follow(driveLeftA);
+		
+		driveRightB.follow(driveRightA);
+		driveRightC.follow(driveRightA);
 	}
 }

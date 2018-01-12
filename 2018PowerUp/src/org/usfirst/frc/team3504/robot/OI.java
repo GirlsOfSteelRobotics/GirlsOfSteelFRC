@@ -7,7 +7,13 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -15,33 +21,24 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	private Joystick drivingJoystick = new Joystick (0);
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
+	
+	private JoystickButton shifterUp;
+	private JoystickButton shifterDown;
+	private JoystickButton driveByDistanceLow;
+	private JoystickButton driveByDistanceHigh;
+	
+	public OI() {
+		shifterDown = new JoystickButton(drivingJoystick, 2);
+		shifterUp = new JoystickButton(drivingJoystick, 3);
+		driveByDistanceLow = new JoystickButton(drivingJoystick, 9);
+		driveByDistanceHigh = new JoystickButton(drivingJoystick, 10);
+		
+		shifterDown.whenPressed(new ShiftDown());
+		shifterUp.whenPressed(new ShiftUp());
+		driveByDistanceLow.whenPressed(new DriveByDistance(12, Shifters.Speed.kLow));
+		driveByDistanceHigh.whenPressed(new DriveByDistance(12, Shifters.Speed.kHigh));
+	}
 
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
 	
 	public double getDrivingJoystickX() {
 		return drivingJoystick.getX();
