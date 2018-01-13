@@ -34,21 +34,20 @@ public class Chassis extends Subsystem {
 	private SpeedControllerGroup rightGroup = new SpeedControllerGroup(driveRightA, driveRightB, driveRightC);
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	private DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
+	public DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
 	
 	public Chassis() {
 		leftGroup.setInverted(true);
 		rightGroup.setInverted(true);
 		driveLeftA.setSensorPhase(true);
 	}
-	public void arcadeDrive() {
-		drive.arcadeDrive(Robot.oi.getDrivingJoystickY(),Robot.oi.getDrivingJoystickX());
-	}
+	
 	public void initDefaultCommand() {
 		setDefaultCommand(new Drive());
 		// Set the command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
+	
 	public void setupFPID(WPI_TalonSRX talon) {
 		//talon.setPosition (0); TODO figure out new syntax
 		talon.config_kF(0, 0, 0);
@@ -56,22 +55,27 @@ public class Chassis extends Subsystem {
 		talon.config_kI(0, 0, 0);
 		talon.config_kD(0, 0, 0);	
 	}
+	
 	public WPI_TalonSRX getLeftTalon() {
 		return driveLeftA;
 	}
+	
 	public WPI_TalonSRX getRightTalon() {
 		return driveRightA;
 	}
+	
 	public SpeedControllerGroup getLeftGroup() {
 		return leftGroup;
 	}
+	
 	public SpeedControllerGroup getRightGroup() {
 		return rightGroup;
 	}
-	public void stop()
-	{
+	
+	public void stop() {
 		drive.stopMotor();
 	}
+	
 	public void setFollowerMode() {
 		driveLeftB.follow(driveLeftA);
 		driveLeftC.follow(driveLeftA);
