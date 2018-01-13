@@ -47,6 +47,9 @@ public class OI {
 	public double getDrivingJoystickY() {
 		return drivingJoystick.getY();
 	}
-
+	
+	public double getCurrentThrottle() {
+		return drivingJoystick.getThrottle();
+	}
 }
 

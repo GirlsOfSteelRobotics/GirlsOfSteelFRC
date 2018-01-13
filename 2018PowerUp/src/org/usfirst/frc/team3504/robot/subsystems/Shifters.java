@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Shifters extends Subsystem {
 	private DoubleSolenoid shifterLeft;
 	private DoubleSolenoid shifterRight;
-
+	private double SHIFTING_THRESHOLD = 0; 
+	//TODO find correct shifting value
+	
 	public enum Speed {
 		kHigh, kLow
 	};
@@ -50,5 +52,9 @@ public class Shifters extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+	}
+	
+	public double getShiftingThreshold() {
+		return SHIFTING_THRESHOLD;
 	}
 }

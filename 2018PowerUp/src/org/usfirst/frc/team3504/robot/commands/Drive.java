@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,7 +22,12 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.arcadeDrive();
+    		if (Robot.oi.getCurrentThrottle() > Robot.shifters.getShiftingThreshold()) {
+    			Robot.shifters.shiftGear(Speed.kHigh);
+    		} else if (Robot.oi.getCurrentThrottle() < Robot.shifters.getShiftingThreshold()) {
+    			Robot.shifters.shiftGear(Speed.kLow);
+    		}
+    		Robot.chassis.arcadeDrive();
     }
 
     // Make this return true when this Command no longer needs to run execute()
