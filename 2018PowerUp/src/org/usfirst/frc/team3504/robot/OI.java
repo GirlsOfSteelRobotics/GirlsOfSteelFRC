@@ -33,7 +33,7 @@ public class OI {
 	private Joystick drivingJoystickOne = new Joystick (1);
 	private Joystick drivingJoystickTwo = new Joystick (2);
 	
-	private DigitalInput dioO = new DigitalInput(0);
+	private DigitalInput dio0 = new DigitalInput(0);
 	private DigitalInput dio1 = new DigitalInput(1);
 	private DigitalInput dio2 = new DigitalInput(2);
 	private DigitalInput dio3 = new DigitalInput(3);
@@ -54,6 +54,8 @@ public class OI {
 		shifterUp.whenPressed(new ShiftUp());
 		driveByDistanceLow.whenPressed(new DriveByDistance(12, Shifters.Speed.kLow));
 		driveByDistanceHigh.whenPressed(new DriveByDistance(12, Shifters.Speed.kHigh));
+		
+		drivingGamePad.setTwistChannel(3);
 	}
 
 	
@@ -65,7 +67,7 @@ public class OI {
 			return drivingJoystickOne.getY();
 		} 
 		else if (driveStyle == DriveStyle.gamePadTank) {
-			return drivingGamePad.getZ(); //TODO: this should get the Z vertical/rotate value								
+			return drivingGamePad.getTwist(); //TODO: this should get the Z vertical/rotate value								
 		}
 		else if (driveStyle == DriveStyle.joystickTank) {
 			return drivingJoystickOne.getY();
@@ -76,7 +78,7 @@ public class OI {
 	
 	public double getDrivingJoystickX() {
 		if (driveStyle == DriveStyle.gamePadArcade) { // keep the redundancy, it breaks if
-			return drivingGamePad.getZ(); //TODO: this should get the Z rotate value							
+			return drivingGamePad.getZ(); 
 		} 
 		else if (driveStyle == DriveStyle.joystickArcade){
 				return drivingJoystickOne.getX();
@@ -93,23 +95,27 @@ public class OI {
 	}
 	
 	public void setDriveStyle() {
-		if (dio1.get()) {
+		if (!dio1.get()) {
 			driveStyle = DriveStyle.joystickArcade; 
-		} else if (dio2.get()) {
+		} else if (!dio2.get()) {
 			driveStyle = DriveStyle.gamePadArcade; 
-		} else if (dio3.get()) {
+		} else if (!dio3.get()) {
 			driveStyle = DriveStyle.joystickTank; 
-		} else if (dio4.get()) {
+		} else if (!dio4.get()) {
 			driveStyle = DriveStyle.gamePadTank; 
 		} else {
 			System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
 			driveStyle = DriveStyle.joystickArcade; 
 		}
-		
+		System.out.println("Drive Mode: " + driveStyle);
 	}
 	
 	public DriveStyle getDriveStyle() {
 		return driveStyle; 
+	}
+	
+	public boolean isSquared() {
+		return !dio0.get(); 
 	}
 	
 	public double getCurrentThrottle() {

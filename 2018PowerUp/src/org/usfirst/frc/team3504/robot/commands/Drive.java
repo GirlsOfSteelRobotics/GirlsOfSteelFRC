@@ -21,6 +21,8 @@ public class Drive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    		Robot.oi.setDriveStyle();
+    		System.out.println("Squared Units: " + Robot.oi.isSquared());
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,10 +32,11 @@ public class Drive extends Command {
     		} else if (Robot.oi.getCurrentThrottle() < Robot.shifters.getShiftingThreshold()) {
     			Robot.shifters.shiftGear(Speed.kLow);
     		}*/
+    	
     		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
-    			Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
+    			Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
     		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
-    			Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
+    			Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
     		} 
     		
     }
