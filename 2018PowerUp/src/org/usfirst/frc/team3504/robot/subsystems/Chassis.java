@@ -7,14 +7,11 @@
 
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.Drive;
 
-import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -30,15 +27,14 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
 	private WPI_TalonSRX driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
 	
-	private SpeedControllerGroup leftGroup = new SpeedControllerGroup(driveLeftA, driveLeftB, driveLeftC);
-	private SpeedControllerGroup rightGroup = new SpeedControllerGroup(driveRightA, driveRightB, driveRightC);
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	public DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
+	public DifferentialDrive drive = new DifferentialDrive(driveLeftA, driveRightA);
 	
 	public Chassis() {
-		leftGroup.setInverted(true);
-		rightGroup.setInverted(true);
+		setFollowerMode();
+		driveLeftA.setInverted(true);
+		driveRightA.setInverted(true);
 		driveLeftA.setSensorPhase(true);
 	}
 	
@@ -62,14 +58,6 @@ public class Chassis extends Subsystem {
 	
 	public WPI_TalonSRX getRightTalon() {
 		return driveRightA;
-	}
-	
-	public SpeedControllerGroup getLeftGroup() {
-		return leftGroup;
-	}
-	
-	public SpeedControllerGroup getRightGroup() {
-		return rightGroup;
 	}
 	
 	public void stop() {
