@@ -9,6 +9,8 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
+import org.usfirst.frc.team3504.robot.subsystems.Lift;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,6 +30,8 @@ public class Robot extends TimedRobot {
 	
 	public static Chassis chassis;
 	public static Shifters shifters;
+	public static Lift lift;
+	public static Collector collector;
 	public static OI oi;
 
 	Command m_autonomousCommand;
@@ -41,6 +45,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		chassis = new Chassis();
 		shifters = new Shifters();
+		lift = new Lift();
+		collector = new Collector();
 		oi = new OI();
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
