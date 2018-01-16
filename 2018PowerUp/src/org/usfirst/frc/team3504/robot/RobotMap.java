@@ -14,10 +14,10 @@ package org.usfirst.frc.team3504.robot;
  * floating around.
  */
 public class RobotMap {
-	public static final int DRIVE_RIGHT_A = 2;//1;
+	public static final int DRIVE_RIGHT_A = 1;
 	public static final int DRIVE_RIGHT_B = 2;
 	public static final int DRIVE_RIGHT_C = 3;
-	public static final int DRIVE_LEFT_A = 5;//4;
+	public static final int DRIVE_LEFT_A = 4;
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
 	// For example to map the left and right motors, you could define the
