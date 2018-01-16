@@ -3,46 +3,48 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.StayClimbed;
 
-import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
  */
 
 public class Climber extends Subsystem {
-	public CANTalon climbMotorA;
-	public CANTalon climbMotorB;
+	public WPI_TalonSRX climbMotorA;
+	public WPI_TalonSRX climbMotorB;
 
 	public Climber() {
-		climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
-		climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
+		climbMotorA = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_A);
+		climbMotorB = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_B);
 
-		climbMotorA.enableBrakeMode(true);
-		climbMotorB.enableBrakeMode(true);
+		climbMotorA.setNeutralMode(NeutralMode.Brake);
+		climbMotorB.setNeutralMode(NeutralMode.Brake);
 
-		climbMotorA.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-		climbMotorA.reverseSensor(true);
+		climbMotorA.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+		climbMotorA.setSensorPhase(true);
 
-		climbMotorA.setF(0);
-		climbMotorA.setP(0.5);
-		climbMotorA.setI(0);
-		climbMotorA.setD(0);
+		climbMotorA.config_kF(0, 0, 0);
+		climbMotorA.config_kP(0, 0.5, 0);
+		climbMotorA.config_kI(0, 0, 0);
+		climbMotorA.config_kD(0, 0, 0);
 
 //		LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
 //		LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
 	}
 
 	public void climb(double speed) {
-		climbMotorA.set(speed);
-		climbMotorB.set(speed);
+		climbMotorA.set(ControlMode.PercentOutput, speed);
+		climbMotorB.set(ControlMode.PercentOutput, speed);
 	}
 
 	public void stopClimb() {
-		climbMotorA.set(0.0);
-		climbMotorB.set(0.0);
+		climbMotorA.set(ControlMode.PercentOutput, 0.0);
+		climbMotorB.set(ControlMode.PercentOutput, 0.0);
 	}
 
 	public void initDefaultCommand() {

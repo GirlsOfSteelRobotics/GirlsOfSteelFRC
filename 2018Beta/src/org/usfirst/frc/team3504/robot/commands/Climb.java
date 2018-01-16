@@ -2,10 +2,6 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
-import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
-
-import org.usfirst.frc.team3335.util.CANTalon;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -21,8 +17,6 @@ public class Climb extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.climber.climbMotorA.changeControlMode(TalonControlMode.PercentVbus);
-		Robot.climber.climbMotorB.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

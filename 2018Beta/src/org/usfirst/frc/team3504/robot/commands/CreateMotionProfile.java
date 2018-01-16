@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -19,8 +19,8 @@ public class CreateMotionProfile extends Command {
 
 	private ArrayList<ArrayList<Double>> leftTrajectory; // filled with arraylists of points
 	private ArrayList<ArrayList<Double>> rightTrajectory; // filled with arraylists of points
-	public CANTalon leftTalon = Robot.chassis.getLeftTalon();
-	public CANTalon rightTalon = Robot.chassis.getRightTalon();
+	public WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+	public WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 	private ArrayList<Double> leftPoint; // position (rev), velocity (rpm), duration
 	private ArrayList<Double> rightPoint; // position (rev), velocity (rpm), duration
 	public String leftFile; // path of file on roborio
@@ -39,8 +39,8 @@ public class CreateMotionProfile extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		leftInitial = (double) leftTalon.getPosition();
-		rightInitial = (double) rightTalon.getPosition();
+		leftInitial = (double) leftTalon.getSelectedSensorPosition(0);
+		rightInitial = (double) rightTalon.getSelectedSensorPosition(0);
 		
 		leftTrajectory = new ArrayList<ArrayList<Double>>();
 		rightTrajectory = new ArrayList<ArrayList<Double>>();
@@ -56,11 +56,11 @@ public class CreateMotionProfile extends Command {
 		leftPoint = new ArrayList<Double>();
 		rightPoint = new ArrayList<Double>();
 		
-		double leftPosition = (double) leftTalon.getPosition() - leftInitial; // in rotations
-		double rightPosition = (double) rightTalon.getPosition() - rightInitial;
+		double leftPosition = (double) leftTalon.getSelectedSensorPosition(0) - leftInitial; // in rotations
+		double rightPosition = (double) rightTalon.getSelectedSensorPosition(0) - rightInitial;
 		
-		double leftVelocity = (double) leftTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
-		double rightVelocity = (double) rightTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
+		double leftVelocity = (double) leftTalon.getSelectedSensorPosition(0) / RobotMap.CODES_PER_WHEEL_REV;
+		double rightVelocity = (double) rightTalon.getSelectedSensorPosition(0) / RobotMap.CODES_PER_WHEEL_REV;
 		
 		/* Other way of getting velocity: divide change in position by time
 		

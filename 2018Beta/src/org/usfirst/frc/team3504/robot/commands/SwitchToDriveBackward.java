@@ -17,7 +17,6 @@ public class SwitchToDriveBackward extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.chassis.setPercentVbusMode();
 
 		Robot.oi.setDriveDirection(DriveDirection.kREV);
 	}
