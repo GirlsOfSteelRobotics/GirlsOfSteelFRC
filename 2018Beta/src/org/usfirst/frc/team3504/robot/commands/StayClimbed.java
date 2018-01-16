@@ -2,7 +2,7 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
 
-import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -20,19 +20,17 @@ public class StayClimbed extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.climber.climbMotorA.changeControlMode(TalonControlMode.Position);
 
-		Robot.climber.climbMotorB.changeControlMode(TalonControlMode.Follower);
-		Robot.climber.climbMotorB.set(Robot.climber.climbMotorA.getDeviceID());
+		Robot.climber.climbMotorB.follow(Robot.climber.climbMotorA);
 
 		// Robot.climber.climbMotorA.setPosition(0);
-		encPosition = Robot.climber.climbMotorA.getPosition();
+		encPosition = Robot.climber.climbMotorA.getSelectedSensorPosition(0);
 		System.out.println("Climber Encoder Position: " + encPosition);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.climber.climbMotorA.set(encPosition);
+		Robot.climber.climbMotorA.set(ControlMode.Position, encPosition);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

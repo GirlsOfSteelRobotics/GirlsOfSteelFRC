@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.OI;
 import org.usfirst.frc.team3504.robot.OI.DriveStyle;
 import org.usfirst.frc.team3504.robot.Robot;
 
-import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Command {
 
-	private CANTalon leftTalon = Robot.chassis.getLeftTalon();
-	private CANTalon rightTalon = Robot.chassis.getRightTalon();
+	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
 	public Drive() {
 		// Use requires() here to declare subsystem dependencies
@@ -26,11 +26,11 @@ public class Drive extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		// Change mode to Percent Vbus
-		Robot.chassis.setPercentVbusMode();
-
 		// V per sec; 12 = zero to full speed in 1 second
-		leftTalon.setVoltageRampRate(24.0);
-		rightTalon.setVoltageRampRate(24.0);
+		leftTalon.configVoltageCompSaturation(24.0, 0);
+		rightTalon.configVoltageCompSaturation(24.0, 0);
+		//leftTalon.setVoltageRampRate(24.0);  IS THIS THE SAME AS ABOVE???
+		//rightTalon.setVoltageRampRate(24.0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

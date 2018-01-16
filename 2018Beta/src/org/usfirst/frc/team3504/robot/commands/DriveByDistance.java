@@ -5,7 +5,8 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.TurnToGear.Direction;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
-import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,8 +18,8 @@ public class DriveByDistance extends Command {
 
 	private double rotations;
 
-	private CANTalon leftTalon = Robot.chassis.getLeftTalon();
-	private CANTalon rightTalon = Robot.chassis.getRightTalon();
+	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
 	private double leftInitial;
 	private double rightInitial;
@@ -35,38 +36,32 @@ public class DriveByDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.chassis.setPositionMode();
-		
 		Robot.shifters.shiftGear(speed);
 
 		// Robot.chassis.setupFPID(leftTalon);
 		// Robot.chassis.setupFPID(rightTalon);
 		
 		if (speed == Shifters.Speed.kLow){
-			leftTalon.setP(0.17);
-			rightTalon.setP(0.17);
-
-			leftTalon.setI(0.0);
-			rightTalon.setI(0.0);
-
-			leftTalon.setD(0.02);
-			rightTalon.setD(0.02);
-
-			leftTalon.setF(0.0);
-			rightTalon.setF(0.0);
+			leftTalon.config_kF(0, 0, 0);
+			leftTalon.config_kP(0, 0.17, 0);
+			leftTalon.config_kI(0, 0, 0);
+			leftTalon.config_kD(0, 0.02, 0);
+			
+			rightTalon.config_kF(0, 0, 0);
+			rightTalon.config_kP(0, 0.17, 0);
+			rightTalon.config_kI(0, 0, 0);
+			rightTalon.config_kD(0, 0.02, 0);
 		}
 		else if (speed == Shifters.Speed.kHigh){
-			leftTalon.setP(0.02);
-			rightTalon.setP(0.02);
-
-			leftTalon.setI(0.0);
-			rightTalon.setI(0.0);
-
-			leftTalon.setD(0.04);
-			rightTalon.setD(0.04);
-
-			leftTalon.setF(0.0);
-			rightTalon.setF(0.0);
+			leftTalon.config_kF(0, 0, 0);
+			leftTalon.config_kP(0, 0.02, 0);
+			leftTalon.config_kI(0, 0, 0);
+			leftTalon.config_kD(0, 0.04, 0);
+			
+			rightTalon.config_kF(0, 0, 0);
+			rightTalon.config_kP(0, 0.02, 0);
+			rightTalon.config_kI(0, 0, 0);
+			rightTalon.config_kD(0, 0.04, 0);
 		}
 		
 
@@ -75,11 +70,11 @@ public class DriveByDistance extends Command {
 
 		System.out.println("Drive by Distance Started " + rotations);
 
-		leftInitial = -leftTalon.getPosition();
-		rightInitial = rightTalon.getPosition();
+		leftInitial = -leftTalon.getSelectedSensorPosition(0);
+		rightInitial = rightTalon.getSelectedSensorPosition(0);
 
-		leftTalon.set(-(rotations + leftInitial));
-		rightTalon.set(rotations + rightInitial);
+		leftTalon.set(ControlMode.Position, -(rotations + leftInitial));
+		rightTalon.set(ControlMode.Position, rotations + rightInitial);
 
 		System.out.println("LeftInitial: " + leftInitial + " RightInitial: " + rightInitial);
 
@@ -87,12 +82,12 @@ public class DriveByDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		leftTalon.set(-(rotations + leftInitial));
-		rightTalon.set(rotations + rightInitial);
+		leftTalon.set(ControlMode.Position, -(rotations + leftInitial));
+		rightTalon.set(ControlMode.Position, rotations + rightInitial);
 
 		SmartDashboard.putNumber("Drive Talon Left Goal", -rotations);
-		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getPosition());
-		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getError());
+		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getSelectedSensorPosition(0));
+		//SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getError());
 
 		//System.out.println("Left Goal " + (-(rotations + leftInitial)) + " Right Goal " + (rotations + rightInitial));
 		//System.out.println("Left Position " + leftTalon.getPosition() + " Right Position " + rightTalon.getPosition());
@@ -103,11 +98,11 @@ public class DriveByDistance extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if (rotations > 0) {
-			return ((rightTalon.getPosition() > rotations + rightInitial)
-					&& (-leftTalon.getPosition() > rotations + leftInitial));
+			return ((rightTalon.getSelectedSensorPosition(0) > rotations + rightInitial)
+					&& (-leftTalon.getSelectedSensorPosition(0) > rotations + leftInitial));
 		} else if (rotations < 0) {
-			return ((rightTalon.getPosition() < rotations + rightInitial)
-					&& (-leftTalon.getPosition() < rotations + leftInitial));
+			return ((rightTalon.getSelectedSensorPosition(0) < rotations + rightInitial)
+					&& (-leftTalon.getSelectedSensorPosition(0) < rotations + leftInitial));
 		} else
 			return true;
 	}

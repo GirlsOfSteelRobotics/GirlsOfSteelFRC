@@ -2,29 +2,29 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
-import org.usfirst.frc.team3335.util.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
  */
 public class Loader extends Subsystem {
 
-	private CANTalon loaderMotor;
+	private WPI_TalonSRX loaderMotor;
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
 	public Loader() {
-		loaderMotor = new CANTalon(RobotMap.LOADER_MOTOR);
+		loaderMotor = new WPI_TalonSRX(RobotMap.LOADER_MOTOR);
 
 		//LiveWindow.addActuator("Loader", "loaderMotor", loaderMotor);
 	}
 
 	public void loadBall(double speed) {
-		loaderMotor.set(speed);
+		loaderMotor.set(ControlMode.PercentOutput, speed);
 	}
 
 	public void stopLoader() {
