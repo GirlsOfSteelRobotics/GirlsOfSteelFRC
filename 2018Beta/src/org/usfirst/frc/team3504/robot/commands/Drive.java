@@ -27,26 +27,21 @@ public class Drive extends Command {
 	protected void initialize() {
 		// Change mode to Percent Vbus
 		// V per sec; 12 = zero to full speed in 1 second
-		leftTalon.configVoltageCompSaturation(24.0, 0);
-		rightTalon.configVoltageCompSaturation(24.0, 0);
+		//leftTalon.configVoltageCompSaturation(24.0, 0);
+		//rightTalon.configVoltageCompSaturation(24.0, 0);
 		//leftTalon.setVoltageRampRate(24.0);  IS THIS THE SAME AS ABOVE???
 		//rightTalon.setVoltageRampRate(24.0);
+		Robot.oi.setDriveStyle();
+		System.out.println("Squared Units: " + Robot.oi.isSquared());
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (OI.driveStyle == DriveStyle.oneStickArcade 
-				|| OI.driveStyle == DriveStyle.gamePadArcade) {
-			Robot.chassis.arcadeDrive();
-			SmartDashboard.putNumber("Drive by Joystick Y: ", Robot.oi.getDrivingJoystickY());
-			SmartDashboard.putNumber("Drive by Joystick X: ", Robot.oi.getDrivingJoystickX());
-		}
-		else {
-			Robot.chassis.tankDrive();
-			SmartDashboard.putNumber("Drive by Joystick Left:", Robot.oi.getDrivingJoystickLeft());
-			SmartDashboard.putNumber("drive by Joystick Right:", Robot.oi.getDrivingJoystickRight());
+		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
+			Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
+		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
+			Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
 		} 
-	
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

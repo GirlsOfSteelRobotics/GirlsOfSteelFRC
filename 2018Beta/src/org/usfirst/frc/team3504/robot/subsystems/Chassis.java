@@ -24,7 +24,7 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX driveRightB;
 	private WPI_TalonSRX driveRightC;
 
-	public DifferentialDrive drive = new DifferentialDrive(driveLeftA, driveRightA);
+	public DifferentialDrive drive; 
 
 	public Chassis() {
 		driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
@@ -33,7 +33,6 @@ public class Chassis extends Subsystem {
 		driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
 		driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
 		driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
-
 
 		driveLeftA.setNeutralMode(NeutralMode.Brake);
 		driveLeftB.setNeutralMode(NeutralMode.Brake);
@@ -50,12 +49,14 @@ public class Chassis extends Subsystem {
 		setupEncoder(driveLeftA);
 		setupEncoder(driveRightA);
 
-		drive.setSafetyEnabled(true);
-		drive.setExpiration(0.2);
-		drive.setMaxOutput(1.0);
+		//drive.setSafetyEnabled(false);
+		//drive.setExpiration(0.2);
+		//drive.setMaxOutput(1.0);
 
-		driveLeftC.setInverted(false);
-		driveRightC.setInverted(false);
+		driveLeftA.setInverted(false);
+		driveRightA.setInverted(false);
+		
+		drive = new DifferentialDrive(driveLeftA, driveRightA);
 		//drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
 		//drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
@@ -78,14 +79,6 @@ public class Chassis extends Subsystem {
 
 	public WPI_TalonSRX getRightTalon() {
 		return driveRightA;
-	}
-
-	public void arcadeDrive() {
-		drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX());
-	}
-	
-	public void tankDrive() {
-		drive.tankDrive(Robot.oi.getDrivingJoystickLeft(), Robot.oi.getDrivingJoystickRight());
 	}
 
 	public void setupEncoder(WPI_TalonSRX talon) { // only call this on non-follower
