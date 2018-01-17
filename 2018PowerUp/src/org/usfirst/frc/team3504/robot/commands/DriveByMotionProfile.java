@@ -175,9 +175,10 @@ public class DriveByMotionProfile extends Command {
 			point.position = arr.get(0);
 			
 			point.velocity = arr.get(1) * multiplier;
-			//point.timeDurMs = (int)(arr.get(2) / multiplier);
+			point.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
+			//point.timeDur = (int)(arr.get(2) / multiplier);
 			
-			System.out.println("DriveByMotionProfile: " + point.position + " " + point.velocity);// + " " + point.timeDurMs);
+			System.out.println("DriveByMotionProfile: " + point.position + " " + point.velocity + " " + point.timeDur);// + " " + point.timeDurMs);
 			point.profileSlotSelect0 = 0; /*
 											 * which set of gains would you like to
 											 * use?

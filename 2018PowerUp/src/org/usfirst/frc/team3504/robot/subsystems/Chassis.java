@@ -36,6 +36,8 @@ public class Chassis extends Subsystem {
 		driveLeftA.setInverted(true);
 		driveRightA.setInverted(true);
 		driveLeftA.setSensorPhase(true);
+		driveLeftA.setSafetyEnabled(false);
+		driveRightA.setSafetyEnabled(false);
 	}
 	
 	public void initDefaultCommand() {
