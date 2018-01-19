@@ -35,7 +35,7 @@ public class Chassis extends Subsystem {
 		setFollowerMode();
 		driveLeftA.setInverted(true);
 		driveRightA.setInverted(true);
-		driveLeftA.setSensorPhase(true);
+		driveRightA.setSensorPhase(true);
 		driveLeftA.setSafetyEnabled(false);
 		driveRightA.setSafetyEnabled(false);
 	}

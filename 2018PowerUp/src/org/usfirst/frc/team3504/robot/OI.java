@@ -67,8 +67,8 @@ public class OI {
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
-		driveByDistanceLow.whenPressed(new DriveByDistance(12, Shifters.Speed.kLow));
-		driveByDistanceHigh.whenPressed(new DriveByDistance(12, Shifters.Speed.kHigh));
+		driveByDistanceLow.whenPressed(new DriveByDistance(12.0, Shifters.Speed.kLow));
+		driveByDistanceHigh.whenPressed(new DriveByDistance(36.0, Shifters.Speed.kLow));
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());

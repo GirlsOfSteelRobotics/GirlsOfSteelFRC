@@ -46,12 +46,12 @@ public class DriveByDistance extends Command {
 		
 		if (speed == Shifters.Speed.kLow){
 			leftTalon.config_kF(0, 0, 0);
-			leftTalon.config_kP(0, 0.6, 0);
+			leftTalon.config_kP(0, 0.3, 0);
 			leftTalon.config_kI(0, 0, 0);
 			leftTalon.config_kD(0, 0, 0);
 			
 			rightTalon.config_kF(0, 0, 0);
-			rightTalon.config_kP(0, 0.6, 0);
+			rightTalon.config_kP(0, 0.3, 0);
 			rightTalon.config_kI(0, 0, 0);
 			rightTalon.config_kD(0, 0, 0);
 		}
@@ -85,10 +85,16 @@ public class DriveByDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		leftTalon.set((rotations + leftInitial));
-		rightTalon.set(rotations + rightInitial);
+		System.out.println("LeftInitial " + leftInitial);
+		System.out.println("RightInitial " + rightInitial);
+		System.out.println("Rotations: " + rotations);
+		System.out.println("Left goal: " + (rotations + leftInitial));
+		System.out.println("Right goal: " + (rotations + rightInitial));
 
-		SmartDashboard.putNumber("Drive Talon Left Goal", -rotations);
+		leftTalon.set(ControlMode.Position, (rotations + leftInitial));
+		rightTalon.set(ControlMode.Position, (rotations + rightInitial));
+
+		SmartDashboard.putNumber("Drive Talon Left Goal", rotations);
 		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getClosedLoopError(0));
 

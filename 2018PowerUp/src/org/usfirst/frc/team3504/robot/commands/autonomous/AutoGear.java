@@ -19,8 +19,8 @@ public class AutoGear extends CommandGroup {
 		addSequential(new DriveByDistance(-3.0, Shifters.Speed.kLow));
 		*/
 		// Using motion profiles for turns:
-		//addSequential(new DriveByDistance(distance, Shifters.Speed.kLow));
-		addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
+		addSequential(new DriveByDistance(36.0, Shifters.Speed.kLow));
+		//addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
 
 		// Add Commands here:
 		// e.g. addSequential(new Command1());
