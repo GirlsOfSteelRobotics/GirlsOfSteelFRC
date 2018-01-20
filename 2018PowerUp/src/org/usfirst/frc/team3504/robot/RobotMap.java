@@ -24,6 +24,8 @@ public class RobotMap {
 	public static final int LIFT_A = 7;
 	public static final int LIFT_B = 8;
 	
+	public static final int PIVOT = 13;
+	
 	public static final int COLLECT_RIGHT_A = 9;
 	public static final int COLLECT_RIGHT_B = 10;
 	public static final int COLLECT_LEFT_A = 11;

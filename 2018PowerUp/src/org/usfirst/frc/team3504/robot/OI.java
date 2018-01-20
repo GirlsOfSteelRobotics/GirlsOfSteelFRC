@@ -11,6 +11,8 @@ import org.usfirst.frc.team3504.robot.commands.Collect;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
+import org.usfirst.frc.team3504.robot.commands.PivotIn;
+import org.usfirst.frc.team3504.robot.commands.PivotOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
@@ -50,6 +52,9 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	
+	private JoystickButton pivotIn;
+	private JoystickButton pivotOut;
+	
 	private JoystickButton collect;
 	private JoystickButton release;
 	
@@ -62,6 +67,9 @@ public class OI {
 		liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
 		liftDown = new JoystickButton(operatorGamePad, 2);
 		
+		pivotIn = new JoystickButton(operatorGamePad, 5);  
+		pivotOut = new JoystickButton(operatorGamePad, 6); 
+		
 		collect = new JoystickButton(operatorGamePad, 3);
 		release = new JoystickButton(operatorGamePad, 4);
 		
@@ -72,6 +80,10 @@ public class OI {
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
+		
+		pivotIn.whileHeld(new PivotIn());
+		pivotOut.whileHeld(new PivotOut());
+		
 		
 		collect.whileHeld(new Collect());
 		release.whileHeld(new Release());
