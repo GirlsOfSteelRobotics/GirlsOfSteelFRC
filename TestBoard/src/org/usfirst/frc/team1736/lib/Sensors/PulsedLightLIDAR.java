@@ -48,6 +48,7 @@ public class PulsedLightLIDAR { // We don't need any pid system, So I took out t
     private java.util.Timer updater;
     private final int LIDAR_ADDR = 0x62;
     private final int LIDAR_CONFIG_REGISTER = 0x00;
+    private final int LIDAR_CONFIG_REG_MEASURE = 0x04;
     private final int LIDAR_DISTANCE_REGISTER = 0x8f;
 
 
@@ -102,21 +103,21 @@ public class PulsedLightLIDAR { // We don't need any pid system, So I took out t
      * Read from the sensor and update the internal "distance" variable with the result.
      */
     public void update() {
-    	boolean result;
-    	byte oneByte[] = 
-    			{0x55};
-    	result = i2c.read(0x04, 1, oneByte);
-    	System.out.println("Read(0x04) result: " + result);
-    	System.out.printf("Read(0x04) = 0x%01x\n", oneByte[0]);
+    		boolean result;
+//    	byte oneByte[] = 
+//    			{0x55};
+//    	result = i2c.read(0x04, 1, oneByte);
+//    	System.out.println("Read(0x04) result: " + result);
+//    	System.out.printf("Read(0x04) = 0x%01x\n", oneByte[0]);
 
-    	result = i2c.write(LIDAR_CONFIG_REGISTER, 0x04); // Initiate measurement
-    	System.out.println("Write result: " + result);
-    	Timer.delay(0.04); // Delay for measurement to be taken
-
-    	result = i2c.read(LIDAR_DISTANCE_REGISTER, 2, distance); // Read in measurement
-    	System.out.println("Read result: " + result);
-    	System.out.printf("Distance array: %d, %d\n", distance[0], distance[1]);
-    	Timer.delay(0.005); // Delay to prevent over polling
+	    	result = i2c.write(LIDAR_CONFIG_REGISTER, LIDAR_CONFIG_REG_MEASURE); // Initiate measurement
+	    	System.out.println("Write result: " + result);
+	    	Timer.delay(0.04); // Delay for measurement to be taken (20 ms is enough)
+	
+	    	result = i2c.read(LIDAR_DISTANCE_REGISTER, 2, distance); // Read in measurement
+	    	System.out.println("Read result: " + result);
+	    	System.out.printf("Distance array: %d, %d\n", distance[0], distance[1]);
+	    	Timer.delay(0.04); // Delay to prevent over polling
     }
 
     /**
