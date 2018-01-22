@@ -9,14 +9,13 @@ package org.usfirst.frc.team3504.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team1736.lib.Sensors.PulsedLightLIDAR;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,7 +32,7 @@ public class Robot extends IterativeRobot {
 	private DifferentialDrive m_robotDrive;
 	private Joystick m_stick;
 	private Timer m_timer;
-	private PulsedLightLIDAR lidar;
+	private LidarLitePWM lidar;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -48,11 +47,11 @@ public class Robot extends IterativeRobot {
 		m_robotDrive = new DifferentialDrive(leftGroup, motor3);
 		m_stick = new Joystick(0);
 		m_timer = new Timer();
-		lidar = new PulsedLightLIDAR();
+		lidar = new LidarLitePWM(new DigitalInput(0));
 	}
 
 	/**
-	 * This function is run once each time the robot enters autonomous mode.
+
 	 */
 	@Override
 	public void autonomousInit() {
@@ -78,10 +77,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopInit() {
-		lidar.update();
-		double dist = lidar.getDistance();
-		System.out.printf("LIDAR distance: %f\n", dist);
-		SmartDashboard.putNumber("LIDAR", dist);
 	}
 
 	/**
@@ -89,13 +84,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("getY", m_stick.getY());
+		double dist = lidar.getDistance();
+		//System.out.printf("LIDAR distance: %f\n", dist);
+		SmartDashboard.putNumber("LIDAR", dist);
+//		SmartDashboard.putNumber("getY", m_stick.getY());
 		m_robotDrive.stopMotor();
-		if (m_stick.getTrigger()) {
-			motor3.set(m_stick.getY());
-		} else {
-			motor3.stopMotor();
-		}
+//		if (m_stick.getTrigger()) {
+//			motor3.set(m_stick.getY());
+//		} else {
+//			motor3.stopMotor();
+//		}
 	}
 	
 	@Override

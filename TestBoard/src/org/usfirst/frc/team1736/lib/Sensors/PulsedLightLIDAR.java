@@ -54,10 +54,12 @@ public class PulsedLightLIDAR { // We don't need any pid system, So I took out t
 
     public PulsedLightLIDAR() {
         i2c = new I2C(Port.kOnboard, LIDAR_ADDR);
+//        i2c = new I2C(Port.kMXP, LIDAR_ADDR);
         distance = new byte[2];
         updater = new java.util.Timer();
     }
 
+    
 
     /**
      * Internally return Distance in cm
@@ -111,11 +113,11 @@ public class PulsedLightLIDAR { // We don't need any pid system, So I took out t
 //    	System.out.printf("Read(0x04) = 0x%01x\n", oneByte[0]);
 
 	    	result = i2c.write(LIDAR_CONFIG_REGISTER, LIDAR_CONFIG_REG_MEASURE); // Initiate measurement
-	    	System.out.println("Write result: " + result);
-	    	Timer.delay(0.04); // Delay for measurement to be taken (20 ms is enough)
+	    	System.out.println("Write aborted? " + result);
+	    	Timer.delay(0.1); // Delay for measurement to be taken (20 ms is enough)
 	
 	    	result = i2c.read(LIDAR_DISTANCE_REGISTER, 2, distance); // Read in measurement
-	    	System.out.println("Read result: " + result);
+	    	System.out.println("Read aborted? " + result);
 	    	System.out.printf("Distance array: %d, %d\n", distance[0], distance[1]);
 	    	Timer.delay(0.04); // Delay to prevent over polling
     }
