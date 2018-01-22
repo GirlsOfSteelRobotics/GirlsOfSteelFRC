@@ -10,6 +10,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.Drive;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -29,15 +30,18 @@ public class Chassis extends Subsystem {
 	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	public DifferentialDrive drive = new DifferentialDrive(driveLeftA, driveRightA);
+	public DifferentialDrive drive;
 	
 	public Chassis() {
 		setFollowerMode();
 		driveLeftA.setInverted(true);
-		driveRightA.setInverted(true);
+		//driveRightA.setInverted(true);
 		driveRightA.setSensorPhase(true);
+		driveLeftA.setSensorPhase(true);
 		driveLeftA.setSafetyEnabled(false);
 		driveRightA.setSafetyEnabled(false);
+		
+		drive = new DifferentialDrive(driveLeftA, driveRightA);
 	}
 	
 	public void initDefaultCommand() {
@@ -73,4 +77,5 @@ public class Chassis extends Subsystem {
 		driveRightB.follow(driveRightA);
 		driveRightC.follow(driveRightA);
 	}
+	
 }
