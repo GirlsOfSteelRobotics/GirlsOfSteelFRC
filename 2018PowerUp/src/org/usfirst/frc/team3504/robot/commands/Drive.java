@@ -19,6 +19,7 @@ public class Drive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     		Robot.oi.setDriveStyle();
+    		Robot.chassis.setInverted(false);
     		System.out.println("Squared Units: " + Robot.oi.isSquared());
     }
 

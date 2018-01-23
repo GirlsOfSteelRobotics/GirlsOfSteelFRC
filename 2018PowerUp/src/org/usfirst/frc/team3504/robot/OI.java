@@ -16,6 +16,7 @@ import org.usfirst.frc.team3504.robot.commands.PivotOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.SimpleDrive;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -47,7 +48,7 @@ public class OI {
 	private JoystickButton shifterUp;
 	private JoystickButton shifterDown;
 	private JoystickButton driveByDistanceLow;
-	private JoystickButton driveByDistanceHigh;
+	private JoystickButton simpleDrive;
 	
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
@@ -62,7 +63,7 @@ public class OI {
 		shifterDown = new JoystickButton(drivingJoystickOne, 2);
 		shifterUp = new JoystickButton(drivingJoystickOne, 3);
 		driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
-		driveByDistanceHigh = new JoystickButton(drivingJoystickOne, 10);
+		simpleDrive = new JoystickButton(drivingJoystickOne, 10);
 		
 		liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
 		liftDown = new JoystickButton(operatorGamePad, 2);
@@ -75,8 +76,8 @@ public class OI {
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
-		driveByDistanceLow.whenPressed(new DriveByDistance(12.0, Shifters.Speed.kLow));
-		driveByDistanceHigh.whenPressed(new DriveByDistance(36.0, Shifters.Speed.kLow));
+		driveByDistanceLow.whenPressed(new DriveByDistance(36.0, Shifters.Speed.kLow));
+		simpleDrive.whileHeld(new SimpleDrive());
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());

@@ -8,7 +8,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoArcadeDrive;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSpeedControl;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
 		//m_autonomousCommand = new DriveByDistance(36, Shifters.Speed.kLow); //m_chooser.getSelected();
-		m_autonomousCommand = new AutoArcadeDrive();
+		m_autonomousCommand = new AutoDriveForward();
 		
 
 		/*

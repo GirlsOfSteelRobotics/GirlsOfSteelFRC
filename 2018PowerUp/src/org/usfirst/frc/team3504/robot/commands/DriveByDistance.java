@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveByDistance extends Command {
 
-	private double rotations; //in sensor units
+	private double codes; //in sensor units
 
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
@@ -28,8 +28,8 @@ public class DriveByDistance extends Command {
 	private Shifters.Speed speed;
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {
-		rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
-		rotations = 4096 * rotations;
+		double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
+		codes = RobotMap.CODES_PER_WHEEL_REV * rotations;
 		this.speed = speed;
 
 		// Use requires() here to declare subsystem dependencies
@@ -38,6 +38,7 @@ public class DriveByDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.chassis.setInverted(true);
 		Robot.shifters.shiftGear(speed);
 		Robot.chassis.setFollowerMode();
 
@@ -46,12 +47,12 @@ public class DriveByDistance extends Command {
 		
 		if (speed == Shifters.Speed.kLow){
 			leftTalon.config_kF(0, 0, 0);
-			leftTalon.config_kP(0, 0.7, 0);
+			leftTalon.config_kP(0, 0.3, 0);
 			leftTalon.config_kI(0, 0, 0);
 			leftTalon.config_kD(0, 0, 0);
 			
 			rightTalon.config_kF(0, 0, 0);
-			rightTalon.config_kP(0, 0.7, 0);
+			rightTalon.config_kP(0, 0.3, 0);
 			rightTalon.config_kI(0, 0, 0);
 			rightTalon.config_kD(0, 0, 0);
 		}
@@ -71,13 +72,13 @@ public class DriveByDistance extends Command {
 		// leftTalon.setPosition(0.0);
 		// rightTalon.setPosition(0.0);
 
-		System.out.println("Drive by Distance Started " + rotations);
+		System.out.println("Drive by Distance Started " + codes);
 
 		leftInitial = leftTalon.getSelectedSensorPosition(0);
 		rightInitial = rightTalon.getSelectedSensorPosition(0);
 
-		leftTalon.set(ControlMode.Position, (rotations + leftInitial));
-		rightTalon.set(ControlMode.Position, (rotations + rightInitial));
+		leftTalon.set(ControlMode.Position, (codes + leftInitial));
+		rightTalon.set(ControlMode.Position, (codes + rightInitial));
 
 		System.out.println("LeftInitial: " + leftInitial + " RightInitial: " + rightInitial);
 
@@ -91,33 +92,33 @@ public class DriveByDistance extends Command {
 		//System.out.println("Left goal: " + (rotations + leftInitial));
 		//System.out.println("Right goal: " + (rotations + rightInitial));
 
-		leftTalon.set(ControlMode.Position, (rotations + leftInitial));
-		rightTalon.set(ControlMode.Position, (rotations + rightInitial));
+		leftTalon.set(ControlMode.Position, (codes + leftInitial));
+		rightTalon.set(ControlMode.Position, (codes + rightInitial));
 
-		SmartDashboard.putNumber("Drive Talon Left Goal", rotations);
+		SmartDashboard.putNumber("Drive Talon Left Goal", codes);
 		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getClosedLoopError(0));
 
-		System.out.println("Left Goal: " + ((rotations + leftInitial)) + " Right Goal: " + (rotations + rightInitial));
+		System.out.println("Left Goal: " + ((codes + leftInitial)) + " Right Goal: " + (codes + rightInitial));
 		System.out.println("Left Position: " + leftTalon.getSelectedSensorPosition(0) + " Right Position: " + rightTalon.getSelectedSensorPosition(0));
-		System.out.println("Left Error: " + ((rotations + leftInitial) - leftTalon.getSelectedSensorPosition(0)));
-		System.out.println("Right Error: " + ((rotations + rightInitial) - rightTalon.getSelectedSensorPosition(0)));
+		System.out.println("Left Error: " + ((codes + leftInitial) - leftTalon.getSelectedSensorPosition(0)));
+		System.out.println("Right Error: " + ((codes + rightInitial) - rightTalon.getSelectedSensorPosition(0)));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		
-		if (rotations > 0) {
-			if ((rightTalon.getSelectedSensorPosition(0) > (rotations + rightInitial))
-					&& (leftTalon.getSelectedSensorPosition(0) > (rotations + leftInitial)))
+		if (codes > 0) {
+			if ((rightTalon.getSelectedSensorPosition(0) > (codes + rightInitial))
+					&& (leftTalon.getSelectedSensorPosition(0) > (codes + leftInitial)))
 			{
 				System.out.println("Finish Case #1");
 				return true;
 			}
 			else return false;
-		} else if (rotations < 0) {
-			if ((rightTalon.getSelectedSensorPosition(0) < (rotations + rightInitial))
-					&& (leftTalon.getSelectedSensorPosition(0) < (rotations + leftInitial)))
+		} else if (codes < 0) {
+			if ((rightTalon.getSelectedSensorPosition(0) < (codes + rightInitial))
+					&& (leftTalon.getSelectedSensorPosition(0) < (codes + leftInitial)))
 			{
 				System.out.println("Finish Case #2");
 				return true;

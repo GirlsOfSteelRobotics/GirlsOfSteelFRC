@@ -26,6 +26,8 @@ public class AutoSpeedControl extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.setInverted(true);
+    	
     	time = 0;
 
 		leftTalon.config_kF(0, 2*1023.0/6500.0, 0);

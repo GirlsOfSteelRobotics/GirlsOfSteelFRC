@@ -35,11 +35,28 @@ public class Chassis extends Subsystem {
 	public Chassis() {
 		setFollowerMode();
 		driveLeftA.setInverted(true);
-		//driveRightA.setInverted(true);
-		driveRightA.setSensorPhase(true);
-		driveLeftA.setSensorPhase(true);
+		driveLeftB.setInverted(true);
+		driveLeftC.setInverted(true);
+		driveRightA.setInverted(false);
+		driveRightB.setInverted(false);
+		driveRightC.setInverted(false);
+		
+		driveRightA.setSensorPhase(false);
+		driveLeftA.setSensorPhase(false);
+		
 		driveLeftA.setSafetyEnabled(false);
+		driveLeftB.setSafetyEnabled(false);
+		driveLeftB.setSafetyEnabled(false);
 		driveRightA.setSafetyEnabled(false);
+		driveRightB.setSafetyEnabled(false);
+		driveRightC.setSafetyEnabled(false);
+		
+		System.out.println("Chassis: leftA " + driveLeftA.getInverted());
+		System.out.println("Chassis: leftB " + driveLeftB.getInverted());
+		System.out.println("Chassis: leftC " + driveLeftC.getInverted());
+    	System.out.println("Chassis: rightA " + driveRightA.getInverted());
+    	System.out.println("Chassis: rightB " + driveRightB.getInverted());
+    	System.out.println("Chassis: rightC " + driveRightC.getInverted());
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
 	}
@@ -76,6 +93,12 @@ public class Chassis extends Subsystem {
 		
 		driveRightB.follow(driveRightA);
 		driveRightC.follow(driveRightA);
+	}
+	
+	public void setInverted(boolean inverted) {
+		driveLeftA.setInverted(inverted);
+		driveLeftB.setInverted(inverted);
+		driveLeftC.setInverted(inverted);
 	}
 	
 }
