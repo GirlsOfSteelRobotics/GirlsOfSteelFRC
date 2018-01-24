@@ -28,7 +28,7 @@ public class DriveByDistance extends Command {
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {
 		double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
-		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * rotations;
+		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * rotations * 4;
 		this.speed = speed;
 
 		// Use requires() here to declare subsystem dependencies
@@ -46,12 +46,12 @@ public class DriveByDistance extends Command {
 		
 		if (speed == Shifters.Speed.kLow){
 			leftTalon.config_kF(0, 0, 0);
-			leftTalon.config_kP(0, 0.3, 0);
+			leftTalon.config_kP(0, 0.12, 0);
 			leftTalon.config_kI(0, 0, 0);
 			leftTalon.config_kD(0, 0, 0);
 			
 			rightTalon.config_kF(0, 0, 0);
-			rightTalon.config_kP(0, 0.3, 0);
+			rightTalon.config_kP(0, 0.12, 0);
 			rightTalon.config_kI(0, 0, 0);
 			rightTalon.config_kD(0, 0, 0);
 		}
