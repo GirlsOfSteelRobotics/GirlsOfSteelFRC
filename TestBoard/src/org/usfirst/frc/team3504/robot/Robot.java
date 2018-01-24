@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 		m_robotDrive = new DifferentialDrive(leftGroup, motor3);
 		m_stick = new Joystick(0);
 		m_timer = new Timer();
-		lidar = new LidarLitePWM(new DigitalInput(0));
+		lidar = new LidarLitePWM(new DigitalInput(9));
 	}
 
 	/**

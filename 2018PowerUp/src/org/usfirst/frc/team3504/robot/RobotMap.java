@@ -21,6 +21,8 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
 	
+	public static final int LIDAR = 9;
+	
 	public static final int LIFT_A = 7;
 	public static final int LIFT_B = 8;
 	
@@ -54,4 +56,5 @@ public class RobotMap {
 	// 36/12 is the ratio of the stage that spins the encoder
 	
 	public static final double WHEEL_DIAMETER = 6.0; // inches
+	
 }
