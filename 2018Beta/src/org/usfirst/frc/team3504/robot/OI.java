@@ -161,7 +161,7 @@ public class OI {
 			return drivingJoystickOne.getY();
 		} 
 		else if (driveStyle == DriveStyle.gamePadTank) {
-			return drivingGamePad.getTwist(); //TODO: this should get the Z vertical/rotate value								
+			return drivingGamePad.getY(); //TODO: this should get the Z vertical/rotate value								
 		}
 		else if (driveStyle == DriveStyle.joystickTank) {
 			return drivingJoystickOne.getY();
@@ -171,14 +171,14 @@ public class OI {
 	}
 	
 	public double getDrivingJoystickX() {
-		if (driveStyle == DriveStyle.gamePadArcade) { // keep the redundancy, it breaks if
-			return drivingGamePad.getZ(); 
+		if (driveStyle == DriveStyle.gamePadArcade) { 
+			return -drivingGamePad.getZ(); 
 		} 
 		else if (driveStyle == DriveStyle.joystickArcade){
 				return drivingJoystickOne.getX();
 		}
 		else if (driveStyle == DriveStyle.gamePadTank) {
-			return drivingGamePad.getY();							
+			return drivingGamePad.getTwist();							
 		} 
 		else if (driveStyle == DriveStyle.joystickTank) {
 			return drivingJoystickTwo.getY();
