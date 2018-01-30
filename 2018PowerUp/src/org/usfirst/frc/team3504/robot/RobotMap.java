@@ -21,8 +21,6 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
 	
-	public static final int LIDAR = 9;
-	
 	public static final int LIFT_A = 7;
 	public static final int LIFT_B = 8;
 	
@@ -49,7 +47,8 @@ public class RobotMap {
 	public static final int SHIFTER_LEFT_B = 3;
 	
 	//Limit switch
-	public static final int LIMIT_SWITCH = 1; //TODO
+	public static final int LIMIT_SWITCH = 8; //TODO
+	public static final int LIDAR = 9;
 	
 	public static final double CODES_PER_WHEEL_REV = 256.0 * (60.0 / 24.0)
 			* (36.0 / 12.0) * 4;

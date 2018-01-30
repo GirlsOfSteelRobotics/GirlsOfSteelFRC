@@ -182,7 +182,7 @@ public class OI {
 		return driveStyle; 
 	}
 	
-	public boolean isSquaredOrQuickTurn() {
+	public boolean isSquaredOrCurvature() {
 		return !dio0.get(); 
 	}
 	
