@@ -115,16 +115,16 @@ public class OI {
 		return drivingJoystickOne.getY();
 	}
 	
-	public double getJoystickOneRightAndLeft() {
-		return drivingJoystickOne.getY();
+	public double getJoystickOneSideToSide() {
+		return drivingJoystickOne.getX();
 	}
 	
 	public double getJoystickTwoUpAndDown() {
 		return drivingJoystickTwo.getY();
 	}
 	
-	public double getJoystickTwoRightAndLeft() {
-		return -drivingJoystickTwo.getX();
+	public double getJoystickTwoSideToSide() {
+		return drivingJoystickTwo.getX();
 	}
 	/*
 	public double getDrivingJoystickY() {
