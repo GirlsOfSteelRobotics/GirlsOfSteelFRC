@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Drive extends Command {
+public class DriveByJoystick extends Command {
 
-    public Drive() {
+    public DriveByJoystick() {
     	requires(Robot.chassis);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -20,7 +20,7 @@ public class Drive extends Command {
     protected void initialize() {
     		Robot.oi.setDriveStyle();
     		Robot.chassis.setInverted(false);
-    		System.out.println("Squared Units: " + Robot.oi.isSquared());
+    		System.out.println("Squared Units: " + Robot.oi.isSquaredOrQuickTurn());
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,9 +32,9 @@ public class Drive extends Command {
     		}*/
     	
     		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
-    			Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
+    			Robot.chassis.drive.curvatureDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquaredOrQuickTurn());
     		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
-    			Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
+    			Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquaredOrQuickTurn());
     		} 
     		
     }

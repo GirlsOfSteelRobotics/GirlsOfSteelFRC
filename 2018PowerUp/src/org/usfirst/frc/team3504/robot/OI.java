@@ -115,7 +115,7 @@ public class OI {
 			return drivingGamePad.getZ(); 
 		} 
 		else if (driveStyle == DriveStyle.joystickArcade){
-				return drivingJoystickOne.getX();
+				return -drivingJoystickOne.getX();
 		}
 		else if (driveStyle == DriveStyle.gamePadTank) {
 			return drivingGamePad.getY();							
@@ -148,7 +148,7 @@ public class OI {
 		return driveStyle; 
 	}
 	
-	public boolean isSquared() {
+	public boolean isSquaredOrQuickTurn() {
 		return !dio0.get(); 
 	}
 	

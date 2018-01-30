@@ -9,7 +9,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.LidarLitePWM;
 import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.Drive;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -66,7 +66,7 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new Drive());
+		setDefaultCommand(new DriveByJoystick());
 		// Set the command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
