@@ -9,6 +9,7 @@ package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Collect;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
 import org.usfirst.frc.team3504.robot.commands.PivotIn;
@@ -48,7 +49,7 @@ public class OI {
 	private JoystickButton shifterUp;
 	private JoystickButton shifterDown;
 	private JoystickButton driveByDistanceLow;
-	private JoystickButton simpleDrive;
+	private JoystickButton driveByMotionProfile;
 	
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
@@ -63,7 +64,7 @@ public class OI {
 		shifterDown = new JoystickButton(drivingJoystickOne, 2);
 		shifterUp = new JoystickButton(drivingJoystickOne, 3);
 		driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
-		simpleDrive = new JoystickButton(drivingJoystickOne, 10);
+		driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
 		
 		liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
 		liftDown = new JoystickButton(operatorGamePad, 2);
@@ -77,7 +78,9 @@ public class OI {
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
 		driveByDistanceLow.whenPressed(new DriveByDistance(36.0, Shifters.Speed.kLow));
-		simpleDrive.whileHeld(new SimpleDrive());
+		
+		//turn left:
+		driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
@@ -115,7 +118,7 @@ public class OI {
 			return drivingGamePad.getZ(); 
 		} 
 		else if (driveStyle == DriveStyle.joystickArcade){
-				return drivingJoystickOne.getX();
+				return -drivingJoystickOne.getX();
 		}
 		else if (driveStyle == DriveStyle.gamePadTank) {
 			return drivingGamePad.getY();							
@@ -148,7 +151,7 @@ public class OI {
 		return driveStyle; 
 	}
 	
-	public boolean isSquared() {
+	public boolean isSquaredOrQuickTurn() {
 		return !dio0.get(); 
 	}
 	
