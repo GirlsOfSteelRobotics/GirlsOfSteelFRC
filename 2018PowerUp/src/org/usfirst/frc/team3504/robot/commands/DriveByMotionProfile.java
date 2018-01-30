@@ -29,14 +29,12 @@ public class DriveByMotionProfile extends Command {
 	private MotionProfileStatus rightStatus;
 	private static final int kMinPointsInTalon = 5;
 	private SetValueMotionProfile state;
-	private double multiplier = 1.0;
 
 	Notifier notifier = new Notifier(new PeriodicRunnable());
 
-	public DriveByMotionProfile(String leftFile, String rightFile, double multiplier) {
+	public DriveByMotionProfile(String leftFile, String rightFile) {
 		requires(Robot.chassis);
 
-		this.multiplier = multiplier;
 		
 		// Load trajectory from file into array
 		try {
@@ -176,7 +174,7 @@ public class DriveByMotionProfile extends Command {
 			// Double[] a = (Double[]) arr.toArray();
 			point.position = arr.get(0);
 			
-			point.velocity = arr.get(1) * multiplier;
+			point.velocity = arr.get(1);
 			point.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
 			//point.timeDur = (int)(arr.get(2) / multiplier);
 			
