@@ -56,5 +56,6 @@ public class RobotMap {
 	// 36/12 is the ratio of the stage that spins the encoder
 	
 	public static final double WHEEL_DIAMETER = 6.0; // inches
+	public static final int DRIVING_CAM = 0;
 	
 }
