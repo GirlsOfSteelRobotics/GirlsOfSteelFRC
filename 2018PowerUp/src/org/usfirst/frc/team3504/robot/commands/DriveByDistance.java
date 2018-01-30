@@ -28,7 +28,7 @@ public class DriveByDistance extends Command {
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {
 		double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
-		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * rotations * 4;
+		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * rotations;
 		this.speed = speed;
 
 		// Use requires() here to declare subsystem dependencies

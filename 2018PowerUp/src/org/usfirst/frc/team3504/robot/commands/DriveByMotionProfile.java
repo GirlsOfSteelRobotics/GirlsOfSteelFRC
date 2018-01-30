@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motion.*;
 
 import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile.PeriodicRunnable;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
@@ -172,9 +172,9 @@ public class DriveByMotionProfile extends Command {
 		for (ArrayList<Double> arr : points) {
 			/* for each point, fill our structure and pass it to API */
 			// Double[] a = (Double[]) arr.toArray();
-			point.position = arr.get(0);
+			point.position = arr.get(0) * RobotMap.CODES_PER_WHEEL_REV;
 			
-			point.velocity = arr.get(1);
+			point.velocity = arr.get(1) * RobotMap.CODES_PER_WHEEL_REV / 600;
 			point.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
 			//point.timeDur = (int)(arr.get(2) / multiplier);
 			
