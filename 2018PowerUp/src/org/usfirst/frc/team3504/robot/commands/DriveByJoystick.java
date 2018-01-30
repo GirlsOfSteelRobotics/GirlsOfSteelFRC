@@ -31,10 +31,14 @@ public class DriveByJoystick extends Command {
     			Robot.shifters.shiftGear(Speed.kLow);
     		}*/
     	
-    		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
-    			Robot.chassis.drive.curvatureDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquaredOrQuickTurn());
-    		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
-    			Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquaredOrQuickTurn());
+    		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade) {
+    			Robot.chassis.drive.curvatureDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickOneRightAndLeft(), Robot.oi.isSquaredOrQuickTurn());
+    		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
+        		Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadLeftSideToSide(), Robot.oi.isSquaredOrQuickTurn());
+    		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank){
+    			Robot.chassis.drive.tankDrive(Robot.oi.getGamePadRightUpAndDown(), Robot.oi.getGamePadRightSideToSide(), Robot.oi.isSquaredOrQuickTurn());
+    		} else if (Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
+    			Robot.chassis.drive.tankDrive(Robot.oi.getGamePadRightUpAndDown(), Robot.oi.getGamePadRightSideToSide(), Robot.oi.isSquaredOrQuickTurn());
     		} 
     		
     }

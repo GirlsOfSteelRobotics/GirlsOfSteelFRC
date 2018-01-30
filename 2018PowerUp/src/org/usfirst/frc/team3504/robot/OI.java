@@ -94,8 +94,39 @@ public class OI {
 		
 		drivingGamePad.setTwistChannel(3);
 	}
-
 	
+	public double getGamePadLeftUpAndDown() {
+		return drivingGamePad.getY();
+	}
+	
+	public double getGamePadRightUpAndDown() {
+		return drivingGamePad.getTwist();
+	}
+	
+	public double getGamePadLeftSideToSide() {
+		return drivingGamePad.getX();
+	}
+	
+	public double getGamePadRightSideToSide(){
+		return drivingGamePad.getZ();
+	}
+	
+	public double getJoystickOneUpAndDown() {
+		return drivingJoystickOne.getY();
+	}
+	
+	public double getJoystickOneRightAndLeft() {
+		return drivingJoystickOne.getY();
+	}
+	
+	public double getJoystickTwoUpAndDown() {
+		return drivingJoystickTwo.getY();
+	}
+	
+	public double getJoystickTwoRightAndLeft() {
+		return -drivingJoystickTwo.getX();
+	}
+	/*
 	public double getDrivingJoystickY() {
 		if (driveStyle == DriveStyle.gamePadArcade){
 			return drivingGamePad.getY();
@@ -130,7 +161,7 @@ public class OI {
 			return 0.0;
 		}
 	}
-	
+	*/
 	public void setDriveStyle() {
 		if (!dio1.get()) {
 			driveStyle = DriveStyle.joystickArcade; 
