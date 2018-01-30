@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -14,6 +15,7 @@ public class Lift extends Subsystem {
 	private WPI_TalonSRX liftA = new WPI_TalonSRX(RobotMap.LIFT_A);
 	private WPI_TalonSRX liftB = new WPI_TalonSRX(RobotMap.LIFT_B);
 	private WPI_TalonSRX pivot = new WPI_TalonSRX(RobotMap.PIVOT);
+	private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 	
 	public Lift() {
 		liftB.follow(liftA);
@@ -68,6 +70,10 @@ public class Lift extends Subsystem {
 
 	public void pivotStop(){
 		pivot.stopMotor();
+	}
+	
+	public boolean getLimitSwitch(){
+		return limitSwitch.get();
 	}
 }
 

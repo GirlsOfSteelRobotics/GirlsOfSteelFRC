@@ -48,6 +48,9 @@ public class RobotMap {
 	public static final int SHIFTER_LEFT_A = 2;
 	public static final int SHIFTER_LEFT_B = 3;
 	
+	//Limit switch
+	public static final int LIMIT_SWITCH = 1; //TODO
+	
 	public static final double CODES_PER_WHEEL_REV = 256.0 * (60.0 / 24.0)
 			* (36.0 / 12.0);
 	// 256.0 is the number of ticks per revolution on the encoder
