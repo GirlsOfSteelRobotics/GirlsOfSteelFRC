@@ -21,8 +21,6 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
 	
-	public static final int LIDAR = 9;
-	
 	public static final int LIFT_A = 7;
 	public static final int LIFT_B = 8;
 	
@@ -48,12 +46,17 @@ public class RobotMap {
 	public static final int SHIFTER_LEFT_A = 2;
 	public static final int SHIFTER_LEFT_B = 3;
 	
+	//Limit switch
+	public static final int LIMIT_SWITCH = 8; //TODO
+	public static final int LIDAR = 9;
+	
 	public static final double CODES_PER_WHEEL_REV = 256.0 * (60.0 / 24.0)
-			* (36.0 / 12.0);
+			* (36.0 / 12.0) * 4;
 	// 256.0 is the number of ticks per revolution on the encoder
 	// (*4 = 1024 "native units" per rev)
 	// 60/24 is the gearbox final stage output
 	// 36/12 is the ratio of the stage that spins the encoder
+	// 4 JUST BECAUSE
 	
 	public static final double WHEEL_DIAMETER = 6.0; // inches
 	public static final int DRIVING_CAM = 0;
