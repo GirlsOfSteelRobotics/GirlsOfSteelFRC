@@ -16,6 +16,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lift;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -36,6 +37,9 @@ public class Robot extends TimedRobot {
 	public static Lift lift;
 	public static Collector collector;
 	public static OI oi;
+	private enum PlateSide {
+		left, right
+	}
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -84,11 +88,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
+		String gameData;
 		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
 		//m_autonomousCommand = new DriveByDistance(36, Shifters.Speed.kLow); //m_chooser.getSelected();
 		m_autonomousCommand = new AutoDriveForward();
 		
-
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -100,6 +106,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		
 	}
 
 	/**
@@ -137,4 +144,33 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+	
+	public PlateSide getSwitchSide()
+	{
+		String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if(gameData.charAt(0) == 'L')
+		{
+			return PlateSide.left;
+		} 
+		else 
+		{
+			return PlateSide.right;
+		}
+	}
+	
+	public PlateSide getScaleSide()
+	{
+		String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if(gameData.charAt(1) == 'L')
+		{
+			return PlateSide.left;
+		} 
+		else 
+		{
+			return PlateSide.right;
+		}
+	}
+	
 }
