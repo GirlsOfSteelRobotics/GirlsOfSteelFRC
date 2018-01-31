@@ -19,7 +19,7 @@ public class DriveByJoystick extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.oi.setDriveStyle();
-		Robot.chassis.setInverted(false);
+		//Robot.chassis.setInverted(false);
 		System.out.println("Squared Units: " + Robot.oi.isSquaredOrCurvature());
 	}
 
@@ -33,15 +33,15 @@ public class DriveByJoystick extends Command {
 
 		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade) {
 			if (Robot.oi.isSquaredOrCurvature()){
-				Robot.chassis.drive.curvatureDrive(Robot.oi.getJoystickOneUpAndDown(), -Robot.oi.getJoystickOneSideToSide(), true);
+				Robot.chassis.drive.curvatureDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickOneSideToSide(), true);
 			} else {
-				Robot.chassis.drive.arcadeDrive(Robot.oi.getJoystickOneUpAndDown(), -Robot.oi.getJoystickOneSideToSide(), true);
+				Robot.chassis.drive.arcadeDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickOneSideToSide(), true);
 			}
 		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
 			if (Robot.oi.isSquaredOrCurvature()){
-				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), -Robot.oi.getGamePadRightSideToSide(), true);
+				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
 			} else {
-				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), -Robot.oi.getGamePadRightSideToSide(), true);
+				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
 			}
 		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank){
 			Robot.chassis.drive.tankDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightUpAndDown(), Robot.oi.isSquaredOrCurvature());
