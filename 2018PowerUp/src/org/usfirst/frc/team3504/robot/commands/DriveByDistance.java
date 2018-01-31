@@ -5,6 +5,7 @@ import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -25,6 +26,8 @@ public class DriveByDistance extends Command {
 	private double rightInitial;
 	
 	private Shifters.Speed speed;
+	
+	private static final int ERROR_THRESHOLD = 400;
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {
 		double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
@@ -37,9 +40,14 @@ public class DriveByDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		ErrorCode err;
 		Robot.chassis.setInverted(true);
 		Robot.shifters.shiftGear(speed);
-		Robot.chassis.setFollowerMode();
+		
+		err = leftTalon.setSelectedSensorPosition(0, 0, 20);
+		System.out.printf("Error code on left: %s\n", err);
+		err = rightTalon.setSelectedSensorPosition(0, 0, 20);
+		System.out.printf("Error code on right: %s\n", err);
 
 		// Robot.chassis.setupFPID(leftTalon);
 		// Robot.chassis.setupFPID(rightTalon);
@@ -107,6 +115,9 @@ public class DriveByDistance extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		
+		return (Math.abs(leftTalon.getClosedLoopError(0)) < ERROR_THRESHOLD && Math.abs(rightTalon.getClosedLoopError(0)) < ERROR_THRESHOLD);
+		
+		/*
 		if (encoderTicks > 0) {
 			if ((rightTalon.getSelectedSensorPosition(0) > (encoderTicks + rightInitial))
 					&& (leftTalon.getSelectedSensorPosition(0) > (encoderTicks + leftInitial)))
@@ -127,6 +138,7 @@ public class DriveByDistance extends Command {
 			System.out.println("Finish Case #3");
 			return true;
 		}
+		*/
 	}
 
 	// Called once after isFinished returns true

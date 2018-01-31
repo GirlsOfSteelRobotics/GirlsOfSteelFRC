@@ -48,8 +48,8 @@ public class Chassis extends Subsystem {
 		driveRightB.setInverted(false);
 		driveRightC.setInverted(false); */
 		
-		driveRightA.setSensorPhase(false);
-		driveLeftA.setSensorPhase(false);
+		driveRightA.setSensorPhase(true);
+		driveLeftA.setSensorPhase(true);
 		
 		driveLeftA.setSafetyEnabled(false);
 		driveLeftB.setSafetyEnabled(false);
@@ -116,9 +116,9 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void setInverted(boolean inverted) {
-		driveLeftA.setInverted(inverted);
-		driveLeftB.setInverted(inverted);
-		driveLeftC.setInverted(inverted);
+		driveRightA.setInverted(inverted);
+		driveRightB.setInverted(inverted);
+		driveRightC.setInverted(inverted);
 	}
 		
 }
