@@ -96,11 +96,11 @@ public class OI {
 	}
 	
 	public double getGamePadLeftUpAndDown() {
-		return drivingGamePad.getY();
+		return -drivingGamePad.getY();
 	}
 	
 	public double getGamePadRightUpAndDown() {
-		return drivingGamePad.getTwist();
+		return -drivingGamePad.getTwist();
 	}
 	
 	public double getGamePadLeftSideToSide() {
@@ -112,7 +112,7 @@ public class OI {
 	}
 	
 	public double getJoystickOneUpAndDown() {
-		return drivingJoystickOne.getY();
+		return -drivingJoystickOne.getY();
 	}
 	
 	public double getJoystickOneSideToSide() {
@@ -120,7 +120,7 @@ public class OI {
 	}
 	
 	public double getJoystickTwoUpAndDown() {
-		return drivingJoystickTwo.getY();
+		return -drivingJoystickTwo.getY();
 	}
 	
 	public double getJoystickTwoSideToSide() {

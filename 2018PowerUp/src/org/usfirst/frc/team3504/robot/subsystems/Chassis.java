@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -39,12 +40,13 @@ public class Chassis extends Subsystem {
 	
 	public Chassis() {
 		setFollowerMode();
+		/*
 		driveLeftA.setInverted(true);
 		driveLeftB.setInverted(true);
 		driveLeftC.setInverted(true);
 		driveRightA.setInverted(false);
 		driveRightB.setInverted(false);
-		driveRightC.setInverted(false);
+		driveRightC.setInverted(false); */
 		
 		driveRightA.setSensorPhase(false);
 		driveLeftA.setSensorPhase(false);
@@ -62,6 +64,19 @@ public class Chassis extends Subsystem {
     	System.out.println("Chassis: rightA " + driveRightA.getInverted());
     	System.out.println("Chassis: rightB " + driveRightB.getInverted());
     	System.out.println("Chassis: rightC " + driveRightC.getInverted());
+    	
+    	driveLeftA.setName("Chassis", "driveLeftA");
+    	driveLeftB.setName("Chassis", "driveLeftB");
+    	driveLeftC.setName("Chassis", "driveLeftC");
+    	driveRightA.setName("Chassis", "driveRightA");
+    	driveRightB.setName("Chassis", "driveRightB");
+    	driveRightC.setName("Chassis", "driveRightC");
+    	LiveWindow.add(driveLeftA);
+    	LiveWindow.add(driveLeftB);
+    	LiveWindow.add(driveLeftC);
+    	LiveWindow.add(driveRightA);
+    	LiveWindow.add(driveRightB);
+    	LiveWindow.add(driveRightC);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
 	}
