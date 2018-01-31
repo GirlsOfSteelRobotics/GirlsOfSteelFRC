@@ -14,6 +14,7 @@ package org.usfirst.frc.team3504.robot;
  * floating around.
  */
 public class RobotMap {
+	//Drive
 	public static final int DRIVE_RIGHT_A = 1;
 	public static final int DRIVE_RIGHT_B = 2;
 	public static final int DRIVE_RIGHT_C = 3;
@@ -21,11 +22,14 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_B = 5;
 	public static final int DRIVE_LEFT_C = 6;
 	
+	//Lift
 	public static final int LIFT_A = 7;
 	public static final int LIFT_B = 8;
 	
+	//Pivot
 	public static final int PIVOT = 13;
 	
+	//Collector
 	public static final int COLLECT_RIGHT_A = 9;
 	public static final int COLLECT_RIGHT_B = 10;
 	public static final int COLLECT_LEFT_A = 11;
@@ -57,7 +61,6 @@ public class RobotMap {
 	// 60/24 is the gearbox final stage output
 	// 36/12 is the ratio of the stage that spins the encoder
 	// 4 JUST BECAUSE
-	
 	public static final double WHEEL_DIAMETER = 6.0; // inches
 	public static final int DRIVING_CAM = 0;
 	
