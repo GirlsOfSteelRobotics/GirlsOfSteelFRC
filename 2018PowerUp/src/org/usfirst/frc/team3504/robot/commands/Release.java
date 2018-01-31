@@ -17,7 +17,6 @@ public class Release extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.collector.setupFPID();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -27,7 +27,7 @@ public class LiftReset extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	liftTalon.set(ControlMode.PercentOutput, -0.5); //TODO
+    		liftTalon.set(ControlMode.PercentOutput, -0.5); //TODO
     }
 
     // Make this return true when this Command no longer needs to run execute()

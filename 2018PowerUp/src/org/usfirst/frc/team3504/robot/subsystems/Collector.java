@@ -27,18 +27,6 @@ public class Collector extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void setupFPID() {
-		//talon.setPosition (0); TODO figure out new syntax
-    	collectLeft.config_kF(0, 0, 0);
-    	collectLeft.config_kP(0, 0, 0);
-    	collectLeft.config_kI(0, 0, 0);
-    	collectLeft.config_kD(0, 0, 0);	
-		
-    	collectRight.config_kF(0, 0, 0);
-    	collectRight.config_kP(0, 0, 0);
-    	collectRight.config_kI(0, 0, 0);
-    	collectRight.config_kD(0, 0, 0);
-	}
     
     public WPI_TalonSRX getCollectorLeft() {
 		return collectLeft;
