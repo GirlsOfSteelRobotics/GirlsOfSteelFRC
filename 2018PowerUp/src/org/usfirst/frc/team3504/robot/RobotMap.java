@@ -59,5 +59,6 @@ public class RobotMap {
 	// 4 JUST BECAUSE
 	
 	public static final double WHEEL_DIAMETER = 6.0; // inches
+	public static final int DRIVING_CAM = 0;
 	
 }
