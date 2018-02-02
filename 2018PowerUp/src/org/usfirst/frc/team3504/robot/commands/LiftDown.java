@@ -22,18 +22,20 @@ public class LiftDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.lift.setupFPID(Robot.lift.getLiftTalon());
-    	liftTalon.set(ControlMode.Position, 0);
+	    	liftTalon.set(ControlMode.PercentOutput, 1.0);
+	    Robot.lift.setupFPID(liftTalon);
+	    	System.out.println("LiftDown");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	liftTalon.set(ControlMode.Position, -.5);
+    		//Robot.lift.setSpeed(1.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.lift.getLimitSwitch();
+    		return false;
+    		//return Robot.lift.getLimitSwitch();
     }
 
     // Called once after isFinished returns true
@@ -44,5 +46,6 @@ public class LiftDown extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    		end();
     }
 }

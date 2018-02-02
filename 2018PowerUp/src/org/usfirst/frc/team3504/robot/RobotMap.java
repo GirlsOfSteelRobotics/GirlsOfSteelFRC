@@ -23,8 +23,7 @@ public class RobotMap {
 	public static final int DRIVE_LEFT_C = 6;
 	
 	//Lift
-	public static final int LIFT_A = 7;
-	public static final int LIFT_B = 8;
+	public static final int LIFT = 7;
 	
 	//Pivot
 	public static final int PIVOT = 13;

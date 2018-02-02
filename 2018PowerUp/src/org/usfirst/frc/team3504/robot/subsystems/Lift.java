@@ -12,14 +12,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Lift extends Subsystem {
 
-	private WPI_TalonSRX liftA = new WPI_TalonSRX(RobotMap.LIFT_A);
-	private WPI_TalonSRX liftB = new WPI_TalonSRX(RobotMap.LIFT_B);
+	private WPI_TalonSRX lift = new WPI_TalonSRX(RobotMap.LIFT);
 	private WPI_TalonSRX pivot = new WPI_TalonSRX(RobotMap.PIVOT);
 	private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 	
 	public Lift() {
-		liftB.follow(liftA);
-		liftA.setSensorPhase(true);
+		lift.setSensorPhase(true);
 	}
 	
 	
@@ -32,24 +30,24 @@ public class Lift extends Subsystem {
     }
     
     public void setupFPID(WPI_TalonSRX talon) {
-		//talon.setPosition (0); TODO figure out new syntax
-		talon.config_kF(0, 0, 0);
-		talon.config_kP(0, 0, 0);
-		talon.config_kI(0, 0, 0);
-		talon.config_kD(0, 0, 0);	
+		//talon.setPosition(0); //TODO figure out new syntax
+    	talon.config_kF(0, 0, 10);
+		talon.config_kP(0, 0.5, 10);
+		talon.config_kI(0, 0, 10);
+		talon.config_kD(0, 0, 10);	
 	}
     
     public void setupPivotFPID(WPI_TalonSRX talon) {
 		//talon.setPosition (0); TODO figure out new syntax
-		talon.config_kF(0, 0, 0);
-		talon.config_kP(0, 0, 0);
-		talon.config_kI(0, 0, 0);
-		talon.config_kD(0, 0, 0);	
+		talon.config_kF(0, 0, 10);
+		talon.config_kP(0, 0.5, 10);
+		talon.config_kI(0, 0, 10);
+		talon.config_kD(0, 0, 10);	
 	}
     
     
     public WPI_TalonSRX getLiftTalon() {
-    	return liftA;
+    	return lift;
     }
 
     public WPI_TalonSRX getPivotTalon() {
@@ -57,15 +55,15 @@ public class Lift extends Subsystem {
     }
     
     public void setSpeed(double speed) {
-    	liftA.set(speed); //value between -1.0 and 1.0;
+    		lift.set(speed); //value between -1.0 and 1.0;
     }
 
     public void setPivotSpeed(double speed) {
-    	pivot.set(speed); //value between -1.0 and 1.0;
+    		pivot.set(speed); //value between -1.0 and 1.0;
     }
 
     public void stop() {
-    	liftA.stopMotor();
+    		lift.stopMotor();
     }
 
 	public void pivotStop(){
