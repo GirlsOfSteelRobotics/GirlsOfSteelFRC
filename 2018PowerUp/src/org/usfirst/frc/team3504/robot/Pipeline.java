@@ -31,6 +31,7 @@ public class Pipeline {
 	private Mat hslThreshold0Output = new Mat();
 	private Mat hslThreshold1Output = new Mat();
 	private Mat cvBitwiseOrOutput = new Mat();
+	private Mat findLineOutput = new Mat();
 	private MatOfKeyPoint findBlobsOutput = new MatOfKeyPoint();
 
 	//Sources
@@ -132,6 +133,14 @@ public class Pipeline {
 		return findBlobsOutput;
 	}
 
+	
+	/**
+	 * This method is a generated getter for the output of a CV_bitwise_or.
+	 * @return Mat output from CV_bitwise_or.
+	 */
+	public Mat findLineOutput() {
+		return cvBitwiseOrOutput;
+	}
 
 	/**
 	 * Scales and image to an exact size.
@@ -226,9 +235,35 @@ public class Pipeline {
 		}
 
 		blobDet.detect(input, blobList);
+		for (int r = 0; r < blobList.toArray().length; r++){
+			for (int c = 0; c < blobList.toArray().length; c++){
+				System.out.print(blobList.get);
+			}
+			
+		}
+	
+		
 	}
 
+	
+	
+	
+	private void deleteOutliers(){
+		
+		KeyPoint[] blobPointArray = new KeyPoint[findBlobsOutput.toList().size()];
+		for(int i = 0; i < findBlobsOutput.toList().size(); i ++){
+			blobPointArray[i] = findBlobsOutput.toList().get(i);
+			
+			
+		}
+		for(int r = 0; r < blobPointArray.length; r++){
+			
+		}
+		Imgproc.fitLine(findBlobsOutput(), findLineOutput(), 4, 0, 0.01, 0.01);
+		
 
+	}
+ 
 
 
 }
