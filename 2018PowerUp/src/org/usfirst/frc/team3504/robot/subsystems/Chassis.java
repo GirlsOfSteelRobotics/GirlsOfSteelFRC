@@ -51,6 +51,9 @@ public class Chassis extends Subsystem {
 		driveRightA.setSensorPhase(true);
 		driveLeftA.setSensorPhase(true);
 		
+		driveRightA.configForwardSoftLimitEnable(false, 0);
+		driveLeftA.configForwardSoftLimitEnable(false, 0);
+		
 		driveLeftA.setSafetyEnabled(false);
 		driveLeftB.setSafetyEnabled(false);
 		driveLeftB.setSafetyEnabled(false);

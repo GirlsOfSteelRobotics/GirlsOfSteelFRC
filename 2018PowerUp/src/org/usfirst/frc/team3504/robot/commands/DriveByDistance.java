@@ -44,22 +44,24 @@ public class DriveByDistance extends Command {
 		Robot.chassis.setInverted(true);
 		Robot.shifters.shiftGear(speed);
 		
+		/*
 		err = leftTalon.setSelectedSensorPosition(0, 0, 20);
 		System.out.printf("Error code on left: %s\n", err);
 		err = rightTalon.setSelectedSensorPosition(0, 0, 20);
 		System.out.printf("Error code on right: %s\n", err);
+		*/
 
 		// Robot.chassis.setupFPID(leftTalon);
 		// Robot.chassis.setupFPID(rightTalon);
 		
 		if (speed == Shifters.Speed.kLow){
 			leftTalon.config_kF(0, 0, 0);
-			leftTalon.config_kP(0, 0.12, 0);
+			leftTalon.config_kP(0, 0.15, 0);
 			leftTalon.config_kI(0, 0, 0);
 			leftTalon.config_kD(0, 0, 0);
 			
 			rightTalon.config_kF(0, 0, 0);
-			rightTalon.config_kP(0, 0.12, 0);
+			rightTalon.config_kP(0, 0.15, 0);
 			rightTalon.config_kI(0, 0, 0);
 			rightTalon.config_kD(0, 0, 0);
 		}
@@ -115,9 +117,9 @@ public class DriveByDistance extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		
-		return (Math.abs(leftTalon.getClosedLoopError(0)) < ERROR_THRESHOLD && Math.abs(rightTalon.getClosedLoopError(0)) < ERROR_THRESHOLD);
+		//return (Math.abs(leftTalon.getClosedLoopError(0)) < ERROR_THRESHOLD && Math.abs(rightTalon.getClosedLoopError(0)) < ERROR_THRESHOLD);
 		
-		/*
+		
 		if (encoderTicks > 0) {
 			if ((rightTalon.getSelectedSensorPosition(0) > (encoderTicks + rightInitial))
 					&& (leftTalon.getSelectedSensorPosition(0) > (encoderTicks + leftInitial)))
@@ -138,7 +140,7 @@ public class DriveByDistance extends Command {
 			System.out.println("Finish Case #3");
 			return true;
 		}
-		*/
+		
 	}
 
 	// Called once after isFinished returns true
