@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class WristOut extends Command {
 
     public WristOut() {
-        requires(Robot.lift);
+        requires(Robot.wrist);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +19,7 @@ public class WristOut extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.setWristSpeed(-1.0); //TODO: tune this value
+    	Robot.wrist.setWristSpeed(-1.0); //TODO: tune this value
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -29,7 +29,7 @@ public class WristOut extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.lift.wristStop();
+    	Robot.wrist.wristStop();
     }
 
     // Called when another command which requires one or more of the same

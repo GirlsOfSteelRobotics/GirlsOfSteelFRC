@@ -12,14 +12,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Lift extends Subsystem {
 
-	public WPI_TalonSRX lift = new WPI_TalonSRX(RobotMap.LIFT);
-	private WPI_TalonSRX wrist = new WPI_TalonSRX(RobotMap.PIVOT);
-	private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
+	public WPI_TalonSRX lift;
+	private DigitalInput limitSwitch;
 	
 	public Lift() {
+		lift = new WPI_TalonSRX(RobotMap.LIFT); 
+		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
 		setupLiftFPID();
-		setupWristFPID();
+
 	}
 	
 	
@@ -39,14 +40,6 @@ public class Lift extends Subsystem {
 		lift.config_kD(0, 0, 10);	
 	}
     
-    public void setupWristFPID() {
-		//talon.setPosition (0); TODO figure out new syntax
-		wrist.config_kF(0, 0, 10);
-		wrist.config_kP(0, 0.5, 10);
-		wrist.config_kI(0, 0, 10);
-		wrist.config_kD(0, 0, 10);	
-	}
-    
    
 //    public WPI_TalonSRX getLiftTalon() {
 //    	return lift;
@@ -56,17 +49,9 @@ public class Lift extends Subsystem {
     		lift.set(speed); //value between -1.0 and 1.0;
     }
 
-    public void setWristSpeed(double speed) {
-    		wrist.set(speed); //value between -1.0 and 1.0;
-    }
-
     public void stop() {
     		lift.stopMotor();
     }
-
-	public void wristStop(){
-		wrist.stopMotor();
-	}
 	
 	public boolean getLimitSwitch(){
 		return limitSwitch.get();
