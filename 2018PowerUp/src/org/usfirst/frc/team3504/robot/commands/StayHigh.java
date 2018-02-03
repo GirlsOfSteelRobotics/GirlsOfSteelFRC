@@ -17,7 +17,7 @@ public class StayHigh extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.lift.setupFPID(Robot.lift.getLiftTalon());
+    		
     }
 
     // Called repeatedly when this Command is scheduled to run

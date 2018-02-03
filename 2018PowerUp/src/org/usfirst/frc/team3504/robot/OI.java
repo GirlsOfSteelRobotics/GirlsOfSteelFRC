@@ -12,8 +12,8 @@ import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
-import org.usfirst.frc.team3504.robot.commands.PivotIn;
-import org.usfirst.frc.team3504.robot.commands.PivotOut;
+import org.usfirst.frc.team3504.robot.commands.WristIn;
+import org.usfirst.frc.team3504.robot.commands.WristOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
@@ -85,8 +85,8 @@ public class OI {
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
 		
-		pivotIn.whileHeld(new PivotIn());
-		pivotOut.whileHeld(new PivotOut());
+		pivotIn.whileHeld(new WristIn());
+		pivotOut.whileHeld(new WristOut());
 		
 		
 		collect.whileHeld(new Collect());
