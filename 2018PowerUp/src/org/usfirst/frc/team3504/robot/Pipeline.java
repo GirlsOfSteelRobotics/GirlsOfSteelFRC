@@ -237,7 +237,7 @@ public class Pipeline {
 		blobDet.detect(input, blobList);
 		for (int r = 0; r < blobList.toArray().length; r++){
 			for (int c = 0; c < blobList.toArray().length; c++){
-				System.out.print(blobList.get);
+				//System.out.print(blobList.get);
 			}
 			
 		}

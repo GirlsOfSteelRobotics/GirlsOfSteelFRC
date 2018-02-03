@@ -12,6 +12,8 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -53,6 +55,16 @@ public class Chassis extends Subsystem {
 		
 		driveRightA.configForwardSoftLimitEnable(false, 0);
 		driveLeftA.configForwardSoftLimitEnable(false, 0);
+		
+		driveRightA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+	
+		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 3, 10);
+		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 3, 10);
+		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 3, 10);
+		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 3, 10);
+		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 3, 10);
+		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 3, 10);
 		
 		driveLeftA.setSafetyEnabled(false);
 		driveLeftB.setSafetyEnabled(false);

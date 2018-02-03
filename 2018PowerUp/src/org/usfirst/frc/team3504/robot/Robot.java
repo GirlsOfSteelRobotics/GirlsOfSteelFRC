@@ -136,6 +136,9 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("LIDAR", chassis.lidar.getDistance());
+		
+		System.out.print("RightError: " + Robot.chassis.getRightTalon().getClosedLoopError(0));
+		System.out.println("  LeftError: " + Robot.chassis.getLeftTalon().getClosedLoopError(0));
 	}
 
 	/**
