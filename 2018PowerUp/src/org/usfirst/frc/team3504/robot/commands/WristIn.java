@@ -20,7 +20,7 @@ public class WristIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.wrist.setWristSpeed(1.0); //TODO: tune this value
+    	Robot.wrist.setWristSpeed(-0.5); //TODO: tune this value
     }
 
     // Make this return true when this Command no longer needs to run execute()

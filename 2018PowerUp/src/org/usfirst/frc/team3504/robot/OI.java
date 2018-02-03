@@ -54,8 +54,8 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	
-	private JoystickButton pivotIn;
-	private JoystickButton pivotOut;
+	private JoystickButton wristIn;
+	private JoystickButton wristOut;
 	
 	private JoystickButton collect;
 	private JoystickButton release;
@@ -69,8 +69,8 @@ public class OI {
 		liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
 		liftDown = new JoystickButton(operatorGamePad, 2);
 		
-		pivotIn = new JoystickButton(operatorGamePad, 5);  
-		pivotOut = new JoystickButton(operatorGamePad, 6); 
+		wristIn = new JoystickButton(operatorGamePad, 5);  
+		wristOut = new JoystickButton(operatorGamePad, 6); 
 		
 		collect = new JoystickButton(operatorGamePad, 3);
 		release = new JoystickButton(operatorGamePad, 4);
@@ -85,8 +85,8 @@ public class OI {
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
 		
-		pivotIn.whileHeld(new WristIn());
-		pivotOut.whileHeld(new WristOut());
+		wristIn.whileHeld(new WristIn());
+		wristOut.whileHeld(new WristOut());
 		
 		
 		collect.whileHeld(new Collect());
