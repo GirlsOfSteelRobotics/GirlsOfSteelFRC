@@ -26,13 +26,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class Chassis extends Subsystem {
-	private WPI_TalonSRX driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
-	private WPI_TalonSRX driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
-	private WPI_TalonSRX driveLeftC = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_C);
+	private WPI_TalonSRX driveLeftA;
+	private WPI_TalonSRX driveLeftB;
+	private WPI_TalonSRX driveLeftC;
 	
-	private WPI_TalonSRX driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
-	private WPI_TalonSRX driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
-	private WPI_TalonSRX driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
+	private WPI_TalonSRX driveRightA;
+	private WPI_TalonSRX driveRightB;
+	private WPI_TalonSRX driveRightC;
 	
 	public LidarLitePWM lidar = new LidarLitePWM(new DigitalInput (RobotMap.LIDAR));
 	
@@ -41,6 +41,13 @@ public class Chassis extends Subsystem {
 	public DifferentialDrive drive;
 	
 	public Chassis() {
+		driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
+		driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
+		driveLeftC = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_C);
+		driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
+		driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
+		driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
+		
 		setFollowerMode();
 		/*
 		driveLeftA.setInverted(true);
