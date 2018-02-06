@@ -142,7 +142,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("LIDAR", chassis.lidar.getDistance());
 		
 		System.out.print("RightError: " + Robot.chassis.getRightTalon().getClosedLoopError(0));
-		System.out.println("  LeftError: " + Robot.chassis.getLeftTalon().getClosedLoopError(0));
+		System.out.print("  LeftError: " + Robot.chassis.getLeftTalon().getClosedLoopError(0));
+		System.out.print("  RightPosition: " + Robot.chassis.getRightTalon().getSelectedSensorPosition(0));
+		System.out.println(" LeftPosition: " + Robot.chassis.getLeftTalon().getSelectedSensorPosition(0));
+		
 	}
 
 	/**
