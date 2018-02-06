@@ -18,6 +18,7 @@ import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SimpleDrive;
+import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -56,6 +57,7 @@ public class OI {
 	
 	private JoystickButton wristIn;
 	private JoystickButton wristOut;
+	private JoystickButton wristHold;
 	
 	private JoystickButton collect;
 	private JoystickButton release;
@@ -70,7 +72,8 @@ public class OI {
 		liftDown = new JoystickButton(operatorGamePad, 2);
 		
 		wristIn = new JoystickButton(operatorGamePad, 5);  
-		wristOut = new JoystickButton(operatorGamePad, 6); 
+		wristOut = new JoystickButton(operatorGamePad, 6);
+		wristHold = new JoystickButton(operatorGamePad, 7);
 		
 		collect = new JoystickButton(operatorGamePad, 3);
 		release = new JoystickButton(operatorGamePad, 4);
@@ -87,7 +90,7 @@ public class OI {
 		
 		wristIn.whileHeld(new WristIn());
 		wristOut.whileHeld(new WristOut());
-		
+		wristHold.whileHeld(new WristHold());
 		
 		collect.whileHeld(new Collect());
 		release.whileHeld(new Release());
