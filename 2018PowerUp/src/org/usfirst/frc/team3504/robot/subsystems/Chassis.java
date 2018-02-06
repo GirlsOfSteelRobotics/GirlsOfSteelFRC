@@ -66,12 +66,14 @@ public class Chassis extends Subsystem {
 		driveRightA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 	
+		/*
 		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 3, 10);
 		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 3, 10);
 		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 3, 10);
 		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 3, 10);
 		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 3, 10);
 		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 3, 10);
+		*/
 		
 		driveLeftA.setSafetyEnabled(false);
 		driveLeftB.setSafetyEnabled(false);
