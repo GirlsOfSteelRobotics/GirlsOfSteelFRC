@@ -44,6 +44,10 @@ public class Wrist extends Subsystem {
     public void setWristSpeed(double speed) {
     		wrist.set(speed); //value between -1.0 and 1.0;
     }
+    
+    public WPI_TalonSRX wristMotor() {
+    		return wrist; 
+    }
 
 	public void wristStop(){
 		wrist.stopMotor();
