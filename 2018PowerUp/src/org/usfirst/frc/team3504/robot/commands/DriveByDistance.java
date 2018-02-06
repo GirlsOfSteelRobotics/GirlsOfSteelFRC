@@ -40,16 +40,16 @@ public class DriveByDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		//ErrorCode err;
+		ErrorCode err;
 		Robot.chassis.setInverted(false);
 		Robot.shifters.shiftGear(speed);
 
-		/*
+		
 		err = leftTalon.setSelectedSensorPosition(0, 0, 20);
 		System.out.printf("Error code on left: %s\n", err);
 		err = rightTalon.setSelectedSensorPosition(0, 0, 20);
 		System.out.printf("Error code on right: %s\n", err);
-		*/
+		
 
 		// Robot.chassis.setupFPID(leftTalon);
 		// Robot.chassis.setupFPID(rightTalon);
@@ -81,8 +81,8 @@ public class DriveByDistance extends Command {
 		leftInitial = leftTalon.getSelectedSensorPosition(0);
 		rightInitial = -rightTalon.getSelectedSensorPosition(0);//!!!
 		
-		leftTalon.set(ControlMode.Position, (encoderTicks + leftInitial));
-		rightTalon.set(ControlMode.Position, -(encoderTicks + rightInitial));//!!!
+		leftTalon.set(ControlMode.Position, encoderTicks);
+		rightTalon.set(ControlMode.Position, -encoderTicks);//!!!
 
 		System.out.println("Drive by Distance Started " + encoderTicks);
 
@@ -98,8 +98,11 @@ public class DriveByDistance extends Command {
 		//System.out.println("Left goal: " + (rotations + leftInitial));
 		//System.out.println("Right goal: " + (rotations + rightInitial));
 
-		leftTalon.set(ControlMode.Position, (encoderTicks + leftInitial));
-		rightTalon.set(ControlMode.Position, -(encoderTicks + rightInitial));//!!!
+		//leftTalon.set(ControlMode.Position, (encoderTicks + leftInitial));
+		//rightTalon.set(ControlMode.Position, -(encoderTicks + rightInitial));//!!!
+		
+		leftTalon.set(ControlMode.Position, encoderTicks);
+		rightTalon.set(ControlMode.Position, -encoderTicks);
 
 		SmartDashboard.putNumber("Drive Talon Left Goal", encoderTicks);
 		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getSelectedSensorPosition(0));
@@ -123,20 +126,20 @@ public class DriveByDistance extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		
-		return (Math.abs(leftTalon.getClosedLoopError(0)) < ERROR_THRESHOLD && Math.abs(rightTalon.getClosedLoopError(0)) < ERROR_THRESHOLD);
+		return (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD && Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD);
 		
 		/*
 		if (encoderTicks > 0) {
-			if ((rightTalon.getSelectedSensorPosition(0) < (encoderTicks + rightInitial))//!!!
-					&& (leftTalon.getSelectedSensorPosition(0) > (encoderTicks + leftInitial)))
+			if (rightTalon.getSelectedSensorPosition(0) < -encoderTicks
+					&& leftTalon.getSelectedSensorPosition(0) > encoderTicks)
 			{
 				System.out.println("Finish Case #1");
 				return true;
 			}
 			else return false;
 		} else if (encoderTicks < 0) {
-			if ((rightTalon.getSelectedSensorPosition(0) > (encoderTicks + rightInitial))//!!!
-					&& (leftTalon.getSelectedSensorPosition(0) < (encoderTicks + leftInitial)))
+			if ((rightTalon.getSelectedSensorPosition(0) > -encoderTicks)//!!!
+					&& (leftTalon.getSelectedSensorPosition(0) < (encoderTicks)))
 			{
 				System.out.println("Finish Case #2");
 				return true;
@@ -147,6 +150,7 @@ public class DriveByDistance extends Command {
 			return true;
 		}
 		*/
+		
 		
 	}
 
