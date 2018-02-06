@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoDriveForward extends Command {
+public class AutoBaseLine extends Command {
 	
 	private int time;
 	
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
-    public AutoDriveForward() {
+    public AutoBaseLine() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
     }
