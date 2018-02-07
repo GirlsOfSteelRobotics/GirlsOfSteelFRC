@@ -30,8 +30,8 @@ public class Wrist extends Subsystem {
     public void setupWristFPID() {
 		//talon.setPosition (0); TODO figure out new syntax
 		wrist.config_kF(0, 0, 10);
-		wrist.config_kP(0, 0.5, 10);
-		wrist.config_kI(0, 0, 10);
+		wrist.config_kP(0, 2, 10);
+		wrist.config_kI(0, 0.005, 10);
 		wrist.config_kD(0, 0, 10);	
 	}
     

@@ -23,7 +23,7 @@ public class WristHold extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.wrist.wristMotor().set(ControlMode.Position, 100); //arbitrary encoder value rn, will change after some testing 
+    		Robot.wrist.wristMotor().set(ControlMode.Position, -370); //arbitrary encoder value rn, will change after some testing 
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,10 +33,12 @@ public class WristHold extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.wrist.wristStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
