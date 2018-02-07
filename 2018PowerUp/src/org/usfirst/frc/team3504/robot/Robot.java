@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
 	public static Wrist wrist;
 	public static Collector collector;
 	public static OI oi;
-	private enum PlateSide {
+	public enum PlateSide {
 		left, right
 	}
 
