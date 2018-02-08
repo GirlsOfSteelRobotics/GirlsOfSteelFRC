@@ -11,6 +11,7 @@ import org.usfirst.frc.team3504.robot.commands.Collect;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
+import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
 import org.usfirst.frc.team3504.robot.commands.WristIn;
 import org.usfirst.frc.team3504.robot.commands.WristOut;
@@ -54,6 +55,7 @@ public class OI {
 	
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
+	private JoystickButton liftToSwitch;
 	
 	private JoystickButton wristIn;
 	private JoystickButton wristOut;
@@ -70,6 +72,7 @@ public class OI {
 		
 		liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
 		liftDown = new JoystickButton(operatorGamePad, 2);
+		liftToSwitch = new JoystickButton(operatorGamePad, 8);
 		
 		wristIn = new JoystickButton(operatorGamePad, 5);  
 		wristOut = new JoystickButton(operatorGamePad, 6);
@@ -87,10 +90,11 @@ public class OI {
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
+		liftToSwitch.whileHeld(new LiftToSwitch());
 		
 		wristIn.whileHeld(new WristIn());
 		wristOut.whileHeld(new WristOut());
-		wristHold.whileHeld(new WristHold());
+		wristHold.whenPressed(new WristHold());
 		
 		collect.whileHeld(new Collect());
 		release.whileHeld(new Release());

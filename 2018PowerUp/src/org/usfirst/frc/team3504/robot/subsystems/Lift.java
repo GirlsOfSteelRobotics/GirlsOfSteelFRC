@@ -35,8 +35,8 @@ public class Lift extends Subsystem {
     public void setupLiftFPID() {
 		//talon.setPosition(0); //TODO figure out new syntax
     	lift.config_kF(0, 0, 10);
-		lift.config_kP(0, 0.5, 10);
-		lift.config_kI(0, 0, 10);
+		lift.config_kP(0, 1.5, 10);
+		lift.config_kI(0, 0.001, 10);
 		lift.config_kD(0, 0, 10);	
 	}
     
