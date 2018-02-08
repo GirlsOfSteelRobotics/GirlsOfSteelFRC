@@ -17,7 +17,7 @@ public class Wrist extends Subsystem {
 	private WPI_TalonSRX wrist;
 	
 	public Wrist() {
-		wrist = new WPI_TalonSRX(RobotMap.PIVOT);
+		wrist = new WPI_TalonSRX(RobotMap.WRIST);
 		setupWristFPID();
 	}
 	

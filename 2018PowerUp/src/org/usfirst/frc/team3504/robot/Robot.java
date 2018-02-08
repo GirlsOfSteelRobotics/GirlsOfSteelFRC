@@ -41,7 +41,6 @@ public class Robot extends TimedRobot {
 	}
 
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -55,9 +54,7 @@ public class Robot extends TimedRobot {
 		wrist = new Wrist();
 		collector = new Collector();
 		oi = new OI();
-		
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+
 	}
 
 	/**
@@ -136,12 +133,6 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("LIDAR", chassis.lidar.getDistance());
-		
-		System.out.print("RightError: " + Robot.chassis.getRightTalon().getClosedLoopError(0));
-		System.out.print("  LeftError: " + Robot.chassis.getLeftTalon().getClosedLoopError(0));
-		System.out.print("  RightPosition: " + Robot.chassis.getRightTalon().getSelectedSensorPosition(0));
-		System.out.println(" LeftPosition: " + Robot.chassis.getLeftTalon().getSelectedSensorPosition(0));
-		
 	}
 
 	/**
@@ -151,7 +142,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 	
-	public PlateSide getSwitchSide()
+	public PlateSide getSwitchSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -165,7 +156,7 @@ public class Robot extends TimedRobot {
 		}
 	}
 	
-	public PlateSide getScaleSide()
+	public PlateSide getScaleSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();

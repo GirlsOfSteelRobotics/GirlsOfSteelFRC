@@ -133,42 +133,7 @@ public class OI {
 	public double getJoystickTwoSideToSide() {
 		return drivingJoystickTwo.getX();
 	}
-	/*
-	public double getDrivingJoystickY() {
-		if (driveStyle == DriveStyle.gamePadArcade){
-			return drivingGamePad.getY();
-		}
-		else if (driveStyle == DriveStyle.joystickArcade) {
-			return drivingJoystickOne.getY();
-		} 
-		else if (driveStyle == DriveStyle.gamePadTank) {
-			return drivingGamePad.getTwist(); //TODO: this should get the Z vertical/rotate value								
-		}
-		else if (driveStyle == DriveStyle.joystickTank) {
-			return drivingJoystickOne.getY();
-		} else {
-			return 0.0;
-		}
-	}
 	
-	public double getDrivingJoystickX() {
-		if (driveStyle == DriveStyle.gamePadArcade) { // keep the redundancy, it breaks if
-			return drivingGamePad.getZ(); 
-		} 
-		else if (driveStyle == DriveStyle.joystickArcade){
-				return -drivingJoystickOne.getX();
-		}
-		else if (driveStyle == DriveStyle.gamePadTank) {
-			return drivingGamePad.getY();							
-		} 
-		else if (driveStyle == DriveStyle.joystickTank) {
-			return drivingJoystickTwo.getY();
-		} 
-		else {
-			return 0.0;
-		}
-	}
-	*/
 	public void setDriveStyle() {
 		if (!dio1.get()) {
 			driveStyle = DriveStyle.joystickArcade; 
@@ -189,12 +154,8 @@ public class OI {
 		return driveStyle; 
 	}
 	
-	public boolean isSquaredOrCurvature() {
+	public boolean isSquaredOrCurvature() { //TODO: rethink boolean
 		return !dio0.get(); 
-	}
-	
-	public double getCurrentThrottle() {
-		return drivingJoystickOne.getThrottle();
 	}
 }
 
