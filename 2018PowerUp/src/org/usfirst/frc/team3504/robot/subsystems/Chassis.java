@@ -7,17 +7,12 @@
 
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.LidarLitePWM;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -34,7 +29,7 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX driveRightB;
 	private WPI_TalonSRX driveRightC;
 	
-	public LidarLitePWM lidar = new LidarLitePWM(new DigitalInput (RobotMap.LIDAR));
+	private Shifters.Speed speed;
 	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -49,13 +44,6 @@ public class Chassis extends Subsystem {
 		driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
 		
 		setFollowerMode();
-		/*
-		driveLeftA.setInverted(true);
-		driveLeftB.setInverted(true);
-		driveLeftC.setInverted(true);
-		driveRightA.setInverted(false);
-		driveRightB.setInverted(false);
-		driveRightC.setInverted(false); */
 		
 		driveRightA.setSensorPhase(true);
 		driveLeftA.setSensorPhase(true);
@@ -81,26 +69,19 @@ public class Chassis extends Subsystem {
 		driveRightA.setSafetyEnabled(false);
 		driveRightB.setSafetyEnabled(false);
 		driveRightC.setSafetyEnabled(false);
-		
-		System.out.println("Chassis: leftA " + driveLeftA.getInverted());
-		System.out.println("Chassis: leftB " + driveLeftB.getInverted());
-		System.out.println("Chassis: leftC " + driveLeftC.getInverted());
-    	System.out.println("Chassis: rightA " + driveRightA.getInverted());
-    	System.out.println("Chassis: rightB " + driveRightB.getInverted());
-    	System.out.println("Chassis: rightC " + driveRightC.getInverted());
     	
-    	driveLeftA.setName("Chassis", "driveLeftA");
-    	driveLeftB.setName("Chassis", "driveLeftB");
-    	driveLeftC.setName("Chassis", "driveLeftC");
-    	driveRightA.setName("Chassis", "driveRightA");
-    	driveRightB.setName("Chassis", "driveRightB");
-    	driveRightC.setName("Chassis", "driveRightC");
-    	LiveWindow.add(driveLeftA);
-    	LiveWindow.add(driveLeftB);
-    	LiveWindow.add(driveLeftC);
-    	LiveWindow.add(driveRightA);
-    	LiveWindow.add(driveRightB);
-    	LiveWindow.add(driveRightC);
+	    	driveLeftA.setName("Chassis", "driveLeftA");
+	    	driveLeftB.setName("Chassis", "driveLeftB");
+	    	driveLeftC.setName("Chassis", "driveLeftC");
+	    	driveRightA.setName("Chassis", "driveRightA");
+	    	driveRightB.setName("Chassis", "driveRightB");
+	    	driveRightC.setName("Chassis", "driveRightC");
+	    	LiveWindow.add(driveLeftA);
+	    	LiveWindow.add(driveLeftB);
+	    	LiveWindow.add(driveLeftC);
+	    	LiveWindow.add(driveRightA);
+	    	LiveWindow.add(driveRightB);
+	    	LiveWindow.add(driveRightC);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
 	}
@@ -111,12 +92,19 @@ public class Chassis extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 	
-	public void setupFPID(WPI_TalonSRX talon) {
-		//talon.setPosition (0); TODO figure out new syntax
-		talon.config_kF(0, 0, 0);
-		talon.config_kP(0, 0, 0);
-		talon.config_kI(0, 0, 0);
-		talon.config_kD(0, 0, 0);	
+	public void setupFPID(WPI_TalonSRX talon) { //PID values from DriveByDistance
+		if (speed == Shifters.Speed.kLow){
+			talon.config_kF(0, 0, 0);
+			talon.config_kP(0, 0.15, 0);
+			talon.config_kI(0, 0, 0);
+			talon.config_kD(0, 0, 0);
+		}
+		else if (speed == Shifters.Speed.kHigh){
+			talon.config_kF(0, 0, 0);
+			talon.config_kP(0, 0.02, 0);
+			talon.config_kI(0, 0, 0);
+			talon.config_kD(0, 0.04, 0);
+		}	
 	}
 	
 	public WPI_TalonSRX getLeftTalon() {

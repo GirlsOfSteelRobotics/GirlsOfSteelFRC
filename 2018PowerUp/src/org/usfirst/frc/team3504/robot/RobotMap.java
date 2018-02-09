@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -26,7 +28,7 @@ public class RobotMap {
 	public static final int LIFT = 7;
 	
 	//Pivot
-	public static final int PIVOT = 8;
+	public static final int WRIST = 8;
 	
 	//Collector
 	public static final int COLLECT_RIGHT = 9;
@@ -60,5 +62,12 @@ public class RobotMap {
 	// 4 JUST BECAUSE
 	public static final double WHEEL_DIAMETER = 6.0; // inches
 	public static final int DRIVING_CAM = 0;
+	
+	//DIO
+	public static DigitalInput dio0 = new DigitalInput(0);
+	public static DigitalInput dio1 = new DigitalInput(1);
+	public static DigitalInput dio2 = new DigitalInput(2);
+	public static DigitalInput dio3 = new DigitalInput(3);
+	public static DigitalInput dio4 = new DigitalInput(4);
 	
 }
