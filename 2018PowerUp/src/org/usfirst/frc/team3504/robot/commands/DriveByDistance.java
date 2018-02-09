@@ -51,33 +51,9 @@ public class DriveByDistance extends Command {
 		System.out.printf("Error code on right: %s\n", err);
 		
 
-		// Robot.chassis.setupFPID(leftTalon);
-		// Robot.chassis.setupFPID(rightTalon);
-		
-		if (speed == Shifters.Speed.kLow){
-			leftTalon.config_kF(0, 0, 0);
-			leftTalon.config_kP(0, 0.15, 0);
-			leftTalon.config_kI(0, 0, 0);
-			leftTalon.config_kD(0, 0, 0);
-			
-			rightTalon.config_kF(0, 0, 0);
-			rightTalon.config_kP(0, 0.15, 0);
-			rightTalon.config_kI(0, 0, 0);
-			rightTalon.config_kD(0, 0, 0);
-		}
-		else if (speed == Shifters.Speed.kHigh){
-			leftTalon.config_kF(0, 0, 0);
-			leftTalon.config_kP(0, 0.02, 0);
-			leftTalon.config_kI(0, 0, 0);
-			leftTalon.config_kD(0, 0.04, 0);
-			
-			rightTalon.config_kF(0, 0, 0);
-			rightTalon.config_kP(0, 0.02, 0);
-			rightTalon.config_kI(0, 0, 0);
-			rightTalon.config_kD(0, 0.04, 0);
-		}
+		Robot.chassis.setupFPID(leftTalon);
+		Robot.chassis.setupFPID(rightTalon);
 
-		
 		leftInitial = leftTalon.getSelectedSensorPosition(0);
 		rightInitial = -rightTalon.getSelectedSensorPosition(0);//!!!
 		
