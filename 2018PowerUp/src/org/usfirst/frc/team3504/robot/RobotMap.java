@@ -28,11 +28,11 @@ public class RobotMap {
 	public static final int LIFT = 7;
 	
 	//Pivot
-	public static final int WRIST = 8;
+	public static final int WRIST = 10;
 	
 	//Collector
-	public static final int COLLECT_RIGHT = 9;
-	public static final int COLLECT_LEFT = 10;
+	public static final int COLLECT_RIGHT = 8;
+	public static final int COLLECT_LEFT = 9;
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
