@@ -11,13 +11,15 @@ import org.usfirst.frc.team3504.robot.commands.Collect;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
+import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
-import org.usfirst.frc.team3504.robot.commands.PivotIn;
-import org.usfirst.frc.team3504.robot.commands.PivotOut;
+import org.usfirst.frc.team3504.robot.commands.WristIn;
+import org.usfirst.frc.team3504.robot.commands.WristOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SimpleDrive;
+import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -53,9 +55,11 @@ public class OI {
 	
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
+	private JoystickButton liftToSwitch;
 	
-	private JoystickButton pivotIn;
-	private JoystickButton pivotOut;
+	private JoystickButton wristIn;
+	private JoystickButton wristOut;
+	private JoystickButton wristHold;
 	
 	private JoystickButton collect;
 	private JoystickButton release;
@@ -63,31 +67,34 @@ public class OI {
 	public OI() {
 		shifterDown = new JoystickButton(drivingJoystickOne, 2);
 		shifterUp = new JoystickButton(drivingJoystickOne, 3);
-		driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
-		driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
+		//driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
+		//driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
 		
-		liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
-		liftDown = new JoystickButton(operatorGamePad, 2);
+		liftUp = new JoystickButton(operatorGamePad, 10); //TODO: random buttom assignment
+		liftDown = new JoystickButton(operatorGamePad, 8);
+		liftToSwitch = new JoystickButton(operatorGamePad, 9);
 		
-		pivotIn = new JoystickButton(operatorGamePad, 5);  
-		pivotOut = new JoystickButton(operatorGamePad, 6); 
+		wristIn = new JoystickButton(operatorGamePad, 5);  
+		wristOut = new JoystickButton(operatorGamePad, 7);
+		wristHold = new JoystickButton(operatorGamePad, 1);
 		
 		collect = new JoystickButton(operatorGamePad, 3);
-		release = new JoystickButton(operatorGamePad, 4);
+		release = new JoystickButton(operatorGamePad, 2);
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
-		driveByDistanceLow.whenPressed(new DriveByDistance(36.0, Shifters.Speed.kLow));
+		//driveByDistanceLow.whenPressed(new DriveByDistance(36.0, Shifters.Speed.kLow));
 		
 		//turn left:
-		driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
+		//driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
+		liftToSwitch.whileHeld(new LiftToSwitch());
 		
-		pivotIn.whileHeld(new PivotIn());
-		pivotOut.whileHeld(new PivotOut());
-		
+		wristIn.whileHeld(new WristIn());
+		wristOut.whileHeld(new WristOut());
+		wristHold.whenPressed(new WristHold());
 		
 		collect.whileHeld(new Collect());
 		release.whileHeld(new Release());
@@ -126,42 +133,7 @@ public class OI {
 	public double getJoystickTwoSideToSide() {
 		return drivingJoystickTwo.getX();
 	}
-	/*
-	public double getDrivingJoystickY() {
-		if (driveStyle == DriveStyle.gamePadArcade){
-			return drivingGamePad.getY();
-		}
-		else if (driveStyle == DriveStyle.joystickArcade) {
-			return drivingJoystickOne.getY();
-		} 
-		else if (driveStyle == DriveStyle.gamePadTank) {
-			return drivingGamePad.getTwist(); //TODO: this should get the Z vertical/rotate value								
-		}
-		else if (driveStyle == DriveStyle.joystickTank) {
-			return drivingJoystickOne.getY();
-		} else {
-			return 0.0;
-		}
-	}
 	
-	public double getDrivingJoystickX() {
-		if (driveStyle == DriveStyle.gamePadArcade) { // keep the redundancy, it breaks if
-			return drivingGamePad.getZ(); 
-		} 
-		else if (driveStyle == DriveStyle.joystickArcade){
-				return -drivingJoystickOne.getX();
-		}
-		else if (driveStyle == DriveStyle.gamePadTank) {
-			return drivingGamePad.getY();							
-		} 
-		else if (driveStyle == DriveStyle.joystickTank) {
-			return drivingJoystickTwo.getY();
-		} 
-		else {
-			return 0.0;
-		}
-	}
-	*/
 	public void setDriveStyle() {
 		if (!dio1.get()) {
 			driveStyle = DriveStyle.joystickArcade; 
@@ -182,12 +154,8 @@ public class OI {
 		return driveStyle; 
 	}
 	
-	public boolean isSquaredOrCurvature() {
+	public boolean isSquaredOrCurvature() { //TODO: rethink boolean
 		return !dio0.get(); 
-	}
-	
-	public double getCurrentThrottle() {
-		return drivingJoystickOne.getThrottle();
 	}
 }
 

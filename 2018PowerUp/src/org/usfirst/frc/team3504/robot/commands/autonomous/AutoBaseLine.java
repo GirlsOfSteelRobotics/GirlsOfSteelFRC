@@ -10,31 +10,31 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoDriveForward extends Command {
+public class AutoBaseLine extends Command {
 	
 	private int time;
 	
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
-    public AutoDriveForward() {
+    public AutoBaseLine() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.setInverted(true);
-    	time = 0;
-    	leftTalon.set(ControlMode.PercentOutput, 0.5);
-    	rightTalon.set(ControlMode.PercentOutput, 0.5);
+	    	Robot.chassis.setInverted(true);
+	    	time = 0;
+	    	leftTalon.set(ControlMode.PercentOutput, 0.5);
+	    	rightTalon.set(ControlMode.PercentOutput, 0.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	time++;
-    	leftTalon.set(ControlMode.PercentOutput, 0.5);
-    	rightTalon.set(ControlMode.PercentOutput, 0.5);
+	    	time++;
+	    	leftTalon.set(ControlMode.PercentOutput, 0.5);
+	    	rightTalon.set(ControlMode.PercentOutput, 0.5);		
     }
 
     // Make this return true when this Command no longer needs to run execute()

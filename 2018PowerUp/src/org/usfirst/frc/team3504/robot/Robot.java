@@ -7,20 +7,17 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoGear;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSpeedControl;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lift;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -35,14 +32,14 @@ public class Robot extends TimedRobot {
 	public static Chassis chassis;
 	public static Shifters shifters;
 	public static Lift lift;
+	public static Wrist wrist;
 	public static Collector collector;
 	public static OI oi;
-	private enum PlateSide {
+	public enum PlateSide {
 		left, right
 	}
 
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,11 +50,10 @@ public class Robot extends TimedRobot {
 		chassis = new Chassis();
 		shifters = new Shifters();
 		lift = new Lift();
+		wrist = new Wrist();
 		collector = new Collector();
 		oi = new OI();
-		
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+
 	}
 
 	/**
@@ -92,7 +88,7 @@ public class Robot extends TimedRobot {
 		String gameData;
 		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
 		//m_autonomousCommand = new DriveByDistance(36, Shifters.Speed.kLow); //m_chooser.getSelected();
-		m_autonomousCommand = new AutoDriveForward();
+		m_autonomousCommand = new AutoBaseLine();
 		
 		
 		/*
@@ -135,7 +131,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("LIDAR", chassis.lidar.getDistance());
 	}
 
 	/**
@@ -145,7 +140,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 	
-	public PlateSide getSwitchSide()
+	public PlateSide getSwitchSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -159,7 +154,7 @@ public class Robot extends TimedRobot {
 		}
 	}
 	
-	public PlateSide getScaleSide()
+	public PlateSide getScaleSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();

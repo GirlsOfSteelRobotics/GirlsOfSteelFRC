@@ -11,10 +11,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Collector extends Subsystem {
 	
-	private WPI_TalonSRX collectLeft = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_A);
-	private WPI_TalonSRX collectRight = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT_A);
+	private WPI_TalonSRX collectLeft;
+	private WPI_TalonSRX collectRight;
 
 	public Collector() {
+		collectLeft = new WPI_TalonSRX(RobotMap.COLLECT_LEFT);
+		collectRight = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT);
 		collectLeft.setSensorPhase(true);
 		collectRight.setSensorPhase(true);
 	}

@@ -12,12 +12,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Lift extends Subsystem {
 
-	private WPI_TalonSRX lift = new WPI_TalonSRX(RobotMap.LIFT);
-	private WPI_TalonSRX pivot = new WPI_TalonSRX(RobotMap.PIVOT);
-	private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
+	public WPI_TalonSRX lift;
+	private DigitalInput limitSwitch;
 	
 	public Lift() {
+		lift = new WPI_TalonSRX(RobotMap.LIFT); 
+		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
+		setupLiftFPID();
+
 	}
 	
 	
@@ -29,46 +32,26 @@ public class Lift extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void setupFPID(WPI_TalonSRX talon) {
+    public void setupLiftFPID() {
 		//talon.setPosition(0); //TODO figure out new syntax
-    	talon.config_kF(0, 0, 10);
-		talon.config_kP(0, 0.5, 10);
-		talon.config_kI(0, 0, 10);
-		talon.config_kD(0, 0, 10);	
+    	lift.config_kF(0, 0, 10);
+		lift.config_kP(0, 1.5, 10);
+		lift.config_kI(0, 0.001, 10);
+		lift.config_kD(0, 0, 10);	
 	}
     
-    public void setupPivotFPID(WPI_TalonSRX talon) {
-		//talon.setPosition (0); TODO figure out new syntax
-		talon.config_kF(0, 0, 10);
-		talon.config_kP(0, 0.5, 10);
-		talon.config_kI(0, 0, 10);
-		talon.config_kD(0, 0, 10);	
-	}
+   
+//    public WPI_TalonSRX getLiftTalon() {
+//    	return lift;
+//    }
     
-    
-    public WPI_TalonSRX getLiftTalon() {
-    	return lift;
-    }
-
-    public WPI_TalonSRX getPivotTalon() {
-    	return pivot;
-    }
-    
-    public void setSpeed(double speed) {
+    public void setLiftSpeed(double speed) {
     		lift.set(speed); //value between -1.0 and 1.0;
-    }
-
-    public void setPivotSpeed(double speed) {
-    		pivot.set(speed); //value between -1.0 and 1.0;
     }
 
     public void stop() {
     		lift.stopMotor();
     }
-
-	public void pivotStop(){
-		pivot.stopMotor();
-	}
 	
 	public boolean getLimitSwitch(){
 		return limitSwitch.get();

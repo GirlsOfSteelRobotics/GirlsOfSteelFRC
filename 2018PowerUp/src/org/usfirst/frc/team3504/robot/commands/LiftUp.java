@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LiftUp extends Command {
 	
-	private WPI_TalonSRX liftTalon = Robot.lift.getLiftTalon();
 
     public LiftUp() {
         // Use requires() here to declare subsystem dependencies
@@ -22,13 +21,12 @@ public class LiftUp extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		liftTalon.set(ControlMode.Position, 0);
-    		Robot.lift.setupFPID(liftTalon);
-    		Robot.lift.setSpeed(-1.0);
+    		//liftTalon.set(ControlMode.Position, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.lift.setLiftSpeed(-0.4);
     }
 
     // Make this return true when this Command no longer needs to run execute()

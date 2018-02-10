@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LiftToSwitch extends Command {
 	
-	private WPI_TalonSRX liftTalon = Robot.lift.getLiftTalon();
+	private WPI_TalonSRX liftTalon = Robot.lift.lift;
 	
-	public static final double inches = 0; //TODO: find distance in inches up to switch from 'home'
+	public static final double inches = -5; //TODO: find distance in inches up to switch from 'home'
 	
 	private double encoderTicks; //in sensor units
 	private double liftInitial;
@@ -71,10 +71,12 @@ public class LiftToSwitch extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
