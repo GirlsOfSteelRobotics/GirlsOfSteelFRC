@@ -65,8 +65,8 @@ public class OI {
 	private JoystickButton release;
 	
 	public OI() {
-		shifterDown = new JoystickButton(drivingJoystickOne, 2);
-		shifterUp = new JoystickButton(drivingJoystickOne, 3);
+		shifterDown = new JoystickButton(drivingJoystickOne, 3);
+		shifterUp = new JoystickButton(drivingJoystickOne, 2);
 		//driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
 		//driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
 		
