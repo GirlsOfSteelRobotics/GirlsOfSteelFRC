@@ -11,6 +11,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -53,15 +54,13 @@ public class Chassis extends Subsystem {
 		
 		driveRightA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-	
-		/*
-		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 3, 10);
-		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 3, 10);
-		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 3, 10);
-		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 3, 10);
-		driveRightA.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 3, 10);
-		driveLeftA.setStatusFramePeriod(StatusFrameEnhanced.Status_3_Quadrature, 3, 10);
-		*/
+		
+		driveLeftA.setNeutralMode(NeutralMode.Brake);
+		driveLeftB.setNeutralMode(NeutralMode.Brake);
+		driveLeftC.setNeutralMode(NeutralMode.Brake);
+		driveRightA.setNeutralMode(NeutralMode.Brake);
+		driveRightB.setNeutralMode(NeutralMode.Brake);
+		driveRightC.setNeutralMode(NeutralMode.Brake);
 		
 		driveLeftA.setSafetyEnabled(false);
 		driveLeftB.setSafetyEnabled(false);
