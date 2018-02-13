@@ -67,8 +67,8 @@ public class OI {
 	public OI() {
 		shifterDown = new JoystickButton(drivingJoystickOne, 3);
 		shifterUp = new JoystickButton(drivingJoystickOne, 2);
-		//driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
-		//driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
+		driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
+		driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
 		
 		liftUp = new JoystickButton(operatorGamePad, 10); //TODO: random buttom assignment
 		liftDown = new JoystickButton(operatorGamePad, 8);
@@ -83,10 +83,10 @@ public class OI {
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
-		//driveByDistanceLow.whenPressed(new DriveByDistance(36.0, Shifters.Speed.kLow));
+		driveByDistanceLow.whenPressed(new DriveByDistance(12.0, Shifters.Speed.kLow));
 		
 		//turn left:
-		//driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
+		driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());

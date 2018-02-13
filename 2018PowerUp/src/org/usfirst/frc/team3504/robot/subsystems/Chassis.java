@@ -81,6 +81,12 @@ public class Chassis extends Subsystem {
 	    	LiveWindow.add(driveRightA);
 	    	LiveWindow.add(driveRightB);
 	    	LiveWindow.add(driveRightC);
+	    	
+	    	setupFPID(driveLeftA);
+	    	setupFPID(driveRightA);
+	    	
+	    	driveLeftA.configClosedloopRamp(0.5, 10);
+	    	driveRightA.configClosedloopRamp(0.5, 10);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
 	}
@@ -92,18 +98,25 @@ public class Chassis extends Subsystem {
 	}
 	
 	public void setupFPID(WPI_TalonSRX talon) { //PID values from DriveByDistance
-		if (speed == Shifters.Speed.kLow){
-			talon.config_kF(0, 0, 0);
-			talon.config_kP(0, 0.15, 0);
-			talon.config_kI(0, 0, 0);
-			talon.config_kD(0, 0, 0);
-		}
-		else if (speed == Shifters.Speed.kHigh){
-			talon.config_kF(0, 0, 0);
-			talon.config_kP(0, 0.02, 0);
-			talon.config_kI(0, 0, 0);
-			talon.config_kD(0, 0.04, 0);
-		}	
+		talon.config_kF(0, 0, 10);
+		talon.config_kP(0, 0.1, 10); //increase until overshoot/oscillation
+		talon.config_kI(0, 0, 10);
+		talon.config_kD(0, 0.05, 10); //D is around 1/10 to 1/100 of P value
+		
+//		if (speed == Shifters.Speed.kLow){
+//			talon.config_kF(0, 0, 10);
+//			talon.config_kP(0, 0.3, 10);
+//			talon.config_kI(0, 0, 10);
+//			talon.config_kD(0, 0.001, 10);
+//		}
+//		else if (speed == Shifters.Speed.kHigh){
+//			talon.config_kF(0, 0, 10);
+//			talon.config_kP(0, 0.3, 10);
+//			talon.config_kI(0, 0, 10);
+//			talon.config_kD(0, 0.001, 10);
+//		} else {
+//			System.out.println("No bueno PID setting");
+//		}
 	}
 	
 	public WPI_TalonSRX getLeftTalon() {
