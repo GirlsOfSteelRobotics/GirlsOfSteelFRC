@@ -20,11 +20,15 @@ public class Lift extends Subsystem {
 	private DigitalInput limitSwitch;
 	
 	private static double goalLiftPosition;
-	public static final double LIFT_INCREMENT = -1000; //TODO tune
-	public static final double LIFT_SWITCH = -5000; //TODO tune
-	public static final double LIFT_SCALE = -10000; //TODO tune
+	
 	public static final double LIFT_MAX = -14000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
+	public static final double LIFT_SWITCH = -5000; //TODO tune
+	public static final double LIFT_SCALE = -10000; //TODO tune
+	public static final double LIFT_GROUND = LIFT_MIN; //TODO tune
+	
+	public static final double LIFT_INCREMENT = -250; //TODO tune
+	public static final double INCREMENT_ERROR = 200; //TODO tune
 	
 	public Lift() {
 		lift = new WPI_TalonSRX(RobotMap.LIFT); 
@@ -94,16 +98,14 @@ public class Lift extends Subsystem {
 	{
 		goalLiftPosition = LIFT_SWITCH;
 	}
-	
 	public void setLiftToGround()
 	{
-		goalLiftPosition = LIFT_MIN;
+		goalLiftPosition = LIFT_GROUND;
 	}
 	
 	public void incrementLift()
 	{
-		double currentPosition = goalLiftPosition;
-		double goalPosition = currentPosition + Lift.LIFT_INCREMENT;
+		double goalPosition = goalLiftPosition + Lift.LIFT_INCREMENT;
 		if (goalPosition <= Lift.LIFT_MAX)
 		{
 			Robot.lift.setGoalLiftPosition(Lift.LIFT_MAX);
@@ -117,8 +119,7 @@ public class Lift extends Subsystem {
 	
 	public void decrementLift()
 	{
-		double currentPosition = goalLiftPosition;
-		double goalPosition = currentPosition - Lift.LIFT_INCREMENT;
+		double goalPosition = goalLiftPosition - Lift.LIFT_INCREMENT;
 		if (goalPosition >= Lift.LIFT_MIN)
 		{
 			Robot.lift.setGoalLiftPosition(Lift.LIFT_MIN);
@@ -134,7 +135,7 @@ public class Lift extends Subsystem {
 	{
 		double error = Math.abs(lift.getSelectedSensorPosition(0) - goalLiftPosition);
 		System.out.println("Error = " + error);
-		return (error <500);
+		return (error < INCREMENT_ERROR);
 	}
 }
 

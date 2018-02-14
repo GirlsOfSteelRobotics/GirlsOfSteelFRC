@@ -89,8 +89,8 @@ public class OI {
 		driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 		
 		liftUp.whileHeld(new LiftUp());
-		liftDown.whenPressed(new LiftDown());
-		liftToSwitch.whileHeld(new LiftToSwitch());
+		liftDown.whileHeld(new LiftDown());
+		liftToSwitch.whenPressed(new LiftToSwitch());
 		
 		wristIn.whileHeld(new WristIn());
 		wristOut.whileHeld(new WristOut());
