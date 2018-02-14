@@ -31,13 +31,9 @@ public class Lift extends Subsystem {
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
 		setupLiftFPID();
-<<<<<<< HEAD
 		goalLiftPosition = 0;
 		System.out.println("Lift Constructed");
-=======
 		LiveWindow.add(lift);
-
->>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2018GirlsOfSteel.git
 	}
 	
 	
