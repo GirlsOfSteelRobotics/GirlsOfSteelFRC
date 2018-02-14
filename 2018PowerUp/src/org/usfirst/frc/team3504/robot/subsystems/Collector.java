@@ -29,14 +29,7 @@ public class Collector extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    
-    public WPI_TalonSRX getCollectorLeft() {
-		return collectLeft;
-	}
-    
-    public WPI_TalonSRX getCollectorRight() {
-		return collectRight;
-	}
+   
     
     public void stop() {
     		collectLeft.stopMotor();

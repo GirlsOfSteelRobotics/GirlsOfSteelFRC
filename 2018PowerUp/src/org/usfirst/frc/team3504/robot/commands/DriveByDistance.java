@@ -19,8 +19,8 @@ public class DriveByDistance extends Command {
 
 	private double encoderTicks; //in sensor units
 
-	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+//	private WPI_TalonSRX leftTalon = Robot.chassis.LeftTalon;
+//	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
 	private double leftInitial;
 	private double rightInitial;

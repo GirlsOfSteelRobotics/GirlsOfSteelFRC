@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Lift extends Subsystem {
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
 		setupLiftFPID();
+		LiveWindow.add(lift);
 
 	}
 	

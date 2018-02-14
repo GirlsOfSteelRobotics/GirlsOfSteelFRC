@@ -2,9 +2,11 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -19,6 +21,7 @@ public class Wrist extends Subsystem {
 	public Wrist() {
 		wrist = new WPI_TalonSRX(RobotMap.WRIST);
 		setupWristFPID();
+		LiveWindow.add(wrist);
 	}
 	
     public void initDefaultCommand() {
@@ -35,18 +38,14 @@ public class Wrist extends Subsystem {
 		wrist.config_kD(0, 0, 10);	
 	}
     
-   
-//    public WPI_TalonSRX getLiftTalon() {
-//    	return lift;
-//    }
     
 
     public void setWristSpeed(double speed) {
     		wrist.set(speed); //value between -1.0 and 1.0;
     }
     
-    public WPI_TalonSRX wristMotor() {
-    		return wrist; 
+    public void setWristPosition(double pos){
+    	wrist.set(ControlMode.Position, pos);
     }
 
 	public void wristStop(){

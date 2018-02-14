@@ -16,11 +16,11 @@ public class Camera extends Subsystem {
 
 	
 	public Camera() {
-		SmartDashboard.putData("CAMERA", new Camera());
+		SmartDashboard.putData("CAMERA", this);
 		
 		driveCam = new UsbCamera("camGear", RobotMap.DRIVING_CAM);
 		driveCam.setResolution(320, 240);
-		driveCam.setFPS(10);
+		driveCam.setFPS(30);
 		CameraServer.getInstance().addCamera(driveCam);
 		server = CameraServer.getInstance().addServer("CameraServer", 1181);
 		server.setSource(driveCam);
