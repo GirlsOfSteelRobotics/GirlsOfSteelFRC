@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -30,8 +31,13 @@ public class Lift extends Subsystem {
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
 		setupLiftFPID();
+<<<<<<< HEAD
 		goalLiftPosition = 0;
 		System.out.println("Lift Constructed");
+=======
+		LiveWindow.add(lift);
+
+>>>>>>> branch 'master' of https://github.com/GirlsOfSteelRobotics/2018GirlsOfSteel.git
 	}
 	
 	
