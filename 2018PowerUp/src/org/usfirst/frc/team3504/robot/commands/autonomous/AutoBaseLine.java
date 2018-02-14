@@ -24,7 +24,6 @@ public class AutoBaseLine extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	    	Robot.chassis.setInverted(true);
 	    	time = 0;
 	    	leftTalon.set(ControlMode.PercentOutput, 0.5);
 	    	rightTalon.set(ControlMode.PercentOutput, 0.5);

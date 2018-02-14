@@ -22,7 +22,6 @@ public class SimpleDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.setInverted(true);
     	leftTalon.set(ControlMode.PercentOutput, 0.5);
     	rightTalon.set(ControlMode.PercentOutput, 0.5);
     	System.out.println("SimpleDrive: leftA " + leftTalon.getInverted());

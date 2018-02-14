@@ -139,10 +139,5 @@ public class Chassis extends Subsystem {
 		driveRightC.follow(driveRightA);
 	}
 	
-	public void setInverted(boolean inverted) {
-		driveRightA.setInverted(inverted);
-		driveRightB.setInverted(inverted);
-		driveRightC.setInverted(inverted);
-	}
 		
 }
