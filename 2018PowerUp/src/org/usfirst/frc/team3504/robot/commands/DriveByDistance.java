@@ -77,11 +77,11 @@ public class DriveByDistance extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		
-		return false;
+		//return false;
 		
 		//TODO: add timer in addition to stuff below
 		
-		//return (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD && Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD);
+		return (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD && Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD);
 		
 		/*
 		if (encoderTicks > 0) {

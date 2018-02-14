@@ -20,10 +20,10 @@ public class Lift extends Subsystem {
 	private DigitalInput limitSwitch;
 	
 	private static double goalLiftPosition;
-	public static final double LIFT_INCREMENT = -100; //TODO tune
-	public static final double LIFT_SWITCH = -500; //TODO tune
-	public static final double LIFT_SCALE = -1500; //TODO tune
-	public static final double LIFT_MAX = -2000; //TODO tune
+	public static final double LIFT_INCREMENT = -1000; //TODO tune
+	public static final double LIFT_SWITCH = -5000; //TODO tune
+	public static final double LIFT_SCALE = -10000; //TODO tune
+	public static final double LIFT_MAX = -14000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
 	
 	public Lift() {
@@ -49,8 +49,8 @@ public class Lift extends Subsystem {
     public void setupLiftFPID() {
 		//talon.setPosition(0); //TODO figure out new syntax
     	lift.config_kF(0, 0, 10);
-		lift.config_kP(0, 1.5, 10);
-		lift.config_kI(0, 0.001, 10);
+		lift.config_kP(0, 0.3, 10);
+		lift.config_kI(0, 0, 10);
 		lift.config_kD(0, 0, 10);	
 	}
     
@@ -128,6 +128,13 @@ public class Lift extends Subsystem {
 			Robot.lift.setGoalLiftPosition(goalPosition);
 		}
 		System.out.println("Lift decremented");
+	}
+	
+	public boolean liftAtGoal()
+	{
+		double error = Math.abs(lift.getSelectedSensorPosition(0) - goalLiftPosition);
+		System.out.println("Error = " + error);
+		return (error <500);
 	}
 }
 
