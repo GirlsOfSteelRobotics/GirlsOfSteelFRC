@@ -53,7 +53,7 @@ public class DriveByMotionProfile extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		
-		Robot.chassis.setInverted(true);
+		Robot.chassis.setInverted(false);
 
 		Robot.chassis.setFollowerMode();
 		Robot.chassis.setupFPID(leftTalon);
@@ -150,8 +150,8 @@ public class DriveByMotionProfile extends Command {
 		Scanner s = new Scanner(is);
 		while (s.hasNext()) {
 			ArrayList<Double> arr = new ArrayList<Double>();
-			arr.add(s.nextDouble() * (isLeft ? -1.0 : 1.0)); // p
-			arr.add(s.nextDouble() * (isLeft ? -1.0 : 1.0)); // v
+			arr.add(s.nextDouble() * (isLeft ? 1.0 : -1.0)); // p
+			arr.add(s.nextDouble() * (isLeft ? 1.0 : -1.0)); // v
 			arr.add(s.nextDouble()); // d
 
 			points.add(arr);
