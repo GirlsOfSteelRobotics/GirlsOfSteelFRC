@@ -36,7 +36,7 @@ public class LiftReset extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Robot.lift.setSelectedSensorPosition(0,0,0);
+    	Robot.lift.setGoalLiftPosition(0);
     }
 
     // Called when another command which requires one or more of the same
