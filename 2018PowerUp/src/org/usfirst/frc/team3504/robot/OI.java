@@ -83,14 +83,14 @@ public class OI {
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
-		driveByDistanceLow.whenPressed(new DriveByDistance(12.0, Shifters.Speed.kLow));
+		driveByDistanceLow.whenPressed(new DriveByDistance(-12.0, Shifters.Speed.kLow));
 		
 		//turn left:
 		driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 		
-		liftUp.whenPressed(new LiftUp());
-		liftDown.whenPressed(new LiftDown());
-		liftToSwitch.whileHeld(new LiftToSwitch());
+		liftUp.whileHeld(new LiftUp());
+		liftDown.whileHeld(new LiftDown());
+		liftToSwitch.whenPressed(new LiftToSwitch());
 		
 		wristIn.whileHeld(new WristIn());
 		wristOut.whileHeld(new WristOut());

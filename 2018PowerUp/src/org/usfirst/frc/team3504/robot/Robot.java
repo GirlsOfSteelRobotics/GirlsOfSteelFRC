@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
+import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lift;
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
 	public static Lift lift;
 	public static Wrist wrist;
 	public static Collector collector;
+	public static Blobs blobs;
 	public static OI oi;
 	public enum PlateSide {
 		left, right
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
 		lift = new Lift();
 		wrist = new Wrist();
 		collector = new Collector();
+		//blobs = new Blobs();
 		oi = new OI();
 
 	}

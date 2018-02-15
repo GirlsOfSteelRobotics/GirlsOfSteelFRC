@@ -14,6 +14,9 @@ public class Blobs extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+	public static final int MIN_BLOBS_FOR_LINE = 5;
+	public static final int GOAL_DISTANCE = 50;
+	public static final int ERROR_THRESHOLD = 50;
 
 	public Blobs() {
 		ArrayList<Blob> randomBlobs = makeBlobs(100); //randomly generated blobs
@@ -59,7 +62,7 @@ public class Blobs extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public static ArrayList<Blob> makeBlobs(int size){
+    public ArrayList<Blob> makeBlobs(int size){
 		ArrayList<Blob> randomBlobs = new ArrayList<Blob>();
 		
 		//Populate randomBlobs with Blobs with x- and y-coords between 0 and 10
@@ -72,7 +75,7 @@ public class Blobs extends Subsystem {
 		return randomBlobs;
 	}
     
-    public static double findSlope(Blob blob1, Blob blob2){
+    public double findSlope(Blob blob1, Blob blob2){
 		double numer = (blob2.y - blob1.y);
 		double denom = (blob2.x - blob1.x);
 		double slope = numer/denom;
@@ -80,7 +83,7 @@ public class Blobs extends Subsystem {
 	}
     
     //Finds distance between line (defined by b1 and b2) and point (b3)
-    public static double findDistance(Blob b1, Blob b2, Blob b3){
+    public double findDistance(Blob b1, Blob b2, Blob b3){
 		double x1 = b1.x;
 		double x2 = b2.x;
 		double x3 = b3.x;
@@ -98,7 +101,7 @@ public class Blobs extends Subsystem {
 	}
     
     //returns an Arraylist of blobs sorted by x-coord
-	public static ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs){
+	public ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs){
 		//THIS DESTROYS THE ORIGINAL LIST
 		ArrayList<Blob> sortedBlobs = new ArrayList<Blob>();
 		
@@ -119,7 +122,7 @@ public class Blobs extends Subsystem {
 	}
 	
 	//Returns sorted list of blobs without outliers
-	public static ArrayList<Blob> golfSac(ArrayList<Blob> blobList){
+	public ArrayList<Blob> golfSac(ArrayList<Blob> blobList){
 		Blob[] endpoints = new Blob[2]; 
 		double minErr = -1;
 		double minStd = -1;
@@ -160,5 +163,29 @@ public class Blobs extends Subsystem {
 		}
 		
 		return sortByX(returnBlobs);
+	}
+	
+	public double findAvgDistance(ArrayList<Blob> blobList)
+	{
+		//requires input ArrayList to be sorted
+		double sumDistance = 0;
+		for (int i = 0; i < blobList.size() - 1; i++)
+		{
+			double x = Math.pow(blobList.get(i+1).x - blobList.get(i).x, 2);
+			double y = Math.pow(blobList.get(i+1).y - blobList.get(i).y, 2);
+			sumDistance += Math.pow(x + y, 0.5);
+		}
+		return sumDistance / (blobList.size() - 1);
+	}
+	
+	public double distanceBetweenBlobs()
+	{
+		ArrayList<Blob> blobList = makeBlobs(20);
+		ArrayList<Blob> line = golfSac(golfSac(blobList));
+		if (line.size() >= MIN_BLOBS_FOR_LINE)
+		{
+			return findAvgDistance(line);
+		}
+		else return -1;
 	}
 }
