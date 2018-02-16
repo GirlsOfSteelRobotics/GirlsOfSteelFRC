@@ -17,7 +17,7 @@ public class Blobs extends Subsystem {
     // here. Call these from Commands.
 	public static final int MIN_BLOBS_FOR_LINE = 5;
 	public static final int GOAL_DISTANCE = 50;
-	public static final int ERROR_THRESHOLD = 50;
+	public static final int ERROR_THRESHOLD = 20;
 
 	public Blobs() {
 		ArrayList<Blob> randomBlobs = makeBlobs(100); //randomly generated blobs
@@ -151,7 +151,6 @@ public class Blobs extends Subsystem {
 					minErr = tempErr;
 					minStd = tempStd;
 				}
-				
 			}
 		}
 		
@@ -182,9 +181,12 @@ public class Blobs extends Subsystem {
 	public double distanceBetweenBlobs()
 	{
 		ArrayList<Blob> blobList = PipelineListener.blobList;
+		if (blobList.size() < MIN_BLOBS_FOR_LINE) return -1;
+		
 		ArrayList<Blob> line = golfSac(golfSac(blobList));
 		if (line.size() >= MIN_BLOBS_FOR_LINE)
 		{
+			System.out.print("Blobs: Line found. Size = " + line.size());
 			return findAvgDistance(line);
 		}
 		else return -1;

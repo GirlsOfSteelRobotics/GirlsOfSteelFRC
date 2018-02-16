@@ -11,19 +11,24 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristHold extends Command {
 
+	private double goalPosition;
+	
     public WristHold() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		requires(Robot.wrist); 
+    	requires(Robot.wrist); 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	goalPosition = Robot.wrist.getWristPosition();
+    	Robot.wrist.setGoalWristPosition(goalPosition);
+    	Robot.wrist.holdWrist();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.wrist.setWristPosition(-370); //arbitrary encoder value rn, will change after some testing 
+    	Robot.wrist.holdWrist();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,7 +38,7 @@ public class WristHold extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.wrist.wristStop();
+    	
     }
 
     // Called when another command which requires one or more of the same

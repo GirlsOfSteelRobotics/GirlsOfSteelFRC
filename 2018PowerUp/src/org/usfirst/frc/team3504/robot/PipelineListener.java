@@ -5,9 +5,7 @@ import java.util.ArrayList;
 
 import org.opencv.core.KeyPoint;
 import org.opencv.core.MatOfKeyPoint;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
+import org.opencv.core.Point;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 
 import edu.wpi.first.wpilibj.vision.VisionRunner;
@@ -21,30 +19,14 @@ public class PipelineListener implements VisionRunner.Listener<Pipeline> {
 	public void copyPipelineOutputs(Pipeline pipeline) {
 		MatOfKeyPoint blobs = (pipeline.findBlobsOutput());
 		synchronized (cameraLock) {
-			List<KeyPoint> blobsList = blobs.toList();
+			List<KeyPoint> gripBlobs = blobs.toList();
 			ArrayList<Blob> returnBlobs = new ArrayList<Blob>();
-			for (int i = 0; i < blobsList.size(); i++){
-				double x = blobsList.get(i).pt.x;
-				double y = blobsList.get(i).pt.y;
-				returnBlobs.add(new Blob(x,y));
+			for (int i = 0; i < gripBlobs.size(); i++){
+				Point blob = gripBlobs.get(i).pt;
+				returnBlobs.add(new Blob(blob.x,blob.y));
 			}
 			blobList = returnBlobs;
-
 		}
 	}
 
-	public ArrayList<Blob> gimmeBlobs(Pipeline pipeline) {
-		MatOfKeyPoint blobs = (pipeline.findBlobsOutput());
-		ArrayList<Blob> returnBlobs = new ArrayList<Blob>();
-		synchronized (cameraLock) {
-			List<KeyPoint> blobList = blobs.toList();
-			for (int i = 0; i < blobList.size(); i++){
-				double x = blobList.get(i).pt.x;
-				double y = blobList.get(i).pt.y;
-				returnBlobs.add(new Blob(x,y));
-			}
-		}
-
-		return returnBlobs;
-	}
 }

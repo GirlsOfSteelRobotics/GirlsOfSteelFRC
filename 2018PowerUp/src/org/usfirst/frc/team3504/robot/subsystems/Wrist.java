@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.WristHold;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -17,6 +18,7 @@ public class Wrist extends Subsystem {
     // here. Call these from Commands.
 
 	private WPI_TalonSRX wrist;
+	private double goalWristPosition;
 	
 	public Wrist() {
 		wrist = new WPI_TalonSRX(RobotMap.WRIST);
@@ -26,7 +28,8 @@ public class Wrist extends Subsystem {
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new WristHold());
+    	
     }
     
     
@@ -50,6 +53,21 @@ public class Wrist extends Subsystem {
 
 	public void wristStop(){
 		wrist.stopMotor();
+	}
+	
+	public void setGoalWristPosition(double goal)
+	{
+		goalWristPosition = goal;
+	}
+	
+	public void holdWrist()
+	{
+		wrist.set(ControlMode.Position, goalWristPosition);
+	}
+	
+	public double getWristPosition()
+	{
+		return wrist.getSelectedSensorPosition(0);
 	}
 }
 
