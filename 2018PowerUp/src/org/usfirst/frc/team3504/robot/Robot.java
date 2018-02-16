@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
 		lift = new Lift();
 		wrist = new Wrist();
 		collector = new Collector();
-		//blobs = new Blobs();
+		blobs = new Blobs();
 		oi = new OI();
 
 	}

@@ -21,14 +21,15 @@ public class DriveByVision extends Command {
 
     public DriveByVision() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
+        requires(Robot.blobs);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	dist = Robot.blobs.distanceBetweenBlobs();
     	if (Robot.blobs.distanceBetweenBlobs() == -1)
 		{
-    		System.out.print("DriveByVision initialize: line not in sight!!");
+    		System.out.println("DriveByVision initialize: line not in sight!!");
     		end();
 		}
     }
@@ -36,13 +37,20 @@ public class DriveByVision extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	dist = Robot.blobs.distanceBetweenBlobs();
-    	if (dist < Blobs.GOAL_DISTANCE)
+    	System.out.print("Distance = " + dist + " ");
+    	if (dist == -1)
+    	{
+    		System.out.println("DriveByVision: Can't see line!");
+    	}
+    	else if (dist < Blobs.GOAL_DISTANCE)
     	{//too far --> go forward
+    		System.out.println("DriveByVision: driving forward");
     		leftTalon.set(ControlMode.PercentOutput, SPEED_PERCENT);
     		rightTalon.set(ControlMode.PercentOutput, -SPEED_PERCENT);
     	}
     	else if (dist > Blobs.GOAL_DISTANCE)
     	{//too close --> go backward
+    		System.out.println("DriveByVision: driving backard");
     		leftTalon.set(ControlMode.PercentOutput, -SPEED_PERCENT);
     		rightTalon.set(ControlMode.PercentOutput, SPEED_PERCENT);
     	}
@@ -50,7 +58,7 @@ public class DriveByVision extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Math.abs(Robot.blobs.distanceBetweenBlobs() - Blobs.GOAL_DISTANCE) < Blobs.ERROR_THRESHOLD);
+        return (dist == -1 || Math.abs(dist - Blobs.GOAL_DISTANCE) < Blobs.ERROR_THRESHOLD);
     }
 
     // Called once after isFinished returns true

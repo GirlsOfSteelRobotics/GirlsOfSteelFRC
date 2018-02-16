@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.Blob;
 import org.usfirst.frc.team3504.robot.PipelineListener;
+import org.usfirst.frc.team3504.robot.commands.DriveByVision;
 
 /**
  *
@@ -20,17 +21,18 @@ public class Blobs extends Subsystem {
 	public static final int ERROR_THRESHOLD = 20;
 
 	public Blobs() {
+		/*
 		ArrayList<Blob> randomBlobs = makeBlobs(100); //randomly generated blobs
 		ArrayList<Blob> blobList = new ArrayList<Blob>(); //filled with testblobs (below)
 		
 		Blob testBlob1 = new Blob(1, 1);
 		Blob testBlob2 = new Blob(2, 1);
-		Blob testBlob3 = new Blob(2, 1);
-		Blob testBlob4 = new Blob(2, 1);
-		Blob testBlob5 = new Blob(2, 1);
-		Blob testBlob6 = new Blob(2, 1);
-		Blob testBlob7 = new Blob(2, 1);
-		Blob testBlob8 = new Blob(2, 1);
+		Blob testBlob3 = new Blob(3, 1);
+		Blob testBlob4 = new Blob(4, 1);
+		Blob testBlob5 = new Blob(5, 1);
+		Blob testBlob6 = new Blob(6, 1);
+		Blob testBlob7 = new Blob(8, 8);
+		Blob testBlob8 = new Blob(7, 1);
 		
 		blobList.add(testBlob1);
 		blobList.add(testBlob2);
@@ -56,11 +58,12 @@ public class Blobs extends Subsystem {
 		{
 			printBlob(line.get(i));
 		}
+		*/
 	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        //setDefaultCommand(new DriveByVision());
     }
     
     public ArrayList<Blob> makeBlobs(int size){
@@ -186,9 +189,13 @@ public class Blobs extends Subsystem {
 		ArrayList<Blob> line = golfSac(golfSac(blobList));
 		if (line.size() >= MIN_BLOBS_FOR_LINE)
 		{
-			System.out.print("Blobs: Line found. Size = " + line.size());
+			System.out.println("Blobs: Line found. Size = " + line.size());
 			return findAvgDistance(line);
 		}
-		else return -1;
+		else 
+		{
+			System.out.println("Blobs: Line not found!");
+			return -1;
+		}
 	}
 }
