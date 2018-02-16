@@ -13,13 +13,12 @@ import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
-import org.usfirst.frc.team3504.robot.commands.WristIn;
-import org.usfirst.frc.team3504.robot.commands.WristOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
-import org.usfirst.frc.team3504.robot.commands.SimpleDrive;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
+import org.usfirst.frc.team3504.robot.commands.WristIn;
+import org.usfirst.frc.team3504.robot.commands.WristOut;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -32,21 +31,16 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public enum DriveStyle {
-		joystickArcade, gamePadArcade, joystickTank, gamePadTank
+		joystickArcade, gamePadArcade, joystickTank, gamePadTank, amazonDrive
 	}; 
 	
 	private DriveStyle driveStyle;
 	
 	private Joystick operatorGamePad = new Joystick (0);
 	private Joystick drivingGamePad = new Joystick (1);
+	private Joystick amazonGamePad = new Joystick (1);
 	private Joystick drivingJoystickOne = new Joystick (1);
 	private Joystick drivingJoystickTwo = new Joystick (2);
-	
-	private DigitalInput dio0 = new DigitalInput(0);
-	private DigitalInput dio1 = new DigitalInput(1);
-	private DigitalInput dio2 = new DigitalInput(2);
-	private DigitalInput dio3 = new DigitalInput(3);
-	private DigitalInput dio4 = new DigitalInput(4);
 	
 	private JoystickButton shifterUp;
 	private JoystickButton shifterDown;
@@ -118,6 +112,14 @@ public class OI {
 		return drivingGamePad.getZ();
 	}
 	
+	public double getAmazonLeftUpAndDown() {
+		return -amazonGamePad.getY();
+	}
+	
+	public double getAmazonRightSideToSide() {
+		return amazonGamePad.getZ();
+	}
+	
 	public double getJoystickOneUpAndDown() {
 		return -drivingJoystickOne.getY();
 	}
@@ -135,14 +137,16 @@ public class OI {
 	}
 	
 	public void setDriveStyle() {
-		if (!dio1.get()) {
+		if (!RobotMap.dio1.get()) {
 			driveStyle = DriveStyle.joystickArcade; 
-		} else if (!dio2.get()) {
+		} else if (!RobotMap.dio2.get()) {
 			driveStyle = DriveStyle.gamePadArcade; 
-		} else if (!dio3.get()) {
+		} else if (!RobotMap.dio3.get()) {
 			driveStyle = DriveStyle.joystickTank; 
-		} else if (!dio4.get()) {
+		} else if (!RobotMap.dio4.get()) {
 			driveStyle = DriveStyle.gamePadTank; 
+		} else if (!RobotMap.dio5.get()) {
+			driveStyle = DriveStyle.amazonDrive;
 		} else {
 			System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
 			driveStyle = DriveStyle.joystickArcade; 
@@ -155,7 +159,7 @@ public class OI {
 	}
 	
 	public boolean isSquaredOrCurvature() { //TODO: rethink boolean
-		return !dio0.get(); 
+		return !RobotMap.dio0.get(); 
 	}
 }
 
