@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.Blob;
+import org.usfirst.frc.team3504.robot.PipelineListener;
 
 /**
  *
@@ -22,14 +23,14 @@ public class Blobs extends Subsystem {
 		ArrayList<Blob> randomBlobs = makeBlobs(100); //randomly generated blobs
 		ArrayList<Blob> blobList = new ArrayList<Blob>(); //filled with testblobs (below)
 		
-		Blob testBlob1 = new Blob(1, 1, 1);
-		Blob testBlob2 = new Blob(2, 1, 1);
-		Blob testBlob3 = new Blob(3, 1, 1);
-		Blob testBlob4 = new Blob(4, 1, 1);
-		Blob testBlob5 = new Blob(3, 3, 1);
-		Blob testBlob6 = new Blob(5, 3, 1);
-		Blob testBlob7 = new Blob(7, 2, 1);
-		Blob testBlob8 = new Blob(5, 1, 1);
+		Blob testBlob1 = new Blob(1, 1);
+		Blob testBlob2 = new Blob(2, 1);
+		Blob testBlob3 = new Blob(2, 1);
+		Blob testBlob4 = new Blob(2, 1);
+		Blob testBlob5 = new Blob(2, 1);
+		Blob testBlob6 = new Blob(2, 1);
+		Blob testBlob7 = new Blob(2, 1);
+		Blob testBlob8 = new Blob(2, 1);
 		
 		blobList.add(testBlob1);
 		blobList.add(testBlob2);
@@ -69,7 +70,7 @@ public class Blobs extends Subsystem {
 		for(int i = 0; i < size; i++){
 			double x = Math.random()*10;
 			double y = Math.random()*10;
-			Blob blob1 = new Blob(x, y, 1);
+			Blob blob1 = new Blob(x, y);
 			randomBlobs.add(blob1);
 		}
 		return randomBlobs;
@@ -180,7 +181,7 @@ public class Blobs extends Subsystem {
 	
 	public double distanceBetweenBlobs()
 	{
-		ArrayList<Blob> blobList = makeBlobs(20);
+		ArrayList<Blob> blobList = PipelineListener.blobList;
 		ArrayList<Blob> line = golfSac(golfSac(blobList));
 		if (line.size() >= MIN_BLOBS_FOR_LINE)
 		{

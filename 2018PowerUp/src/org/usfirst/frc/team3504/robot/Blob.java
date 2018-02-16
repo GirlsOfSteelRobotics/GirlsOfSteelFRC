@@ -3,11 +3,10 @@ package org.usfirst.frc.team3504.robot;
 public class Blob {
 	public final double x;
 	public final double y;
-	public final double size;
 
-	public Blob(double x, double y, double size) {
+	public Blob(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.size = size;
+		
 	}
 }
