@@ -21,22 +21,21 @@ public class Lift extends Subsystem {
 	
 	private static double goalLiftPosition;
 	
-	public static final double LIFT_MAX = -14000; //TODO tune
+	public static final double LIFT_MAX = -24000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
 	public static final double LIFT_SWITCH = -5000; //TODO tune
-	public static final double LIFT_SCALE = -10000; //TODO tune
+	public static final double LIFT_SCALE = -20000; //TODO tune
 	public static final double LIFT_GROUND = LIFT_MIN; //TODO tune
-	
 	public static final double LIFT_INCREMENT = -250; //TODO tune
-	public static final double INCREMENT_ERROR = 200; //TODO tune
 	
 	public Lift() {
 		lift = new WPI_TalonSRX(RobotMap.LIFT); 
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
+		lift.configAllowableClosedloopError(0, 100, 0);
 		setupLiftFPID();
 		goalLiftPosition = 0;
-		System.out.println("Lift Constructed");
+		//System.out.println("Lift Constructed");
 		LiveWindow.add(lift);
 	}
 	
@@ -47,7 +46,7 @@ public class Lift extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new LiftHold());
-        System.out.println("Lift Default command initialized");
+        //System.out.println("Lift Default command initialized");
     }
     
     public void setupLiftFPID() {
@@ -88,7 +87,7 @@ public class Lift extends Subsystem {
 	public void holdLiftPosition()
 	{
 		lift.set(ControlMode.Position, goalLiftPosition);
-		System.out.println("GoalLiftPosition: " + goalLiftPosition);
+		//System.out.println("GoalLiftPosition: " + goalLiftPosition);
 	}
 	public void setLiftToScale()
 	{
@@ -113,8 +112,9 @@ public class Lift extends Subsystem {
 		else
 		{
 			Robot.lift.setGoalLiftPosition(goalPosition);
+			System.out.println("Lift incremented. New goal : " + goalLiftPosition);
 		}
-		System.out.println("Lift incremented");
+		
 	}
 	
 	public void decrementLift()
@@ -127,15 +127,10 @@ public class Lift extends Subsystem {
 		else
 		{
 			Robot.lift.setGoalLiftPosition(goalPosition);
+			System.out.println("Lift decremented. New goal : " + goalLiftPosition);
 		}
-		System.out.println("Lift decremented");
+		
 	}
-	
-	public boolean liftAtGoal()
-	{
-		double error = Math.abs(lift.getSelectedSensorPosition(0) - goalLiftPosition);
-		System.out.println("Error = " + error);
-		return (error < INCREMENT_ERROR);
-	}
+
 }
 
