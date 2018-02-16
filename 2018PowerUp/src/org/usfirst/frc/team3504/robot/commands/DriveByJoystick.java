@@ -41,13 +41,19 @@ public class DriveByJoystick extends Command {
 			if (Robot.oi.isSquaredOrCurvature()){
 				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
 			} else {
-				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
+				Robot.chassis.drive.arcadeDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
 			}
 		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank){
 			Robot.chassis.drive.tankDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightUpAndDown(), Robot.oi.isSquaredOrCurvature());
 		} else if (Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
 			Robot.chassis.drive.tankDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickTwoUpAndDown(), Robot.oi.isSquaredOrCurvature());
-		} 
+		} else if (Robot.oi.getDriveStyle() == DriveStyle.amazonDrive ) {
+			if (Robot.oi.isSquaredOrCurvature()){
+				Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown(), Robot.oi.getAmazonRightSideToSide(), true);
+			} else {
+				Robot.chassis.drive.arcadeDrive(Robot.oi.getAmazonLeftUpAndDown(), Robot.oi.getAmazonRightSideToSide(), true);
+			}
+		}
 
 	}
 
