@@ -105,6 +105,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.start();
 		}
 		lift.setGoalLiftPosition(lift.getLiftPosition());
+		wrist.setGoalWristPosition(wrist.getWristPosition());
 	}
 
 	/**

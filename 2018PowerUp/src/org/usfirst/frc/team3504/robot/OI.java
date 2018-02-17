@@ -8,9 +8,12 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.Collect;
+import org.usfirst.frc.team3504.robot.commands.CollectPosition;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
+import org.usfirst.frc.team3504.robot.commands.LiftToGround;
+import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
 import org.usfirst.frc.team3504.robot.commands.Release;
@@ -50,10 +53,12 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	private JoystickButton liftToSwitch;
+	private JoystickButton liftToScale;
+	private JoystickButton liftToGround;
 	
 	private JoystickButton wristIn;
 	private JoystickButton wristOut;
-	private JoystickButton wristHold;
+
 	
 	private JoystickButton collect;
 	private JoystickButton release;
@@ -61,34 +66,37 @@ public class OI {
 	public OI() {
 		shifterDown = new JoystickButton(drivingJoystickOne, 3);
 		shifterUp = new JoystickButton(drivingJoystickOne, 2);
-		driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
-		driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
+		//driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
+		//driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
 		
-		liftUp = new JoystickButton(operatorGamePad, 10); //TODO: random buttom assignment
-		liftDown = new JoystickButton(operatorGamePad, 9);
-		liftToSwitch = new JoystickButton(operatorGamePad, 8);
+		liftUp = new JoystickButton(operatorGamePad, 6); //TODO: random buttom assignment
+		liftDown = new JoystickButton(operatorGamePad, 8);
+		liftToSwitch = new JoystickButton(operatorGamePad, 9);
+		liftToScale = new JoystickButton(operatorGamePad, 10);
 		
 		wristIn = new JoystickButton(operatorGamePad, 5);  
 		wristOut = new JoystickButton(operatorGamePad, 7);
-		wristHold = new JoystickButton(operatorGamePad, 1);
+		liftToGround = new JoystickButton(operatorGamePad, 1);
 		
 		collect = new JoystickButton(operatorGamePad, 3);
 		release = new JoystickButton(operatorGamePad, 2);
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
-		driveByDistanceLow.whenPressed(new DriveByDistance(-12.0, Shifters.Speed.kLow));
+		//driveByDistanceLow.whenPressed(new DriveByDistance(-12.0, Shifters.Speed.kLow));
 		
 		//turn left:
-		driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
+		//driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 		
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
 		liftToSwitch.whenPressed(new LiftToSwitch());
+		liftToScale.whenPressed(new LiftToScale());
+		liftToGround.whenPressed(new LiftToGround());
 		
 		wristIn.whileHeld(new WristIn());
 		wristOut.whileHeld(new WristOut());
-		wristHold.whenPressed(new WristHold());
+
 		
 		collect.whileHeld(new Collect());
 		release.whileHeld(new Release());

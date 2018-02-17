@@ -23,6 +23,7 @@ public class Wrist extends Subsystem {
 	
 	public static final double WRIST_IN_BOUND = -60; //TODO tune
 	public static final double WRIST_OUT_BOUND = -1020; //TODO tune
+	public static final double WRIST_COLLECT = -930; //TODO tune
 	public static final double WRIST_INCREMENT = 50; //TODO tune
 	
 	public Wrist() {
@@ -72,7 +73,7 @@ public class Wrist extends Subsystem {
 		else
 		{
 			goalWristPosition = goalPosition;
-			System.out.println("Wrist moved in. New goal : " + goalWristPosition);
+			//System.out.println("Wrist moved in. New goal : " + goalWristPosition);
 		}
 		
 	}
@@ -87,7 +88,7 @@ public class Wrist extends Subsystem {
 		else
 		{
 			goalWristPosition = goalPosition;
-			System.out.println("Wrist moved out. New goal : " + goalWristPosition);
+			//System.out.println("Wrist moved out. New goal : " + goalWristPosition);
 		}
 		
 	}

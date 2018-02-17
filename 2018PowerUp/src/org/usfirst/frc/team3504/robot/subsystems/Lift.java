@@ -23,9 +23,9 @@ public class Lift extends Subsystem {
 	
 	public static final double LIFT_MAX = -32000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
-	public static final double LIFT_SWITCH = -5000; //TODO tune
-	public static final double LIFT_SCALE = -20000; //TODO tune
-	public static final double LIFT_GROUND = LIFT_MIN; //TODO tune
+	public static final double LIFT_SWITCH = -12500; //TODO tune
+	public static final double LIFT_SCALE = -30000; //TODO tune
+	public static final double LIFT_GROUND = -1000; //TODO tune
 	public static final double LIFT_INCREMENT = -250; //TODO tune
 	
 	public Lift() {
@@ -91,11 +91,10 @@ public class Lift extends Subsystem {
 	
 	public void holdLiftPosition()
 	{
-		if (limitSwitch.get() && goalLiftPosition == LIFT_MIN)
+		if (goalLiftPosition != LIFT_MIN)
 		{
-			System.out.println("Limit switch activated");
+			lift.set(ControlMode.Position, goalLiftPosition);
 		}
-		else lift.set(ControlMode.Position, goalLiftPosition);
 		//System.out.println("GoalLiftPosition: " + goalLiftPosition);
 	}
 	public void setLiftToScale()
@@ -121,7 +120,7 @@ public class Lift extends Subsystem {
 		else
 		{
 			goalLiftPosition = goalPosition;
-			System.out.println("Lift incremented. New goal : " + goalLiftPosition);
+			//System.out.println("Lift incremented. New goal : " + goalLiftPosition);
 		}
 		
 	}
@@ -136,7 +135,7 @@ public class Lift extends Subsystem {
 		else
 		{
 			goalLiftPosition = goalPosition;
-			System.out.println("Lift decremented. New goal : " + goalLiftPosition);
+			//System.out.println("Lift decremented. New goal : " + goalLiftPosition);
 		}
 		
 	}
