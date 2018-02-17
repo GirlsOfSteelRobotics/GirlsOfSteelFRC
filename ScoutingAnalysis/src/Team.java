@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class Team {
@@ -34,5 +35,21 @@ public class Team {
 	{
 		matches.add(match);
 	}
+	
+	public void printStats(PrintStream output)
+	{
+		output.println("Win Percentage = " + (getWinPercentage()*100) + "%");
+		output.println("Average Points = " + getAveragePoints());
+	}
+	
+	public void printMatches(PrintStream output)
+	{
+		for (int i = 0; i < matches.size(); i++)
+		{
+			matches.get(i).printMatch(output);
+		}
+	}
+	
+
 
 }

@@ -46,18 +46,15 @@ public class Database {
 	{
 		output.println("Team Stats for team #" + teamNumber + ":");
 		Team team = getTeam(teamNumber);
-		output.println("Win Percentage = " + (team.getWinPercentage()*100) + "%");
-		output.println("Average Points = " + team.getAveragePoints());
+		team.printStats(output);
 	}
 	
 	public void printMatches(int teamNumber, PrintStream output)
 	{
 		output.println("Matches for team #" + teamNumber + ":");
 		Team team = getTeam(teamNumber);
-		for (int i = 0; i < team.matches.size(); i++)
-		{
-			team.matches.get(i).printMatch(output);
-		}
+		team.printMatches(output);
+
 	}
 	
 	public boolean isTeamInDatabase(int teamNumber)
