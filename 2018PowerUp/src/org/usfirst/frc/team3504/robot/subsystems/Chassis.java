@@ -99,8 +99,8 @@ public class Chassis extends Subsystem {
 	
 	public void setupFPID(WPI_TalonSRX talon) { //PID values from DriveByDistance
 		talon.config_kF(0, 0, 10);
-		talon.config_kP(0, 0.1, 10); //increase until overshoot/oscillation
-		talon.config_kI(0, 0, 10);
+		talon.config_kP(0, 0.03, 10); //increase until overshoot/oscillation
+		talon.config_kI(0, 0.0, 10);
 		talon.config_kD(0, 0.05, 10); //D is around 1/10 to 1/100 of P value
 		
 //		if (speed == Shifters.Speed.kLow){

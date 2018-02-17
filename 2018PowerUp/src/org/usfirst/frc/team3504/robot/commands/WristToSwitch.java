@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WristToCollect extends Command {
+public class WristToSwitch extends Command {
 
-    public WristToCollect() {
+    public WristToSwitch() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.wrist);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.wrist.setGoalWristPosition(Robot.wrist.WRIST_COLLECT);
-    		System.out.println("LiftToSwitch initialized");
+		Robot.wrist.setGoalWristPosition(Robot.wrist.WRIST_IN_BOUND);
+		System.out.println("WristToSwitch");
     }
 
     // Called repeatedly when this Command is scheduled to run

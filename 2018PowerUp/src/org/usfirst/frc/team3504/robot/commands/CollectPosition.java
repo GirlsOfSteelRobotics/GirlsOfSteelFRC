@@ -25,8 +25,8 @@ public class CollectPosition extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	System.out.println("CollectPosition");
-    	addParallel(new LiftToGround());
-    	addParallel(new WristToCollect());
+    	addSequential(new LiftToGround());
+    	addSequential(new WristToCollect());
     	
     }
 }

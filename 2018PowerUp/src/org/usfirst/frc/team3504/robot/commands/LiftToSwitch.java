@@ -22,6 +22,7 @@ public class LiftToSwitch extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     		Robot.lift.setLiftToSwitch();
+    		System.out.println("LiftToSwitch initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run

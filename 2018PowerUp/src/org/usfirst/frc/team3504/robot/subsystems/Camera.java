@@ -12,7 +12,6 @@ public class Camera extends Subsystem {
 
 	private UsbCamera driveCam; 
 	private MjpegServer server;
-	
 
 	
 	public Camera() {

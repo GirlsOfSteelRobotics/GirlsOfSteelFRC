@@ -47,7 +47,7 @@ public class OI {
 	
 	private JoystickButton shifterUp;
 	private JoystickButton shifterDown;
-	private JoystickButton driveByDistanceLow;
+	//private JoystickButton driveByDistanceLow;
 	private JoystickButton driveByMotionProfile;
 	
 	private JoystickButton liftUp;
@@ -64,15 +64,18 @@ public class OI {
 	private JoystickButton release;
 	
 	public OI() {
-		shifterDown = new JoystickButton(drivingJoystickOne, 3);
-		shifterUp = new JoystickButton(drivingJoystickOne, 2);
-		//driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
+		//shifterDown = new JoystickButton(drivingJoystickOne, 3);
+		//shifterUp = new JoystickButton(drivingJoystickOne, 2);
+		
+		shifterDown = new JoystickButton(amazonGamePad, 3);
+		shifterUp = new JoystickButton(amazonGamePad, 2);
+		//driveByDistanceLow = new JoystickButton(drivingJoystickOne, 4);
 		//driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
 		
 		liftUp = new JoystickButton(operatorGamePad, 6); //TODO: random buttom assignment
 		liftDown = new JoystickButton(operatorGamePad, 8);
-		liftToSwitch = new JoystickButton(operatorGamePad, 9);
-		liftToScale = new JoystickButton(operatorGamePad, 10);
+		liftToSwitch = new JoystickButton(operatorGamePad, 10);
+		liftToScale = new JoystickButton(operatorGamePad, 9);
 		
 		wristIn = new JoystickButton(operatorGamePad, 5);  
 		wristOut = new JoystickButton(operatorGamePad, 7);
@@ -83,7 +86,7 @@ public class OI {
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
-		//driveByDistanceLow.whenPressed(new DriveByDistance(-12.0, Shifters.Speed.kLow));
+		//driveByDistanceLow.whenPressed(new DriveByDistance(50.0, Shifters.Speed.kLow));
 		
 		//turn left:
 		//driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
@@ -92,7 +95,7 @@ public class OI {
 		liftDown.whileHeld(new LiftDown());
 		liftToSwitch.whenPressed(new LiftToSwitch());
 		liftToScale.whenPressed(new LiftToScale());
-		liftToGround.whenPressed(new LiftToGround());
+		liftToGround.whenPressed(new CollectPosition());
 		
 		wristIn.whileHeld(new WristIn());
 		wristOut.whileHeld(new WristOut());
@@ -102,6 +105,7 @@ public class OI {
 		release.whileHeld(new Release());
 		
 		drivingGamePad.setTwistChannel(3);
+		amazonGamePad.setTwistChannel(4);
 	}
 	
 	public double getGamePadLeftUpAndDown() {
@@ -125,7 +129,7 @@ public class OI {
 	}
 	
 	public double getAmazonRightSideToSide() {
-		return amazonGamePad.getZ();
+		return amazonGamePad.getTwist();
 	}
 	
 	public double getJoystickOneUpAndDown() {

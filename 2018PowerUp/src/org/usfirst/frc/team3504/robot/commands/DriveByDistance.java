@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveByDistance extends Command {
 
 	private double encoderTicks; //in sensor units
+	private int tim;
 
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
@@ -57,6 +58,7 @@ public class DriveByDistance extends Command {
 		leftTalon.set(ControlMode.Position, encoderTicks);
 		rightTalon.set(ControlMode.Position, -encoderTicks);//!!!
 
+		tim = 0;
 		System.out.println("Drive by Distance Started " + encoderTicks);
 
 
@@ -72,6 +74,8 @@ public class DriveByDistance extends Command {
 		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getClosedLoopError(0));
 
+		System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(0) - encoderTicks));
+		System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) - encoderTicks));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -81,7 +85,7 @@ public class DriveByDistance extends Command {
 		
 		//TODO: add timer in addition to stuff below
 		
-		return (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD && Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD);
+		return (tim > 400 || (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD && Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD));
 		
 		/*
 		if (encoderTicks > 0) {
