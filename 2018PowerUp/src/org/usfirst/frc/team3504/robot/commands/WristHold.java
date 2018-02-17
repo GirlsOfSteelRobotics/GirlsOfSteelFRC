@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristHold extends Command {
 
-	private double goalPosition;
-	
     public WristHold() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -21,14 +19,12 @@ public class WristHold extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	goalPosition = Robot.wrist.getWristPosition();
-    	Robot.wrist.setGoalWristPosition(goalPosition);
-    	Robot.wrist.holdWrist();
+    	Robot.wrist.holdWristPosition();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.wrist.holdWrist();
+    	Robot.wrist.holdWristPosition();
     }
 
     // Make this return true when this Command no longer needs to run execute()

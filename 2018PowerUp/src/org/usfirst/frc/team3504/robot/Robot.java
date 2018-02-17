@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
-		
+		lift.setGoalLiftPosition(lift.getLiftPosition());
 	}
 
 	/**
@@ -124,7 +124,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		lift.setGoalLiftPosition(lift.lift.getSelectedSensorPosition(0));
+		lift.setGoalLiftPosition(lift.getLiftPosition());
+		wrist.setGoalWristPosition(wrist.getWristPosition());
 	}
 
 	/**

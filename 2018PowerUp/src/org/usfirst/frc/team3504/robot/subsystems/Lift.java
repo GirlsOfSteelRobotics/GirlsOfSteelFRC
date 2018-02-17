@@ -21,7 +21,7 @@ public class Lift extends Subsystem {
 	
 	private static double goalLiftPosition;
 	
-	public static final double LIFT_MAX = -24000; //TODO tune
+	public static final double LIFT_MAX = -32000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
 	public static final double LIFT_SWITCH = -5000; //TODO tune
 	public static final double LIFT_SCALE = -20000; //TODO tune
@@ -84,9 +84,18 @@ public class Lift extends Subsystem {
 		goalLiftPosition = goal;
 	}
 	
+	public double getLiftPosition()
+	{
+		return lift.getSelectedSensorPosition(0);
+	}
+	
 	public void holdLiftPosition()
 	{
-		lift.set(ControlMode.Position, goalLiftPosition);
+		if (limitSwitch.get() && goalLiftPosition == LIFT_MIN)
+		{
+			System.out.println("Limit switch activated");
+		}
+		else lift.set(ControlMode.Position, goalLiftPosition);
 		//System.out.println("GoalLiftPosition: " + goalLiftPosition);
 	}
 	public void setLiftToScale()
@@ -104,14 +113,14 @@ public class Lift extends Subsystem {
 	
 	public void incrementLift()
 	{
-		double goalPosition = goalLiftPosition + Lift.LIFT_INCREMENT;
-		if (goalPosition <= Lift.LIFT_MAX)
+		double goalPosition = goalLiftPosition + LIFT_INCREMENT;
+		if (goalPosition <= LIFT_MAX)
 		{
-			Robot.lift.setGoalLiftPosition(Lift.LIFT_MAX);
+			goalLiftPosition = LIFT_MAX;
 		}
 		else
 		{
-			Robot.lift.setGoalLiftPosition(goalPosition);
+			goalLiftPosition = goalPosition;
 			System.out.println("Lift incremented. New goal : " + goalLiftPosition);
 		}
 		
@@ -119,14 +128,14 @@ public class Lift extends Subsystem {
 	
 	public void decrementLift()
 	{
-		double goalPosition = goalLiftPosition - Lift.LIFT_INCREMENT;
-		if (goalPosition >= Lift.LIFT_MIN)
+		double goalPosition = goalLiftPosition - LIFT_INCREMENT;
+		if (goalPosition >= LIFT_MIN)
 		{
-			Robot.lift.setGoalLiftPosition(Lift.LIFT_MIN);
+			goalLiftPosition = LIFT_MIN;
 		}
 		else
 		{
-			Robot.lift.setGoalLiftPosition(goalPosition);
+			goalLiftPosition = goalPosition;
 			System.out.println("Lift decremented. New goal : " + goalLiftPosition);
 		}
 		
