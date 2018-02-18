@@ -22,14 +22,10 @@ public class Database {
 		
 		while ((line = file.readLine()) != null) {
 			String[] lineInput = line.split(",");
-			int teamNumber = Integer.parseInt(lineInput[1]);
-			
+			int teamNumber = Match.getInt(lineInput[1]);
 			//Create match
-			Match match = new Match();
-			match.matchNumber = Integer.parseInt(lineInput[2]);
-			match.win = (lineInput[3].equals("Yes"));
-			match.points = Integer.parseInt(lineInput[4]);
-			match.comments = lineInput[5];
+			Match match = new Match(lineInput);
+			
 			
 			int index = getTeamIndex(teamNumber);
 			Team team;
@@ -82,7 +78,6 @@ public class Database {
 			if (data.get(i).teamNumber == teamNumber)
 				return i;
 		}
-		System.out.println("ERROR! getTeam: Team not found.");
 		return -1;
 	}
 	
@@ -91,6 +86,7 @@ public class Database {
 		for (int i = 0; i < data.size(); i++)
 		{
 			String filename = foldername + "/" + Integer.toString(data.get(i).teamNumber) + ".txt";
+			System.out.println("Writing " + filename);
 			data.get(i).writeStatFile(filename);
 		}
 		

@@ -1,17 +1,19 @@
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Scanner;
+//import java.io.PrintStream;
+//import java.util.Scanner;
 
 public class MainLauncher {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		Scanner input = new Scanner(System.in);
-		PrintStream output = new PrintStream(System.out);
-		int i; String s;
+		//Scanner input = new Scanner(System.in);
+		//PrintStream output = new PrintStream(System.out);
+		//int i; String s;
 		
-		Database data = new Database("ScoutingData.dat");
-		
+		System.out.println("Loading database...");
+		Database data = new Database("MVRScoutingData.csv");
+		data.writeDataSheets("DataSheets");
+		/*
 		boolean done = false;
 		while(!done)
 		{
@@ -55,7 +57,7 @@ public class MainLauncher {
 		
 		output.println("Goodbye!");
 		input.close();
-		// TODO Auto-generated method stub
+		*/
 
 	}
 

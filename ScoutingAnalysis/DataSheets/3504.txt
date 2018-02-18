@@ -1,5 +1,5 @@
 
-Win Percentage = 50.0%
-Average Points = 26.0
-Match #1: Win, 20 points scored, comments: n/a
-Match #2: Loss, 32 points scored, comments: great robot
+Win Percentage = 100.0%
+Average Points = 200.0
+Match #1: Win, 200 - 170
+	Comments: Took a long time to put cube on scale

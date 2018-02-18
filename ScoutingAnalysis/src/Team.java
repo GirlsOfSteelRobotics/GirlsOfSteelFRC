@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+
 public class Team {
 	public int teamNumber;
 	public ArrayList<Match> matches;
@@ -19,12 +20,13 @@ public class Team {
 	
 	public double getWinPercentage()
 	{
-		int wins = 0;
+		double wins = 0;
 		for (int i = 0; i < matches.size(); i++)
 		{
-			if (matches.get(i).win) wins++;
+			if (matches.get(i).result.equals("Win")) wins+=1;
+			else if (matches.get(i).result.equals("Tie")) wins+=0.5;
 		}
-		return ((double)wins)/matches.size();
+		return wins/matches.size();
 	}
 	
 	public double getAveragePoints()
@@ -32,7 +34,7 @@ public class Team {
 		int total = 0;
 		for (int i = 0; i < matches.size(); i++)
 		{
-			total += matches.get(i).points;
+			total += matches.get(i).alliancePoints;
 		}
 		return ((double)total)/matches.size();
 	}
