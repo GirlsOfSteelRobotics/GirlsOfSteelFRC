@@ -1,0 +1,5 @@
+
+Win Percentage = 0.0%
+Average Points = 36.0
+Match #1: Loss, 40 points scored, comments: n/a
+Match #2: Loss, 32 points scored, comments: disabled during endgame

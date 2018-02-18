@@ -1,0 +1,5 @@
+
+Win Percentage = 50.0%
+Average Points = 26.0
+Match #1: Win, 20 points scored, comments: n/a
+Match #2: Loss, 32 points scored, comments: great robot
