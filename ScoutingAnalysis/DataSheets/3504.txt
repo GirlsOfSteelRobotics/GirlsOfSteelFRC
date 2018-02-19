@@ -1,5 +1,0 @@
-
-Win Percentage = 100.0%
-Average Points = 200.0
-Match #1: Win, 200 - 170
-	Comments: Took a long time to put cube on scale

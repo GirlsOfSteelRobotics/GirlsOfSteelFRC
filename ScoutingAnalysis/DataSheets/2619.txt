@@ -1,5 +1,0 @@
-
-Win Percentage = 50.0%
-Average Points = 200.0
-Match #1: Tie, 200 - 170
-	Comments: Great driver
