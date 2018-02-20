@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
@@ -91,9 +92,9 @@ public class Robot extends TimedRobot {
 		
 		String gameData;
 		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
-		//m_autonomousCommand = new DriveByDistance(36, Shifters.Speed.kLow); //m_chooser.getSelected();
-		m_autonomousCommand = new AutoSwitchSimple();
-		//m_autonomousCommand = new DriveByDistance(110, Shifters.Speed.kLow);
+		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
+		//m_autonomousCommand = new AutoSwitchSimple();
+		m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

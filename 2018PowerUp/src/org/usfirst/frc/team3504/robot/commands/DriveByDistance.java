@@ -26,9 +26,12 @@ public class DriveByDistance extends Command {
 	private double leftInitial;
 	private double rightInitial;
 	
+	private boolean leftGood;
+	private boolean rightGood;
+	
 	private Shifters.Speed speed;
 	
-	private static final int ERROR_THRESHOLD = 400;
+	private static final int ERROR_THRESHOLD = 700;
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {
 		double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
@@ -61,11 +64,15 @@ public class DriveByDistance extends Command {
 		tim = 0;
 		System.out.println("Drive by Distance Started " + encoderTicks);
 
+		leftGood = false;
+		rightGood = false;
 
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		
+		tim++;
 		
 		leftTalon.set(ControlMode.Position, encoderTicks);
 		rightTalon.set(ControlMode.Position, -encoderTicks);
@@ -75,18 +82,19 @@ public class DriveByDistance extends Command {
 		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getClosedLoopError(0));
 
 		System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(0) - encoderTicks));
-		System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) - encoderTicks));
+		System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) + encoderTicks));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
+		return false;
+		/*
+		if (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD) leftGood = true;
+		if (Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD) rightGood = true;
 		
-		//return false;
 		
-		//TODO: add timer in addition to stuff below
-		
-		return (tim > 400 || (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD && Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD));
-		
+		return (tim > 400 || (leftGood && rightGood));
+		*/
 		/*
 		if (encoderTicks > 0) {
 			if (rightTalon.getSelectedSensorPosition(0) < -encoderTicks

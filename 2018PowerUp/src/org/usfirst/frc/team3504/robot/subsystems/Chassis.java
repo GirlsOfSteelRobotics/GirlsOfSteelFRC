@@ -85,8 +85,14 @@ public class Chassis extends Subsystem {
 	    	setupFPID(driveLeftA);
 	    	setupFPID(driveRightA);
 	    	
-	    	driveLeftA.configClosedloopRamp(0.5, 10);
-	    	driveRightA.configClosedloopRamp(0.5, 10);
+	    	driveLeftA.configClosedloopRamp(0, 10);
+	    	driveRightA.configClosedloopRamp(0, 10);
+	    	
+	    	driveLeftA.configPeakOutputForward(0.9, 10);
+	    	driveLeftA.configPeakOutputReverse(-0.9, 10);
+	    	
+	    	driveRightA.configPeakOutputForward(0.9, 10);
+	    	driveRightA.configPeakOutputReverse(-0.9, 10);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
 	}
@@ -99,9 +105,9 @@ public class Chassis extends Subsystem {
 	
 	public void setupFPID(WPI_TalonSRX talon) { //PID values from DriveByDistance
 		talon.config_kF(0, 0, 10);
-		talon.config_kP(0, 0.03, 10); //increase until overshoot/oscillation
-		talon.config_kI(0, 0.0, 10);
-		talon.config_kD(0, 0.05, 10); //D is around 1/10 to 1/100 of P value
+		talon.config_kP(0, 0.021, 10); //increase until overshoot/oscillation
+		talon.config_kI(0, 0, 10);
+		talon.config_kD(0, 0.8, 10); //D is around 1/10 to 1/100 of P value
 		
 //		if (speed == Shifters.Speed.kLow){
 //			talon.config_kF(0, 0, 10);
