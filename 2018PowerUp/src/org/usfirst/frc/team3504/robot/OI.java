@@ -22,6 +22,7 @@ import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.commands.WristIn;
 import org.usfirst.frc.team3504.robot.commands.WristOut;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -62,6 +63,8 @@ public class OI {
 	
 	private JoystickButton collect;
 	private JoystickButton release;
+	
+	private Camera driveCam;
 	
 	public OI() {
 		//shifterDown = new JoystickButton(drivingJoystickOne, 3);
@@ -106,6 +109,8 @@ public class OI {
 		
 		drivingGamePad.setTwistChannel(3);
 		amazonGamePad.setTwistChannel(4);
+		
+		
 	}
 	
 	public double getGamePadLeftUpAndDown() {
