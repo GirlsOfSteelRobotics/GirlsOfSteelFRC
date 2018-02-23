@@ -22,11 +22,13 @@ public class LiftReset extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.lift.setLiftToGround();
+    	System.out.println("LiftReset: initialize");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.lift.lift.set(ControlMode.PercentOutput, 0.2);
+    	System.out.println("LiftReset: execute loop");
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +38,10 @@ public class LiftReset extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.lift.setGoalLiftPosition(0);
+    	Robot.lift.lift.stopMotor();
+    	
+    	Robot.lift.lift.setSelectedSensorPosition(0, 0, 10);
+    	System.out.println("LiftReset: ended");
     }
 
     // Called when another command which requires one or more of the same

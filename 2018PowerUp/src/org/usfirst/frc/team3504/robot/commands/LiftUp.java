@@ -22,13 +22,14 @@ public class LiftUp extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.lift.incrementLift();
+    		//Robot.lift.incrementLift();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.holdLiftPosition();
-		Robot.lift.incrementLift();
+    	Robot.lift.lift.set(-0.8);
+    	//Robot.lift.holdLiftPosition();
+		//Robot.lift.incrementLift();
     }
 
     // Make this return true when this Command no longer needs to run execute()
