@@ -12,6 +12,7 @@ import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lift;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
 	public static Wrist wrist;
 	public static Collector collector;
 	public static Blobs blobs;
+	public static Camera camera;
 	public static OI oi;
 	public enum PlateSide {
 		left, right
@@ -57,6 +59,7 @@ public class Robot extends TimedRobot {
 		wrist = new Wrist();
 		collector = new Collector();
 		blobs = new Blobs();
+		camera = new Camera();
 		oi = new OI();
 
 	}
@@ -93,8 +96,11 @@ public class Robot extends TimedRobot {
 		String gameData;
 		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
-		m_autonomousCommand = new AutoSwitchSimple();
+		//m_autonomousCommand = new AutoSwitchSimple();
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
+		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
+		//m_autonomousCommand = new AutoSwitchSimple();
+		//m_autonomousCommand = new DriveByDistance(200, Shifters.Speed.kLow);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

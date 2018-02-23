@@ -87,7 +87,7 @@ public class Blobs extends Subsystem {
 	}
     
     //Finds distance between line (defined by b1 and b2) and point (b3)
-    public double findDistance(Blob b1, Blob b2, Blob b3){
+    public static double findDistance(Blob b1, Blob b2, Blob b3){
 		double x1 = b1.x;
 		double x2 = b2.x;
 		double x3 = b3.x;
@@ -105,7 +105,7 @@ public class Blobs extends Subsystem {
 	}
     
     //returns an Arraylist of blobs sorted by x-coord
-	public ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs){
+	public static ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs){
 		//THIS DESTROYS THE ORIGINAL LIST
 		ArrayList<Blob> sortedBlobs = new ArrayList<Blob>();
 		
@@ -126,7 +126,7 @@ public class Blobs extends Subsystem {
 	}
 	
 	//Returns sorted list of blobs without outliers
-	public ArrayList<Blob> golfSac(ArrayList<Blob> blobList){
+	public static ArrayList<Blob> golfSac(ArrayList<Blob> blobList){
 		Blob[] endpoints = new Blob[2]; 
 		double minErr = -1;
 		double minStd = -1;
