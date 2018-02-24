@@ -32,7 +32,7 @@ public class DriveByDistance extends Command {
 	private Shifters.Speed speed;
 	
 	private static final int ERROR_THRESHOLD = 700;
-	private static final int BIG_ERROR_THRESHOLD = 2000;
+	private static final int BIG_ERROR_THRESHOLD = 4000;
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {
 		double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);

@@ -29,10 +29,10 @@ public class AutoPrintData extends CommandGroup {
     	
     	if (Robot.getSwitchSide() == Robot.PlateSide.left) System.out.println("Switch is on the left");
     	else if (Robot.getSwitchSide() == Robot.PlateSide.right) System.out.println("Switch is on the right");
-    	else System.out.println("Error getting switch side");
+    	else if (Robot.getSwitchSide() == Robot.PlateSide.bad) System.out.println("Switch is BAD");
     	
     	if (Robot.getScaleSide() == Robot.PlateSide.left) System.out.println("Scale is on the left");
     	else if (Robot.getScaleSide() == Robot.PlateSide.right) System.out.println("Scale is on the right");
-    	else System.out.println("Error getting scale side");
+    	else if (Robot.getScaleSide() == Robot.PlateSide.bad) System.out.println("Scale is BAD");
     }
 }

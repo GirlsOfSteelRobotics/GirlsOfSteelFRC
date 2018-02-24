@@ -38,9 +38,13 @@ public class AutoSwitchSimple extends CommandGroup {
     	
 
     	
-    	addSequential(new WristToSwitch());
+    	addSequential(new WristToCollect());
+    	addSequential(new LiftToSwitch());
     	addParallel(new WristHold());
-    	addSequential(new DriveByDistance(100, Shifters.Speed.kLow));
-    	addSequential(new Release());
+    	addParallel(new LiftHold());
+    	addSequential(new DriveByDistance(105, Shifters.Speed.kLow));
+    	addParallel(new Release());
+    	addSequential(new TimeDelay(1.0));
+    	addSequential(new DriveByDistance(-30, Shifters.Speed.kLow));
     }
 }

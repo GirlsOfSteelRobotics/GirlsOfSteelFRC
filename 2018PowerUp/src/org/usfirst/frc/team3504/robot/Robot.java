@@ -22,6 +22,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -43,7 +44,7 @@ public class Robot extends TimedRobot {
 	public static Camera camera;
 	public static OI oi;
 	public static enum PlateSide {
-		left, right
+		left, right, bad
 	}
 
 	Command m_autonomousCommand;
@@ -98,11 +99,11 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
 
-		m_autonomousCommand = new AutoPrintData();
+		//m_autonomousCommand = new AutoPrintData();
 
 		//m_autonomousCommand = new AutoSwitchSimple();
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
-		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
+		m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn2018.dat", "/home/lvuser/shortTurn2018.dat"); //m_chooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchSimple();
 		//m_autonomousCommand = new DriveByDistance(200, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
@@ -162,6 +163,16 @@ public class Robot extends TimedRobot {
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		int tim = 0;
+		
+		while(tim <= 5 && (gameData == null || gameData.equals(""))) 
+		{
+			Timer.delay(0.2);
+			tim++;
+		}
+		
+		if (gameData == null || gameData.equals("")) return PlateSide.bad;
+		
 		if(gameData.charAt(0) == 'L')
 		{
 			return PlateSide.left;
@@ -176,6 +187,16 @@ public class Robot extends TimedRobot {
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		int tim = 0;
+		
+		while(tim <= 5 && (gameData == null || gameData.equals(""))) 
+		{
+			Timer.delay(0.2);
+			tim++;
+		}
+		
+		if (gameData == null || gameData.equals("")) return PlateSide.bad;
+		
 		if(gameData.charAt(1) == 'L')
 		{
 			return PlateSide.left;
