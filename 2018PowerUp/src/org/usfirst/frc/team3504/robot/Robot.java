@@ -155,7 +155,7 @@ public class Robot extends TimedRobot {
 		
 		//m_autonomousCommand = new AutoPrintData();
 		//m_autonomousCommand = new AutoSwitchSimple();
-		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat"); //m_chooser.getSelected();
+		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
 		

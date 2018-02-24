@@ -18,31 +18,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoSwitchSimple extends CommandGroup {
 
     public AutoSwitchSimple() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
     	
-    	
-
-    	
+    	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToSwitch());
     	addParallel(new WristHold());
     	addParallel(new LiftHold());
+    	
+    	//Move Robot into position
     	addSequential(new DriveByDistance(105, Shifters.Speed.kLow));
+    	
+    	//Release and back up
     	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
     	addSequential(new DriveByDistance(-30, Shifters.Speed.kLow));
