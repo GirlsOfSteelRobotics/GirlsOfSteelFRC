@@ -10,6 +10,7 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPrintData;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
@@ -41,7 +42,7 @@ public class Robot extends TimedRobot {
 	public static Blobs blobs;
 	public static Camera camera;
 	public static OI oi;
-	public enum PlateSide {
+	public static enum PlateSide {
 		left, right
 	}
 
@@ -95,9 +96,10 @@ public class Robot extends TimedRobot {
 		
 		String gameData;
 		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
-		m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
-		//m_autonomousCommand = new AutoSwitchSimple();
+		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
+		m_autonomousCommand = new AutoPrintData();
 		//m_autonomousCommand = new DriveByDistance(200, Shifters.Speed.kLow);
+		//m_autonomousCommand = new AutoSwitchSimple();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -150,7 +152,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 	
-	public PlateSide getSwitchSide() //TODO: test
+	public static PlateSide getSwitchSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -164,7 +166,7 @@ public class Robot extends TimedRobot {
 		}
 	}
 	
-	public PlateSide getScaleSide() //TODO: test
+	public static PlateSide getScaleSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
