@@ -10,6 +10,10 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarScale;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarSwitch;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScale;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPrintData;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
@@ -43,8 +47,11 @@ public class Robot extends TimedRobot {
 	public static Blobs blobs;
 	public static Camera camera;
 	public static OI oi;
-	public static enum PlateSide {
+	public static enum FieldSide {
 		left, right, bad
+	}
+	public static enum FieldElement {
+		Switch, Scale
 	}
 
 	Command m_autonomousCommand;
@@ -95,17 +102,61 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
-		String gameData;
-		//m_autonomousCommand = new AutoGear(44.00); //m_chooser.getSelected();
-		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"); //m_chooser.getSelected();
-
+		lift.setGoalLiftPosition(lift.getLiftPosition());
+		wrist.setGoalWristPosition(wrist.getWristPosition());
+		
+		FieldSide robotSide = FieldSide.left; //get from DIO port
+		FieldSide switchSide = getSwitchSide(); //get from DIO port
+		FieldSide scaleSide = getScaleSide(); //get from DIO port
+		boolean logicPriority = true; //get from DIO port; true = field element, false = stay on our side
+		FieldElement elementPriority = FieldElement.Switch;
+		FieldElement crossPriority = FieldElement.Scale;
+		
+		if (switchSide == FieldSide.bad || scaleSide == FieldSide.bad) m_autonomousCommand = new AutoBaseLine();
+		else if (logicPriority) //Field Element Priority
+		{
+			if (elementPriority == FieldElement.Switch)
+			{
+				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(robotSide);
+				else m_autonomousCommand = new AutoFarSwitch(robotSide);
+			}
+			else //if (elementPriority == FieldElement.Scale)
+			{
+				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(robotSide);
+				else m_autonomousCommand = new AutoFarScale(robotSide);
+			}
+		}
+		else //Stay on our side priority
+		{
+			if (elementPriority == FieldElement.Switch)
+			{
+				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(robotSide);
+				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(robotSide);
+				else
+				{
+					if (crossPriority == FieldElement.Switch) m_autonomousCommand = new AutoFarSwitch(robotSide);
+					else m_autonomousCommand = new AutoFarScale(robotSide);
+				}
+			}
+			else //if (elementPriority == FieldElement.Scale)
+			{
+				if (switchSide == robotSide) m_autonomousCommand = new AutoNearScale(robotSide);
+				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearSwitch(robotSide);
+				else
+				{
+					if (crossPriority == FieldElement.Switch) m_autonomousCommand = new AutoFarSwitch(robotSide);
+					else m_autonomousCommand = new AutoFarScale(robotSide);
+				}
+			}
+		}
+		
+		
+		//Other auto commands for testing:
+		
 		//m_autonomousCommand = new AutoPrintData();
-
 		//m_autonomousCommand = new AutoSwitchSimple();
+		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat"); //m_chooser.getSelected();
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
-		m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn2018.dat", "/home/lvuser/shortTurn2018.dat"); //m_chooser.getSelected();
-		//m_autonomousCommand = new AutoSwitchSimple();
-		//m_autonomousCommand = new DriveByDistance(200, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
 		
 		/*
@@ -119,8 +170,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
-		lift.setGoalLiftPosition(lift.getLiftPosition());
-		wrist.setGoalWristPosition(wrist.getWristPosition());
+		
 	}
 
 	/**
@@ -159,7 +209,7 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 	
-	public static PlateSide getSwitchSide() //TODO: test
+	public static FieldSide getSwitchSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -171,19 +221,19 @@ public class Robot extends TimedRobot {
 			tim++;
 		}
 		
-		if (gameData == null || gameData.equals("")) return PlateSide.bad;
+		if (gameData == null || gameData.equals("")) return FieldSide.bad;
 		
 		if(gameData.charAt(0) == 'L')
 		{
-			return PlateSide.left;
+			return FieldSide.left;
 		} 
 		else 
 		{
-			return PlateSide.right;
+			return FieldSide.right;
 		}
 	}
 	
-	public static PlateSide getScaleSide() //TODO: test
+	public static FieldSide getScaleSide() //TODO: test
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -195,15 +245,15 @@ public class Robot extends TimedRobot {
 			tim++;
 		}
 		
-		if (gameData == null || gameData.equals("")) return PlateSide.bad;
+		if (gameData == null || gameData.equals("")) return FieldSide.bad;
 		
 		if(gameData.charAt(1) == 'L')
 		{
-			return PlateSide.left;
+			return FieldSide.left;
 		} 
 		else 
 		{
-			return PlateSide.right;
+			return FieldSide.right;
 		}
 	}
 	

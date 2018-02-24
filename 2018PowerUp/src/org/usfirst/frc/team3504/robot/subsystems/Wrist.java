@@ -44,7 +44,7 @@ public class Wrist extends Subsystem {
 		wrist.config_kF(0, 0, 10);
 		wrist.config_kP(0, 1.5, 10);
 		wrist.config_kI(0, 0, 10);
-		wrist.config_kD(0, 0, 10);	
+		wrist.config_kD(0, 15, 10);	
 	}
 
     public void setWristSpeed(double speed) {

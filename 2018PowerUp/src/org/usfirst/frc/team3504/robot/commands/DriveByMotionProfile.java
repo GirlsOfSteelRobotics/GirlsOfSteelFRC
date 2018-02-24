@@ -169,9 +169,9 @@ public class DriveByMotionProfile extends Command {
 		for (ArrayList<Double> arr : points) {
 			/* for each point, fill our structure and pass it to API */
 			// Double[] a = (Double[]) arr.toArray();
-			point.position = arr.get(0) * RobotMap.CODES_PER_WHEEL_REV * 2;
+			point.position = arr.get(0) * RobotMap.CODES_PER_WHEEL_REV * 4;
 			
-			point.velocity = arr.get(1) * RobotMap.CODES_PER_WHEEL_REV * 2/ 600;
+			point.velocity = arr.get(1) * RobotMap.CODES_PER_WHEEL_REV * 4/ 600;
 			point.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
 			//point.timeDur = (int)(arr.get(2) / multiplier);
 			
