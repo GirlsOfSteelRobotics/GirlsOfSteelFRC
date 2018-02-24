@@ -44,8 +44,8 @@ public class Collector extends Subsystem {
     
     public void release() {
     		if (Robot.lift.getLiftPosition() < -13000) {
-    			collectLeft.set(1.0); //TODO: tune this speed, and these values may be reversed
-        		collectRight.set(-1.0);
+    			collectLeft.set(0.9); //TODO: tune this speed, and these values may be reversed
+        		collectRight.set(-0.9);
     		}
     		else
     		{
