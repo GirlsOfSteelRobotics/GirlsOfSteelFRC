@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoNearSwitch extends CommandGroup {
 	
 	private final double DISTANCE_FORWARD = 100.0;
-	private final double DISTANCE_SIDE = 100.0;
+	private final double DISTANCE_SIDE = 10.0;
 
     public AutoNearSwitch(FieldSide robotPosition) {
     	//Get lift & wrist into position

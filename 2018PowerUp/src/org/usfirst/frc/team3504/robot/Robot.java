@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
 	}
 
 	Command m_autonomousCommand;
+	public static String motionProfile = "90-medium";
 
 	/**
 	 * This function is run when the robot is first started up and should be
