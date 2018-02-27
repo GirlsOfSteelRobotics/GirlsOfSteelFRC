@@ -32,7 +32,7 @@ public class DriveByDistance extends Command {
 	private Shifters.Speed speed;
 	
 	private static final int ERROR_THRESHOLD = 700;
-	private static final int BIG_ERROR_THRESHOLD = 4000;
+	private static final int BIG_ERROR_THRESHOLD = 5000;
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {
 		double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
@@ -87,7 +87,7 @@ public class DriveByDistance extends Command {
 		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getClosedLoopError(0));
 
 		System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(0) - encoderTicks));
-		System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) + encoderTicks));
+		//System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) + encoderTicks));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -98,7 +98,7 @@ public class DriveByDistance extends Command {
 		if (Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD) rightGood = true;
 		
 		
-		return (tim > 50 || (leftGood && rightGood));
+		return (tim > 30 || (leftGood && rightGood));
 		
 		/*
 		if (encoderTicks > 0) {

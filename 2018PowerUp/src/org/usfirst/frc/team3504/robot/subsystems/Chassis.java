@@ -88,6 +88,9 @@ public class Chassis extends Subsystem {
     	driveLeftA.configClosedloopRamp(0, 10);
     	driveRightA.configClosedloopRamp(0, 10);
     	
+    	driveLeftA.configOpenloopRamp(2, 10);
+    	driveRightA.configOpenloopRamp(2, 10);
+    	
     	driveLeftA.configPeakOutputForward(0.9, 10);
     	driveLeftA.configPeakOutputReverse(-0.9, 10);
     	
@@ -95,6 +98,8 @@ public class Chassis extends Subsystem {
     	driveRightA.configPeakOutputReverse(-0.9, 10);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
+		
+		drive.setDeadband(0.02);
 	}
 	
 	public void initDefaultCommand() {

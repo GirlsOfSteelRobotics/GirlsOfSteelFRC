@@ -19,10 +19,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoNearSwitch extends CommandGroup {
 	
-	private final double DISTANCE_FORWARD = 100.0;
-	private final double DISTANCE_SIDE = 10.0;
+	private final double DISTANCE_FORWARD = 140.0;
+	private final double DISTANCE_SIDE = 2.0;
 
     public AutoNearSwitch(FieldSide robotPosition) {
+    	System.out.println("AutoNearSwitch starting");
     	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToSwitch());
@@ -38,6 +39,6 @@ public class AutoNearSwitch extends CommandGroup {
     	//Release and back up
     	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
-    	addSequential(new DriveByDistance(-30, Shifters.Speed.kLow));
+    	addSequential(new DriveByDistance(-40, Shifters.Speed.kLow));
     }
 }

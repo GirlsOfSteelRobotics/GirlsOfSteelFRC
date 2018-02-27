@@ -21,6 +21,7 @@ public class AutoFarSwitch extends CommandGroup {
 	private final double DISTANCE_FORWARD_2 = 30.0;
 
     public AutoFarSwitch(FieldSide robotPosition) {
+    	System.out.println("AutoFarSwitch starting");
     	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToSwitch());

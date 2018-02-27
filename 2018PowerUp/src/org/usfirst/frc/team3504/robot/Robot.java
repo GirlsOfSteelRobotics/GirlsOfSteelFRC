@@ -16,6 +16,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScale;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPrintData;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnRight;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
@@ -55,7 +56,7 @@ public class Robot extends TimedRobot {
 	}
 
 	Command m_autonomousCommand;
-	public static String motionProfile = "90-medium";
+	public static String motionProfile = "91-small";
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -159,6 +160,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
+		m_autonomousCommand = new AutoNearScale(FieldSide.left);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

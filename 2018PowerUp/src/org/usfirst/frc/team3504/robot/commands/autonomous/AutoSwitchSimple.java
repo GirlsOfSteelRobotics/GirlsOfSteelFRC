@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoSwitchSimple extends CommandGroup {
 
     public AutoSwitchSimple() {
+    	System.out.println("AutoSimpleSwitch starting");
     	
     	//Get lift & wrist into position
     	addSequential(new WristToCollect());

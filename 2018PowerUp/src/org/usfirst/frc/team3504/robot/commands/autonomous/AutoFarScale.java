@@ -17,12 +17,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoFarScale extends CommandGroup {
-	private final double DISTANCE_FORWARD_1 = 150.0;
+	private final double DISTANCE_FORWARD_1 = 250.0;
 	private final double DISTANCE_SIDE_1 = 150.0;
 	private final double DISTANCE_FORWARD_2 = 10.0;
 	private final double DISTANCE_SIDE_2 = 10.0;
 
     public AutoFarScale(FieldSide robotPosition) {
+    	System.out.println("AutoFarScale starting");
     	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToScale());
