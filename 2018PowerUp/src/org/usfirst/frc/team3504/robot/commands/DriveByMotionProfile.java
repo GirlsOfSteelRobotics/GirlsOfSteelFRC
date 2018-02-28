@@ -52,9 +52,7 @@ public class DriveByMotionProfile extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.chassis.setFollowerMode();
-		Robot.chassis.setupFPID(leftTalon);
-		Robot.chassis.setupFPID(rightTalon);
+		Robot.chassis.setVelocityPIDSlot();
 
 		// Set Talon to MP mode
 		System.out.println("DriveByMotion: Change Talon to MP Mode");

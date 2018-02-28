@@ -91,6 +91,12 @@ public class Chassis extends Subsystem {
     	driveLeftA.configOpenloopRamp(2, 10);
     	driveRightA.configOpenloopRamp(2, 10);
     	
+    	driveLeftA.configMotionCruiseVelocity(2800, 10);
+    	driveRightA.configMotionCruiseVelocity(2800, 10);
+    	
+    	driveLeftA.configMotionAcceleration(6000, 10);
+    	driveRightA.configMotionAcceleration(6000, 10);
+    	
     	driveLeftA.configPeakOutputForward(0.9, 10);
     	driveLeftA.configPeakOutputReverse(-0.9, 10);
     	
@@ -113,9 +119,10 @@ public class Chassis extends Subsystem {
 		talon.config_kP(0, 0.025, 10); //increase until overshoot/oscillation
 		talon.config_kI(0, 0, 10);
 		talon.config_kD(0, 6.5, 10); //D is around 1/10 to 1/100 of P value
+
 		
-		talon.config_kF(1, 0, 10);
-		talon.config_kP(1, 0.020, 10); //increase until overshoot/oscillation
+		talon.config_kF(1, 0.3008, 10);
+		talon.config_kP(1, 0, 10); //increase until overshoot/oscillation
 		talon.config_kI(1, 0, 10);
 		talon.config_kD(1, 0, 10);
 //		if (speed == Shifters.Speed.kLow){

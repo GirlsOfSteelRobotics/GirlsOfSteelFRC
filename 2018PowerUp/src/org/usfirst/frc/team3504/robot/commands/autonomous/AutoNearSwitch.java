@@ -23,12 +23,12 @@ public class AutoNearSwitch extends CommandGroup {
 	private final double DISTANCE_SIDE = 2.0;
 
     public AutoNearSwitch(FieldSide robotPosition) {
-    	System.out.println("AutoNearSwitch starting");
-    	//Get lift & wrist into position
-    	addSequential(new WristToCollect());
-    	addSequential(new LiftToSwitch());
-    	addParallel(new WristHold());
-    	addParallel(new LiftHold());
+//    	System.out.println("AutoNearSwitch starting");
+//    	//Get lift & wrist into position
+//    	addSequential(new WristToCollect());
+//    	addSequential(new LiftToSwitch());
+//    	addParallel(new WristHold());
+//    	addParallel(new LiftHold());
     	
     	//Move Robot into position
     	addSequential(new DriveByDistance(DISTANCE_FORWARD, Shifters.Speed.kLow));
@@ -37,7 +37,7 @@ public class AutoNearSwitch extends CommandGroup {
     	addSequential(new DriveByDistance(DISTANCE_SIDE, Shifters.Speed.kLow));
     	
     	//Release and back up
-    	addParallel(new Release());
+//    	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
     	addSequential(new DriveByDistance(-40, Shifters.Speed.kLow));
     }

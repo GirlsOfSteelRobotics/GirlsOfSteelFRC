@@ -160,7 +160,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
-		m_autonomousCommand = new AutoNearScale(FieldSide.left);
+		m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

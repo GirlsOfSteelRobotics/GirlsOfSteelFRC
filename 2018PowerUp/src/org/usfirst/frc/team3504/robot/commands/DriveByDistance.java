@@ -86,7 +86,7 @@ public class DriveByDistance extends Command {
 		SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getClosedLoopError(0));
 
-		System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(0) - encoderTicks));
+		//System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(0) - encoderTicks));
 		//System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) + encoderTicks));
 	}
 

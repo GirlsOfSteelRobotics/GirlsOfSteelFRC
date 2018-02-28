@@ -10,6 +10,7 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.Collect;
 import org.usfirst.frc.team3504.robot.commands.CollectPosition;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.LiftReset;
@@ -170,6 +171,8 @@ public class OI {
 			System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
 			driveStyle = DriveStyle.joystickArcade; 
 		}
+		
+		driveStyle = DriveStyle.gamePadArcade;
 		System.out.println("Drive Mode: " + driveStyle);
 	}
 	
