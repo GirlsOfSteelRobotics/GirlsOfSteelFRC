@@ -110,15 +110,15 @@ public class Robot extends TimedRobot {
 		
 		//Determine which side of the field out robot is on
 		FieldSide robotSide;
-		if(RobotMap.dio1.get()) robotSide = FieldSide.left; //get from DIO port
-		else if (RobotMap.dio2.get()) robotSide = FieldSide.middle;
-		else if (RobotMap.dio3.get()) robotSide = FieldSide.right;
+		if(!RobotMap.dio1.get()) robotSide = FieldSide.left; //get from DIO port
+		else if (!RobotMap.dio2.get()) robotSide = FieldSide.middle;
+		else if (!RobotMap.dio3.get()) robotSide = FieldSide.right;
 		else robotSide = FieldSide.bad;
 		
 		FieldSide switchSide = getSwitchSide();
 		FieldSide scaleSide = getScaleSide(); 
 		
-		if(RobotMap.dio4.get())
+		if(!RobotMap.dio4.get())
 		{
 			m_autonomousCommand = null;
 		}
@@ -195,7 +195,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
 		
-		m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+		//m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
