@@ -21,6 +21,7 @@ public class AutoNearSwitch extends CommandGroup {
 	
 	private final double DISTANCE_FORWARD = 140.0;
 	private final double DISTANCE_SIDE = 2.0;
+	private final double BACK_UP = -30;
 
     public AutoNearSwitch(FieldSide robotPosition) {
 //    	System.out.println("AutoNearSwitch starting");
@@ -39,6 +40,6 @@ public class AutoNearSwitch extends CommandGroup {
     	//Release and back up
     	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
-    	addSequential(new DriveByDistance(-40, Shifters.Speed.kLow));
+    	addSequential(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
     }
 }

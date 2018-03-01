@@ -104,6 +104,7 @@ public class Chassis extends Subsystem {
     	driveRightA.configPeakOutputReverse(-0.9, 10);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
+		drive.setSafetyEnabled(false);
 		
 		drive.setDeadband(0.02);
 	}

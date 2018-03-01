@@ -70,5 +70,6 @@ public class RobotMap {
 	public static DigitalInput dio3 = new DigitalInput(3);
 	public static DigitalInput dio4 = new DigitalInput(4);
 	public static DigitalInput dio5 = new DigitalInput(5);
+	public static DigitalInput dio6 = new DigitalInput(6);
 	
 }

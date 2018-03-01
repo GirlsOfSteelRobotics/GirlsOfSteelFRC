@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoSwitchSimple extends CommandGroup {
 
+	public final double DISTANCE_FORWARD = 105;
+	public final double BACK_UP = -30;
+	
     public AutoSwitchSimple() {
     	System.out.println("AutoSimpleSwitch starting");
     	
@@ -27,11 +30,11 @@ public class AutoSwitchSimple extends CommandGroup {
     	addParallel(new LiftHold());
     	
     	//Move Robot into position
-    	addSequential(new DriveByDistance(105, Shifters.Speed.kLow));
+    	addSequential(new DriveByDistance(DISTANCE_FORWARD, Shifters.Speed.kLow));
     	
     	//Release and back up
     	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
-    	addSequential(new DriveByDistance(-30, Shifters.Speed.kLow));
+    	addSequential(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
     }
 }

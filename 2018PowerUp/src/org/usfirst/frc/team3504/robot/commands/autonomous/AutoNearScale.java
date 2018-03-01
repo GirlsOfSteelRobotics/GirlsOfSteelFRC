@@ -20,6 +20,7 @@ public class AutoNearScale extends CommandGroup {
 
 	private final double DISTANCE_FORWARD = 300.0;
 	private final double DISTANCE_SIDE = 2.0;
+	private final double BACK_UP = -30;
 
     public AutoNearScale(FieldSide robotPosition) {
     	System.out.println("AutoNearScale starting");
@@ -42,7 +43,7 @@ public class AutoNearScale extends CommandGroup {
     	//Release and back up
     	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
-    	addSequential(new DriveByDistance(-30, Shifters.Speed.kLow));
+    	addSequential(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
         
     }
 }

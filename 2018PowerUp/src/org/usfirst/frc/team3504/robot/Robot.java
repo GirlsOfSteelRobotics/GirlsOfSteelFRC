@@ -10,6 +10,7 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveToBaseline;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarScale;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScale;
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
 	public static Camera camera;
 	public static OI oi;
 	public static enum FieldSide {
-		left, right, bad
+		left, right, middle, bad
 	}
 	public static enum FieldElement {
 		Switch, Scale
@@ -107,10 +108,43 @@ public class Robot extends TimedRobot {
 		lift.setGoalLiftPosition(lift.getLiftPosition());
 		wrist.setGoalWristPosition(wrist.getWristPosition());
 		
-		FieldSide robotSide = FieldSide.left; //get from DIO port
-		FieldSide switchSide = getSwitchSide(); //get from DIO port
-		FieldSide scaleSide = getScaleSide(); //get from DIO port
-		boolean logicPriority = true; //get from DIO port; true = field element, false = stay on our side
+		//Determine which side of the field out robot is on
+		FieldSide robotSide;
+		if(RobotMap.dio1.get()) robotSide = FieldSide.left; //get from DIO port
+		else if (RobotMap.dio2.get()) robotSide = FieldSide.middle;
+		else if (RobotMap.dio3.get()) robotSide = FieldSide.right;
+		else robotSide = FieldSide.bad;
+		
+		FieldSide switchSide = getSwitchSide();
+		FieldSide scaleSide = getScaleSide(); 
+		
+		if(RobotMap.dio4.get())
+		{
+			m_autonomousCommand = null;
+		}
+		else if(robotSide == FieldSide.left)
+		{
+			if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+			else m_autonomousCommand = new AutoDriveToBaseline();
+		}
+		else if(robotSide == FieldSide.right)
+		{
+			if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
+			else m_autonomousCommand = new AutoDriveToBaseline();
+		}
+		else if(robotSide == FieldSide.middle)
+		{
+			if (switchSide == FieldSide.right) m_autonomousCommand = new AutoSwitchSimple();
+			else m_autonomousCommand = new AutoDriveToBaseline();
+		}
+		else 
+		{
+			System.out.println("Robot field side from DIO ports invalid!!");
+			m_autonomousCommand = new AutoDriveToBaseline();
+		}
+		
+		/*
+		boolean logicPriority = false; //get from DIO port; true = field element, false = stay on our side
 		FieldElement elementPriority = FieldElement.Switch;
 		FieldElement crossPriority = FieldElement.Scale;
 		
@@ -151,7 +185,7 @@ public class Robot extends TimedRobot {
 				}
 			}
 		}
-		
+		*/
 		
 		//Other auto commands for testing:
 		
@@ -160,6 +194,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
+		
 		m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
 		
 		/*

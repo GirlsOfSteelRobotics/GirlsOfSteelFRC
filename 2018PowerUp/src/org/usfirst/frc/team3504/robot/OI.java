@@ -156,21 +156,21 @@ public class OI {
 		return drivingJoystickTwo.getX();
 	}
 	
-	public void setDriveStyle() {
-		if (!RobotMap.dio1.get()) {
-			driveStyle = DriveStyle.joystickArcade; 
-		} else if (!RobotMap.dio2.get()) {
-			driveStyle = DriveStyle.gamePadArcade; 
-		} else if (!RobotMap.dio3.get()) {
-			driveStyle = DriveStyle.joystickTank; 
-		} else if (!RobotMap.dio4.get()) {
-			driveStyle = DriveStyle.gamePadTank; 
-		} else if (!RobotMap.dio5.get()) {
-			driveStyle = DriveStyle.amazonDrive;
-		} else {
-			System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
-			driveStyle = DriveStyle.joystickArcade; 
-		}
+	public void setDriveStyle() {	
+//		if (!RobotMap.dio1.get()) {
+//			driveStyle = DriveStyle.joystickArcade; 
+//		} else if (!RobotMap.dio2.get()) {
+//			driveStyle = DriveStyle.gamePadArcade; 
+//		} else if (!RobotMap.dio3.get()) {
+//			driveStyle = DriveStyle.joystickTank; 
+//		} else if (!RobotMap.dio4.get()) {
+//			driveStyle = DriveStyle.gamePadTank; 
+//		} else if (!RobotMap.dio5.get()) {
+//			driveStyle = DriveStyle.amazonDrive;
+//		} else {
+//			System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
+//			driveStyle = DriveStyle.joystickArcade; 
+//		}
 		
 		driveStyle = DriveStyle.gamePadArcade;
 		System.out.println("Drive Mode: " + driveStyle);
