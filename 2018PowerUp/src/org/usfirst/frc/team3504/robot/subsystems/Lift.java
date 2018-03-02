@@ -21,7 +21,7 @@ public class Lift extends Subsystem {
 	
 	private static double goalLiftPosition;
 	
-	public static final double LIFT_MAX = -32000; //TODO tune
+	public static final double LIFT_MAX = -29000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
 	public static final double LIFT_SWITCH = -12500; //TODO tune
 	public static final double LIFT_SCALE = -30000; //TODO tune
@@ -33,8 +33,8 @@ public class Lift extends Subsystem {
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
 		lift.configAllowableClosedloopError(0, 100, 0);
-		lift.configContinuousCurrentLimit(40, 10);
-		lift.enableCurrentLimit(true);
+		lift.configContinuousCurrentLimit(0, 10);
+		lift.enableCurrentLimit(false);
 		setupLiftFPID();
 		goalLiftPosition = 0;
 		//System.out.println("Lift Constructed");
