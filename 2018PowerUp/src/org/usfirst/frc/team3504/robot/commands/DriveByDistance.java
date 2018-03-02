@@ -31,7 +31,7 @@ public class DriveByDistance extends Command {
 	
 	private Shifters.Speed speed;
 	
-	private static final int ERROR_THRESHOLD = 700;
+	private static final int ERROR_THRESHOLD = 1000;
 	private static final int BIG_ERROR_THRESHOLD = 5000;
 
 	public DriveByDistance(double inches, Shifters.Speed speed) {

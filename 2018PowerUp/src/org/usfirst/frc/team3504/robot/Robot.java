@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
 	}
 
 	Command m_autonomousCommand;
-	public static String motionProfile = "91-small";
+	public static String motionProfile = "101-small";
 
 	/**
 	 * This function is run when the robot is first started up and should be

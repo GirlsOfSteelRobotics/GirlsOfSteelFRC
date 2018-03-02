@@ -116,21 +116,21 @@ public class OI {
 		
 	}
 	
-	public double getGamePadLeftUpAndDown() {
-		return -drivingGamePad.getY();
-	}
-	
-	public double getGamePadRightUpAndDown() {
-		return -drivingGamePad.getTwist();
-	}
-	
-	public double getGamePadLeftSideToSide() {
-		return drivingGamePad.getX();
-	}
-	
-	public double getGamePadRightSideToSide(){
-		return drivingGamePad.getZ();
-	}
+//	public double getGamePadLeftUpAndDown() {
+//		return -drivingGamePad.getY();
+//	}
+//	
+//	public double getGamePadRightUpAndDown() {
+//		return -drivingGamePad.getTwist();
+//	}
+//	
+//	public double getGamePadLeftSideToSide() {
+//		return drivingGamePad.getX();
+//	}
+//	
+//	public double getGamePadRightSideToSide(){
+//		return drivingGamePad.getZ();
+//	}
 	
 	public double getAmazonLeftUpAndDown() {
 		return -amazonGamePad.getY();
@@ -140,22 +140,22 @@ public class OI {
 		return amazonGamePad.getTwist();
 	}
 	
-	public double getJoystickOneUpAndDown() {
-		return -drivingJoystickOne.getY();
-	}
-	
-	public double getJoystickOneSideToSide() {
-		return drivingJoystickOne.getX();
-	}
-	
-	public double getJoystickTwoUpAndDown() {
-		return -drivingJoystickTwo.getY();
-	}
-	
-	public double getJoystickTwoSideToSide() {
-		return drivingJoystickTwo.getX();
-	}
-	
+//	public double getJoystickOneUpAndDown() {
+//		return -drivingJoystickOne.getY();
+//	}
+//	
+//	public double getJoystickOneSideToSide() {
+//		return drivingJoystickOne.getX();
+//	}
+//	
+//	public double getJoystickTwoUpAndDown() {
+//		return -drivingJoystickTwo.getY();
+//	}
+//	
+//	public double getJoystickTwoSideToSide() {
+//		return drivingJoystickTwo.getX();
+//	}
+//	
 	public void setDriveStyle() {	
 //		if (!RobotMap.dio1.get()) {
 //			driveStyle = DriveStyle.joystickArcade; 
@@ -172,7 +172,7 @@ public class OI {
 //			driveStyle = DriveStyle.joystickArcade; 
 //		}
 		
-		driveStyle = DriveStyle.gamePadArcade;
+		driveStyle = DriveStyle.amazonDrive;
 		System.out.println("Drive Mode: " + driveStyle);
 	}
 	

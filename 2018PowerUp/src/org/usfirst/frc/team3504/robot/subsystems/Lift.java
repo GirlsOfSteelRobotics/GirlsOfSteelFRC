@@ -33,8 +33,8 @@ public class Lift extends Subsystem {
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 		lift.setSensorPhase(true);
 		lift.configAllowableClosedloopError(0, 100, 0);
-		//lift.configContinuousCurrentLimit(40, 10);
-		lift.enableCurrentLimit(false);
+		lift.configContinuousCurrentLimit(40, 10);
+		lift.enableCurrentLimit(true);
 		setupLiftFPID();
 		goalLiftPosition = 0;
 		//System.out.println("Lift Constructed");
