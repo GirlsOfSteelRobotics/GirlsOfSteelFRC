@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
 	}
 
 	Command m_autonomousCommand;
-	public static String motionProfile = "101-small";
+	public static String motionProfile = "91-small";
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
 			if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
 			else m_autonomousCommand = new AutoDriveToBaseline();
 		}
-		else if(robotSide == FieldSide.right)
+		else if(robotSide == FieldSide.right) 
 		{
 			if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
 			else m_autonomousCommand = new AutoDriveToBaseline();

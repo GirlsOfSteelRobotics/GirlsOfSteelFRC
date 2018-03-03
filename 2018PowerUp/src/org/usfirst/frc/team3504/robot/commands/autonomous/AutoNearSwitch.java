@@ -24,7 +24,7 @@ public class AutoNearSwitch extends CommandGroup {
 	private final double BACK_UP = -30;
 
     public AutoNearSwitch(FieldSide robotPosition) {
-//    	System.out.println("AutoNearSwitch starting");
+    	System.out.println("AutoNearSwitch starting");
 //    	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToSwitch());

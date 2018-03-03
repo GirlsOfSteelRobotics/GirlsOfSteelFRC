@@ -5,6 +5,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -21,12 +22,14 @@ public class Lift extends Subsystem {
 	
 	private static double goalLiftPosition;
 	
-	public static final double LIFT_MAX = -29000; //TODO tune
+	public static final double LIFT_MAX = -32000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
 	public static final double LIFT_SWITCH = -12500; //TODO tune
 	public static final double LIFT_SCALE = -30000; //TODO tune
 	public static final double LIFT_GROUND = -1000; //TODO tune
 	public static final double LIFT_INCREMENT = -250; //TODO tune
+	
+	private StickyFaults faults = new StickyFaults();
 	
 	public Lift() {
 		lift = new WPI_TalonSRX(RobotMap.LIFT); 
@@ -35,6 +38,7 @@ public class Lift extends Subsystem {
 		lift.configAllowableClosedloopError(0, 100, 0);
 		lift.configContinuousCurrentLimit(0, 10);
 		lift.enableCurrentLimit(false);
+		lift.clearStickyFaults(10);
 		setupLiftFPID();
 		goalLiftPosition = 0;
 		//System.out.println("Lift Constructed");
@@ -93,7 +97,12 @@ public class Lift extends Subsystem {
 	
 	public void holdLiftPosition()
 	{
-		if (goalLiftPosition != LIFT_MIN)
+		lift.getStickyFaults(faults);
+		if (faults.ResetDuringEn) {
+			lift.stopMotor();
+			System.out.println("sticky fault detected, LIFT MOTOR STOP");
+		}
+		else if (goalLiftPosition != LIFT_MIN)
 		{
 			lift.set(ControlMode.Position, goalLiftPosition);
 		}
