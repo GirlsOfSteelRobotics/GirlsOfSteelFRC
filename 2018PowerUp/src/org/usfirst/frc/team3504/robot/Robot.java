@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3504.robot;
 
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveToBaseline;
@@ -196,6 +197,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoSwitchSimple();
 		
 		//m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+		m_autonomousCommand = new DriveByMotionMagic(50.0);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

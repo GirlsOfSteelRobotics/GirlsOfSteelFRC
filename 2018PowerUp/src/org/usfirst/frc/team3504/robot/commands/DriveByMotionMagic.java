@@ -36,12 +36,14 @@ public class DriveByMotionMagic extends Command {
     	System.out.println("DriveByMotionMagic encoder ticks: " + encoderTicks);
     	Robot.chassis.setVelocityPIDSlot();
     	System.out.println("DriveByMotionMagic initialized");
+    	
+    	leftTalon.set(ControlMode.MotionMagic, encoderTicks);
+		rightTalon.set(ControlMode.MotionMagic, -encoderTicks);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	leftTalon.set(ControlMode.MotionMagic, encoderTicks);
-		rightTalon.set(ControlMode.MotionMagic, -encoderTicks);
+    	
 		System.out.println("DriveByMotionMagic execute");
     }
 
