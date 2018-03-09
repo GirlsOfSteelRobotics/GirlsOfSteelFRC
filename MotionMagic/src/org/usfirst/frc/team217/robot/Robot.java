@@ -25,19 +25,31 @@ import java.util.concurrent.TimeUnit;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 public class Robot extends IterativeRobot {
-	TalonSRX _talon = new TalonSRX(3);
+	TalonSRX _talon = new TalonSRX(4);
+	TalonSRX _talon2 = new TalonSRX(5);
+	TalonSRX _talon3 = new TalonSRX(6);
 	Joystick _joy = new Joystick(0);
 	StringBuilder _sb = new StringBuilder();
-
+	private final static double GOAL = 118157; // 290 in, backwall to scale white line
+//	private final static double GOAL = 44000; // 108 in, switch white line to scale white line
+	
 	public void robotInit() {
-
+		// Set the second and third Talons to follow the master Talon
+		_talon2.follow(_talon);
+		_talon3.follow(_talon);
+		
+		// Enable brake mode to stop the motors quickly instead of coasting
+		_talon.setNeutralMode(NeutralMode.Brake);
+		_talon2.setNeutralMode(NeutralMode.Brake);
+		_talon3.setNeutralMode(NeutralMode.Brake);
+		
 		/* first choose the sensor */
-		_talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 		_talon.setSensorPhase(true);
 		_talon.setInverted(false);
 
@@ -53,17 +65,21 @@ public class Robot extends IterativeRobot {
 
 		/* set closed loop gains in slot0 - see documentation */
 		_talon.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-		_talon.config_kF(0, 0.2, Constants.kTimeoutMs);
+		_talon.config_kF(0, 0.25, Constants.kTimeoutMs);
 		_talon.config_kP(0, 0.2, Constants.kTimeoutMs);
 		_talon.config_kI(0, 0, Constants.kTimeoutMs);
 		_talon.config_kD(0, 0, Constants.kTimeoutMs);
 		/* set acceleration and vcruise velocity - see documentation */
-		_talon.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
-		_talon.configMotionAcceleration(6000, Constants.kTimeoutMs);
-		/* zero the sensor */
-		_talon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		_talon.configMotionCruiseVelocity(4000, Constants.kTimeoutMs);
+		_talon.configMotionAcceleration(4000, Constants.kTimeoutMs);
 	}
 
+	@Override
+	public void teleopInit() {
+		/* zero the sensor */
+		_talon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);		
+	}
+	
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -80,7 +96,9 @@ public class Robot extends IterativeRobot {
 
 		if (_joy.getRawButton(1)) {
 			/* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
-			double targetPos = leftYstick * 4096 * 10.0;
+			//double targetPos = leftYstick * 4096 * 10.0;
+			// Hard-code our target position for now
+			double targetPos = GOAL;
 			_talon.set(ControlMode.MotionMagic, targetPos);
 
 			/* append more signals to print when in speed mode. */
