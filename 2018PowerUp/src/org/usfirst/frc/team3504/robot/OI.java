@@ -66,6 +66,7 @@ public class OI {
 	
 	private JoystickButton collect;
 	private JoystickButton release;
+	private JoystickButton slowRelease;
 	
 	private Camera driveCam;
 	
@@ -78,7 +79,7 @@ public class OI {
 		//driveByDistanceLow = new JoystickButton(drivingJoystickOne, 4);
 		//driveByMotionProfile = new JoystickButton(drivingJoystickOne, 10);
 		
-		liftUp = new JoystickButton(operatorGamePad, 6); //TODO: random buttom assignment
+		liftUp = new JoystickButton(operatorGamePad, 6);
 		liftDown = new JoystickButton(operatorGamePad, 8);
 		liftToSwitch = new JoystickButton(operatorGamePad, 1);
 		liftToScale = new JoystickButton(operatorGamePad, 9);
@@ -89,6 +90,7 @@ public class OI {
 		
 		collect = new JoystickButton(operatorGamePad, 4);
 		release = new JoystickButton(operatorGamePad, 3);
+		slowRelease = new JoystickButton(operatorGamePad, 10); //TODO: see if drivers like this placement
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());

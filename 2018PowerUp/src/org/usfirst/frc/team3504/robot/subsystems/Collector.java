@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -30,7 +29,6 @@ public class Collector extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-   
     
     public void stop() {
     		collectLeft.stopMotor();
@@ -42,17 +40,9 @@ public class Collector extends Subsystem {
     		collectRight.set(0.5);
     }
     
-    public void release() {
-    		if (Robot.lift.getLiftPosition() < -13000) {
-    			collectLeft.set(0.9); //TODO: tune this speed, and these values may be reversed
-        		collectRight.set(-0.9);
-    		}
-    		else
-    		{
-    			collectLeft.set(0.8); //TODO: tune this speed, and these values may be reversed
-        		collectRight.set(-0.8);
-    		}
-    		
+    public void release(double speed) {
+    		collectLeft.set(speed); //TODO: tune this speed, and these values may be reversed
+		collectRight.set(-speed);
     }
     
 }

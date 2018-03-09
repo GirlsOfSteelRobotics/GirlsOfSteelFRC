@@ -69,39 +69,39 @@ public class Chassis extends Subsystem {
 		driveRightB.setSafetyEnabled(false);
 		driveRightC.setSafetyEnabled(false);
     	
-    	driveLeftA.setName("Chassis", "driveLeftA");
-    	driveLeftB.setName("Chassis", "driveLeftB");
-    	driveLeftC.setName("Chassis", "driveLeftC");
-    	driveRightA.setName("Chassis", "driveRightA");
-    	driveRightB.setName("Chassis", "driveRightB");
-    	driveRightC.setName("Chassis", "driveRightC");
-    	LiveWindow.add(driveLeftA);
-    	LiveWindow.add(driveLeftB);
-    	LiveWindow.add(driveLeftC);
-    	LiveWindow.add(driveRightA);
-    	LiveWindow.add(driveRightB);
-    	LiveWindow.add(driveRightC);
-    	
-    	setupFPID(driveLeftA);
-    	setupFPID(driveRightA);
-    	
-    	driveLeftA.configClosedloopRamp(0, 10);
-    	driveRightA.configClosedloopRamp(0, 10);
-    	
-    	driveLeftA.configOpenloopRamp(0.25, 10);
-    	driveRightA.configOpenloopRamp(0.25, 10);
-    	
-    	driveLeftA.configMotionCruiseVelocity(2800, 10);
-    	driveRightA.configMotionCruiseVelocity(2800, 10);
-    	
-    	driveLeftA.configMotionAcceleration(6000, 10);
-    	driveRightA.configMotionAcceleration(6000, 10);
-    	
-    	driveLeftA.configPeakOutputForward(0.9, 10);
-    	driveLeftA.configPeakOutputReverse(-0.9, 10);
-    	
-    	driveRightA.configPeakOutputForward(0.9, 10);
-    	driveRightA.configPeakOutputReverse(-0.9, 10);
+	    	driveLeftA.setName("Chassis", "driveLeftA");
+	    	driveLeftB.setName("Chassis", "driveLeftB");
+	    	driveLeftC.setName("Chassis", "driveLeftC");
+	    	driveRightA.setName("Chassis", "driveRightA");
+	    	driveRightB.setName("Chassis", "driveRightB");
+	    	driveRightC.setName("Chassis", "driveRightC");
+	    	LiveWindow.add(driveLeftA);
+	    	LiveWindow.add(driveLeftB);
+	    	LiveWindow.add(driveLeftC);
+	    	LiveWindow.add(driveRightA);
+	    	LiveWindow.add(driveRightB);
+	    	LiveWindow.add(driveRightC);
+	    	
+	    	setupFPID(driveLeftA);
+	    	setupFPID(driveRightA);
+	    	
+	    	driveLeftA.configClosedloopRamp(0, 10);
+	    	driveRightA.configClosedloopRamp(0, 10);
+	    	
+	    	driveLeftA.configOpenloopRamp(0.25, 10);
+	    	driveRightA.configOpenloopRamp(0.25, 10);
+	    	
+	    	driveLeftA.configMotionCruiseVelocity(2800, 10);
+	    	driveRightA.configMotionCruiseVelocity(2800, 10);
+	    	
+	    	driveLeftA.configMotionAcceleration(6000, 10);
+	    	driveRightA.configMotionAcceleration(6000, 10);
+	    	
+	    	driveLeftA.configPeakOutputForward(0.9, 10);
+	    	driveLeftA.configPeakOutputReverse(-0.9, 10);
+	    	
+	    	driveRightA.configPeakOutputForward(0.9, 10);
+	    	driveRightA.configPeakOutputReverse(-0.9, 10);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
 		drive.setSafetyEnabled(false);
