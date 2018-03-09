@@ -19,6 +19,7 @@ import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
 import org.usfirst.frc.team3504.robot.commands.Release;
+import org.usfirst.frc.team3504.robot.commands.ReleaseSlow;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.SwitchPosition;
@@ -66,7 +67,7 @@ public class OI {
 	
 	private JoystickButton collect;
 	private JoystickButton release;
-	private JoystickButton slowRelease;
+	private JoystickButton releaseSlow;
 	
 	private Camera driveCam;
 	
@@ -90,7 +91,7 @@ public class OI {
 		
 		collect = new JoystickButton(operatorGamePad, 4);
 		release = new JoystickButton(operatorGamePad, 3);
-		slowRelease = new JoystickButton(operatorGamePad, 10); //TODO: see if drivers like this placement
+		releaseSlow = new JoystickButton(operatorGamePad, 10); //TODO: see if drivers like this placement
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
@@ -111,6 +112,7 @@ public class OI {
 		
 		collect.whileHeld(new Collect());
 		release.whileHeld(new Release());
+		releaseSlow.whileHeld(new ReleaseSlow());
 		
 		drivingGamePad.setTwistChannel(3);
 		amazonGamePad.setTwistChannel(4);
