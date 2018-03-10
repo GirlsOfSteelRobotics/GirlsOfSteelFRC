@@ -84,9 +84,9 @@ public class Robot extends IterativeRobot {
 	}
 	
 	/* hardware objects */
-	TalonSRX _talonLeft = new TalonSRX(6);
-	TalonSRX _talonRght = new TalonSRX(2);
-	TalonSRX _talonPigeon = new TalonSRX(5);
+	TalonSRX _talonLeft = new TalonSRX(4);
+	TalonSRX _talonRght = new TalonSRX(1);
+	TalonSRX _talonPigeon = new TalonSRX(8);
 	PigeonIMU _imu = new PigeonIMU(_talonPigeon);
 	Joystick _joy = new Joystick(0);
 	
