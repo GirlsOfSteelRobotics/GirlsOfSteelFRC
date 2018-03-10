@@ -22,7 +22,7 @@ public class Constants {
 	 * Using CTRE Magnetic Encoder.
 	 * @link https://github.com/CrossTheRoadElec/Phoenix-Documentation#what-are-the-units-of-my-sensor
 	 */
-	public final static int kSensorUnitsPerRotation = 4096;
+	public final static int kSensorUnitsPerRotation = 7680;
 
 	public final static double kRotationsToTravel = 6;
 
