@@ -21,19 +21,21 @@ public class Lift extends Subsystem {
 	private DigitalInput limitSwitch;
 	
 	private static double goalLiftPosition;
+	private static boolean inRecoveryMode;
 	
-	public static final double LIFT_MAX = -32000; //TODO tune
+	public static final double LIFT_MAX = 32000; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
-	public static final double LIFT_SWITCH = -12500; //TODO tune
-	public static final double LIFT_SCALE = -30000; //TODO tune
-	public static final double LIFT_GROUND = -1000; //TODO tune
-	public static final double LIFT_INCREMENT = -250; //TODO tune
+	public static final double LIFT_SWITCH = 12500; //TODO tune
+	public static final double LIFT_SCALE = 30000; //TODO tune
+	public static final double LIFT_GROUND = 1000; //TODO tune
+	public static final double LIFT_INCREMENT = 250; //TODO tune
 	
 	private StickyFaults faults = new StickyFaults();
 	
 	public Lift() {
 		lift = new WPI_TalonSRX(RobotMap.LIFT); 
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
+		lift.setInverted(true);
 		lift.setSensorPhase(true);
 		lift.configAllowableClosedloopError(0, 100, 0);
 		lift.configContinuousCurrentLimit(0, 10);
@@ -41,6 +43,7 @@ public class Lift extends Subsystem {
 		lift.clearStickyFaults(10);
 		setupLiftFPID();
 		goalLiftPosition = 0;
+		inRecoveryMode = false;
 		//System.out.println("Lift Constructed");
 		LiveWindow.add(lift);
 	}
@@ -95,36 +98,52 @@ public class Lift extends Subsystem {
 		return lift.getSelectedSensorPosition(0);
 	}
 	
+	public void enterRecoveryMode()
+	{
+		inRecoveryMode = true;
+		System.out.println("Lift IN RECOVERY MODE");
+	}
+	
 	public void holdLiftPosition()
 	{
 		lift.getStickyFaults(faults);
 		if (faults.ResetDuringEn) {
-			lift.stopMotor();
-			System.out.println("sticky fault detected, LIFT MOTOR STOP");
+			inRecoveryMode = true;
+			lift.clearStickyFaults(10);
+			System.out.println("sticky fault detected, IN RECOVERY MODE");
 		}
-		else if (goalLiftPosition != LIFT_MIN)
+		if (inRecoveryMode)
 		{
-			lift.set(ControlMode.Position, goalLiftPosition);
+			if (getLimitSwitch()) 
+			{
+				lift.setSelectedSensorPosition(0, 0, 10);
+				inRecoveryMode = false;
+				System.out.println("Lift encoder position recovered");
+			}
 		}
+		lift.set(ControlMode.Position, goalLiftPosition);
 		//System.out.println("GoalLiftPosition: " + goalLiftPosition);
 	}
 	public void setLiftToScale()
 	{
-		goalLiftPosition = LIFT_SCALE;
+		if (!inRecoveryMode) goalLiftPosition = LIFT_SCALE;
+		else System.out.println("Lift in recovery mode, can't go to scale");
 	}
 	public void setLiftToSwitch()
 	{
-		goalLiftPosition = LIFT_SWITCH;
+		if (!inRecoveryMode) goalLiftPosition = LIFT_SWITCH;
+		else System.out.println("Lift in recovery mode, can't go to switch");
 	}
 	public void setLiftToGround()
 	{
-		goalLiftPosition = LIFT_GROUND;
+		if (!inRecoveryMode) goalLiftPosition = LIFT_GROUND;
+		else System.out.println("Lift in recovery mode, can't go to ground");
 	}
 	
 	public void incrementLift()
 	{
 		double goalPosition = goalLiftPosition + LIFT_INCREMENT;
-		if (goalPosition <= LIFT_MAX)
+		if (!inRecoveryMode && (goalPosition >= LIFT_MAX))
 		{
 			goalLiftPosition = LIFT_MAX;
 		}
@@ -139,7 +158,7 @@ public class Lift extends Subsystem {
 	public void decrementLift()
 	{
 		double goalPosition = goalLiftPosition - LIFT_INCREMENT;
-		if (goalPosition >= LIFT_MIN)
+		if (!inRecoveryMode && (goalPosition <= LIFT_MIN))
 		{
 			goalLiftPosition = LIFT_MIN;
 		}

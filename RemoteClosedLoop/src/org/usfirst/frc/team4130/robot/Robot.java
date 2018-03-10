@@ -85,7 +85,12 @@ public class Robot extends IterativeRobot {
 	
 	/* hardware objects */
 	TalonSRX _talonLeft = new TalonSRX(4);
+	TalonSRX _talonLeftB = new TalonSRX(5);
+	TalonSRX _talonLeftC = new TalonSRX(6);
 	TalonSRX _talonRght = new TalonSRX(1);
+	TalonSRX _talonRghtB = new TalonSRX(2);
+	TalonSRX _talonRghtC = new TalonSRX(3);
+	
 	TalonSRX _talonPigeon = new TalonSRX(8);
 	PigeonIMU _imu = new PigeonIMU(_talonPigeon);
 	Joystick _joy = new Joystick(0);
@@ -113,9 +118,23 @@ public class Robot extends IterativeRobot {
 
 		//------------ talons -----------------//
 		_talonLeft.setInverted(false);
+		_talonLeftB.setInverted(false);
+		_talonLeftC.setInverted(false);
 		_talonLeft.setSensorPhase(true);
+		
 		_talonRght.setInverted(true);
+		_talonRghtB.setInverted(true);
+		_talonRghtC.setInverted(true);
 		_talonRght.setSensorPhase(true);
+		
+		//------------ follower mode -----------------//
+		
+		_talonLeftB.follow(_talonLeft, FollowerType.PercentOutput);
+		_talonLeftC.follow(_talonLeft, FollowerType.PercentOutput);
+		
+		_talonRghtB.follow(_talonRght, FollowerType.PercentOutput);
+		_talonRghtC.follow(_talonRght, FollowerType.PercentOutput);
+		
 
 		//------------ setup filters -----------------//
 		/* other side is quad */
