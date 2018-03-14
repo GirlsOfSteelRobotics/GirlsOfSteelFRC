@@ -24,12 +24,12 @@ public class Constants {
 	 */
 	public final static int kSensorUnitsPerRotation = 7680;
 
-	public final static double kRotationsToTravel = 6;
+	public final static double kRotationsToTravel = 15;
 
 	/**
 	 * How to measure robot heading. 0 for Difference between left and right quad encoder. 1 for Pigeon IMU.
 	 */
-	public final static int kHeadingSensorChoice = 0;
+	public final static int kHeadingSensorChoice = 1;
 
 	/**
 	 * Empirically measure what the difference between encoders per 360'
@@ -71,7 +71,7 @@ public class Constants {
 
 	//                                         			   kP   kI   kD   kF              Iz    PeakOut
 	public final static Gains kGains_Distanc = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
-	public final static Gains kGains_Turning = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
+	public final static Gains kGains_Turning = new Gains( 6.0, 0.0,  4.0, 0.0,            200,  1.00 );
 	public final static Gains kGains_Velocit = new Gains( 0.1, 0.0, 20.0, 1023.0/6800.0,  300,  0.50 ); /* measured 6800 velocity units at full motor output */
 	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 ); /* measured 6800 velocity units at full motor output */
 

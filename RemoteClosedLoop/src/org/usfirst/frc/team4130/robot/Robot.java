@@ -713,7 +713,7 @@ public class Robot extends IterativeRobot {
 
 			/* calculate targets from gamepad inputs */
 			double target_sensorUnits = joyForward * Constants.kSensorUnitsPerRotation * Constants.kRotationsToTravel;
-			double heading_units = joyTurn * Constants.kTurnTravelUnitsPerRotation * -1.0; /* positive right stick => negative heading target (turn to right) */
+			double heading_units = -900;//joyTurn * Constants.kTurnTravelUnitsPerRotation * -1.0; /* positive right stick => negative heading target (turn to right) */
 
 			if (bFirstCall) {
 				System.out.print("[10]two_Axis_MotionMagic selected, ");
@@ -729,6 +729,8 @@ public class Robot extends IterativeRobot {
 			} else if (bExecuteAction == ButtonEvent.ButtonOn) {
 				_target0 = target_sensorUnits;
 				_target1 = heading_units;
+				System.out.println("target distance: " + _target0 + " heading: " + _target1);
+				
 
 				_talonRght.set(ControlMode.MotionMagic, _target0, DemandType.AuxPID, _target1);
 				_talonLeft.follow(_talonRght, FollowerType.AuxOutput1);
