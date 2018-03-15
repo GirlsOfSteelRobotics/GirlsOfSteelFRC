@@ -20,6 +20,9 @@ public class DriveByMotionMagic extends Command {
 
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+	
+	private final static double DISTANCE_ERROR_THRESHOLD = 500; //TODO tune (in encoder ticks)
+	private final static double TURNING_ERROR_THRESHOLD = 2.0; //TODO tune (in degrees)
 
     public DriveByMotionMagic(double inches, double degrees) {
 		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
@@ -53,8 +56,18 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (headingUnits == 0) return Robot.chassis.isMotionStraightFinished(encoderTicks);
-    	else return Robot.chassis.isMotionTurningFinished(headingUnits);
+    	if (headingUnits == 0)
+    	{
+    		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
+    		double error = Math.abs(encoderTicks - currentTicks);
+    		return (error < DISTANCE_ERROR_THRESHOLD);
+    	}
+    	else
+    	{
+    		double currentHeading = Robot.chassis.getYaw();
+    		double error = Math.abs((headingUnits/10) - currentHeading);
+    		return (error < TURNING_ERROR_THRESHOLD);
+    	}
     }
 
     // Called once after isFinished returns true

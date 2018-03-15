@@ -30,8 +30,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Chassis extends Subsystem {
 	
-
-	
+	//Drive talons
 	private WPI_TalonSRX driveLeftA;
 	private WPI_TalonSRX driveLeftB;
 	private WPI_TalonSRX driveLeftC;
@@ -50,9 +49,6 @@ public class Chassis extends Subsystem {
 	
 	public final static double TURN_UNITS_PER_ROTATION = 3600;
 	public final static int PIGEON_UNITS_PER_ROTATION = 8192;
-	
-	public final static double DISTANCE_ERROR_THRESHOLD = 500; //TODO tune (in encoder ticks)
-	public final static double TURNING_ERROR_THRESHOLD = 2.0; //TODO tune (in degrees)
 
 	PigeonIMU pigeonIMU;
 	
@@ -244,7 +240,7 @@ public class Chassis extends Subsystem {
 		/* Remote 0 will be the other side's Talon */
 		driveRightA.configRemoteFeedbackFilter(driveLeftA.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_ENCODER, 10);
 		/* Remote 1 will be a pigeon */
-		driveRightA.configRemoteFeedbackFilter(Robot.collector.getRightCollector().getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
+		driveRightA.configRemoteFeedbackFilter(Robot.collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
 		/* setup sum and difference signals */
 		driveRightA.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, 10);
 		driveRightA.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.QuadEncoder, 10);
@@ -305,20 +301,12 @@ public class Chassis extends Subsystem {
 		System.out.println("Chassis: All sensors are zeroed.");
 	}
 	
-	public boolean isMotionStraightFinished(double targetEncoderTicks)
-	{
-		double currentTicks = driveRightA.getSensorCollection().getQuadraturePosition();
-		double error = Math.abs(targetEncoderTicks - currentTicks);
-		return (error < DISTANCE_ERROR_THRESHOLD);
-	}
 	
-	public boolean isMotionTurningFinished(double headingTarget)
+	public double getYaw()
 	{
 		double[] imuData = new double[3];
 		pigeonIMU.getYawPitchRoll(imuData);
-		double currentHeading = imuData[0];
-		double error = Math.abs((headingTarget/10) - currentHeading);
-		return (error < TURNING_ERROR_THRESHOLD);
+		return imuData[0];
 	}
 	
 		

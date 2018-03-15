@@ -45,6 +45,11 @@ public class Collector extends Subsystem {
 		collectRight.set(-speed);
     }
     
+    public int getRightCollectorID()
+    {
+    	return collectRight.getDeviceID();
+    }
+    
     public WPI_TalonSRX getRightCollector()
     {
     	return collectRight;
