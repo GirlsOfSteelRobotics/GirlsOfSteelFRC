@@ -66,11 +66,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		collector = new Collector();
 		chassis = new Chassis();
 		shifters = new Shifters();
 		lift = new Lift();
 		wrist = new Wrist();
-		collector = new Collector();
 		blobs = new Blobs();
 		camera = new Camera();
 		oi = new OI();

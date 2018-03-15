@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
@@ -17,7 +18,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -53,8 +53,7 @@ public class Chassis extends Subsystem {
 	
 	public final static double DISTANCE_ERROR_THRESHOLD = 500; //TODO tune (in encoder ticks)
 	public final static double TURNING_ERROR_THRESHOLD = 2.0; //TODO tune (in degrees)
-	
-	TalonSRX pigeon;
+
 	PigeonIMU pigeonIMU;
 	
 	private Shifters.Speed speed;
@@ -65,8 +64,7 @@ public class Chassis extends Subsystem {
 	
 	public Chassis() {
 		
-		pigeon = new TalonSRX(RobotMap.PIGEON);
-		pigeonIMU = new PigeonIMU(pigeon);
+		pigeonIMU = new PigeonIMU(Robot.collector.getRightCollector());
 		
 		driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
 		driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
@@ -246,7 +244,7 @@ public class Chassis extends Subsystem {
 		/* Remote 0 will be the other side's Talon */
 		driveRightA.configRemoteFeedbackFilter(driveLeftA.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_ENCODER, 10);
 		/* Remote 1 will be a pigeon */
-		driveRightA.configRemoteFeedbackFilter(pigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
+		driveRightA.configRemoteFeedbackFilter(Robot.collector.getRightCollector().getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
 		/* setup sum and difference signals */
 		driveRightA.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, 10);
 		driveRightA.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.QuadEncoder, 10);
