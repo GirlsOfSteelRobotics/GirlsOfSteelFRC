@@ -51,6 +51,9 @@ public class Chassis extends Subsystem {
 	public final static double TURN_UNITS_PER_ROTATION = 3600;
 	public final static int PIGEON_UNITS_PER_ROTATION = 8192;
 	
+	public final static double DISTANCE_ERROR_THRESHOLD = 500; //TODO tune (in encoder ticks)
+	public final static double TURNING_ERROR_THRESHOLD = 2.0; //TODO tune (in degrees)
+	
 	TalonSRX pigeon;
 	PigeonIMU pigeonIMU;
 	
@@ -302,6 +305,22 @@ public class Chassis extends Subsystem {
 		pigeonIMU.setYaw(0, 10);
 		pigeonIMU.setAccumZAngle(0, 10);
 		System.out.println("Chassis: All sensors are zeroed.");
+	}
+	
+	public boolean isMotionStraightFinished(double targetEncoderTicks)
+	{
+		double currentTicks = driveRightA.getSensorCollection().getQuadraturePosition();
+		double error = Math.abs(targetEncoderTicks - currentTicks);
+		return (error < DISTANCE_ERROR_THRESHOLD);
+	}
+	
+	public boolean isMotionTurningFinished(double headingTarget)
+	{
+		double[] imuData = new double[3];
+		pigeonIMU.getYawPitchRoll(imuData);
+		double currentHeading = imuData[0];
+		double error = Math.abs((headingTarget/10) - currentHeading);
+		return (error < TURNING_ERROR_THRESHOLD);
 	}
 	
 		

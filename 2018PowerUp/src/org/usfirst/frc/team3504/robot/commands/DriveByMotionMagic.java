@@ -53,7 +53,8 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	if (headingUnits == 0) return Robot.chassis.isMotionStraightFinished(encoderTicks);
+    	else return Robot.chassis.isMotionTurningFinished(headingUnits);
     }
 
     // Called once after isFinished returns true
