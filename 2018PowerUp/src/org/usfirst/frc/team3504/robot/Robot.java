@@ -197,7 +197,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoSwitchSimple();
 		
 		//m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-		m_autonomousCommand = new DriveByMotionMagic(50.0);
+		m_autonomousCommand = new DriveByMotionMagic(50.0,0);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

@@ -32,6 +32,9 @@ public class RobotMap {
 	//Collector
 	public static final int COLLECT_RIGHT = 8;
 	public static final int COLLECT_LEFT = 9;
+	
+	//Pigeon
+	public static final int PIGEON = 11; //TODO update
 
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
