@@ -38,6 +38,7 @@ public class Collector extends Subsystem {
     	collectLeft.stopMotor();
     	collectRight.stopMotor();
     	collectorSpeed = 0;
+    	System.out.println("Collector: motors stopped");
     }
     
     public void collect() {
@@ -68,6 +69,7 @@ public class Collector extends Subsystem {
     
     public void runSlowCollect()
     {
+    	System.out.println("Collector: holding cube in");
     	collectorSpeed = 0.15;
     }
     

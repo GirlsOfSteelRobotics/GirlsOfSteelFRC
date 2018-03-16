@@ -4,7 +4,7 @@ import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
-import org.usfirst.frc.team3504.robot.commands.Release;
+import org.usfirst.frc.team3504.robot.commands.ReleaseFast;
 import org.usfirst.frc.team3504.robot.commands.TimeDelay;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.commands.WristToCollect;
@@ -34,7 +34,7 @@ public class AutoSwitchSimple extends CommandGroup {
     	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD, 0));
     	
     	//Release and back up
-    	addParallel(new Release());
+    	addParallel(new ReleaseFast());
     	addSequential(new TimeDelay(1.0));
     	addSequential(new DriveByMotionMagic(BACK_UP, 0));
     	

@@ -104,13 +104,21 @@ public class Lift extends Subsystem {
 		System.out.println("Lift IN RECOVERY MODE");
 	}
 	
+	public void printLimitSwitch()
+	{
+		if (getLimitSwitch()) System.out.println("Lift: Limit switch ACTIVATED");
+		else System.out.println("Lift: Limit switch NOT activated");
+	}
+	
 	public void holdLiftPosition()
 	{
+		printLimitSwitch(); ///Testing Limit Switch
+		
 		lift.getStickyFaults(faults);
 		if (faults.ResetDuringEn) {
 			inRecoveryMode = true;
 			lift.clearStickyFaults(10);
-			System.out.println("sticky fault detected, IN RECOVERY MODE");
+			System.out.println("Lift: Sticky fault detected, IN RECOVERY MODE");
 		}
 		if (inRecoveryMode)
 		{
@@ -118,7 +126,7 @@ public class Lift extends Subsystem {
 			{
 				lift.setSelectedSensorPosition(0, 0, 10);
 				inRecoveryMode = false;
-				System.out.println("Lift encoder position recovered");
+				System.out.println("Lift: encoder position recovered (limit switch activted)");
 			}
 		}
 		lift.set(ControlMode.Position, goalLiftPosition);

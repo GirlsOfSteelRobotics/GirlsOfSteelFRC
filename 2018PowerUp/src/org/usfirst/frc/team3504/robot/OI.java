@@ -19,7 +19,7 @@ import org.usfirst.frc.team3504.robot.commands.LiftToGround;
 import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.LiftUp;
-import org.usfirst.frc.team3504.robot.commands.Release;
+import org.usfirst.frc.team3504.robot.commands.ReleaseFast;
 import org.usfirst.frc.team3504.robot.commands.ReleaseSlow;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
@@ -67,7 +67,7 @@ public class OI {
 
 	
 	private JoystickButton collect;
-	private JoystickButton release;
+	private JoystickButton releaseFast;
 	private JoystickButton releaseSlow;
 	
 	private Camera driveCam;
@@ -91,8 +91,8 @@ public class OI {
 		liftToGround = new JoystickButton(operatorGamePad, 2);
 		
 		collect = new JoystickButton(operatorGamePad, 4);
-		release = new JoystickButton(operatorGamePad, 3);
-		releaseSlow = new JoystickButton(operatorGamePad, 10); //TODO: see if drivers like this placement
+		releaseFast = new JoystickButton(operatorGamePad, 10);
+		releaseSlow = new JoystickButton(operatorGamePad, 3); //TODO: see if drivers like this placement
 		
 		shifterDown.whenPressed(new ShiftDown());
 		shifterUp.whenPressed(new ShiftUp());
@@ -112,7 +112,7 @@ public class OI {
 
 		
 		collect.whileHeld(new Collect());
-		release.whileHeld(new Release());
+		releaseFast.whileHeld(new ReleaseFast());
 		releaseSlow.whileHeld(new ReleaseSlow());
 		
 		drivingGamePad.setTwistChannel(3);

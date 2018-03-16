@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Release extends Command {
+public class ReleaseFast extends Command {
 
-    public Release() {
+    public ReleaseFast() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.collector);

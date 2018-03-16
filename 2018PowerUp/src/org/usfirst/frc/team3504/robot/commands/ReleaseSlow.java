@@ -21,7 +21,7 @@ public class ReleaseSlow extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.collector.release(0.51); //TODO: test this value
+    		Robot.collector.release(0.5); //TODO: test this value
     }
 
     // Make this return true when this Command no longer needs to run execute()
