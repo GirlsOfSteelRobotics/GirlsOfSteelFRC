@@ -14,7 +14,6 @@ import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
 import org.usfirst.frc.team3504.robot.commands.LiftEnterRecoveryMode;
-import org.usfirst.frc.team3504.robot.commands.LiftReset;
 import org.usfirst.frc.team3504.robot.commands.LiftToGround;
 import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
