@@ -117,8 +117,8 @@ public class Chassis extends Subsystem {
     	//driveRightA.configOpenloopRamp(0.25, 10);
     	
     	//blinky values
-    	driveLeftA.configOpenloopRamp(0.5, 10);
-    	driveRightA.configOpenloopRamp(0.5, 10);
+    	driveLeftA.configOpenloopRamp(0.37, 10);
+    	driveRightA.configOpenloopRamp(0.37, 10);
     	
     	driveLeftA.configMotionCruiseVelocity(2800, 10);
     	driveRightA.configMotionCruiseVelocity(2800, 10);
