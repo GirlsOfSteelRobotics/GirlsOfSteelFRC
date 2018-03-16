@@ -13,6 +13,7 @@ import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
 import org.usfirst.frc.team3504.robot.commands.LiftDown;
+import org.usfirst.frc.team3504.robot.commands.LiftEnterRecoveryMode;
 import org.usfirst.frc.team3504.robot.commands.LiftReset;
 import org.usfirst.frc.team3504.robot.commands.LiftToGround;
 import org.usfirst.frc.team3504.robot.commands.LiftToScale;
@@ -58,7 +59,7 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	private JoystickButton liftToSwitch;
-	private JoystickButton liftToScale;
+	private JoystickButton liftEnterRecovery;
 	private JoystickButton liftToGround;
 	
 	private JoystickButton wristIn;
@@ -83,7 +84,7 @@ public class OI {
 		liftUp = new JoystickButton(operatorGamePad, 6);
 		liftDown = new JoystickButton(operatorGamePad, 8);
 		liftToSwitch = new JoystickButton(operatorGamePad, 1);
-		liftToScale = new JoystickButton(operatorGamePad, 9);
+		liftEnterRecovery = new JoystickButton(operatorGamePad, 9);
 		
 		wristIn = new JoystickButton(operatorGamePad, 5);  
 		wristOut = new JoystickButton(operatorGamePad, 7);
@@ -103,7 +104,7 @@ public class OI {
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
 		liftToSwitch.whenPressed(new SwitchPosition());
-		liftToScale.whenPressed(new LiftToScale());
+		liftEnterRecovery.whenPressed(new LiftEnterRecoveryMode());
 		liftToGround.whenPressed(new CollectPosition());
 		
 		wristIn.whileHeld(new WristIn());
