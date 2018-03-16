@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot.FieldSide;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.Release;
@@ -25,7 +26,26 @@ public class AutoNearSwitch extends CommandGroup {
 
     public AutoNearSwitch(FieldSide robotPosition) {
     	System.out.println("AutoNearSwitch starting");
-//    	//Get lift & wrist into position
+    	
+    	//Get lift & wrist into position
+    	addSequential(new WristToCollect());
+    	addSequential(new LiftToSwitch());
+    	addParallel(new WristHold());
+    	addParallel(new LiftHold());
+    	
+    	//Move Robot into position
+    	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD, 0));
+    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight());
+    	else addSequential(new AutoTurnLeft());
+    	addSequential(new DriveByMotionMagic(DISTANCE_SIDE, 0));
+    	
+    	//Release and back up
+    	addParallel(new Release());
+    	addSequential(new TimeDelay(1.0));
+    	addSequential(new DriveByMotionMagic(BACK_UP, 0));
+    	
+    	/*Position Control
+    	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToSwitch());
     	addParallel(new WristHold());
@@ -41,5 +61,6 @@ public class AutoNearSwitch extends CommandGroup {
     	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
     	addSequential(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
+    	*/
     }
 }

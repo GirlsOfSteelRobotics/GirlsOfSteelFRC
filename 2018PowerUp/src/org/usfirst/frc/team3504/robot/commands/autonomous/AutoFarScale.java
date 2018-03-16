@@ -2,6 +2,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot.FieldSide;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
@@ -21,9 +22,35 @@ public class AutoFarScale extends CommandGroup {
 	private final double DISTANCE_SIDE_1 = 150.0;
 	private final double DISTANCE_FORWARD_2 = 10.0;
 	private final double DISTANCE_SIDE_2 = 10.0;
+	private final double BACK_UP = -30.0;
 
     public AutoFarScale(FieldSide robotPosition) {
     	System.out.println("AutoFarScale starting");
+    	
+    	//Get lift & wrist into position
+    	addSequential(new WristToCollect());
+    	addSequential(new LiftToScale());
+    	addParallel(new WristHold());
+    	addParallel(new LiftHold());
+    	
+    	//Move Robot into position
+    	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
+    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight());
+    	else addSequential(new AutoTurnLeft());
+    	addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 0));
+    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnLeft());
+    	else addSequential(new AutoTurnRight());
+    	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_2, 0));
+    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnLeft());
+    	else addSequential(new AutoTurnRight());
+    	addSequential(new DriveByMotionMagic(DISTANCE_SIDE_2, 0));
+    	
+    	//Release and back up
+    	addParallel(new Release());
+    	addSequential(new TimeDelay(1.0));
+    	addSequential(new DriveByMotionMagic(BACK_UP, 0));
+    	
+    	/*Position Control
     	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToScale());
@@ -45,6 +72,7 @@ public class AutoFarScale extends CommandGroup {
     	//Release and back up
     	addParallel(new Release());
     	addSequential(new TimeDelay(1.0));
-    	addSequential(new DriveByDistance(-30, Shifters.Speed.kLow));
+    	addSequential(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
+    	*/
     }
 }

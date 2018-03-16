@@ -189,15 +189,13 @@ public class Robot extends TimedRobot {
 		*/
 		
 		//Other auto commands for testing:
-		
 		//m_autonomousCommand = new AutoPrintData();
 		//m_autonomousCommand = new AutoSwitchSimple();
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
-		
 		//m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-		m_autonomousCommand = new DriveByMotionMagic(50.0,0);
+		
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -205,6 +203,11 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
+		
+		//Motion Magic Testing
+		m_autonomousCommand = new DriveByMotionMagic(50.0,0);
+		//m_autonomousCommand = new AutoTurnRight();
+		//m_autonomousCommand = new AutoTurnLeft();
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
