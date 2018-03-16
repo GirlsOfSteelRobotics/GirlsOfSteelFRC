@@ -37,7 +37,6 @@ public class OI {
 	private JoystickButton liftUp;
 	private JoystickButton liftDown;
 	private JoystickButton liftToSwitch;
-	private JoystickButton liftToScale;
 	private JoystickButton liftEnterRecovery;
 	private JoystickButton liftToGround;
 
@@ -61,9 +60,8 @@ public class OI {
 		liftUp = new JoystickButton(operatorGamePad, 6);
 		liftDown = new JoystickButton(operatorGamePad, 8);
 		liftToSwitch = new JoystickButton(operatorGamePad, 1);
-		liftToScale = new JoystickButton(operatorGamePad, 9);
 		liftToGround = new JoystickButton(operatorGamePad, 2);
-		liftEnterRecovery = new JoystickButton(operatorGamePad, 11);
+		liftEnterRecovery = new JoystickButton(operatorGamePad, 9);
 
 		wristIn = new JoystickButton(operatorGamePad, 5);  
 		wristOut = new JoystickButton(operatorGamePad, 7);
@@ -84,7 +82,6 @@ public class OI {
 		liftUp.whileHeld(new LiftUp());
 		liftDown.whileHeld(new LiftDown());
 		liftToSwitch.whenPressed(new SwitchPosition());
-		liftToScale.whenPressed(new LiftToScale());
 		liftToGround.whenPressed(new CollectPosition());
 		liftEnterRecovery.whenPressed(new LiftEnterRecoveryMode());
 
