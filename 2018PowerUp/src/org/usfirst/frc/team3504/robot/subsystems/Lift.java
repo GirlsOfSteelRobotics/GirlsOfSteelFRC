@@ -22,10 +22,10 @@ public class Lift extends Subsystem {
 	private static double goalLiftPosition;
 	private static boolean inRecoveryMode;
 
-	public static final double LIFT_MAX = 32000; //TODO tune
+	public static final double LIFT_MAX = 32500; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
 	public static final double LIFT_SWITCH = 12500; //TODO tune
-	public static final double LIFT_SCALE = 30000; //TODO tune
+	public static final double LIFT_SCALE = 32500; //TODO tune
 	public static final double LIFT_GROUND = 1000; //TODO tune
 	public static final double LIFT_INCREMENT = 250; //TODO tune
 
@@ -104,11 +104,12 @@ public class Lift extends Subsystem {
 
 	public void holdLiftPosition()
 	{
-		printLimitSwitch(); ///Testing Limit Switch
+		//printLimitSwitch(); ///Testing Limit Switch
 
 		lift.getStickyFaults(faults);
 		if (faults.ResetDuringEn) {
 			inRecoveryMode = true;
+			goalLiftPosition = 0;
 			lift.clearStickyFaults(10);
 			System.out.println("Lift: Sticky fault detected, IN RECOVERY MODE");
 		}

@@ -119,12 +119,7 @@ public class Chassis extends Subsystem {
     	//blinky values
     	driveLeftA.configOpenloopRamp(0.37, 10);
     	driveRightA.configOpenloopRamp(0.37, 10);
-    	
-    	driveLeftA.configMotionCruiseVelocity(2800, 10);
-    	driveRightA.configMotionCruiseVelocity(2800, 10);
-    	
-    	driveLeftA.configMotionAcceleration(6000, 10);
-    	driveRightA.configMotionAcceleration(6000, 10);
+
     	
     	driveLeftA.configPeakOutputForward(0.9, 10);
     	driveLeftA.configPeakOutputReverse(-0.9, 10);
@@ -148,10 +143,10 @@ public class Chassis extends Subsystem {
 		//Motion Magic
 		
 		/* distance servo */
-		driveRightA.config_kP(SLOT_DISTANCE, 0.1, 10);
+		driveRightA.config_kP(SLOT_DISTANCE, 0.05, 10);
 		driveRightA.config_kI(SLOT_DISTANCE, 0.0, 10);
-		driveRightA.config_kD(SLOT_DISTANCE, 0.0, 10);
-		driveRightA.config_kF(SLOT_DISTANCE, 0.0, 10);
+		driveRightA.config_kD(SLOT_DISTANCE, 0.01, 10);
+		driveRightA.config_kF(SLOT_DISTANCE, 0.14, 10);
 		driveRightA.config_IntegralZone(SLOT_DISTANCE, 100, 10);
 		driveRightA.configClosedLoopPeakOutput(SLOT_DISTANCE, 0.50, 10);
 
@@ -230,8 +225,8 @@ public class Chassis extends Subsystem {
 		driveLeftC.setInverted(false);
 		
 		driveRightA.setInverted(inverted);
-		driveRightA.setInverted(inverted);
-		driveRightA.setInverted(inverted);
+		driveRightB.setInverted(inverted);
+		driveRightC.setInverted(inverted);
 	}
 	
 	public void configForMotionMagic()
@@ -263,8 +258,8 @@ public class Chassis extends Subsystem {
 		driveLeftA.configNeutralDeadband(0.001, 10);
 		driveRightA.configNeutralDeadband(0.001, 10);
 
-		driveRightA.configMotionAcceleration(1000, 10);
-		driveRightA.configMotionCruiseVelocity(1000, 10);
+		driveRightA.configMotionAcceleration(6000, 10);
+		driveRightA.configMotionCruiseVelocity(2800, 10);
 
 		/* max out the peak output (for all modes).  However you can
 		 * limit the output of a given PID object with configClosedLoopPeakOutput().

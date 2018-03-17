@@ -46,6 +46,8 @@ public class OI {
 	private JoystickButton collect;
 	private JoystickButton releaseFast;
 	private JoystickButton releaseSlow;
+	
+	private JoystickButton motionMagic;
 
 	public OI() {
 		// Set which joystick axis is retrieved by its getTwist() method
@@ -69,6 +71,8 @@ public class OI {
 		collect = new JoystickButton(operatorGamePad, 4);
 		releaseFast = new JoystickButton(operatorGamePad, 10);
 		releaseSlow = new JoystickButton(operatorGamePad, 3);
+		
+		motionMagic = new JoystickButton(amazonGamePad, 4);
 
 		/* BUTTON ACTIONS */
 
@@ -91,6 +95,8 @@ public class OI {
 		collect.whileHeld(new Collect());
 		releaseFast.whileHeld(new ReleaseFast());
 		releaseSlow.whileHeld(new ReleaseSlow());
+		
+		motionMagic.whenPressed(new DriveByMotionMagic(25.0, -90.0));
 	}
 
 	//	public double getGamePadLeftUpAndDown() {

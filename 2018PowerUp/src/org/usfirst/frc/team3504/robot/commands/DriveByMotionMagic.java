@@ -43,7 +43,7 @@ public class DriveByMotionMagic extends Command {
     	System.out.println("DriveByMotionMagic encoder ticks + heading: " + encoderTicks + headingUnits);
     	System.out.println("DriveByMotionMagic initialized");
     	
-		rightTalon.set(ControlMode.MotionMagic, encoderTicks, DemandType.AuxPID, headingUnits);
+		rightTalon.set(ControlMode.MotionMagic, 2 * encoderTicks, DemandType.AuxPID, headingUnits);
 		leftTalon.follow(rightTalon, FollowerType.AuxOutput1);
 		
 		System.out.println("DriveByMotionMagic: instructions sent, started");
@@ -56,6 +56,7 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+
     	if (headingUnits == 0)
     	{
     		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
@@ -68,6 +69,7 @@ public class DriveByMotionMagic extends Command {
     		double error = Math.abs((headingUnits/10) - currentHeading);
     		return (error < TURNING_ERROR_THRESHOLD);
     	}
+    	
     }
 
     // Called once after isFinished returns true

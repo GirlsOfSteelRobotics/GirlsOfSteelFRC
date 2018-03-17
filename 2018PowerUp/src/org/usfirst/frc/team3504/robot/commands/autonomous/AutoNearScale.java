@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoNearScale extends CommandGroup {
 
-	private final double DISTANCE_FORWARD = 300.0;
-	private final double DISTANCE_SIDE = 2.0;
+	private final double DISTANCE_FORWARD = 285.0;
+	private final double DISTANCE_SIDE = 0.0;
 	private final double BACK_UP = -30;
 
     public AutoNearScale(FieldSide robotPosition) {

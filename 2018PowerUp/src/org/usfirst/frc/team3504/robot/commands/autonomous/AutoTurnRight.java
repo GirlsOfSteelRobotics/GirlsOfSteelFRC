@@ -24,7 +24,7 @@ public class AutoTurnRight extends CommandGroup {
     	
     	//Motion Magic 
     	double heading = -90.0; //in degrees
-    	double inches = 50.0;
+    	double inches = 25.0;
     	addSequential(new DriveByMotionMagic(inches, heading));
     }
 }
