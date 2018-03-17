@@ -259,7 +259,7 @@ public class Chassis extends Subsystem {
 		driveRightA.configNeutralDeadband(0.001, 10);
 
 		driveRightA.configMotionAcceleration(6000, 10);
-		driveRightA.configMotionCruiseVelocity(2800, 10);
+		driveRightA.configMotionCruiseVelocity(5000, 10);
 
 		/* max out the peak output (for all modes).  However you can
 		 * limit the output of a given PID object with configClosedLoopPeakOutput().
@@ -294,6 +294,13 @@ public class Chassis extends Subsystem {
 		pigeonIMU.setYaw(0, 10);
 		pigeonIMU.setAccumZAngle(0, 10);
 		System.out.println("Chassis: All sensors are zeroed.");
+	}
+	
+	public void zeroEncoder()
+	{
+		driveLeftA.getSensorCollection().setQuadraturePosition(0, 10);
+		driveRightA.getSensorCollection().setQuadraturePosition(0, 10);
+		System.out.println("Chassis: Encoders are zeroed.");
 	}
 	
 	

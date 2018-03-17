@@ -35,8 +35,8 @@ public class AutoNearSwitch extends CommandGroup {
     	
     	//Move Robot into position
     	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD, 0));
-    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight());
-    	else addSequential(new AutoTurnLeft());
+    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight(25.0));
+    	else addSequential(new AutoTurnLeft(25.0));
     	addSequential(new DriveByMotionMagic(DISTANCE_SIDE, 0));
     	
     	//Release and back up

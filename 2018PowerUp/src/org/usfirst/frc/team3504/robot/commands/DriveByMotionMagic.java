@@ -17,6 +17,7 @@ public class DriveByMotionMagic extends Command {
 	
 	private double encoderTicks; //in sensor units
 	private double headingUnits;
+	private boolean resetPigeon;
 
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
@@ -27,6 +28,15 @@ public class DriveByMotionMagic extends Command {
     public DriveByMotionMagic(double inches, double degrees) {
 		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
 		headingUnits = 10*degrees;
+		resetPigeon = true;
+		requires(Robot.chassis);
+		System.out.println("DriveByMotionMagic: constructed");
+    }
+    
+    public DriveByMotionMagic(double inches, double degrees, boolean reset) {
+		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
+		headingUnits = 10*degrees;
+		resetPigeon = reset;
 		requires(Robot.chassis);
 		System.out.println("DriveByMotionMagic: constructed");
     }
@@ -37,7 +47,8 @@ public class DriveByMotionMagic extends Command {
     	System.out.println("DriveByMotionMagic: motors inverted");
     	Robot.chassis.configForMotionMagic();
     	System.out.println("DriveByMotionMagic: configured for motion magic");
-    	Robot.chassis.zeroSensors();
+    	if (resetPigeon) Robot.chassis.zeroSensors();
+    	else Robot.chassis.zeroEncoder();
     	System.out.println("DriveByMotionMagic: sensors zeroed");
     	
     	System.out.println("DriveByMotionMagic encoder ticks + heading: " + encoderTicks + headingUnits);
@@ -51,13 +62,13 @@ public class DriveByMotionMagic extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		System.out.println("DriveByMotionMagic execute");
+		//System.out.println("DriveByMotionMagic execute");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-    	if (headingUnits == 0)
+    	if (!resetPigeon || headingUnits == 0)
     	{
     		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
     		double error = Math.abs(encoderTicks - currentTicks);

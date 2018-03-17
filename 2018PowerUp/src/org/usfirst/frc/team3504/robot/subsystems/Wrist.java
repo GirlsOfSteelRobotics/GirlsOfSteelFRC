@@ -26,6 +26,7 @@ public class Wrist extends Subsystem {
 	public static final double WRIST_COLLECT = -930; //TODO tune
 	public static final double WRIST_SWITCH = -800; //TODO tune
 	public static final double WRIST_INCREMENT = 20; //TODO tune
+	public static final double WRIST_SHOOT = -400; //TODO tune
 	
 	public Wrist() {
 		wrist = new WPI_TalonSRX(RobotMap.WRIST);

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoTurnLeft extends CommandGroup {
 
-    public AutoTurnLeft() {
+    public AutoTurnLeft(double inches) {
     	System.out.println("AutoTurnLeft starting");
     	
     	/*Position Control
@@ -21,7 +21,6 @@ public class AutoTurnLeft extends CommandGroup {
         
       //Motion Magic 
     	double heading = 90.0; //in degrees
-    	double inches = 25.0;
     	addSequential(new DriveByMotionMagic(inches, heading));
     }
 }

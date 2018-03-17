@@ -10,6 +10,7 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
+import org.usfirst.frc.team3504.robot.commands.TurnInPlace;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveToBaseline;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarScale;
@@ -111,6 +112,11 @@ public class Robot extends TimedRobot {
 		
 		//Determine which side of the field out robot is on
 		FieldSide robotSide;
+		FieldElement elementPriority;
+		
+		if (!RobotMap.dio0.get()) elementPriority = FieldElement.Scale;
+		else elementPriority = FieldElement.Switch;
+		
 		if(!RobotMap.dio1.get()) robotSide = FieldSide.left; //get from DIO port
 		else if (!RobotMap.dio2.get()) robotSide = FieldSide.middle;
 		else if (!RobotMap.dio3.get()) robotSide = FieldSide.right;
@@ -125,13 +131,33 @@ public class Robot extends TimedRobot {
 		}
 		else if(robotSide == FieldSide.left)
 		{
-			if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-			else m_autonomousCommand = new AutoDriveToBaseline();
+			if (elementPriority == FieldElement.Switch)
+			{
+				if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+				else if (scaleSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+				else m_autonomousCommand = new AutoDriveToBaseline();
+			}
+			else //scale priority
+			{
+				if (scaleSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+				else if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+				else m_autonomousCommand = new AutoDriveToBaseline();
+			}
 		}
 		else if(robotSide == FieldSide.right) 
 		{
-			if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
-			else m_autonomousCommand = new AutoDriveToBaseline();
+			if (elementPriority == FieldElement.Switch)
+			{
+				if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
+				else if (scaleSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
+				else m_autonomousCommand = new AutoDriveToBaseline();
+			}
+			else //scale priority
+			{
+				if (scaleSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
+				else if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
+				else m_autonomousCommand = new AutoDriveToBaseline();
+			}
 		}
 		else if(robotSide == FieldSide.middle)
 		{
@@ -195,6 +221,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
 		m_autonomousCommand = new AutoNearScale(FieldSide.left);
+		//m_autonomousCommand = new TurnInPlace(-90.0);
 		
 		
 		/*
