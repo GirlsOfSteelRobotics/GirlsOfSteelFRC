@@ -166,5 +166,9 @@ public class OI {
 	public boolean isSquaredOrCurvature() { //TODO: rethink boolean
 		return !RobotMap.dio0.get(); 
 	}
+	
+	public boolean isThrottle() {
+		return amazonGamePad.getRawAxis(3)>.5;
+	}
 }
 

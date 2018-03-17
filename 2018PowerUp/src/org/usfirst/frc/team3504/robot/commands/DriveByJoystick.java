@@ -25,35 +25,11 @@ public class DriveByJoystick extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		/*if (Robot.oi.getCurrentThrottle() > Robot.shifters.getShiftingThreshold()) {
-    			Robot.shifters.shiftGear(Speed.kHigh);
-    		} else if (Robot.oi.getCurrentThrottle() < Robot.shifters.getShiftingThreshold()) {
-    			Robot.shifters.shiftGear(Speed.kLow);
-    		}*/
-
-//		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade) {
-//			if (Robot.oi.isSquaredOrCurvature()){
-//				Robot.chassis.drive.curvatureDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickOneSideToSide(), true);
-//			} else {
-//				Robot.chassis.drive.arcadeDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickOneSideToSide(), true);
-//			}
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
-//			if (Robot.oi.isSquaredOrCurvature()){
-//				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
-//			} else {
-//				Robot.chassis.drive.arcadeDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
-//			}
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank){
-//			Robot.chassis.drive.tankDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightUpAndDown(), Robot.oi.isSquaredOrCurvature());
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
-//			Robot.chassis.drive.tankDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickTwoUpAndDown(), Robot.oi.isSquaredOrCurvature());
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.amazonDrive ) {
-			if (Robot.oi.isSquaredOrCurvature()){
-				Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown(), Robot.oi.getAmazonRightSideToSide(), true);
-			} else {
-				Robot.chassis.drive.arcadeDrive(Robot.oi.getAmazonLeftUpAndDown(), Robot.oi.getAmazonRightSideToSide(), true);
-			}
-		
+	
+		double throttleFactor = Robot.oi.isThrottle()? .25 : 1;
+		Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown()*throttleFactor, 
+				Robot.oi.getAmazonRightSideToSide()*throttleFactor, true);
+	
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
