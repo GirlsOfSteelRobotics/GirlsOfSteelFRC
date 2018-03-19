@@ -22,8 +22,8 @@ public class DriveByMotionMagic extends Command {
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 	
-	private final static double DISTANCE_ERROR_THRESHOLD = 500; //TODO tune (in encoder ticks)
-	private final static double TURNING_ERROR_THRESHOLD = 2.0; //TODO tune (in degrees)
+	private final static double DISTANCE_ERROR_THRESHOLD = 1000; //TODO tune (in encoder ticks)
+	private final static double TURNING_ERROR_THRESHOLD = 6.0; //TODO tune (in degrees)
 
     public DriveByMotionMagic(double inches, double degrees) {
 		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
@@ -67,17 +67,23 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-
+  
     	if (!resetPigeon || headingUnits == 0)
     	{
-    		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
-    		double error = Math.abs(encoderTicks - currentTicks);
+    		double rightTicks = rightTalon.getSensorCollection().getQuadraturePosition();
+    		double leftTicks = leftTalon.getSensorCollection().getQuadraturePosition();
+    		double currentTicks = rightTicks + leftTicks;
+    		System.out.println("sensor position: " + currentTicks);
+    		System.out.println("target position: " + (2*encoderTicks));
+    		double error = Math.abs((2*encoderTicks) - currentTicks);
+    		System.out.println("Distance error: " + error);
     		return (error < DISTANCE_ERROR_THRESHOLD);
     	}
     	else
     	{
     		double currentHeading = Robot.chassis.getYaw();
     		double error = Math.abs((headingUnits/10) - currentHeading);
+    		//System.out.println("Turning error: " + error);
     		return (error < TURNING_ERROR_THRESHOLD);
     	}
     	
