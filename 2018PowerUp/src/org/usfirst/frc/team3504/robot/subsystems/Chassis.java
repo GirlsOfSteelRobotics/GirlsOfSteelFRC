@@ -121,11 +121,11 @@ public class Chassis extends Subsystem {
     	driveRightA.configOpenloopRamp(0.37, 10);
 
     	
-    	driveLeftA.configPeakOutputForward(0.9, 10);
-    	driveLeftA.configPeakOutputReverse(-0.9, 10);
+    	driveLeftA.configPeakOutputForward(1, 10);
+    	driveLeftA.configPeakOutputReverse(-1, 10);
     	
-    	driveRightA.configPeakOutputForward(0.9, 10);
-    	driveRightA.configPeakOutputReverse(-0.9, 10);
+    	driveRightA.configPeakOutputForward(1, 10);
+    	driveRightA.configPeakOutputReverse(-1, 10);
 		
 		drive = new DifferentialDrive(driveLeftA, driveRightA);
 		drive.setSafetyEnabled(false);

@@ -170,5 +170,9 @@ public class OI {
 	public boolean isThrottle() {
 		return amazonGamePad.getRawAxis(3)>.5;
 	}
+	
+	public boolean isSpeedy(){
+		return amazonGamePad.getRawAxis(4)>.5;
+	}
 }
 
