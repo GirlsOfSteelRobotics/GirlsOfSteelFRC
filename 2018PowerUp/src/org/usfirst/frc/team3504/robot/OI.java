@@ -172,7 +172,7 @@ public class OI {
 	}
 	
 	public boolean isSpeedy(){
-		return amazonGamePad.getRawAxis(4)>.5;
+		return amazonGamePad.getRawAxis(2)>.5;
 	}
 }
 

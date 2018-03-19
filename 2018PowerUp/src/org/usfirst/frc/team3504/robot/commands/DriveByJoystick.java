@@ -35,7 +35,7 @@ public class DriveByJoystick extends Command {
 		if (Robot.oi.isThrottle()){
 			throttleFactor = .225;
 		}
-		if (Robot.oi.isSpeedy())
+		else if (Robot.oi.isSpeedy())
 			throttleFactor = 1;
 		else
 			throttleFactor = .9;
