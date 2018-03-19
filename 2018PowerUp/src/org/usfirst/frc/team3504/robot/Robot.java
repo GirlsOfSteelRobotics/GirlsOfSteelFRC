@@ -15,6 +15,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveToBaseline;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarScale;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarSwitch;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoMiddleSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScale;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPrintData;
@@ -161,7 +162,7 @@ public class Robot extends TimedRobot {
 		}
 		else if(robotSide == FieldSide.middle)
 		{
-			if (switchSide == FieldSide.right) m_autonomousCommand = new AutoSwitchSimple();
+			if (switchSide != FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitch(switchSide);
 			else m_autonomousCommand = new AutoDriveToBaseline();
 		}
 		else 
@@ -220,7 +221,8 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
-		m_autonomousCommand = new AutoNearScale(FieldSide.left);
+		//m_autonomousCommand = new AutoNearScale(FieldSide.left);
+		//m_autonomousCommand = new AutoMiddleSwitch(switchSide);
 		//m_autonomousCommand = new TurnInPlace(-90.0);
 		
 		
