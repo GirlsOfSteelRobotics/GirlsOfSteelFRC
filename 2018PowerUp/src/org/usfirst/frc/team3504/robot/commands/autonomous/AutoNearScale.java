@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot.FieldSide;
+import org.usfirst.frc.team3504.robot.commands.CollectPosition;
+import org.usfirst.frc.team3504.robot.commands.CollectorStop;
 import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
@@ -23,8 +25,6 @@ public class AutoNearScale extends CommandGroup {
 
 	private final double DISTANCE_FORWARD = 295.0;
 	private final double DISTANCE_SIDE = -20.0;
-	private final double DISTANCE_SIDE_2 = 20.0;
-	private final double BACK_UP = -30;
 
     public AutoNearScale(FieldSide robotPosition) {
     	System.out.println("AutoNearScale starting");
@@ -57,25 +57,13 @@ public class AutoNearScale extends CommandGroup {
     	//Wait for lift and wrist to get into position then shoot
     	addSequential(new TimeDelay(2.0));
     	addParallel(new ReleaseFast(0.65));
+    	addSequential(new TimeDelay(1.5));
     	
-    	/*Position Control
-    	//Get lift & wrist into position
-    	addSequential(new WristToCollect());
-    	addSequential(new LiftToScale());
+    	//Put lift down and stop collector
+    	addSequential(new CollectPosition());
+    	addSequential(new CollectorStop());
     	addParallel(new WristHold());
     	addParallel(new LiftHold());
-    	
-    	//Move Robot into position
-    	addSequential(new DriveByDistance(DISTANCE_FORWARD, Shifters.Speed.kLow));
-    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight());
-    	else addSequential(new AutoTurnLeft());
-    	addSequential(new DriveByDistance(DISTANCE_SIDE, Shifters.Speed.kLow));
-    	
-    	//Release and back up
-    	addParallel(new Release());
-    	addSequential(new TimeDelay(1.0));
-    	addSequential(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
-    	*/
         
     }
 }

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot.FieldSide;
+import org.usfirst.frc.team3504.robot.commands.CollectPosition;
+import org.usfirst.frc.team3504.robot.commands.CollectorStop;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
@@ -46,5 +48,11 @@ public class AutoMiddleSwitch extends CommandGroup {
     	addParallel(new ReleaseSlow());
     	addSequential(new TimeDelay(1.0));
     	addSequential(new DriveByMotionMagic(BACK_UP, 0));
+    	
+    	//Put lift down and stop collector
+    	addSequential(new CollectPosition());
+    	addSequential(new CollectorStop());
+    	addParallel(new WristHold());
+    	addParallel(new LiftHold());
     }
 }
