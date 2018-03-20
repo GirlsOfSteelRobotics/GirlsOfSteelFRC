@@ -70,12 +70,11 @@ public class DriveByMotionMagic extends Command {
   
     	if (!resetPigeon || headingUnits == 0)
     	{
-    		double rightTicks = rightTalon.getSensorCollection().getQuadraturePosition();
-    		double leftTicks = leftTalon.getSensorCollection().getQuadraturePosition();
-    		double currentTicks = rightTicks + leftTicks;
-    		System.out.println("sensor position: " + currentTicks);
-    		System.out.println("target position: " + (2*encoderTicks));
-    		double error = Math.abs((2*encoderTicks) - currentTicks);
+    		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
+    		//System.out.println("sensor position: " + currentTicks);
+    		//System.out.println("target position: " + (2*encoderTicks));
+    		double error = Math.abs(encoderTicks - currentTicks);
+    		//double error = rightTalon.getClosedLoopError(0);
     		System.out.println("Distance error: " + error);
     		return (error < DISTANCE_ERROR_THRESHOLD);
     	}

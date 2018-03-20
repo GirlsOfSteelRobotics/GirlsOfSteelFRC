@@ -9,9 +9,18 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ReleaseFast extends Command {
 
+	private double speed;
     public ReleaseFast() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	speed = 0.9;
+		requires(Robot.collector);
+    }
+    
+    public ReleaseFast(double s) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	speed = s;
 		requires(Robot.collector);
     }
 
@@ -22,7 +31,7 @@ public class ReleaseFast extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		Robot.collector.release(0.9);
+		Robot.collector.release(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

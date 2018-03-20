@@ -148,7 +148,7 @@ public class Chassis extends Subsystem {
 		driveRightA.config_kD(SLOT_DISTANCE, 0.01, 10);
 		driveRightA.config_kF(SLOT_DISTANCE, 0.14, 10);
 		driveRightA.config_IntegralZone(SLOT_DISTANCE, 100, 10);
-		driveRightA.configClosedLoopPeakOutput(SLOT_DISTANCE, 0.50, 10);
+		driveRightA.configClosedLoopPeakOutput(SLOT_DISTANCE, 0.70, 10);
 
 		/* turn servo */
 		driveRightA.config_kP(SLOT_TURNING, 2.0, 10);
