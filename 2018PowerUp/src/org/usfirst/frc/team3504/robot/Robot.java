@@ -222,7 +222,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
 		//m_autonomousCommand = new AutoNearScale(FieldSide.left);
-		m_autonomousCommand = new AutoNearScale(scaleSide);
+		//m_autonomousCommand = new AutoNearScale(scaleSide);
 		//m_autonomousCommand = new TurnInPlace(-90.0);
 		
 		
