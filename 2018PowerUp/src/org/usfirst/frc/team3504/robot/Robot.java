@@ -107,56 +107,41 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
-		lift.setGoalLiftPosition(lift.getLiftPosition());
-		wrist.setGoalWristPosition(wrist.getWristPosition());
-		
-		//Determine which side of the field out robot is on
+
+		//Field Variables
 		FieldSide robotSide;
 		FieldElement elementPriority;
+		FieldSide switchSide = FieldSide.bad; //not initialized yet
+		FieldSide scaleSide = FieldSide.bad; //not initialized yet
 		
+		//Get robot side, switch side, scale side, element priority
 		if (!RobotMap.dio0.get()) elementPriority = FieldElement.Scale;
 		else elementPriority = FieldElement.Switch;
 		
-		if(!RobotMap.dio1.get()) robotSide = FieldSide.left; //get from DIO port
+		if(!RobotMap.dio1.get()) robotSide = FieldSide.left;
 		else if (!RobotMap.dio2.get()) robotSide = FieldSide.middle;
 		else if (!RobotMap.dio3.get()) robotSide = FieldSide.right;
 		else robotSide = FieldSide.bad;
 		
-		FieldSide switchSide = getSwitchSide();
-		FieldSide scaleSide = getScaleSide(); 
+		switchSide = getSwitchSide();
+		scaleSide = getScaleSide(); 
 		
 		if(!RobotMap.dio4.get())
 		{
 			m_autonomousCommand = null;
 		}
-		else if(robotSide == FieldSide.left)
+		else if(robotSide == FieldSide.left || robotSide == FieldSide.right) //if robot in the corner
 		{
-			if (elementPriority == FieldElement.Switch)
+			if (elementPriority == FieldElement.Switch) //switch priority
 			{
-				if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-				else if (scaleSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
+				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
+				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
 				else m_autonomousCommand = new AutoDriveToBaseline();
 			}
 			else //scale priority
 			{
-				if (scaleSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-				else if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-				else m_autonomousCommand = new AutoDriveToBaseline();
-			}
-		}
-		else if(robotSide == FieldSide.right) 
-		{
-			if (elementPriority == FieldElement.Switch)
-			{
-				if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
-				else if (scaleSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
-				else m_autonomousCommand = new AutoDriveToBaseline();
-			}
-			else //scale priority
-			{
-				if (scaleSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
-				else if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
+				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
+				else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
 				else m_autonomousCommand = new AutoDriveToBaseline();
 			}
 		}
@@ -167,7 +152,7 @@ public class Robot extends TimedRobot {
 		}
 		else 
 		{
-			System.out.println("Robot field side from DIO ports invalid!!");
+			System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
 			m_autonomousCommand = new AutoDriveToBaseline();
 		}
 		
