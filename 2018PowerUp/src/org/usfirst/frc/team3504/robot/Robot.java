@@ -156,6 +156,8 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new AutoDriveToBaseline();
 		}
 		
+		System.out.println("Auto: " + m_autonomousCommand);
+		
 		/*
 		boolean logicPriority = false; //get from DIO port; true = field element, false = stay on our side
 		FieldElement elementPriority = FieldElement.Switch;

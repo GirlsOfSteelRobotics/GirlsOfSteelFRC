@@ -34,7 +34,7 @@ public class DriveByMotionMagic extends Command {
 
     public DriveByMotionMagic(double inches, double degrees) {
 		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
-		targetHeading = 10*degrees;
+		targetHeading = degrees;
 		resetPigeon = true;
 		requires(Robot.chassis);
 		System.out.println("DriveByMotionMagic: constructed");

@@ -22,7 +22,7 @@ public class Wrist extends Subsystem {
 	private double goalWristPosition;
 	
 	public static final double WRIST_IN_BOUND = -60; //TODO tune
-	public static final double WRIST_OUT_BOUND = -1020; //TODO tune
+	public static final double WRIST_OUT_BOUND = -1000; //TODO tune
 	public static final double WRIST_COLLECT = -930; //TODO tune
 	public static final double WRIST_SWITCH = -800; //TODO tune
 	public static final double WRIST_INCREMENT = 20; //TODO tune
