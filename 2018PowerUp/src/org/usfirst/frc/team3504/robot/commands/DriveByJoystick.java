@@ -25,20 +25,36 @@ public class DriveByJoystick extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-	
+		boolean highGear = true;
+		double throttleFactor = .9;
+		
+		
 		
 		//throttle runs .225 speed
 		//speedy is 100%
 		//regular is 90% speed
 
-		double throttleFactor = .9;
-		if (Robot.oi.isThrottle()){
-			throttleFactor = .225;
+		if (highGear == true) {
+			throttleFactor = .5;
+			if (Robot.oi.isThrottle()){
+				throttleFactor = .2;
+			}
+			else if (Robot.oi.isSpeedy())
+				throttleFactor = .85;
+			else
+				throttleFactor = .5;
 		}
-		else if (Robot.oi.isSpeedy())
-			throttleFactor = 1;
-		else
+		else {
 			throttleFactor = .9;
+			if (Robot.oi.isThrottle()){
+				throttleFactor = .225;
+			}
+			else if (Robot.oi.isSpeedy())
+				throttleFactor = 1;
+			else
+				throttleFactor = .9;
+		}
+
 		
 		Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown()*throttleFactor, 
 				Robot.oi.getAmazonRightSideToSide()*throttleFactor, true);
