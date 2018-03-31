@@ -17,6 +17,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarScale;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoMiddleSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScale;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScaleAngled;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearSwitch;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPrintData;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
@@ -140,7 +141,7 @@ public class Robot extends TimedRobot {
 			}
 			else //scale priority
 			{
-				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
+				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScaleAngled(scaleSide);
 				else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
 				else m_autonomousCommand = new AutoDriveToBaseline();
 			}

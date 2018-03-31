@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 import org.usfirst.frc.team3504.robot.Robot.FieldSide;
@@ -20,7 +21,7 @@ public class AutoNearScaleAngled extends CommandGroup {
 
 	
 	//distance constants
-	private final double DISTANCE_FORWARD_1 = 250.0;
+	private final double DISTANCE_FORWARD_1 = 225.0;
 	private final double DISTANCE_TURN_1 = 25;
 	private final double BACK_UP = -30.0;
 
@@ -29,16 +30,21 @@ public class AutoNearScaleAngled extends CommandGroup {
 		System.out.println("AutoFarScale starting");
 
 		//moves robot forward
-		addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
+		addParallel(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
+		addSequential(new TimeDelay(3.0));
 		
 		//gets lift & wrist into position
 		addSequential(new WristToCollect());
-		addSequential(new LiftToScale());
+		//addSequential(new LiftToScale());
 		addParallel(new WristHold());
 		addParallel(new LiftHold());
+		addSequential(new TimeDelay(2.0)); 
 		
 		//turn
-		addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, 45));
+		if (robotPosition == FieldSide.left)
+			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, -25));
+		else
+			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, 25)); 
 
 		//release cube and back up
 		addParallel(new ReleaseFast());
