@@ -37,10 +37,15 @@ public class DriveByJoystick extends Command {
 		if (highGear == true) {
 			throttleFactor = .5;
 			if (Robot.oi.isThrottle()){
+				Robot.chassis.getLeftTalon().configOpenloopRamp(0.37, 10); //blinky numbers
+				Robot.chassis.getRightTalon().configOpenloopRamp(0.37, 10);
 				throttleFactor = .2;
 			}
-			else if (Robot.oi.isSpeedy())
-				throttleFactor = .85;
+			else if (Robot.oi.isSpeedy()) {
+				Robot.chassis.getLeftTalon().configOpenloopRamp(0.7, 10); //blinky numbers
+				Robot.chassis.getRightTalon().configOpenloopRamp(0.7, 10);
+				throttleFactor = 1;
+			}
 			else
 				throttleFactor = .5;
 		}
@@ -55,7 +60,7 @@ public class DriveByJoystick extends Command {
 				throttleFactor = .9;
 		}
 
-		
+
 		Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown()*throttleFactor, 
 				Robot.oi.getAmazonRightSideToSide()*throttleFactor, true);
 
