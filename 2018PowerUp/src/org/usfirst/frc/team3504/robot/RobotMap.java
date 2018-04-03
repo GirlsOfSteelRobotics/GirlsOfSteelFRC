@@ -67,6 +67,7 @@ public class RobotMap {
 	public static final int DRIVING_CAM = 0;
 	
 	//DIO
+	public static final int DIO_PRIORITY = 0;
 	public static DigitalInput dio0 = new DigitalInput(0);
 	public static DigitalInput dio1 = new DigitalInput(1);
 	public static DigitalInput dio2 = new DigitalInput(2);

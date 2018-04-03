@@ -7,21 +7,7 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
-import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
-import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.TurnInPlace;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveToBaseline;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarScale;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarSwitch;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoMiddleSwitch;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScale;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScaleAngled;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearSwitch;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPrintData;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnRight;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
