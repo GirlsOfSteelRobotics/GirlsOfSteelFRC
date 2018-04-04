@@ -68,10 +68,23 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
     	}
     	else if (switchSide == FieldSide.left)
     	{
-    		addSequential(new DriveByMotionMagic(-TURN_RADIUS_2, TURN_DEGREES_2));
-    		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, 0, false));
+    		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -TURN_DEGREES_2));
+    		addSequential(new DriveByMotionMagic(-TURN_RADIUS_2, 0, false));
     	}
     	else System.out.println("AutoMiddleSwitch: invalid switch side");
-    	addSequential(new DriveByMotionMagic(TURN_RADIUS_2, TURN_DEGREES_2));
+    	
+    	//lift up to shoot out
+    	addSequential(new WristToCollect());
+    	addSequential(new LiftToSwitch());
+    	addParallel(new WristHold());
+    	addParallel(new LiftHold());
+    	
+    	addSequential(new TimeDelay(2.0));
+    	addSequential(new DriveByMotionMagic(-BACK_UP, 0));
+    	
+    	//Release and back up
+    	addParallel(new ReleaseSlow());
+    	addSequential(new TimeDelay(1.0));
+    	addSequential(new DriveByMotionMagic(BACK_UP/2, 0));
     }
 }
