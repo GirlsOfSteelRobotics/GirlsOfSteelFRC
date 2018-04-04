@@ -11,6 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TurnInPlace extends Command {
+	
+	private double encoderTicks;
+	private static final int ERROR_THRESHOLD = 5;
+	
+	private boolean leftGood;
+	private boolean rightGood;
 
 	private double headingTarget;
 	private double speed;
@@ -33,30 +39,41 @@ public class TurnInPlace extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (headingTarget > 0) //send both negative
-    	{
-    		leftTalon.set(ControlMode.PercentOutput, -speed);
-    		rightTalon.set(ControlMode.PercentOutput, -speed);
+    	
+    	if (headingTarget > 0) {
+    		leftTalon.set(ControlMode.Position, encoderTicks);
+        	rightTalon.set(ControlMode.Position, encoderTicks);
+    	} else {
+    		leftTalon.set(ControlMode.Position, -encoderTicks);
+        	rightTalon.set(ControlMode.Position, -encoderTicks);
     	}
-    	else
-    	{
-    		leftTalon.set(ControlMode.PercentOutput, speed);
-    		rightTalon.set(ControlMode.PercentOutput, speed);
-    	}
+    	
+    	System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(1) - encoderTicks));
+    	System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(1) + encoderTicks));
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Math.abs(Robot.chassis.getYaw() - headingTarget) < ERROR);
+    	if (Math.abs(leftTalon.getSelectedSensorPosition(1) - encoderTicks) < ERROR_THRESHOLD) 
+    		leftGood = true;
+		if (Math.abs(rightTalon.getSelectedSensorPosition(1) + encoderTicks) < ERROR_THRESHOLD) 
+			rightGood = true;
+  
+		return (leftGood || rightGood); 
     }
+    
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("TurnInPlace Finished");
     	Robot.chassis.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("TurnInPlace Interrupted");
+    	end(); 
     }
 }
