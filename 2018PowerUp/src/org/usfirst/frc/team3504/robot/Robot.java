@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.GameData.FieldElement;
+import org.usfirst.frc.team3504.robot.GameData.FieldSide;
 import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
@@ -16,9 +18,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Lift;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Wrist;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -39,12 +39,7 @@ public class Robot extends TimedRobot {
 	public static Blobs blobs;
 	public static Camera camera;
 	public static OI oi;
-	public static enum FieldSide {
-		left, right, middle, bad
-	}
-	public static enum FieldElement {
-		Switch, Scale
-	}
+	public static GameData gameData;
 
 	Command m_autonomousCommand;
 	public static String motionProfile = "91-small";
@@ -63,6 +58,7 @@ public class Robot extends TimedRobot {
 		blobs = new Blobs();
 		camera = new Camera();
 		oi = new OI();
+		gameData = new GameData();
 
 	}
 
@@ -95,25 +91,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 
-		//Field Variables
-		FieldSide robotSide;
-		FieldElement elementPriority;
-		FieldSide switchSide = FieldSide.bad; //not initialized yet
-		FieldSide scaleSide = FieldSide.bad; //not initialized yet
-		
 		//Get robot side, switch side, scale side, element priority
-		if (!RobotMap.dio0.get()) elementPriority = FieldElement.Scale;
-		else elementPriority = FieldElement.Switch;
+		FieldSide robotSide = gameData.getRobotSide();
+		FieldElement elementPriority = gameData.getElementPriority();
+		FieldSide switchSide = gameData.getSwitchSide(); 
+		FieldSide scaleSide = gameData.getScaleSide(); 
 		
-		if(!RobotMap.dio1.get()) robotSide = FieldSide.left;
-		else if (!RobotMap.dio2.get()) robotSide = FieldSide.middle;
-		else if (!RobotMap.dio3.get()) robotSide = FieldSide.right;
-		else robotSide = FieldSide.bad;
-		
-		switchSide = getSwitchSide();
-		scaleSide = getScaleSide(); 
-		
-		if(!RobotMap.dio4.get())
+		if(gameData.getNoAuto())
 		{
 			m_autonomousCommand = null;
 		}
@@ -199,14 +183,6 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoNearScale(scaleSide);
 		//m_autonomousCommand = new TurnInPlace(-90.0);
 		
-		
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-		
 		//Motion Magic Testing
 		//m_autonomousCommand = new DriveByMotionMagic(166.0,0);
 		//m_autonomousCommand = new AutoTurnRight();
@@ -254,53 +230,4 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
-	
-	public static FieldSide getSwitchSide() //TODO: test
-	{
-		String gameData;
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		int tim = 0;
-		
-		while(tim <= 5 && (gameData == null || gameData.equals(""))) 
-		{
-			Timer.delay(0.2);
-			tim++;
-		}
-		
-		if (gameData == null || gameData.equals("")) return FieldSide.bad;
-		
-		if(gameData.charAt(0) == 'L')
-		{
-			return FieldSide.left;
-		} 
-		else 
-		{
-			return FieldSide.right;
-		}
-	}
-	
-	public static FieldSide getScaleSide() //TODO: test
-	{
-		String gameData;
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		int tim = 0;
-		
-		while(tim <= 5 && (gameData == null || gameData.equals(""))) 
-		{
-			Timer.delay(0.2);
-			tim++;
-		}
-		
-		if (gameData == null || gameData.equals("")) return FieldSide.bad;
-		
-		if(gameData.charAt(1) == 'L')
-		{
-			return FieldSide.left;
-		} 
-		else 
-		{
-			return FieldSide.right;
-		}
-	}
-	
 }

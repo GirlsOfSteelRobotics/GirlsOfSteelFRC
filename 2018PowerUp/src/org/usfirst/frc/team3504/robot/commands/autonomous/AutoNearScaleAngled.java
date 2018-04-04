@@ -1,12 +1,11 @@
 
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot.FieldSide;
+import org.usfirst.frc.team3504.robot.GameData.FieldSide;
 import org.usfirst.frc.team3504.robot.commands.CollectPosition;
 import org.usfirst.frc.team3504.robot.commands.CollectorStop;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
-import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.ReleaseFast;
 import org.usfirst.frc.team3504.robot.commands.TimeDelay;
 import org.usfirst.frc.team3504.robot.commands.WristHold;

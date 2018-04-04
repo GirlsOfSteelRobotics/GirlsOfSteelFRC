@@ -68,12 +68,8 @@ public class RobotMap {
 	
 	//DIO
 	public static final int DIO_PRIORITY = 0;
-	public static DigitalInput dio0 = new DigitalInput(0);
-	public static DigitalInput dio1 = new DigitalInput(1);
-	public static DigitalInput dio2 = new DigitalInput(2);
-	public static DigitalInput dio3 = new DigitalInput(3);
-	public static DigitalInput dio4 = new DigitalInput(4);
-	public static DigitalInput dio5 = new DigitalInput(5);
-	public static DigitalInput dio6 = new DigitalInput(6);
-	
+	public static final int DIO_LEFT = 1;
+	public static final int DIO_MIDDLE = 2;
+	public static final int DIO_RIGHT = 3;
+	public static final int DIO_NO_AUTO = 4;
 }
