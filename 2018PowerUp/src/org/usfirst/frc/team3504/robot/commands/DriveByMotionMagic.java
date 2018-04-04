@@ -27,7 +27,7 @@ public class DriveByMotionMagic extends Command {
 	private final static double DISTANCE_FINISH_THRESHOLD = 500; //TODO tune (in encoder ticks)
 	private final static double TURNING_FINISH_THRESHOLD = 2.0; //TODO tune (in degrees)
 	
-	private final static double DISTANCE_TIMER_THRESHOLD = 1500; //TODO tune (in encoder ticks)
+	private final static double DISTANCE_TIMER_THRESHOLD = 2500; //TODO tune (in encoder ticks)
 	private final static double TURNING_TIMER_THRESHOLD = 7.0; //TODO tune (in degrees)
 	
 	private final static double TIMER_THRESHOLD = 1.5; //in seconds
@@ -89,7 +89,11 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (timeoutCtr > (TIMER_THRESHOLD * 50)) return true;
+    	if (timeoutCtr > (TIMER_THRESHOLD * 50))
+		{
+    		System.out.println("DriveByMotionMagic: timeout");
+    		return true;
+		}
     	else if (!resetPigeon || targetHeading == 0) //if trying to drive straight
     	{
     		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();

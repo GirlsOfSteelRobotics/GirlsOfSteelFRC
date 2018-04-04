@@ -188,6 +188,8 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoTurnRight();
 		//m_autonomousCommand = new AutoTurnLeft();
 
+		m_autonomousCommand = new AutoFarScale(FieldSide.left);
+		//m_autonomousCommand = new AutoDriveToBaseline();
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();

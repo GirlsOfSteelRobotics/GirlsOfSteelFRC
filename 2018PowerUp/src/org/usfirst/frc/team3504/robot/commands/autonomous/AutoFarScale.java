@@ -16,8 +16,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoFarScale extends CommandGroup {
-	private final double DISTANCE_FORWARD_1 = 250.0;
-	private final double DISTANCE_SIDE_1 = 150.0;
+	private final double DISTANCE_FORWARD_1 = 160.0;
+	private final double TURN_RADIUS_1 = 100.0;
+	private final double DISTANCE_SIDE_1 = 135.0;
+	private final double TURN_RADIUS_2 = 70.0;
+	private final double DEGREES_2 = 120.0;
 	private final double DISTANCE_FORWARD_2 = 10.0;
 	private final double DISTANCE_SIDE_2 = 10.0;
 	private final double BACK_UP = -30.0;
@@ -27,17 +30,21 @@ public class AutoFarScale extends CommandGroup {
     	
     	//Get lift & wrist into position
     	addSequential(new WristToCollect());
-    	addSequential(new LiftToScale());
+    	//addSequential(new LiftToScale());
     	addParallel(new WristHold());
     	addParallel(new LiftHold());
     	
     	//Move Robot into position
     	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
-    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight(25.0));
-    	else addSequential(new AutoTurnLeft(25.0));
+    	
+    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight(TURN_RADIUS_1));
+    	else addSequential(new AutoTurnLeft(TURN_RADIUS_1));
+    	
     	addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 0));
-    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnLeft(25.0));
-    	else addSequential(new AutoTurnRight(25.0));
+    	
+    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagic(TURN_RADIUS_2, DEGREES_2));
+    	else addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -DEGREES_2));
+    	/*
     	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_2, 0));
     	if (robotPosition == FieldSide.left) addSequential(new AutoTurnLeft(25.0));
     	else addSequential(new AutoTurnRight(25.0));
@@ -53,5 +60,6 @@ public class AutoFarScale extends CommandGroup {
     	addSequential(new CollectorStop());
     	addParallel(new WristHold());
     	addParallel(new LiftHold());
+    	*/
     }
 }
