@@ -22,7 +22,7 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
 	public final static double RIGHT_DISTANCE = 63.0;
 	public final static double LEFT_ANGLE = 65.0;
 	public final static double LEFT_DISTANCE = 70.0;
-	public final static double BACK_UP = -70.0;
+	public final static double BACK_UP = -75.0;
 	
 	public final static double TURN_RADIUS_2 = 100.0;
 	public final static double TURN_DEGREES_2 = 70.0;
@@ -64,12 +64,12 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
     	if(switchSide == FieldSide.right)
     	{
     		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, TURN_DEGREES_2));
-    		addSequential(new DriveByMotionMagic(-TURN_RADIUS_2, 0, false));
+    		addParallel(new DriveByMotionMagic(-TURN_RADIUS_2/2, -20, false));
     	}
     	else if (switchSide == FieldSide.left)
     	{
     		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -TURN_DEGREES_2));
-    		addSequential(new DriveByMotionMagic(-TURN_RADIUS_2, 0, false));
+    		addParallel(new DriveByMotionMagic(-TURN_RADIUS_2/2, 20, false));
     	}
     	else System.out.println("AutoMiddleSwitch: invalid switch side");
     	
@@ -80,7 +80,8 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
     	addParallel(new LiftHold());
     	
     	addSequential(new TimeDelay(2.0));
-    	addSequential(new DriveByMotionMagic(-BACK_UP, 0));
+    	addParallel(new DriveByMotionMagic(-BACK_UP, 0));
+    	addSequential(new TimeDelay(2.0));
     	
     	//Release and back up
     	addParallel(new ReleaseSlow());
