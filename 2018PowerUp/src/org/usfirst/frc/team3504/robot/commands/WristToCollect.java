@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,8 +17,8 @@ public class WristToCollect extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.wrist.setGoalWristPosition(Robot.wrist.WRIST_COLLECT);
-    		System.out.println("LiftToSwitch initialized");
+    		Robot.wrist.setGoalWristPosition(Wrist.WRIST_COLLECT);
+    		System.out.println("WristToCollect initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
