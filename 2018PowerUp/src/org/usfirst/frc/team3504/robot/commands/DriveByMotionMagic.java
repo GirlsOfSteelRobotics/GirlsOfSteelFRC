@@ -24,20 +24,20 @@ public class DriveByMotionMagic extends Command {
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 	
-	private final static double DISTANCE_FINISH_THRESHOLD = 500; //TODO tune (in encoder ticks)
-	private final static double TURNING_FINISH_THRESHOLD = 2.0; //TODO tune (in degrees)
+	private final static double DISTANCE_FINISH_THRESHOLD = 1000; //TODO tune (in encoder ticks)
+	private final static double TURNING_FINISH_THRESHOLD = 3.0; //TODO tune (in degrees)
 	
 	private final static double DISTANCE_TIMER_THRESHOLD = 2500; //TODO tune (in encoder ticks)
-	private final static double TURNING_TIMER_THRESHOLD = 10.0; //TODO tune (in degrees)
+	private final static double TURNING_TIMER_THRESHOLD = 8.0; //TODO tune (in degrees)
 	
-	private final static double TIMER_THRESHOLD = 1.5; //in seconds
+	private final static double TIMER_THRESHOLD = 0.5; //in seconds
 
     public DriveByMotionMagic(double inches, double degrees) {
 		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
 		targetHeading = degrees;
 		resetPigeon = true;
 		requires(Robot.chassis);
-		System.out.println("DriveByMotionMagic: constructed");
+		//System.out.println("DriveByMotionMagic: constructed");
     }
     
     public DriveByMotionMagic(double inches, double degrees, boolean reset) {
@@ -45,7 +45,7 @@ public class DriveByMotionMagic extends Command {
 		targetHeading = degrees;
 		resetPigeon = reset;
 		requires(Robot.chassis);
-		System.out.println("DriveByMotionMagic: constructed");
+		//System.out.println("DriveByMotionMagic: constructed");
     }
 
     // Called just before this Command runs the first time
@@ -58,14 +58,15 @@ public class DriveByMotionMagic extends Command {
     	
     	if (resetPigeon) Robot.chassis.zeroSensors();
     	else Robot.chassis.zeroEncoder();
-    	System.out.println("DriveByMotionMagic: sensors zeroed");
+    	//System.out.println("DriveByMotionMagic: sensors zeroed");
     	
-    	System.out.println("DriveByMotionMagic encoder ticks + heading: " + encoderTicks + targetHeading);
+    	double inches = (encoderTicks / RobotMap.CODES_PER_WHEEL_REV) * (RobotMap.WHEEL_DIAMETER * Math.PI);
+    	System.out.println("DriveByMotionMagic inches + heading: " + inches + targetHeading);
     	
 		rightTalon.set(ControlMode.MotionMagic, 2 * encoderTicks, DemandType.AuxPID, 10 * targetHeading);
 		leftTalon.follow(rightTalon, FollowerType.AuxOutput1);
 		
-		System.out.println("DriveByMotionMagic: instructions sent, started");
+		System.out.println("DriveByMotionMagic: running...");
 		
 		timeoutCtr = 0;
     }
@@ -89,9 +90,10 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	
     	if (timeoutCtr > (TIMER_THRESHOLD * 50))
 		{
-    		System.out.println("DriveByMotionMagic: timeout");
+    		System.out.println("DriveByMotionMagic: timeout reached");
     		return true;
 		}
     	else if (!resetPigeon || targetHeading == 0) //if trying to drive straight
@@ -99,20 +101,38 @@ public class DriveByMotionMagic extends Command {
     		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
     		double error = Math.abs(encoderTicks - currentTicks);
     		//System.out.println("DriveByMotionMagic: distance error = " + error);
-    		return (error < DISTANCE_FINISH_THRESHOLD);
+    		if (error < DISTANCE_FINISH_THRESHOLD)
+    		{
+    			System.out.println("DriveByMotionMagic: encoder ticks reached");
+        		return true;
+    		}
+    		else return false;
     	}
     	else //if trying to turn to an angle
     	{
     		double currentHeading = Robot.chassis.getYaw();
     		double error = Math.abs(targetHeading - currentHeading);
     		//System.out.println("DriveByMotionMagic: turning error = " + error);
-    		return (error < TURNING_FINISH_THRESHOLD);
+    		if (error < TURNING_FINISH_THRESHOLD)
+    		{
+    			System.out.println("DriveByMotionMagic: turning degrees reached");
+        		return true;
+    		}
+    		else return false;
     	}
+    	
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("DriveByMotionMagic: ended");
+    	
+    	double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
+		double ticksError = Math.abs(encoderTicks - currentTicks);
+		double inches = (ticksError / RobotMap.CODES_PER_WHEEL_REV) * (RobotMap.WHEEL_DIAMETER * Math.PI);
+		double currentHeading = Robot.chassis.getYaw();
+		double degreesError = Math.abs(targetHeading - currentHeading);
+    	
+    	System.out.println("DriveByMotionMagic: ended. Error = " + inches + " inches, " + degreesError + " degrees");
     	Robot.chassis.stop();
     	Robot.chassis.setInverted(false);
     }
