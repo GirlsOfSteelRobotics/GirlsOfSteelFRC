@@ -20,7 +20,16 @@ public class TurnInPlace extends Command {
 
 	private double headingTarget;
 	private double speed;
-	private final static double ERROR = 2.0;
+	private double currentPos;
+	private double error;
+	private double errorLast = 0;
+	private double dError;
+	private double iError = 0;
+	private double tempError;
+	
+	private double kP = 1;
+	private double kI = 0;
+	private double kD = 0;
 	
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
@@ -39,18 +48,33 @@ public class TurnInPlace extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	currentPos = Robot.chassis.getYaw();
+    	error = (headingTarget - currentPos);
+    	dError = ((error - errorLast)/.02);
+
     	
-    	if (headingTarget > 0) {
-    		leftTalon.set(ControlMode.Position, encoderTicks);
-        	rightTalon.set(ControlMode.Position, encoderTicks);
-    	} else {
-    		leftTalon.set(ControlMode.Position, -encoderTicks);
-        	rightTalon.set(ControlMode.Position, -encoderTicks);
+    	tempError = (iError + (error*.02));
+    	if (Math.abs(tempError*kI) < .5){
+    		iError = tempError;
     	}
     	
-    	System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(1) - encoderTicks));
-    	System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(1) + encoderTicks));
+    	
+    	leftTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
+    	rightTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
 
+    	errorLast = error;
+
+//    	if (headingTarget > 0) {
+//    		leftTalon.set(ControlMode.Position, encoderTicks);
+//        	rightTalon.set(ControlMode.Position, encoderTicks);
+//    	} else {
+//    		leftTalon.set(ControlMode.Position, -encoderTicks);
+//        	rightTalon.set(ControlMode.Position, -encoderTicks);
+//    	}
+//    	
+//    	System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(1) - encoderTicks));
+//    	System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(1) + encoderTicks));
+//
     }
 
     // Make this return true when this Command no longer needs to run execute()
