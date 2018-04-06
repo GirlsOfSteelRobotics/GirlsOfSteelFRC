@@ -23,7 +23,7 @@ public class OldTurnInPlace extends Command {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
         headingTarget = degrees;
-        speed = 0.2;
+        speed = 0.3;
     }
 
     // Called just before this Command runs the first time

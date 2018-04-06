@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoDriveToBaseline extends CommandGroup {
 	
-	private final double DISTANCE_FORWARD = 121;
+	private final double DISTANCE_FORWARD = 48;
 
     public AutoDriveToBaseline() {
         

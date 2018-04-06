@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoMiddleSwitchTwoCube extends CommandGroup {
+public class AutoMiddleSwitchTwoCubeS extends CommandGroup {
 	//Parameters for first cube
 	public final static double RIGHT_ANGLE = 50.0;
 	public final static double RIGHT_DISTANCE = 63.0;
@@ -33,7 +33,7 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
 	//After second cube
 	public final static double SHORT_BACK_UP = -30.0;
 
-    public AutoMiddleSwitchTwoCube(FieldSide switchSide) {
+    public AutoMiddleSwitchTwoCubeS(FieldSide switchSide) {
     	
     	//Raise lift, lower wrist to get ready to spit cube out
     	addSequential(new WristToCollect());
@@ -44,25 +44,20 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
     	//Drive to the switch plate
     	if(switchSide == FieldSide.right)
     	{
-    		addParallel(new DriveByMotionMagic(RIGHT_DISTANCE, -RIGHT_ANGLE));
-    		addSequential(new TimeDelay(2.5));
-    		addParallel(new DriveByMotionMagic(RIGHT_DISTANCE, RIGHT_ANGLE));
-    		addSequential(new TimeDelay(2.0));
+    		addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, -RIGHT_ANGLE));
+    		addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, RIGHT_ANGLE));
     	}
     	else if (switchSide == FieldSide.left)
     	{
-    		addParallel(new DriveByMotionMagic(LEFT_DISTANCE, LEFT_ANGLE));
-    		addSequential(new TimeDelay(2.5));
-    		addParallel(new DriveByMotionMagic(LEFT_DISTANCE, -LEFT_ANGLE));
-    		addSequential(new TimeDelay(2.0));
+    		addSequential(new DriveByMotionMagic(LEFT_DISTANCE, LEFT_ANGLE));
+    		addSequential(new DriveByMotionMagic(LEFT_DISTANCE, -LEFT_ANGLE));
     	}
     	else System.out.println("AutoMiddleSwitch: invalid switch side");
     	
     	//Release and back up
     	addParallel(new ReleaseSlow());
     	addSequential(new TimeDelay(0.5));
-    	addParallel(new DriveByMotionMagic(LONG_BACK_UP, 0));
-    	addSequential(new TimeDelay(2.5));
+    	addSequential(new DriveByMotionMagic(LONG_BACK_UP, 0));
     	
     	//Put lift down and start collecting
     	addSequential(new CollectPosition());
@@ -73,17 +68,15 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
     	//Grab second cube and come back
     	if(switchSide == FieldSide.right)
     	{
-    		addParallel(new DriveByMotionMagic(TURN_RADIUS_2, TURN_DEGREES_2));
-    		addSequential(new TimeDelay(2.5));
+    		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, TURN_DEGREES_2));
     		addParallel(new CollectorHold());
-    		addParallel(new DriveByMotionMagic(-TURN_RADIUS_2/2, -20, false));
+    		addSequential(new DriveByMotionMagic(-TURN_RADIUS_2/2, -20, false));
     	}
     	else if (switchSide == FieldSide.left)
     	{
-    		addParallel(new DriveByMotionMagic(TURN_RADIUS_2, -TURN_DEGREES_2));
-    		addSequential(new TimeDelay(2.5));
+    		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -TURN_DEGREES_2));
     		addParallel(new CollectorHold());
-    		addParallel(new DriveByMotionMagic(-TURN_RADIUS_2/2, 20, false));
+    		addSequential(new DriveByMotionMagic(-TURN_RADIUS_2/2, 20, false));
     	}
     	else System.out.println("AutoMiddleSwitch: invalid switch side");
     	
@@ -94,9 +87,7 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
     	addParallel(new LiftHold());
     	
     	//Approach switch plate
-    	addSequential(new TimeDelay(2.0));
-    	addParallel(new DriveByMotionMagic(-LONG_BACK_UP, 0));
-    	addSequential(new TimeDelay(2.0));
+    	addSequential(new DriveByMotionMagic(-LONG_BACK_UP, 0));
     	
     	//Release and back up
     	addParallel(new ReleaseSlow());
