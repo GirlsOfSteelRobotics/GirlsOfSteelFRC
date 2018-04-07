@@ -43,10 +43,19 @@ public class TurnInPlace extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.setInverted(true);
+    	Robot.chassis.configForMotionMagic();
     	Robot.chassis.zeroSensors();
+    	System.out.println("Turn in place initialized Heading = " + headingTarget );
+   
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    private void println(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	// Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	currentPos = Robot.chassis.getYaw();
     	error = (headingTarget - currentPos);
@@ -57,7 +66,7 @@ public class TurnInPlace extends Command {
     	if (Math.abs(tempError*kI) < .5){
     		iError = tempError;
     	}
-    	
+    	System.out.println("current position " + headingTarget);
     	
     	leftTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
     	rightTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
