@@ -24,6 +24,10 @@ public class DriveByJoystick extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		boolean highGear = true;
+		
+//		if (Robot.shifters.getGearSpeed().equals("kHigh")){
+//			highGear = true;
+//		}
 		double throttleFactor = .9;
 		
 		
@@ -33,7 +37,7 @@ public class DriveByJoystick extends Command {
 		//regular is 90% speed
 
 		if (highGear == true) {
-			throttleFactor = .5;
+			throttleFactor = .65;
 			if (Robot.oi.isThrottle()){
 				Robot.chassis.getLeftTalon().configOpenloopRamp(0.37, 10); //blinky numbers
 				Robot.chassis.getRightTalon().configOpenloopRamp(0.37, 10);
@@ -45,7 +49,7 @@ public class DriveByJoystick extends Command {
 				throttleFactor = 1;
 			}
 			else
-				throttleFactor = .5;
+				throttleFactor = .65;
 		}
 		else {
 			throttleFactor = .9;
