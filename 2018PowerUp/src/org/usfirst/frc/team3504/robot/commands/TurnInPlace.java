@@ -17,6 +17,7 @@ public class TurnInPlace extends Command {
 	
 	private boolean leftGood;
 	private boolean rightGood;
+	private boolean targetReached = false;
 
 	private double headingTarget;
 	private double speed;
@@ -27,7 +28,7 @@ public class TurnInPlace extends Command {
 	private double iError = 0;
 	private double tempError;
 	
-	private double kP = 1;
+	private double kP = .00056;
 	private double kI = 0;
 	private double kD = 0;
 	
@@ -57,6 +58,7 @@ public class TurnInPlace extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	currentPos = Robot.chassis.getYaw();
     	error = (headingTarget - currentPos);
     	dError = ((error - errorLast)/.02);
@@ -66,12 +68,18 @@ public class TurnInPlace extends Command {
     	if (Math.abs(tempError*kI) < .5){
     		iError = tempError;
     	}
-    	System.out.println("current position " + headingTarget);
+    	System.out.println("current position " + currentPos);
     	
     	leftTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
     	rightTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
 
+    	if (error <1 && dError <10){
+    		targetReached = true;
+    	}
+    	
     	errorLast = error;
+    	
+    	
 
 //    	if (headingTarget > 0) {
 //    		leftTalon.set(ControlMode.Position, encoderTicks);
@@ -88,12 +96,7 @@ public class TurnInPlace extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(leftTalon.getSelectedSensorPosition(1) - encoderTicks) < ERROR_THRESHOLD) 
-    		leftGood = true;
-		if (Math.abs(rightTalon.getSelectedSensorPosition(1) + encoderTicks) < ERROR_THRESHOLD) 
-			rightGood = true;
-  
-		return (leftGood || rightGood); 
+    	return targetReached;
     }
     
 
