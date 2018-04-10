@@ -42,7 +42,7 @@ public class Collector extends Subsystem {
     }
     
     public void collect() {
-		collectLeft.set(-1.0); //TODO: tune this speed, and these values may be reversed
+		collectLeft.set(-1.00); //TODO: tune this speed, and these values may be reversed
 		collectRight.set(0.5);
     }
     
