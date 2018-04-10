@@ -132,7 +132,7 @@ public class TurnByMotionMagic extends Command {
 		double currentHeading = Robot.chassis.getYaw();
 		double degreesError = Math.abs(targetHeading - currentHeading);
     	
-    	System.out.println("TurnByMotionMagic: ended. Error = " + inches + " inches, " + degreesError + " degrees");
+    	System.out.println("TurnByMotionMagic: ended. Error = " + inches/2 + " inches, " + degreesError + " degrees");
     	Robot.chassis.stop();
     	Robot.chassis.setInverted(false);
     }
