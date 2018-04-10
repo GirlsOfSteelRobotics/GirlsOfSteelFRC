@@ -92,6 +92,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 
+		
+		System.out.println("Starting Auto...");
 		//Get robot side, switch side, scale side, element priority
 		FieldSide robotSide = gameData.getRobotSide();
 		FieldElement elementPriority = gameData.getElementPriority();
@@ -196,6 +198,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.start();
 		}
 		
+		System.out.println("Hopefully auto is runnin");
 	}
 
 	/**
