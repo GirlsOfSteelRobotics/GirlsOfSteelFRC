@@ -4,6 +4,7 @@ import org.usfirst.frc.team3504.robot.GameData.FieldSide;
 import org.usfirst.frc.team3504.robot.commands.CollectPosition;
 import org.usfirst.frc.team3504.robot.commands.CollectorStop;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
+import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagicAbsolute;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.ReleaseFast;
@@ -18,22 +19,23 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoFarScale extends CommandGroup {
+public class AutoFarScaleAbsolute extends CommandGroup {
 	private final double DISTANCE_FORWARD_1 = 175.0;
 	private final double TURN_RADIUS_1 = 100.0;
-	private final double DISTANCE_SIDE_1 = 80.0;
-	private final double TURN_RADIUS_2 = 150.0;
-	private final double DEGREES_2 = 90.0;
+	private final double TURN_HEADING_1 = 90.0; //absolute value
+	private final double DISTANCE_SIDE_1 = 115.0;
+	private final double TURN_RADIUS_2 = 80.0;
+	private final double TURN_HEADING_2 = 0;
 
-    public AutoFarScale(FieldSide robotPosition) {
+    public AutoFarScaleAbsolute(FieldSide robotPosition) {
     	System.out.println("AutoFarScale starting");
     	
     	//Initial forward distance past switch
-    	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
+    	addSequential(new DriveByMotionMagicAbsolute(DISTANCE_FORWARD_1, 0, false));
     	
     	//First turn behind the switch
-    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight(TURN_RADIUS_1));
-    	else addSequential(new AutoTurnLeft(TURN_RADIUS_1));
+    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, -TURN_HEADING_1, true));
+    	else addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, TURN_HEADING_1, true));
     	
     	//Get lift and wrist into position
     	addSequential(new LiftToScale());
@@ -42,19 +44,19 @@ public class AutoFarScale extends CommandGroup {
     	addParallel(new LiftHold());
     	
     	//Driving across the field behind the switch
-    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, -90, false));
-    	else addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 90, false));
+    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, -TURN_HEADING_1, false));
+    	else addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, TURN_HEADING_1, false));
     	
     	//Turning towards the scale
     	if (robotPosition == FieldSide.left) 
 		{
-    		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, DEGREES_2));
-    		addSequential(new TurnByMotionMagic(90));
+    		addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_2, TURN_HEADING_2, true));
+    		addSequential(new TurnByMotionMagic(45));
 		}
     	else 
 		{
-    		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -DEGREES_2));
-    		addSequential(new TurnByMotionMagic(-90));
+    		addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_2, -TURN_HEADING_2, true));
+    		addSequential(new TurnByMotionMagic(-45));
 		}
 
     	//Release cube

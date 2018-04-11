@@ -91,6 +91,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
+		Robot.shifters.shiftGear(Shifters.Speed.kHigh);
+		Robot.chassis.zeroSensors();
 
 		//Get robot side, switch side, scale side, element priority
 		FieldSide robotSide = gameData.getRobotSide();
@@ -180,7 +183,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
-		m_autonomousCommand = new AutoFarScale(FieldSide.left);
+		m_autonomousCommand = new AutoFarScaleAbsolute(FieldSide.left);
 		//m_autonomousCommand = new TurnByMotionMagic(-90);
 		//m_autonomousCommand = new AutoNearScale(scaleSide);
 		
