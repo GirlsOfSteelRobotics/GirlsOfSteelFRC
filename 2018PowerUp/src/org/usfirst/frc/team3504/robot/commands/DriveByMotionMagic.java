@@ -90,7 +90,8 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	
+    	return false;
+    	/*
     	if (timeoutCtr > (TIMER_THRESHOLD * 50))
 		{
     		System.out.println("DriveByMotionMagic: timeout reached");
@@ -120,7 +121,7 @@ public class DriveByMotionMagic extends Command {
     		}
     		else return false;
     	}
-    	
+    	*/
     }
 
     // Called once after isFinished returns true
@@ -132,7 +133,7 @@ public class DriveByMotionMagic extends Command {
 		double currentHeading = Robot.chassis.getYaw();
 		double degreesError = Math.abs(targetHeading - currentHeading);
     	
-    	System.out.println("DriveByMotionMagic: ended. Error = " + inches + " inches, " + degreesError + " degrees");
+    	System.out.println("DriveByMotionMagic: ended. Error = " + inches/2 + " inches, " + degreesError + " degrees");
     	Robot.chassis.stop();
     	Robot.chassis.setInverted(false);
     }
