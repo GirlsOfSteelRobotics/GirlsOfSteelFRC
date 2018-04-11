@@ -52,7 +52,6 @@ public class Chassis extends Subsystem {
 
 	PigeonIMU pigeonIMU;
 	
-	private Shifters.Speed speed;
 	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -231,19 +230,10 @@ public class Chassis extends Subsystem {
 	
 	public void configForTurnByMotionMagic()
 	{
-		driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_DISTANCE, 10);
-		/* Remote 0 will be the other side's Talon */
-		driveRightA.configRemoteFeedbackFilter(driveLeftA.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_ENCODER, 10);
+
 		/* Remote 1 will be a pigeon */
 		driveRightA.configRemoteFeedbackFilter(Robot.collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
-		/* setup sum and difference signals */
-		driveRightA.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, 10);
-		driveRightA.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.QuadEncoder, 10);
-		driveRightA.configSensorTerm(SensorTerm.Diff1, FeedbackDevice.RemoteSensor0, 10);
-		driveRightA.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.QuadEncoder, 10);
-		/* select sum for distance(0), different for turn(1) */
-		driveRightA.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, 1, 10);
-		driveRightA.configSelectedFeedbackCoefficient(1.0, 1, 10);
+		
 		driveRightA.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 10);
 		driveRightA.configSelectedFeedbackCoefficient(TURN_UNITS_PER_ROTATION / PIGEON_UNITS_PER_ROTATION, 0, 10);
 	
@@ -252,14 +242,12 @@ public class Chassis extends Subsystem {
 		driveRightA.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, 10);
 		driveRightA.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, 10);
 		driveRightA.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, 10);
-		/* speed up the left since we are polling it's sensor */
-		driveLeftA.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 10);
-
+	
 		driveLeftA.configNeutralDeadband(0.001, 10);
 		driveRightA.configNeutralDeadband(0.001, 10);
 
-		driveRightA.configMotionAcceleration(720, 10); //28000
-		driveRightA.configMotionCruiseVelocity(900, 10);
+		driveRightA.configMotionAcceleration(3600/15*2, 10); //28000
+		driveRightA.configMotionCruiseVelocity(3600/15, 10);
 
 		/* max out the peak output (for all modes).  However you can
 		 * limit the output of a given PID object with configClosedLoopPeakOutput().
@@ -273,16 +261,8 @@ public class Chassis extends Subsystem {
 		driveRightA.setNeutralMode(NeutralMode.Brake);
 		
 		//pid loop speed = 1ms
-		driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, 1, 10);
 		driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, 0, 10);
-		
-		/**
-		 * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
-		 * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
-		 */
-		driveRightA.configAuxPIDPolarity(true, 10);
-		
-		driveRightA.selectProfileSlot(SLOT_DISTANCE, 1);
+	
 		driveRightA.selectProfileSlot(SLOT_TURNING, 0);
 
 	}
