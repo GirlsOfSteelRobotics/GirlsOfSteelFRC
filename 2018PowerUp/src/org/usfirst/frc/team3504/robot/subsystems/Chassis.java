@@ -246,7 +246,7 @@ public class Chassis extends Subsystem {
 		driveLeftA.configNeutralDeadband(0.001, 10);
 		driveRightA.configNeutralDeadband(0.001, 10);
 
-		driveRightA.configMotionAcceleration(3600/15*2, 10); //28000
+		driveRightA.configMotionAcceleration(2 * 3600/15, 10);
 		driveRightA.configMotionCruiseVelocity(3600/15, 10);
 
 		/* max out the peak output (for all modes).  However you can

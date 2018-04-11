@@ -181,6 +181,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
 		m_autonomousCommand = new AutoFarScale(FieldSide.left);
+		//m_autonomousCommand = new TurnByMotionMagic(-90);
 		//m_autonomousCommand = new AutoNearScale(scaleSide);
 		
 		//Motion Magic Testing

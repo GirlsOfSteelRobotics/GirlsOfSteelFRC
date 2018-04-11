@@ -21,7 +21,7 @@ public class TurnByMotionMagic extends Command {
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
-	private final static double TURNING_FINISH_THRESHOLD = 3.0; // TODO tune (in degrees)
+	private final static double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
 	public TurnByMotionMagic(double degrees) {
 		targetHeading = degrees;
@@ -49,7 +49,7 @@ public class TurnByMotionMagic extends Command {
 
 		System.out.println("TurnByMotionMagic: heading: " + targetHeading);
 
-		rightTalon.set(ControlMode.MotionMagic, 10 * targetHeading);
+		rightTalon.set(ControlMode.MotionMagic, -10 * targetHeading);
 		leftTalon.follow(rightTalon);
 
 	}
@@ -61,16 +61,15 @@ public class TurnByMotionMagic extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
 
-//		double currentHeading = Robot.chassis.getYaw();
-//		double error = Math.abs(targetHeading - currentHeading);
-//		// System.out.println("DriveByMotionMagic: turning error = " + error);
-//		if (error < TURNING_FINISH_THRESHOLD) {
-//			System.out.println("DriveByMotionMagic: turning degrees reached");
-//			return true;
-//		} else
-//			return false;
+		double currentHeading = Robot.chassis.getYaw();
+		double error = Math.abs(targetHeading - currentHeading);
+		// System.out.println("DriveByMotionMagic: turning error = " + error);
+		if (error < TURNING_FINISH_THRESHOLD) {
+			System.out.println("DriveByMotionMagic: turning degrees reached");
+			return true;
+		} else
+			return false;
 
 	}
 
@@ -78,7 +77,7 @@ public class TurnByMotionMagic extends Command {
 	protected void end() {
 
 		double currentHeading = Robot.chassis.getYaw();
-		double degreesError = Math.abs(targetHeading - currentHeading);
+		double degreesError = targetHeading - currentHeading;
 
 		System.out.println("TurnByMotionMagic: ended. Error = " + degreesError + " degrees");
 		Robot.chassis.stop();
