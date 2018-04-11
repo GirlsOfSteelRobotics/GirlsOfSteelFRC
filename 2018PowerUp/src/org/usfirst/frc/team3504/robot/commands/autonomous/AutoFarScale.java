@@ -10,17 +10,19 @@ import org.usfirst.frc.team3504.robot.commands.ReleaseFast;
 import org.usfirst.frc.team3504.robot.commands.TimeDelay;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.commands.WristToCollect;
+import org.usfirst.frc.team3504.robot.commands.WristToShoot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
 public class AutoFarScale extends CommandGroup {
-	private final double DISTANCE_FORWARD_1 = 160.0;
+	private final double DISTANCE_FORWARD_1 = 175.0;
 	private final double TURN_RADIUS_1 = 100.0;
 	private final double DISTANCE_SIDE_1 = 135.0;
-	private final double TURN_RADIUS_2 = 70.0;
-	private final double DEGREES_2 = 120.0;
+	private final double TURN_RADIUS_2 = 90.0;
+	private final double DEGREES_2 = 130.0;
 	private final double DISTANCE_FORWARD_2 = 10.0;
 	private final double DISTANCE_SIDE_2 = 10.0;
 	private final double BACK_UP = -30.0;
@@ -40,7 +42,13 @@ public class AutoFarScale extends CommandGroup {
     	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight(TURN_RADIUS_1));
     	else addSequential(new AutoTurnLeft(TURN_RADIUS_1));
     	
-    	addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 0));
+    	addSequential(new LiftToScale());
+    	addSequential(new WristToShoot());
+    	addParallel(new WristHold());
+    	addParallel(new LiftHold());
+    	
+    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, -90, false));
+    	else addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 90, false));
     	
     	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagic(TURN_RADIUS_2, DEGREES_2));
     	else addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -DEGREES_2));

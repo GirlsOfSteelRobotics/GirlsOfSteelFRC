@@ -20,14 +20,15 @@ public class DriveByMotionMagic extends Command {
 	private boolean resetPigeon;
 	
 	private int timeoutCtr;
+	private double time;
 
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 	
-	private final static double DISTANCE_FINISH_THRESHOLD = 1000; //TODO tune (in encoder ticks)
-	private final static double TURNING_FINISH_THRESHOLD = 3.0; //TODO tune (in degrees)
+	private final static double DISTANCE_FINISH_THRESHOLD = 4000; //TODO tune (in encoder ticks)
+	private final static double TURNING_FINISH_THRESHOLD = 1.5; //TODO tune (in degrees)
 	
-	private final static double DISTANCE_TIMER_THRESHOLD = 2500; //TODO tune (in encoder ticks)
+	private final static double DISTANCE_TIMER_THRESHOLD = 10000; //TODO tune (in encoder ticks)
 	private final static double TURNING_TIMER_THRESHOLD = 8.0; //TODO tune (in degrees)
 	
 	private final static double TIMER_THRESHOLD = 0.5; //in seconds
@@ -50,6 +51,7 @@ public class DriveByMotionMagic extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	time = 0;
     	Robot.chassis.setInverted(true);
     	//System.out.println("DriveByMotionMagic: motors inverted");
     	
@@ -73,6 +75,7 @@ public class DriveByMotionMagic extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	time+=0.02;
     	if (!resetPigeon || targetHeading == 0) //if trying to drive straight
     	{
     		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
@@ -90,8 +93,7 @@ public class DriveByMotionMagic extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
-    	/*
+
     	if (timeoutCtr > (TIMER_THRESHOLD * 50))
 		{
     		System.out.println("DriveByMotionMagic: timeout reached");
@@ -121,7 +123,7 @@ public class DriveByMotionMagic extends Command {
     		}
     		else return false;
     	}
-    	*/
+    	
     }
 
     // Called once after isFinished returns true
@@ -133,7 +135,7 @@ public class DriveByMotionMagic extends Command {
 		double currentHeading = Robot.chassis.getYaw();
 		double degreesError = Math.abs(targetHeading - currentHeading);
     	
-    	System.out.println("DriveByMotionMagic: ended. Error = " + inches/2 + " inches, " + degreesError + " degrees");
+    	System.out.println("DriveByMotionMagic: ended. Error = " + inches/2 + " inches, " + degreesError + " degrees, " + time + " seconds");
     	Robot.chassis.stop();
     	Robot.chassis.setInverted(false);
     }

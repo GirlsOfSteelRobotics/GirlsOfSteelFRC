@@ -143,15 +143,15 @@ public class Chassis extends Subsystem {
 		//Motion Magic
 		
 		/* distance servo */
-		driveRightA.config_kP(SLOT_DISTANCE, 0.0164, 10); //0.03
+		driveRightA.config_kP(SLOT_DISTANCE, 0.014, 10); //0.03
 		driveRightA.config_kI(SLOT_DISTANCE, 0.0, 10); //0 
-		driveRightA.config_kD(SLOT_DISTANCE, 0.164, 10); //.02
-		driveRightA.config_kF(SLOT_DISTANCE, 0.102, 10); //.05
+		driveRightA.config_kD(SLOT_DISTANCE, 6.0, 10); //.02
+		driveRightA.config_kF(SLOT_DISTANCE, 0.08, 10); //.05
 		driveRightA.config_IntegralZone(SLOT_DISTANCE, 100, 10);
 		driveRightA.configClosedLoopPeakOutput(SLOT_DISTANCE, 0.70, 10);
 
 		/* turn servo */
-		driveRightA.config_kP(SLOT_TURNING, 1.5, 10);
+		driveRightA.config_kP(SLOT_TURNING, 3.0, 10);
 		driveRightA.config_kI(SLOT_TURNING, 0.0, 10);
 		driveRightA.config_kD(SLOT_TURNING, 4.0, 10);
 		driveRightA.config_kF(SLOT_TURNING, 0.0, 10);
@@ -317,7 +317,7 @@ public class Chassis extends Subsystem {
 		driveRightA.configNeutralDeadband(0.001, 10);
 
 		driveRightA.configMotionAcceleration(5000, 10); //28000
-		driveRightA.configMotionCruiseVelocity(3750, 10);
+		driveRightA.configMotionCruiseVelocity(10000, 10);
 
 		/* max out the peak output (for all modes).  However you can
 		 * limit the output of a given PID object with configClosedLoopPeakOutput().
