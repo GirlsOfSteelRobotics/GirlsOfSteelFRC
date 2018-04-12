@@ -28,7 +28,7 @@ public class DriveByMotionMagic extends Command {
 	private final static double DISTANCE_FINISH_THRESHOLD = 4000; //TODO tune (in encoder ticks)
 	private final static double TURNING_FINISH_THRESHOLD = 1.5; //TODO tune (in degrees)
 	
-	private final static double DISTANCE_TIMER_THRESHOLD = 10000; //TODO tune (in encoder ticks)
+	private final static double DISTANCE_TIMER_THRESHOLD = 5000; //TODO tune (in encoder ticks)
 	private final static double TURNING_TIMER_THRESHOLD = 8.0; //TODO tune (in degrees)
 	
 	private final static double TIMER_THRESHOLD = 0.5; //in seconds

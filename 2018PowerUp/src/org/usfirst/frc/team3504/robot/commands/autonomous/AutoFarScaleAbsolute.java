@@ -20,15 +20,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoFarScaleAbsolute extends CommandGroup {
-	private final double DISTANCE_FORWARD_1 = 175.0;
-	private final double TURN_RADIUS_1 = 100.0;
+	private final double DISTANCE_FORWARD_1 = 180.0;
+	private final double TURN_RADIUS_1 = 110.0;
 	private final double TURN_HEADING_1 = 90.0; //absolute value
-	private final double DISTANCE_SIDE_1 = 115.0;
-	private final double TURN_RADIUS_2 = 80.0;
+	private final double DISTANCE_SIDE_1 = 120.0;
+	private final double TURN_RADIUS_2 = 90.0;
 	private final double TURN_HEADING_2 = 0;
 
     public AutoFarScaleAbsolute(FieldSide robotPosition) {
     	System.out.println("AutoFarScale starting");
+    	
+    	addSequential(new WristToShoot());
+    	addParallel(new WristHold());
     	
     	//Initial forward distance past switch
     	addSequential(new DriveByMotionMagicAbsolute(DISTANCE_FORWARD_1, 0, false));
@@ -39,8 +42,6 @@ public class AutoFarScaleAbsolute extends CommandGroup {
     	
     	//Get lift and wrist into position
     	addSequential(new LiftToScale());
-    	addSequential(new WristToShoot());
-    	addParallel(new WristHold());
     	addParallel(new LiftHold());
     	
     	//Driving across the field behind the switch
@@ -62,6 +63,7 @@ public class AutoFarScaleAbsolute extends CommandGroup {
     	//Release cube
     	addParallel(new ReleaseFast(0.5));
     	addSequential(new TimeDelay(1.0));
+    	addSequential(new DriveByMotionMagic(-15.0, 0));
 
     	//Put lift down and stop collector motors
     	addSequential(new CollectPosition());
