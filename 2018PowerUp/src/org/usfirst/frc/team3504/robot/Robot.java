@@ -95,6 +95,8 @@ public class Robot extends TimedRobot {
 		Robot.shifters.shiftGear(Shifters.Speed.kHigh);
 		Robot.chassis.zeroSensors();
 
+		
+		System.out.println("Starting Auto...");
 		//Get robot side, switch side, scale side, element priority
 		FieldSide robotSide = gameData.getRobotSide();
 		FieldElement elementPriority = gameData.getElementPriority();
@@ -193,13 +195,13 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoTurnLeft();
 		//m_autonomousCommand = new AutoMiddleSwitch(FieldSide.left);
 
-		m_autonomousCommand = new AutoMiddleSwitchTwoCubeBetter(FieldSide.left);
-		//m_autonomousCommand = new AutoDriveToBaseline();
+		m_autonomousCommand = new TurnInPlace(90);
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
 		
+		System.out.println("Hopefully auto is runnin");
 	}
 
 	/**
