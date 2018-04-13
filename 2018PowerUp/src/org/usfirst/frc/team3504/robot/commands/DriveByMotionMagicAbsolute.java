@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveByMotionMagic extends Command {
+public class DriveByMotionMagicAbsolute extends Command {
 	
-	private double encoderTicks; //in sensor units
-	private double targetHeading; //in degrees
-	private boolean resetPigeon;
+	private double encoderTicks;
+	private double targetHeading;
+	
+	private boolean turning;
 	
 	private int timeoutCtr;
 	private double time;
@@ -28,47 +29,38 @@ public class DriveByMotionMagic extends Command {
 	private final static double DISTANCE_FINISH_THRESHOLD = 4000; //TODO tune (in encoder ticks)
 	private final static double TURNING_FINISH_THRESHOLD = 1.5; //TODO tune (in degrees)
 	
-	private final static double DISTANCE_TIMER_THRESHOLD = 5000; //TODO tune (in encoder ticks)
+	private final static double DISTANCE_TIMER_THRESHOLD = 10000; //TODO tune (in encoder ticks)
 	private final static double TURNING_TIMER_THRESHOLD = 8.0; //TODO tune (in degrees)
 	
 	private final static double TIMER_THRESHOLD = 0.5; //in seconds
 
-    public DriveByMotionMagic(double inches, double degrees) {
+    public DriveByMotionMagicAbsolute(double inches, double absoluteDegrees, boolean isTurnMotion) {
 		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
-		targetHeading = degrees;
-		resetPigeon = true;
+		targetHeading = absoluteDegrees;
+		turning = isTurnMotion;
 		requires(Robot.chassis);
-		//System.out.println("DriveByMotionMagic: constructed");
+		//System.out.println("DriveByMotionMagicAbsolute: constructed");
     }
     
-    public DriveByMotionMagic(double inches, double degrees, boolean reset) {
-		encoderTicks = RobotMap.CODES_PER_WHEEL_REV * (inches / (RobotMap.WHEEL_DIAMETER * Math.PI));
-		targetHeading = degrees;
-		resetPigeon = reset;
-		requires(Robot.chassis);
-		//System.out.println("DriveByMotionMagic: constructed");
-    }
-
     // Called just before this Command runs the first time
     protected void initialize() {
     	time = 0;
     	Robot.chassis.setInverted(true);
-    	//System.out.println("DriveByMotionMagic: motors inverted");
+    	//System.out.println("DriveByMotionMagicAbsolute: motors inverted");
     	
     	Robot.chassis.configForMotionMagic();
-    	//System.out.println("DriveByMotionMagic: configured for motion magic");
+    	//System.out.println("DriveByMotionMagicAbsolute: configured for motion magic");
     	
-    	if (resetPigeon) Robot.chassis.zeroSensors();
-    	else Robot.chassis.zeroEncoder();
-    	//System.out.println("DriveByMotionMagic: sensors zeroed");
+    	Robot.chassis.zeroEncoder();
+    	//System.out.println("DriveByMotionMagicAbsolute: sensors zeroed");
     	
     	double inches = (encoderTicks / RobotMap.CODES_PER_WHEEL_REV) * (RobotMap.WHEEL_DIAMETER * Math.PI);
-    	System.out.println("DriveByMotionMagic inches + heading: " + inches + targetHeading);
+    	System.out.println("DriveByMotionMagicAbsolute inches + heading: " + inches + targetHeading);
     	
 		rightTalon.set(ControlMode.MotionMagic, 2 * encoderTicks, DemandType.AuxPID, 10 * targetHeading);
 		leftTalon.follow(rightTalon, FollowerType.AuxOutput1);
 		
-		System.out.println("DriveByMotionMagic: running...");
+		System.out.println("DriveByMotionMagicAbsolute: running...");
 		
 		timeoutCtr = 0;
     }
@@ -76,7 +68,7 @@ public class DriveByMotionMagic extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	time+=0.02;
-    	if (!resetPigeon || targetHeading == 0) //if trying to drive straight
+    	if (!turning) //if trying to drive straight
     	{
     		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
     		double error = Math.abs(encoderTicks - currentTicks);
@@ -86,7 +78,7 @@ public class DriveByMotionMagic extends Command {
     	{
     		double currentHeading = Robot.chassis.getYaw();
     		double error = Math.abs(targetHeading - currentHeading);
-    		//System.out.println("DriveByMotionMagic: turning error = " + error);
+    		//System.out.println("DriveByMotionMagicAbsolute: turning error = " + error);
     		if (error < TURNING_TIMER_THRESHOLD) timeoutCtr++;
     	}
     }
@@ -96,17 +88,17 @@ public class DriveByMotionMagic extends Command {
 
     	if (timeoutCtr > (TIMER_THRESHOLD * 50))
 		{
-    		System.out.println("DriveByMotionMagic: timeout reached");
+    		System.out.println("DriveByMotionMagicAbsolute: timeout reached");
     		return true;
 		}
-    	else if (!resetPigeon || targetHeading == 0) //if trying to drive straight
+    	else if (!turning) //if trying to drive straight
     	{
     		double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
     		double error = Math.abs(encoderTicks - currentTicks);
-    		//System.out.println("DriveByMotionMagic: distance error = " + error);
+    		//System.out.println("DriveByMotionMagicAbsolute: distance error = " + error);
     		if (error < DISTANCE_FINISH_THRESHOLD)
     		{
-    			System.out.println("DriveByMotionMagic: encoder ticks reached");
+    			System.out.println("DriveByMotionMagicAbsolute: encoder ticks reached");
         		return true;
     		}
     		else return false;
@@ -115,10 +107,10 @@ public class DriveByMotionMagic extends Command {
     	{
     		double currentHeading = Robot.chassis.getYaw();
     		double error = Math.abs(targetHeading - currentHeading);
-    		//System.out.println("DriveByMotionMagic: turning error = " + error);
+    		//System.out.println("DriveByMotionMagicAbsolute: turning error = " + error);
     		if (error < TURNING_FINISH_THRESHOLD)
     		{
-    			System.out.println("DriveByMotionMagic: turning degrees reached");
+    			System.out.println("DriveByMotionMagicAbsolute: turning degrees reached");
         		return true;
     		}
     		else return false;
@@ -135,7 +127,7 @@ public class DriveByMotionMagic extends Command {
 		double currentHeading = Robot.chassis.getYaw();
 		double degreesError = Math.abs(targetHeading - currentHeading);
     	
-    	System.out.println("DriveByMotionMagic: ended. Error = " + inches/2 + " inches, " + degreesError + " degrees, " + time + " seconds");
+    	System.out.println("DriveByMotionMagicAbsolute: ended. Error = " + inches/2 + " inches, " + degreesError + " degrees, " + time + " seconds");
     	Robot.chassis.stop();
     	Robot.chassis.setInverted(false);
     }
@@ -143,7 +135,7 @@ public class DriveByMotionMagic extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("DriveByMotionMagic: interrupted");
+    	System.out.println("DriveByMotionMagicAbsolute: interrupted");
     	end();
     }
 }

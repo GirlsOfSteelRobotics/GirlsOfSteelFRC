@@ -56,8 +56,8 @@ public class OI {
 
 		/* BUTTON MAPPING */
 
-		shifterDown = new JoystickButton(amazonGamePad, 5);
-		shifterUp = new JoystickButton(amazonGamePad, 6);
+		shifterDown = new JoystickButton(amazonGamePad, 6);
+		shifterUp = new JoystickButton(amazonGamePad, 5);
 
 		liftUp = new JoystickButton(operatorGamePad, 6);
 		liftDown = new JoystickButton(operatorGamePad, 8);
