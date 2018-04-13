@@ -150,10 +150,10 @@ public class Chassis extends Subsystem {
 		driveRightA.configClosedLoopPeakOutput(SLOT_DISTANCE, 0.70, 10);
 
 		/* turn servo */
-		driveRightA.config_kP(SLOT_TURNING, 1.0, 10);
+		driveRightA.config_kP(SLOT_TURNING, 4.0, 10);
 		driveRightA.config_kI(SLOT_TURNING, 0.0, 10);
-		driveRightA.config_kD(SLOT_TURNING, 1.53, 10);
-		driveRightA.config_kF(SLOT_TURNING, 5.68, 10);
+		driveRightA.config_kD(SLOT_TURNING, 6.0, 10);
+		driveRightA.config_kF(SLOT_TURNING, 0.0, 10);
 		driveRightA.config_IntegralZone(SLOT_TURNING, 200, 10);
 		driveRightA.configClosedLoopPeakOutput(SLOT_TURNING, 1.00, 10);
 		

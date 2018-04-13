@@ -61,8 +61,7 @@ public class TurnByMotionMagic extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
-		/*
+		
 		double currentHeading = Robot.chassis.getYaw();
 		double error = Math.abs(targetHeading - currentHeading);
 		// System.out.println("DriveByMotionMagic: turning error = " + error);
@@ -70,7 +69,7 @@ public class TurnByMotionMagic extends Command {
 			System.out.println("DriveByMotionMagic: turning degrees reached");
 			return true;
 		} else
-			return false; */
+			return false; 
 
 	}
 

@@ -23,7 +23,7 @@ public class AutoFarScaleAbsolute extends CommandGroup {
 	private final double DISTANCE_FORWARD_1 = 180.0;
 	private final double TURN_RADIUS_1 = 110.0;
 	private final double TURN_HEADING_1 = 90.0; //absolute value
-	private final double DISTANCE_SIDE_1 = 120.0;
+	private final double DISTANCE_SIDE_1 = 115.0;
 	private final double TURN_RADIUS_2 = 90.0;
 	private final double TURN_HEADING_2 = 0;
 

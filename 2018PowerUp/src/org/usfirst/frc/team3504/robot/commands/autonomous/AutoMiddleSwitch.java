@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoMiddleSwitch extends CommandGroup {
 	
-	public final static double RIGHT_ANGLE = 50.0;
-	public final static double RIGHT_DISTANCE = 63.0;
+	public final static double RIGHT_ANGLE = 53.0;
+	public final static double RIGHT_DISTANCE = 72.0;
 	public final static double LEFT_ANGLE = 65.0;
-	public final static double LEFT_DISTANCE = 70.0;
+	public final static double LEFT_DISTANCE = 75.0;
 	public final static double BACK_UP = -30.0;
 
     public AutoMiddleSwitch(FieldSide switchSide) {

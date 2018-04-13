@@ -183,7 +183,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
-		m_autonomousCommand = new AutoFarScaleAbsolute(FieldSide.left);
+		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
 		//m_autonomousCommand = new TurnByMotionMagic(-90);
 		//m_autonomousCommand = new AutoNearScale(scaleSide);
 		
@@ -193,7 +193,7 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoTurnLeft();
 		//m_autonomousCommand = new AutoMiddleSwitch(FieldSide.left);
 
-		//m_autonomousCommand = new AutoMiddleSwitchTwoCubeS(FieldSide.left);
+		m_autonomousCommand = new AutoMiddleSwitchTwoCubeBetter(FieldSide.left);
 		//m_autonomousCommand = new AutoDriveToBaseline();
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

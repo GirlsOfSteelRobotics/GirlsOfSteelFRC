@@ -10,6 +10,7 @@ import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team3504.robot.commands.OldTurnInPlace;
 import org.usfirst.frc.team3504.robot.commands.ReleaseSlow;
 import org.usfirst.frc.team3504.robot.commands.TimeDelay;
+import org.usfirst.frc.team3504.robot.commands.TurnByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.commands.WristToCollect;
 
@@ -40,11 +41,11 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
     	
     	if(switchSide == FieldSide.right)
     	{
-    		addSequential(new OldTurnInPlace(-TURN_DEGREES_1));
+    		addSequential(new TurnByMotionMagic(-TURN_DEGREES_1));
     	}
     	else if (switchSide == FieldSide.left)
     	{
-    		addSequential(new OldTurnInPlace(TURN_DEGREES_1));
+    		addSequential(new TurnByMotionMagic(TURN_DEGREES_1));
     	}
     	
     	addSequential(new DriveByMotionMagic(STRAIGHT_2, 0));
@@ -67,11 +68,11 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
     	//Turn back straight
     	if(switchSide == FieldSide.right)
     	{
-    		addSequential(new OldTurnInPlace(TURN_DEGREES_1));
+    		addSequential(new TurnByMotionMagic(TURN_DEGREES_1));
     	}
     	else if (switchSide == FieldSide.left)
     	{
-    		addSequential(new OldTurnInPlace(-TURN_DEGREES_1));
+    		addSequential(new TurnByMotionMagic(-TURN_DEGREES_1));
     	}
     	
     	//Drive into cube then back up into place
@@ -82,11 +83,11 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
     	//Turn in place and drive forward
     	if(switchSide == FieldSide.right)
     	{
-    		addSequential(new OldTurnInPlace(-TURN_DEGREES_1));
+    		addSequential(new TurnByMotionMagic(-TURN_DEGREES_1));
     	}
     	else if (switchSide == FieldSide.left)
     	{
-    		addSequential(new OldTurnInPlace(TURN_DEGREES_1));
+    		addSequential(new TurnByMotionMagic(TURN_DEGREES_1));
     	}
     	
     	addSequential(new DriveByMotionMagic(STRAIGHT_2, 0));

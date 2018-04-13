@@ -23,25 +23,27 @@ public class OldTurnInPlace extends Command {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
         headingTarget = degrees;
-        speed = 0.3;
+        speed = 0.4;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.setInverted(true);
     	Robot.chassis.zeroSensors();
+    	System.out.println("OldTurnInPlace: intitialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (headingTarget > 0) //send both negative
+    	if (headingTarget > 0)
     	{
-    		leftTalon.set(ControlMode.PercentOutput, -speed);
-    		rightTalon.set(ControlMode.PercentOutput, -speed);
+    		//leftTalon.set(ControlMode.PercentOutput, -speed);
+    		rightTalon.set(ControlMode.PercentOutput, speed);
     	}
     	else
     	{
     		leftTalon.set(ControlMode.PercentOutput, speed);
-    		rightTalon.set(ControlMode.PercentOutput, speed);
+    		//rightTalon.set(ControlMode.PercentOutput, -speed);
     	}
     }
 
@@ -53,6 +55,8 @@ public class OldTurnInPlace extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.chassis.stop();
+    	Robot.chassis.setInverted(false);
+    	System.out.println("OldTurnInPlace: finished");
     }
 
     // Called when another command which requires one or more of the same
