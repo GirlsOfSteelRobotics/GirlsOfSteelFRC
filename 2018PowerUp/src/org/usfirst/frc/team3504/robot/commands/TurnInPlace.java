@@ -28,7 +28,7 @@ public class TurnInPlace extends Command {
 	private double iError = 0;
 	private double tempError;
 	
-	private double kP = .0056;
+	private double kP = .005;
 	private double kI = 0;
 	private double kD = 0;
 	
@@ -45,7 +45,7 @@ public class TurnInPlace extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("Trying to initialize");
-    	Robot.chassis.setInverted(true);
+    	Robot.chassis.setInverted(false);
     	Robot.chassis.zeroSensors();
     	System.out.println("Turn in place initialized Heading = " + headingTarget );
    
