@@ -47,6 +47,9 @@ public class OI {
 	private JoystickButton releaseFast;
 	private JoystickButton releaseSlow;
 	
+	private JoystickButton climb; 
+	private JoystickButton unClimb; 
+	
 	private JoystickButton motionMagic;
 
 	public OI() {
@@ -63,14 +66,17 @@ public class OI {
 		liftDown = new JoystickButton(operatorGamePad, 8);
 		liftToSwitch = new JoystickButton(operatorGamePad, 1);
 		liftToGround = new JoystickButton(operatorGamePad, 2);
-		liftEnterRecovery = new JoystickButton(operatorGamePad, 9);
+		liftEnterRecovery = new JoystickButton(operatorGamePad, 11);
 
 		wristIn = new JoystickButton(operatorGamePad, 5);  
 		wristOut = new JoystickButton(operatorGamePad, 7);
 
 		collect = new JoystickButton(operatorGamePad, 4);
-		releaseFast = new JoystickButton(operatorGamePad, 10);
+		//releaseFast = new JoystickButton(operatorGamePad, 10);
 		releaseSlow = new JoystickButton(operatorGamePad, 3);
+		
+		climb = new JoystickButton(operatorGamePad, 10);
+		unClimb = new JoystickButton(operatorGamePad, 9); 
 		
 		motionMagic = new JoystickButton(amazonGamePad, 4);
 
@@ -93,8 +99,11 @@ public class OI {
 		wristOut.whileHeld(new WristOut());
 
 		collect.whileHeld(new Collect());
-		releaseFast.whileHeld(new ReleaseFast());
+		//releaseFast.whileHeld(new ReleaseFast());
 		releaseSlow.whileHeld(new ReleaseSlow());
+		
+		climb.whileHeld(new ClimbUp());
+		unClimb.whileHeld(new ClimbDown());
 		
 		motionMagic.whenPressed(new DriveByMotionMagic(25.0, -90.0));
 	}

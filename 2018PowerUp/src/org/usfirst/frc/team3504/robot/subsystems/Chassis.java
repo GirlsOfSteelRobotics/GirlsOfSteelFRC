@@ -63,10 +63,8 @@ public class Chassis extends Subsystem {
 		
 		driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
 		driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
-		driveLeftC = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_C);
 		driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
 		driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
-		driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
 		
 		setFollowerMode();
 		
@@ -81,24 +79,18 @@ public class Chassis extends Subsystem {
 		
 		driveLeftA.setNeutralMode(NeutralMode.Brake);
 		driveLeftB.setNeutralMode(NeutralMode.Brake);
-		driveLeftC.setNeutralMode(NeutralMode.Brake);
 		driveRightA.setNeutralMode(NeutralMode.Brake);
 		driveRightB.setNeutralMode(NeutralMode.Brake);
-		driveRightC.setNeutralMode(NeutralMode.Brake);
 		
 		driveLeftA.setSafetyEnabled(false);
 		driveLeftB.setSafetyEnabled(false);
-		driveLeftB.setSafetyEnabled(false);
 		driveRightA.setSafetyEnabled(false);
 		driveRightB.setSafetyEnabled(false);
-		driveRightC.setSafetyEnabled(false);
     	
     	driveLeftA.setName("Chassis", "driveLeftA");
     	driveLeftB.setName("Chassis", "driveLeftB");
-    	driveLeftC.setName("Chassis", "driveLeftC");
     	driveRightA.setName("Chassis", "driveRightA");
     	driveRightB.setName("Chassis", "driveRightB");
-    	driveRightC.setName("Chassis", "driveRightC");
     	LiveWindow.add(driveLeftA);
     	LiveWindow.add(driveLeftB);
     	LiveWindow.add(driveLeftC);
@@ -199,10 +191,8 @@ public class Chassis extends Subsystem {
 	
 	public void setFollowerMode() {
 		driveLeftB.follow(driveLeftA, FollowerType.PercentOutput);
-		driveLeftC.follow(driveLeftA, FollowerType.PercentOutput);
 		
 		driveRightB.follow(driveRightA, FollowerType.PercentOutput);
-		driveRightC.follow(driveRightA, FollowerType.PercentOutput);
 	}
 	
 	public void setPositionPIDSlot()
@@ -221,11 +211,9 @@ public class Chassis extends Subsystem {
 	{
 		driveLeftA.setInverted(false);
 		driveLeftB.setInverted(false);
-		driveLeftC.setInverted(false);
 		
 		driveRightA.setInverted(inverted);
 		driveRightB.setInverted(inverted);
-		driveRightC.setInverted(inverted);
 	}
 	
 	public void configForTurnByMotionMagic()

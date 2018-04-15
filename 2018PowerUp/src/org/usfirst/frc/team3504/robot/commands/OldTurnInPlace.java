@@ -14,7 +14,7 @@ public class OldTurnInPlace extends Command {
 
 	private double headingTarget;
 	private double speed;
-	private final static double ERROR = 2.0;
+	private final static double ERROR = 3.0;
 	
 	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
 	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
@@ -23,7 +23,7 @@ public class OldTurnInPlace extends Command {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
         headingTarget = degrees;
-        speed = 0.4;
+        speed = 0.2;
     }
 
     // Called just before this Command runs the first time
@@ -37,13 +37,13 @@ public class OldTurnInPlace extends Command {
     protected void execute() {
     	if (headingTarget > 0)
     	{
-    		//leftTalon.set(ControlMode.PercentOutput, -speed);
+    		leftTalon.set(ControlMode.PercentOutput, -speed);
     		rightTalon.set(ControlMode.PercentOutput, speed);
     	}
     	else
     	{
     		leftTalon.set(ControlMode.PercentOutput, speed);
-    		//rightTalon.set(ControlMode.PercentOutput, -speed);
+    		rightTalon.set(ControlMode.PercentOutput, -speed);
     	}
     }
 

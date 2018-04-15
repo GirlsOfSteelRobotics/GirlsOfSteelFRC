@@ -14,6 +14,7 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Climber;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lift;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
 	public static Collector collector;
 	public static Blobs blobs;
 	public static Camera camera;
+	public static Climber climber; 
 	public static OI oi;
 	public static GameData gameData;
 
@@ -58,6 +60,7 @@ public class Robot extends TimedRobot {
 		wrist = new Wrist();
 		blobs = new Blobs();
 		camera = new Camera();
+		climber = new Climber(); 
 		oi = new OI();
 		gameData = new GameData();
 
@@ -193,9 +196,10 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionMagic(166.0,0);
 		//m_autonomousCommand = new AutoTurnRight();
 		//m_autonomousCommand = new AutoTurnLeft();
-		//m_autonomousCommand = new AutoMiddleSwitch(FieldSide.left);
+		m_autonomousCommand = new AutoMiddleSwitch(FieldSide.right);
 
-		m_autonomousCommand = new TurnInPlace(90);
+		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
+		//m_autonomousCommand = new OldTurnInPlace(-90.0);
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
