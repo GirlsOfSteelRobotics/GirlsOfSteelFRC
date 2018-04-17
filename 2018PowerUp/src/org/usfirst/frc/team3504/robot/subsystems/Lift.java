@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 
@@ -17,21 +16,21 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Lift extends Subsystem {
 
-	public WPI_TalonSRX lift;
+	private WPI_TalonSRX lift;
 	private DigitalInput limitSwitch;
-	
+
 	private static double goalLiftPosition;
 	private static boolean inRecoveryMode;
-	
-	public static final double LIFT_MAX = 32000; //TODO tune
+
+	public static final double LIFT_MAX = 32500; //TODO tune
 	public static final double LIFT_MIN = 0; //TODO tune
 	public static final double LIFT_SWITCH = 12500; //TODO tune
-	public static final double LIFT_SCALE = 30000; //TODO tune
+	public static final double LIFT_SCALE = 32500; //TODO tune
 	public static final double LIFT_GROUND = 1000; //TODO tune
-	public static final double LIFT_INCREMENT = 250; //TODO tune
-	
+	public static final double LIFT_INCREMENT = 200; //TODO tune 250
+
 	private StickyFaults faults = new StickyFaults();
-	
+
 	public Lift() {
 		lift = new WPI_TalonSRX(RobotMap.LIFT); 
 		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
@@ -47,78 +46,80 @@ public class Lift extends Subsystem {
 		//System.out.println("Lift Constructed");
 		LiveWindow.add(lift);
 	}
-	
-	
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new LiftHold());
-        //System.out.println("Lift Default command initialized");
-    }
-    
-    public void setupLiftFPID() {
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		setDefaultCommand(new LiftHold());
+	}
+
+	public void setupLiftFPID() {
 		//talon.setPosition(0); //TODO figure out new syntax
-    	lift.config_kF(0, 0, 10);
+		lift.config_kF(0, 0, 10);
 		lift.config_kP(0, 0.3, 10);
 		lift.config_kI(0, 0, 10);
 		lift.config_kD(0, 0, 10);	
 	}
-    
-   
-//    public WPI_TalonSRX getLiftTalon() {
-//    	return lift;
-//    }
-    
-    public void setLiftSpeed(double speed) {
-    		lift.set(speed); //value between -1.0 and 1.0;
-    }
 
-    public void stop() {
-    		lift.stopMotor();
-    }
-	
-	public boolean getLimitSwitch(){
-		return limitSwitch.get();
+	public void setLiftSpeed(double speed) {
+		lift.set(speed); //value between -1.0 and 1.0;
 	}
-	
+
+	public void stop() {
+		lift.stopMotor();
+	}
+
+	public boolean isAtBottom(){
+		return !limitSwitch.get();
+	}
+
 	public double getGoalLiftPosition()
 	{
 		return goalLiftPosition;
 	}
-	
+
 	public void setGoalLiftPosition(double goal)
 	{
 		goalLiftPosition = goal;
 	}
-	
+
 	public double getLiftPosition()
 	{
 		return lift.getSelectedSensorPosition(0);
 	}
-	
+
 	public void enterRecoveryMode()
 	{
 		inRecoveryMode = true;
 		System.out.println("Lift IN RECOVERY MODE");
 	}
-	
+
+	public void printLimitSwitch()
+	{
+		if (isAtBottom()) System.out.println("Lift: Limit switch ACTIVATED at bottom");
+		else System.out.println("Lift: Limit switch NOT activated at bottom");
+	}
+
 	public void holdLiftPosition()
 	{
+		//printLimitSwitch(); ///Testing Limit Switch
+
 		lift.getStickyFaults(faults);
 		if (faults.ResetDuringEn) {
 			inRecoveryMode = true;
+			goalLiftPosition = 0;
 			lift.clearStickyFaults(10);
-			System.out.println("sticky fault detected, IN RECOVERY MODE");
+			System.out.println("Lift: Sticky fault detected, IN RECOVERY MODE");
 		}
 		if (inRecoveryMode)
 		{
-			if (getLimitSwitch()) 
+			if (isAtBottom()) 
 			{
 				lift.setSelectedSensorPosition(0, 0, 10);
 				inRecoveryMode = false;
-				System.out.println("Lift encoder position recovered");
+				System.out.println("Lift: encoder position recovered (limit switch activated at bottom)");
 			}
 		}
 		lift.set(ControlMode.Position, goalLiftPosition);
@@ -139,7 +140,7 @@ public class Lift extends Subsystem {
 		if (!inRecoveryMode) goalLiftPosition = LIFT_GROUND;
 		else System.out.println("Lift in recovery mode, can't go to ground");
 	}
-	
+
 	public void incrementLift()
 	{
 		double goalPosition = goalLiftPosition + LIFT_INCREMENT;
@@ -152,9 +153,8 @@ public class Lift extends Subsystem {
 			goalLiftPosition = goalPosition;
 			//System.out.println("Lift incremented. New goal : " + goalLiftPosition);
 		}
-		
 	}
-	
+
 	public void decrementLift()
 	{
 		double goalPosition = goalLiftPosition - LIFT_INCREMENT;
@@ -167,8 +167,6 @@ public class Lift extends Subsystem {
 			goalLiftPosition = goalPosition;
 			//System.out.println("Lift decremented. New goal : " + goalLiftPosition);
 		}
-		
 	}
-
 }
 

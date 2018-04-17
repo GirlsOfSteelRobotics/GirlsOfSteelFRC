@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.CollectorHold;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -13,12 +14,15 @@ public class Collector extends Subsystem {
 	
 	private WPI_TalonSRX collectLeft;
 	private WPI_TalonSRX collectRight;
+	
+	public double collectorSpeed;
 
 	public Collector() {
 		collectLeft = new WPI_TalonSRX(RobotMap.COLLECT_LEFT);
 		collectRight = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT);
 		collectLeft.setSensorPhase(true);
 		collectRight.setSensorPhase(true);
+		collectorSpeed = 0; //TODO do we want it to turn during auto
 	}
 	
     // Put methods for controlling this subsystem
@@ -26,23 +30,47 @@ public class Collector extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new CollectorHold());
     }
     
     
     public void stop() {
-    		collectLeft.stopMotor();
-    		collectRight.stopMotor();
+    	collectLeft.stopMotor();
+    	collectRight.stopMotor();
+    	collectorSpeed = 0;
+    	System.out.println("Collector: motors stopped");
     }
     
     public void collect() {
-    		collectLeft.set(-1.0); //TODO: tune this speed, and these values may be reversed
-    		collectRight.set(0.5);
+		collectLeft.set(-1.00); //TODO: tune this speed, and these values may be reversed
+		collectRight.set(0.5);
     }
     
     public void release(double speed) {
-    		collectLeft.set(speed); //TODO: tune this speed, and these values may be reversed
+		collectLeft.set(speed); //TODO: tune this speed, and these values may be reversed
 		collectRight.set(-speed);
+    }
+    
+    public int getRightCollectorID()
+    {
+    	return collectRight.getDeviceID();
+    }
+    
+    public WPI_TalonSRX getRightCollector()
+    {
+    	return collectRight;
+    }
+    
+    public void runCollector()
+    {
+    	collectLeft.set(-collectorSpeed);
+    	collectRight.set(collectorSpeed);
+    }
+    
+    public void runSlowCollect()
+    {
+    	System.out.println("Collector: holding cube in");
+    	collectorSpeed = 0.15;
     }
     
 }

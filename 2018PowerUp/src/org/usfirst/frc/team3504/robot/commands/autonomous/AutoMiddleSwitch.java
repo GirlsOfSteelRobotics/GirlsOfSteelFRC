@@ -6,41 +6,45 @@ import org.usfirst.frc.team3504.robot.commands.CollectorStop;
 import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.LiftHold;
 import org.usfirst.frc.team3504.robot.commands.LiftToSwitch;
-import org.usfirst.frc.team3504.robot.commands.ReleaseFast;
+import org.usfirst.frc.team3504.robot.commands.ReleaseSlow;
 import org.usfirst.frc.team3504.robot.commands.TimeDelay;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.commands.WristToCollect;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnRight;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutoNearSwitch extends CommandGroup {
+public class AutoMiddleSwitch extends CommandGroup {
 	
-	private final double DISTANCE_FORWARD = 130.0;
-	private final double DISTANCE_SIDE = 0.0;
-	private final double BACK_UP = -30;
+	public final static double RIGHT_ANGLE = 53.0;
+	public final static double RIGHT_DISTANCE = 72.0;
+	public final static double LEFT_ANGLE = 65.0;
+	public final static double LEFT_DISTANCE = 75.0;
+	public final static double BACK_UP = -30.0;
 
-    public AutoNearSwitch(FieldSide robotPosition) {
-    	System.out.println("AutoNearSwitch starting");
+    public AutoMiddleSwitch(FieldSide switchSide) {
     	
-    	//Get lift & wrist into position
     	addSequential(new WristToCollect());
     	addSequential(new LiftToSwitch());
     	addParallel(new WristHold());
     	addParallel(new LiftHold());
     	
-    	//Move Robot into position
-    	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD, 0));
-    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight(25.0));
-    	else addSequential(new AutoTurnLeft(25.0));
-    	addSequential(new DriveByMotionMagic(DISTANCE_SIDE, 0));
+    	if(switchSide == FieldSide.right)
+    	{
+    		addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, -RIGHT_ANGLE));
+    		addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, RIGHT_ANGLE));
+    	}
+    	else if (switchSide == FieldSide.left)
+    	{
+    		addSequential(new DriveByMotionMagic(LEFT_DISTANCE, LEFT_ANGLE));
+    		addSequential(new DriveByMotionMagic(LEFT_DISTANCE, -LEFT_ANGLE));
+    	}
+    	else System.out.println("AutoMiddleSwitch: invalid switch side");
     	
     	//Release and back up
-    	addParallel(new ReleaseFast());
+    	addParallel(new ReleaseSlow());
     	addSequential(new TimeDelay(1.0));
     	addSequential(new DriveByMotionMagic(BACK_UP, 0));
     	

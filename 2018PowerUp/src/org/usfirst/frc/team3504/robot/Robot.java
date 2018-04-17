@@ -7,29 +7,20 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.DriveByDistance;
-import org.usfirst.frc.team3504.robot.commands.DriveByMotionMagic;
-import org.usfirst.frc.team3504.robot.commands.DriveByMotionProfile;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoBaseLine;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveToBaseline;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarScale;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFarSwitch;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearScale;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoNearSwitch;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPrintData;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoSwitchSimple;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnRight;
+import org.usfirst.frc.team3504.robot.GameData.FieldElement;
+import org.usfirst.frc.team3504.robot.GameData.FieldSide;
+import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
 import org.usfirst.frc.team3504.robot.subsystems.Blobs;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Climber;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lift;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Wrist;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -49,13 +40,9 @@ public class Robot extends TimedRobot {
 	public static Collector collector;
 	public static Blobs blobs;
 	public static Camera camera;
+	public static Climber climber; 
 	public static OI oi;
-	public static enum FieldSide {
-		left, right, middle, bad
-	}
-	public static enum FieldElement {
-		Switch, Scale
-	}
+	public static GameData gameData;
 
 	Command m_autonomousCommand;
 	public static String motionProfile = "91-small";
@@ -66,14 +53,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		collector = new Collector();
 		chassis = new Chassis();
 		shifters = new Shifters();
 		lift = new Lift();
 		wrist = new Wrist();
-		collector = new Collector();
 		blobs = new Blobs();
 		camera = new Camera();
+		climber = new Climber(); 
 		oi = new OI();
+		gameData = new GameData();
 
 	}
 
@@ -106,44 +95,49 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
-		lift.setGoalLiftPosition(lift.getLiftPosition());
-		wrist.setGoalWristPosition(wrist.getWristPosition());
+		Robot.shifters.shiftGear(Shifters.Speed.kHigh);
+		Robot.chassis.zeroSensors();
+
 		
-		//Determine which side of the field out robot is on
-		FieldSide robotSide;
-		if(!RobotMap.dio1.get()) robotSide = FieldSide.left; //get from DIO port
-		else if (!RobotMap.dio2.get()) robotSide = FieldSide.middle;
-		else if (!RobotMap.dio3.get()) robotSide = FieldSide.right;
-		else robotSide = FieldSide.bad;
+		System.out.println("Starting Auto...");
+		//Get robot side, switch side, scale side, element priority
+		FieldSide robotSide = gameData.getRobotSide();
+		FieldElement elementPriority = gameData.getElementPriority();
+		FieldSide switchSide = gameData.getSwitchSide(); 
+		FieldSide scaleSide = gameData.getScaleSide(); 
 		
-		FieldSide switchSide = getSwitchSide();
-		FieldSide scaleSide = getScaleSide(); 
-		
-		if(!RobotMap.dio4.get())
-		{
-			m_autonomousCommand = null;
-		}
-		else if(robotSide == FieldSide.left)
-		{
-			if (switchSide == FieldSide.left) m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-			else m_autonomousCommand = new AutoDriveToBaseline();
-		}
-		else if(robotSide == FieldSide.right) 
-		{
-			if (switchSide == FieldSide.right) m_autonomousCommand = new AutoNearSwitch(FieldSide.right);
-			else m_autonomousCommand = new AutoDriveToBaseline();
-		}
-		else if(robotSide == FieldSide.middle)
-		{
-			if (switchSide == FieldSide.right) m_autonomousCommand = new AutoSwitchSimple();
-			else m_autonomousCommand = new AutoDriveToBaseline();
-		}
-		else 
-		{
-			System.out.println("Robot field side from DIO ports invalid!!");
-			m_autonomousCommand = new AutoDriveToBaseline();
-		}
-		
+//		if(gameData.getNoAuto())
+//		{
+//			m_autonomousCommand = null;
+//		}
+//		else if(robotSide == FieldSide.left || robotSide == FieldSide.right) //if robot in the corner
+//		{
+//			if (elementPriority == FieldElement.Switch) //switch priority
+//			{
+//				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
+//				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
+//				else m_autonomousCommand = new AutoDriveToBaseline();
+//			}
+//			else //scale priority
+//			{
+//				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScaleAngled(scaleSide);
+//				else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
+//				else m_autonomousCommand = new AutoDriveToBaseline();
+//			}
+//		}
+//		else if(robotSide == FieldSide.middle)
+//		{
+//			if (switchSide != FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitch(switchSide);
+//			else m_autonomousCommand = new AutoDriveToBaseline();
+//		}
+//		else 
+//		{
+//			System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
+//			m_autonomousCommand = new AutoDriveToBaseline();
+//		}
+//		
+//		System.out.println("Auto: " + m_autonomousCommand);
+//		
 		/*
 		boolean logicPriority = false; //get from DIO port; true = field element, false = stay on our side
 		FieldElement elementPriority = FieldElement.Switch;
@@ -189,28 +183,29 @@ public class Robot extends TimedRobot {
 		*/
 		
 		//Other auto commands for testing:
-		
 		//m_autonomousCommand = new AutoPrintData();
 		//m_autonomousCommand = new AutoSwitchSimple();
 		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoSwitchSimple();
+		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
+		//m_autonomousCommand = new TurnByMotionMagic(-90);
+		//m_autonomousCommand = new AutoNearScale(scaleSide);
 		
-		//m_autonomousCommand = new AutoNearSwitch(FieldSide.left);
-		m_autonomousCommand = new DriveByMotionMagic(50.0);
-		
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		//Motion Magic Testing
+		//m_autonomousCommand = new DriveByMotionMagic(166.0,0);
+		//m_autonomousCommand = new AutoTurnRight();
+		//m_autonomousCommand = new AutoTurnLeft();
+		m_autonomousCommand = new AutoMiddleSwitch(FieldSide.right);
 
+		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
+		//m_autonomousCommand = new OldTurnInPlace(-90.0);
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
 		
+		System.out.println("Hopefully auto is runnin");
 	}
 
 	/**
@@ -248,53 +243,4 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
-	
-	public static FieldSide getSwitchSide() //TODO: test
-	{
-		String gameData;
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		int tim = 0;
-		
-		while(tim <= 5 && (gameData == null || gameData.equals(""))) 
-		{
-			Timer.delay(0.2);
-			tim++;
-		}
-		
-		if (gameData == null || gameData.equals("")) return FieldSide.bad;
-		
-		if(gameData.charAt(0) == 'L')
-		{
-			return FieldSide.left;
-		} 
-		else 
-		{
-			return FieldSide.right;
-		}
-	}
-	
-	public static FieldSide getScaleSide() //TODO: test
-	{
-		String gameData;
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		int tim = 0;
-		
-		while(tim <= 5 && (gameData == null || gameData.equals(""))) 
-		{
-			Timer.delay(0.2);
-			tim++;
-		}
-		
-		if (gameData == null || gameData.equals("")) return FieldSide.bad;
-		
-		if(gameData.charAt(1) == 'L')
-		{
-			return FieldSide.left;
-		} 
-		else 
-		{
-			return FieldSide.right;
-		}
-	}
-	
 }

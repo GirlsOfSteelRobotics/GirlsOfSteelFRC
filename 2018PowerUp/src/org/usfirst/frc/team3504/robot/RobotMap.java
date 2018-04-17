@@ -19,10 +19,8 @@ public class RobotMap {
 	//Drive
 	public static final int DRIVE_RIGHT_A = 1;
 	public static final int DRIVE_RIGHT_B = 2;
-	public static final int DRIVE_RIGHT_C = 3;
 	public static final int DRIVE_LEFT_A = 4;
 	public static final int DRIVE_LEFT_B = 5;
-	public static final int DRIVE_LEFT_C = 6;
 	
 	//Lift
 	public static final int LIFT = 7;
@@ -32,6 +30,13 @@ public class RobotMap {
 	//Collector
 	public static final int COLLECT_RIGHT = 8;
 	public static final int COLLECT_LEFT = 9;
+	
+	public static final int CLIMB_MOTOR = 6; 
+	
+	//Pigeon
+	public static final int PIGEON = 11; //TODO update
+	
+	
 
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
@@ -64,12 +69,9 @@ public class RobotMap {
 	public static final int DRIVING_CAM = 0;
 	
 	//DIO
-	public static DigitalInput dio0 = new DigitalInput(0);
-	public static DigitalInput dio1 = new DigitalInput(1);
-	public static DigitalInput dio2 = new DigitalInput(2);
-	public static DigitalInput dio3 = new DigitalInput(3);
-	public static DigitalInput dio4 = new DigitalInput(4);
-	public static DigitalInput dio5 = new DigitalInput(5);
-	public static DigitalInput dio6 = new DigitalInput(6);
-	
+	public static final int DIO_PRIORITY = 0;
+	public static final int DIO_LEFT = 1;
+	public static final int DIO_MIDDLE = 2;
+	public static final int DIO_RIGHT = 3;
+	public static final int DIO_NO_AUTO = 4;
 }

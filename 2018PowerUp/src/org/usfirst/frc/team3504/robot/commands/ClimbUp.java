@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Release extends Command {
+public class ClimbUp extends Command {
 
-    public Release() {
+    public ClimbUp() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		requires(Robot.collector);
+    	requires(Robot.climber); 
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class Release extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.collector.release(0.9);
+    	Robot.climber.climb(1.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,12 +31,12 @@ public class Release extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    		Robot.collector.stop();
+    	Robot.climber.stopClimb();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	end(); 
     }
 }

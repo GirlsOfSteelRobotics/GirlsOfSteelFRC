@@ -19,41 +19,54 @@ public class DriveByJoystick extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.oi.setDriveStyle();
-		
-		System.out.println("Squared Units: " + Robot.oi.isSquaredOrCurvature());
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		/*if (Robot.oi.getCurrentThrottle() > Robot.shifters.getShiftingThreshold()) {
-    			Robot.shifters.shiftGear(Speed.kHigh);
-    		} else if (Robot.oi.getCurrentThrottle() < Robot.shifters.getShiftingThreshold()) {
-    			Robot.shifters.shiftGear(Speed.kLow);
-    		}*/
-
-//		if (Robot.oi.getDriveStyle() == DriveStyle.joystickArcade) {
-//			if (Robot.oi.isSquaredOrCurvature()){
-//				Robot.chassis.drive.curvatureDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickOneSideToSide(), true);
-//			} else {
-//				Robot.chassis.drive.arcadeDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickOneSideToSide(), true);
-//			}
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadArcade) {
-//			if (Robot.oi.isSquaredOrCurvature()){
-//				Robot.chassis.drive.curvatureDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
-//			} else {
-//				Robot.chassis.drive.arcadeDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightSideToSide(), true);
-//			}
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.gamePadTank){
-//			Robot.chassis.drive.tankDrive(Robot.oi.getGamePadLeftUpAndDown(), Robot.oi.getGamePadRightUpAndDown(), Robot.oi.isSquaredOrCurvature());
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.joystickTank){
-//			Robot.chassis.drive.tankDrive(Robot.oi.getJoystickOneUpAndDown(), Robot.oi.getJoystickTwoUpAndDown(), Robot.oi.isSquaredOrCurvature());
-//		} else if (Robot.oi.getDriveStyle() == DriveStyle.amazonDrive ) {
-			if (Robot.oi.isSquaredOrCurvature()){
-				Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown(), Robot.oi.getAmazonRightSideToSide(), true);
-			} else {
-				Robot.chassis.drive.arcadeDrive(Robot.oi.getAmazonLeftUpAndDown(), Robot.oi.getAmazonRightSideToSide(), true);
-			}
+		boolean highGear = true;
 		
+//		if (Robot.shifters.getGearSpeed().equals("kHigh")){
+//			highGear = true;
+//		}
+		double throttleFactor = .9;
+		
+		
+		
+		//throttle runs .225 speed
+		//speedy is 100%
+		//regular is 90% speed
+
+		if (highGear == true) {
+			throttleFactor = .65;
+			if (Robot.oi.isThrottle()){
+				Robot.chassis.getLeftTalon().configOpenloopRamp(0.37, 10); //blinky numbers
+				Robot.chassis.getRightTalon().configOpenloopRamp(0.37, 10);
+				throttleFactor = .2;
+			}
+			else if (Robot.oi.isSpeedy()) {
+				Robot.chassis.getLeftTalon().configOpenloopRamp(0.7, 10); //blinky numbers
+				Robot.chassis.getRightTalon().configOpenloopRamp(0.7, 10);
+				throttleFactor = 1;
+			}
+			else
+				throttleFactor = .65;
+		}
+		else {
+			throttleFactor = .9;
+			if (Robot.oi.isThrottle()){
+				throttleFactor = .225;
+			}
+			else if (Robot.oi.isSpeedy())
+				throttleFactor = 1;
+			else
+				throttleFactor = .9;
+		}
+
+
+		Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown()*throttleFactor, 
+				Robot.oi.getAmazonRightSideToSide()*throttleFactor, true);
+
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
