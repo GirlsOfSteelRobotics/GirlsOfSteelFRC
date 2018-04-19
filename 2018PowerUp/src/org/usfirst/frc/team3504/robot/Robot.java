@@ -196,7 +196,8 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new DriveByMotionMagic(166.0,0);
 		//m_autonomousCommand = new AutoTurnRight();
 		//m_autonomousCommand = new AutoTurnLeft();
-		m_autonomousCommand = new AutoMiddleSwitch(FieldSide.right);
+		//m_autonomousCommand = new AutoMiddleSwitch(FieldSide.left);
+		m_autonomousCommand = new AutoMiddleSwitchTwoCubeBetter(FieldSide.left);
 
 		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
 		//m_autonomousCommand = new OldTurnInPlace(-90.0);
