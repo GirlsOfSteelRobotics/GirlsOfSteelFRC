@@ -73,5 +73,6 @@ public class RobotMap {
 	public static final int DIO_LEFT = 1;
 	public static final int DIO_MIDDLE = 2;
 	public static final int DIO_RIGHT = 3;
-	public static final int DIO_NO_AUTO = 4;
+	public static final int DIO_SCALE_OVERRIDE = 4;
+	public static final int DIO_NO_AUTO = 5;
 }

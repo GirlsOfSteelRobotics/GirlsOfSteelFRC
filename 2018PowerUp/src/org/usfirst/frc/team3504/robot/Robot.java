@@ -104,40 +104,43 @@ public class Robot extends TimedRobot {
 		FieldSide robotSide = gameData.getRobotSide();
 		FieldElement elementPriority = gameData.getElementPriority();
 		FieldSide switchSide = gameData.getSwitchSide(); 
-		FieldSide scaleSide = gameData.getScaleSide(); 
+		switchSide = FieldSide.left;
+		FieldSide scaleSide = gameData.getScaleSide();
+		boolean scaleOverride = gameData.getScaleOverride();
 		
-//		if(gameData.getNoAuto())
-//		{
-//			m_autonomousCommand = null;
-//		}
-//		else if(robotSide == FieldSide.left || robotSide == FieldSide.right) //if robot in the corner
-//		{
-//			if (elementPriority == FieldElement.Switch) //switch priority
-//			{
-//				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-//				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
-//				else m_autonomousCommand = new AutoDriveToBaseline();
-//			}
-//			else //scale priority
-//			{
-//				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScaleAngled(scaleSide);
-//				else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-//				else m_autonomousCommand = new AutoDriveToBaseline();
-//			}
-//		}
-//		else if(robotSide == FieldSide.middle)
-//		{
-//			if (switchSide != FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitch(switchSide);
-//			else m_autonomousCommand = new AutoDriveToBaseline();
-//		}
-//		else 
-//		{
-//			System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
-//			m_autonomousCommand = new AutoDriveToBaseline();
-//		}
-//		
-//		System.out.println("Auto: " + m_autonomousCommand);
-//		
+		if(gameData.getNoAuto())
+		{
+			m_autonomousCommand = null;
+		}
+		else if(robotSide == FieldSide.left || robotSide == FieldSide.right) //if robot in the corner
+		{
+			if (elementPriority == FieldElement.Switch) //switch priority
+			{
+				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
+				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
+				else m_autonomousCommand = new AutoDriveToBaseline();
+			}
+			else //scale priority
+			{
+				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScaleAngled(scaleSide);
+				else if (scaleOverride) m_autonomousCommand = new AutoFarScale(scaleSide);
+				else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
+				else m_autonomousCommand = new AutoDriveToBaseline();
+			}
+		}
+		else if(robotSide == FieldSide.middle)
+		{
+			if (switchSide != FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitchTwoCubeBetter(switchSide);
+			else m_autonomousCommand = new AutoDriveToBaseline();
+		}
+		else 
+		{
+			System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
+			m_autonomousCommand = new AutoDriveToBaseline();
+		}
+		
+		System.out.println("Auto: " + m_autonomousCommand);
+		
 		/*
 		boolean logicPriority = false; //get from DIO port; true = field element, false = stay on our side
 		FieldElement elementPriority = FieldElement.Switch;
@@ -185,14 +188,11 @@ public class Robot extends TimedRobot {
 		//Other auto commands for testing:
 		//m_autonomousCommand = new AutoPrintData();
 		//m_autonomousCommand = new AutoSwitchSimple();
-		//m_autonomousCommand = new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat");
 		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
 		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
 		//m_autonomousCommand = new TurnByMotionMagic(-90);
-		m_autonomousCommand = new AutoNearScale(FieldSide.left);
-		
-		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.right);
-		//m_autonomousCommand = new OldTurnInPlace(-90.0);
+		//m_autonomousCommand = new AutoNearScale(FieldSide.left);
+
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();

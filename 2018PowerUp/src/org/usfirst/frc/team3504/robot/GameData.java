@@ -33,6 +33,7 @@ public class GameData {
 	public DigitalInput dioLeft;
 	public DigitalInput dioMiddle;
 	public DigitalInput dioRight;
+	public DigitalInput dioScaleOverride;
 	public DigitalInput dioNoAuto;
 
 	private String gameData = null;
@@ -46,6 +47,7 @@ public class GameData {
 		dioLeft = new DigitalInput(RobotMap.DIO_LEFT);
 		dioMiddle = new DigitalInput(RobotMap.DIO_MIDDLE);
 		dioRight = new DigitalInput(RobotMap.DIO_RIGHT);
+		dioScaleOverride = new DigitalInput(RobotMap.DIO_SCALE_OVERRIDE);
 		dioNoAuto = new DigitalInput(RobotMap.DIO_NO_AUTO);
 
 	}
@@ -81,6 +83,10 @@ public class GameData {
 		return !dioNoAuto.get();
 	}
 
+	public boolean getScaleOverride() {
+		return !dioScaleOverride.get();
+	}
+	
 	/**
 	 * Which side of the near scale has our alliance color?
 	 * 
