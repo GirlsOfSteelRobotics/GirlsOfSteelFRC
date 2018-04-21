@@ -190,16 +190,16 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = new AutoSwitchSimple();
 		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
 		//m_autonomousCommand = new TurnByMotionMagic(-90);
-		//m_autonomousCommand = new AutoNearScale(scaleSide);
+		m_autonomousCommand = new AutoNearScale(FieldSide.left);
 		
 		//Motion Magic Testing
 		//m_autonomousCommand = new DriveByMotionMagic(166.0,0);
 		//m_autonomousCommand = new AutoTurnRight();
 		//m_autonomousCommand = new AutoTurnLeft();
 		//m_autonomousCommand = new AutoMiddleSwitch(FieldSide.left);
-		m_autonomousCommand = new AutoMiddleSwitchTwoCubeBetter(FieldSide.left);
+		//m_autonomousCommand = new AutoMiddleSwitchTwoCubeBetter(FieldSide.left);
 
-		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
+		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.right);
 		//m_autonomousCommand = new OldTurnInPlace(-90.0);
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

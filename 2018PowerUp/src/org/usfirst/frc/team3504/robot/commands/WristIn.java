@@ -15,7 +15,6 @@ public class WristIn extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.wrist.wristIn();
     }
 
     // Called repeatedly when this Command is scheduled to run

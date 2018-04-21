@@ -22,7 +22,7 @@ public class AutoNearScaleAngled extends CommandGroup {
 
 	
 	//distance constants
-	private final double DISTANCE_FORWARD_1 = 225.0;
+	private final double DISTANCE_FORWARD_1 = 235.0;
 	private final double DISTANCE_TURN_1 = 25;
 	private final double BACK_UP = -30.0;
 
@@ -43,9 +43,9 @@ public class AutoNearScaleAngled extends CommandGroup {
 		
 		//turn
 		if (robotPosition == FieldSide.left)
-			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, -25));
+			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, -30));
 		else
-			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, 25)); 
+			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, 30)); 
 
 		//release cube and back up
 		addParallel(new ReleaseFast(0.5));

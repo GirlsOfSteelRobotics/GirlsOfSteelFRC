@@ -13,6 +13,7 @@ public class WristToShoot extends Command {
     public WristToShoot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.wrist);
     }
 
     // Called just before this Command runs the first time
