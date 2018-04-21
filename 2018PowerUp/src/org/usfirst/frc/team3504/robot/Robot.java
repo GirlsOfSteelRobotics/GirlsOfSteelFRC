@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
 			}
 			else //scale priority
 			{
-				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScaleAngled(scaleSide);
+				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
 				else if (scaleOverride) m_autonomousCommand = new AutoFarScale(scaleSide);
 				else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
 				else m_autonomousCommand = new AutoDriveToBaseline();
