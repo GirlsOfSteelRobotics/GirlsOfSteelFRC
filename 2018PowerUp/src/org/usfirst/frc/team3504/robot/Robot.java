@@ -63,7 +63,6 @@ public class Robot extends TimedRobot {
 		climber = new Climber(); 
 		oi = new OI();
 		gameData = new GameData();
-
 	}
 
 	/**
@@ -97,14 +96,13 @@ public class Robot extends TimedRobot {
 		
 		Robot.shifters.shiftGear(Shifters.Speed.kHigh);
 		Robot.chassis.zeroSensors();
-
-		
+		gameData.reset();
+	
 		System.out.println("Starting Auto...");
 		//Get robot side, switch side, scale side, element priority
 		FieldSide robotSide = gameData.getRobotSide();
 		FieldElement elementPriority = gameData.getElementPriority();
 		FieldSide switchSide = gameData.getSwitchSide(); 
-		switchSide = FieldSide.left;
 		FieldSide scaleSide = gameData.getScaleSide();
 		boolean scaleOverride = gameData.getScaleOverride();
 		

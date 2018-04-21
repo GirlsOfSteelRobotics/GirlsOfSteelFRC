@@ -32,6 +32,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
 	public final static double BACK_UP = -30.0;
 
     public AutoMiddleSwitchTwoCubeBetter(FieldSide switchSide) {
+    	System.out.println("AutoMiddleSwitchTwoCubeBetter - side = " + switchSide);
     	
     	//Lift to switch position, ready to release
     	addSequential(new WristToCollect());

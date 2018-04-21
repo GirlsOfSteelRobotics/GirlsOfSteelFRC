@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.GameData.FieldSide;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -49,7 +47,6 @@ public class GameData {
 		dioRight = new DigitalInput(RobotMap.DIO_RIGHT);
 		dioScaleOverride = new DigitalInput(RobotMap.DIO_SCALE_OVERRIDE);
 		dioNoAuto = new DigitalInput(RobotMap.DIO_NO_AUTO);
-
 	}
 
 	/**
@@ -87,6 +84,9 @@ public class GameData {
 		return !dioScaleOverride.get();
 	}
 	
+	public void reset() {
+		gameData = null;
+	}
 	/**
 	 * Which side of the near scale has our alliance color?
 	 * 
@@ -94,7 +94,7 @@ public class GameData {
 	 */
 	public FieldSide getScaleSide() {
 		// If we haven't retrieved the game data string, go get it now
-		if (gameData != null) {
+		if (gameData == null) {
 			gameData = getGameData();
 		}
 		// Parse the string and return the enumerator
@@ -116,11 +116,10 @@ public class GameData {
 	 */
 	public FieldSide getSwitchSide() {
 		// If we haven't retrieved the game data string, go get it now
-		if (gameData != null) {
+		if (gameData == null) {
 			gameData = getGameData();
 		}
 		// Parse the string and return the enumerator
-
 		if (gameData != null && gameData.length() >= 1) {
 			if (gameData.charAt(0) == 'L') {
 				return FieldSide.left;
