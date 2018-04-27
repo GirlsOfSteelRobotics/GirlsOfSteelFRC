@@ -25,14 +25,14 @@ public class AutoFarScale extends CommandGroup {
 	private final double TURN_RADIUS_2 = 150.0;
 	private final double DEGREES_2 = 90.0;
 
-    public AutoFarScale(FieldSide robotPosition) {
-    	System.out.println("AutoFarScale starting");
+    public AutoFarScale(FieldSide scaleSide) {
+    	System.out.println("AutoFarScale starting: scaleSide=" + scaleSide);
     	
     	//Initial forward distance past switch
     	addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
     	
     	//First turn behind the switch
-    	if (robotPosition == FieldSide.left) addSequential(new AutoTurnRight(TURN_RADIUS_1));
+    	if (scaleSide == FieldSide.right) addSequential(new AutoTurnRight(TURN_RADIUS_1));
     	else addSequential(new AutoTurnLeft(TURN_RADIUS_1));
     	
     	//Get lift and wrist into position
@@ -42,11 +42,11 @@ public class AutoFarScale extends CommandGroup {
     	addParallel(new LiftHold());
     	
     	//Driving across the field behind the switch
-    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, -90, false));
+    	if (scaleSide == FieldSide.right) addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, -90, false));
     	else addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 90, false));
     	
     	//Turning towards the scale
-    	if (robotPosition == FieldSide.left) 
+    	if (scaleSide == FieldSide.right) 
 		{
     		addSequential(new DriveByMotionMagic(TURN_RADIUS_2, DEGREES_2));
     		addSequential(new TurnByMotionMagic(90));

@@ -27,7 +27,7 @@ public class Lift extends Subsystem {
 	public static final double LIFT_SWITCH = 12500; //TODO tune
 	public static final double LIFT_SCALE = 32500; //TODO tune
 	public static final double LIFT_GROUND = 1000; //TODO tune
-	public static final double LIFT_INCREMENT = 200; //TODO tune 250
+	public static final double LIFT_INCREMENT = 300; //TODO tune 250
 
 	private StickyFaults faults = new StickyFaults();
 

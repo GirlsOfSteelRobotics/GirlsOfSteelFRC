@@ -63,7 +63,7 @@ public class DriveByMotionMagic extends Command {
     	//System.out.println("DriveByMotionMagic: sensors zeroed");
     	
     	double inches = (encoderTicks / RobotMap.CODES_PER_WHEEL_REV) * (RobotMap.WHEEL_DIAMETER * Math.PI);
-    	System.out.println("DriveByMotionMagic inches + heading: " + inches + targetHeading);
+    	System.out.println("DriveByMotionMagic inches + heading + reset: " + inches + " " + targetHeading + " " + resetPigeon);
     	
 		rightTalon.set(ControlMode.MotionMagic, 2 * encoderTicks, DemandType.AuxPID, 10 * targetHeading);
 		leftTalon.follow(rightTalon, FollowerType.AuxOutput1);

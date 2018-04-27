@@ -27,8 +27,8 @@ public class AutoFarScaleAbsolute extends CommandGroup {
 	private final double TURN_RADIUS_2 = 90.0;
 	private final double TURN_HEADING_2 = 0;
 
-    public AutoFarScaleAbsolute(FieldSide robotPosition) {
-    	System.out.println("AutoFarScale starting");
+    public AutoFarScaleAbsolute(FieldSide scaleSide) {
+    	System.out.println("AutoFarScaleAbsolute starting: scaleSide=" + scaleSide);
     	
     	addSequential(new WristToShoot());
     	addParallel(new WristHold());
@@ -37,7 +37,7 @@ public class AutoFarScaleAbsolute extends CommandGroup {
     	addSequential(new DriveByMotionMagicAbsolute(DISTANCE_FORWARD_1, 0, false));
     	
     	//First turn behind the switch
-    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, -TURN_HEADING_1, true));
+    	if (scaleSide == FieldSide.right) addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, -TURN_HEADING_1, true));
     	else addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, TURN_HEADING_1, true));
     	
     	//Get lift and wrist into position
@@ -45,11 +45,11 @@ public class AutoFarScaleAbsolute extends CommandGroup {
     	addParallel(new LiftHold());
     	
     	//Driving across the field behind the switch
-    	if (robotPosition == FieldSide.left) addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, -TURN_HEADING_1, false));
+    	if (scaleSide == FieldSide.right) addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, -TURN_HEADING_1, false));
     	else addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, TURN_HEADING_1, false));
     	
     	//Turning towards the scale
-    	if (robotPosition == FieldSide.left) 
+    	if (scaleSide == FieldSide.right) 
 		{
     		addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_2, TURN_HEADING_2, true));
     		addSequential(new TurnByMotionMagic(45));

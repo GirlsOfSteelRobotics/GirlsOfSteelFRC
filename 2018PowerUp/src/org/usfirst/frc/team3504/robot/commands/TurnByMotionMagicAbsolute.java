@@ -37,7 +37,7 @@ public class TurnByMotionMagicAbsolute extends Command {
 		Robot.chassis.configForTurnByMotionMagic();
 		// System.out.println("TurnByMotionMagic: configured for motion magic");
 
-		System.out.println("TurnByMotionMagic: heading: " + targetHeading);
+		System.out.println("TurnByMotionMagicAbsolute: heading: " + targetHeading);
 
 		rightTalon.set(ControlMode.MotionMagic, -10 * targetHeading);
 		leftTalon.follow(rightTalon);
@@ -56,7 +56,7 @@ public class TurnByMotionMagicAbsolute extends Command {
 		double error = Math.abs(targetHeading - currentHeading);
 		// System.out.println("DriveByMotionMagic: turning error = " + error);
 		if (error < TURNING_FINISH_THRESHOLD) {
-			System.out.println("DriveByMotionMagic: turning degrees reached");
+			System.out.println("TurnByMotionMagicAbsolute: turning degrees reached");
 			return true;
 		} else
 			return false; 
@@ -69,7 +69,7 @@ public class TurnByMotionMagicAbsolute extends Command {
 		double currentHeading = Robot.chassis.getYaw();
 		double degreesError = targetHeading - currentHeading;
 
-		System.out.println("TurnByMotionMagic: ended. Error = " + degreesError + " degrees");
+		System.out.println("TurnByMotionMagicAbsolute: ended. Error = " + degreesError + " degrees");
 		Robot.chassis.stop();
 		Robot.shifters.shiftGear(Shifters.Speed.kHigh);
 		Robot.chassis.setInverted(false);
@@ -78,7 +78,7 @@ public class TurnByMotionMagicAbsolute extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		System.out.println("TurnByMotionMagic: interrupted");
+		System.out.println("TurnByMotionMagicAbsolute: interrupted");
 		end();
 	}
 }

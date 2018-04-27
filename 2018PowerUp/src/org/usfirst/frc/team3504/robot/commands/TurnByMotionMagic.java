@@ -47,7 +47,8 @@ public class TurnByMotionMagic extends Command {
 		if (resetPigeon)
 			Robot.chassis.zeroSensors();
 
-		System.out.println("TurnByMotionMagic: heading: " + targetHeading);
+		System.out.println("TurnByMotionMagic: heading: " + targetHeading + " reset=" + resetPigeon);
+	
 
 		rightTalon.set(ControlMode.MotionMagic, -10 * targetHeading);
 		leftTalon.follow(rightTalon);
@@ -66,7 +67,7 @@ public class TurnByMotionMagic extends Command {
 		double error = Math.abs(targetHeading - currentHeading);
 		// System.out.println("DriveByMotionMagic: turning error = " + error);
 		if (error < TURNING_FINISH_THRESHOLD) {
-			System.out.println("DriveByMotionMagic: turning degrees reached");
+			System.out.println("TurnByMotionMagic: turning degrees reached");
 			return true;
 		} else
 			return false; 

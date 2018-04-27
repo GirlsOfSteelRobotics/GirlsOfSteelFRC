@@ -27,7 +27,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
 	public final static double END_HEADING = 20.0;
 	public final static double APPROACH_SWITCH = 70.0;
 	public final static double DEPART_CUBE = 5.0;
-	public final static double APPROACH_CUBE = 68.0;
+	public final static double APPROACH_CUBE = 71.0; //was 68.0
 	
 	public final static double BACK_UP = -30.0;
 
@@ -98,7 +98,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
     	else if (switchSide == FieldSide.left)
     	{
     		addSequential(new TurnByMotionMagicAbsolute(90));
-    		addSequential(new DriveByMotionMagicAbsolute((APPROACH_SWITCH + 50), 85, false));
+    		addSequential(new DriveByMotionMagicAbsolute((APPROACH_SWITCH + 10), 85, false)); //10 was 50 before
     	}
     	
     	//Spit cube out

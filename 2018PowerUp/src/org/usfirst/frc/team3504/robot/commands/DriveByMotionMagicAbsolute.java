@@ -55,7 +55,8 @@ public class DriveByMotionMagicAbsolute extends Command {
     	//System.out.println("DriveByMotionMagicAbsolute: sensors zeroed");
     	
     	double inches = (encoderTicks / RobotMap.CODES_PER_WHEEL_REV) * (RobotMap.WHEEL_DIAMETER * Math.PI);
-    	System.out.println("DriveByMotionMagicAbsolute inches + heading: " + inches + targetHeading);
+    	System.out.println("DriveByMotionMagicAbsolute inches + heading + isTurnMotion: " + inches + " " + targetHeading + " " + turning);
+
     	
 		rightTalon.set(ControlMode.MotionMagic, 2 * encoderTicks, DemandType.AuxPID, 10 * targetHeading);
 		leftTalon.follow(rightTalon, FollowerType.AuxOutput1);
