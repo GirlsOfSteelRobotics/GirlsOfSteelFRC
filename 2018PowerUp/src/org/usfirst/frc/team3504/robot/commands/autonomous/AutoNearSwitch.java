@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
+import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.GameData.FieldSide;
 import org.usfirst.frc.team3504.robot.commands.CollectPosition;
 import org.usfirst.frc.team3504.robot.commands.CollectorStop;
@@ -11,6 +12,7 @@ import org.usfirst.frc.team3504.robot.commands.TimeDelay;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.commands.WristToCollect;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnRight;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnLeft;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -28,6 +30,8 @@ public class AutoNearSwitch extends CommandGroup {
     	System.out.println("AutoNearSwitch starting");
     	
     	//Get lift & wrist into position
+		Robot.shifters.shiftGear(Shifters.Speed.kLow);
+
     	addSequential(new WristToCollect());
     	addSequential(new LiftToSwitch());
     	addParallel(new WristHold());

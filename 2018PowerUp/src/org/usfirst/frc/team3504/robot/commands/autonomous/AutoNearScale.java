@@ -9,6 +9,7 @@ import org.usfirst.frc.team3504.robot.commands.LiftHold;
 import org.usfirst.frc.team3504.robot.commands.LiftToScale;
 import org.usfirst.frc.team3504.robot.commands.ReleaseFast;
 import org.usfirst.frc.team3504.robot.commands.TimeDelay;
+import org.usfirst.frc.team3504.robot.commands.TurnByMotionMagic;
 import org.usfirst.frc.team3504.robot.commands.TurnInPlace;
 import org.usfirst.frc.team3504.robot.commands.WristHold;
 import org.usfirst.frc.team3504.robot.commands.WristToShoot;
@@ -22,7 +23,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoNearScale extends CommandGroup {
 
 	private final double DISTANCE_FORWARD = 295.0;
-	private final double DISTANCE_SIDE = -35.0;
+	private final double DISTANCE_SIDE = -30.0;
 
     public AutoNearScale(FieldSide robotPosition) {
     	System.out.println("AutoNearScale starting");
@@ -32,7 +33,7 @@ public class AutoNearScale extends CommandGroup {
     	Robot.shifters.shiftGear(Shifters.Speed.kLow);
     	if (robotPosition == FieldSide.left) 
 		{
-    		addSequential(new TurnInPlace(-90.0));
+    		addSequential(new TurnByMotionMagic(-90.0));
     		addSequential(new DriveByMotionMagic(DISTANCE_SIDE, -90, false));
         	addSequential(new WristToShoot());
         	addSequential(new LiftToScale());
@@ -41,7 +42,7 @@ public class AutoNearScale extends CommandGroup {
 		}
     	else 
 		{
-    		addSequential(new TurnInPlace(90.0));
+    		addSequential(new TurnByMotionMagic(90.0));
     		addSequential(new DriveByMotionMagic(DISTANCE_SIDE, 90, false));
         	addSequential(new WristToShoot());
         	addSequential(new LiftToScale());

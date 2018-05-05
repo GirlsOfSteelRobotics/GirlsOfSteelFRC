@@ -94,7 +94,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
-		Robot.shifters.shiftGear(Shifters.Speed.kHigh);
 		Robot.chassis.zeroSensors();
 		gameData.reset();
 	
@@ -111,11 +110,14 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = null;
 		}
 		else if(robotSide == FieldSide.left || robotSide == FieldSide.right) //if robot in the corner
+			
 		{
+			Robot.shifters.shiftGear(Shifters.Speed.kHigh);
+
 			if (elementPriority == FieldElement.Switch) //switch priority
 			{
 				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-				//else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
+				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
 				else m_autonomousCommand = new AutoDriveToBaseline();
 			}
 			else //scale priority
@@ -128,7 +130,8 @@ public class Robot extends TimedRobot {
 		}
 		else if(robotSide == FieldSide.middle)
 		{
-			if (switchSide != FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitchTwoCubeBetter(switchSide);
+			Robot.shifters.shiftGear(Shifters.Speed.kLow);
+			if (switchSide != FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitch(switchSide);
 			else m_autonomousCommand = new AutoDriveToBaseline();
 		}
 		else 
@@ -138,58 +141,9 @@ public class Robot extends TimedRobot {
 		}
 		
 		System.out.println("Auto: " + m_autonomousCommand);
-		
-		/*
-		boolean logicPriority = false; //get from DIO port; true = field element, false = stay on our side
-		FieldElement elementPriority = FieldElement.Switch;
-		FieldElement crossPriority = FieldElement.Scale;
-		
-		if (switchSide == FieldSide.bad || scaleSide == FieldSide.bad) m_autonomousCommand = new AutoBaseLine();
-		else if (logicPriority) //Field Element Priority
-		{
-			if (elementPriority == FieldElement.Switch)
-			{
-				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(robotSide);
-				else m_autonomousCommand = new AutoFarSwitch(robotSide);
-			}
-			else //if (elementPriority == FieldElement.Scale)
-			{
-				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(robotSide);
-				else m_autonomousCommand = new AutoFarScale(robotSide);
-			}
-		}
-		else //Stay on our side priority
-		{
-			if (elementPriority == FieldElement.Switch)
-			{
-				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(robotSide);
-				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(robotSide);
-				else
-				{
-					if (crossPriority == FieldElement.Switch) m_autonomousCommand = new AutoFarSwitch(robotSide);
-					else m_autonomousCommand = new AutoFarScale(robotSide);
-				}
-			}
-			else //if (elementPriority == FieldElement.Scale)
-			{
-				if (switchSide == robotSide) m_autonomousCommand = new AutoNearScale(robotSide);
-				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearSwitch(robotSide);
-				else
-				{
-					if (crossPriority == FieldElement.Switch) m_autonomousCommand = new AutoFarSwitch(robotSide);
-					else m_autonomousCommand = new AutoFarScale(robotSide);
-				}
-			}
-		}
-		*/
-		
+			
 		//Other auto commands for testing:
 		//m_autonomousCommand = new AutoPrintData();
-		//m_autonomousCommand = new AutoSwitchSimple();
-		//m_autonomousCommand = new DriveByDistance(100, Shifters.Speed.kLow);
-		//m_autonomousCommand = new AutoNearScaleAngled(FieldSide.left);
-		//m_autonomousCommand = new TurnByMotionMagic(-90);
-		//m_autonomousCommand = new AutoNearScale(FieldSide.left);
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
