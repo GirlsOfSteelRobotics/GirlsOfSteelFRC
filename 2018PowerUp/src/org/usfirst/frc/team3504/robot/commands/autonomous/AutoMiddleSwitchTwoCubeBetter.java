@@ -58,7 +58,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
     	else if (switchSide == FieldSide.left)
     	{
     		addSequential(new TurnByMotionMagicAbsolute(TURN_DEGREES_2));
-    		addSequential(new DriveByMotionMagicAbsolute(APPROACH_SWITCH, TURN_DEGREES_1 + 10, false));
+    		addSequential(new DriveByMotionMagicAbsolute(APPROACH_SWITCH, TURN_DEGREES_2 - 20, false));
     		
         	//Spit cube out
         	addParallel(new ReleaseFast(0.8));

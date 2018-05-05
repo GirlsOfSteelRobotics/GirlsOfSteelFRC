@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
 			if (elementPriority == FieldElement.Switch) //switch priority
 			{
 				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
+				//else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
 				else m_autonomousCommand = new AutoDriveToBaseline();
 			}
 			else //scale priority
