@@ -18,6 +18,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Climber;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lift;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
 import org.usfirst.frc.team3504.robot.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -72,7 +73,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
@@ -118,6 +118,7 @@ public class Robot extends TimedRobot {
 			{
 				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
 				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
+				else if (scaleOverride) m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
 				else m_autonomousCommand = new AutoDriveToBaseline();
 			}
 			else //scale priority
@@ -143,7 +144,7 @@ public class Robot extends TimedRobot {
 		System.out.println("Auto: " + m_autonomousCommand);
 			
 		//Other auto commands for testing:
-		//m_autonomousCommand = new AutoPrintData();
+		//m_autonomousCommand = new AutoDriveToBaseline();
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

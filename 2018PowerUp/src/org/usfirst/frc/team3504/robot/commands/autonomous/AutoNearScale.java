@@ -52,8 +52,8 @@ public class AutoNearScale extends CommandGroup {
 		}
     	
     	//Wait for lift and wrist to get into position then shoot
-    	addSequential(new TimeDelay(2.0));
-    	addParallel(new ReleaseFast(0.65));
+    	addSequential(new TimeDelay(2.5));
+    	addParallel(new ReleaseFast(0.75));
     	addSequential(new TimeDelay(1.5));
     	
     	//Put lift down and stop collector
