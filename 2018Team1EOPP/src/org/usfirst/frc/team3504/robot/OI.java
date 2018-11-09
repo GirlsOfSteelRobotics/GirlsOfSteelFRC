@@ -7,11 +7,62 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.DriveByArcade;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	public Joystick tankDrive;
+    public Joystick arcadeDrive;
+    public Joystick joystickDrive;
+    
+    public Button button1; 
+	public Button button2;
+	public Button buttonGo;
+
+    public OI() {  
+
+        joystickDrive = new Joystick (2);
+    	arcadeDrive = new Joystick(1);
+        //make sure that tank uses the logitech dual controller (basically the dual controller)
+        tankDrive = new Joystick(0);
+        button1 = new JoystickButton(joystickDrive, 1); //Open Pneumatic
+        button2 = new JoystickButton(joystickDrive, 2); //Close Pneumatic
+        buttonGo = new JoystickButton(joystickDrive, 3);
+        
+        //button1 = new JoystickButton(tankDrive, 1); //Open Pneumatic 
+    	//button2 = new JoystickButton(tankDrive, 2); //Close Pneumatic
+
+        //button1.whenPressed(new OpenPneumatic());
+		
+        // SmartDashboard Buttons
+        SmartDashboard.putData("DriveByArcade", new DriveByArcade());
+        
+    }
+
+    public Joystick getTankDrive() {
+        return tankDrive;
+    }
+
+    public Joystick getArcadeDrive() {
+        return arcadeDrive;
+    }
+
+    public double getDrivingJoyStickY(){
+    	return joystickDrive.getY();
+    }
+
+    public double getDrivingJoyStickX(){
+    	return joystickDrive.getX();
+    }
+   
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
