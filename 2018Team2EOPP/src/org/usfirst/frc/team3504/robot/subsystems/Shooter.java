@@ -1,12 +1,17 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import org.usfirst.frc.team3504.robot.Robot; 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+
 
 /**
  *
@@ -17,7 +22,7 @@ public class Shooter extends Subsystem {
 	private WPI_TalonSRX shooter1follower;
 	
 	private WPI_TalonSRX shooter2master;
-	
+		
 public Shooter () {
 	
 	shooter1master= new WPI_TalonSRX(RobotMap.SHOOTER_1_MASTER);
@@ -32,16 +37,18 @@ public Shooter () {
 	
 	shooter2master.setNeutralMode(NeutralMode.Brake);
 	
-	
 }
-
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new DriveByJoystick());
+    }
+    public void stop() {
+    	shooter1master.set(0);
+    	shooter2master.set(0);
     }
 }
 
