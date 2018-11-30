@@ -3,6 +3,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByArcade;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -15,34 +16,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Chassis extends Subsystem {
-
-	private final WPI_TalonSRX talonSRX1;
-	private final WPI_TalonSRX talonSRX2;
-	private final WPI_TalonSRX talonSRX3;
-	private final WPI_TalonSRX talonSRX4;
-	private final WPI_TalonSRX talonSRX5;
-	private final WPI_TalonSRX talonSRX6;
+	
+	private final WPI_TalonSRX talonSRX1 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FRONT);
+	private final WPI_TalonSRX talonSRX2 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MIDDLE);
+	private final WPI_TalonSRX talonSRX3 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_BACK);
+	private final WPI_TalonSRX talonSRX4 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FRONT);
+	private final WPI_TalonSRX talonSRX5 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MIDDLE);
+	private final WPI_TalonSRX talonSRX6 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_BACK);
+	
 
 	private DifferentialDrive drive;
 
 	public Chassis() {
 		// This is the constructor
 		
-		talonSRX1 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FRONT);
-		talonSRX2 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MIDDLE);
-		talonSRX3 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_BACK);
-		talonSRX4 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FRONT);
-		talonSRX5 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MIDDLE);
-		talonSRX6 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_BACK);
 		
+
 		// Safety and brakes ----------------------------------
 		talonSRX1.setNeutralMode(NeutralMode.Brake);
-		talonSRX2.setNeutralMode(NeutralMode.Brake);
-		talonSRX3.setNeutralMode(NeutralMode.Brake);
-
 		talonSRX4.setNeutralMode(NeutralMode.Brake);
-		talonSRX5.setNeutralMode(NeutralMode.Brake);
-		talonSRX6.setNeutralMode(NeutralMode.Brake);
+		
+
+		talonSRX2.set(ControlMode.Follower, talonSRX1.getDeviceID());
+		talonSRX3.set(ControlMode.Follower, talonSRX1.getDeviceID());
+		talonSRX5.set(ControlMode.Follower, talonSRX2.getDeviceID());
+		talonSRX6.set(ControlMode.Follower, talonSRX2.getDeviceID());
+		
 
 	    	talonSRX1.setSafetyEnabled(false);
 	    	talonSRX2.setSafetyEnabled(false);
