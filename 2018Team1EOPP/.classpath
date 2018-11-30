@@ -7,7 +7,9 @@
 	<classpathentry exported="true" kind="var" path="cscore" sourcepath="cscore.sources"/>
 	<classpathentry exported="true" kind="var" path="wpiutil" sourcepath="wpiutil.sources"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry exported="true" kind="lib" path="/Users/AnnaNesbitt/wpilib/user/java/lib/CTRE_Phoenix-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/AnnaNesbitt/wpilib/user/java/lib/CTRE_Phoenix.jar"/>
+	<classpathentry kind="var" path="CTRE_Phoenix"/>
+	<classpathentry kind="var" path="CTRE_Phoenix-sources"/>
+	<classpathentry kind="var" path="CTRE_Phoenix_WPIAPI"/>
+	<classpathentry kind="var" path="CTRE_Phoenix_WPIAPI-sources"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
