@@ -44,13 +44,13 @@ public class Chassis extends Subsystem {
 		talonSRX5.setNeutralMode(NeutralMode.Brake);
 		talonSRX6.setNeutralMode(NeutralMode.Brake);
 
-//	    	talonSRX1.setSafetyEnabled(false);
-//	    	talonSRX2.setSafetyEnabled(false);
-//	    	talonSRX3.setSafetyEnabled(false);
-//	    	
-//	    	talonSRX4.setSafetyEnabled(false);
-//	    	talonSRX5.setSafetyEnabled(false);
-//	    	talonSRX6.setSafetyEnabled(false);
+	    	talonSRX1.setSafetyEnabled(false);
+	    	talonSRX2.setSafetyEnabled(false);
+	    	talonSRX3.setSafetyEnabled(false);
+	    	
+	    	talonSRX4.setSafetyEnabled(false);
+	    	talonSRX5.setSafetyEnabled(false);
+	    	talonSRX6.setSafetyEnabled(false);
 		// -----------------------------------------------------
 		
 
