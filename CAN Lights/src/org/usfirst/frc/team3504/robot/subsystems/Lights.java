@@ -14,14 +14,17 @@ public class Lights extends Subsystem {
 	// here. Call these from Commands.
 
 	private CANLight lights;
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+	
+	public Lights () {
 		lights = new CANLight(RobotMap.LIGHTS);
 	}
 	
-	public void changeColor(int R, int G, int B)
-	{
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+	
+	public void changeColor(int R, int G, int B) {
 		lights.showRGB(R, G, B);
 	}
 }

@@ -17,6 +17,7 @@ public class ChangeToPurple extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("purple");
     	Robot.lights.changeColor(105, 19, 218);
     }
 
