@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.DriveByArcade;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -43,7 +43,7 @@ public class OI {
         //button1.whenPressed(new OpenPneumatic());
 		
         // SmartDashboard Buttons
-        SmartDashboard.putData("DriveByArcade", new DriveByArcade());
+        SmartDashboard.putData("DriveByArcade", new DriveByJoystick());
         
     }
 

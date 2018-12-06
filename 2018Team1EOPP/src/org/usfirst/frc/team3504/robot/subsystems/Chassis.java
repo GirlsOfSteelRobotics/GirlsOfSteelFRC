@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.DriveByArcade;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
@@ -83,7 +83,7 @@ public class Chassis extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveByArcade());
+		setDefaultCommand(new DriveByJoystick());
 
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
