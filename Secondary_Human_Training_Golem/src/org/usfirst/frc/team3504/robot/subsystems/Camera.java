@@ -28,6 +28,7 @@ public class Camera extends Subsystem {
 		visionCam = new UsbCamera("visionCam", RobotMap.VISION_CAMERA);
 		visionCam.setResolution(320, 240);
 		visionCam.setFPS(10); 
+		visionCam.setExposureManual(16);
 		CameraServer.getInstance().addCamera(camGear);
 		CameraServer.getInstance().addCamera(camClimb);
 		CameraServer.getInstance().addCamera(visionCam);
