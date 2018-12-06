@@ -9,6 +9,7 @@ package org.usfirst.frc.team3504.robot;
 
 
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	public static Chassis chassis;
+	public static Shooter shooter; 
 	public static OI oi;
 
 	Command m_autonomousCommand;

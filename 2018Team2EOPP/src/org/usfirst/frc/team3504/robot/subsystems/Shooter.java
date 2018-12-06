@@ -18,22 +18,17 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class Shooter extends Subsystem {
 	
-	private WPI_TalonSRX shooter1master;
-	private WPI_TalonSRX shooter1follower;
-	
+	private WPI_TalonSRX shooter1master;	
 	private WPI_TalonSRX shooter2master;
 		
 public Shooter () {
 	
 	shooter1master= new WPI_TalonSRX(RobotMap.SHOOTER_1_MASTER);
-	shooter1follower= new WPI_TalonSRX(RobotMap.SHOOTER_1_FOLLOWER);
 	
 	shooter2master=new WPI_TalonSRX(RobotMap.SHOOTER_2_MASTER);
 	
-	shooter1follower.follow(shooter1master, FollowerType.PercentOutput);
 	
 	shooter1master.setNeutralMode(NeutralMode.Brake);
-	shooter1follower.setNeutralMode(NeutralMode.Brake);
 	
 	shooter2master.setNeutralMode(NeutralMode.Brake);
 	
@@ -44,8 +39,13 @@ public Shooter () {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new DriveByJoystick());
     }
+    
+    public void shoot() {
+    	shooter1master.set(0.5);
+    	shooter2master.set(-0.5);
+    }
+    
     public void stop() {
     	shooter1master.set(0);
     	shooter2master.set(0);
