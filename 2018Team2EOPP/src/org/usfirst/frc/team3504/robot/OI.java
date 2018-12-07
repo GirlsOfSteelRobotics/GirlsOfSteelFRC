@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 
-	private Joystick operatorGamePad = new Joystick (0);
-	private Joystick drivingJoystick = new Joystick (1);
+	private Joystick operatorGamePad ;
+	private Joystick drivingJoystick ;
 
 	private JoystickButton shoot;
 
@@ -23,6 +23,7 @@ public class OI {
 		/* BUTTON ACTIONS */
 		
 		shoot.whileHeld(new Shooting());
+	}
 		
 		public double getDrivingJoyStickY(){
 			return drivingJoystick.getY();
@@ -32,7 +33,6 @@ public class OI {
 			return drivingJoystick.getX();
 		}
 
-	}
 	
 }
 
