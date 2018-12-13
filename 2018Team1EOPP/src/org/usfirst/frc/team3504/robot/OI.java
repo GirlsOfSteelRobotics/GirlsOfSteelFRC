@@ -10,6 +10,7 @@ package org.usfirst.frc.team3504.robot;
 import org.usfirst.frc.team3504.robot.commands.ChangeToRed;
 import org.usfirst.frc.team3504.robot.commands.ChangeToWhite;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.RedAndWhite;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -26,6 +27,7 @@ public class OI {
     //public Button shoot; 
 	public Button changeToRed;
 	public Button changeToWhite;
+	public Button redAndWhite;
 
     public OI() {  
         joystick = new Joystick (0);
@@ -42,6 +44,9 @@ public class OI {
         
         changeToWhite = new JoystickButton(joystick, 3);
         changeToWhite.whenPressed(new ChangeToWhite());
+        
+        redAndWhite = new JoystickButton(joystick, 4);
+        redAndWhite.whenPressed(new RedAndWhite());
         
         // SmartDashboard Buttons
         SmartDashboard.putData("DriveByJoystick", new DriveByJoystick());

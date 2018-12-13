@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.commands.RedAndWhite;
 
 import com.mindsensors.CANLight;
 
@@ -22,9 +23,16 @@ public class Lights extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new RedAndWhite());
 	}
 	
 	public void changeColor(int R, int G, int B) {
 		lights.showRGB(R, G, B);
+	}
+	
+	public void redAndWhite() {
+		//					index time r g b
+		lights.writeRegister(0, 1.0, 255, 0, 0);
+		lights.writeRegister(1, 1.0, 255, 255, 255);
 	}
 }
