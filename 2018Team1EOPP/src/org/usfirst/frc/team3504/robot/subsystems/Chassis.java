@@ -83,7 +83,7 @@ public class Chassis extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveByJoystick());
+		//setDefaultCommand(new DriveByJoystick());
 
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());

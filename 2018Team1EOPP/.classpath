@@ -15,5 +15,7 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix.jar" sourcepath="/USERLIBS_DIR/CTRE_Phoenix-sources.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix_WPIAPI-sources.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix_WPIAPI.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/mindsensors-javadoc.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/mindsensors.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

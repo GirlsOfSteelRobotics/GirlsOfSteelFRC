@@ -32,7 +32,9 @@ public class Lights extends Subsystem {
 	
 	public void redAndWhite() {
 		//					index time r g b
-		lights.writeRegister(0, 1.0, 255, 0, 0);
-		lights.writeRegister(1, 1.0, 255, 255, 255);
+		lights.writeRegister(0, 10000.0, 255, 0, 0);
+		lights.writeRegister(1, 10000.0, 255, 255, 255);
+		
+		lights.cycle(0, 1);
 	}
 }
