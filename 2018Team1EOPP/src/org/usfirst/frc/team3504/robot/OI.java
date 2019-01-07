@@ -7,7 +7,10 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.ChangeToRed;
+import org.usfirst.frc.team3504.robot.commands.ChangeToWhite;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.RedAndWhite;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -19,48 +22,43 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public Joystick tankDrive;
-    public Joystick arcadeDrive;
-    public Joystick joystickDrive;
+    public Joystick joystick;
     
-    public Button button1; 
-	public Button button2;
-	public Button buttonGo;
+    //public Button shoot; 
+	public Button changeToRed;
+	public Button changeToWhite;
+	public Button redAndWhite;
 
     public OI() {  
-
-        joystickDrive = new Joystick (2);
-    	arcadeDrive = new Joystick(1);
-        //make sure that tank uses the logitech dual controller (basically the dual controller)
-        tankDrive = new Joystick(0);
-        button1 = new JoystickButton(joystickDrive, 1); //Open Pneumatic
-        button2 = new JoystickButton(joystickDrive, 2); //Close Pneumatic
-        buttonGo = new JoystickButton(joystickDrive, 3);
-        
+        joystick = new Joystick (0);
+       
+        // Example button
         //button1 = new JoystickButton(tankDrive, 1); //Open Pneumatic 
-    	//button2 = new JoystickButton(tankDrive, 2); //Close Pneumatic
-
-        //button1.whenPressed(new OpenPneumatic());
+    	//button1.whenPressed(new OpenPneumatic());
 		
-        // SmartDashboard Buttons
-        SmartDashboard.putData("DriveByArcade", new DriveByJoystick());
+        //shoot = new JoystickButton(joystick, 1);
+        //shoot.whenHeld(new Shoot());
         
-    }
-
-    public Joystick getTankDrive() {
-        return tankDrive;
-    }
-
-    public Joystick getArcadeDrive() {
-        return arcadeDrive;
+        changeToRed = new JoystickButton(joystick, 2);
+        changeToRed.whenPressed(new ChangeToRed());
+        
+        changeToWhite = new JoystickButton(joystick, 3);
+        changeToWhite.whenPressed(new ChangeToWhite());
+        
+        redAndWhite = new JoystickButton(joystick, 4);
+        redAndWhite.whenPressed(new RedAndWhite());
+        
+        // SmartDashboard Buttons
+        SmartDashboard.putData("DriveByJoystick", new DriveByJoystick());
+        
     }
 
     public double getDrivingJoyStickY(){
-    	return joystickDrive.getY();
+    	return joystick.getY();
     }
 
     public double getDrivingJoyStickX(){
-    	return joystickDrive.getX();
+    	return joystick.getX();
     }
    
 	//// CREATING BUTTONS

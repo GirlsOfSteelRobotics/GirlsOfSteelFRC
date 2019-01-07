@@ -37,8 +37,6 @@ public class RobotMap {
 	public static final int RIGHT_SLAVE_A_PORT=5;
 	public static final int RIGHT_SLAVE_B_PORT=6;
 	
-	public static final int SHOOTER_1_MASTER=7;
-	public static final int SHOOTER_1_FOLLOWER=8;
-	
-	public static final int SHOOTER_2_MASTER=9;
+	public static final int SHOOTER_TOP = 8;
+	public static final int SHOOTER_BOTTOM = 9;
 }

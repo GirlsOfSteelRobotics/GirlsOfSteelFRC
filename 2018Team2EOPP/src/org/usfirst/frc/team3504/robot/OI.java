@@ -11,6 +11,7 @@ public class OI {
 	private Joystick drivingJoystick ;
 
 	private JoystickButton shoot;
+	private JoystickButton stopShoot;
 
 	public OI() {
 

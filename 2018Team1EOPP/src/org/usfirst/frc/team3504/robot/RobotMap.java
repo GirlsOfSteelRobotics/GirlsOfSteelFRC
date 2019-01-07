@@ -15,32 +15,35 @@ package org.usfirst.frc.team3504.robot;
  */
 public class RobotMap {
 	    
-	  	public static final int DRIVE_RIGHT_FRONT = 1;
-		public static final int DRIVE_RIGHT_MIDDLE = 2;
-		public static final int DRIVE_RIGHT_BACK = 3;
-		public static final int DRIVE_LEFT_FRONT = 4;
-		public static final int DRIVE_LEFT_MIDDLE = 5;
-		public static final int DRIVE_LEFT_BACK = 6;
-		
-		public static final int SHOOT_1 = 1;
-		public static final int SHOOT_2 = 2;
-		public static final int SHOOT_3 = 3;
-		
-	    //you can add more things here. like more motors, encoders, things that need an object
-	    //limit switches, shifters, etc
-	    //public static DoubleSolenoid shifterRight; //example
-	    //public static DoubleSolenoid shifterLeft;  //example
-		
-	    	//when labeling motors, 0 is never used, makes it easier
-	    	/*
-	    	 * talons are positioned like this
-	    	 * ||-----||
-	    	 *  |1---4|
-	    	 * ||2---5||
-	    	 *  |3---6|
-	    	 * ||-----||
-	    	 * sides may vary like is 1 is actually left (could be right side)
-	    	 */
+  	public static final int DRIVE_RIGHT_FRONT = 1;
+	public static final int DRIVE_RIGHT_MIDDLE = 2;
+	public static final int DRIVE_RIGHT_BACK = 3;
+	public static final int DRIVE_LEFT_FRONT = 4;
+	public static final int DRIVE_LEFT_MIDDLE = 5;
+	public static final int DRIVE_LEFT_BACK = 6;
+	
+	public static final int SHOOT_1 = 1;
+	public static final int SHOOT_2 = 2;
+	public static final int SHOOT_3 = 3;
+	
+	public static final int LIGHTS = 3;
+	
+    //You can add more things here. like more motors, encoders, things that need an object
+    //limit switches, shifters, etc
+    //public static DoubleSolenoid shifterRight; //example
+    //public static DoubleSolenoid shifterLeft;  //example
+	
+	//When labeling motors, 0 is never used, makes it easier
+	/*
+	 * talons are positioned like this
+	 * ||-----||
+	 *  |1---4|
+	 * ||2---5||
+	 *  |3---6|
+	 * ||-----||
+	 * sides may vary like is 1 is actually left (could be right side)
+	 */
+	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
