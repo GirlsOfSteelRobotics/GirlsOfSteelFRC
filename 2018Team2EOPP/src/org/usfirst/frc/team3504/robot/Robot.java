@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		chassis = new Chassis();
+		shooter = new Shooter();
 		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
