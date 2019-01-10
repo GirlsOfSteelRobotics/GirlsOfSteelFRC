@@ -7,6 +7,20 @@
 
 package frc.robot;
 
+import org.usfirst.frc.team3504.robot.GameData.FieldElement;
+import org.usfirst.frc.team3504.robot.GameData.FieldSide;
+import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.*;
+import org.usfirst.frc.team3504.robot.subsystems.Blobs;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Climber;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
+import org.usfirst.frc.team3504.robot.subsystems.Lift;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
+import org.usfirst.frc.team3504.robot.subsystems.Wrist;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,7 +44,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    chassis = new Chassis(); 
     oi = new OI();
+    
 
   }
 
@@ -85,6 +101,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+   
   }
 
   /**
@@ -100,5 +117,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
   }
 }
