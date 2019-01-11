@@ -1,9 +1,5 @@
 package frc.robot.subsystems;
 
-import frc.robot.RobotMap;
-import frc.robot.commands.DriveByJoystick;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -11,41 +7,43 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotMap;
+import frc.robot.commands.DriveByJoystick;
 
 public class Chassis extends Subsystem {
-	
+
 	private WPI_TalonSRX masterLeft;
-	private WPI_TalonSRX slaveLeft_A;
-	private WPI_TalonSRX slaveLeft_B;
+	private WPI_TalonSRX driveLeft_A;
+	private WPI_TalonSRX driveLeft_B;
 
 	private WPI_TalonSRX masterRight;
-	private WPI_TalonSRX slaveRight_A;
-	private WPI_TalonSRX slaveRight_B;
+	private WPI_TalonSRX driveRight_A;
+	private WPI_TalonSRX driveRight_B;
 	
 	private DifferentialDrive drive;
 	
 	public Chassis () {
 		masterLeft = new WPI_TalonSRX(RobotMap.LEFT_MASTER_PORT);
-		slaveLeft_A = new WPI_TalonSRX(RobotMap.LEFT_SLAVE_A_PORT);
-		slaveLeft_B = new WPI_TalonSRX(RobotMap.LEFT_SLAVE_B_PORT);
+		driveLeft_A = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_A_PORT);
+		driveLeft_B = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_B_PORT);
 		
 		masterRight = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_PORT); 
-		slaveRight_A = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE_A_PORT); 
-		slaveRight_B = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE_B_PORT); 
+		driveRight_A = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_A_PORT); 
+		driveRight_B = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_B_PORT); 
 		
 		masterLeft.setNeutralMode(NeutralMode.Brake);
-		slaveLeft_A.setNeutralMode(NeutralMode.Brake);
-		slaveLeft_B.setNeutralMode(NeutralMode.Brake);
+		driveLeft_A.setNeutralMode(NeutralMode.Brake);
+		driveLeft_B.setNeutralMode(NeutralMode.Brake);
 
 		masterRight.setNeutralMode(NeutralMode.Brake);
-		slaveRight_A.setNeutralMode(NeutralMode.Brake);
-		slaveRight_B.setNeutralMode(NeutralMode.Brake);
+		driveRight_A.setNeutralMode(NeutralMode.Brake);
+		driveRight_B.setNeutralMode(NeutralMode.Brake);
 		
-		slaveLeft_A.follow(masterLeft, FollowerType.PercentOutput); 
-		slaveLeft_B.follow(masterLeft, FollowerType.PercentOutput);
+		driveLeft_A.follow(masterLeft, FollowerType.PercentOutput); 
+		driveLeft_B.follow(masterLeft, FollowerType.PercentOutput);
 		
-		slaveRight_A.follow(masterRight, FollowerType.PercentOutput);
-		slaveRight_B.follow(masterRight, FollowerType.PercentOutput); 
+		driveRight_A.follow(masterRight, FollowerType.PercentOutput);
+		driveRight_B.follow(masterRight, FollowerType.PercentOutput); 
 		
 		drive = new DifferentialDrive(masterLeft, masterRight);
 		drive.setSafetyEnabled(true);
