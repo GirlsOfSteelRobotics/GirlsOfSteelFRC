@@ -6,18 +6,21 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
+import frc.robot.Robot;
+import frc.robot.subsystems.Wrist;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class WristToSwitch extends Command {
   public WristToSwitch() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.wrist);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.wrist.setGoalWristPosition(Wrist.WRIST_SWITCH);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -28,7 +31,7 @@ public class WristToSwitch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

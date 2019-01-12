@@ -4,12 +4,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Collector; 
+import frc.robot.subsystems.Wrist;
 //import frc.robot.subsystems.Lift; 
 
 public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
   public static Collector collector; 
   public static OI oi;
+  public static Wrist wrist;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -19,7 +21,7 @@ public class Robot extends TimedRobot {
     chassis = new Chassis();
     collector = new Collector();  
     oi = new OI();
-    
+    wrist = new Wrist();
 
   }
 

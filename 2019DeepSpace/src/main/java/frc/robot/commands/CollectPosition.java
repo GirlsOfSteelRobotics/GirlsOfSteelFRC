@@ -7,9 +7,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CollectPosition extends Command {
+public class CollectPosition extends CommandGroup {
   public CollectPosition() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
