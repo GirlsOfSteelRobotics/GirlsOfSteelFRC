@@ -3,10 +3,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Chassis;
-
+import frc.robot.subsystems.Collector; 
+import frc.robot.subsystems.Lift; 
 
 public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
+  public static Collector collector; 
   public static OI oi;
   /**
    * This function is run when the robot is first started up and should be
@@ -14,7 +16,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    chassis = new Chassis(); 
+    chassis = new Chassis();
+    collector = new Collector();  
     oi = new OI();
     
 
