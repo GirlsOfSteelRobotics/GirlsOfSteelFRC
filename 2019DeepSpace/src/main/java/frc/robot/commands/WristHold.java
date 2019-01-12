@@ -8,13 +8,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot; 
 
-public class LiftToGround extends Command {
-  public LiftToGround() {
+public class WristHold extends Command {
+  public WristHold() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.lift); 
   }
 
   // Called just before this Command runs the first time

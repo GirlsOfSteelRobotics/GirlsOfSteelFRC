@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Collector; 
-import frc.robot.subsystems.Lift; 
+//import frc.robot.subsystems.Lift; 
 
 public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
