@@ -13,18 +13,33 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GamepadBase;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.HIDType;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public Joystick driveStick;
+	public Joystick gamepad;
 
 	public OI() {
-		driveStick = new Joystick(0);
-  }
+		gamepad = new Joystick(0);
+  	}
 
+
+	public double getLeftUpAndDown() {
+		return -gamepad.getY();
+	}	
+
+	public double getRightSideToSide() {
+		return -gamepad.getTwist();
+	}
 }
+
+
+
 

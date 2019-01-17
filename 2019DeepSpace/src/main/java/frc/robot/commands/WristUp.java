@@ -6,11 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.Robot;
+import frc.robot.Robot; 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class WristOut extends Command {
-  public WristOut() {
+public class WristUp extends Command {
+  public WristUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.wrist);
@@ -25,7 +25,7 @@ public class WristOut extends Command {
   @Override
   protected void execute() {
     Robot.wrist.holdWristPosition();
-    Robot.wrist.wristOut();
+    Robot.wrist.wristIn();
   }
 
   // Make this return true when this Command no longer needs to run execute()

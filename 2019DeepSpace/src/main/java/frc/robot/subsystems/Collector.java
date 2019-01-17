@@ -45,13 +45,13 @@ public class Collector extends Subsystem {
 
   public void collect(){
       leftCollect.set(-1.00); 
-      rightCollect.set(0.5); //these two may need to be reversed 
+      rightCollect.set(1.00); //these two may need to be reversed 
 
   }
 
-  public void release(double speed){
-      leftCollect.set(speed); 
-      rightCollect.set(-speed); //these two may need to be reversed
+  public void release(){
+      leftCollect.set(1.00); 
+      rightCollect.set(-1.00); //these two may need to be reversed
   }
 
   public int getRightCollectorID(){

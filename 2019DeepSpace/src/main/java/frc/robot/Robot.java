@@ -20,8 +20,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     chassis = new Chassis();
     collector = new Collector();  
-    oi = new OI();
     wrist = new Wrist();
+    oi = new OI();
 
   }
 
