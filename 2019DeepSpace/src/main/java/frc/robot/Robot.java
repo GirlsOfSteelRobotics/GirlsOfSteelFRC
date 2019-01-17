@@ -8,7 +8,7 @@ import frc.robot.subsystems.Wrist;
 //import frc.robot.subsystems.Lift; 
 
 public class Robot extends TimedRobot {
-  public static Chassis chassis = new Chassis();
+  public static Chassis chassis;
   public static Collector collector; 
   public static OI oi;
   public static Wrist wrist;
