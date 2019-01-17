@@ -24,12 +24,12 @@ public class RobotMap {
 	public static final int LEFT_DRIVE_A_PORT = 2; 
 	public static final int LEFT_DRIVE_B_PORT = 3; 
 	
-	public static final int RIGHT_MASTER_PORT = 1; 
-	public static final int RIGHT_DRIVE_A_PORT = 2;
-	public static final int RIGHT_DRIVE_B_PORT = 3;
+	public static final int RIGHT_MASTER_PORT = 4; 
+	public static final int RIGHT_DRIVE_A_PORT = 5;
+	public static final int RIGHT_DRIVE_B_PORT = 6;
 	
-	public static final int COLLECT_LEFT = 4; //TODO ADJUST
-	public static final int COLLECT_RIGHT = 5; //TODO ADJUST
+	public static final int COLLECT_LEFT = 7; //TODO ADJUST
+	public static final int COLLECT_RIGHT = 8; //TODO ADJUST
 
 	public static final int WRIST = 10;//TODO ADJUST 
 
