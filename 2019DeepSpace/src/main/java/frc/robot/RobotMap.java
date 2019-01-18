@@ -28,10 +28,13 @@ public class RobotMap {
 	public static final int RIGHT_DRIVE_A_PORT = 5;
 	public static final int RIGHT_DRIVE_B_PORT = 6;
 	
-	public static final int COLLECT_LEFT = 7; //TODO ADJUST
-	public static final int COLLECT_RIGHT = 8; //TODO ADJUST
+	public static final int COLLECT_LEFT = 7; //TODO; ADJUST
+	public static final int COLLECT_RIGHT = 8; //TODO; ADJUST
 
-	public static final int WRIST = 10;//TODO ADJUST 
+	public static final int WRIST = 10;//TODO; ADJUST 
+
+	public static final int PISTON_FRONT = 0; //TODO; ADJUST
+	public static final int PISTON_BACK = 1; //TODO; ADJUST
 
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.

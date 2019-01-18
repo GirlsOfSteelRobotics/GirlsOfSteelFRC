@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.RobotMap; 
+
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,16 +23,27 @@ public class Climber extends Subsystem {
     private DoubleSolenoid pistonFront; 
     private DoubleSolenoid pistonBack; 
 
-    public enum Speed{
-      kHigh, kLow;
-    }
     
-    private Speed speed; 
+    public Climber(){
+      pistonFront = new DoubleSolenoid(RobotMap.PISTON_FRONT); 
+      pistonBack = new DoubleSolenoid(RobotMap.PISTON_BACK); 
 
-    public Climber() {
-      pistonFront = new DoubleSolenoid(RobotMap.CLIMBER_FRONT_A, RobotMap.CLIMBER_FRONT_B); 
-      pistonBack = new DoubleSolenoid(RobotMap.CLIMBER_BACK_A, RobotMap.CLIMBER_BACK_B); 
+    }
 
+    public void shiftUpBack(){
+      pistonBack.set(DoubleSolenoid.Value.kForward); 
+    }
+
+    public void shiftUpFront(){
+      pistonFront.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void shiftDownBack(){
+      pistonBack.set(DoubleSolenoid.Value.kReverse); 
+    }
+
+    public void shiftDownFront(){
+      pistonFront.set(DoubleSolenoid.Value.kReverse); 
     }
  
 
