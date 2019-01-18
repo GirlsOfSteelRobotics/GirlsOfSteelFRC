@@ -20,30 +20,43 @@ public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-    private DoubleSolenoid pistonFront; 
-    private DoubleSolenoid pistonBack; 
+    private DoubleSolenoid pistonFrontA; 
+    private DoubleSolenoid pistonFrontB; 
+    private DoubleSolenoid pistonBackA; 
+    private DoubleSolenoid pistonBackB; 
 
     
     public Climber(){
-      pistonFront = new DoubleSolenoid(RobotMap.PISTON_FRONT); 
-      pistonBack = new DoubleSolenoid(RobotMap.PISTON_BACK); 
+      pistonFrontA = new DoubleSolenoid(RobotMap.PISTON_FRONT_A1, RobotMap.PISTON_FRONT_A2); 
+      pistonFrontB = new DoubleSolenoid(RobotMap.PISTON_FRONT_B1, RobotMap.PISTON_FRONT_B2); 
+      pistonBackA = new DoubleSolenoid(RobotMap.PISTON_BACK_A1, RobotMap.PISTON_BACK_A2); 
+      pistonBackB = new DoubleSolenoid(RobotMap.PISTON_BACK_B1, RobotMap.PISTON_BACK_B2); 
+      
 
     }
 
     public void shiftUpBack(){
-      pistonBack.set(DoubleSolenoid.Value.kForward); 
+      pistonBackA.set(DoubleSolenoid.Value.kForward); 
+      pistonBackB.set(DoubleSolenoid.Value.kForward); 
+
     }
 
     public void shiftUpFront(){
-      pistonFront.set(DoubleSolenoid.Value.kForward);
+      pistonFrontA.set(DoubleSolenoid.Value.kForward);
+      pistonFrontB.set(DoubleSolenoid.Value.kForward);
+
     }
 
     public void shiftDownBack(){
-      pistonBack.set(DoubleSolenoid.Value.kReverse); 
+      pistonBackA.set(DoubleSolenoid.Value.kReverse); 
+      pistonBackB.set(DoubleSolenoid.Value.kReverse); 
+
     }
 
     public void shiftDownFront(){
-      pistonFront.set(DoubleSolenoid.Value.kReverse); 
+      pistonFrontA.set(DoubleSolenoid.Value.kReverse); 
+      pistonFrontB.set(DoubleSolenoid.Value.kReverse); 
+
     }
  
 

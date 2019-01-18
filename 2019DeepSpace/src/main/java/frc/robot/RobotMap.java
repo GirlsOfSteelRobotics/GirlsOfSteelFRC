@@ -33,8 +33,15 @@ public class RobotMap {
 
 	public static final int WRIST = 10;//TODO; ADJUST 
 
-	public static final int PISTON_FRONT = 0; //TODO; ADJUST
-	public static final int PISTON_BACK = 1; //TODO; ADJUST
+	public static final int PISTON_FRONT_A1 = 0; //TODO; ADJUST
+	public static final int PISTON_FRONT_A2 = 1; //TODO; ADJUST
+	public static final int PISTON_FRONT_B1 = 0; //TODO; ADJUST
+	public static final int PISTON_FRONT_B2 = 1; //TODO; ADJUST
+	public static final int PISTON_BACK_A1 = 1; //TODO; ADJUST
+	public static final int PISTON_BACK_A2 = 1; //TODO; ADJUST
+	public static final int PISTON_BACK_B1 = 1; //TODO; ADJUST
+	public static final int PISTON_BACK_B2 = 1; //TODO; ADJUST
+
 
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
