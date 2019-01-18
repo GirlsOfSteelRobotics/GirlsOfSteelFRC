@@ -32,6 +32,7 @@ public class Climber extends Subsystem {
       pistonBack = new DoubleSolenoid(RobotMap.CLIMBER_BACK_A, RobotMap.CLIMBER_BACK_B); 
 
     }
+ 
 
   @Override
   public void initDefaultCommand() {
