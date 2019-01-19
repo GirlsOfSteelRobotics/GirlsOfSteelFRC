@@ -21,6 +21,7 @@ public class AllUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("All Up init");
     Robot.climber.backUp();
     Robot.climber.frontUp();
   }

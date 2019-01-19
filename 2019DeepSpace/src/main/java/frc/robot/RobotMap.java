@@ -33,12 +33,12 @@ public class RobotMap {
 
 	public static final int PISTON_FRONT_A1 = 0; //TODO; ADJUST
 	public static final int PISTON_FRONT_A2 = 1; //TODO; ADJUST
-	public static final int PISTON_FRONT_B1 = 0; //TODO; ADJUST
-	public static final int PISTON_FRONT_B2 = 1; //TODO; ADJUST
-	public static final int PISTON_BACK_A1 = 1; //TODO; ADJUST
-	public static final int PISTON_BACK_A2 = 1; //TODO; ADJUST
-	public static final int PISTON_BACK_B1 = 1; //TODO; ADJUST
-	public static final int PISTON_BACK_B2 = 1; //TODO; ADJUST
+	public static final int PISTON_FRONT_B1 = 2; //TODO; ADJUST
+	public static final int PISTON_FRONT_B2 = 3; //TODO; ADJUST
+	public static final int PISTON_BACK_A1 = 4; //TODO; ADJUST
+	public static final int PISTON_BACK_A2 = 5; //TODO; ADJUST
+	public static final int PISTON_BACK_B1 = 6; //TODO; ADJUST
+	public static final int PISTON_BACK_B2 = 7; //TODO; ADJUST
 
 
 	// For example to map the left and right motors, you could define the
