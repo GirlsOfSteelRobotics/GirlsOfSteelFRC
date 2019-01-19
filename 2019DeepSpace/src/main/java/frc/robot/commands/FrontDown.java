@@ -10,9 +10,9 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PistonFrontUp extends Command {
+public class FrontDown extends Command {
 
-	public PistonFrontUp() {
+	public FrontDown() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.climber);
@@ -20,7 +20,7 @@ public class PistonFrontUp extends Command {
 
   // Called just before this Command runs the first time
 	protected void initialize() {
-    Robot.climber.shiftUpFront(); 
+    Robot.climber.frontDown(); 
   }
   
 	// Called repeatedly when this Command is scheduled to run

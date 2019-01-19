@@ -8,9 +8,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class FrontBackDown extends Command {
-  public FrontBackDown() {
+public class BackUp extends Command {
+  public BackUp() {
+    requires(Robot.climber);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -18,6 +20,7 @@ public class FrontBackDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.climber.backUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,5 +43,6 @@ public class FrontBackDown extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

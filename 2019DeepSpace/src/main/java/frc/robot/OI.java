@@ -18,26 +18,59 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.HIDType;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.AllDown;
+import frc.robot.commands.AllUp;
+import frc.robot.commands.BackDown;
+import frc.robot.commands.BackUp;
+import frc.robot.commands.FrontDown;
+import frc.robot.commands.FrontUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public Joystick gamepad;
+	
+	public Joystick drivingPad;
+
+	private JoystickButton backUp;
+	private JoystickButton backDown;
+
+	private JoystickButton frontUp;
+	private JoystickButton frontDown;
+
+	private JoystickButton allUp;
+	private JoystickButton allDown;
 
 	public OI() {
-		gamepad = new Joystick(0);
+		drivingPad = new Joystick(0);
+
+		// Climber Buttons
+		backUp = new JoystickButton(drivingPad, 1);
+		backUp.whenPressed(new BackUp());
+		backDown = new JoystickButton(drivingPad, 2);
+		backDown.whenPressed(new BackDown());
+		frontUp = new JoystickButton(drivingPad, 3);
+		frontUp.whenPressed(new FrontUp());
+		frontDown = new JoystickButton(drivingPad, 4);
+		frontDown.whenPressed(new FrontDown());
+		allUp = new JoystickButton(drivingPad, 5);
+		allUp.whenPressed(new AllUp());
+		allDown = new JoystickButton(drivingPad, 6);
+		allDown.whenPressed(new AllDown());
+
   	}
 
 
 	public double getLeftUpAndDown() {
-		return -gamepad.getY();
+		return -drivingPad.getY();
 	}	
 
 	public double getRightSideToSide() {
-		return -gamepad.getTwist();
+		return -drivingPad.getTwist();
 	}
+	
 }
 
 

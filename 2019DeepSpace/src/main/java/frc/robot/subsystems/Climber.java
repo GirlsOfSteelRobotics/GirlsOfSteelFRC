@@ -31,29 +31,27 @@ public class Climber extends Subsystem {
       pistonFrontB = new DoubleSolenoid(RobotMap.PISTON_FRONT_B1, RobotMap.PISTON_FRONT_B2); 
       pistonBackA = new DoubleSolenoid(RobotMap.PISTON_BACK_A1, RobotMap.PISTON_BACK_A2); 
       pistonBackB = new DoubleSolenoid(RobotMap.PISTON_BACK_B1, RobotMap.PISTON_BACK_B2); 
-      
-
     }
 
-    public void shiftUpBack(){
+    public void backUp(){
       pistonBackA.set(DoubleSolenoid.Value.kForward); 
       pistonBackB.set(DoubleSolenoid.Value.kForward); 
 
     }
 
-    public void shiftUpFront(){
+    public void frontUp(){
       pistonFrontA.set(DoubleSolenoid.Value.kForward);
       pistonFrontB.set(DoubleSolenoid.Value.kForward);
 
     }
 
-    public void shiftDownBack(){
+    public void backDown(){
       pistonBackA.set(DoubleSolenoid.Value.kReverse); 
       pistonBackB.set(DoubleSolenoid.Value.kReverse); 
 
     }
 
-    public void shiftDownFront(){
+    public void frontDown(){
       pistonFrontA.set(DoubleSolenoid.Value.kReverse); 
       pistonFrontB.set(DoubleSolenoid.Value.kReverse); 
 
