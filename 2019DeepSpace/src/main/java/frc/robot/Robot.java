@@ -11,9 +11,9 @@ import frc.robot.subsystems.Climber;
 public class Robot extends TimedRobot {
   public static Chassis chassis;
   public static Collector collector; 
-  public static OI oi;
   public static Wrist wrist;
   public static Climber climber; 
+  public static OI oi;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
     wrist = new Wrist();
     climber = new Climber(); 
     oi = new OI();
+    System.out.println("Robot Init");
 
   }
 

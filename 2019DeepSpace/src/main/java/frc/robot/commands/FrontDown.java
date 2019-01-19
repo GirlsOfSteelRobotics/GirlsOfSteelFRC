@@ -20,6 +20,7 @@ public class FrontDown extends Command {
 
   // Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("Front Down init");
     Robot.climber.frontDown(); 
   }
   
