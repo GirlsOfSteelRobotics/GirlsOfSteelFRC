@@ -23,8 +23,11 @@ import frc.robot.commands.AllDown;
 import frc.robot.commands.AllUp;
 import frc.robot.commands.BackDown;
 import frc.robot.commands.BackUp;
+import frc.robot.commands.Collect;
 import frc.robot.commands.FrontDown;
 import frc.robot.commands.FrontUp;
+import frc.robot.commands.Release;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -42,6 +45,9 @@ public class OI {
 
 	private JoystickButton allUp;
 	private JoystickButton allDown;
+
+	private JoystickButton collect;
+	private JoystickButton release;
 
 	public OI() {
 		drivingPad = new Joystick(0);
@@ -64,6 +70,13 @@ public class OI {
 		
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whenPressed(new AllDown());
+
+		//collector buttons
+		collect = new JoystickButton(drivingPad, 7);
+		collect.whileHeld(new Collect());
+
+		release = new JoystickButton(drivingPad, 8);
+		release.whileHeld(new Release());
 
   	}
 

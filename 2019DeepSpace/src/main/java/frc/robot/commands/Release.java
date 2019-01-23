@@ -6,12 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.Robot; 
-
+import frc.robot.Robot;
+import frc.robot.subsystems.Collector;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Collect extends Command {
-  public Collect() {
+public class Release extends Command {
+  public Release() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.collector); 
@@ -25,7 +25,7 @@ public class Collect extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.collector.collect();
+    Robot.collector.release();
   }
 
   // Make this return true when this Command no longer needs to run execute()
