@@ -13,6 +13,7 @@ public class Robot extends TimedRobot {
   public static Collector collector; 
   public static Wrist wrist;
   public static Climber climber; 
+  //public static ColorSensor sensor;
   public static OI oi;
   /**
    * This function is run when the robot is first started up and should be
@@ -25,8 +26,10 @@ public class Robot extends TimedRobot {
     wrist = new Wrist();
     climber = new Climber(); 
     oi = new OI();
+   // sensor = new ColorSensor();
     System.out.println("Robot Init");
 
+    //sensor.writeData(0x00, sensor.readData(0x00, 1), 1);
   }
 
   /**
