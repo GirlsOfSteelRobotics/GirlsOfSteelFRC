@@ -20,6 +20,7 @@ public class DriveByJoystick extends Command {
 	protected void execute() {
 		// 4 is the axis number right x on the gamepad
 		Robot.chassis.driveByJoystick(-Robot.oi.drivingPad.getY(), -Robot.oi.drivingPad.getRawAxis(4));
+		System.out.println("Printing value of Light Sensor " + Robot.chassis.darkLightSensor());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
