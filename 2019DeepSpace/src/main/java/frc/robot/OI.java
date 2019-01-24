@@ -13,20 +13,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GamepadBase;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.GenericHID.HIDType;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.AllDown;
-import frc.robot.commands.AllUp;
-import frc.robot.commands.BackDown;
-import frc.robot.commands.BackUp;
-import frc.robot.commands.Collect;
-import frc.robot.commands.FrontDown;
-import frc.robot.commands.FrontUp;
-import frc.robot.commands.Release;
+import frc.robot.commands.*;
 
 
 /**
