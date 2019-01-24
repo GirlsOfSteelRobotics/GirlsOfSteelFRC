@@ -31,14 +31,14 @@ public class RobotMap {
 
 	public static final int WRIST = 10;//TODO; ADJUST 
 
-	public static final int PISTON_FRONT_A1 = 0;
-	public static final int PISTON_FRONT_A2 = 1; 
-	public static final int PISTON_FRONT_B1 = 2; 
-	public static final int PISTON_FRONT_B2 = 3; 
-	public static final int PISTON_BACK_A1 = 4; 
-	public static final int PISTON_BACK_A2 = 5; 
-	public static final int PISTON_BACK_B1 = 6; 
-	public static final int PISTON_BACK_B2 = 7; 
+	public static final int PISTON_FRONT_A1 = 4;
+	public static final int PISTON_FRONT_A2 = 5; 
+	public static final int PISTON_FRONT_B1 = 6; 
+	public static final int PISTON_FRONT_B2 = 7; 
+	public static final int PISTON_BACK_A1 = 0; 
+	public static final int PISTON_BACK_A2 = 1; 
+	public static final int PISTON_BACK_B1 = 2; 
+	public static final int PISTON_BACK_B2 = 3; 
 
 	public static final int LIGHT_SENSOR_PORT = 0;
 
