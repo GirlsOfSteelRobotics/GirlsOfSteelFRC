@@ -2,10 +2,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
   public static ColorSensor sensor;
   public static OI oi;
+  public static Motor motor;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -13,6 +15,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    motor = new Motor();
     oi = new OI();
     sensor = new ColorSensor();
     System.out.println("Robot Init");
