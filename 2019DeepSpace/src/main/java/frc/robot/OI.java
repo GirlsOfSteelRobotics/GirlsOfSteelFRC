@@ -42,16 +42,16 @@ public class OI {
 		drivingPad = new Joystick(0);
 
 		// Climber Buttons
-		backUp = new JoystickButton(drivingPad, 1);
+		backUp = new JoystickButton(drivingPad, 3);
 		backUp.whenPressed(new BackUp());
 		
-		backDown = new JoystickButton(drivingPad, 2);
+		backDown = new JoystickButton(drivingPad, 4);
 		backDown.whenPressed(new BackDown());
 		
-		frontUp = new JoystickButton(drivingPad, 3);
+		frontUp = new JoystickButton(drivingPad, 1);
 		frontUp.whenPressed(new FrontUp());
 		
-		frontDown = new JoystickButton(drivingPad, 4);
+		frontDown = new JoystickButton(drivingPad, 2);
 		frontDown.whenPressed(new FrontDown());
 		
 		allUp = new JoystickButton(drivingPad, 5);
