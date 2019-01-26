@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
 
-
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -42,17 +41,17 @@ public class OI {
 		drivingPad = new Joystick(0);
 
 		// Climber Buttons
-		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whenPressed(new BackUp());
-		
-		backDown = new JoystickButton(drivingPad, 4);
-		backDown.whenPressed(new BackDown());
-		
 		frontUp = new JoystickButton(drivingPad, 1);
 		frontUp.whenPressed(new FrontUp());
 		
 		frontDown = new JoystickButton(drivingPad, 2);
 		frontDown.whenPressed(new FrontDown());
+		
+		backUp = new JoystickButton(drivingPad, 3);
+		backUp.whenPressed(new BackUp());
+		
+		backDown = new JoystickButton(drivingPad, 4);
+		backDown.whenPressed(new BackDown());
 		
 		allUp = new JoystickButton(drivingPad, 5);
 		allUp.whenPressed(new AllUp());
@@ -60,13 +59,13 @@ public class OI {
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whenPressed(new AllDown());
 
-		//collector buttons
+		
+		// Collector buttons
 		collect = new JoystickButton(drivingPad, 7);
 		collect.whileHeld(new Collect());
 
 		release = new JoystickButton(drivingPad, 8);
 		release.whileHeld(new Release());
-
   	}
 
 

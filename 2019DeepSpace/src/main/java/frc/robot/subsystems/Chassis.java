@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,8 +20,6 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX masterRight;
 	private WPI_TalonSRX driveRight_A;
 	private WPI_TalonSRX driveRight_B;
-
-	private DigitalInput lightSensor;
 	
 	private DifferentialDrive drive;
 	
@@ -53,8 +50,6 @@ public class Chassis extends Subsystem {
 		drive.setSafetyEnabled(true);
 		drive.setExpiration(0.1);
 		drive.setMaxOutput(1.0);
-
-		lightSensor = new DigitalInput(RobotMap.LIGHT_SENSOR_PORT);
 	}
 
 	// Put methods for controlling this subsystem
@@ -69,10 +64,6 @@ public class Chassis extends Subsystem {
     public void driveByJoystick(double yDir, double xDir) {
     	SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
     	drive.arcadeDrive(yDir, xDir);
-	}
-	
-	public boolean darkLightSensor(){
-		return lightSensor.get();
 	}
     
     public void stop() {
