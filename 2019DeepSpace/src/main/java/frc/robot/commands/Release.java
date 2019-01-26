@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
+
 import frc.robot.Robot;
-import frc.robot.subsystems.Collector;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Release extends Command {
