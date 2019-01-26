@@ -72,10 +72,10 @@ public class OI {
 		release.whileHeld(new Release());
 
 		babyDriveForward = new JoystickButton(drivingPad, 9);
-		babyDriveForward.whileHeld(new babyDriveForward());
+		babyDriveForward.whileHeld(new BabyDriveForward());
 
 		babyDriveBackward = new JoystickButton(drivingPad, 10);
-		babyDriveBackward.whileHeld(new babyDriveBackward());
+		babyDriveBackward.whileHeld(new BabyDriveBackwards());
 
   	}
 
