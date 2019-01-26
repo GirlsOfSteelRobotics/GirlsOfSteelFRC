@@ -21,8 +21,6 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX masterRight;
 	private WPI_TalonSRX driveRight_A;
 	private WPI_TalonSRX driveRight_B;
-
-	private DigitalInput lightSensor;
 	
 	private DifferentialDrive drive;
 	
@@ -53,8 +51,6 @@ public class Chassis extends Subsystem {
 		drive.setSafetyEnabled(true);
 		drive.setExpiration(0.1);
 		drive.setMaxOutput(1.0);
-
-		lightSensor = new DigitalInput(RobotMap.LIGHT_SENSOR_PORT);
 	}
 
 	// Put methods for controlling this subsystem
@@ -69,10 +65,6 @@ public class Chassis extends Subsystem {
     public void driveByJoystick(double yDir, double xDir) {
     	SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
     	drive.arcadeDrive(yDir, xDir);
-	}
-	
-	public boolean darkLightSensor(){
-		return lightSensor.get();
 	}
     
     public void stop() {
