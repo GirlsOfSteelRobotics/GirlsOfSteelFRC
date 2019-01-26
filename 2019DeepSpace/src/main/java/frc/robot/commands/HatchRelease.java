@@ -10,8 +10,8 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class HatchCollect extends Command {
-  public HatchCollect() {
+public class HatchRelease extends Command {
+  public HatchRelease() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.hatch); 
