@@ -21,9 +21,11 @@ public class Collector extends Subsystem {
 
     public Collector(){
         leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT);
-		rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT);
+        rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT);
+        
 		leftCollect.setSensorPhase(true);
-		rightCollect.setSensorPhase(true);
+        rightCollect.setSensorPhase(true);
+        
 		collectorSpeed = 0; 
     }
   // Put methods for controlling this subsystem
@@ -45,7 +47,7 @@ public class Collector extends Subsystem {
 
   public void collect(){
       leftCollect.set(-1.00); 
-      rightCollect.set(1.00); //these two may need to be reversed 
+      rightCollect.set(1.00); // TODO: these two may need to be reversed 
 
   }
 

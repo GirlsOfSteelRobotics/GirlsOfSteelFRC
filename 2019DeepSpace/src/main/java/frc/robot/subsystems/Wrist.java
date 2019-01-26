@@ -27,7 +27,7 @@ public class Wrist extends Subsystem {
   private WPI_TalonSRX wrist; 
   private double goalWristPosition; 
 
-  //TODO tune all
+  // TODO: tune all
   public static final double WRIST_IN_BOUND = -60; 
 	public static final double WRIST_OUT_BOUND = -1000; 
 	public static final double WRIST_COLLECT = -930; 
@@ -50,7 +50,7 @@ public class Wrist extends Subsystem {
   }
 
   public void setupWristFPID() {
-		//talon.setPosition (0); TODO figure out new syntax
+		// wrist.setPosition (0); TODO: figure out new syntax
 		wrist.config_kF(0, 0, 10);
 		wrist.config_kP(0, 1.5, 10);
 		wrist.config_kI(0, 0, 10);
