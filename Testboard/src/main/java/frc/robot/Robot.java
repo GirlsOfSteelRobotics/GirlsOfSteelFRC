@@ -3,11 +3,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Camera;
 
 public class Robot extends TimedRobot {
   public static ColorSensor sensor;
   public static OI oi;
   public static Motor motor;
+  public static Camera camera;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -18,6 +20,7 @@ public class Robot extends TimedRobot {
     motor = new Motor();
     oi = new OI();
     sensor = new ColorSensor();
+    camera = new Camera();
     System.out.println("Robot Init");
 
     //sensor.writeData(0x00, sensor.readData(0x00, 1), 1);
