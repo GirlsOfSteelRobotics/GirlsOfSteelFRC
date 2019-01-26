@@ -6,16 +6,27 @@ import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Collector; 
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Climber; 
+<<<<<<< HEAD
 import frc.robot.subsystems.BabyDrive; 
 //import frc.robot.subsystems.Lift; 
+=======
+import frc.robot.subsystems.ScrewClimber;
+import frc.robot.subsystems.Hatch;
+>>>>>>> a0241b678f59b81783b049573fad80829cd55978
 
 public class Robot extends TimedRobot {
   public static Chassis chassis;
   public static Collector collector; 
   public static Wrist wrist;
   public static Climber climber; 
+<<<<<<< HEAD
   public static BabyDrive babydrive; 
+=======
+  public static ScrewClimber screwClimber;
+>>>>>>> a0241b678f59b81783b049573fad80829cd55978
   public static OI oi;
+  public static Hatch hatch;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -26,8 +37,13 @@ public class Robot extends TimedRobot {
     collector = new Collector();  
     wrist = new Wrist();
     climber = new Climber(); 
+<<<<<<< HEAD
     babydrive = new BabyDrive(); 
+=======
+    screwClimber = new ScrewClimber();
+>>>>>>> a0241b678f59b81783b049573fad80829cd55978
     oi = new OI();
+    hatch = new Hatch();
     System.out.println("Robot Init");
   }
 
