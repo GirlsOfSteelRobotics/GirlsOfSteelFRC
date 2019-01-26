@@ -31,6 +31,10 @@ public class RobotMap {
 
 	public static final int WRIST = 10;//TODO; ADJUST 
 
+	
+	public static final int BABY_DRIVE_TALON = 11;
+
+
 	public static final int PISTON_FRONT_A1 = 4;
 	public static final int PISTON_FRONT_A2 = 5; 
 	public static final int PISTON_FRONT_B1 = 6; 
@@ -41,6 +45,8 @@ public class RobotMap {
 	public static final int PISTON_BACK_B2 = 3; 
 
 	public static final int LIGHT_SENSOR_PORT = 0;
+
+
 
 
 	// For example to map the left and right motors, you could define the
