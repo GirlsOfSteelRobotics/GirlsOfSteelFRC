@@ -5,7 +5,6 @@ import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-import frc.robot.commands.CollectorHold;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
@@ -17,7 +16,8 @@ public class Collector extends Subsystem {
     private WPI_TalonSRX leftCollect; 
     private WPI_TalonSRX rightCollect; 
 
-    public double collectorSpeed; 
+    public static final double SLOW_COLLECTOR_SPEED = 0.15; 
+    public static final double COLLECTOR_SPEED = 0.75; 
 
     public Collector(){
         leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT);
@@ -25,8 +25,6 @@ public class Collector extends Subsystem {
         
 		leftCollect.setSensorPhase(true);
         rightCollect.setSensorPhase(true);
-        
-		collectorSpeed = 0; 
     }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
@@ -34,43 +32,28 @@ public class Collector extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new CollectorHold());
   }
 
   public void stop(){
       leftCollect.stopMotor(); 
       rightCollect.stopMotor(); 
-      collectorSpeed = 0; 
       System.out.println("Collector stopped motors"); 
-
   }
 
   public void collect(){
-      leftCollect.set(-1.00); 
-      rightCollect.set(1.00); // TODO: these two may need to be reversed 
+      leftCollect.set(-COLLECTOR_SPEED); 
+      rightCollect.set(COLLECTOR_SPEED); // TODO: these two may need to be reversed 
 
   }
 
   public void release(){
-      leftCollect.set(1.00); 
-      rightCollect.set(-1.00); //these two may need to be reversed
-  }
-
-  public int getRightCollectorID(){
-        return rightCollect.getDeviceID(); 
-  }
-
-  public WPI_TalonSRX getRightCollector(){
-        return rightCollect; 
-  }
-
-  public void runCollector(){
-      leftCollect.set(-collectorSpeed); 
-      rightCollect.set(collectorSpeed); 
+      leftCollect.set(COLLECTOR_SPEED); 
+      rightCollect.set(-COLLECTOR_SPEED); //these two may need to be reversed
   }
 
   public void slowCollect(){
     System.out.println("Collector holding ball"); 
-    collectorSpeed = 0.15; 
+    leftCollect.set(-SLOW_COLLECTOR_SPEED); 
+      rightCollect.set(SLOW_COLLECTOR_SPEED); 
   }
 }
