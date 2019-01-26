@@ -47,8 +47,7 @@ public class RobotMap {
 	public static final int SCREW_FRONT = 0;
 	public static final int SCREW_BACK = 0;
 
-	public static final int PISTON_COLLECT_A = 4; //change
-	public static final int PISTON_COLLECT_B = 5; //change
+	public static final int PISTON_COLLECT_A = 0; //change
 
 	public static final int LIGHT_SENSOR_PORT = 0;
 
