@@ -6,6 +6,7 @@ import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Collector; 
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Climber; 
+import frc.robot.subsystems.BabyDrive; 
 //import frc.robot.subsystems.Lift; 
 
 public class Robot extends TimedRobot {
@@ -13,6 +14,7 @@ public class Robot extends TimedRobot {
   public static Collector collector; 
   public static Wrist wrist;
   public static Climber climber; 
+  public static BabyDrive babydrive; 
   public static OI oi;
   /**
    * This function is run when the robot is first started up and should be
@@ -24,6 +26,7 @@ public class Robot extends TimedRobot {
     collector = new Collector();  
     wrist = new Wrist();
     climber = new Climber(); 
+    babydrive = new BabyDrive(); 
     oi = new OI();
     System.out.println("Robot Init");
   }
