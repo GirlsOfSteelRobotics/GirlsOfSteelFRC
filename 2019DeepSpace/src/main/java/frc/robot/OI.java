@@ -75,10 +75,10 @@ public class OI {
 
 		// Hatch buttons
 		hatchCollect = new JoystickButton(drivingPad, 9);
-		hatchCollect.whileHeld(new Collect());
+		hatchCollect.whenPressed(new HatchCollect());
 
-		release = new JoystickButton(drivingPad, 10);
-		release.whileHeld(new Release());
+		hatchRelease = new JoystickButton(drivingPad, 10);
+		hatchRelease.whenPressed(new HatchRelease());
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 11);
@@ -87,12 +87,7 @@ public class OI {
 		babyDriveBackward = new JoystickButton(drivingPad, 12);
 		babyDriveBackward.whileHeld(new BabyDriveBackwards());
 
-		// Hatch buttons
-		hatchCollect = new JoystickButton(drivingPad, 13);
-		hatchCollect.whenPressed(new HatchCollect());
-
-		hatchRelease = new JoystickButton(drivingPad, 14);
-		hatchRelease.whenPressed(new HatchRelease());
+		
   	}
 
 

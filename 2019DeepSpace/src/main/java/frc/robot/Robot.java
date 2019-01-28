@@ -26,8 +26,8 @@ public class Robot extends TimedRobot {
     climber = new Climber(); 
     babyDrive = new BabyDrive(); 
     screwClimber = new ScrewClimber();
-    oi = new OI();
     hatch = new Hatch();
+    oi = new OI();
     System.out.println("Robot Init");
   }
 
