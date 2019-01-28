@@ -8,8 +8,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap; 
-import frc.robot.Robot; 
-import frc.robot.commands.DriveByJoystick; 
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -22,18 +20,19 @@ public class BabyDrive extends Subsystem {
   // here. Call these from Commands.
 
   private WPI_TalonSRX babyDriveTalon; 
+  private double speed = 0.5;
 
   public BabyDrive(){
     babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON) ;
   }
 
   public void babyDriveForward(){
-    babyDriveTalon.set(0.5);//TODO; ADJUST SPEED
+    babyDriveTalon.set(speed);//TODO; ADJUST SPEED
 
   }
 
   public void babyDriveBackwards(){
-    babyDriveTalon.set(-0.5);//TODO; ADJUST SPEED 
+    babyDriveTalon.set(speed);//TODO; ADJUST SPEED 
 
   }
 
