@@ -26,13 +26,13 @@ public class RobotMap {
 	public static final int RIGHT_DRIVE_A_PORT = 5;
 	public static final int RIGHT_DRIVE_B_PORT = 6;
 	
-	public static final int COLLECT_LEFT = 8;
+	public static final int COLLECT_LEFT = 11;
 	public static final int COLLECT_RIGHT = 9;
 
 	public static final int WRIST = 10;//TODO; ADJUST 
 
 	
-	public static final int BABY_DRIVE_TALON = 11;
+	public static final int BABY_DRIVE_TALON = 8;
 
 
 	public static final int PISTON_FRONT_A1 = 4;
