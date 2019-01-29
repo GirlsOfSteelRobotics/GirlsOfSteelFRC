@@ -32,7 +32,7 @@ public class BabyDrive extends Subsystem {
   }
 
   public void babyDriveBackwards(){
-    babyDriveTalon.set(speed);//TODO; ADJUST SPEED 
+    babyDriveTalon.set(-speed);//TODO; ADJUST SPEED 
   }
 
   public void babyDriveStop() {
