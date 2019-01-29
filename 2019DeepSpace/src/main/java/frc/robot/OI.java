@@ -16,7 +16,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
-import frc.robot.subsystems.BabyDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -68,24 +67,24 @@ public class OI {
 
 		
 		// Collector buttons
-		collect = new JoystickButton(drivingPad, 7);
+		collect = new JoystickButton(drivingPad, 9);
 		collect.whileHeld(new Collect());
-
-		release = new JoystickButton(drivingPad, 8);
-		release.whileHeld(new Release());
-
-		// Hatch buttons
-		hatchCollect = new JoystickButton(drivingPad, 9);
-		hatchCollect.whileHeld(new Collect());
 
 		release = new JoystickButton(drivingPad, 10);
 		release.whileHeld(new Release());
 
+		// Hatch buttons
+		hatchCollect = new JoystickButton(drivingPad, 12);
+		hatchCollect.whenPressed(new HatchCollect());
 
-		babyDriveForward = new JoystickButton(drivingPad, 11);
+		hatchRelease = new JoystickButton(drivingPad, 11);
+		hatchRelease.whenPressed(new HatchRelease());
+
+		// BabyDrive buttons
+		babyDriveForward = new JoystickButton(drivingPad, 7);
 		babyDriveForward.whileHeld(new BabyDriveForward());
 
-		babyDriveBackward = new JoystickButton(drivingPad, 12);
+		babyDriveBackward = new JoystickButton(drivingPad, 8);
 		babyDriveBackward.whileHeld(new BabyDriveBackwards());
   	}
 

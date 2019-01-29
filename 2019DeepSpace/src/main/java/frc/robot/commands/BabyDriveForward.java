@@ -16,18 +16,18 @@ public class BabyDriveForward extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.babyDrive); 
-
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.babyDrive.babyDriveBackwards(); 
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.babyDrive.babyDriveBackwards(); 
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +39,7 @@ public class BabyDriveForward extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.babyDrive.babyDriveStop();
   }
 
   // Called when another command which requires one or more of the same

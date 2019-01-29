@@ -31,7 +31,6 @@ public class Climber extends Subsystem {
       pistonFrontB = new DoubleSolenoid(RobotMap.PISTON_FRONT_B1, RobotMap.PISTON_FRONT_B2); 
       pistonBackA = new DoubleSolenoid(RobotMap.PISTON_BACK_A1, RobotMap.PISTON_BACK_A2); 
       pistonBackB = new DoubleSolenoid(RobotMap.PISTON_BACK_B1, RobotMap.PISTON_BACK_B2); 
-      System.out.println("Climber Constructor");
     }
  
     public void backUp(){

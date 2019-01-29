@@ -7,10 +7,8 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.RobotMap; 
-
-
-import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,24 +18,19 @@ public class Hatch extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-    private Solenoid leftCollect; 
-    //private Solenoid rightCollect;
+    private Relay piston;
 
     public Hatch(){
-        leftCollect = new Solenoid(RobotMap.PISTON_COLLECT_A);
-        //rightCollect = new Solenoid(RobotMap.PISTON_COLLECT_B); 
+      piston = new Relay(RobotMap.PISTON_RELAY);
     }
 
-    public void Collect(){
-        leftCollect.set(true); 
-        //rightCollect.set(Solenoid.kForward); 
-      }
+    public void collect(){
+      piston.set(Relay.Value.kForward); 
+    }
   
-      public void Release(){
-        leftCollect.set(false); 
-        //rightCollect.set(Solenoid.Value.kForward); 
-  
-      }
+    public void release(){
+      piston.set(Relay.Value.kOff);
+    }
  
   @Override
   public void initDefaultCommand() {

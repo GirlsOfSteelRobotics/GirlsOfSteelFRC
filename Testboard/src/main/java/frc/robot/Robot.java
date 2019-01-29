@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Camera;
+import edu.wpi.first.cameraserver.CameraServer;
+
 
 public class Robot extends TimedRobot {
   public static ColorSensor sensor;
@@ -18,11 +20,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     motor = new Motor();
-    oi = new OI();
     sensor = new ColorSensor();
-    camera = new Camera();
-    System.out.println("Robot Init");
+    CameraServer.getInstance().startAutomaticCapture();
+    oi = new OI();
 
+    
     //sensor.writeData(0x00, sensor.readData(0x00, 1), 1);
   }
 
