@@ -17,12 +17,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * Add your docs here.
  */
 
+ //commented out screwback for testing purposes
 public class ScrewClimber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
     private WPI_TalonSRX screwFront; 
-    private WPI_TalonSRX screwBack; 
+    //private WPI_TalonSRX screwBack; 
 
     public static final double DURATION_TIME = 2;
     public static final double SPEED = 1;
@@ -31,7 +32,7 @@ public class ScrewClimber extends Subsystem {
     
     public ScrewClimber(){
       screwFront = new WPI_TalonSRX(RobotMap.SCREW_FRONT); 
-      screwBack = new WPI_TalonSRX(RobotMap.SCREW_BACK);  
+      //screwBack = new WPI_TalonSRX(RobotMap.SCREW_BACK);  
 
       screwFront.setSensorPhase(true);
       screwFront.setSensorPhase(true);
@@ -40,10 +41,12 @@ public class ScrewClimber extends Subsystem {
     }
  
     //the value in set expiration is in SECONDS not milliseconds
+    /*
     public void screwBackUp(){
       screwBack.set(SPEED);
       screwBack.setExpiration(DURATION_TIME); //TODO tune this time and speed!!!
     }
+    */
 
     public void screwFrontUp(){
       screwFront.set(SPEED);
@@ -51,11 +54,13 @@ public class ScrewClimber extends Subsystem {
 
     }
 
+    /*
     public void screwBackDown(){
       screwBack.set(-SPEED);
       screwBack.setExpiration(DURATION_TIME); //TODO tune this time and speed!!!
 
     }
+    */
 
     public void screwFrontDown(){
       screwFront.set(-SPEED);
@@ -65,7 +70,7 @@ public class ScrewClimber extends Subsystem {
 
     public void stop(){
       screwFront.stopMotor();
-      screwBack.stopMotor();
+      //screwBack.stopMotor();
       System.out.println("Ball Screw Climber Stopped!");
 
     }

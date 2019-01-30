@@ -21,7 +21,7 @@ public class ScrewBackDown extends Command {
   // Called just before this Command runs the first time
 	protected void initialize() {
 		System.out.println("Screw Back Down init");
-    Robot.screwClimber.screwBackDown(); 
+    //Robot.screwClimber.screwBackDown(); 
   }
   
 	// Called re peatedly when this Command is scheduled to run

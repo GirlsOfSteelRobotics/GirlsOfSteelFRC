@@ -21,7 +21,7 @@ public class ScrewBackUp extends Command {
   // Called just before this Command runs the first time
 	protected void initialize() {
 		System.out.println("Screw Back Up init");
-    Robot.screwClimber.screwBackUp(); 
+    //Robot.screwClimber.screwBackUp(); 
   }
   
 	// Called re peatedly when this Command is scheduled to run

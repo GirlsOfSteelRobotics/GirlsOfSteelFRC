@@ -22,7 +22,7 @@ public class ScrewAllUp extends Command {
 	protected void initialize() {
 		System.out.println("Screw All Up init");
     Robot.screwClimber.screwFrontUp(); 
-    Robot.screwClimber.screwBackUp();
+    //Robot.screwClimber.screwBackUp();
   }
   
 	// Called re peatedly when this Command is scheduled to run

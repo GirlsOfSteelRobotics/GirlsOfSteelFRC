@@ -22,7 +22,7 @@ public class ScrewAllDown extends Command {
 	protected void initialize() {
 		System.out.println("Screw All Down init");
     Robot.screwClimber.screwFrontDown(); 
-    Robot.screwClimber.screwBackDown();
+    //Robot.screwClimber.screwBackDown();
   }
   
 	// Called re peatedly when this Command is scheduled to run
