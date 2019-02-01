@@ -5,6 +5,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Camera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 
 public class Robot extends TimedRobot {
@@ -12,6 +15,8 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static Motor motor;
   public static Camera camera;
+  NetworkTableEntry xEntry;
+  NetworkTableEntry yEntry;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -22,11 +27,18 @@ public class Robot extends TimedRobot {
     motor = new Motor();
     sensor = new ColorSensor();
     CameraServer.getInstance().startAutomaticCapture();
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable table = inst.getTable("data table");
+    xEntry = table.getEntry("x");
+    yEntry = table.getEntry("y");
     oi = new OI();
 
     
     //sensor.writeData(0x00, sensor.readData(0x00, 1), 1);
   }
+
+  double x = 0;
+  double y = 0;
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -88,6 +100,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    xEntry.setDouble(x);
+    yEntry.setDouble(y);
+    x += 0.05;
+    y += 1.0;
   }
 
   /**
