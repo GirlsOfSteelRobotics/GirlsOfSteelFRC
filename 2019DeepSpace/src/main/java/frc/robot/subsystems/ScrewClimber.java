@@ -11,63 +11,48 @@ import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
 /**
  * Add your docs here.
  */
 
+ //commented out screwback for testing purposes
 public class ScrewClimber extends Subsystem {
+  DigitalInput limitSwitch = new DigitalInput(1);
+  SpeedController armMotor = new Victor(1);
+  Counter counter = new Counter(limitSwitch);
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
     private WPI_TalonSRX screwFront; 
-    private WPI_TalonSRX screwBack; 
+    //private WPI_TalonSRX screwBack; 
 
-    public static final double DURATION_TIME = 2;
-    public static final double SPEED = 1;
+    public static final double CLIMBER_UP = 1500.0;
+    public static final double CLIMBER_DOWN = 0.0;
 
 
     
     public ScrewClimber(){
       screwFront = new WPI_TalonSRX(RobotMap.SCREW_FRONT); 
-      screwBack = new WPI_TalonSRX(RobotMap.SCREW_BACK);  
+      //screwBack = new WPI_TalonSRX(RobotMap.SCREW_BACK);  
 
       screwFront.setSensorPhase(true);
       screwFront.setSensorPhase(true);
-
-      
     }
  
     //the value in set expiration is in SECONDS not milliseconds
-    public void screwBackUp(){
-      screwBack.set(SPEED);
-      screwBack.setExpiration(DURATION_TIME); //TODO tune this time and speed!!!
+    public void setClimberPosition(double pos){
+      screwFront.set(ControlMode.Position, pos);
+      //screwBack.set(ControlMode.Position, pos);
     }
 
-    public void screwFrontUp(){
-      screwFront.set(SPEED);
-      screwFront.setExpiration(DURATION_TIME); //TODO tune this time and speed!!!
-
-    }
-
-    public void screwBackDown(){
-      screwBack.set(-SPEED);
-      screwBack.setExpiration(DURATION_TIME); //TODO tune this time and speed!!!
-
-    }
-
-    public void screwFrontDown(){
-      screwFront.set(-SPEED);
-      screwFront.setExpiration(DURATION_TIME); //TODO tune this time and speed!!!
-
-    }
-
-    public void stop(){
-      screwFront.stopMotor();
-      screwBack.stopMotor();
-      System.out.println("Ball Screw Climber Stopped!");
-
+    public void setClimberSpeed(double speed){
+      screwFront.set(ControlMode.Position, speed);
     }
 
   @Override

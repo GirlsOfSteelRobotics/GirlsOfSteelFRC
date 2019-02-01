@@ -24,6 +24,7 @@ import frc.robot.commands.*;
 public class OI {
 	
 	public Joystick drivingPad;
+	public Joystick drivingPad1;
 
 	private JoystickButton backUp;
 	private JoystickButton backDown;
@@ -43,8 +44,12 @@ public class OI {
 	private JoystickButton babyDriveForward; 
 	private JoystickButton babyDriveBackward;
 
+	private JoystickButton screwFrontUp;
+	private JoystickButton screwFrontDown;
+
 	public OI() {
 		drivingPad = new Joystick(0);
+		drivingPad1 = new Joystick(1);
 
 		// Climber Buttons
 		frontUp = new JoystickButton(drivingPad, 1);
@@ -86,7 +91,14 @@ public class OI {
 
 		babyDriveBackward = new JoystickButton(drivingPad, 8);
 		babyDriveBackward.whileHeld(new BabyDriveBackwards());
-  	}
+	  
+		// ScrewClimber buttons
+		screwFrontUp = new JoystickButton(drivingPad1, 1);
+		screwFrontUp.whileHeld(new ScrewFrontUp());
+
+		screwFrontDown = new JoystickButton(drivingPad, 2);
+		screwFrontDown.whileHeld(new ScrewFrontDown());
+	}
 
 
 	public double getLeftUpAndDown() {
