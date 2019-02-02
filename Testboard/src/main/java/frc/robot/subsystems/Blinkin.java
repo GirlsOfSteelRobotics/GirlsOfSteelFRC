@@ -8,7 +8,7 @@ public class Blinkin extends Subsystem {
     private Spark leftLightController;
     private Spark rightLightController;
 
-    private static final double PARTY = -0.97;
+    private static final double SINELON = -0.79 ;
     private static final double CONFETTI = -0.87 ;
     private static final double SOLID_GREEN = 0.77;
 
@@ -34,8 +34,8 @@ public class Blinkin extends Subsystem {
         System.out.println("Setting patttern to: " + pattern);
         switch (pattern) {
         case AUTO_DEFAULT:
-            leftLightController.set(PARTY);
-            rightLightController.set(PARTY);
+            leftLightController.set(SINELON);
+            rightLightController.set(SINELON);
             break;
         case TELEOP_DEFAULT:
             leftLightController.set(CONFETTI);
