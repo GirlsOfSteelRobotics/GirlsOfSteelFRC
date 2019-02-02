@@ -94,19 +94,19 @@ public class OI {
 	  
 		// ScrewClimber buttons
 		screwFrontUp = new JoystickButton(drivingPad1, 1);
-		screwFrontUp.whileHeld(new ScrewFrontUp());
+		screwFrontUp.whileHeld(new ScrewClimberFrontUp());
 
 		screwFrontDown = new JoystickButton(drivingPad, 2);
-		screwFrontDown.whileHeld(new ScrewFrontDown());
+		screwFrontDown.whileHeld(new ScrewClimberFrontDown());
 	}
 
 
 	public double getLeftUpAndDown() {
-		return -drivingPad.getY();
+		return drivingPad.getY();
 	}	
 
 	public double getRightSideToSide() {
-		return -drivingPad.getTwist();
+		return -drivingPad.getRawAxis(4);
 	}
 	
 }

@@ -49,7 +49,7 @@ public class Chassis extends Subsystem {
 		drive = new DifferentialDrive(masterLeft, masterRight);
 		drive.setSafetyEnabled(true);
 		drive.setExpiration(0.1);
-		drive.setMaxOutput(1.0);
+		drive.setMaxOutput(0.8);
 	}
 
 	// Put methods for controlling this subsystem
