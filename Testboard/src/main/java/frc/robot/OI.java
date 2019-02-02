@@ -13,6 +13,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,7 +23,14 @@ package frc.robot;
  */
 public class OI {
 
+	public Joystick drivingPad;
+	public JoystickButton blinkinTest;
+
 	public OI() {
+		drivingPad = new Joystick(0);
+
+		blinkinTest = new JoystickButton(drivingPad, 1);
+		blinkinTest.whenPressed(new TryBlinkin());
 		
   	}
 	

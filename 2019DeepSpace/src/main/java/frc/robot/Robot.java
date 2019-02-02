@@ -11,6 +11,7 @@ public class Robot extends TimedRobot {
   public static ScrewClimber screwClimber;
   public static BabyDrive babyDrive;
   public static Hatch hatch;
+  public static Blinkin blinkin;
   public static OI oi;
 
   /**
@@ -25,6 +26,7 @@ public class Robot extends TimedRobot {
     babyDrive = new BabyDrive(); 
     screwClimber = new ScrewClimber();
     hatch = new Hatch();
+    blinkin = new Blinkin();
     oi = new OI();
     System.out.println("Robot Init");
   }
@@ -68,6 +70,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
+
   }
 
   /**
@@ -80,6 +84,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+  Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
    
   }
 

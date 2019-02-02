@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.Robot; 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.subsystems.Blinkin.LightPattern;;
 
 public class HatchRelease extends Command {
   public HatchRelease() {
@@ -21,6 +22,7 @@ public class HatchRelease extends Command {
   @Override
   protected void initialize() {
     Robot.hatch.release();
+    Robot.blinkin.setLightPattern(LightPattern.HATCH_RELEASE);
     System.out.println("hatch release");
   }
 
@@ -32,6 +34,7 @@ public class HatchRelease extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    Robot.blinkin.setLightPattern(LightPattern.TELEOP_DEFAULT);
     return true;
   }
 

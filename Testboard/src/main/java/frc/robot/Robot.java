@@ -15,8 +15,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static Motor motor;
   public static Camera camera;
-  NetworkTableEntry xEntry;
-  NetworkTableEntry yEntry;
+  public static Blinkin blinkin;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -26,11 +25,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     motor = new Motor();
     sensor = new ColorSensor();
+    blinkin = new Blinkin();
     CameraServer.getInstance().startAutomaticCapture();
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable table = inst.getTable("data table");
-    xEntry = table.getEntry("x");
-    yEntry = table.getEntry("y");
     oi = new OI();
 
     
@@ -79,6 +75,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+   // Robot.blinkin.setLightPattern(Blinkin.LightPattern.HATCH_RELEASE);
   }
 
   /**
@@ -91,7 +88,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-   
+    //Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
   }
 
   /**
@@ -100,10 +97,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    xEntry.setDouble(x);
-    yEntry.setDouble(y);
-    x += 0.05;
-    y += 1.0;
   }
 
   /**
