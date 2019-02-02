@@ -17,8 +17,8 @@ public class Blinkin extends Subsystem {
     }
 
     public Blinkin() {
-        leftLightController = new Spark(RobotMap.LED_LEFT_PORT);
-        rightLightController = new Spark(RobotMap.LED_RIGHT_PORT);
+        leftLightController = new Spark(RobotMap.BLINKIN_LEFT_PWM);
+        rightLightController = new Spark(RobotMap.BLINKIN_RIGHT_PWM);
 
     }
 
