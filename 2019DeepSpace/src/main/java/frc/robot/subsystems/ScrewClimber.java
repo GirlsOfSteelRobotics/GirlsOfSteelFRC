@@ -38,7 +38,7 @@ public class ScrewClimber extends Subsystem {
 
     
     public ScrewClimber(){
-      screwFront = new WPI_TalonSRX(RobotMap.SCREW_FRONT); 
+      screwFront = new WPI_TalonSRX(RobotMap.SCREW_FRONT_TALON); 
       //screwBack = new WPI_TalonSRX(RobotMap.SCREW_BACK);  
 
       screwFront.setSensorPhase(true);

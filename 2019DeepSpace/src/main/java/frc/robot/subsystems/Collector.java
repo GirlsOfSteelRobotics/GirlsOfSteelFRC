@@ -19,8 +19,8 @@ public class Collector extends Subsystem {
     public static final double COLLECTOR_SPEED = 0.75;
 
     public Collector() {
-        leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT);
-        rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT);
+        leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_TALON);
+        rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT_TALON);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

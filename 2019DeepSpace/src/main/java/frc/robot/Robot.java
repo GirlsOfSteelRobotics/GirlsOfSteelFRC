@@ -8,7 +8,6 @@ public class Robot extends TimedRobot {
   public static Chassis chassis;
   public static Collector collector; 
   public static Wrist wrist;
-  public static Climber climber; 
   public static ScrewClimber screwClimber;
   public static BabyDrive babyDrive;
   public static Hatch hatch;
@@ -23,7 +22,6 @@ public class Robot extends TimedRobot {
     chassis = new Chassis();
     collector = new Collector();  
     wrist = new Wrist();
-    climber = new Climber(); 
     babyDrive = new BabyDrive(); 
     screwClimber = new ScrewClimber();
     hatch = new Hatch();

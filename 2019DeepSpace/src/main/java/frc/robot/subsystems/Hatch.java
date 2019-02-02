@@ -18,18 +18,18 @@ public class Hatch extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-    private Relay piston;
+    private Relay relay;
 
     public Hatch(){
-      piston = new Relay(RobotMap.PISTON_RELAY);
+      relay = new Relay(RobotMap.HATCH_RELAY);
     }
 
     public void collect(){
-      piston.set(Relay.Value.kForward); 
+      relay.set(Relay.Value.kForward); 
     }
   
     public void release(){
-      piston.set(Relay.Value.kOff);
+      relay.set(Relay.Value.kOff);
     }
  
   @Override

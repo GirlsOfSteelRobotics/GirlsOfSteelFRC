@@ -17,36 +17,25 @@ public class RobotMap {
 	
 	public static final int JOYSTICK_PORT = 0;
 	
-	public static final int LEFT_MASTER_PORT = 1; 
-	public static final int LEFT_DRIVE_A_PORT = 2; 
+	public static final int DRIVE_LEFT_MASTER_TALON = 1; 
+	public static final int DRIVE_LEFT_FOLLOWER_TALON = 2; 
 	
-	public static final int RIGHT_MASTER_PORT = 3; 
-	public static final int RIGHT_DRIVE_A_PORT = 4;
+	public static final int DRIVE_RIGHT_MASTER_TALON = 3; 
+	public static final int DRIVE_RIGHT_FOLLOWER_TALON = 4;
 	
-	public static final int COLLECT_LEFT = 11;
-	public static final int COLLECT_RIGHT = 9;
+	public static final int COLLECT_LEFT_TALON = 7;
+	public static final int COLLECT_RIGHT_TALON = 6;
 
-	public static final int WRIST = 10;//TODO; ADJUST 
+	public static final int PIVOT_TALON = 8;
 
+	public static final int BABY_DRIVE_TALON = 9;
 	
-	public static final int BABY_DRIVE_TALON = 8;
+	public static final int SCREW_FRONT_TALON = 5;
+	public static final int SCREW_BACK_TALON = 10;
 
+	public static final int HATCH_RELAY = 0; 
 
-	public static final int PISTON_FRONT_A1 = 4;
-	public static final int PISTON_FRONT_A2 = 5; 
-	public static final int PISTON_FRONT_B1 = 6; 
-	public static final int PISTON_FRONT_B2 = 7; 
-	public static final int PISTON_BACK_A1 = 0; 
-	public static final int PISTON_BACK_A2 = 1; 
-	public static final int PISTON_BACK_B1 = 2; 
-	public static final int PISTON_BACK_B2 = 3; 
-	
-	public static final int SCREW_FRONT = 0;
-	public static final int SCREW_BACK = 0;
-
-	public static final int PISTON_RELAY = 0; // Roborio Relay port number
-
-	public static final int LIGHT_SENSOR_PORT = 0;
+	public static final int LIGHT_SENSOR_DIO = 0;
 
 
 
