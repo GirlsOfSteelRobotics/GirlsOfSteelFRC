@@ -51,6 +51,9 @@ public class RobotMap {
 
 	public static final int LIGHT_SENSOR_PORT = 0;
 
+	public static final int LED_LEFT_PORT = 0;
+	public static final int LED_RIGHT_PORT = 1;
+
 
 
 
