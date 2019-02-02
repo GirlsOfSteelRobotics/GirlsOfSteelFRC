@@ -53,22 +53,22 @@ public class OI {
 
 		// Climber Buttons
 		frontUp = new JoystickButton(drivingPad, 1);
-		frontUp.whenPressed(new FrontUp());
+		frontUp.whenPressed(new ScrewClimberFrontUp());
 		
 		frontDown = new JoystickButton(drivingPad, 2);
-		frontDown.whenPressed(new FrontDown());
+		frontDown.whenPressed(new ScrewClimberFrontDown());
 		
 		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whenPressed(new BackUp());
+		backUp.whenPressed(new ScrewClimberBackUp());
 		
 		backDown = new JoystickButton(drivingPad, 4);
-		backDown.whenPressed(new BackDown());
+		backDown.whenPressed(new ScrewClimberBackDown());
 		
 		allUp = new JoystickButton(drivingPad, 5);
-		allUp.whenPressed(new AllUp());
+		allUp.whenPressed(new ScrewClimberAllUp());
 		
 		allDown = new JoystickButton(drivingPad, 6);
-		allDown.whenPressed(new AllDown());
+		allDown.whenPressed(new ScrewClimberAllDown());
 
 		
 		// Collector buttons
@@ -92,12 +92,7 @@ public class OI {
 		babyDriveBackward = new JoystickButton(drivingPad, 8);
 		babyDriveBackward.whileHeld(new BabyDriveBackwards());
 	  
-		// ScrewClimber buttons
-		screwFrontUp = new JoystickButton(drivingPad1, 1);
-		screwFrontUp.whileHeld(new ScrewClimberFrontUp());
-
-		screwFrontDown = new JoystickButton(drivingPad, 2);
-		screwFrontDown.whileHeld(new ScrewClimberFrontDown());
+		
 	}
 
 
