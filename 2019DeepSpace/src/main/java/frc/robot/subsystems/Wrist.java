@@ -36,7 +36,7 @@ public class Wrist extends Subsystem {
 	public static final double WRIST_SHOOT = -350;
   
   public Wrist() {
-		wrist = new WPI_TalonSRX(RobotMap.WRIST);
+		wrist = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
 		setupWristFPID();
 		LiveWindow.add(wrist);
 	}
