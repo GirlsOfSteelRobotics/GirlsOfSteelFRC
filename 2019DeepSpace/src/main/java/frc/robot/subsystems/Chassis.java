@@ -26,25 +26,19 @@ public class Chassis extends Subsystem {
 	public Chassis () {
 		masterLeft = new WPI_TalonSRX(RobotMap.LEFT_MASTER_PORT);
 		driveLeft_A = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_A_PORT);
-		//driveLeft_B = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_B_PORT);
 		
 		masterRight = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_PORT); 
 		driveRight_A = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_A_PORT); 
-		//driveRight_B = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_B_PORT); 
-		
+	
 		masterLeft.setNeutralMode(NeutralMode.Brake);
 		driveLeft_A.setNeutralMode(NeutralMode.Brake);
-		//driveLeft_B.setNeutralMode(NeutralMode.Brake);
-
+		
 		masterRight.setNeutralMode(NeutralMode.Brake);
 		driveRight_A.setNeutralMode(NeutralMode.Brake);
-		//driveRight_B.setNeutralMode(NeutralMode.Brake);
 		
 		driveLeft_A.follow(masterLeft, FollowerType.PercentOutput); 
-		//driveLeft_B.follow(masterLeft, FollowerType.PercentOutput);
 		
 		driveRight_A.follow(masterRight, FollowerType.PercentOutput);
-		//driveRight_B.follow(masterRight, FollowerType.PercentOutput); 
 		
 		drive = new DifferentialDrive(masterLeft, masterRight);
 		drive.setSafetyEnabled(true);
