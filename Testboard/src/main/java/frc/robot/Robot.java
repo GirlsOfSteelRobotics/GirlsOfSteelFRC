@@ -15,6 +15,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static Motor motor;
   public static Camera camera;
+  public static Blinkin blinkin;
   NetworkTableEntry xEntry;
   NetworkTableEntry yEntry;
 
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     motor = new Motor();
     sensor = new ColorSensor();
+    blinkin = new Blinkin();
     CameraServer.getInstance().startAutomaticCapture();
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable("data table");
@@ -79,6 +81,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+   // Robot.blinkin.setLightPattern(Blinkin.LightPattern.HATCH_RELEASE);
   }
 
   /**
@@ -91,7 +94,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-   
+    //Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
   }
 
   /**
