@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot; 
 import frc.robot.RobotMap; 
 import frc.robot.commands.WristHold;
 
@@ -17,9 +16,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-/**
- * Add your docs here.
- */
 public class Wrist extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
@@ -90,27 +86,21 @@ public class Wrist extends Subsystem {
   public void wristOut()
 	{
 		double goalPosition = goalWristPosition - WRIST_INCREMENT;
-		if (goalPosition <= WRIST_OUT_BOUND)
-		{
+		if (goalPosition <= WRIST_OUT_BOUND) {
 			goalWristPosition = WRIST_OUT_BOUND;
-		}
-		else
-		{
+		}	else {
 			goalWristPosition = goalPosition;
 			//System.out.println("Wrist moved out. New goal : " + goalWristPosition);
     }
     
   }
 	
-	public void setGoalWristPosition(double goal)
-	{
+	public void setGoalWristPosition(double goal) {
 		goalWristPosition = goal;
 	}
 	
-	public double getWristPosition()
-	{
+	public double getWristPosition() {
 		return wrist.getSelectedSensorPosition(0);
 	}
-
 
 }

@@ -44,14 +44,11 @@ public class OI {
 	private JoystickButton babyDriveForward; 
 	private JoystickButton babyDriveBackward;
 
-	private JoystickButton screwFrontUp;
-	private JoystickButton screwFrontDown;
-
 	public OI() {
 		drivingPad = new Joystick(0);
 		drivingPad1 = new Joystick(1);
 
-		// Climber Buttons
+		// Piston climber buttons
 		frontUp = new JoystickButton(drivingPad, 1);
 		frontUp.whenPressed(new ScrewClimberFrontUp());
 		
@@ -91,8 +88,6 @@ public class OI {
 
 		babyDriveBackward = new JoystickButton(drivingPad, 8);
 		babyDriveBackward.whileHeld(new BabyDriveBackwards());
-	  
-		
 	}
 
 

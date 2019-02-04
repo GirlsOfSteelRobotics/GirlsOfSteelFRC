@@ -15,11 +15,9 @@ public class Chassis extends Subsystem {
 
 	private WPI_TalonSRX masterLeft;
 	private WPI_TalonSRX driveLeft_A;
-	private WPI_TalonSRX driveLeft_B;
 
 	private WPI_TalonSRX masterRight;
 	private WPI_TalonSRX driveRight_A;
-	private WPI_TalonSRX driveRight_B;
 	
 	private DifferentialDrive drive;
 	
@@ -37,7 +35,6 @@ public class Chassis extends Subsystem {
 		driveRight_A.setNeutralMode(NeutralMode.Brake);
 		
 		driveLeft_A.follow(masterLeft, FollowerType.PercentOutput); 
-		
 		driveRight_A.follow(masterRight, FollowerType.PercentOutput);
 		
 		drive = new DifferentialDrive(masterLeft, masterRight);
