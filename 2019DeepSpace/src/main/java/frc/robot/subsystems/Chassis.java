@@ -15,27 +15,38 @@ public class Chassis extends Subsystem {
 
 	private WPI_TalonSRX masterLeft;
 	private WPI_TalonSRX driveLeft_A;
+	private WPI_TalonSRX driveLeft_B;
 
 	private WPI_TalonSRX masterRight;
 	private WPI_TalonSRX driveRight_A;
+	private WPI_TalonSRX driveRight_B;
 	
 	private DifferentialDrive drive;
 	
 	public Chassis () {
-		masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
-		driveLeft_A = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_TALON);
+		masterLeft = new WPI_TalonSRX(RobotMap.LEFT_MASTER_PORT);
+		driveLeft_A = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_A_PORT);
+
+		//driveLeft_B = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_B_PORT);
 		
-		masterRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MASTER_TALON); 
-		driveRight_A = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_TALON); 
-	
+		masterRight = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_PORT); 
+		driveRight_A = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_A_PORT); 
+
+		//driveRight_B = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_B_PORT); 
+		
 		masterLeft.setNeutralMode(NeutralMode.Brake);
 		driveLeft_A.setNeutralMode(NeutralMode.Brake);
-		
+		//driveLeft_B.setNeutralMode(NeutralMode.Brake);
+
 		masterRight.setNeutralMode(NeutralMode.Brake);
 		driveRight_A.setNeutralMode(NeutralMode.Brake);
+		//driveRight_B.setNeutralMode(NeutralMode.Brake);
 		
 		driveLeft_A.follow(masterLeft, FollowerType.PercentOutput); 
+		//driveLeft_B.follow(masterLeft, FollowerType.PercentOutput);
+		
 		driveRight_A.follow(masterRight, FollowerType.PercentOutput);
+		//driveRight_B.follow(masterRight, FollowerType.PercentOutput); 
 		
 		drive = new DifferentialDrive(masterLeft, masterRight);
 		drive.setSafetyEnabled(true);

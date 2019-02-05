@@ -31,7 +31,5 @@ public class OI {
 
 		blinkinTest = new JoystickButton(drivingPad, 1);
 		blinkinTest.whenPressed(new TryBlinkin());
-		
   	}
-	
 }

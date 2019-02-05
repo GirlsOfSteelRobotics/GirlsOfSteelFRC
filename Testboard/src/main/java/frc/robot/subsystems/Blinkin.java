@@ -34,8 +34,8 @@ public class Blinkin extends Subsystem {
         System.out.println("Setting patttern to: " + pattern);
         switch (pattern) {
         case AUTO_DEFAULT:
-            leftLightController.set(SINELON);
-            rightLightController.set(SINELON);
+            leftLightController.set(CONFETTI);
+            rightLightController.set(CONFETTI);
             break;
         case TELEOP_DEFAULT:
             leftLightController.set(CONFETTI);
