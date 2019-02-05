@@ -60,10 +60,10 @@ public class DriveByVision extends Command {
 		//Robot.chassis.setSpeedMode();
 
 		// tuned by janet and ziya on 2/20, overrides PID set in chassis method
-		// leftTalon.setF(0.22); // carpet on practice field
-		// leftTalon.setP(0.235);
-		// rightTalon.setF(0.2);
-		// rightTalon.setP(0.235);
+		 leftTalon.config_kF(0, 0.22); // carpet on practice field
+		 leftTalon.config_kP(0, 0.235);
+		 rightTalon.config_kF(0, 0.2);
+		 rightTalon.config_kP(0, 0.235);
 
 		System.out.println("DriveByVision Initialized");
 
@@ -142,9 +142,8 @@ public class DriveByVision extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 
-		//return ((tim.get() > 1 && Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY
-			//	&& Math.abs(rightTalon.getEncVelocity()) < SLIPPING_VELOCITY) || (tim.get() > TIMEOUT));
-			return true;
+		return ((tim.get() > 1 && Math.abs(leftTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY
+				&& Math.abs(rightTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY) || (tim.get() > TIMEOUT));
 	}
 
 	// Called once after isFinished returns true

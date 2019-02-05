@@ -15,6 +15,7 @@ public class Robot extends TimedRobot{
   public static BabyDrive babyDrive;
   public static Hatch hatch;
   public static Blinkin blinkin;
+  public static GripPipelineListener listener;
   public static OI oi;
 
   private VisionThread visionThread; 
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot{
     screwClimber = new ScrewClimber();
     hatch = new Hatch();
     blinkin = new Blinkin();
+    listener = new GripPipelineListener();
     oi = new OI();
     System.out.println("Robot Init");
   }
