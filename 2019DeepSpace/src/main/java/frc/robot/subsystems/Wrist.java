@@ -90,7 +90,6 @@ public class Wrist extends Subsystem {
 			goalWristPosition = WRIST_OUT_BOUND;
 		}	else {
 			goalWristPosition = goalPosition;
-			//System.out.println("Wrist moved out. New goal : " + goalWristPosition);
     }
     
   }

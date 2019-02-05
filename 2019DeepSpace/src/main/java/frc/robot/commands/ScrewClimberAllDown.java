@@ -20,18 +20,20 @@ public class ScrewClimberAllDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.screwClimber.setClimberPosition(Robot.screwClimber.CLIMBER_DOWN);
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.screwClimber.holdClimberPosition();
+    Robot.screwClimber.decrementClimber();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

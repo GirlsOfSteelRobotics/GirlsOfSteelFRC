@@ -62,10 +62,10 @@ public class OI {
 		backDown.whenPressed(new ScrewClimberBackDown());
 		
 		allUp = new JoystickButton(drivingPad, 5);
-		allUp.whenPressed(new ScrewClimberAllUp());
+		allUp.whileHeld(new ScrewClimberAllUp());
 		
 		allDown = new JoystickButton(drivingPad, 6);
-		allDown.whenPressed(new ScrewClimberAllDown());
+		allDown.whileHeld(new ScrewClimberAllDown());
 
 		
 		// Collector buttons
