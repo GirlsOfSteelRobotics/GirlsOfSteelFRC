@@ -95,6 +95,14 @@ public class ScrewClimber extends Subsystem {
       screwBack.set(ControlMode.Position, goalClimberPosition);
     }
 
+    public void holdClimberFrontPosition() {
+      screwFront.set(ControlMode.Position, goalClimberPosition);
+    }
+
+    public void holdClimberBackPosition() {
+      screwBack.set(ControlMode.Position, goalClimberPosition);
+    }
+
     public void setClimberUp() { 
       goalClimberPosition = CLIMBER_UP;
     }

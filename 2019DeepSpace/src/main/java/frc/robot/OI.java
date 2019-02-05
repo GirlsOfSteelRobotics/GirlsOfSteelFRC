@@ -50,16 +50,16 @@ public class OI {
 
 		// Piston climber buttons
 		frontUp = new JoystickButton(drivingPad, 1);
-		frontUp.whenPressed(new ScrewClimberFrontUp());
+		frontUp.whileHeld(new ScrewClimberFrontUp());
 		
 		frontDown = new JoystickButton(drivingPad, 2);
-		frontDown.whenPressed(new ScrewClimberFrontDown());
+		frontDown.whileHeld(new ScrewClimberFrontDown());
 		
 		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whenPressed(new ScrewClimberBackUp());
+		backUp.whileHeld(new ScrewClimberBackUp());
 		
 		backDown = new JoystickButton(drivingPad, 4);
-		backDown.whenPressed(new ScrewClimberBackDown());
+		backDown.whileHeld(new ScrewClimberBackDown());
 		
 		allUp = new JoystickButton(drivingPad, 5);
 		allUp.whileHeld(new ScrewClimberAllUp());
