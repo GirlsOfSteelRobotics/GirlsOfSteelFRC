@@ -7,7 +7,8 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.vision.VisionRunner;
 import edu.wpi.first.vision.VisionThread;
 
-public class Robot extends TimedRobot{
+
+public class Robot extends TimedRobot {
   public static Chassis chassis;
   public static Collector collector; 
   public static Wrist wrist;
@@ -16,6 +17,7 @@ public class Robot extends TimedRobot{
   public static Hatch hatch;
   public static Blinkin blinkin;
   public static GripPipelineListener listener;
+  public static Camera camera;
   public static OI oi;
 
   private VisionThread visionThread; 
@@ -35,8 +37,13 @@ public class Robot extends TimedRobot{
     hatch = new Hatch();
     blinkin = new Blinkin();
     listener = new GripPipelineListener();
+    camera = new Camera();
     oi = new OI();
     System.out.println("Robot Init");
+
+    visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
+    
+		visionThread.start();
   }
 
   /**
