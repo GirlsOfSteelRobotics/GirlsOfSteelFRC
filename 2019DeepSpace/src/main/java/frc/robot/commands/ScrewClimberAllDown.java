@@ -20,7 +20,7 @@ public class ScrewClimberAllDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
+    System.out.println("All Down");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -28,6 +28,8 @@ public class ScrewClimberAllDown extends Command {
   protected void execute() {
     Robot.screwClimber.holdClimberPosition();
     Robot.screwClimber.decrementClimber();
+    System.out.println("Front Position: " + Robot.screwClimber.getFrontPosition());
+    System.out.println("Back Position: " + Robot.screwClimber.getBackPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()

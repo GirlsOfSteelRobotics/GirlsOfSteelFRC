@@ -37,7 +37,6 @@ public class ScrewClimber extends Subsystem {
     public static final double CLIMBER_INCREMENT = 300.0;
 
     private double goalClimberPosition;
-    private boolean recoveryMode;
   
     public ScrewClimber(){
       screwFront = new WPI_TalonSRX(RobotMap.SCREW_FRONT_TALON); 
@@ -80,6 +79,7 @@ public class ScrewClimber extends Subsystem {
   
     public void setGoalCLimberPosition(double goal) {
       goalClimberPosition = goal;
+      System.out.println("Goal Climber Position set to: " + goal);
     }
   
     public double getFrontPosition() {
