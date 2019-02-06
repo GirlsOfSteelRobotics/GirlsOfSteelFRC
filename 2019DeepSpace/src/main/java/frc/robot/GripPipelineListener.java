@@ -13,11 +13,11 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.vision.VisionRunner;
 /**
  * Add your docs here.
  */
-public class GripPipelineListener {
+public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>{
     public Object cameraLock = new Object();
     
 	public double targetX; 
