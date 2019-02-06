@@ -24,7 +24,7 @@ import frc.robot.commands.*;
 public class OI {
 	
 	public Joystick drivingPad;
-	public Joystick drivingPad1;
+	public Joystick operatingPad;
 
 	private JoystickButton backUp;
 	private JoystickButton backDown;
@@ -44,9 +44,12 @@ public class OI {
 	private JoystickButton babyDriveForward; 
 	private JoystickButton babyDriveBackward;
 
+	private JoystickButton pivotUp;
+	private JoystickButton pivotDown;
+
 	public OI() {
 		drivingPad = new Joystick(0);
-		drivingPad1 = new Joystick(1);
+		operatingPad = new Joystick(1);
 
 		// Piston climber buttons
 		frontUp = new JoystickButton(drivingPad, 1);
@@ -88,6 +91,13 @@ public class OI {
 
 		babyDriveBackward = new JoystickButton(drivingPad, 8);
 		babyDriveBackward.whileHeld(new BabyDriveBackwards());
+
+		// Pivot buttons
+		pivotUp = new JoystickButton(operatingPad, 1);
+		pivotUp.whileHeld(new PivotUp());
+		
+		pivotDown = new JoystickButton(operatingPad, 2);
+		pivotDown.whileHeld(new PivotDown());
 	}
 
 
