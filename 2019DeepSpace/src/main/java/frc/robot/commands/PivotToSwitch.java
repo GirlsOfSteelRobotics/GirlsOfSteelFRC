@@ -7,20 +7,20 @@
 
 package frc.robot.commands;
 import frc.robot.Robot;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.Pivot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class WristToSwitch extends Command {
-  public WristToSwitch() {
+public class PivotToSwitch extends Command {
+  public PivotToSwitch() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.wrist);
+    requires(Robot.pivot);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.wrist.setGoalWristPosition(Wrist.WRIST_SWITCH);
+    Robot.pivot.setGoalPivotPosition(Pivot.WRIST_SWITCH);
   }
 
   // Called repeatedly when this Command is scheduled to run

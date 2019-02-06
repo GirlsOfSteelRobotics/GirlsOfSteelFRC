@@ -7,27 +7,25 @@
 
 package frc.robot.commands;
 import frc.robot.Robot; 
-
 import edu.wpi.first.wpilibj.command.Command;
 
-
-public class WristHold extends Command {
-  public WristHold() {
+public class PivotUp extends Command {
+  public PivotUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.wrist);
+    requires(Robot.pivot);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.wrist.holdWristPosition();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.wrist.holdWristPosition();
+    Robot.pivot.holdPivotPosition();
+    Robot.pivot.wristIn();
   }
 
   // Make this return true when this Command no longer needs to run execute()

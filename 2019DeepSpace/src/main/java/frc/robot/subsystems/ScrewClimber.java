@@ -68,7 +68,7 @@ public class ScrewClimber extends Subsystem {
       screwBack.set(speed);
     }
 
-    public void stop() {
+    public void climberStop() {
       screwFront.stopMotor(); 
       screwBack.stopMotor();
     }

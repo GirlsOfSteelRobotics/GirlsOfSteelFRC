@@ -7,32 +7,31 @@
 
 package frc.robot.commands;
 import frc.robot.Robot;
-import frc.robot.subsystems.Wrist;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class WristToShoot extends Command {
-  public WristToShoot() {
+public class PivotDown extends Command {
+  public PivotDown() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.wrist);
+    requires(Robot.pivot);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.wrist.setGoalWristPosition(Wrist.WRIST_SHOOT);
-    System.out.println("WristToShoot Initialized");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.pivot.holdPivotPosition();
+    Robot.pivot.pivotOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -44,5 +43,6 @@ public class WristToShoot extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

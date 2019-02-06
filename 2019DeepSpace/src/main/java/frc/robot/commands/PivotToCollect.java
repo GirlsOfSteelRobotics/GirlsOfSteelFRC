@@ -8,19 +8,19 @@
 package frc.robot.commands;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.Pivot;
 
-public class WristToCollect extends Command {
-  public WristToCollect() {
+public class PivotToCollect extends Command {
+  public PivotToCollect() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.wrist);
+    requires(Robot.pivot);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.wrist.setGoalWristPosition(Wrist.WRIST_COLLECT);
+    Robot.pivot.setGoalPivotPosition(Pivot.WRIST_COLLECT);
     System.out.println("WristToCollect initialized");
   }
 

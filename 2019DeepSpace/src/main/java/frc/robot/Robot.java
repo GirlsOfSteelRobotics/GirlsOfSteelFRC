@@ -11,7 +11,7 @@ import edu.wpi.first.vision.VisionThread;
 public class Robot extends TimedRobot {
   public static Chassis chassis;
   public static Collector collector; 
-  public static Wrist wrist;
+  public static Pivot pivot;
   public static ScrewClimber screwClimber;
   public static BabyDrive babyDrive;
   public static Hatch hatch;
@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     chassis = new Chassis();
     collector = new Collector();  
-    wrist = new Wrist();
+    pivot = new Pivot();
     babyDrive = new BabyDrive(); 
     screwClimber = new ScrewClimber();
     hatch = new Hatch();
