@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     babyDrive = new BabyDrive(); 
     screwClimber = new ScrewClimber();
     hatch = new Hatch();
-    //blinkin = new Blinkin(); // uncomment blink in/light code once blink in is put on robot
+    blinkin = new Blinkin();
     listener = new GripPipelineListener();
     camera = new Camera();
     oi = new OI();
@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
+    Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
 
   }
 
@@ -98,7 +98,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  //Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
    
   }
 
