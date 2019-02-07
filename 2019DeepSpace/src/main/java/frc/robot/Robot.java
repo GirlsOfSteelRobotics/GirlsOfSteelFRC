@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
 
-import edu.wpi.first.vision.VisionRunner;
 import edu.wpi.first.vision.VisionThread;
 
 
@@ -35,7 +34,7 @@ public class Robot extends TimedRobot {
     babyDrive = new BabyDrive(); 
     screwClimber = new ScrewClimber();
     hatch = new Hatch();
-    blinkin = new Blinkin();
+    //blinkin = new Blinkin(); // uncomment blink in/light code once blink in is put on robot
     listener = new GripPipelineListener();
     camera = new Camera();
     oi = new OI();
@@ -85,7 +84,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
+    //Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
 
   }
 
@@ -99,7 +98,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+  //Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
    
   }
 
