@@ -19,6 +19,8 @@ public class ColorSensor{
         int bufferLength = address == -1? 
         length: length + 1;
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(bufferLength);
+
+
         if(address != -1){
             byteBuffer.put((byte)address);
             System.out.println("address != -1");
