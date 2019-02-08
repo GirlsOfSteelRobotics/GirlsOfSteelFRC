@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveByJoystick;
-
+import frc.robot.LidarLitePWM;
 public class Chassis extends Subsystem {
 
 	private WPI_TalonSRX masterLeft;
@@ -22,12 +22,14 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX driveRight_B;
 	
 	private DifferentialDrive drive;
-	
+	private LidarLitePWM lidarLite;
+
 	public Chassis () {
 		masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
 		driveLeft_A = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_TALON);
 
 		//driveLeft_B = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_B_PORT);
+
 		
 		masterRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MASTER_TALON); 
 		driveRight_A = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_TALON); 
@@ -52,6 +54,8 @@ public class Chassis extends Subsystem {
 		drive.setSafetyEnabled(true);
 		drive.setExpiration(0.1);
 		drive.setMaxOutput(0.8);
+
+		lidarLite = new LidarLitePWM(RobotMap.LIDAR_LITE_DIO);
 	}
 
 	// Put methods for controlling this subsystem
