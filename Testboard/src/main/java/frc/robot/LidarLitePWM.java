@@ -1,12 +1,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalSource;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class LidarLitePWM {
 	private Counter counter;
 	
-	public LidarLitePWM (DigitalSource source) {
+	public LidarLitePWM (int dio) {
+		DigitalInput source = new DigitalInput(dio);
 		counter = new Counter(source);
 	    counter.setMaxPeriod(1.0);
 	    // Configure for measuring rising to falling pulses

@@ -8,9 +8,7 @@ public class Blinkin extends Subsystem {
     private Spark leftLightController;
     private Spark rightLightController;
 
-    private static final double SINELON = -0.79 ;
-    private static final double CONFETTI = -0.87 ;
-    private static final double SOLID_GREEN = 0.77;
+    private static double test = -0.99;
 
     public enum LightPattern {
         AUTO_DEFAULT, TELEOP_DEFAULT, HATCH_RELEASE,
@@ -32,18 +30,19 @@ public class Blinkin extends Subsystem {
 
     public void setLightPattern(LightPattern pattern) {
         System.out.println("Setting patttern to: " + pattern);
+        System.out.println(test);
         switch (pattern) {
         case AUTO_DEFAULT:
-            leftLightController.set(CONFETTI);
-            rightLightController.set(CONFETTI);
+            leftLightController.set(test);
+            rightLightController.set(test);
             break;
         case TELEOP_DEFAULT:
-            leftLightController.set(CONFETTI);
-            rightLightController.set(CONFETTI);
+            leftLightController.set(test);
+            rightLightController.set(test);
             break;
         case HATCH_RELEASE:
-            leftLightController.set(SOLID_GREEN);
-            rightLightController.set(SOLID_GREEN);
+            leftLightController.set(test);
+            rightLightController.set(test);
             System.out.println("reset color");
             break;
         default:

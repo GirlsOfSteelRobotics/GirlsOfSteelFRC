@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
     sensor = new ColorSensor();
     blinkin = new Blinkin();
     CameraServer.getInstance().startAutomaticCapture();
-    sensorLidarLitePWM = new LidarLitePWM(new DigitalInput(1));
+    sensorLidarLitePWM = new LidarLitePWM(0);
     oi = new OI();
 
     
