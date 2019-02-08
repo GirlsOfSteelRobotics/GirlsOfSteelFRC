@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
@@ -8,6 +9,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.LidarLitePWM;
 
 
 public class Robot extends TimedRobot {
@@ -16,6 +18,7 @@ public class Robot extends TimedRobot {
   public static Motor motor;
   public static Camera camera;
   public static Blinkin blinkin;
+  public static LidarLitePWM sensorLidarLitePWM;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -27,6 +30,7 @@ public class Robot extends TimedRobot {
     sensor = new ColorSensor();
     blinkin = new Blinkin();
     CameraServer.getInstance().startAutomaticCapture();
+    sensorLidarLitePWM = new LidarLitePWM(new DigitalInput(1));
     oi = new OI();
 
     

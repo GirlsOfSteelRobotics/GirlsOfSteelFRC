@@ -25,11 +25,14 @@ public class OI {
 
 	public Joystick drivingPad;
 	public JoystickButton blinkinTest;
+	public JoystickButton LidarLitePWM;
 
 	public OI() {
 		drivingPad = new Joystick(0);
 
 		blinkinTest = new JoystickButton(drivingPad, 1);
 		blinkinTest.whenPressed(new TryBlinkin());
+		LidarLitePWM = new JoystickButton(drivingPad, 2);
+		LidarLitePWM.whenPressed(new ReadLidarLitePWM());
   	}
 }
