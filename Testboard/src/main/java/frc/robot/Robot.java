@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-   // Robot.blinkin.setLightPattern(Blinkin.LightPattern.HATCH_RELEASE);
+    blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
   }
 
   /**
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    //Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
   }
 
   /**
