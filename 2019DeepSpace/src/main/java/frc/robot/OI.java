@@ -79,10 +79,10 @@ public class OI {
 		release.whileHeld(new Release());
 
 		// Hatch buttons
-		hatchCollect = new JoystickButton(drivingPad, 12);
+		hatchCollect = new JoystickButton(operatingPad, 4);
 		hatchCollect.whenPressed(new HatchCollect());
 
-		hatchRelease = new JoystickButton(drivingPad, 11);
+		hatchRelease = new JoystickButton(operatingPad, 3);
 		hatchRelease.whenPressed(new HatchRelease());
 
 		// BabyDrive buttons

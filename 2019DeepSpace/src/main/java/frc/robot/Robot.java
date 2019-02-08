@@ -36,13 +36,12 @@ public class Robot extends TimedRobot {
     hatch = new Hatch();
     blinkin = new Blinkin();
     listener = new GripPipelineListener();
-    camera = new Camera();
+    //camera = new Camera();
+    //visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
     oi = new OI();
     System.out.println("Robot Init");
-
-    visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
     
-		visionThread.start();
+		//visionThread.start();
   }
 
   /**

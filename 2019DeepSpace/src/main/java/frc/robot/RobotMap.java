@@ -40,8 +40,6 @@ public class RobotMap {
 	public static final int BLINKIN_LEFT_PWM = 0;
 	public static final int BLINKIN_RIGHT_PWM = 1;
 
-	public static final int CAMERA_PORT = 0;
-
 	public static final int VISION_CAMERA = 0; 
 
 
