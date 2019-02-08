@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
 
-import edu.wpi.first.vision.VisionRunner;
 import edu.wpi.first.vision.VisionThread;
 
 
@@ -37,13 +36,12 @@ public class Robot extends TimedRobot {
     hatch = new Hatch();
     blinkin = new Blinkin();
     listener = new GripPipelineListener();
-    camera = new Camera();
+    //camera = new Camera();
+    //visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
     oi = new OI();
     System.out.println("Robot Init");
-
-    visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
     
-		visionThread.start();
+		//visionThread.start();
   }
 
   /**
@@ -99,7 +97,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
    
   }
 

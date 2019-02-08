@@ -17,9 +17,19 @@ public class Blinkin extends Subsystem {
     }
 
     public Blinkin() {
-        leftLightController = new Spark(RobotMap.BLINKIN_LEFT_PWM);
-        rightLightController = new Spark(RobotMap.BLINKIN_RIGHT_PWM);
+        try {
+            leftLightController = new Spark(RobotMap.BLINKIN_LEFT_PWM);
+        } catch (Exception e) {
+            System.out.println("No blink-in in 0, error: " + e);
+            leftLightController = null;
+        }
 
+        try {
+            rightLightController = new Spark(RobotMap.BLINKIN_RIGHT_PWM);
+        } catch (Exception e) {
+            System.out.println("No blink-in in 1, error: " + e);
+            rightLightController = null;
+        }
     }
 
     // Put methods for controlling this subsystem
@@ -33,16 +43,17 @@ public class Blinkin extends Subsystem {
     public void setLightPattern(LightPattern pattern) {
         switch (pattern) {
         case AUTO_DEFAULT:
-            leftLightController.set(CONFETTI);
-            rightLightController.set(CONFETTI);
+            if (leftLightController != null) leftLightController.set(CONFETTI);
+            if (rightLightController != null) rightLightController.set(CONFETTI);
+            else System.out.println("Blink in error handled");
             break;
         case TELEOP_DEFAULT:
-            leftLightController.set(RAINBOW_WITH_GLITTER);
-            rightLightController.set(RAINBOW_WITH_GLITTER);
+            if (leftLightController != null) leftLightController.set(RAINBOW_WITH_GLITTER);
+            if (rightLightController != null) rightLightController.set(RAINBOW_WITH_GLITTER);
             break;
         case HATCH_RELEASE:
-            leftLightController.set(SOLID_GREEN);
-            rightLightController.set(SOLID_GREEN);
+            if (leftLightController != null) leftLightController.set(SOLID_GREEN);
+            if (rightLightController != null) rightLightController.set(SOLID_GREEN);
             break;
         default:
             break;
