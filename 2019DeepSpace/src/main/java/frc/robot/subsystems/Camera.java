@@ -6,7 +6,6 @@ import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Camera extends Subsystem {
 
@@ -16,9 +15,6 @@ public class Camera extends Subsystem {
 	
 	public Camera() {
 	
-	driveCam = new UsbCamera("driveCam", RobotMap.CAMERA_PORT);
-	driveCam.setResolution(320, 240);
-	driveCam.setFPS(20);
 	visionCam = new UsbCamera("visionCam", RobotMap.VISION_CAMERA);
 	visionCam.setResolution(320, 240);
 	visionCam.setFPS(10); 
