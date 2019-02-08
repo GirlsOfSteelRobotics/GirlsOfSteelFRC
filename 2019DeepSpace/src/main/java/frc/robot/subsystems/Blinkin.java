@@ -18,18 +18,22 @@ public class Blinkin extends Subsystem {
 
     public Blinkin() {
         try {
-            leftLightController = new Spark(RobotMap.BLINKIN_LEFT_PWM);
+            rightLightController = new Spark(RobotMap.BLINKIN_RIGHT_PWM);
+            System.out.println("Right Light Controller"); // this never gets made no matter what
         } catch (Exception e) {
-            System.out.println("No blink-in in 0, error: " + e);
-            leftLightController = null;
+            System.out.println("No blink-in in " + RobotMap.BLINKIN_RIGHT_PWM + ", error: " + e);
+            rightLightController = null; 
         }
 
         try {
-            rightLightController = new Spark(RobotMap.BLINKIN_RIGHT_PWM);
+            leftLightController = new Spark(RobotMap.BLINKIN_LEFT_PWM);
+            System.out.println("Left Light Controller");
         } catch (Exception e) {
-            System.out.println("No blink-in in 1, error: " + e);
-            rightLightController = null;
+            System.out.println("No blink-in in " + RobotMap.BLINKIN_LEFT_PWM + ", error: " + e);
+            leftLightController = null;
         }
+
+ 
     }
 
     // Put methods for controlling this subsystem
@@ -43,17 +47,22 @@ public class Blinkin extends Subsystem {
     public void setLightPattern(LightPattern pattern) {
         switch (pattern) {
         case AUTO_DEFAULT:
-            if (leftLightController != null) leftLightController.set(CONFETTI);
-            if (rightLightController != null) rightLightController.set(CONFETTI);
-            else System.out.println("Blink in error handled");
+            if (leftLightController != null)
+                leftLightController.set(CONFETTI);
+            if (rightLightController != null)
+                rightLightController.set(CONFETTI);
             break;
         case TELEOP_DEFAULT:
-            if (leftLightController != null) leftLightController.set(RAINBOW_WITH_GLITTER);
-            if (rightLightController != null) rightLightController.set(RAINBOW_WITH_GLITTER);
+            if (leftLightController != null)
+                leftLightController.set(RAINBOW_WITH_GLITTER);
+            if (rightLightController != null)
+                rightLightController.set(RAINBOW_WITH_GLITTER);
             break;
         case HATCH_RELEASE:
-            if (leftLightController != null) leftLightController.set(SOLID_GREEN);
-            if (rightLightController != null) rightLightController.set(SOLID_GREEN);
+            if (leftLightController != null)
+                leftLightController.set(SOLID_GREEN);
+            if (rightLightController != null)
+                rightLightController.set(SOLID_GREEN);
             break;
         default:
             break;
