@@ -7,122 +7,124 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.RobotMap; 
+import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
+
 /**
  * Add your docs here.
  */
 
- //commented out screwback for testing purposes
+// commented out screwback for testing purposes
 public class Climber extends Subsystem {
-  //DigitalInput limitSwitch = new DigitalInput(1);
+  // DigitalInput limitSwitch = new DigitalInput(1);
   // SpeedController armMotor = new Victor(1);
-  //Counter counter = new Counter(limitSwitch);
+  // Counter counter = new Counter(limitSwitch);
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-    private WPI_TalonSRX climberFront; 
-    private WPI_TalonSRX climberBack; 
+  private WPI_TalonSRX climberFront;
+  private WPI_TalonSRX climberBack;
 
-    public static final double CLIMBER_UP = 1500.0;
-    public static final double CLIMBER_DOWN = 0.0;
-    public static final double CLIMBER_INCREMENT = 100.0;
+  public static final double CLIMBER_UP = 1500.0;
+  public static final double CLIMBER_DOWN = 0.0;
+  public static final double CLIMBER_INCREMENT = 50.0;
 
-    private double goalClimberPosition = 400.0;
-  
-    public Climber(){
-      
-      climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON); 
-      climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);  
+  private double goalClimberPosition;
 
-      System.out.println("Front Position: " + getFrontPosition() + " Back Position: " + getBackPosition());
-      System.out.println("Goal Position: "+ getGoalClimberPosition());
+  public Climber() {
+    climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
+    climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
 
-      climberFront.setSensorPhase(false);
-      climberBack.setSensorPhase(false); 
-      
-      climberFront.config_kF(0, 0, 10);
-      climberFront.config_kP(0, 1.5, 10);
-      climberFront.config_kI(0, 0, 10);
-      climberFront.config_kD(0, 15, 10);	
-      
-      climberBack.config_kF(0, 0, 10);
-      climberBack.config_kP(0, 1.5, 10);
-      climberBack.config_kI(0, 0, 10);
-      climberBack.config_kD(0, 15, 10);	
-    }
-    
- 
-    //the value in set expiration is in SECONDS not milliseconds
-    public void setClimberPosition(double pos) {
-      climberFront.set(ControlMode.Position, pos);
-      climberBack.set(ControlMode.Position, pos);
-    }
+    climberFront.setSensorPhase(false);
+    climberBack.setSensorPhase(false);
 
-    public void setClimberSpeed(double speed) {
-      climberFront.set(speed);
-      climberBack.set(speed);
-    }
+    climberFront.config_kF(0, 0, 10);
+    climberFront.config_kP(0, 1.5, 10);
+    climberFront.config_kI(0, 0, 10);
+    climberFront.config_kD(0, 15, 10);
 
-    public void climberStop() {
-      climberFront.stopMotor(); 
-      climberBack.stopMotor();
-    }
-  
-    public double getGoalClimberPosition() {
-      return goalClimberPosition;
-    }
-  
-    public void setGoalCLimberPosition(double goal) {
-      goalClimberPosition = goal;
-      System.out.println("Goal Climber Position set to: " + goal);
-    }
-  
-    public double getFrontPosition() {
-      return climberFront.getSelectedSensorPosition(0);
-    }
+    climberBack.config_kF(0, 0, 10);
+    climberBack.config_kP(0, 1.5, 10);
+    climberBack.config_kI(0, 0, 10);
+    climberBack.config_kD(0, 15, 10);
 
-    public double getBackPosition() {
-      return climberBack.getSelectedSensorPosition(0);
-    }
-  
-    public void holdClimberPosition() {
-      climberFront.set(ControlMode.Position, goalClimberPosition);
-      climberBack.set(ControlMode.Position, goalClimberPosition);
-    }
+    climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+        RobotMap.DRIVE_LEFT_MASTER_TALON);
+    climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+        RobotMap.DRIVE_RIGHT_MASTER_TALON);
+  }
 
-    public void holdClimberFrontPosition() {
-      climberFront.set(ControlMode.Position, goalClimberPosition);
-    }
+  // the value in set expiration is in SECONDS not milliseconds
+  public void setClimberPosition(double pos) {
+    climberFront.set(ControlMode.Position, pos);
+    climberBack.set(ControlMode.Position, pos);
+  }
 
-    public void holdClimberBackPosition() {
-      climberBack.set(ControlMode.Position, goalClimberPosition);
-    }
+  public void setClimberSpeed(double speed) {
+    climberFront.set(speed);
+    climberBack.set(speed);
+  }
 
-    public void setClimberUp() { 
-      goalClimberPosition = CLIMBER_UP;
-    }
-    
-    public void setClimberDown() { 
-      goalClimberPosition = CLIMBER_DOWN;
-    }
-  
-    public void incrementClimber() {
-      goalClimberPosition += CLIMBER_INCREMENT;
-    }
-  
-    public void decrementClimber() {
-      goalClimberPosition -= CLIMBER_INCREMENT;
-    }
+  public void climberStop() {
+    climberFront.stopMotor();
+    climberBack.stopMotor();
+  }
 
+  public double getGoalClimberPosition() {
+    return goalClimberPosition;
+  }
+
+  public void setGoalCLimberPosition(double goal) {
+    goalClimberPosition = goal;
+    System.out.println("Goal Climber Position set to: " + goal);
+  }
+
+  public double getFrontPosition() {
+    return climberFront.getSelectedSensorPosition(0);
+  }
+
+  public double getBackPosition() {
+    return climberBack.getSelectedSensorPosition(0);
+  }
+
+  public void holdClimberPosition() {
+    climberFront.set(ControlMode.Position, goalClimberPosition);
+    climberBack.set(ControlMode.Position, goalClimberPosition);
+  }
+
+  public void holdClimberFrontPosition() {
+    climberFront.set(ControlMode.Position, goalClimberPosition);
+  }
+
+  public void holdClimberBackPosition() {
+    climberBack.set(ControlMode.Position, goalClimberPosition);
+  }
+
+  public void setClimberUp() {
+    goalClimberPosition = CLIMBER_UP;
+  }
+
+  public void setClimberDown() {
+    goalClimberPosition = CLIMBER_DOWN;
+  }
+
+  public void incrementClimber() {
+    goalClimberPosition += CLIMBER_INCREMENT;
+  }
+
+  public void decrementClimber() {
+    goalClimberPosition -= CLIMBER_INCREMENT;
+  }
 
   @Override
   public void initDefaultCommand() {
