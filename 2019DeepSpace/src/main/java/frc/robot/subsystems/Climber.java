@@ -23,9 +23,9 @@ import edu.wpi.first.wpilibj.Victor;
 
  //commented out screwback for testing purposes
 public class Climber extends Subsystem {
-  DigitalInput limitSwitch = new DigitalInput(1);
-  SpeedController armMotor = new Victor(1);
-  Counter counter = new Counter(limitSwitch);
+  //DigitalInput limitSwitch = new DigitalInput(1);
+  // SpeedController armMotor = new Victor(1);
+  //Counter counter = new Counter(limitSwitch);
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
