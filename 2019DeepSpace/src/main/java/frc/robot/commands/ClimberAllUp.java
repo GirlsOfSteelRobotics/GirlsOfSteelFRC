@@ -37,15 +37,7 @@ public class ClimberAllUp extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean isFinished = (/*Robot.climber.getGoalClimberPosition() <= Robot.climber.getFrontPosition() + 500 
-    && Robot.climber.getGoalClimberPosition() >= Robot.climber.getFrontPosition()-500)
-    && (*/Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
-    && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
-    System.out.println("isFinished: " + isFinished);
-    return (/*Robot.climber.getGoalClimberPosition() <= Robot.climber.getFrontPosition() + 500 
-      && Robot.climber.getGoalClimberPosition() >= Robot.climber.getFrontPosition()-500)
-      && (*/Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
-      && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
+    return Robot.climber.checkCurrentPosition(Robot.climber.CLIMBER_UP);
   }
 
   // Called once after isFinished returns true

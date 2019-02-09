@@ -26,7 +26,8 @@ public class ClimberToThirdUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.setClimberPosition(Robot.climber.THIRD_GOAL_POS); //TODO: figure out what pos is 
+    Robot.climber.setClimberPosition(Robot.climber.THIRD_GOAL_POS);
+    Robot.climber.checkCurrentPosition(Robot.climber.THIRD_GOAL_POS);
     
   }
 
@@ -46,5 +47,6 @@ public class ClimberToThirdUp extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

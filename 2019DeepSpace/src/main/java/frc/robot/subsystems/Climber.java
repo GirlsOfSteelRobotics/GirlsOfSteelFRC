@@ -102,6 +102,18 @@ public class Climber extends Subsystem {
     return climberBack.getSelectedSensorPosition(0);
   }
 
+  public boolean checkCurrentPosition(double goalPos){
+    boolean isFinished = (goalPos <= getFrontPosition() + 500 
+    && goalPos  >= getFrontPosition()-500)
+    && (goalPos  <= getBackPosition()+ 500 
+    && goalPos >= getBackPosition()-500);
+    System.out.println("isFinished: " + isFinished);
+    return (goalPos  <= getFrontPosition() + 500 
+      && goalPos  >= getFrontPosition()-500)
+      && (goalPos  <= getBackPosition()+ 500 
+      && goalPos  >= getBackPosition()-500);
+  }
+
   public void holdClimberPosition() {
     climberFront.set(ControlMode.Position, goalClimberPosition);
     climberBack.set(ControlMode.Position, goalClimberPosition);
@@ -130,6 +142,7 @@ public class Climber extends Subsystem {
   public void decrementClimber() {
     goalClimberPosition -= CLIMBER_INCREMENT;
   }
+
 
   @Override
   public void initDefaultCommand() {

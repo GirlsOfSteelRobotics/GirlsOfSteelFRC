@@ -34,17 +34,20 @@ public class ClimberFrontDown extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.climber.checkCurrentPosition(Robot.climber.CLIMBER_DOWN);
+
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.climber.climberStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

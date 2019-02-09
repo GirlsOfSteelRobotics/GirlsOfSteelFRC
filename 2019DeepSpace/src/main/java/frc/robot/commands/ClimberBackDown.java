@@ -35,21 +35,19 @@ public class ClimberBackDown extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean isFinished = (Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
-    && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
-    System.out.println("isFinished: " + isFinished);
-    return (Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
-      && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
+    return Robot.climber.checkCurrentPosition(Robot.climber.CLIMBER_DOWN);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.climber.climberStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }
