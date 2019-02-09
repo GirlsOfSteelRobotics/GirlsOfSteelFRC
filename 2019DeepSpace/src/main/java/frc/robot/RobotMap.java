@@ -30,8 +30,8 @@ public class RobotMap {
 
 	public static final int BABY_DRIVE_TALON = 9;
 	
-	public static final int SCREW_FRONT_TALON = 5;
-	public static final int SCREW_BACK_TALON = 10;
+	public static final int CLIMBER_FRONT_TALON = 5;
+	public static final int CLIMBER_BACK_TALON = 10;
 
 	public static final int HATCH_RELAY = 0; 
 

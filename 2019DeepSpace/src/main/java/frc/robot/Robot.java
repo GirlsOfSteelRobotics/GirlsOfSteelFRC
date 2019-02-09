@@ -10,7 +10,7 @@ public class Robot extends TimedRobot {
   public static Chassis chassis;
   public static Collector collector;
   public static Pivot pivot;
-  public static ScrewClimber screwClimber;
+  public static Climber climber;
   public static BabyDrive babyDrive;
   public static Hatch hatch;
   public static Blinkin blinkin;
@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
     collector = new Collector();
     pivot = new Pivot();
     babyDrive = new BabyDrive();
-    screwClimber = new ScrewClimber();
+    climber = new Climber();
     hatch = new Hatch();
     blinkin = new Blinkin();
     listener = new GripPipelineListener();

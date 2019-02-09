@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ScrewClimberFrontDown extends Command {
-  public ScrewClimberFrontDown() {
+public class ClimberFrontDown extends Command {
+  public ClimberFrontDown() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.screwClimber);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
@@ -25,8 +25,8 @@ public class ScrewClimberFrontDown extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.screwClimber.holdClimberFrontPosition();
-    Robot.screwClimber.decrementClimber();
+    Robot.climber.holdClimberFrontPosition();
+    Robot.climber.decrementClimber();
   }
 
   // Make this return true when this Command no longer needs to run execute()

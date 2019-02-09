@@ -10,26 +10,23 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ScrewClimberAllUp extends Command {
-  public ScrewClimberAllUp() {
+public class ClimberFrontUp extends Command {
+  public ClimberFrontUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.screwClimber);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("All Up");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.screwClimber.holdClimberPosition();
-    Robot.screwClimber.incrementClimber();
-    System.out.println("Front Position: " + Robot.screwClimber.getFrontPosition());
-    System.out.println("Back Position: " + Robot.screwClimber.getBackPosition());
+    Robot.climber.holdClimberFrontPosition();
+    Robot.climber.incrementClimber();
   }
 
   // Make this return true when this Command no longer needs to run execute()

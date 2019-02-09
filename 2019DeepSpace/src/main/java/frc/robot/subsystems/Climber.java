@@ -22,55 +22,55 @@ import edu.wpi.first.wpilibj.Victor;
  */
 
  //commented out screwback for testing purposes
-public class ScrewClimber extends Subsystem {
+public class Climber extends Subsystem {
   DigitalInput limitSwitch = new DigitalInput(1);
   SpeedController armMotor = new Victor(1);
   Counter counter = new Counter(limitSwitch);
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-    private WPI_TalonSRX screwFront; 
-    private WPI_TalonSRX screwBack; 
+    private WPI_TalonSRX climberFront; 
+    private WPI_TalonSRX climberBack; 
 
     public static final double CLIMBER_UP = 1500.0;
     public static final double CLIMBER_DOWN = 0.0;
-    public static final double CLIMBER_INCREMENT = 300.0;
+    public static final double CLIMBER_INCREMENT = 50.0;
 
     private double goalClimberPosition;
   
-    public ScrewClimber(){
-      screwFront = new WPI_TalonSRX(RobotMap.SCREW_FRONT_TALON); 
-      screwBack = new WPI_TalonSRX(RobotMap.SCREW_BACK_TALON);  
+    public Climber(){
+      climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON); 
+      climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);  
 
-      screwFront.setSensorPhase(true);
-      screwBack.setSensorPhase(true);
+      climberFront.setSensorPhase(true);
+      climberBack.setSensorPhase(true);
       
-      screwFront.config_kF(0, 0, 10);
-      screwFront.config_kP(0, 1.5, 10);
-      screwFront.config_kI(0, 0, 10);
-      screwFront.config_kD(0, 15, 10);	
+      climberFront.config_kF(0, 0, 10);
+      climberFront.config_kP(0, 1.5, 10);
+      climberFront.config_kI(0, 0, 10);
+      climberFront.config_kD(0, 15, 10);	
       
-      screwBack.config_kF(0, 0, 10);
-      screwBack.config_kP(0, 1.5, 10);
-      screwBack.config_kI(0, 0, 10);
-      screwBack.config_kD(0, 15, 10);	
+      climberBack.config_kF(0, 0, 10);
+      climberBack.config_kP(0, 1.5, 10);
+      climberBack.config_kI(0, 0, 10);
+      climberBack.config_kD(0, 15, 10);	
     }
     
  
     //the value in set expiration is in SECONDS not milliseconds
     public void setClimberPosition(double pos) {
-      screwFront.set(ControlMode.Position, pos);
-      screwBack.set(ControlMode.Position, pos);
+      climberFront.set(ControlMode.Position, pos);
+      climberBack.set(ControlMode.Position, pos);
     }
 
     public void setClimberSpeed(double speed) {
-      screwFront.set(speed);
-      screwBack.set(speed);
+      climberFront.set(speed);
+      climberBack.set(speed);
     }
 
     public void climberStop() {
-      screwFront.stopMotor(); 
-      screwBack.stopMotor();
+      climberFront.stopMotor(); 
+      climberBack.stopMotor();
     }
   
     public double getGoalClimberPosition() {
@@ -83,24 +83,24 @@ public class ScrewClimber extends Subsystem {
     }
   
     public double getFrontPosition() {
-      return screwFront.getSelectedSensorPosition(0);
+      return climberFront.getSelectedSensorPosition(0);
     }
 
     public double getBackPosition() {
-      return screwBack.getSelectedSensorPosition(0);
+      return climberBack.getSelectedSensorPosition(0);
     }
   
     public void holdClimberPosition() {
-      screwFront.set(ControlMode.Position, goalClimberPosition);
-      screwBack.set(ControlMode.Position, goalClimberPosition);
+      climberFront.set(ControlMode.Position, goalClimberPosition);
+      climberBack.set(ControlMode.Position, goalClimberPosition);
     }
 
     public void holdClimberFrontPosition() {
-      screwFront.set(ControlMode.Position, goalClimberPosition);
+      climberFront.set(ControlMode.Position, goalClimberPosition);
     }
 
     public void holdClimberBackPosition() {
-      screwBack.set(ControlMode.Position, goalClimberPosition);
+      climberBack.set(ControlMode.Position, goalClimberPosition);
     }
 
     public void setClimberUp() { 
