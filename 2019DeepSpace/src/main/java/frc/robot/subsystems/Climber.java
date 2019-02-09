@@ -39,6 +39,8 @@ public class Climber extends Subsystem {
   public static final double CLIMBER_DOWN = 0.0;
   public static final double CLIMBER_INCREMENT = 50.0;
 
+  public static final double FRONT_POSITION = 0; 
+
   public static final double FIRST_GOAL_POS = 0.0; //TOOD; adjust this value
   public static final double SECOND_GOAL_POS = 150.0; //TODO; adjust this value
   public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
@@ -136,11 +138,13 @@ public class Climber extends Subsystem {
   }
 
   public void incrementClimber() {
-    goalClimberPosition += CLIMBER_INCREMENT;
+    double frontPosition = getFrontPosition(); 
+    frontPosition += CLIMBER_INCREMENT;
   }
 
   public void decrementClimber() {
-    goalClimberPosition -= CLIMBER_INCREMENT;
+    double frontPosition = getFrontPosition(); 
+    frontPosition -= CLIMBER_INCREMENT;
   }
 
 
