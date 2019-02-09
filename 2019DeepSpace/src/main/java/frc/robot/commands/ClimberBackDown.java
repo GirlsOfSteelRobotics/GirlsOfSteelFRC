@@ -27,7 +27,7 @@ public class ClimberBackDown extends Command {
   @Override
   protected void execute() {
     Robot.climber.holdClimberBackPosition();
-    Robot.climber.decrementClimber();
+    Robot.climber.decrementBackClimber();
     System.out.println(" Back Position: " + Robot.climber.getBackPosition());
     System.out.println("Goal Position: "+ Robot.climber.getGoalClimberPosition());
   }

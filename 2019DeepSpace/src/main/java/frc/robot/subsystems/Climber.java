@@ -46,8 +46,8 @@ public class Climber extends Subsystem {
   public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
 
 
-  private double goalClimberPosition;
-
+  private double frontPosition;
+  private double backPosition;
   public Climber() {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
@@ -65,10 +65,10 @@ public class Climber extends Subsystem {
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 15, 10);
 
-    climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-        RobotMap.DRIVE_LEFT_MASTER_TALON);
-    climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-        RobotMap.DRIVE_RIGHT_MASTER_TALON);
+    //climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+        //RobotMap.DRIVE_LEFT_MASTER_TALON);
+    //climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+        //RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
 
   // the value in set expiration is in SECONDS not milliseconds
@@ -88,13 +88,12 @@ public class Climber extends Subsystem {
   }
 
   public double getGoalClimberPosition() {
-    return goalClimberPosition;
+    return 0;
   }
 
-  public void setGoalCLimberPosition(double goal) {
-    goalClimberPosition = goal;
-    System.out.println("Goal Climber Position set to: " + goal);
-  }
+  //public void setGoalCLimberPosition(double goal) {
+    //System.out.println("Goal Climber Position set to: " + goal);
+  //}
 
   public double getFrontPosition() {
     return climberFront.getSelectedSensorPosition(0);
@@ -117,36 +116,46 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberPosition() {
-    climberFront.set(ControlMode.Position, goalClimberPosition);
-    climberBack.set(ControlMode.Position, goalClimberPosition);
+    climberFront.set(ControlMode.Position, frontPosition);
+    climberBack.set(ControlMode.Position, backPosition);
   }
 
   public void holdClimberFrontPosition() {
-    climberFront.set(ControlMode.Position, goalClimberPosition);
+    climberFront.set(ControlMode.Position, frontPosition);
   }
 
   public void holdClimberBackPosition() {
-    climberBack.set(ControlMode.Position, goalClimberPosition);
+    climberBack.set(ControlMode.Position, backPosition);
   }
 
-  public void setClimberUp() {
-    goalClimberPosition = CLIMBER_UP;
-  }
 
-  public void setClimberDown() {
-    goalClimberPosition = CLIMBER_DOWN;
-  }
-
-  public void incrementClimber() {
-    double frontPosition = getFrontPosition(); 
+  public void incrementFrontClimber() {
+    frontPosition = getFrontPosition(); 
     frontPosition += CLIMBER_INCREMENT;
   }
 
-  public void decrementClimber() {
-    double frontPosition = getFrontPosition(); 
+  public void decrementFrontClimber() {
+    frontPosition = getFrontPosition(); 
     frontPosition -= CLIMBER_INCREMENT;
   }
+  public void incrementBackClimber() {
+    backPosition = getBackPosition(); 
+    backPosition += CLIMBER_INCREMENT;
+  }
 
+  public void decrementBackClimber() {
+    backPosition = getBackPosition(); 
+    backPosition -= CLIMBER_INCREMENT;
+  }
+  public void incrementAllClimber() {
+incrementFrontClimber();
+incrementBackClimber();
+  }
+
+  public void decrementAllClimber() {
+    decrementFrontClimber();
+    decrementBackClimber();
+  }
 
   @Override
   public void initDefaultCommand() {

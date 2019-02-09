@@ -26,7 +26,7 @@ public class ClimberFrontUp extends Command {
   @Override
   protected void execute() {
     Robot.climber.holdClimberFrontPosition();
-    Robot.climber.incrementClimber();
+    Robot.climber.incrementFrontClimber();
     System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
     System.out.println("Goal Position: "+ Robot.climber.getGoalClimberPosition());
   }
