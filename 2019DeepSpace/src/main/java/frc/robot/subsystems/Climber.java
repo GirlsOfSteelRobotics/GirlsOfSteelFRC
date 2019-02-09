@@ -34,16 +34,20 @@ public class Climber extends Subsystem {
 
     public static final double CLIMBER_UP = 1500.0;
     public static final double CLIMBER_DOWN = 0.0;
-    public static final double CLIMBER_INCREMENT = 50.0;
+    public static final double CLIMBER_INCREMENT = 100.0;
 
-    private double goalClimberPosition;
+    private double goalClimberPosition = 400.0;
   
     public Climber(){
+      
       climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON); 
       climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);  
 
-      climberFront.setSensorPhase(true);
-      climberBack.setSensorPhase(true);
+      System.out.println("Front Position: " + getFrontPosition() + " Back Position: " + getBackPosition());
+      System.out.println("Goal Position: "+ getGoalClimberPosition());
+
+      climberFront.setSensorPhase(false);
+      climberBack.setSensorPhase(false); 
       
       climberFront.config_kF(0, 0, 10);
       climberFront.config_kP(0, 1.5, 10);

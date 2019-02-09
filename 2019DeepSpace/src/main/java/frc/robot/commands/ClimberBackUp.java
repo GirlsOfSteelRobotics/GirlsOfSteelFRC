@@ -20,6 +20,7 @@ public class ClimberBackUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Back Up Init");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -27,12 +28,18 @@ public class ClimberBackUp extends Command {
   protected void execute() {
     Robot.climber.holdClimberBackPosition();
     Robot.climber.incrementClimber();
+    System.out.println("Back Position: " + Robot.climber.getBackPosition());
+    System.out.println("Goal Position: "+ Robot.climber.getGoalClimberPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    boolean isFinished = (Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
+    && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
+    System.out.println("isFinished: " + isFinished);
+    return (Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
+      && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
   }
 
   // Called once after isFinished returns true

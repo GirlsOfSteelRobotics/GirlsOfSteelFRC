@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//This command means that the entire robot goes DOWN
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,15 +30,22 @@ public class ClimberAllDown extends Command {
   protected void execute() {
     Robot.climber.holdClimberPosition();
     Robot.climber.decrementClimber();
-    System.out.println("Front Position: " + Robot.climber.getFrontPosition());
-    System.out.println("Back Position: " + Robot.climber.getBackPosition());
+    System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
     System.out.println("Goal Position: "+ Robot.climber.getGoalClimberPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    boolean isFinished = (/*Robot.climber.getGoalClimberPosition() <= Robot.climber.getFrontPosition() + 500 
+    && Robot.climber.getGoalClimberPosition() >= Robot.climber.getFrontPosition()-500)
+    && (*/Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
+    && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
+    System.out.println("isFinished: " + isFinished);
+    return (/*Robot.climber.getGoalClimberPosition() <= Robot.climber.getFrontPosition() + 500 
+      && Robot.climber.getGoalClimberPosition() >= Robot.climber.getFrontPosition()-500)
+      && (*/Robot.climber.getGoalClimberPosition() <= Robot.climber.getBackPosition()+ 500 
+      && Robot.climber.getGoalClimberPosition() >= Robot.climber.getBackPosition()-500);
   }
 
   // Called once after isFinished returns true
