@@ -50,8 +50,8 @@ public class Climber extends Subsystem {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
 
-    climberFront.setSensorPhase(true);
-    climberBack.setSensorPhase(true);
+    climberFront.setSensorPhase(false);
+    climberBack.setSensorPhase(false);
 
     climberFront.config_kF(0, 0, 10);
     climberFront.config_kP(0, 1.5, 10);
