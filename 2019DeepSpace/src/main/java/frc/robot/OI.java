@@ -35,6 +35,11 @@ public class OI {
 	private JoystickButton allUp;
 	private JoystickButton allDown;
 
+	private JoystickButton toSecondUp; 
+	private JoystickButton toThirdUp; 
+	private JoystickButton toSecondDown; 
+	private JoystickButton toThirdDown; 
+
 	private JoystickButton collect;
 	private JoystickButton release;
 
@@ -70,6 +75,19 @@ public class OI {
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whileHeld(new ClimberAllDown());
 
+		toSecondUp = new JoystickButton(operatingPad, 3); 
+		toSecondUp.whenPressed(new ClimberToSecondUp()); 
+
+		toThirdUp = new JoystickButton(operatingPad, 4); 
+		toThirdUp.whenPressed(new ClimberToThirdUp()); 
+
+		toSecondDown = new JoystickButton(operatingPad, 5); 
+		toSecondDown.whenPressed(new ClimberToSecondDown()); 
+
+		toThirdDown = new JoystickButton(operatingPad, 6); 
+		toThirdDown.whenPressed(new ClimberToThirdDown()); 
+
+
 		
 		// Collector buttons
 		collect = new JoystickButton(drivingPad, 9);
@@ -98,6 +116,8 @@ public class OI {
 		
 		pivotDown = new JoystickButton(operatingPad, 2);
 		pivotDown.whileHeld(new PivotDown());
+
+
 	}
 
 

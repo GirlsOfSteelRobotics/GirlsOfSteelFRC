@@ -8,29 +8,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.robot.Robot; 
 
-public class ClimberAllDown extends Command {
-  public ClimberAllDown() {
+public class ClimberToSecondUp extends Command {
+  public ClimberToSecondUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.climber);
+    requires(Robot.climber); 
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("All Down");
+    System.out.println("To second all up");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.climber.holdClimberPosition();
-    Robot.climber.decrementClimber();
-    System.out.println("Front Position: " + Robot.climber.getFrontPosition());
-    System.out.println("Back Position: " + Robot.climber.getBackPosition());
-    System.out.println("Goal Position: "+ Robot.climber.getGoalClimberPosition());
+    Robot.climber.incrementClimber();
   }
 
   // Make this return true when this Command no longer needs to run execute()
