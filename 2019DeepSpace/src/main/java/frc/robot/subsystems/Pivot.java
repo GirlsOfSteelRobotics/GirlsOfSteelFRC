@@ -25,16 +25,15 @@ public class Pivot extends Subsystem {
 	private double pivotPosition; 
 
   // TODO: tune all
-  public static final double WRIST_IN_BOUND = -60; 
-	public static final double WRIST_OUT_BOUND = -1000; 
-	public static final double WRIST_COLLECT = -930; 
-	public static final double WRIST_SWITCH = -800; 
-	public static final double WRIST_INCREMENT = 20; 
-	public static final double WRIST_SHOOT = -350;
+  public static final double PIVOT_IN_BOUND = 0; 
+	public static final double PIVOT_OUT_BOUND = 1000; 
+	public static final double PIVOT_COLLECT = -930; 
+	public static final double PIVOT_SWITCH = -800; 
+	public static final double PIVOT_INCREMENT = 50; 
+	public static final double PIVOT_SHOOT = -350;
   
   public Pivot() {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
-
 		pivot.setSensorPhase(true);
 		setupPivotFPID();
 		LiveWindow.add(pivot);
@@ -73,10 +72,10 @@ public class Pivot extends Subsystem {
   }
 
   public void wristIn(){
-    double goalPosition = goalPivotPosition + WRIST_INCREMENT;
-		if (goalPosition >= WRIST_IN_BOUND)
+    double goalPosition = goalPivotPosition + PIVOT_INCREMENT;
+		if (goalPosition >= PIVOT_IN_BOUND)
 		{
-			goalPivotPosition = WRIST_IN_BOUND;
+			goalPivotPosition = PIVOT_IN_BOUND;
 		}
 		else
 		{
@@ -87,9 +86,9 @@ public class Pivot extends Subsystem {
 
   public void pivotOut()
 	{
-		double goalPosition = goalPivotPosition - WRIST_INCREMENT;
-		if (goalPosition <= WRIST_OUT_BOUND) {
-			goalPivotPosition = WRIST_OUT_BOUND;
+		double goalPosition = goalPivotPosition - PIVOT_INCREMENT;
+		if (goalPosition <= PIVOT_OUT_BOUND) {
+			goalPivotPosition = PIVOT_OUT_BOUND;
 		}	else {
 			goalPivotPosition = goalPosition;
     }
@@ -107,11 +106,18 @@ public class Pivot extends Subsystem {
 
 	public void incrementPivot () {
 		pivotPosition = getPivotPosition(); 
-		pivotPosition += WRIST_INCREMENT; // TODO: Adjust
+		pivotPosition += PIVOT_INCREMENT; // TODO: Adjust
 	}
 
 	public void decrementPivot () {
 		pivotPosition = getPivotPosition(); 
-		pivotPosition -= WRIST_INCREMENT; //TODO: Adjust
+		pivotPosition -= PIVOT_INCREMENT; //TODO: Adjust
+	}
+
+	public boolean checkCurrentPivotPosition(double goalPos) {
+		boolean isFinished = (goalPos <= getPivotPosition() + 500 
+    && goalPos  >= getPivotPosition()-500);
+    System.out.println("isFinished: " + isFinished);
+    return isFinished;
 	}
 }
