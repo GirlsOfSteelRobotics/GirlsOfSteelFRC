@@ -25,13 +25,13 @@ public class PivotUp extends Command {
   @Override
   protected void execute() {
     Robot.pivot.holdPivotPosition();
-    Robot.pivot.pivotIn();
+    Robot.pivot.incrementPivot();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.pivot.checkCurrentPivotPosition(Robot.pivot.PIVOT_IN_BOUND);
+    return Robot.pivot.checkCurrentPivotPosition(Robot.pivot.PIVOT_IN);
   }
 
   // Called once after isFinished returns true

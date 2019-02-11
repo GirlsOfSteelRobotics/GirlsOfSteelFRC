@@ -7,10 +7,11 @@
 
 package frc.robot.commands;
 import frc.robot.Robot;
+import frc.robot.subsystems.Pivot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PivotDown extends Command {
-  public PivotDown() {
+public class PivotToRocket extends Command {
+  public PivotToRocket() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.pivot);
@@ -19,19 +20,19 @@ public class PivotDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.pivot.setGoalPivotPosition(Robot.pivot.PIVOT_ROCKET);
+    System.out.println("PivotToRocket Initialized");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pivot.holdPivotPosition();
-    Robot.pivot.decrementPivot();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.pivot.checkCurrentPivotPosition(Robot.pivot.PIVOT_IN);
+    return true;
   }
 
   // Called once after isFinished returns true
@@ -43,6 +44,5 @@ public class PivotDown extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
