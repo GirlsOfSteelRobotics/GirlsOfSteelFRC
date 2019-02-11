@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -31,6 +31,9 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
+  private DigitalInput backLimitSwitch;
+  private DigitalInput frontLimitSwitch;
+
   public static final double CLIMBER_UP = 1500.0;
   public static final double CLIMBER_DOWN = 0.0;
   public static final double CLIMBER_INCREMENT = 50.0;
@@ -47,6 +50,9 @@ public class Climber extends Subsystem {
   public Climber() {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
+
+    //frontLimitSwitch = new DigitalInput(RobotMap.FRONT_LIMIT_SWITCH);
+    //backLimitSwitch = new DigitalInput(RobotMap.BACK_LIMIT_SWITCH);
 
     climberFront.setSensorPhase(false);
     climberBack.setSensorPhase(false);

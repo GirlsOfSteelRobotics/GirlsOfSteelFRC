@@ -43,6 +43,8 @@ public class RobotMap {
 
 	public static final int VISION_CAMERA = 0; 
 
+	public static final int FRONT_LIMIT_SWITCH = 1;
+	public static final int BACK_LIMIT_SWITCH = 0;
 
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
