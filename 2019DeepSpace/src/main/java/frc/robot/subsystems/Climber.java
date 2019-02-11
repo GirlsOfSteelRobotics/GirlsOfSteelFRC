@@ -45,9 +45,9 @@ public class Climber extends Subsystem {
   public static final double SECOND_GOAL_POS = 150.0; //TODO; adjust this value
   public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
 
-
   private double frontPosition;
   private double backPosition;
+
   public Climber() {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
@@ -65,10 +65,10 @@ public class Climber extends Subsystem {
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 15, 10);
 
-    //climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-        //RobotMap.DRIVE_LEFT_MASTER_TALON);
-    //climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-        //RobotMap.DRIVE_RIGHT_MASTER_TALON);
+    climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+        RobotMap.DRIVE_LEFT_MASTER_TALON);
+    climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+        RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
 
   // the value in set expiration is in SECONDS not milliseconds
@@ -86,14 +86,6 @@ public class Climber extends Subsystem {
     climberFront.stopMotor();
     climberBack.stopMotor();
   }
-
-  public double getGoalClimberPosition() {
-    return 0;
-  }
-
-  //public void setGoalCLimberPosition(double goal) {
-    //System.out.println("Goal Climber Position set to: " + goal);
-  //}
 
   public double getFrontPosition() {
     return climberFront.getSelectedSensorPosition(0);
@@ -127,8 +119,7 @@ public class Climber extends Subsystem {
   public void holdClimberBackPosition() {
     climberBack.set(ControlMode.Position, backPosition);
   }
-
-
+  
   public void incrementFrontClimber() {
     frontPosition = getFrontPosition(); 
     frontPosition += CLIMBER_INCREMENT;
@@ -148,8 +139,8 @@ public class Climber extends Subsystem {
     backPosition -= CLIMBER_INCREMENT;
   }
   public void incrementAllClimber() {
-incrementFrontClimber();
-incrementBackClimber();
+    incrementFrontClimber();
+    incrementBackClimber();
   }
 
   public void decrementAllClimber() {

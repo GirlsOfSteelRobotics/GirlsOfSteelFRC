@@ -29,7 +29,6 @@ public class ClimberBackUp extends Command {
     Robot.climber.holdClimberBackPosition();
     Robot.climber.incrementBackClimber();
     System.out.println("Back Position: " + Robot.climber.getBackPosition());
-    System.out.println("Goal Position: "+ Robot.climber.getGoalClimberPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()
