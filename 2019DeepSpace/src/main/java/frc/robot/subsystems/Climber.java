@@ -15,10 +15,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Victor;
 
 /**
  * Add your docs here.
@@ -101,10 +97,7 @@ public class Climber extends Subsystem {
     && (goalPos  <= getBackPosition()+ 500 
     && goalPos >= getBackPosition()-500);
     System.out.println("isFinished: " + isFinished);
-    return (goalPos  <= getFrontPosition() + 500 
-      && goalPos  >= getFrontPosition()-500)
-      && (goalPos  <= getBackPosition()+ 500 
-      && goalPos  >= getBackPosition()-500);
+    return isFinished;
   }
 
   public void holdClimberPosition() {
