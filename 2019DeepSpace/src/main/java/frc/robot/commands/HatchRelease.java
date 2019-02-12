@@ -41,6 +41,6 @@ public class HatchRelease extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-System.out.println("end hatch release");
+    System.out.println("end hatch release");
   }
 }
