@@ -23,7 +23,7 @@ public class HatchRelease extends Command {
   protected void initialize() {
     Robot.hatch.release();
     Robot.blinkin.setLightPattern(LightPattern.HATCH_RELEASE);
-    System.out.println("hatch release");
+    System.out.println("init hatch release");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -35,19 +35,12 @@ public class HatchRelease extends Command {
   @Override
   protected boolean isFinished() {
     Robot.blinkin.setLightPattern(LightPattern.TELEOP_DEFAULT);
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    end();
+System.out.println("end hatch release");
   }
 }
