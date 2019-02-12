@@ -100,8 +100,7 @@ public class Pivot extends Subsystem {
 	}
 	
 	public double getPivotPosition() {
-		pivotPosition = pivot.getSelectedSensorPosition(0);
-		return pivotPosition; 
+		return pivot.getSelectedSensorPosition(0);
 	}
 
 	public void incrementPivot () {
