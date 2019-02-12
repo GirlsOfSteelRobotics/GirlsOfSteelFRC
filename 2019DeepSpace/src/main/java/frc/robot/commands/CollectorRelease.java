@@ -10,8 +10,8 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Collect extends Command {
-  public Collect() {
+public class CollectorRelease extends Command {
+  public CollectorRelease() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.collector); 
@@ -20,12 +20,13 @@ public class Collect extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("init CollectorRelease");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.collector.collect();
+    Robot.collector.release();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -38,12 +39,8 @@ public class Collect extends Command {
   @Override
   protected void end() {
     Robot.collector.stop();
+    System.out.println("end CollectorRelease");
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    end();
-  }
+
 }
