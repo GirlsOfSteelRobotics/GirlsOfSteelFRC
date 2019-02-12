@@ -25,7 +25,7 @@ public class PivotUp extends Command {
   @Override
   protected void execute() {
     Robot.pivot.holdPivotPosition();
-    Robot.pivot.wristIn();
+    Robot.pivot.pivotIn();
   }
 
   // Make this return true when this Command no longer needs to run execute()

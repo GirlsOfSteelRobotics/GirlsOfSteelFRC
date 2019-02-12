@@ -25,12 +25,12 @@ public class Pivot extends Subsystem {
 	private double pivotPosition; 
 
   // TODO: tune all
-  public static final double PIVOT_IN_BOUND = 0; 
-	public static final double PIVOT_OUT_BOUND = 1000; 
-	public static final double PIVOT_COLLECT = -930; 
-	public static final double PIVOT_SWITCH = -800; 
+  public static final double PIVOT_IN = 0; 
+	public static final double PIVOT_OUT = 1000; 
 	public static final double PIVOT_INCREMENT = 50; 
-	public static final double PIVOT_SHOOT = -350;
+	public static final double PIVOT_GROUND = -930; 
+	public static final double PIVOT_ROCKET = -800; 
+	public static final double PIVOT_CARGO = -350;
   
   public Pivot() {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
@@ -54,45 +54,26 @@ public class Pivot extends Subsystem {
 		pivot.config_kD(0, 15, 10);	
   }
 
-  public void setPivotSpeed(double speed){
-    pivot.set(speed); 
-  }
 
   public void setPivotPosition(double pos){
     pivot.set(ControlMode.Position, pos); 
-
   }
 
-  public void pivotStop(){
-    pivot.stopMotor(); 
-  }
 
   public void holdPivotPosition(){
     pivot.set(ControlMode.Position, goalPivotPosition); 
   }
 
-  public void wristIn(){
-    double goalPosition = goalPivotPosition + PIVOT_INCREMENT;
-		if (goalPosition >= PIVOT_IN_BOUND)
-		{
-			goalPivotPosition = PIVOT_IN_BOUND;
-		}
-		else
-		{
-			goalPivotPosition = goalPosition;
-		}
-
+  public void pivotToGround(){
+		pivot.set(ControlMode.Position, PIVOT_GROUND); 
   }
 
-  public void pivotOut()
-	{
-		double goalPosition = goalPivotPosition - PIVOT_INCREMENT;
-		if (goalPosition <= PIVOT_OUT_BOUND) {
-			goalPivotPosition = PIVOT_OUT_BOUND;
-		}	else {
-			goalPivotPosition = goalPosition;
-    }
-    
+  public void pivotToRocket(){
+		pivot.set(ControlMode.Position, PIVOT_ROCKET); 
+	}
+	
+	public void pivotToCargo(){
+		pivot.set(ControlMode.Position, PIVOT_CARGO); 
   }
 	
 	public void setGoalPivotPosition(double goal) {
@@ -119,4 +100,9 @@ public class Pivot extends Subsystem {
     System.out.println("isFinished: " + isFinished);
     return isFinished;
 	}
+
+	public void pivotStop(){
+		pivot.stopMotor(); 
+	}	
 }
+
