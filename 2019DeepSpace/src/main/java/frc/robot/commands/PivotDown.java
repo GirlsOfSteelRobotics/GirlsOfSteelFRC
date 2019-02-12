@@ -19,7 +19,8 @@ public class PivotDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("pivot down init");
+    System.out.println("init PivotDown");
+
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,6 +41,7 @@ public class PivotDown extends Command {
   @Override
   protected void end() {
     Robot.pivot.pivotStop();
+    System.out.println("end PivotDown");
   }
 
   // Called when another command which requires one or more of the same

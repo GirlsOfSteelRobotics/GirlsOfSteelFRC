@@ -21,7 +21,7 @@ public class PivotToGround extends Command {
   @Override
   protected void initialize() {
     Robot.pivot.setGoalPivotPosition(Robot.pivot.PIVOT_GROUND);
-    System.out.println("PivotToGround initialized");
+    System.out.println("init PivotToGround"); 
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,7 +38,9 @@ public class PivotToGround extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    
     Robot.pivot.pivotStop();
+    System.out.println("end PivotToGround");
   }
 
   // Called when another command which requires one or more of the same
