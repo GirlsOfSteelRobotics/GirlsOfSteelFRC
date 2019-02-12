@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+// negative encoder ticks is down
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;

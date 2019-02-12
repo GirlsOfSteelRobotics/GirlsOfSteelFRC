@@ -21,16 +21,15 @@ public class Pivot extends Subsystem {
   // here. Call these from Commands.
 
   private WPI_TalonSRX pivot; 
-	private double goalPivotPosition; 
-	private double pivotPosition; 
+	private double goalPivotPosition;
 
   // TODO: tune all
   public static final double PIVOT_IN = 0; 
 	public static final double PIVOT_OUT = 1000; 
-	public static final double PIVOT_INCREMENT = 50; 
-	public static final double PIVOT_GROUND = -930; 
-	public static final double PIVOT_ROCKET = -800; 
-	public static final double PIVOT_CARGO = -350;
+	public static final double PIVOT_INCREMENT = 150; 
+	public static final double PIVOT_GROUND = -4500; //good estimate
+	public static final double PIVOT_ROCKET = -3500; //good estimate 
+	public static final double PIVOT_CARGO = -350; //need to figure out
   
   public Pivot() {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
@@ -61,7 +60,8 @@ public class Pivot extends Subsystem {
 
 
   public void holdPivotPosition(){
-    pivot.set(ControlMode.Position, goalPivotPosition); 
+		pivot.set(ControlMode.Position, goalPivotPosition); 
+		System.out.println("goal position" + goalPivotPosition +  "actual position " + pivot.getSelectedSensorPosition(0));
   }
 
   public void pivotToGround(){
@@ -85,18 +85,18 @@ public class Pivot extends Subsystem {
 	}
 
 	public void incrementPivot () {
-		pivotPosition = getPivotPosition(); 
-		pivotPosition += PIVOT_INCREMENT; // TODO: Adjust
+		goalPivotPosition = getPivotPosition(); 
+		goalPivotPosition += PIVOT_INCREMENT; // TODO: Adjust
 	}
 
 	public void decrementPivot () {
-		pivotPosition = getPivotPosition(); 
-		pivotPosition -= PIVOT_INCREMENT; //TODO: Adjust
+		goalPivotPosition = getPivotPosition(); 
+		goalPivotPosition -= PIVOT_INCREMENT; //TODO: Adjust
 	}
 
 	public boolean checkCurrentPivotPosition(double goalPos) {
-		boolean isFinished = (goalPos <= getPivotPosition() + 500 
-    && goalPos  >= getPivotPosition()-500);
+		boolean isFinished = (goalPos <= getPivotPosition() + 100 
+    && goalPos  >= getPivotPosition()-100);
     System.out.println("isFinished: " + isFinished);
     return isFinished;
 	}
