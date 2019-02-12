@@ -40,10 +40,12 @@ public class Climber extends Subsystem {
   public static final double CLIMBER_INCREMENT = 50.0;
 
   public static final double FRONT_POSITION = 0; 
+  public static final double BACK_POSITION = 0;
 
   public static final double FIRST_GOAL_POS = 0.0; //TOOD; adjust this value
   public static final double SECOND_GOAL_POS = 150.0; //TODO; adjust this value
   public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
+
 
   private double frontPosition;
   private double backPosition;
@@ -96,6 +98,18 @@ public class Climber extends Subsystem {
 
   public double getBackPosition() {
     return climberBack.getSelectedSensorPosition(0);
+  }
+
+  public boolean checkCurrentFrontPosition(double goalFrontPos){
+    boolean isFinished = (goalFrontPos <= getFrontPosition() + 200 && goalFrontPos >= getFrontPosition()-200);
+    System.out.println("front positon check isFinished " + isFinished);
+    return isFinished;
+  }
+
+  public boolean checkCurrentBackPosition(double goalBackPos){
+    boolean isFinished = (goalBackPos <= getBackPosition() + 200 && goalBackPos >= getBackPosition()-200);
+    System.out.println("back position check isFinished " + isFinished);
+    return isFinished;
   }
 
   public boolean checkCurrentPosition(double goalPos){
