@@ -21,7 +21,8 @@ public class Pivot extends Subsystem {
   // here. Call these from Commands.
 
   private WPI_TalonSRX pivot; 
-  private double goalPivotPosition; 
+	private double goalPivotPosition; 
+	private double pivotPosition; 
 
   // TODO: tune all
   public static final double WRIST_IN_BOUND = -60; 
@@ -100,14 +101,17 @@ public class Pivot extends Subsystem {
 	}
 	
 	public double getPivotPosition() {
-		return pivot.getSelectedSensorPosition(0);
+		pivotPosition = pivot.getSelectedSensorPosition(0);
+		return pivotPosition; 
 	}
 
 	public void incrementPivot () {
-		goalPivotPosition += WRIST_INCREMENT; // TODO: Adjust
+		pivotPosition = getPivotPosition(); 
+		pivotPosition += WRIST_INCREMENT; // TODO: Adjust
 	}
 
 	public void decrementPivot () {
-		goalPivotPosition -= WRIST_INCREMENT; //TODO: Adjust
+		pivotPosition = getPivotPosition(); 
+		pivotPosition -= WRIST_INCREMENT; //TODO: Adjust
 	}
 }
