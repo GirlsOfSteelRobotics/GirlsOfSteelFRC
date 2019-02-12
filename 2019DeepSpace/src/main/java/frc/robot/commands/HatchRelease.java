@@ -35,7 +35,7 @@ public class HatchRelease extends Command {
   @Override
   protected boolean isFinished() {
     Robot.blinkin.setLightPattern(LightPattern.TELEOP_DEFAULT);
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
