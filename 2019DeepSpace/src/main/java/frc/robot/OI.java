@@ -94,7 +94,7 @@ public class OI {
 		
 		// Collector buttons
 		collect = new JoystickButton(drivingPad, 9);
-		collect.whileHeld(new CollectorCosllect());
+		collect.whileHeld(new CollectorCollect());
 
 		release = new JoystickButton(drivingPad, 10);
 		release.whileHeld(new CollectorRelease());
