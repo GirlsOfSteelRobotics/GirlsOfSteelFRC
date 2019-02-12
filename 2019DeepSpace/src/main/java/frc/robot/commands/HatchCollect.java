@@ -10,6 +10,7 @@ package frc.robot.commands;
 import frc.robot.Robot; 
 import edu.wpi.first.wpilibj.command.Command;
 
+
 public class HatchCollect extends Command {
   public HatchCollect() {
     // Use requires() here to declare subsystem dependencies
@@ -21,7 +22,7 @@ public class HatchCollect extends Command {
   @Override
   protected void initialize() {
     Robot.hatch.collect();
-    System.out.println("hatch collect");
+    System.out.println("init hatch collect");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,13 +39,6 @@ public class HatchCollect extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    end();
+    System.out.println("end hatch collect");
   }
 }
