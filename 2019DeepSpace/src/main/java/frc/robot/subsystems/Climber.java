@@ -68,10 +68,10 @@ public class Climber extends Subsystem {
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 15, 10);
 
-    climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-        RobotMap.DRIVE_LEFT_MASTER_TALON);
-    climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-        RobotMap.DRIVE_RIGHT_MASTER_TALON);
+    // climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+    //     RobotMap.DRIVE_LEFT_MASTER_TALON);
+    // climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+    //     RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
 
   // the value in set expiration is in SECONDS not milliseconds
