@@ -9,7 +9,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -75,8 +74,8 @@ public class Climber extends Subsystem {
     // climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
     //     RobotMap.DRIVE_RIGHT_MASTER_TALON);
 
-      climberFront.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
-        RobotMap.DRIVE_LEFT_MASTER_TALON);
+    climberFront.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
+      RobotMap.DRIVE_LEFT_MASTER_TALON);
     climberBack.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
        RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
@@ -107,13 +106,13 @@ public class Climber extends Subsystem {
 
   public boolean checkCurrentFrontPosition(double goalFrontPos){
     boolean isFinished = (goalFrontPos <= getFrontPosition() + CLIMBER_TOLERANCE && goalFrontPos >= getFrontPosition()- CLIMBER_TOLERANCE);
-    System.out.println("front positon check isFinished " + isFinished);
+    System.out.println("climber front positon check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentBackPosition(double goalBackPos){
     boolean isFinished = (goalBackPos <= getBackPosition() + CLIMBER_TOLERANCE && goalBackPos >= getBackPosition() - CLIMBER_TOLERANCE);
-    System.out.println("back position check isFinished " + isFinished);
+    System.out.println("climber back position check isFinished " + isFinished);
     return isFinished;
   }
 
@@ -122,7 +121,7 @@ public class Climber extends Subsystem {
       && goalPos  >= getFrontPosition() - CLIMBER_TOLERANCE)
       && (goalPos  <= getBackPosition() + CLIMBER_TOLERANCE 
       && goalPos >= getBackPosition() - CLIMBER_TOLERANCE);
-    System.out.println("isFinished: " + isFinished);
+    System.out.println("climber isFinished: " + isFinished);
     return isFinished;
   }
 
