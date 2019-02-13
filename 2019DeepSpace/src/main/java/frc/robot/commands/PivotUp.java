@@ -28,7 +28,7 @@ public class PivotUp extends Command {
   protected void execute() {
     Robot.pivot.holdPivotPosition();
     Robot.pivot.incrementPivot();
-    System.out.println("pivot execute");
+    System.out.println("execute PivotUp");
   }
 
   // Make this return true when this Command no longer needs to run execute()
