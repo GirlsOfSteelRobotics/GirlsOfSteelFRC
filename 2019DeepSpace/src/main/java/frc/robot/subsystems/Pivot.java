@@ -62,7 +62,7 @@ public class Pivot extends Subsystem {
 
   public void holdPivotPosition(){
 		pivot.set(ControlMode.Position, goalPivotPosition); 
-		System.out.println("goal position" + goalPivotPosition +  "actual position " + pivot.getSelectedSensorPosition(0));
+		//System.out.println("Pivot goal position" + goalPivotPosition +  "actual position " + pivot.getSelectedSensorPosition(0));
   }
 
   public void pivotToGround(){
@@ -98,7 +98,7 @@ public class Pivot extends Subsystem {
 	public boolean checkCurrentPivotPosition(double goalPos) {
 		boolean isFinished = (goalPos <= getPivotPosition() + PIVOT_TOLERANCE 
     && goalPos  >= getPivotPosition() - PIVOT_TOLERANCE);
-    System.out.println("isFinished: " + isFinished);
+    //System.out.println("isFinished: " + isFinished);
     return isFinished;
 	}
 

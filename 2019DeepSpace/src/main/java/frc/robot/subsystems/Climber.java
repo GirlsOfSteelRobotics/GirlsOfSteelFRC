@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -32,14 +33,11 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
-  private DigitalInput backLimitSwitch;
-  private DigitalInput frontLimitSwitch;
-
   public static final double CLIMBER_UP = 1500.0;
   public static final double CLIMBER_DOWN = 0.0;
-  public static final double CLIMBER_INCREMENT = 50.0;
+  public static final double CLIMBER_INCREMENT = -150;
 
-  public static final double CLIMBER_TOLERANCE = 200.0;
+  public static final double CLIMBER_TOLERANCE = 100;
 
   public static final double FRONT_POSITION = 0; 
   public static final double BACK_POSITION = 0;
@@ -56,9 +54,6 @@ public class Climber extends Subsystem {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
 
-    //frontLimitSwitch = new DigitalInput(RobotMap.FRONT_LIMIT_SWITCH);
-    //backLimitSwitch = new DigitalInput(RobotMap.BACK_LIMIT_SWITCH);
-
     climberFront.setSensorPhase(false);
     climberBack.setSensorPhase(false);
 
@@ -72,10 +67,18 @@ public class Climber extends Subsystem {
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 15, 10);
 
+    climberFront.setNeutralMode(NeutralMode.Brake);
+    climberBack.setNeutralMode(NeutralMode.Brake);
+
     // climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
     //     RobotMap.DRIVE_LEFT_MASTER_TALON);
     // climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
     //     RobotMap.DRIVE_RIGHT_MASTER_TALON);
+
+      climberFront.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
+        RobotMap.DRIVE_LEFT_MASTER_TALON);
+    climberBack.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
+       RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
 
   // the value in set expiration is in SECONDS not milliseconds
@@ -116,9 +119,9 @@ public class Climber extends Subsystem {
 
   public boolean checkCurrentPosition(double goalPos){
     boolean isFinished = (goalPos <= getFrontPosition() + 500 
-    && goalPos  >= getFrontPosition()-500)
-    && (goalPos  <= getBackPosition()+ 500 
-    && goalPos >= getBackPosition()-500);
+      && goalPos  >= getFrontPosition() - CLIMBER_TOLERANCE)
+      && (goalPos  <= getBackPosition() + CLIMBER_TOLERANCE 
+      && goalPos >= getBackPosition() - CLIMBER_TOLERANCE);
     System.out.println("isFinished: " + isFinished);
     return isFinished;
   }
@@ -166,6 +169,7 @@ public class Climber extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
