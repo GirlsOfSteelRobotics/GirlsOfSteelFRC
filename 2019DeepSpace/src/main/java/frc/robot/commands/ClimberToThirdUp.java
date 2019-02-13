@@ -20,13 +20,13 @@ public class ClimberToThirdUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Climber to third all up");
+    System.out.println("init Climber to third all up");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.setClimberPosition(Robot.climber.THIRD_GOAL_POS);
+    Robot.climber.setGoalClimberPosition(Robot.climber.THIRD_GOAL_POS);
     Robot.climber.checkCurrentPosition(Robot.climber.THIRD_GOAL_POS);
     
   }
@@ -41,6 +41,8 @@ public class ClimberToThirdUp extends Command {
   @Override
   protected void end() {
     Robot.climber.climberStop(); 
+    System.out.println("end Climber to third all up");
+
   }
 
   

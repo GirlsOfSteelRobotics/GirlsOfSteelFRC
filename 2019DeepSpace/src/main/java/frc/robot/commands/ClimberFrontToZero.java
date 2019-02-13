@@ -20,13 +20,15 @@ public class ClimberFrontToZero extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.climber.setGoalClimberPosition(Robot.climber.FRONT_POSITION);
+    System.out.println("init Climber Front To Zero");
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.climber.holdClimberFrontPosition();
-    Robot.climber.decrementFrontClimber();
     System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
   }
 
@@ -40,6 +42,8 @@ public class ClimberFrontToZero extends Command {
   @Override
   protected void end() {
     Robot.climber.climberStop();
+    System.out.println("end Climber Front To Zero");
+
   }
 
 }
