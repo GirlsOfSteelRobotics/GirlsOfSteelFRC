@@ -20,6 +20,8 @@ public class ClimberFrontDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("init Climber Front Down");
+
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -41,6 +43,8 @@ public class ClimberFrontDown extends Command {
   @Override
   protected void end() {
     Robot.climber.climberStop();
+    System.out.println("end Climber Front Down");
+
   }
 
 }

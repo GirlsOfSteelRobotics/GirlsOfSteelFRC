@@ -22,7 +22,7 @@ public class ClimberAllDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("All Down");
+    System.out.println("init All Down");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,12 +43,9 @@ public class ClimberAllDown extends Command {
   @Override
   protected void end() {
     Robot.climber.climberStop(); 
+    System.out.println("end All Down");
+
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    end();
-  }
+ 
 }

@@ -79,7 +79,7 @@ public class Climber extends Subsystem {
   }
 
   // the value in set expiration is in SECONDS not milliseconds
-  public void setClimberPosition(double pos) {
+  public void setGoalClimberPosition(double pos) {
     climberFront.set(ControlMode.Position, pos);
     climberBack.set(ControlMode.Position, pos);
   }
