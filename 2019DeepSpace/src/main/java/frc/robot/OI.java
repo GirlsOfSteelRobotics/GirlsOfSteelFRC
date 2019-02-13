@@ -37,11 +37,12 @@ public class OI {
 
 	private JoystickButton toSecondUp; 
 	private JoystickButton toThirdUp; 
-	private JoystickButton toSecondDown; 
-	private JoystickButton toThirdDown; 
 
 	private JoystickButton collect;
 	private JoystickButton release;
+
+	private JoystickButton frontToZero;
+	private JoystickButton backToZero;
 
 	private JoystickButton hatchCollect;
 	private JoystickButton hatchRelease;
@@ -78,20 +79,19 @@ public class OI {
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whileHeld(new ClimberAllDown());
 
-		toSecondUp = new JoystickButton(operatingPad, 3); 
-		toSecondUp.whenPressed(new ClimberToSecondUp()); 
-
-		toThirdUp = new JoystickButton(operatingPad, 4); 
-		toThirdUp.whenPressed(new ClimberToThirdUp()); 
-
-		toSecondDown = new JoystickButton(operatingPad, 5); 
-		toSecondDown.whenPressed(new ClimberToSecondDown()); 
-
-		toThirdDown = new JoystickButton(operatingPad, 6); 
-		toThirdDown.whenPressed(new ClimberToThirdDown()); 
-
-
+	
+		backToZero = new JoystickButton(drivingPad, 3);
+		backToZero.whileHeld(new ClimberBackToZero());
 		
+		frontToZero = new JoystickButton(drivingPad, 4);
+		frontToZero.whileHeld(new ClimberFrontToZero());
+
+		toSecondUp = new JoystickButton(drivingPad, 5);
+		toSecondUp.whileHeld(new ClimberToSecondUp());
+
+		toThirdUp = new JoystickButton(drivingPad, 6);
+		toThirdUp.whileHeld(new ClimberToThirdUp());
+	
 		// Collector buttons
 		collect = new JoystickButton(drivingPad, 9);
 		collect.whileHeld(new CollectorCollect());
