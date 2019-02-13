@@ -9,7 +9,7 @@ public class Blinkin extends Subsystem {
     private Spark rightLightController;
 
     private static final double CONFETTI = -0.87;
-    private static final double RED = -0.85;
+    private static final double RAINBOW_WITH_GLITTER = -0.89;
     private static final double SOLID_GREEN = 0.77;
 
     public enum LightPattern {
@@ -18,20 +18,22 @@ public class Blinkin extends Subsystem {
 
     public Blinkin() {
         try {
-            rightLightController = new Spark(RobotMap.LED_LEFT_PORT);
+            rightLightController = new Spark(RobotMap.BLINKIN_RIGHT_PWM);
             System.out.println("Right Light Controller"); // this never gets made no matter what
         } catch (Exception e) {
-            System.out.println("No blink-in in " + RobotMap.LED_LEFT_PORT + ", error: " + e);
+            System.out.println("No blink-in in " + RobotMap.BLINKIN_RIGHT_PWM + ", error: " + e);
             rightLightController = null; 
         }
 
         try {
-            leftLightController = new Spark(RobotMap.LED_RIGHT_PORT);
+            leftLightController = new Spark(RobotMap.BLINKIN_LEFT_PWM);
             System.out.println("Left Light Controller");
         } catch (Exception e) {
-            System.out.println("No blink-in in " + RobotMap.LED_RIGHT_PORT + ", error: " + e);
+            System.out.println("No blink-in in " + RobotMap.BLINKIN_LEFT_PWM + ", error: " + e);
             leftLightController = null;
         }
+
+ 
     }
 
     // Put methods for controlling this subsystem
@@ -43,20 +45,24 @@ public class Blinkin extends Subsystem {
     }
 
     public void setLightPattern(LightPattern pattern) {
-        System.out.println("Setting patttern to: " + pattern);
         switch (pattern) {
         case AUTO_DEFAULT:
-            leftLightController.set(CONFETTI);
-            rightLightController.set(CONFETTI);
+            if (leftLightController != null)
+                leftLightController.set(CONFETTI);
+            if (rightLightController != null)
+                rightLightController.set(CONFETTI);
             break;
         case TELEOP_DEFAULT:
-            leftLightController.set(RED);
-            rightLightController.set(RED);
+            if (leftLightController != null)
+                leftLightController.set(RAINBOW_WITH_GLITTER);
+            if (rightLightController != null)
+                rightLightController.set(RAINBOW_WITH_GLITTER);
             break;
         case HATCH_RELEASE:
-            leftLightController.set(SOLID_GREEN);
-            rightLightController.set(SOLID_GREEN);
-            System.out.println("reset color");
+            if (leftLightController != null)
+                leftLightController.set(SOLID_GREEN);
+            if (rightLightController != null)
+                rightLightController.set(SOLID_GREEN);
             break;
         default:
             break;
