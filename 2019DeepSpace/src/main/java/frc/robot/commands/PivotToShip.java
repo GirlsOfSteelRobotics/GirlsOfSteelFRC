@@ -15,13 +15,14 @@ public class PivotToShip extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.pivot);
+  
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.pivot.setGoalPivotPosition(Pivot.PIVOT_CARGO);
-    System.out.println("PivotToShip initialized");
+    System.out.println("init PivotToShip");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,6 +40,8 @@ public class PivotToShip extends Command {
   @Override
   protected void end() {
     Robot.pivot.pivotStop();
+    System.out.println("end PivotToShip");
+
   }
 
   // Called when another command which requires one or more of the same
