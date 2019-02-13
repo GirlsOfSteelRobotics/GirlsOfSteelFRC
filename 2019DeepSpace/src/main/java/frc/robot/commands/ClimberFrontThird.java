@@ -10,41 +10,40 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot; 
 
-public class ClimberToSecondUp extends Command {
-  public ClimberToSecondUp() {
+public class ClimberFrontThird extends Command {
+  public ClimberFrontThird() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.climber); 
-
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.climber.setGoalClimberPosition(Robot.climber.SECOND_GOAL_POS);
-    System.out.println("init Climber To Second Up");
+    System.out.println("init Climber to third all up");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.holdClimberPosition();
-
+    Robot.climber.setGoalClimberPosition(Robot.climber.THIRD_GOAL_POS);
+    Robot.climber.checkCurrentFrontPosition(Robot.climber.THIRD_GOAL_POS);
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.climber.checkCurrentPosition(Robot.climber.SECOND_GOAL_POS);
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.climber.climberStop(); 
-    System.out.println("end Climber To Second Up");
+    System.out.println("end Climber to third all up");
 
   }
 
- 
+  
 }
