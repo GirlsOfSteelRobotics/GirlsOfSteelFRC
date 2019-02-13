@@ -30,6 +30,7 @@ public class Pivot extends Subsystem {
 	public static final double PIVOT_GROUND = -4500; //good estimate
 	public static final double PIVOT_ROCKET = -3500; //good estimate 
 	public static final double PIVOT_CARGO = -350; //need to figure out
+	public static final double PIVOT_TOLERANCE = 100;
   
   public Pivot() {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
@@ -95,8 +96,8 @@ public class Pivot extends Subsystem {
 	}
 
 	public boolean checkCurrentPivotPosition(double goalPos) {
-		boolean isFinished = (goalPos <= getPivotPosition() + 100 
-    && goalPos  >= getPivotPosition()-100);
+		boolean isFinished = (goalPos <= getPivotPosition() + PIVOT_TOLERANCE 
+    && goalPos  >= getPivotPosition() - PIVOT_TOLERANCE);
     System.out.println("isFinished: " + isFinished);
     return isFinished;
 	}
