@@ -39,6 +39,8 @@ public class Climber extends Subsystem {
   public static final double CLIMBER_DOWN = 0.0;
   public static final double CLIMBER_INCREMENT = 50.0;
 
+  public static final double CLIMBER_TOLERANCE = 200.0;
+
   public static final double FRONT_POSITION = 0; 
   public static final double BACK_POSITION = 0;
 
@@ -101,13 +103,13 @@ public class Climber extends Subsystem {
   }
 
   public boolean checkCurrentFrontPosition(double goalFrontPos){
-    boolean isFinished = (goalFrontPos <= getFrontPosition() + 200 && goalFrontPos >= getFrontPosition()-200);
+    boolean isFinished = (goalFrontPos <= getFrontPosition() + CLIMBER_TOLERANCE && goalFrontPos >= getFrontPosition()- CLIMBER_TOLERANCE);
     System.out.println("front positon check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentBackPosition(double goalBackPos){
-    boolean isFinished = (goalBackPos <= getBackPosition() + 200 && goalBackPos >= getBackPosition()-200);
+    boolean isFinished = (goalBackPos <= getBackPosition() + CLIMBER_TOLERANCE && goalBackPos >= getBackPosition() - CLIMBER_TOLERANCE);
     System.out.println("back position check isFinished " + isFinished);
     return isFinished;
   }
