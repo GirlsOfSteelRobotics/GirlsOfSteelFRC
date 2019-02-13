@@ -14,9 +14,9 @@ public class RobotMap {
 
 	public static final int CAMERA_PORT = 0;
 
-	public static final int LED_LEFT_PORT = 1;
-	public static final int LED_RIGHT_PORT = 0;
-
+	public static final int BLINKIN_LEFT_PWM = 0;
+	public static final int BLINKIN_RIGHT_PWM = 1;
+	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;

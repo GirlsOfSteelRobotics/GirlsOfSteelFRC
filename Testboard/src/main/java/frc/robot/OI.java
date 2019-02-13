@@ -33,6 +33,6 @@ public class OI {
 		blinkinTest = new JoystickButton(drivingPad, 1);
 		blinkinTest.whenPressed(new TryBlinkin());
 		LidarLitePWM = new JoystickButton(drivingPad, 2);
-		//LidarLitePWM.whenPressed(new ReadLidarLitePWM());
+		LidarLitePWM.whenPressed(new ReadLidarLitePWM());
   	}
 }
