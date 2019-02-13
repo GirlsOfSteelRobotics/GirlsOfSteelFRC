@@ -79,13 +79,14 @@ public class OI {
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whileHeld(new ClimberAllDown());
 
-		/*
+	
 		backToZero = new JoystickButton(drivingPad, 3);
 		backToZero.whileHeld(new ClimberBackToZero());
 		
 		frontToZero = new JoystickButton(drivingPad, 4);
 		frontToZero.whileHeld(new ClimberFrontToZero());
 
+		/*
 		toSecondUp = new JoystickButton(drivingPad, 5);
 		toSecondUp.whileHeld(new ClimberToSecondUp());
 
