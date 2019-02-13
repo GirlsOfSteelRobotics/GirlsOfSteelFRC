@@ -20,7 +20,7 @@ public class Motor extends Subsystem {
 	
 	public Motor () {
 		 
-		mainMotor = new WPI_TalonSRX(RobotMap.MAIN_MOTOR_PORT); 
+		mainMotor = new WPI_TalonSRX(RobotMap.MAIN_MOTOR_TALON); 
 
 		lightSensor = new DigitalInput(RobotMap.LIGHT_SENSOR_PORT);
 	}
@@ -30,8 +30,7 @@ public class Motor extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-		setDefaultCommand(new ReadLightSensor());
-		
+		//setDefaultCommand(new MyCommand());
     }
     
 
@@ -40,6 +39,7 @@ public class Motor extends Subsystem {
 	}
     
     public void stop() {
+		mainMotor.stopMotor();
     }
 }
 
