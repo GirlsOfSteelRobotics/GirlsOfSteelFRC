@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveByJoystick;
-import frc.robot.subsystems.LidarLitePWM;
+import frc.robot.LidarLitePWM;
 public class Chassis extends Subsystem {
 
 	private WPI_TalonSRX masterLeft;
