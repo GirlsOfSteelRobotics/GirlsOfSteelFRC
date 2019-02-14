@@ -7,10 +7,14 @@
 
 package frc.robot.commands;
 
+import frc.robot.LidarLitePWM; 
+import frc.robot.Robot; 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class BabyLidarBackwards extends Command {
   public BabyLidarBackwards() {
+    requires(Robot.subsystems.BabyDrive); 
+  
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
