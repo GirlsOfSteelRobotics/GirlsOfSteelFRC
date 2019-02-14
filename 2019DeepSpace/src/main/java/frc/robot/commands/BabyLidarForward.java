@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import frc.robot.LidarLitePWM; 
+import frc.robot.Robot; 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class BabyLidarForward extends Command {
@@ -18,22 +20,25 @@ public class BabyLidarForward extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("init BabyLidarForward");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.babyDrive.babyDriveForward(); 
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.babyDrive.checkBabyDriveDistance(); 
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    
   }
 
   // Called when another command which requires one or more of the same

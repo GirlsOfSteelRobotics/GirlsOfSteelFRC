@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap; 
+import frc.robot.LidarLitePWM;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -19,26 +20,34 @@ public class BabyDrive extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private WPI_TalonSRX babyDriveTalon; 
+  private LidarLitePWM lidar; 
+
+  private WPI_TalonSRX babyDriveTalon;
   private double speed = 0.5;
+  private boolean isFinished; 
 
   public BabyDrive(){
-    babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON) ;
+    babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
   }
 
-  public void babyDriveForward(){
-    babyDriveTalon.set(speed);//TODO; ADJUST SPEED
+    public void babyDriveForward(){
+      babyDriveTalon.set(speed);//TODO; ADJUST SPEED
+    }
 
+    public void babyDriveBackwards(){
+      babyDriveTalon.set(-speed);//TODO; ADJUST SPEED 
+    }
+
+    public void babyDriveStop() {
+      babyDriveTalon.set(0.0);
+    }
+
+  public boolean checkBabyDriveDistance(){
+
+    isFinished = lidar.getDistance() <= 20; 
+    return isFinished; 
   }
-
-  public void babyDriveBackwards(){
-    babyDriveTalon.set(-speed);//TODO; ADJUST SPEED 
-  }
-
-  public void babyDriveStop() {
-    babyDriveTalon.set(0.0);
-  }
-
+      
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
