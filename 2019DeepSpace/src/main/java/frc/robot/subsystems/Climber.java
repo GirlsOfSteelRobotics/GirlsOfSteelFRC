@@ -46,15 +46,15 @@ public class Climber extends Subsystem {
   public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
 
 
-  private double frontPosition;
-  private double backPosition;
+  public double goalFrontPosition;
+  public double goalBackPosition;
 
   public Climber() {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
 
-    climberFront.setSensorPhase(false);
-    climberBack.setSensorPhase(false);
+    climberFront.setSensorPhase(true);
+    climberBack.setSensorPhase(true);
 
     climberFront.config_kF(0, 0, 10);
     climberFront.config_kP(0, 1.5, 10);
@@ -126,35 +126,35 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberPosition() {
-    climberFront.set(ControlMode.Position, frontPosition);
-    climberBack.set(ControlMode.Position, backPosition);
+    climberFront.set(ControlMode.Position, goalFrontPosition);
+    climberBack.set(ControlMode.Position, goalBackPosition);
   }
 
   public void holdClimberFrontPosition() {
-    climberFront.set(ControlMode.Position, frontPosition);
+    climberFront.set(ControlMode.Position, goalFrontPosition);
   }
 
   public void holdClimberBackPosition() {
-    climberBack.set(ControlMode.Position, backPosition);
+    climberBack.set(ControlMode.Position, goalBackPosition);
   }
   
   public void incrementFrontClimber() {
-    frontPosition = getFrontPosition(); 
-    frontPosition += CLIMBER_INCREMENT;
+    goalFrontPosition = getFrontPosition(); 
+    goalFrontPosition += CLIMBER_INCREMENT;
   }
 
   public void decrementFrontClimber() {
-    frontPosition = getFrontPosition(); 
-    frontPosition -= CLIMBER_INCREMENT;
+    goalFrontPosition = getFrontPosition(); 
+    goalFrontPosition -= CLIMBER_INCREMENT;
   }
   public void incrementBackClimber() {
-    backPosition = getBackPosition(); 
-    backPosition += CLIMBER_INCREMENT;
+    goalBackPosition = getBackPosition(); 
+    goalBackPosition += CLIMBER_INCREMENT;
   }
 
   public void decrementBackClimber() {
-    backPosition = getBackPosition(); 
-    backPosition -= CLIMBER_INCREMENT;
+    goalBackPosition = getBackPosition(); 
+    goalBackPosition -= CLIMBER_INCREMENT;
   }
   public void incrementAllClimber() {
     incrementFrontClimber();
