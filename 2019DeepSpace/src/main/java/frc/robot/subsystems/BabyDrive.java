@@ -25,6 +25,7 @@ public class BabyDrive extends Subsystem {
   private WPI_TalonSRX babyDriveTalon;
   private double speed = 0.5;
   private boolean isFinished; 
+  public double LIDAR_TOLERANCE = 1; //tune
 
   public BabyDrive(){
     babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
@@ -39,13 +40,11 @@ public class BabyDrive extends Subsystem {
     }
 
     public void babyDriveStop() {
-      babyDriveTalon.set(0.0);
+      babyDriveTalon.stopMotor();
     }
 
-  public boolean checkBabyDriveDistance(){
-
-    isFinished = lidar.getDistance() <= 20; 
-    return isFinished; 
+  public double getLidarDistance(){
+    return lidar.getDistance(); 
   }
       
   @Override
