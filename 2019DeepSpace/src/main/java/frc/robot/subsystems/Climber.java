@@ -32,18 +32,16 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
-  public static final double CLIMBER_UP = 1500.0;
-  public static final double CLIMBER_DOWN = 0.0;
-  public static final double CLIMBER_INCREMENT = 150;
+  public static final double CLIMBER_INCREMENT = 1000;
 
   public static final double CLIMBER_TOLERANCE = 100;
 
   public static final double FRONT_POSITION = 0; 
   public static final double BACK_POSITION = 0;
 
-  public static final double FIRST_GOAL_POS = 0.0; //TOOD; adjust this value
-  public static final double SECOND_GOAL_POS = 150.0; //TODO; adjust this value
-  public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
+  public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
+  public static final double SECOND_GOAL_POS = -30000.0; //TODO; first estimate from quick measurement
+  public static final double THIRD_GOAL_POS = -78000.0; //TODO; first estimate 
 
 
   public double goalFrontPosition;
@@ -57,12 +55,12 @@ public class Climber extends Subsystem {
     climberBack.setSensorPhase(true);
 
     climberFront.config_kF(0, 0, 10);
-    climberFront.config_kP(0, 3.0, 10);
+    climberFront.config_kP(0, 1.0, 10);
     climberFront.config_kI(0, 0, 10);
     climberFront.config_kD(0, 0, 10);
 
     climberBack.config_kF(0, 0, 10);
-    climberBack.config_kP(0, 3.0, 10);
+    climberBack.config_kP(0, 1.0, 10);
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 0, 10);
 
