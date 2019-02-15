@@ -86,11 +86,6 @@ public class Climber extends Subsystem {
     climberBack.set(ControlMode.Position, pos);
   }
 
-  public void setClimberSpeed(double speed) {
-    climberFront.set(speed);
-    climberBack.set(speed);
-  }
-
   public void climberStop() {
     climberFront.stopMotor();
     climberBack.stopMotor();
@@ -126,8 +121,8 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberPosition() {
-    climberFront.set(ControlMode.Position, goalFrontPosition);
-    climberBack.set(ControlMode.Position, goalBackPosition);
+    holdClimberFrontPosition();
+    holdClimberBackPosition();
   }
 
   public void holdClimberFrontPosition() {
