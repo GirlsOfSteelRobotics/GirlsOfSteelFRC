@@ -28,6 +28,7 @@ public class PivotToShip extends Command {
   @Override
   protected void execute() {
     Robot.pivot.setGoalPivotPosition(Pivot.PIVOT_CARGO);
+    Robot.pivot.holdPivotPosition();
   }
 
   // Make this return true when this Command no longer needs to run execute()

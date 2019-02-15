@@ -92,10 +92,10 @@ public class OI {
 		// toThirdUp.whileHeld(new ClimberToThirdUp());
 	
 		// Collector buttons
-		collect = new JoystickButton(drivingPad, 9);
+		collect = new JoystickButton(operatingPad, 5);
 		collect.whileHeld(new CollectorCollect());
 
-		release = new JoystickButton(drivingPad, 10);
+		release = new JoystickButton(operatingPad, 6);
 		release.whileHeld(new CollectorRelease());
 
 		// Hatch buttons
