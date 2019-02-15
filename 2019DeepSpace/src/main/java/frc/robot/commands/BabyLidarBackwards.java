@@ -11,9 +11,9 @@ import frc.robot.LidarLitePWM;
 import frc.robot.Robot; 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BabyLidarForward extends Command {
+public class BabyLidarBackwards extends Command {
   private double goalLidar;
-  public BabyLidarForward(double goalLidar) {
+  public BabyLidarBackwards(double goalLidar) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.babyDrive);
@@ -23,13 +23,13 @@ public class BabyLidarForward extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("init BabyLidarForward");
+    System.out.println("init BabyLidarBackwards");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.babyDrive.babyDriveForward(); 
+    Robot.babyDrive.babyDriveBackwards(); 
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,7 +42,7 @@ public class BabyLidarForward extends Command {
   @Override
   protected void end() {
     Robot.babyDrive.babyDriveStop();
-    System.out.println("BabyLidarForwards end");
+    System.out.println("BabyLidarBackwards end");
   }
 
   // Called when another command which requires one or more of the same
