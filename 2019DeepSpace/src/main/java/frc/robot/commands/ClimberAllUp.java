@@ -30,7 +30,7 @@ public class ClimberAllUp extends Command {
   protected void execute() {
     Robot.climber.holdClimberPosition();
     Robot.climber.incrementAllClimber();
-    System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
+    //System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()

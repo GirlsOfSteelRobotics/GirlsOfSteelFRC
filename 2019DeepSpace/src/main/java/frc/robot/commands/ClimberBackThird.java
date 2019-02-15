@@ -21,7 +21,7 @@ public class ClimberBackThird extends Command {
   @Override
   protected void initialize() {
     Robot.climber.setGoalClimberPosition(Robot.climber.THIRD_GOAL_POS);
-    System.out.println("init climber back third all up");
+    //System.out.println("init climber back third all up");
   }
 
   // Called repeatedly when this Command is scheduled to run
