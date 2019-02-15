@@ -14,13 +14,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
 public class RobotToThird extends CommandGroup {
+
+    private final double BABY_LIDAR_FORWARD_1 = 100;
+    private final double BABY_LIDAR_FORWARD_2 = 20;
+    private final double FULL_LIDAR_DRIVE_FORWARD = 150;
+
   public RobotToThird() {
     addSequential(new ClimberAllUp());
-    addSequential(new BabyLidarForward(100)); //make this into a constant
+    addSequential(new BabyLidarForward(BABY_LIDAR_FORWARD_1)); //make this into a constant
     addSequential(new ClimberFrontUp());
-    addSequential(new BabyLidarForward(20));
+    addSequential(new BabyLidarForward(BABY_LIDAR_FORWARD_2));
     addSequential(new ClimberBackUp());
-  // addSequential(new DriveLidar()); make this command
+    addSequential(new LidarDriveForward(FULL_LIDAR_DRIVE_FORWARD));
   }
 
 }
