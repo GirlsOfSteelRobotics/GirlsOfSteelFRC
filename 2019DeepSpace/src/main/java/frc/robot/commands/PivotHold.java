@@ -22,7 +22,7 @@ public class PivotHold extends Command {
   @Override
   protected void initialize() {
     Robot.pivot.holdPivotPosition();
-   // System.out.println("init PivotHold");
+    System.out.println("init PivotHold");
 
   }
 
@@ -41,7 +41,7 @@ public class PivotHold extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-   // System.out.println("end PivotHold");
+   System.out.println("end PivotHold");
 
   }
 

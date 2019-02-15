@@ -27,6 +27,7 @@ public class PivotToRocket extends Command {
   @Override
   protected void execute() {
     Robot.pivot.setGoalPivotPosition(Robot.pivot.PIVOT_ROCKET);
+    Robot.pivot.holdPivotPosition();
   }
 
   // Make this return true when this Command no longer needs to run execute()
