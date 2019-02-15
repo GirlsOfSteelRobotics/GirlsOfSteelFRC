@@ -45,7 +45,6 @@ public class Climber extends Subsystem {
   public static final double SECOND_GOAL_POS = 150.0; //TODO; adjust this value
   public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
 
-
   private double frontPosition;
   private double backPosition;
 
@@ -86,11 +85,6 @@ public class Climber extends Subsystem {
     climberBack.set(ControlMode.Position, pos);
   }
 
-  public void setClimberSpeed(double speed) {
-    climberFront.set(speed);
-    climberBack.set(speed);
-  }
-
   public void climberStop() {
     climberFront.stopMotor();
     climberBack.stopMotor();
@@ -126,8 +120,8 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberPosition() {
-    climberFront.set(ControlMode.Position, frontPosition);
-    climberBack.set(ControlMode.Position, backPosition);
+    holdClimberFrontPosition();
+    holdClimberBackPosition();
   }
 
   public void holdClimberFrontPosition() {
