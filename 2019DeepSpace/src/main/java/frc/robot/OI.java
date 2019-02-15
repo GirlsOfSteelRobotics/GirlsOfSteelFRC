@@ -99,10 +99,10 @@ public class OI {
 		release.whileHeld(new CollectorRelease());
 
 		// Hatch buttons
-		hatchCollect = new JoystickButton(operatingPad, 4);
+		hatchCollect = new JoystickButton(operatingPad, 5);
 		hatchCollect.whenPressed(new HatchCollect());
 
-		hatchRelease = new JoystickButton(operatingPad, 3);
+		hatchRelease = new JoystickButton(operatingPad, 6);
 		hatchRelease.whenPressed(new HatchRelease());
 
 		// BabyDrive buttons
@@ -127,7 +127,7 @@ public class OI {
 		pivotRocket = new JoystickButton (operatingPad, 4);
 		pivotRocket.whenPressed(new PivotToRocket());
 
-		pivotShip = new JoystickButton (operatingPad, 5);
+		pivotShip = new JoystickButton (operatingPad, 8);
 		pivotShip.whenPressed(new PivotToShip());
 
 

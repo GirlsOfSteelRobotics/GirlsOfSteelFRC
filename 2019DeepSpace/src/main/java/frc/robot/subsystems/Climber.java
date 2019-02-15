@@ -34,7 +34,7 @@ public class Climber extends Subsystem {
 
   public static final double CLIMBER_UP = 1500.0;
   public static final double CLIMBER_DOWN = 0.0;
-  public static final double CLIMBER_INCREMENT = -150;
+  public static final double CLIMBER_INCREMENT = 150;
 
   public static final double CLIMBER_TOLERANCE = 100;
 
@@ -57,14 +57,14 @@ public class Climber extends Subsystem {
     climberBack.setSensorPhase(true);
 
     climberFront.config_kF(0, 0, 10);
-    climberFront.config_kP(0, 1.5, 10);
+    climberFront.config_kP(0, 3.0, 10);
     climberFront.config_kI(0, 0, 10);
-    climberFront.config_kD(0, 15, 10);
+    climberFront.config_kD(0, 0, 10);
 
     climberBack.config_kF(0, 0, 10);
-    climberBack.config_kP(0, 1.5, 10);
+    climberBack.config_kP(0, 3.0, 10);
     climberBack.config_kI(0, 0, 10);
-    climberBack.config_kD(0, 15, 10);
+    climberBack.config_kD(0, 0, 10);
 
     climberFront.setNeutralMode(NeutralMode.Brake);
     climberBack.setNeutralMode(NeutralMode.Brake);
@@ -101,13 +101,13 @@ public class Climber extends Subsystem {
 
   public boolean checkCurrentFrontPosition(double goalFrontPos){
     boolean isFinished = (goalFrontPos <= getFrontPosition() + CLIMBER_TOLERANCE && goalFrontPos >= getFrontPosition()- CLIMBER_TOLERANCE);
-    System.out.println("climber front positon check isFinished " + isFinished);
+    //System.out.println("climber front positon check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentBackPosition(double goalBackPos){
     boolean isFinished = (goalBackPos <= getBackPosition() + CLIMBER_TOLERANCE && goalBackPos >= getBackPosition() - CLIMBER_TOLERANCE);
-    System.out.println("climber back position check isFinished " + isFinished);
+    //System.out.println("climber back position check isFinished " + isFinished);
     return isFinished;
   }
 
@@ -116,7 +116,7 @@ public class Climber extends Subsystem {
       && goalPos  >= getFrontPosition() - CLIMBER_TOLERANCE)
       && (goalPos  <= getBackPosition() + CLIMBER_TOLERANCE 
       && goalPos >= getBackPosition() - CLIMBER_TOLERANCE);
-    System.out.println("climber isFinished: " + isFinished);
+    //System.out.println("climber isFinished: " + isFinished);
     return isFinished;
   }
 
