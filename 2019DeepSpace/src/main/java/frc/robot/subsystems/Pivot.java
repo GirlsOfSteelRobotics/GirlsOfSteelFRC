@@ -24,8 +24,6 @@ public class Pivot extends Subsystem {
 	private double goalPivotPosition;
 
   // TODO: tune all
-  public static final double PIVOT_IN = 0; 
-	public static final double PIVOT_OUT = 1000; 
 	public static final double PIVOT_INCREMENT = 150; 
 	public static final double PIVOT_GROUND = -3700; //tested
 	public static final double PIVOT_ROCKET = -1600; //tested 
