@@ -38,7 +38,7 @@ public class CollectorCollect extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.collector.stop();
+    Robot.collector.slowCollect(); 
     System.out.println("end CollectorCollect");
   }
 
