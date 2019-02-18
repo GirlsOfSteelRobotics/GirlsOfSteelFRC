@@ -28,8 +28,8 @@ public class Pivot extends Subsystem {
 
   // TODO: tune all
 	public static final double PIVOT_INCREMENT = 250; 
-	public static final double PIVOT_GROUND = -3400; //tested
-	public static final double PIVOT_ROCKET = -1600; //tested 
+	public static final double PIVOT_GROUND = -4143; //tested
+	public static final double PIVOT_ROCKET = -1091; //tested 
 	public static final double PIVOT_CARGO = -2400; //tested
 	public static final double PIVOT_TOLERANCE = 100;
   
@@ -64,7 +64,7 @@ public class Pivot extends Subsystem {
 
   public void holdPivotPosition(){
 		pivot.set(ControlMode.Position, goalPivotPosition); 
-		System.out.println("Pivot goal position" + goalPivotPosition +  "actual position " + pivot.getSelectedSensorPosition(0));
+		//System.out.println("Pivot goal position" + goalPivotPosition +  "actual position " + pivot.getSelectedSensorPosition(0));
   }
 
   public void pivotToGround(){
