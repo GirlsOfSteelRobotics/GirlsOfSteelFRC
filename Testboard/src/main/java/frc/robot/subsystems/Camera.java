@@ -14,7 +14,7 @@ public class Camera extends Subsystem {
   public MjpegServer server;
 	
 	public Camera() {
-	
+	CameraServer.getInstance().startAutomaticCapture();
 	driveCam = new UsbCamera("driveCam", RobotMap.CAMERA_PORT);
 	driveCam.setResolution(320, 240);
 	driveCam.setFPS(20);
