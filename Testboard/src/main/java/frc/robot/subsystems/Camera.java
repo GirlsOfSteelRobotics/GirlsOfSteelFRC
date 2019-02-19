@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Camera extends Subsystem {
 
-  private UsbCamera driveCam; 
+  public UsbCamera driveCam; 
   public MjpegServer server;
 	
 	public Camera() {
