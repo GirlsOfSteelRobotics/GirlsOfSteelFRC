@@ -8,47 +8,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot; 
+import frc.robot.Robot;
 
-public class ClimberToSecondUp extends Command {
-  public ClimberToSecondUp() {
+public class ClimberAllToZero extends Command {
+  public ClimberAllToZero() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.climber); 
-
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.climber.setGoalClimberPosition(Robot.climber.SECOND_GOAL_POS);
-    System.out.println("init Climber To Second Up");
+    Robot.climber.setGoalClimberPosition(Robot.climber.FRONT_POSITION);
+    System.out.println("init Climber All To Zero");
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("goal front position: " + Robot.climber.goalFrontPosition + "actual front position: " + Robot.climber.getFrontPosition());
-    System.out.println("goal back position" + Robot.climber.goalBackPosition + "actual back position: " + Robot.climber.getBackPosition());
-
-    Robot.climber.holdClimberPosition();
-    
+    Robot.climber.holdClimberAllPosition();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.climber.checkCurrentPosition(Robot.climber.SECOND_GOAL_POS);
-  
+    return (Robot.climber.checkCurrentPosition(Robot.climber.ALL_TO_ZERO));
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.climber.climberStop(); 
-    System.out.println("end Climber To Second Up");
-
+    Robot.climber.climberStop();
+    System.out.println("end Climber All To Zero");
   }
-
- 
 }
