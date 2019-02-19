@@ -42,7 +42,7 @@ public class Climber extends Subsystem {
   public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
   public static final double SECOND_GOAL_POS = -33000.0; //TODO; first estimate from quick measurement
   public static final double THIRD_GOAL_POS = -78000.0; //TODO; first estimate 
-
+  //THIRD_GOAL_POS should be around -83000
   public static final double ALL_TO_ZERO = 0.0;
 
   public double goalFrontPosition;
