@@ -35,7 +35,6 @@ public class Pivot extends Subsystem {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
 		pivot.setSensorPhase(true);
 		setupPivotFPID();
-		//pivot.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
 		LiveWindow.add(pivot);
 	}
 
