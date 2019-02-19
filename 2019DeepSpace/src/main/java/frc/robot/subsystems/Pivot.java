@@ -14,8 +14,6 @@ import frc.robot.commands.PivotHold;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX; 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -40,7 +38,6 @@ public class Pivot extends Subsystem {
 		//pivot.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
 		LiveWindow.add(pivot);
 	}
-
 
   @Override
   public void initDefaultCommand() {
