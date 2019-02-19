@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-// negative encoder ticks is down
+// NEGATIVE ENCODER TICKS IS BALLSCREW DOWN, ROBOT UP
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteLimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -40,9 +41,10 @@ public class Climber extends Subsystem {
   public static final double BACK_POSITION = 0;
 
   public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
-  public static final double SECOND_GOAL_POS = -30000.0; //TODO; first estimate from quick measurement
+  public static final double SECOND_GOAL_POS = -33000.0; //TODO; first estimate from quick measurement
   public static final double THIRD_GOAL_POS = -78000.0; //TODO; first estimate 
-
+  //THIRD_GOAL_POS should be around -83000
+  public static final double ALL_TO_ZERO = 0.0;
 
   public double goalFrontPosition;
   public double goalBackPosition;
@@ -60,28 +62,30 @@ public class Climber extends Subsystem {
     climberFront.config_kD(0, 0, 10);
 
     climberBack.config_kF(0, 0, 10);
-    climberBack.config_kP(0, 1.0, 10);
+    climberBack.config_kP(0, 0.85, 10);
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 0, 10);
 
     climberFront.setNeutralMode(NeutralMode.Brake);
     climberBack.setNeutralMode(NeutralMode.Brake);
 
-    // climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-    //     RobotMap.DRIVE_LEFT_MASTER_TALON);
-    // climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-    //     RobotMap.DRIVE_RIGHT_MASTER_TALON);
+    // Limit Switches On
+    climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
+        RobotMap.DRIVE_LEFT_MASTER_TALON);
+    climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
+        RobotMap.DRIVE_RIGHT_MASTER_TALON);
 
-    climberFront.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
-      RobotMap.DRIVE_LEFT_MASTER_TALON);
-    climberBack.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
-       RobotMap.DRIVE_RIGHT_MASTER_TALON);
+    // Limit Switches Off
+    // climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
+    //   RobotMap.DRIVE_LEFT_MASTER_TALON);
+    // climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
+    //    RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
 
   // the value in set expiration is in SECONDS not milliseconds
   public void setGoalClimberPosition(double pos) {
-    climberFront.set(ControlMode.Position, pos);
-    climberBack.set(ControlMode.Position, pos);
+    goalFrontPosition = pos;
+    goalBackPosition = pos;
   }
 
   public void climberStop() {
@@ -98,23 +102,28 @@ public class Climber extends Subsystem {
   }
 
   public boolean checkCurrentFrontPosition(double goalFrontPos){
-    boolean isFinished = (goalFrontPos <= getFrontPosition() + CLIMBER_TOLERANCE && goalFrontPos >= getFrontPosition()- CLIMBER_TOLERANCE);
+    boolean isFinished = (goalFrontPos + CLIMBER_TOLERANCE >= getFrontPosition()  && goalFrontPos - CLIMBER_TOLERANCE <= getFrontPosition());
     //System.out.println("climber front positon check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentBackPosition(double goalBackPos){
-    boolean isFinished = (goalBackPos <= getBackPosition() + CLIMBER_TOLERANCE && goalBackPos >= getBackPosition() - CLIMBER_TOLERANCE);
+    boolean isFinished = (goalBackPos + CLIMBER_TOLERANCE >= getBackPosition() && goalBackPos - CLIMBER_TOLERANCE <= getBackPosition());
     //System.out.println("climber back position check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentPosition(double goalPos){
-    boolean isFinished = (goalPos <= getFrontPosition() + 500 
-      && goalPos  >= getFrontPosition() - CLIMBER_TOLERANCE)
-      && (goalPos  <= getBackPosition() + CLIMBER_TOLERANCE 
-      && goalPos >= getBackPosition() - CLIMBER_TOLERANCE);
-    //System.out.println("climber isFinished: " + isFinished);
+    boolean isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()  
+      && goalPos - CLIMBER_TOLERANCE  <= getFrontPosition() )
+      && (goalPos + CLIMBER_TOLERANCE >= getBackPosition()  
+      && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
+    // System.out.println("climber isFinished: " + isFinished);
+    // System.out.println("front upper: " + ((goalPos + CLIMBER_TOLERANCE) >= getFrontPosition()));
+    // System.out.println("front lower: " + ((goalPos - CLIMBER_TOLERANCE)  <= getFrontPosition()));
+    // System.out.println("down upper: " + ((goalPos + CLIMBER_TOLERANCE) >= getBackPosition()));
+    // System.out.println("down lower: " + ((goalPos - CLIMBER_TOLERANCE) <= getBackPosition()));
+
     return isFinished;
   }
 
@@ -129,6 +138,11 @@ public class Climber extends Subsystem {
 
   public void holdClimberBackPosition() {
     climberBack.set(ControlMode.Position, goalBackPosition);
+  }
+
+  public void holdClimberAllPosition(){
+    climberBack.set(ControlMode.Position, goalBackPosition);
+    climberFront.set(ControlMode.Position, goalFrontPosition);
   }
   
   public void incrementFrontClimber() {

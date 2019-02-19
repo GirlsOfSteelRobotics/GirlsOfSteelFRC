@@ -14,8 +14,6 @@ import frc.robot.commands.PivotHold;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX; 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -29,18 +27,16 @@ public class Pivot extends Subsystem {
   // TODO: tune all
 	public static final double PIVOT_INCREMENT = 250; 
 	public static final double PIVOT_GROUND = -4143; //tested
-	public static final double PIVOT_ROCKET = -1091; //tested 
-	public static final double PIVOT_CARGO = -2400; //tested
+	public static final double PIVOT_ROCKET = -1852; //tested 
+	public static final double PIVOT_CARGO = -1091; //tested
 	public static final double PIVOT_TOLERANCE = 100;
   
   public Pivot() {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
 		pivot.setSensorPhase(true);
 		setupPivotFPID();
-		//pivot.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
 		LiveWindow.add(pivot);
 	}
-
 
   @Override
   public void initDefaultCommand() {

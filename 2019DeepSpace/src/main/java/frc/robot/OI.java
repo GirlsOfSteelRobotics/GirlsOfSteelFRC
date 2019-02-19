@@ -38,6 +38,8 @@ public class OI {
 	private JoystickButton toSecondUp; 
 	private JoystickButton toThirdUp; 
 
+	private JoystickButton allToZero;
+
 	private JoystickButton collect;
 	private JoystickButton release;
 
@@ -61,17 +63,17 @@ public class OI {
 		operatingPad = new Joystick(1);
 
 		// Piston climber buttons
-		frontUp = new JoystickButton(drivingPad, 1);
-		frontUp.whileHeld(new ClimberFrontUp());
+		//frontUp = new JoystickButton(drivingPad, 1);
+		//frontUp.whileHeld(new ClimberFrontUp());
 		
-		frontDown = new JoystickButton(drivingPad, 2);
-		frontDown.whileHeld(new ClimberFrontDown());
+		//frontDown = new JoystickButton(drivingPad, 2);
+		//frontDown.whileHeld(new ClimberFrontDown());
 		
-		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whileHeld(new ClimberBackUp());
+		//backUp = new JoystickButton(drivingPad, 3);
+		//backUp.whileHeld(new ClimberBackUp());
 		
-		backDown = new JoystickButton(drivingPad, 4);
-		backDown.whileHeld(new ClimberBackDown());
+		//backDown = new JoystickButton(drivingPad, 4);
+		//backDown.whileHeld(new ClimberBackDown());
 		
 		allUp = new JoystickButton(drivingPad, 5);
 		allUp.whileHeld(new ClimberAllUp());
@@ -79,18 +81,21 @@ public class OI {
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whileHeld(new ClimberAllDown());
 	
-		// backToZero = new JoystickButton(drivingPad, 3);
-		// backToZero.whileHeld(new ClimberBackToZero());
+		 backToZero = new JoystickButton(drivingPad, 3);
+		 backToZero.whenPressed(new ClimberBackToZero());
 		
-		// frontToZero = new JoystickButton(drivingPad, 4);
-		// frontToZero.whileHeld(new ClimberFrontToZero());
+		frontToZero = new JoystickButton(drivingPad, 4);
+		frontToZero.whenPressed(new ClimberFrontToZero());
 
-		// toSecondUp = new JoystickButton(drivingPad, 5);
-		// toSecondUp.whileHeld(new ClimberToSecondUp());
+		//toSecondUp = new JoystickButton(drivingPad, 1);
+		//toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		// toThirdUp = new JoystickButton(drivingPad, 6);
-		// toThirdUp.whileHeld(new ClimberToThirdUp());
+		toThirdUp = new JoystickButton(drivingPad, 1);
+		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
+		allToZero = new JoystickButton(drivingPad, 2);
+		allToZero.whenPressed(new ClimberAllToZero());
+
 		// Collector buttons
 		collect = new JoystickButton(operatingPad, 5);
 		collect.whileHeld(new CollectorCollect());
@@ -129,6 +134,8 @@ public class OI {
 
 		pivotShip = new JoystickButton (operatingPad, 10);
 		pivotShip.whenPressed(new PivotToShip());
+
+
 
 
 	}

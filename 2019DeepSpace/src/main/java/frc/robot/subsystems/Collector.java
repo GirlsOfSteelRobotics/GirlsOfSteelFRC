@@ -16,7 +16,9 @@ public class Collector extends Subsystem {
     private WPI_TalonSRX rightCollect;
 
     public static final double SLOW_COLLECTOR_SPEED = 0.15;
-    public static final double COLLECTOR_SPEED = 0.4;
+
+    public static final double COLLECTOR_INTAKE_SPEED = 0.4;
+    public static final double COLLECTOR_RELEASE_SPEED = 0.5;
 
     public Collector() {
         leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_TALON);
@@ -38,14 +40,14 @@ public class Collector extends Subsystem {
     }
 
     public void collect() {
-        leftCollect.set(-COLLECTOR_SPEED);
-        rightCollect.set(COLLECTOR_SPEED); // TODO: these two may need to be reversed
+        leftCollect.set(-COLLECTOR_INTAKE_SPEED);
+        rightCollect.set(COLLECTOR_INTAKE_SPEED); // TODO: these two may need to be reversed
 
     }
 
     public void release() {
-        leftCollect.set(COLLECTOR_SPEED);
-        rightCollect.set(-COLLECTOR_SPEED); // these two may need to be reversed
+        leftCollect.set(COLLECTOR_RELEASE_SPEED);
+        rightCollect.set(-COLLECTOR_RELEASE_SPEED); // these two may need to be reversed
     }
 
     public void slowCollect() {
