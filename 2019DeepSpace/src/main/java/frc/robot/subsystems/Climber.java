@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteLimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -33,7 +32,7 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
-  public static final double CLIMBER_INCREMENT = 1000;
+  public static final double CLIMBER_INCREMENT = 1500;
 
   public static final double CLIMBER_TOLERANCE = 100;
 
@@ -57,12 +56,12 @@ public class Climber extends Subsystem {
     climberBack.setSensorPhase(true);
 
     climberFront.config_kF(0, 0, 10);
-    climberFront.config_kP(0, 1.0, 10);
+    climberFront.config_kP(0, 1.0, 10); //1.0 works for manual control
     climberFront.config_kI(0, 0, 10);
     climberFront.config_kD(0, 0, 10);
 
     climberBack.config_kF(0, 0, 10);
-    climberBack.config_kP(0, 0.85, 10);
+    climberBack.config_kP(0, 0.85, 10); //.85
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 0, 10);
 
@@ -70,16 +69,16 @@ public class Climber extends Subsystem {
     climberBack.setNeutralMode(NeutralMode.Brake);
 
     // Limit Switches On
-    climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
-        RobotMap.DRIVE_LEFT_MASTER_TALON);
-    climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
-        RobotMap.DRIVE_RIGHT_MASTER_TALON);
+    // climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+    //     RobotMap.DRIVE_LEFT_MASTER_TALON);
+    // climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+    //     RobotMap.DRIVE_RIGHT_MASTER_TALON);
 
     // Limit Switches Off
-    // climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
-    //   RobotMap.DRIVE_LEFT_MASTER_TALON);
-    // climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
-    //    RobotMap.DRIVE_RIGHT_MASTER_TALON);
+    climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
+      RobotMap.DRIVE_LEFT_MASTER_TALON);
+    climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
+       RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
 
   // the value in set expiration is in SECONDS not milliseconds
