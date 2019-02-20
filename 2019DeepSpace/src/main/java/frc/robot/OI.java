@@ -62,7 +62,7 @@ public class OI {
 		drivingPad = new Joystick(0);
 		operatingPad = new Joystick(1);
 
-		// Piston climber buttons
+		// Climber buttons
 		//frontUp = new JoystickButton(drivingPad, 1);
 		//frontUp.whileHeld(new ClimberFrontUp());
 		
@@ -135,14 +135,9 @@ public class OI {
 		pivotShip = new JoystickButton (operatingPad, 10);
 		pivotShip.whenPressed(new PivotToShip());
 
-
-
-
 	}
-
-
 	public double getLeftUpAndDown() {
-		return drivingPad.getY();
+		return -drivingPad.getY(); // Laika needs negative, Belka is positive
 	}	
 
 	public double getRightSideToSide() {
