@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class SpinByLidar extends Command {
 
-	public double goalLidar = 2; //this is not right????
+	public double goalLidar = 5;
 
 	public SpinByLidar() {
 		requires(Robot.motor);
@@ -25,7 +25,7 @@ public class SpinByLidar extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return (goalLidar <= Robot.motor.getLidarDistance());
+		return (Robot.motor.getLidarDistance() <= goalLidar + Robot.motor.LIDAR_TOLERANCE && Robot.motor.getLidarDistance() >= goalLidar - Robot.motor.LIDAR_TOLERANCE);
 
 	}
 
