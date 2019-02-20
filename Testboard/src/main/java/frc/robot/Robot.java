@@ -9,6 +9,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.vision.VisionThread;
 import frc.robot.LidarLitePWM;
 
 
@@ -19,8 +20,8 @@ public class Robot extends TimedRobot {
   public static Camera camera;
   public static Blinkin blinkin;
   public static LidarLitePWM sensorLidarLitePWM;
-  public static GripPipeline pipeline;
   public static GripPipelineListener listener;
+  public static VisionThread visionThread; 
 
   /**
    * This function is run when the robot is first started up and should be
@@ -34,19 +35,22 @@ public class Robot extends TimedRobot {
     blinkin = new Blinkin();
     camera = new Camera();
     sensorLidarLitePWM = new LidarLitePWM(0);
-    pipeline = new GripPipeline();
     listener = new GripPipelineListener();
     oi = new OI();
 
-    listener.copyPipelineOutputs(pipeline);
+    visionThread = new VisionThread(camera.driveCam, new GripPipeline(), listener); 
+
+    visionThread.start(); 
+
+
+
     //sensor.writeData(0x00, sensor.readData(0x00, 1), 1);
+
+    
 
     System.out.println("RobotInitend");
 
   }
-
-  double x = 0;
-  double y = 0;
 
   /**
    * This function is called every robot packet, no matter the mode. Use
