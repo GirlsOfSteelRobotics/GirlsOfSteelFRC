@@ -62,15 +62,9 @@ public class OI {
 		drivingPad = new Joystick(0);
 		operatingPad = new Joystick(1);
 
-<<<<<<< HEAD
-		// Piston climber buttons
+		// Climber buttons
 		frontUp = new JoystickButton(drivingPad, 1);
 		frontUp.whileHeld(new ClimberFrontUp());
-=======
-		// Climber buttons
-		//frontUp = new JoystickButton(drivingPad, 1);
-		//frontUp.whileHeld(new ClimberFrontUp());
->>>>>>> 867be8865ec9da2759a2102d9aa1665ea5dcc354
 		
 		frontDown = new JoystickButton(drivingPad, 2);
 		frontDown.whileHeld(new ClimberFrontDown());
