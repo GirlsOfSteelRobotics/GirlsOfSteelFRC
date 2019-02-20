@@ -81,17 +81,17 @@ public class OI {
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whileHeld(new ClimberAllDown());
 	
-		 backToZero = new JoystickButton(drivingPad, 3);
-		 backToZero.whenPressed(new ClimberBackToZero());
+		backToZero = new JoystickButton(drivingPad, 3);
+		backToZero.whenPressed(new ClimberBackToZero());
 		
 		frontToZero = new JoystickButton(drivingPad, 4);
 		frontToZero.whenPressed(new ClimberFrontToZero());
 
-		//toSecondUp = new JoystickButton(drivingPad, 1);
-		//toSecondUp.whenPressed(new ClimberToSecondUp());
+		toSecondUp = new JoystickButton(drivingPad, 1);
+		toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		toThirdUp = new JoystickButton(drivingPad, 1);
-		toThirdUp.whenPressed(new ClimberToThirdUp());
+		// toThirdUp = new JoystickButton(drivingPad, 1);
+		// toThirdUp.whenPressed(new ClimberToThirdUp());
 	
 		allToZero = new JoystickButton(drivingPad, 2);
 		allToZero.whenPressed(new ClimberAllToZero());
