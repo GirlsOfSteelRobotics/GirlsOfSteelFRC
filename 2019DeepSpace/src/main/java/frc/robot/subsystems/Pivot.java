@@ -14,6 +14,7 @@ import frc.robot.commands.PivotHold;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX; 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Pivot extends Subsystem {
@@ -24,12 +25,10 @@ public class Pivot extends Subsystem {
 	private double goalPivotPosition;
 
   // TODO: tune all
-  public static final double PIVOT_IN = 0; 
-	public static final double PIVOT_OUT = 1000; 
-	public static final double PIVOT_INCREMENT = 150; 
-	public static final double PIVOT_GROUND = -4500; //good estimate
-	public static final double PIVOT_ROCKET = -3500; //good estimate 
-	public static final double PIVOT_CARGO = -350; //need to figure out
+	public static final double PIVOT_INCREMENT = 250; 
+	public static final double PIVOT_GROUND = -4143; //tested
+	public static final double PIVOT_ROCKET = -1852; //tested 
+	public static final double PIVOT_CARGO = -1091; //tested
 	public static final double PIVOT_TOLERANCE = 100;
   
   public Pivot() {
@@ -38,7 +37,6 @@ public class Pivot extends Subsystem {
 		setupPivotFPID();
 		LiveWindow.add(pivot);
 	}
-
 
   @Override
   public void initDefaultCommand() {

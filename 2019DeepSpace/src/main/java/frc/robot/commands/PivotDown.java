@@ -26,15 +26,14 @@ public class PivotDown extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pivot.holdPivotPosition();
     Robot.pivot.decrementPivot();
-    System.out.println("execute PivotUp");
+    Robot.pivot.holdPivotPosition();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.pivot.checkCurrentPivotPosition(Robot.pivot.PIVOT_IN);
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -44,10 +43,4 @@ public class PivotDown extends Command {
     System.out.println("end PivotDown");
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    end();
-  }
 }

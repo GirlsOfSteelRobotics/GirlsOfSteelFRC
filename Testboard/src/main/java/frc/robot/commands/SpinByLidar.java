@@ -3,10 +3,12 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveByJoystick extends Command {
+public class SpinByLidar extends Command {
 
-	public DriveByJoystick() {
-		requires(Robot.chassis);
+	public double goalLidar = 5;
+
+	public SpinByLidar() {
+		requires(Robot.motor);
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 	}
@@ -18,23 +20,17 @@ public class DriveByJoystick extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		// 4 is the axis number right x on the gamepad
-		Robot.chassis.driveByJoystick(Robot.oi.getLeftUpAndDown(), Robot.oi.getRightSideToSide());
+        Robot.motor.motorGo();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return (Robot.motor.getLidarDistance() <= goalLidar + Robot.motor.LIDAR_TOLERANCE && Robot.motor.getLidarDistance() >= goalLidar - Robot.motor.LIDAR_TOLERANCE);
+
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.chassis.stop();
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
+		Robot.motor.stop();
 	}
 }

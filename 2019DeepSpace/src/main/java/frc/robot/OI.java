@@ -38,6 +38,8 @@ public class OI {
 	private JoystickButton toSecondUp; 
 	private JoystickButton toThirdUp; 
 
+	private JoystickButton allToZero;
+
 	private JoystickButton collect;
 	private JoystickButton release;
 
@@ -60,7 +62,7 @@ public class OI {
 		drivingPad = new Joystick(0);
 		operatingPad = new Joystick(1);
 
-		// Piston climber buttons
+		// Climber buttons
 		frontUp = new JoystickButton(drivingPad, 1);
 		frontUp.whileHeld(new ClimberFrontUp());
 		
@@ -79,31 +81,34 @@ public class OI {
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whileHeld(new ClimberAllDown());
 	
-		// backToZero = new JoystickButton(drivingPad, 3);
-		// backToZero.whileHeld(new ClimberBackToZero());
+		//backToZero = new JoystickButton(drivingPad, 3);
+		//backToZero.whenPressed(new ClimberBackToZero());
 		
-		// frontToZero = new JoystickButton(drivingPad, 4);
-		// frontToZero.whileHeld(new ClimberFrontToZero());
+		//frontToZero = new JoystickButton(drivingPad, 4);
+		//frontToZero.whenPressed(new ClimberFrontToZero());
 
-		// toSecondUp = new JoystickButton(drivingPad, 5);
-		// toSecondUp.whileHeld(new ClimberToSecondUp());
+		//toSecondUp = new JoystickButton(drivingPad, 1);
+		//toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		// toThirdUp = new JoystickButton(drivingPad, 6);
-		// toThirdUp.whileHeld(new ClimberToThirdUp());
+		// toThirdUp = new JoystickButton(drivingPad, 1);
+		// toThirdUp.whenPressed(new ClimberToThirdUp());
 	
+		//allToZero = new JoystickButton(drivingPad, 2);
+		//allToZero.whenPressed(new ClimberAllToZero());
+
 		// Collector buttons
-		collect = new JoystickButton(drivingPad, 9);
+		collect = new JoystickButton(operatingPad, 5);
 		collect.whileHeld(new CollectorCollect());
 
-		release = new JoystickButton(drivingPad, 10);
+		release = new JoystickButton(operatingPad, 6);
 		release.whileHeld(new CollectorRelease());
 
 		// Hatch buttons
-		hatchCollect = new JoystickButton(operatingPad, 4);
-		hatchCollect.whenPressed(new HatchCollect());
+		// hatchCollect = new JoystickButton(operatingPad, 5);
+		// hatchCollect.whenPressed(new HatchCollect());
 
-		hatchRelease = new JoystickButton(operatingPad, 3);
-		hatchRelease.whenPressed(new HatchRelease());
+		// hatchRelease = new JoystickButton(operatingPad, 6);
+		// hatchRelease.whenPressed(new HatchRelease());
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 7);
@@ -127,15 +132,12 @@ public class OI {
 		pivotRocket = new JoystickButton (operatingPad, 4);
 		pivotRocket.whenPressed(new PivotToRocket());
 
-		pivotShip = new JoystickButton (operatingPad, 5);
+		pivotShip = new JoystickButton (operatingPad, 10);
 		pivotShip.whenPressed(new PivotToShip());
 
-
 	}
-
-
 	public double getLeftUpAndDown() {
-		return drivingPad.getY();
+		return -drivingPad.getY(); // Laika needs negative, Belka is positive
 	}	
 
 	public double getRightSideToSide() {

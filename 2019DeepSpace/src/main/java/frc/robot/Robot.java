@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
-
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
 
 public class Robot extends TimedRobot {
@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
     chassis = new Chassis();
     collector = new Collector();
     pivot = new Pivot();
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
     hatch = new Hatch();
     blinkin = new Blinkin();
     listener = new GripPipelineListener();
+    CameraServer.getInstance().startAutomaticCapture();
     // camera = new Camera();
     // visionThread = new VisionThread(camera.visionCam, new GripPipeline(),
     // listener);

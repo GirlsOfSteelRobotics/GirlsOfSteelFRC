@@ -12,9 +12,12 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class BabyLidarForward extends Command {
-  public BabyLidarForward() {
+  private double goalLidar;
+  public BabyLidarForward(double goalLidar) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.babyDrive);
+    this.goalLidar = goalLidar;
   }
 
   // Called just before this Command runs the first time
@@ -32,13 +35,14 @@ public class BabyLidarForward extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.babyDrive.checkBabyDriveDistance(); 
+   return (Robot.babyDrive.getLidarDistance() <= goalLidar + Robot.babyDrive.LIDAR_TOLERANCE && Robot.babyDrive.getLidarDistance() >= goalLidar - Robot.babyDrive.LIDAR_TOLERANCE);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
+    Robot.babyDrive.babyDriveStop();
+    System.out.println("BabyLidarForwards end");
   }
 
   // Called when another command which requires one or more of the same

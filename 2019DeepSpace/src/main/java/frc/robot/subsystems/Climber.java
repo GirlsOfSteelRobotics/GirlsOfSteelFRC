@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-// negative encoder ticks is down
+// NEGATIVE ENCODER TICKS IS BALLSCREW DOWN, ROBOT UP
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteLimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -32,57 +32,59 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
-  public static final double CLIMBER_UP = 1500.0;
-  public static final double CLIMBER_DOWN = 0.0;
-  public static final double CLIMBER_INCREMENT = -150;
+  public static final double CLIMBER_INCREMENT = 1500;
 
   public static final double CLIMBER_TOLERANCE = 100;
 
   public static final double FRONT_POSITION = 0; 
   public static final double BACK_POSITION = 0;
 
-  public static final double FIRST_GOAL_POS = 0.0; //TOOD; adjust this value
-  public static final double SECOND_GOAL_POS = 150.0; //TODO; adjust this value
-  public static final double THIRD_GOAL_POS = 200.0; //TODO; adjust this value 
+  public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
+  public static final double SECOND_GOAL_POS = -33000.0; //TODO; first estimate from quick measurement
+  public static final double THIRD_GOAL_POS = -78000.0; //TODO; first estimate 
+  //THIRD_GOAL_POS should be around -83000
+  public static final double ALL_TO_ZERO = 0.0;
 
-  private double frontPosition;
-  private double backPosition;
+  public double goalFrontPosition;
+  public double goalBackPosition;
 
   public Climber() {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
 
-    climberFront.setSensorPhase(false);
-    climberBack.setSensorPhase(false);
+    climberFront.setSensorPhase(true);
+    climberBack.setSensorPhase(true);
 
     climberFront.config_kF(0, 0, 10);
-    climberFront.config_kP(0, 1.5, 10);
+    climberFront.config_kP(0, 1.0, 10); //1.0 works for manual control
     climberFront.config_kI(0, 0, 10);
-    climberFront.config_kD(0, 15, 10);
+    climberFront.config_kD(0, 0, 10);
 
     climberBack.config_kF(0, 0, 10);
-    climberBack.config_kP(0, 1.5, 10);
+    climberBack.config_kP(0, 0.85, 10); //.85
     climberBack.config_kI(0, 0, 10);
-    climberBack.config_kD(0, 15, 10);
+    climberBack.config_kD(0, 0, 10);
 
     climberFront.setNeutralMode(NeutralMode.Brake);
     climberBack.setNeutralMode(NeutralMode.Brake);
 
-    // climberFront.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+    // Limit Switches On
+    // climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
     //     RobotMap.DRIVE_LEFT_MASTER_TALON);
-    // climberBack.configForwardLimitSwitchSource(LimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
+    // climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
     //     RobotMap.DRIVE_RIGHT_MASTER_TALON);
 
-    climberFront.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
+    // Limit Switches Off
+    climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
       RobotMap.DRIVE_LEFT_MASTER_TALON);
-    climberBack.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen,
+    climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
        RobotMap.DRIVE_RIGHT_MASTER_TALON);
   }
 
   // the value in set expiration is in SECONDS not milliseconds
   public void setGoalClimberPosition(double pos) {
-    climberFront.set(ControlMode.Position, pos);
-    climberBack.set(ControlMode.Position, pos);
+    goalFrontPosition = pos;
+    goalBackPosition = pos;
   }
 
   public void climberStop() {
@@ -99,23 +101,28 @@ public class Climber extends Subsystem {
   }
 
   public boolean checkCurrentFrontPosition(double goalFrontPos){
-    boolean isFinished = (goalFrontPos <= getFrontPosition() + CLIMBER_TOLERANCE && goalFrontPos >= getFrontPosition()- CLIMBER_TOLERANCE);
-    System.out.println("climber front positon check isFinished " + isFinished);
+    boolean isFinished = (goalFrontPos + CLIMBER_TOLERANCE >= getFrontPosition()  && goalFrontPos - CLIMBER_TOLERANCE <= getFrontPosition());
+    //System.out.println("climber front positon check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentBackPosition(double goalBackPos){
-    boolean isFinished = (goalBackPos <= getBackPosition() + CLIMBER_TOLERANCE && goalBackPos >= getBackPosition() - CLIMBER_TOLERANCE);
-    System.out.println("climber back position check isFinished " + isFinished);
+    boolean isFinished = (goalBackPos + CLIMBER_TOLERANCE >= getBackPosition() && goalBackPos - CLIMBER_TOLERANCE <= getBackPosition());
+    //System.out.println("climber back position check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentPosition(double goalPos){
-    boolean isFinished = (goalPos <= getFrontPosition() + 500 
-      && goalPos  >= getFrontPosition() - CLIMBER_TOLERANCE)
-      && (goalPos  <= getBackPosition() + CLIMBER_TOLERANCE 
-      && goalPos >= getBackPosition() - CLIMBER_TOLERANCE);
-    System.out.println("climber isFinished: " + isFinished);
+    boolean isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()  
+      && goalPos - CLIMBER_TOLERANCE  <= getFrontPosition() )
+      && (goalPos + CLIMBER_TOLERANCE >= getBackPosition()  
+      && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
+    // System.out.println("climber isFinished: " + isFinished);
+    // System.out.println("front upper: " + ((goalPos + CLIMBER_TOLERANCE) >= getFrontPosition()));
+    // System.out.println("front lower: " + ((goalPos - CLIMBER_TOLERANCE)  <= getFrontPosition()));
+    // System.out.println("down upper: " + ((goalPos + CLIMBER_TOLERANCE) >= getBackPosition()));
+    // System.out.println("down lower: " + ((goalPos - CLIMBER_TOLERANCE) <= getBackPosition()));
+
     return isFinished;
   }
 
@@ -125,30 +132,35 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberFrontPosition() {
-    climberFront.set(ControlMode.Position, frontPosition);
+    climberFront.set(ControlMode.Position, goalFrontPosition);
   }
 
   public void holdClimberBackPosition() {
-    climberBack.set(ControlMode.Position, backPosition);
+    climberBack.set(ControlMode.Position, goalBackPosition);
+  }
+
+  public void holdClimberAllPosition(){
+    climberBack.set(ControlMode.Position, goalBackPosition);
+    climberFront.set(ControlMode.Position, goalFrontPosition);
   }
   
   public void incrementFrontClimber() {
-    frontPosition = getFrontPosition(); 
-    frontPosition += CLIMBER_INCREMENT;
+    goalFrontPosition = getFrontPosition(); 
+    goalFrontPosition += CLIMBER_INCREMENT;
   }
 
   public void decrementFrontClimber() {
-    frontPosition = getFrontPosition(); 
-    frontPosition -= CLIMBER_INCREMENT;
+    goalFrontPosition = getFrontPosition(); 
+    goalFrontPosition -= CLIMBER_INCREMENT;
   }
   public void incrementBackClimber() {
-    backPosition = getBackPosition(); 
-    backPosition += CLIMBER_INCREMENT;
+    goalBackPosition = getBackPosition(); 
+    goalBackPosition += CLIMBER_INCREMENT;
   }
 
   public void decrementBackClimber() {
-    backPosition = getBackPosition(); 
-    backPosition -= CLIMBER_INCREMENT;
+    goalBackPosition = getBackPosition(); 
+    goalBackPosition -= CLIMBER_INCREMENT;
   }
   public void incrementAllClimber() {
     incrementFrontClimber();

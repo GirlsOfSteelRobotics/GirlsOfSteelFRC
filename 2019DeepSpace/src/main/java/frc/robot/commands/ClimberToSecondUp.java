@@ -28,14 +28,18 @@ public class ClimberToSecondUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.holdClimberPosition();
+    System.out.println("goal front position: " + Robot.climber.goalFrontPosition + "actual front position: " + Robot.climber.getFrontPosition());
+    System.out.println("goal back position" + Robot.climber.goalBackPosition + "actual back position: " + Robot.climber.getBackPosition());
 
+    Robot.climber.holdClimberPosition();
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return Robot.climber.checkCurrentPosition(Robot.climber.SECOND_GOAL_POS);
+  
   }
 
   // Called once after isFinished returns true

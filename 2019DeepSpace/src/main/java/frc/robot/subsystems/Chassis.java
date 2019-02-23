@@ -22,7 +22,13 @@ public class Chassis extends Subsystem {
 	private WPI_TalonSRX driveRight_B;
 	
 	private DifferentialDrive drive;
-	private LidarLitePWM lidarLite;
+
+	private LidarLitePWM lidar;
+	
+	public double LIDAR_TOLERANCE = 1; //tune
+
+
+	private double speed = 1; //tune this!!
 
 	public Chassis () {
 		masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
@@ -55,7 +61,7 @@ public class Chassis extends Subsystem {
 		drive.setExpiration(0.1);
 		drive.setMaxOutput(0.8);
 
-		lidarLite = new LidarLitePWM(RobotMap.LIDAR_LITE_DIO);
+		lidar = new LidarLitePWM(RobotMap.LIDAR_LITE_DIO);
 	}
 
 	// Put methods for controlling this subsystem
@@ -79,7 +85,21 @@ public class Chassis extends Subsystem {
     	SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
     	drive.arcadeDrive(yDir, xDir);
 	}
-    
+	
+	public void driveForward(){
+		driveLeft_A.set(speed);//TODO; ADJUST SPEED
+		driveRight_A.set(speed); //TODO: ADJUST SPEED
+	}
+
+	public void driveBackwards(){
+		driveLeft_A.set(-speed);//TODO; ADJUST SPEED
+		driveRight_A.set(-speed); //TODO: ADJUST SPEED
+	}
+	
+	public double getLidarDistance(){
+		return lidar.getDistance(); 
+	  }
+
     public void stop() {
     	drive.stopMotor(); 
 	}
