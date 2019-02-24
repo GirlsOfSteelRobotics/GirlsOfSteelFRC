@@ -21,6 +21,7 @@ public class Robot extends TimedRobot {
   public static LidarLitePWM sensorLidarLitePWM;
   public static GripPipeline pipeline;
   public static GripPipelineListener listener;
+  private VisionThread visionThread;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -34,12 +35,11 @@ public class Robot extends TimedRobot {
     blinkin = new Blinkin();
     camera = new Camera();
     sensorLidarLitePWM = new LidarLitePWM(0);
-    pipeline = new GripPipeline();
     listener = new GripPipelineListener();
     oi = new OI();
 
-    listener.copyPipelineOutputs(pipeline);
-    //sensor.writeData(0x00, sensor.readData(0x00, 1), 1);
+    visionThread = new VisionThread(camera.driveCam, new GripPipeline(), listener);
+    visionThread.start();
 
     System.out.println("RobotInitend");
 
