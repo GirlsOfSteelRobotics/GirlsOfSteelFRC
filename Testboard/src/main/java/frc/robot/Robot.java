@@ -30,10 +30,9 @@ public class Robot extends TimedRobot {
     sensor = new ColorSensor();
     blinkin = new Blinkin();
     camera = new Camera();
-    sensorLidarLitePWM = new LidarLitePWM(RobotMap.LIDAR_DIO);
-    listener = new GripPipelineListener();
     oi = new OI();
 
+    listener = new GripPipelineListener();
     visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
     visionThread.start();
 
