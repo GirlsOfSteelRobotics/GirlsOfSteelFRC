@@ -21,8 +21,8 @@ public class Hatch extends Subsystem {
 
 
   // TODO: tune all
-	public static final double HATCH_IN = .25; 
-	public static final double HATCH_OUT = .75;  
+	public static final double HATCH_OUT = .5; //
+	public static final double HATCH_IN = .65;  
 
   public Hatch() {
 		servo = new Servo(RobotMap.HATCH_PWMPORT);
@@ -41,13 +41,7 @@ public class Hatch extends Subsystem {
 
   public void setServoOut(){
     servo.set(HATCH_OUT);
-  }
-
-  public double getServoPosition() {
-    return servo.get();
-  }
-
-  
+  } 
 }
 
 
