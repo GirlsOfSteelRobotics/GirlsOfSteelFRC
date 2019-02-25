@@ -33,7 +33,7 @@ public class RobotMap {
 	public static final int CLIMBER_FRONT_TALON = 5;
 	public static final int CLIMBER_BACK_TALON = 10;
 
-	public static final int HATCH_RELAY = 0; 
+	public static final int HATCH_PWMPORT = 2; 
 
 	public static final int LIGHT_SENSOR_DIO = 0;
 	public static final int LIDAR_LITE_DIO = 1;
