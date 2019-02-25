@@ -32,7 +32,7 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
-  public static final double CLIMBER_INCREMENT = 1500;
+  public static final double CLIMBER_INCREMENT = 2000;
 
   public static final double CLIMBER_TOLERANCE = 100;
 
@@ -44,8 +44,8 @@ public class Climber extends Subsystem {
   public static final double THIRD_GOAL_POS = -78000.0; //THIRD_GOAL_POS should be around -83000
   public static final double ALL_TO_ZERO = 0.0;
 
-  public static final int MAX_CRUISE_VELOCITY = 10000;
-  public static final int MAX_ACCELERATION = 6000;
+  public static final int MAX_CRUISE_VELOCITY = 1500;
+  public static final int MAX_ACCELERATION = 1500;
 
   public double goalFrontPosition;
   public double goalBackPosition;
@@ -79,10 +79,10 @@ public class Climber extends Subsystem {
     climberBack.setNeutralMode(NeutralMode.Brake);
 
     // Limit Switches On
-    // climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-    //     RobotMap.DRIVE_LEFT_MASTER_TALON);
-    // climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyOpen,
-    //     RobotMap.DRIVE_RIGHT_MASTER_TALON);
+//     climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
+//         RobotMap.DRIVE_LEFT_MASTER_TALON);
+//     climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
+//         RobotMap.DRIVE_RIGHT_MASTER_TALON);
 
     // Limit Switches Off
     climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
@@ -142,11 +142,11 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberFrontPosition() {
-    climberFront.set(ControlMode.MotionMagic, goalFrontPosition);
+    climberFront.set(ControlMode.Position, goalFrontPosition);
   }
 
   public void holdClimberBackPosition() {
-    climberBack.set(ControlMode.MotionMagic, goalFrontPosition);
+    climberBack.set(ControlMode.Position, goalFrontPosition);
   }
   
   public void incrementFrontClimber() {

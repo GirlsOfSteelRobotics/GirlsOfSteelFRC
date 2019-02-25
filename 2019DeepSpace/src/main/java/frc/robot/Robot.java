@@ -17,7 +17,6 @@ public class Robot extends TimedRobot {
   public static GripPipelineListener listener;
   public static Camera camera;
   public static OI oi;
-
   private VisionThread visionThread;
 
   /**
@@ -26,7 +25,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
     chassis = new Chassis();
     collector = new Collector();
     pivot = new Pivot();
@@ -34,15 +32,16 @@ public class Robot extends TimedRobot {
     climber = new Climber();
     hatch = new Hatch();
     blinkin = new Blinkin();
-    listener = new GripPipelineListener();
-    CameraServer.getInstance().startAutomaticCapture();
-    // camera = new Camera();
-    // visionThread = new VisionThread(camera.visionCam, new GripPipeline(),
-    // listener);
+    camera = new Camera();
+   
+    // Create all subsystems BEFORE creating the Operator Interface (OI)
     oi = new OI();
-    System.out.println("Robot Init");
 
-    // visionThread.start();
+    listener = new GripPipelineListener();
+    visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
+    visionThread.start();
+
+    System.out.println("Robot Init finished");
   }
 
   /**
