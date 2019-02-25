@@ -137,7 +137,7 @@ public class OI {
 
 	}
 	public double getLeftUpAndDown() {
-		return -drivingPad.getY(); // Laika needs negative, Belka is positive
+		return drivingPad.getY(); // Laika needs negative, Belka is positive
 	}	
 
 	public double getRightSideToSide() {

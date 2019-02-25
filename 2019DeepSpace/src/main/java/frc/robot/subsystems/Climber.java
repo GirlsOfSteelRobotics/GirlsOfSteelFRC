@@ -59,12 +59,12 @@ public class Climber extends Subsystem {
 
     // PID
     climberFront.config_kF(0, 0, 10);
-    climberFront.config_kP(0, 1.0, 10);
+    climberFront.config_kP(0, 1.0, 10); //1.0 works for manual control on Belka
     climberFront.config_kI(0, 0, 10);
     climberFront.config_kD(0, 0, 10);
 
     climberBack.config_kF(0, 0, 10);
-    climberBack.config_kP(0, 0.85, 10);
+    climberBack.config_kP(0, 0.85, 10); //.85 works for manual control on Belka
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 0, 10);
 
