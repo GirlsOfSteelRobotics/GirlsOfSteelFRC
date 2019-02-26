@@ -8,15 +8,13 @@ import frc.robot.subsystems.Camera;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.vision.VisionThread;
-import frc.robot.LidarLitePWM;
 
 public class Robot extends TimedRobot {
-  public static ColorSensor sensor;
   public static OI oi;
   public static Motor motor;
   public static Camera camera;
   public static Blinkin blinkin;
-  public static LidarLitePWM sensorLidarLitePWM;
+  public static Lidar lidar;
   public static GripPipeline pipeline;
   public static GripPipelineListener listener;
   public static WPI_TalonSRX talon;
@@ -31,7 +29,6 @@ public class Robot extends TimedRobot {
     System.out.println("RobotInit started");
 
     motor = new Motor();
-    sensor = new ColorSensor();
     blinkin = new Blinkin();
     camera = new Camera();
     oi = new OI();

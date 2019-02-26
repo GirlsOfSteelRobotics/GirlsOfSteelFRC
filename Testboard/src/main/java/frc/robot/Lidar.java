@@ -3,10 +3,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-public class LidarLitePWM {
+public class Lidar {
 	private Counter counter;
 	
-	public LidarLitePWM (int dio) {
+	public Lidar (int dio) {
 		DigitalInput source = new DigitalInput(dio);
 		counter = new Counter(source);
 	    counter.setMaxPeriod(1.0);
@@ -23,7 +23,7 @@ public class LidarLitePWM {
 	public double getDistance() {
 		double cm;
 		while (counter.get() < 1) {
-			System.out.println("LidarLitePWM: waiting for distance measurement");
+			System.out.println("Lidar: waiting for distance measurement");
 		}
 		/* getPeriod returns time in seconds. The hardware resolution is microseconds.
 		 * The LIDAR-Lite unit sends a high signal for 10 microseconds per cm of distance.

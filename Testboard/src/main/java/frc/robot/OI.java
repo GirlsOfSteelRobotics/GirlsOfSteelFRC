@@ -37,7 +37,7 @@ public class OI {
 		blinkinTest.whenPressed(new TryBlinkin());
 
 		LidarLitePWM = new JoystickButton(drivingPad, 2);
-		LidarLitePWM.whenPressed(new ReadLidarLitePWM());
+		LidarLitePWM.whenPressed(new ReadLidar());
 
 		spinByLidar = new JoystickButton(drivingPad, 4);
 		spinByLidar.whenPressed(new SpinByLidar());
