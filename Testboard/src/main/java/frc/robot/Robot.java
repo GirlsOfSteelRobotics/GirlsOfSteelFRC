@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Camera;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.vision.VisionThread;
 import frc.robot.LidarLitePWM;
 
@@ -16,6 +19,7 @@ public class Robot extends TimedRobot {
   public static LidarLitePWM sensorLidarLitePWM;
   public static GripPipeline pipeline;
   public static GripPipelineListener listener;
+  public static WPI_TalonSRX talon;
   private VisionThread visionThread;
 
   /**
@@ -31,7 +35,6 @@ public class Robot extends TimedRobot {
     blinkin = new Blinkin();
     camera = new Camera();
     oi = new OI();
-
     listener = new GripPipelineListener();
     visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
     visionThread.start();

@@ -24,6 +24,8 @@ public class Motor extends Subsystem {
 
 	private final double speed = 0.5;
 
+	private final double slowSpeed = 0.25;
+
 	public double LIDAR_TOLERANCE = 1; //tune
 
 	
@@ -54,12 +56,15 @@ public class Motor extends Subsystem {
 		return lidar.getDistance(); 
 	  }
 		
-	public void motorGo(){
+	public void motorGoFast(){
 		mainMotor.set(speed);
+	}
+	public void motorGoSlow(){
+		mainMotor.set(slowSpeed);
 	}
 
     public void stop() {
 		mainMotor.stopMotor();
-    }
+	}
 }
 
