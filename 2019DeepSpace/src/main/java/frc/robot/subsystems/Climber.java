@@ -41,11 +41,15 @@ public class Climber extends Subsystem {
 
   public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
   public static final double SECOND_GOAL_POS = -33000.0; //tested and good
-  public static final double THIRD_GOAL_POS = -78000.0; //THIRD_GOAL_POS should be around -83000
+  public static final double THIRD_GOAL_POS = -82000.0;
+  //-78000.0; 
+  //THIRD_GOAL_POS should be around -83000
   public static final double ALL_TO_ZERO = 0.0;
 
-  public static final int MAX_CRUISE_VELOCITY = 1500;
-  public static final int MAX_ACCELERATION = 1500;
+  public static final int MAX_CRUISE_VELOCITY = 1884;
+  //1500
+  public static final int MAX_ACCELERATION = 3588;
+  //1500
 
   public double goalFrontPosition;
   public double goalBackPosition;
@@ -58,13 +62,13 @@ public class Climber extends Subsystem {
     climberBack.setSensorPhase(true);
 
     // PID
-    climberFront.config_kF(0, 0, 10);
-    climberFront.config_kP(0, 1.0, 10); //1.0 works for manual control on Belka
+    climberFront.config_kF(0, 0.4072, 10);
+    climberFront.config_kP(0, 1.5, 10); //1.0 works for manual control on Belka
     climberFront.config_kI(0, 0, 10);
     climberFront.config_kD(0, 0, 10);
 
-    climberBack.config_kF(0, 0, 10);
-    climberBack.config_kP(0, 0.85, 10); //.85 works for manual control on Belka
+    climberBack.config_kF(0, 0.4072, 10);
+    climberBack.config_kP(0, 1.5, 10); //.85 works for manual control on Belka
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 0, 10);
 
@@ -142,11 +146,11 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberFrontPosition() {
-    climberFront.set(ControlMode.Position, goalFrontPosition);
+    climberFront.set(ControlMode.MotionMagic, goalFrontPosition);
   }
 
   public void holdClimberBackPosition() {
-    climberBack.set(ControlMode.Position, goalFrontPosition);
+    climberBack.set(ControlMode.MotionMagic, goalFrontPosition);
   }
   
   public void incrementFrontClimber() {
