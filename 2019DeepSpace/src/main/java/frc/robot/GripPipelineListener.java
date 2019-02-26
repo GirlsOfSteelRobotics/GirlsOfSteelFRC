@@ -32,7 +32,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 		Robot.camera.processedStream.putFrame(frame);
 
 		ArrayList<MatOfPoint> contours = pipeline.filterContoursOutput();
-		System.out.println("GripPipelineListener contours.size: " + contours.size());
+		//System.out.println("GripPipelineListener contours.size: " + contours.size());
 		synchronized (cameraLock) {
 			if (contours.size() == 2) {
 				Rect r0 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));

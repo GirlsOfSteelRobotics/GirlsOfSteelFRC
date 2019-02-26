@@ -22,7 +22,6 @@ public class HatchRelease extends Command {
   @Override
   protected void initialize() {
     System.out.println("init hatch release");
-    System.out.println("servo position "+ Robot.hatch.getServoPosition());
     Robot.hatch.setServoOut();
   }
 
@@ -41,7 +40,6 @@ public class HatchRelease extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("servo position "+ Robot.hatch.getServoPosition());
     System.out.println("end hatch release");
   }
 }

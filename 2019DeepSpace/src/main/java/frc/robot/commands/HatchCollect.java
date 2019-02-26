@@ -22,8 +22,7 @@ public class HatchCollect extends Command {
   @Override
   protected void initialize() {
     System.out.println("init hatch collect");
-    System.out.println("servo position "+ Robot.hatch.getServoPosition());
-    Robot.hatch.setServoOut();
+    Robot.hatch.setServoIn();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,7 +39,6 @@ public class HatchCollect extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("servo position "+ Robot.hatch.getServoPosition());
     System.out.println("end hatch collect");
   }
 }

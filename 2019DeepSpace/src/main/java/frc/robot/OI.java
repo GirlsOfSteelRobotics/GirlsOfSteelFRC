@@ -104,11 +104,11 @@ public class OI {
 		release.whileHeld(new CollectorRelease());
 
 		// Hatch buttons
-		// hatchCollect = new JoystickButton(operatingPad, 5);
-		// hatchCollect.whenPressed(new HatchCollect());
+		hatchCollect = new JoystickButton(operatingPad, 7);
+		hatchCollect.whenPressed(new HatchCollect());
 
-		// hatchRelease = new JoystickButton(operatingPad, 6);
-		// hatchRelease.whenPressed(new HatchRelease());
+		hatchRelease = new JoystickButton(operatingPad, 8);
+		hatchRelease.whenPressed(new HatchRelease());
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 7);
