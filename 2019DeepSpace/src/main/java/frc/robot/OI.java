@@ -63,14 +63,14 @@ public class OI {
 		operatingPad = new Joystick(1);
 
 		// Climber buttons
-		frontUp = new JoystickButton(drivingPad, 1);
-		frontUp.whileHeld(new ClimberFrontUp());
+		//frontUp = new JoystickButton(drivingPad, 1);
+		//frontUp.whileHeld(new ClimberFrontUp());
 		
-		frontDown = new JoystickButton(drivingPad, 2);
-		frontDown.whileHeld(new ClimberFrontDown());
+		//frontDown = new JoystickButton(drivingPad, 2);
+		//frontDown.whileHeld(new ClimberFrontDown());
 		
-		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whileHeld(new ClimberBackUp());
+		//backUp = new JoystickButton(drivingPad, 3);
+		//backUp.whileHeld(new ClimberBackUp());
 		
 		backDown = new JoystickButton(drivingPad, 4);
 		backDown.whileHeld(new ClimberBackDown());
@@ -87,14 +87,14 @@ public class OI {
 		//frontToZero = new JoystickButton(drivingPad, 4);
 		//frontToZero.whenPressed(new ClimberFrontToZero());
 
-		//toSecondUp = new JoystickButton(drivingPad, 1);
-		//toSecondUp.whenPressed(new ClimberToSecondUp());
+		toSecondUp = new JoystickButton(drivingPad, 1);
+		toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		// toThirdUp = new JoystickButton(drivingPad, 1);
-		// toThirdUp.whenPressed(new ClimberToThirdUp());
+		toThirdUp = new JoystickButton(drivingPad, 2);
+		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
-		//allToZero = new JoystickButton(drivingPad, 2);
-		//allToZero.whenPressed(new ClimberAllToZero());
+		allToZero = new JoystickButton(drivingPad, 3);
+		allToZero.whenPressed(new ClimberAllToZero());
 
 		// Collector buttons
 		collect = new JoystickButton(operatingPad, 5);
@@ -120,10 +120,10 @@ public class OI {
 		// Pivot buttons
 		// negative is down, positive is up
 		// must start up
-		pivotUp = new JoystickButton(operatingPad, 1);
+		pivotUp = new JoystickButton(operatingPad, 2);
 		pivotUp.whileHeld(new PivotUp());
 		
-		pivotDown = new JoystickButton(operatingPad, 2);
+		pivotDown = new JoystickButton(operatingPad, 1);
 		pivotDown.whileHeld(new PivotDown());
 
 		pivotGround = new JoystickButton(operatingPad, 3);
