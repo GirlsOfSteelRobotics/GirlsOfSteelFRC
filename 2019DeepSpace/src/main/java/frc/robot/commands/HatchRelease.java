@@ -21,9 +21,8 @@ public class HatchRelease extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.hatch.release();
-    Robot.blinkin.setLightPattern(LightPattern.HATCH_RELEASE);
     System.out.println("init hatch release");
+    Robot.hatch.setServoOut();
   }
 
   // Called repeatedly when this Command is scheduled to run
