@@ -40,6 +40,11 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 				targetX = ((r0.x + (r0.width / 2.0)) + (r1.x + (r1.width / 2.0)))/2.0;
 				height = (r0.height + r1.height)/2.0;
 			} 
+			else if(contours.size() == 1){
+				Rect rect = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+				targetX = rect.width/2.0;
+				height = rect.height/2.0;
+			}
 			else {
 				targetX = -1;
 				height = -1;
