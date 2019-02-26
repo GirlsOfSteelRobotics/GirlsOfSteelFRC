@@ -31,10 +31,11 @@ public class Robot extends TimedRobot {
     motor = new Motor();
     blinkin = new Blinkin();
     camera = new Camera();
+    lidar = new Lidar();
     oi = new OI();
-    listener = new GripPipelineListener();
-    visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
-    visionThread.start();
+    // listener = new GripPipelineListener();
+    // visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
+    // visionThread.start();
 
     System.out.println("RobotInit finished");
   }

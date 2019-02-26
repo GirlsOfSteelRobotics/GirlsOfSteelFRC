@@ -26,7 +26,7 @@ public class OI {
 	private Joystick drivingPad;
 	
 	private JoystickButton blinkinTest;
-	private JoystickButton LidarLitePWM;
+	private JoystickButton readLidar;
 	private JoystickButton spinByLidar;
 	private JoystickButton driveByVision;
 
@@ -36,8 +36,8 @@ public class OI {
 		blinkinTest = new JoystickButton(drivingPad, 1);
 		blinkinTest.whenPressed(new TryBlinkin());
 
-		LidarLitePWM = new JoystickButton(drivingPad, 2);
-		LidarLitePWM.whenPressed(new ReadLidar());
+		readLidar = new JoystickButton(drivingPad, 2);
+		readLidar.whenPressed(new ReadLidar());
 
 		spinByLidar = new JoystickButton(drivingPad, 4);
 		spinByLidar.whenPressed(new SpinByLidar());
