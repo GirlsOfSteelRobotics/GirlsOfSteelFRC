@@ -24,9 +24,9 @@ import frc.robot.commands.*;
 public class OI {
 
 	private Joystick drivingPad;
+	
 	private JoystickButton blinkinTest;
 	private JoystickButton LidarLitePWM;
-	private JoystickButton readLightSensor;
 	private JoystickButton spinByLidar;
 	private JoystickButton driveByVision;
 
@@ -35,13 +35,14 @@ public class OI {
 
 		blinkinTest = new JoystickButton(drivingPad, 1);
 		blinkinTest.whenPressed(new TryBlinkin());
+
 		LidarLitePWM = new JoystickButton(drivingPad, 2);
 		LidarLitePWM.whenPressed(new ReadLidarLitePWM());
-		readLightSensor = new JoystickButton(drivingPad, 3);
-		readLightSensor.whenPressed(new ReadLightSensor());
+
 		spinByLidar = new JoystickButton(drivingPad, 4);
 		spinByLidar.whenPressed(new SpinByLidar());
+
 		driveByVision = new JoystickButton(drivingPad, 5);
 		driveByVision.whenPressed(new DriveByVision());
-  	}
+	}
 }
