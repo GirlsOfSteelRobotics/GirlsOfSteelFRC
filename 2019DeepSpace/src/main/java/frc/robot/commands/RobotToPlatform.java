@@ -9,23 +9,24 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
 
-public class RobotToThird extends CommandGroup {
+public class RobotToPlatform extends CommandGroup {
 
-    private final double BABY_LIDAR_FORWARD_1 = 100;
-    private final double BABY_LIDAR_FORWARD_2 = 20;
-    private final double FULL_LIDAR_DRIVE_FORWARD = 150;
+    private final double BABY_LIDAR_FORWARD_1 = 110.6;
+    private final double BABY_LIDAR_FORWARD_2 = 66.15;
 
-  public RobotToThird() {
-    addSequential(new ClimberAllUp());
+  public RobotToPlatform(int platform) {
+    
+    if (platform == 3)
+      addSequential(new ClimberToThirdUp());
+    else
+      addSequential(new ClimberToSecondUp());
+
     addSequential(new BabyLidarForward(BABY_LIDAR_FORWARD_1)); //make this into a constant
-    addSequential(new ClimberFrontUp());
+    addSequential(new ClimberFrontToZero());
     addSequential(new BabyLidarForward(BABY_LIDAR_FORWARD_2));
-    addSequential(new ClimberBackUp());
-    addSequential(new LidarDriveForward(FULL_LIDAR_DRIVE_FORWARD));
+    addSequential(new ClimberBackToZero());
   }
 
 }

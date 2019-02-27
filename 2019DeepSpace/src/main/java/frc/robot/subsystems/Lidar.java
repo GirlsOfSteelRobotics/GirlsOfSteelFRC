@@ -10,7 +10,6 @@ import frc.robot.RobotMap;
 public class Lidar extends Subsystem{
 	
 	public double LIDAR_TOLERANCE = 1; // tune
-	public static final double GOAL_LIDAR = 5;
 	private Counter counter;
 	
 	public Lidar () {

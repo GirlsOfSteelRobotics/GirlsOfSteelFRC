@@ -39,18 +39,22 @@ public class OI {
 	private JoystickButton toThirdUp; 
 
 	private JoystickButton allToZero;
+	private JoystickButton frontToZero;
+	private JoystickButton backToZero;
+
+	private JoystickButton robotToThird;
+	private JoystickButton robotToSecond;
+
+	private JoystickButton driveLidarForward; // for testing purposes only
+
+	private JoystickButton babyDriveForward; 
+	private JoystickButton babyDriveBackward;
 
 	private JoystickButton collect;
 	private JoystickButton release;
 
-	private JoystickButton frontToZero;
-	private JoystickButton backToZero;
-
 	private JoystickButton hatchCollect;
 	private JoystickButton hatchRelease;
-
-	private JoystickButton babyDriveForward; 
-	private JoystickButton babyDriveBackward;
 
 	private JoystickButton pivotUp;
 	private JoystickButton pivotDown;
@@ -63,14 +67,14 @@ public class OI {
 		operatingPad = new Joystick(1);
 
 		// Climber buttons
-		//frontUp = new JoystickButton(drivingPad, 1);
-		//frontUp.whileHeld(new ClimberFrontUp());
+		frontUp = new JoystickButton(drivingPad, 1);
+		frontUp.whileHeld(new ClimberFrontUp());
 		
-		//frontDown = new JoystickButton(drivingPad, 2);
-		//frontDown.whileHeld(new ClimberFrontDown());
+		frontDown = new JoystickButton(drivingPad, 2);
+		frontDown.whileHeld(new ClimberFrontDown());
 		
-		//backUp = new JoystickButton(drivingPad, 3);
-		//backUp.whileHeld(new ClimberBackUp());
+		backUp = new JoystickButton(drivingPad, 3);
+		backUp.whileHeld(new ClimberBackUp());
 		
 		backDown = new JoystickButton(drivingPad, 4);
 		backDown.whileHeld(new ClimberBackDown());
@@ -87,14 +91,30 @@ public class OI {
 		//frontToZero = new JoystickButton(drivingPad, 4);
 		//frontToZero.whenPressed(new ClimberFrontToZero());
 
-		toSecondUp = new JoystickButton(drivingPad, 1);
-		toSecondUp.whenPressed(new ClimberToSecondUp());
+		// toSecondUp = new JoystickButton(drivingPad, 1);
+		// toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		toThirdUp = new JoystickButton(drivingPad, 2);
-		toThirdUp.whenPressed(new ClimberToThirdUp());
+		// toThirdUp = new JoystickButton(drivingPad, 2);
+		// toThirdUp.whenPressed(new ClimberToThirdUp());
 	
-		allToZero = new JoystickButton(drivingPad, 3);
-		allToZero.whenPressed(new ClimberAllToZero());
+		// allToZero = new JoystickButton(drivingPad, 3);
+		// allToZero.whenPressed(new ClimberAllToZero());
+
+		robotToSecond = new JoystickButton(drivingPad, 9);
+		robotToSecond.whenPressed(new RobotToPlatform(2));
+
+		driveLidarForward = new JoystickButton(drivingPad, 10);
+		driveLidarForward.whenPressed(new LidarDriveForward(25));
+
+		// robotToThird = new JoystickButton(drivingPad, 10);
+		// robotToThird.whenPressed(new RobotToPlatform(3));
+
+		// BabyDrive buttons
+		babyDriveForward = new JoystickButton(drivingPad, 7);
+		babyDriveForward.whileHeld(new BabyDriveForward());
+
+		babyDriveBackward = new JoystickButton(drivingPad, 8);
+		babyDriveBackward.whileHeld(new BabyDriveBackwards());
 
 		// Collector buttons
 		collect = new JoystickButton(operatingPad, 5);
@@ -109,13 +129,6 @@ public class OI {
 
 		hatchRelease = new JoystickButton(operatingPad, 8);
 		hatchRelease.whenPressed(new HatchRelease());
-
-		// BabyDrive buttons
-		babyDriveForward = new JoystickButton(drivingPad, 7);
-		babyDriveForward.whileHeld(new BabyDriveForward());
-
-		babyDriveBackward = new JoystickButton(drivingPad, 8);
-		babyDriveBackward.whileHeld(new BabyDriveBackwards());
 
 		// Pivot buttons
 		// negative is down, positive is up

@@ -21,7 +21,7 @@ public class Hatch extends Subsystem {
 
 
   // TODO: tune all
-	public static final double HATCH_OUT = .5; //
+	public static final double HATCH_OUT = .5; // needs to be adjusted
 	public static final double HATCH_IN = .65;  
 
   public Hatch() {

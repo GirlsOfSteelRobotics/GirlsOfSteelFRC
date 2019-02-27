@@ -33,12 +33,12 @@ public class RobotMap {
 	public static final int CLIMBER_FRONT_TALON = 5;
 	public static final int CLIMBER_BACK_TALON = 10;
 
-	public static final int HATCH_PWMPORT = 2; 
-
-	public static final int LIDAR = 1;
+	public static final int LIDAR = 0;
 
 	public static final int BLINKIN_LEFT_PWM = 0;
 	public static final int BLINKIN_RIGHT_PWM = 1;
+
+	public static final int HATCH_PWMPORT = 2; 
 
 	public static final int VISION_CAMERA = 0; 
 

@@ -12,29 +12,35 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LidarDriveBackwards extends Command {
+
+  private double goalLidar;
+
   public LidarDriveBackwards(double goalLidar) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.chassis);
     requires(Robot.lidar);
+
+    goalLidar = this.goalLidar;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("init DriveLidarBackwards");
+    System.out.println("DriveLidarBackwards init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chassis.driveBackwards(); 
+    Robot.chassis.drive(.2); 
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   return (Robot.chassis.getLidarDistance() <= Lidar.GOAL_LIDAR + Robot.chassis.LIDAR_TOLERANCE && Robot.chassis.getLidarDistance() >= Lidar.GOAL_LIDAR - Robot.chassis.LIDAR_TOLERANCE);
+   return (Robot.lidar.getDistance() <=  + Robot.lidar.LIDAR_TOLERANCE 
+    && Robot.lidar.getDistance() >= goalLidar - Robot.lidar.LIDAR_TOLERANCE);
   }
 
   // Called once after isFinished returns true

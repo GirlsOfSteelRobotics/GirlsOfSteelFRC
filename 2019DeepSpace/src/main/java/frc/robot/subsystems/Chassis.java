@@ -11,57 +11,38 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.subsystems.*;
+
 public class Chassis extends Subsystem {
 
 	private WPI_TalonSRX masterLeft;
-	private WPI_TalonSRX driveLeft_A;
-	private WPI_TalonSRX driveLeft_B;
+	private WPI_TalonSRX followerLeft;
 
 	private WPI_TalonSRX masterRight;
-	private WPI_TalonSRX driveRight_A;
-	private WPI_TalonSRX driveRight_B;
+	private WPI_TalonSRX followerRight;
 	
 	private DifferentialDrive drive;
 
-	private Lidar lidar;
-	
-	public double LIDAR_TOLERANCE = 1; //tune
-
-
-	private double speed = 1; //tune this!!
-
 	public Chassis () {
 		masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
-		driveLeft_A = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_TALON);
+		followerLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_TALON);
 
-		//driveLeft_B = new WPI_TalonSRX(RobotMap.LEFT_DRIVE_B_PORT);
-
-		
 		masterRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MASTER_TALON); 
-		driveRight_A = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_TALON); 
-
-		//driveRight_B = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE_B_PORT); 
+		followerRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_TALON); 
 		
 		masterLeft.setNeutralMode(NeutralMode.Brake);
-		driveLeft_A.setNeutralMode(NeutralMode.Brake);
-		//driveLeft_B.setNeutralMode(NeutralMode.Brake);
+		followerLeft.setNeutralMode(NeutralMode.Brake);
 
 		masterRight.setNeutralMode(NeutralMode.Brake);
-		driveRight_A.setNeutralMode(NeutralMode.Brake);
-		//driveRight_B.setNeutralMode(NeutralMode.Brake);
+		followerRight.setNeutralMode(NeutralMode.Brake);
 		
-		driveLeft_A.follow(masterLeft, FollowerType.PercentOutput); 
-		//driveLeft_B.follow(masterLeft, FollowerType.PercentOutput);
+		followerLeft.follow(masterLeft, FollowerType.PercentOutput);
 		
-		driveRight_A.follow(masterRight, FollowerType.PercentOutput);
-		//driveRight_B.follow(masterRight, FollowerType.PercentOutput); 
+		followerRight.follow(masterRight, FollowerType.PercentOutput);
 		
 		drive = new DifferentialDrive(masterLeft, masterRight);
 		drive.setSafetyEnabled(true);
 		drive.setExpiration(0.1);
 		drive.setMaxOutput(0.8);
-
-		lidar = new Lidar();
 	}
 
 	// Put methods for controlling this subsystem
@@ -74,11 +55,11 @@ public class Chassis extends Subsystem {
 	}
 	
 	public WPI_TalonSRX getLeftTalon(){
-		return driveLeft_A;
+		return followerLeft;
 	}
 
 	public WPI_TalonSRX getRightTalon(){
-		return driveRight_A;
+		return followerRight;
 	}
     
     public void driveByJoystick(double yDir, double xDir) {
@@ -86,19 +67,10 @@ public class Chassis extends Subsystem {
     	drive.arcadeDrive(yDir, xDir);
 	}
 	
-	public void driveForward(){
-		driveLeft_A.set(speed);//TODO; ADJUST SPEED
-		driveRight_A.set(speed); //TODO: ADJUST SPEED
+	public void drive(double speed){
+		followerLeft.set(speed);
+		followerRight.set(speed);
 	}
-
-	public void driveBackwards(){
-		driveLeft_A.set(-speed);//TODO; ADJUST SPEED
-		driveRight_A.set(-speed); //TODO: ADJUST SPEED
-	}
-	
-	public double getLidarDistance(){
-		return lidar.getDistance(); 
-	  }
 
     public void stop() {
     	drive.stopMotor(); 
