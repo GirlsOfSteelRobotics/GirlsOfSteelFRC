@@ -16,6 +16,7 @@ public class Robot extends TimedRobot {
   public static Blinkin blinkin;
   public static GripPipelineListener listener;
   public static Camera camera;
+  public static Lidar lidar;
   public static OI oi;
   private VisionThread visionThread;
 
@@ -33,7 +34,7 @@ public class Robot extends TimedRobot {
     hatch = new Hatch();
     blinkin = new Blinkin();
     camera = new Camera();
-   
+    lidar = new Lidar();
     // Create all subsystems BEFORE creating the Operator Interface (OI)
     oi = new OI();
 

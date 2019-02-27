@@ -35,8 +35,7 @@ public class RobotMap {
 
 	public static final int HATCH_PWMPORT = 2; 
 
-	public static final int LIGHT_SENSOR_DIO = 0;
-	public static final int LIDAR_LITE_DIO = 1;
+	public static final int LIDAR = 1;
 
 	public static final int BLINKIN_LEFT_PWM = 0;
 	public static final int BLINKIN_RIGHT_PWM = 1;

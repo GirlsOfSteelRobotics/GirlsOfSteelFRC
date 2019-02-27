@@ -7,19 +7,16 @@
 
 package frc.robot.commands;
 
-import frc.robot.LidarLitePWM; 
+import frc.robot.subsystems.*; 
 import frc.robot.Robot; 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LidarDriveForward extends Command {
-
-  private double goalLidar;
-
   public LidarDriveForward(double goalLidar) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.chassis);
-    this.goalLidar = goalLidar;
+    requires(Robot.lidar);
   }
 
   // Called just before this Command runs the first time
@@ -37,7 +34,7 @@ public class LidarDriveForward extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   return (Robot.chassis.getLidarDistance() <= goalLidar + Robot.chassis.LIDAR_TOLERANCE && Robot.chassis.getLidarDistance() >= goalLidar - Robot.chassis.LIDAR_TOLERANCE);
+   return (Robot.chassis.getLidarDistance() <= Lidar.GOAL_LIDAR + Robot.chassis.LIDAR_TOLERANCE && Robot.chassis.getLidarDistance() >= Lidar.GOAL_LIDAR - Robot.chassis.LIDAR_TOLERANCE);
   }
 
   // Called once after isFinished returns true

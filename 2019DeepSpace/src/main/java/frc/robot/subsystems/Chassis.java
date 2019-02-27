@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveByJoystick;
-import frc.robot.LidarLitePWM;
+import frc.robot.subsystems.*;
 public class Chassis extends Subsystem {
 
 	private WPI_TalonSRX masterLeft;
@@ -23,7 +23,7 @@ public class Chassis extends Subsystem {
 	
 	private DifferentialDrive drive;
 
-	private LidarLitePWM lidar;
+	private Lidar lidar;
 	
 	public double LIDAR_TOLERANCE = 1; //tune
 
@@ -61,7 +61,7 @@ public class Chassis extends Subsystem {
 		drive.setExpiration(0.1);
 		drive.setMaxOutput(0.8);
 
-		lidar = new LidarLitePWM(RobotMap.LIDAR_LITE_DIO);
+		lidar = new Lidar();
 	}
 
 	// Put methods for controlling this subsystem

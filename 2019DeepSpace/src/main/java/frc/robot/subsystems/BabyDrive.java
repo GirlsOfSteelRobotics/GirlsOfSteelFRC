@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap; 
-import frc.robot.LidarLitePWM;
+import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -20,7 +20,7 @@ public class BabyDrive extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private LidarLitePWM lidar; 
+  private Lidar lidar; 
 
   private WPI_TalonSRX babyDriveTalon;
   private double speed = 0.5;
