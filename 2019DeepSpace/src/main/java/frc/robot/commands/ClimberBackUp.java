@@ -26,8 +26,8 @@ public class ClimberBackUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.holdClimberBackPosition();
     Robot.climber.incrementBackClimber();
+    Robot.climber.holdClimberBackPosition();
     //System.out.println("Back Position: " + Robot.climber.getBackPosition() + "goal Back Position" + Robot.climber.goalBackPosition);
   }
 

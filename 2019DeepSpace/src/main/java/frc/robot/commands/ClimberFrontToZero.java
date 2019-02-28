@@ -21,7 +21,7 @@ public class ClimberFrontToZero extends Command {
   @Override
   protected void initialize() {
     Robot.climber.setGoalClimberPosition(Robot.climber.FRONT_POSITION);
-    System.out.println("init Climber Front To Zero");
+    System.out.println("ClimberFrontToZero init");
 
   }
 
@@ -42,8 +42,7 @@ public class ClimberFrontToZero extends Command {
   @Override
   protected void end() {
     Robot.climber.climberStop();
-    System.out.println("end Climber Front To Zero");
-
+    System.out.println("ClimberFrontToZero end");
   }
 
 }

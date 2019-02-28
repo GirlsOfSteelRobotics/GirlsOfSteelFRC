@@ -5,28 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-//This command means that the entire robot goes UP
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RobotToPlatform extends CommandGroup {
 
-    private final double BABY_LIDAR_FORWARD_1 = 110.6;
-    private final double BABY_LIDAR_FORWARD_2 = 66.15;
+  private final double BABYDRIVE_FRONT_TO_PLATFORM = 117.3;
+  private final double BABYDRIVE_BACK_TO_PLATFORM = 70.15;
+  private final double ROBOT_ON_PLATFORM = 56.4;
 
   public RobotToPlatform(int platform) {
-    
+
     if (platform == 3)
       addSequential(new ClimberToThirdUp());
     else
       addSequential(new ClimberToSecondUp());
 
-    addSequential(new BabyLidarForward(BABY_LIDAR_FORWARD_1)); //make this into a constant
+    addSequential(new LidarDriveForward(BABYDRIVE_FRONT_TO_PLATFORM, false)); // make this into a constant
     addSequential(new ClimberFrontToZero());
-    addSequential(new BabyLidarForward(BABY_LIDAR_FORWARD_2));
+    addSequential(new LidarDriveForward(BABYDRIVE_BACK_TO_PLATFORM, false));
     addSequential(new ClimberBackToZero());
+    // addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM));
   }
 
 }

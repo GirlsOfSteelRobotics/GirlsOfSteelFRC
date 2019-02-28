@@ -79,11 +79,11 @@ public class OI {
 		backDown = new JoystickButton(drivingPad, 4);
 		backDown.whileHeld(new ClimberBackDown());
 		
-		allUp = new JoystickButton(drivingPad, 5);
-		allUp.whileHeld(new ClimberAllUp());
+		// allUp = new JoystickButton(drivingPad, 5);
+		// allUp.whileHeld(new ClimberAllUp());
 		
-		allDown = new JoystickButton(drivingPad, 6);
-		allDown.whileHeld(new ClimberAllDown());
+		// allDown = new JoystickButton(drivingPad, 6);
+		// allDown.whileHeld(new ClimberAllDown());
 	
 		//backToZero = new JoystickButton(drivingPad, 3);
 		//backToZero.whenPressed(new ClimberBackToZero());
@@ -94,20 +94,20 @@ public class OI {
 		// toSecondUp = new JoystickButton(drivingPad, 1);
 		// toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		// toThirdUp = new JoystickButton(drivingPad, 2);
-		// toThirdUp.whenPressed(new ClimberToThirdUp());
+		toThirdUp = new JoystickButton(drivingPad, 5);
+		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
-		// allToZero = new JoystickButton(drivingPad, 3);
-		// allToZero.whenPressed(new ClimberAllToZero());
+		allToZero = new JoystickButton(drivingPad, 6);
+		allToZero.whenPressed(new ClimberAllToZero());
 
 		robotToSecond = new JoystickButton(drivingPad, 9);
 		robotToSecond.whenPressed(new RobotToPlatform(2));
 
-		driveLidarForward = new JoystickButton(drivingPad, 10);
-		driveLidarForward.whenPressed(new LidarDriveForward(25));
+		// driveLidarForward = new JoystickButton(drivingPad, 10);
+		// driveLidarForward.whenPressed(new LidarDriveForward(115.6, false));
 
-		// robotToThird = new JoystickButton(drivingPad, 10);
-		// robotToThird.whenPressed(new RobotToPlatform(3));
+		robotToThird = new JoystickButton(drivingPad, 10);
+		robotToThird.whenPressed(new RobotToPlatform(3));
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 7);

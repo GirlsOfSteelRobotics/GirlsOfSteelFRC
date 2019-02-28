@@ -29,7 +29,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 		// Get a frame of video from the last step of the pipeline that deals with video 
 		// (before converting to a list of contours) and send it to the Processed stream
 		Mat frame = pipeline.cvErodeOutput();
-		Robot.camera.processedStream.putFrame(frame);
+		// Robot.camera.processedStream.putFrame(frame);
 
 		ArrayList<MatOfPoint> contours = pipeline.filterContoursOutput();
 		//System.out.println("GripPipelineListener contours.size: " + contours.size());

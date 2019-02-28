@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class BabyDriveBackwards extends Command {
+  private final double BABYDRIVE_SPEED = 0.4;
   public BabyDriveBackwards() {
     requires(Robot.babyDrive); 
     // Use requires() here to declare subsystem dependencies
@@ -27,7 +28,7 @@ public class BabyDriveBackwards extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.babyDrive.babyDriveForward(); 
+    Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED); 
   }
 
   // Make this return true when this Command no longer needs to run execute()

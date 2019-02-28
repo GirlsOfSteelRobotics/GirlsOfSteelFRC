@@ -43,8 +43,7 @@ public class ClimberAllUp extends Command {
   @Override
   protected void end() {
     Robot.climber.climberStop(); 
-    System.out.println("end All Up");
-
+    System.out.println("ClimberAllUp end");
   }
 
   

@@ -12,6 +12,8 @@ import frc.robot.Robot;
 
 
 public class BabyDriveForward extends Command {
+  private final double BABYDRIVE_SPEED = -0.4;
+  
   public BabyDriveForward() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -27,7 +29,7 @@ public class BabyDriveForward extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.babyDrive.babyDriveBackwards(); 
+    Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED); 
   }
 
   // Make this return true when this Command no longer needs to run execute()

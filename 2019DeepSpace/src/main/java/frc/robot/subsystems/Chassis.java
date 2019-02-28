@@ -36,7 +36,6 @@ public class Chassis extends Subsystem {
 		followerRight.setNeutralMode(NeutralMode.Brake);
 		
 		followerLeft.follow(masterLeft, FollowerType.PercentOutput);
-		
 		followerRight.follow(masterRight, FollowerType.PercentOutput);
 		
 		drive = new DifferentialDrive(masterLeft, masterRight);
@@ -55,11 +54,11 @@ public class Chassis extends Subsystem {
 	}
 	
 	public WPI_TalonSRX getLeftTalon(){
-		return followerLeft;
+		return masterLeft;
 	}
 
 	public WPI_TalonSRX getRightTalon(){
-		return followerRight;
+		return masterRight;
 	}
     
     public void driveByJoystick(double yDir, double xDir) {
@@ -67,9 +66,8 @@ public class Chassis extends Subsystem {
     	drive.arcadeDrive(yDir, xDir);
 	}
 	
-	public void drive(double speed){
-		followerLeft.set(speed);
-		followerRight.set(speed);
+	public void setSpeed(double speed){
+		drive.arcadeDrive(-speed, 0);
 	}
 
     public void stop() {

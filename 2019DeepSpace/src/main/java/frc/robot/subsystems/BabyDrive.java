@@ -27,12 +27,8 @@ public class BabyDrive extends Subsystem {
     babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
   }
 
-  public void babyDriveForward() {
-    babyDriveTalon.set(speed);// TODO; ADJUST SPEED
-  }
-
-  public void babyDriveBackwards() {
-    babyDriveTalon.set(-speed);// TODO; ADJUST SPEED
+  public void babyDriveSetSpeed(double speed) {
+    babyDriveTalon.set(speed);
   }
 
   public void babyDriveStop() {
