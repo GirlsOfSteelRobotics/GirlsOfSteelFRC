@@ -97,11 +97,11 @@ public class OI {
 		toThirdUp = new JoystickButton(drivingPad, 5);
 		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
-		allToZero = new JoystickButton(drivingPad, 6);
-		allToZero.whenPressed(new ClimberAllToZero());
+		// allToZero = new JoystickButton(drivingPad, 6);
+		// allToZero.whenPressed(new ClimberAllToZero());
 
-		robotToSecond = new JoystickButton(drivingPad, 9);
-		robotToSecond.whenPressed(new RobotToPlatform(2));
+		// robotToSecond = new JoystickButton(drivingPad, 9);
+		// robotToSecond.whenPressed(new RobotToPlatform(2));
 
 		// driveLidarForward = new JoystickButton(drivingPad, 10);
 		// driveLidarForward.whenPressed(new LidarDriveForward(115.6, false));
