@@ -13,7 +13,7 @@ public class Lidar extends Subsystem{
 	private Counter counter;
 	
 	public Lidar () {
-		DigitalInput source = new DigitalInput(RobotMap.LIDAR);
+		DigitalInput source = new DigitalInput(RobotMap.LIDAR_DIO);
 		counter = new Counter(source);
 	    counter.setMaxPeriod(1.0);
 	    // Configure for measuring rising to falling pulses

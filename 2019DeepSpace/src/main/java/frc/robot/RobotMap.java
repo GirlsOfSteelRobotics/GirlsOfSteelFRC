@@ -15,8 +15,7 @@ package frc.robot;
  */
 public class RobotMap {
 	
-	public static final int JOYSTICK_PORT = 0;
-	
+	// Talon SRX ID numbers	assigned via the Phoenix Tuning utility
 	public static final int DRIVE_LEFT_MASTER_TALON = 1; 
 	public static final int DRIVE_LEFT_FOLLOWER_TALON = 2; 
 	
@@ -33,25 +32,17 @@ public class RobotMap {
 	public static final int CLIMBER_FRONT_TALON = 5;
 	public static final int CLIMBER_BACK_TALON = 10;
 
-	public static final int LIDAR = 0;
+	// Digital Input/Output (DIO) Ports on the RoboRIO
+	public static final int LIDAR_DIO = 0;
 
+	// Pulse-width Modulation (PWM) Ports on the RoboRIO
 	public static final int BLINKIN_LEFT_PWM = 0;
 	public static final int BLINKIN_RIGHT_PWM = 1;
 
-	public static final int HATCH_PWMPORT = 2; 
+	public static final int HATCH_PWM = 2; 
 
-	public static final int VISION_CAMERA = 0; 
-
-	public static final int FRONT_LIMIT_SWITCH = 1;
-	public static final int BACK_LIMIT_SWITCH = 0;
-
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
-
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
+	// Camera numbers assigned by the USB driver 
+	// based on where they're plugged in
+	public static final int VISION_CAMERA = 0;
+	public static final int DRIVER_CAMERA = 1;
 }

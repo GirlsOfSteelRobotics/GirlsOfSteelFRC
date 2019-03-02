@@ -25,7 +25,7 @@ public class Hatch extends Subsystem {
 	public static final double HATCH_IN = .65;  
 
   public Hatch() {
-		servo = new Servo(RobotMap.HATCH_PWMPORT);
+		servo = new Servo(RobotMap.HATCH_PWM);
 		LiveWindow.add(servo);
 	}
 
