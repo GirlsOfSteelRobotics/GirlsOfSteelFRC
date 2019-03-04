@@ -24,7 +24,7 @@ public class Camera extends Subsystem {
 		processedStream = CameraServer.getInstance().putVideo("Processed", 320, 240);
 
 		// Start a stream for the second camera viewed by the driver/operator
-		driverCam = CameraServer.getInstance().startAutomaticCapture("Vision Camera", RobotMap.DRIVER_CAMERA);
+		CameraServer.getInstance().addServer("Driver Camera", RobotMap.DRIVER_CAMERA);
 	}
 
 	public void initDefaultCommand() {
