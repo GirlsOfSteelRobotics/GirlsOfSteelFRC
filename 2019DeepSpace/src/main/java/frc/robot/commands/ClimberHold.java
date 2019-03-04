@@ -5,15 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-//This command means that the entire robot goes DOWN
+//This command means that the entire robot goes UP
 
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ClimberAllDown extends Command {
-  public ClimberAllDown() {
+public class ClimberHold extends Command {
+  public ClimberHold() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.climber);
@@ -22,14 +22,13 @@ public class ClimberAllDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("init All Down");
+    System.out.println("ClimberHold init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.climber.holdClimberPosition();
-    Robot.climber.decrementAllClimber();
     //System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
   }
 
@@ -43,8 +42,6 @@ public class ClimberAllDown extends Command {
   @Override
   protected void end() {
     Robot.climber.climberStop(); 
-    System.out.println("end All Down");
+    System.out.println("ClimberHold end");
   }
-
- 
 }

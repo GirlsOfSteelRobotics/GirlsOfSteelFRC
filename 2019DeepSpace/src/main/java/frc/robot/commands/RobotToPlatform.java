@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RobotToPlatform extends CommandGroup {
 
   private final double BABYDRIVE_FRONT_TO_PLATFORM = 117.3;
-  private final double BABYDRIVE_BACK_TO_PLATFORM = 70.15;
+  private final double BABYDRIVE_BACK_TO_PLATFORM = 65.15;
   private final double ROBOT_ON_PLATFORM = 56.4;
 
   public RobotToPlatform(int platform) {

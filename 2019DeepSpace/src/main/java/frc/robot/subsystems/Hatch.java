@@ -20,8 +20,8 @@ public class Hatch extends Subsystem {
   private Servo servo; 
 
   // TODO: tune these to be near physical limits for in and out positions
-	public static final double HATCH_OUT = 0.55;
-	public static final double HATCH_IN = 0.77;  
+	public static final double HATCH_OUT = 0.5;
+	public static final double HATCH_IN = 0.75;  
 
   public Hatch() {
 		servo = new Servo(RobotMap.HATCH_PWM);

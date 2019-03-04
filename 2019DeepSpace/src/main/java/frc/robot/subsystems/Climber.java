@@ -9,6 +9,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
+import frc.robot.commands.ClimberHold;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -100,8 +101,9 @@ public class Climber extends Subsystem {
   }
 
   public void climberStop() {
-    climberFront.stopMotor();
-    climberBack.stopMotor();
+    goalFrontPosition = getFrontPosition();
+    goalBackPosition = getBackPosition();
+    holdClimberPosition();
   }
 
   public double getFrontPosition() {
@@ -148,7 +150,7 @@ public class Climber extends Subsystem {
   }
 
   public void holdClimberBackPosition() {
-    climberBack.set(ControlMode.MotionMagic, goalFrontPosition);
+    climberBack.set(ControlMode.MotionMagic, goalBackPosition);
   }
   
   public void incrementFrontClimber() {
@@ -182,7 +184,7 @@ public class Climber extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    
+    setDefaultCommand(new ClimberHold());
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
