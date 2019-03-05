@@ -20,11 +20,10 @@ public class Camera extends Subsystem {
 		visionCam.setResolution(320, 240);
 		visionCam.setFPS(10);
 		visionCam.setExposureManual(16);
+		// Start a stream for the second camera viewed by the driver/operator
+		CameraServer.getInstance().startAutomaticCapture("Driver Camera", RobotMap.DRIVER_CAMERA);
 		// Create a second Camera Server stream that we'll fill with processed frames in GripPipelineListener
 		processedStream = CameraServer.getInstance().putVideo("Processed", 320, 240);
-
-		// Start a stream for the second camera viewed by the driver/operator
-		CameraServer.getInstance().addServer("Driver Camera", RobotMap.DRIVER_CAMERA);
 	}
 
 	public void initDefaultCommand() {
