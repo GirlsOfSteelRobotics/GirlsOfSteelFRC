@@ -7,12 +7,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RobotToPlatform extends CommandGroup {
 
   private final double BABYDRIVE_FRONT_TO_PLATFORM = 117.3;
-  private final double BABYDRIVE_BACK_TO_PLATFORM = 65.15;
+  private final double BABYDRIVE_BACK_TO_PLATFORM = 62.25;
   private final double ROBOT_ON_PLATFORM = 56.4;
 
   public RobotToPlatform(int platform) {
@@ -24,8 +25,10 @@ public class RobotToPlatform extends CommandGroup {
 
     addSequential(new LidarDriveForward(BABYDRIVE_FRONT_TO_PLATFORM, false)); // make this into a constant
     addSequential(new ClimberFrontToZero());
-    addSequential(new LidarDriveForward(BABYDRIVE_BACK_TO_PLATFORM, false));
+    addSequential(new LidarDriveForward(BABYDRIVE_BACK_TO_PLATFORM, true));
     addSequential(new ClimberBackToZero());
+    addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM, true));
+
     // addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM));
   }
 
