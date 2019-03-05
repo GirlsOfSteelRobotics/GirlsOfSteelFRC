@@ -100,8 +100,8 @@ public class OI {
 		// allToZero = new JoystickButton(drivingPad, 6);
 		// allToZero.whenPressed(new ClimberAllToZero());
 
-		// robotToSecond = new JoystickButton(drivingPad, 9);
-		// robotToSecond.whenPressed(new RobotToPlatform(2));
+		robotToSecond = new JoystickButton(drivingPad, 9);
+		robotToSecond.whenPressed(new RobotToPlatform(2));
 
 		robotToThird = new JoystickButton(drivingPad, 10);
 		robotToThird.whenPressed(new RobotToPlatform(3));
