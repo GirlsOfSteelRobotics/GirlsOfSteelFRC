@@ -45,8 +45,6 @@ public class OI {
 	private JoystickButton robotToThird;
 	private JoystickButton robotToSecond;
 
-	private JoystickButton driveLidarForward; // for testing purposes only
-
 	private JoystickButton babyDriveForward; 
 	private JoystickButton babyDriveBackward;
 
