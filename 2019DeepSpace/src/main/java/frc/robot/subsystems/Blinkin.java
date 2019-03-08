@@ -6,14 +6,15 @@ import frc.robot.RobotMap;
 
 public class Blinkin extends Subsystem {
     private Spark leftLightController;
+    private Spark left2LightController;
     private Spark rightLightController;
 
     private static final double CONFETTI = -0.87;
     private static final double RAINBOW_WITH_GLITTER = -0.89;
-    private static final double SOLID_GREEN = 0.77;
+    private static final double COLOR_WAVES = 0.53;
 
     public enum LightPattern {
-        AUTO_DEFAULT, TELEOP_DEFAULT, HATCH_RELEASE,
+        AUTO_DEFAULT, TELEOP_DEFAULT, END_GAME,
     }
 
     public Blinkin() {
@@ -33,7 +34,13 @@ public class Blinkin extends Subsystem {
             leftLightController = null;
         }
 
- 
+        try {
+            left2LightController = new Spark(RobotMap.BLINKIN_LEFT2_PWN);
+            System.out.println("Left 2 Light Controller");
+        } catch (Exception e) {
+            System.out.println("No blink in in " + RobotMap.BLINKIN_LEFT2_PWN + ", error: " + e);
+            left2LightController = null;
+        }
     }
 
     // Put methods for controlling this subsystem
@@ -49,20 +56,26 @@ public class Blinkin extends Subsystem {
         case AUTO_DEFAULT:
             if (leftLightController != null)
                 leftLightController.set(CONFETTI);
+            if (left2LightController != null)
+                left2LightController.set(CONFETTI);
             if (rightLightController != null)
                 rightLightController.set(CONFETTI);
             break;
         case TELEOP_DEFAULT:
             if (leftLightController != null)
                 leftLightController.set(RAINBOW_WITH_GLITTER);
+            if (left2LightController != null)
+                left2LightController.set(RAINBOW_WITH_GLITTER);
             if (rightLightController != null)
                 rightLightController.set(RAINBOW_WITH_GLITTER);
             break;
-        case HATCH_RELEASE:
+        case END_GAME:
             if (leftLightController != null)
-                leftLightController.set(SOLID_GREEN);
+                leftLightController.set(COLOR_WAVES);
+            if (left2LightController != null)
+                left2LightController.set(COLOR_WAVES);
             if (rightLightController != null)
-                rightLightController.set(SOLID_GREEN);
+                rightLightController.set(COLOR_WAVES);
             break;
         default:
             break;

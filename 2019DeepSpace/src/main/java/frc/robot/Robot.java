@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
@@ -101,7 +102,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
-
   }
 
   /**
@@ -110,8 +110,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    if (DriverStation.getInstance().getMatchTime() <= 40)
+      Robot.blinkin.setLightPattern(Blinkin.LightPattern.END_GAME);
   }
-
   /**
    * This function is called periodically during test mode.
    */

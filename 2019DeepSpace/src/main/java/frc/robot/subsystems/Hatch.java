@@ -20,7 +20,7 @@ public class Hatch extends Subsystem {
   private Servo servo; 
 
   // TODO: tune these to be near physical limits for in and out positions
-	public static final double HATCH_OUT = 0.45;
+	public static final double HATCH_OUT = 0.48;
 	public static final double HATCH_IN = 0.72;  
 
   public Hatch() {

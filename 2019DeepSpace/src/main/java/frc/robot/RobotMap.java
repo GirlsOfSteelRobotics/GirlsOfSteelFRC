@@ -37,9 +37,10 @@ public class RobotMap {
 
 	// Pulse-width Modulation (PWM) Ports on the RoboRIO
 	public static final int BLINKIN_LEFT_PWM = 0;
-	public static final int BLINKIN_RIGHT_PWM = 1;
+	public static final int BLINKIN_LEFT2_PWN = 1;
+	public static final int BLINKIN_RIGHT_PWM = 2;
 
-	public static final int HATCH_PWM = 2; 
+	public static final int HATCH_PWM = 3; 
 
 	// Camera numbers assigned by the USB driver 
 	// based on where they're plugged in
