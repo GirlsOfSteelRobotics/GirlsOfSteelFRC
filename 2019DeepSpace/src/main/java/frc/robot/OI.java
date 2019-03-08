@@ -15,6 +15,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.*;
 
 /**
@@ -35,15 +36,15 @@ public class OI {
 	private JoystickButton allUp;
 	private JoystickButton allDown;
 
-	private JoystickButton toSecondUp; 
-	private JoystickButton toThirdUp; 
+	private POVButton toSecondUp; 
+	private POVButton toThirdUp; 
 
 	private JoystickButton allToZero;
 	private JoystickButton frontToZero;
 	private JoystickButton backToZero;
 
-	private JoystickButton robotToThird;
-	private JoystickButton robotToSecond;
+	private POVButton robotToThird;
+	private POVButton robotToSecond;
 
 	private JoystickButton lidarDrive; // testing purposes only
 
@@ -91,19 +92,19 @@ public class OI {
 		//frontToZero = new JoystickButton(drivingPad, 4);
 		//frontToZero.whenPressed(new ClimberFrontToZero());
 
-		toSecondUp = new JoystickButton(drivingPad, 9);
+		toSecondUp = new POVButton(drivingPad, 270);
 		toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		toThirdUp = new JoystickButton(drivingPad, 10);
+		toThirdUp = new POVButton(drivingPad, 90);
 		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
 		// allToZero = new JoystickButton(drivingPad, 6);
 		// allToZero.whenPressed(new ClimberAllToZero());
 
-		// robotToSecond = new JoystickButton(drivingPad, 9);
+		// robotToSecond = new POVButton(drivingPad, 270);
 		// robotToSecond.whenPressed(new RobotToPlatform(2));
 
-		// robotToThird = new JoystickButton(drivingPad, 10);
+		// robotToThird = new POVButton(drivingPad, 90);
 		// robotToThird.whenPressed(new RobotToPlatform(3));
 
 		// Lidar button (testing purposes only)
