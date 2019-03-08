@@ -33,7 +33,7 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
-  public static final double CLIMBER_INCREMENT = 2000;
+  public static final double CLIMBER_INCREMENT = 1500;
 
   public static final double CLIMBER_TOLERANCE = 100;
 
@@ -41,8 +41,9 @@ public class Climber extends Subsystem {
   public static final double BACK_POSITION = 0;
 
   public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
-  public static final double SECOND_GOAL_POS = -33000.0; // accurate on Belka
-  public static final double THIRD_GOAL_POS = -82000.0; // accurate on Belka
+  public static final double SECOND_GOAL_POS = -34000.0; // -30000 on Belka, -32000 on Laika
+  public static final double THIRD_GOAL_POS = -84000.0; // -82000 on Belka, -84000 on Laika
+
   public static final double ALL_TO_ZERO = 0.0;
 
   public static final int MAX_CRUISE_VELOCITY = 1884;

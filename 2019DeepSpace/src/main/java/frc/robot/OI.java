@@ -89,20 +89,20 @@ public class OI {
 		//frontToZero = new JoystickButton(drivingPad, 4);
 		//frontToZero.whenPressed(new ClimberFrontToZero());
 
-		// toSecondUp = new JoystickButton(drivingPad, 1);
-		// toSecondUp.whenPressed(new ClimberToSecondUp());
+		toSecondUp = new JoystickButton(drivingPad, 9);
+		toSecondUp.whenPressed(new ClimberToSecondUp());
 
-		// toThirdUp = new JoystickButton(drivingPad, 5);
-		// toThirdUp.whenPressed(new ClimberToThirdUp());
+		toThirdUp = new JoystickButton(drivingPad, 10);
+		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
 		// allToZero = new JoystickButton(drivingPad, 6);
 		// allToZero.whenPressed(new ClimberAllToZero());
 
-		robotToSecond = new JoystickButton(drivingPad, 9);
-		robotToSecond.whenPressed(new RobotToPlatform(2));
+		// robotToSecond = new JoystickButton(drivingPad, 9);
+		// robotToSecond.whenPressed(new RobotToPlatform(2));
 
-		robotToThird = new JoystickButton(drivingPad, 10);
-		robotToThird.whenPressed(new RobotToPlatform(3));
+		// robotToThird = new JoystickButton(drivingPad, 10);
+		// robotToThird.whenPressed(new RobotToPlatform(3));
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 7);
