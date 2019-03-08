@@ -45,6 +45,8 @@ public class OI {
 	private JoystickButton robotToThird;
 	private JoystickButton robotToSecond;
 
+	private JoystickButton lidarDrive; // testing purposes only
+
 	private JoystickButton babyDriveForward; 
 	private JoystickButton babyDriveBackward;
 
@@ -103,6 +105,10 @@ public class OI {
 
 		// robotToThird = new JoystickButton(drivingPad, 10);
 		// robotToThird.whenPressed(new RobotToPlatform(3));
+
+		// Lidar button (testing purposes only)
+		// lidarDrive = new JoystickButton(drivingPad, 9);
+		// lidarDrive.whenPressed(new LidarDriveForward(30, true));
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 8);

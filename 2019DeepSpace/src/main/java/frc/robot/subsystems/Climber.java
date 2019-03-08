@@ -33,7 +33,7 @@ public class Climber extends Subsystem {
   private WPI_TalonSRX climberFront;
   private WPI_TalonSRX climberBack;
 
-  public static final double CLIMBER_INCREMENT = 1500;
+  public static final double CLIMBER_INCREMENT = 2000;
 
   public static final double CLIMBER_TOLERANCE = 100;
 

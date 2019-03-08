@@ -26,9 +26,9 @@ public class Pivot extends Subsystem {
 
   // TODO: tune all
 	public static final double PIVOT_INCREMENT = 250; 
-	public static final double PIVOT_GROUND = -4143; //tested
-	public static final double PIVOT_ROCKET = -1852; //tested 
-	public static final double PIVOT_CARGO = -1091; //tested
+	public static final double PIVOT_GROUND = -4093; // -4143 (pre-MVR values)
+	public static final double PIVOT_ROCKET = -1852; // -1852
+	public static final double PIVOT_CARGO = -1191; // -1091
 	public static final double PIVOT_TOLERANCE = 100;
   
   public Pivot() {
