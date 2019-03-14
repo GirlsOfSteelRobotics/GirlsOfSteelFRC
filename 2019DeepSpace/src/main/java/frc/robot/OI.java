@@ -149,18 +149,14 @@ public class OI {
 
 		pivotShip = new JoystickButton (operatingPad, 10);
 		pivotShip.whenPressed(new PivotToShip());
-
 	}
+
 	public double getLeftUpAndDown() {
-		return drivingPad.getY();
+		return -drivingPad.getY();
 	}	
 
 	public double getRightSideToSide() {
-		return -drivingPad.getRawAxis(4);
+		return drivingPad.getRawAxis(4);
 	}
 	
 }
-
-
-
-
