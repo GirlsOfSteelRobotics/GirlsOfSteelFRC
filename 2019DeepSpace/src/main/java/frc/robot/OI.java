@@ -68,7 +68,7 @@ public class OI {
 		operatingPad = new Joystick(1);
 
 		// Climber buttons
-		frontToZero = new POVButton(drivingPad, 270);
+		frontToZero = new POVButton(drivingPad, 180);
 		frontToZero.whenPressed(new ClimberFrontToZero());
 		
 		frontDown = new JoystickButton(drivingPad, 2);
