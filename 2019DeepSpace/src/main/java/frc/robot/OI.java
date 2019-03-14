@@ -40,8 +40,8 @@ public class OI {
 	private POVButton toThirdUp; 
 
 	private JoystickButton allToZero;
-	private JoystickButton frontToZero;
-	private JoystickButton backToZero;
+	private POVButton frontToZero;
+	private POVButton backToZero;
 
 	private POVButton robotToThird;
 	private POVButton robotToSecond;
@@ -68,14 +68,14 @@ public class OI {
 		operatingPad = new Joystick(1);
 
 		// Climber buttons
-		frontUp = new JoystickButton(drivingPad, 1);
-		frontUp.whileHeld(new ClimberFrontUp());
+		frontToZero = new POVButton(drivingPad, 270);
+		frontToZero.whenPressed(new ClimberFrontToZero());
 		
 		frontDown = new JoystickButton(drivingPad, 2);
 		frontDown.whileHeld(new ClimberFrontDown());
 		
-		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whileHeld(new ClimberBackUp());
+		backToZero = new POVButton(drivingPad, 0);
+		backToZero.whenPressed(new ClimberBackToZero());
 		
 		backDown = new JoystickButton(drivingPad, 4);
 		backDown.whileHeld(new ClimberBackDown());
@@ -85,12 +85,12 @@ public class OI {
 		
 		allDown = new JoystickButton(drivingPad, 6);
 		allDown.whileHeld(new ClimberAllDown());
-	
-		//backToZero = new JoystickButton(drivingPad, 3);
-		//backToZero.whenPressed(new ClimberBackToZero());
-		
-		//frontToZero = new JoystickButton(drivingPad, 4);
-		//frontToZero.whenPressed(new ClimberFrontToZero());
+
+		frontUp = new JoystickButton(drivingPad, 1);
+		frontUp.whileHeld(new ClimberFrontUp());
+
+		backUp = new JoystickButton(drivingPad, 3);
+		backUp.whileHeld(new ClimberBackUp());
 
 		toSecondUp = new POVButton(drivingPad, 270);
 		toSecondUp.whenPressed(new ClimberToSecondUp());

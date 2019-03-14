@@ -44,6 +44,6 @@ public class RobotMap {
 
 	// Camera numbers assigned by the USB driver 
 	// based on where they're plugged in
-	public static final int VISION_CAMERA = 0;
-	public static final int DRIVER_CAMERA = 1;
+	public static final int DRIVER_CAMERA = 0;
+	public static final int VISION_CAMERA = 1;
 }
