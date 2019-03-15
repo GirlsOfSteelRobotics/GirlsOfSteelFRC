@@ -27,8 +27,10 @@ public class DriveByVision extends Command {
 	private final int TIMEOUT = 8;
 	private final int SLIPPING_VELOCITY = 850;
 	private Timer tim;
-	private double slowLinearVelocity = 22; // TODO: change (in/s)
-	private double fastLinearVelocity = 28; // TODO: change (in/s)
+	private double slowLinearVelocity = 220; // TODO: change (in/s)
+	private double fastLinearVelocity = 280; // TODO: change (in/s)
+
+	private double goalLidar = 82;
 
 	// width of X or Y in pixels when the robot is at the lift
 	// private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -52,17 +54,14 @@ public class DriveByVision extends Command {
 		// reset talon encoder reading to zero
 
 		// not calling setupFPID because other PID values override
-		leftTalon.set(ControlMode.Position, 0);
-		rightTalon.set(ControlMode.Position, 0);
-
-		// Change motor control to speed in the -1..+1 range
-		//Robot.chassis.setSpeedMode();
+		leftTalon.setSelectedSensorPosition(0);
+		rightTalon.setSelectedSensorPosition(0);
 
 		// tuned by janet and ziya on 2/20, overrides PID set in chassis method
-		 leftTalon.config_kF(0, 0.22); // carpet on practice field
-		 leftTalon.config_kP(0, 0.235);
-		 rightTalon.config_kF(0, 0.2);
-		 rightTalon.config_kP(0, 0.235);
+		leftTalon.config_kF(0, 0.22); // carpet on practice field
+		leftTalon.config_kP(0, 0.235);
+		rightTalon.config_kF(0, 0.2);
+		rightTalon.config_kP(0, 0.235);
 
 		System.out.println("DriveByVision Initialized");
 
@@ -73,10 +72,12 @@ public class DriveByVision extends Command {
 	protected void execute() {
 		double targetX;
 		double height;
+		double contoursNum; 
 
-		synchronized(Robot.listener.cameraLock){
+		synchronized (Robot.listener.cameraLock) {
 			targetX = Robot.listener.targetX;
 			height = Robot.listener.height;
+			contoursNum = Robot.listener.contours.size(); 
 		}
 
 		// the center of the x and y rectangles (the target)
@@ -85,7 +86,7 @@ public class DriveByVision extends Command {
 			goalAngularVelocity = 0;
 			SmartDashboard.putBoolean("Bay in Sight", false);
 		} else {
-			//double targetX = (centerX[0] + centerX[1]) / 2.0;
+			// double targetX = (centerX[0] + centerX[1]) / 2.0;
 			double error = (targetX - IMAGE_CENTER) / IMAGE_CENTER;
 			goalAngularVelocity = error * MAX_ANGULAR_VELOCITY;
 			SmartDashboard.putBoolean("Bay In Sight", true);
@@ -106,30 +107,32 @@ public class DriveByVision extends Command {
 		// right and left desired wheel speeds in inches per second
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; // (in/s)
 		double vLeft = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2;
-		
-		// right and left desired wheel speeds in RPM
-		double angVRight = 75 * vRight / (2 * Math.PI * WHEEL_RADIUS); // (RPM)
-		double angVLeft = 75 * vLeft / (2 * Math.PI * WHEEL_RADIUS);
-	
-		// send desired wheel speeds to Talon set to velocity control mode
-		rightTalon.set(angVRight);
-		leftTalon.set(-angVLeft);
 
-		if (targetX >= 0){
-			System.out.println("Number of Contours: " + 2/*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-					+ " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
-		}
-		else {
-			System.out.println("Number of Contours: " + "not 2" /*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-					+ " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
-		}
+		// right and left desired wheel speeds in RPM
+		double angVRight = vRight * 60 / (2 * Math.PI * WHEEL_RADIUS); // (RPM)
+		double angVLeft = vLeft * 60 / (2 * Math.PI * WHEEL_RADIUS);
+
+		// send desired wheel speeds to Talon set to velocity control mode
+		rightTalon.set(ControlMode.Velocity, -angVRight);
+		leftTalon.set(ControlMode.Velocity, angVLeft);
+
+		System.out.println("Number of Contours: " + contoursNum/* centerX.length */ + " Goal Linear Velocity: "
+			+ goalLinearVelocity + " Angular Velocity, right, left: " + angVRight + " , " + angVLeft + " Timer: " + tim.get());
+
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 
-		return ((tim.get() > 1 && Math.abs(leftTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY
-				&& Math.abs(rightTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY) || (tim.get() > TIMEOUT));
+		double error = Robot.lidar.getDistance() - goalLidar;
+		System.out.println("DriveByVisionLidar error: " + error);
+		return error <= Robot.lidar.LIDAR_TOLERANCE;
+
+		// return ((tim.get() > 1 && Math.abs(leftTalon.getSelectedSensorVelocity()) <
+		// SLIPPING_VELOCITY
+		// && Math.abs(rightTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY) ||
+		// (tim.get() > TIMEOUT));
 	}
 
 	// Called once after isFinished returns true

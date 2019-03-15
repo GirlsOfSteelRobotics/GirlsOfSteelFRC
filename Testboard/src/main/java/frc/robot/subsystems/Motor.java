@@ -24,6 +24,15 @@ public class Motor extends Subsystem {
 		// setDefaultCommand(new MyCommand());
 	}
 
+	public WPI_TalonSRX getTalon(){
+		return mainMotor; 
+	}
+
+	public void setSpeedMode() {
+		mainMotor.set(0.25);
+	}
+
+
 	public void motorGoFast() {
 		mainMotor.set(speed);
 	}

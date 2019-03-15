@@ -9,13 +9,20 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import frc.robot.subsystems.*;
+import frc.robot.GripPipelineListener;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Timer; 
+import edu.wpi.first.wpilibj.command.Command; 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.vision.VisionRunner.Listener;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveByVision extends Command {
-  
+
   public DriveByVision() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -27,6 +34,12 @@ public class DriveByVision extends Command {
   protected void initialize() {
     System.out.println("DriveByVision Initialized");
 
+  
+
+		// Change motor control to speed in the -1..+1 range
+		Robot.motor.setSpeedMode();
+
+		System.out.println("DriveByVision Initialized");
   }
 
   // Called repeatedly when this Command is scheduled to run

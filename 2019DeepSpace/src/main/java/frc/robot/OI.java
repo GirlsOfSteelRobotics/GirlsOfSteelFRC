@@ -63,6 +63,8 @@ public class OI {
 	private JoystickButton pivotRocket;
 	private JoystickButton pivotShip;
 
+	private JoystickButton driveByVision; 
+
 	public OI() {
 		drivingPad = new Joystick(0);
 		operatingPad = new Joystick(1);
@@ -107,9 +109,9 @@ public class OI {
 		// robotToThird = new POVButton(drivingPad, 90);
 		// robotToThird.whenPressed(new RobotToPlatform(3));
 
-		// Lidar button (testing purposes only)
-		// lidarDrive = new JoystickButton(drivingPad, 9);
-		// lidarDrive.whenPressed(new LidarDriveForward(30, true));
+		//Lidar button (testing purposes only)
+		lidarDrive = new JoystickButton(drivingPad, 9);
+		lidarDrive.whenPressed(new LidarDriveForward(82, true));
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 8);
@@ -149,6 +151,11 @@ public class OI {
 
 		pivotShip = new JoystickButton (operatingPad, 10);
 		pivotShip.whenPressed(new PivotToShip());
+
+		//DriveByVision button
+		driveByVision = new JoystickButton (operatingPad, 9); 
+		driveByVision.whenPressed(new DriveByVision()); 
+
 	}
 
 	public double getLeftUpAndDown() {
