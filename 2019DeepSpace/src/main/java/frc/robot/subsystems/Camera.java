@@ -21,7 +21,7 @@ public class Camera extends Subsystem {
 		
 		// Adjust the camera settings; most important is to reduce the exposure very low
 		visionCam.setResolution(320, 240);
-		visionCam.setFPS(10);
+		visionCam.setFPS(30);
 		visionCam.setExposureManual(16);
 	
 		// Create a Camera Server stream that we'll fill with processed frames in GripPipelineListener
