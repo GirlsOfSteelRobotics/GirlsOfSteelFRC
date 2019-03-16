@@ -11,12 +11,11 @@ public class Camera extends Subsystem {
 
 	public CvSource processedStream;
 	public UsbCamera visionCam;
-	private UsbCamera driverCam;
 
 	public Camera() {
 		// Start a stream for the camera viewed by the driver/operator
 		CameraServer.getInstance().startAutomaticCapture("Driver Camera", RobotMap.DRIVER_CAMERA);
-
+		
 		// Create a Camera Server video stream of the given name using the logical camera number
 		visionCam = CameraServer.getInstance().startAutomaticCapture("Vision Camera", RobotMap.VISION_CAMERA);
 		

@@ -43,13 +43,13 @@ public class Blinkin extends Subsystem {
         }
     }
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 
     public void setLightPattern(LightPattern pattern) {
         switch (pattern) {
@@ -80,13 +80,5 @@ public class Blinkin extends Subsystem {
         default:
             break;
         }
-    }
-
-    public void setOutputValue() {
-
-    }
-
-    public void stop() {
-
     }
 }
