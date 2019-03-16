@@ -40,8 +40,7 @@ public class Robot extends TimedRobot {
     System.out.println("RobotInit finished");
   }
 
-  double x = 0;
-  double y = 0;
+ 
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for
@@ -63,6 +62,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    camera.closeMovieFile();
   }
 
   @Override
@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
+    camera.openMovieFile();
   }
 
   /**
@@ -98,6 +99,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    camera.openMovieFile();
   }
 
   /**
