@@ -68,8 +68,9 @@ public class Chassis extends Subsystem {
 	}
     
     public void driveByJoystick(double yDir, double xDir) {
-    	SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
-    	drive.arcadeDrive(yDir, xDir, true);
+		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
+		double forward = yDir*Math.abs(yDir);
+    	drive.arcadeDrive(forward, xDir);
 	}
 	
 	public void setSpeed(double speed){
