@@ -27,6 +27,8 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 	public ArrayList<MatOfPoint> contours; 
     
     public void copyPipelineOutputs(GripPipeline pipeline) {
+		//record vision camera movie
+		Robot.camera.addFrame(Robot.camera.getVisionFrame());
 		// Get a frame of video from the last step of the pipeline that deals with video 
 		// (before converting to a list of contours) and send it to the Processed stream
 		Mat frame = pipeline.hslThresholdOutput();

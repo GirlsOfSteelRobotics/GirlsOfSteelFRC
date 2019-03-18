@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    camera.closeMovieFile();
   }
 
   @Override
@@ -88,7 +89,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
-
+    camera.openMovieFile();
   }
 
   /**
@@ -102,6 +103,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    camera.openMovieFile();
   }
 
   /**
