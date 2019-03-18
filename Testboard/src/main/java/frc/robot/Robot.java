@@ -33,14 +33,13 @@ public class Robot extends TimedRobot {
     camera = new Camera();
     lidar = new Lidar();
     oi = new OI();
+
     listener = new GripPipelineListener();
     visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
     visionThread.start();
 
     System.out.println("RobotInit finished");
   }
-
- 
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for
