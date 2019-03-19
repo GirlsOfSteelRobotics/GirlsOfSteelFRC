@@ -84,12 +84,18 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 			}
 
 			// goal pair is the closest (the pair with the largest area)
-			goalTargetPair = targetPairs.get(targetPairs.size() - 1);
-			targetX = goalTargetPair.getTargetCenterX();
-			height = goalTargetPair.getHeight();
+			if (targetPairs.size() <= 0) {
+				targetX = -1;
+				height = -1;
+			} else {
+				goalTargetPair = targetPairs.get(targetPairs.size() - 1);
+				targetX = goalTargetPair.getTargetCenterX();
+				height = goalTargetPair.getHeight();
+			}
 		}
 
 		// @Joe why does the editor catch this error first?
+		// puts a dot in the middle of target pair on the processed image for SmartDashboard
 		Imgproc.circle(frame, goalTargetPair.getTargetCenterPoint(), 6, new Scalar(255, 255, 255));
 		Robot.camera.processedStream.putFrame(frame);
 
