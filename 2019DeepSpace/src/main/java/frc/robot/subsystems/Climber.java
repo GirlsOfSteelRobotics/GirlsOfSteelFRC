@@ -46,7 +46,7 @@ public class Climber extends Subsystem {
 
   public static final double ALL_TO_ZERO = 0.0;
 
-  public static final int MAX_CRUISE_VELOCITY = 2300;
+  public static final int MAX_CRUISE_VELOCITY = 2300; // 17% faster than 1884
   public static final int MAX_ACCELERATION = 3588;
   //1500
 

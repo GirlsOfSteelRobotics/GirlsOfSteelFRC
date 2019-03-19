@@ -66,12 +66,14 @@ public class DriveByVision extends Command {
 	protected void execute() {
 		double targetX;
 		double height;
-		double contoursNum; 
+		int contoursNum;
+		int setsNum; 
 
 		synchronized (Robot.listener.cameraLock) {
 			targetX = Robot.listener.targetX;
 			height = Robot.listener.height;
 			contoursNum = Robot.listener.contours.size(); 
+			setsNum = Robot.listener.targetPairs.size();
 		}
 
 		// the center of the x and y rectangles (the target)
@@ -110,7 +112,8 @@ public class DriveByVision extends Command {
 		rightTalon.set(ControlMode.Velocity, -angVRight);
 		leftTalon.set(ControlMode.Velocity, angVLeft);
 
-		System.out.println("Number of Contours: " + contoursNum/* centerX.length */ + " Angular Velocity, right, left: " + angVRight + " , " + angVLeft + " Timer: " + tim.get());
+		System.out.println("Number of Contours: " + contoursNum + "Number of Sets: " + setsNum 
+			+ " Angular Velocity, right, left: " + angVRight + " , " + angVLeft + " Timer: " + tim.get());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
