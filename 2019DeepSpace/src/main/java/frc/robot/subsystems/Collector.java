@@ -24,8 +24,6 @@ public class Collector extends Subsystem {
         leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_TALON);
         rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT_TALON);
     }
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
     @Override
     public void initDefaultCommand() {
@@ -33,25 +31,25 @@ public class Collector extends Subsystem {
         // setDefaultCommand(new MySpecialCommand());
     }
 
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
+
     public void stop() {
         leftCollect.stopMotor();
         rightCollect.stopMotor();
-        System.out.println("Collector stopped motors");
     }
 
     public void collect() {
         leftCollect.set(-COLLECTOR_INTAKE_SPEED);
-        rightCollect.set(COLLECTOR_INTAKE_SPEED); // TODO: these two may need to be reversed
-
+        rightCollect.set(COLLECTOR_INTAKE_SPEED);
     }
 
     public void release() {
         leftCollect.set(COLLECTOR_RELEASE_SPEED);
-        rightCollect.set(-COLLECTOR_RELEASE_SPEED); // these two may need to be reversed
+        rightCollect.set(-COLLECTOR_RELEASE_SPEED);
     }
 
     public void slowCollect() {
-        System.out.println("Collector holding ball");
         leftCollect.set(-SLOW_COLLECTOR_SPEED);
         rightCollect.set(SLOW_COLLECTOR_SPEED);
     }

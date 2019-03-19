@@ -9,7 +9,7 @@ import frc.robot.RobotMap;
 
 public class Lidar extends Subsystem{
 	
-	public double LIDAR_TOLERANCE = 2; // tune
+	public double LIDAR_TOLERANCE = 0; // tune
 	private Counter counter;
 	
 	public Lidar () {
@@ -19,6 +19,11 @@ public class Lidar extends Subsystem{
 	    // Configure for measuring rising to falling pulses
 	    counter.setSemiPeriodMode(true);
 	    counter.reset();
+	}
+
+	@Override
+	protected void initDefaultCommand() {
+
 	}
 
 	/**
@@ -36,10 +41,5 @@ public class Lidar extends Subsystem{
 		 */
 		cm = (counter.getPeriod() * 1000000.0 / 10.0) - 18;
 		return cm;
-	}
-
-	@Override
-	protected void initDefaultCommand() {
-
 	}
 }

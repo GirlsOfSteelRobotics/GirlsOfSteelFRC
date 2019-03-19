@@ -4,7 +4,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,15 +50,15 @@ public class Chassis extends Subsystem {
 		drive.setMaxOutput(0.8);
 	}
 
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveByJoystick()); 
 	}
 	
+	// Put methods for controlling this subsystem
+    // here. Call these from Commands.
+
 	public WPI_TalonSRX getLeftTalon(){
 		return masterLeft;
 	}
@@ -69,12 +68,13 @@ public class Chassis extends Subsystem {
 	}
     
     public void driveByJoystick(double yDir, double xDir) {
-    	SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
-    	drive.arcadeDrive(yDir, xDir);
+		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
+		double forward = yDir*Math.abs(yDir);
+    	drive.arcadeDrive(forward, xDir);
 	}
 	
 	public void setSpeed(double speed){
-		drive.arcadeDrive(-speed, 0);
+		drive.arcadeDrive(speed, 0);
 	}
 
     public void stop() {

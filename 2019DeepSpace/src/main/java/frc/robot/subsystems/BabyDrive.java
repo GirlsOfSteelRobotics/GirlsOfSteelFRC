@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -17,15 +16,21 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * Add your docs here.
  */
 public class BabyDrive extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   private WPI_TalonSRX babyDriveTalon;
-  private double speed = 0.5;
 
   public BabyDrive() {
     babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
   }
+
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
+  }
+
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
   public void babyDriveSetSpeed(double speed) {
     babyDriveTalon.set(speed);
@@ -33,11 +38,5 @@ public class BabyDrive extends Subsystem {
 
   public void babyDriveStop() {
     babyDriveTalon.stopMotor();
-  }
-
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 }
