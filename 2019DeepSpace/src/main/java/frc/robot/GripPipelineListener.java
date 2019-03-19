@@ -45,6 +45,8 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 
 			}
 
+
+			
 			rotatedRects.sort(Comparator.comparing(p -> p.x)); 
 
 			targetX = (r0.center.x +  r1.center.x)/2.0;
