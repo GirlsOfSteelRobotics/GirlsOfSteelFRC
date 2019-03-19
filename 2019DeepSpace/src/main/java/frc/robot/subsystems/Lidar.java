@@ -21,6 +21,11 @@ public class Lidar extends Subsystem{
 	    counter.reset();
 	}
 
+	@Override
+	protected void initDefaultCommand() {
+
+	}
+
 	/**
 	 * Take a measurement and return the distance in cm
 	 * 
@@ -36,10 +41,5 @@ public class Lidar extends Subsystem{
 		 */
 		cm = (counter.getPeriod() * 1000000.0 / 10.0) - 18;
 		return cm;
-	}
-
-	@Override
-	protected void initDefaultCommand() {
-
 	}
 }

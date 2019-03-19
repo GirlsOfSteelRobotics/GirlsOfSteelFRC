@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.MotorStop;
 
 public class Motor extends Subsystem {
 
@@ -21,7 +22,7 @@ public class Motor extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MyCommand());
+		setDefaultCommand(new MotorStop());
 	}
 
 	public WPI_TalonSRX getTalon(){

@@ -10,12 +10,12 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import frc.robot.commands.ClimberHold;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteLimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -46,8 +46,7 @@ public class Climber extends Subsystem {
 
   public static final double ALL_TO_ZERO = 0.0;
 
-  public static final int MAX_CRUISE_VELOCITY = 1884;
-  //1500
+  public static final int MAX_CRUISE_VELOCITY = 2300;
   public static final int MAX_ACCELERATION = 3588;
   //1500
 
@@ -81,18 +80,13 @@ public class Climber extends Subsystem {
 
     climberFront.setNeutralMode(NeutralMode.Brake);
     climberBack.setNeutralMode(NeutralMode.Brake);
+  }
 
-    // Limit Switches On
-//     climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
-//         RobotMap.DRIVE_LEFT_MASTER_TALON);
-//     climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
-//         RobotMap.DRIVE_RIGHT_MASTER_TALON);
-
-    // Limit Switches Off
-    climberFront.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
-      RobotMap.DRIVE_LEFT_MASTER_TALON);
-    climberBack.configReverseLimitSwitchSource(RemoteLimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed,
-       RobotMap.DRIVE_RIGHT_MASTER_TALON);
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ClimberHold());
   }
 
   // the value in set expiration is in SECONDS not milliseconds
@@ -116,13 +110,15 @@ public class Climber extends Subsystem {
   }
 
   public boolean checkCurrentFrontPosition(double goalFrontPos){
-    boolean isFinished = (goalFrontPos + CLIMBER_TOLERANCE >= getFrontPosition()  && goalFrontPos - CLIMBER_TOLERANCE <= getFrontPosition());
+    boolean isFinished = (goalFrontPos + CLIMBER_TOLERANCE >= getFrontPosition()  && 
+                          goalFrontPos - CLIMBER_TOLERANCE <= getFrontPosition());
     //System.out.println("climber front positon check isFinished " + isFinished);
     return isFinished;
   }
 
   public boolean checkCurrentBackPosition(double goalBackPos){
-    boolean isFinished = (goalBackPos + CLIMBER_TOLERANCE >= getBackPosition() && goalBackPos - CLIMBER_TOLERANCE <= getBackPosition());
+    boolean isFinished = (goalBackPos + CLIMBER_TOLERANCE >= getBackPosition() && 
+                          goalBackPos - CLIMBER_TOLERANCE <= getBackPosition());
     //System.out.println("climber back position check isFinished " + isFinished);
     return isFinished;
   }
@@ -148,10 +144,12 @@ public class Climber extends Subsystem {
 
   public void holdClimberFrontPosition() {
     climberFront.set(ControlMode.MotionMagic, goalFrontPosition);
+    SmartDashboard.putNumber("Climber Front Velocity", climberFront.getSelectedSensorVelocity());
   }
 
   public void holdClimberBackPosition() {
     climberBack.set(ControlMode.MotionMagic, goalBackPosition);
+    SmartDashboard.putNumber("Climber Back Velocity", climberBack.getSelectedSensorVelocity());
   }
   
   public void incrementFrontClimber() {
@@ -173,6 +171,7 @@ public class Climber extends Subsystem {
     goalBackPosition = getBackPosition(); 
     goalBackPosition -= CLIMBER_INCREMENT;
   }
+
   public void incrementAllClimber() {
     incrementFrontClimber();
     incrementBackClimber();
@@ -181,12 +180,5 @@ public class Climber extends Subsystem {
   public void decrementAllClimber() {
     decrementFrontClimber();
     decrementBackClimber();
-  }
-
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new ClimberHold());
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 }

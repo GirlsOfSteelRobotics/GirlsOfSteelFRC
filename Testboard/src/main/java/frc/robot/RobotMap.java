@@ -9,7 +9,8 @@ package frc.robot;
 public class RobotMap {
 	public static final int MAIN_MOTOR_TALON = 1;
 
-	public static final int VISION_CAMERA = 0;
+	public static final int DRIVER_CAMERA = 0;
+	public static final int VISION_CAMERA = 1;
 
 	public static final int BLINKIN_LEFT_PWM = 0;
 	public static final int BLINKIN_RIGHT_PWM = 1;

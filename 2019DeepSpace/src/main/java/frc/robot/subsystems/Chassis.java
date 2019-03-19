@@ -50,15 +50,15 @@ public class Chassis extends Subsystem {
 		drive.setMaxOutput(0.8);
 	}
 
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveByJoystick()); 
 	}
 	
+	// Put methods for controlling this subsystem
+    // here. Call these from Commands.
+
 	public WPI_TalonSRX getLeftTalon(){
 		return masterLeft;
 	}
@@ -68,8 +68,9 @@ public class Chassis extends Subsystem {
 	}
     
     public void driveByJoystick(double yDir, double xDir) {
-    	SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
-    	drive.arcadeDrive(yDir, xDir, true);
+		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
+		double forward = yDir*Math.abs(yDir);
+    	drive.arcadeDrive(forward, xDir);
 	}
 	
 	public void setSpeed(double speed){

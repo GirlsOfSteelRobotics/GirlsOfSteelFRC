@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import frc.robot.GripPipelineListener;
 import frc.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -8,27 +7,22 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class DriveByVision extends Command {
-
-	NetworkTable table;
-
-	private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust
-	// (rad/s) current
-	// value works
+	
+	private static final double MAX_ANGULAR_VELOCITY = 2.5; // TODO: adjust (rad/s) current
 	private static final int IMAGE_WIDTH = 320;
 	private static final double IMAGE_CENTER = IMAGE_WIDTH / 2.0;
 	double[] defaultValue = new double[0];
 	private final int TIMEOUT = 8;
 	private final int SLIPPING_VELOCITY = 850;
 	private Timer tim;
-	private double slowLinearVelocity = 220; // TODO: change (in/s)
-	private double fastLinearVelocity = 280; // TODO: change (in/s)
+	private double slowLinearVelocity = 28; // (in/s)
+	private double fastLinearVelocity = 22; // (in/s)
 
 	private double goalLidar = 82;
 
@@ -99,7 +93,7 @@ public class DriveByVision extends Command {
 			goalLinearVelocity = fastLinearVelocity;
 		else if (height < 0) {
 			goalLinearVelocity = slowLinearVelocity;
-		} else if (height >= 52.0)
+		} else if (height >= 100.0)
 			goalLinearVelocity = slowLinearVelocity;
 		else
 			goalLinearVelocity = fastLinearVelocity;
@@ -108,18 +102,15 @@ public class DriveByVision extends Command {
 		double vRight = goalLinearVelocity - (WHEEL_BASE * goalAngularVelocity) / 2; // (in/s)
 		double vLeft = goalLinearVelocity + (WHEEL_BASE * goalAngularVelocity) / 2;
 
-		// right and left desired wheel speeds in RPM
-		double angVRight = vRight * 60 / (2 * Math.PI * WHEEL_RADIUS); // (RPM)
-		double angVLeft = vLeft * 60 / (2 * Math.PI * WHEEL_RADIUS);
+		// right and left desired wheel speeds in sensor units (which is 4096 ticks per rotation) per 100 milliseconds
+		double angVRight = (vRight * 4096) / (2 * Math.PI * WHEEL_RADIUS * 10); // (ticks/100ms)
+		double angVLeft = (vLeft * 4096) / (2 * Math.PI * WHEEL_RADIUS * 10);
 
 		// send desired wheel speeds to Talon set to velocity control mode
 		rightTalon.set(ControlMode.Velocity, -angVRight);
 		leftTalon.set(ControlMode.Velocity, angVLeft);
 
-		System.out.println("Number of Contours: " + contoursNum/* centerX.length */ + " Goal Linear Velocity: "
-			+ goalLinearVelocity + " Angular Velocity, right, left: " + angVRight + " , " + angVLeft + " Timer: " + tim.get());
-
-		
+		System.out.println("Number of Contours: " + contoursNum/* centerX.length */ + " Angular Velocity, right, left: " + angVRight + " , " + angVLeft + " Timer: " + tim.get());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

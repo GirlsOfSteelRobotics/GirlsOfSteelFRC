@@ -39,7 +39,7 @@ public class OI {
 	private POVButton toSecondUp; 
 	private POVButton toThirdUp; 
 
-	private JoystickButton allToZero;
+	private POVButton allToZero;
 	private POVButton frontToZero;
 	private POVButton backToZero;
 
@@ -100,7 +100,7 @@ public class OI {
 		toThirdUp = new POVButton(drivingPad, 90);
 		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
-		// allToZero = new JoystickButton(drivingPad, 6);
+		// allToZero = new POVButton(drivingPad, 180);
 		// allToZero.whenPressed(new ClimberAllToZero());
 
 		// robotToSecond = new POVButton(drivingPad, 270);
@@ -110,8 +110,8 @@ public class OI {
 		// robotToThird.whenPressed(new RobotToPlatform(3));
 
 		//Lidar button (testing purposes only)
-		lidarDrive = new JoystickButton(drivingPad, 9);
-		lidarDrive.whenPressed(new LidarDriveForward(82, true));
+		// lidarDrive = new JoystickButton(drivingPad, 9);
+		// lidarDrive.whenPressed(new LidarDriveForward(82, true));
 
 		// BabyDrive buttons
 		babyDriveForward = new JoystickButton(drivingPad, 8);
@@ -152,10 +152,9 @@ public class OI {
 		pivotShip = new JoystickButton (operatingPad, 10);
 		pivotShip.whenPressed(new PivotToShip());
 
-		//DriveByVision button
+		// DriveByVision button
 		driveByVision = new JoystickButton (operatingPad, 9); 
 		driveByVision.whenPressed(new DriveByVision()); 
-
 	}
 
 	public double getLeftUpAndDown() {
