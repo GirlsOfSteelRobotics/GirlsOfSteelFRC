@@ -110,8 +110,15 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    if (DriverStation.getInstance().getMatchTime() <= 40)
-      Robot.blinkin.setLightPattern(Blinkin.LightPattern.END_GAME);
+    Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    double timeRemaining = DriverStation.getInstance().getMatchTime();
+    //System.out.println("Robot match time: " + DriverStation.getInstance().getMatchTime());
+    if (timeRemaining <= 30) {
+      Robot.blinkin.setLightPattern(Blinkin.LightPattern.THIRTY_CLIMB);
+    } else if (timeRemaining <= 40) {
+      Robot.blinkin.setLightPattern(Blinkin.LightPattern.FORTY_CLIMB);
+    }
+
   }
   /**
    * This function is called periodically during test mode.

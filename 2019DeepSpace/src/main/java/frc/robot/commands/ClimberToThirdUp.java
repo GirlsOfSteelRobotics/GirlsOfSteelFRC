@@ -9,18 +9,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot; 
+import frc.robot.subsystems.Blinkin;
 
 public class ClimberToThirdUp extends Command {
   public ClimberToThirdUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.climber); 
+    requires(Robot.blinkin);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.climber.setGoalClimberPosition(Robot.climber.THIRD_GOAL_POS);
+    Robot.blinkin.setLightPattern(Blinkin.LightPattern.CLIMBER_THIRD);
     System.out.println("init Climber to third all up");
   }
 
@@ -28,7 +31,6 @@ public class ClimberToThirdUp extends Command {
   @Override
   protected void execute() {
     Robot.climber.holdClimberPosition();
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
