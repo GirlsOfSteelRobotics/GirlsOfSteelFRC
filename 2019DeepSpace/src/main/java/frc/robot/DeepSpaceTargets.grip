@@ -127,7 +127,7 @@
     <language>Java</language>
     <className>GripPipeline</className>
     <implementWpilibPipeline>true</implementWpilibPipeline>
-    <saveDir>/Users/meghnabehari/GRIP</saveDir>
+    <saveDir>/Users/meghnabehari/2019GirlsOfSteel/2019DeepSpace/src/main/java/frc/robot</saveDir>
     <packageName>frc.robot</packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>
