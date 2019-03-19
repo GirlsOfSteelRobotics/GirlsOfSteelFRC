@@ -39,7 +39,7 @@ public class OI {
 	private POVButton toSecondUp; 
 	private POVButton toThirdUp; 
 
-	private JoystickButton allToZero;
+	private POVButton allToZero;
 	private POVButton frontToZero;
 	private POVButton backToZero;
 
@@ -100,7 +100,7 @@ public class OI {
 		toThirdUp = new POVButton(drivingPad, 90);
 		toThirdUp.whenPressed(new ClimberToThirdUp());
 	
-		// allToZero = new JoystickButton(drivingPad, 6);
+		// allToZero = new POVButton(drivingPad, 180);
 		// allToZero.whenPressed(new ClimberAllToZero());
 
 		// robotToSecond = new POVButton(drivingPad, 270);

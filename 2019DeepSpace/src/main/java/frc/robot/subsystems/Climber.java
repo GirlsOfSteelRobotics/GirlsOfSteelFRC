@@ -12,6 +12,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ClimberHold;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -45,8 +46,7 @@ public class Climber extends Subsystem {
 
   public static final double ALL_TO_ZERO = 0.0;
 
-  public static final int MAX_CRUISE_VELOCITY = 1884;
-  //1500
+  public static final int MAX_CRUISE_VELOCITY = 2300;
   public static final int MAX_ACCELERATION = 3588;
   //1500
 
@@ -144,10 +144,12 @@ public class Climber extends Subsystem {
 
   public void holdClimberFrontPosition() {
     climberFront.set(ControlMode.MotionMagic, goalFrontPosition);
+    SmartDashboard.putNumber("Climber Front Velocity", climberFront.getSelectedSensorVelocity());
   }
 
   public void holdClimberBackPosition() {
     climberBack.set(ControlMode.MotionMagic, goalBackPosition);
+    SmartDashboard.putNumber("Climber Back Velocity", climberBack.getSelectedSensorVelocity());
   }
   
   public void incrementFrontClimber() {
