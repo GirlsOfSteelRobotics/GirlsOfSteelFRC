@@ -41,9 +41,9 @@ public class Robot extends TimedRobot {
     // Create all subsystems BEFORE creating the Operator Interface (OI)
     oi = new OI();
 
-    listener = new GripPipelineListener();
-    visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
-    visionThread.start();
+    //listener = new GripPipelineListener();
+    //visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
+    //visionThread.start();
 
     System.out.println("Robot Init finished");
   }

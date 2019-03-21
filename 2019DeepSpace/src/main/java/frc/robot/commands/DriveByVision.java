@@ -1,4 +1,4 @@
-package frc.robot.commands;
+/* package frc.robot.commands;
 
 import frc.robot.Robot;
 
@@ -9,9 +9,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class DriveByVision extends Command {
 	
 	private static final double MAX_ANGULAR_VELOCITY = 2.5; // TODO: adjust (rad/s) current
@@ -140,4 +137,4 @@ public class DriveByVision extends Command {
 	protected void interrupted() {
 		end();
 	}
-}
+}*/

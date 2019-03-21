@@ -153,8 +153,8 @@ public class OI {
 		pivotShip.whenPressed(new PivotToShip());
 
 		// DriveByVision button
-		driveByVision = new JoystickButton (operatingPad, 9); 
-		driveByVision.whenPressed(new DriveByVision()); 
+		// driveByVision = new JoystickButton (operatingPad, 9); 
+		// driveByVision.whenPressed(new DriveByVision()); 
 	}
 
 	public double getLeftUpAndDown() {
