@@ -12,9 +12,13 @@ public class Blinkin extends Subsystem {
     private static final double CONFETTI = -0.87;
     private static final double RAINBOW_WITH_GLITTER = -0.89;
     private static final double COLOR_WAVES = 0.53;
+    private static final double GREEN = .77;
+    private static final double BLUE = .87;
+    private static final double RED = .61;
+    private static final double PURPLE = .91;
 
     public enum LightPattern {
-        AUTO_DEFAULT, TELEOP_DEFAULT, END_GAME,
+        AUTO_DEFAULT, TELEOP_DEFAULT, FORTY_CLIMB, THIRTY_CLIMB, CLIMBER_THIRD, CLIMBER_SECOND,
     }
 
     public Blinkin() {
@@ -23,7 +27,7 @@ public class Blinkin extends Subsystem {
             System.out.println("Right Light Controller"); // this never gets made no matter what
         } catch (Exception e) {
             System.out.println("No blink-in in " + RobotMap.BLINKIN_RIGHT_PWM + ", error: " + e);
-            rightLightController = null; 
+            rightLightController = null;
         }
 
         try {
@@ -69,14 +73,35 @@ public class Blinkin extends Subsystem {
             if (rightLightController != null)
                 rightLightController.set(RAINBOW_WITH_GLITTER);
             break;
-        case END_GAME:
+        case FORTY_CLIMB:
             if (leftLightController != null)
-                leftLightController.set(COLOR_WAVES);
+                leftLightController.set(BLUE);
             if (left2LightController != null)
-                left2LightController.set(COLOR_WAVES);
+                left2LightController.set(BLUE);
             if (rightLightController != null)
-                rightLightController.set(COLOR_WAVES);
+                rightLightController.set(BLUE);
             break;
+        case THIRTY_CLIMB:
+            if (leftLightController != null)
+                leftLightController.set(RED);
+            if (left2LightController != null)
+                left2LightController.set(RED);
+            if (rightLightController != null)
+                rightLightController.set(RED);
+        case CLIMBER_THIRD:
+            if (leftLightController != null)
+                leftLightController.set(GREEN);
+            if (left2LightController != null)
+                left2LightController.set(GREEN);
+            if (rightLightController != null)
+                rightLightController.set(GREEN);
+        case CLIMBER_SECOND:
+            if (leftLightController != null)
+                leftLightController.set(PURPLE);
+            if (left2LightController != null)
+                left2LightController.set(GREEN);
+            if (rightLightController != null)
+                rightLightController.set(GREEN);
         default:
             break;
         }

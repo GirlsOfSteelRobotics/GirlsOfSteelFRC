@@ -5,46 +5,43 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//This command means that the entire robot goes UP
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot; 
-import frc.robot.subsystems.Blinkin;
+import frc.robot.Robot;
 
-public class ClimberToThirdUp extends Command {
-  public ClimberToThirdUp() {
+public class HatchScrewOpen extends Command {
+  public HatchScrewOpen() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.climber); 
-    requires(Robot.blinkin);
+    requires(Robot.hatchScrew);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.climber.setGoalClimberPosition(Robot.climber.THIRD_GOAL_POS);
-    Robot.blinkin.setLightPattern(Blinkin.LightPattern.CLIMBER_THIRD);
-    System.out.println("init Climber to third all up");
+    System.out.println("init Hatch Screw Open");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.holdClimberPosition();
+    Robot.hatchScrew.setOpenPosition();
+    //System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.climber.checkCurrentPosition(Robot.climber.THIRD_GOAL_POS);
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.climber.climberStop(); 
-    System.out.println("end Climber to third all up");
-
+    System.out.println("HatchScrewOpen end");
   }
 
   

@@ -18,6 +18,7 @@ public class Robot extends TimedRobot {
   public static GripPipelineListener listener;
   public static Camera camera;
   public static Lidar lidar;
+  public static HatchScrew hatchScrew;
   public static OI oi;
   private VisionThread visionThread;
 
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
     blinkin = new Blinkin();
     camera = new Camera();
     lidar = new Lidar();
+    hatchScrew = new HatchScrew();
     // Create all subsystems BEFORE creating the Operator Interface (OI)
     oi = new OI();
 
@@ -66,6 +68,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    camera.closeMovieFile();
   }
 
   @Override
@@ -88,7 +91,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
-
+    camera.openMovieFile();
   }
 
   /**
@@ -102,6 +105,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    camera.openMovieFile();
   }
 
   /**
@@ -110,8 +114,15 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    if (DriverStation.getInstance().getMatchTime() <= 40)
-      Robot.blinkin.setLightPattern(Blinkin.LightPattern.END_GAME);
+    Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    double timeRemaining = DriverStation.getInstance().getMatchTime();
+    //System.out.println("Robot match time: " + DriverStation.getInstance().getMatchTime());
+    if (timeRemaining <= 30) {
+      Robot.blinkin.setLightPattern(Blinkin.LightPattern.THIRTY_CLIMB);
+    } else if (timeRemaining <= 40) {
+      Robot.blinkin.setLightPattern(Blinkin.LightPattern.FORTY_CLIMB);
+    }
+
   }
   /**
    * This function is called periodically during test mode.

@@ -8,6 +8,8 @@ import edu.wpi.first.vision.VisionPipeline;
 import org.opencv.core.*;
 import org.opencv.imgproc.*;
 
+import frc.robot.Robot;
+
 /**
 * GripPipeline class.
 *
@@ -16,7 +18,6 @@ import org.opencv.imgproc.*;
 * @author GRIP
 */
 public class GripPipeline implements VisionPipeline {
-
 	//Outputs
 	private Mat resizeImageOutput = new Mat();
 	private Mat hslThresholdOutput = new Mat();
