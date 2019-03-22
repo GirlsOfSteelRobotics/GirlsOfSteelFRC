@@ -34,7 +34,7 @@ public class PivotToShip extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.pivot.checkCurrentPivotPosition(Robot.pivot.PIVOT_CARGO));
+    return (Robot.pivot.checkCurrentPivotPosition(Pivot.PIVOT_CARGO));
 
   }
 
@@ -44,11 +44,5 @@ public class PivotToShip extends Command {
     Robot.pivot.pivotStop();
     System.out.println("end PivotToShip");
 
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }

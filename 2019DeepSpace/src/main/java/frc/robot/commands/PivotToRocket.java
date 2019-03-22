@@ -26,14 +26,14 @@ public class PivotToRocket extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pivot.setGoalPivotPosition(Robot.pivot.PIVOT_ROCKET);
+    Robot.pivot.setGoalPivotPosition(Pivot.PIVOT_ROCKET);
     Robot.pivot.holdPivotPosition();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.pivot.checkCurrentPivotPosition(Robot.pivot.PIVOT_ROCKET));
+    return (Robot.pivot.checkCurrentPivotPosition(Pivot.PIVOT_ROCKET));
   }
 
   // Called once after isFinished returns true
@@ -41,11 +41,5 @@ public class PivotToRocket extends Command {
   protected void end() {
    Robot.pivot.pivotStop();
    System.out.println("end PivotToRocket");
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }

@@ -26,27 +26,20 @@ public class PivotToGround extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pivot.setGoalPivotPosition(Robot.pivot.PIVOT_GROUND);
+    Robot.pivot.setGoalPivotPosition(Pivot.PIVOT_GROUND);
     Robot.pivot.holdPivotPosition();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.pivot.checkCurrentPivotPosition(Robot.pivot.PIVOT_GROUND));
+    return (Robot.pivot.checkCurrentPivotPosition(Pivot.PIVOT_GROUND));
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
     Robot.pivot.pivotStop();
     System.out.println("end PivotToGround");
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }
