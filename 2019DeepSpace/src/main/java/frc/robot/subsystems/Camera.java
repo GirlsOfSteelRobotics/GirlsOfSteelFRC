@@ -33,7 +33,7 @@ public class Camera extends Subsystem {
 		driveCam = CameraServer.getInstance().startAutomaticCapture("Driver Camera", RobotMap.DRIVER_CAMERA);
 		driveCam.setResolution(WIDTH, HEIGHT);
 		driveCam.setFPS(20);
-		driveCam.setBrightness(80);
+		driveCam.setBrightness(0);
 		
 		// Create a Camera Server video stream of the given name using the logical camera number
 		visionCam = CameraServer.getInstance().startAutomaticCapture("Vision Camera", RobotMap.VISION_CAMERA);
