@@ -22,8 +22,8 @@ public class Pivot extends Subsystem {
 	private double goalPivotPosition;
 
 	public static final double PIVOT_INCREMENT = 200; 
-	public static final double PIVOT_GROUND = -3971; // -4143 (pre-MVR values) 377
-	public static final double PIVOT_ROCKET = -1175; // -1852
+	public static final double PIVOT_GROUND = -4121; // -4143 (pre-MVR values) 377
+	public static final double PIVOT_ROCKET = -1775; // -1852
 	public static final double PIVOT_CARGO = -838; // -1091
 	public static final double PIVOT_TOLERANCE = 100;
   
