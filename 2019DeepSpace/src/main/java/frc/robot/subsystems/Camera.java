@@ -35,16 +35,16 @@ public class Camera extends Subsystem {
 		driveCam.setFPS(20);
 		driveCam.setBrightness(0);
 		
-		// Create a Camera Server video stream of the given name using the logical camera number
-		visionCam = CameraServer.getInstance().startAutomaticCapture("Vision Camera", RobotMap.VISION_CAMERA);
+		// // Create a Camera Server video stream of the given name using the logical camera number
+		// visionCam = CameraServer.getInstance().startAutomaticCapture("Vision Camera", RobotMap.VISION_CAMERA);
 		
-		// Adjust the camera settings; most important is to reduce the exposure very low
-		visionCam.setResolution(WIDTH, HEIGHT);
-		visionCam.setFPS(FPS);
-		visionCam.setExposureManual(24);
+		// // Adjust the camera settings; most important is to reduce the exposure very low
+		// visionCam.setResolution(WIDTH, HEIGHT);
+		// visionCam.setFPS(FPS);
+		// visionCam.setExposureManual(24);
 	
-		// Create a Camera Server stream that we'll fill with processed frames in GripPipelineListener
-		processedStream = CameraServer.getInstance().putVideo("Processed", 320, 240);
+		// // Create a Camera Server stream that we'll fill with processed frames in GripPipelineListener
+		// processedStream = CameraServer.getInstance().putVideo("Processed", 320, 240);
 	}
 
 	public void initDefaultCommand() {
