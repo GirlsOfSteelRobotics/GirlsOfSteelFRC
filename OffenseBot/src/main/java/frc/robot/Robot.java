@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -39,6 +40,8 @@ public class Robot extends TimedRobot {
     // Be sure to create the OI object only after creating all subsystems
     // to avoid the code crashing when enabled!!!
     oi = new OI();
+
+    CameraServer.getInstance().startAutomaticCapture("Camera", 0);
   }
 
   /**
