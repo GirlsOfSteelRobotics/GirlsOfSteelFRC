@@ -6,9 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveByJoystick extends Command {
 
 	public DriveByJoystick() {
-		requires(Robot.chassis);
 		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+		requires(Robot.chassis);
 	}
 
 	// Called just before this Command runs the first time
