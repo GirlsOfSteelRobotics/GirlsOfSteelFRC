@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Climber.ClimberType;
 
 public class ClimberFrontUp extends Command {
   public ClimberFrontUp() {
@@ -27,7 +28,7 @@ public class ClimberFrontUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.holdClimberFrontPosition();
+    Robot.climber.holdClimberPosition(ClimberType.All);
     Robot.climber.incrementFrontClimber();
     //System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
   }

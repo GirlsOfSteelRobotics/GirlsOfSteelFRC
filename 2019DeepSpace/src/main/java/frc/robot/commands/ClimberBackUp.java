@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Climber.ClimberType;
 
 public class ClimberBackUp extends Command {
   public ClimberBackUp() {
@@ -27,7 +28,7 @@ public class ClimberBackUp extends Command {
   @Override
   protected void execute() {
     Robot.climber.incrementBackClimber();
-    Robot.climber.holdClimberBackPosition();
+    Robot.climber.holdClimberPosition(ClimberType.All);
     //System.out.println("Back Position: " + Robot.climber.getBackPosition() + "goal Back Position" + Robot.climber.goalBackPosition);
   }
 

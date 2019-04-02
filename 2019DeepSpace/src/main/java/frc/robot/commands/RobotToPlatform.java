@@ -5,31 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+// package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.TimedCommand;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+// import edu.wpi.first.wpilibj.command.TimedCommand;
+// import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class RobotToPlatform extends CommandGroup {
+// public class RobotToPlatform extends CommandGroup {
 
-  private final double BABYDRIVE_FRONT_TO_PLATFORM = 117.3;
-  private final double BABYDRIVE_BACK_TO_PLATFORM = 62.25;
-  private final double ROBOT_ON_PLATFORM = 56.4;
+//   private final double BABYDRIVE_FRONT_TO_PLATFORM = 117.3;
+//   private final double BABYDRIVE_BACK_TO_PLATFORM = 62.25;
+//   private final double ROBOT_ON_PLATFORM = 56.4;
 
-  public RobotToPlatform(int platform) {
+//   public RobotToPlatform(int platform) {
 
-    if (platform == 3)
-      addSequential(new ClimberToThirdUp());
-    else
-      addSequential(new ClimberToSecondUp());
+//     if (platform == 3)
+//       addSequential(new ClimberToThirdUp());
+//     else
+//       addSequential(new ClimberToSecondUp());
 
-    addSequential(new LidarDriveForward(BABYDRIVE_FRONT_TO_PLATFORM, false)); // make this into a constant
-    addSequential(new ClimberFrontToZero());
-    addSequential(new LidarDriveForward(BABYDRIVE_BACK_TO_PLATFORM, true));
-    addSequential(new ClimberBackToZero());
-    addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM, true));
+//     addSequential(new LidarDriveForward(BABYDRIVE_FRONT_TO_PLATFORM, false)); // make this into a constant
+//     addSequential(new ClimberFrontToZero());
+//     addSequential(new LidarDriveForward(BABYDRIVE_BACK_TO_PLATFORM, true));
+//     addSequential(new ClimberBackToZero());
+//     addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM, true));
 
-    // addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM));
-  }
+//     // addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM));
+//   }
 
-}
+// }

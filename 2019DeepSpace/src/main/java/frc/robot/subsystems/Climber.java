@@ -37,18 +37,19 @@ public class Climber extends Subsystem {
 
   public static final double CLIMBER_TOLERANCE = 100;
 
-  public static final double FRONT_POSITION = 0; 
-  public static final double BACK_POSITION = 0;
-
   public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
   public static final double SECOND_GOAL_POS = -34000.0; // -30000 on Belka, -32000 on Laika
   public static final double THIRD_GOAL_POS = -84000.0; // -82000 on Belka, -84000 on Laika
 
   public static final double ALL_TO_ZERO = 0.0;
 
+  public static enum ClimberType {
+    All, Front, Back
+  };
+
   public static final int MAX_CRUISE_VELOCITY = 2300; // 17% faster than 1884
   public static final int MAX_ACCELERATION = 3588;
-  //1500
+  // 1500
 
   public double goalFrontPosition;
   public double goalBackPosition;
@@ -67,7 +68,7 @@ public class Climber extends Subsystem {
     climberFront.config_kD(0, 0, 10);
 
     climberBack.config_kF(0, 0.4072, 10);
-    climberBack.config_kP(0, 1.5, 10); //.85 works for manual control on Belka
+    climberBack.config_kP(0, 1.5, 10); // .85 works for manual control on Belka
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 0, 10);
 
@@ -90,15 +91,22 @@ public class Climber extends Subsystem {
   }
 
   // the value in set expiration is in SECONDS not milliseconds
-  public void setGoalClimberPosition(double pos) {
-    goalFrontPosition = pos;
-    goalBackPosition = pos;
+  public void setGoalClimberPosition(double pos, ClimberType type) {
+    if (type == ClimberType.All) {
+      goalFrontPosition = pos;
+      goalBackPosition = pos;
+    } else if (type == ClimberType.Front) {
+      goalFrontPosition = pos;
+    } else {
+      goalBackPosition = pos;
+    }
+
   }
 
   public void climberStop() {
     goalFrontPosition = getFrontPosition();
     goalBackPosition = getBackPosition();
-    holdClimberPosition();
+    holdClimberPosition(ClimberType.All);
   }
 
   public double getFrontPosition() {
@@ -109,66 +117,71 @@ public class Climber extends Subsystem {
     return climberBack.getSelectedSensorPosition(0);
   }
 
-  public boolean checkCurrentFrontPosition(double goalFrontPos){
-    boolean isFinished = (goalFrontPos + CLIMBER_TOLERANCE >= getFrontPosition()  && 
-                          goalFrontPos - CLIMBER_TOLERANCE <= getFrontPosition());
-    //System.out.println("climber front positon check isFinished " + isFinished);
-    return isFinished;
-  }
+  public boolean checkCurrentPosition(double goalPos, ClimberType type) {
 
-  public boolean checkCurrentBackPosition(double goalBackPos){
-    boolean isFinished = (goalBackPos + CLIMBER_TOLERANCE >= getBackPosition() && 
-                          goalBackPos - CLIMBER_TOLERANCE <= getBackPosition());
-    //System.out.println("climber back position check isFinished " + isFinished);
-    return isFinished;
-  }
+    boolean isFinished;
+    if (type == ClimberType.All) {
+      isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()
+          && goalPos - CLIMBER_TOLERANCE <= getFrontPosition())
+          && (goalPos + CLIMBER_TOLERANCE >= getBackPosition() && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
+    } else if (type == ClimberType.Front) {
+      isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()
+          && goalPos - CLIMBER_TOLERANCE <= getFrontPosition());
+    } else {
+      isFinished = (goalPos + CLIMBER_TOLERANCE >= getBackPosition()
+          && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
+    }
 
-  public boolean checkCurrentPosition(double goalPos){
-    boolean isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()  
-      && goalPos - CLIMBER_TOLERANCE  <= getFrontPosition() )
-      && (goalPos + CLIMBER_TOLERANCE >= getBackPosition()  
-      && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
+    isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()
+        && goalPos - CLIMBER_TOLERANCE <= getFrontPosition())
+        && (goalPos + CLIMBER_TOLERANCE >= getBackPosition() && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
+
     // System.out.println("climber isFinished: " + isFinished);
-    // System.out.println("front upper: " + ((goalPos + CLIMBER_TOLERANCE) >= getFrontPosition()));
-    // System.out.println("front lower: " + ((goalPos - CLIMBER_TOLERANCE)  <= getFrontPosition()));
-    // System.out.println("down upper: " + ((goalPos + CLIMBER_TOLERANCE) >= getBackPosition()));
-    // System.out.println("down lower: " + ((goalPos - CLIMBER_TOLERANCE) <= getBackPosition()));
+    // System.out.println("front upper: " + ((goalPos + CLIMBER_TOLERANCE) >=
+    // getFrontPosition()));
+    // System.out.println("front lower: " + ((goalPos - CLIMBER_TOLERANCE) <=
+    // getFrontPosition()));
+    // System.out.println("down upper: " + ((goalPos + CLIMBER_TOLERANCE) >=
+    // getBackPosition()));
+    // System.out.println("down lower: " + ((goalPos - CLIMBER_TOLERANCE) <=
+    // getBackPosition()));
 
     return isFinished;
   }
 
-  public void holdClimberPosition() {
-    holdClimberFrontPosition();
-    holdClimberBackPosition();
+  public void holdClimberPosition(ClimberType type) {
+    if (type == ClimberType.All) {
+      climberFront.set(ControlMode.MotionMagic, goalFrontPosition);
+      SmartDashboard.putNumber("Climber Front Velocity", climberFront.getSelectedSensorVelocity());
+      climberBack.set(ControlMode.MotionMagic, goalBackPosition);
+      SmartDashboard.putNumber("Climber Back Velocity", climberBack.getSelectedSensorVelocity());
+    } else if (type == ClimberType.Front) {
+      climberFront.set(ControlMode.MotionMagic, goalFrontPosition);
+      SmartDashboard.putNumber("Climber Front Velocity", climberFront.getSelectedSensorVelocity());
+    } else {
+      climberBack.set(ControlMode.MotionMagic, goalBackPosition);
+      SmartDashboard.putNumber("Climber Back Velocity", climberBack.getSelectedSensorVelocity());
+    }
+
   }
 
-  public void holdClimberFrontPosition() {
-    climberFront.set(ControlMode.MotionMagic, goalFrontPosition);
-    SmartDashboard.putNumber("Climber Front Velocity", climberFront.getSelectedSensorVelocity());
-  }
-
-  public void holdClimberBackPosition() {
-    climberBack.set(ControlMode.MotionMagic, goalBackPosition);
-    SmartDashboard.putNumber("Climber Back Velocity", climberBack.getSelectedSensorVelocity());
-  }
-  
   public void incrementFrontClimber() {
-    goalFrontPosition = getFrontPosition(); 
+    goalFrontPosition = getFrontPosition();
     goalFrontPosition += CLIMBER_INCREMENT;
   }
 
   public void decrementFrontClimber() {
-    goalFrontPosition = getFrontPosition(); 
+    goalFrontPosition = getFrontPosition();
     goalFrontPosition -= CLIMBER_INCREMENT;
   }
 
   public void incrementBackClimber() {
-    goalBackPosition = getBackPosition(); 
+    goalBackPosition = getBackPosition();
     goalBackPosition += CLIMBER_INCREMENT;
   }
 
   public void decrementBackClimber() {
-    goalBackPosition = getBackPosition(); 
+    goalBackPosition = getBackPosition();
     goalBackPosition -= CLIMBER_INCREMENT;
   }
 

@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.*;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Climber.ClimberType;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -71,13 +73,13 @@ public class OI {
 
 		// Climber buttons
 		frontToZero = new POVButton(drivingPad, 180);
-		frontToZero.whenPressed(new ClimberFrontToZero());
+		frontToZero.whenPressed(new ClimberToSetPoint(Climber.FIRST_GOAL_POS, ClimberType.Front));
 		
 		frontDown = new JoystickButton(drivingPad, 2);
 		frontDown.whileHeld(new ClimberFrontDown());
 		
 		backToZero = new POVButton(drivingPad, 0);
-		backToZero.whenPressed(new ClimberBackToZero());
+		backToZero.whenPressed(new ClimberToSetPoint(Climber.FIRST_GOAL_POS, ClimberType.Back));
 		
 		backDown = new JoystickButton(drivingPad, 4);
 		backDown.whileHeld(new ClimberBackDown());
@@ -95,10 +97,10 @@ public class OI {
 		backUp.whileHeld(new ClimberBackUp());
 
 		toSecondUp = new POVButton(drivingPad, 270);
-		toSecondUp.whenPressed(new ClimberToSecondUp());
+		toSecondUp.whenPressed(new ClimberToSetPoint(Climber.SECOND_GOAL_POS, ClimberType.All));
 
 		toThirdUp = new POVButton(drivingPad, 90);
-		toThirdUp.whenPressed(new ClimberToThirdUp());
+		toThirdUp.whenPressed(new ClimberToSetPoint(Climber.THIRD_GOAL_POS, ClimberType.All));
 	
 		// allToZero = new POVButton(drivingPad, 180);
 		// allToZero.whenPressed(new ClimberAllToZero());
