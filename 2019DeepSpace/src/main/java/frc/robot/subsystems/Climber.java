@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -31,7 +32,10 @@ public class Climber extends Subsystem {
   // here. Call these from Commands.
 
   private WPI_TalonSRX climberFront;
+  private WPI_TalonSRX followerClimberFront; 
+
   private WPI_TalonSRX climberBack;
+  private WPI_TalonSRX followerClimberBack; 
 
   public static final double CLIMBER_INCREMENT = 2000;
 
@@ -56,10 +60,16 @@ public class Climber extends Subsystem {
 
   public Climber() {
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
+    followerClimberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_FOLLOWER_TALON); 
+
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
+    followerClimberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_FOLLOWER_TALON);
 
     climberFront.setSensorPhase(true);
+    followerClimberFront.setSensorPhase(true);
+
     climberBack.setSensorPhase(true);
+    followerClimberBack.setSensorPhase(true);
 
     // PID
     climberFront.config_kF(0, 0.4072, 10);
@@ -80,7 +90,14 @@ public class Climber extends Subsystem {
     climberBack.configMotionCruiseVelocity(MAX_CRUISE_VELOCITY);
 
     climberFront.setNeutralMode(NeutralMode.Brake);
+    followerClimberFront.setNeutralMode(NeutralMode.Brake); 
+
     climberBack.setNeutralMode(NeutralMode.Brake);
+    followerClimberBack.setNeutralMode(NeutralMode.Brake); 
+
+    followerClimberFront.follow(climberFront, FollowerType.PercentOutput);
+		followerClimberBack.follow(climberBack, FollowerType.PercentOutput);
+
   }
 
   @Override
