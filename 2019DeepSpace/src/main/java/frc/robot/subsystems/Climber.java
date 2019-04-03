@@ -179,7 +179,6 @@ public class Climber extends Subsystem {
       climberBack.set(ControlMode.MotionMagic, goalBackPosition);
       SmartDashboard.putNumber("Climber Back Velocity", climberBack.getSelectedSensorVelocity());
     }
-
   }
 
   public void incrementFrontClimber() {
