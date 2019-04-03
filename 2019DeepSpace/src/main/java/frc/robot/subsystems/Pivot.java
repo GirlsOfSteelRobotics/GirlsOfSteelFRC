@@ -22,9 +22,9 @@ public class Pivot extends Subsystem {
 	private double goalPivotPosition;
 
 	public static final double PIVOT_INCREMENT = 200; 
-	public static final double PIVOT_GROUND = -4121; // -4143 (pre-MVR values) 377
-	public static final double PIVOT_ROCKET = -1775; // -1852
-	public static final double PIVOT_CARGO = -838; // -1091
+	public static final double PIVOT_GROUND = -3821; // -4121 was the pre pool noodle value
+	public static final double PIVOT_ROCKET = -1371; //-1775  
+	public static final double PIVOT_CARGO = -438; // -838
 	public static final double PIVOT_TOLERANCE = 100;
   
   public Pivot() {

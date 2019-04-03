@@ -5,13 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-// NEGATIVE ENCODER TICKS IS BALLSCREW DOWN, ROBOT UP
+// POSITIVE ENCODER TICKS IS BALLSCREW DOWN, ROBOT UP
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
 import frc.robot.commands.ClimberHold;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -42,8 +43,8 @@ public class Climber extends Subsystem {
   public static final double CLIMBER_TOLERANCE = 100;
 
   public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
-  public static final double SECOND_GOAL_POS = -34000.0; // -30000 on Belka, -32000 on Laika
-  public static final double THIRD_GOAL_POS = -84000.0; // -82000 on Belka, -84000 on Laika
+  public static final double SECOND_GOAL_POS = 34000.0; // -30000 on Belka, -32000 on Laika
+  public static final double THIRD_GOAL_POS = 84000.0; // -82000 on Belka, -84000 on Laika
 
   public static final double ALL_TO_ZERO = 0.0;
 
@@ -51,8 +52,8 @@ public class Climber extends Subsystem {
     All, Front, Back
   };
 
-  public static final int MAX_CRUISE_VELOCITY = 2300; // 17% faster than 1884
-  public static final int MAX_ACCELERATION = 3588;
+  public static final int MAX_CRUISE_VELOCITY = 5000; // Ziya and Joe on 4/3 (new climber)
+  public static final int MAX_ACCELERATION = 10000; // Ziya and Joe on 4/3
   // 1500
 
   public double goalFrontPosition;
@@ -65,20 +66,21 @@ public class Climber extends Subsystem {
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
     followerClimberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_FOLLOWER_TALON);
 
-    climberFront.setSensorPhase(true);
-    followerClimberFront.setSensorPhase(true);
-
+    followerClimberFront.setInverted(true); // 4/3
+    climberBack.setInverted(true);
+    followerClimberBack.setInverted(true);
+    
+    climberFront.setSensorPhase(false);
     climberBack.setSensorPhase(true);
-    followerClimberBack.setSensorPhase(true);
 
     // PID
-    climberFront.config_kF(0, 0.4072, 10);
-    climberFront.config_kP(0, 1.5, 10); // current value is great on Belka, 1.0 works for manual control on Belka
+    climberFront.config_kF(0, 0.20, 10); // tuned by Ziya and Joe on 4/3
+    climberFront.config_kP(0, 1.0, 10); // tuned by Ziya and Joe on 4/3
     climberFront.config_kI(0, 0, 10);
     climberFront.config_kD(0, 0, 10);
 
-    climberBack.config_kF(0, 0.4072, 10);
-    climberBack.config_kP(0, 1.5, 10); // .85 works for manual control on Belka
+    climberBack.config_kF(0, 0.20, 10); // tuned by Ziya and Joe on 4/3
+    climberBack.config_kP(0, 1.0, 10); // tuned by Ziya and Joe on 4/3
     climberBack.config_kI(0, 0, 10);
     climberBack.config_kD(0, 0, 10);
 
@@ -96,7 +98,12 @@ public class Climber extends Subsystem {
     followerClimberBack.setNeutralMode(NeutralMode.Brake); 
 
     followerClimberFront.follow(climberFront, FollowerType.PercentOutput);
-		followerClimberBack.follow(climberBack, FollowerType.PercentOutput);
+    followerClimberBack.follow(climberBack, FollowerType.PercentOutput);
+    
+    LiveWindow.addActuator("Climber", "climberFront", climberFront);
+    LiveWindow.addActuator("Climber", "climberBack", climberBack);
+    LiveWindow.addActuator("Climber", "climberFollowerFront", followerClimberFront);
+    LiveWindow.addActuator("Climber", "climberFollowerBack", followerClimberBack);
 
   }
 

@@ -32,10 +32,8 @@ public class RobotMap {
 	public static final int CLIMBER_FRONT_TALON = 5;
 	public static final int CLIMBER_BACK_TALON = 10;
 
-	public static final int CLIMBER_FRONT_FOLLOWER_TALON = 12; //TODO; ADJUST
-	public static final int CLIMBER_BACK_FOLLOWER_TALON = 13; //TODO; ADJUST 
-
-	public static final int HATCH_SCREW_TALON = 11;
+	public static final int CLIMBER_FRONT_FOLLOWER_TALON = 11;
+	public static final int CLIMBER_BACK_FOLLOWER_TALON = 12;
 
 	// Digital Input/Output (DIO) Ports on the RoboRIO
 	public static final int LIDAR_DIO = 0;
