@@ -139,13 +139,13 @@ public class OI {
 		// Pivot buttons
 		// negative is down, positive is up
 		// must start up
-		pivotUp = new JoystickButton(operatingPad, 3);
+		pivotUp = new JoystickButton(operatingPad, 2);
 		pivotUp.whileHeld(new PivotUp());
 		
 		pivotDown = new JoystickButton(operatingPad, 1);
 		pivotDown.whileHeld(new PivotDown());
 
-		pivotGround = new JoystickButton(operatingPad, 2);
+		pivotGround = new JoystickButton(operatingPad, 3);
 		pivotGround.whenPressed(new PivotToGround());
 		
 		pivotRocket = new JoystickButton (operatingPad, 4);
