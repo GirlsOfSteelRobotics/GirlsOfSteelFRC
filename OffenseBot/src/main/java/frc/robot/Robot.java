@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.HatchCollector;
 import frc.robot.subsystems.Shifters;
 
 /**
@@ -24,6 +25,7 @@ import frc.robot.subsystems.Shifters;
 public class Robot extends TimedRobot {
   public static Chassis chassis;
   public static Shifters shifters;
+  public static HatchCollector hatchCollector;
   public static OI oi;
 
   Command autonomousCommand;
@@ -36,6 +38,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     chassis = new Chassis();
     shifters = new Shifters();
+    hatchCollector = new HatchCollector();
 
     // Be sure to create the OI object only after creating all subsystems
     // to avoid the code crashing when enabled!!!
