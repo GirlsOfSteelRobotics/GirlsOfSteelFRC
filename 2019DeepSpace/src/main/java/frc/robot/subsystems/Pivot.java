@@ -26,6 +26,10 @@ public class Pivot extends Subsystem {
 	public static final double PIVOT_ROCKET = -1371; //-1775  
 	public static final double PIVOT_CARGO = -438; // -838
 	public static final double PIVOT_TOLERANCE = 100;
+
+	public static enum PivotDirection {
+		Up, Down
+	};
   
   public Pivot() {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
