@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ClimberType;
+import frc.robot.subsystems.Pivot.PivotDirection;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -142,10 +143,10 @@ public class OI {
 		// negative is down, positive is up
 		// must start up
 		pivotUp = new JoystickButton(operatingPad, 2);
-		pivotUp.whileHeld(new PivotUp());
+		pivotUp.whileHeld(new PivotManual(PivotDirection.Up));
 		
 		pivotDown = new JoystickButton(operatingPad, 1);
-		pivotDown.whileHeld(new PivotDown());
+		pivotDown.whileHeld(new PivotManual(PivotDirection.Down));
 
 		pivotGround = new JoystickButton(operatingPad, 3);
 		pivotGround.whenPressed(new PivotToGround());

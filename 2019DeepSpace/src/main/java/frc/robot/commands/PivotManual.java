@@ -6,11 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
+
 import frc.robot.Robot;
+import frc.robot.subsystems.Pivot.PivotDirection;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PivotDown extends Command {
-  public PivotDown() {
+public class PivotManual extends Command {
+
+  private PivotDirection direction;
+
+  public PivotManual(PivotDirection direction) {
+    this.direction = direction;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.pivot);
@@ -19,14 +25,18 @@ public class PivotDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("init PivotDown");
+    System.out.println("init PivotManual " + direction);
 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pivot.decrementPivot();
+    if (direction == PivotDirection.Up) {
+      Robot.pivot.incrementPivot();
+    } else {
+      Robot.pivot.decrementPivot();
+    }
     Robot.pivot.holdPivotPosition();
   }
 
@@ -40,7 +50,6 @@ public class PivotDown extends Command {
   @Override
   protected void end() {
     Robot.pivot.pivotStop();
-    System.out.println("end PivotDown");
+    System.out.println("end PivotManual " + direction);
   }
-
 }
