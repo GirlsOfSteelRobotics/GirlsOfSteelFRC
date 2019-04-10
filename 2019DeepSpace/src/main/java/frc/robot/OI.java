@@ -95,7 +95,7 @@ public class OI {
 		allUp.whileHeld(new ClimberManual(true, ClimberType.All));
 		
 		allDown = new JoystickButton(drivingPad, 6);
-		allDown.whileHeld(new ClimberManual(false, ClimberType.Back));
+		allDown.whileHeld(new ClimberManual(false, ClimberType.All));
 
 		frontUp = new JoystickButton(drivingPad, 1);
 		frontUp.whileHeld(new ClimberManual(true, ClimberType.Front));
