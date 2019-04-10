@@ -72,35 +72,37 @@ public class OI {
 		operatingPad = new Joystick(1);
 
 		// Climber buttons
-		frontToZero = new POVButton(drivingPad, 180);
+		frontToZero = new POVButton(drivingPad, 90);
 		frontToZero.whenPressed(new ClimberToSetPoint(Climber.FIRST_GOAL_POS, ClimberType.Front));
-		
-		frontDown = new JoystickButton(drivingPad, 2);
-		frontDown.whileHeld(new ClimberFrontDown());
-		
-		backToZero = new POVButton(drivingPad, 0);
+
+		backToZero = new POVButton(drivingPad, 270);
 		backToZero.whenPressed(new ClimberToSetPoint(Climber.FIRST_GOAL_POS, ClimberType.Back));
-		
-		backDown = new JoystickButton(drivingPad, 4);
-		backDown.whileHeld(new ClimberBackDown());
-		
-		allUp = new JoystickButton(drivingPad, 5);
-		allUp.whileHeld(new ClimberAllUp());
-		
-		allDown = new JoystickButton(drivingPad, 6);
-		allDown.whileHeld(new ClimberAllDown());
 
-		frontUp = new JoystickButton(drivingPad, 1);
-		frontUp.whileHeld(new ClimberFrontUp());
-
-		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whileHeld(new ClimberBackUp());
-
-		toSecondUp = new POVButton(drivingPad, 270);
+		toSecondUp = new POVButton(drivingPad, 180);
 		toSecondUp.whenPressed(new ClimberToSetPoint(Climber.SECOND_GOAL_POS, ClimberType.All));
 
-		toThirdUp = new POVButton(drivingPad, 90);
+		toThirdUp = new POVButton(drivingPad, 0);
 		toThirdUp.whenPressed(new ClimberToSetPoint(Climber.THIRD_GOAL_POS, ClimberType.All));
+		
+		frontDown = new JoystickButton(drivingPad, 2);
+		frontDown.whileHeld(new ClimberManual(false, ClimberType.Front));
+		
+		backDown = new JoystickButton(drivingPad, 4);
+		backDown.whileHeld(new ClimberManual(false, ClimberType.Back));
+		
+		allUp = new JoystickButton(drivingPad, 5);
+		allUp.whileHeld(new ClimberManual(true, ClimberType.All));
+		
+		allDown = new JoystickButton(drivingPad, 6);
+		allDown.whileHeld(new ClimberManual(false, ClimberType.Back));
+
+		frontUp = new JoystickButton(drivingPad, 1);
+		frontUp.whileHeld(new ClimberManual(true, ClimberType.Front));
+
+		backUp = new JoystickButton(drivingPad, 3);
+		backUp.whileHeld(new ClimberManual(true, ClimberType.Back));
+
+
 	
 		// allToZero = new POVButton(drivingPad, 180);
 		// allToZero.whenPressed(new ClimberAllToZero());

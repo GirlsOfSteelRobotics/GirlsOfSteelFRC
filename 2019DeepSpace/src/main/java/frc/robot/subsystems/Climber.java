@@ -33,12 +33,12 @@ public class Climber extends Subsystem {
   // here. Call these from Commands.
 
   private WPI_TalonSRX climberFront;
-  private WPI_TalonSRX followerClimberFront; 
+  private WPI_TalonSRX followerClimberFront;
 
   private WPI_TalonSRX climberBack;
-  private WPI_TalonSRX followerClimberBack; 
+  private WPI_TalonSRX followerClimberBack;
 
-  public static final double CLIMBER_INCREMENT = 2000;
+  public static final double CLIMBER_EXTEND = 2000;
 
   public static final double CLIMBER_TOLERANCE = 100;
 
@@ -59,9 +59,12 @@ public class Climber extends Subsystem {
   public double goalFrontPosition;
   public double goalBackPosition;
 
+  private int dir;
+
   public Climber() {
+
     climberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
-    followerClimberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_FOLLOWER_TALON); 
+    followerClimberFront = new WPI_TalonSRX(RobotMap.CLIMBER_FRONT_FOLLOWER_TALON);
 
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
     followerClimberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_FOLLOWER_TALON);
@@ -69,7 +72,7 @@ public class Climber extends Subsystem {
     followerClimberFront.setInverted(true); // 4/3
     climberBack.setInverted(true);
     followerClimberBack.setInverted(true);
-    
+
     climberFront.setSensorPhase(false);
     climberBack.setSensorPhase(true);
 
@@ -92,14 +95,14 @@ public class Climber extends Subsystem {
     climberBack.configMotionCruiseVelocity(MAX_CRUISE_VELOCITY);
 
     climberFront.setNeutralMode(NeutralMode.Brake);
-    followerClimberFront.setNeutralMode(NeutralMode.Brake); 
+    followerClimberFront.setNeutralMode(NeutralMode.Brake);
 
     climberBack.setNeutralMode(NeutralMode.Brake);
-    followerClimberBack.setNeutralMode(NeutralMode.Brake); 
+    followerClimberBack.setNeutralMode(NeutralMode.Brake);
 
     followerClimberFront.follow(climberFront, FollowerType.PercentOutput);
     followerClimberBack.follow(climberBack, FollowerType.PercentOutput);
-    
+
     LiveWindow.addActuator("Climber", "climberFront", climberFront);
     LiveWindow.addActuator("Climber", "climberBack", climberBack);
     LiveWindow.addActuator("Climber", "climberFollowerFront", followerClimberFront);
@@ -188,33 +191,30 @@ public class Climber extends Subsystem {
     }
   }
 
-  public void incrementFrontClimber() {
-    goalFrontPosition = getFrontPosition();
-    goalFrontPosition += CLIMBER_INCREMENT;
+  public void extendClimber(boolean directionExtend, ClimberType type) {
+    if (directionExtend) {
+      dir = 1;
+    } else {
+      dir = -1;
+    }
+
+    if (type == ClimberType.All) {
+
+      goalFrontPosition = getFrontPosition();
+      goalFrontPosition += (dir * CLIMBER_EXTEND);
+      goalBackPosition = getBackPosition();
+      goalBackPosition += (dir * CLIMBER_EXTEND);
+
+    } else if (type == ClimberType.Front) {
+      goalFrontPosition = getFrontPosition();
+      goalFrontPosition += (dir * CLIMBER_EXTEND);
+    } else {
+      goalBackPosition = getBackPosition();
+      goalBackPosition += (dir * CLIMBER_EXTEND);
+
+    }
+
   }
 
-  public void decrementFrontClimber() {
-    goalFrontPosition = getFrontPosition();
-    goalFrontPosition -= CLIMBER_INCREMENT;
-  }
-
-  public void incrementBackClimber() {
-    goalBackPosition = getBackPosition();
-    goalBackPosition += CLIMBER_INCREMENT;
-  }
-
-  public void decrementBackClimber() {
-    goalBackPosition = getBackPosition();
-    goalBackPosition -= CLIMBER_INCREMENT;
-  }
-
-  public void incrementAllClimber() {
-    incrementFrontClimber();
-    incrementBackClimber();
-  }
-
-  public void decrementAllClimber() {
-    decrementFrontClimber();
-    decrementBackClimber();
-  }
+  
 }
