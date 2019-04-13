@@ -22,24 +22,24 @@ public class HatchRelease extends Command {
   @Override
   protected void initialize() {
     System.out.println("init hatch release");
-    Robot.hatch.setServoOut();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.hatch.release();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    Robot.blinkin.setLightPattern(LightPattern.TELEOP_DEFAULT);
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.hatch.stop();
     System.out.println("end hatch release");
   }
 }

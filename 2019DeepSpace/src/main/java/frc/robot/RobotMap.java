@@ -35,6 +35,8 @@ public class RobotMap {
 	public static final int CLIMBER_FRONT_FOLLOWER_TALON = 11;
 	public static final int CLIMBER_BACK_FOLLOWER_TALON = 12;
 
+	public static final int HATCH_TALON = 13;
+
 	// Digital Input/Output (DIO) Ports on the RoboRIO
 	public static final int LIDAR_DIO = 0;
 
@@ -42,8 +44,6 @@ public class RobotMap {
 	public static final int BLINKIN_LEFT_PWM = 0;
 	public static final int BLINKIN_LEFT2_PWN = 1;
 	public static final int BLINKIN_RIGHT_PWM = 2;
-
-	public static final int HATCH_PWM = 3; 
 
 	// Camera numbers assigned by the USB driver 
 	// based on where they're plugged in

@@ -7,26 +7,25 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Servo;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap; 
+import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Hatch extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
-  private Servo servo; 
+  private WPI_TalonSRX hatchCollector;
 
-  // TODO: tune these to be near physical limits for in and out positions
-	public static final double HATCH_OUT = 0.48;
-	public static final double HATCH_IN = 0.72;  
+  private static final double SLOW_COLLECTOR_SPEED = 0.15;
+  private static final double COLLECTOR_INTAKE_SPEED = 0.4;
+  private static final double COLLECTOR_RELEASE_SPEED = 0.4;
 
   public Hatch() {
-		servo = new Servo(RobotMap.HATCH_PWM);
-		LiveWindow.add(servo);
-	}
+    hatchCollector = new WPI_TalonSRX(RobotMap.HATCH_TALON);
+    LiveWindow.addActuator("Hatch", "Collector", hatchCollector);
+  }
 
   @Override
   public void initDefaultCommand() {
@@ -34,13 +33,21 @@ public class Hatch extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void setServoIn(){
-    servo.set(HATCH_IN);
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
+  public void stop() {
+    hatchCollector.stopMotor();
   }
 
-  public void setServoOut(){
-    servo.set(HATCH_OUT);
-  } 
+  public void collect() {
+    hatchCollector.set(COLLECTOR_INTAKE_SPEED);
+  }
+
+  public void release() {
+    hatchCollector.set(-COLLECTOR_RELEASE_SPEED);
+  }
+
+  public void slowCollect() {
+    hatchCollector.set(SLOW_COLLECTOR_SPEED);
+  }
 }
-
-

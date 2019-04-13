@@ -134,10 +134,10 @@ public class OI {
 
 		// Hatch buttons
 		hatchCollect = new JoystickButton(operatingPad, 7);
-		hatchCollect.whenPressed(new HatchCollect());
+		hatchCollect.whileHeld(new HatchCollect());
 
 		hatchRelease = new JoystickButton(operatingPad, 8);
-		hatchRelease.whenPressed(new HatchRelease());
+		hatchRelease.whileHeld(new HatchRelease());
 
 		// Pivot buttons
 		// negative is down, positive is up
