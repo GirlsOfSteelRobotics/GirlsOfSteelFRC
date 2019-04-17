@@ -18,7 +18,7 @@ public class Hatch extends Subsystem {
 
   private WPI_TalonSRX hatchCollector;
 
-  private static final double SLOW_COLLECTOR_SPEED = 0.15;
+  private static final double SLOW_COLLECTOR_SPEED = 0.25;
   private static final double COLLECTOR_INTAKE_SPEED = 0.4;
   private static final double COLLECTOR_RELEASE_SPEED = 0.4;
 
