@@ -24,6 +24,7 @@ public class Hatch extends Subsystem {
 
   public Hatch() {
     hatchCollector = new WPI_TalonSRX(RobotMap.HATCH_TALON);
+    hatchCollector.setInverted(true);
     LiveWindow.addActuator("Hatch", "Collector", hatchCollector);
   }
 
