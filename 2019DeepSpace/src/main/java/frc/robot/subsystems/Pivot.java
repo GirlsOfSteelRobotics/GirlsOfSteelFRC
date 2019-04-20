@@ -21,7 +21,8 @@ public class Pivot extends Subsystem {
   private WPI_TalonSRX pivot; 
 	private double goalPivotPosition;
 
-	public static final double PIVOT_INCREMENT = 200; 
+	public static final double PIVOT_DOWN_INCREMENT = 125; 
+	public static final double PIVOT_UP_INCREMENT = 200; 
 	public static final double PIVOT_GROUND = -3821; // -4121 was the pre pool noodle value
 	public static final double PIVOT_ROCKET = -1371; //-1775  
 	public static final double PIVOT_CARGO = -438; // -838
@@ -86,12 +87,12 @@ public class Pivot extends Subsystem {
 
 	public void incrementPivot () {
 		goalPivotPosition = getPivotPosition(); 
-		goalPivotPosition += PIVOT_INCREMENT;
+		goalPivotPosition += PIVOT_UP_INCREMENT;
 	}
 
 	public void decrementPivot () {
 		goalPivotPosition = getPivotPosition(); 
-		goalPivotPosition -= PIVOT_INCREMENT;
+		goalPivotPosition -= PIVOT_DOWN_INCREMENT;
 	}
 
 	public boolean checkCurrentPivotPosition(double goalPos) {
