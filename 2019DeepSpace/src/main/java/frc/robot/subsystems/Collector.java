@@ -22,8 +22,6 @@ public class Collector extends Subsystem {
     public Collector() {
         leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_TALON);
         rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT_TALON);
-
-        leftCollect.setInverted(true);
     }
 
     @Override

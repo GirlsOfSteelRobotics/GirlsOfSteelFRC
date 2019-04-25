@@ -35,11 +35,11 @@ public class Chassis extends Subsystem {
 		followerRight.setNeutralMode(NeutralMode.Brake);
 
 		// inverted should be true for Laika
-		masterLeft.setInverted(true);
-		followerLeft.setInverted(true);
+		// masterLeft.setInverted(true);
+		// followerLeft.setInverted(true);
 
-		masterRight.setInverted(true);
-		followerRight.setInverted(true);
+		// masterRight.setInverted(true);
+		// followerRight.setInverted(true);
 		
 		followerLeft.follow(masterLeft, FollowerType.PercentOutput);
 		followerRight.follow(masterRight, FollowerType.PercentOutput);

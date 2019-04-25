@@ -154,7 +154,7 @@ public class OI {
 		pivotRocket = new JoystickButton (operatingPad, 4);
 		pivotRocket.whenPressed(new PivotToRocket());
 
-		pivotShip = new JoystickButton (operatingPad, 12);
+		pivotShip = new JoystickButton (operatingPad, 11);
 		pivotShip.whenPressed(new PivotToShip());
 
 		// DriveByVision button
