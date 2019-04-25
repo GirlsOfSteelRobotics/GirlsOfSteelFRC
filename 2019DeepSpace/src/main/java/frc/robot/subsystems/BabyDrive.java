@@ -21,6 +21,8 @@ public class BabyDrive extends Subsystem {
 
   public BabyDrive() {
     babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
+
+    babyDriveTalon.setInverted(true);
   }
 
   @Override

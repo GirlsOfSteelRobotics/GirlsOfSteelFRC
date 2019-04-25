@@ -145,16 +145,16 @@ public class OI {
 		pivotUp = new JoystickButton(operatingPad, 2);
 		pivotUp.whileHeld(new PivotManual(PivotDirection.Up));
 		
-		pivotDown = new JoystickButton(operatingPad, 3);
+		pivotDown = new JoystickButton(operatingPad, 1);
 		pivotDown.whileHeld(new PivotManual(PivotDirection.Down));
 
-		pivotGround = new JoystickButton(operatingPad, 1);
+		pivotGround = new JoystickButton(operatingPad, 3);
 		pivotGround.whenPressed(new PivotToGround());
 		
 		pivotRocket = new JoystickButton (operatingPad, 4);
 		pivotRocket.whenPressed(new PivotToRocket());
 
-		pivotShip = new JoystickButton (operatingPad, 11);
+		pivotShip = new JoystickButton (operatingPad, 10);
 		pivotShip.whenPressed(new PivotToShip());
 
 		// DriveByVision button

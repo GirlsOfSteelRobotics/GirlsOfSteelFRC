@@ -40,7 +40,7 @@ public class Climber extends Subsystem {
 
   public static final double CLIMBER_EXTEND = 2000;
 
-  public static final double CLIMBER_TOLERANCE = 100;
+  public static final double CLIMBER_TOLERANCE = 200;
 
   public static final double FIRST_GOAL_POS = 0.0; // Robot is powered on in fully retracted state
   public static final double SECOND_GOAL_POS = 34000.0; // -30000 on Belka, -32000 on Laika
@@ -52,8 +52,8 @@ public class Climber extends Subsystem {
     All, Front, Back
   };
 
-  public static final int MAX_CRUISE_VELOCITY = 5000; // Ziya and Joe on 4/3 (new climber)
-  public static final int MAX_ACCELERATION = 10000; // Ziya and Joe on 4/3
+  public static final int MAX_CRUISE_VELOCITY = 3900; // Anna and Gracie 4/25
+  public static final int MAX_ACCELERATION = 10000; // Anna and Gracie 4/25
   // 1500
 
   public double goalFrontPosition;
