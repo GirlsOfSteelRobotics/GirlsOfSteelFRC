@@ -40,15 +40,17 @@ public class Hatch extends Subsystem {
     hatchCollector.stopMotor();
   }
 
+  //switched all to opposite sign of what they where bc that's correct on comp bot
+
   public void collect() {
-    hatchCollector.set(COLLECTOR_INTAKE_SPEED);
+    hatchCollector.set(-COLLECTOR_INTAKE_SPEED);
   }
 
   public void release() {
-    hatchCollector.set(-COLLECTOR_RELEASE_SPEED);
+    hatchCollector.set(COLLECTOR_RELEASE_SPEED);
   }
 
   public void slowCollect() {
-    hatchCollector.set(SLOW_COLLECTOR_SPEED);
+    hatchCollector.set(-SLOW_COLLECTOR_SPEED);
   }
 }

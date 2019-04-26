@@ -133,10 +133,10 @@ public class OI {
 		release.whileHeld(new CollectorRelease());
 
 		// Hatch buttons
-		hatchCollect = new JoystickButton(operatingPad, 7);
+		hatchCollect = new JoystickButton(operatingPad, 8);
 		hatchCollect.whileHeld(new HatchCollect());
 
-		hatchRelease = new JoystickButton(operatingPad, 8);
+		hatchRelease = new JoystickButton(operatingPad, 7);
 		hatchRelease.whileHeld(new HatchRelease());
 
 		// Pivot buttons

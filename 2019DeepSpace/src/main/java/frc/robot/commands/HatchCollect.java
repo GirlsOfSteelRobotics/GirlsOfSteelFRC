@@ -39,7 +39,7 @@ public class HatchCollect extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.hatch.slowCollect();
-    System.out.println("end hatch collect");
+        Robot.hatch.slowCollect(); 
+        System.out.println("end hatch collect");
   }
 }
