@@ -23,7 +23,7 @@ public class Pivot extends Subsystem {
 
 	public static final double PIVOT_DOWN_INCREMENT = 125; 
 	public static final double PIVOT_UP_INCREMENT = 200; 
-	public static final double PIVOT_GROUND = -4145; // -4121 was the pre pool noodle value
+	public static final double PIVOT_GROUND = -3875; // -4121 was the pre pool noodle value
 	public static final double PIVOT_ROCKET = -1371; //-1775  
 	public static final double PIVOT_CARGO = -559; // -838
 	public static final double PIVOT_TOLERANCE = 100;

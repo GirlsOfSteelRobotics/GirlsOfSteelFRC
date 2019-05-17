@@ -17,7 +17,7 @@ public class Collector extends Subsystem {
 
     private static final double SLOW_COLLECTOR_SPEED = 0.15;
     private static final double COLLECTOR_INTAKE_SPEED = 0.4;
-    private static final double COLLECTOR_RELEASE_SPEED = 0.4; // .5 pre-GPR
+    private static final double COLLECTOR_RELEASE_SPEED = 0.35; // .5 pre-GPR
 
     public Collector() {
         leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_TALON);
