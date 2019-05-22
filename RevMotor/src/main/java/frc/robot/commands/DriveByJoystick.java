@@ -13,21 +13,23 @@ import frc.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class ExampleCommand extends Command {
-  public ExampleCommand() {
+public class DriveByJoystick extends Command {
+  public DriveByJoystick() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.exampleSubsystem);
+    requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("DriveByJoystick init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.exampleSubsystem.runMotor(0.5);
+		// 4 is the axis number right x on the gamepad
+		Robot.chassis.driveByJoystick(Robot.oi.getLeftUpAndDown(), Robot.oi.getRightSideToSide());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +41,6 @@ public class ExampleCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.exampleSubsystem.stopMotor();
+    System.out.println("DriveByJoystick end");
   }
 }
