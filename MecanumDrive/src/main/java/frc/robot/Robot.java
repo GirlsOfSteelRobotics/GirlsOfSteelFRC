@@ -24,7 +24,8 @@ import frc.robot.subsystems.Chassis;
  */
 public class Robot extends TimedRobot {
   public static Chassis m_subsystem = new Chassis();
-  public static OI m_oi;
+  public static OI oi;
+  public static Chassis chassis;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -35,7 +36,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
+    oi = new OI();
+    chassis = new Chassis();
     m_chooser.setDefaultOption("Default Auto", new DriveByJoystick());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);

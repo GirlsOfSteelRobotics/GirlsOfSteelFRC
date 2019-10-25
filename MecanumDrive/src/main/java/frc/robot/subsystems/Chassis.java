@@ -59,12 +59,12 @@ public class Chassis extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void driveByJoystick(double yDir, double xDir){
-    drive.arcadeDrive(yDir, xDir);
+  public void driveByJoystick(double ySpeed, double xSpeed, double zRotation){
+    drive.driveCartesian(ySpeed, xSpeed, zRotation);
   }
 
   public void setSpeed(double speed) {
-    drive.arcadeDrive(speed, 0);
+    drive.drivePolar(speed, 0, 0);
   }
 
   public void stop() {

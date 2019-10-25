@@ -16,17 +16,19 @@ import frc.robot.Robot;
 public class DriveByJoystick extends Command {
   public DriveByJoystick() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_subsystem);
+    requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("DriveByJoystick init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.chassis.driveByJoystick(Robot.oi.getySpeed(), Robot.oi.getxSpeed(), Robot.oi.getzRotation());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -38,11 +40,6 @@ public class DriveByJoystick extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
+    System.out.print("DriveByJoystick end");
   }
 }
