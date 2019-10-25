@@ -30,9 +30,9 @@ public class Chassis extends Subsystem {
   private MecanumDrive drive;
 
   public Chassis() {
-   frontLeft = new CANSparkMax(1, MotorType.kBrushless);
-   frontRight = new CANSparkMax(2, MotorType.kBrushless);
-   rearLeft = new CANSparkMax(3, MotorType.kBrushless);
+   frontLeft = new CANSparkMax(2, MotorType.kBrushless);
+   frontRight = new CANSparkMax(3, MotorType.kBrushless);
+   rearLeft = new CANSparkMax(1, MotorType.kBrushless);
    rearRight = new CANSparkMax(4, MotorType.kBrushless);
 
    frontLeft.setIdleMode(IdleMode.kBrake);
