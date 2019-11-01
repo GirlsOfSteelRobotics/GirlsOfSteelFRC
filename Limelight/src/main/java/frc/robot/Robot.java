@@ -19,6 +19,9 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.networktables.*;
 
 
@@ -31,17 +34,17 @@ import edu.wpi.first.networktables.*;
  */
 public class Robot extends TimedRobot {
   public static Chassis m_subsystem = new Chassis();
-  public static OI m_oi;
+  //public static OI m_oi;
 
   private String m_autoSelected;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private VictorSP m_Left0 = new VictorSP(0);
-  private VictorSP m_Left1 = new VictorSP(1);
-  private VictorSP m_Right0 = new VictorSP(2);
-  private VictorSP m_Right1 = new VictorSP(3);
+  private WPI_TalonSRX m_Left0 = new WPI_TalonSRX(0);
+  private WPI_TalonSRX m_Left1 = new WPI_TalonSRX(1);
+  private WPI_TalonSRX m_Right0 = new WPI_TalonSRX(2);
+  private WPI_TalonSRX m_Right1 = new WPI_TalonSRX(3);
   private SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(m_Left0,m_Left1);
   private SpeedControllerGroup m_RightMotors = new SpeedControllerGroup(m_Right0,m_Right1);
   private DifferentialDrive m_Drive = new DifferentialDrive(m_LeftMotors,m_RightMotors);
@@ -58,7 +61,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
+    //m_oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new DriveByJoystick());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
