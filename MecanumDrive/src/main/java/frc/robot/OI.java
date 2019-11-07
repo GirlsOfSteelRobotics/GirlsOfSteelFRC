@@ -21,11 +21,11 @@ public class OI {
   }
 
   public double getxSpeed() {
-    return squaredInput(-drivingStick.getX());
+    return squaredInput(drivingStick.getX());
   }
 
   public double getySpeed() {
-    return squaredInput(drivingStick.getY());
+    return squaredInput(-drivingStick.getY());
   }
 
   public double getzRotation() {
