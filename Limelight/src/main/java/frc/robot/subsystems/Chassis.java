@@ -22,35 +22,35 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  */
 public class Chassis extends Subsystem {
 
-  private CANSparkMax frontLeft;
-  private CANSparkMax frontRight;
-  private CANSparkMax rearLeft;
-  private CANSparkMax rearRight;
+  // private CANSparkMax frontLeft;
+  // private CANSparkMax frontRight;
+  // private CANSparkMax rearLeft;
+  // private CANSparkMax rearRight;
 
-  private MecanumDrive drive;
+  // private MecanumDrive drive;
 
-  public Chassis() {
-   frontLeft = new CANSparkMax(1, MotorType.kBrushless);
-   frontRight = new CANSparkMax(2, MotorType.kBrushless);
-   rearLeft = new CANSparkMax(3, MotorType.kBrushless);
-   rearRight = new CANSparkMax(4, MotorType.kBrushless);
+  // public Chassis() {
+  //  frontLeft = new CANSparkMax(1, MotorType.kBrushless);
+  //  frontRight = new CANSparkMax(2, MotorType.kBrushless);
+  //  rearLeft = new CANSparkMax(3, MotorType.kBrushless);
+  //  rearRight = new CANSparkMax(4, MotorType.kBrushless);
 
-   frontLeft.setIdleMode(IdleMode.kBrake);
-   frontRight.setIdleMode(IdleMode.kBrake);
-   rearLeft.setIdleMode(IdleMode.kBrake);
-   rearRight.setIdleMode(IdleMode.kBrake);
+  //  frontLeft.setIdleMode(IdleMode.kBrake);
+  //  frontRight.setIdleMode(IdleMode.kBrake);
+  //  rearLeft.setIdleMode(IdleMode.kBrake);
+  //  rearRight.setIdleMode(IdleMode.kBrake);
 
-   frontLeft.setInverted(false);
-   frontRight.setInverted(false);
-   rearLeft.setInverted(false);
-   rearRight.setInverted(false);
+  //  frontLeft.setInverted(false);
+  //  frontRight.setInverted(false);
+  //  rearLeft.setInverted(false);
+  //  rearRight.setInverted(false);
 
-   drive = new MecanumDrive(frontLeft, frontRight, rearLeft, rearRight);
-  }
+  //  drive = new MecanumDrive(frontLeft, frontRight, rearLeft, rearRight);
+  // }
   
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  // // Put methods for controlling this subsystem
+  // // here. Call these from Commands.
 
   @Override
   public void initDefaultCommand() {
@@ -59,15 +59,15 @@ public class Chassis extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void driveByJoystick(double yDir, double xDir){
-    drive.arcadeDrive(yDir, xDir);
-  }
+  // public void driveByJoystick(double yDir, double xDir){
+  //   drive.arcadeDrive(yDir, xDir);
+  // }
 
-  public void setSpeed(double speed) {
-    drive.arcadeDrive(speed, 0);
-  }
+  // public void setSpeed(double speed) {
+  //   drive.arcadeDrive(speed, 0);
+  // }
 
-  public void stop() {
-    drive.stopMotor();
-  }
+  // public void stop() {
+  //   drive.stopMotor();
+  // }
 }

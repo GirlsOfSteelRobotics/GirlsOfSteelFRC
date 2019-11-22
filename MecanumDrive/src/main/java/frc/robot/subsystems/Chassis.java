@@ -30,9 +30,9 @@ public class Chassis extends Subsystem {
   private MecanumDrive drive;
 
   public Chassis() {
-   frontLeft = new CANSparkMax(1, MotorType.kBrushless);
-   frontRight = new CANSparkMax(2, MotorType.kBrushless);
-   rearLeft = new CANSparkMax(3, MotorType.kBrushless);
+   frontLeft = new CANSparkMax(2, MotorType.kBrushless);
+   frontRight = new CANSparkMax(3, MotorType.kBrushless);
+   rearLeft = new CANSparkMax(1, MotorType.kBrushless);
    rearRight = new CANSparkMax(4, MotorType.kBrushless);
 
    frontLeft.setIdleMode(IdleMode.kBrake);
@@ -59,12 +59,12 @@ public class Chassis extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void driveByJoystick(double yDir, double xDir){
-    drive.arcadeDrive(yDir, xDir);
+  public void driveByJoystick(double ySpeed, double xSpeed, double zRotation){
+    drive.driveCartesian(ySpeed, xSpeed, zRotation);
   }
 
   public void setSpeed(double speed) {
-    drive.arcadeDrive(speed, 0);
+    drive.drivePolar(speed, 0, 0);
   }
 
   public void stop() {
