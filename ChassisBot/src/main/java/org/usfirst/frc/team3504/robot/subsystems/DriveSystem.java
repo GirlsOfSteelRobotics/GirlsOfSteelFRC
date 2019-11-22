@@ -4,11 +4,13 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 
 
 public class DriveSystem extends Subsystem {
@@ -20,7 +22,7 @@ public class DriveSystem extends Subsystem {
 	private WPI_TalonSRX driveRightB;
 	//private WPI_TalonSRX driveRightC;
 	
-	private RobotDrive robotDrive;
+	private DifferentialDrive robotDrive;
 	
 	private double encOffsetValueRight = 0;
 	private double encOffsetValueLeft = 0;
@@ -40,28 +42,17 @@ public class DriveSystem extends Subsystem {
 		// On each side, all three drive motors MUST run at the same speed.
 		// Use the CAN Talon Follower mode to set the speed of B and C,
 		// making always run at the same speed as A.
-		driveLeftB.changeControlMode(WPI_TalonSRX.TalonControlMode.Follower);
-		//driveLeftC.changeControlMode(WPI_TalonSRX.TalonControlMode.Follower);
-		driveRightB.changeControlMode(WPI_TalonSRX.TalonControlMode.Follower);
-		//driveRightC.changeControlMode(WPI_TalonSRX.TalonControlMode.Follower);
-		driveLeftB.set(driveLeftA.getDeviceID());
-		//driveLeftC.set(driveLeftA.getDeviceID());
-		driveRightB.set(driveRightA.getDeviceID());
-		//driveRightC.set(driveRightA.getDeviceID());
+		driveLeftB.follow(driveLeftA, FollowerType.PercentOutput);
+		driveRightB.follow(driveRightA, FollowerType.PercentOutput);
 	    
 		// Define a robot drive object in terms of only the A motors.
 		// The B and C motors will play along at the same speed (see above.)
-		robotDrive = new RobotDrive(driveLeftA, driveRightA);
+		robotDrive = new DifferentialDrive(driveLeftA, driveRightA);
 
 		// Set some safety controls for the drive system
 		robotDrive.setSafetyEnabled(true);
 		robotDrive.setExpiration(0.1);
-		robotDrive.setSensitivity(0.5);
 		robotDrive.setMaxOutput(1.0);
-		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true); 
-		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-		//robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
 	}
 	
 	public void initDefaultCommand() {
@@ -73,23 +64,23 @@ public class DriveSystem extends Subsystem {
     // here. Call these from Commands.
 
 	public void takeJoystickInputs(Joystick joystk) {
-		robotDrive.arcadeDrive(joystk);
+		robotDrive.arcadeDrive(-joystk.getY(),joystk.getX());
 	}
 
 	public void forward() {
-		robotDrive.drive(1.0, 0);
+		robotDrive.arcadeDrive(1.0, 0);
 	}
 
 	public void stop() {
-		robotDrive.drive(/* speed */0, /* curve */0);
+		robotDrive.stopMotor();
 	}
 
 	public double getEncoderRight() {
-		return driveRightA.getEncPosition();
+		return driveRightA.getSelectedSensorPosition();
 	}
 
 	public double getEncoderLeft() {
-		return -driveLeftA.getEncPosition();
+		return -driveLeftA.getSelectedSensorPosition();
 	}
 
 	public double getEncoderDistance() {
@@ -104,7 +95,7 @@ public class DriveSystem extends Subsystem {
 	}
 	
 	public void driveByJoystick(Joystick stick) {
-		robotDrive.arcadeDrive(stick);
+		takeJoystickInputs(stick);
 		
 	}
 }
