@@ -11,6 +11,7 @@ import com.revrobotics.SparkMax;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveByJoystick;
 
 import com.revrobotics.CANSparkMax;
@@ -61,6 +62,9 @@ public class Chassis extends Subsystem {
 
   public void driveByJoystick(double ySpeed, double xSpeed, double zRotation){
     drive.driveCartesian(ySpeed, xSpeed, zRotation);
+    SmartDashboard.putNumber("EncoderCPR", frontLeft.getEncoder().getCPR());
+    SmartDashboard.putNumber("Velocity", frontLeft.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Position", frontLeft.getEncoder().getPosition());
   }
 
   public void setSpeed(double speed) {
