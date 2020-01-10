@@ -14,6 +14,7 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
+import edu.wpi.first.wpilibj.RobotBase;
 
 import edu.wpi.first.vision.VisionRunner;
 
@@ -39,7 +40,11 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 
 	public void copyPipelineOutputs(GripPipeline pipeline) {
 		// record vision camera movie
-		Robot.camera.addFrame(Robot.camera.getVisionFrame());
+
+	    if(RobotBase.isReal())
+	    {
+	        Robot.camera.addFrame(Robot.camera.getVisionFrame());
+	    }
 		// Get a frame of video from the last step of the pipeline that deals with video
 		// (before converting to a list of contours) and send it to the Processed stream
 		Mat frame = pipeline.hslThresholdOutput();
@@ -97,7 +102,10 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
 		// @Joe why does the editor catch this error first?
 		// puts a dot in the middle of target pair on the processed image for SmartDashboard
 		Imgproc.circle(frame, goalTargetPair.getTargetCenterPoint(), 6, new Scalar(255, 255, 255));
+        if(RobotBase.isReal())
+        {
 		Robot.camera.processedStream.putFrame(frame);
+        }
 
 	}
 

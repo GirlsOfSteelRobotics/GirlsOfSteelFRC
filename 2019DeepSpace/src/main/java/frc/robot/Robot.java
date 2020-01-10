@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.*;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -34,7 +35,10 @@ public class Robot extends TimedRobot {
     climber = new Climber();
     hatch = new Hatch();
     blinkin = new Blinkin();
-    camera = new Camera();
+    if(RobotBase.isReal())
+    {
+        camera = new Camera();
+    }
     lidar = new Lidar();
     // Create all subsystems BEFORE creating the Operator Interface (OI)
     oi = new OI();
@@ -66,7 +70,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+      if(RobotBase.isReal())
+      {
     camera.closeMovieFile();
+      }
   }
 
   @Override
@@ -89,7 +96,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
+    if(RobotBase.isReal())
+    {
     camera.openMovieFile();
+    }
   }
 
   /**
@@ -103,7 +113,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+    if(RobotBase.isReal())
+    {
     camera.openMovieFile();
+    }
   }
 
   /**
