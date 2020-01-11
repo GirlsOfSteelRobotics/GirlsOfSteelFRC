@@ -9,14 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-<<<<<<< HEAD
+
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.subsystems.Chassis;
-=======
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ColorDetection;
-import frc.robot.subsystems.ExampleSubsystem;
->>>>>>> 5e9f9a0d646fd42e45e78f9aa11df1fe3d378cc7
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -30,15 +27,8 @@ public class RobotContainer {
 
   private final DriveByJoystick m_chassis = new Chassis();
 
-  private final DriveByJoystick m_autoCommand = new Chassis(m_Chassis);
-
 
   private final ColorDetection m_colorDetection = new ColorDetection();
-
-
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.

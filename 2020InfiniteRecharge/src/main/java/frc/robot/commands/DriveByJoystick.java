@@ -1,34 +1,32 @@
 package frc.robot.commands;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.Chassis;
 
-import edu.wpi.first.wpilibj.command.Command;
+public class DriveByJoystick extends CommandBase {
 
-public class DriveByJoystick extends Command {
+  Chassis chassis;
 
-	public DriveByJoystick() {
+	public DriveByJoystick(Chassis chassis) {
+    chassis=chassis;
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.chassis);
-	}
-
-	// Called just before this Command runs the first time
-	protected void initialize() {
-
+		super.addRequirements(chassis);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
+	public void execute() { 
 		// 4 is the axis number right x on the gamepad
-		Robot.chassis.driveByJoystick(Robot.robotContainer.getLeftUpAndDown(), Robot.robotContainter.getRightSideToSide());
+		chassis.driveByJoystick(Robot.robotContainter.getLeftUpAndDown(), Robot.robotContainter.getRightSideToSide());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
+	public boolean isFinished() {
 		return false;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.chassis.stop();
+		chassis.stop();
 	}
 
 	// Called when another command which requires one or more of the same

@@ -1,18 +1,19 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.FollowerType;
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.PWMSpeedController;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.command.subsystem;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.subsystems.*;
 
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
 	private final CANSparkMax masterLeft;
 	private final CANSparkMax followerLeft;
@@ -23,17 +24,17 @@ public class Chassis extends Subsystem {
 	private final DifferentialDrive drive;
 
 	public Chassis () {
-		masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK);
-		followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK);
+		masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushed);
+		followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushed);
 
-		masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK); 
-		followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK); 
+		masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushed); 
+		followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushed); 
 		
-		masterLeft.setNeutralMode(NeutralMode.Brake);
-		followerLeft.setNeutralMode(NeutralMode.Brake);
+		//masterLeft.setNeutralMode(NeutralMode.Brake);
+		//followerLeft.setNeutralMode(NeutralMode.Brake);
 
-		masterRight.setNeutralMode(NeutralMode.Brake);
-		followerRight.setNeutralMode(NeutralMode.Brake);
+		//masterRight.setNeutralMode(NeutralMode.Brake);
+		//followerRight.setNeutralMode(NeutralMode.Brake);
 
 		// inverted should be true for Laika
 		// masterLeft.setInverted(true);
@@ -42,8 +43,8 @@ public class Chassis extends Subsystem {
 		// masterRight.setInverted(true);
 		// followerRight.setInverted(true);
 		
-		followerLeft.follow(masterLeft, FollowerType.PercentOutput);
-		followerRight.follow(masterRight, FollowerType.PercentOutput);
+		followerLeft.follow(masterLeft, false);
+		followerRight.follow(masterRight, false);
 		
 		drive = new DifferentialDrive(masterLeft, masterRight);
 		drive.setSafetyEnabled(true);
@@ -60,11 +61,11 @@ public class Chassis extends Subsystem {
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	public WPI_TalonSRX getLeftTalon(){
+	public CANSparkMax getLeftSparkMax(){
 		return masterLeft;
 	}
 
-	public WPI_TalonSRX getRightTalon(){
+	public CANSparkMax getRightSparkMax(){
 		return masterRight;
 	}
     
