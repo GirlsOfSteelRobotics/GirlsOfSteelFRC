@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
-public class ColorDetection extends SubsystemBase {
+public class ControlPanel extends SubsystemBase {
   /**
-   * Creates a new ColorDetection.
+   * Creates a new ControlPanel.
    */
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -30,14 +30,14 @@ public class ColorDetection extends SubsystemBase {
   private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
-  public ColorDetection() {
+  public ControlPanel() {
 
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
     
-    System.out.println("ColorDetection"); 
+    System.out.println("ControlPanel"); 
 
   }
 
@@ -71,6 +71,7 @@ public class ColorDetection extends SubsystemBase {
     SmartDashboard.putNumber("Confidence", match.confidence); 
     SmartDashboard.putString("Detected Color", colorString);
 
+     
     int proximity = m_colorSensor.getProximity();
 
     SmartDashboard.putNumber("Proximity", proximity); 
