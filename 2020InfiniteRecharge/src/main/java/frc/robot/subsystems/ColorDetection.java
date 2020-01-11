@@ -32,14 +32,14 @@ public class ColorDetection extends SubsystemBase {
 
     double IR = m_colorSensor.getIR();
 
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("IR", IR);
+    System.out.println("Red " + detectedColor.red);
+    System.out.println("Green " + detectedColor.green); 
+    System.out.println("Blue " + detectedColor.green); 
+    System.out.println("IR " + IR); 
 
     int proximity = m_colorSensor.getProximity();
 
-    SmartDashboard.putNumber("Proximity", proximity);
+    System.out.println("Proximity" + proximity); 
 
 
     // This method will be called once per scheduler run
