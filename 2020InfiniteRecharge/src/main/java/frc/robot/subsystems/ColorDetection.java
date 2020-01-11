@@ -34,7 +34,7 @@ public class ColorDetection extends SubsystemBase {
 
     System.out.println("Red " + detectedColor.red);
     System.out.println("Green " + detectedColor.green); 
-    System.out.println("Blue " + detectedColor.green); 
+    System.out.println("Blue " + detectedColor.blue); 
     System.out.println("IR " + IR); 
 
     int proximity = m_colorSensor.getProximity();
