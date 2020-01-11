@@ -22,6 +22,7 @@ public class ColorDetection extends SubsystemBase {
 
   public ColorDetection() {
     
+    System.out.println("ColorDetection"); 
 
   }
 
