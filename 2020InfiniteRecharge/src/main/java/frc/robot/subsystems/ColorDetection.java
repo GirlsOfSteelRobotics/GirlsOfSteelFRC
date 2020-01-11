@@ -31,16 +31,14 @@ public class ColorDetection extends SubsystemBase {
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
   public ColorDetection() {
-    
-    System.out.println("ColorDetection"); 
 
-  }
-
-  public void init(){
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
+    
+    System.out.println("ColorDetection"); 
+
   }
 
   @Override
@@ -66,15 +64,16 @@ public class ColorDetection extends SubsystemBase {
       colorString = "Unknown";
     }
 
-    System.out.println("Red " + detectedColor.red);
-    System.out.println("Green " + detectedColor.green); 
-    System.out.println("Blue " + detectedColor.blue); 
-    System.out.println("IR " + IR); 
-    System.out.println("Detected Color" + colorString);
+    SmartDashboard.putNumber("Red ", detectedColor.red);
+    SmartDashboard.putNumber("Green ", detectedColor.green); 
+    SmartDashboard.putNumber("Blue " ,detectedColor.blue); 
+    SmartDashboard.putNumber("IR ", IR); 
+    SmartDashboard.putNumber("Confidence", match.confidence); 
+    SmartDashboard.putString("Detected Color", colorString);
 
     int proximity = m_colorSensor.getProximity();
 
-    System.out.println("Proximity" + proximity); 
+    SmartDashboard.putNumber("Proximity", proximity); 
 
 
     // This method will be called once per scheduler run
