@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
+
+import frc.robot.commands.DriveByJoystick;
+import frc.robot.subsystems.Chassis;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -23,10 +27,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final DriveByJoystick m_chassis = new Chassis();
-
-  private final DriveByJoystick m_autoCommand = new Chassis(m_Chassis);
-
+  private final Chassis m_chassis = new Chassis();
+  private final XboxController driverJoystick = new XboxController(1);
 
   private final ControlPanel m_colorDetection = new ControlPanel();
 
@@ -34,6 +36,7 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, driverJoystick));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -55,6 +58,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }

@@ -1,34 +1,36 @@
 package frc.robot.commands;
-import frc.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Chassis;
 
-public class DriveByJoystick extends Command {
+public class DriveByJoystick extends CommandBase {
 
-	public DriveByJoystick() {
+  Chassis mChassis;
+  XboxController mJoystick;
+
+	public DriveByJoystick(Chassis chassis, XboxController joystick) {
+		mChassis=chassis;
+		mJoystick=joystick;
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.chassis);
-	}
-
-	// Called just before this Command runs the first time
-	protected void initialize() {
-
+		super.addRequirements(chassis);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
+	public void execute() { 
 		// 4 is the axis number right x on the gamepad
-		Robot.chassis.driveByJoystick(Robot.robotContainer.getLeftUpAndDown(), Robot.robotContainter.getRightSideToSide());
+		mChassis.driveByJoystick(mJoystick.getY(Hand.kLeft),mJoystick.getX(Hand.kRight));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
+	public boolean isFinished() {
 		return false;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.chassis.stop();
+		mChassis.stop();
 	}
 
 	// Called when another command which requires one or more of the same
