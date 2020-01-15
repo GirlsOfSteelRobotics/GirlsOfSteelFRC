@@ -27,6 +27,13 @@ public class ControlPanel extends SubsystemBase {
    * Creates a new ControlPanel.
    */
 
+   public enum panelColor{
+     yellow, blue, red, green, unknown
+   }
+
+
+   private panelColor currentColor;
+
   private final CANSparkMax controlPanel;
   private final CANEncoder controlPanelEncoder;
 
@@ -66,15 +73,15 @@ public class ControlPanel extends SubsystemBase {
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
-      colorString = "Blue";
+      currentColor = panelColor.blue;
     } else if (match.color == kRedTarget) {
-      colorString = "Red";
+      currentColor = panelColor.red;
     } else if (match.color == kGreenTarget) {
-      colorString = "Green";
+      currentColor = panelColor.green;
     } else if (match.color == kYellowTarget) {
-      colorString = "Yellow";
+      currentColor = panelColor.yellow;
     } else {
-      colorString = "Unknown";
+      currentColor = panelColor.unknown;
     }
 
     SmartDashboard.putNumber("Red ", detectedColor.red);
@@ -82,7 +89,7 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("Blue " ,detectedColor.blue); 
     SmartDashboard.putNumber("IR ", IR); 
     SmartDashboard.putNumber("Confidence", match.confidence); 
-    SmartDashboard.putString("Detected Color", colorString);
+    SmartDashboard.putString("Detected Color", currentColor.toString());
 
      
     int proximity = m_colorSensor.getProximity();
@@ -96,5 +103,8 @@ public class ControlPanel extends SubsystemBase {
   public double getControlPanelEncoder(){
     return controlPanelEncoder.getPosition();
   }
+
+  public panelColor getCurrentColor(){
+    return currentColor;
   }
 }
