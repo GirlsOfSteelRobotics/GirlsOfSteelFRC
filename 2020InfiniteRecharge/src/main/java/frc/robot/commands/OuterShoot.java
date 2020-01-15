@@ -27,7 +27,7 @@ public class OuterShoot extends CommandBase {
   double m_LimelightSteerCommand = 0.0;
 
   public OuterShoot() {
-    addRequirements(Robot.chassis);
+    // addRequirements(Robot.chassis);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
