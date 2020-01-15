@@ -8,13 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 
-public class DetectColor extends CommandBase {
+public class RotationControl extends CommandBase {
   /**
-   * Creates a new DetectColor.
+   * Creates a new RotationControl.
    */
-  public DetectColor() {
-    
+  public RotationControl() {
+    addRequirements();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

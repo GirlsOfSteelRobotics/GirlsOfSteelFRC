@@ -9,13 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
-
-import frc.robot.commands.DriveByJoystick;
-import frc.robot.subsystems.Chassis;
-
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -27,16 +24,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final Chassis m_chassis = new Chassis();
-  private final XboxController driverJoystick = new XboxController(1);
-
-  private final ControlPanel m_colorDetection = new ControlPanel();
+  private final Chassis chassis;
+  private final ControlPanel controlPanel;
+  private final OI oi;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, driverJoystick));
+
+    //Add subsystems in this section:
+    chassis = new Chassis();
+    controlPanel = new ControlPanel();
+
+    // This line has to be after all of the subsystems are created!
+    oi = new OI();
+
+    chassis.setDefaultCommand(new DriveByJoystick(chassis, oi));
     // Configure the button bindings
     configureButtonBindings();
   }

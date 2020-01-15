@@ -8,11 +8,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -20,6 +26,16 @@ public class ControlPanel extends SubsystemBase {
   /**
    * Creates a new ControlPanel.
    */
+
+   public enum panelColor{
+     yellow, blue, red, green, unknown
+   }
+
+
+   private panelColor currentColor;
+
+  private final CANSparkMax controlPanel;
+  private final CANEncoder controlPanelEncoder;
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
@@ -31,6 +47,10 @@ public class ControlPanel extends SubsystemBase {
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
   public ControlPanel() {
+
+
+		controlPanel = new CANSparkMax(Constants.CONTROL_PANEL_SPARK, MotorType.kBrushed);
+    controlPanelEncoder = controlPanel.getEncoder();
 
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
@@ -53,15 +73,15 @@ public class ControlPanel extends SubsystemBase {
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
-      colorString = "Blue";
+      currentColor = panelColor.blue;
     } else if (match.color == kRedTarget) {
-      colorString = "Red";
+      currentColor = panelColor.red;
     } else if (match.color == kGreenTarget) {
-      colorString = "Green";
+      currentColor = panelColor.green;
     } else if (match.color == kYellowTarget) {
-      colorString = "Yellow";
+      currentColor = panelColor.yellow;
     } else {
-      colorString = "Unknown";
+      currentColor = panelColor.unknown;
     }
 
     SmartDashboard.putNumber("Red ", detectedColor.red);
@@ -69,7 +89,7 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("Blue " ,detectedColor.blue); 
     SmartDashboard.putNumber("IR ", IR); 
     SmartDashboard.putNumber("Confidence", match.confidence); 
-    SmartDashboard.putString("Detected Color", colorString);
+    SmartDashboard.putString("Detected Color", currentColor.toString());
 
      
     int proximity = m_colorSensor.getProximity();
@@ -78,5 +98,13 @@ public class ControlPanel extends SubsystemBase {
 
 
     // This method will be called once per scheduler run
+  }
+
+  public double getControlPanelEncoder(){
+    return controlPanelEncoder.getPosition();
+  }
+
+  public panelColor getCurrentColor(){
+    return currentColor;
   }
 }
