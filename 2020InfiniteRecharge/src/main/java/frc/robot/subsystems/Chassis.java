@@ -69,6 +69,10 @@ public class Chassis extends SubsystemBase {
 		drive.arcadeDrive(speed, 0);
 	}
 
+	public void setSpeedAndSteer(double speed, double steer){
+		drive.arcadeDrive(speed, steer);
+	}
+	
     public void stop() {
     	drive.stopMotor(); 
 	}
