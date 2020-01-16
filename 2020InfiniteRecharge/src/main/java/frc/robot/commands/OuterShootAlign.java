@@ -18,7 +18,7 @@ public class OuterShootAlign extends CommandBase {
   Limelight mlimelight;
   Chassis mchassis;
 
-  public OuterShootAlign(Limelight limelight, Chassis chassis) {
+  public OuterShootAlign(Chassis chassis, Limelight limelight) {
     mlimelight = limelight;
     mchassis = chassis;
     addRequirements(limelight);

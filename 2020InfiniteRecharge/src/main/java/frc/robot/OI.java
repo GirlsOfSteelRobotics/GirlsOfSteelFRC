@@ -27,11 +27,11 @@ public class OI {
 	public XboxController drivingPad;
 	public XboxController operatingPad;
 
-	public OI() {
+	public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight) {
 		drivingPad = new XboxController(0);
         operatingPad = new XboxController(1);
         
-        new JoystickButton(operatingPad, Button.kA.value).whileHeld(new OuterShoot());
+        new JoystickButton(operatingPad, Button.kA.value).whileHeld(new OuterShootAlign(chassis, limelight));
 	}
 
     // Y is negated so that pushing the joystick forward results in positive values
