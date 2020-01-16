@@ -41,11 +41,12 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private WPI_TalonSRX m_Left0 = new WPI_TalonSRX(1);
-  private WPI_TalonSRX m_Left1 = new WPI_TalonSRX(2);
-  private WPI_TalonSRX m_Right0 = new WPI_TalonSRX(3);
-  private WPI_TalonSRX m_Right1 = new WPI_TalonSRX(4);
-  private SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(m_Left0,m_Left1);
+  private WPI_TalonSRX m_Left0 = new WPI_TalonSRX(6);
+  private WPI_TalonSRX m_Left1 = new WPI_TalonSRX(10);
+  private WPI_TalonSRX m_Left2 = new WPI_TalonSRX(7);
+  private WPI_TalonSRX m_Right0 = new WPI_TalonSRX(8);
+  private WPI_TalonSRX m_Right1 = new WPI_TalonSRX(9);
+  private SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(m_Left0,m_Left1,m_Left2);
   private SpeedControllerGroup m_RightMotors = new SpeedControllerGroup(m_Right0,m_Right1);
   private DifferentialDrive m_Drive = new DifferentialDrive(m_LeftMotors,m_RightMotors);
 
