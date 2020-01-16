@@ -7,12 +7,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -26,6 +24,7 @@ public class RobotContainer {
 
   private final Chassis chassis;
   private final ControlPanel controlPanel;
+  private final Limelight limelight;
   private final OI oi;
 
   /**
@@ -36,9 +35,10 @@ public class RobotContainer {
     //Add subsystems in this section:
     chassis = new Chassis();
     controlPanel = new ControlPanel();
+    limelight = new Limelight();
 
     // This line has to be after all of the subsystems are created!
-    oi = new OI();
+    oi = new OI(chassis, controlPanel, limelight);
 
     chassis.setDefaultCommand(new DriveByJoystick(chassis, oi));
   }
