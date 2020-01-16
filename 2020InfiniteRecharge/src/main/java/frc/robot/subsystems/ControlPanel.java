@@ -18,7 +18,6 @@ import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -64,13 +63,11 @@ public class ControlPanel extends SubsystemBase {
   @Override
   public void periodic() {
 
-    Color detectedColor = m_colorSensor.getColor();
+    final Color detectedColor = m_colorSensor.getColor();
 
-    double IR = m_colorSensor.getIR();
+    final double IR = m_colorSensor.getIR();
 
-    String colorString;
-    
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    final ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
       currentColor = panelColor.blue;
@@ -85,14 +82,13 @@ public class ControlPanel extends SubsystemBase {
     }
 
     SmartDashboard.putNumber("Red ", detectedColor.red);
-    SmartDashboard.putNumber("Green ", detectedColor.green); 
-    SmartDashboard.putNumber("Blue " ,detectedColor.blue); 
-    SmartDashboard.putNumber("IR ", IR); 
-    SmartDashboard.putNumber("Confidence", match.confidence); 
+    SmartDashboard.putNumber("Green ", detectedColor.green);
+    SmartDashboard.putNumber("Blue ", detectedColor.blue);
+    SmartDashboard.putNumber("IR ", IR);
+    SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", currentColor.toString());
 
-     
-    int proximity = m_colorSensor.getProximity();
+    final int proximity = m_colorSensor.getProximity();
 
     SmartDashboard.putNumber("Proximity", proximity); 
 
