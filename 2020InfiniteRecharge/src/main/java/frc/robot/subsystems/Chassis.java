@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -48,11 +49,11 @@ public class Chassis extends SubsystemBase {
 		
 		m_pigeon = new PigeonIMU(0);
 		
-		masterLeft.setNeutralMode(NeutralMode.Brake);
-		followerLeft.setNeutralMode(NeutralMode.Brake);
+		masterLeft.setIdleMode(IdleMode.kBrake);
+		followerLeft.setIdleMode(IdleMode.kBrake);
 
-		masterRight.setNeutralMode(NeutralMode.Brake);
-		followerRight.setNeutralMode(NeutralMode.Brake);
+		masterRight.setIdleMode(IdleMode.kBrake);
+		followerRight.setIdleMode(IdleMode.kBrake);
 
 		// inverted should be true for Laika
 		// masterLeft.setInverted(true);
@@ -129,7 +130,7 @@ public class Chassis extends SubsystemBase {
     
     public void driveByJoystick(final double yDir, final double xDir) {
 		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
-    	drive.arcadeDrive(ydir, xDir);
+    	drive.arcadeDrive(yDir, xDir);
 	}
 	
 	public void setSpeed(final double speed){
