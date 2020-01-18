@@ -1,9 +1,15 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -15,8 +21,18 @@ public class Chassis extends SubsystemBase {
 
 	private final CANSparkMax masterRight;
 	private final CANSparkMax followerRight;
+
+	private final CANEncoder rightEncoder;
+	private final CANEncoder leftEncoder;
+
+	private final PigeonIMU m_pigeon;
 	
 	private final DifferentialDrive drive;
+
+	private final DifferentialDriveOdometry m_odometry;
+
+	private final double[] m_Angles = new double[3];
+
 
 	public Chassis () {
 		masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
@@ -24,6 +40,13 @@ public class Chassis extends SubsystemBase {
 
 		masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless); 
 		followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless); 
+
+		rightEncoder = masterRight.getEncoder();
+		leftEncoder = masterLeft.getEncoder();
+		
+		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+		
+		m_pigeon = new PigeonIMU(0);
 		
 		masterLeft.setNeutralMode(NeutralMode.Brake);
 		followerLeft.setNeutralMode(NeutralMode.Brake);
@@ -51,13 +74,58 @@ public class Chassis extends SubsystemBase {
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	public CANSparkMax getLeftSparkMax(){
+	@Override
+	public void periodic(){
+		m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getPosition(),
+		rightEncoder.getPosition());
+
+		m_pigeon.getAccumGyro(m_Angles);
+
+		SmartDashboard.putNumber("x", getX());
+		SmartDashboard.putNumber("y", getY());
+		SmartDashboard.putNumber("yaw", getHeading());
+		SmartDashboard.putNumber("right encoder", getRightEncoder());
+		SmartDashboard.putNumber("left encoder", getLeftEncoder());
+
+	}
+	
+	public CANSparkMax getLeftSparkMax() {
 		return masterLeft;
 	}
 
 	public CANSparkMax getRightSparkMax(){
 		return masterRight;
 	}
+
+	public double getLeftEncoder() {
+		return rightEncoder.getPosition();
+	  }
+	  
+	 public double getRightEncoder() {
+		return leftEncoder.getPosition();
+	  }	
+
+	  public double getAverageEncoderDistance() {
+		return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2.0;
+	  }
+
+
+	  public double getX(){
+		  return  m_odometry.getPoseMeters().getTranslation().getX();
+	  }
+
+	  public double getY(){
+		return  m_odometry.getPoseMeters().getTranslation().getY();
+	}
+
+
+	  public double getHeading() {
+		return m_Angles[0];
+	}
+
+	public Pose2d getPose() {
+		return m_odometry.getPoseMeters();
+	  }
     
     public void driveByJoystick(final double yDir, final double xDir) {
 		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
