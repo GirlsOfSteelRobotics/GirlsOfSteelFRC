@@ -14,6 +14,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -37,11 +38,11 @@ public class OI {
 
     // Y is negated so that pushing the joystick forward results in positive values
 	public double getJoystickSpeed() {
-		return -drivingPad.getY();
+		return -drivingPad.getY(Hand.kLeft);
 	}	
 
 	public double getJoystickSpin() {
-		return drivingPad.getRawAxis(4);
+		return drivingPad.getX(Hand.kRight);
 	}
 	
 }
