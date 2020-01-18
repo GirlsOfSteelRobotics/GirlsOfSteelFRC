@@ -1,0 +1,84 @@
+!!com.snobot.simulator.config.v1.SimulatorConfigV1
+mAccelerometers:
+- mHandle: 400
+  mName: Pigeon X
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonAccelWrapper
+- mHandle: 401
+  mName: Pigeon Y
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonAccelWrapper
+- mHandle: 402
+  mName: Pigeon Z
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonAccelWrapper
+mAnalogIn: []
+mAnalogOut: []
+mDefaultI2CWrappers: {}
+mDefaultSpiWrappers: {}
+mDigitalIO: []
+mEncoders:
+- mConnectedSpeedControllerHandle: 101
+  mHandle: 101
+  mName: CAN Encoder (1)
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+- mConnectedSpeedControllerHandle: 103
+  mHandle: 103
+  mName: CAN Encoder (3)
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+- mConnectedSpeedControllerHandle: 105
+  mHandle: 105
+  mName: CAN Encoder (5)
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+mGyros:
+- mHandle: 400
+  mName: Pigeon Yaw
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonGyroWrapper
+- mHandle: 401
+  mName: Pigeon Pitch
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonGyroWrapper
+- mHandle: 402
+  mName: Pigeon Roll
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonGyroWrapper
+mPwm:
+- mHandle: 101
+  mMotorModelConfig:
+    mGearReduction: 1.0
+    mGearboxEfficiency: 1.0
+    mHasBrake: false
+    mInverted: false
+    mMotorType: CIM
+    mNumMotors: 2
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
+    mConversionFactor: 1.0
+    mLoad: 0.6
+  mName: Left Drive (M)
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 102
+  mMotorModelConfig: null
+  mMotorSimConfig: null
+  mName: Rev SC 2
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 103
+  mMotorModelConfig:
+    mGearReduction: 1.0
+    mGearboxEfficiency: 1.0
+    mHasBrake: false
+    mInverted: false
+    mMotorType: CIM
+    mNumMotors: 2
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
+    mConversionFactor: 1.0
+    mLoad: 0.6
+  mName: RIght Drive (M)
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 104
+  mMotorModelConfig: null
+  mMotorSimConfig: null
+  mName: Rev SC 4
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 105
+  mMotorModelConfig: null
+  mMotorSimConfig: null
+  mName: Rev SC 5
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+mRelays: []
+mSimulatorComponents: []
+mSolenoids: []
