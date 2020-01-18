@@ -15,12 +15,12 @@ public class OuterShootAlign extends CommandBase {
   /**
    * Creates a new OuterShootAlign.
    */
-  Limelight mlimelight;
-  Chassis mchassis;
+  Limelight limelight;
+  Chassis chassis;
 
   public OuterShootAlign(Chassis chassis, Limelight limelight) {
-    mlimelight = limelight;
-    mchassis = chassis;
+    this.limelight = limelight;
+    this.chassis = chassis;
     addRequirements(limelight);
     addRequirements(chassis);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -34,7 +34,7 @@ public class OuterShootAlign extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mchassis.setSpeedAndSteer(mlimelight.getDriveCommand(), mlimelight.getSteerCommand());
+    chassis.setSpeedAndSteer(limelight.getDriveCommand(), limelight.getSteerCommand());
   }
   // Called once the command ends or is interrupted.
   @Override
