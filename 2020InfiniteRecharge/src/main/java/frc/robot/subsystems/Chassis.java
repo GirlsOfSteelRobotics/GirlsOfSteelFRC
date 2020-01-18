@@ -19,17 +19,17 @@ public class Chassis extends SubsystemBase {
 	private final DifferentialDrive drive;
 
 	public Chassis () {
-		masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushed);
-		followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushed);
+		masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
+		followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
 
-		masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushed); 
-		followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushed); 
+		masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless); 
+		followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless); 
 		
-		//masterLeft.setNeutralMode(NeutralMode.Brake);
-		//followerLeft.setNeutralMode(NeutralMode.Brake);
+		masterLeft.setNeutralMode(NeutralMode.Brake);
+		followerLeft.setNeutralMode(NeutralMode.Brake);
 
-		//masterRight.setNeutralMode(NeutralMode.Brake);
-		//followerRight.setNeutralMode(NeutralMode.Brake);
+		masterRight.setNeutralMode(NeutralMode.Brake);
+		followerRight.setNeutralMode(NeutralMode.Brake);
 
 		// inverted should be true for Laika
 		// masterLeft.setInverted(true);
@@ -61,8 +61,7 @@ public class Chassis extends SubsystemBase {
     
     public void driveByJoystick(final double yDir, final double xDir) {
 		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
-		final double forward = yDir*Math.abs(yDir);
-    	drive.arcadeDrive(forward, xDir);
+    	drive.arcadeDrive(ydir, xDir);
 	}
 	
 	public void setSpeed(final double speed){
