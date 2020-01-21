@@ -13,6 +13,8 @@ import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterConveyor;
+import frc.robot.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -28,6 +30,8 @@ public class RobotContainer {
   private final ControlPanel controlPanel;
   private final Limelight limelight;
   private final Shooter shooter;
+  private final ShooterConveyor shooterConveyor;
+  private final ShooterIntake shooterIntake;
   private final OI oi;
 
   /**
@@ -40,9 +44,12 @@ public class RobotContainer {
     controlPanel = new ControlPanel();
     limelight = new Limelight();
     shooter = new Shooter();
+    shooterConveyor = new ShooterConveyor();
+    shooterIntake = new ShooterIntake();
+
 
     // This line has to be after all of the subsystems are created!
-    oi = new OI(chassis, controlPanel, limelight, shooter);
+    oi = new OI(chassis, controlPanel, limelight, shooter, shooterIntake, shooterConveyor);
 
     chassis.setDefaultCommand(new DriveByJoystick(chassis, oi));
   }

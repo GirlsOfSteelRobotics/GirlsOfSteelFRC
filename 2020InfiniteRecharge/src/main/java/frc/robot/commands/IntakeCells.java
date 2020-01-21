@@ -8,20 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterIntake;
 
-public class RunShooterRPM extends CommandBase {
+public class IntakeCells extends CommandBase {
   /**
    * Creates a new RotationControl.
    */
 
-Shooter shooter;
-double goalRPM;
+ShooterIntake shooterIntake;
 
-  public RunShooterRPM(Shooter shooter, double goalRPM) {
-    this.shooter = shooter;
-    this.goalRPM = goalRPM;
-    super.addRequirements(shooter);
+  public IntakeCells(ShooterIntake shooterIntake) {
+    this.shooterIntake = shooterIntake;
+    super.addRequirements(shooterIntake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -33,13 +31,13 @@ double goalRPM;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      shooter.setRPM(goalRPM);
+      shooterIntake.collectCells();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      shooter.stop();
+      shooterIntake.stop();
   }
 
   // Returns true when the command should end.

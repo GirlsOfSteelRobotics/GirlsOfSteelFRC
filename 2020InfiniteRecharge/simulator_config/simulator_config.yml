@@ -57,8 +57,9 @@ mPwm:
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 102
   mMotorModelConfig: null
-  mMotorSimConfig: null
-  mName: Rev SC 2
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Left Drive (F)
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 103
   mMotorModelConfig:
@@ -75,8 +76,9 @@ mPwm:
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 104
   mMotorModelConfig: null
-  mMotorSimConfig: null
-  mName: Rev SC 4
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Right Drive (F)
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 105
   mMotorModelConfig: null
@@ -95,6 +97,18 @@ mPwm:
     mConversionFactor: 6.28
     mLoad: 0.25
   mName: Shooter
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 107
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Conveyor
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 108
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Intake
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 mRelays: []
 mSimulatorComponents:

@@ -29,7 +29,7 @@ public class OI {
 	public XboxController drivingPad;
 	public XboxController operatingPad;
 
-	public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight, Shooter shooter) {
+	public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight, Shooter shooter, ShooterIntake shooterIntake, ShooterConveyor shooterConveyor) {
 		drivingPad = new XboxController(0);
         operatingPad = new XboxController(1);
         
@@ -37,6 +37,9 @@ public class OI {
 		
 		new JoystickButton(operatingPad, Button.kB.value).whileHeld(new RunShooterRPM(shooter, 400));
 		new JoystickButton(operatingPad, Button.kX.value).whileHeld(new RunShooterRPM(shooter, 600));
+
+		new JoystickButton(operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake));
+		new JoystickButton(operatingPad, Button.kBumperRight.value).whileHeld(new Conveyor(shooterConveyor));
 	}
 
     // Y is negated so that pushing the joystick forward results in positive values
