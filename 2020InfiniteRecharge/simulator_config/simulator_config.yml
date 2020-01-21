@@ -27,6 +27,10 @@ mEncoders:
   mHandle: 105
   mName: CAN Encoder (5)
   mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+- mConnectedSpeedControllerHandle: 106
+  mHandle: 106
+  mName: CAN Encoder (6)
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
 mGyros:
 - mHandle: 400
   mName: Pigeon Yaw
@@ -40,15 +44,15 @@ mGyros:
 mPwm:
 - mHandle: 101
   mMotorModelConfig:
-    mGearReduction: 1.0
-    mGearboxEfficiency: 1.0
+    mGearReduction: 10.0
+    mGearboxEfficiency: 0.8
     mHasBrake: false
     mInverted: false
     mMotorType: CIM
     mNumMotors: 2
   mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
-    mConversionFactor: 1.0
-    mLoad: 0.6
+    mConversionFactor: 3.14
+    mLoad: 0.25
   mName: Left Drive (M)
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 102
@@ -58,15 +62,15 @@ mPwm:
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 103
   mMotorModelConfig:
-    mGearReduction: 1.0
-    mGearboxEfficiency: 1.0
+    mGearReduction: 10.0
+    mGearboxEfficiency: 0.8
     mHasBrake: false
-    mInverted: false
+    mInverted: true
     mMotorType: CIM
     mNumMotors: 2
   mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
-    mConversionFactor: 1.0
-    mLoad: 0.6
+    mConversionFactor: 3.14
+    mLoad: 0.25
   mName: RIght Drive (M)
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 104
@@ -79,6 +83,24 @@ mPwm:
   mMotorSimConfig: null
   mName: Rev SC 5
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 106
+  mMotorModelConfig:
+    mGearReduction: 5.0
+    mGearboxEfficiency: 0.8
+    mHasBrake: false
+    mInverted: false
+    mMotorType: CIM
+    mNumMotors: 2
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
+    mConversionFactor: 6.28
+    mLoad: 0.25
+  mName: Shooter
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 mRelays: []
-mSimulatorComponents: []
+mSimulatorComponents:
+- !!com.snobot.simulator.simulator_components.config.TankDriveConfig
+  mGyroHandle: 400
+  mLeftMotorHandle: 101
+  mRightMotorHandle: 103
+  mTurnKp: 33.33
 mSolenoids: []

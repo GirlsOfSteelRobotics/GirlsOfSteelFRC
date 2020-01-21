@@ -80,7 +80,7 @@ public class Chassis extends SubsystemBase {
 		m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getPosition(),
 		rightEncoder.getPosition());
 
-		m_pigeon.getAccumGyro(m_Angles);
+		m_pigeon.getYawPitchRoll(m_Angles);
 
 		SmartDashboard.putNumber("x", getX());
 		SmartDashboard.putNumber("y", getY());

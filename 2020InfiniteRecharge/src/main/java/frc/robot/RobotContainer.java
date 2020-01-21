@@ -12,6 +12,7 @@ import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -26,6 +27,7 @@ public class RobotContainer {
   private final Chassis chassis;
   private final ControlPanel controlPanel;
   private final Limelight limelight;
+  private final Shooter shooter;
   private final OI oi;
 
   /**
@@ -37,9 +39,10 @@ public class RobotContainer {
     chassis = new Chassis();
     controlPanel = new ControlPanel();
     limelight = new Limelight();
+    shooter = new Shooter();
 
     // This line has to be after all of the subsystems are created!
-    oi = new OI(chassis, controlPanel, limelight);
+    oi = new OI(chassis, controlPanel, limelight, shooter);
 
     chassis.setDefaultCommand(new DriveByJoystick(chassis, oi));
   }
