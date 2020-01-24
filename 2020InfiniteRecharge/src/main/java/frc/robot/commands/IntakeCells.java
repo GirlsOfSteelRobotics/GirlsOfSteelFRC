@@ -16,9 +16,11 @@ public class IntakeCells extends CommandBase {
    */
 
 ShooterIntake shooterIntake;
+boolean intake;
 
-  public IntakeCells(ShooterIntake shooterIntake) {
+  public IntakeCells(ShooterIntake shooterIntake, boolean intake) {
     this.shooterIntake = shooterIntake;
+    this.intake = intake;
     super.addRequirements(shooterIntake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -31,7 +33,10 @@ ShooterIntake shooterIntake;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (intake)
       shooterIntake.collectCells();
+    else
+      shooterIntake.decollectCells();
   }
 
   // Called once the command ends or is interrupted.

@@ -16,9 +16,11 @@ public class Conveyor extends CommandBase {
    */
 
 ShooterConveyor shooterConveyor;
+boolean intake;
 
-  public Conveyor(ShooterConveyor shooterConveyor) {
+  public Conveyor(ShooterConveyor shooterConveyor, boolean intake) {
     this.shooterConveyor = shooterConveyor;
+    this.intake = intake;
     super.addRequirements(shooterConveyor);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -31,7 +33,10 @@ ShooterConveyor shooterConveyor;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      shooterConveyor.moveConveyor();
+    if (intake)
+      shooterConveyor.inConveyor();
+    else
+      shooterConveyor.outConveyor();
   }
 
   // Called once the command ends or is interrupted.

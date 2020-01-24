@@ -38,8 +38,10 @@ public class OI {
 		new JoystickButton(operatingPad, Button.kB.value).whileHeld(new RunShooterRPM(shooter, 400));
 		new JoystickButton(operatingPad, Button.kX.value).whileHeld(new RunShooterRPM(shooter, 600));
 
-		new JoystickButton(operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake));
-		new JoystickButton(operatingPad, Button.kBumperRight.value).whileHeld(new Conveyor(shooterConveyor));
+		new JoystickButton(operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
+		new JoystickButton(operatingPad, Button.kBack.value).whileHeld(new IntakeCells(shooterIntake, false));
+		new JoystickButton(operatingPad, Button.kBumperRight.value).whileHeld(new Conveyor(shooterConveyor, true));
+		new JoystickButton(operatingPad, Button.kStart.value).whileHeld(new Conveyor(shooterConveyor, false));
 	}
 
     // Y is negated so that pushing the joystick forward results in positive values

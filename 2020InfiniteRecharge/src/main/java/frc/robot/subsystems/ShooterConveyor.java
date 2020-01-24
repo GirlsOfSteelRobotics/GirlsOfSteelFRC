@@ -12,10 +12,16 @@ public class ShooterConveyor extends SubsystemBase {
 
 	public ShooterConveyor () {
         m_motor = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK, MotorType.kBrushless);
+        m_motor.setInverted(false);
+        m_motor.restoreFactoryDefaults();
     } 
 
-    public void moveConveyor(){
+    public void inConveyor(){
         m_motor.set(1);
+    }
+
+    public void outConveyor(){
+        m_motor.set(-1);
     }
 
     public void stop(){
