@@ -4,9 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoShoot extends CommandBase {
 
+
 	public AutoShoot() {
 		// Use requires() here to declare subsystem dependencies
-		//super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
+        //super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
 	}
 
     public void initialize(){
