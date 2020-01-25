@@ -9,7 +9,6 @@ package frc.robot;
 
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.commands.autonomous.DriveDistance;
-import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
