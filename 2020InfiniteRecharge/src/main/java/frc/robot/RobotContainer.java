@@ -8,6 +8,7 @@
 package frc.robot;
 
 import frc.robot.commands.DriveByJoystick;
+import frc.robot.commands.WinchWind;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.subsystems.Chassis;
@@ -16,6 +17,8 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterConveyor;
 import frc.robot.subsystems.ShooterIntake;
+import frc.robot.subsystems.Winch;
+import frc.robot.subsystems.Lift;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -34,6 +37,8 @@ public class RobotContainer {
   private final Shooter shooter;
   private final ShooterConveyor shooterConveyor;
   private final ShooterIntake shooterIntake;
+  private final Winch winch;
+  private final Lift lift;
   private final OI oi;
 
   /**
@@ -48,10 +53,12 @@ public class RobotContainer {
     shooter = new Shooter();
     shooterConveyor = new ShooterConveyor();
     shooterIntake = new ShooterIntake();
+    winch = new Winch();
+    lift = new Lift();
 
 
     // This line has to be after all of the subsystems are created!
-    oi = new OI(chassis, controlPanel, limelight, shooter, shooterIntake, shooterConveyor);
+    oi = new OI(chassis, controlPanel, limelight, shooter, shooterIntake, shooterConveyor, lift, winch);
 
     chassis.setDefaultCommand(new DriveByJoystick(chassis, oi));
   }
