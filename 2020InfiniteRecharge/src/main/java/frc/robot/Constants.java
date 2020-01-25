@@ -21,9 +21,10 @@ public final class Constants {
     public static final int DRIVE_RIGHT_MASTER_SPARK = 3;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
     public static final int CONTROL_PANEL_SPARK = 5;
-    public static final int SHOOTER_SPARK = 6;
-    public static final int SHOOTER_CONVEYOR_SPARK = 7;
 
-    
+    public static final int SHOOTER_TALON = 6;
+    public static final int SHOOTER_CONVEYOR_TALON = 7;
     public static final int SHOOTER_INTAKE_TALON = 8;
+
+    public static final int CTRE_TIMEOUT = 30;
 }
