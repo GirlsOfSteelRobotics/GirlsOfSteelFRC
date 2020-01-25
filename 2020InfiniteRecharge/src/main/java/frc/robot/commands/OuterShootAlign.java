@@ -34,7 +34,9 @@ public class OuterShootAlign extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    chassis.setSpeedAndSteer(limelight.getDriveCommand(), limelight.getSteerCommand());
+    //chassis.setSpeedAndSteer(limelight.getDriveCommand(), limelight.getSteerCommand());
+    chassis.setSteer(limelight.getSteerCommand());
+
   }
   // Called once the command ends or is interrupted.
   @Override

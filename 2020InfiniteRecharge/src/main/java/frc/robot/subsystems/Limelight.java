@@ -29,11 +29,30 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getSteerCommand(){
+
+    double Kp = -0.1;           //proportional control constant - TUNE VALUE
+    double min_command = 0.04;  //TUNE VALUE
+    double heading_error = -tx;
+
+    double steering_adjust = 0.0;
+    if (tx > 1.0){
+        steering_adjust = Kp*heading_error - min_command;
+    }
+    else if (tx < 1.0){
+        steering_adjust = Kp*heading_error + min_command;
+    }
+  
+    return steering_adjust; 
+      
+    /*
     double STEER_K = 0.03;                    // how hard to turn toward the target
     double steer_cmd = tx * STEER_K;
     m_LimelightSteerCommand = steer_cmd;
     return m_LimelightSteerCommand;
+    */
+
   }
+  
 
   public double getDriveCommand(){
     double DRIVE_K = 0.26;                    // how hard to drive fwd toward the target
@@ -48,6 +67,7 @@ public class Limelight extends SubsystemBase {
     return m_LimelightDriveCommand;
   }
 
+  
   public void init(){
   }
 

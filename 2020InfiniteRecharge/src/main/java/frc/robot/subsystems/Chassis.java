@@ -136,6 +136,11 @@ public class Chassis extends SubsystemBase {
 		drive.arcadeDrive(speed, 0);
 	}
 
+	//command to rotate robot to align with target based on limelight value
+	public void setSteer(double steer){
+		drive.arcadeDrive(0, steer); 
+	}
+
 	public void setSpeedAndSteer(double speed, double steer){
 		drive.arcadeDrive(speed, steer);
 	}
