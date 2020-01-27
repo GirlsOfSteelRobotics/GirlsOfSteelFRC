@@ -10,12 +10,13 @@ public class AutoShoot extends CommandBase {
 	Shooter shooter;
 	OI OI;
 
+
 	public AutoShoot() {
 		requires(Robot.Shooter);
 		shooter = Robot.shooter;
 		OI = Robot.OI;
 		// Use requires() here to declare subsystem dependencies
-		//super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
+        //super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
 	}
 
     private void requires(Object shooter2) {
