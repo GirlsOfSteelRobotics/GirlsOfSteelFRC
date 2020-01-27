@@ -21,7 +21,6 @@ import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -70,18 +69,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    SequentialCommandGroup group = new SequentialCommandGroup();
-    //group.addCommands(new DriveDistance(chassis, 100, 1));
-    //group.addCommands(new TurnToAngle(chassis, 90, 3));
-    //group.addCommands(new DriveDistance(chassis, 50, 1));
-    //group.addCommands(new TurnToAngle(chassis, 45, 3));
-    //group.addCommands(new DriveDistance(chassis, 25, 1));
-    group.addCommands(new AutoShoot(shooter, shooterConveyor, 400, 3));
-
-    return group.withTimeout(3);
-    //return new TimedDriveStraight(chassis, 5, 10);
-    //return new DriveDistance(chassis, 100, 1);
-    //return new TurnToAngle(chassis, 90, 5);
+    return new GoToPosition(chassis, 27 * 12, -13.5 * 12);
   }
 
   public Chassis getChassis()

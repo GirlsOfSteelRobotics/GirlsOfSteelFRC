@@ -18,7 +18,7 @@ public class TurnToAngle extends CommandBase {
         //super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
         this.chassis = chassis;
 
-        m_angle = angle + chassis.getHeading();
+        m_angle = angle;
         m_allowableError = allowableError;
 	}
 
