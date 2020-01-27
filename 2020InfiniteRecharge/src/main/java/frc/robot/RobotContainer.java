@@ -9,6 +9,7 @@ package frc.robot;
 
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.commands.WinchWind;
+import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.subsystems.Chassis;
@@ -70,13 +71,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     SequentialCommandGroup group = new SequentialCommandGroup();
-    group.addCommands(new DriveDistance(chassis, 100, 1));
-    group.addCommands(new TurnToAngle(chassis, 90, 3));
-    group.addCommands(new DriveDistance(chassis, 50, 1));
-    group.addCommands(new TurnToAngle(chassis, 45, 3));
-    group.addCommands(new DriveDistance(chassis, 25, 1));
+    //group.addCommands(new DriveDistance(chassis, 100, 1));
+    //group.addCommands(new TurnToAngle(chassis, 90, 3));
+    //group.addCommands(new DriveDistance(chassis, 50, 1));
+    //group.addCommands(new TurnToAngle(chassis, 45, 3));
+    //group.addCommands(new DriveDistance(chassis, 25, 1));
+    group.addCommands(new AutoShoot(shooter, shooterConveyor, 400, 3));
 
-    return group;
+    return group.withTimeout(3);
     //return new TimedDriveStraight(chassis, 5, 10);
     //return new DriveDistance(chassis, 100, 1);
     //return new TurnToAngle(chassis, 90, 5);

@@ -20,9 +20,6 @@ import frc.robot.subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static Object Shooter;
-public static Shooter shooter;
-public static frc.robot.OI OI;
 private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
