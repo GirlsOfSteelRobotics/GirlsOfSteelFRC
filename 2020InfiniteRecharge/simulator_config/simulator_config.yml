@@ -17,19 +17,19 @@ mDigitalIO: []
 mEncoders:
 - mConnectedSpeedControllerHandle: 101
   mHandle: 101
-  mName: CAN Encoder (1)
+  mName: Drive Left
   mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
 - mConnectedSpeedControllerHandle: 103
   mHandle: 103
-  mName: CAN Encoder (3)
+  mName: Drive Right
   mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
 - mConnectedSpeedControllerHandle: 105
   mHandle: 105
-  mName: CAN Encoder (5)
+  mName: Control Panel
   mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
-- mConnectedSpeedControllerHandle: 106
-  mHandle: 106
-  mName: CAN Encoder (6)
+- mConnectedSpeedControllerHandle: 107
+  mHandle: 107
+  mName: Shooter
   mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
 mGyros:
 - mHandle: 400
@@ -82,8 +82,9 @@ mPwm:
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 105
   mMotorModelConfig: null
-  mMotorSimConfig: null
-  mName: Rev SC 5
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Control Panel
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 106
   mMotorModelConfig:
@@ -94,22 +95,47 @@ mPwm:
     mMotorType: CIM
     mNumMotors: 2
   mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
-    mConversionFactor: 6.28
+    mConversionFactor: 1.0
     mLoad: 0.25
-  mName: Shooter
+  mName: Shooter Conveyor
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 107
-  mMotorModelConfig: null
-  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
-    mMaxSpeed: 0.0
-  mName: Conveyor
-  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+  mMotorModelConfig:
+    mGearReduction: 10.0
+    mGearboxEfficiency: 0.8
+    mHasBrake: false
+    mInverted: true
+    mMotorType: CIM
+    mNumMotors: 2
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
+    mConversionFactor: 1.0
+    mLoad: 0.25
+  mName: Shooter
+  mType: com.snobot.simulator.simulator_components.ctre.CtreTalonSrxSpeedControllerSim
 - mHandle: 108
   mMotorModelConfig: null
   mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
     mMaxSpeed: 0.0
-  mName: Intake
-  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+  mName: Shooter Intake
+  mType: com.snobot.simulator.simulator_components.ctre.CtreTalonSrxSpeedControllerSim
+- mHandle: 109
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Winch (A)
+  mType: com.snobot.simulator.simulator_components.ctre.CtreTalonSrxSpeedControllerSim
+- mHandle: 110
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Winch (B)
+  mType: com.snobot.simulator.simulator_components.ctre.CtreTalonSrxSpeedControllerSim
+- mHandle: 111
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Lift
+  mType: com.snobot.simulator.simulator_components.ctre.CtreTalonSrxSpeedControllerSim
 mRelays: []
 mSimulatorComponents:
 - !!com.snobot.simulator.simulator_components.config.TankDriveConfig

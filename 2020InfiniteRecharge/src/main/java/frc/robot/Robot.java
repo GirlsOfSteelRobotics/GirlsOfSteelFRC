@@ -116,4 +116,9 @@ private Command m_autonomousCommand;
   @Override
   public void testPeriodic() {
   }
+
+  public RobotContainer getContainer()
+  {
+    return m_robotContainer;
+  }
 }

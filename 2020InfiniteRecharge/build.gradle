@@ -1,5 +1,6 @@
 plugins {
     id "java"
+    id "eclipse"
     id "edu.wpi.first.GradleRIO" version "2020.2.2"
     id "com.snobot.simulator.plugin.SnobotSimulatorPlugin" version "2020-0.0.0" apply false
 }
@@ -43,6 +44,14 @@ def includeDesktopSupport = false
 
 /////////////////////////////////////////////////////
 // Snobot Sim
+sourceSets {
+    simulatorExtensions
+    {
+        java {
+            srcDirs += ["src/snobot_sim/java"]
+        }
+    }
+}
 apply plugin: com.snobot.simulator.plugin.SnobotSimulatorPlugin
 apply from: "snobotsim/snobot_sim.gradle"
 // End Snobot Sim
