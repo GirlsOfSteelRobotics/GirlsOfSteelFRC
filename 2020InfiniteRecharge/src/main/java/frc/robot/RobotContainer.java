@@ -11,6 +11,7 @@ import frc.robot.commands.DriveByJoystick;
 import frc.robot.commands.WinchWind;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistance;
+import frc.robot.commands.autonomous.GoToPosition;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
