@@ -44,8 +44,9 @@ public class OI {
 		new JoystickButton(operatingPad, Button.kBack.value).whileHeld(new IntakeCells(shooterIntake, false));
 		new JoystickButton(operatingPad, Button.kBumperRight.value).whileHeld(new Conveyor(shooterConveyor, true));
 		new JoystickButton(operatingPad, Button.kStart.value).whileHeld(new Conveyor(shooterConveyor, false));
-		new JoystickButton(drivingPad, Button.kBumperLeft.value).whileHeld(new HangerLift(lift, false));
+		new JoystickButton(drivingPad, Button.kA.value).whileHeld(new HangerLift(lift, false));
 		new JoystickButton(drivingPad, Button.kBumperRight.value).whileHeld(new WinchWind(winch, false));
+		new JoystickButton(drivingPad, Button.kBumperLeft.value).whileHeld(new WinchWind(winch, true));
 	}
 
     // Y is negated so that pushing the joystick forward results in positive values
