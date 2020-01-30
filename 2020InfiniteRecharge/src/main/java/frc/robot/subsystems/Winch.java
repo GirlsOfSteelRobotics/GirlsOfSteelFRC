@@ -8,31 +8,31 @@ import frc.robot.Constants;
 
 public class Winch extends SubsystemBase {
 
-    private final TalonSRX motorA;
-    private final TalonSRX motorB;
+    private final TalonSRX m_motorA;
+    private final TalonSRX m_motorB;
 
-	public Winch () {
-        motorA = new TalonSRX(Constants.WINCH_A_TALON);
-        motorA.configFactoryDefault();
-        motorA.setInverted(false);
-        motorB = new TalonSRX(Constants.WINCH_B_TALON);
-        motorB.configFactoryDefault();
-        motorB.setInverted(false);
+    public Winch() {
+        m_motorA = new TalonSRX(Constants.WINCH_A_TALON);
+        m_motorA.configFactoryDefault();
+        m_motorA.setInverted(false);
+        m_motorB = new TalonSRX(Constants.WINCH_B_TALON);
+        m_motorB.configFactoryDefault();
+        m_motorB.setInverted(false);
     } 
 
-    public void wind(){
-        motorA.set(ControlMode.PercentOutput, 1);
-        motorB.set(ControlMode.PercentOutput, 1);
+    public void wind() {
+        m_motorA.set(ControlMode.PercentOutput, 1);
+        m_motorB.set(ControlMode.PercentOutput, 1);
     }
 
-    public void unwind(){
-        motorA.set(ControlMode.PercentOutput, -1);
-        motorB.set(ControlMode.PercentOutput, -1);
+    public void unwind() {
+        m_motorA.set(ControlMode.PercentOutput, -1);
+        m_motorB.set(ControlMode.PercentOutput, -1);
     }
 
-    public void stop(){
-        motorA.set(ControlMode.PercentOutput, 0);
-        motorB.set(ControlMode.PercentOutput, 0);
+    public void stop() {
+        m_motorA.set(ControlMode.PercentOutput, 0);
+        m_motorB.set(ControlMode.PercentOutput, 0);
     }
 
 }

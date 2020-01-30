@@ -16,136 +16,124 @@ import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
 
-	private final CANSparkMax masterLeft;
-	private final CANSparkMax followerLeft;
+    private final CANSparkMax m_masterLeft;
+    private final CANSparkMax m_followerLeft; // NOPMD
 
-	private final CANSparkMax masterRight;
-	private final CANSparkMax followerRight;
+    private final CANSparkMax m_masterRight;
+    private final CANSparkMax m_followerRight; // NOPMD
 
-	private final CANEncoder rightEncoder;
-	private final CANEncoder leftEncoder;
+    private final CANEncoder m_rightEncoder;
+    private final CANEncoder m_leftEncoder;
 
-	private final PigeonIMU m_pigeon;
-	
-	private final DifferentialDrive drive;
-
-	private final DifferentialDriveOdometry m_odometry;
-
-	private final double[] m_Angles = new double[3];
-
-
-	public Chassis () {
-		masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
-		followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
-
-		masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless); 
-		followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless); 
-
-		rightEncoder = masterRight.getEncoder();
-		leftEncoder = masterLeft.getEncoder();
-		
-		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-		
-		m_pigeon = new PigeonIMU(0);
-		
-		masterLeft.setIdleMode(IdleMode.kBrake);
-		followerLeft.setIdleMode(IdleMode.kBrake);
-
-		masterRight.setIdleMode(IdleMode.kBrake);
-		followerRight.setIdleMode(IdleMode.kBrake);
-
-		// inverted should be true for Laika
-		// masterLeft.setInverted(true);
-		// followerLeft.setInverted(true);
-
-		// masterRight.setInverted(true);
-		// followerRight.setInverted(true);
-		
-		followerLeft.follow(masterLeft, false);
-		followerRight.follow(masterRight, false);
-		
-		drive = new DifferentialDrive(masterLeft, masterRight);
-		drive.setSafetyEnabled(true);
-		drive.setExpiration(0.1);
-		drive.setMaxOutput(0.8);
-	}
-
-	
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
-	@Override
-	public void periodic(){
-		m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getPosition(),
-		rightEncoder.getPosition());
-
-		m_pigeon.getYawPitchRoll(m_Angles);
-
-		SmartDashboard.putNumber("x", getX());
-		SmartDashboard.putNumber("y", getY());
-		SmartDashboard.putNumber("yaw", getHeading());
-		SmartDashboard.putNumber("right encoder", getRightEncoder());
-		SmartDashboard.putNumber("left encoder", getLeftEncoder());
-
-	}
-	
-	public CANSparkMax getLeftSparkMax() {
-		return masterLeft;
-	}
-
-	public CANSparkMax getRightSparkMax(){
-		return masterRight;
-	}
-
-	public double getLeftEncoder() {
-		return rightEncoder.getPosition();
-	  }
-	  
-	 public double getRightEncoder() {
-		return leftEncoder.getPosition();
-	  }	
-
-	  public double getAverageEncoderDistance() {
-		return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2.0;
-	  }
-
-
-	  public double getX(){
-		  return  m_odometry.getPoseMeters().getTranslation().getX();
-	  }
-
-	  public double getY(){
-		return  m_odometry.getPoseMeters().getTranslation().getY();
-	}
-
-
-	  public double getHeading() {
-		return m_Angles[0];
-	}
-
-	public Pose2d getPose() {
-		return m_odometry.getPoseMeters();
-	  }
+    private final PigeonIMU m_pigeon;
     
-    public void driveByJoystick(final double yDir, final double xDir) {
-		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
-    	drive.arcadeDrive(yDir, xDir);
-	}
-	
-	public void setSpeed(final double speed){
-		drive.arcadeDrive(speed, 0);
-	}
+    private final DifferentialDrive m_drive;
 
-	//command to rotate robot to align with target based on limelight value
-	public void setSteer(double steer){
-		drive.arcadeDrive(0, steer); 
-	}
+    private final DifferentialDriveOdometry m_odometry;
 
-	public void setSpeedAndSteer(double speed, double steer){
-		drive.arcadeDrive(speed, steer);
-	}
-	
+    private final double[] m_angles = new double[3];
+
+
+    public Chassis() {
+        m_masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
+        m_followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
+
+        m_masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless);
+        m_followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
+
+        m_rightEncoder = m_masterRight.getEncoder();
+        m_leftEncoder = m_masterLeft.getEncoder();
+        
+        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        
+        m_pigeon = new PigeonIMU(0);
+        
+        m_masterLeft.setIdleMode(IdleMode.kBrake);
+        m_followerLeft.setIdleMode(IdleMode.kBrake);
+
+        m_masterRight.setIdleMode(IdleMode.kBrake);
+        m_followerRight.setIdleMode(IdleMode.kBrake);
+
+        // inverted should be true for Laika
+        // masterLeft.setInverted(true);
+        // followerLeft.setInverted(true);
+
+        // masterRight.setInverted(true);
+        // followerRight.setInverted(true);
+        
+        m_followerLeft.follow(m_masterLeft, false);
+        m_followerRight.follow(m_masterRight, false);
+        
+        m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
+        m_drive.setSafetyEnabled(true);
+        m_drive.setExpiration(0.1);
+        m_drive.setMaxOutput(0.8);
+    }
+
+    @Override
+    public void periodic() {
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+
+        m_pigeon.getYawPitchRoll(m_angles);
+
+        SmartDashboard.putNumber("x", getX());
+        SmartDashboard.putNumber("y", getY());
+        SmartDashboard.putNumber("yaw", getHeading());
+        SmartDashboard.putNumber("right encoder", getM_rightEncoder());
+        SmartDashboard.putNumber("left encoder", getM_leftEncoder());
+
+    }
+    
+    public CANSparkMax getLeftSparkMax() {
+        return m_masterLeft;
+    }
+
+    public CANSparkMax getRightSparkMax() {
+        return m_masterRight;
+    }
+
+    public double getM_leftEncoder() {
+        return m_rightEncoder.getPosition();
+    }
+        
+    public double getM_rightEncoder() {
+        return m_leftEncoder.getPosition();
+    }
+
+    public double getAverageEncoderDistance() {
+        return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
+    }
+
+    public double getX() {
+        return m_odometry.getPoseMeters().getTranslation().getX();
+    }
+
+    public double getY() {
+        return m_odometry.getPoseMeters().getTranslation().getY();
+    }
+
+    public double getHeading() {
+        return m_angles[0];
+    }
+
+    public Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
+    
+    public void setSpeed(final double speed) {
+        m_drive.arcadeDrive(speed, 0);
+    }
+
+    //command to rotate robot to align with target based on limelight value
+    public void setSteer(double steer) {
+        m_drive.arcadeDrive(0, steer);
+    }
+
+    public void setSpeedAndSteer(double speed, double steer) {
+        m_drive.arcadeDrive(speed, steer);
+    }
+    
     public void stop() {
-    	drive.stopMotor(); 
-	}
+        m_drive.stopMotor();
+    }
 }

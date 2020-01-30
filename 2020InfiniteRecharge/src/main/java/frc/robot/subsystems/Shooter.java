@@ -10,14 +10,14 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
 
+    private static final double SHOOTER_KP = 0.1;
+    private static final double SHOOTER_KFF = 0.00139;
+
+    private static final int SLOT_ID = 0;
+
     private final TalonSRX m_motor;
 
-    private final double SHOOTER_KP = 0.1;
-    private final double SHOOTER_KFF = 0.00139;
-
-    private final int SLOT_ID = 0;
-
-	public Shooter () {
+    public Shooter() {
         m_motor = new TalonSRX(Constants.SHOOTER_TALON);
 
         m_motor.configFactoryDefault();
@@ -32,16 +32,17 @@ public class Shooter extends SubsystemBase {
     
     public void setRPM(final double rpm) {
         //m_pidController.setReference(rpm, ControlType.kVelocity);
-        double targetVelocity_UnitsPer100ms = rpm * 4096 / 600;
-        m_motor.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
+        double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
+        m_motor.set(ControlMode.Velocity, targetVelocityUnitsPer100ms);
     }
 
-    public void periodic(){
-        double rpm = m_motor.getSelectedSensorVelocity() * 600 / 4096;
+    @Override
+    public void periodic() {
+        double rpm = m_motor.getSelectedSensorVelocity() * 600.0 / 4096;
         SmartDashboard.putNumber("RPM", rpm);
     }
 
-    public void stop(){
+    public void stop() {
         m_motor.set(ControlMode.PercentOutput, 0);
         //m_pidController.setReference(0, ControlType.kVelocity);
     }

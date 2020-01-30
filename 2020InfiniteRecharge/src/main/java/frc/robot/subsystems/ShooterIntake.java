@@ -10,22 +10,21 @@ public class ShooterIntake extends SubsystemBase {
 
     private final TalonSRX m_motor;
 
-	public ShooterIntake () {
+    public ShooterIntake() {
         m_motor = new TalonSRX(Constants.SHOOTER_INTAKE_TALON);
         m_motor.configFactoryDefault();
         m_motor.setInverted(false);
     } 
 
-    public void collectCells(){
+    public void collectCells() {
         m_motor.set(ControlMode.PercentOutput, 1);
     }
 
-    public void decollectCells(){
+    public void decollectCells() {
         m_motor.set(ControlMode.PercentOutput, -1);
     }
 
-    public void stop(){
+    public void stop() {
         m_motor.set(ControlMode.PercentOutput, 0);
     }
-
 }

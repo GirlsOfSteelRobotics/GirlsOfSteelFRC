@@ -7,22 +7,22 @@ import frc.robot.Robot;
 
 public class GirlsOfSteelSimulator extends ASimulator {
 
-    private ControlPanelSim mControlPanelSim;
-    private CameraSimulator mCameraSimulator;
+  private ControlPanelSim m_controlPanelSim;
+  private CameraSimulator m_cameraSimulator;
 
-    @Override
-    public void setRobot(IRobotClassContainer aRobot) {
-        setRobot((Robot) ((JavaRobotContainer) aRobot).getJavaRobot());
-    }
+  @Override
+  public void setRobot(IRobotClassContainer robot) {
+    setRobot((Robot) ((JavaRobotContainer) robot).getJavaRobot());
+  }
 
-    public void setRobot(Robot aRobot) {
-        mControlPanelSim = new ControlPanelSim(aRobot);
-        mCameraSimulator = new CameraSimulator(aRobot);
-    }
+  public void setRobot(Robot robot) {
+    m_controlPanelSim = new ControlPanelSim(robot);
+    m_cameraSimulator = new CameraSimulator(robot);
+  }
 
-    @Override
-    public void update() {
-        mControlPanelSim.update();
-        mCameraSimulator.update();
-    }
+  @Override
+  public void update() {
+    m_controlPanelSim.update();
+    m_cameraSimulator.update();
+  }
 }
