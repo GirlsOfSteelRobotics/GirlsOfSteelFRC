@@ -11,32 +11,32 @@ import frc.robot.Robot;
 
 public class ControlPanelSim {
 
-  private final NetworkTable m_networkTable;
-  private IPwmWrapper m_controlPanelMotorSim;
-  private final SimDeviceSim m_deviceSim;
+    private final NetworkTable m_networkTable;
+    private IPwmWrapper m_controlPanelMotorSim;
+    private final SimDeviceSim m_deviceSim;
 
-  public ControlPanelSim(Robot robot) {
-    m_controlPanelMotorSim = SensorActuatorRegistry.get().getSpeedControllers().get(Constants.DRIVE_LEFT_FOLLOWER_SPARK + BaseCanSmartSpeedController.sCAN_SC_OFFSET);
-    m_networkTable = NetworkTableInstance.getDefault().getTable("ControlPanel");
+    public ControlPanelSim(Robot robot) {
+        m_controlPanelMotorSim = SensorActuatorRegistry.get().getSpeedControllers().get(Constants.DRIVE_LEFT_FOLLOWER_SPARK + BaseCanSmartSpeedController.sCAN_SC_OFFSET);
+        m_networkTable = NetworkTableInstance.getDefault().getTable("ControlPanel");
 
-    m_networkTable.getEntry(".type").setString("ControlPanel");
-    m_networkTable.getEntry("sim/r").setDouble(0.0);
-    m_networkTable.getEntry("sim/g").setDouble(0.0);
-    m_networkTable.getEntry("sim/b").setDouble(0.0);
+        m_networkTable.getEntry(".type").setString("ControlPanel");
+        m_networkTable.getEntry("sim/r").setDouble(0.0);
+        m_networkTable.getEntry("sim/g").setDouble(0.0);
+        m_networkTable.getEntry("sim/b").setDouble(0.0);
 
-    m_deviceSim = new SimDeviceSim("REV Color Sensor V3[0,82]");
-  }
+        m_deviceSim = new SimDeviceSim("REV Color Sensor V3[0,82]");
+    }
 
-  public void update() {
+    public void update() {
 
-    m_networkTable.getEntry("sim/Wheel Angle").setDouble(m_controlPanelMotorSim.getPosition());
+        m_networkTable.getEntry("sim/Wheel Angle").setDouble(m_controlPanelMotorSim.getPosition());
 
-    double r = m_networkTable.getEntry("sim/r").getDouble(0.0);
-    double g = m_networkTable.getEntry("sim/g").getDouble(0.0);
-    double b = m_networkTable.getEntry("sim/b").getDouble(0.0);
+        double r = m_networkTable.getEntry("sim/r").getDouble(0.0);
+        double g = m_networkTable.getEntry("sim/g").getDouble(0.0);
+        double b = m_networkTable.getEntry("sim/b").getDouble(0.0);
 
-    m_deviceSim.getDouble("Red").set(r);
-    m_deviceSim.getDouble("Green").set(g);
-    m_deviceSim.getDouble("Blue").set(b);
-  }
+        m_deviceSim.getDouble("Red").set(r);
+        m_deviceSim.getDouble("Green").set(g);
+        m_deviceSim.getDouble("Blue").set(b);
+    }
 }
