@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import frc.robot.subsystems.Shooter;
+
 public class TuneRPM {
     /**
  * This function sets the speed for the RPM
@@ -13,8 +15,10 @@ public class TuneRPM {
  * @param testSpeed speed in RPM
  */
 
-    public void testRPM(double testSpeed){
-
+    public void testRPM(double testSpeed) {
+        Shooter shooter = new Shooter();
+        RunShooterRPM runShooter = new RunShooterRPM(shooter, testSpeed);
+        runShooter.execute();
     }
 
     public TuneRPM() {
