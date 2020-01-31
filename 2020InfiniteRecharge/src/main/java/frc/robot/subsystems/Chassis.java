@@ -92,16 +92,15 @@ public class Chassis extends SubsystemBase {
         SmartDashboard.putNumber("right encoder", getM_rightEncoder());
         SmartDashboard.putNumber("left encoder", getM_leftEncoder());
 
-		m_customNetworkTable.getEntry("X").setDouble(getX());
-		m_customNetworkTable.getEntry("Y").setDouble(getY());
-		m_customNetworkTable.getEntry("Angle").setDouble(getHeading());
+        m_customNetworkTable.getEntry("X").setDouble(getX());
+        m_customNetworkTable.getEntry("Y").setDouble(getY());
+        m_customNetworkTable.getEntry("Angle").setDouble(getHeading());
 
-		// Actually update the display every 5 loops = 100ms
-		if(m_robotPositionCtr % 5 == 0)
-		{
-			m_customNetworkTable.getEntry("Ctr").setDouble(m_robotPositionCtr);
-		}
-		++m_robotPositionCtr;
+        // Actually update the display every 5 loops = 100ms
+        if (m_robotPositionCtr % 5 == 0) {
+            m_customNetworkTable.getEntry("Ctr").setDouble(m_robotPositionCtr);
+        }
+        ++m_robotPositionCtr;
 
     }
     
