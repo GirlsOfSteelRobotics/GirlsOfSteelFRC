@@ -84,4 +84,36 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
 
+/////////////////////////////////////////////////////
+// Widget Helper
+
+repositories {
+    mavenLocal()
+    maven { url "http://raw.githubusercontent.com/pjreiniger/maven_repo/master" }
+}
+
+configurations {
+    coordinate_gui_widget
+}
+
+dependencies {
+    // Helper for getting the coordinate gui from maven into the shuffleboard area
+    coordinate_gui_widget 'org.snobot.coordinate_gui:CoordinateGuiWidget2020:3.0.0'
+}
+
+task deleteOldWidgets(type: Delete) {
+    delete fileTree("${System.getProperty("user.home")}/Shuffleboard/plugins") {
+        include '**/*.jar'
+    }
+    followSymlinks = true
+}
+
+task copyWidgets(type: Copy, dependsOn: deleteOldWidgets) {
+    group = "Girls of Steel"
+    description = "Copies any Girls of Steel widgets from maven into the shuffleboard area"
+    from configurations.coordinate_gui_widget
+    into("${System.getProperty("user.home")}/Shuffleboard/plugins")
+}
+/////////////////////////////////////////////////////
+
 apply from: "styleguide.gradle"
