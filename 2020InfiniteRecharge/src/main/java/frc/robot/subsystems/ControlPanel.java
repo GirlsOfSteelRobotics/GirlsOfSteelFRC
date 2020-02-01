@@ -112,7 +112,7 @@ public class ControlPanel extends SubsystemBase {
     }
 
     public void start(){
-        m_controlPanel.set(ControlMode.PercentOutput, 0.5);
+        m_controlPanel.set(ControlMode.PercentOutput, 0.2);
     }
 
     public void stop() {
