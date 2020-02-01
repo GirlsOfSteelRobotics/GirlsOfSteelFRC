@@ -5,12 +5,9 @@ import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,22 +24,21 @@ public class ControlPanel extends SubsystemBase {
      */
 
     public enum PanelColor {
-         yellow, blue, red, green, unknown
+        yellow, blue, red, green, unknown
     }
 
     private final TalonSRX m_controlPanel; // NOPMD
-    //private final CANEncoder m_controlPanelEncoder;
+    // private final CANEncoder m_controlPanelEncoder;
 
     private final ColorSensorV3 m_colorSensor;
     private final ColorMatch m_colorMatcher;
 
     private int m_colorCounter;
 
-    private PanelColor m_currentPanelColor; 
-    private PanelColor m_lastPanelColor; 
+    private PanelColor m_currentPanelColor;
+    private PanelColor m_lastPanelColor;
 
     private Color m_currentColor = null;
-
 
     public ControlPanel() {
 
@@ -50,7 +46,7 @@ public class ControlPanel extends SubsystemBase {
         m_colorMatcher = new ColorMatch();
 
         m_controlPanel = new TalonSRX(Constants.CONTROL_PANEL_TALON);
-        //m_controlPanelEncoder = m_controlPanel.getEncoder();
+        // m_controlPanelEncoder = m_controlPanel.getEncoder();
 
         m_colorCounter = 0;
 
@@ -58,19 +54,18 @@ public class ControlPanel extends SubsystemBase {
         m_colorMatcher.addColorMatch(GREEN_TARGET_COLOR);
         m_colorMatcher.addColorMatch(RED_TARGET_COLOR);
         m_colorMatcher.addColorMatch(YELLOW_TARGET_COLOR);
-        
-        System.out.println("ControlPanel"); 
+
+        System.out.println("ControlPanel");
 
     }
 
     @Override
     public void periodic() {
-    
+
         m_currentColor = m_colorSensor.getColor();
-     
+
         final double IR = m_colorSensor.getIR();
         final ColorMatchResult match = m_colorMatcher.matchClosestColor(m_currentColor);
-
 
         if (match.color == BLUE_TARGET_COLOR) {
             m_currentPanelColor = PanelColor.blue;
@@ -83,10 +78,10 @@ public class ControlPanel extends SubsystemBase {
         } else {
             m_currentPanelColor = PanelColor.unknown;
         }
- 
-        if(m_currentPanelColor != m_lastPanelColor){
-            m_colorCounter++; 
-            m_lastPanelColor = m_currentPanelColor; 
+
+        if (m_currentPanelColor != m_lastPanelColor) {
+            m_colorCounter++;
+            m_lastPanelColor = m_currentPanelColor;
         }
 
         SmartDashboard.putNumber("Red ", m_currentColor.red);
@@ -98,20 +93,19 @@ public class ControlPanel extends SubsystemBase {
         SmartDashboard.putNumber("Proximity", m_colorSensor.getProximity());
     }
 
-
-    public int getColorCounter(){
+    public int getColorCounter() {
         return m_colorCounter;
     }
 
     // public double getControlPanelEncoder() {
-    //     return m_controlPanelEncoder.getPosition();
+    // return m_controlPanelEncoder.getPosition();
     // }
 
     public PanelColor getCurrentColor() {
         return m_currentPanelColor;
     }
 
-    public void start(){
+    public void start() {
         m_controlPanel.set(ControlMode.PercentOutput, 0.5);
     }
 
