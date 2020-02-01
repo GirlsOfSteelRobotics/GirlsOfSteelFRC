@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -151,6 +152,14 @@ public class Chassis extends SubsystemBase {
 
     public void setSpeedAndSteer(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
+    }
+
+    public void setPosition(double x, double y, double angle) {
+        m_pigeon.setYaw(angle);
+        m_leftEncoder.setPosition(0);
+        m_rightEncoder.setPosition(0);
+        Rotation2d rotation = Rotation2d.fromDegrees(angle);
+        m_odometry.resetPosition(new Pose2d(new Translation2d(x, y), rotation), rotation);
     }
     
     public void stop() {
