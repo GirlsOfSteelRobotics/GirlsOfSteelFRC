@@ -80,7 +80,7 @@ public class RobotContainer {
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
 
         // This line has to be after all of the subsystems are created!
-        m_oi = new OI(m_chassis, m_limelight, m_shooter, m_shooterIntake, m_shooterConveyor, m_lift, m_winch);
+        m_oi = new OI(m_chassis, m_controlPanel, m_limelight, m_shooter, m_shooterIntake, m_shooterConveyor, m_lift, m_winch);
 
         m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, m_oi));
     }
