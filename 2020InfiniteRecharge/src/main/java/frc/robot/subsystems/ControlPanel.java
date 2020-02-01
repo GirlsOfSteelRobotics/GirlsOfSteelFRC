@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorMatch;
@@ -108,5 +109,13 @@ public class ControlPanel extends SubsystemBase {
 
     public PanelColor getCurrentColor() {
         return m_currentPanelColor;
+    }
+
+    public void start(){
+        m_controlPanel.set(ControlMode.PercentOutput, 0.5);
+    }
+
+    public void stop() {
+        m_controlPanel.set(ControlMode.PercentOutput, 0);
     }
 }

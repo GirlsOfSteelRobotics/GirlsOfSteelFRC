@@ -22,11 +22,11 @@ public final class Constants {
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
     public static final int SHOOTER_CONVEYOR_SPARK = 6;
 
-    public static final int CONTROL_PANEL_TALON = 0;
+    public static final int CONTROL_PANEL_TALON = 10;
     public static final int SHOOTER_TALON = 7;
     public static final int SHOOTER_INTAKE_TALON = 8;
     public static final int WINCH_A_TALON = 9;
-    public static final int WINCH_B_TALON = 10;
+    public static final int WINCH_B_TALON = 0;
     public static final int LIFT_TALON = 11;
 
     public static final int SPARK_MAX_CURRENT_LIMIT = 60;
