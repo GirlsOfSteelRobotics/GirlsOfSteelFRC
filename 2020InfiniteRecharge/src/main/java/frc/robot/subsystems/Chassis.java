@@ -43,7 +43,6 @@ public class Chassis extends SubsystemBase {
     public Chassis() {
         m_masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
         m_followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
-
         m_masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless);
         m_followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
@@ -56,19 +55,21 @@ public class Chassis extends SubsystemBase {
         
         m_masterLeft.setIdleMode(IdleMode.kBrake);
         m_followerLeft.setIdleMode(IdleMode.kBrake);
-
         m_masterRight.setIdleMode(IdleMode.kBrake);
         m_followerRight.setIdleMode(IdleMode.kBrake);
 
-        // inverted should be true for Laika
-        // masterLeft.setInverted(true);
-        // followerLeft.setInverted(true);
-
-        // masterRight.setInverted(true);
-        // followerRight.setInverted(true);
+        m_masterLeft.setInverted(false);
+        m_followerLeft.setInverted(false);
+        m_masterRight.setInverted(false);
+        m_followerRight.setInverted(false);
         
         m_followerLeft.follow(m_masterLeft, false);
         m_followerRight.follow(m_masterRight, false);
+        
+        m_masterLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
+        m_followerLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
+        m_masterRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
+        m_followerRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         
         m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
         m_drive.setSafetyEnabled(true);
