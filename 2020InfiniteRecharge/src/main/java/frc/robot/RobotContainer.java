@@ -9,7 +9,8 @@ package frc.robot;
 
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.commands.autonomous.DriveDistance;
-import frc.robot.commands.autonomous.GoToPosition;
+import frc.robot.commands.autonomous.DriveToPoint;
+import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.subsystems.Chassis;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.Lift;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -60,17 +62,19 @@ public class RobotContainer {
         m_winch = new Winch();
         m_lift = new Lift();
         m_sendableChooser = new SendableChooser<>();
-        double dX = 27;
-        double dY = 13.5;
-        m_sendableChooser.addOption("Test. Go To Position", new GoToPosition(m_chassis, 0.0, 0.0, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Right", new GoToPosition(m_chassis, dX, 0.0, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Left", new GoToPosition(m_chassis, -dX, 0.0, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Up", new GoToPosition(m_chassis, 0.0, dY, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Down", new GoToPosition(m_chassis, 0.0, -dY, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Up-Left", new GoToPosition(m_chassis, -dX, dY, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Up-Right", new GoToPosition(m_chassis, dX, dY, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Down-Left", new GoToPosition(m_chassis, -dX, -dY, 1, 1));
-        m_sendableChooser.addOption("Test. Go To Position Down-Right", new GoToPosition(m_chassis, dX, -dY, 1, 1));
+        double dX = 27 * 12;
+        double dY = 13.5 * 12;
+        double xOffset = 27 * 12;
+        double yOffset = -13.5 * 12;
+        m_sendableChooser.addOption("Test. Go To Position (0, 0)", new DriveToPoint(m_chassis, 0.0, 0.0, 1));
+        m_sendableChooser.addOption("Test. Go To Position Right", new DriveToPoint(m_chassis, dX + xOffset, 0.0 + yOffset, 1));
+        m_sendableChooser.addOption("Test. Go To Position Left", new DriveToPoint(m_chassis, -dX + xOffset, 0.0 + yOffset, 1));
+        m_sendableChooser.addOption("Test. Go To Position Up", new DriveToPoint(m_chassis, 0.0 + xOffset, dY + yOffset, 1));
+        m_sendableChooser.addOption("Test. Go To Position Down", new DriveToPoint(m_chassis, 0.0 + xOffset, -dY + yOffset, 1));
+        m_sendableChooser.addOption("Test. Go To Position Up-Left", new DriveToPoint(m_chassis, -dX + xOffset, dY + yOffset, 1));
+        m_sendableChooser.addOption("Test. Go To Position Up-Right", new DriveToPoint(m_chassis, dX + xOffset, dY + yOffset, 1));
+        m_sendableChooser.addOption("Test. Go To Position Down-Left", new DriveToPoint(m_chassis, -dX + xOffset, -dY + yOffset, 1));
+        m_sendableChooser.addOption("Test. Go To Position Down-Right", new DriveToPoint(m_chassis, dX + xOffset, -dY + yOffset, 1));
         m_sendableChooser.addOption("Test. Turn To Angle Positive", new TurnToAngle(m_chassis, 90, 1));
         m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(m_chassis, -90, 1));
         m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(m_chassis, 60, 1));
@@ -91,7 +95,10 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return m_sendableChooser.getSelected();
+        SequentialCommandGroup group = new SequentialCommandGroup();
+        group.addCommands(new SetStartingPosition(m_chassis, 27 * 12, -13.5 * 12, 0));
+        group.addCommands(m_sendableChooser.getSelected());
+        return group;
     }
 
     public Chassis getChassis()    {
