@@ -36,6 +36,8 @@ public class ControlPanel extends SubsystemBase {
 
     private PanelColor m_currentColor;
 
+    private int m_colorCounter;
+
 
     public ControlPanel() {
 
@@ -44,6 +46,8 @@ public class ControlPanel extends SubsystemBase {
 
         m_controlPanel = new CANSparkMax(Constants.CONTROL_PANEL_SPARK, MotorType.kBrushed);
         m_controlPanelEncoder = m_controlPanel.getEncoder();
+
+        m_colorCounter = 0;
 
         m_colorMatcher.addColorMatch(BLUE_TARGET_COLOR);
         m_colorMatcher.addColorMatch(GREEN_TARGET_COLOR);
@@ -65,12 +69,16 @@ public class ControlPanel extends SubsystemBase {
 
         if (match.color == BLUE_TARGET_COLOR) {
             m_currentColor = PanelColor.blue;
+            m_colorCounter++;
         } else if (match.color == RED_TARGET_COLOR) {
             m_currentColor = PanelColor.red;
+            m_colorCounter++;
         } else if (match.color == GREEN_TARGET_COLOR) {
             m_currentColor = PanelColor.green;
+            m_colorCounter++;
         } else if (match.color == YELLOW_TARGET_COLOR) {
             m_currentColor = PanelColor.yellow;
+            m_colorCounter++;
         } else {
             m_currentColor = PanelColor.unknown;
         }
@@ -82,6 +90,11 @@ public class ControlPanel extends SubsystemBase {
         SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", m_currentColor.toString());
         SmartDashboard.putNumber("Proximity", m_colorSensor.getProximity());
+    }
+
+
+    public int getColorCounter(){
+        return m_colorCounter;
     }
 
     public double getControlPanelEncoder() {
