@@ -17,7 +17,9 @@ import frc.robot.subsystems.ShooterConveyor;
 import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Camera;
 import edu.wpi.first.wpilibj2.command.Command;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -29,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
+    private final Camera m_camera;
     private final Chassis m_chassis;
     private final ControlPanel m_controlPanel;
     private final Limelight m_limelight;
@@ -45,6 +48,8 @@ public class RobotContainer {
     public RobotContainer() {
 
         //Add subsystems in this section:
+        m_camera = new Camera ();
+        // Todo: change drivercam constant to display camera feed
         m_chassis = new Chassis();
         m_controlPanel = new ControlPanel();
         m_limelight = new Limelight();

@@ -31,4 +31,6 @@ public final class Constants {
 
     public static final int SPARK_MAX_CURRENT_LIMIT = 60;
     public static final int CTRE_TIMEOUT = 30;
+
+    public static final int DRIVER_CAMERA = -1;
 }
