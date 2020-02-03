@@ -27,6 +27,8 @@ public class OI {
         new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPM(shooter, 600));
         new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
         new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld(new IntakeCells(shooterIntake, false));
+        new JoystickButton(m_operatingPad, Button.kY.value).whileHeld(new MovePiston(shooterIntake, true));
+        new JoystickButton(m_operatingPad, Button.kY.value).whenReleased(new MovePiston(shooterIntake, false));
         new JoystickButton(m_operatingPad, Button.kBumperRight.value).whileHeld(new Conveyor(shooterConveyor, true));
         new JoystickButton(m_operatingPad, Button.kStart.value).whileHeld(new Conveyor(shooterConveyor, false));
  
