@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -27,7 +27,7 @@ public class ControlPanel extends SubsystemBase {
         yellow, blue, red, green, unknown
     }
 
-    private final TalonSRX m_controlPanel; // NOPMD
+    private final WPI_TalonSRX m_controlPanel; // NOPMD
     // private final CANEncoder m_controlPanelEncoder;
 
     private final ColorSensorV3 m_colorSensor;
@@ -45,7 +45,7 @@ public class ControlPanel extends SubsystemBase {
         m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
         m_colorMatcher = new ColorMatch();
 
-        m_controlPanel = new TalonSRX(Constants.CONTROL_PANEL_TALON);
+        m_controlPanel = new WPI_TalonSRX(Constants.CONTROL_PANEL_TALON);
         // m_controlPanelEncoder = m_controlPanel.getEncoder();
 
         m_colorCounter = 0;

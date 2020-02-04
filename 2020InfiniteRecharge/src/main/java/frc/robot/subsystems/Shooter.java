@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,12 +15,12 @@ public class Shooter extends SubsystemBase {
 
     private static final int SLOT_ID = 0;
 
-    private final TalonSRX m_master;
-    private final TalonSRX m_follower;
+    private final WPI_TalonSRX m_master;
+    private final WPI_TalonSRX m_follower;
 
     public Shooter() {
-        m_master = new TalonSRX(Constants.SHOOTER_TALON_A);
-        m_follower = new TalonSRX(Constants.SHOOTER_TALON_B);
+        m_master = new WPI_TalonSRX(Constants.SHOOTER_TALON_A);
+        m_follower = new WPI_TalonSRX(Constants.SHOOTER_TALON_B);
 
         m_follower.follow(m_master);
         

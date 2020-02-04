@@ -33,10 +33,7 @@ public final class Constants {
     public static final int SPARK_MAX_CURRENT_LIMIT = 60;
     public static final int CTRE_TIMEOUT = 30;
 
-<<<<<<< HEAD
     public static final int DRIVER_CAMERA = -1;
-=======
     public static final int DOUBLE_SOLENOID_SHOOTER_INTAKE_FORWARD = 0;
     public static final int DOUBLE_SOLENOID_SHOOTER_INTAKE_BACKWARD = 1;
->>>>>>> c91beea15b2de9aead089228fca135cd97e3d2c4
 }

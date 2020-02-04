@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -10,11 +10,11 @@ import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
 
-    private final TalonSRX m_motor;
+    private final WPI_TalonSRX m_motor;
     private final DoubleSolenoid m_piston;
 
     public ShooterIntake() {
-        m_motor = new TalonSRX(Constants.SHOOTER_INTAKE_TALON);
+        m_motor = new WPI_TalonSRX(Constants.SHOOTER_INTAKE_TALON);
         m_motor.configFactoryDefault();
         m_motor.setInverted(false);
         m_piston = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_SHOOTER_INTAKE_FORWARD, Constants.DOUBLE_SOLENOID_SHOOTER_INTAKE_BACKWARD);
