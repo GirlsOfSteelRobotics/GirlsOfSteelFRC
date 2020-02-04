@@ -35,7 +35,8 @@ public class OI {
         new JoystickButton(m_drivingPad, Button.kBumperLeft.value).whileHeld(new HangerLift(lift, true));
         new JoystickButton(m_drivingPad, Button.kBumperRight.value).whileHeld(new HangerLift(lift, false));
         new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
-        new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
+        new JoystickButton(m_drivingPad, Button.kA.
+        value).whileHeld(new WinchWind(winch, false));
         new JoystickButton(m_drivingPad, Button.kY.value).whenPressed(new RotationControl(controlPanel));
     }
 

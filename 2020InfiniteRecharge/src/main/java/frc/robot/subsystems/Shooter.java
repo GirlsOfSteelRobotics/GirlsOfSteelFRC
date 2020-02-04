@@ -15,35 +15,40 @@ public class Shooter extends SubsystemBase {
 
     private static final int SLOT_ID = 0;
 
-    private final TalonSRX m_motor;
+    private final TalonSRX m_master;
+    private final TalonSRX m_follower;
 
     public Shooter() {
-        m_motor = new TalonSRX(Constants.SHOOTER_TALON);
+        m_master = new TalonSRX(Constants.SHOOTER_TALON_A);
+        m_follower = new TalonSRX(Constants.SHOOTER_TALON_B);
 
-        m_motor.configFactoryDefault();
-        m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, SLOT_ID, Constants.CTRE_TIMEOUT);
+        m_follower.follow(m_master);
+        
 
-        m_motor.setSensorPhase(true);
-        m_motor.setInverted(true);
+        m_master.configFactoryDefault();
+        m_master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, SLOT_ID, Constants.CTRE_TIMEOUT);
 
-        m_motor.config_kF(SLOT_ID, SHOOTER_KFF, Constants.CTRE_TIMEOUT);
-        m_motor.config_kP(SLOT_ID, SHOOTER_KP, Constants.CTRE_TIMEOUT);
+        m_master.setSensorPhase(true);
+        m_master.setInverted(true);
+
+        m_master.config_kF(SLOT_ID, SHOOTER_KFF, Constants.CTRE_TIMEOUT);
+        m_master.config_kP(SLOT_ID, SHOOTER_KP, Constants.CTRE_TIMEOUT);
     } 
     
     public void setRPM(final double rpm) {
         //m_pidController.setReference(rpm, ControlType.kVelocity);
         double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
-        m_motor.set(ControlMode.Velocity, targetVelocityUnitsPer100ms);
+        m_master.set(ControlMode.Velocity, targetVelocityUnitsPer100ms);
     }
 
     @Override
     public void periodic() {
-        double rpm = m_motor.getSelectedSensorVelocity() * 600.0 / 4096;
+        double rpm = m_master.getSelectedSensorVelocity() * 600.0 / 4096;
         SmartDashboard.putNumber("RPM", rpm);
     }
 
     public void stop() {
-        m_motor.set(ControlMode.PercentOutput, 0);
+        m_master.set(ControlMode.PercentOutput, 0);
         //m_pidController.setReference(0, ControlType.kVelocity);
     }
 }
