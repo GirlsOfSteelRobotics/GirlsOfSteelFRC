@@ -6,9 +6,12 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,11 +36,13 @@ public class Chassis extends SubsystemBase {
 
     private final double[] m_angles = new double[3];
 
+    private final NetworkTable m_customNetworkTable;
+    private int m_robotPositionCtr; // Used for downsampling the updates
+
 
     public Chassis() {
         m_masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
         m_followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
-
         m_masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless);
         m_followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
@@ -50,24 +55,31 @@ public class Chassis extends SubsystemBase {
         
         m_masterLeft.setIdleMode(IdleMode.kBrake);
         m_followerLeft.setIdleMode(IdleMode.kBrake);
-
         m_masterRight.setIdleMode(IdleMode.kBrake);
         m_followerRight.setIdleMode(IdleMode.kBrake);
 
-        // inverted should be true for Laika
-        // masterLeft.setInverted(true);
-        // followerLeft.setInverted(true);
-
-        // masterRight.setInverted(true);
-        // followerRight.setInverted(true);
+        m_masterLeft.setInverted(false);
+        m_followerLeft.setInverted(false);
+        m_masterRight.setInverted(false);
+        m_followerRight.setInverted(false);
         
         m_followerLeft.follow(m_masterLeft, false);
         m_followerRight.follow(m_masterRight, false);
+        
+        m_masterLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
+        m_followerLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
+        m_masterRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
+        m_followerRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         
         m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
         m_drive.setSafetyEnabled(true);
         m_drive.setExpiration(0.1);
         m_drive.setMaxOutput(0.8);
+
+        NetworkTable coordinateGuiContainer = NetworkTableInstance.getDefault().getTable("CoordinateGui");
+        coordinateGuiContainer.getEntry(".type").setString("CoordinateGui");
+
+        m_customNetworkTable = coordinateGuiContainer.getSubTable("RobotPosition");
     }
 
     @Override
@@ -81,6 +93,16 @@ public class Chassis extends SubsystemBase {
         SmartDashboard.putNumber("yaw", getHeading());
         SmartDashboard.putNumber("right encoder", getM_rightEncoder());
         SmartDashboard.putNumber("left encoder", getM_leftEncoder());
+
+        m_customNetworkTable.getEntry("X").setDouble(getX());
+        m_customNetworkTable.getEntry("Y").setDouble(getY());
+        m_customNetworkTable.getEntry("Angle").setDouble(getHeading());
+
+        // Actually update the display every 5 loops = 100ms
+        if (m_robotPositionCtr % 5 == 0) {
+            m_customNetworkTable.getEntry("Ctr").setDouble(m_robotPositionCtr);
+        }
+        ++m_robotPositionCtr;
 
     }
     
@@ -131,6 +153,14 @@ public class Chassis extends SubsystemBase {
 
     public void setSpeedAndSteer(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
+    }
+
+    public void setPosition(double x, double y, double angle) {
+        m_pigeon.setYaw(angle);
+        m_leftEncoder.setPosition(0);
+        m_rightEncoder.setPosition(0);
+        Rotation2d rotation = Rotation2d.fromDegrees(angle);
+        m_odometry.resetPosition(new Pose2d(new Translation2d(x, y), rotation), rotation);
     }
     
     public void stop() {
