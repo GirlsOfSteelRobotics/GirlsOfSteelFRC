@@ -8,25 +8,28 @@ import frc.robot.Constants;
 
 public class ShooterConveyor extends SubsystemBase {
 
-    private final CANSparkMax m_motor;
+    private final CANSparkMax m_master;
+    private final CANSparkMax m_follower;
 
     public ShooterConveyor() {
-        m_motor = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK, MotorType.kBrushless);
-        m_motor.restoreFactoryDefaults();
-        m_motor.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-        m_motor.setInverted(false);
+        m_master = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_A, MotorType.kBrushless);
+        m_master.restoreFactoryDefaults();
+        m_master.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
+        m_master.setInverted(false);
 
+        m_follower = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_B, MotorType.kBrushless);
+        m_follower.follow(m_master);
     } 
 
     public void inConveyor() {
-        m_motor.set(1);
+        m_master.set(1);
     }
 
     public void outConveyor() {
-        m_motor.set(-1);
+        m_master.set(-1);
     }
 
     public void stop() {
-        m_motor.set(0);
+        m_master.set(0);
     }
 }
