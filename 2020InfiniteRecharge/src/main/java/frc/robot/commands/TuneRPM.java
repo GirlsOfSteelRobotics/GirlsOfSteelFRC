@@ -1,36 +1,41 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class TuneRPM {
-    /**
- * This function sets the speed for the RPM
- * @param setSpeed speed in RPM
- */
-    public void setRPM(double setSpeed) {
-        return;
-    }
-    /**
- * This function tests the speed, will make the robot move
- * @param testSpeed speed in RPM
- */
 
-    public void testRPM(double testSpeed) {
-        Shooter shooter = new Shooter();
-        RunShooterRPM runShooter = new RunShooterRPM(shooter, testSpeed);
-        runShooter.execute();
+public class TuneRPM extends CommandBase {
+
+    private final Shooter m_shooter;
+
+    public TuneRPM(Shooter shooter) {
+        this.m_shooter = shooter;
+
+        super.addRequirements(shooter);
+
+        SmartDashboard.putNumber("Tune RPM", 0);
     }
 
-    public TuneRPM() {
-
+    @Override
+    public void initialize() {
     }
 
-    public static void main(String... args) {
+    @Override
+    public void execute() {
+        double goalRPM;
+        goalRPM = SmartDashboard.getNumber("Tune RPM", 0);
+        m_shooter.setRPM(goalRPM);
+        System.out.println("goalRPM" + goalRPM);
+    }
 
-        TuneRPM tuneRPM = new TuneRPM();
-        tuneRPM.setRPM(400);
+    @Override
+    public void end(boolean interrupted) {
+        m_shooter.stop();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }
-
-
-
