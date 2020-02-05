@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
 
-public class RunShooterRPM extends CommandBase {
+public class RunShooterRPMWhileHeld extends CommandBase {
 
     private final Shooter m_shooter;
     private final double m_goalRPM;
 
-    public RunShooterRPM(Shooter shooter, double goalRPM) {
+    public RunShooterRPMWhileHeld(Shooter shooter, double goalRPM) {
         this.m_shooter = shooter;
         this.m_goalRPM = goalRPM;
 
@@ -27,11 +27,11 @@ public class RunShooterRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-    // leave motor running 
+        m_shooter.stop();
     }
 
     @Override
     public boolean isFinished() {
-        return m_shooter.isAtFullSpeed();
+        return false;
     }
 }

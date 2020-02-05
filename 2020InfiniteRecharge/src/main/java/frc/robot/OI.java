@@ -16,7 +16,7 @@ public class OI {
     public XboxController m_drivingPad;
     public XboxController m_operatingPad;
 
-    public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight,
+    public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight, Camera camera,
                 Shooter shooter, ShooterIntake shooterIntake, ShooterConveyor shooterConveyor,
                  Lift lift, Winch winch) {
         m_drivingPad = new XboxController(0);

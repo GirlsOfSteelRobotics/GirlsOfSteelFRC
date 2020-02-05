@@ -23,7 +23,7 @@ public class Camera extends SubsystemBase {
 	public CvSource processedStream;
 	public UsbCamera driveCam;
 	
-	private Mat frame = new Mat();
+	//private Mat frame = new Mat();
 	private VideoWriter videoWriter = new VideoWriter();
 	private int framecount;
 

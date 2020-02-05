@@ -13,17 +13,19 @@ public class Shooter extends SubsystemBase {
     private static final double SHOOTER_KP = 0.1;
     private static final double SHOOTER_KFF = 0.00139;
 
+    private static final double ALLOWABLE_ERROR_PERCENT = 1;          
+
     private static final int SLOT_ID = 0;
 
     private final WPI_TalonSRX m_master;
     private final WPI_TalonSRX m_follower;
+    private double goalRPM; 
 
     public Shooter() {
         m_master = new WPI_TalonSRX(Constants.SHOOTER_TALON_A);
         m_follower = new WPI_TalonSRX(Constants.SHOOTER_TALON_B);
 
         m_follower.follow(m_master);
-        
 
         m_master.configFactoryDefault();
         m_master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, SLOT_ID, Constants.CTRE_TIMEOUT);
@@ -36,6 +38,7 @@ public class Shooter extends SubsystemBase {
     } 
     
     public void setRPM(final double rpm) {
+        goalRPM = rpm; 
         //m_pidController.setReference(rpm, ControlType.kVelocity);
         double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
         m_master.set(ControlMode.Velocity, targetVelocityUnitsPer100ms);
@@ -45,6 +48,12 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         double rpm = m_master.getSelectedSensorVelocity() * 600.0 / 4096;
         SmartDashboard.putNumber("RPM", rpm);
+    }
+
+    public boolean isAtFullSpeed() {
+        double currentRPM = m_master.getSelectedSensorVelocity() * 600.0 / 4096;
+        double percentError = (goalRPM - currentRPM) / goalRPM * 100;
+        return Math.abs(percentError) <= ALLOWABLE_ERROR_PERCENT;
     }
 
     public void stop() {
