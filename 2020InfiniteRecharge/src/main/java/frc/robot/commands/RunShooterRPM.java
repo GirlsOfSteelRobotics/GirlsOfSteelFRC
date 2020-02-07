@@ -27,11 +27,11 @@ public class RunShooterRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.stop();
+    // leave motor running 
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return m_shooter.isAtFullSpeed();
     }
 }

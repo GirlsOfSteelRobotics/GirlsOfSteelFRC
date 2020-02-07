@@ -16,19 +16,24 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int DRIVE_LEFT_MASTER_SPARK = 1;
-    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 2;
-    public static final int DRIVE_RIGHT_MASTER_SPARK = 3;
-    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
-    public static final int SHOOTER_CONVEYOR_SPARK = 6;
-
-    public static final int CONTROL_PANEL_TALON = 10;
-    public static final int SHOOTER_TALON = 7;
-    public static final int SHOOTER_INTAKE_TALON = 8;
-    public static final int WINCH_A_TALON = 9;
-    public static final int WINCH_B_TALON = 0;
-    public static final int LIFT_TALON = 11;
+    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
+    public static final int WINCH_B_TALON = 2;
+    public static final int WINCH_A_TALON = 3;
+    public static final int LIFT_TALON = 4;
+    public static final int CONTROL_PANEL_TALON = 5;
+    public static final int SHOOTER_CONVEYOR_SPARK_A = 6;
+    public static final int DRIVE_RIGHT_MASTER_SPARK = 7;
+    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
+    public static final int SHOOTER_TALON_A = 9;
+    public static final int SHOOTER_TALON_B = 10;
+    public static final int SHOOTER_INTAKE_TALON = 11;
+    public static final int SHOOTER_CONVEYOR_SPARK_B = 12;
+    public static final int DRIVE_LEFT_MASTER_SPARK = 13;
 
     public static final int SPARK_MAX_CURRENT_LIMIT = 60;
     public static final int CTRE_TIMEOUT = 30;
+
+    public static final int DRIVER_CAMERA = -1;
+    public static final int DOUBLE_SOLENOID_SHOOTER_INTAKE_FORWARD = 0;
+    public static final int DOUBLE_SOLENOID_SHOOTER_INTAKE_BACKWARD = 1;
 }
