@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.DriveDistance;
@@ -87,6 +88,7 @@ public class RobotContainer {
         m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(m_chassis, 2, 0.5));
         m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(m_chassis, 2, -0.5));
         m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(m_shooter));
+        m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(m_shooterIntake, m_shooterConveyor));
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
 
         // This line has to be after all of the subsystems are created!
