@@ -36,4 +36,9 @@ public final class Constants {
     public static final int DRIVER_CAMERA = -1;
     public static final int DOUBLE_SOLENOID_SHOOTER_INTAKE_FORWARD = 0;
     public static final int DOUBLE_SOLENOID_SHOOTER_INTAKE_BACKWARD = 1;
+
+    public static final int CAMERA_INTAKE = 1;
+    public static final int CAMERA_CLIMB = 1;
+
+
 }

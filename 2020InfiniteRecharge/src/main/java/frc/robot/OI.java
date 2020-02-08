@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -16,7 +17,7 @@ public class OI {
     public XboxController m_drivingPad;
     public XboxController m_operatingPad;
 
-    public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight, //Camera camera,
+    public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight, Camera camera,
                 Shooter shooter, ShooterIntake shooterIntake, ShooterConveyor shooterConveyor,
                  Lift lift, Winch winch) {
         m_drivingPad = new XboxController(0);
@@ -36,6 +37,10 @@ public class OI {
         new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
         new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
         new JoystickButton(m_drivingPad, Button.kY.value).whenPressed(new RotationControl(controlPanel));
+        new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(camera));
+        new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(camera));
+
+
     }
 
     // Y is negated so that pushing the joystick forward results in positive values
