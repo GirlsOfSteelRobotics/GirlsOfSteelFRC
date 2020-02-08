@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,47 +19,52 @@ public class Shooter extends SubsystemBase {
 
     private static final int SLOT_ID = 0;
 
-    private final WPI_TalonSRX m_master;
-    private final WPI_TalonSRX m_follower;
+    private final CANSparkMax m_master;
+    private final CANSparkMax m_follower;
+    private final CANEncoder m_encoder;
+    private CANPIDController m_pidController;
+
     private double goalRPM; 
 
     public Shooter() {
-        m_master = new WPI_TalonSRX(Constants.SHOOTER_TALON_A);
-        m_follower = new WPI_TalonSRX(Constants.SHOOTER_TALON_B);
+        m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushless);
+        m_follower = new CANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushless);
+        m_encoder  = m_master.getEncoder();
+        m_pidController = m_master.getPIDController();
+ 
+        m_master.restoreFactoryDefaults();
+
+        m_master.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
 
         m_follower.follow(m_master);
 
-        m_master.configFactoryDefault();
-        m_master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, SLOT_ID, Constants.CTRE_TIMEOUT);
-
-        m_master.setSensorPhase(true);
         m_master.setInverted(true);
 
-        m_master.config_kF(SLOT_ID, SHOOTER_KFF, Constants.CTRE_TIMEOUT);
-        m_master.config_kP(SLOT_ID, SHOOTER_KP, Constants.CTRE_TIMEOUT);
+        m_pidController.setP(SHOOTER_KP);
+        m_pidController.setFF(SHOOTER_KFF);
     } 
     
     public void setRPM(final double rpm) {
         goalRPM = rpm; 
         //m_pidController.setReference(rpm, ControlType.kVelocity);
         double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
-        m_master.set(ControlMode.Velocity, targetVelocityUnitsPer100ms);
+        m_master.set(targetVelocityUnitsPer100ms);
     }
 
     @Override
     public void periodic() {
-        double rpm = m_master.getSelectedSensorVelocity() * 600.0 / 4096;
+        double rpm = m_encoder.getVelocity() * 600.0 / 4096;
         SmartDashboard.putNumber("RPM", rpm);
     }
 
     public boolean isAtFullSpeed() {
-        double currentRPM = m_master.getSelectedSensorVelocity() * 600.0 / 4096;
+        double currentRPM = m_encoder.getVelocity() * 600.0 / 4096;
         double percentError = (goalRPM - currentRPM) / goalRPM * 100;
         return Math.abs(percentError) <= ALLOWABLE_ERROR_PERCENT;
     }
 
     public void stop() {
-        m_master.set(ControlMode.PercentOutput, 0);
+        m_master.set(0);
         //m_pidController.setReference(0, ControlType.kVelocity);
     }
 }
