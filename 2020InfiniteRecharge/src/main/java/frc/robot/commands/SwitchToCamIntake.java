@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Camera;
 
@@ -15,12 +16,12 @@ public class SwitchToCamIntake extends CommandBase {
 
     @Override
     public void initialize() {
+        SmartDashboard.putString("Camera selection", "Intake");
     }
 
     @Override
     public void execute() {
         m_camera.switchToCamIntake();
-
     }
 
     @Override
