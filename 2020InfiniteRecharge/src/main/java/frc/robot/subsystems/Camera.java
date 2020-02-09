@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,33 +14,25 @@ public class Camera extends SubsystemBase {
 
 	private UsbCamera camIntake;
 	private UsbCamera camClimb;
-	private MjpegServer server;
-	
-	
-	public Camera() {
+	private VideoSink server;
 
+	public Camera() {
 		if(RobotBase.isSimulation()){
 			return; 
 		}
 		camIntake = new UsbCamera("camIntake", Constants.CAMERA_INTAKE);
 		camIntake.setResolution(320, 240);
-		camIntake.setFPS(10);
+		camIntake.setFPS(20);
 		camClimb = new UsbCamera("camClimb", Constants.CAMERA_CLIMB);
 		camClimb.setResolution(320, 240);
-		camClimb.setFPS(10);
-		CameraServer.getInstance().addCamera(camIntake);
-		CameraServer.getInstance().addCamera(camClimb);
-		server = CameraServer.getInstance().addServer("CameraServer", 1181);
+		camClimb.setFPS(20);
+		server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
 		server.setSource(camIntake);
 
-		// For stream in smartdashboard add a mjpg stream viewer,
-		// right click, select properties, and add
-		// http://roborio-3504-frc.local:1181/stream.mjpg
-		// as the URL
+		// To see the stream in the Dashboard, add a CameraServer Stream Viewer
 	}
 
 	public void switchToCamClimb() {
-
 		if(RobotBase.isSimulation()){
 			return; 
 		}
@@ -49,7 +41,6 @@ public class Camera extends SubsystemBase {
 	}
 
 	public void switchToCamIntake() {
-
 		if(RobotBase.isSimulation()){
 			return; 
 		}
@@ -59,7 +50,6 @@ public class Camera extends SubsystemBase {
 	}
 
 	public void initDefaultCommand() {
-
 		if(RobotBase.isSimulation()){
 			return; 
 		}
