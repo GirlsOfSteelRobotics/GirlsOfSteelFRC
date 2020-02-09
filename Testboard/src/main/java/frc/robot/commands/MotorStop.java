@@ -7,36 +7,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Motor;
 
-public class MotorStop extends Command {
-  public MotorStop() {
+public class MotorStop extends CommandBase {
+
+  private Motor m_motor;
+
+  public MotorStop(Motor motor) {
+    m_motor = motor;
+    
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.motor);
+    super.addRequirements(m_motor);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  public void initialize() {
     System.out.println("init MotorStop");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    Robot.motor.stop();
+  public void execute() {
+    m_motor.stop();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  public void end(boolean interrupted) {
     System.out.println("end MotorStop");
   }
 }

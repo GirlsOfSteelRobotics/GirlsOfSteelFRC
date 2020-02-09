@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Blinkin extends Subsystem {
+public class Blinkin extends SubsystemBase {
     private Spark leftLightController;
     private Spark rightLightController;
 
@@ -22,7 +22,7 @@ public class Blinkin extends Subsystem {
             System.out.println("Right Light Controller"); // this never gets made no matter what
         } catch (Exception e) {
             System.out.println("No blink-in in " + Constants.BLINKIN_RIGHT_PWM + ", error: " + e);
-            rightLightController = null; 
+            rightLightController = null;
         }
 
         try {
@@ -33,16 +33,15 @@ public class Blinkin extends Subsystem {
             leftLightController = null;
         }
 
- 
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
     }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
 
     public void setLightPattern(LightPattern pattern) {
         switch (pattern) {
@@ -69,11 +68,7 @@ public class Blinkin extends Subsystem {
         }
     }
 
-    public void setOutputValue() {
-
-    }
-
     public void stop() {
-
+        // leave the lights running, I guess
     }
 }

@@ -1,37 +1,42 @@
 package frc.robot.commands;
-import frc.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.subsystems.Lidar;
+import frc.robot.subsystems.Motor;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SpinByLidar extends Command {
+public class SpinByLidar extends CommandBase {
 
-	public double goalLidar = 6;
+	private Motor m_motor;
+	private Lidar m_lidar;
+	private double goalLidar = 6;
 
-	public SpinByLidar() {
-		requires(Robot.motor);
-		requires(Robot.lidar);
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+	public SpinByLidar(Motor motor, Lidar lidar) {
+		m_motor = motor;
+		m_lidar = lidar;
+	
+		// Use super.addRequirements here to declare subsystem dependencies
+		super.addRequirements(m_motor);
+		super.addRequirements(m_lidar);
 	}
 
 	// Called just before this Command runs the first time
-	protected void initialize() {
+	public void initialize() {
 		System.out.println("SpinByLidar init");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-        Robot.motor.motorGoFast();
+	public void execute() {
+        m_motor.motorGoFast();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		System.out.println("SpinByLidar lidar distance: " + Robot.lidar.getDistance());
-		return (Robot.lidar.getDistance() <= goalLidar + Robot.lidar.LIDAR_TOLERANCE && Robot.lidar.getDistance() >= goalLidar - Robot.lidar.LIDAR_TOLERANCE);
+	public boolean isFinished() {
+		System.out.println("SpinByLidar lidar distance: " + m_lidar.getDistance());
+		return (m_lidar.getDistance() <= goalLidar + m_lidar.LIDAR_TOLERANCE && m_lidar.getDistance() >= goalLidar - m_lidar.LIDAR_TOLERANCE);
 	}
 
 	// Called once after isFinished returns true
-	protected void end() {
-		Robot.motor.stop();
+	public void end(boolean interrupted) {
+		m_motor.stop();
 	}
 }
