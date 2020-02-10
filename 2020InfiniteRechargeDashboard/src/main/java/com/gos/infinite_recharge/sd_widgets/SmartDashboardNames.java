@@ -1,7 +1,10 @@
 package com.gos.infinite_recharge.sd_widgets;
 
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class SmartDashboardNames {
+
+    // LEDS
+    public static final String LED_SIM_TABLE_NAME = "LedSimulator";
+    public static final String LED_VALUES = "Values";
 
     // Control Panel
     public static final String CONTROL_PANEL_TABLE_NAME = "ControlPanel";
