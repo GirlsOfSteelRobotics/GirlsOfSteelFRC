@@ -10,6 +10,7 @@ public class GirlsOfSteelSimulator extends ASimulator {
     private ControlPanelSim m_controlPanelSim;
     private CameraSimulator m_cameraSimulator;
     private BallSensorSimulator m_ballSensorSimulator;
+    private LedSimulator m_ledSimulator;
 
     @Override
     public void setRobot(IRobotClassContainer robot) {
@@ -20,6 +21,7 @@ public class GirlsOfSteelSimulator extends ASimulator {
         m_controlPanelSim = new ControlPanelSim(robot);
         m_cameraSimulator = new CameraSimulator(robot);
         m_ballSensorSimulator = new BallSensorSimulator();
+        m_ledSimulator = new LedSimulator();
     }
 
     @Override
@@ -27,5 +29,6 @@ public class GirlsOfSteelSimulator extends ASimulator {
         m_controlPanelSim.update();
         m_cameraSimulator.update();
         m_ballSensorSimulator.update();
+        m_ledSimulator.update();
     }
 }
