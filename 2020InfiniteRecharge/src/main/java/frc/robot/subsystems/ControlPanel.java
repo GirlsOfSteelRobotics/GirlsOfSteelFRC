@@ -84,6 +84,23 @@ public class ControlPanel extends SubsystemBase {
             m_lastPanelColor = m_currentPanelColor;
         }
 
+        //essentially saying that if the last color for each color is way off from what it should be, to decrease the color counter by 1
+        //not sure if this is right tho
+        if(m_currentPanelColor == PanelColor.yellow && m_lastPanelColor == PanelColor.red || m_currentPanelColor == PanelColor.yellow && m_lastPanelColor == PanelColor.green){
+            m_colorCounter--;
+        }
+        else if(m_currentPanelColor == PanelColor.red && m_lastPanelColor == PanelColor.green || m_currentPanelColor == PanelColor.red && m_lastPanelColor == PanelColor.blue){
+            m_colorCounter--;
+        }
+
+        else if(m_currentPanelColor == PanelColor.green && m_lastPanelColor == PanelColor.yellow || m_currentPanelColor == PanelColor.green && m_lastPanelColor == PanelColor.blue) {
+            m_colorCounter--;
+        }
+
+        else if (m_currentPanelColor == PanelColor.blue && m_lastPanelColor == PanelColor.red || m_currentPanelColor == PanelColor.blue && m_lastPanelColor == PanelColor.yellow){
+            m_colorCounter--;
+        }
+
         SmartDashboard.putNumber("Red ", m_currentColor.red);
         SmartDashboard.putNumber("Green ", m_currentColor.green);
         SmartDashboard.putNumber("Blue ", m_currentColor.blue);
