@@ -22,14 +22,16 @@ public class OI {
                  Lift lift, Winch winch) {
         m_drivingPad = new XboxController(0);
         m_operatingPad = new XboxController(1);
-                
+
         new JoystickButton(m_operatingPad, Button.kA.value).whileHeld(new OuterShootAlign(chassis, limelight));
         //new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
-        new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
+//        new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));       
-        //new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
+        new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getTriggerAxis(Hand.kLeft) > .8).whileHeld(new IntakeCells(shooterIntake, false));
         new JoystickButton(m_operatingPad, Button.kBumperRight.value).whileHeld(new Conveyor(shooterConveyor, true));
-        new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld(new IntakeCells(shooterIntake, false));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getTriggerAxis(Hand.kRight) > .8).whileHeld(new Conveyor(shooterConveyor, false));
+//        new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld();
         new JoystickButton(m_operatingPad, Button.kStart.value).whileHeld(new Conveyor(shooterConveyor, false));
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));       
         new JoystickButton(m_operatingPad, Button.kY.value).whenPressed(new MovePiston(shooterIntake, false));
