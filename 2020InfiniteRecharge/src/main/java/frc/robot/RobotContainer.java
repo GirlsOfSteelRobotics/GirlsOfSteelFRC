@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.DriveDistance;
@@ -22,7 +23,7 @@ import frc.robot.subsystems.ShooterConveyor;
 import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
-//import frc.robot.subsystems.Camera;
+import frc.robot.subsystems.Camera;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,36 +37,43 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  */
 @SuppressWarnings("PMD.SingularField")
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
 
-   // private final Camera m_camera;
+    // The robot's subsystems are declared here
+    private final Camera m_camera;
     private final Chassis m_chassis;
     private final ControlPanel m_controlPanel;
+    private final Lift m_lift;
     private final Limelight m_limelight;
     private final Shooter m_shooter;
     private final ShooterConveyor m_shooterConveyor;
     private final ShooterIntake m_shooterIntake;
     private final Winch m_winch;
-    private final Lift m_lift;
     private final OI m_oi;
     private final SendableChooser<Command> m_sendableChooser;
 
     /**
-     * The container for the robot.    Contains subsystems, OI devices, and commands.
+     * The container for the robot. Contains subsystems and the OI (joystick/gamepad) object.
      */
     public RobotContainer() {
 
-        //Add subsystems in this section:
-       // m_camera = new Camera ();
-        // Todo: change drivercam constant to display camera feed
+        // Create all subsystems in this section:
+        m_camera = new Camera ();
         m_chassis = new Chassis();
         m_controlPanel = new ControlPanel();
+        m_lift = new Lift();
         m_limelight = new Limelight();
         m_shooter = new Shooter();
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();
         m_winch = new Winch();
-        m_lift = new Lift();
+
+        // This line has to be after all of the subsystems are created!
+        m_oi = new OI(m_chassis, m_controlPanel, m_limelight, m_camera, m_shooter, m_shooterIntake, m_shooterConveyor, m_lift, m_winch);
+
+        // Default command for the chassis is to drive using the joysticks on the driver's gamepad
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, m_oi));
+
+        // Add some testing options to the Autonomous Chooser on the dashboard
         m_sendableChooser = new SendableChooser<>();
         double dX = 27 * 12;
         double dY = 13.5 * 12;
@@ -87,12 +95,8 @@ public class RobotContainer {
         m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(m_chassis, 2, 0.5));
         m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(m_chassis, 2, -0.5));
         m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(m_shooter));
+        m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(m_shooterIntake, m_shooterConveyor));
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
-
-        // This line has to be after all of the subsystems are created!
-        m_oi = new OI(m_chassis, m_controlPanel, m_limelight, m_shooter, m_shooterIntake, m_shooterConveyor, m_lift, m_winch);
-
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, m_oi));
     }
 
     /**

@@ -12,11 +12,11 @@ import frc.robot.Robot;
 public class ControlPanelSim {
 
     private final NetworkTable m_networkTable;
-    private IPwmWrapper m_controlPanelMotorSim;
+    private final IPwmWrapper m_controlPanelMotorSim;
     private final SimDeviceSim m_deviceSim;
 
     public ControlPanelSim(Robot robot) {
-        m_controlPanelMotorSim = SensorActuatorRegistry.get().getSpeedControllers().get(Constants.DRIVE_LEFT_FOLLOWER_SPARK + BaseCanSmartSpeedController.sCAN_SC_OFFSET);
+        m_controlPanelMotorSim = SensorActuatorRegistry.get().getSpeedControllers().get(Constants.CONTROL_PANEL_TALON + BaseCanSmartSpeedController.sCAN_SC_OFFSET);
         m_networkTable = NetworkTableInstance.getDefault().getTable("ControlPanel");
 
         m_networkTable.getEntry(".type").setString("ControlPanel");

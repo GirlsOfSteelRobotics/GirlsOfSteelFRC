@@ -1,0 +1,9 @@
+<FindBugsFilter>
+    <Match>
+        <Package name="~com\.team254.*"/>
+    </Match>
+    <Match>
+        <Class name="org.snobot.coordinate_gui.ui.layers.BaseGuiController"/>
+        <Bug pattern="UI_INHERITANCE_UNSAFE_GETRESOURCE" />
+    </Match>
+</FindBugsFilter>
