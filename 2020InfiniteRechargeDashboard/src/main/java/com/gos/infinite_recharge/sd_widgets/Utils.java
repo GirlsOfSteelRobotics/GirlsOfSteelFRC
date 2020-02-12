@@ -16,6 +16,7 @@ public final class Utils {
         }
     }
 
+
     /**
      * Gets a color for a motor based on a speed.
      *
@@ -24,17 +25,24 @@ public final class Utils {
      */
     @SuppressWarnings({"PMD.AvoidLiteralsInIfCondition", "PMD.AvoidReassigningParameters"})
     public static Color getMotorColor(double speed) {
+        return getClampedColor(speed, -1, 1);
+    }
+
+    @SuppressWarnings({"PMD.AvoidLiteralsInIfCondition", "PMD.AvoidReassigningParameters"})
+    public static Color getClampedColor(double speed, double min, double max) {
 
         if (Double.isNaN(speed)) {
             speed = 0;
         }
-        if (speed > 1) {
-            speed = 1;
-        } else if (speed < -1) {
-            speed = -1;
+        if (speed > max) {
+            speed = max;
+        } else if (speed < min) {
+            speed = min;
         }
 
-        double percent = (speed + 1) / 2;
+        double spread = max - min;
+
+        double percent = (speed - min) / spread;
         double hue = percent * 120; // Sweep lower third of the color wheel for
         // red -> green
         double saturation = 1;
