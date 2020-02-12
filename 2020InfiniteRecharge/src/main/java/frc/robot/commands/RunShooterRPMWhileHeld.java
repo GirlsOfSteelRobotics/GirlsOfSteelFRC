@@ -18,6 +18,7 @@ public class RunShooterRPMWhileHeld extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("init RunShooterRPMWhileHeld");
     }
 
     @Override
@@ -28,6 +29,8 @@ public class RunShooterRPMWhileHeld extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_shooter.stop();
+        System.out.println("end RunShooterRPMWhileHeld");
+
     }
 
     @Override
