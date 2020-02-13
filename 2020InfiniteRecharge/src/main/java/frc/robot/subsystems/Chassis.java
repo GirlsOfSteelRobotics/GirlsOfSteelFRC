@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -16,6 +17,9 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.lib.IGyroWrapper;
+import frc.robot.lib.NullGyroWrapper;
+import frc.robot.lib.PigeonGyro;
 
 public class Chassis extends SubsystemBase {
 
@@ -28,13 +32,12 @@ public class Chassis extends SubsystemBase {
     private final CANEncoder m_rightEncoder;
     private final CANEncoder m_leftEncoder;
 
-    private final PigeonIMU m_pigeon;
+    private final IGyroWrapper m_gyro;
+
     
     private final DifferentialDrive m_drive;
 
     private final DifferentialDriveOdometry m_odometry;
-
-    private final double[] m_angles = new double[3];
 
     private final NetworkTable m_customNetworkTable;
     private int m_robotPositionCtr; // Used for downsampling the updates
@@ -50,13 +53,21 @@ public class Chassis extends SubsystemBase {
         m_leftEncoder = m_masterLeft.getEncoder();
         
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+
+        // TODO(pj) remove when pigeon gets put on. Disabled now to clean up roboRio logs
+        if(RobotBase.isReal())
+        {
+            m_gyro = new NullGyroWrapper();
+        }
+        else
+        {
+            m_gyro = new PigeonGyro(0);
+        }
         
-        m_pigeon = new PigeonIMU(0);
-        
-        m_masterLeft.setIdleMode(IdleMode.kBrake);
-        m_followerLeft.setIdleMode(IdleMode.kBrake);
-        m_masterRight.setIdleMode(IdleMode.kBrake);
-        m_followerRight.setIdleMode(IdleMode.kBrake);
+        m_masterLeft.setIdleMode(IdleMode.kCoast);
+        m_followerLeft.setIdleMode(IdleMode.kCoast);
+        m_masterRight.setIdleMode(IdleMode.kCoast);
+        m_followerRight.setIdleMode(IdleMode.kCoast);
 
         m_masterLeft.setInverted(false);
         m_followerLeft.setInverted(false);
@@ -84,9 +95,9 @@ public class Chassis extends SubsystemBase {
 
     @Override
     public void periodic() {
+        m_gyro.poll();
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
-        m_pigeon.getYawPitchRoll(m_angles);
 
         SmartDashboard.putNumber("x", getX());
         SmartDashboard.putNumber("y", getY());
@@ -135,7 +146,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getHeading() {
-        return m_angles[0];
+        return m_gyro.getYaw();
     }
 
     public Pose2d getPose() {
@@ -156,7 +167,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public void setPosition(double x, double y, double angle) {
-        m_pigeon.setYaw(angle);
+        m_gyro.setYaw(angle);
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
         Rotation2d rotation = Rotation2d.fromDegrees(angle);
