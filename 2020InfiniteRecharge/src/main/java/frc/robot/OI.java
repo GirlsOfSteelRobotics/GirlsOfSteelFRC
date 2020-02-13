@@ -24,8 +24,8 @@ public class OI {
         m_operatingPad = new XboxController(1);
 
         new JoystickButton(m_operatingPad, Button.kA.value).whileHeld(new OuterShootAlign(chassis, limelight));
-        //new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
-//        new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
+        new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
+    //    new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));       
         new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
         new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getTriggerAxis(Hand.kLeft) > .8).whileHeld(new IntakeCells(shooterIntake, false));

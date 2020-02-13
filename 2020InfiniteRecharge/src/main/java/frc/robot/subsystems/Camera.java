@@ -21,7 +21,7 @@ public class Camera extends SubsystemBase {
         // TODO(pj) - Undo when cameras are plugged in. Disabled now to clean up roboRio logs
         m_useCamera = false;
         // m_useCamera = !RobotBase.isSimulation();
-        if (m_useCamera) {
+        if (!m_useCamera) {
             return; 
         }
         m_camIntake = new UsbCamera("camIntake", Constants.CAMERA_INTAKE);
@@ -37,7 +37,7 @@ public class Camera extends SubsystemBase {
     }
 
     public void switchToCamClimb() {
-        if (m_useCamera) {
+        if (!m_useCamera) {
             return; 
         }
         m_server.setSource(m_camClimb);
@@ -45,7 +45,7 @@ public class Camera extends SubsystemBase {
     }
 
     public void switchToCamIntake() {
-        if (m_useCamera) {
+        if (!m_useCamera) {
             return; 
         }
 
@@ -54,7 +54,7 @@ public class Camera extends SubsystemBase {
     }
 
     public void initDefaultCommand() {
-        if (m_useCamera) {
+        if (!m_useCamera) {
             return; 
         }
         // Set the default command for a subsystem here.
