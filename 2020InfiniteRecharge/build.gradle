@@ -99,7 +99,7 @@ configurations {
 dependencies {
     // Helper for getting the coordinate gui from maven into the shuffleboard area
     coordinate_gui_widget 'org.snobot.coordinate_gui:CoordinateGuiWidget2020:3.0.0'
-    coordinate_gui_widget 'com.gos.infinite_recharge.sd_widgets:RobotWidget:0.0.0'
+    coordinate_gui_widget 'com.gos.infinite_recharge.sd_widgets:RobotWidget:1.0.0'
 }
 
 task deleteOldWidgets(type: Delete) {

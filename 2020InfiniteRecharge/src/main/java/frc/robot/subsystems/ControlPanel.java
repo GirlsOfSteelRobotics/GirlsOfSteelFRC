@@ -9,6 +9,8 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -19,6 +21,7 @@ public class ControlPanel extends SubsystemBase {
     private static final Color RED_TARGET_COLOR = ColorMatch.makeColor(0.561, 0.232, 0.114);
     private static final Color YELLOW_TARGET_COLOR = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
+    private final NetworkTable m_customNetworkTable;
     /**
      * Creates a new ControlPanel.
      */
@@ -56,6 +59,8 @@ public class ControlPanel extends SubsystemBase {
         m_colorMatcher.addColorMatch(YELLOW_TARGET_COLOR);
 
         System.out.println("ControlPanel");
+
+        m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Winch");
 
     }
 
@@ -108,6 +113,8 @@ public class ControlPanel extends SubsystemBase {
         SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Assigned Color", m_currentPanelColor.toString());
         SmartDashboard.putNumber("Proximity", m_colorSensor.getProximity());
+
+        m_customNetworkTable.getEntry("Speed").setDouble(m_controlPanel.get());
     }
 
     public int getColorCounter() {
