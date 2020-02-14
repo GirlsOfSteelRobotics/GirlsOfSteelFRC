@@ -40,10 +40,9 @@ public class Shooter extends SubsystemBase {
 
         m_master.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
 
-        m_follower.follow(m_master);
+        m_follower.follow(m_master, true);
 
-        m_master.setInverted(true);
-        m_follower.setInverted(false);
+        m_master.setInverted(false);
 
         m_pidController.setP(SHOOTER_KP);
         m_pidController.setFF(SHOOTER_KFF);
