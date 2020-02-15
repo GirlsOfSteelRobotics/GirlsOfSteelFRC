@@ -19,10 +19,10 @@ public class Winch extends SubsystemBase {
     private final NetworkTable m_customNetworkTable;
 
     public Winch() {
-        m_motorA = new CANSparkMax(Constants.WINCH_A_SPARK, MotorType.kBrushless);
+        m_motorA = new CANSparkMax(Constants.WINCH_A_SPARK, MotorType.kBrushed);
         m_motorA.setIdleMode(IdleMode.kBrake);
         m_motorA.setInverted(false);
-        m_motorB = new CANSparkMax(Constants.WINCH_B_SPARK, MotorType.kBrushless);
+        m_motorB = new CANSparkMax(Constants.WINCH_B_SPARK, MotorType.kBrushed);
         m_motorB.setIdleMode(IdleMode.kBrake);
         m_motorB.setInverted(false);
 
