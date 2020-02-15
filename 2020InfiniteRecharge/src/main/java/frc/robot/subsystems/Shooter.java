@@ -57,7 +57,7 @@ public class Shooter extends SubsystemBase {
         goalRPM = rpm; 
         //m_pidController.setReference(rpm, ControlType.kVelocity);
         double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
-        m_master.set(0.75 /*targetVelocityUnitsPer100ms*/);
+        m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
     }
 
     @Override

@@ -75,27 +75,27 @@ public class RobotContainer {
 
         // Add some testing options to the Autonomous Chooser on the dashboard
         m_sendableChooser = new SendableChooser<>();
-        double dX = 27 * 12;
-        double dY = 13.5 * 12;
-        double xOffset = 27 * 12;
-        double yOffset = -13.5 * 12;
-        m_sendableChooser.addOption("Test. Go To Position (0, 0)", new DriveToPoint(m_chassis, 0.0, 0.0, 1));
-        m_sendableChooser.addOption("Test. Go To Position Right", new DriveToPoint(m_chassis, dX + xOffset, 0.0 + yOffset, 1));
-        m_sendableChooser.addOption("Test. Go To Position Left", new DriveToPoint(m_chassis, -dX + xOffset, 0.0 + yOffset, 1));
-        m_sendableChooser.addOption("Test. Go To Position Up", new DriveToPoint(m_chassis, 0.0 + xOffset, dY + yOffset, 1));
-        m_sendableChooser.addOption("Test. Go To Position Down", new DriveToPoint(m_chassis, 0.0 + xOffset, -dY + yOffset, 1));
-        m_sendableChooser.addOption("Test. Go To Position Up-Left", new DriveToPoint(m_chassis, -dX + xOffset, dY + yOffset, 1));
-        m_sendableChooser.addOption("Test. Go To Position Up-Right", new DriveToPoint(m_chassis, dX + xOffset, dY + yOffset, 1));
-        m_sendableChooser.addOption("Test. Go To Position Down-Left", new DriveToPoint(m_chassis, -dX + xOffset, -dY + yOffset, 1));
-        m_sendableChooser.addOption("Test. Go To Position Down-Right", new DriveToPoint(m_chassis, dX + xOffset, -dY + yOffset, 1));
-        m_sendableChooser.addOption("Test. Turn To Angle Positive", new TurnToAngle(m_chassis, 90, 1));
-        m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(m_chassis, -90, 1));
+        // double dX = 27 * 12;
+        //  double dY = 13.5 * 12;
+        //  double xOffset = 27 * 12;
+        //  double yOffset = -13.5 * 12;
+        // m_sendableChooser.addOption("Test. Go To Position (0, 0)", new DriveToPoint(m_chassis, 0.0, 0.0, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Right", new DriveToPoint(m_chassis, dX + xOffset, 0.0 + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Left", new DriveToPoint(m_chassis, -dX + xOffset, 0.0 + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Up", new DriveToPoint(m_chassis, 0.0 + xOffset, dY + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Down", new DriveToPoint(m_chassis, 0.0 + xOffset, -dY + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Up-Left", new DriveToPoint(m_chassis, -dX + xOffset, dY + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Up-Right", new DriveToPoint(m_chassis, dX + xOffset, dY + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Down-Left", new DriveToPoint(m_chassis, -dX + xOffset, -dY + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Go To Position Down-Right", new DriveToPoint(m_chassis, dX + xOffset, -dY + yOffset, 1));
+        // m_sendableChooser.addOption("Test. Turn To Angle Positive", new TurnToAngle(m_chassis, 90, 1));
+        // m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(m_chassis, -90, 1));
         m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(m_chassis, 60, 1));
-        m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(m_chassis, -60, 1));
-        m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(m_chassis, 2, 0.5));
-        m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(m_chassis, 2, -0.5));
-        m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(m_shooter));
-        m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(m_shooterIntake, m_shooterConveyor));
+        // m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(m_chassis, -60, 1));
+        // m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(m_chassis, 2, 0.5));
+        // m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(m_chassis, 2, -0.5));
+        // m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(m_shooter));
+        // m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(m_shooterIntake, m_shooterConveyor));
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
     }
 
@@ -105,12 +105,13 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        SequentialCommandGroup group = new SequentialCommandGroup();
-        group.addCommands(new SetStartingPosition(m_chassis, 27 * 12, -13.5 * 12, 0));
-        if (m_sendableChooser.getSelected() != null) {
-            group.addCommands(m_sendableChooser.getSelected());
-        }
-        return group;
+        // SequentialCommandGroup group = new SequentialCommandGroup();
+        // group.addCommands(new SetStartingPosition(m_chassis, 27 * 12, -13.5 * 12, 0));
+        // if (m_sendableChooser.getSelected() != null) {
+        //     group.addCommands(m_sendableChooser.getSelected());
+        // }
+        // return group;
+        return m_sendableChooser.getSelected();
     }
 
     public Chassis getChassis()    {

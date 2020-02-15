@@ -103,7 +103,9 @@ public class Chassis extends SubsystemBase {
         SmartDashboard.putNumber("y", getY());
         SmartDashboard.putNumber("yaw", getHeading());
         SmartDashboard.putNumber("right encoder", getM_rightEncoder());
-        SmartDashboard.putNumber("left encoder", getM_leftEncoder());
+        SmartDashboard.putNumber("left encoder", getM_leftEncoder());        
+        SmartDashboard.putNumber("right encoder speed", getM_rightEncoderSpeed());
+        SmartDashboard.putNumber("left encoder speed", getM_leftEncoderSpeed());
 
         m_customNetworkTable.getEntry("X").setDouble(getX());
         m_customNetworkTable.getEntry("Y").setDouble(getY());
@@ -131,6 +133,14 @@ public class Chassis extends SubsystemBase {
         
     public double getM_rightEncoder() {
         return m_leftEncoder.getPosition();
+    }
+
+    public double getM_leftEncoderSpeed() {
+        return m_rightEncoder.getVelocity();
+    }
+        
+    public double getM_rightEncoderSpeed() {
+        return m_leftEncoder.getVelocity();
     }
 
     public double getAverageEncoderDistance() {
