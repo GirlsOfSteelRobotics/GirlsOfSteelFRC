@@ -17,17 +17,17 @@ public class Lift extends SubsystemBase {
     public Lift() {
         m_motor = new WPI_TalonSRX(Constants.LIFT_TALON);
         m_motor.configFactoryDefault();
-        m_motor.setInverted(false);
+        m_motor.setInverted(true);
 
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Lift");
     } 
 
     public void liftUp() {
-        m_motor.set(ControlMode.PercentOutput, 1);
+        m_motor.set(ControlMode.PercentOutput, 0.8);
     }
 
     public void liftDown() {
-        m_motor.set(ControlMode.PercentOutput, -1);
+        m_motor.set(ControlMode.PercentOutput, -0.8);
     }
 
     public void periodic() {
