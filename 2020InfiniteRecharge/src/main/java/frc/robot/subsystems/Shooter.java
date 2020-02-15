@@ -4,6 +4,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -33,7 +34,7 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new CANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
-        m_encoder  = m_master.getEncoder();
+        m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 4096);
         m_pidController = m_master.getPIDController();
  
         m_master.restoreFactoryDefaults();
