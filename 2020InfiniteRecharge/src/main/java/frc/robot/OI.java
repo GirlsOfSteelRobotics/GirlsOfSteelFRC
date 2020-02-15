@@ -37,8 +37,10 @@ public class OI {
  
         new JoystickButton(m_drivingPad, Button.kBumperLeft.value).whileHeld(new HangerLift(lift, true));
         new JoystickButton(m_drivingPad, Button.kBumperRight.value).whileHeld(new HangerLift(lift, false));
-        new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
-        new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
+        //new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
+        //new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getTriggerAxis(Hand.kLeft) > .8).whileHeld(new WinchWind(winch, true));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getTriggerAxis(Hand.kRight) > .8).whileHeld(new WinchWind(winch, false));
         new JoystickButton(m_drivingPad, Button.kY.value).whenPressed(new RotationControl(controlPanel));
         new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(camera));
         new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(camera));
