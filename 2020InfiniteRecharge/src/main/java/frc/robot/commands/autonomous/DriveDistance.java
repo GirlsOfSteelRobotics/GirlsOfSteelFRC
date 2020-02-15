@@ -5,19 +5,19 @@ import frc.robot.subsystems.Chassis;
 
 public class DriveDistance extends CommandBase {
 
-    private static final double AUTO_KP = 0.1;
+    private static final double AUTO_KP = 0.5;
 
     private final Chassis m_chassis;
     private final double m_distance;
     private final double m_allowableError;
-
+    private double m_initialPosition;
     private double m_error;
 
 
     public DriveDistance(Chassis chassis, double distance, double allowableError) {
         this.m_chassis = chassis;
 
-        m_distance = distance + chassis.getAverageEncoderDistance();
+        m_distance = distance;
         m_allowableError = allowableError;
 
         addRequirements(chassis);
@@ -25,12 +25,13 @@ public class DriveDistance extends CommandBase {
 
     @Override
     public void initialize(){
+        m_initialPosition = m_chassis.getAverageEncoderDistance();
     }
 
     @Override
     public void execute() { 
-        double currentDistance = m_chassis.getAverageEncoderDistance();
-        m_error = m_distance - currentDistance;
+        double currentPosition = m_chassis.getAverageEncoderDistance();
+        m_error = m_distance - (currentPosition - m_initialPosition);
 
         double speed = m_error * AUTO_KP;
         m_chassis.setSpeed(speed);
