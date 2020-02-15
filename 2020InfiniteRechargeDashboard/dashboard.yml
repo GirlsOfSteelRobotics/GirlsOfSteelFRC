@@ -1,0 +1,64 @@
+
+table: SuperStructure
+package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+children_tables:
+  - table: ControlPanel
+    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+    table_name: CONTROL_PANEL_TABLE_NAME
+    entries:
+      - type: double
+        name: speed
+        dasboard_constant: CONTROL_PANEL_SPEED
+  - table: Lift
+    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+    table_name: LIFT_TABLE_NAME
+    entries:
+      - type: double
+        name: speed
+        dasboard_constant: LIFT_SPEED
+  - table: ShooterConveyor
+    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+    table_name: SHOOTER_CONVEYOR_TABLE_NAME
+    entries:
+      - type: double
+        name: speed
+        dasboard_constant: SHOOTER_CONVEYOR_SPEED
+      - type: boolean
+        name: handoffBallSensor
+        dasboard_constant: CONVEYOR_HANDOFF_BALL_SENSOR
+      - type: boolean
+        name: secondaryBallSensor
+        dasboard_constant: CONVEYOR_SECONDARY_BALL_SENSOR
+      - type: boolean
+        name: topBallSensor
+        dasboard_constant: CONVEYOR_TOP_BALL_SENSOR
+  - table: ShooterIntake
+    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+    table_name: SHOOTER_INTAKE_TABLE_NAME
+    entries:
+      - type: double
+        name: speed
+        dasboard_constant: SHOOTER_INTAKE_SPEED
+      - type: boolean
+        name: position
+        dasboard_constant: SHOOTER_INTAKE_POSITION
+  - table: ShooterWheels
+    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+    table_name: SHOOTER_WHEELS_TABLE_NAME
+    entries:
+      - type: double
+        name: speed
+        dasboard_constant: SHOOTER_WHEELS_SPEED
+      - type: double
+        name: currentRpm
+        dasboard_constant: SHOOTER_WHEELS_GOAL_RPM
+      - type: double
+        name: goalRpm
+        dasboard_constant: SHOOTER_WHEELS_CURRENT_RPM
+  - table: Winch
+    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+    table_name: WINCH_TABLE_NAME
+    entries:
+      - type: double
+        name: speed
+        dasboard_constant: WINCH_SPEED

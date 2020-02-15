@@ -1,41 +1,40 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ControlPanel;
 
 public class RotationControl extends CommandBase {
-  /**
-   * Creates a new RotationControl.
-   */
-  public RotationControl() {
-    addRequirements();
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+    private final ControlPanel m_controlPanel;
+    private int m_colorCount;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
+    public RotationControl(ControlPanel controlPanel) {
+        this.m_controlPanel = controlPanel;
+        super.addRequirements(controlPanel);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
+    @Override
+    public void initialize() {
+        m_colorCount = 0;
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+    @Override
+    public void execute() {
+        m_controlPanel.start(); 
+        m_colorCount = m_controlPanel.getColorCounter();
+        System.out.println("number of colors: " + m_colorCount);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    @Override
+    public boolean isFinished() {
+        if(m_colorCount == 24){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_controlPanel.stop(); 
+    }
+
 }

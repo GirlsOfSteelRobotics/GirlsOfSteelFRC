@@ -1,21 +1,10 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -24,24 +13,46 @@ import frc.robot.subsystems.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    
-	public XboxController drivingPad;
-	public XboxController operatingPad;
 
-	public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight) {
-		drivingPad = new XboxController(0);
-        operatingPad = new XboxController(1);
-        
-        new JoystickButton(operatingPad, Button.kA.value).whileHeld(new OuterShootAlign(chassis, limelight));
-	}
+    public XboxController m_drivingPad;
+    public XboxController m_operatingPad;
+
+    public OI(Chassis chassis, ControlPanel controlPanel, Limelight limelight, Camera camera,
+                Shooter shooter, ShooterIntake shooterIntake, ShooterConveyor shooterConveyor,
+                 Lift lift, Winch winch) {
+        m_drivingPad = new XboxController(0);
+        m_operatingPad = new XboxController(1);
+
+        new JoystickButton(m_operatingPad, Button.kA.value).whenPressed(new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
+        new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
+        //new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
+        new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));       
+        new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getTriggerAxis(Hand.kLeft) > .8).whileHeld(new IntakeCells(shooterIntake, false));
+        new JoystickButton(m_operatingPad, Button.kBumperRight.value).whileHeld(new Conveyor(shooterConveyor, true));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getTriggerAxis(Hand.kRight) > .8).whileHeld(new Conveyor(shooterConveyor, false));
+        //new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld();
+        new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));       
+        new JoystickButton(m_operatingPad, Button.kY.value).whenPressed(new MovePiston(shooterIntake, false));
+ 
+        new JoystickButton(m_drivingPad, Button.kBumperLeft.value).whileHeld(new HangerLift(lift, true));
+        new JoystickButton(m_drivingPad, Button.kBumperRight.value).whileHeld(new HangerLift(lift, false));
+        new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
+        new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
+        new JoystickButton(m_drivingPad, Button.kY.value).whenPressed(new RotationControl(controlPanel));
+        new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(camera));
+        new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(camera));
+
+
+    }
 
     // Y is negated so that pushing the joystick forward results in positive values
-	public double getJoystickSpeed() {
-		return -drivingPad.getY();
-	}	
+    public double getJoystickSpeed() {
+        return -m_drivingPad.getY(Hand.kLeft);
+    }
 
-	public double getJoystickSpin() {
-		return drivingPad.getRawAxis(4);
-	}
-	
+    public double getJoystickSpin() {
+        return m_drivingPad.getX(Hand.kRight);
+    }
+
 }
