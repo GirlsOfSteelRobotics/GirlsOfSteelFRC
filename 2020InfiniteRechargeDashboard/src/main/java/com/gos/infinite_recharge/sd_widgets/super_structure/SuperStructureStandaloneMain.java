@@ -186,7 +186,6 @@ public class SuperStructureStandaloneMain {
         }
     }
 
-
     public static class PseudoMain extends Application {
 
         @Override

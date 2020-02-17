@@ -13,7 +13,7 @@
         <Group fx:id="m_group">
             <children>
 
-                <Circle fx:id="m_robotShooter" radius="3" centerX="20" centerY="10" fill="plum"/>
+                <Circle fx:id="m_robotShooterCurrentRPM" radius="3" centerX="20" centerY="10" fill="plum"/>
                 <Arc fill="TRANSPARENT"
                      stroke="coral"
                      startAngle="0"
@@ -23,6 +23,7 @@
                      radiusX="8"
                      radiusY="8"
                      type="ROUND" />
+                <Circle fx:id="m_robotShooterGoalRPM" radius="1.5" centerX="20" centerY="10" fill="pink"/>
                 <Circle fx:id="m_shooterTop" radius="3" centerX="23" centerY="15" fill="plum"/>
                 <Rectangle fx:id="m_controlPanel" x="32" y="30" height="4" width="10" fill="peachPuff"/>
 

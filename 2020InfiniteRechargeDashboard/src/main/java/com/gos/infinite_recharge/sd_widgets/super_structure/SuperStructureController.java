@@ -32,7 +32,10 @@ public class SuperStructureController {
     private Pane m_pane;
 
     @FXML
-    private Circle m_robotShooter;
+    private Circle m_robotShooterCurrentRPM;
+
+    @FXML
+    private Circle m_robotShooterGoalRPM;
 
     @FXML
     private Rectangle m_robotConveyor;
@@ -113,7 +116,8 @@ public class SuperStructureController {
     }
     
     public void updateShooterWheels(ShooterWheelsData shooterWheelsData) {
-        m_robotShooter.setFill(Utils.getMotorColor(shooterWheelsData.getSpeed()));
+        m_robotShooterCurrentRPM.setFill(Utils.getClampedColor(shooterWheelsData.getCurrentRpm(), 4000, 8000));
+        m_robotShooterGoalRPM.setFill(Utils.getClampedColor(shooterWheelsData.getGoalRpm(), 4000, 8000));
     }
     
 

@@ -27,7 +27,7 @@ public class Shooter extends SubsystemBase {
     private final CANEncoder m_encoder;
     private CANPIDController m_pidController;
 
-    private double goalRPM; 
+    private double m_goalRPM; 
     
     private final NetworkTable m_customNetworkTable;
 
@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase {
 
     
     public void setRPM(final double rpm) {
-        goalRPM = rpm; 
+        m_goalRPM = rpm; 
         //m_pidController.setReference(rpm, ControlType.kVelocity);
         double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
         m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
@@ -65,12 +65,14 @@ public class Shooter extends SubsystemBase {
         double rpm = m_encoder.getVelocity() * 600.0 / 4096;
         SmartDashboard.putNumber("RPM", rpm);
         m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
+        m_customNetworkTable.getEntry("Current RPM").setDouble(rpm);
+        m_customNetworkTable.getEntry("Goal RPM").setDouble(m_goalRPM);
 
     }
 
     public boolean isAtFullSpeed() {
         double currentRPM = m_encoder.getVelocity() * 600.0 / 4096;
-        double percentError = (goalRPM - currentRPM) / goalRPM * 100;
+        double percentError = (m_goalRPM - currentRPM) / m_goalRPM * 100;
         return Math.abs(percentError) <= ALLOWABLE_ERROR_PERCENT;
     }
 
