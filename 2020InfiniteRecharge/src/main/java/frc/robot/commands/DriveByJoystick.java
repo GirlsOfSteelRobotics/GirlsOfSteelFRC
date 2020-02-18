@@ -6,29 +6,28 @@ import frc.robot.subsystems.Chassis;
 
 public class DriveByJoystick extends CommandBase {
 
-  Chassis chassis;
-  OI oi;
+    private final Chassis m_chassis;
+    private final OI m_oi;
 
-	public DriveByJoystick(Chassis chassis, OI oi) {
-		this.chassis = chassis;
-		this.oi = oi;
-		// Use requires() here to declare subsystem dependencies
-		super.addRequirements(chassis);
-	}
+    public DriveByJoystick(Chassis chassis, OI oi) {
+        this.m_chassis = chassis;
+        this.m_oi = oi;
 
-	// Called repeatedly when this Command is scheduled to run
-	public void execute() { 
-		// 4 is the axis number right x on the gamepad
-		chassis.driveByJoystick(oi.getJoystickSpeed(),oi.getJoystickSpin());
-	}
+        super.addRequirements(chassis);
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	public boolean isFinished() {
-		return false;
-	}
+    @Override
+    public void execute() {
+        m_chassis.setSpeedAndSteer(m_oi.getJoystickSpeed(), m_oi.getJoystickSpin());
+    }
 
-	// Called once after isFinished returns true
-	public void end(boolean interrupted) {
-		chassis.stop();
-  }
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_chassis.stop();
+    }
 }

@@ -6,44 +6,37 @@ import frc.robot.subsystems.Chassis;
 
 public class TimedDriveStraight extends CommandBase {
 
-  Chassis chassis;
+    private final Chassis m_chassis;
+    private final Timer m_timer;
+    private final double m_waitTime;
+    private final double m_speed;
 
-  private Timer m_timer;
-  private int m_waitTime;
-  private double m_speed;
-
-	public TimedDriveStraight(Chassis chassis , int waitTime, double speed) {
-        this.chassis = chassis;
+    public TimedDriveStraight(Chassis chassis, int waitTime, double speed) {
+        m_chassis = chassis;
         m_waitTime = waitTime;
         m_speed = speed;
-        
         m_timer = new Timer();
 
-		// Use requires() here to declare subsystem dependencies
-		super.addRequirements(chassis);
-	}
+        addRequirements(chassis);
+    }
 
-    public void initialize(){
+    @Override
+    public void initialize() {
         m_timer.start();
     }
 
-	// Called repeatedly when this Command is scheduled to run
-	public void execute() { 
-        chassis.setSpeed(m_speed);
-	}
+    @Override
+    public void execute() {
+        m_chassis.setSpeed(m_speed);
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	public boolean isFinished() {
-        if (m_timer.get() > m_waitTime){
-            return true;
-        }
-		else {
-            return false;
-        }
-	}
+    @Override
+    public boolean isFinished() {
+        return m_timer.get() > m_waitTime;
+    }
 
-	// Called once after isFinished returns true
-	public void end(boolean interrupted) {
-		chassis.stop();
-  }
+    @Override
+    public void end(boolean interrupted) {
+        m_chassis.stop();
+    }
 }

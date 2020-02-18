@@ -1,27 +1,17 @@
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.commands.Conveyor;
+import frc.robot.commands.RunShooterRPM;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterConveyor;
 
-public class AutoShoot extends CommandBase {
+public class AutoShoot extends ParallelCommandGroup {
 
-	public AutoShoot() {
-		// Use requires() here to declare subsystem dependencies
-		//super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
-	}
+    public AutoShoot(Shooter shooter, ShooterConveyor shooterConveyor, double rpm, double time) {
 
-    public void initialize(){
+        super.addCommands(new RunShooterRPM(shooter, rpm).withTimeout(time));
+        super.addCommands(new Conveyor(shooterConveyor, true).withTimeout(time));
+
     }
-
-	// Called repeatedly when this Command is scheduled to run
-	public void execute() { 
-	}
-
-	// Make this return true when this Command no longer needs to run execute()
-	public boolean isFinished() {
-        return false;
-	}
-
-	// Called once after isFinished returns true
-	public void end(boolean interrupted) {
-  }
 }
