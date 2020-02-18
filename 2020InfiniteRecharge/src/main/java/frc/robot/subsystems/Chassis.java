@@ -23,6 +23,10 @@ import frc.robot.lib.PigeonGyro;
 
 public class Chassis extends SubsystemBase {
 
+    private static final double WHEEL_DIAMETER = 4.0;
+    private static final double GEAR_RATIO = 34.0 / 20.0;
+    private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
+
     private final CANSparkMax m_masterLeft;
     private final CANSparkMax m_followerLeft; // NOPMD
 
@@ -52,10 +56,16 @@ public class Chassis extends SubsystemBase {
         m_rightEncoder = m_masterRight.getEncoder();
         m_leftEncoder = m_masterLeft.getEncoder();
         
+        m_leftEncoder.setPosition(0);
+        m_rightEncoder.setPosition(0);
+
+        m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+        m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
         // TODO(pj) remove when pigeon gets put on. Disabled now to clean up roboRio logs
-        if(RobotBase.isReal())
+        if (RobotBase.isReal())
         {
             m_gyro = new NullGyroWrapper();
         }

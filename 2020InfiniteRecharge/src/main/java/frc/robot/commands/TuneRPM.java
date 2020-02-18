@@ -14,7 +14,7 @@ public class TuneRPM extends CommandBase {
 
         super.addRequirements(shooter);
 
-        SmartDashboard.putNumber("Tune RPM", 0);
+        SmartDashboard.putNumber("Tune RPM", 6000);
     }
 
     @Override
