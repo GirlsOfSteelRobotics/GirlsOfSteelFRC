@@ -57,12 +57,16 @@ public class Limelight extends SubsystemBase {
         return distance;
     }
 
-    public double getDriveCommand() {
-        double driveCmd = (DESIRED_TARGET_AREA - m_ta) * DRIVE_K;
-        if (driveCmd > MAX_DRIVE)
-        {
-            driveCmd = MAX_DRIVE;
-        }
+    public double getDriveCommand(double distance) {
+        // double driveCmd = (DESIRED_TARGET_AREA - m_ta) * DRIVE_K;
+        // if (driveCmd > MAX_DRIVE)
+        // {
+        //     driveCmd = MAX_DRIVE;
+        // }
+        // m_limelightDriveCommand = driveCmd;
+        // return m_limelightDriveCommand;
+
+        double driveCmd = distance*0.1;
         m_limelightDriveCommand = driveCmd;
         return m_limelightDriveCommand;
     }

@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import frc.robot.auto_modes.AutoModeFactory;
 import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.commands.TuneRPM;
@@ -24,9 +25,11 @@ import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Camera;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -48,8 +51,8 @@ public class RobotContainer {
     private final ShooterConveyor m_shooterConveyor;
     private final ShooterIntake m_shooterIntake;
     private final Winch m_winch;
+    private final AutoModeFactory m_autoModeFactory;
     private final OI m_oi;
-    private final SendableChooser<Command> m_sendableChooser;
 
     /**
      * The container for the robot. Contains subsystems and the OI (joystick/gamepad) object.
@@ -66,6 +69,7 @@ public class RobotContainer {
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();
         m_winch = new Winch();
+        m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_shooterConveyor, m_shooterIntake);
 
         // This line has to be after all of the subsystems are created!
         m_oi = new OI(m_chassis, m_controlPanel, m_limelight, m_camera, m_shooter, m_shooterIntake, m_shooterConveyor, m_lift, m_winch);
@@ -74,29 +78,9 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, m_oi));
 
         // Add some testing options to the Autonomous Chooser on the dashboard
-        m_sendableChooser = new SendableChooser<>();
-        // double dX = 27 * 12;
-        //  double dY = 13.5 * 12;
-        //  double xOffset = 27 * 12;
-        //  double yOffset = -13.5 * 12;
-        // m_sendableChooser.addOption("Test. Go To Position (0, 0)", new DriveToPoint(m_chassis, 0.0, 0.0, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Right", new DriveToPoint(m_chassis, dX + xOffset, 0.0 + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Left", new DriveToPoint(m_chassis, -dX + xOffset, 0.0 + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Up", new DriveToPoint(m_chassis, 0.0 + xOffset, dY + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Down", new DriveToPoint(m_chassis, 0.0 + xOffset, -dY + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Up-Left", new DriveToPoint(m_chassis, -dX + xOffset, dY + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Up-Right", new DriveToPoint(m_chassis, dX + xOffset, dY + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Down-Left", new DriveToPoint(m_chassis, -dX + xOffset, -dY + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Go To Position Down-Right", new DriveToPoint(m_chassis, dX + xOffset, -dY + yOffset, 1));
-        // m_sendableChooser.addOption("Test. Turn To Angle Positive", new TurnToAngle(m_chassis, 90, 1));
-        // m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(m_chassis, -90, 1));
-        m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(m_chassis, 5, 1));
-        // m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(m_chassis, -60, 1));
-        // m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(m_chassis, 2, 0.5));
-        // m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(m_chassis, 2, -0.5));
-        // m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(m_shooter));
-        // m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(m_shooterIntake, m_shooterConveyor));
-        SmartDashboard.putData("Auto Mode", m_sendableChooser);
+       
+        CommandScheduler.getInstance().onCommandInitialize(command ->  System.out.println(command + "is starting"));
+        CommandScheduler.getInstance().onCommandFinish(command ->  System.out.println(command + "has ended"));
     }
 
     /**
@@ -111,7 +95,7 @@ public class RobotContainer {
         //     group.addCommands(m_sendableChooser.getSelected());
         // }
         // return group;
-        return m_sendableChooser.getSelected();
+        return m_autoModeFactory.getAutonomousMode();
     }
 
     public Chassis getChassis()    {

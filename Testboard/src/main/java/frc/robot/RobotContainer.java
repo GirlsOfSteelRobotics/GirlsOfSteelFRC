@@ -31,6 +31,7 @@ public class RobotContainer {
     private final Camera m_camera;
     private final Lidar m_lidar;
     private final Motor m_motor;
+    private final Limelight m_limelight;
     private final SendableChooser<Command> m_sendableChooser;
     private Joystick drivingPad;
 
@@ -44,6 +45,7 @@ public class RobotContainer {
         m_camera = new Camera ();
         m_lidar = new Lidar();
         m_motor = new Motor();
+        m_limelight = new Limelight();
 
         // Configure the button bindings
         configureButtonBindings();
@@ -67,6 +69,8 @@ public class RobotContainer {
         new JoystickButton(drivingPad, 1).	whenPressed(new TryBlinkin(m_blinkin));
         new JoystickButton(drivingPad, 2).	whenPressed(new ReadLidar(m_lidar));
         new JoystickButton(drivingPad, 4).	whenPressed(new SpinByLidar(m_motor, m_lidar));
+
+        new JoystickButton(drivingPad, 3).whenPressed(new OuterShootAlign2(m_limelight));
 
         new POVButton(drivingPad, 0).		whenPressed(new SwitchToCamClimb(m_camera));
         new POVButton(drivingPad, 180).		whenPressed(new SwitchToCamIntake(m_camera));
