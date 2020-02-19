@@ -23,6 +23,7 @@ import frc.robot.lib.PigeonGyro;
 
 public class Chassis extends SubsystemBase {
 
+    private static final double FULL_THROTTLE_SECONDS = 5.0;
     private static final double WHEEL_DIAMETER = 4.0;
     private static final double GEAR_RATIO = 34.0 / 20.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
@@ -80,9 +81,7 @@ public class Chassis extends SubsystemBase {
         m_followerRight.setIdleMode(IdleMode.kCoast);
 
         m_masterLeft.setInverted(false);
-        m_followerLeft.setInverted(false);
         m_masterRight.setInverted(false);
-        m_followerRight.setInverted(false);
         
         m_followerLeft.follow(m_masterLeft, false);
         m_followerRight.follow(m_masterRight, false);
@@ -92,6 +91,9 @@ public class Chassis extends SubsystemBase {
         m_masterRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_followerRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         
+        m_masterLeft.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
+        m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
+
         m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
         m_drive.setSafetyEnabled(true);
         m_drive.setExpiration(0.1);
