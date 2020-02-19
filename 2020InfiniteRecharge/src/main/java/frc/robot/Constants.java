@@ -50,4 +50,6 @@ public final class Constants {
     // Other motor controller constant values
     public static final int SPARK_MAX_CURRENT_LIMIT = 60;
     public static final int CTRE_TIMEOUT = 30;
+
+    public static final double DEFAULT_RPM = 8500;
 }
