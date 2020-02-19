@@ -37,9 +37,9 @@ public final class Constants {
     public static final int DOUBLE_SOLENOID_SHOOTER_INTAKE_BACKWARD = 1;
 
     // DIO port numbers for digital (on/off) sensors
-    public static final int DIGITAL_INPUT_SENSOR_HANDOFF = 0; 
-    public static final int DIGITAL_INPUT_SENSOR_SECONDARY = 1; 
-    public static final int DIGITAL_INPUT_SENSOR_TOP = 2; 
+    public static final int DIGITAL_INPUT_SENSOR_HANDOFF = 4; 
+    public static final int DIGITAL_INPUT_SENSOR_SECONDARY = 2; 
+    public static final int DIGITAL_INPUT_SENSOR_TOP = 0; 
 
     // Camera USB numbers
     // - These start at zero and go up from there

@@ -23,7 +23,7 @@ import frc.robot.lib.PigeonGyro;
 
 public class Chassis extends SubsystemBase {
 
-    private static final double FULL_THROTTLE_SECONDS = 5.0;
+    private static final double FULL_THROTTLE_SECONDS = 1.0;
     private static final double WHEEL_DIAMETER = 4.0;
     private static final double GEAR_RATIO = 34.0 / 20.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
@@ -75,10 +75,10 @@ public class Chassis extends SubsystemBase {
             m_gyro = new PigeonGyro(0);
         }
         
-        m_masterLeft.setIdleMode(IdleMode.kCoast);
-        m_followerLeft.setIdleMode(IdleMode.kCoast);
-        m_masterRight.setIdleMode(IdleMode.kCoast);
-        m_followerRight.setIdleMode(IdleMode.kCoast);
+        m_masterLeft.setIdleMode(IdleMode.kBrake);
+        m_followerLeft.setIdleMode(IdleMode.kBrake);
+        m_masterRight.setIdleMode(IdleMode.kBrake);
+        m_followerRight.setIdleMode(IdleMode.kBrake);
 
         m_masterLeft.setInverted(false);
         m_masterRight.setInverted(false);

@@ -12,6 +12,8 @@ import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
 
+    private final double INTAKE_SPEED = 0.5; 
+
     private final WPI_TalonSRX m_motor;
     private final DoubleSolenoid m_piston;
 
@@ -20,7 +22,7 @@ public class ShooterIntake extends SubsystemBase {
     public ShooterIntake() {
         m_motor = new WPI_TalonSRX(Constants.SHOOTER_INTAKE_TALON);
         m_motor.configFactoryDefault();
-        m_motor.setInverted(false);
+        m_motor.setInverted(true);
         m_piston = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_SHOOTER_INTAKE_FORWARD,
                 Constants.DOUBLE_SOLENOID_SHOOTER_INTAKE_BACKWARD);
 
@@ -34,11 +36,11 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public void collectCells() {
-        m_motor.set(ControlMode.PercentOutput, 1);
+        m_motor.set(ControlMode.PercentOutput, INTAKE_SPEED);
     }
 
     public void decollectCells() {
-        m_motor.set(ControlMode.PercentOutput, -1);
+        m_motor.set(ControlMode.PercentOutput, -INTAKE_SPEED);
     }
 
     public void stop() {

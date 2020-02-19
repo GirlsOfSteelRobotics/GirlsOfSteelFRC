@@ -8,6 +8,7 @@ public class IntakeCells extends CommandBase {
     private final ShooterIntake m_shooterIntake;
     private final boolean m_intake;
 
+
     public IntakeCells(ShooterIntake shooterIntake, boolean intake) {
         this.m_shooterIntake = shooterIntake;
         this.m_intake = intake;
