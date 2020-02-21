@@ -1,6 +1,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
 
 public class DriveToPoint extends CommandBase {
@@ -17,8 +18,8 @@ public class DriveToPoint extends CommandBase {
     private double m_finalPositionX;
     private double m_finalPositionY;
 
-    private static final double AUTO_KP = 0.05;
-    private static final double AUTO_KP_ANGLE = 0.1;
+    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("DriveToPointDriveKp", 0.05);
+    private static final PropertyManager.IProperty<Double> AUTO_KP_ANGLE = new PropertyManager.DoubleProperty("DriveToPointSteerKp",  0.1);
 
     public DriveToPoint(Chassis chassis, double finalPositionX, double finalPositionY, double allowableError) {
         // Use requires() here to declare subsystem dependencies
@@ -48,7 +49,7 @@ public class DriveToPoint extends CommandBase {
         angle = Math.toDegrees(Math.atan2(dy, dx));
 
         m_errorDistance = m_hyp;
-        double speed = m_errorDistance * AUTO_KP;
+        double speed = m_errorDistance * AUTO_KP.getValue();
 
         currentAngle = m_chassis.getHeading();
 
@@ -64,7 +65,7 @@ public class DriveToPoint extends CommandBase {
 
         m_errorAngle = calculateAngleBetweenNegAndPos180(m_errorAngle);
 
-        double turnSpeed = m_errorAngle * AUTO_KP_ANGLE;
+        double turnSpeed = m_errorAngle * AUTO_KP_ANGLE.getValue();
 
         //System.out.println("angle" + angle + "hyp" + m_hyp + "speed" + speed + "turnSpeed" + turnSpeed + "currentAngle" + currentAngle + "errorAngle" + m_errorAngle);
 

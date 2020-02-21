@@ -1,11 +1,12 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
 
 public class DriveDistance extends CommandBase {
 
-    private static final double AUTO_KP = 0.5;
+    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("DriveDistanceKp", 0.5);
 
     private final Chassis m_chassis;
     private final double m_distance;
@@ -33,7 +34,7 @@ public class DriveDistance extends CommandBase {
         double currentPosition = m_chassis.getAverageEncoderDistance();
         m_error = m_distance - (currentPosition - m_initialPosition);
 
-        double speed = m_error * AUTO_KP;
+        double speed = m_error * AUTO_KP.getValue();
         m_chassis.setSpeed(speed);
 
         //System.out.println("error:" + m_error + "speed:" + speed);
