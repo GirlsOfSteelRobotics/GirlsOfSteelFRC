@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.DriveDistance;
+import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.commands.autonomous.DriveToPoint;
 import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
@@ -53,6 +54,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(chassis, -90, 1));
             m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(chassis, 5, 1));
             m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(chassis, -60, 1));
+            m_sendableChooser.addOption("Test. Drive Distance Smart Motion", new DriveDistanceSmartMotion(chassis, 10, 120));
             m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(chassis, 2, 0.5));
             m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(chassis, 2, -0.5));
             m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(shooter));
