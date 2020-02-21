@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Preferences;
 import frc.robot.auto_modes.AutoModeFactory;
 import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.DriveByJoystick;
@@ -16,6 +18,7 @@ import frc.robot.commands.autonomous.DriveToPoint;
 import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
+import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Limelight;
@@ -81,6 +84,8 @@ public class RobotContainer {
        
         CommandScheduler.getInstance().onCommandInitialize(command ->  System.out.println(command + "is starting"));
         CommandScheduler.getInstance().onCommandFinish(command ->  System.out.println(command + "has ended"));
+
+        PropertyManager.purgeExtraKeys();
     }
 
     /**
