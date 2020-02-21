@@ -81,7 +81,7 @@ public class Shooter extends SubsystemBase {
 
         m_pidController.setP(m_dashboardKp.getDouble(SHOOTER_KP));
         m_pidController.setFF(m_dashboardKff.getDouble(SHOOTER_KFF));
-        System.out.println("kp: " + m_dashboardKp.getDouble(SHOOTER_KP) + ", " + m_dashboardKff.getDouble(SHOOTER_KFF) + " goal: " + m_goalRPM + "== " + rpm);
+        //System.out.println("kp: " + m_dashboardKp.getDouble(SHOOTER_KP) + ", " + m_dashboardKff.getDouble(SHOOTER_KFF) + " goal: " + m_goalRPM + "== " + rpm);
 
     }
 
