@@ -37,7 +37,7 @@ public class AutomatedConveyorIntake extends SequentialCommandGroup {
         }
 
         //conveyor belt runs until secondary break sensor is true (collected ball has been positioned at bottom of conveyor)
-        addCommands(runConveyor.withInterrupt(() -> {
+        addCommands(new Conveyor(shooterConveyor, true).withInterrupt(() -> {
             return m_shooterConveyor.getTop() || (m_shooterConveyor.getSecondary() && !m_shooterConveyor.getHandoff()); 
         }));
 
