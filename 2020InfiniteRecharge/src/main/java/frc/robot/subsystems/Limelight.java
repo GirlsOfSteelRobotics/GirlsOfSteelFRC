@@ -2,12 +2,29 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.*;
+import frc.robot.lib.PropertyManager;
 
 /**
  * Add your docs here.
  */
 @SuppressWarnings("PMD")
 public class Limelight extends SubsystemBase {
+
+    /// how hard to turn toward the target
+    private static final PropertyManager.IProperty<Double> STEER_K = new PropertyManager.DoubleProperty("LimelightSteerK", 0.05);
+
+    // how hard to drive fwd toward the target
+    private static final PropertyManager.IProperty<Double> DRIVE_K = new PropertyManager.DoubleProperty("LimelightDriveK", 0.3);
+
+    // Area of the target when the robot reaches the wall
+    private static final PropertyManager.IProperty<Double> DESIRED_TARGET_AREA = new PropertyManager.DoubleProperty("LimelightTargetArea", 13.0);
+
+    // Simple speed limit so we don't drive too fast
+    private static final PropertyManager.IProperty<Double> MAX_DRIVE = new PropertyManager.DoubleProperty("LimelihtMaxDrive", 0.3);
+
+    private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = new PropertyManager.ConstantProperty<>("LimelightHeightOffset", 48.75);
+    private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = new PropertyManager.ConstantProperty<>("LimelightAngleOffset", 20.0);
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     //private boolean m_LimelightHasValidTarget = false;
@@ -17,10 +34,6 @@ public class Limelight extends SubsystemBase {
     private double m_tx;
     private double m_ty;
     private double m_ta;
-    private static final double STEER_K = 0.05;                                        // how hard to turn toward the target
-    private static final double DRIVE_K = 0.3;                                        // how hard to drive fwd toward the target
-    private static final double DESIRED_TARGET_AREA = 13.0;                           // Area of the target when the robot reaches the wall
-    private static final double MAX_DRIVE = 0.3;                                     // Simple speed limit so we don't drive too fast
 
 
     public Limelight() {
@@ -44,24 +57,24 @@ public class Limelight extends SubsystemBase {
         // return steering_adjust; 
             
         
-        double steerCmd = m_tx * STEER_K;
+        double steerCmd = m_tx * STEER_K.getValue();
         m_limelightSteerCommand = steerCmd;
         return m_limelightSteerCommand;
 
     }
 
     public double estimateDistance() {
-        double distance = 48.75 / (Math.tan(Math.toRadians(m_ty + 20))); 
+        double distance = CAMERA_HEIGHT_OFFSET.getValue() / (Math.tan(Math.toRadians(m_ty + CAMERA_ANGLE_OFFSET.getValue())));
         System.out.println("ty: " + m_ty);
         System.out.println("distance: " + distance);
         return distance;
     }
 
     public double getDriveCommand() {
-        double driveCmd = (DESIRED_TARGET_AREA - m_ta) * DRIVE_K;
-        if (driveCmd > MAX_DRIVE)
+        double driveCmd = (DESIRED_TARGET_AREA.getValue() - m_ta) * DRIVE_K.getValue();
+        if (driveCmd > MAX_DRIVE.getValue())
         {
-            driveCmd = MAX_DRIVE;
+            driveCmd = MAX_DRIVE.getValue();
         }
         m_limelightDriveCommand = driveCmd;
         return m_limelightDriveCommand;

@@ -24,7 +24,7 @@ public class OI {
         m_operatingPad = new XboxController(1);
 
         new JoystickButton(m_operatingPad, Button.kA.value).whenPressed(new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
-        new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 6000));
+        new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, Constants.DEFAULT_RPM));
         //new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));       
         new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));

@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
+//import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -20,6 +21,10 @@ import frc.robot.Constants;
 import frc.robot.lib.IGyroWrapper;
 import frc.robot.lib.NullGyroWrapper;
 import frc.robot.lib.PigeonGyro;
+import frc.robot.lib.PropertyManager;
+import frc.robot.lib.PropertyManager.IProperty;
+
+import com.revrobotics.CANPIDController;
 
 public class Chassis extends SubsystemBase {
 
@@ -37,16 +42,35 @@ public class Chassis extends SubsystemBase {
     private final CANEncoder m_rightEncoder;
     private final CANEncoder m_leftEncoder;
 
+    private final CANPIDController m_leftPidController;
+    private final CANPIDController m_rightPidController;
+
     private final IGyroWrapper m_gyro;
 
-    
     private final DifferentialDrive m_drive;
 
     private final DifferentialDriveOdometry m_odometry;
 
     private final NetworkTable m_customNetworkTable;
+
     private int m_robotPositionCtr; // Used for downsampling the updates
 
+    private IProperty<Double> kP = new PropertyManager.DoubleProperty("ChassisKp", 5e-5);    
+    private IProperty<Double> kI = new PropertyManager.DoubleProperty("ChassisKi", 0);
+    //private double kI = 0; // 1e-6;
+    private IProperty<Double> kD = new PropertyManager.DoubleProperty("ChassisKd", 0);
+    //private double kD = 0;
+    private IProperty<Double> kIz = new PropertyManager.DoubleProperty("ChassisKiz", 0);
+    //private double kIz = 0;
+    private IProperty<Double> kFF = new PropertyManager.DoubleProperty("ChassisKff", 0.000156);
+    //private double kFF = 0.000156;
+    private double kMaxOutput = 1;
+    private double kMinOutput = -1;
+
+    private double maxVel = 2000; // rpm
+    private double minVel = 0; // rpm
+    private double maxAcc = 1500;
+    private double allowedErr = 0;
 
     public Chassis() {
         m_masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
@@ -56,7 +80,35 @@ public class Chassis extends SubsystemBase {
 
         m_rightEncoder = m_masterRight.getEncoder();
         m_leftEncoder = m_masterLeft.getEncoder();
-        
+
+        m_leftPidController = m_masterLeft.getPIDController();
+        m_rightPidController = m_masterRight.getPIDController();
+
+        m_leftPidController.setP(kP.getValue());
+        m_leftPidController.setI(kI.getValue());
+        m_leftPidController.setD(kD.getValue());
+        m_leftPidController.setIZone(kIz.getValue());
+        m_leftPidController.setFF(kFF.getValue());
+        m_leftPidController.setOutputRange(kMinOutput, kMaxOutput);
+
+        m_rightPidController.setP(kP.getValue());
+        m_rightPidController.setI(kI.getValue());
+        m_rightPidController.setD(kD.getValue());
+        m_rightPidController.setIZone(kIz.getValue());
+        m_rightPidController.setFF(kFF.getValue());
+        m_rightPidController.setOutputRange(kMinOutput, kMaxOutput);
+
+        int smartMotionSlot = 0;
+        m_leftPidController.setSmartMotionMaxVelocity(maxVel, smartMotionSlot);
+        m_leftPidController.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
+        m_leftPidController.setSmartMotionMaxAccel(maxAcc, smartMotionSlot);
+        m_leftPidController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
+
+        m_rightPidController.setSmartMotionMaxVelocity(maxVel, smartMotionSlot);
+        m_rightPidController.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
+        m_rightPidController.setSmartMotionMaxAccel(maxAcc, smartMotionSlot);
+        m_rightPidController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
+
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
 
@@ -65,16 +117,14 @@ public class Chassis extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
-        // TODO(pj) remove when pigeon gets put on. Disabled now to clean up roboRio logs
-        if (RobotBase.isReal())
-        {
+        // TODO(pj) remove when pigeon gets put on. Disabled now to clean up roboRio
+        // logs
+        if (RobotBase.isReal()) {
             m_gyro = new NullGyroWrapper();
-        }
-        else
-        {
+        } else {
             m_gyro = new PigeonGyro(0);
         }
-        
+
         m_masterLeft.setIdleMode(IdleMode.kBrake);
         m_followerLeft.setIdleMode(IdleMode.kBrake);
         m_masterRight.setIdleMode(IdleMode.kBrake);
@@ -82,17 +132,17 @@ public class Chassis extends SubsystemBase {
 
         m_masterLeft.setInverted(false);
         m_masterRight.setInverted(false);
-        
+
         m_followerLeft.follow(m_masterLeft, false);
         m_followerRight.follow(m_masterRight, false);
-        
+
         m_masterLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_followerLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_masterRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_followerRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         
-        m_masterLeft.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
-        m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
+        // m_masterLeft.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
+        // m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
 
         m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
         m_drive.setSafetyEnabled(true);
@@ -108,14 +158,14 @@ public class Chassis extends SubsystemBase {
     @Override
     public void periodic() {
         m_gyro.poll();
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
+                m_rightEncoder.getPosition());
 
         SmartDashboard.putNumber("x", getX());
         SmartDashboard.putNumber("y", getY());
         SmartDashboard.putNumber("yaw", getHeading());
         SmartDashboard.putNumber("right encoder", getM_rightEncoder());
-        SmartDashboard.putNumber("left encoder", getM_leftEncoder());        
+        SmartDashboard.putNumber("left encoder", getM_leftEncoder());
         SmartDashboard.putNumber("right encoder speed", getM_rightEncoderSpeed());
         SmartDashboard.putNumber("left encoder speed", getM_leftEncoderSpeed());
 
@@ -130,7 +180,7 @@ public class Chassis extends SubsystemBase {
         ++m_robotPositionCtr;
 
     }
-    
+
     public CANSparkMax getLeftSparkMax() {
         return m_masterLeft;
     }
@@ -142,7 +192,7 @@ public class Chassis extends SubsystemBase {
     public double getM_leftEncoder() {
         return m_rightEncoder.getPosition();
     }
-        
+
     public double getM_rightEncoder() {
         return m_leftEncoder.getPosition();
     }
@@ -150,7 +200,7 @@ public class Chassis extends SubsystemBase {
     public double getM_leftEncoderSpeed() {
         return m_rightEncoder.getVelocity();
     }
-        
+
     public double getM_rightEncoderSpeed() {
         return m_leftEncoder.getVelocity();
     }
@@ -174,12 +224,12 @@ public class Chassis extends SubsystemBase {
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
     }
-    
+
     public void setSpeed(final double speed) {
         m_drive.arcadeDrive(speed, 0);
     }
 
-    //command to rotate robot to align with target based on limelight value
+    // command to rotate robot to align with target based on limelight value
     public void setSteer(double steer) {
         m_drive.arcadeDrive(0, steer);
     }
@@ -195,8 +245,19 @@ public class Chassis extends SubsystemBase {
         Rotation2d rotation = Rotation2d.fromDegrees(angle);
         m_odometry.resetPosition(new Pose2d(new Translation2d(x, y), rotation), rotation);
     }
-    
+
     public void stop() {
         m_drive.stopMotor();
+    }
+
+    public void resetEncoder() {
+        m_masterLeft.getEncoder().setPosition(0);
+        m_masterRight.getEncoder().setPosition(0);
+
+    }
+
+    public void driveDistance(double inches) {
+        m_leftPidController.setReference(inches, ControlType.kSmartMotion);
+        m_rightPidController.setReference(inches, ControlType.kSmartMotion);
     }
 }

@@ -4,7 +4,6 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
-import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -25,7 +24,7 @@ public class ShooterConveyor extends SubsystemBase {
     private final CANSparkMax m_master;
     private final CANEncoder m_encoder;
     private CANPIDController m_pidController;
-    // private final CANSparkMax m_follower;
+    private final CANSparkMax m_follower;
 
     private final DigitalInput m_breakSensorHandoff;
     private final DigitalInput m_breakSensorSecondary;
@@ -39,13 +38,13 @@ public class ShooterConveyor extends SubsystemBase {
         m_encoder = m_master.getEncoder();
         m_pidController = m_master.getPIDController();
 
-        //m_follower = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_B, MotorType.kBrushless);
+        m_follower = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_B, MotorType.kBrushless);
 
-        //m_follower.follow(m_master);
+        m_follower.follow(m_master, true);
 
         m_master.restoreFactoryDefaults();
         m_master.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-        m_master.setInverted(true);
+        m_master.setInverted(false);
 
         m_breakSensorHandoff = new DigitalInput(Constants.DIGITAL_INPUT_SENSOR_HANDOFF);
         m_breakSensorSecondary = new DigitalInput(Constants.DIGITAL_INPUT_SENSOR_SECONDARY);

@@ -8,14 +8,8 @@
 package frc.robot;
 
 import frc.robot.auto_modes.AutoModeFactory;
-import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.DriveByJoystick;
-import frc.robot.commands.TuneRPM;
-import frc.robot.commands.autonomous.DriveDistance;
-import frc.robot.commands.autonomous.DriveToPoint;
-import frc.robot.commands.autonomous.SetStartingPosition;
-import frc.robot.commands.autonomous.TimedDriveStraight;
-import frc.robot.commands.autonomous.TurnToAngle;
+import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Limelight;
@@ -25,12 +19,8 @@ import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Camera;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -81,6 +71,8 @@ public class RobotContainer {
        
         CommandScheduler.getInstance().onCommandInitialize(command ->  System.out.println(command + "is starting"));
         CommandScheduler.getInstance().onCommandFinish(command ->  System.out.println(command + "has ended"));
+
+        PropertyManager.purgeExtraKeys();
     }
 
     /**

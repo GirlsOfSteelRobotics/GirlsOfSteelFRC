@@ -6,9 +6,6 @@ import com.snobot.simulator.simulator_components.smart_sc.BaseCanSmartSpeedContr
 import edu.wpi.first.hal.sim.SimDeviceSim;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
