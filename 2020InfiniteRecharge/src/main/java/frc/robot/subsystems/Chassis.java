@@ -140,9 +140,9 @@ public class Chassis extends SubsystemBase {
         m_followerLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_masterRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_followerRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-
-        m_masterLeft.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
-        m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
+        
+        // m_masterLeft.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
+        // m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
 
         m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
         m_drive.setSafetyEnabled(true);
