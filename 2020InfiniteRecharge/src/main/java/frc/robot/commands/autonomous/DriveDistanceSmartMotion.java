@@ -5,12 +5,10 @@ import frc.robot.subsystems.Chassis;
 
 public class DriveDistanceSmartMotion extends CommandBase {
 
-    private static final double AUTO_KP = 0.5;
 
     private final Chassis m_chassis;
     private final double m_distance;
     private final double m_allowableError;
-    private double m_initialPosition;
 
 
     public DriveDistanceSmartMotion(Chassis chassis, double distance, double allowableError) {
@@ -24,7 +22,6 @@ public class DriveDistanceSmartMotion extends CommandBase {
 
     @Override
     public void initialize(){
-        m_initialPosition = m_chassis.getAverageEncoderDistance();
     }
 
     @Override

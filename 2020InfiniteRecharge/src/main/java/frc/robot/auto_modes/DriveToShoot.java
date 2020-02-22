@@ -16,18 +16,10 @@ import frc.robot.subsystems.*;
 
 public class DriveToShoot extends SequentialCommandGroup {
 
-    private final Chassis m_chassis;
-    private final Shooter m_shooter;
-    private final ShooterConveyor m_shooterConveyor;
-
     /**
      * Creates a new AutomatedConveyorIntake.
      */
     public DriveToShoot(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor) {
-
-        m_chassis = chassis;
-        m_shooter = shooter;
-        m_shooterConveyor = shooterConveyor;
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
         addCommands(new DriveDistance(chassis, 12, 1).alongWith(new RunShooterRPM(shooter, Constants.DEFAULT_RPM))); 

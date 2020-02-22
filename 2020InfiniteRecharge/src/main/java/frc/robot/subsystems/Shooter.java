@@ -8,7 +8,6 @@ import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,7 +21,6 @@ public class Shooter extends SubsystemBase {
 
     private static final double ALLOWABLE_ERROR_PERCENT = 1;          
 
-    private static final int SLOT_ID = 0;
 
     private final CANSparkMax m_master;
     private final CANSparkMax m_follower;

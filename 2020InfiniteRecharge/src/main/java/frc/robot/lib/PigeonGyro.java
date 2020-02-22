@@ -1,7 +1,6 @@
 package frc.robot.lib;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class PigeonGyro implements IGyroWrapper {
 

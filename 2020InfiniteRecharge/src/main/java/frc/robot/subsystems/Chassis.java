@@ -21,6 +21,9 @@ import frc.robot.Constants;
 import frc.robot.lib.IGyroWrapper;
 import frc.robot.lib.NullGyroWrapper;
 import frc.robot.lib.PigeonGyro;
+import frc.robot.lib.PropertyManager;
+import frc.robot.lib.PropertyManager.IProperty;
+
 import com.revrobotics.CANPIDController;
 
 public class Chassis extends SubsystemBase {
@@ -52,11 +55,15 @@ public class Chassis extends SubsystemBase {
 
     private int m_robotPositionCtr; // Used for downsampling the updates
 
-    private double kP = 5e-5;
-    private double kI = 0; // 1e-6;
-    private double kD = 0;
-    private double kIz = 0;
-    private double kFF = 0.000156;
+    private IProperty<Double> kP = new PropertyManager.DoubleProperty("ChassisKp", 5e-5);    
+    private IProperty<Double> kI = new PropertyManager.DoubleProperty("ChassisKi", 0);
+    //private double kI = 0; // 1e-6;
+    private IProperty<Double> kD = new PropertyManager.DoubleProperty("ChassisKd", 0);
+    //private double kD = 0;
+    private IProperty<Double> kIz = new PropertyManager.DoubleProperty("ChassisKiz", 0);
+    //private double kIz = 0;
+    private IProperty<Double> kFF = new PropertyManager.DoubleProperty("ChassisKff", 0.000156);
+    //private double kFF = 0.000156;
     private double kMaxOutput = 1;
     private double kMinOutput = -1;
 
@@ -77,18 +84,18 @@ public class Chassis extends SubsystemBase {
         m_leftPidController = m_masterLeft.getPIDController();
         m_rightPidController = m_masterRight.getPIDController();
 
-        m_leftPidController.setP(kP);
-        m_leftPidController.setI(kI);
-        m_leftPidController.setD(kD);
-        m_leftPidController.setIZone(kIz);
-        m_leftPidController.setFF(kFF);
+        m_leftPidController.setP(kP.getValue());
+        m_leftPidController.setI(kI.getValue());
+        m_leftPidController.setD(kD.getValue());
+        m_leftPidController.setIZone(kIz.getValue());
+        m_leftPidController.setFF(kFF.getValue());
         m_leftPidController.setOutputRange(kMinOutput, kMaxOutput);
 
-        m_rightPidController.setP(kP);
-        m_rightPidController.setI(kI);
-        m_rightPidController.setD(kD);
-        m_rightPidController.setIZone(kIz);
-        m_rightPidController.setFF(kFF);
+        m_rightPidController.setP(kP.getValue());
+        m_rightPidController.setI(kI.getValue());
+        m_rightPidController.setD(kD.getValue());
+        m_rightPidController.setIZone(kIz.getValue());
+        m_rightPidController.setFF(kFF.getValue());
         m_rightPidController.setOutputRange(kMinOutput, kMaxOutput);
 
         int smartMotionSlot = 0;
