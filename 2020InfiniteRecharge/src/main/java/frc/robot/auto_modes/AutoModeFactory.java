@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.TuneRPM;
+import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.commands.autonomous.DriveToPoint;
@@ -53,17 +55,18 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Go To Position Down-Right", createDrivePointCommand(chassis, dX + xOffset, -dY + yOffset, 1));
             m_sendableChooser.addOption("Test. Turn To Angle Positive", new TurnToAngle(chassis, 90, 1));
             m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(chassis, -90, 1));
-            m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(chassis, 5, 1));
-            m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(chassis, -60, 1));
-            m_sendableChooser.addOption("Test. Drive Distance Smart Motion", new DriveDistanceSmartMotion(chassis, 10, 120));
+            m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(chassis, 1000000, 1));
+            m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(chassis, -1000000, 1));
+            m_sendableChooser.addOption("Test. Drive Distance Smart Motion", new DriveDistanceSmartMotion(chassis, 1000000, 1));
             m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(chassis, 2, 0.5));
             m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(chassis, 2, -0.5));
             m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(shooter));
             m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
+            m_sendableChooser.addOption("Test. Start Shooter", new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 3));
         }
            
-        m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
-        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
+        //m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
+        //m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
        
     }

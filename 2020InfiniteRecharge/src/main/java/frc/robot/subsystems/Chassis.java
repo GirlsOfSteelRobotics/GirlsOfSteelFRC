@@ -86,18 +86,18 @@ public class Chassis extends SubsystemBase {
         m_rightPidController = m_masterRight.getPIDController();
 
         m_leftPidController.setP(kP.getValue());
-        m_leftPidController.setI(kI.getValue());
-        m_leftPidController.setD(kD.getValue());
-        m_leftPidController.setIZone(kIz.getValue());
-        m_leftPidController.setFF(kFF.getValue());
-        m_leftPidController.setOutputRange(kMinOutput, kMaxOutput);
+        // m_leftPidController.setI(kI.getValue());
+        // m_leftPidController.setD(kD.getValue());
+        // m_leftPidController.setIZone(kIz.getValue());
+        // m_leftPidController.setFF(kFF.getValue());
+        // m_leftPidController.setOutputRange(kMinOutput, kMaxOutput);
 
         m_rightPidController.setP(kP.getValue());
-        m_rightPidController.setI(kI.getValue());
-        m_rightPidController.setD(kD.getValue());
-        m_rightPidController.setIZone(kIz.getValue());
-        m_rightPidController.setFF(kFF.getValue());
-        m_rightPidController.setOutputRange(kMinOutput, kMaxOutput);
+        // m_rightPidController.setI(kI.getValue());
+        // m_rightPidController.setD(kD.getValue());
+        // m_rightPidController.setIZone(kIz.getValue());
+        // m_rightPidController.setFF(kFF.getValue());
+        // m_rightPidController.setOutputRange(kMinOutput, kMaxOutput);
 
         int smartMotionSlot = 0;
         m_leftPidController.setSmartMotionMaxVelocity(maxVel, smartMotionSlot);
@@ -126,7 +126,7 @@ public class Chassis extends SubsystemBase {
         m_followerRight.setIdleMode(IdleMode.kBrake);
 
         m_masterLeft.setInverted(false);
-        m_masterRight.setInverted(false);
+        m_masterRight.setInverted(true);
 
         m_followerLeft.follow(m_masterLeft, false);
         m_followerRight.follow(m_masterRight, false);
@@ -140,6 +140,7 @@ public class Chassis extends SubsystemBase {
         // m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
 
         m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
+        m_drive.setRightSideInverted(false);
         m_drive.setSafetyEnabled(true);
         m_drive.setExpiration(0.1);
         m_drive.setMaxOutput(0.8);
@@ -173,6 +174,20 @@ public class Chassis extends SubsystemBase {
             m_customNetworkTable.getEntry("Ctr").setDouble(m_robotPositionCtr);
         }
         ++m_robotPositionCtr;
+
+        m_leftPidController.setP(kP.getValue());
+        // m_leftPidController.setI(kI.getValue());
+        // m_leftPidController.setD(kD.getValue());
+       // m_leftPidController.setIZone(kIz.getValue());
+        m_leftPidController.setFF(kFF.getValue());
+        m_leftPidController.setOutputRange(kMinOutput, kMaxOutput);
+
+        m_rightPidController.setP(kP.getValue());
+        // m_rightPidController.setI(kI.getValue());
+        // m_rightPidController.setD(kD.getValue());
+       // m_rightPidController.setIZone(kIz.getValue());
+        m_rightPidController.setFF(kFF.getValue());
+        m_rightPidController.setOutputRange(kMinOutput, kMaxOutput);
 
     }
 
@@ -221,16 +236,19 @@ public class Chassis extends SubsystemBase {
     }
 
     public void setSpeed(final double speed) {
+        System.out.println("SETTING SPEED");
         m_drive.arcadeDrive(speed, 0);
     }
 
     // command to rotate robot to align with target based on limelight value
     public void setSteer(double steer) {
         m_drive.arcadeDrive(0, steer);
+        System.out.println("SETTING STEER");
     }
 
     public void setSpeedAndSteer(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
+        System.out.println("SETTING SPEED AND STEER");
     }
 
     public void setPosition(double x, double y, double angle) {
@@ -243,16 +261,26 @@ public class Chassis extends SubsystemBase {
 
     public void stop() {
         m_drive.stopMotor();
+        System.out.println("Stopping motors");
     }
 
     public void resetEncoder() {
         m_masterLeft.getEncoder().setPosition(0);
         m_masterRight.getEncoder().setPosition(0);
+        System.out.println("Resetting encoder");
 
     }
 
     public void driveDistance(double inches) {
-        m_leftPidController.setReference(inches, ControlType.kSmartMotion);
+        System.out.println("Driving distance");
+        m_leftPidController.setReference(inches, ControlType.kPosition);
         m_rightPidController.setReference(inches, ControlType.kSmartMotion);
     }
+
+	public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+        // System.out.println("Driving velocity");
+        System.out.println("Driving velocity");
+        m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
+        m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);
+	}
 }
