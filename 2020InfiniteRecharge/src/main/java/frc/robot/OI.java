@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.subsystems.*;
 
 /**
@@ -36,6 +37,7 @@ public class OI {
         new JoystickButton(m_operatingPad, Button.kY.value).whenPressed(new MovePiston(shooterIntake, false));
         new POVButton(m_operatingPad, 90).whenPressed(new TuneRPM(shooter));
         new POVButton(m_operatingPad, 0).whenPressed(new ConveyorAdvanceOneUnit(shooterConveyor));
+        new POVButton(m_operatingPad, 180).whenPressed(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 5)); 
  
         new JoystickButton(m_drivingPad, Button.kBumperLeft.value).whileHeld(new HangerLift(lift, true));
         new JoystickButton(m_drivingPad, Button.kBumperRight.value).whileHeld(new HangerLift(lift, false));

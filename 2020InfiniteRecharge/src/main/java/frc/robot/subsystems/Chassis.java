@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.lib.IGyroWrapper;
+import frc.robot.lib.NavXWrapper;
 import frc.robot.lib.NullGyroWrapper;
 import frc.robot.lib.PigeonGyro;
 import frc.robot.lib.PropertyManager;
@@ -117,13 +118,7 @@ public class Chassis extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
-        // TODO(pj) remove when pigeon gets put on. Disabled now to clean up roboRio
-        // logs
-        if (RobotBase.isReal()) {
-            m_gyro = new NullGyroWrapper();
-        } else {
-            m_gyro = new PigeonGyro(0);
-        }
+        m_gyro = new NavXWrapper(); 
 
         m_masterLeft.setIdleMode(IdleMode.kBrake);
         m_followerLeft.setIdleMode(IdleMode.kBrake);
