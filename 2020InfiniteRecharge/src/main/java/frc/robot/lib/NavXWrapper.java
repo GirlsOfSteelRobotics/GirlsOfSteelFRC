@@ -28,25 +28,19 @@ public class NavXWrapper implements IGyroWrapper {
 
     @Override
     public void poll() {
-        SmartDashboard.putString("Firmware Version: ", m_NavX.getFirmwareVersion()); 
-        SmartDashboard.putNumber("Byte Count: ", m_NavX.getByteCount());
-        SmartDashboard.putNumber("Update Count: ", m_NavX.getUpdateCount()); 
-        SmartDashboard.putBoolean("Connected ", m_NavX.isConnected()); 
-        SmartDashboard.putBoolean("Calibrated ", m_NavX.isCalibrating()); 
         SmartDashboard.putNumber("Yaw ", m_NavX.getYaw()); 
         SmartDashboard.putNumber("Pitch ", m_NavX.getPitch()); 
         SmartDashboard.putNumber("Roll ", m_NavX.getRoll()); 
-        SmartDashboard.putNumber("Angle ", m_NavX.getAngle()); 
     }
 
     @Override
     public double getYaw() {
-        return  m_NavX.getPitch() - m_startingPosition; 
+        return  m_NavX.getYaw() - m_startingPosition; 
     }
 
     @Override
     public void setYaw(double angle) {
-        m_startingPosition = m_NavX.getPitch() - angle;
+        m_startingPosition = m_NavX.getYaw() - angle;
     }
 
 }
