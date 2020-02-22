@@ -14,21 +14,21 @@ public class FollowTrajectory extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         //super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
         this.m_chassis = chassis;
-        RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory,
-        m_robotDrive::getPose,
-        new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-        new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                   DriveConstants.kvVoltSecondsPerMeter,
-                                   DriveConstants.kaVoltSecondsSquaredPerMeter),
-        DriveConstants.kDriveKinematics,
-        m_robotDrive::getWheelSpeeds,
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        // RamseteCommand passes volts to the callback
-        m_robotDrive::tankDriveVolts,
-        m_robotDrive
-        )
+        // RamseteCommand ramseteCommand = new RamseteCommand(
+        // exampleTrajectory,
+        // m_robotDrive::getPose,
+        // new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+        // new SimpleMotorFeedforward(DriveConstants.ksVolts,
+        //                            DriveConstants.kvVoltSecondsPerMeter,
+        //                            DriveConstants.kaVoltSecondsSquaredPerMeter),
+        // DriveConstants.kDriveKinematics,
+        // m_robotDrive::getWheelSpeeds,
+        // new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        // new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        // // RamseteCommand passes volts to the callback
+        // m_robotDrive::tankDriveVolts,
+        // m_robotDrive
+        // )
     }
 
     public void initialize(){
