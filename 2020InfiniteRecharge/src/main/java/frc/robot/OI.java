@@ -46,7 +46,7 @@ public class OI {
         new JoystickButton(m_drivingPad, Button.kY.value).whenPressed(new RotationControl(controlPanel));
         new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(camera));
         new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(camera));
-
+        new POVButton(m_drivingPad, 90).whenHeld(new SpinControlPanel(controlPanel));
 
     }
 
