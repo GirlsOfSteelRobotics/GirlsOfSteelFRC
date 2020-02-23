@@ -18,6 +18,7 @@ public class Shooter extends SubsystemBase {
 
     private static final double SHOOTER_KP = 0.0001;
     private static final double SHOOTER_KFF = 0.000087; //1 / 10600.0;
+    private static final double SHOOTER_KD = 0.001;
 
     private static final double ALLOWABLE_ERROR_PERCENT = 1;          
 
@@ -33,6 +34,7 @@ public class Shooter extends SubsystemBase {
 
     private final PropertyManager.IProperty<Double> m_dashboardKp;
     private final PropertyManager.IProperty<Double> m_dashboardKff;
+    private final PropertyManager.IProperty<Double> m_dashboardKd;
 
     public Shooter() {
         m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
@@ -42,6 +44,7 @@ public class Shooter extends SubsystemBase {
         
         m_dashboardKp = new PropertyManager.DoubleProperty("shooter_kp", SHOOTER_KP);
         m_dashboardKff = new PropertyManager.DoubleProperty("shooter_kff", SHOOTER_KFF);
+        m_dashboardKd = new PropertyManager.DoubleProperty("shooter_kd", SHOOTER_KD);
         
         m_master.restoreFactoryDefaults();
 
@@ -53,6 +56,7 @@ public class Shooter extends SubsystemBase {
 
         m_pidController.setP(SHOOTER_KP);
         m_pidController.setFF(SHOOTER_KFF);
+        m_pidController.setD(SHOOTER_KD);
         
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Shooter");
         NetworkTableInstance.getDefault().getTable("SuperStructure").getEntry(".type").setString("SuperStructure");

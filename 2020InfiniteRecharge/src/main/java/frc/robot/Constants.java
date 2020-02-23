@@ -24,7 +24,7 @@ public final class Constants {
     public static final int LIFT_TALON = 4;
     public static final int CONTROL_PANEL_TALON = 5;
     public static final int SHOOTER_CONVEYOR_SPARK_A = 6;
-    public static final int DRIVE_RIGHT_MASTER_SPARK = 7;,
+    public static final int DRIVE_RIGHT_MASTER_SPARK = 7;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
     public static final int SHOOTER_SPARK_A = 9;
     public static final int SHOOTER_SPARK_B = 10;
@@ -51,5 +51,5 @@ public final class Constants {
     public static final int SPARK_MAX_CURRENT_LIMIT = 60;
     public static final int CTRE_TIMEOUT = 30;
 
-    public static final double DEFAULT_RPM = 8500;
+    public static final double DEFAULT_RPM = 9500;
 }
