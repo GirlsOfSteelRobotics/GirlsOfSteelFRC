@@ -28,6 +28,7 @@ public class NavXWrapper implements IGyroWrapper {
 
     @Override
     public void poll() {
+        SmartDashboard.putNumber("RawAngle ", m_NavX.getAngle()); 
         SmartDashboard.putNumber("Yaw ", m_NavX.getYaw()); 
         SmartDashboard.putNumber("Pitch ", m_NavX.getPitch()); 
         SmartDashboard.putNumber("Roll ", m_NavX.getRoll()); 

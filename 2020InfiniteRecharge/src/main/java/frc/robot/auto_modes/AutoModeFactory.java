@@ -17,7 +17,7 @@ import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
-import frc.robot.commands.autonomous.DriveToPoint;
+import frc.robot.commands.autonomous.GoToPosition;
 import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
@@ -40,19 +40,20 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser = new SendableChooser<>();
         
         if (TEST_MODE) {
-            double dX = 27 * 12;
-            double dY = 13.5 * 12;
+            double dX = 8 * 12;
+            double dY = 8 * 12;
             double xOffset = 27 * 12;
             double yOffset = -13.5 * 12;
-            m_sendableChooser.addOption("Test. Go To Position (0, 0)", createDrivePointCommand(chassis, 0.0, 0.0, 1));
-            m_sendableChooser.addOption("Test. Go To Position Right", createDrivePointCommand(chassis, dX + xOffset, 0.0 + yOffset, 1));
-            m_sendableChooser.addOption("Test. Go To Position Left", createDrivePointCommand(chassis, -dX + xOffset, 0.0 + yOffset, 1));
-            m_sendableChooser.addOption("Test. Go To Position Up", createDrivePointCommand(chassis, 0.0 + xOffset, dY + yOffset, 1));
-            m_sendableChooser.addOption("Test. Go To Position Down", createDrivePointCommand(chassis, 0.0 + xOffset, -dY + yOffset, 1));
-            m_sendableChooser.addOption("Test. Go To Position Up-Left", createDrivePointCommand(chassis, -dX + xOffset, dY + yOffset, 1));
-            m_sendableChooser.addOption("Test. Go To Position Up-Right", createDrivePointCommand(chassis, dX + xOffset, dY + yOffset, 1));
-            m_sendableChooser.addOption("Test. Go To Position Down-Left", createDrivePointCommand(chassis, -dX + xOffset, -dY + yOffset, 1));
-            m_sendableChooser.addOption("Test. Go To Position Down-Right", createDrivePointCommand(chassis, dX + xOffset, -dY + yOffset, 1));
+            double allowableError = 3;
+            m_sendableChooser.addOption("Test. Go To Position (0, 0)", createDrivePointCommand(chassis, 0.0, 0.0, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Right", createDrivePointCommand(chassis, dX + xOffset, 0.0 + yOffset, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Left", createDrivePointCommand(chassis, -dX + xOffset, 0.0 + yOffset, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Up", createDrivePointCommand(chassis, 0.0 + xOffset, dY + yOffset, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Down", createDrivePointCommand(chassis, 0.0 + xOffset, -dY + yOffset, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Up-Left", createDrivePointCommand(chassis, -dX + xOffset, dY + yOffset, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Up-Right", createDrivePointCommand(chassis, dX + xOffset, dY + yOffset, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Down-Left", createDrivePointCommand(chassis, -dX + xOffset, -dY + yOffset, allowableError));
+            m_sendableChooser.addOption("Test. Go To Position Down-Right", createDrivePointCommand(chassis, dX + xOffset, -dY + yOffset, allowableError));
             m_sendableChooser.addOption("Test. Turn To Angle Positive", new TurnToAngle(chassis, 90, 1));
             m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(chassis, -90, 1));
             m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(chassis, 5 * 12, 1));
@@ -63,6 +64,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(shooter));
             m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
             m_sendableChooser.addOption("Test. Start Shooter", new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 3));
+            m_sendableChooser.addOption("Test. Set Starting Position", new SetStartingPosition(chassis, 0, 0, 0));
         }
            
         //m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
@@ -73,7 +75,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError)
     {
-        return new SetStartingPosition(chassis, 27 * 12, -13.5 * 12, 0).andThen(new DriveToPoint(chassis, x, y, allowableError));
+        return new SetStartingPosition(chassis, 27 * 12, -13.5 * 12, 0).andThen(new GoToPosition(chassis, x, y, allowableError));
     }
 
     public Command getAutonomousMode(){
