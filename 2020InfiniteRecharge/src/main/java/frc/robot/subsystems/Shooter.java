@@ -16,8 +16,8 @@ import frc.robot.lib.PropertyManager;
 
 public class Shooter extends SubsystemBase {
 
-    private static final double SHOOTER_KP = 0.000203;
-    private static final double SHOOTER_KFF = 0.000091; //1 / 10600.0;
+    private static final double SHOOTER_KP = 0.0001;
+    private static final double SHOOTER_KFF = 0.000087; //1 / 10600.0;
 
     private static final double ALLOWABLE_ERROR_PERCENT = 1;          
 
@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new CANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
-        m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 4096);
+        m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 8192);
         m_pidController = m_master.getPIDController();
         
         m_dashboardKp = new PropertyManager.DoubleProperty("shooter_kp", SHOOTER_KP);
