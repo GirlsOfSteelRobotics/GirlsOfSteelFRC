@@ -78,14 +78,18 @@ public class Chassis extends SubsystemBase {
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
 
+        m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
         m_gyro = new NavXWrapper(); 
 
-        m_masterLeft.setIdleMode(IdleMode.kBrake);
-        m_followerLeft.setIdleMode(IdleMode.kBrake);
-        m_masterRight.setIdleMode(IdleMode.kBrake);
-        m_followerRight.setIdleMode(IdleMode.kBrake);
+        IdleMode idleMode = IdleMode.kBrake;
+        m_masterLeft.setIdleMode(idleMode);
+        m_followerLeft.setIdleMode(idleMode);
+        m_masterRight.setIdleMode(idleMode);
+        m_followerRight.setIdleMode(idleMode);
 
         m_masterLeft.setInverted(false);
         m_masterRight.setInverted(true);
@@ -113,14 +117,14 @@ public class Chassis extends SubsystemBase {
         m_customNetworkTable = coordinateGuiContainer.getSubTable("RobotPosition");
 
         // Smart Motion stuff
-        double kp = 0;
+        double kp = 0.008000;
         double ki = 0;
         double kd = 0;
-        double kff = 0.000156;
+        double kff = 0.005900;
         boolean lockConstants = false;
-        double minVel = 0; // rpm
-        double maxVel = 2000; // rpm
-        double maxAcc = 1500;
+        double minVel = 0; // inch/sec
+        double maxVel = 72; // inch/sec
+        double maxAcc = 144; // inch/sec/sec
         double allowedErr = 0;
         double kMaxOutput = 1;
         double kMinOutput = -1;
@@ -150,6 +154,9 @@ public class Chassis extends SubsystemBase {
 
         m_leftPidController.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
         m_rightPidController.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
+        
+        m_leftProperties.updateIfChanged(true);
+        m_rightProperties.updateIfChanged(true);
     }
 
     @Override
@@ -231,27 +238,29 @@ public class Chassis extends SubsystemBase {
     // Functions to make it drive
     //////////////////////////////
     public void setSpeed(final double speed) {
-        System.out.println("SETTING SPEED");
+        // System.out.println("SETTING SPEED");
         m_drive.arcadeDrive(speed, 0);
     }
 
     // command to rotate robot to align with target based on limelight value
     public void setSteer(double steer) {
         m_drive.arcadeDrive(0, steer);
-        System.out.println("SETTING STEER");
+        // System.out.println("SETTING STEER");
     }
 
     public void setSpeedAndSteer(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
-        System.out.println("SETTING SPEED AND STEER");
+        // System.out.println("SETTING SPEED AND STEER");
     }
 
     public void driveDistance(double leftPosition, double rightPosition) {
+        m_drive.setSafetyEnabled(false);
         m_leftPidController.setReference(leftPosition, ControlType.kSmartMotion);
         m_rightPidController.setReference(rightPosition, ControlType.kSmartMotion);
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+        m_drive.setSafetyEnabled(false);
         // System.out.println("Driving velocity");
         m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
         m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);

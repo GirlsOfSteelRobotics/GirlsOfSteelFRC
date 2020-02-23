@@ -22,11 +22,14 @@ public class HeavyDoubleProperty
         m_property = property;
         m_lastValue = property.getValue();
     }
+    
+    public void updateIfChanged() {
+        updateIfChanged(false);
+    }
 
-    public void updateIfChanged()
-    {
+    public void updateIfChanged(boolean forceUpdate) {
         double newValue = m_property.getValue();
-        if(newValue != m_lastValue)
+        if (newValue != m_lastValue || forceUpdate)
         {
             System.out.println("Value for " + m_property.getName() + " changed from " + m_lastValue + " to " + newValue);
             m_setter.accept(newValue);

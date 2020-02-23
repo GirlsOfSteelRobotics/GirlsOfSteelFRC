@@ -57,7 +57,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(chassis, -90, 1));
             m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(chassis, 5 * 12, 1));
             m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(chassis, -5 * 12, 1));
-            m_sendableChooser.addOption("Test. Drive Distance Smart Motion", new DriveDistanceSmartMotion(chassis, 1000000, 1));
+            m_sendableChooser.addOption("Test. Drive Distance Smart Motion", new DriveDistanceSmartMotion(chassis, 8 * 12, 5));
             m_sendableChooser.addOption("Test. Timed Drive Straight Forward", new TimedDriveStraight(chassis, 2, 0.5));
             m_sendableChooser.addOption("Test. Timed Drive Straight Backward", new TimedDriveStraight(chassis, 2, -0.5));
             m_sendableChooser.addOption("Test. TuneRPM", new TuneRPM(shooter));
