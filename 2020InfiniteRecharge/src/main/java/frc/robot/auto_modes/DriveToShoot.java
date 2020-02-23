@@ -12,6 +12,7 @@ import frc.robot.Constants;
 import frc.robot.commands.RunShooterRPM;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistance;
+import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.subsystems.*;
 
 public class DriveToShoot extends SequentialCommandGroup {
@@ -22,7 +23,7 @@ public class DriveToShoot extends SequentialCommandGroup {
     public DriveToShoot(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor) {
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
-        addCommands(new DriveDistance(chassis, 12, 1).alongWith(new RunShooterRPM(shooter, Constants.DEFAULT_RPM))); 
-        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 10));
+        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 5));
+        addCommands(new DriveDistanceSmartMotion(chassis, 3 * 12, 1).alongWith(new RunShooterRPM(shooter, Constants.DEFAULT_RPM))); 
     }
 }

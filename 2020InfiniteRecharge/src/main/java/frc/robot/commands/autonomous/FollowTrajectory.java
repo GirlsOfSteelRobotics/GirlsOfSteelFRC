@@ -1,10 +1,35 @@
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Chassis;
 
-public class FollowTrajectory extends CommandBase {
+public class FollowTrajectory extends SequentialCommandGroup {
+
+    public static class AutoConstants {
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+
+        public static final double kMaxSpeedMetersPerSecond = Units.inchesToMeters(60);
+        public static final double kMaxAccelerationMetersPerSecondSquared = Units.inchesToMeters(60);
+
+    }
+
+    public static class DriveConstants {
+        public static final double ksVolts = 0.179;
+        public static final double kvVoltSecondsPerMeter = 0.0653;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.00754;
+
+        public static final double kTrackwidthMeters = 1.1554881713809029;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+            new DifferentialDriveKinematics(kTrackwidthMeters);
+    }
 
     Chassis m_chassis;
 
@@ -14,41 +39,16 @@ public class FollowTrajectory extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         //super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
         this.m_chassis = chassis;
-        // RamseteCommand ramseteCommand = new RamseteCommand(
-        // exampleTrajectory,
-        // m_robotDrive::getPose,
-        // new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-        // new SimpleMotorFeedforward(DriveConstants.ksVolts,
-        //                            DriveConstants.kvVoltSecondsPerMeter,
-        //                            DriveConstants.kaVoltSecondsSquaredPerMeter),
-        // DriveConstants.kDriveKinematics,
-        // m_robotDrive::getWheelSpeeds,
-        // new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        // new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        // // RamseteCommand passes volts to the callback
-        // m_robotDrive::tankDriveVolts,
-        // m_robotDrive
-        // )
-    }
+        
+        RamseteCommand ramseteCommand = new RamseteCommand(
+            trajectory,
+            m_chassis::getPose,
+            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+            DriveConstants.kDriveKinematics,
+            m_chassis::smartVelocityControlMeters,
+            m_chassis
+        );
 
-    public void initialize(){
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    public void execute() {
-
-    }
-    
-    
-
-    // Make this return true when this Command no longer needs to run execute()
-    public boolean isFinished() { 
-        return false; 
-    }
-    
-
-    // Called once after isFinished returns true
-    public void end(boolean interrupted) {
-    
+        addCommands(ramseteCommand);
     }
 }

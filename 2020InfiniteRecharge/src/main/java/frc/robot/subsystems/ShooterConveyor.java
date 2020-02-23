@@ -44,7 +44,7 @@ public class ShooterConveyor extends SubsystemBase {
 
         m_master.restoreFactoryDefaults();
         m_master.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-        m_master.setInverted(true);
+        m_master.setInverted(false);
 
         m_breakSensorHandoff = new DigitalInput(Constants.DIGITAL_INPUT_SENSOR_HANDOFF);
         m_breakSensorSecondary = new DigitalInput(Constants.DIGITAL_INPUT_SENSOR_SECONDARY);

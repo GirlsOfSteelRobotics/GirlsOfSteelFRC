@@ -7,8 +7,19 @@
 
 package frc.robot.auto_modes;
 
+import java.util.List;
+
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -17,10 +28,13 @@ import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
+import frc.robot.commands.autonomous.FollowTrajectory;
 import frc.robot.commands.autonomous.GoToPosition;
 import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
+import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
+import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
 
 
@@ -65,10 +79,11 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
             m_sendableChooser.addOption("Test. Start Shooter", new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 3));
             m_sendableChooser.addOption("Test. Set Starting Position", new SetStartingPosition(chassis, 0, 0, 0));
+            m_sendableChooser.addOption("Test. Get Trajectory", createTrajectoryCommand(chassis));
         }
            
-        //m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
-        //m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
+        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
        
     }
@@ -78,7 +93,39 @@ public class AutoModeFactory extends SequentialCommandGroup {
         return new SetStartingPosition(chassis, 27 * 12, -13.5 * 12, 0).andThen(new GoToPosition(chassis, x, y, allowableError));
     }
 
-    public Command getAutonomousMode(){
+    private Command createTrajectoryCommand(Chassis chassis) {
+        var autoVoltageConstraint =
+            new DifferentialDriveVoltageConstraint (
+                new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                        DriveConstants.kvVoltSecondsPerMeter,
+                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
+                DriveConstants.kDriveKinematics,
+                10);
+
+        TrajectoryConfig config =
+            new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
+                            AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+        Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(),
+            //new Translation2d(2, -1)
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(Units.inchesToMeters(5 * 12), 0, new Rotation2d(0)),
+            // Pass config
+            config
+        );
+
+        return new SetStartingPosition(chassis, 0, 0, 0).andThen(new FollowTrajectory(exampleTrajectory, chassis));
+    }
+
+    public Command getAutonomousMode() {
         return m_sendableChooser.getSelected();
     }
 }

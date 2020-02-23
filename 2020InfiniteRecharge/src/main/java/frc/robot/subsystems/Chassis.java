@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.lib.IGyroWrapper;
@@ -265,6 +266,17 @@ public class Chassis extends SubsystemBase {
         // System.out.println("Driving velocity");
         m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
         m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);
+
+        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
+    }
+
+    public void smartVelocityControlMeters(double leftVelocityMeters, double rightVelocityMeters) {
+        double leftVelocityInchesPerSecond;
+        leftVelocityInchesPerSecond = Units.metersToInches(leftVelocityMeters);
+        double rightVelocityInchesPerSecond;
+        rightVelocityInchesPerSecond = Units.metersToInches(rightVelocityMeters);
+
+        smartVelocityControl(leftVelocityInchesPerSecond, rightVelocityInchesPerSecond);
     }
 
     public void stop() {
