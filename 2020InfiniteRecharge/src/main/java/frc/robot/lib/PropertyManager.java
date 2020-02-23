@@ -34,13 +34,17 @@ public class PropertyManager {
 
 	public static interface IProperty<TypeT> {
 		TypeT getValue();
+
+		String getName();
 	}
 
 	public static class ConstantProperty<TypeT> implements IProperty<TypeT> {
 		private final TypeT mValue;
+		private final String mName;
 
 		public ConstantProperty(String aKey, TypeT aValue) {
 			mValue = aValue;
+			mName = aKey;
 
 			Preferences.getInstance().remove(aKey);
 		}
@@ -48,6 +52,11 @@ public class PropertyManager {
 		@Override
 		public TypeT getValue() {
 			return mValue;
+		}
+
+		@Override
+		public String getName() {
+			return mName;
 		}
 	}
 
@@ -77,6 +86,11 @@ public class PropertyManager {
 
 			mSetter.accept(mKey, mDefault);
 			return mDefault;
+		}
+
+		@Override
+		public String getName() {
+			return mKey;
 		}
 	}
 

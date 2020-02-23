@@ -22,11 +22,12 @@ public class DriveDistanceSmartMotion extends CommandBase {
 
     @Override
     public void initialize(){
+        System.out.println("Drive Distance Smart Motion; distnace " + m_distance + ", allowable error " + m_allowableError);
     }
 
     @Override
     public void execute() { 
-        m_chassis.driveDistance(m_distance);
+        m_chassis.driveDistance(m_distance, m_distance);
 
         //System.out.println("error:" + m_error + "speed:" + speed);
     }
@@ -48,6 +49,7 @@ public class DriveDistanceSmartMotion extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_chassis.setSpeed(0);
+        System.out.println("Drive Distance Smart Motion, end");
        
     }
 }

@@ -99,7 +99,8 @@ public class Robot extends TimedRobot {
 
     // Note that the angle from the NavX and all implementors of wpilib Gyro
     // must be negated because getAngle returns a clockwise positive angle
-    gyroAngleRadians = () -> 0.0;
+    AHRS navx = new AHRS(SPI.Port.kMXP);
+    gyroAngleRadians = () -> -1 * Math.toRadians(navx.getAngle());
 
     //
     // Configure drivetrain movement
