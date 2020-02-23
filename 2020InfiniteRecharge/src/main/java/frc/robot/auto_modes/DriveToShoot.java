@@ -9,10 +9,9 @@ package frc.robot.auto_modes;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.RunShooterRPM;
-import frc.robot.commands.autonomous.AutoShoot;
-import frc.robot.commands.autonomous.DriveDistance;
+import frc.robot.commands.StopShooter;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
+import frc.robot.commands.autonomous.SingleShoot;
 import frc.robot.subsystems.*;
 
 public class DriveToShoot extends SequentialCommandGroup {
@@ -23,7 +22,9 @@ public class DriveToShoot extends SequentialCommandGroup {
     public DriveToShoot(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor) {
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
-        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 5));
-        addCommands(new DriveDistanceSmartMotion(chassis, 3 * 12, 1).alongWith(new RunShooterRPM(shooter, Constants.DEFAULT_RPM))); 
+        addCommands(new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
+        addCommands(new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
+        addCommands(new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
+        addCommands(new DriveDistanceSmartMotion(chassis, 3 * 12, 1).alongWith(new StopShooter(shooter))); 
     }
 }

@@ -92,7 +92,7 @@ public class ShooterConveyor extends SubsystemBase {
     }
 
     public void inConveyor() {
-        m_master.set(1);
+        m_master.set(.3);
     }
 
     public void outConveyor() {
