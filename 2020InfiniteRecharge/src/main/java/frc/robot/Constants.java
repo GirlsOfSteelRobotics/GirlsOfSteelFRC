@@ -19,12 +19,12 @@ public final class Constants {
     // Motor controller CAN IDs
     // - Keep these in numeric order so it's clear that there are no duplicate numbers
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
-    public static final int WINCH_B_SPARK = 2;
-    public static final int WINCH_A_SPARK = 3;
+    public static final int WINCH_A_SPARK = 2;
+    public static final int WINCH_B_SPARK = 3;
     public static final int LIFT_TALON = 4;
     public static final int CONTROL_PANEL_TALON = 5;
     public static final int SHOOTER_CONVEYOR_SPARK_A = 6;
-    public static final int DRIVE_RIGHT_MASTER_SPARK = 7;
+    public static final int DRIVE_RIGHT_MASTER_SPARK = 7;,
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
     public static final int SHOOTER_SPARK_A = 9;
     public static final int SHOOTER_SPARK_B = 10;
