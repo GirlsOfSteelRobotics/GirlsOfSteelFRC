@@ -27,8 +27,7 @@ public class DriveDistanceSmartMotion extends CommandBase {
 
     @Override
     public void execute() { 
-        // m_chassis.driveDistance(m_distance);      
-        m_chassis.smartVelocityControl(2000, 2000);
+        m_chassis.driveDistance(m_distance, m_distance);
 
         //System.out.println("error:" + m_error + "speed:" + speed);
     }
