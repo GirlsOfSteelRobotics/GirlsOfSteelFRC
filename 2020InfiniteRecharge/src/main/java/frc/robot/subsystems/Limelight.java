@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.lib.PropertyManager;
 
 /**
@@ -25,6 +26,7 @@ public class Limelight extends SubsystemBase {
     private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = new PropertyManager.ConstantProperty<>("LimelightHeightOffset", 48.75);
     private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = new PropertyManager.ConstantProperty<>("LimelightAngleOffset", 20.0);
 
+    private static final double ALLOWABLE_ERROR = 2;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     //private boolean m_LimelightHasValidTarget = false;
@@ -35,9 +37,14 @@ public class Limelight extends SubsystemBase {
     private double m_ty;
     private double m_ta;
 
+    private final NetworkTableEntry m_limelightIsAimedEntry;
+
 
     public Limelight() {
         System.out.println("Limelight"); 
+
+        m_limelightIsAimedEntry = Shuffleboard.getTab("Driver Tab").add("Limelight Is Aimed", limelightIsAimed()).getEntry();
+        Shuffleboard.selectTab("Driver Tab");
     }
 
     public double getSteerCommand() {
@@ -60,7 +67,6 @@ public class Limelight extends SubsystemBase {
         double steerCmd = m_tx * STEER_K.getValue();
         m_limelightSteerCommand = steerCmd;
         return m_limelightSteerCommand;
-
     }
 
     public double estimateDistance() {
@@ -86,5 +92,16 @@ public class Limelight extends SubsystemBase {
         m_ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
         m_ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
         // This method will be called once per scheduler run
+
+        m_limelightIsAimedEntry.setBoolean(limelightIsAimed());
+    }
+
+    public boolean limelightIsAimed() {
+        if (Math.abs(m_tx) <= ALLOWABLE_ERROR) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

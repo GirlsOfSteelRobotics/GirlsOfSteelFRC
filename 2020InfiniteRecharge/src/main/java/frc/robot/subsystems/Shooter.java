@@ -8,7 +8,9 @@ import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -36,6 +38,8 @@ public class Shooter extends SubsystemBase {
     private final PropertyManager.IProperty<Double> m_dashboardKff;
     private final PropertyManager.IProperty<Double> m_dashboardKd;
 
+    private final NetworkTableEntry m_isAtShooterSpeedEntry;
+
     public Shooter() {
         m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new CANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
@@ -60,6 +64,8 @@ public class Shooter extends SubsystemBase {
         
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Shooter");
         NetworkTableInstance.getDefault().getTable("SuperStructure").getEntry(".type").setString("SuperStructure");
+
+        m_isAtShooterSpeedEntry = Shuffleboard.getTab("Driver Tab").add("Shooter At Speed", isAtFullSpeed()).getEntry();
     } 
 
     
@@ -83,6 +89,7 @@ public class Shooter extends SubsystemBase {
         m_pidController.setFF(m_dashboardKff.getValue());
 //        System.out.println("kp: " + m_dashboardKp.getValue() + ", " + m_dashboardKff.getValue() + " goal: " + m_goalRPM + "== " + rpm);
 
+        m_isAtShooterSpeedEntry.setBoolean(isAtFullSpeed());
     }
 
     public boolean isAtFullSpeed() {
