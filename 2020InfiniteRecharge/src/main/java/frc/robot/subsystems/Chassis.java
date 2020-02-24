@@ -224,8 +224,8 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getHeading() {
-        //return m_gyro.getYaw();
-        return 0;
+        return m_gyro.getYaw();
+        // return 0;
     }
 
     public Pose2d getPose() {
