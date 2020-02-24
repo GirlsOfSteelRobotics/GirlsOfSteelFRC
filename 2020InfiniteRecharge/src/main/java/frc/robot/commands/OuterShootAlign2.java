@@ -23,7 +23,7 @@ public class OuterShootAlign2 extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassis.setSpeedAndSteer(m_limelight.getDriveCommand(), m_limelight.getSteerCommand());
+        m_chassis.setSteer(m_limelight.getSteerCommand());
     }
 
     @Override
