@@ -50,7 +50,9 @@ public class OI {
         new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(camera));
         new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(camera));
         new POVButton(m_drivingPad, 90).whenHeld(new SpinControlPanel(controlPanel));
-        new POVButton(m_drivingPad, 270).whenHeld(new OuterShootAlign2(chassis, limelight));
+        new POVButton(m_drivingPad, 270).whenHeld(new AlignLeftRight(chassis, limelight));
+        //new POVButton(m_drivingPad, 90).whenHeld(new AlignForwardBackward(chassis, limelight));
+
 
     }
 
