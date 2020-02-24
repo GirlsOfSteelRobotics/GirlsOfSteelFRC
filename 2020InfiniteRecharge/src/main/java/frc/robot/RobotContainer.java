@@ -69,8 +69,9 @@ public class RobotContainer {
 
         // Add some testing options to the Autonomous Chooser on the dashboard
        
-        CommandScheduler.getInstance().onCommandInitialize(command ->  System.out.println(command + "is starting"));
-        CommandScheduler.getInstance().onCommandFinish(command ->  System.out.println(command + "has ended"));
+        CommandScheduler.getInstance().onCommandInitialize(command ->  System.out.println(command.getName() + " is starting"));
+        CommandScheduler.getInstance().onCommandFinish(command ->  System.out.println(command.getName() + " has ended"));
+        CommandScheduler.getInstance().onCommandInterrupt(command ->  System.out.println(command.getName() + " was interrupted"));
 
         PropertyManager.purgeExtraKeys();
     }
