@@ -53,6 +53,9 @@ public class ShooterConveyor extends SubsystemBase {
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/ShooterConveyor");
 
         m_pidController.setP(SHOOTER_CONVEYOR_KP);
+
+        m_master.burnFlash();
+        m_follower.burnFlash();
     }
 
 

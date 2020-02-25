@@ -61,11 +61,18 @@ public class Shooter extends SubsystemBase {
         m_pidController.setP(SHOOTER_KP);
         m_pidController.setFF(SHOOTER_KFF);
         m_pidController.setD(SHOOTER_KD);
+
+        m_master.burnFlash();
+        m_follower.burnFlash();
         
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Shooter");
         NetworkTableInstance.getDefault().getTable("SuperStructure").getEntry(".type").setString("SuperStructure");
 
-        m_isAtShooterSpeedEntry = Shuffleboard.getTab("Driver Tab").add("Shooter At Speed", isAtFullSpeed()).getEntry();
+        m_isAtShooterSpeedEntry = Shuffleboard.getTab("Driver Tab")
+        .add("Shooter At Speed", isAtFullSpeed())
+        .withSize(3,1)
+        .withPosition(0,4)
+        .getEntry();
     } 
 
     

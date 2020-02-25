@@ -27,7 +27,7 @@ public class Lift extends SubsystemBase {
     }
 
     public void liftDown() {
-        m_motor.set(ControlMode.PercentOutput, -0.6);
+        m_motor.set(ControlMode.PercentOutput, -0.5);
     }
 
     public void periodic() {
