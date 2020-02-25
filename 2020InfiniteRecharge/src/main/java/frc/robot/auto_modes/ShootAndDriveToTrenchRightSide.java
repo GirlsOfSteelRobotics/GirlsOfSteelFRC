@@ -18,16 +18,16 @@ import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.subsystems.*;
 
-public class ShootAndDriveToTrench extends SequentialCommandGroup {
+public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
 
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public ShootAndDriveToTrench(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
+    public ShootAndDriveToTrenchRightSide(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
         addCommands(new SetStartingPosition(chassis, 122, -98, 0));
-        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 5)); //Shoot pre-loaded cells
+        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 10)); //Shoot pre-loaded cells
         addCommands(new DriveDistance(chassis, 12, 1).alongWith(new RunShooterRPM(shooter, Constants.DEFAULT_RPM))); 
         addCommands(new GoToPosition(chassis, 207, -31, 12));
         addCommands(new TurnToAngle(chassis, 0, 12));

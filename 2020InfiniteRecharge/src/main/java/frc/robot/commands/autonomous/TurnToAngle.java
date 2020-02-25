@@ -6,7 +6,7 @@ import frc.robot.subsystems.Chassis;
 
 public class TurnToAngle extends CommandBase {
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("TurnToAngleKp", 0.05);
+    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("TurnToAngleKp", 0.02);
 
     private final Chassis m_chassis;
     private final double m_angle;
@@ -33,9 +33,9 @@ public class TurnToAngle extends CommandBase {
         m_error = m_angle - currentAngle;
 
         double turnSpeed = m_error * AUTO_KP.getValue();
-        m_chassis.setSpeedAndSteer(0, turnSpeed);
+        m_chassis.setSpeedAndSteer(0, -turnSpeed);
 
-        //System.out.println("error:" + m_error + "speed:" + speed);
+        System.out.println("error:" + m_error + "turnSpeed:" + turnSpeed);
     }
 
     @Override

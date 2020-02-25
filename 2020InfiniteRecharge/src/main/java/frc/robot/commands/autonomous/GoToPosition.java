@@ -6,25 +6,26 @@ import frc.robot.subsystems.Chassis;
 
 public class GoToPosition extends CommandBase {
 
-    Chassis m_chassis;
+    private final Chassis m_chassis;
 
-    private double m_allowableError;
+    private final double m_allowableError;
     private double m_errorDistance;
 
     private double m_errorAngle;
 
     private double m_hyp;
 
-    private double m_finalPositionX;
-    private double m_finalPositionY;
+    private final double m_finalPositionX;
+    private final double m_finalPositionY;
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("DriveToPointDriveKp", 0.03);
-    private static final PropertyManager.IProperty<Double> AUTO_KP_ANGLE = new PropertyManager.DoubleProperty("DriveToPointSteerKp",  0.1);
+    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("DriveToPointDriveKp", 0.04);
+    private static final PropertyManager.IProperty<Double> AUTO_KP_ANGLE = new PropertyManager.DoubleProperty("DriveToPointSteerKp",  0.25);
 
     public GoToPosition(Chassis chassis, double finalPositionX, double finalPositionY, double allowableError) {
         // Use requires() here to declare subsystem dependencies
         //super.addRequirements(Shooter); When a subsystem is written, add the requires line back in.
         this.m_chassis = chassis;
+        this.m_allowableError = allowableError;
 
         m_finalPositionX = finalPositionX;
         m_finalPositionY = finalPositionY;
@@ -67,7 +68,7 @@ public class GoToPosition extends CommandBase {
 
         double turnSpeed = m_errorAngle * AUTO_KP_ANGLE.getValue();
 
-        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed + ", currentAngle " + currentAngle + ", errorAngle " + m_errorAngle);
+        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed + ", currentAngle " + currentAngle + ", errorAngle " + m_errorAngle + ", allowableError" + m_allowableError);
 
         if (speed > .5) {
             speed = .5;
@@ -75,7 +76,7 @@ public class GoToPosition extends CommandBase {
         if (speed < -.5) {
             speed = -.5;
         }
-        m_chassis.setSpeedAndSteer(speed, turnSpeed);
+        m_chassis.setSpeedAndSteer(speed, -turnSpeed);
 
     }
     
