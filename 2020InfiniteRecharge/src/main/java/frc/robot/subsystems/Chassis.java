@@ -158,6 +158,11 @@ public class Chassis extends SubsystemBase {
         
         m_leftProperties.updateIfChanged(true);
         m_rightProperties.updateIfChanged(true);
+
+        m_masterLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_masterRight.burnFlash();
+        m_followerRight.burnFlash();
     }
 
     @Override

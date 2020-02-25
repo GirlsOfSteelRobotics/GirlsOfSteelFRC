@@ -29,6 +29,9 @@ public class Winch extends SubsystemBase {
         m_motorB.setIdleMode(IdleMode.kBrake);
         m_motorB.setInverted(false);
 
+        m_motorA.burnFlash();
+        m_motorB.burnFlash();
+
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Winch");
     } 
 

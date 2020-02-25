@@ -43,7 +43,11 @@ public class Limelight extends SubsystemBase {
     public Limelight() {
         System.out.println("Limelight"); 
 
-        m_limelightIsAimedEntry = Shuffleboard.getTab("Driver Tab").add("Limelight Is Aimed", limelightIsAimed()).getEntry();
+        m_limelightIsAimedEntry = Shuffleboard.getTab("Driver Tab")
+            .add("Limelight Is Aimed", limelightIsAimed())
+            .withSize(3,1)
+            .withPosition(0,1)
+            .getEntry();
         Shuffleboard.selectTab("Driver Tab");
     }
 
