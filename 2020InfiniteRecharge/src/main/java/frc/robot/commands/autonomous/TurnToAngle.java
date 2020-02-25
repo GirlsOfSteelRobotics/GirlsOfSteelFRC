@@ -1,6 +1,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.lib.DeadbandHelper;
 import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
 
@@ -12,10 +13,13 @@ public class TurnToAngle extends CommandBase {
     private final double m_angle;
     private final double m_allowableError;
 
+    private final DeadbandHelper m_deadbandHelper;
+
     private double m_error;
 
     public TurnToAngle(Chassis chassis, double angle, double allowableError) {
         m_chassis = chassis;
+        m_deadbandHelper = new DeadbandHelper(5);
 
         m_angle = angle;
         m_allowableError = allowableError;
@@ -40,7 +44,9 @@ public class TurnToAngle extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(m_error) < m_allowableError) {
+        boolean isFinished = Math.abs(m_error) < m_allowableError;
+        m_deadbandHelper.setIsGood(isFinished);
+        if (m_deadbandHelper.isFinished()) {
             System.out.println("Done!");
             return true;
         }

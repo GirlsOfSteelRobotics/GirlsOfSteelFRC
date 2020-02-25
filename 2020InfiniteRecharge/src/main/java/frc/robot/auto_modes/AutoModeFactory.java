@@ -59,7 +59,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             double dY = 8 * 12;
             double xOffset = 27 * 12;
             double yOffset = -13.5 * 12;
-            double allowableError = 3;
+            double allowableError = 5;
             m_sendableChooser.addOption("Test. Go To Position (0, 0)", createDrivePointCommand(chassis, 0.0, 0.0, allowableError));
             m_sendableChooser.addOption("Test. Go To Position Right", createDrivePointCommand(chassis, dX + xOffset, 0.0 + yOffset, allowableError));
             m_sendableChooser.addOption("Test. Go To Position Left", createDrivePointCommand(chassis, -dX + xOffset, 0.0 + yOffset, allowableError));
@@ -86,6 +86,9 @@ public class AutoModeFactory extends SequentialCommandGroup {
            
         m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("ShootToDriveNoSensor", new ShootToDriveNoSensor(chassis, shooter, shooterConveyor));
+
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
        
     }

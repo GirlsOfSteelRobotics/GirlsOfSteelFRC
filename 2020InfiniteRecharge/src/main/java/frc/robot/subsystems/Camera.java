@@ -19,7 +19,7 @@ public class Camera extends SubsystemBase {
 
     public Camera() {
         // TODO(pj) - Undo when cameras are plugged in. Disabled now to clean up roboRio logs
-        m_useCamera = false;
+        m_useCamera = true;
         // m_useCamera = !RobotBase.isSimulation();
         if (!m_useCamera) {
             return; 

@@ -10,9 +10,12 @@ package frc.robot.auto_modes;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.AutomatedConveyorIntake;
+import frc.robot.commands.Conveyor;
+import frc.robot.commands.IntakeCells;
 import frc.robot.commands.RunShooterRPM;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistance;
+import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.commands.autonomous.GoToPosition;
 import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TurnToAngle;
@@ -25,16 +28,21 @@ public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
      */
     public ShootAndDriveToTrenchRightSide(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
 
+        double allowableErrorAngle;
+        allowableErrorAngle = 1;
+        double allowableErrorDrive;
+        allowableErrorDrive = 12;
+
         //cell intake runs until handoff break sensor is true (a ball has been collected)
-        addCommands(new SetStartingPosition(chassis, 122, -98, 0));
-        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 10)); //Shoot pre-loaded cells
-        addCommands(new DriveDistance(chassis, 12, 1).alongWith(new RunShooterRPM(shooter, Constants.DEFAULT_RPM))); 
-        addCommands(new GoToPosition(chassis, 207, -31, 12));
-        addCommands(new TurnToAngle(chassis, 0, 12));
-        addCommands(new AutomatedConveyorIntake(shooterIntake, shooterConveyor)
-            .raceWith(new GoToPosition(chassis, 328, -29, 12)));
+        addCommands(new SetStartingPosition(chassis, 122, -98, -30));
+        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 2)); //Shoot pre-loaded cells
+        addCommands(new TurnToAngle(chassis, 0, allowableErrorAngle));
+        addCommands(new IntakeCells(shooterIntake, true)
+            .raceWith(new DriveDistanceSmartMotion(chassis, 17 * 12, allowableErrorDrive)
+            .raceWith(new Conveyor(shooterConveyor, true))));
+        addCommands(new TurnToAngle(chassis, 0, allowableErrorAngle));
+        addCommands(new DriveDistanceSmartMotion(chassis, -17 * 12, allowableErrorDrive));
         addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 8));
-        addCommands(new GoToPosition(chassis, 122, -98, 12));
-        addCommands(new TurnToAngle(chassis, 0, 12));
-    }
+        }
 }
+
