@@ -43,16 +43,14 @@ public class Limelight extends SubsystemBase {
     private final NetworkTableEntry m_limelightIsAimedEntry;
 
 
-    public Limelight() {
+    public Limelight(ShuffleboardTab driverDisplayTab) {
         System.out.println("Limelight"); 
 
-        ShuffleboardTab tab = Shuffleboard.getTab("Driver Tab");
-        m_limelightIsAimedEntry = tab
+        m_limelightIsAimedEntry = driverDisplayTab
             .add("Limelight Is Aimed", limelightIsAimed())
-            .withSize(3, 1)
-            .withPosition(0, 1)
+            .withSize(4, 1)
+            .withPosition(4, 0)
             .getEntry();
-        Shuffleboard.selectTab("Driver Tab");
        
         // VideoSource limelightSource = CameraServer.getInstance().getServer("limelight").getSource();
         // tab.add("limelight", limelightSource)

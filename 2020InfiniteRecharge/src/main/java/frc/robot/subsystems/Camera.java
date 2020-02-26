@@ -4,6 +4,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,7 +19,7 @@ public class Camera extends SubsystemBase {
     private UsbCamera m_camClimb;
     private VideoSink m_server;
 
-    public Camera() {
+    public Camera(ShuffleboardTab driverDisplayTab) {
         // TODO(pj) - Undo when cameras are plugged in. Disabled now to clean up roboRio logs
         m_useCamera = true;
         // m_useCamera = !RobotBase.isSimulation();
@@ -34,9 +35,9 @@ public class Camera extends SubsystemBase {
         m_server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
         m_server.setSource(m_camIntake);
 
-        Shuffleboard.getTab("Driver Tab").add("Camera Intake", m_camIntake)
-            // .withSize(4, 3)
-            // .withPosition(1, 0)
+        driverDisplayTab.add("Camera Intake", m_camIntake)
+            .withSize(4, 3)
+            .withPosition(1, 0)
             ;
 
         // To see the stream in the Dashboard, add a CameraServer Stream Viewer

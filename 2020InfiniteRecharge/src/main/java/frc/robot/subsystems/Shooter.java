@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -40,7 +41,7 @@ public class Shooter extends SubsystemBase {
 
     private final NetworkTableEntry m_isAtShooterSpeedEntry;
 
-    public Shooter() {
+    public Shooter(ShuffleboardTab driveDisplayTab) {
         m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new CANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
         m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 8192);
@@ -68,11 +69,10 @@ public class Shooter extends SubsystemBase {
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Shooter");
         NetworkTableInstance.getDefault().getTable("SuperStructure").getEntry(".type").setString("SuperStructure");
 
-        m_isAtShooterSpeedEntry = Shuffleboard.getTab("Driver Tab")
-        .add("Shooter At Speed", isAtFullSpeed())
-        // .withSize(3, 1)
-        .withPosition(0, 0)
-        .getEntry();
+        m_isAtShooterSpeedEntry = driveDisplayTab.add("Shooter At Speed", isAtFullSpeed())
+            .withSize(4, 1)
+            .withPosition(0, 0)
+            .getEntry();
     } 
 
     

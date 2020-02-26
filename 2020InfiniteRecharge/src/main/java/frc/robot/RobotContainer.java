@@ -19,6 +19,8 @@ import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Camera;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -49,17 +51,21 @@ public class RobotContainer {
      */
     public RobotContainer() {
 
+        ShuffleboardTab driveDisplayTab = Shuffleboard.getTab("Driver Tab");
+
         // Create all subsystems in this section:
-        m_camera = new Camera();
+        m_camera = new Camera(driveDisplayTab);
         m_chassis = new Chassis();
         m_controlPanel = new ControlPanel();
         m_lift = new Lift();
-        m_limelight = new Limelight();
-        m_shooter = new Shooter();
+        m_limelight = new Limelight(driveDisplayTab);
+        m_shooter = new Shooter(driveDisplayTab);
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();
         m_winch = new Winch();
         m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_shooterConveyor, m_shooterIntake);
+        
+        Shuffleboard.selectTab("Driver Tab");
 
         // This line has to be after all of the subsystems are created!
         m_oi = new OI(m_chassis, m_controlPanel, m_limelight, m_camera, m_shooter, m_shooterIntake, m_shooterConveyor, m_lift, m_winch);
