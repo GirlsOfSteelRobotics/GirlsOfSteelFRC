@@ -34,9 +34,10 @@ public class Camera extends SubsystemBase {
         m_server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
         m_server.setSource(m_camIntake);
 
-        Shuffleboard.getTab("Driver Tab").add("Camera Intake", m_server)
-        .withSize(4, 3)
-        .withPosition(1, 0);
+        Shuffleboard.getTab("Driver Tab").add("Camera Intake", m_camIntake)
+            // .withSize(4, 3)
+            // .withPosition(1, 0)
+            ;
 
         // To see the stream in the Dashboard, add a CameraServer Stream Viewer
     }

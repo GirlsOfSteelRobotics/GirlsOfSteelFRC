@@ -70,8 +70,8 @@ public class Shooter extends SubsystemBase {
 
         m_isAtShooterSpeedEntry = Shuffleboard.getTab("Driver Tab")
         .add("Shooter At Speed", isAtFullSpeed())
-        .withSize(3, 1)
-        .withPosition(0, 4)
+        // .withSize(3, 1)
+        .withPosition(0, 0)
         .getEntry();
     } 
 

@@ -54,10 +54,11 @@ public class Limelight extends SubsystemBase {
             .getEntry();
         Shuffleboard.selectTab("Driver Tab");
        
-        VideoSource limelightSource = CameraServer.getInstance().getServer("limelight").getSource();
-        tab.add("limelight", limelightSource)
-            .withSize(4, 3)
-            .withPosition(0, 5);
+        // VideoSource limelightSource = CameraServer.getInstance().getServer("limelight").getSource();
+        // tab.add("limelight", limelightSource)
+        // //     .withSize(4, 3)
+        // //     .withPosition(0, 5)
+        // ;
     }
 
     public double getSteerCommand() {
