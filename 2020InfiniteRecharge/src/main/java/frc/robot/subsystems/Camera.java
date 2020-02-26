@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -32,6 +33,10 @@ public class Camera extends SubsystemBase {
         m_camClimb.setFPS(20);
         m_server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
         m_server.setSource(m_camIntake);
+
+        Shuffleboard.getTab("Driver Tab").add("Camera Intake", m_server)
+        .withSize(4, 3)
+        .withPosition(1, 0);
 
         // To see the stream in the Dashboard, add a CameraServer Stream Viewer
     }
