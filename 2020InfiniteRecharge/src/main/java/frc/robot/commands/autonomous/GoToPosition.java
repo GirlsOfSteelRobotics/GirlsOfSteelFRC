@@ -68,14 +68,15 @@ public class GoToPosition extends CommandBase {
 
         double turnSpeed = m_errorAngle * AUTO_KP_ANGLE.getValue();
 
-        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed + ", currentAngle " + currentAngle + ", errorAngle " + m_errorAngle + ", allowableError" + m_allowableError);
+        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed 
+            + ", currentAngle " + currentAngle + ", errorAngle " + m_errorAngle + ", allowableError" + m_allowableError);
 
-         if (speed > .8) {
-             speed = .8;
-         }
-         if (speed < -.8) {
-             speed = -.8;
-         }
+        if (speed > .8) {
+            speed = .8;
+        }
+        if (speed < -.8) {
+            speed = -.8;
+        }
         m_chassis.setSpeedAndSteer(speed, -turnSpeed);
 
     }

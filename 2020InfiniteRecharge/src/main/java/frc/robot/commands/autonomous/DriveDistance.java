@@ -25,7 +25,7 @@ public class DriveDistance extends CommandBase {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() { 
         m_initialPosition = m_chassis.getAverageEncoderDistance();
     }
 

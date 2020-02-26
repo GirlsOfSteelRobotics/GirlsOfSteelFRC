@@ -12,7 +12,6 @@ import java.util.List;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -93,14 +92,13 @@ public class AutoModeFactory extends SequentialCommandGroup {
        
     }
 
-    private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError)
-    {
+    private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError) {
         return new SetStartingPosition(chassis, 27 * 12, -13.5 * 12, 0).andThen(new GoToPosition(chassis, x, y, allowableError));
     }
 
     private Command createTrajectoryCommand(Chassis chassis) {
         var autoVoltageConstraint =
-            new DifferentialDriveVoltageConstraint (
+            new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(DriveConstants.ksVolts,
                                         DriveConstants.kvVoltSecondsPerMeter,
                                         DriveConstants.kaVoltSecondsSquaredPerMeter),

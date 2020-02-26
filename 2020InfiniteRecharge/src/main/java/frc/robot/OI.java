@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
-import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.SingleShoot;
 import frc.robot.subsystems.*;
 

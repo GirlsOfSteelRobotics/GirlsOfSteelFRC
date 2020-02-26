@@ -50,7 +50,7 @@ public class RobotContainer {
     public RobotContainer() {
 
         // Create all subsystems in this section:
-        m_camera = new Camera ();
+        m_camera = new Camera();
         m_chassis = new Chassis();
         m_controlPanel = new ControlPanel();
         m_lift = new Lift();

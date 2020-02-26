@@ -6,11 +6,9 @@ import frc.robot.subsystems.ShooterIntake;
 public class TogglePiston extends CommandBase {
 
     private final ShooterIntake m_shooterIntake;
-    private final boolean m_intake;
 
     public TogglePiston(ShooterIntake shooterIntake, boolean intake) {
         this.m_shooterIntake = shooterIntake;
-        this.m_intake = intake;
 
         super.addRequirements(shooterIntake);
     }

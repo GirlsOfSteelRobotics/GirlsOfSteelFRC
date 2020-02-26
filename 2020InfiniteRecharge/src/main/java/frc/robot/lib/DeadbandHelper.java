@@ -13,8 +13,7 @@ public class DeadbandHelper
 
     public void setIsGood(boolean isFinished)
     {
-        if(isFinished)
-        {
+        if (isFinished) {
             ++m_goodLoops;
         }
         else {

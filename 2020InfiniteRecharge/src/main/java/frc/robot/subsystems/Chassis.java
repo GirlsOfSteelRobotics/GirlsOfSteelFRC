@@ -26,7 +26,7 @@ import com.revrobotics.CANPIDController;
 
 public class Chassis extends SubsystemBase {
 
-    private static final double FULL_THROTTLE_SECONDS = 1.0;
+    //private static final double FULL_THROTTLE_SECONDS = 1.0;
     private static final double WHEEL_DIAMETER = 4.0;
     private static final double GEAR_RATIO = 40.0 / 10.0 * 34.0 / 20.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;

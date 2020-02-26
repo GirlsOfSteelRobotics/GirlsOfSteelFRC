@@ -26,7 +26,7 @@ public class RotationControl extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(m_colorCount == 24){
+        if (m_colorCount == 24) {
             return true;
         }
         return false;

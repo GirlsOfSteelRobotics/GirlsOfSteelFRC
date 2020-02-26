@@ -12,7 +12,6 @@ import frc.robot.Constants;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
-import frc.robot.commands.autonomous.SingleShoot;
 import frc.robot.subsystems.*;
 
 public class ShootToDriveNoSensor extends SequentialCommandGroup {

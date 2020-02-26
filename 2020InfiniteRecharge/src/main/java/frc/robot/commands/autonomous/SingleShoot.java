@@ -26,8 +26,8 @@ public class SingleShoot extends SequentialCommandGroup {
     }
 
     
-  public void end(boolean interrupted) {
-    super.end(interrupted);
-    System.out.println("Command finished");
-  }
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+        System.out.println("Command finished");
+    }
 }
