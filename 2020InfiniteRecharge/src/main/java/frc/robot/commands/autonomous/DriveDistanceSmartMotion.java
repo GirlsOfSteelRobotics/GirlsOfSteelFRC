@@ -36,7 +36,7 @@ public class DriveDistanceSmartMotion extends CommandBase {
         m_chassis.driveDistance(m_leftGoalPosition, m_rightGoalPosition);
         // m_chassis.smartVelocityControl(48, 48);
 
-        //System.out.println("error:" + m_error + "speed:" + speed);
+        System.out.println("left goal position" + m_leftGoalPosition + ", right goal position" + m_rightGoalPosition);
     }
 
     @Override
