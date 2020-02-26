@@ -1,18 +1,15 @@
 package frc.robot.lib;
 
-public class DeadbandHelper
-{
+public class DeadbandHelper {
     private int m_goodLoops;
     private int m_requiredLoops;
     
-    public DeadbandHelper(int requiredLoops)
-    {
+    public DeadbandHelper(int requiredLoops) {
         m_requiredLoops = requiredLoops;
         m_goodLoops = 0;
     }
 
-    public void setIsGood(boolean isFinished)
-    {
+    public void setIsGood(boolean isFinished) {
         if (isFinished) {
             ++m_goodLoops;
         }
@@ -21,8 +18,7 @@ public class DeadbandHelper
         }
     }
 
-    public boolean isFinished()
-    {
+    public boolean isFinished() {
         return m_goodLoops >= m_requiredLoops;
     }
 

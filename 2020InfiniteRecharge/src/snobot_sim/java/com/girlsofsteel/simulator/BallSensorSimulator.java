@@ -18,8 +18,7 @@ public class BallSensorSimulator {
     private final IDigitalIoWrapper m_secondaryWrapper;
     private final IDigitalIoWrapper m_topWrapper; 
 
-    public BallSensorSimulator()
-    {
+    public BallSensorSimulator() {
         ShuffleboardTab tab = Shuffleboard.getTab("Simulator");
         m_handoffNetworkTableSim = tab.add("Handoff", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
         m_secondaryNetworkTableSim = tab.add("Secondary", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();

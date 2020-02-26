@@ -18,103 +18,100 @@ import edu.wpi.first.wpilibj.Preferences;
  */
 public class PropertyManager {
 
-	private static final Set<String> REGISTERED_KEYS = new HashSet<>();
+    private static final Set<String> REGISTERED_KEYS = new HashSet<>();
 
-	public static void purgeExtraKeys()
-	{
-		Collection<String> keys = Preferences.getInstance().getKeys();
-		for(String key : keys)
-		{
-			if (!REGISTERED_KEYS.contains(key) && !".type".equals(key))
-			{
-				Preferences.getInstance().remove(key);
-			}
-		}
-	}
+    public static void purgeExtraKeys() {
+        Collection<String> keys = Preferences.getInstance().getKeys();
+        for (String key : keys) {
+            if (!REGISTERED_KEYS.contains(key) && !".type".equals(key)) {
+                Preferences.getInstance().remove(key);
+            }
+        }
+    }
 
-	public static interface IProperty<TypeT> {
-		TypeT getValue();
+    public static interface IProperty<TypeT> {
+        TypeT getValue();
 
-		String getName();
-	}
+        String getName();
+    }
 
-	public static class ConstantProperty<TypeT> implements IProperty<TypeT> {
-		private final TypeT mValue;
-		private final String mName;
+    public static class ConstantProperty<TypeT> implements IProperty<TypeT> {
+        private final TypeT m_value;
+        private final String m_name;
 
-		public ConstantProperty(String aKey, TypeT aValue) {
-			mValue = aValue;
-			mName = aKey;
+        public ConstantProperty(String key, TypeT value) {
+            m_value = value;
+            m_name = key;
 
-			Preferences.getInstance().remove(aKey);
-		}
+            Preferences.getInstance().remove(key);
+        }
 
-		@Override
-		public TypeT getValue() {
-			return mValue;
-		}
+        @Override
+        public TypeT getValue() {
+            return m_value;
+        }
 
-		@Override
-		public String getName() {
-			return mName;
-		}
-	}
+        @Override
+        public String getName() {
+            return m_name;
+        }
+    }
 
-	public static class BaseProperty<TypeT> implements IProperty<TypeT> {
-		private final String mKey;
-		private final TypeT mDefault;
-		private final BiConsumer<String, TypeT> mSetter;
-		private final BiFunction<String, TypeT, TypeT> mGetter;
+    public static class BaseProperty<TypeT> implements IProperty<TypeT> {
+        private final String m_key;
+        private final TypeT m_default;
+        private final BiConsumer<String, TypeT> m_setter;
+        private final BiFunction<String, TypeT, TypeT> m_getter;
 
-		public BaseProperty(String aKey, TypeT aDefault, BiConsumer<String, TypeT> aSetter,
-				BiFunction<String, TypeT, TypeT> aGetter) {
-			mKey = aKey;
-			mDefault = aDefault;
-			mSetter = aSetter;
-			mGetter = aGetter;
+        public BaseProperty(String key, TypeT defaultValue, BiConsumer<String, TypeT> setter,
+                BiFunction<String, TypeT, TypeT> getter) {
+            m_key = key;
+            m_default = defaultValue;
+            m_setter = setter;
+            m_getter = getter;
 
-			REGISTERED_KEYS.add(aKey);
+            REGISTERED_KEYS.add(key);
 
-			getValue();
-		}
+            getValue();
+        }
 
-		@Override
-		public TypeT getValue() {
-			if (Preferences.getInstance().containsKey(mKey)) {
-				return mGetter.apply(mKey, mDefault);
-			}
+        @Override
+        public TypeT getValue() {
+            if (Preferences.getInstance().containsKey(m_key)) {
+                return m_getter.apply(m_key, m_default);
+            }
 
-			mSetter.accept(mKey, mDefault);
-			return mDefault;
-		}
+            m_setter.accept(m_key, m_default);
+            return m_default;
+        }
 
-		@Override
-		public String getName() {
-			return mKey;
-		}
-	}
+        @Override
+        public String getName() {
+            return m_key;
+        }
+    }
 
-	public static class IntProperty extends BaseProperty<Integer> {
-		public IntProperty(String aKey, int aDefault) {
-			super(aKey, aDefault, Preferences.getInstance()::putInt, Preferences.getInstance()::getInt);
-		}
-	}
+    public static class IntProperty extends BaseProperty<Integer> {
+        public IntProperty(String key, int defaultValue) {
+            super(key, defaultValue, Preferences.getInstance()::putInt, Preferences.getInstance()::getInt);
+        }
+    }
 
-	public static class DoubleProperty extends BaseProperty<Double> {
-		public DoubleProperty(String aKey, double aDefault) {
-			super(aKey, aDefault, Preferences.getInstance()::putDouble, Preferences.getInstance()::getDouble);
-		}
-	}
+    public static class DoubleProperty extends BaseProperty<Double> {
+        public DoubleProperty(String key, double defaultValue) {
+            super(key, defaultValue, Preferences.getInstance()::putDouble, Preferences.getInstance()::getDouble);
+        }
+    }
 
-	public static class StringProperty extends BaseProperty<String> {
-		public StringProperty(String aKey, String aDefault) {
-			super(aKey, aDefault, Preferences.getInstance()::putString, Preferences.getInstance()::getString);
-		}
-	}
+    public static class StringProperty extends BaseProperty<String> {
+        public StringProperty(String key, String defaultValue) {
+            super(key, defaultValue, Preferences.getInstance()::putString, Preferences.getInstance()::getString);
+        }
+    }
 
-	public static class BooleanProperty extends BaseProperty<Boolean> {
-		public BooleanProperty(String aKey, boolean aDefault) {
-			super(aKey, aDefault, Preferences.getInstance()::putBoolean, Preferences.getInstance()::getBoolean);
-		}
-	}
+    public static class BooleanProperty extends BaseProperty<Boolean> {
+        public BooleanProperty(String key, boolean defaultValue) {
+            super(key, defaultValue, Preferences.getInstance()::putBoolean, Preferences.getInstance()::getBoolean);
+        }
+    }
 }

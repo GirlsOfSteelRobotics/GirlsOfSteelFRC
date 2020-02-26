@@ -24,7 +24,7 @@ public class DriveDistanceSmartMotion extends CommandBase {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         
         m_leftGoalPosition = m_chassis.getM_leftEncoder() + m_distance;
         m_rightGoalPosition = m_chassis.getM_rightEncoder() + m_distance;

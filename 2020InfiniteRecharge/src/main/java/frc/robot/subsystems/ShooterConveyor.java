@@ -76,7 +76,7 @@ public class ShooterConveyor extends SubsystemBase {
         m_pidController.setReference(m_encoder.getPosition() + UNIT_HEIGHT, ControlType.kPosition);
     }
 
-    public boolean isAdvanced(){
+    public boolean isAdvanced() {
         double currentPosition = m_encoder.getPosition();
         double percentError = (m_goalPosition - currentPosition) / m_goalPosition * 100;
         return Math.abs(percentError) <= ALLOWABLE_ERROR_PERCENT;

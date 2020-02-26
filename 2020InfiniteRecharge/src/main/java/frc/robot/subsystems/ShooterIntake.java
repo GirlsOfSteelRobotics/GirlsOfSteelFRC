@@ -12,7 +12,7 @@ import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
 
-    private final double INTAKE_SPEED = 0.5; 
+    private static final double INTAKE_SPEED = 0.5;
 
     private final WPI_TalonSRX m_motor;
     private final DoubleSolenoid m_piston;

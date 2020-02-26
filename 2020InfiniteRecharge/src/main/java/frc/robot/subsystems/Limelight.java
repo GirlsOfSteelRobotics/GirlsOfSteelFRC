@@ -109,11 +109,6 @@ public class Limelight extends SubsystemBase {
     }
 
     public boolean limelightIsAimed() {
-        if (Math.abs(m_tx) <= ALLOWABLE_ERROR) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return Math.abs(m_tx) <= ALLOWABLE_ERROR;
     }
 }
