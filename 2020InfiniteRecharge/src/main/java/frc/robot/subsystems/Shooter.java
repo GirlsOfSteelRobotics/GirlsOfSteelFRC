@@ -86,14 +86,14 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         double rpm = m_encoder.getVelocity();
-        SmartDashboard.putNumber("RPM", rpm);
-        SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
-        m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
-        m_customNetworkTable.getEntry("Current RPM").setDouble(rpm);
-        m_customNetworkTable.getEntry("Goal RPM").setDouble(m_goalRPM);
+        // SmartDashboard.putNumber("RPM", rpm);
+        // SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
+        // m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
+        // m_customNetworkTable.getEntry("Current RPM").setDouble(rpm);
+        // m_customNetworkTable.getEntry("Goal RPM").setDouble(m_goalRPM);
 
-        m_pidController.setP(m_dashboardKp.getValue());
-        m_pidController.setFF(m_dashboardKff.getValue());
+        // m_pidController.setP(m_dashboardKp.getValue());
+        // m_pidController.setFF(m_dashboardKff.getValue());
         // System.out.println("kp: " + m_dashboardKp.getValue() + ", " + m_dashboardKff.getValue() + " goal: " + m_goalRPM + "== " + rpm);
 
         m_isAtShooterSpeedEntry.setBoolean(isAtFullSpeed());

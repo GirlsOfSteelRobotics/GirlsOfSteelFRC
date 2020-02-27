@@ -168,14 +168,14 @@ public class Chassis extends SubsystemBase {
     @Override
     public void periodic() {
         m_gyro.poll();
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
-                m_rightEncoder.getPosition());
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), Units.inchesToMeters(m_leftEncoder.getPosition()),
+            Units.inchesToMeters(m_rightEncoder.getPosition()));
 
-        SmartDashboard.putNumber("x", getX());
-        SmartDashboard.putNumber("y", getY());
-        SmartDashboard.putNumber("yaw", getHeading());
-        SmartDashboard.putNumber("right encoder", getRightEncoder());
-        SmartDashboard.putNumber("left encoder", getLeftEncoder());
+        // SmartDashboard.putNumber("x", getX());
+        // SmartDashboard.putNumber("y", getY());
+        // SmartDashboard.putNumber("yaw", getHeading());
+        // SmartDashboard.putNumber("right encoder", getRightEncoder());
+        // SmartDashboard.putNumber("left encoder", getLeftEncoder());
         SmartDashboard.putNumber("right encoder speed", getRightEncoderSpeed());
         SmartDashboard.putNumber("left encoder speed", getLeftEncoderSpeed());
 
@@ -217,7 +217,7 @@ public class Chassis extends SubsystemBase {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
         Rotation2d rotation = Rotation2d.fromDegrees(angle);
-        m_odometry.resetPosition(new Pose2d(new Translation2d(x, y), rotation), rotation);
+        m_odometry.resetPosition(new Pose2d(new Translation2d(Units.inchesToMeters(x), Units.inchesToMeters(y)), rotation), rotation);
     }
 
     public double getX() {

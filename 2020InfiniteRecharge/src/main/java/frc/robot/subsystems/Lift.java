@@ -31,7 +31,7 @@ public class Lift extends SubsystemBase {
     }
 
     public void periodic() {
-        m_customNetworkTable.getEntry("Speed").setDouble(m_motor.getMotorOutputPercent());
+        //m_customNetworkTable.getEntry("Speed").setDouble(m_motor.getMotorOutputPercent());
     }
 
     public void stop() {
