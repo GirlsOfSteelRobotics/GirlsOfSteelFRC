@@ -25,6 +25,7 @@ import frc.robot.Constants;
 import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.AutoShoot;
+import frc.robot.commands.autonomous.DriveAtVelocity;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.commands.autonomous.FollowTrajectory;
@@ -36,6 +37,7 @@ import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
+import frc.robot.commands.autonomous.DriveAtVelocity;
 
 
 
@@ -83,6 +85,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Set Starting Position", new SetStartingPosition(chassis, 0, 0, 0));
             m_sendableChooser.addOption("Test. Get Trajectory", createTrajectoryCommand(chassis));
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
+            m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 60));
         }
            
         m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
