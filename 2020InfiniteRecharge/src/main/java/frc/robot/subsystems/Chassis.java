@@ -86,7 +86,7 @@ public class Chassis extends SubsystemBase {
 
         m_gyro = new NavXWrapper(); 
 
-        IdleMode idleMode = IdleMode.kBrake;
+        IdleMode idleMode = IdleMode.kCoast;
         m_masterLeft.setIdleMode(idleMode);
         m_followerLeft.setIdleMode(idleMode);
         m_masterRight.setIdleMode(idleMode);
