@@ -86,6 +86,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Get Trajectory", createTrajectoryCommand(chassis));
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
             m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 60));
+            m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
         }
            
         m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
@@ -93,7 +94,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("ShootToDriveNoSensor", new ShootToDriveNoSensor(chassis, shooter, shooterConveyor));
 
-        //SmartDashboard.putData("Auto Mode", m_sendableChooser);
+        SmartDashboard.putData("Auto Mode", m_sendableChooser);
 
         m_defaultCommand = new DriveToShoot(chassis, shooter, shooterConveyor);
        
@@ -122,12 +123,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
         Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-98), new Rotation2d(0)), //starting position in front of goal
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(),
-            //new Translation2d(2, -1)
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(Units.inchesToMeters(5 * 12), 0, new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
             // Pass config
             config
         );
@@ -136,7 +135,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
     }
 
     public Command getAutonomousMode() {
-        // return m_sendableChooser.getSelected();
-        return m_defaultCommand;
+        return m_sendableChooser.getSelected();
+        // return m_defaultCommand;
     }
 }

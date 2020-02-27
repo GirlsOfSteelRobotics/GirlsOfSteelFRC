@@ -15,74 +15,83 @@ import frc.robot.lib.PropertyManager;
 public class Limelight extends SubsystemBase {
 
     /// how hard to turn toward the target
-    private static final PropertyManager.IProperty<Double> STEER_K = new PropertyManager.DoubleProperty("LimelightSteerK", 0.05);
+    private static final PropertyManager.IProperty<Double> STEER_K = new PropertyManager.DoubleProperty(
+            "LimelightSteerK", 0.05);
 
     // how hard to drive fwd toward the target
-    private static final PropertyManager.IProperty<Double> DRIVE_K = new PropertyManager.DoubleProperty("LimelightDriveK", 0.3);
+    private static final PropertyManager.IProperty<Double> DRIVE_K = new PropertyManager.DoubleProperty(
+            "LimelightDriveK", 0.3);
 
     // Area of the target when the robot reaches the wall
-    private static final PropertyManager.IProperty<Double> DESIRED_TARGET_AREA = new PropertyManager.DoubleProperty("LimelightTargetArea", 13.0);
+    private static final PropertyManager.IProperty<Double> DESIRED_TARGET_AREA = new PropertyManager.DoubleProperty(
+            "LimelightTargetArea", 13.0);
 
     // Simple speed limit so we don't drive too fast
-    private static final PropertyManager.IProperty<Double> MAX_DRIVE = new PropertyManager.DoubleProperty("LimelihtMaxDrive", 0.3);
+    private static final PropertyManager.IProperty<Double> MAX_DRIVE = new PropertyManager.DoubleProperty(
+            "LimelihtMaxDrive", 0.3);
 
-    private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = new PropertyManager.ConstantProperty<>("LimelightHeightOffset", 48.75);
-    private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = new PropertyManager.ConstantProperty<>("LimelightAngleOffset", 20.0);
+    private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = new PropertyManager.ConstantProperty<>(
+            "LimelightHeightOffset", 48.75);
+    private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = new PropertyManager.ConstantProperty<>(
+            "LimelightAngleOffset", 20.0);
 
     private static final double ALLOWABLE_ERROR = 2;
+    private static final double MIN_AREA = 1;
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    //private boolean m_LimelightHasValidTarget = false;
+    // private boolean m_LimelightHasValidTarget = false;
     private double m_limelightDriveCommand = 0.0;
     private double m_limelightSteerCommand = 0.0;
-    //private double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    // private double tv =
+    // NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     private double m_tx;
     private double m_ty;
     private double m_ta;
 
     private final NetworkTableEntry m_limelightIsAimedEntry;
 
-
     public Limelight(ShuffleboardTab driverDisplayTab) {
-        System.out.println("Limelight"); 
+        System.out.println("Limelight");
 
-        m_limelightIsAimedEntry = driverDisplayTab
-            .add("Limelight Is Aimed", limelightIsAimed())
-            .withSize(4, 1)
-            .withPosition(4, 0)
-            .getEntry();
-       
-        // VideoSource limelightSource = CameraServer.getInstance().getServer("limelight").getSource();
+        m_limelightIsAimedEntry = driverDisplayTab.add("Limelight Is Aimed", limelightIsAimed()).withSize(4, 1)
+                .withPosition(4, 0).getEntry();
+
+        // VideoSource limelightSource =
+        // CameraServer.getInstance().getServer("limelight").getSource();
         // tab.add("limelight", limelightSource)
-        // //     .withSize(4, 3)
-        // //     .withPosition(0, 5)
+        // // .withSize(4, 3)
+        // // .withPosition(0, 5)
         // ;
     }
 
     public double getSteerCommand() {
 
-        // double Kp = -0.1;                     //proportional control constant - TUNE VALUE
-        // double min_command = 0.04;    //TUNE VALUE
+        // double Kp = -0.1; //proportional control constant - TUNE VALUE
+        // double min_command = 0.04; //TUNE VALUE
         // double heading_error = -tx;
 
         // double steering_adjust = 0.0;
         // if (tx > 1.0){
-        //         steering_adjust = Kp * heading_error - min_command;
+        // steering_adjust = Kp * heading_error - min_command;
         // }
         // else if (tx < 1.0){
-        //         steering_adjust = Kp * heading_error + min_command;
+        // steering_adjust = Kp * heading_error + min_command;
         // }
-    
-        // return steering_adjust; 
-            
-        
+
+        // return steering_adjust;
+
         double steerCmd = m_tx * STEER_K.getValue();
         m_limelightSteerCommand = steerCmd;
+        if (m_ta < MIN_AREA) {
+            return 0;
+        }
         return m_limelightSteerCommand;
     }
 
     public double estimateDistance() {
-        double distance = CAMERA_HEIGHT_OFFSET.getValue() / (Math.tan(Math.toRadians(m_ty + CAMERA_ANGLE_OFFSET.getValue())));
+        double distance = CAMERA_HEIGHT_OFFSET.getValue()
+                / (Math.tan(Math.toRadians(m_ty + CAMERA_ANGLE_OFFSET.getValue())));
         System.out.println("ty: " + m_ty);
         System.out.println("distance: " + distance);
         return distance;
@@ -108,6 +117,14 @@ public class Limelight extends SubsystemBase {
     }
 
     public boolean limelightIsAimed() {
-        return Math.abs(m_tx) <= ALLOWABLE_ERROR;
+        boolean isAimed = Math.abs(m_tx) <= ALLOWABLE_ERROR;
+        boolean isBig = m_ta > MIN_AREA;
+        if (isAimed && isBig == true) {
+            return true;
+
+        } else {
+            return false;
+
+        }
     }
 }
