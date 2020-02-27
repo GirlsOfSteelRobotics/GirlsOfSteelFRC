@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.lib.PropertyManager;
@@ -15,8 +16,14 @@ import frc.robot.lib.PropertyManager;
 public class Limelight extends SubsystemBase {
 
     /// how hard to turn toward the target
-    private static final PropertyManager.IProperty<Double> STEER_K = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> STEER_KP_PROPERTY = new PropertyManager.DoubleProperty(
             "LimelightSteerK", 0.05);
+
+    private static final PropertyManager.IProperty<Double> STEER_KI_PROPERTY = new PropertyManager.DoubleProperty(
+            "LimelightSteerKI", 0.0);
+
+    private static final PropertyManager.IProperty<Double> STEER_KD_PROPERTY = new PropertyManager.DoubleProperty(
+            "LimelightSteerKD", 0.0);
 
     // how hard to drive fwd toward the target
     private static final PropertyManager.IProperty<Double> DRIVE_K = new PropertyManager.DoubleProperty(
@@ -37,6 +44,7 @@ public class Limelight extends SubsystemBase {
 
     private static final double ALLOWABLE_ERROR = 2;
     private static final double MIN_AREA = 1;
+    private PIDController m_steerPID;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -63,6 +71,7 @@ public class Limelight extends SubsystemBase {
         // // .withSize(4, 3)
         // // .withPosition(0, 5)
         // ;
+        m_steerPID = new PIDController(0, 0, 0);
     }
 
     public double getSteerCommand() {
@@ -80,13 +89,14 @@ public class Limelight extends SubsystemBase {
         // }
 
         // return steering_adjust;
-
-        double steerCmd = m_tx * STEER_K.getValue();
-        m_limelightSteerCommand = steerCmd;
         if (m_ta < MIN_AREA) {
             return 0;
         }
-        return m_limelightSteerCommand;
+
+        // double steerCmd = m_tx * STEER_K.getValue();
+        // m_limelightSteerCommand = steerCmd;
+        // return m_limelightSteerCommand;
+        return m_steerPID.calculate(m_tx, 0);
     }
 
     public double estimateDistance() {
@@ -112,7 +122,9 @@ public class Limelight extends SubsystemBase {
         m_ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
         m_ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
         // This method will be called once per scheduler run
-
+        m_steerPID.setP(STEER_KP_PROPERTY.getValue());
+        m_steerPID.setI(STEER_KI_PROPERTY.getValue());
+        m_steerPID.setD(STEER_KD_PROPERTY.getValue());
         m_limelightIsAimedEntry.setBoolean(limelightIsAimed());
     }
 

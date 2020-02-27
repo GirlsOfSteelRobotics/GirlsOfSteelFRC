@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,8 +22,8 @@ public class Camera extends SubsystemBase {
 
     public Camera(ShuffleboardTab driverDisplayTab) {
         // TODO(pj) - Undo when cameras are plugged in. Disabled now to clean up roboRio logs
-        m_useCamera = true;
-        // m_useCamera = !RobotBase.isSimulation();
+        //m_useCamera = true;
+        m_useCamera = !RobotBase.isSimulation();
         if (!m_useCamera) {
             return; 
         }
