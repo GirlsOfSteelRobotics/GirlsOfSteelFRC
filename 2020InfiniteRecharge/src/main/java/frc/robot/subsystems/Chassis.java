@@ -174,10 +174,10 @@ public class Chassis extends SubsystemBase {
         SmartDashboard.putNumber("x", getX());
         SmartDashboard.putNumber("y", getY());
         SmartDashboard.putNumber("yaw", getHeading());
-        SmartDashboard.putNumber("right encoder", getM_rightEncoder());
-        SmartDashboard.putNumber("left encoder", getM_leftEncoder());
-        SmartDashboard.putNumber("right encoder speed", getM_rightEncoderSpeed());
-        SmartDashboard.putNumber("left encoder speed", getM_leftEncoderSpeed());
+        SmartDashboard.putNumber("right encoder", getRightEncoder());
+        SmartDashboard.putNumber("left encoder", getLeftEncoder());
+        SmartDashboard.putNumber("right encoder speed", getRightEncoderSpeed());
+        SmartDashboard.putNumber("left encoder speed", getLeftEncoderSpeed());
 
         m_customNetworkTable.getEntry("X").setDouble(getX());
         m_customNetworkTable.getEntry("Y").setDouble(getY());
@@ -196,20 +196,20 @@ public class Chassis extends SubsystemBase {
     //////////////////////////////
     // Odometry Stuff
     //////////////////////////////
-    public double getM_leftEncoder() {
-        return m_rightEncoder.getPosition();
-    }
-
-    public double getM_rightEncoder() {
+    public double getLeftEncoder() {
         return m_leftEncoder.getPosition();
     }
 
-    public double getM_leftEncoderSpeed() {
-        return m_rightEncoder.getVelocity();
+    public double getRightEncoder() {
+        return m_rightEncoder.getPosition();
     }
 
-    public double getM_rightEncoderSpeed() {
+    public double getLeftEncoderSpeed() {
         return m_leftEncoder.getVelocity();
+    }
+
+    public double getRightEncoderSpeed() {
+        return m_rightEncoder.getVelocity();
     }
 
     public void setPosition(double x, double y, double angle) {
