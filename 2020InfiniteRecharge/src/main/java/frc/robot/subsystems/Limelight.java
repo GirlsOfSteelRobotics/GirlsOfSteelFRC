@@ -96,7 +96,7 @@ public class Limelight extends SubsystemBase {
         // double steerCmd = m_tx * STEER_K.getValue();
         // m_limelightSteerCommand = steerCmd;
         // return m_limelightSteerCommand;
-        return m_steerPID.calculate(m_tx, 0);
+        return m_steerPID.calculate(-m_tx, 0);
     }
 
     public double estimateDistance() {

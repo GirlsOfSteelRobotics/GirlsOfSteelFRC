@@ -39,8 +39,8 @@ public class OI {
         new POVButton(m_operatingPad, 0).whenPressed(new ConveyorAdvanceOneUnit(shooterConveyor));
         new POVButton(m_operatingPad, 180).whenPressed(new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM)); 
  
-        new JoystickButton(m_drivingPad, Button.kBumperLeft.value).whileHeld(new HangerLift(lift, true));
-        new JoystickButton(m_drivingPad, Button.kBumperRight.value).whileHeld(new HangerLift(lift, false));
+        new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new HangerLift(lift, true));
+        new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new HangerLift(lift, false));
         //new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
         //new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
         new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getTriggerAxis(Hand.kLeft) > .8).whileHeld(new WinchWind(winch, false));
@@ -51,6 +51,9 @@ public class OI {
         new POVButton(m_drivingPad, 90).whenHeld(new SpinControlPanel(controlPanel));
         new POVButton(m_drivingPad, 270).whenHeld(new AlignLeftRight(chassis, limelight));
         //new POVButton(m_drivingPad, 90).whenHeld(new AlignForwardBackward(chassis, limelight));
+        
+        new JoystickButton(m_drivingPad, Button.kBumperLeft.value).whileHeld(new DriveLessByJoystickWhenPressed(chassis, this));
+        //new JoystickButton(m_drivingPad, Button.kB.value).whenPressed(new DriveByJoystick(chassis, this));
 
 
     }

@@ -38,6 +38,8 @@ import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.autonomous.DriveAtVelocity;
+import frc.robot.auto_modes.ShootToDriveForwardsNoSensor;
+
 
 
 
@@ -87,12 +89,13 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
             m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 60));
             m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
-        }
            
+        }
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensor", new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
-        m_sendableChooser.addOption("ShootToDriveNoSensor", new ShootToDriveNoSensor(chassis, shooter, shooterConveyor));
+        m_sendableChooser.addOption("ShootToDriveAwayFromTargetNoSensor", new ShootToDriveNoSensor(chassis, shooter, shooterConveyor, shooterIntake));
 
         SmartDashboard.putData("Auto Mode", m_sendableChooser);
 

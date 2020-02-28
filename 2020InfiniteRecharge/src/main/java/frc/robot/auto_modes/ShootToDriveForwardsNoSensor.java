@@ -14,17 +14,19 @@ import frc.robot.commands.StopShooter;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.ShooterIntake;
 
-public class ShootToDriveNoSensor extends SequentialCommandGroup {
+public class ShootToDriveForwardsNoSensor extends SequentialCommandGroup {
 
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public ShootToDriveNoSensor(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
+    public ShootToDriveForwardsNoSensor(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
         addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 5));
-        addCommands(new DriveDistanceSmartMotion(chassis, 3 * 12, 1).alongWith(new StopShooter(shooter)));
-        addCommands(new MovePiston(shooterIntake, true));  
+        addCommands(new DriveDistanceSmartMotion(chassis, -3 * 12, 1).alongWith(new StopShooter(shooter)));
+        addCommands(new MovePiston(shooterIntake, true)); 
     }
 }
+
