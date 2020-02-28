@@ -48,6 +48,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
     private final SendableChooser<Command> m_sendableChooser;
     private static final boolean TEST_MODE = true;
 
+    private static final boolean ENABLE_AUTO_SELECTION = false;
+
     private Command m_defaultCommand;
 
 
@@ -97,7 +99,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("ShootToDriveAwayFromTargetNoSensor", new ShootToDriveNoSensor(chassis, shooter, shooterConveyor, shooterIntake));
 
-        SmartDashboard.putData("Auto Mode", m_sendableChooser);
+        if(ENABLE_AUTO_SELECTION == true) {
+            SmartDashboard.putData("Auto Mode", m_sendableChooser);
+        }
+        
 
         m_defaultCommand = new DriveToShoot(chassis, shooter, shooterConveyor);
        
@@ -138,7 +143,11 @@ public class AutoModeFactory extends SequentialCommandGroup {
     }
 
     public Command getAutonomousMode() {
-        return m_sendableChooser.getSelected();
-        // return m_defaultCommand;
+        if (ENABLE_AUTO_SELECTION == false) {
+            return m_defaultCommand;
+        }
+        else {
+            return m_sendableChooser.getSelected();
+        }
     }
 }

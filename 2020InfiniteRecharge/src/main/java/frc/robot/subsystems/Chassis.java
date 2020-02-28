@@ -163,6 +163,9 @@ public class Chassis extends SubsystemBase {
         m_followerLeft.burnFlash();
         m_masterRight.burnFlash();
         m_followerRight.burnFlash();
+
+        m_drive.setSafetyEnabled(false);
+
     }
 
     @Override
