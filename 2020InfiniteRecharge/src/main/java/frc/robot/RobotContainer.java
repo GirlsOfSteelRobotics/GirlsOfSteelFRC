@@ -59,7 +59,7 @@ public class RobotContainer {
         m_controlPanel = new ControlPanel();
         m_lift = new Lift();
         m_limelight = new Limelight(driveDisplayTab);
-        m_shooter = new Shooter(driveDisplayTab);
+        m_shooter = new Shooter(driveDisplayTab, m_limelight);
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();
         m_winch = new Winch();

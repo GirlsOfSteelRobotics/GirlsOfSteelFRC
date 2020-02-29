@@ -62,6 +62,7 @@ public class Limelight extends SubsystemBase {
     public Limelight(ShuffleboardTab driverDisplayTab) {
         System.out.println("Limelight");
 
+
         m_limelightIsAimedEntry = driverDisplayTab.add("Limelight Is Aimed", limelightIsAimed()).withSize(4, 1)
                 .withPosition(4, 0).getEntry();
 
@@ -72,6 +73,8 @@ public class Limelight extends SubsystemBase {
         // // .withPosition(0, 5)
         // ;
         m_steerPID = new PIDController(0, 0, 0);
+
+        turnLimelightOff();
     }
 
     public double getSteerCommand() {
@@ -114,6 +117,16 @@ public class Limelight extends SubsystemBase {
         }
         m_limelightDriveCommand = driveCmd;
         return m_limelightDriveCommand;
+
+       
+    }
+    
+    public void turnLimelightOn(){
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setDouble(3);
+    }
+    
+    public void turnLimelightOff(){
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setDouble(1);
     }
 
     @Override

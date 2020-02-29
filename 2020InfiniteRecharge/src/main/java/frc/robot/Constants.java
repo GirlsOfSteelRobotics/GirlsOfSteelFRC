@@ -52,4 +52,5 @@ public final class Constants {
     public static final int CTRE_TIMEOUT = 30;
 
     public static final double DEFAULT_RPM = 8600;
+    public static final double DEFAULT_RPM_LEFT = 8800;
 }

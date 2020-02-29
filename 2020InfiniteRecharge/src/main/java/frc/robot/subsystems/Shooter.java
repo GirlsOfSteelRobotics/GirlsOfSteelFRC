@@ -31,6 +31,8 @@ public class Shooter extends SubsystemBase {
     private final CANEncoder m_encoder;
     private CANPIDController m_pidController;
 
+    private Limelight m_limelight;
+
     private double m_goalRPM; 
     
     private final NetworkTable m_customNetworkTable;
@@ -41,7 +43,7 @@ public class Shooter extends SubsystemBase {
 
     private final NetworkTableEntry m_isAtShooterSpeedEntry;
 
-    public Shooter(ShuffleboardTab driveDisplayTab) {
+    public Shooter(ShuffleboardTab driveDisplayTab, Limelight limelight) {
         m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new CANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
         m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 8192);
@@ -50,7 +52,9 @@ public class Shooter extends SubsystemBase {
         m_dashboardKp = new PropertyManager.DoubleProperty("shooter_kp", SHOOTER_KP);
         m_dashboardKff = new PropertyManager.DoubleProperty("shooter_kff", SHOOTER_KFF);
         m_dashboardKd = new PropertyManager.DoubleProperty("shooter_kd", SHOOTER_KD);
-        
+
+        m_limelight = limelight;
+
         m_master.restoreFactoryDefaults();
 
         m_encoder.setInverted(true);
@@ -81,7 +85,11 @@ public class Shooter extends SubsystemBase {
         m_pidController.setReference(rpm, ControlType.kVelocity);
         // double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
         // m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
+        m_limelight.turnLimelightOn();
     }
+
+    // public void Limelight() {
+    //     m_limelight - limelight
 
     @Override
     public void periodic() {
@@ -107,6 +115,7 @@ public class Shooter extends SubsystemBase {
 
     public void stop() {
         m_master.set(0);
+        m_limelight.turnLimelightOff();
         //m_pidController.setReference(0, ControlType.kVelocity);
     }
 }

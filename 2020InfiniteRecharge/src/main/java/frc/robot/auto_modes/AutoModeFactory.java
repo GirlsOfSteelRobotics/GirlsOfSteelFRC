@@ -98,14 +98,20 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("ShootToDriveAwayFromTargetNoSensor", new ShootToDriveNoSensor(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("ShootToDriveAwayFromTargetNoSensorLeftSide", new ShootToDriveNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorLeftSide", new ShootToDriveForwardsNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake));
 
-        if(ENABLE_AUTO_SELECTION == true) {
+
+        if (ENABLE_AUTO_SELECTION == true) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);
         }
         
 
-        m_defaultCommand = new DriveToShoot(chassis, shooter, shooterConveyor);
-       
+        m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake);
+        //m_defaultCommand = new ShootToDriveForwardsNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake);
+        //m_defaultCommand = new ShootToDriveNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake);
+        //m_defaultCommand = new ShootToDriveNoSensor(chassis, shooter, shooterConveyor, shooterIntake);
+
     }
 
     private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError) {
