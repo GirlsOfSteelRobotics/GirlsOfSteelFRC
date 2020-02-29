@@ -53,4 +53,6 @@ public final class Constants {
 
     public static final double DEFAULT_RPM = 8600;
     public static final double DEFAULT_RPM_LEFT = 8800;
+
+    public static final double LONG_RPM = 10500;
 }

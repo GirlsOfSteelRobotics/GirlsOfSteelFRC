@@ -48,7 +48,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
     private final SendableChooser<Command> m_sendableChooser;
     private static final boolean TEST_MODE = true;
 
-    private static final boolean ENABLE_AUTO_SELECTION = false;
+    private static final boolean ENABLE_AUTO_SELECTION = true;
 
     private Command m_defaultCommand;
 
@@ -89,11 +89,23 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Set Starting Position", new SetStartingPosition(chassis, 0, 0, 0));
             m_sendableChooser.addOption("Test. Get Trajectory", createTrajectoryCommand(chassis));
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
-            m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 60));
+            m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 72));
             m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
            
         }
-        m_sendableChooser.addOption("ShootToDriveToTargetNoSensor", new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM));
+
+        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorCenterOrRight", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM));
+
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorLeft", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM_LEFT));
+
+        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorLeft", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM_LEFT));
+           
+           
         m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
@@ -107,10 +119,11 @@ public class AutoModeFactory extends SequentialCommandGroup {
         }
         
 
-        m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake);
-        //m_defaultCommand = new ShootToDriveForwardsNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake);
-        //m_defaultCommand = new ShootToDriveNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake);
-        //m_defaultCommand = new ShootToDriveNoSensor(chassis, shooter, shooterConveyor, shooterIntake);
+        m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM);
+        //m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM);
+        //m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM);
+        //m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM_LEFT);
+
 
     }
 

@@ -13,6 +13,7 @@ import frc.robot.commands.MovePiston;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
+import frc.robot.commands.autonomous.SingleShoot;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.ShooterIntake;
 
@@ -21,12 +22,22 @@ public class ShootToDriveForwardsNoSensor extends SequentialCommandGroup {
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public ShootToDriveForwardsNoSensor(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
+    public ShootToDriveForwardsNoSensor(Chassis chassis, 
+        Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake,
+            boolean useSensor, double rpm) {
 
-        //cell intake runs until handoff break sensor is true (a ball has been collected)
-        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 5));
+        if (useSensor == true) {
+            addCommands(new SingleShoot(shooter, shooterConveyor, rpm));
+            addCommands(new SingleShoot(shooter, shooterConveyor, rpm));
+            addCommands(new SingleShoot(shooter, shooterConveyor, rpm));
+        }
+
+        if (useSensor == false) {
+            addCommands(new AutoShoot(shooter, shooterConveyor, rpm, 5));
+        }
+
         addCommands(new DriveDistanceSmartMotion(chassis, -3 * 12, 1).alongWith(new StopShooter(shooter)));
-        addCommands(new MovePiston(shooterIntake, true)); 
+        addCommands(new MovePiston(shooterIntake, true));
     }
 }
 
