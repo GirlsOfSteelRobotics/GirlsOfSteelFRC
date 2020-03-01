@@ -37,7 +37,6 @@ import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
-import frc.robot.commands.autonomous.DriveAtVelocity;
 import frc.robot.auto_modes.ShootToDriveForwardsNoSensor;
 
 
@@ -95,13 +94,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
         }
         m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM));
-
         m_sendableChooser.addOption("ShootToDriveToTargetWithSensorCenterOrRight", 
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM));
-
         m_sendableChooser.addOption("ShootToDriveToTargetNoSensorLeft", 
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM_LEFT));
-
         m_sendableChooser.addOption("ShootToDriveToTargetWithSensorLeft", 
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM_LEFT));
            

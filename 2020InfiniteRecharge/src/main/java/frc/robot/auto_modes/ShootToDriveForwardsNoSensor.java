@@ -8,7 +8,6 @@
 package frc.robot.auto_modes;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
 import frc.robot.commands.MovePiston;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.autonomous.AutoShoot;

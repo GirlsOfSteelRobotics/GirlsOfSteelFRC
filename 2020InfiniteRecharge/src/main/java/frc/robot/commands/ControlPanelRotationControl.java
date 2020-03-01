@@ -3,11 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ControlPanel;
 
-public class RotationControl extends CommandBase {
+public class ControlPanelRotationControl extends CommandBase {
     private final ControlPanel m_controlPanel;
     private int m_colorCount;
 
-    public RotationControl(ControlPanel controlPanel) {
+    public ControlPanelRotationControl(ControlPanel controlPanel) {
         this.m_controlPanel = controlPanel;
         super.addRequirements(controlPanel);
     }
