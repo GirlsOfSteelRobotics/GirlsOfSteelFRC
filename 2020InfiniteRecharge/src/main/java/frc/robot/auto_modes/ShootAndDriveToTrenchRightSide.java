@@ -9,7 +9,7 @@ package frc.robot.auto_modes;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.Conveyor;
+import frc.robot.commands.ConveyorWhileHeld;
 import frc.robot.commands.IntakeCells;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
@@ -35,7 +35,7 @@ public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
         addCommands(new TurnToAngle(chassis, 0, allowableErrorAngle));
         addCommands(new IntakeCells(shooterIntake, true)
             .raceWith(new DriveDistanceSmartMotion(chassis, 17 * 12, allowableErrorDrive)
-            .raceWith(new Conveyor(shooterConveyor, true))));
+            .raceWith(new ConveyorWhileHeld(shooterConveyor, true))));
         addCommands(new TurnToAngle(chassis, 0, allowableErrorAngle));
         addCommands(new DriveDistanceSmartMotion(chassis, -17 * 12, allowableErrorDrive));
         addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 8));

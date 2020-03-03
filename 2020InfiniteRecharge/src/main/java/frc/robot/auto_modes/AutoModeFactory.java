@@ -102,13 +102,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM_LEFT));
            
            
-        m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
-        m_sendableChooser.addOption("ShootToDriveAwayFromTargetNoSensor", new ShootToDriveNoSensor(chassis, shooter, shooterConveyor, shooterIntake));
-        m_sendableChooser.addOption("ShootToDriveAwayFromTargetNoSensorLeftSide", new ShootToDriveNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake));
-        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorLeftSide", new ShootToDriveForwardsNoSensorLeft(chassis, shooter, shooterConveyor, shooterIntake));
-
 
         if (ENABLE_AUTO_SELECTION == true) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);
