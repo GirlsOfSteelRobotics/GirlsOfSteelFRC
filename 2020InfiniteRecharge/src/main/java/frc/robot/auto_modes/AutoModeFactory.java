@@ -123,21 +123,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
     }
 
     private Command createTrajectoryCommand(Chassis chassis) {
-        var autoVoltageConstraint =
-            new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                        DriveConstants.kvVoltSecondsPerMeter,
-                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
-                DriveConstants.kDriveKinematics,
-                10);
-
-        TrajectoryConfig config =
-            new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                            AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
+       
 
         Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
@@ -146,10 +132,31 @@ public class AutoModeFactory extends SequentialCommandGroup {
             List.of(),
             new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
             // Pass config
-            config
+            getTrajectoryConfig()
         );
 
-        return new SetStartingPosition(chassis, 0, 0, 0).andThen(new FollowTrajectory(exampleTrajectory, chassis));
+
+        return new SetStartingPosition(chassis, 122, -98, 0).andThen(new FollowTrajectory(exampleTrajectory, chassis));
+    }
+
+    private TrajectoryConfig getTrajectoryConfig() {
+        var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                    DriveConstants.kvVoltSecondsPerMeter,
+                                    DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
+            DriveConstants.maxVoltage);
+
+    TrajectoryConfig config =
+        new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
+                        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(DriveConstants.kDriveKinematics)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint);
+
+        return config;
     }
 
     public Command getAutonomousMode() {

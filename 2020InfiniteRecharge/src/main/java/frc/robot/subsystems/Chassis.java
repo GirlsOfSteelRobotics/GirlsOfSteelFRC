@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -21,6 +22,7 @@ import frc.robot.Constants;
 import frc.robot.lib.IGyroWrapper;
 import frc.robot.lib.MotionMagicProperty;
 import frc.robot.lib.NavXWrapper;
+import frc.robot.lib.PigeonGyro;
 
 import com.revrobotics.CANPIDController;
 
@@ -84,7 +86,12 @@ public class Chassis extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
-        m_gyro = new NavXWrapper(); 
+        if (RobotBase.isSimulation()) {
+            m_gyro = new PigeonGyro(0);
+        }
+        else {
+            m_gyro = new NavXWrapper(); 
+        }
 
         IdleMode idleMode = IdleMode.kCoast;
         m_masterLeft.setIdleMode(idleMode);
@@ -224,11 +231,11 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getX() {
-        return m_odometry.getPoseMeters().getTranslation().getX();
+        return (Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getX()));
     }
 
     public double getY() {
-        return m_odometry.getPoseMeters().getTranslation().getY();
+        return Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getY());
     }
 
     public double getHeading() {

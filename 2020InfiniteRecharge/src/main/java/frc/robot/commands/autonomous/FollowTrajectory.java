@@ -28,6 +28,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
         public static final double ksVolts = 0.179;
         public static final double kvVoltSecondsPerMeter = 0.0653;
         public static final double kaVoltSecondsSquaredPerMeter = 0.00754;
+        public static final double maxVoltage = 10;
 
         public static final double kTrackwidthMeters = 1.1554881713809029;
         public static final DifferentialDriveKinematics kDriveKinematics =
