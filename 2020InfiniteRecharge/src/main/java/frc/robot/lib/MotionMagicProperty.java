@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.function.DoubleConsumer;
 
 
-public class MotionMagicProperty
-{
+public class MotionMagicProperty {
     private final List<HeavyDoubleProperty> m_properties;
 
     private MotionMagicProperty(List<HeavyDoubleProperty> properties) {

@@ -9,7 +9,6 @@ package frc.robot.lib;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -18,30 +17,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class NavXWrapper implements IGyroWrapper {
 
-    private final AHRS m_NavX; 
+    private final AHRS m_navX;
     private double m_startingPosition; 
 
     public NavXWrapper() {
-        m_NavX = new AHRS(SPI.Port.kMXP); 
+        m_navX = new AHRS(SPI.Port.kMXP);
         m_startingPosition = getYaw(); 
     }
 
     @Override
     public void poll() {
-        SmartDashboard.putNumber("RawAngle ", m_NavX.getAngle()); 
-        SmartDashboard.putNumber("Yaw ", m_NavX.getYaw()); 
-        SmartDashboard.putNumber("Pitch ", m_NavX.getPitch()); 
-        SmartDashboard.putNumber("Roll ", m_NavX.getRoll()); 
+        SmartDashboard.putNumber("RawAngle ", m_navX.getAngle());
+        SmartDashboard.putNumber("Yaw ", m_navX.getYaw());
+        SmartDashboard.putNumber("Pitch ", m_navX.getPitch());
+        SmartDashboard.putNumber("Roll ", m_navX.getRoll());
     }
 
     @Override
     public double getYaw() {
-        return  m_NavX.getYaw() - m_startingPosition; 
+        return  m_navX.getYaw() - m_startingPosition;
     }
 
     @Override
     public void setYaw(double angle) {
-        m_startingPosition = m_NavX.getYaw() - angle;
+        m_startingPosition = m_navX.getYaw() - angle;
     }
 
 }

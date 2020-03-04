@@ -24,10 +24,10 @@ public class DriveDistanceSmartMotion extends CommandBase {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         
-        m_leftGoalPosition = m_chassis.getM_leftEncoder() + m_distance;
-        m_rightGoalPosition = m_chassis.getM_rightEncoder() + m_distance;
+        m_leftGoalPosition = m_chassis.getLeftEncoder() + m_distance;
+        m_rightGoalPosition = m_chassis.getRightEncoder() + m_distance;
         System.out.println("Drive Distance Smart Motion Starting; distnace " + m_distance + ", left=" + m_leftGoalPosition + ", " + m_rightGoalPosition + " deadband " + m_allowableError);
     }
 
@@ -36,13 +36,13 @@ public class DriveDistanceSmartMotion extends CommandBase {
         m_chassis.driveDistance(m_leftGoalPosition, m_rightGoalPosition);
         // m_chassis.smartVelocityControl(48, 48);
 
-        //System.out.println("error:" + m_error + "speed:" + speed);
+        System.out.println("left goal position" + m_leftGoalPosition + ", right goal position" + m_rightGoalPosition);
     }
 
     @Override
     public boolean isFinished() {
-        double leftError = m_chassis.getM_leftEncoder() - m_leftGoalPosition;
-        double rightError = m_chassis.getM_rightEncoder() - m_rightGoalPosition;
+        double leftError = m_chassis.getLeftEncoder() - m_leftGoalPosition;
+        double rightError = m_chassis.getRightEncoder() - m_rightGoalPosition;
         double avgError = (leftError + rightError) / 2;
 
         if (Math.abs(avgError) < m_allowableError) {

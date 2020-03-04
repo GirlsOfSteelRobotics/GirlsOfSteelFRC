@@ -3,11 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterConveyor;
 
-public class Conveyor extends CommandBase {
+public class ConveyorWhileHeld extends CommandBase {
     private final ShooterConveyor m_shooterConveyor;
     private final boolean m_intake;
 
-    public Conveyor(ShooterConveyor shooterConveyor, boolean intake) {
+    public ConveyorWhileHeld(ShooterConveyor shooterConveyor, boolean intake) {
         this.m_shooterConveyor = shooterConveyor;
         this.m_intake = intake;
 

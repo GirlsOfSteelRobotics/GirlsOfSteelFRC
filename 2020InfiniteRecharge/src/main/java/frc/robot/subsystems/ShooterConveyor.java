@@ -60,15 +60,15 @@ public class ShooterConveyor extends SubsystemBase {
 
 
     public void periodic() {
-        SmartDashboard.putBoolean("Break Sensor Handoff: ", m_breakSensorHandoff.get());
-        SmartDashboard.putBoolean("Break Sensor Secondary: ", m_breakSensorSecondary.get());
+        // SmartDashboard.putBoolean("Break Sensor Handoff: ", m_breakSensorHandoff.get());
+        // SmartDashboard.putBoolean("Break Sensor Secondary: ", m_breakSensorSecondary.get());
         SmartDashboard.putBoolean("Break Sensor Top", m_breakSensorTop.get());
-        SmartDashboard.putNumber("Conveyor Position", m_encoder.getPosition());
+        // SmartDashboard.putNumber("Conveyor Position", m_encoder.getPosition());
 
-        m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
-        m_customNetworkTable.getEntry("Handoff Ball Sensor").setBoolean(m_breakSensorHandoff.get());
-        m_customNetworkTable.getEntry("Secondary Ball Sensor").setBoolean(m_breakSensorSecondary.get());
-        m_customNetworkTable.getEntry("Top Ball Sensor").setBoolean(m_breakSensorTop.get());
+        // m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
+        // m_customNetworkTable.getEntry("Handoff Ball Sensor").setBoolean(m_breakSensorHandoff.get());
+        // m_customNetworkTable.getEntry("Secondary Ball Sensor").setBoolean(m_breakSensorSecondary.get());
+        // m_customNetworkTable.getEntry("Top Ball Sensor").setBoolean(m_breakSensorTop.get());
     }
 
     public void advanceBall() {
@@ -76,7 +76,7 @@ public class ShooterConveyor extends SubsystemBase {
         m_pidController.setReference(m_encoder.getPosition() + UNIT_HEIGHT, ControlType.kPosition);
     }
 
-    public boolean isAdvanced(){
+    public boolean isAdvanced() {
         double currentPosition = m_encoder.getPosition();
         double percentError = (m_goalPosition - currentPosition) / m_goalPosition * 100;
         return Math.abs(percentError) <= ALLOWABLE_ERROR_PERCENT;

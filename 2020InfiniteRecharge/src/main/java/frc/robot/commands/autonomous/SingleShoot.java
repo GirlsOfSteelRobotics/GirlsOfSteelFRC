@@ -1,7 +1,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Conveyor;
+import frc.robot.commands.ConveyorWhileHeld;
 import frc.robot.commands.RunShooterRPM;
 import frc.robot.commands.StopShooter;
 import frc.robot.subsystems.Shooter;
@@ -13,12 +13,12 @@ public class SingleShoot extends SequentialCommandGroup {
 
         addCommands(
             new RunShooterRPM(shooter, rpm), 
-            new Conveyor(shooterConveyor, true).withInterrupt(() -> {
+            new ConveyorWhileHeld(shooterConveyor, true).withInterrupt(() -> {
 
                 System.out.println("Part One: " + shooterConveyor.getTop());
                 return shooterConveyor.getTop();
             }), 
-            new Conveyor(shooterConveyor, true).withInterrupt(() -> {
+            new ConveyorWhileHeld(shooterConveyor, true).withInterrupt(() -> {
                 System.out.println("Part Two: " + shooterConveyor.getTop());
                 return !shooterConveyor.getTop();
             }), 
@@ -26,8 +26,8 @@ public class SingleShoot extends SequentialCommandGroup {
     }
 
     
-  public void end(boolean interrupted) {
-    super.end(interrupted);
-    System.out.println("Command finished");
-  }
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+        System.out.println("Command finished");
+    }
 }

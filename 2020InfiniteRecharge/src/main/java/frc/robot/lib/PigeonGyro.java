@@ -8,8 +8,7 @@ public class PigeonGyro implements IGyroWrapper {
 
     private final PigeonIMU m_pigeon;
 
-    public PigeonGyro(int deviceNumber)
-    {
+    public PigeonGyro(int deviceNumber) {
         m_pigeon = new PigeonIMU(deviceNumber);
     }
 

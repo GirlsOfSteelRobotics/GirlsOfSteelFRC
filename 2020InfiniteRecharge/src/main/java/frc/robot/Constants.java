@@ -51,5 +51,8 @@ public final class Constants {
     public static final int SPARK_MAX_CURRENT_LIMIT = 60;
     public static final int CTRE_TIMEOUT = 30;
 
-    public static final double DEFAULT_RPM = 9500;
+    public static final double DEFAULT_RPM = 8600;
+    public static final double DEFAULT_RPM_LEFT = 8800;
+
+    public static final double LONG_RPM = 10500;
 }

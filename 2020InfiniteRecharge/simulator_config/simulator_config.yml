@@ -17,13 +17,21 @@ mDigitalIO:
 - mHandle: 0
   mName: Handoff Ball Sensor
   mType: com.snobot.simulator.module_wrapper.wpi.WpiDigitalIoWrapper
-- mHandle: 1
-  mName: Secondary Ball Sensor
-  mType: com.snobot.simulator.module_wrapper.wpi.WpiDigitalIoWrapper
 - mHandle: 2
   mName: Top Ball Sensor
   mType: com.snobot.simulator.module_wrapper.wpi.WpiDigitalIoWrapper
+- mHandle: 4
+  mName: Middle Sensor
+  mType: com.snobot.simulator.module_wrapper.wpi.WpiDigitalIoWrapper
 mEncoders:
+- mConnectedSpeedControllerHandle: 102
+  mHandle: 102
+  mName: CAN Encoder (2)
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+- mConnectedSpeedControllerHandle: 106
+  mHandle: 106
+  mName: CAN Encoder (6)
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
 - mConnectedSpeedControllerHandle: 107
   mHandle: 107
   mName: Right Drive
@@ -126,6 +134,11 @@ mPwm:
     mMaxSpeed: 0.0
   mName: Shooter Intake
   mType: com.snobot.simulator.simulator_components.ctre.CtreTalonSrxSpeedControllerSim
+- mHandle: 112
+  mMotorModelConfig: null
+  mMotorSimConfig: null
+  mName: Rev SC 12
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
 - mHandle: 113
   mMotorModelConfig:
     mGearReduction: 10.0

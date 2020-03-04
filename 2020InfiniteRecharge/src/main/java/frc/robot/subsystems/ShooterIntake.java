@@ -12,7 +12,7 @@ import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
 
-    private final double INTAKE_SPEED = 0.5; 
+    private static final double INTAKE_SPEED = 0.5;
 
     private final WPI_TalonSRX m_motor;
     private final DoubleSolenoid m_piston;
@@ -31,8 +31,8 @@ public class ShooterIntake extends SubsystemBase {
     
     @Override
     public void periodic() {
-        m_customNetworkTable.getEntry("Speed").setDouble(m_motor.getMotorOutputPercent());
-        m_customNetworkTable.getEntry("Position").setBoolean(m_piston.get() == Value.kForward);
+        //m_customNetworkTable.getEntry("Speed").setDouble(m_motor.getMotorOutputPercent());
+        //m_customNetworkTable.getEntry("Position").setBoolean(m_piston.get() == Value.kForward);
     }
 
     public void collectCells() {

@@ -12,7 +12,6 @@ import java.util.List;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -26,6 +25,7 @@ import frc.robot.Constants;
 import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.AutoShoot;
+import frc.robot.commands.autonomous.DriveAtVelocity;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.commands.autonomous.FollowTrajectory;
@@ -37,6 +37,8 @@ import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
+import frc.robot.auto_modes.ShootToDriveForwardsNoSensor;
+
 
 
 
@@ -44,6 +46,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private final SendableChooser<Command> m_sendableChooser;
     private static final boolean TEST_MODE = true;
+
+    private static final boolean ENABLE_AUTO_SELECTION = true;
+
+    private Command m_defaultCommand;
 
 
 
@@ -59,7 +65,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             double dY = 8 * 12;
             double xOffset = 27 * 12;
             double yOffset = -13.5 * 12;
-            double allowableError = 3;
+            double allowableError = 5;
             m_sendableChooser.addOption("Test. Go To Position (0, 0)", createDrivePointCommand(chassis, 0.0, 0.0, allowableError));
             m_sendableChooser.addOption("Test. Go To Position Right", createDrivePointCommand(chassis, dX + xOffset, 0.0 + yOffset, allowableError));
             m_sendableChooser.addOption("Test. Go To Position Left", createDrivePointCommand(chassis, -dX + xOffset, 0.0 + yOffset, allowableError));
@@ -82,52 +88,83 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Set Starting Position", new SetStartingPosition(chassis, 0, 0, 0));
             m_sendableChooser.addOption("Test. Get Trajectory", createTrajectoryCommand(chassis));
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
-        }
+            m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 72));
+            m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
            
-        m_sendableChooser.addOption("DriveToShoot", new DriveToShoot(chassis, shooter, shooterConveyor));
+        }
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM));
+        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorCenterOrRight", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM));
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorLeft", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM_LEFT));
+        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorLeft", 
+            new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM_LEFT));
+           
+           
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
-        SmartDashboard.putData("Auto Mode", m_sendableChooser);
-       
+        m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
+
+        if (ENABLE_AUTO_SELECTION == true) {
+            SmartDashboard.putData("Auto Mode", m_sendableChooser);
+        }
+        
+
+        m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM);
+        //m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM);
+        //m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM);
+        //m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM_LEFT);
+
+
     }
 
-    private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError)
-    {
+    private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError) {
         return new SetStartingPosition(chassis, 27 * 12, -13.5 * 12, 0).andThen(new GoToPosition(chassis, x, y, allowableError));
     }
 
     private Command createTrajectoryCommand(Chassis chassis) {
-        var autoVoltageConstraint =
-            new DifferentialDriveVoltageConstraint (
-                new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                        DriveConstants.kvVoltSecondsPerMeter,
-                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
-                DriveConstants.kDriveKinematics,
-                10);
-
-        TrajectoryConfig config =
-            new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                            AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
+       
 
         Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-98), new Rotation2d(0)), //starting position in front of goal
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(),
-            //new Translation2d(2, -1)
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(Units.inchesToMeters(5 * 12), 0, new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
             // Pass config
-            config
+            getTrajectoryConfig()
         );
 
-        return new SetStartingPosition(chassis, 0, 0, 0).andThen(new FollowTrajectory(exampleTrajectory, chassis));
+
+        return new SetStartingPosition(chassis, 122, -98, 0).andThen(new FollowTrajectory(exampleTrajectory, chassis));
+    }
+
+    private TrajectoryConfig getTrajectoryConfig() {
+        var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                    DriveConstants.kvVoltSecondsPerMeter,
+                                    DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
+            DriveConstants.maxVoltage);
+
+    TrajectoryConfig config =
+        new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
+                        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(DriveConstants.kDriveKinematics)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint);
+
+        return config;
     }
 
     public Command getAutonomousMode() {
-        return m_sendableChooser.getSelected();
+        if (ENABLE_AUTO_SELECTION == false) {
+            return m_defaultCommand;
+        }
+        else {
+            return m_sendableChooser.getSelected();
+        }
     }
 }

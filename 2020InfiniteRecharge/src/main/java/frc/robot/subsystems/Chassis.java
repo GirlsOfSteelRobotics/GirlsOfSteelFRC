@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -21,12 +22,13 @@ import frc.robot.Constants;
 import frc.robot.lib.IGyroWrapper;
 import frc.robot.lib.MotionMagicProperty;
 import frc.robot.lib.NavXWrapper;
+import frc.robot.lib.PigeonGyro;
 
 import com.revrobotics.CANPIDController;
 
 public class Chassis extends SubsystemBase {
 
-    private static final double FULL_THROTTLE_SECONDS = 1.0;
+    //private static final double FULL_THROTTLE_SECONDS = 1.0;
     private static final double WHEEL_DIAMETER = 4.0;
     private static final double GEAR_RATIO = 40.0 / 10.0 * 34.0 / 20.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
@@ -84,9 +86,14 @@ public class Chassis extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
-        m_gyro = new NavXWrapper(); 
+        if (RobotBase.isSimulation()) {
+            m_gyro = new PigeonGyro(0);
+        }
+        else {
+            m_gyro = new NavXWrapper(); 
+        }
 
-        IdleMode idleMode = IdleMode.kBrake;
+        IdleMode idleMode = IdleMode.kCoast;
         m_masterLeft.setIdleMode(idleMode);
         m_followerLeft.setIdleMode(idleMode);
         m_masterRight.setIdleMode(idleMode);
@@ -163,21 +170,24 @@ public class Chassis extends SubsystemBase {
         m_followerLeft.burnFlash();
         m_masterRight.burnFlash();
         m_followerRight.burnFlash();
+
+        m_drive.setSafetyEnabled(false);
+
     }
 
     @Override
     public void periodic() {
         m_gyro.poll();
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
-                m_rightEncoder.getPosition());
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), Units.inchesToMeters(m_leftEncoder.getPosition()),
+            Units.inchesToMeters(m_rightEncoder.getPosition()));
 
-        SmartDashboard.putNumber("x", getX());
-        SmartDashboard.putNumber("y", getY());
-        SmartDashboard.putNumber("yaw", getHeading());
-        SmartDashboard.putNumber("right encoder", getM_rightEncoder());
-        SmartDashboard.putNumber("left encoder", getM_leftEncoder());
-        SmartDashboard.putNumber("right encoder speed", getM_rightEncoderSpeed());
-        SmartDashboard.putNumber("left encoder speed", getM_leftEncoderSpeed());
+        // SmartDashboard.putNumber("x", getX());
+        // SmartDashboard.putNumber("y", getY());
+        // SmartDashboard.putNumber("yaw", getHeading());
+        // SmartDashboard.putNumber("right encoder", getRightEncoder());
+        // SmartDashboard.putNumber("left encoder", getLeftEncoder());
+        SmartDashboard.putNumber("right encoder speed", getRightEncoderSpeed());
+        SmartDashboard.putNumber("left encoder speed", getLeftEncoderSpeed());
 
         m_customNetworkTable.getEntry("X").setDouble(getX());
         m_customNetworkTable.getEntry("Y").setDouble(getY());
@@ -196,20 +206,20 @@ public class Chassis extends SubsystemBase {
     //////////////////////////////
     // Odometry Stuff
     //////////////////////////////
-    public double getM_leftEncoder() {
-        return m_rightEncoder.getPosition();
-    }
-
-    public double getM_rightEncoder() {
+    public double getLeftEncoder() {
         return m_leftEncoder.getPosition();
     }
 
-    public double getM_leftEncoderSpeed() {
-        return m_rightEncoder.getVelocity();
+    public double getRightEncoder() {
+        return m_rightEncoder.getPosition();
     }
 
-    public double getM_rightEncoderSpeed() {
+    public double getLeftEncoderSpeed() {
         return m_leftEncoder.getVelocity();
+    }
+
+    public double getRightEncoderSpeed() {
+        return m_rightEncoder.getVelocity();
     }
 
     public void setPosition(double x, double y, double angle) {
@@ -217,19 +227,19 @@ public class Chassis extends SubsystemBase {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
         Rotation2d rotation = Rotation2d.fromDegrees(angle);
-        m_odometry.resetPosition(new Pose2d(new Translation2d(x, y), rotation), rotation);
+        m_odometry.resetPosition(new Pose2d(new Translation2d(Units.inchesToMeters(x), Units.inchesToMeters(y)), rotation), rotation);
     }
 
     public double getX() {
-        return m_odometry.getPoseMeters().getTranslation().getX();
+        return (Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getX()));
     }
 
     public double getY() {
-        return m_odometry.getPoseMeters().getTranslation().getY();
+        return Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getY());
     }
 
     public double getHeading() {
-        return m_gyro.getYaw();
+        return -m_gyro.getYaw();
         // return 0;
     }
 

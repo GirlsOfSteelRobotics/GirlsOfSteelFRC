@@ -29,7 +29,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Cap the maximum speed since the chassis bot is used in outreach events with new drivers
-    chassis.drive.setMaxOutput(0.5);
+    chassis.drive.setMaxOutput(1);
     // Set the default command to drive the robot
     // Y is negated so that pushing the stick forward results in positive values
     chassis.setDefaultCommand(
