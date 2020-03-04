@@ -33,7 +33,8 @@ public class RobotContainer {
     // Set the default command to drive the robot
     // Y is negated so that pushing the stick forward results in positive values
     chassis.setDefaultCommand(
-        new RunCommand(() -> chassis.drive.arcadeDrive(-driveStick.getY(), driveStick.getX(), true)));
+        new RunCommand(() -> chassis.drive.arcadeDrive(-driveStick.getY(), driveStick.getX(), true),chassis)
+      );
   }
 
   /**
