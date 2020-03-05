@@ -10,7 +10,8 @@ package frc.robot;
 import frc.robot.subsystems.Chassis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -22,7 +23,8 @@ import edu.wpi.first.wpilibj.Joystick;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Chassis chassis = new Chassis();
-  public Joystick driveStick = new Joystick(0);
+  
+  XboxController m_drivingPad = new XboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -33,7 +35,9 @@ public class RobotContainer {
     // Set the default command to drive the robot
     // Y is negated so that pushing the stick forward results in positive values
     chassis.setDefaultCommand(
-        new RunCommand(() -> chassis.drive.arcadeDrive(-driveStick.getY(), driveStick.getX(), true)));
+        new RunCommand(() -> chassis.drive.arcadeDrive(-m_drivingPad.getY(Hand.kLeft), m_drivingPad.getX(Hand.kRight), true),
+                       chassis)
+      );
   }
 
   /**
