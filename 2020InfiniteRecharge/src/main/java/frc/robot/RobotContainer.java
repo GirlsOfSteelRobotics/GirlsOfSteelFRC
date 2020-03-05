@@ -63,7 +63,7 @@ public class RobotContainer {
         m_shooter = new Shooter(driveDisplayTab, m_limelight);
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();
-        m_winch = new Winch();
+        m_winch = new Winch(isEuropa());
         m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_shooterConveyor, m_shooterIntake);
         
         Shuffleboard.selectTab("Driver Tab");
@@ -102,5 +102,11 @@ public class RobotContainer {
         return m_chassis;
     }
     
+    DigitalInput m_digitalInput = new DigitalInput(Constants.DIGITAL_INPUT_EUROPA);
+
+    public boolean isEuropa() {
+        System.out.println("Is this Europa? " + !m_digitalInput.get());
+        return !m_digitalInput.get();
+    }
   
 }

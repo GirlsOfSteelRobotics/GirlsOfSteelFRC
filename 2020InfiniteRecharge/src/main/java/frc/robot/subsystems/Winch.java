@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,14 +19,17 @@ public class Winch extends SubsystemBase {
 
     private final NetworkTable m_customNetworkTable;
 
-    public Winch() {
-        m_motorA = new CANSparkMax(Constants.WINCH_A_SPARK, 
-        isEuropa() ? MotorType.kBrushed : MotorType.kBrushless);
+    public Winch(boolean isBrushed) {
+        m_motorA = new CANSparkMax(Constants.WINCH_A_SPARK, isBrushed ? MotorType.kBrushed : MotorType.kBrushless);
         m_motorA.setIdleMode(IdleMode.kBrake);
         m_motorA.setInverted(false);
-        m_encoder = m_motorA.getEncoder(EncoderType.kQuadrature, 8192);
-        m_motorB = new CANSparkMax(Constants.WINCH_B_SPARK, 
-        isEuropa() ? MotorType.kBrushed : MotorType.kBrushless);
+        if (isBrushed) {
+            m_encoder = m_motorA.getEncoder(EncoderType.kQuadrature, 8192);
+        } else {
+            m_encoder = m_motorA.getEncoder();
+        }
+
+        m_motorB = new CANSparkMax(Constants.WINCH_B_SPARK, isBrushed ? MotorType.kBrushed : MotorType.kBrushless);
         m_motorB.setIdleMode(IdleMode.kBrake);
         m_motorB.setInverted(false);
 
@@ -35,13 +37,6 @@ public class Winch extends SubsystemBase {
         m_motorB.burnFlash();
 
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Winch");
-    } 
-
-    DigitalInput m_digitalInput = new DigitalInput(Constants.DIGITAL_INPUT_EUROPA);
-
-    public boolean isEuropa() {
-        System.out.println("Is this Europa? " + m_digitalInput.get());
-        return m_digitalInput.get();
     }
 
     public void wind() {
@@ -55,7 +50,7 @@ public class Winch extends SubsystemBase {
     }
 
     public void periodic() {
-        //m_customNetworkTable.getEntry("Speed").setDouble(m_motorA.get());
+        // m_customNetworkTable.getEntry("Speed").setDouble(m_motorA.get());
     }
 
     public void stop() {
