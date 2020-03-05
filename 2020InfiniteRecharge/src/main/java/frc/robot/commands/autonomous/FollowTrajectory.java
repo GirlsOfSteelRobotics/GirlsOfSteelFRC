@@ -19,7 +19,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
 
-        public static final double kMaxSpeedMetersPerSecond = Units.inchesToMeters(60);
+        public static final double kMaxSpeedMetersPerSecond = Units.inchesToMeters(72);
         public static final double kMaxAccelerationMetersPerSecondSquared = Units.inchesToMeters(60);
 
     }

@@ -38,13 +38,13 @@ import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
 import frc.robot.auto_modes.ShootToDriveForwardsNoSensor;
-
-
+import frc.robot.trajectory_modes.TrajectoryModeFactory;
 
 
 public class AutoModeFactory extends SequentialCommandGroup {
 
     private final SendableChooser<Command> m_sendableChooser;
+    private final TrajectoryModeFactory m_trajectoryModeFactory;
     private static final boolean TEST_MODE = true;
 
     private static final boolean ENABLE_AUTO_SELECTION = true;
@@ -59,6 +59,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
     public AutoModeFactory(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
        
         m_sendableChooser = new SendableChooser<>();
+        m_trajectoryModeFactory = new TrajectoryModeFactory(chassis);
         
         if (TEST_MODE) {
             double dX = 8 * 12;
@@ -86,10 +87,9 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Start Intake", new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
             m_sendableChooser.addOption("Test. Start Shooter", new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 3));
             m_sendableChooser.addOption("Test. Set Starting Position", new SetStartingPosition(chassis, 0, 0, 0));
-            m_sendableChooser.addOption("Test. Get Trajectory", createTrajectoryCommand(chassis));
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
             m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 72));
-            m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
+            m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory));
            
         }
         m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
@@ -102,7 +102,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM_LEFT));
            
            
-        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory));
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
 
         if (ENABLE_AUTO_SELECTION == true) {
@@ -120,43 +120,6 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError) {
         return new SetStartingPosition(chassis, 27 * 12, -13.5 * 12, 0).andThen(new GoToPosition(chassis, x, y, allowableError));
-    }
-
-    private Command createTrajectoryCommand(Chassis chassis) {
-       
-
-        Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-98), new Rotation2d(0)), //starting position in front of goal
-            // Pass through these two interior waypoints, making an 's' curve path
-            List.of(),
-            new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
-            // Pass config
-            getTrajectoryConfig()
-        );
-
-
-        return new SetStartingPosition(chassis, 122, -98, 0).andThen(new FollowTrajectory(exampleTrajectory, chassis));
-    }
-
-    private TrajectoryConfig getTrajectoryConfig() {
-        var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                    DriveConstants.kvVoltSecondsPerMeter,
-                                    DriveConstants.kaVoltSecondsSquaredPerMeter),
-            DriveConstants.kDriveKinematics,
-            DriveConstants.maxVoltage);
-
-    TrajectoryConfig config =
-        new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics)
-        // Apply the voltage constraint
-        .addConstraint(autoVoltageConstraint);
-
-        return config;
     }
 
     public Command getAutonomousMode() {
