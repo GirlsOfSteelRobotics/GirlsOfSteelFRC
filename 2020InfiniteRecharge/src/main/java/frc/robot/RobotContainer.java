@@ -19,6 +19,7 @@ import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Camera;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -100,4 +101,6 @@ public class RobotContainer {
     public Chassis getChassis()    {
         return m_chassis;
     }
+    
+  
 }
