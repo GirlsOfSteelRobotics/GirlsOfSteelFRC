@@ -12,6 +12,7 @@ import frc.robot.commands.DriveByJoystick;
 import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.LidarLite;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterConveyor;
@@ -19,6 +20,7 @@ import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Camera;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +40,7 @@ public class RobotContainer {
     private final Chassis m_chassis;
     private final ControlPanel m_controlPanel;
     private final Lift m_lift;
+    private final LidarLite m_lidarLite;
     private final Limelight m_limelight;
     private final Shooter m_shooter;
     private final ShooterConveyor m_shooterConveyor;
@@ -58,11 +61,12 @@ public class RobotContainer {
         m_chassis = new Chassis();
         m_controlPanel = new ControlPanel();
         m_lift = new Lift();
-        m_limelight = new Limelight(driveDisplayTab);
+        m_lidarLite = new LidarLite();
+        m_limelight = new Limelight(driveDisplayTab, m_lidarLite);
         m_shooter = new Shooter(driveDisplayTab, m_limelight);
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();
-        m_winch = new Winch();
+        m_winch = new Winch(isEuropa());
         m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_shooterConveyor, m_shooterIntake);
         
         Shuffleboard.selectTab("Driver Tab");
@@ -100,4 +104,12 @@ public class RobotContainer {
     public Chassis getChassis()    {
         return m_chassis;
     }
+    
+    DigitalInput m_digitalInput = new DigitalInput(Constants.DIGITAL_INPUT_EUROPA);
+
+    public boolean isEuropa() {
+        System.out.println("Is this Europa? " + !m_digitalInput.get());
+        return !m_digitalInput.get();
+    }
+  
 }
