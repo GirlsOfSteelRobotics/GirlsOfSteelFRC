@@ -41,6 +41,7 @@ public final class Constants {
     public static final int DIGITAL_INPUT_SENSOR_SECONDARY = 2; 
     public static final int DIGITAL_INPUT_SENSOR_TOP = 0; 
     public static final int DIGITAL_INPUT_EUROPA = 9;
+    public static final int DIGITAL_INPUT_LIDAR_LITE = 6;
 
     // Camera USB numbers
     // - These start at zero and go up from there
