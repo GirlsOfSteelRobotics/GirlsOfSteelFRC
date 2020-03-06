@@ -12,6 +12,7 @@ import frc.robot.commands.DriveByJoystick;
 import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.LidarLite;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterConveyor;
@@ -39,6 +40,7 @@ public class RobotContainer {
     private final Chassis m_chassis;
     private final ControlPanel m_controlPanel;
     private final Lift m_lift;
+    private final LidarLite m_lidarLite;
     private final Limelight m_limelight;
     private final Shooter m_shooter;
     private final ShooterConveyor m_shooterConveyor;
@@ -59,7 +61,8 @@ public class RobotContainer {
         m_chassis = new Chassis();
         m_controlPanel = new ControlPanel();
         m_lift = new Lift();
-        m_limelight = new Limelight(driveDisplayTab);
+        m_lidarLite = new LidarLite();
+        m_limelight = new Limelight(driveDisplayTab, m_lidarLite);
         m_shooter = new Shooter(driveDisplayTab, m_limelight);
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();

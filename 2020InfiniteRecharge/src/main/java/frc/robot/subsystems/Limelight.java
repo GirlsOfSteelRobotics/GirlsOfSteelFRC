@@ -34,8 +34,9 @@ public class Limelight extends SubsystemBase {
     private static final PropertyManager.IProperty<Double> MAX_DRIVE = new PropertyManager.DoubleProperty(
             "LimelihtMaxDrive", 0.3);
 
+    // Measured from middle of Limelight to middle of high target
     private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = new PropertyManager.ConstantProperty<>(
-            "LimelightHeightOffset", 48.75);
+            "LimelightHeightOffset", 60.0);
     private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = new PropertyManager.ConstantProperty<>(
             "LimelightAngleOffset", 20.0);
 
@@ -48,6 +49,7 @@ public class Limelight extends SubsystemBase {
     // private boolean m_LimelightHasValidTarget = false;
     private double m_limelightDriveCommand = 0.0;
     private double m_limelightSteerCommand = 0.0;
+    private LidarLite m_lidarLite;
     // private double tv =
     // NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     private double m_tx;
@@ -56,9 +58,10 @@ public class Limelight extends SubsystemBase {
 
     private final NetworkTableEntry m_limelightIsAimedEntry;
 
-    public Limelight(ShuffleboardTab driverDisplayTab) {
+    public Limelight(ShuffleboardTab driverDisplayTab, LidarLite lidarLite) {
         System.out.println("Limelight");
 
+        m_lidarLite = lidarLite;
 
         m_limelightIsAimedEntry = driverDisplayTab.add("Limelight Is Aimed", limelightIsAimed()).withSize(4, 1)
                 .withPosition(4, 0).getEntry();
@@ -107,6 +110,24 @@ public class Limelight extends SubsystemBase {
         return distance;
     }
 
+    public double estimateDistanceWithLidar() {
+        double limelightDistance = estimateDistance();
+        double lidarDistance = m_lidarLite.getDistance();
+
+        double limelightLidarCompare = Math.abs((limelightDistance - lidarDistance) / lidarDistance);
+
+        System.out.println("Lidar distance: " + lidarDistance);
+        System.out.println("Limelight distance: " + limelightDistance);
+
+        if (limelightLidarCompare <= 0.20) {
+            System.out.println("Returning Lidar distance");
+            return lidarDistance;
+        } else {
+            System.out.println("Returning Limelight distance");
+            return limelightDistance;
+        }
+    }
+
     public double getDriveCommand() {
         double driveCmd = (DESIRED_TARGET_AREA.getValue() - m_ta) * DRIVE_K.getValue();
         if (driveCmd > MAX_DRIVE.getValue()) {
@@ -115,15 +136,14 @@ public class Limelight extends SubsystemBase {
         m_limelightDriveCommand = driveCmd;
         return m_limelightDriveCommand;
 
-       
     }
-    
-    public void turnLimelightOn(){
-       //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setDouble(3);
+
+    public void turnLimelightOn() {
+        // NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setDouble(3);
     }
-    
-    public void turnLimelightOff(){
-        //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setDouble(1);
+
+    public void turnLimelightOff() {
+        // NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setDouble(1);
     }
 
     @Override
