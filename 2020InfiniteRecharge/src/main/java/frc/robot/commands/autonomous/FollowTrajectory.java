@@ -16,11 +16,15 @@ import frc.robot.subsystems.Chassis;
 public class FollowTrajectory extends SequentialCommandGroup {
 
     public static class AutoConstants {
+        public static final double slowSpeedMetersPerSecond = Units.inchesToMeters(48);
+        public static final double slowAccelerationMetersPerSecondSquared = Units.inchesToMeters(96);
+        public static final double normalSpeedMetersPerSecond = Units.inchesToMeters(72);
+        public static final double normalAccelerationMetersPerSecondSquared = Units.inchesToMeters(60);
+        public static final double fastSpeedMetersPerSecond = Units.inchesToMeters(120);
+        public static final double fastAccelerationMetersPerSecondSquared = Units.inchesToMeters(120);
+
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
-
-        public static final double kMaxSpeedMetersPerSecond = Units.inchesToMeters(72);
-        public static final double kMaxAccelerationMetersPerSecondSquared = Units.inchesToMeters(60);
 
     }
 

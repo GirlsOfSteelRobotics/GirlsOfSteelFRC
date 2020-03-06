@@ -25,20 +25,22 @@ public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
     public ShootAndDriveToTrenchRightSide(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
 
         double allowableErrorAngle;
-        allowableErrorAngle = 1;
+        allowableErrorAngle = 10;
         double allowableErrorDrive;
         allowableErrorDrive = 12;
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
-        addCommands(new SetStartingPosition(chassis, 122, -98, -30));
-        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 2)); //Shoot pre-loaded cells
+        addCommands(new SetStartingPosition(chassis, 122, -31, 0));
+        addCommands(new TurnToAngle(chassis, 30, 10));
+        //addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 2)); //Shoot pre-loaded cells
         addCommands(new TurnToAngle(chassis, 0, allowableErrorAngle));
-        addCommands(new IntakeCells(shooterIntake, true)
-            .raceWith(new DriveDistanceSmartMotion(chassis, 17 * 12, allowableErrorDrive)
-            .raceWith(new ConveyorWhileHeld(shooterConveyor, true))));
+        //addCommands(new IntakeCells(shooterIntake, true)
+        //    .raceWith(new DriveDistanceSmartMotion(chassis, 17 * 12, allowableErrorDrive)
+        //    .raceWith(new ConveyorWhileHeld(shooterConveyor, true))));
+        addCommands(new DriveDistanceSmartMotion(chassis, 17 * 12, allowableErrorDrive));
         addCommands(new TurnToAngle(chassis, 0, allowableErrorAngle));
         addCommands(new DriveDistanceSmartMotion(chassis, -17 * 12, allowableErrorDrive));
-        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 8));
+        //addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 8));
     }
 }
 

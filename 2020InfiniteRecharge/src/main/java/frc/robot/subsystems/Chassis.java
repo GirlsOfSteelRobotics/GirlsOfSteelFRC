@@ -125,10 +125,10 @@ public class Chassis extends SubsystemBase {
         m_customNetworkTable = coordinateGuiContainer.getSubTable("RobotPosition");
 
         // Smart Motion stuff
-        double kp = 0.008000;
+        double kp = 0.01000;
         double ki = 0;
         double kd = 0;
-        double kff = 0.005900;
+        double kff = 0.005800;
         boolean lockConstants = false;
         double minVel = 0; // inch/sec
         double maxVel = 72; // inch/sec

@@ -10,6 +10,9 @@ package frc.robot.auto_modes;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.AutomatedConveyorIntake;
+import frc.robot.commands.ConveyorWhileHeld;
+import frc.robot.commands.IntakeCells;
+import frc.robot.commands.MovePiston;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TurnToAngle;
@@ -21,16 +24,30 @@ public class ShootAndDriveToTrench extends SequentialCommandGroup {
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public ShootAndDriveToTrench(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake, TrajectoryModeFactory trajectoryFactory) {
+    public ShootAndDriveToTrench(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake, TrajectoryModeFactory trajectoryFactory,
+                                 boolean useSensor) {
 
-        //cell intake runs until handoff break sensor is true (a ball has been collected)
+        //cell intake runs until handoff break sensor is true (a ball has been collected
         addCommands(new SetStartingPosition(chassis, 122, -98, 0));
-        //addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 2)); //Shoot pre-loaded cells
+        addCommands(new MovePiston(shooterIntake, true));
+        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 2)); //Shoot pre-loaded cells
         addCommands(trajectoryFactory.getTrajectoryAutoLineToFrontOfTrench(chassis));
-        addCommands(new AutomatedConveyorIntake(shooterIntake, shooterConveyor)
-            .raceWith(trajectoryFactory.getTrajectoryFrontOfTrenchToControlPanel(chassis)));
+        if(useSensor == true) {
+            SequentialCommandGroup intake = new SequentialCommandGroup();
+            intake.addCommands(new AutomatedConveyorIntake(shooterIntake, shooterConveyor),
+                    new AutomatedConveyorIntake(shooterIntake, shooterConveyor),
+                    new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
+            addCommands(intake.raceWith(trajectoryFactory.getTrajectoryFrontOfTrenchToControlPanel(chassis)));
+        }
+        else {
+            addCommands(new ConveyorWhileHeld(shooterConveyor, true)
+                    .raceWith(new IntakeCells(shooterIntake, true)
+                    .raceWith(trajectoryFactory.getTrajectoryFrontOfTrenchToControlPanel(chassis))));
+        }
+        addCommands(new ConveyorWhileHeld(shooterConveyor, false).withTimeout(.15)
+                .raceWith(new IntakeCells(shooterIntake, true)).withTimeout(.5));
         addCommands(trajectoryFactory.getTrajectoryControlPanelToAutoLine(chassis));
         addCommands(new TurnToAngle(chassis, 0, 12));
-        //addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 3));
+        addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 3));
     }
 }

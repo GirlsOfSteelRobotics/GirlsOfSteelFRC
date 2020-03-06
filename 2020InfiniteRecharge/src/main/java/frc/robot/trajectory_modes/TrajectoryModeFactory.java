@@ -56,7 +56,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
             new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
             List.of(),
             new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
-            getTrajectoryConfig()
+            getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared)
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToControlPanel, chassis);
     }
@@ -88,19 +88,32 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryControlPanelToAutoLine(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
-        getTrajectoryConfig.setReversed(true);
+        TrajectoryConfig trajectoryConfig = getTrajectoryConfig(AutoConstants.fastSpeedMetersPerSecond, AutoConstants.fastAccelerationMetersPerSecondSquared);
+        trajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
                 List.of(),
                 new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-98), new Rotation2d(0)),
+                trajectoryConfig
+        );
+        return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
+    }
+
+    public Command getTrajectoryRightSideToControlPanel(Chassis chassis) {
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
+        getTrajectoryConfig.setReversed(true);
+
+        Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-31), new Rotation2d(0)),
+                List.of(),
+                new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
                 getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
     }
 
-    private TrajectoryConfig getTrajectoryConfig() {
+    private TrajectoryConfig getTrajectoryConfig(double kMaxSpeedMetersPerSecond, double kMaxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(DriveConstants.ksVolts,
@@ -110,13 +123,18 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
             DriveConstants.maxVoltage);
 
     TrajectoryConfig config =
-        new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(DriveConstants.kDriveKinematics)
         // Apply the voltage constraint
         .addConstraint(autoVoltageConstraint);
 
         return config;
+    }
+
+    private TrajectoryConfig getTrajectoryConfig() {
+        return  getTrajectoryConfig(AutoConstants.normalSpeedMetersPerSecond, AutoConstants.normalAccelerationMetersPerSecondSquared);
+
     }
 }
