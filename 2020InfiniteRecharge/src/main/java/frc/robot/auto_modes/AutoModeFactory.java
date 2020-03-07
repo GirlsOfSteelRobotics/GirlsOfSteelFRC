@@ -60,7 +60,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
     public AutoModeFactory(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
        
         m_sendableChooser = new SendableChooser<>();
-        m_trajectoryModeFactory = new TrajectoryModeFactory(chassis);
+        m_trajectoryModeFactory = new TrajectoryModeFactory();
         
         if (TEST_MODE) {
             double dX = 8 * 12;

@@ -27,23 +27,24 @@ import frc.robot.subsystems.*;
 
 public class TrajectoryModeFactory extends SequentialCommandGroup {
 
+    private static final double AUTO_LINE_X = 122;
+    private static final double OUTER_PORT_CENTER_Y = -98;
 
+    private static final double FRONT_TRENCH_X = 207;
+    private static final double FRONT_TRENCH_Y = -31;
 
-    /**
-     * Creates a new AutomatedConveyorIntake.
-     */
-    public TrajectoryModeFactory(Chassis chassis) {
-    }
+    private static final double CONTROL_PANEL_X = 327;
+    private static final double CONTROL_PANEL_Y = -31;
         
     public Command getTrajectoryAutoLineToFrontOfTrench(Chassis chassis) {
        
 
         Trajectory trajectoryAutoLineToFrontOfTrench = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
-            new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-98), new Rotation2d(0)), //starting position in front of goal
+            new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(OUTER_PORT_CENTER_Y), new Rotation2d(0)), //starting position in front of goal
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(),
-            new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(FRONT_TRENCH_X), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
             // Pass config
             getTrajectoryConfig()
         );
@@ -53,9 +54,9 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     public Command getTrajectoryFrontOfTrenchToControlPanel(Chassis chassis) {
 
         Trajectory trajectoryFrontOfTrenchToControlPanel = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(FRONT_TRENCH_X), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(CONTROL_PANEL_X), Units.inchesToMeters(CONTROL_PANEL_Y), new Rotation2d(0)),
             getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared)
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToControlPanel, chassis);
@@ -66,9 +67,9 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
         getTrajectoryConfig.setReversed(true);
         Trajectory trajectoryControlPanelToFrontOfTrench = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(CONTROL_PANEL_X), Units.inchesToMeters(CONTROL_PANEL_Y), new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(FRONT_TRENCH_X), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
             getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryControlPanelToFrontOfTrench, chassis);
@@ -79,9 +80,9 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         getTrajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.inchesToMeters(207), Units.inchesToMeters(-31), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(FRONT_TRENCH_X), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-98), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(OUTER_PORT_CENTER_Y), new Rotation2d(0)),
             getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
@@ -92,9 +93,9 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         trajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(CONTROL_PANEL_X), Units.inchesToMeters(CONTROL_PANEL_Y), new Rotation2d(0)),
                 List.of(),
-                new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-98), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(OUTER_PORT_CENTER_Y), new Rotation2d(0)),
                 trajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
@@ -104,9 +105,9 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-31), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
                 List.of(),
-                new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(CONTROL_PANEL_X), Units.inchesToMeters(CONTROL_PANEL_Y), new Rotation2d(0)),
                 getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
@@ -117,9 +118,9 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         getTrajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(CONTROL_PANEL_X), Units.inchesToMeters(CONTROL_PANEL_Y), new Rotation2d(0)),
                 List.of(),
-                new Pose2d(Units.inchesToMeters(128), Units.inchesToMeters(-31), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(128), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
                 getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
@@ -129,7 +130,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
-                new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-127), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(-127), new Rotation2d(0)),
                 List.of(),
                 new Pose2d(Units.inchesToMeters(227), Units.inchesToMeters(-146), new Rotation2d(0)),
                 getTrajectoryConfig
@@ -144,7 +145,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(227), Units.inchesToMeters(-146), new Rotation2d(0)),
                 List.of(),
-                new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-127), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(-127), new Rotation2d(0)),
                 getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
