@@ -72,9 +72,23 @@ public class Limelight extends SubsystemBase {
         // // .withSize(4, 3)
         // // .withPosition(0, 5)
         // ;
+
         m_steerPID = new PIDController(0, 0, 0);
 
         turnLimelightOff();
+    }
+
+    public void zoom1X() {
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
+    }
+
+    public void zoomIfNeeded() {
+        if( m_ta < 3.5 && m_ty < 12.0) {
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+        }
+        //if( m_ta < 3.5 && m_ty < 12.0) {
+           // NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+        //}
     }
 
     public double getSteerCommand() {

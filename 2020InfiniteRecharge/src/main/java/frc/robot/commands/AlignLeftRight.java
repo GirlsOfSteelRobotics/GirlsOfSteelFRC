@@ -19,15 +19,18 @@ public class AlignLeftRight extends CommandBase {
 
     @Override
     public void initialize() {
+        m_limelight.zoom1X();
     }
 
     @Override
     public void execute() {
         m_chassis.setSteer(m_limelight.getSteerCommand());
+        m_limelight.zoomIfNeeded();
     }
 
     @Override
     public void end(boolean interrupted) {
+        m_limelight.zoom1X();
     }
 
     @Override
