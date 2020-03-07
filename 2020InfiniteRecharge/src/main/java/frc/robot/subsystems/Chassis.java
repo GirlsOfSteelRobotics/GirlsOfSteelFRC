@@ -267,7 +267,6 @@ public class Chassis extends SubsystemBase {
 
     public void setSpeedAndSteer(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
-        // System.out.println("SETTING SPEED AND STEER");
     }
 
     public void driveDistance(double leftPosition, double rightPosition) {

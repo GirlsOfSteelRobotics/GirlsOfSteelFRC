@@ -14,6 +14,7 @@ public class TurnToAngle extends CommandBase {
             0);
     private static final PropertyManager.IProperty<Double> AUTO_KD = new PropertyManager.DoubleProperty("TurnToAngleKd",
             0);
+    private static final double MINIMUM_TURN_SPEED = .25; // The power required to overcome static friction
 
     private final Chassis m_chassis;
     private final double m_angle;
@@ -27,12 +28,13 @@ public class TurnToAngle extends CommandBase {
 
     public TurnToAngle(Chassis chassis, double angle, double allowableError) {
         m_chassis = chassis;
-        m_deadbandHelper = new DeadbandHelper(50);
+        m_deadbandHelper = new DeadbandHelper(5);
  
         m_angle = angle;
         m_allowableError = allowableError;
 
         m_steerPID = new PIDController(0, 0, 0);
+        m_steerPID.enableContinuousInput(-180, 180);
 
         addRequirements(chassis);
     }
@@ -49,6 +51,7 @@ public class TurnToAngle extends CommandBase {
         m_steerPID.setD(AUTO_KD.getValue());
 
         double steeringSpeed = m_steerPID.calculate(m_chassis.getHeading(), m_angle);
+        steeringSpeed += Math.copySign(MINIMUM_TURN_SPEED, steeringSpeed);
 
         m_chassis.setSpeedAndSteer(0, -steeringSpeed);
 

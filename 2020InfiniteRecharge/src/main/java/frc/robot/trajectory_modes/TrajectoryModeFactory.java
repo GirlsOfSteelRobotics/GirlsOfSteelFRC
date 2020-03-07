@@ -102,12 +102,49 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
 
     public Command getTrajectoryRightSideToControlPanel(Chassis chassis) {
         TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
-        getTrajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-31), new Rotation2d(0)),
                 List.of(),
                 new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
+                getTrajectoryConfig
+        );
+        return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
+    }
+
+    public Command getTrajectoryControlPanelToRightSide(Chassis chassis) {
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
+        getTrajectoryConfig.setReversed(true);
+
+        Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(Units.inchesToMeters(327), Units.inchesToMeters(-31), new Rotation2d(0)),
+                List.of(),
+                new Pose2d(Units.inchesToMeters(128), Units.inchesToMeters(-31), new Rotation2d(0)),
+                getTrajectoryConfig
+        );
+        return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
+    }
+
+    public Command getTrajectoryCenterToRendezvous(Chassis chassis) {
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+
+        Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-127), new Rotation2d(0)),
+                List.of(),
+                new Pose2d(Units.inchesToMeters(227), Units.inchesToMeters(-146), new Rotation2d(0)),
+                getTrajectoryConfig
+        );
+        return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
+    }
+
+    public Command getTrajectoryRendezvousToCenter(Chassis chassis) {
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+        getTrajectoryConfig.setReversed(true);
+
+        Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(Units.inchesToMeters(227), Units.inchesToMeters(-146), new Rotation2d(0)),
+                List.of(),
+                new Pose2d(Units.inchesToMeters(122), Units.inchesToMeters(-127), new Rotation2d(0)),
                 getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);

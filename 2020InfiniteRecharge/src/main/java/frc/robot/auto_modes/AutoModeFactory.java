@@ -77,8 +77,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Go To Position Up-Right", createDrivePointCommand(chassis, dX + xOffset, dY + yOffset, allowableError));
             m_sendableChooser.addOption("Test. Go To Position Down-Left", createDrivePointCommand(chassis, -dX + xOffset, -dY + yOffset, allowableError));
             m_sendableChooser.addOption("Test. Go To Position Down-Right", createDrivePointCommand(chassis, dX + xOffset, -dY + yOffset, allowableError));
-            m_sendableChooser.addOption("Test. Turn To Angle Positive", new TurnToAngle(chassis, 90, 1));
-            m_sendableChooser.addOption("Test. Turn To Angle Negative", new TurnToAngle(chassis, -90, 1));
+            m_sendableChooser.addOption("Test. Turn To Angle Positive", new SetStartingPosition(chassis, 0, 0, 0).andThen(new TurnToAngle(chassis, 3, 1)));
+            m_sendableChooser.addOption("Test. Turn To Angle Negative", new SetStartingPosition(chassis, 0, 0, 0).andThen(new TurnToAngle(chassis, -3, 1)));
             m_sendableChooser.addOption("Test. Drive Distance Forward", new DriveDistance(chassis, 5 * 12, 1));
             m_sendableChooser.addOption("Test. Drive Distance Backward", new DriveDistance(chassis, -5 * 12, 1));
             m_sendableChooser.addOption("Test. Drive Distance Smart Motion", new DriveDistanceSmartMotion(chassis, 8 * 12, 5));
@@ -94,6 +94,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Turn to Angle Profiled", new SetStartingPosition(chassis, 0, 0, 0).andThen(new TurnToAngleProfiled(90, chassis)));
 
         }
+        m_sendableChooser.addOption("ShootAndDriveToRendezvous",
+                new ShootAndDriveToRendezvous(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory));
         m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM));
         m_sendableChooser.addOption("ShootToDriveToTargetWithSensorCenterOrRight", 
@@ -105,7 +107,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
            
            
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory, false));
-        m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake));
+        m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake,m_trajectoryModeFactory));
 
         if (ENABLE_AUTO_SELECTION == true) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);
