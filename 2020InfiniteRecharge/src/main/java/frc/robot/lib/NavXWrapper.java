@@ -31,6 +31,7 @@ public class NavXWrapper implements IGyroWrapper {
         SmartDashboard.putNumber("Yaw ", m_navX.getYaw());
         SmartDashboard.putNumber("Pitch ", m_navX.getPitch());
         SmartDashboard.putNumber("Roll ", m_navX.getRoll());
+        SmartDashboard.putNumber("Yaw Rate", m_navX.getRate());
     }
 
     @Override

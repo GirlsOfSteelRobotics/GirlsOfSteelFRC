@@ -34,6 +34,7 @@ import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.SingleShoot;
 import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
+import frc.robot.commands.autonomous.TurnToAngleProfiled;
 import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
@@ -90,7 +91,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
             m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 72));
             m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory, false));
-           
+            m_sendableChooser.addOption("Turn to Angle Profiled", new SetStartingPosition(chassis, 0, 0, 0).andThen(new TurnToAngleProfiled(90, chassis)));
+
         }
         m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM));
