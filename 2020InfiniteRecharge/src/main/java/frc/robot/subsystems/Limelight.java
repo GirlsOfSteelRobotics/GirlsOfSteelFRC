@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants;
@@ -67,12 +70,13 @@ public class Limelight extends SubsystemBase {
         m_limelightIsAimedEntry = driverDisplayTab.add("Limelight Is Aimed", limelightIsAimed()).withSize(4, 1)
                 .withPosition(4, 0).getEntry();
 
-        // VideoSource limelightSource =
-        // CameraServer.getInstance().getServer("limelight").getSource();
-        // tab.add("limelight", limelightSource)
-        // // .withSize(4, 3)
-        // // .withPosition(0, 5)
-        // ;
+        if (RobotBase.isReal())
+        {
+            HttpCamera limelightFeed = new HttpCamera("Limelight Camera", "http://10.35.4.11:5800/stream.mjpg", HttpCameraKind.kMJPGStreamer);
+            driverDisplayTab.add("limelight", limelightFeed)
+                    .withSize(4, 3)
+                    .withPosition(3, 5);
+        }
 
         m_steerPID = new PIDController(0, 0, 0);
 
