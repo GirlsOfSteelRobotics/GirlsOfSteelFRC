@@ -5,6 +5,8 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
@@ -83,7 +85,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
         double rightVelocityInchesPerSecond = Units.metersToInches(rightVelocityMeters);
         m_goalVelocityLeft = leftVelocityInchesPerSecond;
         m_goalVelocityRight = rightVelocityInchesPerSecond;
-        System.out.println("Setting goal velocity: " + m_goalVelocityLeft + ", " + m_goalVelocityRight);
+        //System.out.println("Setting goal velocity: " + m_goalVelocityLeft + ", " + m_goalVelocityRight);
         m_chassis.smartVelocityControl(m_goalVelocityLeft, m_goalVelocityRight);
     }
 
@@ -92,6 +94,15 @@ public class FollowTrajectory extends SequentialCommandGroup {
         super.initialize();
         m_timer.start();
         setIdealTrajectory(m_trajectory);
+
+        Trajectory.State initialPose = m_trajectory.getStates().get(0);
+        Trajectory.State endPose = m_trajectory.getStates().get(m_trajectory.getStates().size()-1);
+        System.out.println("m_trajectory: " + printState(initialPose) + " , " + printState(endPose));
+    }
+
+    private String printState(Trajectory.State state) {
+        Translation2d translation = state.poseMeters.getTranslation();
+        return translation.getX() + ", " + translation.getY();
     }
 
     @Override

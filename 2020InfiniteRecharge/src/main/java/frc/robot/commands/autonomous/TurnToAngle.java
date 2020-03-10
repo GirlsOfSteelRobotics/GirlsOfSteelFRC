@@ -2,6 +2,7 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.lib.DeadbandHelper;
 import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.Chassis;
@@ -14,7 +15,6 @@ public class TurnToAngle extends CommandBase {
             0);
     private static final PropertyManager.IProperty<Double> AUTO_KD = new PropertyManager.DoubleProperty("TurnToAngleKd",
             0);
-    private static final double MINIMUM_TURN_SPEED = .25; // The power required to overcome static friction
 
     private final Chassis m_chassis;
     private final double m_angle;
@@ -51,7 +51,7 @@ public class TurnToAngle extends CommandBase {
         m_steerPID.setD(AUTO_KD.getValue());
 
         double steeringSpeed = m_steerPID.calculate(m_chassis.getHeading(), m_angle);
-        steeringSpeed += Math.copySign(MINIMUM_TURN_SPEED, steeringSpeed);
+        steeringSpeed += Math.copySign(Constants.MINIMUM_TURN_SPEED, steeringSpeed);
 
         m_chassis.setSpeedAndSteer(0, -steeringSpeed);
 

@@ -70,6 +70,20 @@ public final class Constants {
     public static final double kTurnToleranceDeg = 5;
     public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
 
+    public static final double MINIMUM_TURN_SPEED = .25;
+
+    public static final double AUTO_LINE_LEFT_X = 121;
+    public static final double AUTO_LINE_LEFT_Y = -159;
+
+    public static final double OPPONENTS_TRENCH_X = 227;
+    public static final double OPPONENTS_TRENCH_Y = -285;
+    public static final double OPPONENTS_TRENCH_ANGLE = Math.toRadians(-30);
+
+    public static final double OPPONENTS_TRENCH_CELLS_X = 250;
+    public static final double OPPONENTS_TRENCH_CELLS_Y = -287;
+
+    public static final double AUTO_LINE_LEFT_SHOOT_ANGLE = Math.toRadians(-45);
+
 
 
 

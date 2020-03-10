@@ -118,7 +118,7 @@ mPwm:
     mMotorType: CIM
     mNumMotors: 2
   mMotorSimConfig: !!com.snobot.simulator.motor_sim.StaticLoadMotorSimulationConfig
-    mConversionFactor: 1304.45859873
+    mConversionFactor: 200
     mLoad: 0.58
   mName: Shooter (M)
   mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper

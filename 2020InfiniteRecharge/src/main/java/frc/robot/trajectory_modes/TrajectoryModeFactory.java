@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.autonomous.FollowTrajectory;
 import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
@@ -102,7 +103,8 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryRightSideToControlPanel(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
@@ -114,7 +116,8 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryControlPanelToRightSide(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig();
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.fastSpeedMetersPerSecond, AutoConstants.fastAccelerationMetersPerSecondSquared);
+
         getTrajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
@@ -149,6 +152,41 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
                 getTrajectoryConfig
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToAutoLine, chassis);
+    }
+
+    public Command getTrajectoryAutoLineToOpponentsTrench(Chassis chassis) {
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.normalSpeedMetersPerSecond, AutoConstants.normalAccelerationMetersPerSecondSquared);
+
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(Units.inchesToMeters(Constants.AUTO_LINE_LEFT_X), Units.inchesToMeters(Constants.AUTO_LINE_LEFT_Y), new Rotation2d(0)),
+                List.of(),
+                new Pose2d(Units.inchesToMeters(Constants.OPPONENTS_TRENCH_X), Units.inchesToMeters(Constants.OPPONENTS_TRENCH_Y), new Rotation2d(Constants.OPPONENTS_TRENCH_ANGLE)),
+                getTrajectoryConfig
+        );
+        return new FollowTrajectory(trajectory, chassis);
+    }
+
+    public Command getTrajectoryOpponentsTrenchToPickUpCell(Chassis chassis) {
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(Units.inchesToMeters(Constants.OPPONENTS_TRENCH_X), Units.inchesToMeters(Constants.OPPONENTS_TRENCH_Y), new Rotation2d(Constants.OPPONENTS_TRENCH_ANGLE)),
+                List.of(),
+                new Pose2d(Units.inchesToMeters(Constants.OPPONENTS_TRENCH_CELLS_X), Units.inchesToMeters(Constants.OPPONENTS_TRENCH_CELLS_Y), new Rotation2d(Constants.OPPONENTS_TRENCH_ANGLE)),
+                getTrajectoryConfig
+        );
+        return new FollowTrajectory(trajectory, chassis);
+    }
+    public Command getTrajectoryOpponentsTrenchToAutoLine(Chassis chassis) {
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.fastSpeedMetersPerSecond, AutoConstants.fastAccelerationMetersPerSecondSquared);
+        getTrajectoryConfig.setReversed(true);
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                new Pose2d(Units.inchesToMeters(Constants.OPPONENTS_TRENCH_CELLS_X), Units.inchesToMeters(Constants.OPPONENTS_TRENCH_CELLS_Y), new Rotation2d(0)),
+                List.of(),
+                new Pose2d(Units.inchesToMeters(Constants.AUTO_LINE_LEFT_X), Units.inchesToMeters(Constants.AUTO_LINE_LEFT_Y), new Rotation2d(Constants.AUTO_LINE_LEFT_SHOOT_ANGLE)),
+                getTrajectoryConfig
+        );
+        return new FollowTrajectory(trajectory, chassis);
     }
 
     private TrajectoryConfig getTrajectoryConfig(double kMaxSpeedMetersPerSecond, double kMaxAccelerationMetersPerSecondSquared) {

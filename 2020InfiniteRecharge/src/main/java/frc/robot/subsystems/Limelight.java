@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.Constants;
 import frc.robot.lib.PropertyManager;
 
 /**
@@ -41,7 +42,7 @@ public class Limelight extends SubsystemBase {
             "LimelightAngleOffset", 20.0);
 
     private static final double ALLOWABLE_ERROR = 2;
-    private static final double MIN_AREA = 1;
+    private static final double MIN_AREA = 0.5;
     private PIDController m_steerPID;
 
     // Put methods for controlling this subsystem
@@ -79,16 +80,16 @@ public class Limelight extends SubsystemBase {
     }
 
     public void zoom1X() {
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
+//        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
     }
 
     public void zoomIfNeeded() {
-        if( m_ta < 3.5 && m_ty < 12.0) {
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
-        }
-        //if( m_ta < 3.5 && m_ty < 12.0) {
-           // NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
-        //}
+//        if( m_ta < 3.5 && m_ty < 12.0) {
+//            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+//        }
+//        //if( m_ta < 3.5 && m_ty < 12.0) {
+//           // NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+//        //}
     }
 
     public double getSteerCommand() {
@@ -113,7 +114,10 @@ public class Limelight extends SubsystemBase {
         // double steerCmd = m_tx * STEER_K.getValue();
         // m_limelightSteerCommand = steerCmd;
         // return m_limelightSteerCommand;
-        return m_steerPID.calculate(-m_tx, 0);
+        double steeringSpeed =  m_steerPID.calculate(-m_tx, 0);
+        steeringSpeed += Math.copySign(Constants.MINIMUM_TURN_SPEED, steeringSpeed);
+
+        return steeringSpeed;
     }
 
     public double estimateDistance() {

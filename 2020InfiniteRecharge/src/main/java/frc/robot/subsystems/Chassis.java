@@ -281,7 +281,7 @@ public class Chassis extends SubsystemBase {
         m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
         m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);
 
-        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
+        //System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
     }
 
     public void smartVelocityControlMeters(double leftVelocityMeters, double rightVelocityMeters) {
