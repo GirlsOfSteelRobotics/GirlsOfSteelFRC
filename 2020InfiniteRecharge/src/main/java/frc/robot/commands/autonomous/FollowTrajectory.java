@@ -5,7 +5,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -41,8 +40,8 @@ public class FollowTrajectory extends SequentialCommandGroup {
             new DifferentialDriveKinematics(kTrackwidthMeters);
     }
 
-    private final NetworkTableEntry mIdealTableEntry;
-    private final NetworkTableEntry mMeasuredTableEntry;
+    private final NetworkTableEntry m_idealTableEntry;
+    private final NetworkTableEntry m_measuredTableEntry;
     private final Chassis m_chassis;
     private final Trajectory m_trajectory;
     private final Timer m_timer;
@@ -60,9 +59,9 @@ public class FollowTrajectory extends SequentialCommandGroup {
         NetworkTable trajectoryTable = NetworkTableInstance.getDefault().getTable("CoordinateGui").getSubTable("Ramsete Namespace");
         trajectoryTable.getEntry(".type").setString("Ramsete Namespace");
 
-        mMeasuredTableEntry = trajectoryTable.getEntry("Measured");
-        mIdealTableEntry = trajectoryTable.getEntry("Ideal");
-        if (mIdealTableEntry.getString("").isEmpty()) {
+        m_measuredTableEntry = trajectoryTable.getEntry("Measured");
+        m_idealTableEntry = trajectoryTable.getEntry("Ideal");
+        if (m_idealTableEntry.getString("").isEmpty()) {
             setIdealTrajectory(m_trajectory);
         }
         
@@ -90,13 +89,13 @@ public class FollowTrajectory extends SequentialCommandGroup {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         super.initialize();
         m_timer.start();
         setIdealTrajectory(m_trajectory);
 
         Trajectory.State initialPose = m_trajectory.getStates().get(0);
-        Trajectory.State endPose = m_trajectory.getStates().get(m_trajectory.getStates().size()-1);
+        Trajectory.State endPose = m_trajectory.getStates().get(m_trajectory.getStates().size() - 1);
         System.out.println("m_trajectory: " + printState(initialPose) + " , " + printState(endPose));
     }
 
@@ -120,7 +119,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
             .append(m_chassis.getLeftEncoderSpeed()).append(",")
             .append(m_chassis.getRightEncoderSpeed()).append(",");
 
-        mMeasuredTableEntry.setString(output.toString());
+        m_measuredTableEntry.setString(output.toString());
     }
 
     private void setIdealTrajectory(Trajectory trajectory) {
@@ -139,13 +138,12 @@ public class FollowTrajectory extends SequentialCommandGroup {
                 .append(heading).append(",");
         }
 
-        mIdealTableEntry.forceSetString("");
-        mIdealTableEntry.setString(output.toString());
+        m_idealTableEntry.forceSetString("");
+        m_idealTableEntry.setString(output.toString());
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "FollowTrajectory";
     }
 }

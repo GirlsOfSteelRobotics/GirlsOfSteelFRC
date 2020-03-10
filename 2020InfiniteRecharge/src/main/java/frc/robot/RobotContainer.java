@@ -67,7 +67,7 @@ public class RobotContainer {
         m_shooterConveyor = new ShooterConveyor();
         m_shooterIntake = new ShooterIntake();
         m_winch = new Winch(isEuropa());
-        m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_shooterConveyor, m_shooterIntake);
+        m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_shooterConveyor, m_shooterIntake, m_limelight);
         
         Shuffleboard.selectTab("Driver Tab");
 

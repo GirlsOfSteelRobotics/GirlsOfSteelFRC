@@ -231,7 +231,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getX() {
-        return (Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getX()));
+        return Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getX());
     }
 
     public double getY() {

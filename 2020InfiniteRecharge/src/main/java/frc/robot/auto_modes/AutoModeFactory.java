@@ -7,45 +7,31 @@
 
 package frc.robot.auto_modes;
 
-import java.util.List;
-
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.AlignLeftRight;
 import frc.robot.commands.AutomatedConveyorIntake;
 import frc.robot.commands.TuneRPM;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.DriveAtVelocity;
 import frc.robot.commands.autonomous.DriveDistance;
 import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
-import frc.robot.commands.autonomous.FollowTrajectory;
 import frc.robot.commands.autonomous.GoToPosition;
 import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.SingleShoot;
 import frc.robot.commands.autonomous.TimedDriveStraight;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.commands.autonomous.TurnToAngleProfiled;
-import frc.robot.commands.autonomous.FollowTrajectory.AutoConstants;
-import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.subsystems.*;
-import frc.robot.auto_modes.ShootToDriveForwardsNoSensor;
 import frc.robot.trajectory_modes.TrajectoryModeFactory;
 
 
 public class AutoModeFactory extends SequentialCommandGroup {
 
     private final SendableChooser<Command> m_sendableChooser;
-    private final TrajectoryModeFactory m_trajectoryModeFactory;
     private static final boolean TEST_MODE = true;
 
     private static final boolean ENABLE_AUTO_SELECTION = true;
@@ -57,10 +43,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public AutoModeFactory(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake) {
+    public AutoModeFactory(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake, Limelight limelight) {
        
         m_sendableChooser = new SendableChooser<>();
-        m_trajectoryModeFactory = new TrajectoryModeFactory();
+        TrajectoryModeFactory trajectoryModeFactory = new TrajectoryModeFactory();
         
         if (TEST_MODE) {
             double dX = 8 * 12;
@@ -90,12 +76,12 @@ public class AutoModeFactory extends SequentialCommandGroup {
             m_sendableChooser.addOption("Test. Set Starting Position", new SetStartingPosition(chassis, 0, 0, 0));
             m_sendableChooser.addOption("Test.SingleShot", new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
             m_sendableChooser.addOption("Test. Drive At Veloctity", new DriveAtVelocity(chassis, 72));
-            m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory, false));
+            m_sendableChooser.addOption("Shoot and Drive to Trench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory, false, limelight));
             m_sendableChooser.addOption("Turn to Angle Profiled", new SetStartingPosition(chassis, 0, 0, 0).andThen(new TurnToAngleProfiled(90, chassis)));
-
+            m_sendableChooser.addOption("Limelight", new AlignLeftRight(chassis, limelight));
         }
         m_sendableChooser.addOption("ShootAndDriveToRendezvous",
-                new ShootAndDriveToRendezvous(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory));
+                new ShootAndDriveToRendezvous(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory));
         m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM));
         m_sendableChooser.addOption("ShootToDriveToTargetWithSensorCenterOrRight", 
@@ -107,10 +93,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
            
            
-        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, m_trajectoryModeFactory, false));
-        m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake,m_trajectoryModeFactory));
+        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory,false, limelight));
+        m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory, limelight));
         m_sendableChooser.addOption("ShootAndDriveToOpponentsTrench",  new ShootAndDriveToOpponentsTrenchCommandGroup(chassis, shooter,
-                shooterConveyor, shooterIntake, m_trajectoryModeFactory, false));
+                shooterConveyor, shooterIntake, trajectoryModeFactory, false));
 
         if (ENABLE_AUTO_SELECTION == true) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);

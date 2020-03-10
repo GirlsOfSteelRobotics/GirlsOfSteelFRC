@@ -26,9 +26,9 @@ public class ShootAndDriveToOpponentsTrenchCommandGroup extends SequentialComman
         addCommands(new MovePiston(shooterIntake, true));
         addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 2)); //Shoot pre-loaded cells
         addCommands(trajectoryFactory.getTrajectoryAutoLineToOpponentsTrench(chassis)
-        .raceWith(new IntakeCells(shooterIntake, true)));
+            .raceWith(new IntakeCells(shooterIntake, true)));
 
-        if(useSensor == true) {
+        if (useSensor) {
             SequentialCommandGroup intake = new SequentialCommandGroup();
             intake.addCommands(new AutomatedConveyorIntake(shooterIntake, shooterConveyor),
                     new AutomatedConveyorIntake(shooterIntake, shooterConveyor),
@@ -41,7 +41,7 @@ public class ShootAndDriveToOpponentsTrenchCommandGroup extends SequentialComman
          //           .raceWith(trajectoryFactory.getTrajectoryOpponentsTrenchToPickUpCell(chassis)));
         }
         addCommands(new IntakeCells(shooterIntake, true).withTimeout(.5)
-        .raceWith(new ConveyorWhileHeld(shooterConveyor, false)).withTimeout(.15));
+            .raceWith(new ConveyorWhileHeld(shooterConveyor, false)).withTimeout(.15));
         addCommands(trajectoryFactory.getTrajectoryOpponentsTrenchToAutoLine(chassis));
         addCommands(new TurnToAngle(chassis, -30, 12));
         addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 2));

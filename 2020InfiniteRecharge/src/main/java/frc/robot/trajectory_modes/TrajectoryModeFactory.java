@@ -177,6 +177,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         );
         return new FollowTrajectory(trajectory, chassis);
     }
+
     public Command getTrajectoryOpponentsTrenchToAutoLine(Chassis chassis) {
         TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.fastSpeedMetersPerSecond, AutoConstants.fastAccelerationMetersPerSecondSquared);
         getTrajectoryConfig.setReversed(true);
@@ -189,18 +190,18 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         return new FollowTrajectory(trajectory, chassis);
     }
 
-    private TrajectoryConfig getTrajectoryConfig(double kMaxSpeedMetersPerSecond, double kMaxAccelerationMetersPerSecondSquared) {
+    private TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                    DriveConstants.kvVoltSecondsPerMeter,
-                                    DriveConstants.kaVoltSecondsSquaredPerMeter),
-            DriveConstants.kDriveKinematics,
-            DriveConstants.maxVoltage);
+            new DifferentialDriveVoltageConstraint(
+                new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                        DriveConstants.kvVoltSecondsPerMeter,
+                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
+                DriveConstants.kDriveKinematics,
+                DriveConstants.maxVoltage);
 
     TrajectoryConfig config =
-        new TrajectoryConfig(kMaxSpeedMetersPerSecond,
-                kMaxAccelerationMetersPerSecondSquared)
+        new TrajectoryConfig(maxSpeedMetersPerSecond,
+                maxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(DriveConstants.kDriveKinematics)
         // Apply the voltage constraint

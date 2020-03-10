@@ -9,10 +9,10 @@ package frc.robot.auto_modes;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.AlignLeftRight;
 import frc.robot.commands.ConveyorWhileHeld;
 import frc.robot.commands.IntakeCells;
 import frc.robot.commands.autonomous.AutoShoot;
-import frc.robot.commands.autonomous.DriveDistanceSmartMotion;
 import frc.robot.commands.autonomous.SetStartingPosition;
 import frc.robot.commands.autonomous.TurnToAngle;
 import frc.robot.subsystems.*;
@@ -23,12 +23,10 @@ public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public ShootAndDriveToTrenchRightSide(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake,  TrajectoryModeFactory trajectoryFactory) {
+    public ShootAndDriveToTrenchRightSide(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake,  TrajectoryModeFactory trajectoryFactory, Limelight limelight) {
 
         double allowableErrorAngle;
         allowableErrorAngle = 10;
-        double allowableErrorDrive;
-        allowableErrorDrive = 12;
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
         addCommands(new SetStartingPosition(chassis, 122, -31, 0)); //start with shooter facing the wall
@@ -51,6 +49,8 @@ public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
 
         addCommands(trajectoryFactory.getTrajectoryControlPanelToRightSide(chassis)); //go back to center autoline
         addCommands(new TurnToAngle(chassis, 25, 12));
+        addCommands(new AlignLeftRight(chassis, limelight)
+                .withTimeout(1));
         addCommands(new AutoShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM, 3));
 
     }

@@ -12,6 +12,7 @@ public class VelocityControlDrivingTuning extends CommandBase {
 
         super.addRequirements(chassis);
     }
+
     public void initialize() {
     }
 
