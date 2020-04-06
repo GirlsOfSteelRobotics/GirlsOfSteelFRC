@@ -201,6 +201,8 @@ public class Chassis extends SubsystemBase {
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
+
+        System.out.println("Hello world!");
     }
 
     //////////////////////////////
