@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.TelopDriveCommand;
 import frc.robot.subsystems.ChassisSubsystem;
+import frc.robot.subsystems.PJCodelab2020Part1Subsystem;
+import frc.robot.subsystems.PJCodelab2020Part2Subsystem;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -25,6 +27,9 @@ import java.util.List;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+    private PJCodelab2020Part1Subsystem m_pjCodelab2020Part1;
+    private PJCodelab2020Part2Subsystem m_pjCodelab2020Part2;
 
     ///////////////////////////////////////
     // Don't touch things below here
@@ -52,6 +57,7 @@ public class RobotContainer {
 
         sortedNames.sort(String::compareTo);
 
+        System.out.println("\n\n\n\n********************************************************");
         for(String className : sortedNames)
         {
             try {
@@ -61,6 +67,7 @@ public class RobotContainer {
                 e.printStackTrace();
             }
         }
+        System.out.println("********************************************************\n\n\n\n");
 
         // Configure the button bindings
         configureButtonBindings();
