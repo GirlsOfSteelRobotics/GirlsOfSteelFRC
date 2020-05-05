@@ -1,16 +1,18 @@
+
+apply plugin: 'jacoco'
 apply plugin: "pmd"
 apply plugin: "checkstyle"
 
 checkstyle {
-    toolVersion = "8.28"
-    configDir = file("${project.rootDir}/styleguide")
+    toolVersion = "8.31"
+    configDir = file("${project.rootDir}/../styleguide")
     config = resources.text.fromFile(new File(configDir, "checkstyle.xml"))
 }
 
 pmd {
-    toolVersion = '6.10.0'
+    toolVersion = '6.20.0'
     consoleOutput = true
     reportsDir = file("${project.buildDir}/reports/pmd")
-    ruleSetFiles = files(file("$rootDir/styleguide/pmd-ruleset.xml"))
+    ruleSetFiles = files(file("$rootDir/../styleguide/pmd-ruleset.xml"))
     ruleSets = []
 }

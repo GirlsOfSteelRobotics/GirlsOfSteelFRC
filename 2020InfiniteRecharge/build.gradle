@@ -117,4 +117,11 @@ task copyWidgets(type: Copy, dependsOn: deleteOldWidgets) {
 }
 /////////////////////////////////////////////////////
 
-apply from: "styleguide.gradle"
+apply from: "../styleguide.gradle"
+
+checkstyle {
+    ignoreFailures = true
+}
+pmd {
+    ignoreFailures = true
+}

@@ -70,7 +70,8 @@ dependencies {
     compile 'edu.wpi.first.shuffleboard.plugin:networktables:' + shuffleboard_version
 }
 
-apply from: "styleguide.gradle"
+
+apply from: "../styleguide.gradle"
 
 publishing {
     repositories {
