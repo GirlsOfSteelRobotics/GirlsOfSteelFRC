@@ -21,6 +21,24 @@ jobs:
       working-directory: 2020InfiniteRecharge
       run: ./gradlew build
 
+  build_offseason_robot:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up Java
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+    
+    - name: Build Robot
+      working-directory: 2020InfiniteRecharge
+      run: ./gradlew build
+
   build_dashboard:
     strategy:
       matrix:
