@@ -1,15 +1,10 @@
 package com.gos.shuffleboard_codelab.sd_widgets.ss;
 
-import com.gos.shuffleboard_codelab.sd_widgets.Utils;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
 import com.gos.shuffleboard_codelab.sd_widgets.ss.data.ElevatorData;
 import com.gos.shuffleboard_codelab.sd_widgets.ss.data.PunchData;
 import com.gos.shuffleboard_codelab.sd_widgets.ss.data.SpinningWheelData;

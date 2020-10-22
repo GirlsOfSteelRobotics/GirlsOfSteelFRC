@@ -6,15 +6,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ChassisSubsystem;
 
 
-public class TelopDriveCommand extends CommandBase {
+public class TeleopDriveCommand extends CommandBase {
     private final XboxController m_joystick;
-    private final ChassisSubsystem chassisSubsystem;
+    private final ChassisSubsystem m_chassisSubsystem;
 
-    public TelopDriveCommand(ChassisSubsystem chassisSubsystem) {
-        this.chassisSubsystem = chassisSubsystem;
+    public TeleopDriveCommand(ChassisSubsystem chassisSubsystem) {
+        m_chassisSubsystem = chassisSubsystem;
         m_joystick = new XboxController(0);
 
-        addRequirements(this.chassisSubsystem);
+        addRequirements(this.m_chassisSubsystem);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class TelopDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        chassisSubsystem.setSpeedAndSteer(m_joystick.getY(GenericHID.Hand.kLeft), m_joystick.getX(GenericHID.Hand.kRight));
+        m_chassisSubsystem.setSpeedAndSteer(m_joystick.getY(GenericHID.Hand.kLeft), m_joystick.getX(GenericHID.Hand.kRight));
     }
 
     @Override

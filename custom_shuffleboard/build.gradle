@@ -75,7 +75,7 @@ dependencies {
 }
 
 
-//apply from: "../styleguide/styleguide.gradle"
+apply from: "../styleguide/styleguide.gradle"
 
 publishing {
     repositories {

@@ -14,17 +14,18 @@ import edu.wpi.first.wpilibj.RobotBase;
  * Unless you know what you are doing, do not modify this file except to
  * change the parameter class to the startRobot call.
  */
-public final class Main
-{
-    private Main() {}
+public final class Main {
+    private Main() {
 
-   /**
-    * Main initialization method. Do not perform any initialization here.
-    * <p>
-    * If you change your main Robot class (name), change the parameter type.
-    */
-    public static void main(String... args)
-    {
+    }
+
+    /**
+     * Main initialization method. Do not perform any initialization here.
+     * <p>
+     * If you change your main Robot class (name), change the parameter type.
+     */
+    public static void main(String... args) {
         RobotBase.startRobot(Robot::new);
     }
 }
+
