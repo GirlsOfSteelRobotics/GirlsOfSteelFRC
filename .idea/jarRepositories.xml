@@ -22,9 +22,24 @@
       <option name="url" value="https://frcmaven.wpi.edu/artifactory/release" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="SnobotSim" />
+      <option name="name" value="SnobotSim" />
+      <option name="url" value="http://raw.githubusercontent.com/snobotsim/maven_repo/master/development" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="MavenLocal" />
+      <option name="name" value="MavenLocal" />
+      <option name="url" value="file:/$MAVEN_REPOSITORY$/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="WPILocal" />
       <option name="name" value="WPILocal" />
       <option name="url" value="file:/$PROJECT_DIR$/../../../../../../Public/wpilib/2020/maven/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Wpi" />
+      <option name="name" value="Wpi" />
+      <option name="url" value="http://first.wpi.edu/FRC/roborio/maven/release/" />
     </remote-repository>
   </component>
 </project>

@@ -6,7 +6,7 @@ apply plugin: 'checkstyle'
 
 checkstyle {
     toolVersion = "8.28"
-    configDir = file("${project.rootDir}/styleguide")
+    configDir = file("${project.rootDir}/../styleguide")
     config = resources.text.fromFile(new File(configDir, "checkstyle.xml"))
 }
 

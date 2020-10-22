@@ -247,3 +247,8 @@ imgui.ini
 **/build/
 
 # End of https://www.gitignore.io/api/java,gradle,intellij+iml,visualstudiocode,linux,macos,windows,c++,visualstudiocode
+
+# SnobotSim
+logs/
+simulator_config/joystick_config.properties
+simulator_config/networktables.ini*
