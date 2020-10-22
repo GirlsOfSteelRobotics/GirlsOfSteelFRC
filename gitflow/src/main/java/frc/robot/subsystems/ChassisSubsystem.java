@@ -21,7 +21,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightDriveA = new Talon(2);
 
         SpeedController leftDriveB = new Talon(1);
-        SpeedController rightDriveB = new Talon(1);
+        SpeedController rightDriveB = new Talon(3);
 
         m_differentialDrive = new DifferentialDrive(new SpeedControllerGroup(m_leftDriveA, leftDriveB),
                 new SpeedControllerGroup(m_rightDriveA, rightDriveB));

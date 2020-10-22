@@ -11,5 +11,19 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "java.test.config": [
+    {
+        "name": "myConfiguration",
+        "workingDirectory": "${workspaceFolder}",
+        "args": [ "-c", "com.test" ],
+        "vmargs": [ "-Xmx512M" ],
+        "env": { "PATH": "${workspaceFolder}/build/tmp/snobotSimJava" },
+    },
+    {
+        // Another configuration item...
+    }],
+  "java.test.defaultConfig": "myConfiguration"
+
 }
+
