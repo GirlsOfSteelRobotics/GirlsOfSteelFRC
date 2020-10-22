@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="(girflow) Clean Build Robot" type="GradleRunConfiguration" factoryName="Gradle" folderName="GitflowCodelab">
+  <configuration default="false" name="(simulator) Build Robot" type="GradleRunConfiguration" factoryName="Gradle" folderName="SimulatorCodelab">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/gitflow" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/basic_simulator" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
@@ -10,7 +10,6 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="clean" />
           <option value="build" />
         </list>
       </option>

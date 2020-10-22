@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="(gitflow) Run Snobot Sim" type="GradleRunConfiguration" factoryName="Gradle" folderName="Gitflow">
+  <configuration default="false" name="(gitflow) Run Snobot Sim" type="GradleRunConfiguration" factoryName="Gradle" folderName="GitflowCodelab">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$/gitflow" />

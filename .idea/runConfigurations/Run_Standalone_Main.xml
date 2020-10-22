@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Standalone Main" type="Application" factoryName="Application" folderName="ShuffleboardCodelab">
+    <option name="MAIN_CLASS_NAME" value="com.gos.shuffleboard_codelab.sd_widgets.ss.CodelabSuperStructureStandaloneMain" />
+    <module name="custom_shuffleboard.main" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.gos.shuffleboard_codelab.sd_widgets.ss.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

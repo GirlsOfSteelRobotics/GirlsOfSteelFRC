@@ -1,0 +1,87 @@
+!!com.snobot.simulator.config.v1.SimulatorConfigV1
+mAccelerometers:
+- mHandle: 421
+  mName: Pigeon X
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonAccelWrapper
+- mHandle: 422
+  mName: Pigeon Y
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonAccelWrapper
+- mHandle: 423
+  mName: Pigeon Z
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonAccelWrapper
+mAnalogIn: []
+mAnalogOut: []
+mDefaultI2CWrappers: {}
+mDefaultSpiWrappers: {}
+mDigitalIO: []
+mEncoders:
+- mConnectedSpeedControllerHandle: 101
+  mHandle: 101
+  mName: Drive Left
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+- mConnectedSpeedControllerHandle: 103
+  mHandle: 103
+  mName: Drive Right
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+- mConnectedSpeedControllerHandle: 105
+  mHandle: 105
+  mName: Lift
+  mType: com.snobot.simulator.simulator_components.smart_sc.SmartScEncoder
+mGyros:
+- mHandle: 421
+  mName: Pigeon Yaw
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonGyroWrapper
+- mHandle: 422
+  mName: Pigeon Pitch
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonGyroWrapper
+- mHandle: 423
+  mName: Pigeon Roll
+  mType: com.snobot.simulator.simulator_components.ctre.CtrePigeonImuSim$PigeonGyroWrapper
+mPwm:
+- mHandle: 101
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 12.0
+  mName: Drive Left (A)
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 102
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Drive Left (B)
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 103
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: -12.0
+  mName: Drive Right (A)
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 104
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Drive Right (B)
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 105
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 12.0
+  mName: Lift
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+- mHandle: 106
+  mMotorModelConfig: null
+  mMotorSimConfig: !!com.snobot.simulator.motor_sim.SimpleMotorSimulationConfig
+    mMaxSpeed: 0.0
+  mName: Spinny
+  mType: com.snobot.simulator.simulator_components.rev.RevSpeedControllerSimWrapper
+mRelays: []
+mSimulatorComponents:
+- !!com.snobot.simulator.simulator_components.config.TankDriveConfig
+  mGyroHandle: 421
+  mLeftMotorHandle: 101
+  mRightMotorHandle: 103
+  mTurnKp: 33.0
+mSolenoids:
+- mHandle: 0
+  mName: Punch
+  mType: com.snobot.simulator.module_wrapper.wpi.WpiSolenoidWrapper
