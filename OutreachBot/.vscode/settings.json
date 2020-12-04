@@ -12,5 +12,7 @@
     "**/.settings": true,
     "**/.factorypath": true,
     "**/*~": true
-  }
+  },
+  "java.checkstyle.configuration": "${workspaceFolder}/../styleguide/checkstyle.xml",
+  "java.checkstyle.version": "8.18"
 }

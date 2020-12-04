@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "shengchen.vscode-checkstyle",
+        "pjreiniger.snobotsimextension",
+        "vscjava.vscode-java-test"
+    ]
+  }
