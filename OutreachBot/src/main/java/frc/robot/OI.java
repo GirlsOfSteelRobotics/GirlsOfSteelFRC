@@ -12,6 +12,8 @@
 package frc.robot;
 
 import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -107,7 +109,7 @@ autoLine.whenPressed(new DrivePastAutoLine());
         SmartDashboard.putData("ReverseBall", new ReverseBall());
         SmartDashboard.putData("AngleUp", new AngleUp());
         SmartDashboard.putData("AngleDown", new AngleDown());
-        SmartDashboard.putData("RunShooter", new RunShooter());
+        SmartDashboard.putData("RunShooter", new RunShooter(3500));
         SmartDashboard.putData("StopShooter", new StopShooter());
         SmartDashboard.putData("FeedIn", new FeedIn());
         SmartDashboard.putData("FeedOut", new FeedOut());
