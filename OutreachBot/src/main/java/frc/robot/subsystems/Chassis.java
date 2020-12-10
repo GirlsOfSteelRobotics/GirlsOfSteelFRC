@@ -74,8 +74,9 @@ public class Chassis extends SubsystemBase {
 
     }
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+    public void driveByJoystick(double joystickSpeed, double joystickSteer) {
+        m_mecanumDrive.driveCartesian(joystickSpeed, 0, joystickSteer);
+    }
 
 }
 
