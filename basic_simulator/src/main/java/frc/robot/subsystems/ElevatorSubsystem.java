@@ -1,21 +1,26 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SmartDashboardNames;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase {
     public static final double ALLOWABLE_POSITION_ERROR = .25;
-    private static final double KP = .2;
+    private static final double KP = .3;
 
-    private final CANSparkMax m_liftMotor;
+    private final SimableCANSparkMax m_liftMotor;
     private final CANEncoder m_liftEncoder;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
@@ -25,8 +30,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_lowerLimitEntry;
     private final NetworkTableEntry m_upperLimitEntry;
 
+    private ISimWrapper m_elevatorSim;
+
     public ElevatorSubsystem() {
-        m_liftMotor = new CANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushed);
         m_liftEncoder = m_liftMotor.getEncoder();
 
         m_lowerLimitSwitch = new DigitalInput(Constants.DIO_LIFT_LOWER_LIMIT);
@@ -37,6 +44,12 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_heightEntry = table.getEntry(SmartDashboardNames.LIFTING_HEIGHT);
         m_lowerLimitEntry = table.getEntry(SmartDashboardNames.LIFTING_LOWER_LIMIT_SWITCH);
         m_upperLimitEntry = table.getEntry(SmartDashboardNames.LIFTING_UPPER_LIMIT_SWITCH);
+
+        if (RobotBase.isSimulation()) {
+            m_elevatorSim = new ElevatorSimWrapper(Constants.ElevatorSimConstants.createSim(),
+                    new RevMotorControllerSimWrapper(m_liftMotor),
+                    RevEncoderSimWrapper.create(m_liftMotor));
+        }
     }
 
     @Override

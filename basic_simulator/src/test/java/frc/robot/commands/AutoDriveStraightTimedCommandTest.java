@@ -4,6 +4,7 @@ import frc.robot.BaseTestFixture;
 import frc.robot.subsystems.ChassisSubsystem;
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class AutoDriveStraightTimedCommandTest  extends BaseTestFixture {
@@ -16,7 +17,7 @@ public class AutoDriveStraightTimedCommandTest  extends BaseTestFixture {
 
         runCycles(100);
         assertTrue(chassis.getAverageDistance() > 0);
-        // assertFalse(command.isScheduled()); // Can't simulate timers right now
+        assertFalse(command.isScheduled());
     }
 
     @Test
@@ -27,6 +28,6 @@ public class AutoDriveStraightTimedCommandTest  extends BaseTestFixture {
 
         runCycles(100);
         assertTrue(chassis.getAverageDistance() < 0);
-        // assertFalse(command.isScheduled()); // Can't simulate timers right now
+        assertFalse(command.isScheduled());
     }
 }

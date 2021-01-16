@@ -1,8 +1,7 @@
 package frc.robot.commands;
 
-import com.snobot.simulator.wrapper_accessors.DataAccessorFactory;
-import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import frc.robot.BaseTestFixture;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ChassisSubsystem;
@@ -19,10 +18,8 @@ public class DriveChassisWithJoystickCommandTest extends BaseTestFixture {
         ChassisSubsystem chassis = container.getChassis();
 
         runCycles(5, () -> {
-            float[] axisInfo = new float[6];
-            axisInfo[XboxController.Axis.kLeftY.value] = -.7f; // Negated because of pushing up gives negative numbers
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(0, axisInfo, new short[]{}, 0, 0);
-            DriverStationDataJNI.notifyNewData();
+            DriverStationSim.setJoystickAxis(0, XboxController.Axis.kLeftY.value, -.7); // Negated because of pushing up gives negative numbers
+            DriverStationSim.notifyNewData();
         });
 
         assertTrue(chassis.getLeftDistance() > 0);
@@ -36,9 +33,8 @@ public class DriveChassisWithJoystickCommandTest extends BaseTestFixture {
         ChassisSubsystem chassis = container.getChassis();
 
         runCycles(5, () -> {
-            float[] axisInfo = new float[6];
-            axisInfo[XboxController.Axis.kLeftY.value] = .7f; // Positive because of pushing up gives negative numbers
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(0, axisInfo, new short[]{}, 0, 0);
+            DriverStationSim.setJoystickAxis(0, XboxController.Axis.kLeftY.value, .7); // Positive because of pushing up gives negative numbers
+            DriverStationSim.notifyNewData();
         });
 
         assertTrue(chassis.getLeftDistance() < 0);
@@ -52,14 +48,27 @@ public class DriveChassisWithJoystickCommandTest extends BaseTestFixture {
         ChassisSubsystem chassis = container.getChassis();
 
         runCycles(5, () -> {
-            float[] axisInfo = new float[6];
-            axisInfo[XboxController.Axis.kRightX.value] = .7f; // Positive because of pushing up gives negative numbers
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(0, axisInfo, new short[]{}, 0, 0);
-            DriverStationDataJNI.notifyNewData();
+            DriverStationSim.setJoystickAxis(0, XboxController.Axis.kRightX.value, .7);
+            DriverStationSim.notifyNewData();
         });
 
         assertEquals(0, chassis.getAverageDistance(), DOUBLE_EPSILON);
         assertTrue(chassis.getHeading() > 0);
+
+    }
+
+    @Test
+    public void testTurnCounterClockwise() {
+        RobotContainer container = new RobotContainer();
+        ChassisSubsystem chassis = container.getChassis();
+
+        runCycles(5, () -> {
+            DriverStationSim.setJoystickAxis(0, XboxController.Axis.kRightX.value, -.7);
+            DriverStationSim.notifyNewData();
+        });
+
+        assertEquals(0, chassis.getAverageDistance(), DOUBLE_EPSILON);
+        assertTrue(chassis.getHeading() < 0);
 
     }
 }

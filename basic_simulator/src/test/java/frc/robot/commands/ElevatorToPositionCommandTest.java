@@ -12,12 +12,12 @@ public class ElevatorToPositionCommandTest extends BaseTestFixture {
     @Test
     public void testExecution() {
         ElevatorSubsystem elevator = new ElevatorSubsystem();
-        ElevatorToPositionCommand command = new ElevatorToPositionCommand(elevator, 20);
+        ElevatorToPositionCommand command = new ElevatorToPositionCommand(elevator, 20, false);
         command.schedule();
 
-        runCycles(100);
+        runCycles(100, null, () -> !command.isScheduled());
 
         assertFalse(command.isScheduled());
-        assertEquals(20, elevator.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR);
+        assertEquals(20, elevator.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 2);
     }
 }

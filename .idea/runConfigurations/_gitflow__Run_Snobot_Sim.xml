@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="runJavaSnobotSim" />
+          <option value="simulateJava" />
         </list>
       </option>
       <option name="vmOptions" value="" />

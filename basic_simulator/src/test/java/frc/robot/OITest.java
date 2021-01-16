@@ -1,7 +1,7 @@
 package frc.robot;
 
-import com.snobot.simulator.wrapper_accessors.DataAccessorFactory;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.PunchSubsystem;
 import org.junit.Test;
@@ -19,17 +19,13 @@ public class OITest extends BaseTestFixture {
 
         // Press the button, check that it extends
         runCycles(2, () -> {
-            int buttonMask = new ButtonMaskBuilder().addButtonPressed(XboxController.Button.kA.value).build();
-
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(1, new float[5], new short[1], 10, buttonMask);
+            DriverStationSim.setJoystickButton(1, XboxController.Button.kA.value, true);
         });
         assertTrue(punch.isExtended());
 
         // Release the button and make sure it goes back
         runCycles(2, () -> {
-            int buttonMask = 0;
-
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(1, new float[5], new short[1], 10, buttonMask);
+            DriverStationSim.setJoystickButton(1, XboxController.Button.kA.value, false);
         });
         assertFalse(punch.isExtended());
     }
@@ -46,26 +42,22 @@ public class OITest extends BaseTestFixture {
 
         // Press the button, check that it goes to the mid height
         runCycles(loopsToRun, () -> {
-            int buttonMask = new ButtonMaskBuilder().addButtonPressed(XboxController.Button.kY.value).build();
-
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(1, new float[5], new short[1], 10, buttonMask);
+            DriverStationSim.setJoystickButton(1, XboxController.Button.kY.value, true);
         });
-        assertEquals(40, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR);
+        assertEquals(40, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 2);
+        resetJoysticks();
 
         // Press the button, check that it goes to the low height
         runCycles(loopsToRun, () -> {
-            int buttonMask = new ButtonMaskBuilder().addButtonPressed(XboxController.Button.kB.value).build();
-
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(1, new float[5], new short[1], 10, buttonMask);
+            DriverStationSim.setJoystickButton(1, XboxController.Button.kB.value, true);
         });
-        assertEquals(0, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR);
+        assertEquals(0, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 2);
+        resetJoysticks();
 
         // Press the button, check that it goes to the high height
         runCycles(loopsToRun, () -> {
-            int buttonMask = new ButtonMaskBuilder().addButtonPressed(XboxController.Button.kX.value).build();
-
-            DataAccessorFactory.getInstance().getDriverStationAccessor().setJoystickInformation(1, new float[5], new short[1], 10, buttonMask);
+            DriverStationSim.setJoystickButton(1, XboxController.Button.kX.value, true);
         });
-        assertEquals(60, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR);
+        assertEquals(60, lift.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 2);
     }
 }

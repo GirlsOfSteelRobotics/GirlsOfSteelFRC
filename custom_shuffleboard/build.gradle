@@ -5,6 +5,7 @@ plugins {
     id "idea"
     id "eclipse"
     id "maven-publish"
+    id "application"
 }
 
 repositories {
@@ -17,7 +18,7 @@ repositories {
 }
 
 ext {
-    shuffleboard_version = "2020.3.2";
+    shuffleboard_version = "2021.1.2";
     publishing_version = "1.0.0";
     publishing_url = "${rootDir}/build/publishing"
 }
@@ -69,9 +70,10 @@ dependencies {
     
     compile 'edu.wpi.first.shuffleboard:shuffleboard:' + shuffleboard_version
     compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard.plugin:networktables:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard.plugin:networktables:' + shuffleboard_version
+}
+
+application {
+    mainClassName = "com.gos.shuffleboard_codelab.sd_widgets.ss.CodelabSuperStructureStandaloneMain"
 }
 
 
