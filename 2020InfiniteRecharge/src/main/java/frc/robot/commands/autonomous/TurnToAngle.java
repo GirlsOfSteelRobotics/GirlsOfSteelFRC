@@ -22,7 +22,7 @@ public class TurnToAngle extends CommandBase {
 
     private final DeadbandHelper m_deadbandHelper;
 
-    private PIDController m_steerPID;
+    private final PIDController m_steerPID;
 
     private double m_error;
 

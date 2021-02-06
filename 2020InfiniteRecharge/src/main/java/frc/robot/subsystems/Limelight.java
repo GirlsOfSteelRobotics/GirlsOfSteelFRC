@@ -72,8 +72,8 @@ public class Limelight extends SubsystemBase {
                 .withPosition(4, 0).getEntry();
 
         if (RobotBase.isReal()) {
-             HttpCamera limelightFeed = new HttpCamera("Limelight Camera", "http://10.35.4.11:5800/stream.mjpg", HttpCameraKind.kMJPGStreamer);
-             driverDisplayTab.add("limelight", limelightFeed)
+            HttpCamera limelightFeed = new HttpCamera("Limelight Camera", "http://10.35.4.11:5800/stream.mjpg", HttpCameraKind.kMJPGStreamer);
+            driverDisplayTab.add("limelight", limelightFeed)
                      .withSize(4, 3)
                      .withPosition(3, 5)
                      .withWidget(BuiltInWidgets.kCameraStream);
@@ -85,16 +85,16 @@ public class Limelight extends SubsystemBase {
     }
 
     public void zoom1X() {
-//        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
+        //        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
     }
 
     public void zoomIfNeeded() {
-//        if( m_ta < 3.5 && m_ty < 12.0) {
-//            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
-//        }
-//        //if( m_ta < 3.5 && m_ty < 12.0) {
-//           // NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
-//        //}
+        //        if( m_ta < 3.5 && m_ty < 12.0) {
+        //            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+        //        }
+        //        //if( m_ta < 3.5 && m_ty < 12.0) {
+        //           // NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+        //        //}
     }
 
     public double getSteerCommand() {
@@ -184,12 +184,6 @@ public class Limelight extends SubsystemBase {
     public boolean limelightIsAimed() {
         boolean isAimed = Math.abs(m_tx) <= ALLOWABLE_ERROR;
         boolean isBig = m_ta > MIN_AREA;
-        if (isAimed && isBig == true) {
-            return true;
-
-        } else {
-            return false;
-
-        }
+        return isAimed && isBig;
     }
 }

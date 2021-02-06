@@ -16,7 +16,11 @@ import edu.wpi.first.wpilibj.Preferences;
  * @author PJ
  *
  */
-public class PropertyManager {
+public final class PropertyManager {
+
+    private PropertyManager() {
+
+    }
 
     private static final Set<String> REGISTERED_KEYS = new HashSet<>();
 
@@ -76,7 +80,7 @@ public class PropertyManager {
         }
 
         @Override
-        public TypeT getValue() {
+        public final TypeT getValue() {
             if (Preferences.getInstance().containsKey(m_key)) {
                 return m_getter.apply(m_key, m_default);
             }

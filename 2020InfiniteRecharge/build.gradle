@@ -79,7 +79,4 @@ jar {
 }
 
 apply from: "../styleguide/styleguide.gradle"
-checkstyle.ignoreFailures = true
-pmd.ignoreFailures = true
-
 apply from: "../widget_helper.gradle"

@@ -35,7 +35,7 @@ public class NavXWrapper implements IGyroWrapper {
     }
 
     @Override
-    public double getYaw() {
+    public final double getYaw() {
         return  m_navX.getYaw() - m_startingPosition;
     }
 

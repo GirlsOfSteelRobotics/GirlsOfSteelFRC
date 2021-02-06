@@ -58,6 +58,7 @@ public class Chassis extends SubsystemBase {
     private final MotionMagicProperty m_leftProperties;
     private final MotionMagicProperty m_rightProperties;
 
+    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public Chassis() {
         m_masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
         m_followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
@@ -201,8 +202,6 @@ public class Chassis extends SubsystemBase {
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
-
-        System.out.println("Hello world!");
     }
 
     //////////////////////////////

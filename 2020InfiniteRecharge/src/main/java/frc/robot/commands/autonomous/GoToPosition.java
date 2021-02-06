@@ -6,6 +6,8 @@ import frc.robot.subsystems.Chassis;
 
 public class GoToPosition extends CommandBase {
 
+    private static final double MAX_SPEED = .8;
+
     private final Chassis m_chassis;
 
     private final double m_allowableError;
@@ -33,10 +35,12 @@ public class GoToPosition extends CommandBase {
         System.out.println("finalPositionX" + finalPositionX + "finalPositionY" + finalPositionY);
     }
 
+    @Override
     public void initialize(){
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     public void execute() {
 
         double currentAngle;
@@ -71,16 +75,17 @@ public class GoToPosition extends CommandBase {
         System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed 
             + ", currentAngle " + currentAngle + ", errorAngle " + m_errorAngle + ", allowableError" + m_allowableError);
 
-        if (speed > .8) {
-            speed = .8;
+        if (speed > MAX_SPEED) {
+            speed = MAX_SPEED;
         }
-        if (speed < -.8) {
-            speed = -.8;
+        if (speed < -MAX_SPEED) {
+            speed = -MAX_SPEED;
         }
         m_chassis.setSpeedAndSteer(speed, -turnSpeed);
 
     }
-    
+
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public double calculateAngleBetweenNegAndPos180(double angle) {
         while (angle > 180) {
             angle -= 360;
@@ -92,6 +97,7 @@ public class GoToPosition extends CommandBase {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     public boolean isFinished() {
         if (m_hyp < m_allowableError) {
             System.out.println("Done!");
@@ -103,6 +109,7 @@ public class GoToPosition extends CommandBase {
     }
 
     // Called once after isFinished returns true
+    @Override
     public void end(boolean interrupted) {
         m_chassis.setSpeedAndSteer(0, 0);
     }

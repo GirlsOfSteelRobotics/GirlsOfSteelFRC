@@ -2,7 +2,7 @@ package frc.robot.lib;
 
 public class DeadbandHelper {
     private int m_goodLoops;
-    private int m_requiredLoops;
+    private final int m_requiredLoops;
     
     public DeadbandHelper(int requiredLoops) {
         m_requiredLoops = requiredLoops;

@@ -7,6 +7,7 @@ public class TogglePiston extends CommandBase {
 
     private final ShooterIntake m_shooterIntake;
 
+    @SuppressWarnings("PMD.UnusedFormalParameter")
     public TogglePiston(ShooterIntake shooterIntake, boolean intake) {
         this.m_shooterIntake = shooterIntake;
 

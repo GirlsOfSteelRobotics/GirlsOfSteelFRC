@@ -107,7 +107,7 @@ public class RobotContainer {
     
     DigitalInput m_digitalInput = new DigitalInput(Constants.DIGITAL_INPUT_EUROPA);
 
-    public boolean isEuropa() {
+    public final boolean isEuropa() {
         System.out.println("Is this Europa? " + !m_digitalInput.get());
         return !m_digitalInput.get();
     }

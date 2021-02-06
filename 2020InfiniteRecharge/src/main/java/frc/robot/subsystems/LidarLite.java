@@ -9,11 +9,10 @@ import frc.robot.Constants;
 
 public class LidarLite extends SubsystemBase {
 
-    private Counter m_counter;
+    private final Counter m_counter;
 
     public LidarLite() {
-        DigitalInput source = new DigitalInput(Constants.DIGITAL_INPUT_LIDAR_LITE);
-        m_counter = new Counter(source);
+        m_counter = new Counter(new DigitalInput(Constants.DIGITAL_INPUT_LIDAR_LITE));
         m_counter.setMaxPeriod(1.0);
         // Configure for measuring rising to falling pulses
         m_counter.setSemiPeriodMode(true);

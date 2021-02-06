@@ -27,9 +27,9 @@ public class Shooter extends SubsystemBase {
     private final CANSparkMax m_master;
     private final CANSparkMax m_follower;
     private final CANEncoder m_encoder;
-    private CANPIDController m_pidController;
+    private final CANPIDController m_pidController;
 
-    private Limelight m_limelight;
+    private final Limelight m_limelight;
 
     private double m_goalRPM; 
     
@@ -37,7 +37,6 @@ public class Shooter extends SubsystemBase {
 
     private final PropertyManager.IProperty<Double> m_dashboardKp;
     private final PropertyManager.IProperty<Double> m_dashboardKff;
-    private final PropertyManager.IProperty<Double> m_dashboardKd;
 
     private final NetworkTableEntry m_isAtShooterSpeedEntry;
 
@@ -49,7 +48,6 @@ public class Shooter extends SubsystemBase {
         
         m_dashboardKp = new PropertyManager.DoubleProperty("shooter_kp", SHOOTER_KP);
         m_dashboardKff = new PropertyManager.DoubleProperty("shooter_kff", SHOOTER_KFF);
-        m_dashboardKd = new PropertyManager.DoubleProperty("shooter_kd", SHOOTER_KD);
 
         m_limelight = limelight;
 
@@ -71,7 +69,7 @@ public class Shooter extends SubsystemBase {
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Shooter");
         NetworkTableInstance.getDefault().getTable("SuperStructure").getEntry(".type").setString("SuperStructure");
 
-        m_isAtShooterSpeedEntry = driveDisplayTab.add("Shooter At Speed", isAtFullSpeed())
+        m_isAtShooterSpeedEntry = driveDisplayTab.add("Shooter At Speed", isAtFullSpeed()) // NOPMD
             .withSize(4, 1)
             .withPosition(0, 0)
             .getEntry();
@@ -94,12 +92,12 @@ public class Shooter extends SubsystemBase {
         double rpm = m_encoder.getVelocity();
         // SmartDashboard.putNumber("RPM", rpm);
         // SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
-        // m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
-        // m_customNetworkTable.getEntry("Current RPM").setDouble(rpm);
-        // m_customNetworkTable.getEntry("Goal RPM").setDouble(m_goalRPM);
+        m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
+        m_customNetworkTable.getEntry("Current RPM").setDouble(rpm);
+        m_customNetworkTable.getEntry("Goal RPM").setDouble(m_goalRPM);
 
-        // m_pidController.setP(m_dashboardKp.getValue());
-        // m_pidController.setFF(m_dashboardKff.getValue());
+        m_pidController.setP(m_dashboardKp.getValue());
+        m_pidController.setFF(m_dashboardKff.getValue());
         // System.out.println("kp: " + m_dashboardKp.getValue() + ", " + m_dashboardKff.getValue() + " goal: " + m_goalRPM + "== " + rpm);
 
         m_isAtShooterSpeedEntry.setBoolean(isAtFullSpeed());
