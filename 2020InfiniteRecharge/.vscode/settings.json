@@ -1,5 +1,6 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
+  "java.server.launchMode": "Standard",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -10,8 +11,7 @@
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
-    "**/.factorypath": true
-  },
-  "java.checkstyle.configuration": "${workspaceFolder}/styleguide/checkstyle.xml",
-  "java.checkstyle.version": "8.28"
+    "**/.factorypath": true,
+    "**/*~": true
+  }
 }

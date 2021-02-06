@@ -1,8 +1,6 @@
 plugins {
     id "java"
-    id "eclipse"
-    id "edu.wpi.first.GradleRIO" version "2020.2.2"
-    id "com.snobot.simulator.plugin.SnobotSimulatorPlugin" version "2020-0.0.0" apply false
+    id "edu.wpi.first.GradleRIO" version "2021.2.2"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -40,22 +38,7 @@ deploy {
 }
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = false
-
-/////////////////////////////////////////////////////
-// Snobot Sim
-sourceSets {
-    simulatorExtensions
-    {
-        java {
-            srcDirs += ["src/snobot_sim/java"]
-        }
-    }
-}
-apply plugin: com.snobot.simulator.plugin.SnobotSimulatorPlugin
-apply from: "snobotsim/snobot_sim.gradle"
-// End Snobot Sim
-/////////////////////////////////////////////////////
+def includeDesktopSupport = true
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
@@ -74,6 +57,17 @@ dependencies {
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
+    simulation wpi.deps.sim.driverstation(wpi.platforms.desktop, false)
+
+    // Websocket extensions require additional configuration.
+    // simulation wpi.deps.sim.ws_server(wpi.platforms.desktop, false)
+    // simulation wpi.deps.sim.ws_client(wpi.platforms.desktop, false)
+}
+
+// Simulation configuration (e.g. environment variables).
+sim {
+    // Sets the websocket client remote host.
+    // envVar "HALSIMWS_HOST", "10.0.0.2"
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
@@ -84,44 +78,8 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
 
-/////////////////////////////////////////////////////
-// Widget Helper
+apply from: "../styleguide/styleguide.gradle"
+checkstyle.ignoreFailures = true
+pmd.ignoreFailures = true
 
-repositories {
-    mavenLocal()
-    maven { url "http://raw.githubusercontent.com/pjreiniger/maven_repo/master" }
-}
-
-configurations {
-    coordinate_gui_widget
-}
-
-dependencies {
-    // Helper for getting the coordinate gui from maven into the shuffleboard area
-    coordinate_gui_widget 'org.snobot.coordinate_gui:CoordinateGuiWidget2020:2020.0.0'
-    coordinate_gui_widget 'com.gos.infinite_recharge.sd_widgets:RobotWidget:1.0.0'
-}
-
-task deleteOldWidgets(type: Delete) {
-    delete fileTree("${System.getProperty("user.home")}/Shuffleboard/plugins") {
-        include '**/*.jar'
-    }
-    followSymlinks = true
-}
-
-task copyWidgets(type: Copy, dependsOn: deleteOldWidgets) {
-    group = "Girls of Steel"
-    description = "Copies any Girls of Steel widgets from maven into the shuffleboard area"
-    from configurations.coordinate_gui_widget
-    into("${System.getProperty("user.home")}/Shuffleboard/plugins")
-}
-/////////////////////////////////////////////////////
-
-apply from: "../styleguide.gradle"
-
-checkstyle {
-    ignoreFailures = true
-}
-pmd {
-    ignoreFailures = true
-}
+apply from: "../widget_helper.gradle"

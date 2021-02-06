@@ -1,0 +1,29 @@
+
+repositories {
+    mavenLocal()
+    maven { url "http://raw.githubusercontent.com/pjreiniger/maven_repo/master" }
+}
+
+configurations {
+    custom_widgets
+}
+
+dependencies {
+    // Helper for getting the coordinate gui from maven into the shuffleboard area
+    custom_widgets 'org.snobot.coordinate_gui:CoordinateGuiWidget2020:2020.0.0'
+    custom_widgets 'com.gos.infinite_recharge.sd_widgets:RobotWidget:1.0.0'
+}
+
+task deleteOldWidgets(type: Delete) {
+    delete fileTree("${System.getProperty("user.home")}/Shuffleboard/plugins") {
+        include '**/*.jar'
+    }
+    followSymlinks = true
+}
+
+task copyWidgets(type: Copy, dependsOn: deleteOldWidgets) {
+    group = "Girls of Steel"
+    description = "Copies any Girls of Steel widgets from maven into the shuffleboard area"
+    from configurations.custom_widgets
+    into("${System.getProperty("user.home")}/Shuffleboard/plugins")
+}
