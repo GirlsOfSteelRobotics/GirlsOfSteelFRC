@@ -48,8 +48,8 @@ public class GoToPosition extends CommandBase {
         double dy; 
         double angle;
 
-        dx = m_finalPositionX - m_chassis.getX();
-        dy = m_finalPositionY - m_chassis.getY();
+        dx = m_finalPositionX - m_chassis.getXInches();
+        dy = m_finalPositionY - m_chassis.getYInches();
         m_hyp = Math.sqrt((dx * dx) + (dy * dy));
         angle = Math.toDegrees(Math.atan2(dy, dx));
 

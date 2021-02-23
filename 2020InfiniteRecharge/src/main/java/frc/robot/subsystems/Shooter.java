@@ -2,15 +2,23 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.EncoderType;
+import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.lib.PropertyManager;
@@ -24,8 +32,8 @@ public class Shooter extends SubsystemBase {
     private static final double ALLOWABLE_ERROR_PERCENT = 1;          
 
 
-    private final CANSparkMax m_master;
-    private final CANSparkMax m_follower;
+    private final SimableCANSparkMax m_master;
+    private final SimableCANSparkMax m_follower;
     private final CANEncoder m_encoder;
     private final CANPIDController m_pidController;
 
@@ -39,10 +47,12 @@ public class Shooter extends SubsystemBase {
     private final PropertyManager.IProperty<Double> m_dashboardKff;
 
     private final NetworkTableEntry m_isAtShooterSpeedEntry;
+    
+    private ISimWrapper m_simulator;
 
     public Shooter(ShuffleboardTab driveDisplayTab, Limelight limelight) {
-        m_master = new CANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
-        m_follower = new CANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
+        m_master = new SimableCANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
+        m_follower = new SimableCANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
         m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 8192);
         m_pidController = m_master.getPIDController();
         
@@ -73,6 +83,14 @@ public class Shooter extends SubsystemBase {
             .withSize(4, 1)
             .withPosition(0, 0)
             .getEntry();
+            
+        if (RobotBase.isSimulation()) {
+
+            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getVex775Pro(2), 1.66, .008);
+            m_simulator = new FlywheelSimWrapper(flywheelSim,
+                    new RevMotorControllerSimWrapper(m_master),
+                    RevEncoderSimWrapper.create(m_master));
+        }
     } 
 
     
@@ -113,5 +131,10 @@ public class Shooter extends SubsystemBase {
         m_master.set(0);
         m_limelight.turnLimelightOff();
         //m_pidController.setReference(0, ControlType.kVelocity);
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_simulator.update();
     }
 }

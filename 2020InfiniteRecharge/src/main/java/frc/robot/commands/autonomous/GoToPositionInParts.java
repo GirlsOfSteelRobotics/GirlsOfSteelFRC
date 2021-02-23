@@ -7,8 +7,8 @@ public class GoToPositionInParts extends SequentialCommandGroup {
 
     public GoToPositionInParts(Chassis chassis, double finalPositionX, double finalPositionY, double allowableAngleError, double allowableDistanceError) {
 
-        double dx = finalPositionX - chassis.getX();
-        double dy = finalPositionY - chassis.getY();
+        double dx = finalPositionX - chassis.getXInches();
+        double dy = finalPositionY - chassis.getYInches();
         double hyp = Math.sqrt((dx * dx) + (dy * dy));
         double angle = Math.toDegrees(Math.acos(dx / hyp));
 

@@ -79,3 +79,4 @@ jar {
 }
 
 apply from: "../styleguide/styleguide.gradle"
+apply from: "../widget_helper.gradle"

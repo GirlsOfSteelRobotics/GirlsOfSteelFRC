@@ -1,31 +1,46 @@
 package frc.robot.subsystems;
 
-//import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.robot.sim.CameraSimulator;
+
+import org.snobotv2.coordinate_gui.RobotPositionPublisher;
+import org.snobotv2.module_wrappers.navx.NavxWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
+
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.system.LinearSystem;
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.numbers.N2;
 import frc.robot.Constants;
+import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.lib.IGyroWrapper;
 import frc.robot.lib.MotionMagicProperty;
 import frc.robot.lib.NavXWrapper;
-import frc.robot.lib.PigeonGyro;
 
 import com.revrobotics.CANPIDController;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@SuppressWarnings("PMD.TooManyFields")
 public class Chassis extends SubsystemBase {
 
     //private static final double FULL_THROTTLE_SECONDS = 1.0;
@@ -33,11 +48,11 @@ public class Chassis extends SubsystemBase {
     private static final double GEAR_RATIO = 40.0 / 10.0 * 34.0 / 20.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    private final CANSparkMax m_masterLeft;
-    private final CANSparkMax m_followerLeft; // NOPMD
+    private final SimableCANSparkMax m_masterLeft;
+    private final SimableCANSparkMax m_followerLeft; // NOPMD
 
-    private final CANSparkMax m_masterRight;
-    private final CANSparkMax m_followerRight; // NOPMD
+    private final SimableCANSparkMax m_masterRight;
+    private final SimableCANSparkMax m_followerRight; // NOPMD
 
     private final CANEncoder m_rightEncoder;
     private final CANEncoder m_leftEncoder;
@@ -50,20 +65,22 @@ public class Chassis extends SubsystemBase {
     private final DifferentialDrive m_drive;
 
     private final DifferentialDriveOdometry m_odometry;
+    private final List<Field2d> m_fields;
 
-    private final NetworkTable m_customNetworkTable;
-
-    private int m_robotPositionCtr; // Used for downsampling the updates
+    private final RobotPositionPublisher m_coordinateGuiPublisher;
 
     private final MotionMagicProperty m_leftProperties;
     private final MotionMagicProperty m_rightProperties;
+    
+    private DifferentialDrivetrainSimWrapper m_simulator;
+    private CameraSimulator m_cameraSimulator;
 
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public Chassis() {
-        m_masterLeft = new CANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
-        m_followerLeft = new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
-        m_masterRight = new CANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless);
-        m_followerRight = new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_masterLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_MASTER_SPARK, MotorType.kBrushless);
+        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_masterRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_MASTER_SPARK, MotorType.kBrushless);
+        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
         m_masterLeft.restoreFactoryDefaults();
         m_followerLeft.restoreFactoryDefaults();
@@ -87,12 +104,7 @@ public class Chassis extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
-        if (RobotBase.isSimulation()) {
-            m_gyro = new PigeonGyro(0);
-        }
-        else {
-            m_gyro = new NavXWrapper(); 
-        }
+        m_gyro = new NavXWrapper();
 
         IdleMode idleMode = IdleMode.kCoast;
         m_masterLeft.setIdleMode(idleMode);
@@ -120,10 +132,7 @@ public class Chassis extends SubsystemBase {
         m_drive.setExpiration(0.1);
         m_drive.setMaxOutput(0.8);
 
-        NetworkTable coordinateGuiContainer = NetworkTableInstance.getDefault().getTable("CoordinateGui");
-        coordinateGuiContainer.getEntry(".type").setString("CoordinateGui");
-
-        m_customNetworkTable = coordinateGuiContainer.getSubTable("RobotPosition");
+        m_coordinateGuiPublisher = new RobotPositionPublisher();
 
         // Smart Motion stuff
         double kp = 0.01000;
@@ -163,7 +172,7 @@ public class Chassis extends SubsystemBase {
 
         m_leftPidController.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
         m_rightPidController.setSmartMotionMinOutputVelocity(minVel, smartMotionSlot);
-        
+
         m_leftProperties.updateIfChanged(true);
         m_rightProperties.updateIfChanged(true);
 
@@ -174,6 +183,47 @@ public class Chassis extends SubsystemBase {
 
         m_drive.setSafetyEnabled(false);
 
+        m_fields = new ArrayList<>();
+        createField("InfiniteRecharge");
+        createField("Barrel");
+        createField("Bounce");
+        createField("GalacticSearchA");
+        createField("GalacticSearchB");
+        createField("Slalom");
+
+
+        if (RobotBase.isSimulation()) {
+
+            LinearSystem<N2, N2, N2> kDrivetrainPlant = LinearSystemId.identifyDrivetrainSystem(
+                    DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter,
+                    DriveConstants.kvVoltSecondsPerRadian, DriveConstants.kaVoltSecondsSquaredPerRadian);
+            DCMotor kDriveGearbox = DCMotor.getNEO(2);
+
+            DifferentialDrivetrainSim drivetrainSim = new DifferentialDrivetrainSim(
+                    kDrivetrainPlant,
+                    kDriveGearbox,
+                    GEAR_RATIO,
+                    DriveConstants.kTrackwidthMeters,
+                    Units.inchesToMeters(WHEEL_DIAMETER) / 2.0,
+                    null);
+
+            m_simulator = new DifferentialDrivetrainSimWrapper(
+                    drivetrainSim,
+                    new RevMotorControllerSimWrapper(m_masterLeft),
+                    new RevMotorControllerSimWrapper(m_masterRight),
+                    RevEncoderSimWrapper.create(m_masterLeft),
+                    RevEncoderSimWrapper.create(m_masterRight),
+                    new NavxWrapper().getYawGyro());
+            m_simulator.setRightInverted(false);
+            m_cameraSimulator = new CameraSimulator();
+        }
+    }
+
+    private void createField(String name) {
+
+        Field2d field = new Field2d();
+        m_fields.add(field);
+        Shuffleboard.getTab("Fields").add(name + "Field", field);
     }
 
     @Override
@@ -181,6 +231,10 @@ public class Chassis extends SubsystemBase {
         m_gyro.poll();
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), Units.inchesToMeters(m_leftEncoder.getPosition()),
             Units.inchesToMeters(m_rightEncoder.getPosition()));
+
+        for (Field2d field : m_fields) {
+            field.setRobotPose(m_odometry.getPoseMeters());
+        }
 
         // SmartDashboard.putNumber("x", getX());
         // SmartDashboard.putNumber("y", getY());
@@ -190,15 +244,7 @@ public class Chassis extends SubsystemBase {
         SmartDashboard.putNumber("right encoder speed", getRightEncoderSpeed());
         SmartDashboard.putNumber("left encoder speed", getLeftEncoderSpeed());
 
-        m_customNetworkTable.getEntry("X").setDouble(getX());
-        m_customNetworkTable.getEntry("Y").setDouble(getY());
-        m_customNetworkTable.getEntry("Angle").setDouble(getHeading());
-
-        // Actually update the display every 5 loops = 100ms
-        if (m_robotPositionCtr % 5 == 0) {
-            m_customNetworkTable.getEntry("Ctr").setDouble(m_robotPositionCtr);
-        }
-        ++m_robotPositionCtr;
+        m_coordinateGuiPublisher.publish(getPose());
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
@@ -223,20 +269,35 @@ public class Chassis extends SubsystemBase {
         return m_rightEncoder.getVelocity();
     }
 
-    public void setPosition(double x, double y, double angle) {
-        m_gyro.setYaw(angle);
+    public void setPositionInches(double x, double y, double angle) {
+        setPositionMeters(Units.inchesToMeters(x), Units.inchesToMeters(y), angle);
+    }
+
+    public void setPositionMeters(double x, double y, double angle) {
+        resetOdometry(new Pose2d(x, y, Rotation2d.fromDegrees(angle)));
+    }
+
+    public void resetOdometry(Pose2d pose) {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
-        Rotation2d rotation = Rotation2d.fromDegrees(angle);
-        m_odometry.resetPosition(new Pose2d(new Translation2d(Units.inchesToMeters(x), Units.inchesToMeters(y)), rotation), rotation);
+        m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+        m_simulator.resetOdometry(pose);
     }
 
-    public double getX() {
-        return Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getX());
+    public double getXMeters() {
+        return m_odometry.getPoseMeters().getTranslation().getX();
     }
 
-    public double getY() {
-        return Units.metersToInches(m_odometry.getPoseMeters().getTranslation().getY());
+    public double getYMeters() {
+        return m_odometry.getPoseMeters().getTranslation().getY();
+    }
+
+    public double getXInches() {
+        return Units.metersToInches(getXMeters());
+    }
+
+    public double getYInches() {
+        return Units.metersToInches(getYMeters());
     }
 
     public double getHeading() {
@@ -271,25 +332,23 @@ public class Chassis extends SubsystemBase {
     }
 
     public void driveDistance(double leftPosition, double rightPosition) {
-        m_drive.setSafetyEnabled(false);
         m_leftPidController.setReference(leftPosition, ControlType.kSmartMotion);
         m_rightPidController.setReference(rightPosition, ControlType.kSmartMotion);
+        m_drive.feed();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
-        m_drive.setSafetyEnabled(false);
         // System.out.println("Driving velocity");
         m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
         m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);
+        m_drive.feed();
 
         //System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
     }
 
     public void smartVelocityControlMeters(double leftVelocityMeters, double rightVelocityMeters) {
-        double leftVelocityInchesPerSecond;
-        leftVelocityInchesPerSecond = Units.metersToInches(leftVelocityMeters);
-        double rightVelocityInchesPerSecond;
-        rightVelocityInchesPerSecond = Units.metersToInches(rightVelocityMeters);
+        double leftVelocityInchesPerSecond = Units.metersToInches(leftVelocityMeters);
+        double rightVelocityInchesPerSecond = Units.metersToInches(rightVelocityMeters);
 
         smartVelocityControl(leftVelocityInchesPerSecond, rightVelocityInchesPerSecond);
     }
@@ -297,5 +356,11 @@ public class Chassis extends SubsystemBase {
     public void stop() {
         m_drive.stopMotor();
         System.out.println("Stopping motors");
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_simulator.update();
+        m_cameraSimulator.update(getPose());
     }
 }
