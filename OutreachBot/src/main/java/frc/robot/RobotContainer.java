@@ -117,11 +117,11 @@ public class RobotContainer {
         SmartDashboard.putData("AutoLine", new DrivePastAutoLine(m_chassis));
 
         final JoystickButton extendCollector = new JoystickButton(m_driverJoystick, 1);
-        extendCollector.whenPressed(new ExtendCollector(m_collector), true);
+        extendCollector.whileHeld(new ExtendCollector(m_collector), true);
         SmartDashboard.putData("Extend Collector", new ExtendCollector(m_collector));
 
         final JoystickButton retractCollector = new JoystickButton(m_driverJoystick, 1);
-        retractCollector.whenPressed(new RetractCollector(m_collector), true);
+        retractCollector.whileHeld(new RetractCollector(m_collector), true);
         SmartDashboard.putData("Retract Collector", new RetractCollector(m_collector));
 
         final JoystickButton angleUp = new JoystickButton(m_operatorJoystick, 1);
