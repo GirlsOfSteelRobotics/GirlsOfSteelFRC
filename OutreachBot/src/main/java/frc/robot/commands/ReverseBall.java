@@ -52,11 +52,13 @@ public class ReverseBall extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        m_collector.reverseBall();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        m_collector.stopIntake();
     }
 
     // Returns true when the command should end.

@@ -82,5 +82,14 @@ public class Collector extends SubsystemBase {
     public void reverseBall() {
         m_collector.set(-COLLECTOR_SPEED);
     }
+
+    public void stopIntake() {
+        m_collector.set(0); 
+    }
+
+    public void stopFourbar() {
+        m_fourBarLeft.set(0); 
+        m_fourBarRight.set(0); 
+    }
 }
 
