@@ -49,6 +49,12 @@ public class TrajectoryUtils {
         SetStartingPosition setPosition = new SetStartingPosition(chassis, trajectory.getInitialPose());
         return setPosition.andThen(followTrajectory);
     }
+
+    public static Command createTrajectory(String fileName, TrajectoryConfig trajectoryConfig, Chassis chassis) {
+        Trajectory trajectory = loadingTrajectory(fileName, trajectoryConfig);
+        FollowTrajectory followTrajectory = new FollowTrajectory(trajectory, chassis);
+        return followTrajectory;
+    }
 }
 
 
