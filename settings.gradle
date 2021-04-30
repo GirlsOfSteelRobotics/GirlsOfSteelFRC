@@ -28,3 +28,6 @@ pluginManagement {
 
 include '2020InfiniteRecharge'
 include 'OutreachBot'
+include 'libraries:GirlsOfSteelLib'
+include 'libraries:GirlsOfSteelLibRev'
+include 'libraries:GirlsOfSteelLibCtre'
