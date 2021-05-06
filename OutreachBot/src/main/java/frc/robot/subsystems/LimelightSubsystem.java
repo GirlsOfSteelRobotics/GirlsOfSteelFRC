@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
-    private static final double OBJECT_HEIGHT = Units.feetToMeters(10);
-    private static final double ROBOT_HEIGHT = Units.feetToMeters(3);
+    public static final double OBJECT_HEIGHT = Units.feetToMeters(10);
+    public static final double ROBOT_HEIGHT = Units.feetToMeters(3);
     private final NetworkTableEntry m_yawAngle;
     private final NetworkTableEntry m_elevationAngle;
     //private final NetworkTableEntry m_targetArea;
