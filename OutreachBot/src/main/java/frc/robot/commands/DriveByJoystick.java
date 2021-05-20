@@ -55,7 +55,8 @@ public class DriveByJoystick extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_chassis.driveByJoystick(m_joystick.getY(Hand.kLeft), m_joystick.getX(Hand.kRight));
+        //inverting y because negative moves it forward
+        m_chassis.driveByJoystick(-m_joystick.getY(Hand.kLeft), m_joystick.getX(Hand.kRight));
     }
 
     // Called once the command ends or is interrupted.

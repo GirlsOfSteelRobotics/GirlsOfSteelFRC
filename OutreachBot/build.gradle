@@ -40,6 +40,22 @@ deploy {
 // Set this to true to enable desktop support.
 def includeDesktopSupport = true
 
+//////////////////////////////////////////
+// GOS Libraries
+def is_root_project = "${rootDir}" == "${projectDir}"
+if (is_root_project) {
+    sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLib/src/main/java/"
+    sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLibRev/src/main/java/"
+}
+else {
+    dependencies {
+        compile project(":libraries:GirlsOfSteelLib")
+        compile project(":libraries:GirlsOfSteelLibRev")
+    }
+}
+
+//////////////////////////////////////////
+
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -77,6 +93,3 @@ jar {
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
-
-apply from: "../styleguide/styleguide.gradle"
-apply from: "../widget_helper.gradle"

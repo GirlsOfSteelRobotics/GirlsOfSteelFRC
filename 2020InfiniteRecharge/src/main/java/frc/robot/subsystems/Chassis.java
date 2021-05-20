@@ -7,6 +7,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.robot.lib.PidProperty;
+import frc.robot.lib.RevPidPropertyBuilder;
 import frc.robot.sim.CameraSimulator;
 
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
@@ -32,7 +34,6 @@ import edu.wpi.first.wpiutil.math.numbers.N2;
 import frc.robot.Constants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
 import frc.robot.lib.IGyroWrapper;
-import frc.robot.lib.MotionMagicProperty;
 import frc.robot.lib.NavXWrapper;
 
 import com.revrobotics.CANPIDController;
@@ -69,8 +70,8 @@ public class Chassis extends SubsystemBase {
 
     private final RobotPositionPublisher m_coordinateGuiPublisher;
 
-    private final MotionMagicProperty m_leftProperties;
-    private final MotionMagicProperty m_rightProperties;
+    private final PidProperty m_leftProperties;
+    private final PidProperty m_rightProperties;
     
     private DifferentialDrivetrainSimWrapper m_simulator;
     private CameraSimulator m_cameraSimulator;
@@ -148,21 +149,21 @@ public class Chassis extends SubsystemBase {
         double kMinOutput = -1;
         int smartMotionSlot = 0;
 
-        m_leftProperties = MotionMagicProperty.Builder.createBuilder("Chassis")
-            .addP(lockConstants, kp, m_leftPidController::setP)
-            .addI(lockConstants, ki, m_leftPidController::setI)
-            .addD(lockConstants, kd, m_leftPidController::setD)
-            .addFF(lockConstants, kff, m_leftPidController::setFF)
-            .addMaxVelocity(lockConstants, maxVel, (double value) -> m_leftPidController.setSmartMotionMaxVelocity(value, 0))
-            .addMaxAcceleration(lockConstants, maxAcc, (double value) -> m_leftPidController.setSmartMotionMaxAccel(value, 0))
+        m_leftProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_leftPidController, 0)
+            .addP(kp)
+            .addI(ki)
+            .addD(kd)
+            .addFF(kff)
+            .addMaxVelocity(maxVel)
+            .addMaxAcceleration(maxAcc)
             .build();
-        m_rightProperties = MotionMagicProperty.Builder.createBuilder("Chassis")
-            .addP(lockConstants, kp, m_rightPidController::setP)
-            .addI(lockConstants, ki, m_rightPidController::setI)
-            .addD(lockConstants, kd, m_rightPidController::setD)
-            .addFF(lockConstants, kff, m_rightPidController::setFF)
-            .addMaxVelocity(lockConstants, maxVel, (double value) -> m_rightPidController.setSmartMotionMaxVelocity(value, 0))
-            .addMaxAcceleration(lockConstants, maxAcc, (double value) -> m_rightPidController.setSmartMotionMaxAccel(value, 0))
+        m_rightProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_rightPidController, 0)
+            .addP(kp)
+            .addI(ki)
+            .addD(kd)
+            .addFF(kff)
+            .addMaxVelocity(maxVel)
+            .addMaxAcceleration(maxAcc)
             .build();
 
         m_leftPidController.setOutputRange(kMinOutput, kMaxOutput);

@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'edu.wpi.first.WpilibTools' version '0.7.1'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url "https://frcmaven.wpi.edu/artifactory/release/" }
+    maven { url 'http://www.revrobotics.com/content/sw/max/sdk/maven/' }
+}
+
+dependencies {
+    compile wpilibTools.deps.wpilibJava("wpilibj")
+    compile "com.revrobotics.frc:SparkMax-java:1.5.4"
+    compile project(":libraries:GirlsOfSteelLib")
+}
+
+test {
+    useJUnitPlatform()
+}

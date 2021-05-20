@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auto_modes.AutoModeFactory;
 import frc.robot.commands.DriveByJoystick;
 import frc.robot.lib.PropertyManager;
@@ -25,6 +27,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.trajectory_modes.TrajectoryBarrel;
+import frc.robot.trajectory_modes.TrajectoryBounce;
+import frc.robot.trajectory_modes.TrajectoryGalacticSearchA;
+import frc.robot.trajectory_modes.TrajectoryGalacticSearchB;
+import frc.robot.trajectory_modes.TrajectorySlalom;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -84,6 +91,13 @@ public class RobotContainer {
         CommandScheduler.getInstance().onCommandInterrupt(command ->  System.out.println(command.getName() + " was interrupted"));
 
         PropertyManager.purgeExtraKeys();
+        SmartDashboard.putData("SlalomPath", (Sendable) TrajectorySlalom.slalom(m_chassis));
+        SmartDashboard.putData("BouncePath", (Sendable) TrajectoryBounce.bounce(m_chassis));
+        SmartDashboard.putData("BarrelPath", (Sendable) TrajectoryBarrel.barrel(m_chassis));
+        SmartDashboard.putData("GalacticSearchARed", (Sendable) TrajectoryGalacticSearchA.galacticSearchARed(m_chassis));
+        SmartDashboard.putData("GalacticSearchABlue", (Sendable) TrajectoryGalacticSearchA.galacticSearchABlue(m_chassis));
+        SmartDashboard.putData("GalacticSearchBRed", (Sendable) TrajectoryGalacticSearchB.galacticSearchBRed(m_chassis));
+        SmartDashboard.putData("GalacticSearchBBlue", (Sendable) TrajectoryGalacticSearchB.galacticSearchBBlue(m_chassis));
     }
 
     /**

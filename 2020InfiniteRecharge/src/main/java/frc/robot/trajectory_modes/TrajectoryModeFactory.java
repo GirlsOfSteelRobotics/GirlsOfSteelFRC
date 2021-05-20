@@ -190,7 +190,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         return new FollowTrajectory(trajectory, chassis);
     }
 
-    private TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
+    public static TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
             new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(DriveConstants.ksVolts,
@@ -210,7 +210,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         return config;
     }
 
-    private TrajectoryConfig getTrajectoryConfig() {
+    public static TrajectoryConfig getTrajectoryConfig() {
         return  getTrajectoryConfig(AutoConstants.normalSpeedMetersPerSecond, AutoConstants.normalAccelerationMetersPerSecondSquared);
 
     }
