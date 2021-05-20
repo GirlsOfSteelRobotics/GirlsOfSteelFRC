@@ -7,7 +7,6 @@ import frc.robot.subsystems.LimelightSubsystem;
 
 public class AimWithLimelightCommand extends CommandBase {
 
-    private static final double YAW_ALLOWABLE_ERROR = 3;
     private final Chassis m_chassis;
     private final LimelightSubsystem m_limelightSubsystem;
 
@@ -25,16 +24,14 @@ public class AimWithLimelightCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double currentYaw = m_limelightSubsystem.limelightAngle();
-        m_chassis.driveByJoystick(0, Math.signum(currentYaw) * .25);
+        double errorYaw = m_limelightSubsystem.limelightAngle();
+        //negative to account for difference in turning with limelight
+        m_chassis.angleAim(-errorYaw);
     }
 
     @Override
     public boolean isFinished() {
-        double currentYaw = m_limelightSubsystem.limelightAngle();
-        boolean complete = Math.abs(currentYaw) < YAW_ALLOWABLE_ERROR;
-        return complete;
-
+        return m_chassis.allowedAngle();
 
     }
 
