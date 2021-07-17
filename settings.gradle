@@ -27,7 +27,9 @@ pluginManagement {
 }
 
 include '2020InfiniteRecharge'
+include '2020InfiniteRechargeDashboard'
 include 'OutreachBot'
+include 'OutreachBotDashboard'
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'

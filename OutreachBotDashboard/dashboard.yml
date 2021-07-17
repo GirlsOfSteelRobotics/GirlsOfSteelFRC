@@ -1,0 +1,5 @@
+
+base_package: com.gos.outreach.shuffleboard
+plugin_summary: "Widgets for the Outreach Robot"
+plugin_name: "OutreachRobot"
+widgets: []
