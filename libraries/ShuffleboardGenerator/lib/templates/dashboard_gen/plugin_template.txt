@@ -1,0 +1,47 @@
+package {{overall_config.base_package}};
+{% for widget in overall_config.widgets %}
+import {{overall_config.base_package}}.{{widget.package_name}}.{{widget.table}}Widget;
+import {{overall_config.base_package}}.{{widget.package_name}}.{{widget.table}}DataType;
+{%- endfor %}
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import edu.wpi.first.shuffleboard.api.data.DataType;
+import edu.wpi.first.shuffleboard.api.plugin.Description;
+import edu.wpi.first.shuffleboard.api.plugin.Plugin;
+import edu.wpi.first.shuffleboard.api.widget.ComponentType;
+import edu.wpi.first.shuffleboard.api.widget.WidgetType;
+
+import java.util.List;
+import java.util.Map;
+
+@Description(group = "{{overall_config.base_package}}", name = "{{overall_config.plugin_name}}", version = PluginVersion.VERSION, summary = "{{overall_config.plugin_summary}}")
+public class {{overall_config.plugin_name}} extends Plugin {
+
+    @Override
+    public List<ComponentType> getComponents() {
+        return ImmutableList.of(
+        {%- for widget in overall_config.widgets %}
+            WidgetType.forAnnotatedWidget({{widget.table}}Widget.class){% if not loop.last %}, {%endif%}
+        {%- endfor %});
+
+    }
+
+    @Override
+    public List<DataType> getDataTypes() {
+        return ImmutableList.of(
+        {%- for widget in overall_config.widgets %}
+            {{widget.table}}DataType.INSTANCE{% if not loop.last %}, {%endif%}
+        {%- endfor %});
+
+    }
+
+    @Override
+    public Map<DataType, ComponentType> getDefaultComponents() {
+        return ImmutableMap.<DataType, ComponentType>builder()
+        {%- for widget in overall_config.widgets %}
+                .put({{widget.table}}DataType.INSTANCE, WidgetType.forAnnotatedWidget({{widget.table}}Widget.class))
+        {%- endfor %}
+                .build();
+    }
+}
+
