@@ -53,17 +53,19 @@ public class RunShooter extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        m_shooter.runShooter(m_rpm);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        //doesn't end afterwards; does in StopShooter
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return m_shooter.isShooterAtSpeed();
     }
 
     @Override
