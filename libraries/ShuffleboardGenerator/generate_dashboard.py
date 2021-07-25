@@ -22,7 +22,7 @@ def main():
     args = parser.parse_args()
     this_dir = os.path.dirname(os.path.realpath(__file__))
 
-    template_dir = os.path.join(this_dir, r"lib\templates")
+    template_dir = os.path.join(this_dir, "lib", "templates")
     print(template_dir)
 
     if not args.project_dir:
