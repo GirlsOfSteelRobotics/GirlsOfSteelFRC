@@ -1,0 +1,21 @@
+package {{widget_package_name}};
+
+public final class SmartDashboardNames {
+
+    public static final String WIDGET_NAME = "{{widget.widget_name}}";
+
+    public static final String {{widget.sd_table_name_constant}} = "{{upper_snake_to_camel(widget.sd_table_name_constant)}}";
+{% for child in widget.children_tables %}
+{%- if widget.sd_table_name_constant != child.table_name %}
+    public static final String {{child.table_name}} = "{{upper_snake_to_camel(child.table_name)}}";
+{%- endif %}
+    {%- for variable in child.entries %}
+    public static final String {{ "%-32s" | format(variable.dasboard_constant)}} = "{{upper_snake_to_camel(variable.dasboard_constant)}}";
+    {%- endfor %}
+{% endfor %}
+
+    private SmartDashboardNames() {
+
+    }
+}
+

@@ -11,7 +11,7 @@ public class LEDSubsystem extends SubsystemBase {
     private final AddressableLED m_led;
     private static final int NUMBER_LED = 60;
     private static final double MAX_LIMELIGHT_DEGREE = 10.0;
-    private static final int NUM_LIMELIGHT_LED = 40;
+    private static final int NUM_LIMELIGHT_LED = 20;
     private static final int MIDDLE_LED = NUM_LIMELIGHT_LED / 2;
     private final AddressableLEDBuffer m_ledBuffer;
     private int m_rainbowFirstPixelHue;
@@ -20,8 +20,10 @@ public class LEDSubsystem extends SubsystemBase {
     private double m_fadeCounter;
     private double m_directionFade = 0.02;
     private final SendableChooser<Runnable> m_userSelectedPatternChooser;
+    private boolean m_robotEnabled;
+    private final LimelightSubsystem m_limelight;
 
-    public LEDSubsystem() {
+    public LEDSubsystem(LimelightSubsystem limelight) {
         m_led = new AddressableLED(9);
 
         // Reuse buffer
@@ -52,6 +54,12 @@ public class LEDSubsystem extends SubsystemBase {
         m_userSelectedPatternChooser.addOption("shooterError(1)", () -> shooterError(1));
         m_userSelectedPatternChooser.addOption("shooterError(7)", () -> shooterError(7));
         m_userSelectedPatternChooser.addOption("shooterError(11)", () -> shooterError(11));
+
+        m_limelight = limelight;
+    }
+
+    public void setRobotEnabled(boolean robotEnabled) {
+        m_robotEnabled = robotEnabled;
     }
 
     public void rainbow() {
@@ -113,7 +121,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     public void limelightCheck(boolean seeLimelight) {
         if (seeLimelight) {
-            generalLED(0, 5, 0, 255, 0);
+            generalLED(NUMBER_LED - 5, NUMBER_LED, 0, 255, 0);
         }
     }
 
@@ -144,8 +152,16 @@ public class LEDSubsystem extends SubsystemBase {
         m_loopCounter++;
         clear();
         Runnable selectedPattern = m_userSelectedPatternChooser.getSelected();
-        if (selectedPattern != null) {
-            selectedPattern.run();
+        if (m_robotEnabled) {
+            limelightCheck(m_limelight.targetExists());
+            if (m_limelight.targetExists()) {
+                shooterError(m_limelight.limelightAngle());
+            }
+        }
+        else {
+            if (selectedPattern != null) {
+                selectedPattern.run();
+            }
         }
         m_led.setData(m_ledBuffer);
     }

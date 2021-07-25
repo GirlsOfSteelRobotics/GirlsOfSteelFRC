@@ -1,0 +1,97 @@
+package {{widget_package_name}};
+
+import edu.wpi.first.shuffleboard.api.data.ComplexData;
+import edu.wpi.first.shuffleboard.api.util.Maps;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringJoiner;
+
+@SuppressWarnings("PMD.DataClass")
+public class {{child.table}}Data extends ComplexData<{{child.table}}Data> {
+{%- for variable in child.entries %}
+{%- if is_array(variable) %}
+    private static final {{variable.type}} DEFAULT_{{camel_to_snake(variable.name)|upper}} = new {{variable.type}}{{default_array(variable)}};
+{%- endif %}
+{%- endfor %}
+{% for variable in child.entries %}
+    private final {{variable.type}} m_{{variable.name}};
+{%- endfor %}
+
+
+    public {{child.table}}Data() {
+        this({% for variable in child.entries %}{{default_value_lookup(variable)}}{% if not loop.last %}, {%endif%}{% endfor %});
+    }
+
+    public {{child.table}}Data({% for variable in child.entries %}{{variable.type}} {{variable.name}}{% if not loop.last %}, {%endif%}{% endfor %}) {% raw %}{{% endraw %}
+      {%- for variable in child.entries %}
+        m_{{variable.name}} = {{variable.name}};
+      {%- endfor %}
+    }
+
+{%- if widget.children_tables|length == 1 %}
+
+    public {{child.table}}Data(Map<String, Object> map) {
+        this({% for variable in child.entries %}
+            Maps.getOrDefault(map, SmartDashboardNames.{{variable.dasboard_constant}}, {{default_value_lookup(variable)}}){% if not loop.last %},{%endif%}{% endfor %});
+    }
+
+    @Override
+    public Map<String, Object> asMap() {
+        Map<String, Object> output = new HashMap<>();
+        {%- for variable in child.entries %}
+        output.put(SmartDashboardNames.{{variable.dasboard_constant}}, m_{{variable.name}});
+        {%- endfor %}
+        return output;
+    }
+{%- else %}
+
+    public {{child.table}}Data(Map<String, Object> map) {
+        this("", map);
+    }
+
+    public {{child.table}}Data(String prefix, Map<String, Object> map) {
+        this({% for variable in child.entries %}
+            Maps.getOrDefault(map, prefix + SmartDashboardNames.{{variable.dasboard_constant}}, {{default_value_lookup(variable)}}){% if not loop.last %},{%endif%}{% endfor %});
+    }
+
+    @Override
+    public Map<String, Object> asMap() {
+        return asMap("");
+    }
+
+    public Map<String, Object> asMap(String prefix) {
+        Map<String, Object> output = new HashMap<>();
+        {%- for variable in child.entries %}
+        output.put(prefix + SmartDashboardNames.{{variable.dasboard_constant}}, m_{{variable.name}});
+        {%- endfor %}
+        return output;
+    }
+
+    public static boolean hasChanged(Map<String, Object> changes) {
+        return hasChanged(SmartDashboardNames.{{child.table_name}} + "/", changes);
+    }
+
+    public static boolean hasChanged(String prefix, Map<String, Object> changes) {
+        boolean changed = false;{% for variable in child.entries %}
+        changed |= changes.containsKey(prefix + SmartDashboardNames.{{variable.dasboard_constant}});{% endfor %}
+
+        return changed;
+    }
+{%- endif %}
+{% for variable in child.entries %}
+    public {{variable.type}} {{getter_name(variable)}}{{variable.name[0].upper() + variable.name[1:]}}() {
+        return m_{{variable.name}};
+    }
+{% endfor %}
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", "{{child.table}}Data [", "]")
+{%- for variable in child.entries %}
+                    .add("{{variable.name}}=" + m_{{variable.name}})
+{%- endfor %}
+                    .toString();
+    }
+}
+

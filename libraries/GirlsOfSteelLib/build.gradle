@@ -9,6 +9,8 @@ repositories {
     maven { url "https://frcmaven.wpi.edu/artifactory/release/" }
 }
 
+wpilibTools.deps.wpilibVersion = "2021.+"
+
 dependencies {
     compile wpilibTools.deps.wpilibJava("wpilibj")
     compile wpilibTools.deps.wpilibJava("ntcore")

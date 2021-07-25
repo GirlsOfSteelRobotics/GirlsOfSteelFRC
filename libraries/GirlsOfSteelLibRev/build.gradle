@@ -10,6 +10,8 @@ repositories {
     maven { url 'http://www.revrobotics.com/content/sw/max/sdk/maven/' }
 }
 
+wpilibTools.deps.wpilibVersion = "2021.+"
+
 dependencies {
     compile wpilibTools.deps.wpilibJava("wpilibj")
     compile "com.revrobotics.frc:SparkMax-java:1.5.4"

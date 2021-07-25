@@ -1,0 +1,40 @@
+package {{widget_package_name}};
+
+import edu.wpi.first.shuffleboard.api.data.ComplexData;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@SuppressWarnings("PMD.DataClass")
+public class {{widget.table}}Data extends ComplexData<{{widget.table}}Data> {
+{% for child in widget.children_tables %}
+    private final {{child.table}}Data m_{{lower_first_char(child.table)}};
+{%- endfor %}
+
+    public {{widget.table}}Data() {
+{% for child in widget.children_tables %}
+        m_{{lower_first_char(child.table)}} = new {{child.table}}Data();
+{%- endfor %}
+    }
+
+    public {{widget.table}}Data(Map<String, Object> map) {
+{% for child in widget.children_tables %}
+        m_{{lower_first_char(child.table)}} = new {{child.table}}Data(SmartDashboardNames.{{child.table_name}} + "/", map);
+{%- endfor %}
+    }
+
+    @Override
+    public Map<String, Object> asMap() {
+        Map<String, Object> map = new HashMap<>();
+{% for child in widget.children_tables %}
+        map.putAll(m_{{lower_first_char(child.table)}}.asMap(SmartDashboardNames.{{child.table_name}} + "/"));
+{%- endfor %}
+        return map;
+    }
+{% for child in widget.children_tables %}
+    public {{child.table}}Data get{{child.table}}() {
+        return m_{{lower_first_char(child.table)}};
+    }
+{% endfor %}
+}
+

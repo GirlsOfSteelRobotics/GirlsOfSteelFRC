@@ -44,12 +44,14 @@ def is_root_project = "${rootDir}" == "${projectDir}"
 if (is_root_project) {
     sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLib/src/main/java/"
     sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLibCtre/src/main/java/"
+    sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLibNavx/src/main/java/"
     sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLibRev/src/main/java/"
 }
 else {
     dependencies {
         compile project(":libraries:GirlsOfSteelLib")
         compile project(":libraries:GirlsOfSteelLibCtre")
+        compile project(":libraries:GirlsOfSteelLibNavx")
         compile project(":libraries:GirlsOfSteelLibRev")
     }
 }

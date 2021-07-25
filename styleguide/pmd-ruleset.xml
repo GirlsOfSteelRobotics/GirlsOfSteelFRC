@@ -55,7 +55,7 @@
         <!--        <exclude name="AvoidSynchronizedAtMethodLevel" />-->
         <!--        <exclude name="AvoidUsingVolatile" />-->
         <!--        <exclude name="DoNotUseThreads" />-->
-        <!--        <exclude name="UseConcurrentHashMap" />-->
+        <exclude name="UseConcurrentHashMap" />
     </rule>
 
     <rule ref="category/java/performance.xml">

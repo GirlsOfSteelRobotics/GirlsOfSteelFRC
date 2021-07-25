@@ -10,6 +10,8 @@ repositories {
     maven { url 'https://devsite.ctr-electronics.com/maven/release/' }
 }
 
+wpilibTools.deps.wpilibVersion = "2021.+"
+
 dependencies {
     compile wpilibTools.deps.wpilibJava("wpilibj")
     compile "com.ctre.phoenix:api-java:5.19.4"

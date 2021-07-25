@@ -1,0 +1,4 @@
+
+            case {{entry.sim_keys}}:
+                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}} = false;
+                break;
