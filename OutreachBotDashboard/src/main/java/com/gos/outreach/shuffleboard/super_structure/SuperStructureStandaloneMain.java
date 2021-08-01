@@ -21,17 +21,17 @@ public class SuperStructureStandaloneMain {
 
     public SuperStructureStandaloneMain(Scene scene, SuperStructureWidget robotController) {
         m_controller = robotController;
-
+        m_superStructureHoodAngle = 45; //degrees
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
             switch (code) {
 
             // SuperStructure
             case Q:
-                m_superStructureHoodAngle = 0.25;
+                m_superStructureHoodAngle += 2;
                 break;
             case A:
-                m_superStructureHoodAngle = -0.25;
+                m_superStructureHoodAngle -= 2;
                 break;
             case W:
                 m_superStructureHoodMotorSpeed = 0.25;
@@ -67,11 +67,6 @@ public class SuperStructureStandaloneMain {
             KeyCode code = event.getCode();
             switch (code) {
 
-            // SuperStructure
-            case Q:
-            case A:
-                m_superStructureHoodAngle = 0;
-                break;
             case W:
             case S:
                 m_superStructureHoodMotorSpeed = 0;
