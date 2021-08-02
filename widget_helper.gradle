@@ -11,7 +11,6 @@ configurations {
 dependencies {
     // Helper for getting the coordinate gui from maven into the shuffleboard area
     custom_widgets 'org.snobot.coordinate_gui:CoordinateGuiWidget2021:2021.0.0'
-    custom_widgets 'com.gos.infinite_recharge.sd_widgets:RobotWidget:1.0.0'
 }
 
 task deleteOldWidgets(type: Delete) {
@@ -21,7 +20,7 @@ task deleteOldWidgets(type: Delete) {
     followSymlinks = true
 }
 
-task copyWidgets(type: Copy, dependsOn: deleteOldWidgets) {
+task install_shuffleboard_plugins(type: Copy, dependsOn: deleteOldWidgets) {
     group = "Girls of Steel"
     description = "Copies any Girls of Steel widgets from maven into the shuffleboard area"
     from configurations.custom_widgets

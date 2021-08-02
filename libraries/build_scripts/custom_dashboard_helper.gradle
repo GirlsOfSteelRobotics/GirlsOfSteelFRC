@@ -12,7 +12,7 @@ ext {
     shuffleboard_version = "2020.1.2"
 }
 
-task install_plugin(type: Copy) {
+task install_shuffleboard_plugins(type: Copy) {
     group = "GirlsOfSteel"
     from(tasks.named("jar"))
     into("${System.getProperty("user.home")}/Shuffleboard/plugins")

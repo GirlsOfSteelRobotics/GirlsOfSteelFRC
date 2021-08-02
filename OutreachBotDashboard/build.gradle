@@ -2,11 +2,16 @@
 
 plugins {
     id "java"
+    id 'application'
 }
 
 ext {
     package_name = "com.gos.outreach.shuffleboard"
     publishing_version = "2021.0.0"
+}
+
+application {
+    mainClassName = 'com.gos.outreach.shuffleboard.super_structure.SuperStructureStandaloneMain'
 }
 
 apply from: "${rootDir}/libraries/build_scripts/custom_dashboard_helper.gradle"
