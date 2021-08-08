@@ -64,8 +64,6 @@ public class RobotContainer {
         SmartDashboard.putData("RetractCollector", new RetractCollector(m_collector));
         SmartDashboard.putData("IntakeBall", new IntakeBall(m_collector));
         SmartDashboard.putData("ReverseBall", new ReverseBall(m_collector));
-        SmartDashboard.putData("AngleUp", new AngleUp(m_shooter));
-        SmartDashboard.putData("AngleDown", new AngleDown(m_shooter));
         SmartDashboard.putData("RunShooter", new RunShooter(3500, m_shooter));
         SmartDashboard.putData("StopShooter", new StopShooter(m_shooter));
         SmartDashboard.putData("FeedIn", new FeedIn(m_shooter));
@@ -117,13 +115,13 @@ public class RobotContainer {
         retractCollector.whileHeld(new RetractCollector(m_collector), true);
         SmartDashboard.putData("Retract Collector", new RetractCollector(m_collector));
 
-        final JoystickButton angleUp = new JoystickButton(m_operatorJoystick, 1);
-        angleUp.whileHeld(new AngleUp(m_shooter), true);
-        SmartDashboard.putData("Angle Up", new AngleUp(m_shooter));
+        final JoystickButton setHoodAngleUp = new JoystickButton(m_operatorJoystick, 1);
+        setHoodAngleUp.whileHeld(new SetHoodAngleCommand(m_shooter, 20), true);
+        SmartDashboard.putData("Angle Up", new SetHoodAngleCommand(m_shooter, 20));
 
-        final JoystickButton angleDown = new JoystickButton(m_operatorJoystick, 2);
-        angleDown.whileHeld(new AngleDown(m_shooter), true);
-        SmartDashboard.putData("Angle Down", new AngleDown(m_shooter));
+        final JoystickButton setHoodAngleDown = new JoystickButton(m_operatorJoystick, 2);
+        setHoodAngleDown.whileHeld(new SetHoodAngleCommand(m_shooter, 60));
+        SmartDashboard.putData("Angle Down", new SetHoodAngleCommand(m_shooter, 60));
 
         final JoystickButton intakeBall = new JoystickButton(m_operatorJoystick, 3);
         intakeBall.whileHeld(new IntakeBall(m_collector), true);
