@@ -1,0 +1,24 @@
+
+
+dependencies {
+    // SnobotSim
+    snobotSimCompile snobotSimJava()
+
+    simulatorExtensionsCompile snobotSimJava()
+    simulatorExtensionsCompile wpi.deps.wpilib()
+    simulatorExtensionsCompile wpi.deps.vendor.java()
+    simulatorExtensionsCompile sourceSets.main.output
+    simulatorExtensionsCompile snobotSimJava()
+
+    testCompile snobotSimJava()
+}
+
+tasks.withType(Test) {
+    systemProperty "java.library.path", "$rootDir/build/tmp/snobotSimJava"
+}
+
+eclipse {
+    classpath {
+        plusConfigurations += [ configurations.simulatorExtensionsCompile ]
+    }
+}
