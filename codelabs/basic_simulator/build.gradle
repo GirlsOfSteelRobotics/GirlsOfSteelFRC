@@ -78,4 +78,10 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
 
-apply from: "../styleguide/styleguide.gradle"
+test {
+    ignoreFailures = true
+}
+
+pmd {
+    ignoreFailures = true
+}

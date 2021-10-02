@@ -1,0 +1,5 @@
+
+allprojects
+{
+    apply from: "${rootDir}/styleguide/styleguide.gradle"
+}
