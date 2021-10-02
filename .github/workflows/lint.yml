@@ -1,0 +1,30 @@
+name: Lint
+
+on: [push]
+
+jobs:
+  lint_versions:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.7.6'
+
+      - name: Run Linter
+        run: python libraries/linters/gradlerio_versions/lint_gradlerio_versions.py
+
+      - name: Generate diff
+        run: git diff HEAD > lint-version-fixes.patch
+        if: ${{ failure() }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lint-version-fixes
+          path: lint-version-fixes.patch
+        if: ${{ failure() }}
