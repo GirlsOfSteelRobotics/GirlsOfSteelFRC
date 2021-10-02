@@ -1,0 +1,31 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.server.launchMode": "Standard",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "bin/": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/*~": true
+  },
+  "java.test.config": [
+    {
+        "name": "myConfiguration",
+        "workingDirectory": "${workspaceFolder}",
+        "args": [ "-c", "com.test" ],
+        "vmargs": [ "-Xmx512M" ],
+        "env": { "PATH": "${workspaceFolder}/build/tmp/snobotSimJava" },
+    },
+    {
+        // Another configuration item...
+    }],
+  "java.test.defaultConfig": "myConfiguration"
+
+}
+
