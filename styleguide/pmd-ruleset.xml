@@ -4,46 +4,64 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
-  <description>PMD Ruleset for Girls of Steel</description>
+    <description>PMD Ruleset for Girls of Steel</description>
 
-  <rule ref="category/java/bestpractices.xml">
-    <exclude name="SystemPrintln" />
-    <exclude name="JUnitAssertionsShouldIncludeMessage" />
-    <exclude name="JUnitTestContainsTooManyAsserts" />
-  </rule>
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="GuardLogStatement"/>
+        <exclude name="JUnitTestsShouldIncludeAssert"/>
+        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <exclude name="SystemPrintln"/>
+    </rule>
 
-  <rule ref="category/java/codestyle.xml" >
-    <exclude name="ClassNamingConventions" />
-    <exclude name="LongVariable" />
-    <exclude name="MethodArgumentCouldBeFinal" />
-    <exclude name="LocalVariableCouldBeFinal" />
-    <exclude name="FieldNamingConventions" />
-    <exclude name="CallSuperInConstructor" />
-    <exclude name="AtLeastOneConstructor" />
-    <exclude name="ShortClassName" />
-    <exclude name="ShortVariable" />
-  </rule>
+    <rule ref="category/java/design.xml">
+        <exclude name="SingularField"/>
+        <exclude name="UseUtilityClass"/>
+        <exclude name="AvoidThrowingRawExceptionTypes" />
+        <!--        <exclude name="CyclomaticComplexity" />-->
+        <!--        <exclude name="DataClass" />-->
+        <!--        <exclude name="ExcessiveMethodLength" />-->
+        <exclude name="ExcessiveImports" />
+        <!--        <exclude name="ExcessiveParameterList" />-->
+        <!--        <exclude name="GodClass" />-->
+        <exclude name="LawOfDemeter"/>
+        <exclude name="LoosePackageCoupling" />
+        <!--        <exclude name="NcssConstructorCount" />-->
+        <!--        <exclude name="NcssCount" />-->
+        <!--        <exclude name="NcssMethodCount" />-->
+        <!--        <exclude name="NPathComplexity" />-->
+        <!--        <exclude name="SignatureDeclareThrowsException" />-->
+        <!--        <exclude name="TooManyFields" />-->
+        <!--        <exclude name="TooManyMethods" />-->
+    </rule>
 
-  <rule ref="category/java/design.xml" >
-    <exclude name="LawOfDemeter" />
-    <exclude name="LoosePackageCoupling" />
-  </rule>
-<!--  <rule ref="category/java/documentation.xml" >-->
-<!--    <exclude name="CommentContent" />-->
-<!--    <exclude name="CommentRequired" />-->
-<!--    <exclude name="CommentSze" />-->
-<!--    <exclude name="UncommentedEmptyConstructor" />-->
-<!--    <exclude name="UncommentedEmptyMethodBody" />-->
-<!--  </rule>-->
-  <rule ref="category/java/errorprone.xml" >
-    <exclude name="BeanMembersShouldSerialize" />
-    <exclude name="CloseResource" />
-    <exclude name="DataflowAnomalyAnalysis" />
-  </rule>
-  <rule ref="category/java/multithreading.xml">
-    <exclude name="UseConcurrentHashMap" />
-  </rule>
-  <rule ref="category/java/performance.xml" />
-  <rule ref="category/java/security.xml" />
+    <rule ref="category/java/errorprone.xml">
+        <!--        <exclude name="AssignmentToNonFinalStatic" />-->
+        <exclude name="AssignmentInOperand" />
+        <!--        <exclude name="AvoidCatchingThrowable" />-->
+        <!--        <exclude name="AvoidDuplicateLiterals" />-->
+        <!--        <exclude name="AvoidLiteralsInIfCondition" />-->
+        <exclude name="BeanMembersShouldSerialize"/>
+        <!--        <exclude name="ConstructorCallsOverridableMethod" />-->
+        <!--        <exclude name="DataflowAnomalyAnalysis" />-->
+        <!--        <exclude name="DoNotCallSystemExit" />-->
+        <!--        <exclude name="FinalizeDoesNotCallSuperFinalize" />-->
+        <!--        <exclude name="NullAssignment" />-->
+        <!--        <exclude name="MissingSerialVersionUID" />-->
+        <!--        <exclude name="CloseResource"/>-->
+    </rule>
+
+    <rule ref="category/java/multithreading.xml">
+        <!--        <exclude name="AvoidSynchronizedAtMethodLevel" />-->
+        <!--        <exclude name="AvoidUsingVolatile" />-->
+        <!--        <exclude name="DoNotUseThreads" />-->
+        <exclude name="UseConcurrentHashMap" />
+    </rule>
+
+    <rule ref="category/java/performance.xml">
+        <exclude name="AvoidInstantiatingObjectsInLoops" />
+        <!--        <exclude name="AvoidUsingShortType" />-->
+        <!--        <exclude name="AvoidFileStream" />-->
+    </rule>
 
 </ruleset>

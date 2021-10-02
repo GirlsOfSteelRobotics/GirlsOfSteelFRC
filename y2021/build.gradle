@@ -1,7 +1,0 @@
-
-allprojects
-{
-    apply from: "${rootDir}/styleguide/styleguide.gradle"
-}
-
-apply from: "widget_helper.gradle"
