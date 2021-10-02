@@ -30,8 +30,9 @@ public class Lift extends SubsystemBase {
         m_motor.set(ControlMode.PercentOutput, -0.5);
     }
 
+    @Override
     public void periodic() {
-        //m_customNetworkTable.getEntry("Speed").setDouble(m_motor.getMotorOutputPercent());
+        m_customNetworkTable.getEntry("Speed").setDouble(m_motor.getMotorOutputPercent());
     }
 
     public void stop() {

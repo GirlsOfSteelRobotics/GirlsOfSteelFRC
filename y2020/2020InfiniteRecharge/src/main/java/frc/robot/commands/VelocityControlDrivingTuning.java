@@ -13,16 +13,16 @@ public class VelocityControlDrivingTuning extends CommandBase {
         super.addRequirements(chassis);
     }
 
+    @Override
     public void initialize() {
     }
 
+    @Override
     public void execute() {
         m_chassis.smartVelocityControl(20, 20);
     }
 
-    public void end() {
-    }
-
+    @Override
     public boolean isFinished() {
         return false;
     }

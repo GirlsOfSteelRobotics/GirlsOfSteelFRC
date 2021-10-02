@@ -15,32 +15,34 @@ public class Camera extends SubsystemBase {
 
     private final boolean m_useCamera;
 
-    private UsbCamera m_camIntake;
-    private UsbCamera m_camClimb;
-    private VideoSink m_server;
+    private final UsbCamera m_camIntake;
+    private final UsbCamera m_camClimb;
+    private final VideoSink m_server;
 
     public Camera(ShuffleboardTab driverDisplayTab) {
-        // TODO(pj) - Undo when cameras are plugged in. Disabled now to clean up roboRio logs
-        //m_useCamera = true;
         m_useCamera = !RobotBase.isSimulation();
-        if (!m_useCamera) {
-            return; 
-        }
-        m_camIntake = new UsbCamera("camIntake", Constants.CAMERA_INTAKE);
-        m_camIntake.setResolution(320, 240);
-        m_camIntake.setFPS(20);
-        m_camClimb = new UsbCamera("camClimb", Constants.CAMERA_CLIMB);
-        m_camClimb.setResolution(320, 240);
-        m_camClimb.setFPS(20);
-        m_server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
-        m_server.setSource(m_camIntake);
 
-        driverDisplayTab.add("Camera Intake", m_camIntake)
-            .withSize(4, 3)
-            .withPosition(1, 0)
+        if (m_useCamera) {
+
+            m_camIntake = new UsbCamera("camIntake", Constants.CAMERA_INTAKE);
+            m_camIntake.setResolution(320, 240);
+            m_camIntake.setFPS(20);
+            m_camClimb = new UsbCamera("camClimb", Constants.CAMERA_CLIMB);
+            m_camClimb.setResolution(320, 240);
+            m_camClimb.setFPS(20);
+            m_server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
+            m_server.setSource(m_camIntake);
+
+            driverDisplayTab.add("Camera Intake", m_camIntake)
+                    .withSize(4, 3)
+                    .withPosition(1, 0)
             ;
-
-        // To see the stream in the Dashboard, add a CameraServer Stream Viewer
+        }
+        else {
+            m_camIntake = null;
+            m_camClimb = null;
+            m_server = null;
+        }
     }
 
     public void switchToCamClimb() {

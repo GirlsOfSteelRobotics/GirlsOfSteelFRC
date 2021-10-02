@@ -25,13 +25,12 @@ public class ShootToDriveForwardsNoSensor extends SequentialCommandGroup {
         Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake,
             boolean useSensor, double rpm) {
 
-        if (useSensor == true) {
+        if (useSensor) {
             addCommands(new SingleShoot(shooter, shooterConveyor, rpm));
             addCommands(new SingleShoot(shooter, shooterConveyor, rpm));
             addCommands(new SingleShoot(shooter, shooterConveyor, rpm));
         }
-
-        if (useSensor == false) {
+        else {
             addCommands(new AutoShoot(shooter, shooterConveyor, rpm, 5));
         }
 

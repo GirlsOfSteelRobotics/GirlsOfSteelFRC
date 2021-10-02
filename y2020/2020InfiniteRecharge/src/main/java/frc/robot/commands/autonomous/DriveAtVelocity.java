@@ -24,7 +24,7 @@ public class DriveAtVelocity extends CommandBase {
 
     @Override
     public void execute() { 
-        m_chassis.smartVelocityControl(m_velocity, m_velocity);;
+        m_chassis.smartVelocityControl(m_velocity, m_velocity);
         // m_chassis.smartVelocityControl(48, 48);
 
     

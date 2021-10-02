@@ -2,48 +2,15 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.shape.Arc?>
-<BorderPane fx:id="m_pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+<?import javafx.scene.shape.*?>
+
+<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.gos.infinite_recharge.sd_widgets.super_structure.SuperStructureController">
 
-    <center>
-        <Group fx:id="m_group">
-            <children>
-
-                <Circle fx:id="m_robotShooterCurrentRPM" radius="3" centerX="20" centerY="10" fill="plum"/>
-                <Arc fill="TRANSPARENT"
-                     stroke="coral"
-                     startAngle="0"
-                     length="90.0"
-                     centerX="20"
-                     centerY="10"
-                     radiusX="8"
-                     radiusY="8"
-                     type="ROUND" />
-                <Circle fx:id="m_robotShooterGoalRPM" radius="1.5" centerX="20" centerY="10" fill="pink"/>
-                <Circle fx:id="m_shooterTop" radius="3" centerX="23" centerY="15" fill="plum"/>
-                <Rectangle fx:id="m_controlPanel" x="32" y="30" height="4" width="10" fill="peachPuff"/>
-
-                <Rectangle x="16" y="50" height="7.25" width="30.0" fill="lightskyblue"/>
-                <Rectangle fx:id="m_robotConveyor" x="20" y="10" height="40.0" width="8.0" fill="TRANSPARENT" stroke="coral"/>
-                <Rectangle fx:id="m_robotIntake" x="16" y="30" height="20" width="2.5" fill="seagreen"/>
-                <Rectangle fx:id="m_winch" x="32" y="44" height="6" width="7" fill="pink"/>
-                <Rectangle fx:id="m_lift" x="32" y="30" height="16" width="7" fill="orchid"/>
-                <Arc fill="TRANSPARENT"
-                     stroke="coral"
-                     startAngle="270"
-                     length="90.0"
-                     centerX="20"
-                     centerY="50"
-                     radiusX="8"
-                     radiusY="7"
-                     type="ROUND" />
-                <Circle fx:id="m_shooterHandoff" radius="3" centerX="20" centerY="55" fill="plum"/>
-                <Circle fx:id="m_shooterSecondary" radius="3" centerX="23" centerY="50" fill="plum"/>
-            </children>
-        </Group>
-    </center>
-</BorderPane>
+    <Group fx:id="m_group">
+    <!-- Put your shapes in here. -->
+    <!-- Examples. -->
+    <!--     <Circle fx:id="m_spinningWheel" fill="plum"/> -->
+    <!--     <Rectangle fx:id="m_punch" fill="peachPuff"/> -->
+    </Group>
+</Pane>

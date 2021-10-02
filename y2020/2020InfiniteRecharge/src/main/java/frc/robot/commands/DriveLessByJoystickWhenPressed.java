@@ -7,7 +7,7 @@ import frc.robot.subsystems.Chassis;
 public class DriveLessByJoystickWhenPressed extends CommandBase {
     private final Chassis m_chassis;
     private final OI m_oi;
-    private double m_speedReduction;
+    private final double m_speedReduction;
 
     public DriveLessByJoystickWhenPressed(Chassis chassis, OI oi) {
         this.m_chassis = chassis;

@@ -1,13 +1,5 @@
 package com.gos.infinite_recharge.sd_widgets.super_structure;
 
-import com.gos.infinite_recharge.sd_widgets.SmartDashboardNames;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ControlPanelData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.LiftData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ShooterConveyorData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ShooterIntakeData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ShooterWheelsData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.SuperStructureData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.WinchData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,10 +22,10 @@ public class SuperStructureStandaloneMain {
     private boolean m_shooterConveyorSecondaryBallSensor;
     private boolean m_shooterConveyorTopBallSensor;
     private double m_shooterIntakeSpeed;
-    private boolean m_shooterIntakeIsUp;
-    private double m_shooterWheelCurrentRpm;
-    private double m_shooterWheelGoalRpm;
-    private double m_shooterWheelSpeed;
+    private boolean m_shooterIntakePosition;
+    private double m_shooterWheelsCurrentRpm;
+    private double m_shooterWheelsGoalRpm;
+    private double m_shooterWheelsSpeed;
     private double m_winchSpeed;
 
     public SuperStructureStandaloneMain(Scene scene, SuperStructureWidget robotController) {
@@ -43,77 +35,75 @@ public class SuperStructureStandaloneMain {
             KeyCode code = event.getCode();
             switch (code) {
 
-            // Control Panel
+            // ControlPanel
             case A:
-                m_controlPanelSpeed = .75;
+                m_controlPanelSpeed = 0.75;
                 break;
             case Q:
-                m_controlPanelSpeed = -.75;
+                m_controlPanelSpeed = -0.75;
                 break;
-
             // Lift
             case W:
-                m_liftSpeed = .5;
+                m_liftSpeed = 0.5;
                 break;
             case S:
-                m_liftSpeed = -.5;
+                m_liftSpeed = -0.5;
                 break;
-
-            // Shooter Conveyor
+            // ShooterConveyor
             case E:
-                m_shooterConveyorSpeed = .5;
+                m_shooterConveyorSpeed = 0.5;
                 break;
             case D:
-                m_shooterConveyorSpeed = -.5;
+                m_shooterConveyorSpeed = -0.5;
                 break;
 
             case Z:
                 m_shooterConveyorHandoffBallSensor = true;
                 break;
+
             case X:
                 m_shooterConveyorSecondaryBallSensor = true;
                 break;
+
             case C:
                 m_shooterConveyorTopBallSensor = true;
                 break;
-
-            // Shooter Intake
+            // ShooterIntake
             case R:
-                m_shooterIntakeSpeed = .5;
+                m_shooterIntakeSpeed = 0.5;
                 break;
             case F:
-                m_shooterIntakeSpeed = -.5;
-                break;
-            case Y:
-                m_shooterIntakeIsUp = true;
+                m_shooterIntakeSpeed = -0.5;
                 break;
 
-            // Shooter Wheels
+            case Y:
+                m_shooterIntakePosition = true;
+                break;
+            // ShooterWheels
             case U:
-                m_shooterWheelCurrentRpm -= 10;
+                m_shooterWheelsCurrentRpm -= 10;
                 break;
             case J:
-                m_shooterWheelCurrentRpm += 10;
+                m_shooterWheelsCurrentRpm += 10;
                 break;
             case I:
-                m_shooterWheelGoalRpm -= 10;
+                m_shooterWheelsGoalRpm -= 10;
                 break;
             case K:
-                m_shooterWheelGoalRpm += 10;
+                m_shooterWheelsGoalRpm += 10;
                 break;
             case O:
-                m_shooterWheelSpeed = 1;
+                m_shooterWheelsSpeed = 1;
                 break;
             case L:
-                m_shooterWheelSpeed = -1;
+                m_shooterWheelsSpeed = -1;
                 break;
-
             // Winch
             case T:
-                m_winchSpeed = .25;
+                m_winchSpeed = 0.25;
                 break;
             case G:
-                m_winchSpeed = -.25;
+                m_winchSpeed = -0.25;
                 break;
 
             default:
@@ -126,41 +116,54 @@ public class SuperStructureStandaloneMain {
         scene.setOnKeyReleased(event -> {
             KeyCode code = event.getCode();
             switch (code) {
+
+            // ControlPanel
             case A:
             case Q:
                 m_controlPanelSpeed = 0;
                 break;
+            // Lift
             case W:
             case S:
                 m_liftSpeed = 0;
                 break;
+            // ShooterConveyor
             case E:
             case D:
                 m_shooterConveyorSpeed = 0;
                 break;
+
+            case Z:
+                m_shooterConveyorHandoffBallSensor = false;
+                break;
+
+            case X:
+                m_shooterConveyorSecondaryBallSensor = false;
+                break;
+
+            case C:
+                m_shooterConveyorTopBallSensor = false;
+                break;
+            // ShooterIntake
             case R:
             case F:
                 m_shooterIntakeSpeed = 0;
                 break;
+
+            case Y:
+                m_shooterIntakePosition = false;
+                break;
+            // ShooterWheels
+
+
             case O:
             case L:
-                m_shooterWheelSpeed = 0;
+                m_shooterWheelsSpeed = 0;
                 break;
+            // Winch
             case T:
             case G:
                 m_winchSpeed = 0;
-                break;
-            case Y:
-                m_shooterIntakeIsUp = false;
-                break;
-            case Z:
-                m_shooterConveyorHandoffBallSensor = false;
-                break;
-            case X:
-                m_shooterConveyorSecondaryBallSensor = false;
-                break;
-            case C:
-                m_shooterConveyorTopBallSensor = false;
                 break;
             default:
                 break;
@@ -172,15 +175,41 @@ public class SuperStructureStandaloneMain {
     private void handleUpdate() {
 
         try {
+
             Map<String, Object> map = new HashMap<>();
-            map.putAll(new ControlPanelData(m_controlPanelSpeed).asMap(SmartDashboardNames.CONTROL_PANEL_TABLE_NAME + "/"));
-            map.putAll(new LiftData(m_liftSpeed).asMap(SmartDashboardNames.LIFT_TABLE_NAME + "/"));
-            map.putAll(new ShooterConveyorData(m_shooterConveyorSpeed, m_shooterConveyorHandoffBallSensor, m_shooterConveyorSecondaryBallSensor, m_shooterConveyorTopBallSensor).asMap(SmartDashboardNames.SHOOTER_CONVEYOR_TABLE_NAME + "/"));
-            map.putAll(new ShooterIntakeData(m_shooterIntakeSpeed, m_shooterIntakeIsUp).asMap(SmartDashboardNames.SHOOTER_INTAKE_TABLE_NAME + "/"));
-            map.putAll(new ShooterWheelsData(m_shooterWheelSpeed, m_shooterWheelCurrentRpm, m_shooterWheelGoalRpm).asMap(SmartDashboardNames.SHOOTER_WHEELS_TABLE_NAME + "/"));
-            map.putAll(new WinchData(m_winchSpeed).asMap(SmartDashboardNames.WINCH_TABLE_NAME + "/"));
+
+            map.putAll(new ControlPanelData(
+                m_controlPanelSpeed
+                ).asMap(SmartDashboardNames.CONTROL_PANEL_TABLE_NAME + "/"));
+
+            map.putAll(new LiftData(
+                m_liftSpeed
+                ).asMap(SmartDashboardNames.LIFT_TABLE_NAME + "/"));
+
+            map.putAll(new ShooterConveyorData(
+                m_shooterConveyorSpeed,
+                m_shooterConveyorHandoffBallSensor,
+                m_shooterConveyorSecondaryBallSensor,
+                m_shooterConveyorTopBallSensor
+                ).asMap(SmartDashboardNames.SHOOTER_CONVEYOR_TABLE_NAME + "/"));
+
+            map.putAll(new ShooterIntakeData(
+                m_shooterIntakeSpeed,
+                m_shooterIntakePosition
+                ).asMap(SmartDashboardNames.SHOOTER_INTAKE_TABLE_NAME + "/"));
+
+            map.putAll(new ShooterWheelsData(
+                m_shooterWheelsCurrentRpm,
+                m_shooterWheelsGoalRpm,
+                m_shooterWheelsSpeed
+                ).asMap(SmartDashboardNames.SHOOTER_WHEELS_TABLE_NAME + "/"));
+
+            map.putAll(new WinchData(
+                m_winchSpeed
+                ).asMap(SmartDashboardNames.WINCH_TABLE_NAME + "/"));
 
             m_controller.dataProperty().setValue(new SuperStructureData(map));
+
         } catch (ClassCastException ignored) {
             // don't worry about it
         }

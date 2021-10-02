@@ -33,12 +33,12 @@ public class ShootAndDriveToOpponentsTrenchCommandGroup extends SequentialComman
             intake.addCommands(new AutomatedConveyorIntake(shooterIntake, shooterConveyor),
                     new AutomatedConveyorIntake(shooterIntake, shooterConveyor),
                     new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
-         //               .raceWith(trajectoryFactory.getTrajectoryOpponentsTrenchToPickUpCell(chassis)));
+            //               .raceWith(trajectoryFactory.getTrajectoryOpponentsTrenchToPickUpCell(chassis)));
         }
         else {
             addCommands(new ConveyorWhileHeld(shooterConveyor, true)
                     .raceWith(new IntakeCells(shooterIntake, true).withTimeout(1.2)));
-         //           .raceWith(trajectoryFactory.getTrajectoryOpponentsTrenchToPickUpCell(chassis)));
+            //           .raceWith(trajectoryFactory.getTrajectoryOpponentsTrenchToPickUpCell(chassis)));
         }
         addCommands(new IntakeCells(shooterIntake, true).withTimeout(.5)
             .raceWith(new ConveyorWhileHeld(shooterConveyor, false)).withTimeout(.15));

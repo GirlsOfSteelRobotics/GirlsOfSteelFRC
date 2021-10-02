@@ -26,10 +26,7 @@ public class ControlPanelRotationControl extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (m_colorCount == 24) {
-            return true;
-        }
-        return false;
+        return m_colorCount == 24;
     }
 
     @Override
