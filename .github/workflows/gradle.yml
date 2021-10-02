@@ -19,4 +19,4 @@ jobs:
         java-version: 1.11
 
     - name: Build Everything
-      run: ./gradlew build
+      run: ./gradlew build -x :codelabs:basic_simulator:test
