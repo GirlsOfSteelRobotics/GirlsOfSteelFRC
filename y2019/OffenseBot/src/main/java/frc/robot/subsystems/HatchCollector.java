@@ -22,7 +22,7 @@ public class HatchCollector extends Subsystem {
         piston = new DoubleSolenoid(RobotMap.PISTON_A, RobotMap.PISTON_B);
         state = HatchState.kRelease;
 
-		LiveWindow.addActuator("Hatch Piston", "piston", piston);
+		addChild("piston", piston);
   }
   
 	// Put methods for controlling this subsystem

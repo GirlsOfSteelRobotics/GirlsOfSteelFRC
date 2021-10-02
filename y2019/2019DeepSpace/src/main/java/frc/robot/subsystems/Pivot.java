@@ -36,7 +36,7 @@ public class Pivot extends Subsystem {
 		pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
 		pivot.setSensorPhase(true);
 		setupPivotFPID();
-		LiveWindow.add(pivot);
+	    addChild(pivot);
 	}
 
   @Override

@@ -1,7 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2019.4.1"
-    id "com.snobot.simulator.plugin.SnobotSimulatorPlugin" version "2019-4.0.0" apply false
+    id "edu.wpi.first.GradleRIO" version "2021.3.1"
 }
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
@@ -43,13 +42,6 @@ repositories {
     mavenCentral()
 }
 
-/////////////////////////////////////////////////////
-// Snobot Sim
-apply plugin: com.snobot.simulator.plugin.SnobotSimulatorPlugin
-apply from: "snobotsim/snobot_sim.gradle"
-// End Snobot Sim
-/////////////////////////////////////////////////////
-
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -66,4 +58,12 @@ dependencies {
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+}
+
+checkstyle {
+    ignoreFailures = true;
+}
+
+pmd {
+    ignoreFailures = true;
 }

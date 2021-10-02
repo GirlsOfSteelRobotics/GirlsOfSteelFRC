@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2019.3.2"
+    id "edu.wpi.first.GradleRIO" version "2021.3.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -61,4 +61,12 @@ dependencies {
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+}
+
+checkstyle {
+    ignoreFailures = true;
+}
+
+pmd {
+    ignoreFailures = true;
 }
