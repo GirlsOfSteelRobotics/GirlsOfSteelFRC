@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="(simulator) Run Snobot Sim" type="GradleRunConfiguration" factoryName="Gradle" folderName="SimulatorCodelab">
+  <configuration default="false" name="(girflow) Build Robot" type="GradleRunConfiguration" factoryName="Gradle" folderName="GitflowCodelab">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/basic_simulator" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/codelabs/gitflow" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
@@ -10,12 +10,15 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="simulateJava" />
+          <option value="clean" />
+          <option value="build" />
         </list>
       </option>
       <option name="vmOptions" value="" />
     </ExternalSystemSettings>
-    <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+    <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+    <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+    <DebugAllEnabled>false</DebugAllEnabled>
     <method v="2" />
   </configuration>
 </component>

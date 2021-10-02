@@ -113,5 +113,3 @@ task copyWidgets(type: Copy, dependsOn: deleteOldWidgets) {
     into("${System.getProperty("user.home")}/Shuffleboard/plugins")
 }
 ///////////////////////////////////////
-
-apply from: "../styleguide/styleguide.gradle"
