@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<StackPane fx:id="m_root" minHeight="200" minWidth="200" prefHeight="200" prefWidth="200"
+           xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.gos.infinite_recharge.sd_widgets.control_panel.ControlPanelWidget">
+    <children>
+        <fx:include fx:id="m_controlPanel"
+                    source="/com/gos/infinite_recharge/sd_widgets/control_panel/control_panel.fxml"/>
+    </children>
+</StackPane>
