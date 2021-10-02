@@ -104,10 +104,10 @@ public class Climber extends Subsystem {
     followerClimberFront.follow(climberFront, FollowerType.PercentOutput);
     followerClimberBack.follow(climberBack, FollowerType.PercentOutput);
 
-    LiveWindow.addActuator("Climber", "climberFront", climberFront);
-    LiveWindow.addActuator("Climber", "climberBack", climberBack);
-    LiveWindow.addActuator("Climber", "climberFollowerFront", followerClimberFront);
-    LiveWindow.addActuator("Climber", "climberFollowerBack", followerClimberBack);
+    addChild("climberFront", climberFront);
+    addChild("climberBack", climberBack);
+    addChild("climberFollowerFront", followerClimberFront);
+    addChild("climberFollowerBack", followerClimberBack);
 
   }
 
