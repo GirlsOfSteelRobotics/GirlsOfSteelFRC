@@ -40,7 +40,7 @@ public class ControlPanel extends SubsystemBase {
     private PanelColor m_currentPanelColor;
     private PanelColor m_lastPanelColor;
 
-    private Color m_currentColor = null;
+    private Color m_currentColor;
 
     public ControlPanel() {
 
@@ -68,7 +68,6 @@ public class ControlPanel extends SubsystemBase {
 
         m_currentColor = m_colorSensor.getColor();
 
-        final double IR = m_colorSensor.getIR();
         final ColorMatchResult match = m_colorMatcher.matchClosestColor(m_currentColor);
 
         if (match.color == BLUE_TARGET_COLOR) {
@@ -113,7 +112,7 @@ public class ControlPanel extends SubsystemBase {
         // SmartDashboard.putString("Assigned Color", m_currentPanelColor.toString());
         // SmartDashboard.putNumber("Proximity", m_colorSensor.getProximity());
 
-        //m_customNetworkTable.getEntry("Speed").setDouble(m_controlPanel.get());
+        m_customNetworkTable.getEntry("Speed").setDouble(m_controlPanel.get());
     }
 
     public int getColorCounter() {

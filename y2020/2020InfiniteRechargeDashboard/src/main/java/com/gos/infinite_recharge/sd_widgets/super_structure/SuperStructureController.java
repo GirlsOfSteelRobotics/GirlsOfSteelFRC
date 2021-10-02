@@ -3,12 +3,6 @@ package com.gos.infinite_recharge.sd_widgets.super_structure;
 import javafx.scene.paint.Color;
 
 import com.gos.infinite_recharge.sd_widgets.Utils;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ControlPanelData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.LiftData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ShooterConveyorData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ShooterIntakeData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.ShooterWheelsData;
-import com.gos.infinite_recharge.sd_widgets.super_structure.data.WinchData;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -27,7 +21,7 @@ public class SuperStructureController {
 
     @FXML
     private Group m_group;
-    
+
     @FXML
     private Pane m_pane;
 
@@ -90,19 +84,19 @@ public class SuperStructureController {
 
     public void updateShooterConveyor(ShooterConveyorData shooterConveyorData) {
         m_robotConveyor.setStroke(Utils.getMotorColor(shooterConveyorData.getSpeed()));
-        if (shooterConveyorData.getHandoffBallSensor()) {
+        if (shooterConveyorData.isHandoffBallSensor()) {
             m_shooterHandoff.setFill(Color.YELLOW);
         }
         else {
             m_shooterSecondary.setFill(Color.TRANSPARENT);
         }
-        if (shooterConveyorData.getSecondaryBallSensor()) {
+        if (shooterConveyorData.isSecondaryBallSensor()) {
             m_shooterSecondary.setFill(Color.YELLOW);
         }
         else {
             m_shooterSecondary.setFill(Color.TRANSPARENT);
         }
-        if (shooterConveyorData.getTopBallSensor()) {
+        if (shooterConveyorData.isTopBallSensor()) {
             m_shooterTop.setFill(Color.YELLOW);
         }
         else {
@@ -112,14 +106,14 @@ public class SuperStructureController {
 
     public void updateShooterIntake(ShooterIntakeData shooterIntakeData) {
         m_robotIntake.setFill(Utils.getMotorColor(shooterIntakeData.getSpeed()));
-        m_intakeRotation.setAngle(shooterIntakeData.getPosition() ? -90 : 0);
+        m_intakeRotation.setAngle(shooterIntakeData.isPosition() ? -90 : 0);
     }
-    
+
     public void updateShooterWheels(ShooterWheelsData shooterWheelsData) {
         m_robotShooterCurrentRPM.setFill(Utils.getClampedColor(shooterWheelsData.getCurrentRpm(), 4000, 8000));
         m_robotShooterGoalRPM.setFill(Utils.getClampedColor(shooterWheelsData.getGoalRpm(), 4000, 8000));
     }
-    
+
 
     public void updateControlPanel(ControlPanelData controlPanelData) {
         m_controlPanel.setFill(Utils.getMotorColor(controlPanelData.getSpeed()));

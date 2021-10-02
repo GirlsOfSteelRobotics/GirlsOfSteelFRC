@@ -49,8 +49,10 @@ public class Winch extends SubsystemBase {
         m_motorB.set(-0.8);
     }
 
+    @Override
     public void periodic() {
-        // m_customNetworkTable.getEntry("Speed").setDouble(m_motorA.get());
+        m_customNetworkTable.getEntry("Speed").setDouble(m_motorA.get());
+        m_customNetworkTable.getEntry("Height").setDouble(m_encoder.getPosition());
     }
 
     public void stop() {

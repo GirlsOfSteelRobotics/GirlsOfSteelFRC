@@ -36,7 +36,7 @@ public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
         //addCommands(new IntakeCells(shooterIntake, true)
         //    .raceWith(new DriveDistanceSmartMotion(chassis, 17 * 12, allowableErrorDrive)
         //    .raceWith(new ConveyorWhileHeld(shooterConveyor, true))));
-       // addCommands(trajectoryFactory.getTrajectoryRightSideToControlPanel(chassis).raceWith(new IntakeCells(shooterIntake, true).raceWith(new ConveyorWhileHeld(shooterConveyor, true)))); //collecting cells in trench
+        // addCommands(trajectoryFactory.getTrajectoryRightSideToControlPanel(chassis).raceWith(new IntakeCells(shooterIntake, true).raceWith(new ConveyorWhileHeld(shooterConveyor, true)))); //collecting cells in trench
 
         // Drive and pick up
         addCommands(trajectoryFactory.getTrajectoryRightSideToControlPanel(chassis)

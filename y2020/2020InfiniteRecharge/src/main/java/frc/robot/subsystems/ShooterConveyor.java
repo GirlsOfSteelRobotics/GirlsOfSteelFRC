@@ -23,7 +23,7 @@ public class ShooterConveyor extends SubsystemBase {
 
     private final CANSparkMax m_master;
     private final CANEncoder m_encoder;
-    private CANPIDController m_pidController;
+    private final CANPIDController m_pidController;
     private final CANSparkMax m_follower;
 
     private final DigitalInput m_breakSensorHandoff;
@@ -58,17 +58,17 @@ public class ShooterConveyor extends SubsystemBase {
         m_follower.burnFlash();
     }
 
-
+    @Override
     public void periodic() {
         // SmartDashboard.putBoolean("Break Sensor Handoff: ", m_breakSensorHandoff.get());
         // SmartDashboard.putBoolean("Break Sensor Secondary: ", m_breakSensorSecondary.get());
         SmartDashboard.putBoolean("Break Sensor Top", m_breakSensorTop.get());
         // SmartDashboard.putNumber("Conveyor Position", m_encoder.getPosition());
 
-        // m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
-        // m_customNetworkTable.getEntry("Handoff Ball Sensor").setBoolean(m_breakSensorHandoff.get());
-        // m_customNetworkTable.getEntry("Secondary Ball Sensor").setBoolean(m_breakSensorSecondary.get());
-        // m_customNetworkTable.getEntry("Top Ball Sensor").setBoolean(m_breakSensorTop.get());
+        m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
+        m_customNetworkTable.getEntry("Handoff Ball Sensor").setBoolean(m_breakSensorHandoff.get());
+        m_customNetworkTable.getEntry("Secondary Ball Sensor").setBoolean(m_breakSensorSecondary.get());
+        m_customNetworkTable.getEntry("Top Ball Sensor").setBoolean(m_breakSensorTop.get());
     }
 
     public void advanceBall() {

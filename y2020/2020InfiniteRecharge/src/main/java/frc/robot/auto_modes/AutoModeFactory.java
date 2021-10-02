@@ -36,7 +36,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private static final boolean ENABLE_AUTO_SELECTION = true;
 
-    private Command m_defaultCommand;
+    private final Command m_defaultCommand;
 
 
 
@@ -93,12 +93,12 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
            
            
-        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory,false, limelight));
+        m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory, false, limelight));
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory, limelight));
         m_sendableChooser.addOption("ShootAndDriveToOpponentsTrench",  new ShootAndDriveToOpponentsTrenchCommandGroup(chassis, shooter,
                 shooterConveyor, shooterIntake, trajectoryModeFactory, false));
 
-        if (ENABLE_AUTO_SELECTION == true) {
+        if (ENABLE_AUTO_SELECTION) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);
         }
         
@@ -116,11 +116,11 @@ public class AutoModeFactory extends SequentialCommandGroup {
     }
 
     public Command getAutonomousMode() {
-        if (ENABLE_AUTO_SELECTION == false) {
-            return m_defaultCommand;
+        if (ENABLE_AUTO_SELECTION) {
+            return m_sendableChooser.getSelected();
         }
         else {
-            return m_sendableChooser.getSelected();
+            return m_defaultCommand;
         }
     }
 }

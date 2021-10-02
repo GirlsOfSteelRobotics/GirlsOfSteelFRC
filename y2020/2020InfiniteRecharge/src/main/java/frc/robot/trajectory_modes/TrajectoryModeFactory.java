@@ -190,7 +190,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         return new FollowTrajectory(trajectory, chassis);
     }
 
-    private TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
+    public static TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
             new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(DriveConstants.ksVolts,
@@ -199,18 +199,18 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
                 DriveConstants.kDriveKinematics,
                 DriveConstants.maxVoltage);
 
-    TrajectoryConfig config =
-        new TrajectoryConfig(maxSpeedMetersPerSecond,
-                maxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics)
-        // Apply the voltage constraint
-        .addConstraint(autoVoltageConstraint);
+        TrajectoryConfig config =
+            new TrajectoryConfig(maxSpeedMetersPerSecond,
+                    maxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
 
         return config;
     }
 
-    private TrajectoryConfig getTrajectoryConfig() {
+    public static TrajectoryConfig getTrajectoryConfig() {
         return  getTrajectoryConfig(AutoConstants.normalSpeedMetersPerSecond, AutoConstants.normalAccelerationMetersPerSecondSquared);
 
     }

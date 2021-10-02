@@ -1,6 +1,5 @@
 package com.gos.infinite_recharge.sd_widgets.leds;
 
-import com.gos.infinite_recharge.sd_widgets.leds.data.LedData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

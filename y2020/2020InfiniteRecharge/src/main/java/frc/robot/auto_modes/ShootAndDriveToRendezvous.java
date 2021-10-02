@@ -27,11 +27,6 @@ public class ShootAndDriveToRendezvous extends SequentialCommandGroup {
      */
     public ShootAndDriveToRendezvous(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake, TrajectoryModeFactory trajectoryFactory) {
 
-        double allowableErrorAngle;
-        allowableErrorAngle = 10;
-        double allowableErrorDrive;
-        allowableErrorDrive = 12;
-
         //cell intake runs until handoff break sensor is true (a ball has been collected)
         addCommands(new SetStartingPosition(chassis, 122, -127, 0)); //start with shooter facing the wall
         addCommands(new TurnToAngle(chassis, -20, 12));
