@@ -1,27 +1,11 @@
 
-//apply plugin: 'jacoco'
+apply plugin: 'jacoco'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 
-
-checkstyle {
-    toolVersion = "8.28"
-    configDir = file("${project.rootDir}/styleguide")
-    config = resources.text.fromFile(new File(configDir, "checkstyle.xml"))
+jacoco {
+    toolVersion = "0.8.6"
 }
-
-pmd {
-    toolVersion = '6.20.0'
-    consoleOutput  = true
-    reportsDir = file("${project.buildDir}/codelabs/reports/pmd")
-    ruleSetFiles = files(file("$rootDir/styleguide/pmd-ruleset.xml"))
-    ruleSets = []
-}
-
-//jacoco {
-//    toolVersion = "0.8.5"
-//}
-//
 //jacocoTestReport {
 //    dependsOn test
 //    reports {
@@ -33,3 +17,18 @@ pmd {
 //test {
 //    finalizedBy jacocoTestReport
 //}
+
+
+checkstyle {
+    toolVersion = "8.37"
+    configDir = file("${project.rootDir}/styleguide")
+    config = resources.text.fromFile(new File(configDir, "checkstyle.xml"))
+}
+
+pmd {
+    toolVersion = '6.29.0'
+    consoleOutput  = true
+    reportsDir = file("${project.buildDir}/reports/pmd")
+    ruleSetFiles = files(file("$rootDir/styleguide/pmd-ruleset.xml"))
+    ruleSets = []
+}

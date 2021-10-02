@@ -54,6 +54,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private DifferentialDrivetrainSimWrapper m_simulator;
 
+    @SuppressWarnings("PMD.CloseResource")
     public ChassisSubsystem() {
 
         m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkMaxLowLevel.MotorType.kBrushed);

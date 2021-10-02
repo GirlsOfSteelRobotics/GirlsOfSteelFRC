@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2021.2.2"
+    id "edu.wpi.first.GradleRIO" version "2021.3.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -40,22 +40,6 @@ deploy {
 // Set this to true to enable desktop support.
 def includeDesktopSupport = true
 
-def is_root_project = "${rootDir}" == "${projectDir}"
-if (is_root_project) {
-    sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLib/src/main/java/"
-    sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLibCtre/src/main/java/"
-    sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLibNavx/src/main/java/"
-    sourceSets.main.java.srcDir "${projectDir}/../libraries/GirlsOfSteelLibRev/src/main/java/"
-}
-else {
-    dependencies {
-        compile project(":libraries:GirlsOfSteelLib")
-        compile project(":libraries:GirlsOfSteelLibCtre")
-        compile project(":libraries:GirlsOfSteelLibNavx")
-        compile project(":libraries:GirlsOfSteelLibRev")
-    }
-}
-
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -78,6 +62,11 @@ dependencies {
     // Websocket extensions require additional configuration.
     // simulation wpi.deps.sim.ws_server(wpi.platforms.desktop, false)
     // simulation wpi.deps.sim.ws_client(wpi.platforms.desktop, false)
+
+    compile project(":libraries:GirlsOfSteelLib")
+    compile project(":libraries:GirlsOfSteelLibCtre")
+    compile project(":libraries:GirlsOfSteelLibNavx")
+    compile project(":libraries:GirlsOfSteelLibRev")
 }
 
 // Simulation configuration (e.g. environment variables).

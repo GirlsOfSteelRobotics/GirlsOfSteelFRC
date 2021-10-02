@@ -15,6 +15,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final DifferentialDrive m_differentialDrive;
 
+    @SuppressWarnings("PMD.CloseResource")
     public ChassisSubsystem() {
 
         m_leftDriveA = new Talon(0);
