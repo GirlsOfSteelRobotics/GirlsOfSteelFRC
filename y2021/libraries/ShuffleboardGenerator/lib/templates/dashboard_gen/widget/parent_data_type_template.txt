@@ -1,0 +1,25 @@
+package {{widget_package_name}};
+
+import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
+
+import java.util.Map;
+import java.util.function.Function;
+
+public final class {{widget.table}}DataType extends ComplexDataType<{{widget.table}}Data> {
+    public static final {{widget.table}}DataType INSTANCE = new {{widget.table}}DataType();
+
+    private {{widget.table}}DataType() {
+        super(SmartDashboardNames.{{widget.sd_table_name_constant}}, {{widget.table}}Data.class);
+    }
+
+    @Override
+    public Function<Map<String, Object>, {{widget.table}}Data> fromMap() {
+        return {{widget.table}}Data::new;
+    }
+
+    @Override
+    public {{widget.table}}Data getDefaultValue() {
+        return new {{widget.table}}Data();
+    }
+}
+

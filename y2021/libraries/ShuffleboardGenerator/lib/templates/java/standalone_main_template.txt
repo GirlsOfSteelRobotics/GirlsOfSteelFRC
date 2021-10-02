@@ -1,0 +1,134 @@
+package {{widget_package_name}};
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+{%- if widget.children_tables|length != 1 %}
+import java.util.HashMap;
+import java.util.Map;
+{%- endif %}
+
+@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NPathComplexity"})
+public class {{widget.table}}StandaloneMain {
+    private final {{widget.table}}Widget m_controller;
+{% for child in widget.children_tables %}
+  {%- for entry in child.entries %}
+    {%- if is_array(entry) %}
+      {%- for i in range(5) %}
+    private {{entry.type[:-2]}} m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{{i}};
+      {%- endfor %}
+    {%- else %}
+    private {{entry.type}} m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}};
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+
+    public {{widget.table}}StandaloneMain(Scene scene, {{widget.table}}Widget robotController) {
+        m_controller = robotController;
+
+        scene.setOnKeyPressed(event -> {
+            KeyCode code = event.getCode();
+            switch (code) {
+{% for child in widget.children_tables %}
+            // {{child.table}}
+  {%- for entry in child.entries %}
+    {%- if is_array(entry) %}
+      {%- for i in range(5) %}
+    {{ on_key_pressed(child, entry, i) }}
+      {%- endfor %}
+    {%- else %}
+{{ on_key_pressed(child, entry) }}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+
+            default:
+                // ignored
+            }
+            handleUpdate();
+        });
+
+
+        scene.setOnKeyReleased(event -> {
+            KeyCode code = event.getCode();
+            switch (code) {
+{% for child in widget.children_tables %}
+            // {{child.table}}
+  {%- for entry in child.entries %}
+    {%- if is_array(entry) %}
+      {%- for i in range(5) %}
+{{ on_key_pressed(child, entry, i) }}
+      {%- endfor %}
+    {%- else %}
+{{ on_key_released(child, entry) }}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+            default:
+                break;
+            }
+            handleUpdate();
+        });
+    }
+
+    private void handleUpdate() {
+
+        try {
+{% if widget.children_tables|length == 1 %}
+            {{widget.children_tables[0].table}}Data data = new {{widget.children_tables[0].table}}Data(
+            {%- for entry in widget.children_tables[0].entries %}
+              {%- if is_array(entry) %}
+                new {{entry.type}}{ {%- for i in range(5) %}m_{{lower_first_char(widget.children_tables[0].table)}}{{cap_first_char(entry.name)}}{{i}}{% if not loop.last %}, {%endif%}{%- endfor %} },
+              {%- else %}
+                m_{{lower_first_char(widget.children_tables[0].table)}}{{cap_first_char(entry.name)}}{% if not loop.last %},{%endif%}
+              {%- endif %}
+            {%- endfor %}
+            );
+            m_controller.dataProperty().setValue(data);
+{%- else %}
+            Map<String, Object> map = new HashMap<>();
+{% for child in widget.children_tables %}
+            map.putAll(new {{child.table}}Data(
+  {%- for entry in child.entries %}
+                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{% if not loop.last %},{%endif%}
+  {%- endfor %}
+                ).asMap(SmartDashboardNames.{{child.table_name}} + "/"));
+{% endfor %}
+            m_controller.dataProperty().setValue(new {{widget.table}}Data(map));
+{% endif %}
+        } catch (ClassCastException ignored) {
+            // don't worry about it
+        }
+    }
+
+    public static class PseudoMain extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("{{camel_to_snake(widget.table)}}_widget.fxml"));
+            Pane root = loader.load();
+            {{widget.table}}Widget controller = loader.getController();
+
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+
+            new {{widget.table}}StandaloneMain(scene, controller);
+            primaryStage.show();
+        }
+    }
+
+    @SuppressWarnings("JavadocMethod")
+    public static void main(String[] args) {
+        // JavaFX 11+ uses GTK3 by default, and has problems on some display
+        // servers
+        // This flag forces JavaFX to use GTK2
+        // System.setProperty("jdk.gtk.version", "2");
+        Application.launch(PseudoMain.class, args);
+    }
+}
+
