@@ -1,5 +1,9 @@
 
-allprojects
-{
+plugins {
+    id 'com.diffplug.spotless' version '5.5.0' apply false
+    id 'com.github.spotbugs' version '5.0.0-beta.1' apply false
+}
+
+allprojects {
     apply from: "${rootDir}/styleguide/styleguide.gradle"
 }
