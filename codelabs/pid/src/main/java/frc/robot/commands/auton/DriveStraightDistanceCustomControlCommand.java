@@ -16,7 +16,7 @@ public class DriveStraightDistanceCustomControlCommand extends CommandBase {
         m_chassis = chassis;
         m_distance = goalDistance;
         m_allowableError = ChassisSubsystem.DEFAULT_ALLOWABLE_POSITION_ERROR;
-        m_deadbandHelper = new DeadbandHelper();
+        m_deadbandHelper = new DeadbandHelper(50);
 
         addRequirements(chassis);
     }
@@ -34,7 +34,7 @@ public class DriveStraightDistanceCustomControlCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         boolean isFinished = false; // TODO implement
-        return m_deadbandHelper.update(isFinished);
+        return m_deadbandHelper.setIsGood(isFinished);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package frc.robot.commands.tuning;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.lib.properties.PropertyManager;
+import frc.robot.lib.PropertyManager;
 import frc.robot.subsystems.ShooterSubsystem;
 
 

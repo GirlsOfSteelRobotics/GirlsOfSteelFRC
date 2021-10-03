@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.lib.properties.PidProperty;
-import frc.robot.lib.properties.RevPidPropertyBuilder;
+import frc.robot.lib.PidProperty;
+import frc.robot.lib.RevPidPropertyBuilder;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.module_wrappers.wpi.ADXRS450GyroWrapper;
@@ -99,21 +99,21 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupVelocityPidConstants(CANPIDController pidController) {
-        return RevPidPropertyBuilder.createBuilder("Chassis.vel", false, pidController, PID_SLOT_VELOCITY)
+        return new RevPidPropertyBuilder("Chassis.vel", false, pidController, PID_SLOT_VELOCITY)
                 .addP(0)
                 .addFF(0)
                 .build();
     }
 
     private PidProperty setupPositionPidConstants(CANPIDController pidController) {
-        return RevPidPropertyBuilder.createBuilder("Chassis.pos", false, pidController, PID_SLOT_POSITION)
+        return new RevPidPropertyBuilder("Chassis.pos", false, pidController, PID_SLOT_POSITION)
                 .addP(0)
                 .addD(0)
                 .build();
     }
 
     private PidProperty setupSmartMotionPidConstants(CANPIDController pidController) {
-        return RevPidPropertyBuilder.createBuilder("Chassis.sm", false, pidController, PID_SLOT_SMART_MOTION)
+        return new RevPidPropertyBuilder("Chassis.sm", false, pidController, PID_SLOT_SMART_MOTION)
                 .addP(0)
                 .addFF(0)
                 .addMaxAcceleration(0)

@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SmartDashboardNames;
 import frc.robot.commands.tuning.FindElevatorGravityCompensationCommand;
-import frc.robot.lib.properties.PidProperty;
-import frc.robot.lib.properties.RevPidPropertyBuilder;
+import frc.robot.lib.PidProperty;
+import frc.robot.lib.RevPidPropertyBuilder;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
@@ -60,7 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_heightEntry = table.getEntry(SmartDashboardNames.ELEVATOR_HEIGHT);
         m_desiredHeightEntry = table.getEntry(SmartDashboardNames.ELEVATOR_DESIRED_HEIGHT);
 
-        m_pidProperty = RevPidPropertyBuilder.createBuilder("Elevator", false, m_pidController, 0)
+        m_pidProperty = new RevPidPropertyBuilder("Elevator", false, m_pidController, 0)
                 .addP(0)
                 .addFF(0)
                 .addMaxAcceleration(0)
