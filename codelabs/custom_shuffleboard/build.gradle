@@ -10,7 +10,7 @@ plugins {
 
 repositories {
     mavenCentral()
-    
+
     maven {
         name = "WPI"
         url = "https://frcmaven.wpi.edu/artifactory/release/"
@@ -46,28 +46,28 @@ task generate_version() {
 
 public class PluginVersion {
     public static final String VERSION = "${project.publishing_version}";
-} 
+}
 """
-    
+
     doLast {
         if (output_file.exists()) {
             output_file.delete()
         }
         output_file.write(file_template)
     }
-    
+
 }
 compileJava.dependsOn generate_version
 ////////////////////////////
 
 dependencies {
-    
+
     compile "org.openjfx:javafx-base:11:win"
     compile "org.openjfx:javafx-graphics:11:win"
     compile "org.openjfx:javafx-controls:11:win"
     compile "org.openjfx:javafx-fxml:11:win"
-    
-    
+
+
     compile 'edu.wpi.first.shuffleboard:shuffleboard:' + shuffleboard_version
     compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
 }
@@ -88,7 +88,7 @@ publishing {
             groupId = "com.gos.infinite_recharge.sd_widgets"
             artifactId = "RobotWidget"
             version = publishing_version
-            
+
             artifact jar
         }
     }
