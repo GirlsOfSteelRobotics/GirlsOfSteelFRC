@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.SmartDashboardNames;
-import frc.robot.lib.properties.PidProperty;
-import frc.robot.lib.properties.RevPidPropertyBuilder;
+import frc.robot.lib.PidProperty;
+import frc.robot.lib.RevPidPropertyBuilder;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
@@ -43,7 +43,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_encoder = m_wheelMotor.getEncoder();
         m_pidController = m_wheelMotor.getPIDController();
 
-        m_pidProperty = RevPidPropertyBuilder.createBuilder("Shooter", false, m_pidController, 0)
+        m_pidProperty = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
                 .addP(0)
                 .addFF(0)
                 .build();

@@ -16,7 +16,7 @@ public class DriveStraightDistancePositionControlCommand extends CommandBase {
         m_chassis = chassis;
         m_distance = goalDistance;
         m_allowableError = ChassisSubsystem.DEFAULT_ALLOWABLE_POSITION_ERROR;
-        m_deadbandHelper = new DeadbandHelper();
+        m_deadbandHelper = new DeadbandHelper(50);
 
         addRequirements(chassis);
     }
@@ -34,7 +34,7 @@ public class DriveStraightDistancePositionControlCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         double error = m_chassis.getAverageDistance() - m_goalDistance;
-        return m_deadbandHelper.update(Math.abs(error) < m_allowableError);
+        return m_deadbandHelper.setIsGood(Math.abs(error) < m_allowableError);
     }
 
     @Override

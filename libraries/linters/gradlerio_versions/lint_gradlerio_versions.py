@@ -104,6 +104,9 @@ def main():
 
     passed = True
 
+    if len(gradlerio_versions) == 0:
+        raise Exception(f"No build files were found. Check base directory '{base_directory}'")
+
 
     if len(gradlerio_versions) != 1:
         fix_gradlerio_build_file(gradlerio_versions)

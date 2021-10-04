@@ -9,13 +9,15 @@ public class DeadbandHelper {
         m_goodLoops = 0;
     }
 
-    public void setIsGood(boolean isFinished) {
-        if (isFinished) {
+    public boolean setIsGood(boolean isGood) {
+        if (isGood) {
             ++m_goodLoops;
         }
         else {
             m_goodLoops = 0;
         }
+
+        return isFinished();
     }
 
     public boolean isFinished() {

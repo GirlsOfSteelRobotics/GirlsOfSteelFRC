@@ -5,13 +5,17 @@ include 'codelabs:custom_shuffleboard'
 include 'codelabs:gitflow'
 include 'codelabs:pid'
 
-include 'y2019:2019DeepSpace'
-include 'y2019:OffenseBot'
-include 'y2020:2020InfiniteRecharge'
-include 'y2020:2020InfiniteRechargeDashboard'
-include 'y2021:OutreachBot'
-include 'y2021:OutreachBotDashboard'
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
 include 'libraries:GirlsOfSteelLibNavx'
+
+include 'y2019:2019DeepSpace'
+include 'y2019:OffenseBot'
+
+include 'y2020:2020InfiniteRecharge'
+include 'y2020:2020InfiniteRechargeDashboard'
+include 'y2020:Testboard'
+
+include 'y2021:OutreachBot'
+include 'y2021:OutreachBotDashboard'

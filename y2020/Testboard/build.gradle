@@ -66,3 +66,11 @@ jar {
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
+
+checkstyle {
+    ignoreFailures = true;
+}
+
+pmd {
+    ignoreFailures = true;
+}
