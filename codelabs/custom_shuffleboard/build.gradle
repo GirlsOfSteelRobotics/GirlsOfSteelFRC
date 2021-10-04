@@ -2,94 +2,16 @@
 
 plugins {
     id "java"
-    id "idea"
-    id "eclipse"
-    id "maven-publish"
-    id "application"
-}
-
-repositories {
-    mavenCentral()
-
-    maven {
-        name = "WPI"
-        url = "https://frcmaven.wpi.edu/artifactory/release/"
-    }
+    id 'application'
 }
 
 ext {
-    shuffleboard_version = "2021.1.2";
-    publishing_version = "1.0.0";
-    publishing_url = "${rootDir}/build/publishing"
-}
-
-
-task install_plugin(type: Copy) {
-    group = "Girls Of Steel"
-    from(tasks.named("jar"))
-    into("${System.getProperty("user.home")}/Shuffleboard/plugins")
-}
-
-////////////////////////////
-// Generate Version Info
-////////////////////////////
-sourceSets.main.java.srcDir "${buildDir}/generated/java/"
-sourceSets.main.java.srcDir "src/dashboard_gen/java/"
-task generate_version() {
-    def package_name = "com.gos.shuffleboard_codelab.sd_widgets"
-    def package_dir = package_name.replace(".", "/")
-    def generated_dir = file("$buildDir/generated/java/" + package_dir)
-    generated_dir.mkdirs()
-    def output_file = file("$generated_dir/PluginVersion.java")
-    def file_template = """package ${package_name};
-
-
-public class PluginVersion {
-    public static final String VERSION = "${project.publishing_version}";
-}
-"""
-
-    doLast {
-        if (output_file.exists()) {
-            output_file.delete()
-        }
-        output_file.write(file_template)
-    }
-
-}
-compileJava.dependsOn generate_version
-////////////////////////////
-
-dependencies {
-
-    compile "org.openjfx:javafx-base:11:win"
-    compile "org.openjfx:javafx-graphics:11:win"
-    compile "org.openjfx:javafx-controls:11:win"
-    compile "org.openjfx:javafx-fxml:11:win"
-
-
-    compile 'edu.wpi.first.shuffleboard:shuffleboard:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
+    package_name = "com.gos.codelabs.shuffleboard.sd_widgets"
+    publishing_version = "2021.0.0"
 }
 
 application {
-    mainClassName = "com.gos.shuffleboard_codelab.sd_widgets.ss.CodelabSuperStructureStandaloneMain"
+    mainClassName = 'com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureStandaloneMain'
 }
 
-
-publishing {
-    repositories {
-        maven {
-            url publishing_url
-        }
-    }
-    publications {
-        application(MavenPublication) {
-            groupId = "com.gos.infinite_recharge.sd_widgets"
-            artifactId = "RobotWidget"
-            version = publishing_version
-
-            artifact jar
-        }
-    }
-}
+apply from: "${rootDir}/libraries/build_scripts/custom_dashboard_helper.gradle"
