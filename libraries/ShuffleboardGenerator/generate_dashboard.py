@@ -1,6 +1,7 @@
 import yaml
 from lib.generate_dashboard_structure import WidgetGenerator, TopLevelGenerator, maybe_add_standalone_buttons
 import os
+import sys
 
 
 def main(argv):

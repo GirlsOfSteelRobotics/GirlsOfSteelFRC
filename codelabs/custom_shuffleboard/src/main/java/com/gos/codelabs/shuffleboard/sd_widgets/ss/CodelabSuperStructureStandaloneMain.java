@@ -1,10 +1,5 @@
 package com.gos.codelabs.shuffleboard.sd_widgets.ss;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.CodelabSuperStructureData;
-import com.gos.codelabs.shuffleboard.sd_widgets.SmartDashboardNames;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.ElevatorData;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.PunchData;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.SpinningWheelData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,10 +17,10 @@ public class CodelabSuperStructureStandaloneMain {
 
     private double m_elevatorSpeed;
     private double m_elevatorHeight;
-    private boolean m_elevatorAtLowerLimit;
     private boolean m_elevatorAtUpperLimit;
+    private boolean m_elevatorAtLowerLimit;
     private boolean m_punchPunchExtended;
-    private double m_spinningWheelMotorSpeed;
+    private double m_spinningWheelSpeed;
 
     public CodelabSuperStructureStandaloneMain(Scene scene, CodelabSuperStructureWidget robotController) {
         m_controller = robotController;
@@ -49,27 +44,24 @@ public class CodelabSuperStructureStandaloneMain {
                 break;
 
             case X:
-                m_elevatorAtLowerLimit = true;
-                break;
-
-            case Y:
                 m_elevatorAtUpperLimit = true;
                 break;
 
+            case Y:
+                m_elevatorAtLowerLimit = true;
+                break;
             // Punch
 
             case D:
                 m_punchPunchExtended = true;
                 break;
-
             // SpinningWheel
             case O:
-                m_spinningWheelMotorSpeed = 0.5;
+                m_spinningWheelSpeed = 0.5;
                 break;
             case L:
-                m_spinningWheelMotorSpeed = -0.5;
+                m_spinningWheelSpeed = -0.5;
                 break;
-
 
             default:
                 // ignored
@@ -90,25 +82,22 @@ public class CodelabSuperStructureStandaloneMain {
 
 
             case X:
-                m_elevatorAtLowerLimit = false;
-                break;
-
-            case Y:
                 m_elevatorAtUpperLimit = false;
                 break;
 
+            case Y:
+                m_elevatorAtLowerLimit = false;
+                break;
             // Punch
 
             case D:
                 m_punchPunchExtended = false;
                 break;
-
             // SpinningWheel
             case O:
             case L:
-                m_spinningWheelMotorSpeed = 0;
+                m_spinningWheelSpeed = 0;
                 break;
-
             default:
                 break;
             }
@@ -119,13 +108,14 @@ public class CodelabSuperStructureStandaloneMain {
     private void handleUpdate() {
 
         try {
+
             Map<String, Object> map = new HashMap<>();
 
             map.putAll(new ElevatorData(
                 m_elevatorSpeed,
                 m_elevatorHeight,
-                m_elevatorAtLowerLimit,
-                m_elevatorAtUpperLimit
+                m_elevatorAtUpperLimit,
+                m_elevatorAtLowerLimit
                 ).asMap(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/"));
 
             map.putAll(new PunchData(
@@ -133,11 +123,11 @@ public class CodelabSuperStructureStandaloneMain {
                 ).asMap(SmartDashboardNames.PUNCH_TABLE_NAME + "/"));
 
             map.putAll(new SpinningWheelData(
-                m_spinningWheelMotorSpeed
+                m_spinningWheelSpeed
                 ).asMap(SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME + "/"));
 
-
             m_controller.dataProperty().setValue(new CodelabSuperStructureData(map));
+
         } catch (ClassCastException ignored) {
             // don't worry about it
         }

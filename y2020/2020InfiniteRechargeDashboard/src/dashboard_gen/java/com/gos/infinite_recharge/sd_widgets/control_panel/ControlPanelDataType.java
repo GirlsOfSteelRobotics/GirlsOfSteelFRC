@@ -1,13 +1,14 @@
 package com.gos.infinite_recharge.sd_widgets.control_panel;
 
-import com.gos.infinite_recharge.sd_widgets.super_structure.SmartDashboardNames;
 import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
 
 import java.util.Map;
 import java.util.function.Function;
 
-public class ControlPanelDataType extends ComplexDataType<ControlPanelData> {
-    public ControlPanelDataType() {
+public final class ControlPanelDataType extends ComplexDataType<ControlPanelData> {
+    public static final ControlPanelDataType INSTANCE = new ControlPanelDataType();
+
+    private ControlPanelDataType() {
         super(SmartDashboardNames.CONTROL_PANEL_TABLE_NAME, ControlPanelData.class);
     }
 

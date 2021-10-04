@@ -2,6 +2,10 @@ package com.gos.infinite_recharge.sd_widgets;
 
 import com.gos.infinite_recharge.sd_widgets.super_structure.SuperStructureWidget;
 import com.gos.infinite_recharge.sd_widgets.super_structure.SuperStructureDataType;
+import com.gos.infinite_recharge.sd_widgets.leds.LedWidget;
+import com.gos.infinite_recharge.sd_widgets.leds.LedDataType;
+import com.gos.infinite_recharge.sd_widgets.control_panel.ControlPanelWidget;
+import com.gos.infinite_recharge.sd_widgets.control_panel.ControlPanelDataType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.wpi.first.shuffleboard.api.data.DataType;
@@ -19,14 +23,18 @@ public class GirlsOfSteelPlugin2020 extends Plugin {
     @Override
     public List<ComponentType> getComponents() {
         return ImmutableList.of(
-            WidgetType.forAnnotatedWidget(SuperStructureWidget.class));
+            WidgetType.forAnnotatedWidget(SuperStructureWidget.class), 
+            WidgetType.forAnnotatedWidget(LedWidget.class), 
+            WidgetType.forAnnotatedWidget(ControlPanelWidget.class));
 
     }
 
     @Override
     public List<DataType> getDataTypes() {
         return ImmutableList.of(
-            SuperStructureDataType.INSTANCE);
+            SuperStructureDataType.INSTANCE, 
+            LedDataType.INSTANCE, 
+            ControlPanelDataType.INSTANCE);
 
     }
 
@@ -34,6 +42,8 @@ public class GirlsOfSteelPlugin2020 extends Plugin {
     public Map<DataType, ComponentType> getDefaultComponents() {
         return ImmutableMap.<DataType, ComponentType>builder()
                 .put(SuperStructureDataType.INSTANCE, WidgetType.forAnnotatedWidget(SuperStructureWidget.class))
+                .put(LedDataType.INSTANCE, WidgetType.forAnnotatedWidget(LedWidget.class))
+                .put(ControlPanelDataType.INSTANCE, WidgetType.forAnnotatedWidget(ControlPanelWidget.class))
                 .build();
     }
 }

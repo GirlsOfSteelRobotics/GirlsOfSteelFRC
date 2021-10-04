@@ -2,6 +2,8 @@ package com.gos.infinite_recharge.sd_widgets.control_panel;
 
 public final class SmartDashboardNames {
 
+    public static final String WIDGET_NAME = "Infinite Recharge Control Panel Widget";
+
     // Control Panel
     public static final String CONTROL_PANEL_TABLE_NAME = "ControlPanel";
     public static final String CONTROL_PANEL_COLOR_SEEN = "Color Seen";

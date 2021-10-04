@@ -5,9 +5,10 @@ import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
 import java.util.Map;
 import java.util.function.Function;
 
-public class LedDataType extends ComplexDataType<LedData> {
+public final class LedDataType extends ComplexDataType<LedData> {
+    public static final LedDataType INSTANCE = new LedDataType();
 
-    public LedDataType() {
+    private LedDataType() {
         super(SmartDashboardNames.LED_SIM_TABLE_NAME, LedData.class);
     }
 

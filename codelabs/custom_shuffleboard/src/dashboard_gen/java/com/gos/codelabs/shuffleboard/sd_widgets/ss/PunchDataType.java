@@ -1,14 +1,14 @@
-package com.gos.codelabs.shuffleboard.sd_widgets.ss.data;
+package com.gos.codelabs.shuffleboard.sd_widgets.ss;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.SmartDashboardNames;
 import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
 
 import java.util.Map;
 import java.util.function.Function;
 
-public class PunchDataType extends ComplexDataType<PunchData> {
+public final class PunchDataType extends ComplexDataType<PunchData> {
+    public static final PunchDataType INSTANCE = new PunchDataType();
 
-    public PunchDataType() {
+    private PunchDataType() {
         super(SmartDashboardNames.PUNCH_TABLE_NAME, PunchData.class);
     }
 

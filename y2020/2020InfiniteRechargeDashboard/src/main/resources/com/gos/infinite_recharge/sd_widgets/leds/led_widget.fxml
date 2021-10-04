@@ -6,6 +6,6 @@
            fx:controller="com.gos.infinite_recharge.sd_widgets.leds.LedWidget">
     <children>
         <fx:include fx:id="m_leds"
-                    source="/com/gos/infinite_recharge/sd_widgets/leds/led_panel.fxml"/>
+                    source="/com/gos/infinite_recharge/sd_widgets/leds/led.fxml"/>
     </children>
 </StackPane>

@@ -1,64 +1,122 @@
 
-table: SuperStructure
-package_name: com.gos.infinite_recharge.sd_widgets.super_structure
-children_tables:
+base_package: com.gos.infinite_recharge.sd_widgets
+plugin_summary: "Widget for the 2020 Girls of Steel"
+plugin_name: "GirlsOfSteelPlugin2020"
+widgets:
+  - table: SuperStructure
+    package_name: super_structure
+    widget_name: Infinite Recharge Super Structure Widget
+    sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+    children_tables:
+    - table: ControlPanel
+      table_name: CONTROL_PANEL_TABLE_NAME
+      entries:
+        - type: double
+          name: speed
+          dasboard_constant: CONTROL_PANEL_SPEED
+          sim_value: 0.75
+          sim_keys: [A, Q]
+    - table: Lift
+      table_name: LIFT_TABLE_NAME
+      entries:
+        - type: double
+          name: speed
+          dasboard_constant: LIFT_SPEED
+          sim_value: 0.5
+          sim_keys: [ W, S ]
+    - table: ShooterConveyor
+      table_name: SHOOTER_CONVEYOR_TABLE_NAME
+      entries:
+        - type: double
+          name: speed
+          dasboard_constant: SHOOTER_CONVEYOR_SPEED
+          sim_value: 0.5
+          sim_keys: [ E, D ]
+        - type: boolean
+          name: handoffBallSensor
+          dasboard_constant: CONVEYOR_HANDOFF_BALL_SENSOR
+          sim_keys: Z
+        - type: boolean
+          name: secondaryBallSensor
+          dasboard_constant: CONVEYOR_SECONDARY_BALL_SENSOR
+          sim_keys: X
+        - type: boolean
+          name: topBallSensor
+          dasboard_constant: CONVEYOR_TOP_BALL_SENSOR
+          sim_keys: C
+    - table: ShooterIntake
+      table_name: SHOOTER_INTAKE_TABLE_NAME
+      entries:
+        - type: double
+          name: speed
+          dasboard_constant: SHOOTER_INTAKE_SPEED
+          sim_value: 0.5
+          sim_keys: [ R, F ]
+        - type: boolean
+          name: position
+          dasboard_constant: SHOOTER_INTAKE_POSITION
+          sim_keys: Y
+    - table: ShooterWheels
+      table_name: SHOOTER_WHEELS_TABLE_NAME
+      entries:
+        - type: double
+          name: currentRpm
+          dasboard_constant: SHOOTER_WHEELS_GOAL_RPM
+          sim_incr: 10
+          sim_keys: [ U, J ]
+        - type: double
+          name: goalRpm
+          dasboard_constant: SHOOTER_WHEELS_CURRENT_RPM
+          sim_incr: 10
+          sim_keys: [ I, K ]
+        - type: double
+          name: speed
+          dasboard_constant: SHOOTER_WHEELS_SPEED
+          sim_value: 1
+          sim_keys: [ O, L ]
+    - table: Winch
+      package_name: com.gos.infinite_recharge.sd_widgets.super_structure
+      table_name: WINCH_TABLE_NAME
+      entries:
+        - type: double
+          name: speed
+          dasboard_constant: WINCH_SPEED
+          sim_value: .25
+          sim_keys: [ T, G ]
+
+
+  - table: Led
+    package_name: leds
+    widget_name: Infinite Recharge LEDS
+    sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+    children_tables:
+      - table: Led
+        table_name: LED_SIM_TABLE_NAME
+        entries:
+          - type: String
+            name: values
+            dasboard_constant: LED_VALUES
+
   - table: ControlPanel
-    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
-    table_name: CONTROL_PANEL_TABLE_NAME
-    entries:
-      - type: double
-        name: speed
-        dasboard_constant: CONTROL_PANEL_SPEED
-  - table: Lift
-    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
-    table_name: LIFT_TABLE_NAME
-    entries:
-      - type: double
-        name: speed
-        dasboard_constant: LIFT_SPEED
-  - table: ShooterConveyor
-    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
-    table_name: SHOOTER_CONVEYOR_TABLE_NAME
-    entries:
-      - type: double
-        name: speed
-        dasboard_constant: SHOOTER_CONVEYOR_SPEED
-      - type: boolean
-        name: handoffBallSensor
-        dasboard_constant: CONVEYOR_HANDOFF_BALL_SENSOR
-      - type: boolean
-        name: secondaryBallSensor
-        dasboard_constant: CONVEYOR_SECONDARY_BALL_SENSOR
-      - type: boolean
-        name: topBallSensor
-        dasboard_constant: CONVEYOR_TOP_BALL_SENSOR
-  - table: ShooterIntake
-    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
-    table_name: SHOOTER_INTAKE_TABLE_NAME
-    entries:
-      - type: double
-        name: speed
-        dasboard_constant: SHOOTER_INTAKE_SPEED
-      - type: boolean
-        name: position
-        dasboard_constant: SHOOTER_INTAKE_POSITION
-  - table: ShooterWheels
-    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
-    table_name: SHOOTER_WHEELS_TABLE_NAME
-    entries:
-      - type: double
-        name: speed
-        dasboard_constant: SHOOTER_WHEELS_SPEED
-      - type: double
-        name: currentRpm
-        dasboard_constant: SHOOTER_WHEELS_GOAL_RPM
-      - type: double
-        name: goalRpm
-        dasboard_constant: SHOOTER_WHEELS_CURRENT_RPM
-  - table: Winch
-    package_name: com.gos.infinite_recharge.sd_widgets.super_structure
-    table_name: WINCH_TABLE_NAME
-    entries:
-      - type: double
-        name: speed
-        dasboard_constant: WINCH_SPEED
+    package_name: control_panel
+    widget_name: Infinite Recharge Control Panel Widget
+    sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+    children_tables:
+      - table: ControlPanel
+        table_name: CONTROL_PANEL_TABLE_NAME
+        entries:
+          - type: Double
+            name: simAngle
+            dasboard_constant: CONTROL_PANEL_SIM_WHEEL_ANGLE
+          - type: Double
+            name: simR
+            dasboard_constant: CONTROL_PANEL_SIM_WHEEL_R_COLOR
+          - type: Double
+            name: simG
+            dasboard_constant: CONTROL_PANEL_SIM_WHEEL_G_COLOR
+          - type: Double
+            name: simB
+            dasboard_constant: CONTROL_PANEL_SIM_WHEEL_B_COLOR
+          - type: String
+            name: colorSeen
+            dasboard_constant: CONTROL_PANEL_COLOR_SEEN

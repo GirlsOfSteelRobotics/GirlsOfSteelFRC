@@ -1,10 +1,11 @@
-package com.gos.codelabs.shuffleboard.sd_widgets.ss.data;
+package com.gos.codelabs.shuffleboard.sd_widgets.ss;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.SmartDashboardNames;
 import edu.wpi.first.shuffleboard.api.data.ComplexData;
+import edu.wpi.first.shuffleboard.api.util.Maps;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 @SuppressWarnings("PMD.DataClass")
 public class PunchData extends ComplexData<PunchData> {
@@ -16,17 +17,17 @@ public class PunchData extends ComplexData<PunchData> {
         this(false);
     }
 
+    public PunchData(boolean punchExtended) {
+        m_punchExtended = punchExtended;
+    }
+
     public PunchData(Map<String, Object> map) {
         this("", map);
     }
 
     public PunchData(String prefix, Map<String, Object> map) {
         this(
-            (Boolean) map.getOrDefault(prefix + "/" + SmartDashboardNames.PUNCH_IS_EXTENDED, false));
-    }
-
-    public PunchData(boolean punchExtended) {
-        m_punchExtended = punchExtended;
+            Maps.getOrDefault(map, prefix + SmartDashboardNames.PUNCH_IS_EXTENDED, false));
     }
 
     @Override
@@ -35,9 +36,9 @@ public class PunchData extends ComplexData<PunchData> {
     }
 
     public Map<String, Object> asMap(String prefix) {
-        Map<String, Object> map = new HashMap<>();
-        map.put(prefix + SmartDashboardNames.PUNCH_IS_EXTENDED, m_punchExtended);
-        return map;
+        Map<String, Object> output = new HashMap<>();
+        output.put(prefix + SmartDashboardNames.PUNCH_IS_EXTENDED, m_punchExtended);
+        return output;
     }
 
     public static boolean hasChanged(Map<String, Object> changes) {
@@ -53,5 +54,13 @@ public class PunchData extends ComplexData<PunchData> {
 
     public boolean isPunchExtended() {
         return m_punchExtended;
+    }
+
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", "PunchData [", "]")
+                    .add("punchExtended=" + m_punchExtended)
+                    .toString();
     }
 }

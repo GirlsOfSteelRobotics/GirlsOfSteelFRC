@@ -1,19 +1,16 @@
 package com.gos.codelabs.shuffleboard.sd_widgets.ss;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.ElevatorData;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.PunchData;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.SpinningWheelData;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.CodelabSuperStructureData;
-
 import edu.wpi.first.shuffleboard.api.widget.Description;
 import edu.wpi.first.shuffleboard.api.widget.ParametrizedController;
 import edu.wpi.first.shuffleboard.api.widget.SimpleAnnotatedWidget;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
+
 import java.util.Map;
 
-@Description(name = "Codelab Super Structure", dataTypes = {CodelabSuperStructureData.class})
+
+@Description(name = SmartDashboardNames.WIDGET_NAME, dataTypes = {CodelabSuperStructureData.class})
 @ParametrizedController("codelab_super_structure_widget.fxml")
 public class CodelabSuperStructureWidget extends SimpleAnnotatedWidget<CodelabSuperStructureData> {
     @FXML
@@ -47,6 +44,7 @@ public class CodelabSuperStructureWidget extends SimpleAnnotatedWidget<CodelabSu
             if (SpinningWheelData.hasChanged(changes)) {
                 m_widgetController.updateSpinningWheel(newData.getSpinningWheel());
             }
+
 
         });
     }

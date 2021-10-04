@@ -1,0 +1,33 @@
+name: Shuffleboard Generation
+
+on: [push]
+
+jobs:
+  lint_versions:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        config_file:
+          - codelabs/custom_shuffleboard/dashboard.yml
+          - y2020/2020InfiniteRechargeDashboard/dashboard.yml
+          - y2021/OutreachBotDashboard/dashboard.yml
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.7.6'
+      - name: Install Dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Run Linter
+        run: python generate_dashboard.py --config_file=../../${{ matrix.config_file }}
+        working-directory: libraries/ShuffleboardGenerator
+      - name: Check output
+        run: git --no-pager diff --exit-code HEAD
+      - name: Print Debug Message
+        if: ${{ failure() }}
+        run: |
+          echo "::error:: The automatic generation script for the shuffleboard plugin is producing different code than what has been comitted"
