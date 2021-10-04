@@ -7,6 +7,7 @@ import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class LedController {
 
@@ -36,7 +37,28 @@ public class LedController {
         m_leds.add(led);
     }
 
-    public void setColors(List<Color> colors) {
+
+    public void updateLed(LedData data) {
+        if (data.getValues().isEmpty()) {
+            setColors(null);
+        }
+        List<Color> values = new ArrayList<>();
+
+        StringTokenizer tokenizer = new StringTokenizer(data.getValues(), ",");
+
+        while (tokenizer.hasMoreTokens()) {
+            double blue = (0xFF & Byte.parseByte(tokenizer.nextElement().toString())) / 255.0;
+            double green = (0xFF & Byte.parseByte(tokenizer.nextElement().toString())) / 255.0;
+            double red = (0xFF & Byte.parseByte(tokenizer.nextElement().toString())) / 255.0;
+            tokenizer.nextElement(); // Unused
+
+            values.add(new Color(red, green, blue, 1));
+        }
+
+        setColors(values);
+    }
+
+    private void setColors(List<Color> colors) {
         if (colors == null) {
             for (Circle led : m_leds) {
                 led.setFill(Color.BLACK);

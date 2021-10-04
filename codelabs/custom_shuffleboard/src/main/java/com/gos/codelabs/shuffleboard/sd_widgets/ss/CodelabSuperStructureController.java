@@ -9,10 +9,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.ElevatorData;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.PunchData;
-import com.gos.codelabs.shuffleboard.sd_widgets.ss.data.SpinningWheelData;
-
 public class CodelabSuperStructureController {
 
     private static final double MAX_WIDTH = 35; // TODO figure out real value
@@ -45,7 +41,13 @@ public class CodelabSuperStructureController {
 
     @FXML
     public void initialize() {
-        
+
+        ///////////////////////////////////////////////////////////
+        // Controls the inches <-> pixels conversion. Don't touch
+        double minWidthMultiplier = 1;
+        m_pane.setMinHeight(MAX_HEIGHT * minWidthMultiplier);
+        m_pane.setMinWidth(MAX_WIDTH * minWidthMultiplier);
+
         DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> {
             double output = Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
             return output;
@@ -56,6 +58,7 @@ public class CodelabSuperStructureController {
         scale.yProperty().bind(scaleBinding);
 
         m_group.getTransforms().add(scale);
+        ///////////////////////////////////////////////////////////
 
         // TODO implement
     }

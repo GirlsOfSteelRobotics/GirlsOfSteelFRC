@@ -1,14 +1,14 @@
-package com.gos.codelabs.shuffleboard.sd_widgets.ss.data;
+package com.gos.codelabs.shuffleboard.sd_widgets.ss;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.SmartDashboardNames;
 import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
 
 import java.util.Map;
 import java.util.function.Function;
 
-public class SpinningWheelDataType extends ComplexDataType<SpinningWheelData> {
+public final class SpinningWheelDataType extends ComplexDataType<SpinningWheelData> {
+    public static final SpinningWheelDataType INSTANCE = new SpinningWheelDataType();
 
-    public SpinningWheelDataType() {
+    private SpinningWheelDataType() {
         super(SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME, SpinningWheelData.class);
     }
 

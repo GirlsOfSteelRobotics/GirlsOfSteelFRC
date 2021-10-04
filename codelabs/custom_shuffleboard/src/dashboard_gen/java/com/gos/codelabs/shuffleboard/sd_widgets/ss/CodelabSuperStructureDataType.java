@@ -1,14 +1,14 @@
-package com.gos.codelabs.shuffleboard.sd_widgets.ss.data;
+package com.gos.codelabs.shuffleboard.sd_widgets.ss;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.SmartDashboardNames;
 import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
 
 import java.util.Map;
 import java.util.function.Function;
 
-public class CodelabSuperStructureDataType  extends ComplexDataType<CodelabSuperStructureData> {
+public final class CodelabSuperStructureDataType extends ComplexDataType<CodelabSuperStructureData> {
+    public static final CodelabSuperStructureDataType INSTANCE = new CodelabSuperStructureDataType();
 
-    public CodelabSuperStructureDataType() {
+    private CodelabSuperStructureDataType() {
         super(SmartDashboardNames.SUPER_STRUCTURE_TABLE_NAME, CodelabSuperStructureData.class);
     }
 

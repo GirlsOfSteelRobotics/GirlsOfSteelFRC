@@ -95,10 +95,16 @@ public class ControlPanelController {
         m_controlPanel.setLegendVisible(false);
     }
 
+    public void updateControlPanel(ControlPanelData data) {
+        setControlPanelData(data.getSimAngle(), data.getColorSeen());
+    }
+
     public void setControlPanelData(double angle, String colorSeen) {
         double angleToTest = boundAngle(angle);
         m_controlPanel.setRotate(-angle);
-        m_consumerAction.accept(ANGLE_TO_SENSOR_COLOR.lowerEntry(angleToTest).getValue());
+        if (m_consumerAction != null) {
+            m_consumerAction.accept(ANGLE_TO_SENSOR_COLOR.lowerEntry(angleToTest).getValue());
+        }
     }
 
     private double boundAngle(double angle) {

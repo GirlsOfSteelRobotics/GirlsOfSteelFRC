@@ -1,19 +1,24 @@
-package com.gos.codelabs.shuffleboard.sd_widgets.ss.data;
+package com.gos.codelabs.shuffleboard.sd_widgets.ss;
 
-import com.gos.codelabs.shuffleboard.sd_widgets.SmartDashboardNames;
 import edu.wpi.first.shuffleboard.api.data.ComplexData;
+import edu.wpi.first.shuffleboard.api.util.Maps;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 @SuppressWarnings("PMD.DataClass")
 public class SpinningWheelData extends ComplexData<SpinningWheelData> {
 
-    private final double m_motorSpeed;
+    private final double m_speed;
 
 
     public SpinningWheelData() {
         this(0.0);
+    }
+
+    public SpinningWheelData(double speed) {
+        m_speed = speed;
     }
 
     public SpinningWheelData(Map<String, Object> map) {
@@ -22,11 +27,7 @@ public class SpinningWheelData extends ComplexData<SpinningWheelData> {
 
     public SpinningWheelData(String prefix, Map<String, Object> map) {
         this(
-            (Double) map.getOrDefault(prefix + "/" + SmartDashboardNames.SPINNING_WHEEL_MOTOR_SPEED, 0.0));
-    }
-
-    public SpinningWheelData(double motorSpeed) {
-        m_motorSpeed = motorSpeed;
+            Maps.getOrDefault(map, prefix + SmartDashboardNames.SPINNING_WHEEL_MOTOR_SPEED, 0.0));
     }
 
     @Override
@@ -35,9 +36,9 @@ public class SpinningWheelData extends ComplexData<SpinningWheelData> {
     }
 
     public Map<String, Object> asMap(String prefix) {
-        Map<String, Object> map = new HashMap<>();
-        map.put(prefix + SmartDashboardNames.SPINNING_WHEEL_MOTOR_SPEED, m_motorSpeed);
-        return map;
+        Map<String, Object> output = new HashMap<>();
+        output.put(prefix + SmartDashboardNames.SPINNING_WHEEL_MOTOR_SPEED, m_speed);
+        return output;
     }
 
     public static boolean hasChanged(Map<String, Object> changes) {
@@ -51,7 +52,15 @@ public class SpinningWheelData extends ComplexData<SpinningWheelData> {
         return changed;
     }
 
-    public double getMotorSpeed() {
-        return m_motorSpeed;
+    public double getSpeed() {
+        return m_speed;
+    }
+
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", "SpinningWheelData [", "]")
+                    .add("speed=" + m_speed)
+                    .toString();
     }
 }

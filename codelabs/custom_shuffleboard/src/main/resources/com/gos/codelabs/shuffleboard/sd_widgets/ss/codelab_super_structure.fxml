@@ -7,14 +7,10 @@
 <Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureController">
 
-    <Group fx:id="m_group"><!-- robot base -->
-        <Rectangle fx:id="m_base" fill="lightskyblue"/>
-
-        <Circle fx:id="m_spinningWheel" fill="plum"/>
-        <Rectangle fx:id="m_punch" fill="peachPuff"/>
-        <Rectangle fx:id="m_elevatorBox" fill="aqua"/>
-        <Rectangle fx:id="m_liftUpperLimitSwitch" fill="blueviolet"/>
-        <Rectangle fx:id="m_liftLowerLimitSwitch" fill="coral"/>
-
+    <Group fx:id="m_group">
+    <!-- Put your shapes in here. -->
+    <!-- Examples. -->
+    <!--     <Circle fx:id="m_spinningWheel" fill="plum"/> -->
+    <!--     <Rectangle fx:id="m_punch" fill="peachPuff"/> -->
     </Group>
 </Pane>
