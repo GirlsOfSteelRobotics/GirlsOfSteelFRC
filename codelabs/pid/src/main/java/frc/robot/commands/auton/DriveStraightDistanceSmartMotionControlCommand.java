@@ -1,7 +1,7 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.lib.DeadbandHelper;
+import com.gos.lib.DeadbandHelper;
 import frc.robot.subsystems.ChassisSubsystem;
 
 public class DriveStraightDistanceSmartMotionControlCommand extends CommandBase {

@@ -1,4 +1,4 @@
-package frc.robot.lib;
+package com.gos.lib.properties;
 
 public interface IPidPropertyBuilder {
     IPidPropertyBuilder addP(double defaultValue);

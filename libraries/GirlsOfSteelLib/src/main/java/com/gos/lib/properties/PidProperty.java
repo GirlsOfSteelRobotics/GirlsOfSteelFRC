@@ -1,7 +1,7 @@
-package frc.robot.lib;
+package com.gos.lib.properties;
 
-import frc.robot.lib.PropertyManager.ConstantProperty;
-import frc.robot.lib.PropertyManager.DoubleProperty;
+import com.gos.lib.properties.PropertyManager.ConstantProperty;
+import com.gos.lib.properties.PropertyManager.DoubleProperty;
 
 import java.util.ArrayList;
 import java.util.List;

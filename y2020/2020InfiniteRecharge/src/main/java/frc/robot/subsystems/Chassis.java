@@ -7,8 +7,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import frc.robot.lib.PidProperty;
-import frc.robot.lib.RevPidPropertyBuilder;
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import frc.robot.sim.CameraSimulator;
 
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
@@ -33,8 +33,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.numbers.N2;
 import frc.robot.Constants;
 import frc.robot.commands.autonomous.FollowTrajectory.DriveConstants;
-import frc.robot.lib.IGyroWrapper;
-import frc.robot.lib.NavXWrapper;
+import com.gos.lib.sensors.IGyroWrapper;
+import com.gos.lib.navx.NavXWrapper;
 
 import com.revrobotics.CANPIDController;
 

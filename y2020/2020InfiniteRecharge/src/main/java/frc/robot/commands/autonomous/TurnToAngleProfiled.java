@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
-import frc.robot.lib.PropertyManager;
+import com.gos.lib.properties.PropertyManager;
 import frc.robot.subsystems.Chassis;
 
 public class TurnToAngleProfiled extends ProfiledPIDCommand {

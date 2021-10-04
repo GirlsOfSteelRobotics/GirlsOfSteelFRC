@@ -1,6 +1,8 @@
-package frc.robot.lib;
+package com.gos.lib.ctre;
 
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
+import com.gos.lib.properties.IPidPropertyBuilder;
+import com.gos.lib.properties.PidProperty;
 
 public final class CtrePidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
     private final BaseMotorController m_motor;

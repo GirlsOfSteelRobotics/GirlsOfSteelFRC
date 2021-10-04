@@ -1,4 +1,4 @@
-package frc.robot.lib;
+package com.gos.lib.sensors;
 
 public class NullGyroWrapper implements IGyroWrapper {
 

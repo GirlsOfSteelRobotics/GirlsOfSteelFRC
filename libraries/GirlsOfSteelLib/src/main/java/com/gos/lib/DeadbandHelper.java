@@ -1,4 +1,4 @@
-package frc.robot.lib;
+package com.gos.lib;
 
 public class DeadbandHelper {
     private int m_goodLoops;

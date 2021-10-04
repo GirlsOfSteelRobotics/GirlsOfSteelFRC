@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.lib.PropertyManager;
+import com.gos.lib.properties.PropertyManager;
 
 public class Shooter extends SubsystemBase {
 

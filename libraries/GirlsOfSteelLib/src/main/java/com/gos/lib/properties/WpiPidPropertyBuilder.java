@@ -1,4 +1,4 @@
-package frc.robot.lib;
+package com.gos.lib.properties;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 

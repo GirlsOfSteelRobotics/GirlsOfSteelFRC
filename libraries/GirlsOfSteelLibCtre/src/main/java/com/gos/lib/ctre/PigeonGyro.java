@@ -1,6 +1,7 @@
-package frc.robot.lib;
+package com.gos.lib.ctre;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.gos.lib.sensors.IGyroWrapper;
 
 public class PigeonGyro implements IGyroWrapper {
 

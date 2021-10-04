@@ -7,14 +7,14 @@
 
 package frc.robot;
 
+import com.gos.lib.sensors.LidarLite;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auto_modes.AutoModeFactory;
 import frc.robot.commands.DriveByJoystick;
-import frc.robot.lib.PropertyManager;
+import com.gos.lib.properties.PropertyManager;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ControlPanel;
-import frc.robot.subsystems.LidarLite;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterConveyor;
@@ -68,7 +68,7 @@ public class RobotContainer {
         m_chassis = new Chassis();
         m_controlPanel = new ControlPanel();
         m_lift = new Lift();
-        m_lidarLite = new LidarLite();
+        m_lidarLite = new LidarLite(Constants.DIGITAL_INPUT_LIDAR_LITE);
         m_limelight = new Limelight(driveDisplayTab, m_lidarLite);
         m_shooter = new Shooter(driveDisplayTab, m_limelight);
         m_shooterConveyor = new ShooterConveyor();

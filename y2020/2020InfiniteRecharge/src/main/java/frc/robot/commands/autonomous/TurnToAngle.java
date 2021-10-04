@@ -3,8 +3,8 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.lib.DeadbandHelper;
-import frc.robot.lib.PropertyManager;
+import com.gos.lib.DeadbandHelper;
+import com.gos.lib.properties.PropertyManager;
 import frc.robot.subsystems.Chassis;
 
 public class TurnToAngle extends CommandBase {

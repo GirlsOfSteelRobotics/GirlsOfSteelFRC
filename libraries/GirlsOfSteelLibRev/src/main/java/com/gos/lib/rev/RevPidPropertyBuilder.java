@@ -1,5 +1,7 @@
-package frc.robot.lib;
+package com.gos.lib.rev;
 
+import com.gos.lib.properties.IPidPropertyBuilder;
+import com.gos.lib.properties.PidProperty;
 import com.revrobotics.CANPIDController;
 
 public final class RevPidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {

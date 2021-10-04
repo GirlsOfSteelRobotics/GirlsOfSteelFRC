@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.gos.lib.sensors.LidarLite;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.HttpCamera.HttpCameraKind;
@@ -9,7 +10,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants;
-import frc.robot.lib.PropertyManager;
+import com.gos.lib.properties.PropertyManager;
 
 /**
  * Add your docs here.
