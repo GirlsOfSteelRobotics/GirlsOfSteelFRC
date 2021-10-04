@@ -1,6 +1,7 @@
 package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
+import com.gos.infinite_recharge.sim.CameraSimulator;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.ControlType;
 import com.revrobotics.SimableCANSparkMax;

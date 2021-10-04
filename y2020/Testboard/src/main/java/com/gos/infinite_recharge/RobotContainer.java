@@ -7,8 +7,17 @@
 
 package com.gos.infinite_recharge;
 
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import com.gos.infinite_recharge.commands.OuterShootAlign2;
+import com.gos.infinite_recharge.commands.ReadLidar;
+import com.gos.infinite_recharge.commands.SpinByLidar;
+import com.gos.infinite_recharge.commands.SwitchToCamClimb;
+import com.gos.infinite_recharge.commands.SwitchToCamIntake;
+import com.gos.infinite_recharge.commands.TryBlinkin;
+import com.gos.infinite_recharge.subsystems.Blinkin;
+import com.gos.infinite_recharge.subsystems.Camera;
+import com.gos.infinite_recharge.subsystems.Lidar;
+import com.gos.infinite_recharge.subsystems.Limelight;
+import com.gos.infinite_recharge.subsystems.Motor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

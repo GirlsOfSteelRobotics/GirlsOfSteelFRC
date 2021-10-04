@@ -19,11 +19,9 @@ import com.gos.infinite_recharge.subsystems.Shooter;
 import com.gos.infinite_recharge.subsystems.ShooterConveyor;
 import com.gos.infinite_recharge.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.*;
 import com.gos.infinite_recharge.commands.autonomous.AutoShoot;
 import com.gos.infinite_recharge.commands.autonomous.SetStartingPosition;
 import com.gos.infinite_recharge.commands.autonomous.TurnToAngle;
-import frc.robot.subsystems.*;
 import com.gos.infinite_recharge.trajectory_modes.TrajectoryModeFactory;
 
 public class ShootAndDriveToTrench extends SequentialCommandGroup {

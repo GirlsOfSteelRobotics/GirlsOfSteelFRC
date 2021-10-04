@@ -10,7 +10,6 @@ package com.gos.infinite_recharge.commands;
 import com.gos.infinite_recharge.subsystems.ShooterConveyor;
 import com.gos.infinite_recharge.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.*;
 
 public class AutomatedConveyorIntake extends SequentialCommandGroup {
 

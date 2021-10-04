@@ -1,5 +1,6 @@
 package com.gos.infinite_recharge.subsystems;
 
+import com.gos.infinite_recharge.Constants;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

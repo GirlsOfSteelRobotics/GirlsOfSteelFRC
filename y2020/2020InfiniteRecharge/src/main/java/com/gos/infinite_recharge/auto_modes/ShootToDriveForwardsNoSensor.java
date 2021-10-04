@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.infinite_recharge.commands.autonomous.AutoShoot;
 import com.gos.infinite_recharge.commands.autonomous.DriveDistanceSmartMotion;
 import com.gos.infinite_recharge.commands.autonomous.SingleShoot;
-import frc.robot.subsystems.*;
 import com.gos.infinite_recharge.subsystems.ShooterIntake;
 
 public class ShootToDriveForwardsNoSensor extends SequentialCommandGroup {

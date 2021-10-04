@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.infinite_recharge.commands.autonomous.AutoShoot;
 import com.gos.infinite_recharge.commands.autonomous.SetStartingPosition;
 import com.gos.infinite_recharge.commands.autonomous.TurnToAngle;
-import frc.robot.subsystems.*;
 import com.gos.infinite_recharge.trajectory_modes.TrajectoryModeFactory;
 
 public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {

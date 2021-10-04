@@ -1,5 +1,6 @@
 package com.gos.infinite_recharge.subsystems;
 
+import com.gos.infinite_recharge.Constants;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;

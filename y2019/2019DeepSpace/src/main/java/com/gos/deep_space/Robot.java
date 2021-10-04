@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.subsystems.*;
 import edu.wpi.first.vision.VisionThread;
 
 public class Robot extends TimedRobot {

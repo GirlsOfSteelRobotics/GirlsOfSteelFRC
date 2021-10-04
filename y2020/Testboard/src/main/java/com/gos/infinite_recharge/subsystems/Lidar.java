@@ -1,5 +1,6 @@
 package com.gos.infinite_recharge.subsystems;
 
+import com.gos.infinite_recharge.Constants;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
