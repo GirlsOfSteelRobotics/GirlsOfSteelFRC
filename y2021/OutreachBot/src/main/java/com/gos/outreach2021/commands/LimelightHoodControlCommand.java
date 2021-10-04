@@ -1,9 +1,9 @@
-package frc.robot.commands;
+package com.gos.outreach2021.commands;
 
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.Shooter;
+import com.gos.outreach2021.subsystems.LimelightSubsystem;
+import com.gos.outreach2021.subsystems.Shooter;
 
 
 public class LimelightHoodControlCommand extends CommandBase {

@@ -1,8 +1,8 @@
-package frc.robot.commands;
+package com.gos.outreach2021.commands;
 
+import com.gos.outreach2021.subsystems.Chassis;
+import com.gos.outreach2021.subsystems.LimelightSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Chassis;
-import frc.robot.subsystems.LimelightSubsystem;
 
 
 public class AimWithLimelightCommand extends CommandBase {
