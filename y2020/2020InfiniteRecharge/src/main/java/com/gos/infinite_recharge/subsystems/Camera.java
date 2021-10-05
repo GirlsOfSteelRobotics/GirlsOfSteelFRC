@@ -47,7 +47,7 @@ public class Camera extends SubsystemBase {
 
     public void switchToCamClimb() {
         if (!m_useCamera) {
-            return; 
+            return;
         }
         m_server.setSource(m_camClimb);
         System.out.println("Cam Climb!");
@@ -55,7 +55,7 @@ public class Camera extends SubsystemBase {
 
     public void switchToCamIntake() {
         if (!m_useCamera) {
-            return; 
+            return;
         }
 
         m_server.setSource(m_camIntake);
@@ -64,7 +64,7 @@ public class Camera extends SubsystemBase {
 
     public void initDefaultCommand() {
         if (!m_useCamera) {
-            return; 
+            return;
         }
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

@@ -53,7 +53,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
         this.m_trajectory = trajectory;
 
         m_ramsetePublisher = new RamsetePublisher();
-        
+
         RamseteCommand ramseteCommand = new RamseteCommand(
             trajectory,
             m_chassis::getPose,

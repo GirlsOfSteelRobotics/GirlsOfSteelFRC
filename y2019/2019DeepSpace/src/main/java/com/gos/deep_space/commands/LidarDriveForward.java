@@ -41,7 +41,7 @@ public class LidarDriveForward extends Command {
   @Override
   protected void execute() {
     if (chassis)
-      Robot.chassis.setSpeed(DRIVE_SPEED); 
+      Robot.chassis.setSpeed(DRIVE_SPEED);
     else
       Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
     System.out.println("LidarDriveForward lidar distance: " + Robot.lidar.getDistance());
@@ -60,7 +60,7 @@ public class LidarDriveForward extends Command {
   protected void end() {
     if (chassis)
       Robot.chassis.stop();
-    else 
+    else
       Robot.babyDrive.babyDriveStop();
     System.out.println("LidarDriveForward end");
   }

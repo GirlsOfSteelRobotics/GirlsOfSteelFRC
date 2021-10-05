@@ -20,7 +20,7 @@ public class PivotToGround extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("init PivotToGround"); 
+    System.out.println("init PivotToGround");
   }
 
   // Called repeatedly when this Command is scheduled to run

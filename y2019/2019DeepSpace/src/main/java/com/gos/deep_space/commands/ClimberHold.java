@@ -42,7 +42,7 @@ public class ClimberHold extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.climber.climberStop(); 
+    Robot.climber.climberStop();
     System.out.println("ClimberHold end");
   }
 }

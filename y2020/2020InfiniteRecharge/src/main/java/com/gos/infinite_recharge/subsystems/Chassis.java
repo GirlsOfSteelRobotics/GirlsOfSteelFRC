@@ -72,7 +72,7 @@ public class Chassis extends SubsystemBase {
 
     private final PidProperty m_leftProperties;
     private final PidProperty m_rightProperties;
-    
+
     private DifferentialDrivetrainSimWrapper m_simulator;
     private CameraSimulator m_cameraSimulator;
 
@@ -123,7 +123,7 @@ public class Chassis extends SubsystemBase {
         m_followerLeft.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_masterRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_followerRight.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-        
+
         // m_masterLeft.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
         // m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
 

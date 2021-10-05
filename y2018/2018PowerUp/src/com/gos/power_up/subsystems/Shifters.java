@@ -9,51 +9,51 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Shifters extends Subsystem {
-	private DoubleSolenoid shifterLeft;
-	private DoubleSolenoid shifterRight;
-	private double SHIFTING_THRESHOLD = 0; 
-	//TODO find correct shifting value
-	
-	public enum Speed {
-		kHigh, kLow
-	};
+    private DoubleSolenoid shifterLeft;
+    private DoubleSolenoid shifterRight;
+    private double SHIFTING_THRESHOLD = 0;
+    //TODO find correct shifting value
 
-	private Speed speed;
+    public enum Speed {
+        kHigh, kLow
+    };
 
-	public Shifters() {
-		shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
-		shifterRight = new DoubleSolenoid(RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
+    private Speed speed;
 
-		addChild("shifterLeft", shifterLeft);
-		addChild("shifterRight", shifterRight);
+    public Shifters() {
+        shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
+        shifterRight = new DoubleSolenoid(RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
 
-	}
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+        addChild("shifterLeft", shifterLeft);
+        addChild("shifterRight", shifterRight);
 
-	public void shiftGear(Speed speed) {
-		this.speed = speed;
-		if (speed == Speed.kLow) {
-			shifterLeft.set(DoubleSolenoid.Value.kForward);
-			shifterRight.set(DoubleSolenoid.Value.kForward);
-			System.out.println("Shifting left and right side into low gear (fwd)");
-		} else {
-			shifterLeft.set(DoubleSolenoid.Value.kReverse);
-			shifterRight.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("Shifting left and right side into high gear (rev)");
-		}
-	}
+    }
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 
-	public Speed getGearSpeed() {
-		return speed;
-	}
+    public void shiftGear(Speed speed) {
+        this.speed = speed;
+        if (speed == Speed.kLow) {
+            shifterLeft.set(DoubleSolenoid.Value.kForward);
+            shifterRight.set(DoubleSolenoid.Value.kForward);
+            System.out.println("Shifting left and right side into low gear (fwd)");
+        } else {
+            shifterLeft.set(DoubleSolenoid.Value.kReverse);
+            shifterRight.set(DoubleSolenoid.Value.kReverse);
+            System.out.println("Shifting left and right side into high gear (rev)");
+        }
+    }
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	}
-	
-	public double getShiftingThreshold() {
-		return SHIFTING_THRESHOLD;
-	}
+    public Speed getGearSpeed() {
+        return speed;
+    }
+
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+    }
+
+    public double getShiftingThreshold() {
+        return SHIFTING_THRESHOLD;
+    }
 }

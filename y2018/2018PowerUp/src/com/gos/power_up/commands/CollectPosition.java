@@ -24,9 +24,9 @@ public class CollectPosition extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	System.out.println("CollectPosition");
-    	addSequential(new LiftToGround());
-    	addSequential(new WristToCollect());
-    	
+        System.out.println("CollectPosition");
+        addSequential(new LiftToGround());
+        addSequential(new WristToCollect());
+
     }
 }

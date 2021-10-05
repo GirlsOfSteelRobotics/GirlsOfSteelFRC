@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class LiftUp extends Command {
-	
+
 
     public LiftUp() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		requires(Robot.lift);
+            requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +22,8 @@ public class LiftUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.holdLiftPosition();
-		Robot.lift.incrementLift();
+        Robot.lift.holdLiftPosition();
+        Robot.lift.incrementLift();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,6 +38,6 @@ public class LiftUp extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    		end();
+            end();
     }
 }

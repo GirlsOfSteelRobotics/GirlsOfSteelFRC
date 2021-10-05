@@ -13,13 +13,13 @@ public class WristToSwitch extends Command {
     public WristToSwitch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.wrist);
+        requires(Robot.wrist);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		Robot.wrist.setGoalWristPosition(Wrist.WRIST_IN_BOUND);
-		System.out.println("WristToSwitch initialized");
+        Robot.wrist.setGoalWristPosition(Wrist.WRIST_IN_BOUND);
+        System.out.println("WristToSwitch initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run

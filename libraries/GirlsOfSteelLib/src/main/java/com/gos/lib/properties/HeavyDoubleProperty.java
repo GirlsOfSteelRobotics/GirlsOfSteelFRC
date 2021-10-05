@@ -20,7 +20,7 @@ public class HeavyDoubleProperty {
         m_property = property;
         m_lastValue = property.getValue();
     }
-    
+
     public void updateIfChanged() {
         updateIfChanged(false);
     }

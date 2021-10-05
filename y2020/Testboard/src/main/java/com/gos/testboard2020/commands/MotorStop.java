@@ -16,7 +16,7 @@ public class MotorStop extends CommandBase {
 
   public MotorStop(Motor motor) {
     m_motor = motor;
-    
+
     // Use requires() here to declare subsystem dependencies
     super.addRequirements(m_motor);
   }

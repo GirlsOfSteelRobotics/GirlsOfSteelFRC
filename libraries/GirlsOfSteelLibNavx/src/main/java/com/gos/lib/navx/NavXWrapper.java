@@ -19,11 +19,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class NavXWrapper implements IGyroWrapper {
 
     private final AHRS m_navX;
-    private double m_startingPosition; 
+    private double m_startingPosition;
 
     public NavXWrapper() {
         m_navX = new AHRS(SPI.Port.kMXP);
-        m_startingPosition = getYaw(); 
+        m_startingPosition = getYaw();
     }
 
     @Override

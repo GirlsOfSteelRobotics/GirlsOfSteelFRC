@@ -43,8 +43,8 @@ public class SimEnabler implements Sendable {
 
   @Override
   public void initSendable(SendableBuilder builder) {
-    builder.addBooleanProperty("Enabled", 
-                               () -> DriverStation.getInstance().isEnabled(), 
+    builder.addBooleanProperty("Enabled",
+                               () -> DriverStation.getInstance().isEnabled(),
                                enabled -> setEnabled(enabled));
   }
 }

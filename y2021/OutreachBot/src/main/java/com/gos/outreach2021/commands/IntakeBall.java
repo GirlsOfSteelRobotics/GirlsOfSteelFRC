@@ -49,10 +49,10 @@ public class IntakeBall extends CommandBase {
     public void initialize() {
     }
 
-    // Called every time the scheduler runs while the command is scheduled.  
+    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_collector.intakeBall();      
+        m_collector.intakeBall();
     }
 
     // Called once the command ends or is interrupted.

@@ -54,17 +54,17 @@ public class OI {
   }
 
   public double getLeftUpAndDown() {
-		return squaredInput(drivingPad.getY()) * drivingSpeed();
-	}	
+        return squaredInput(drivingPad.getY()) * drivingSpeed();
+    }
 
-	public double getRightSideToSide() {
-		return squaredInput(-drivingPad.getRawAxis(4)) * drivingSpeed();
+    public double getRightSideToSide() {
+        return squaredInput(-drivingPad.getRawAxis(4)) * drivingSpeed();
   }
 
   private double drivingSpeed(){
     return  (drivingPad.getRawAxis(slowSpeedButton) < 0.1 ? speedHigh : speedLow);
   }
-  
+
   private double squaredInput(double speed){
     double sign = speed / Math.abs(speed);
 

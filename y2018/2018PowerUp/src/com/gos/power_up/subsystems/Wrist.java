@@ -16,90 +16,90 @@ public class Wrist extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	private WPI_TalonSRX wrist;
-	private double goalWristPosition;
-	
-	public static final double WRIST_IN_BOUND = -60; //TODO tune
-	public static final double WRIST_OUT_BOUND = -1000; //TODO tune
-	public static final double WRIST_COLLECT = -930; //TODO tune
-	public static final double WRIST_SWITCH = -800; //TODO tune
-	public static final double WRIST_INCREMENT = 20; //TODO tune
-	public static final double WRIST_SHOOT = -350; //TODO tune
-	
-	public Wrist() {
-		wrist = new WPI_TalonSRX(RobotMap.WRIST);
-		setupWristFPID();
-		addChild(wrist);
-	}
-	
+    private WPI_TalonSRX wrist;
+    private double goalWristPosition;
+
+    public static final double WRIST_IN_BOUND = -60; //TODO tune
+    public static final double WRIST_OUT_BOUND = -1000; //TODO tune
+    public static final double WRIST_COLLECT = -930; //TODO tune
+    public static final double WRIST_SWITCH = -800; //TODO tune
+    public static final double WRIST_INCREMENT = 20; //TODO tune
+    public static final double WRIST_SHOOT = -350; //TODO tune
+
+    public Wrist() {
+        wrist = new WPI_TalonSRX(RobotMap.WRIST);
+        setupWristFPID();
+        addChild(wrist);
+    }
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new WristHold());
-    	
+
     }
-    
+
     public void setupWristFPID() {
-		//talon.setPosition (0); TODO figure out new syntax
-		wrist.config_kF(0, 0, 10);
-		wrist.config_kP(0, 1.5, 10);
-		wrist.config_kI(0, 0, 10);
-		wrist.config_kD(0, 15, 10);	
-	}
+        //talon.setPosition (0); TODO figure out new syntax
+        wrist.config_kF(0, 0, 10);
+        wrist.config_kP(0, 1.5, 10);
+        wrist.config_kI(0, 0, 10);
+        wrist.config_kD(0, 15, 10);
+    }
 
     public void setWristSpeed(double speed) {
-    	wrist.set(speed); //value between -1.0 and 1.0;
-    }
-    
-    public void setWristPosition(double pos){
-    	wrist.set(ControlMode.Position, pos);
+        wrist.set(speed); //value between -1.0 and 1.0;
     }
 
-	public void wristStop(){
-		wrist.stopMotor();
-	}
-	
-	public void holdWristPosition()
-	{
-		wrist.set(ControlMode.Position, goalWristPosition);
-	}
-	
-	public void wristIn()
-	{
-		double goalPosition = goalWristPosition + WRIST_INCREMENT;
-		if (goalPosition >= WRIST_IN_BOUND)
-		{
-			goalWristPosition = WRIST_IN_BOUND;
-		}
-		else
-		{
-			goalWristPosition = goalPosition;
-			//System.out.println("Wrist moved in. New goal : " + goalWristPosition);
-		}
-		
-	}
-	
-	public void wristOut()
-	{
-		double goalPosition = goalWristPosition - WRIST_INCREMENT;
-		if (goalPosition <= WRIST_OUT_BOUND)
-		{
-			goalWristPosition = WRIST_OUT_BOUND;
-		}
-		else
-		{
-			goalWristPosition = goalPosition;
-			//System.out.println("Wrist moved out. New goal : " + goalWristPosition);
-		}
-		
-	}
-	
-	public void setGoalWristPosition(double goal)
-	{
-		goalWristPosition = goal;
-	}
-	
-	public double getWristPosition()
-	{
-		return wrist.getSelectedSensorPosition(0);
-	}
+    public void setWristPosition(double pos){
+        wrist.set(ControlMode.Position, pos);
+    }
+
+    public void wristStop(){
+        wrist.stopMotor();
+    }
+
+    public void holdWristPosition()
+    {
+        wrist.set(ControlMode.Position, goalWristPosition);
+    }
+
+    public void wristIn()
+    {
+        double goalPosition = goalWristPosition + WRIST_INCREMENT;
+        if (goalPosition >= WRIST_IN_BOUND)
+        {
+            goalWristPosition = WRIST_IN_BOUND;
+        }
+        else
+        {
+            goalWristPosition = goalPosition;
+            //System.out.println("Wrist moved in. New goal : " + goalWristPosition);
+        }
+
+    }
+
+    public void wristOut()
+    {
+        double goalPosition = goalWristPosition - WRIST_INCREMENT;
+        if (goalPosition <= WRIST_OUT_BOUND)
+        {
+            goalWristPosition = WRIST_OUT_BOUND;
+        }
+        else
+        {
+            goalWristPosition = goalPosition;
+            //System.out.println("Wrist moved out. New goal : " + goalWristPosition);
+        }
+
+    }
+
+    public void setGoalWristPosition(double goal)
+    {
+        goalWristPosition = goal;
+    }
+
+    public double getWristPosition()
+    {
+        return wrist.getSelectedSensorPosition(0);
+    }
 }

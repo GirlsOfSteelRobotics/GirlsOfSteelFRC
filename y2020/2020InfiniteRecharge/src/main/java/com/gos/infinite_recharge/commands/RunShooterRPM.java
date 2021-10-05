@@ -27,7 +27,7 @@ public class RunShooterRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-    // leave motor running 
+    // leave motor running
     }
 
     @Override

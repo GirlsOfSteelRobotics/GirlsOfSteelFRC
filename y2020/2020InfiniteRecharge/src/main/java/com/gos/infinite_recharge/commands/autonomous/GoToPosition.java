@@ -45,7 +45,7 @@ public class GoToPosition extends CommandBase {
 
         double currentAngle;
         double dx;
-        double dy; 
+        double dy;
         double angle;
 
         dx = m_finalPositionX - m_chassis.getXInches();
@@ -72,7 +72,7 @@ public class GoToPosition extends CommandBase {
 
         double turnSpeed = m_errorAngle * AUTO_KP_ANGLE.getValue();
 
-        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed 
+        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed
             + ", currentAngle " + currentAngle + ", errorAngle " + m_errorAngle + ", allowableError" + m_allowableError);
 
         if (speed > MAX_SPEED) {

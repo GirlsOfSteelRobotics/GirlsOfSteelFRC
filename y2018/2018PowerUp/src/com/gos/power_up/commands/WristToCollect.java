@@ -17,8 +17,8 @@ public class WristToCollect extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.wrist.setGoalWristPosition(Wrist.WRIST_COLLECT);
-    		System.out.println("WristToCollect initialized");
+            Robot.wrist.setGoalWristPosition(Wrist.WRIST_COLLECT);
+            System.out.println("WristToCollect initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -12,72 +12,71 @@ import com.gos.deep_space.RobotMap;
 
 public class Chassis extends Subsystem {
 
-	private WPI_TalonSRX masterLeft;
-	private WPI_TalonSRX followerLeft;
+    private WPI_TalonSRX masterLeft;
+    private WPI_TalonSRX followerLeft;
 
-	private WPI_TalonSRX masterRight;
-	private WPI_TalonSRX followerRight;
-	
-	private DifferentialDrive drive;
+    private WPI_TalonSRX masterRight;
+    private WPI_TalonSRX followerRight;
 
-	public Chassis () {
-		masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
-		followerLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_TALON);
+    private DifferentialDrive drive;
 
-		masterRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MASTER_TALON); 
-		followerRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_TALON); 
-		
-		masterLeft.setNeutralMode(NeutralMode.Brake);
-		followerLeft.setNeutralMode(NeutralMode.Brake);
+    public Chassis () {
+        masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
+        followerLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_TALON);
 
-		masterRight.setNeutralMode(NeutralMode.Brake);
-		followerRight.setNeutralMode(NeutralMode.Brake);
+        masterRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MASTER_TALON);
+        followerRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_TALON);
 
-		// inverted should be true for Laika
-		// masterLeft.setInverted(true);
-		// followerLeft.setInverted(true);
+        masterLeft.setNeutralMode(NeutralMode.Brake);
+        followerLeft.setNeutralMode(NeutralMode.Brake);
 
-		// masterRight.setInverted(true);
-		// followerRight.setInverted(true);
-		
-		followerLeft.follow(masterLeft, FollowerType.PercentOutput);
-		followerRight.follow(masterRight, FollowerType.PercentOutput);
-		
-		drive = new DifferentialDrive(masterLeft, masterRight);
-		drive.setSafetyEnabled(true);
-		drive.setExpiration(0.1);
-		drive.setMaxOutput(0.8);
-	}
+        masterRight.setNeutralMode(NeutralMode.Brake);
+        followerRight.setNeutralMode(NeutralMode.Brake);
+
+        // inverted should be true for Laika
+        // masterLeft.setInverted(true);
+        // followerLeft.setInverted(true);
+
+        // masterRight.setInverted(true);
+        // followerRight.setInverted(true);
+
+        followerLeft.follow(masterLeft, FollowerType.PercentOutput);
+        followerRight.follow(masterRight, FollowerType.PercentOutput);
+
+        drive = new DifferentialDrive(masterLeft, masterRight);
+        drive.setSafetyEnabled(true);
+        drive.setExpiration(0.1);
+        drive.setMaxOutput(0.8);
+    }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new DriveByJoystick());
-	}
-	
-	// Put methods for controlling this subsystem
+        setDefaultCommand(new DriveByJoystick());
+    }
+
+    // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	public WPI_TalonSRX getLeftTalon(){
-		return masterLeft;
-	}
+    public WPI_TalonSRX getLeftTalon(){
+        return masterLeft;
+    }
 
-	public WPI_TalonSRX getRightTalon(){
-		return masterRight;
-	}
-    
+    public WPI_TalonSRX getRightTalon(){
+        return masterRight;
+    }
+
     public void driveByJoystick(double yDir, double xDir) {
-		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir); 
-		double forward = yDir*Math.abs(yDir);
-    	drive.arcadeDrive(forward, xDir);
-	}
-	
-	public void setSpeed(double speed){
-		drive.arcadeDrive(speed, 0);
-	}
+        SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir);
+        double forward = yDir*Math.abs(yDir);
+        drive.arcadeDrive(forward, xDir);
+    }
+
+    public void setSpeed(double speed){
+        drive.arcadeDrive(speed, 0);
+    }
 
     public void stop() {
-    	drive.stopMotor(); 
-	}
+        drive.stopMotor();
+    }
 }
-

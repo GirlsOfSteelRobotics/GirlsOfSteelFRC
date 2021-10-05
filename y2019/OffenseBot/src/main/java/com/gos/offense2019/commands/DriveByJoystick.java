@@ -28,8 +28,8 @@ public class DriveByJoystick extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-		// 4 is the axis number right x on the gamepad
-		Robot.chassis.driveByJoystick(Robot.oi.getLeftUpAndDown(), Robot.oi.getRightSideToSide());
+        // 4 is the axis number right x on the gamepad
+        Robot.chassis.driveByJoystick(Robot.oi.getLeftUpAndDown(), Robot.oi.getRightSideToSide());
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SimpleDrive extends Command {
 
-	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
-	
+    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+
     public SimpleDrive() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
@@ -22,16 +22,16 @@ public class SimpleDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	leftTalon.set(ControlMode.PercentOutput, 0.5);
-    	rightTalon.set(ControlMode.PercentOutput, 0.5);
-    	System.out.println("SimpleDrive: leftA " + leftTalon.getInverted());
-    	System.out.println("SimpleDrive: rightA " + rightTalon.getInverted());
+        leftTalon.set(ControlMode.PercentOutput, 0.5);
+        rightTalon.set(ControlMode.PercentOutput, 0.5);
+        System.out.println("SimpleDrive: leftA " + leftTalon.getInverted());
+        System.out.println("SimpleDrive: rightA " + rightTalon.getInverted());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	leftTalon.set(ControlMode.PercentOutput, 0.5);
-    	rightTalon.set(ControlMode.PercentOutput, 0.5);
+        leftTalon.set(ControlMode.PercentOutput, 0.5);
+        rightTalon.set(ControlMode.PercentOutput, 0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()

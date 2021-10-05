@@ -17,11 +17,11 @@ public class SingleShoot extends SequentialCommandGroup {
 
                 System.out.println("Part One: " + shooterConveyor.getTop());
                 return shooterConveyor.getTop();
-            }), 
+            }),
             new ConveyorWhileHeld(shooterConveyor, true).withInterrupt(() -> {
                 System.out.println("Part Two: " + shooterConveyor.getTop());
                 return !shooterConveyor.getTop();
-            }), 
+            }),
             new StopShooter(shooter));
     }
 

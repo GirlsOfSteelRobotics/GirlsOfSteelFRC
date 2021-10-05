@@ -24,7 +24,7 @@ public class TargetPair {
     }
 
     /**
-     * @return the average area of the two contours that form a set 
+     * @return the average area of the two contours that form a set
      */
     public double getTargetAverageArea() {
         return ((left.size.height * left.size.width) + (right.size.height * right.size.width)) / 2;

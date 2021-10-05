@@ -18,7 +18,7 @@ public class PidProperty {
     public void updateIfChanged() {
         updateIfChanged(false);
     }
-    
+
 
     public void updateIfChanged(boolean forceUpdate) {
         for (HeavyDoubleProperty property : m_properties) {

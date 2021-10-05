@@ -67,8 +67,8 @@ public class Climber extends Subsystem {
     climberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_TALON);
     followerClimberBack = new WPI_TalonSRX(RobotMap.CLIMBER_BACK_FOLLOWER_TALON);
 
-    climberFront.setInverted(true); 
-    followerClimberFront.setInverted(true); 
+    climberFront.setInverted(true);
+    followerClimberFront.setInverted(true);
     climberBack.setInverted(true);
     followerClimberBack.setInverted(true);
 
@@ -215,5 +215,5 @@ public class Climber extends Subsystem {
 
   }
 
-  
+
 }
