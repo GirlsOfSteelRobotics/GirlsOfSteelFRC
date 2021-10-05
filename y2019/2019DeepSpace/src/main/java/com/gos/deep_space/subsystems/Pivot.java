@@ -15,9 +15,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public final class Pivot extends Subsystem {
 
-    private final WPI_TalonSRX pivot;
-    private double goalPivotPosition;
-
     public static final double PIVOT_DOWN_INCREMENT = 125;
     public static final double PIVOT_UP_INCREMENT = 200;
     public static final double PIVOT_GROUND = -3875; // -4121 was the pre pool noodle value
@@ -29,11 +26,14 @@ public final class Pivot extends Subsystem {
         Up, Down
     }
 
+    private final WPI_TalonSRX m_pivot;
+    private double m_goalPivotPosition;
+
     public Pivot() {
-        pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
-        pivot.setSensorPhase(true);
+        m_pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
+        m_pivot.setSensorPhase(true);
         setupPivotFPID();
-        addChild(pivot);
+        addChild(m_pivot);
     }
 
     @Override
@@ -47,59 +47,59 @@ public final class Pivot extends Subsystem {
     // here. Call these from Commands.
 
     public void setupPivotFPID() {
-        pivot.config_kF(0, 0, 10);
-        pivot.config_kP(0, 1.5, 10);
-        pivot.config_kI(0, 0, 10);
-        pivot.config_kD(0, 15, 10);
+        m_pivot.config_kF(0, 0, 10);
+        m_pivot.config_kP(0, 1.5, 10);
+        m_pivot.config_kI(0, 0, 10);
+        m_pivot.config_kD(0, 15, 10);
     }
 
     public void setPivotPosition(double pos) {
-        pivot.set(ControlMode.Position, pos);
+        m_pivot.set(ControlMode.Position, pos);
     }
 
     public void holdPivotPosition() {
-        pivot.set(ControlMode.Position, goalPivotPosition);
+        m_pivot.set(ControlMode.Position, m_goalPivotPosition);
         //System.out.println("Pivot goal position" + goalPivotPosition +  "actual position " + pivot.getSelectedSensorPosition(0));
     }
 
     public void pivotToGround() {
-        pivot.set(ControlMode.Position, PIVOT_GROUND);
+        m_pivot.set(ControlMode.Position, PIVOT_GROUND);
     }
 
     public void pivotToRocket() {
-        pivot.set(ControlMode.Position, PIVOT_ROCKET);
+        m_pivot.set(ControlMode.Position, PIVOT_ROCKET);
     }
 
     public void pivotToCargo() {
-        pivot.set(ControlMode.Position, PIVOT_CARGO);
+        m_pivot.set(ControlMode.Position, PIVOT_CARGO);
     }
 
     public void setGoalPivotPosition(double goal) {
-        goalPivotPosition = goal;
+        m_goalPivotPosition = goal;
     }
 
     public double getPivotPosition() {
-        return pivot.getSelectedSensorPosition(0);
+        return m_pivot.getSelectedSensorPosition(0);
     }
 
     public void incrementPivot() {
-        goalPivotPosition = getPivotPosition();
-        goalPivotPosition += PIVOT_UP_INCREMENT;
+        m_goalPivotPosition = getPivotPosition();
+        m_goalPivotPosition += PIVOT_UP_INCREMENT;
     }
 
     public void decrementPivot() {
-        goalPivotPosition = getPivotPosition();
-        goalPivotPosition -= PIVOT_DOWN_INCREMENT;
+        m_goalPivotPosition = getPivotPosition();
+        m_goalPivotPosition -= PIVOT_DOWN_INCREMENT;
     }
 
     public boolean checkCurrentPivotPosition(double goalPos) {
-        boolean isFinished = (goalPos <= getPivotPosition() + PIVOT_TOLERANCE
-            && goalPos >= getPivotPosition() - PIVOT_TOLERANCE);
+        boolean isFinished = (goalPos <= getPivotPosition() + PIVOT_TOLERANCE)
+            && (goalPos >= getPivotPosition() - PIVOT_TOLERANCE);
         //System.out.println("isFinished: " + isFinished);
         return isFinished;
     }
 
     public void pivotStop() {
-        pivot.stopMotor();
+        m_pivot.stopMotor();
     }
 }

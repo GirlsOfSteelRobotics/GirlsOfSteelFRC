@@ -23,19 +23,19 @@ import edu.wpi.first.vision.VisionThread;
  */
 public class Robot extends IterativeRobot {
 
-    public static OI oi;
-    public static Chassis chassis;
-    public static Shifters shifters;
-    public static Agitator agitator;
-    public static Climber climber;
-    public static Shooter shooter;
-    public static Camera camera;
-    public static Loader loader;
-    public static GripPipelineListener listener;
+    public static OI m_oi;
+    public static Chassis m_chassis;
+    public static Shifters m_shifters;
+    public static Agitator m_agitator;
+    public static Climber m_climber;
+    public static Shooter m_shooter;
+    public static Camera m_camera;
+    public static Loader m_loader;
+    public static GripPipelineListener m_listener;
 
-    Command autonomousCommand;
+    Command m_autonomousCommand;
 
-    private VisionThread visionThread; // NOPMD
+    private VisionThread m_visionThread; // NOPMD
 
     /**
      * This function is run when the robot is first started up and should be
@@ -43,18 +43,19 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-        chassis = new Chassis();
-        shifters = new Shifters();
-        agitator = new Agitator();
-        climber = new Climber();
-        shooter = new Shooter();
-        camera = new Camera();
-        loader = new Loader();
-        listener = new GripPipelineListener();
+        m_chassis = new Chassis();
+        m_shifters = new Shifters();
+        m_agitator = new Agitator();
+        m_climber = new Climber();
+        m_shooter = new Shooter();
+        m_camera = new Camera();
+        m_loader = new Loader();
+        m_listener = new GripPipelineListener();
 
         // Initialize all subsystems before creating the OI
-        oi = new OI();
-/*
+        m_oi = new OI();
+
+        /*
         try {
             @SuppressWarnings("unused")
             Process p;
@@ -64,10 +65,11 @@ public class Robot extends IterativeRobot {
                     "-e", "8").start();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+        */
 
-        visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener); // NOPMD
-        visionThread.start();
+        m_visionThread = new VisionThread(m_camera.m_visionCam, new GripPipeline(), m_listener); // NOPMD
+        m_visionThread.start();
 
     }
 
@@ -79,7 +81,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
         System.out.println("DisabledInit shifting into high gear");
-        shifters.shiftGear(Shifters.Speed.kHigh);
+        m_shifters.shiftGear(Shifters.Speed.kHigh);
     }
 
     @Override
@@ -100,14 +102,14 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        autonomousCommand = oi.getAutonCommand();
+        m_autonomousCommand = m_oi.getAutonCommand();
 
         // start the robot out in low gear when starting autonomous
-        shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.kLow);
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) {
-            autonomousCommand.start();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
         }
     }
 
@@ -125,12 +127,12 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) {
-            autonomousCommand.cancel();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
         }
 
         // start robot in low gear when starting teleop
-        shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.kLow);
     }
 
     /**
@@ -139,9 +141,9 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        synchronized (listener.cameraLock) {
-            SmartDashboard.putNumber("TargetX", listener.targetX);
-            SmartDashboard.putNumber("Height", listener.height);
+        synchronized (m_listener.cameraLock) {
+            SmartDashboard.putNumber("TargetX", m_listener.targetX);
+            SmartDashboard.putNumber("Height", m_listener.height);
 
         }
     }

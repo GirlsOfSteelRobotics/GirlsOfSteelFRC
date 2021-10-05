@@ -19,16 +19,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 @SuppressWarnings("PMD.DataClass")
 public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
-    public final static double STRAIGHT_1 = 40.0;
-    public final static double TURN_DEGREES_1 = 30.0;
-    public final static double TURN_DEGREES_2 = 50.0;
-    public final static double TURN_AFTER_STACK = 60.0;
-    public final static double END_HEADING = 20.0;
-    public final static double APPROACH_SWITCH = 70.0;
-    public final static double DEPART_CUBE = 5.0;
-    public final static double APPROACH_CUBE = 71.0; //was 68.0
+    public static final double STRAIGHT_1 = 40.0;
+    public static final double TURN_DEGREES_1 = 30.0;
+    public static final double TURN_DEGREES_2 = 50.0;
+    public static final double TURN_AFTER_STACK = 60.0;
+    public static final double END_HEADING = 20.0;
+    public static final double APPROACH_SWITCH = 70.0;
+    public static final double DEPART_CUBE = 5.0;
+    public static final double APPROACH_CUBE = 71.0; //was 68.0
 
-    public final static double BACK_UP = -30.0;
+    public static final double BACK_UP = -30.0;
 
     public AutoMiddleSwitchTwoCubeBetter(GameData.FieldSide switchSide) {
         System.out.println("AutoMiddleSwitchTwoCubeBetter - side = " + switchSide);
@@ -91,7 +91,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
             addSequential(new DriveByMotionMagicAbsolute(APPROACH_SWITCH + 10, -END_HEADING, false));
         } else if (switchSide == GameData.FieldSide.left) {
             addSequential(new TurnByMotionMagicAbsolute(90));
-            addSequential(new DriveByMotionMagicAbsolute((APPROACH_SWITCH + 10), 85, false)); //10 was 50 before
+            addSequential(new DriveByMotionMagicAbsolute(APPROACH_SWITCH + 10, 85, false)); //10 was 50 before
         }
 
         //Spit cube out

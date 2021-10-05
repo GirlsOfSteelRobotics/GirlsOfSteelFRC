@@ -13,22 +13,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveByVision extends Command {
 
 
-    private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust
-    // (rad/s) current
-    // value works
-    private static final int IMAGE_WIDTH = 320;
-    private static final double IMAGE_CENTER = IMAGE_WIDTH / 2.0;
-    double[] defaultValue = new double[0];
-    public WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    public WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
     private static final int TIMEOUT = 8;
     private static final int SLIPPING_VELOCITY = 850;
-    private final Timer tim;
     private static final double slowLinearVelocity = 22; // TODO: change (in/s)
     private static final double fastLinearVelocity = 28; // TODO: change (in/s)
-
-    // width of X or Y in pixels when the robot is at the lift
-    // private static final double GOAL_WIDTH = 30; //TODO: test and change
+    private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust
 
     // distance b/w wheels
     private static final double WHEEL_BASE = 24.25; // (in)
@@ -36,11 +25,21 @@ public class DriveByVision extends Command {
     // radius of wheel
     private static final int WHEEL_RADIUS = 2; // (in)
 
+    private static final int IMAGE_WIDTH = 320;
+    private static final double IMAGE_CENTER = IMAGE_WIDTH / 2.0;
+
+    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
+    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final Timer m_tim;
+
+    // width of X or Y in pixels when the robot is at the lift
+    // private static final double GOAL_WIDTH = 30; //TODO: test and change
+
     public DriveByVision() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.chassis);
-        tim = new Timer();
+        requires(Robot.m_chassis);
+        m_tim = new Timer();
     }
 
     // Called just before this Command runs the first time
@@ -48,18 +47,18 @@ public class DriveByVision extends Command {
     protected void initialize() {
 
         // not calling setupFPID because other PID values override
-        leftTalon.setSelectedSensorPosition(0, 0, 0);
-        rightTalon.setSelectedSensorPosition(0, 0, 0);
+        m_leftTalon.setSelectedSensorPosition(0, 0, 0);
+        m_rightTalon.setSelectedSensorPosition(0, 0, 0);
 
         // tuned by janet and ziya on 2/20, overrides PID set in chassis method
-        leftTalon.config_kF(0, 0.22, 0); //carpet on practice field
-        leftTalon.config_kP(0, 0.235, 0);
-        rightTalon.config_kF(0, 0.22, 0); //carpet on practice field
-        rightTalon.config_kP(0, 0.235, 0);
+        m_leftTalon.config_kF(0, 0.22, 0); //carpet on practice field
+        m_leftTalon.config_kP(0, 0.235, 0);
+        m_rightTalon.config_kF(0, 0.22, 0); //carpet on practice field
+        m_rightTalon.config_kP(0, 0.235, 0);
 
         System.out.println("DriveByVision Initialized");
 
-        tim.start();
+        m_tim.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -82,9 +81,9 @@ public class DriveByVision extends Command {
          */
         double targetX;
         double height;
-        synchronized (Robot.listener.cameraLock) {
-            targetX = Robot.listener.targetX;
-            height = Robot.listener.height;
+        synchronized (Robot.m_listener.cameraLock) {
+            targetX = Robot.m_listener.targetX;
+            height = Robot.m_listener.height;
         }
         // the center of the x and y rectangles (the target)
         double goalAngularVelocity;
@@ -102,7 +101,7 @@ public class DriveByVision extends Command {
 
 
         double goalLinearVelocity;
-        if (height < 0 && tim.get() < 1) {
+        if (height < 0 && m_tim.get() < 1) {
             goalLinearVelocity = fastLinearVelocity;
         } else if (height < 0) {
             goalLinearVelocity = slowLinearVelocity;
@@ -120,31 +119,30 @@ public class DriveByVision extends Command {
         double angVRight = 75 * vRight / (2 * Math.PI * WHEEL_RADIUS); // (RPM)
         double angVLeft = 75 * vLeft / (2 * Math.PI * WHEEL_RADIUS);
         // send desired wheel speeds to Talon set to velocity control mode
-        rightTalon.set(ControlMode.Velocity, angVRight);
-        leftTalon.set(ControlMode.Velocity, -angVLeft);
+        m_rightTalon.set(ControlMode.Velocity, angVRight);
+        m_leftTalon.set(ControlMode.Velocity, -angVLeft);
 
         if (targetX >= 0) {
             System.out.println("Number of Contours: " + 2/*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
+                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + m_tim.get());
         } else {
             System.out.println("Number of Contours: " + "not 2" /*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
+                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + m_tim.get());
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-
-        return ((tim.get() > 1 && Math.abs(leftTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY
-            && Math.abs(rightTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY) || (tim.get() > TIMEOUT));
+        return (m_tim.get() > 1 && Math.abs(m_leftTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY
+            && Math.abs(m_rightTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT);
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
         System.out.println("DriveByVision Finished");
-        tim.stop();
+        m_tim.stop();
     }
 
     // Called when another command which requires one or more of the same

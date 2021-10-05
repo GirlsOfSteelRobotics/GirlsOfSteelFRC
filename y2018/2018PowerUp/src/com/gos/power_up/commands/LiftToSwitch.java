@@ -10,13 +10,13 @@ public class LiftToSwitch extends Command {
 
 
     public LiftToSwitch() {
-        requires(Robot.lift);
+        requires(Robot.m_lift);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.lift.setLiftToSwitch();
+        Robot.m_lift.setLiftToSwitch();
         System.out.println("LiftToSwitch initialized");
     }
 

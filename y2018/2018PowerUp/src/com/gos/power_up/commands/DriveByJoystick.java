@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveByJoystick extends Command {
 
     public DriveByJoystick() {
-        requires(Robot.chassis);
+        requires(Robot.m_chassis);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -17,7 +17,7 @@ public class DriveByJoystick extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.oi.setDriveStyle();
+        Robot.m_oi.setDriveStyle();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,9 +25,9 @@ public class DriveByJoystick extends Command {
     protected void execute() {
         boolean highGear = true;
 
-//		if (Robot.shifters.getGearSpeed().equals("kHigh")){
-//			highGear = true;
-//		}
+        //  if (Robot.shifters.getGearSpeed().equals("kHigh")){
+        //    highGear = true;
+        //  }
         double throttleFactor;
 
 
@@ -36,21 +36,21 @@ public class DriveByJoystick extends Command {
         //regular is 90% speed
 
         if (highGear) {
-            if (Robot.oi.isThrottle()) {
-                Robot.chassis.getLeftTalon().configOpenloopRamp(0.37, 10); //blinky numbers
-                Robot.chassis.getRightTalon().configOpenloopRamp(0.37, 10);
+            if (Robot.m_oi.isThrottle()) {
+                Robot.m_chassis.getLeftTalon().configOpenloopRamp(0.37, 10); //blinky numbers
+                Robot.m_chassis.getRightTalon().configOpenloopRamp(0.37, 10);
                 throttleFactor = .2;
-            } else if (Robot.oi.isSpeedy()) {
-                Robot.chassis.getLeftTalon().configOpenloopRamp(0.7, 10); //blinky numbers
-                Robot.chassis.getRightTalon().configOpenloopRamp(0.7, 10);
+            } else if (Robot.m_oi.isSpeedy()) {
+                Robot.m_chassis.getLeftTalon().configOpenloopRamp(0.7, 10); //blinky numbers
+                Robot.m_chassis.getRightTalon().configOpenloopRamp(0.7, 10);
                 throttleFactor = 1;
             } else {
                 throttleFactor = .65;
             }
         } else {
-            if (Robot.oi.isThrottle()) {
+            if (Robot.m_oi.isThrottle()) {
                 throttleFactor = .225;
-            } else if (Robot.oi.isSpeedy()) {
+            } else if (Robot.m_oi.isSpeedy()) {
                 throttleFactor = 1;
             } else {
                 throttleFactor = .9;
@@ -58,8 +58,8 @@ public class DriveByJoystick extends Command {
         }
 
 
-        Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown() * throttleFactor,
-            Robot.oi.getAmazonRightSideToSide() * throttleFactor, true);
+        Robot.m_chassis.m_drive.curvatureDrive(Robot.m_oi.getAmazonLeftUpAndDown() * throttleFactor,
+            Robot.m_oi.getAmazonRightSideToSide() * throttleFactor, true);
 
 
     }
@@ -73,7 +73,7 @@ public class DriveByJoystick extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.chassis.stop();
+        Robot.m_chassis.stop();
     }
 
     // Called when another command which requires one or more of the same

@@ -19,18 +19,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 @SuppressWarnings("PMD.DataClass")
 public class AutoMiddleSwitchTwoCubeS extends CommandGroup {
     //Parameters for first cube
-    public final static double RIGHT_ANGLE = 53.0;
-    public final static double RIGHT_DISTANCE = 72.0;
-    public final static double LEFT_ANGLE = 65.0;
-    public final static double LEFT_DISTANCE = 75.0;
+    public static final double RIGHT_ANGLE = 53.0;
+    public static final double RIGHT_DISTANCE = 72.0;
+    public static final double LEFT_ANGLE = 65.0;
+    public static final double LEFT_DISTANCE = 75.0;
 
     //Parameters for collecting second cube
-    public final static double LONG_BACK_UP = -80.0;
-    public final static double TURN_RADIUS_2 = 100.0;
-    public final static double TURN_DEGREES_2 = 70.0;
+    public static final double LONG_BACK_UP = -80.0;
+    public static final double TURN_RADIUS_2 = 100.0;
+    public static final double TURN_DEGREES_2 = 70.0;
 
     //After second cube
-    public final static double SHORT_BACK_UP = -30.0;
+    public static final double SHORT_BACK_UP = -30.0;
 
     public AutoMiddleSwitchTwoCubeS(GameData.FieldSide switchSide) {
 

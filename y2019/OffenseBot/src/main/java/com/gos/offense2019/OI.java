@@ -21,29 +21,25 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    private final Joystick drivingPad;
-    private final POVButton shiftUp;
-    private final POVButton shiftDown;
-    private final Button hatchRelease;
-    private final Button hatchGrab;
+    private final Joystick m_drivingPad;
 
-    private final int slowSpeedButton;
-    private final double speedHigh;
-    private final double speedLow;
+    private final int m_slowSpeedButton;
+    private final double m_speedHigh;
+    private final double m_speedLow;
 
     public OI() {
-        drivingPad = new Joystick(0);
+        m_drivingPad = new Joystick(0);
         //operatingPad = new Joystick(1);
 
-        shiftUp = new POVButton(drivingPad, 0);
-        shiftDown = new POVButton(drivingPad, 180);
+        POVButton shiftUp = new POVButton(m_drivingPad, 0);
+        POVButton shiftDown = new POVButton(m_drivingPad, 180);
 
-        hatchRelease = new JoystickButton(drivingPad, 5);
-        hatchGrab = new JoystickButton(drivingPad, 6);
+        Button hatchRelease = new JoystickButton(m_drivingPad, 5);
+        Button hatchGrab = new JoystickButton(m_drivingPad, 6);
 
-        slowSpeedButton = 3;
-        speedHigh = 1.0;
-        speedLow = 0.77;
+        m_slowSpeedButton = 3;
+        m_speedHigh = 1.0;
+        m_speedLow = 0.77;
 
         shiftUp.whenPressed(new Shift(Shifters.Speed.kHigh));
         shiftDown.whenPressed(new Shift(Shifters.Speed.kLow));
@@ -53,15 +49,15 @@ public class OI {
     }
 
     public double getLeftUpAndDown() {
-        return squaredInput(drivingPad.getY()) * drivingSpeed();
+        return squaredInput(m_drivingPad.getY()) * drivingSpeed();
     }
 
     public double getRightSideToSide() {
-        return squaredInput(-drivingPad.getRawAxis(4)) * drivingSpeed();
+        return squaredInput(-m_drivingPad.getRawAxis(4)) * drivingSpeed();
     }
 
     private double drivingSpeed() {
-        return (drivingPad.getRawAxis(slowSpeedButton) < 0.1 ? speedHigh : speedLow);
+        return m_drivingPad.getRawAxis(m_slowSpeedButton) < 0.1 ? m_speedHigh : m_speedLow;
     }
 
     private double squaredInput(double inSpeed) {

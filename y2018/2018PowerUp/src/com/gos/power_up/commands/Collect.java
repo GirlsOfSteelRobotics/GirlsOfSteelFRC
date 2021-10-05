@@ -11,7 +11,7 @@ public class Collect extends Command {
     public Collect() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.collector);
+        requires(Robot.m_collector);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +22,7 @@ public class Collect extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.collector.collect();
+        Robot.m_collector.collect();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +34,7 @@ public class Collect extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.collector.runSlowCollect();
+        Robot.m_collector.runSlowCollect();
     }
 
     // Called when another command which requires one or more of the same

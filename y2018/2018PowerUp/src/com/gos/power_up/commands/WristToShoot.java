@@ -12,13 +12,13 @@ public class WristToShoot extends Command {
     public WristToShoot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.wrist);
+        requires(Robot.m_wrist);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.wrist.setGoalWristPosition(Wrist.WRIST_SHOOT);
+        Robot.m_wrist.setGoalWristPosition(Wrist.WRIST_SHOOT);
         System.out.println("WristToShoot initialized");
     }
 

@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lidar extends Subsystem {
 
     public static final double LIDAR_TOLERANCE = 0; // tune
-    private final Counter counter;
+    private final Counter m_counter;
 
     public Lidar() {
-        counter = new Counter(new DigitalInput(RobotMap.LIDAR_DIO));
-        counter.setMaxPeriod(1.0);
+        m_counter = new Counter(new DigitalInput(RobotMap.LIDAR_DIO));
+        m_counter.setMaxPeriod(1.0);
         // Configure for measuring rising to falling pulses
-        counter.setSemiPeriodMode(true);
-        counter.reset();
+        m_counter.setSemiPeriodMode(true);
+        m_counter.reset();
     }
 
     @Override
@@ -32,13 +32,13 @@ public class Lidar extends Subsystem {
      */
     public double getDistance() {
         double cm;
-        while (counter.get() < 1) {
+        while (m_counter.get() < 1) {
             System.out.println("Lidar: waiting for distance measurement");
         }
         /* getPeriod returns time in seconds. The hardware resolution is microseconds.
          * The LIDAR-Lite unit sends a high signal for 10 microseconds per cm of distance.
          */
-        cm = (counter.getPeriod() * 1000000.0 / 10.0) - 18;
+        cm = (m_counter.getPeriod() * 1000000.0 / 10.0) - 18;
         return cm;
     }
 }

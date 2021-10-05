@@ -10,32 +10,32 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnInPlace extends Command {
 
-    private boolean targetReached;
-
-    private final double headingTarget;
-    private double errorLast;
-    private double iError;
-
     private static final double kP = .005;
     private static final double kI = 0;
     private static final double kD = 0;
 
-    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private boolean m_targetReached;
+
+    private final double m_headingTarget;
+    private double m_errorLast;
+    private double m_iError;
+
+    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
+    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
 
     public TurnInPlace(double degrees) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
-        headingTarget = degrees;
+        requires(Robot.m_chassis);
+        m_headingTarget = degrees;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
         System.out.println("Trying to initialize");
-        Robot.chassis.setInverted(false);
-        Robot.chassis.zeroSensors();
-        System.out.println("Turn in place initialized Heading = " + headingTarget);
+        Robot.m_chassis.setInverted(false);
+        Robot.m_chassis.zeroSensors();
+        System.out.println("Turn in place initialized Heading = " + m_headingTarget);
 
     }
 
@@ -44,44 +44,43 @@ public class TurnInPlace extends Command {
     @Override
     protected void execute() {
 
-        double currentPos = Robot.chassis.getYaw();
-        double error = (headingTarget - currentPos);
-        double dError = ((error - errorLast) / .02);
+        double currentPos = Robot.m_chassis.getYaw();
+        double error = m_headingTarget - currentPos;
+        double dError = (error - m_errorLast) / .02;
 
 
-        double tempError = (iError + (error * .02));
+        double tempError = m_iError + (error * .02);
         if (Math.abs(tempError * kI) < .5) {
-            iError = tempError;
+            m_iError = tempError;
         }
         System.out.println("current position " + currentPos);
 
-        leftTalon.set(ControlMode.PercentOutput, ((kP * error) + (kD * dError) + (kI * iError)));
-        rightTalon.set(ControlMode.PercentOutput, ((kP * error) + (kD * dError) + (kI * iError)));
+        m_leftTalon.set(ControlMode.PercentOutput, (kP * error) + (kD * dError) + (kI * m_iError));
+        m_rightTalon.set(ControlMode.PercentOutput, (kP * error) + (kD * dError) + (kI * m_iError));
 
         if (error < 1 && dError < 10) {
-            targetReached = true;
+            m_targetReached = true;
         }
 
-        errorLast = error;
+        m_errorLast = error;
 
-
-//    	if (headingTarget > 0) {
-//    		leftTalon.set(ControlMode.Position, encoderTicks);
-//        	rightTalon.set(ControlMode.Position, encoderTicks);
-//    	} else {
-//    		leftTalon.set(ControlMode.Position, -encoderTicks);
-//        	rightTalon.set(ControlMode.Position, -encoderTicks);
-//    	}
-//
-//    	System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(1) - encoderTicks));
-//    	System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(1) + encoderTicks));
-//
+        //        if (headingTarget > 0) {
+        //            leftTalon.set(ControlMode.Position, encoderTicks);
+        //            rightTalon.set(ControlMode.Position, encoderTicks);
+        //        } else {
+        //            leftTalon.set(ControlMode.Position, -encoderTicks);
+        //            rightTalon.set(ControlMode.Position, -encoderTicks);
+        //        }
+        //
+        //        System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(1) - encoderTicks));
+        //        System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(1) + encoderTicks));
+        //
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return targetReached;
+        return m_targetReached;
     }
 
 
@@ -89,7 +88,7 @@ public class TurnInPlace extends Command {
     @Override
     protected void end() {
         System.out.println("TurnInPlace Finished");
-        Robot.chassis.stop();
+        Robot.m_chassis.stop();
     }
 
     // Called when another command which requires one or more of the same

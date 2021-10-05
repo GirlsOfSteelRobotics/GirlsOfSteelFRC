@@ -10,7 +10,7 @@ public class CollectorHold extends Command {
 
     public CollectorHold() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.collector);
+        requires(Robot.m_collector);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class CollectorHold extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.collector.runCollector();
+        Robot.m_collector.runCollector();
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -14,7 +14,7 @@ public class BabyDriveBackwards extends Command {
     private static final double BABYDRIVE_SPEED = 0.4;
 
     public BabyDriveBackwards() {
-        requires(Robot.babyDrive);
+        requires(Robot.m_babyDrive);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -29,7 +29,7 @@ public class BabyDriveBackwards extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
+        Robot.m_babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -41,7 +41,7 @@ public class BabyDriveBackwards extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.babyDrive.babyDriveStop();
+        Robot.m_babyDrive.babyDriveStop();
         System.out.println("end BabyDriveBackwards");
     }
 

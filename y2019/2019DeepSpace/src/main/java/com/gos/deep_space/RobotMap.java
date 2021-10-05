@@ -15,7 +15,7 @@ package com.gos.deep_space;
  */
 public class RobotMap {
 
-    // Talon SRX ID numbers	assigned via the Phoenix Tuning utility
+    // Talon SRX ID numbers assigned via the Phoenix Tuning utility
     public static final int DRIVE_LEFT_MASTER_TALON = 1;
     public static final int DRIVE_LEFT_FOLLOWER_TALON = 2;
 

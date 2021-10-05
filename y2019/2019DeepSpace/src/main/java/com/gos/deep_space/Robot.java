@@ -16,18 +16,18 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
-    public static Chassis chassis;
-    public static Collector collector;
-    public static Pivot pivot;
-    public static Climber climber;
-    public static BabyDrive babyDrive;
-    public static Hatch hatch;
-    public static Blinkin blinkin;
-    public static GripPipelineListener listener;
-    public static Camera camera;
-    public static Lidar lidar;
-    public static OI oi;
-    private VisionThread visionThread; // NOPMD
+    public static Chassis m_chassis;
+    public static Collector m_collector;
+    public static Pivot m_pivot;
+    public static Climber m_climber;
+    public static BabyDrive m_babyDrive;
+    public static Hatch m_hatch;
+    public static Blinkin m_blinkin;
+    public static GripPipelineListener m_listener;
+    public static Camera m_camera;
+    public static Lidar m_lidar;
+    public static OI m_oi;
+    private VisionThread m_visionThread; // NOPMD
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -35,19 +35,19 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        chassis = new Chassis();
-        collector = new Collector();
-        pivot = new Pivot();
-        babyDrive = new BabyDrive();
-        climber = new Climber();
-        hatch = new Hatch();
-        blinkin = new Blinkin();
+        m_chassis = new Chassis();
+        m_collector = new Collector();
+        m_pivot = new Pivot();
+        m_babyDrive = new BabyDrive();
+        m_climber = new Climber();
+        m_hatch = new Hatch();
+        m_blinkin = new Blinkin();
         if (RobotBase.isReal()) {
-            camera = new Camera();
+            m_camera = new Camera();
         }
-        lidar = new Lidar();
+        m_lidar = new Lidar();
         // Create all subsystems BEFORE creating the Operator Interface (OI)
-        oi = new OI();
+        m_oi = new OI();
 
         //listener = new GripPipelineListener();
         //visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         if (RobotBase.isReal()) {
-            camera.closeMovieFile();
+            m_camera.closeMovieFile();
         }
     }
 
@@ -100,9 +100,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        Robot.blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
+        Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
         if (RobotBase.isReal()) {
-            camera.openMovieFile();
+            m_camera.openMovieFile();
         }
     }
 
@@ -116,9 +116,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+        Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
         if (RobotBase.isReal()) {
-            camera.openMovieFile();
+            m_camera.openMovieFile();
         }
     }
 
@@ -128,13 +128,13 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        Robot.blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+        Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
         double timeRemaining = DriverStation.getInstance().getMatchTime();
         //System.out.println("Robot match time: " + DriverStation.getInstance().getMatchTime());
         if (timeRemaining <= 30) {
-            Robot.blinkin.setLightPattern(Blinkin.LightPattern.THIRTY_CLIMB);
+            Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.THIRTY_CLIMB);
         } else if (timeRemaining <= 40) {
-            Robot.blinkin.setLightPattern(Blinkin.LightPattern.FORTY_CLIMB);
+            Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.FORTY_CLIMB);
         }
 
     }

@@ -17,7 +17,7 @@ public class IncrementHighShooter extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shooter.incrementHighShooterSpeed();
+        Robot.m_shooter.incrementHighShooterSpeed();
     }
 
     // Called repeatedly when this Command is scheduled to run

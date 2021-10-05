@@ -14,7 +14,7 @@ public class HatchRelease extends Command {
     public HatchRelease() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.hatch);
+        requires(Robot.m_hatch);
     }
 
     // Called just before this Command runs the first time
@@ -26,7 +26,7 @@ public class HatchRelease extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.hatch.release();
+        Robot.m_hatch.release();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +38,7 @@ public class HatchRelease extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.hatch.stop();
+        Robot.m_hatch.stop();
         System.out.println("end hatch release");
     }
 }

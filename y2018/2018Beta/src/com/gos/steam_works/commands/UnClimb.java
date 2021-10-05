@@ -10,7 +10,7 @@ public class UnClimb extends Command {
 
     public UnClimb() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.climber);
+        requires(Robot.m_climber);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +22,7 @@ public class UnClimb extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.climber.climb(0.75);
+        Robot.m_climber.climb(0.75);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +34,7 @@ public class UnClimb extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.climber.stopClimb();
+        Robot.m_climber.stopClimb();
     }
 
     // Called when another command which requires one or more of the same

@@ -17,7 +17,7 @@ public class DecrementHighShooter extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shooter.decrementHighShooterSpeed();
+        Robot.m_shooter.decrementHighShooterSpeed();
     }
 
     // Called repeatedly when this Command is scheduled to run

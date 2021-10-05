@@ -11,19 +11,19 @@ public class AutoPrintData extends CommandGroup {
 
     public AutoPrintData() {
 
-        if (Robot.gameData.getSwitchSide() == GameData.FieldSide.left) {
+        if (Robot.m_gameData.getSwitchSide() == GameData.FieldSide.left) {
             System.out.println("Switch is on the left");
-        } else if (Robot.gameData.getSwitchSide() == GameData.FieldSide.right) {
+        } else if (Robot.m_gameData.getSwitchSide() == GameData.FieldSide.right) {
             System.out.println("Switch is on the right");
-        } else if (Robot.gameData.getSwitchSide() == GameData.FieldSide.bad) {
+        } else if (Robot.m_gameData.getSwitchSide() == GameData.FieldSide.bad) {
             System.out.println("Switch is BAD");
         }
 
-        if (Robot.gameData.getScaleSide() == GameData.FieldSide.left) {
+        if (Robot.m_gameData.getScaleSide() == GameData.FieldSide.left) {
             System.out.println("Scale is on the left");
-        } else if (Robot.gameData.getScaleSide() == GameData.FieldSide.right) {
+        } else if (Robot.m_gameData.getScaleSide() == GameData.FieldSide.right) {
             System.out.println("Scale is on the right");
-        } else if (Robot.gameData.getScaleSide() == GameData.FieldSide.bad) {
+        } else if (Robot.m_gameData.getScaleSide() == GameData.FieldSide.bad) {
             System.out.println("Scale is BAD");
         }
     }

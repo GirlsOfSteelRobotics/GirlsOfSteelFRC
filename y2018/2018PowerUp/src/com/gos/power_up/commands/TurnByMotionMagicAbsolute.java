@@ -10,33 +10,32 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TurnByMotionMagicAbsolute extends Command {
+    private static final double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
-    private final double targetHeading; // in degrees
+    private final double m_targetHeading; // in degrees
 
-    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
-
-    private final static double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
+    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
+    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
 
     public TurnByMotionMagicAbsolute(double degrees) {
-        targetHeading = degrees;
-        requires(Robot.chassis);
+        m_targetHeading = degrees;
+        requires(Robot.m_chassis);
         // System.out.println("TurnByMotionMagic: constructed");
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shifters.shiftGear(Shifters.Speed.kLow);
-        Robot.chassis.setInverted(false);
+        Robot.m_shifters.shiftGear(Shifters.Speed.kLow);
+        Robot.m_chassis.setInverted(false);
 
-        Robot.chassis.configForTurnByMotionMagic();
+        Robot.m_chassis.configForTurnByMotionMagic();
         // System.out.println("TurnByMotionMagic: configured for motion magic");
 
-        System.out.println("TurnByMotionMagicAbsolute: heading: " + targetHeading);
+        System.out.println("TurnByMotionMagicAbsolute: heading: " + m_targetHeading);
 
-        rightTalon.set(ControlMode.MotionMagic, -10 * targetHeading);
-        leftTalon.follow(rightTalon);
+        m_rightTalon.set(ControlMode.MotionMagic, -10 * m_targetHeading);
+        m_leftTalon.follow(m_rightTalon);
 
     }
 
@@ -50,8 +49,8 @@ public class TurnByMotionMagicAbsolute extends Command {
     @Override
     protected boolean isFinished() {
 
-        double currentHeading = Robot.chassis.getYaw();
-        double error = Math.abs(targetHeading - currentHeading);
+        double currentHeading = Robot.m_chassis.getYaw();
+        double error = Math.abs(m_targetHeading - currentHeading);
         // System.out.println("DriveByMotionMagic: turning error = " + error);
         if (error < TURNING_FINISH_THRESHOLD) {
             System.out.println("TurnByMotionMagicAbsolute: turning degrees reached");
@@ -66,13 +65,13 @@ public class TurnByMotionMagicAbsolute extends Command {
     @Override
     protected void end() {
 
-        double currentHeading = Robot.chassis.getYaw();
-        double degreesError = targetHeading - currentHeading;
+        double currentHeading = Robot.m_chassis.getYaw();
+        double degreesError = m_targetHeading - currentHeading;
 
         System.out.println("TurnByMotionMagicAbsolute: ended. Error = " + degreesError + " degrees");
-        Robot.chassis.stop();
-        Robot.shifters.shiftGear(Shifters.Speed.kHigh);
-        Robot.chassis.setInverted(false);
+        Robot.m_chassis.stop();
+        Robot.m_shifters.shiftGear(Shifters.Speed.kHigh);
+        Robot.m_chassis.setInverted(false);
     }
 
     // Called when another command which requires one or more of the same

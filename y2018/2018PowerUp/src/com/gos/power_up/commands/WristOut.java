@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class WristOut extends Command {
 
     public WristOut() {
-        requires(Robot.wrist);
+        requires(Robot.m_wrist);
     }
 
     // Called just before this Command runs the first time
@@ -20,8 +20,8 @@ public class WristOut extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.wrist.holdWristPosition();
-        Robot.wrist.wristOut();
+        Robot.m_wrist.holdWristPosition();
+        Robot.m_wrist.wristOut();
     }
 
     // Make this return true when this Command no longer needs to run execute()

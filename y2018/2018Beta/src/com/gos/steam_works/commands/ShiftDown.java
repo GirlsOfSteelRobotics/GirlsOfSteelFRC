@@ -12,13 +12,13 @@ public class ShiftDown extends Command {
     public ShiftDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.shifters);
+        requires(Robot.m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shifters.shiftGear(Shifters.Speed.kLow);
+        Robot.m_shifters.shiftGear(Shifters.Speed.kLow);
     }
 
     // Called repeatedly when this Command is scheduled to run

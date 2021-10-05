@@ -13,36 +13,36 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 
 public class Climber extends Subsystem {
-    public WPI_TalonSRX climbMotorA;
-    public WPI_TalonSRX climbMotorB;
+    public final WPI_TalonSRX m_climbMotorA;
+    public final WPI_TalonSRX m_climbMotorB;
 
     public Climber() {
-        climbMotorA = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_A);
-        climbMotorB = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_B);
+        m_climbMotorA = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_A);
+        m_climbMotorB = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_B);
 
-        climbMotorA.setNeutralMode(NeutralMode.Brake);
-        climbMotorB.setNeutralMode(NeutralMode.Brake);
+        m_climbMotorA.setNeutralMode(NeutralMode.Brake);
+        m_climbMotorB.setNeutralMode(NeutralMode.Brake);
 
-        climbMotorA.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-        climbMotorA.setSensorPhase(true);
+        m_climbMotorA.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+        m_climbMotorA.setSensorPhase(true);
 
-        climbMotorA.config_kF(0, 0, 0);
-        climbMotorA.config_kP(0, 0.5, 0);
-        climbMotorA.config_kI(0, 0, 0);
-        climbMotorA.config_kD(0, 0, 0);
+        m_climbMotorA.config_kF(0, 0, 0);
+        m_climbMotorA.config_kP(0, 0.5, 0);
+        m_climbMotorA.config_kI(0, 0, 0);
+        m_climbMotorA.config_kD(0, 0, 0);
 
-//		LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
-//		LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
+        // LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
+        // LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
     }
 
     public void climb(double speed) {
-        climbMotorA.set(ControlMode.PercentOutput, speed);
-        climbMotorB.set(ControlMode.PercentOutput, speed);
+        m_climbMotorA.set(ControlMode.PercentOutput, speed);
+        m_climbMotorB.set(ControlMode.PercentOutput, speed);
     }
 
     public void stopClimb() {
-        climbMotorA.set(ControlMode.PercentOutput, 0.0);
-        climbMotorB.set(ControlMode.PercentOutput, 0.0);
+        m_climbMotorA.set(ControlMode.PercentOutput, 0.0);
+        m_climbMotorB.set(ControlMode.PercentOutput, 0.0);
     }
 
     @Override

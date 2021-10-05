@@ -7,7 +7,7 @@ public class DriveByJoystick extends Command {
 
     public DriveByJoystick() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
+        requires(Robot.m_chassis);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +20,7 @@ public class DriveByJoystick extends Command {
     @Override
     protected void execute() {
         // 4 is the axis number right x on the gamepad
-        Robot.chassis.driveByJoystick(Robot.oi.getLeftUpAndDown(), Robot.oi.getRightSideToSide());
+        Robot.m_chassis.driveByJoystick(Robot.m_oi.getLeftUpAndDown(), Robot.m_oi.getRightSideToSide());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,7 +32,7 @@ public class DriveByJoystick extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.chassis.stop();
+        Robot.m_chassis.stop();
     }
 
     // Called when another command which requires one or more of the same

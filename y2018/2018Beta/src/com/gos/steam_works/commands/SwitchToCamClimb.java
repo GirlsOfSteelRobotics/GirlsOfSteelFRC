@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwitchToCamClimb extends Command {
 
     public SwitchToCamClimb() {
-        requires(Robot.camera);
+        requires(Robot.m_camera);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.camera.switchToCamClimb();
+        Robot.m_camera.switchToCamClimb();
     }
 
     // Called repeatedly when this Command is scheduled to run

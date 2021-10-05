@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Camera extends Subsystem {
 
-    private final UsbCamera driveCam;
+    private final UsbCamera m_driveCam;
 
 
     public Camera() {
 
-        driveCam = CameraServer.getInstance().startAutomaticCapture();
-        driveCam.setResolution(320, 240);
-        driveCam.setFPS(20);
+        m_driveCam = CameraServer.getInstance().startAutomaticCapture();
+        m_driveCam.setResolution(320, 240);
+        m_driveCam.setFPS(20);
     }
 
     @Override

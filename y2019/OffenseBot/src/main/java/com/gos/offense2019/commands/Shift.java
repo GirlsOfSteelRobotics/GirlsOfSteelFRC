@@ -12,19 +12,19 @@ import com.gos.offense2019.subsystems.Shifters.Speed;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Shift extends Command {
-    private final Speed speed;
+    private final Speed m_speed;
 
     public Shift(Speed speed) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.shifters);
-        this.speed = speed;
+        requires(Robot.m_shifters);
+        this.m_speed = speed;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        System.out.println("Shift(" + speed + ") init");
-        Robot.shifters.shiftGear(speed);
+        System.out.println("Shift(" + m_speed + ") init");
+        Robot.m_shifters.shiftGear(m_speed);
     }
 
     // Called repeatedly when this Command is scheduled to run

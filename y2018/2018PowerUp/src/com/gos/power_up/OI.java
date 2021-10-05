@@ -34,63 +34,44 @@ public class OI {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank, amazonDrive
     }
 
-    private DriveStyle driveStyle;
+    private DriveStyle m_driveStyle;
 
-    private final Joystick operatorGamePad = new Joystick(0);
-    private final Joystick drivingGamePad = new Joystick(1);
-    private final Joystick amazonGamePad = new Joystick(1);
+    private final Joystick m_operatorGamePad = new Joystick(0);
+    private final Joystick m_drivingGamePad = new Joystick(1);
+    private final Joystick m_amazonGamePad = new Joystick(1);
     //private Joystick drivingJoystickOne = new Joystick (1);
     //private Joystick drivingJoystickTwo = new Joystick (2);
 
-    private final JoystickButton shifterUp;
-    private final JoystickButton shifterDown;
     //private JoystickButton driveByDistanceLow;
     //private JoystickButton driveByMotionProfile;
 
-    private final JoystickButton liftUp;
-    private final JoystickButton liftDown;
-    private final JoystickButton liftToSwitch;
-    private final JoystickButton liftEnterRecovery;
-    private final JoystickButton liftToGround;
-
-    private final JoystickButton wristIn;
-    private final JoystickButton wristOut;
-
-    private final JoystickButton collect;
-    private final JoystickButton releaseSlow;
-
-    private final JoystickButton climb;
-    private final JoystickButton unClimb;
-
-    private final JoystickButton motionMagic;
-
     public OI() {
         // Set which joystick axis is retrieved by its getTwist() method
-        drivingGamePad.setTwistChannel(3);
-        amazonGamePad.setTwistChannel(4);
+        m_drivingGamePad.setTwistChannel(3);
+        m_amazonGamePad.setTwistChannel(4);
 
         /* BUTTON MAPPING */
 
-        shifterDown = new JoystickButton(amazonGamePad, 6);
-        shifterUp = new JoystickButton(amazonGamePad, 5);
+        JoystickButton shifterDown = new JoystickButton(m_amazonGamePad, 6);
+        JoystickButton shifterUp = new JoystickButton(m_amazonGamePad, 5);
 
-        liftUp = new JoystickButton(operatorGamePad, 6);
-        liftDown = new JoystickButton(operatorGamePad, 8);
-        liftToSwitch = new JoystickButton(operatorGamePad, 1);
-        liftToGround = new JoystickButton(operatorGamePad, 2);
-        liftEnterRecovery = new JoystickButton(operatorGamePad, 11);
+        JoystickButton liftUp = new JoystickButton(m_operatorGamePad, 6);
+        JoystickButton liftDown = new JoystickButton(m_operatorGamePad, 8);
+        JoystickButton liftToSwitch = new JoystickButton(m_operatorGamePad, 1);
+        JoystickButton liftToGround = new JoystickButton(m_operatorGamePad, 2);
+        JoystickButton liftEnterRecovery = new JoystickButton(m_operatorGamePad, 11);
 
-        wristIn = new JoystickButton(operatorGamePad, 5);
-        wristOut = new JoystickButton(operatorGamePad, 7);
+        JoystickButton wristIn = new JoystickButton(m_operatorGamePad, 5);
+        JoystickButton wristOut = new JoystickButton(m_operatorGamePad, 7);
 
-        collect = new JoystickButton(operatorGamePad, 4);
+        JoystickButton collect = new JoystickButton(m_operatorGamePad, 4);
         //releaseFast = new JoystickButton(operatorGamePad, 10);
-        releaseSlow = new JoystickButton(operatorGamePad, 3);
+        JoystickButton releaseSlow = new JoystickButton(m_operatorGamePad, 3);
 
-        climb = new JoystickButton(operatorGamePad, 10);
-        unClimb = new JoystickButton(operatorGamePad, 9);
+        JoystickButton climb = new JoystickButton(m_operatorGamePad, 10);
+        JoystickButton unClimb = new JoystickButton(m_operatorGamePad, 9);
 
-        motionMagic = new JoystickButton(amazonGamePad, 4);
+        JoystickButton motionMagic = new JoystickButton(m_amazonGamePad, 4);
 
         /* BUTTON ACTIONS */
 
@@ -120,75 +101,75 @@ public class OI {
         motionMagic.whenPressed(new DriveByMotionMagic(25.0, -90.0));
     }
 
-    //	public double getGamePadLeftUpAndDown() {
-    //		return -drivingGamePad.getY();
-    //	}
+    //    public double getGamePadLeftUpAndDown() {
+    //        return -drivingGamePad.getY();
+    //    }
     //
-    //	public double getGamePadRightUpAndDown() {
-    //		return -drivingGamePad.getTwist();
-    //	}
+    //    public double getGamePadRightUpAndDown() {
+    //        return -drivingGamePad.getTwist();
+    //    }
     //
-    //	public double getGamePadLeftSideToSide() {
-    //		return drivingGamePad.getX();
-    //	}
+    //    public double getGamePadLeftSideToSide() {
+    //        return drivingGamePad.getX();
+    //    }
     //
-    //	public double getGamePadRightSideToSide(){
-    //		return drivingGamePad.getZ();
-    //	}
+    //    public double getGamePadRightSideToSide(){
+    //        return drivingGamePad.getZ();
+    //    }
 
     public double getAmazonLeftUpAndDown() {
-        return -amazonGamePad.getY();
+        return -m_amazonGamePad.getY();
     }
 
     public double getAmazonRightSideToSide() {
-        return amazonGamePad.getTwist();
+        return m_amazonGamePad.getTwist();
     }
 
-    //	public double getJoystickOneUpAndDown() {
-    //		return -drivingJoystickOne.getY();
-    //	}
+    //    public double getJoystickOneUpAndDown() {
+    //        return -drivingJoystickOne.getY();
+    //    }
     //
-    //	public double getJoystickOneSideToSide() {
-    //		return drivingJoystickOne.getX();
-    //	}
+    //    public double getJoystickOneSideToSide() {
+    //        return drivingJoystickOne.getX();
+    //    }
     //
-    //	public double getJoystickTwoUpAndDown() {
-    //		return -drivingJoystickTwo.getY();
-    //	}
+    //    public double getJoystickTwoUpAndDown() {
+    //        return -drivingJoystickTwo.getY();
+    //    }
     //
-    //	public double getJoystickTwoSideToSide() {
-    //		return drivingJoystickTwo.getX();
-    //	}
+    //    public double getJoystickTwoSideToSide() {
+    //        return drivingJoystickTwo.getX();
+    //    }
     //
     public void setDriveStyle() {
-        //		if (!RobotMap.dio1.get()) {
-        //			driveStyle = DriveStyle.joystickArcade;
-        //		} else if (!RobotMap.dio2.get()) {
-        //			driveStyle = DriveStyle.gamePadArcade;
-        //		} else if (!RobotMap.dio3.get()) {
-        //			driveStyle = DriveStyle.joystickTank;
-        //		} else if (!RobotMap.dio4.get()) {
-        //			driveStyle = DriveStyle.gamePadTank;
-        //		} else if (!RobotMap.dio5.get()) {
-        //			driveStyle = DriveStyle.amazonDrive;
-        //		} else {
-        //			System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
-        //			driveStyle = DriveStyle.joystickArcade;
-        //		}
+        //        if (!RobotMap.dio1.get()) {
+        //            driveStyle = DriveStyle.joystickArcade;
+        //        } else if (!RobotMap.dio2.get()) {
+        //            driveStyle = DriveStyle.gamePadArcade;
+        //        } else if (!RobotMap.dio3.get()) {
+        //            driveStyle = DriveStyle.joystickTank;
+        //        } else if (!RobotMap.dio4.get()) {
+        //            driveStyle = DriveStyle.gamePadTank;
+        //        } else if (!RobotMap.dio5.get()) {
+        //            driveStyle = DriveStyle.amazonDrive;
+        //        } else {
+        //            System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
+        //            driveStyle = DriveStyle.joystickArcade;
+        //        }
 
-        driveStyle = DriveStyle.amazonDrive;
-        System.out.println("Drive Mode: " + driveStyle);
+        m_driveStyle = DriveStyle.amazonDrive;
+        System.out.println("Drive Mode: " + m_driveStyle);
     }
 
     public DriveStyle getDriveStyle() {
-        return driveStyle;
+        return m_driveStyle;
     }
 
     public boolean isThrottle() {
-        return amazonGamePad.getRawAxis(3) > .5;
+        return m_amazonGamePad.getRawAxis(3) > .5;
     }
 
     public boolean isSpeedy() {
-        return amazonGamePad.getRawAxis(2) > .5;
+        return m_amazonGamePad.getRawAxis(2) > .5;
     }
 }

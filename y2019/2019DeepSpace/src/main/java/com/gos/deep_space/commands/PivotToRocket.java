@@ -15,7 +15,7 @@ public class PivotToRocket extends Command {
     public PivotToRocket() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.pivot);
+        requires(Robot.m_pivot);
     }
 
     // Called just before this Command runs the first time
@@ -27,20 +27,20 @@ public class PivotToRocket extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.pivot.setGoalPivotPosition(Pivot.PIVOT_ROCKET);
-        Robot.pivot.holdPivotPosition();
+        Robot.m_pivot.setGoalPivotPosition(Pivot.PIVOT_ROCKET);
+        Robot.m_pivot.holdPivotPosition();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return (Robot.pivot.checkCurrentPivotPosition(Pivot.PIVOT_ROCKET));
+        return Robot.m_pivot.checkCurrentPivotPosition(Pivot.PIVOT_ROCKET);
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.pivot.pivotStop();
+        Robot.m_pivot.pivotStop();
         System.out.println("end PivotToRocket");
     }
 }

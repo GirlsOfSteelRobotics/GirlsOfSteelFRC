@@ -12,19 +12,19 @@ import com.gos.offense2019.subsystems.HatchCollector;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class HatchCollect extends Command {
-    private final HatchCollector.HatchState hatchState;
+    private final HatchCollector.HatchState m_hatchState;
 
     public HatchCollect(HatchCollector.HatchState hatchState) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.hatchCollector);
-        this.hatchState = hatchState;
+        requires(Robot.m_hatchCollector);
+        this.m_hatchState = hatchState;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        System.out.println("Shift(" + hatchState + ") init");
-        Robot.hatchCollector.driveHatch(hatchState);
+        System.out.println("Shift(" + m_hatchState + ") init");
+        Robot.m_hatchCollector.driveHatch(m_hatchState);
     }
 
     // Called repeatedly when this Command is scheduled to run

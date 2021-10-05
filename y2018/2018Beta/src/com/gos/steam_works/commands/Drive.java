@@ -12,7 +12,7 @@ public class Drive extends Command {
     public Drive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.chassis);
+        requires(Robot.m_chassis);
     }
 
     // Called just before this Command runs the first time
@@ -24,17 +24,17 @@ public class Drive extends Command {
         //rightTalon.configVoltageCompSaturation(24.0, 0);
         //leftTalon.setVoltageRampRate(24.0);  IS THIS THE SAME AS ABOVE???
         //rightTalon.setVoltageRampRate(24.0);
-        Robot.oi.setDriveStyle();
-        System.out.println("Squared Units: " + Robot.oi.isSquared());
+        Robot.m_oi.setDriveStyle();
+        System.out.println("Squared Units: " + Robot.m_oi.isSquared());
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (Robot.oi.getDriveStyle() == OI.DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadArcade) {
-            Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
-        } else if (Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == OI.DriveStyle.joystickTank) {
-            Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
+        if (Robot.m_oi.getDriveStyle() == OI.DriveStyle.joystickArcade || Robot.m_oi.getDriveStyle() == OI.DriveStyle.gamePadArcade) {
+            Robot.m_chassis.m_drive.arcadeDrive(Robot.m_oi.getDrivingJoystickY(), Robot.m_oi.getDrivingJoystickX(), Robot.m_oi.isSquared());
+        } else if (Robot.m_oi.getDriveStyle() == OI.DriveStyle.gamePadTank || Robot.m_oi.getDriveStyle() == OI.DriveStyle.joystickTank) {
+            Robot.m_chassis.m_drive.tankDrive(Robot.m_oi.getDrivingJoystickY(), Robot.m_oi.getDrivingJoystickX(), Robot.m_oi.isSquared());
         }
     }
 
@@ -45,7 +45,7 @@ public class Drive extends Command {
     }
 
     public void stop() {
-        Robot.chassis.stop();
+        Robot.m_chassis.stop();
     }
 
     // Called once after isFinished returns true

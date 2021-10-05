@@ -43,7 +43,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
         // record vision camera movie
 
         if (RobotBase.isReal()) {
-            Robot.camera.addFrame(Robot.camera.getVisionFrame());
+            Robot.m_camera.addFrame(Robot.m_camera.getVisionFrame());
         }
         // Get a frame of video from the last step of the pipeline that deals with video
         // (before converting to a list of contours) and send it to the Processed stream
@@ -103,7 +103,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
         // puts a dot in the middle of target pair on the processed image for SmartDashboard
         Imgproc.circle(frame, goalTargetPair.getTargetCenterPoint(), 6, new Scalar(255, 255, 255));
         if (RobotBase.isReal()) {
-            Robot.camera.processedStream.putFrame(frame);
+            Robot.m_camera.m_processedStream.putFrame(frame);
         }
 
     }

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
  * This class manages Game Data obtained from the field management system as
  * well as the related autonomous selection mechanisms on the robot (DIO ports).
  */
+@SuppressWarnings("PMD.NullAssignment")
 public class GameData {
 
     /**
@@ -27,33 +28,33 @@ public class GameData {
     }
 
     // DIO ports used to select autonomous behaviors
-    public DigitalInput dioPriority;
-    public DigitalInput dioLeft;
-    public DigitalInput dioMiddle;
-    public DigitalInput dioRight;
-    public DigitalInput dioScaleOverride;
-    public DigitalInput dioNoAuto;
+    public DigitalInput m_dioPriority;
+    public DigitalInput m_dioLeft;
+    public DigitalInput m_dioMiddle;
+    public DigitalInput m_dioRight;
+    public DigitalInput m_dioScaleOverride;
+    public DigitalInput m_dioNoAuto;
 
-    private String gameData;
+    private String m_gameData;
 
     /**
      * Prepare a place to record the Game Data string and initialize the DIO ports
      * used as autonomous selectors.
      */
     public GameData() {
-        dioPriority = new DigitalInput(RobotMap.DIO_PRIORITY);
-        dioLeft = new DigitalInput(RobotMap.DIO_LEFT);
-        dioMiddle = new DigitalInput(RobotMap.DIO_MIDDLE);
-        dioRight = new DigitalInput(RobotMap.DIO_RIGHT);
-        dioScaleOverride = new DigitalInput(RobotMap.DIO_SCALE_OVERRIDE);
-        dioNoAuto = new DigitalInput(RobotMap.DIO_NO_AUTO);
+        m_dioPriority = new DigitalInput(RobotMap.DIO_PRIORITY);
+        m_dioLeft = new DigitalInput(RobotMap.DIO_LEFT);
+        m_dioMiddle = new DigitalInput(RobotMap.DIO_MIDDLE);
+        m_dioRight = new DigitalInput(RobotMap.DIO_RIGHT);
+        m_dioScaleOverride = new DigitalInput(RobotMap.DIO_SCALE_OVERRIDE);
+        m_dioNoAuto = new DigitalInput(RobotMap.DIO_NO_AUTO);
     }
 
     /**
      * Which field element do we prioritize when selecting an autonomous routine?
      */
     public FieldElement getElementPriority() {
-        if (!dioPriority.get()) {
+        if (!m_dioPriority.get()) {
             return FieldElement.Scale;
         } else {
             return FieldElement.Switch;
@@ -63,14 +64,14 @@ public class GameData {
     /**
      * returns what side the robot is on
      *
-     * @return
+     * @return Field side
      */
     public FieldSide getRobotSide() {
-        if (!dioLeft.get()) {
+        if (!m_dioLeft.get()) {
             return FieldSide.left;
-        } else if (!dioMiddle.get()) {
+        } else if (!m_dioMiddle.get()) {
             return FieldSide.middle;
-        } else if (!dioRight.get()) {
+        } else if (!m_dioRight.get()) {
             return FieldSide.right;
         } else {
             return FieldSide.bad;
@@ -78,15 +79,15 @@ public class GameData {
     }
 
     public boolean getNoAuto() {
-        return !dioNoAuto.get();
+        return !m_dioNoAuto.get();
     }
 
     public boolean getScaleOverride() {
-        return !dioScaleOverride.get();
+        return !m_dioScaleOverride.get();
     }
 
     public void reset() {
-        gameData = null;
+        m_gameData = null;
     }
 
     /**
@@ -96,15 +97,15 @@ public class GameData {
      */
     public FieldSide getScaleSide() {
         // If we haven't retrieved the game data string, go get it now
-        if (gameData == null) {
-            gameData = getGameData();
+        if (m_gameData == null) {
+            m_gameData = getGameData();
         }
         // Parse the string and return the enumerator
 
-        if (gameData != null && gameData.length() >= 2) {
-            if (gameData.charAt(1) == 'L') {
+        if (m_gameData != null && m_gameData.length() >= 2) {
+            if (m_gameData.charAt(1) == 'L') {
                 return FieldSide.left;
-            } else if (gameData.charAt(1) == 'R') {
+            } else if (m_gameData.charAt(1) == 'R') {
                 return FieldSide.right;
             }
         }
@@ -118,14 +119,14 @@ public class GameData {
      */
     public FieldSide getSwitchSide() {
         // If we haven't retrieved the game data string, go get it now
-        if (gameData == null) {
-            gameData = getGameData();
+        if (m_gameData == null) {
+            m_gameData = getGameData();
         }
         // Parse the string and return the enumerator
-        if (gameData != null && gameData.length() >= 1) {
-            if (gameData.charAt(0) == 'L') {
+        if (m_gameData != null && m_gameData.length() >= 1) {
+            if (m_gameData.charAt(0) == 'L') {
                 return FieldSide.left;
-            } else if (gameData.charAt(0) == 'R') {
+            } else if (m_gameData.charAt(0) == 'R') {
                 return FieldSide.right;
             }
         }
@@ -141,19 +142,19 @@ public class GameData {
      */
     private String getGameData() {
         int tim = 0;
-        gameData = DriverStation.getInstance().getGameSpecificMessage();
+        m_gameData = DriverStation.getInstance().getGameSpecificMessage();
 
-        while (tim <= 5 && (gameData == null || "".equals(gameData))) {
-            gameData = DriverStation.getInstance().getGameSpecificMessage();
+        while (tim <= 5 && (m_gameData == null || "".equals(m_gameData))) {
+            m_gameData = DriverStation.getInstance().getGameSpecificMessage();
             Timer.delay(0.2);
             tim++;
         }
 
-        if ("".equals(gameData)) {
-            gameData = null;
+        if ("".equals(m_gameData)) {
+            m_gameData = null;
         }
 
-        System.out.println("Raw GameData: " + gameData);
-        return gameData;
+        System.out.println("Raw GameData: " + m_gameData);
+        return m_gameData;
     }
 }

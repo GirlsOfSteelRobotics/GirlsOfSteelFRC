@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoFarScaleAbsolute extends CommandGroup {
     private static final double DISTANCE_FORWARD_1 = 160.0;
     private static final double TURN_RADIUS_1 = 110.0;
-    private static final double TURN_HEADING_1 = 90.0;//absolute value
+    private static final double TURN_HEADING_1 = 90.0; //absolute value
     private static final double DISTANCE_SIDE_1 = 110.0;
     private static final double TURN_RADIUS_2 = 80.0;
     private static final double TURN_HEADING_2 = 10;
@@ -40,7 +40,7 @@ public class AutoFarScaleAbsolute extends CommandGroup {
 
         //First turn behind the switch
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagicAbsolute((TURN_RADIUS_1), -TURN_HEADING_1, true));
+            addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, -TURN_HEADING_1, true));
         } else {
             addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, TURN_HEADING_1, true));
         }
@@ -51,7 +51,7 @@ public class AutoFarScaleAbsolute extends CommandGroup {
 
         //Driving across the field behind the switch
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagicAbsolute((DISTANCE_SIDE_1 - 7.0), -TURN_HEADING_1, false));
+            addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1 - 7.0, -TURN_HEADING_1, false));
         } else {
             addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, TURN_HEADING_1, false));
         }

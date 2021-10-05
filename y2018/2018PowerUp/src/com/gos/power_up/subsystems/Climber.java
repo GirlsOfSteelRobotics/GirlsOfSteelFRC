@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Climber extends Subsystem {
 
-    public WPI_TalonSRX climbMotor;
+    public WPI_TalonSRX m_climbMotor;
 
     public Climber() {
-        climbMotor = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR);
+        m_climbMotor = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR);
 
-        climbMotor.setNeutralMode(NeutralMode.Brake);
-        climbMotor.configContinuousCurrentLimit(200, 10);
+        m_climbMotor.setNeutralMode(NeutralMode.Brake);
+        m_climbMotor.configContinuousCurrentLimit(200, 10);
 
 
         // Put methods for controlling this subsystem
@@ -25,11 +25,11 @@ public class Climber extends Subsystem {
     }
 
     public void climb(double speed) {
-        climbMotor.set(speed);
+        m_climbMotor.set(speed);
     }
 
     public void stopClimb() {
-        climbMotor.set(0.0);
+        m_climbMotor.set(0.0);
     }
 
     @Override

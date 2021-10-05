@@ -27,7 +27,7 @@ public class AutoNearSwitch extends CommandGroup {
         System.out.println("AutoNearSwitch starting");
 
         //Get lift & wrist into position
-        Robot.shifters.shiftGear(Shifters.Speed.kLow);
+        Robot.m_shifters.shiftGear(Shifters.Speed.kLow);
 
         addSequential(new WristToCollect());
         addSequential(new LiftToSwitch());

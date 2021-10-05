@@ -27,94 +27,87 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public final class Chassis extends Subsystem {
 
-    //Drive talons
-    private final WPI_TalonSRX driveLeftA;
-    private final WPI_TalonSRX driveLeftB;
-    private WPI_TalonSRX driveLeftC;
-
-    private final WPI_TalonSRX driveRightA;
-    private final WPI_TalonSRX driveRightB;
-    private WPI_TalonSRX driveRightC;
-
     //Motion Magic constants
-    public final static int REMOTE_ENCODER = 0;
-    public final static int REMOTE_PIGEON = 1;
-    public final static int PID_DISTANCE = 0;
-    public final static int PID_TURNING = 1;
-    public final static int SLOT_DISTANCE = 0;
-    public final static int SLOT_TURNING = 1;
+    private static final int REMOTE_ENCODER = 0;
+    private static final int REMOTE_PIGEON = 1;
+    private static final int PID_DISTANCE = 0;
+    private static final int PID_TURNING = 1;
+    private static final int SLOT_DISTANCE = 0;
+    private static final int SLOT_TURNING = 1;
 
-    public final static double TURN_UNITS_PER_ROTATION = 3600;
-    public final static int PIGEON_UNITS_PER_ROTATION = 8192;
+    private static final double TURN_UNITS_PER_ROTATION = 3600;
+    private static final int PIGEON_UNITS_PER_ROTATION = 8192;
 
-    PigeonIMU pigeonIMU;
+    //Drive talons
+    private final WPI_TalonSRX m_driveLeftA;
+    private final WPI_TalonSRX m_driveLeftB;
 
+    private final WPI_TalonSRX m_driveRightA;
+    private final WPI_TalonSRX m_driveRightB;
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-    public DifferentialDrive drive;
+    private final PigeonIMU m_pigeonIMU;
+
+    public DifferentialDrive m_drive;
 
     public Chassis() {
 
-        pigeonIMU = new PigeonIMU(Robot.collector.getRightCollector());
+        m_pigeonIMU = new PigeonIMU(Robot.m_collector.getRightCollector());
 
-        driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
-        driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
-        driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
-        driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
+        m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
+        m_driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
+        m_driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
+        m_driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
 
         setFollowerMode();
 
-        driveRightA.setSensorPhase(true);
-        driveLeftA.setSensorPhase(true);
+        m_driveRightA.setSensorPhase(true);
+        m_driveLeftA.setSensorPhase(true);
 
-        driveRightA.configForwardSoftLimitEnable(false, 0);
-        driveLeftA.configForwardSoftLimitEnable(false, 0);
+        m_driveRightA.configForwardSoftLimitEnable(false, 0);
+        m_driveLeftA.configForwardSoftLimitEnable(false, 0);
 
-        driveRightA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-        driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+        m_driveRightA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+        m_driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
-        driveLeftA.setNeutralMode(NeutralMode.Brake);
-        driveLeftB.setNeutralMode(NeutralMode.Brake);
-        driveRightA.setNeutralMode(NeutralMode.Brake);
-        driveRightB.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftA.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftB.setNeutralMode(NeutralMode.Brake);
+        m_driveRightA.setNeutralMode(NeutralMode.Brake);
+        m_driveRightB.setNeutralMode(NeutralMode.Brake);
 
-        driveLeftA.setSafetyEnabled(false);
-        driveLeftB.setSafetyEnabled(false);
-        driveRightA.setSafetyEnabled(false);
-        driveRightB.setSafetyEnabled(false);
+        m_driveLeftA.setSafetyEnabled(false);
+        m_driveLeftB.setSafetyEnabled(false);
+        m_driveRightA.setSafetyEnabled(false);
+        m_driveRightB.setSafetyEnabled(false);
 
-        addChild("driveLeftA", driveLeftA);
-        addChild("driveLeftB", driveLeftB);
-        addChild("driveLeftC", driveLeftC);
-        addChild("driveRightA", driveRightA);
-        addChild("driveRightB", driveRightB);
-        addChild("driveRightC", driveRightC);
+        addChild("driveLeftA", m_driveLeftA);
+        addChild("driveLeftB", m_driveLeftB);
+        addChild("driveRightA", m_driveRightA);
+        addChild("driveRightB", m_driveRightB);
 
-        setupFPID(driveLeftA);
-        setupFPID(driveRightA);
+        setupFPID(m_driveLeftA);
+        setupFPID(m_driveRightA);
 
-        driveLeftA.configClosedloopRamp(0, 10);
-        driveRightA.configClosedloopRamp(0, 10);
+        m_driveLeftA.configClosedloopRamp(0, 10);
+        m_driveRightA.configClosedloopRamp(0, 10);
         // clyde values
         //driveLeftA.configOpenloopRamp(0.25, 10);
         //driveRightA.configOpenloopRamp(0.25, 10);
 
         //blinky values
-        driveLeftA.configOpenloopRamp(0.37, 10);
-        driveRightA.configOpenloopRamp(0.37, 10);
+        m_driveLeftA.configOpenloopRamp(0.37, 10);
+        m_driveRightA.configOpenloopRamp(0.37, 10);
 
 
-        driveLeftA.configPeakOutputForward(1, 10);
-        driveLeftA.configPeakOutputReverse(-1, 10);
+        m_driveLeftA.configPeakOutputForward(1, 10);
+        m_driveLeftA.configPeakOutputReverse(-1, 10);
 
-        driveRightA.configPeakOutputForward(1, 10);
-        driveRightA.configPeakOutputReverse(-1, 10);
+        m_driveRightA.configPeakOutputForward(1, 10);
+        m_driveRightA.configPeakOutputReverse(-1, 10);
 
-        drive = new DifferentialDrive(driveLeftA, driveRightA);
-        drive.setSafetyEnabled(false);
+        m_drive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
+        m_drive.setSafetyEnabled(false);
 
-        drive.setDeadband(0.02);
+        m_drive.setDeadband(0.02);
     }
 
     @Override
@@ -128,20 +121,20 @@ public final class Chassis extends Subsystem {
         //Motion Magic
 
         /* distance servo */
-        driveRightA.config_kP(SLOT_DISTANCE, 0.014, 10); //0.03
-        driveRightA.config_kI(SLOT_DISTANCE, 0.0, 10); //0
-        driveRightA.config_kD(SLOT_DISTANCE, 6.0, 10); //.02
-        driveRightA.config_kF(SLOT_DISTANCE, 0.08, 10); //.05
-        driveRightA.config_IntegralZone(SLOT_DISTANCE, 100, 10);
-        driveRightA.configClosedLoopPeakOutput(SLOT_DISTANCE, 0.70, 10);
+        m_driveRightA.config_kP(SLOT_DISTANCE, 0.014, 10); //0.03
+        m_driveRightA.config_kI(SLOT_DISTANCE, 0.0, 10); //0
+        m_driveRightA.config_kD(SLOT_DISTANCE, 6.0, 10); //.02
+        m_driveRightA.config_kF(SLOT_DISTANCE, 0.08, 10); //.05
+        m_driveRightA.config_IntegralZone(SLOT_DISTANCE, 100, 10);
+        m_driveRightA.configClosedLoopPeakOutput(SLOT_DISTANCE, 0.70, 10);
 
         /* turn servo */
-        driveRightA.config_kP(SLOT_TURNING, 4.0, 10);
-        driveRightA.config_kI(SLOT_TURNING, 0.0, 10);
-        driveRightA.config_kD(SLOT_TURNING, 6.0, 10);
-        driveRightA.config_kF(SLOT_TURNING, 0.0, 10);
-        driveRightA.config_IntegralZone(SLOT_TURNING, 200, 10);
-        driveRightA.configClosedLoopPeakOutput(SLOT_TURNING, 1.00, 10);
+        m_driveRightA.config_kP(SLOT_TURNING, 4.0, 10);
+        m_driveRightA.config_kI(SLOT_TURNING, 0.0, 10);
+        m_driveRightA.config_kD(SLOT_TURNING, 6.0, 10);
+        m_driveRightA.config_kF(SLOT_TURNING, 0.0, 10);
+        m_driveRightA.config_IntegralZone(SLOT_TURNING, 200, 10);
+        m_driveRightA.configClosedLoopPeakOutput(SLOT_TURNING, 1.00, 10);
 
         /* DriveByDistance for Clyde
         talon.config_kF(0, 0, 10);
@@ -155,171 +148,171 @@ public final class Chassis extends Subsystem {
         talon.config_kI(1, 0, 10);
         talon.config_kD(1, 0, 10);
         */
-//		if (speed == Shifters.Speed.kLow){
-//			talon.config_kF(0, 0, 10);
-//			talon.config_kP(0, 0.3, 10);
-//			talon.config_kI(0, 0, 10);
-//			talon.config_kD(0, 0.001, 10);
-//		}
-//		else if (speed == Shifters.Speed.kHigh){
-//			talon.config_kF(0, 0, 10);
-//			talon.config_kP(0, 0.3, 10);
-//			talon.config_kI(0, 0, 10);
-//			talon.config_kD(0, 0.001, 10);
-//		} else {
-//			System.out.println("No bueno PID setting");
-//		}
+        //        if (speed == Shifters.Speed.kLow){
+        //            talon.config_kF(0, 0, 10);
+        //            talon.config_kP(0, 0.3, 10);
+        //            talon.config_kI(0, 0, 10);
+        //            talon.config_kD(0, 0.001, 10);
+        //        }
+        //        else if (speed == Shifters.Speed.kHigh){
+        //            talon.config_kF(0, 0, 10);
+        //            talon.config_kP(0, 0.3, 10);
+        //            talon.config_kI(0, 0, 10);
+        //            talon.config_kD(0, 0.001, 10);
+        //        } else {
+        //            System.out.println("No bueno PID setting");
+        //        }
     }
 
     public WPI_TalonSRX getLeftTalon() {
-        return driveLeftA;
+        return m_driveLeftA;
     }
 
     public WPI_TalonSRX getRightTalon() {
-        return driveRightA;
+        return m_driveRightA;
     }
 
     public void stop() {
-        drive.stopMotor();
+        m_drive.stopMotor();
     }
 
     public void setFollowerMode() {
-        driveLeftB.follow(driveLeftA, FollowerType.PercentOutput);
+        m_driveLeftB.follow(m_driveLeftA, FollowerType.PercentOutput);
 
-        driveRightB.follow(driveRightA, FollowerType.PercentOutput);
+        m_driveRightB.follow(m_driveRightA, FollowerType.PercentOutput);
     }
 
     public void setPositionPIDSlot() {
-        driveLeftA.selectProfileSlot(0, 0);
-        driveRightA.selectProfileSlot(0, 0);
+        m_driveLeftA.selectProfileSlot(0, 0);
+        m_driveRightA.selectProfileSlot(0, 0);
     }
 
     public void setVelocityPIDSlot() {
-        driveLeftA.selectProfileSlot(1, 0);
-        driveRightA.selectProfileSlot(1, 0);
+        m_driveLeftA.selectProfileSlot(1, 0);
+        m_driveRightA.selectProfileSlot(1, 0);
     }
 
     public void setInverted(boolean inverted) {
-        driveLeftA.setInverted(false);
-        driveLeftB.setInverted(false);
+        m_driveLeftA.setInverted(false);
+        m_driveLeftB.setInverted(false);
 
-        driveRightA.setInverted(inverted);
-        driveRightB.setInverted(inverted);
+        m_driveRightA.setInverted(inverted);
+        m_driveRightB.setInverted(inverted);
     }
 
     public void configForTurnByMotionMagic() {
 
         /* Remote 1 will be a pigeon */
-        driveRightA.configRemoteFeedbackFilter(Robot.collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
+        m_driveRightA.configRemoteFeedbackFilter(Robot.m_collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
 
-        driveRightA.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 10);
-        driveRightA.configSelectedFeedbackCoefficient(TURN_UNITS_PER_ROTATION / PIGEON_UNITS_PER_ROTATION, 0, 10);
+        m_driveRightA.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 10);
+        m_driveRightA.configSelectedFeedbackCoefficient(TURN_UNITS_PER_ROTATION / PIGEON_UNITS_PER_ROTATION, 0, 10);
 
         //telemetry------------------
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 10);
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, 10);
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, 10);
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, 10);
 
-        driveLeftA.configNeutralDeadband(0.001, 10);
-        driveRightA.configNeutralDeadband(0.001, 10);
+        m_driveLeftA.configNeutralDeadband(0.001, 10);
+        m_driveRightA.configNeutralDeadband(0.001, 10);
 
-        driveRightA.configMotionAcceleration(3600.0 / 20, 10);
-        driveRightA.configMotionCruiseVelocity(162, 10); // = 0.9 * (3600 / 20)
+        m_driveRightA.configMotionAcceleration(3600.0 / 20, 10);
+        m_driveRightA.configMotionCruiseVelocity(162, 10); // = 0.9 * (3600 / 20)
 
         /* max out the peak output (for all modes).  However you can
          * limit the output of a given PID object with configClosedLoopPeakOutput().
          */
-        driveLeftA.configPeakOutputForward(+1.0, 10);
-        driveLeftA.configPeakOutputReverse(-1.0, 10);
-        driveRightA.configPeakOutputForward(+1.0, 10);
-        driveRightA.configPeakOutputReverse(-1.0, 10);
+        m_driveLeftA.configPeakOutputForward(+1.0, 10);
+        m_driveLeftA.configPeakOutputReverse(-1.0, 10);
+        m_driveRightA.configPeakOutputForward(+1.0, 10);
+        m_driveRightA.configPeakOutputReverse(-1.0, 10);
 
-        driveLeftA.setNeutralMode(NeutralMode.Brake);
-        driveRightA.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftA.setNeutralMode(NeutralMode.Brake);
+        m_driveRightA.setNeutralMode(NeutralMode.Brake);
 
         //pid loop speed = 1ms
-        driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, 0, 10);
+        m_driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, 0, 10);
 
-        driveRightA.selectProfileSlot(SLOT_TURNING, 0);
+        m_driveRightA.selectProfileSlot(SLOT_TURNING, 0);
 
     }
 
     public void configForMotionMagic() {
-        driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_DISTANCE, 10);
+        m_driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_DISTANCE, 10);
         /* Remote 0 will be the other side's Talon */
-        driveRightA.configRemoteFeedbackFilter(driveLeftA.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_ENCODER, 10);
+        m_driveRightA.configRemoteFeedbackFilter(m_driveLeftA.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_ENCODER, 10);
         /* Remote 1 will be a pigeon */
-        driveRightA.configRemoteFeedbackFilter(Robot.collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
+        m_driveRightA.configRemoteFeedbackFilter(Robot.m_collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
         /* setup sum and difference signals */
-        driveRightA.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, 10);
-        driveRightA.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.QuadEncoder, 10);
-        driveRightA.configSensorTerm(SensorTerm.Diff1, FeedbackDevice.RemoteSensor0, 10);
-        driveRightA.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.QuadEncoder, 10);
+        m_driveRightA.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, 10);
+        m_driveRightA.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.QuadEncoder, 10);
+        m_driveRightA.configSensorTerm(SensorTerm.Diff1, FeedbackDevice.RemoteSensor0, 10);
+        m_driveRightA.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.QuadEncoder, 10);
         /* select sum for distance(0), different for turn(1) */
-        driveRightA.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, PID_DISTANCE, 10);
-        driveRightA.configSelectedFeedbackCoefficient(1.0, PID_DISTANCE, 10);
-        driveRightA.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, PID_TURNING, 10);
-        driveRightA.configSelectedFeedbackCoefficient(TURN_UNITS_PER_ROTATION / PIGEON_UNITS_PER_ROTATION, PID_TURNING, 10);
+        m_driveRightA.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, PID_DISTANCE, 10);
+        m_driveRightA.configSelectedFeedbackCoefficient(1.0, PID_DISTANCE, 10);
+        m_driveRightA.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, PID_TURNING, 10);
+        m_driveRightA.configSelectedFeedbackCoefficient(TURN_UNITS_PER_ROTATION / PIGEON_UNITS_PER_ROTATION, PID_TURNING, 10);
 
         //telemetry------------------
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 10);
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, 10);
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, 10);
-        driveRightA.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, 10);
+        m_driveRightA.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, 10);
         /* speed up the left since we are polling it's sensor */
-        driveLeftA.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 10);
+        m_driveLeftA.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 10);
 
-        driveLeftA.configNeutralDeadband(0.001, 10);
-        driveRightA.configNeutralDeadband(0.001, 10);
+        m_driveLeftA.configNeutralDeadband(0.001, 10);
+        m_driveRightA.configNeutralDeadband(0.001, 10);
 
-        driveRightA.configMotionAcceleration(5000, 10); //28000
-        driveRightA.configMotionCruiseVelocity(10000, 10);
+        m_driveRightA.configMotionAcceleration(5000, 10); //28000
+        m_driveRightA.configMotionCruiseVelocity(10000, 10);
 
         /* max out the peak output (for all modes).  However you can
          * limit the output of a given PID object with configClosedLoopPeakOutput().
          */
-        driveLeftA.configPeakOutputForward(+1.0, 10);
-        driveLeftA.configPeakOutputReverse(-1.0, 10);
-        driveRightA.configPeakOutputForward(+1.0, 10);
-        driveRightA.configPeakOutputReverse(-1.0, 10);
+        m_driveLeftA.configPeakOutputForward(+1.0, 10);
+        m_driveLeftA.configPeakOutputReverse(-1.0, 10);
+        m_driveRightA.configPeakOutputForward(+1.0, 10);
+        m_driveRightA.configPeakOutputReverse(-1.0, 10);
 
-        driveLeftA.setNeutralMode(NeutralMode.Brake);
-        driveRightA.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftA.setNeutralMode(NeutralMode.Brake);
+        m_driveRightA.setNeutralMode(NeutralMode.Brake);
 
         //pid loop speed = 1ms
-        driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, PID_DISTANCE, 10);
-        driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, PID_TURNING, 10);
+        m_driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, PID_DISTANCE, 10);
+        m_driveRightA.configSetParameter(ParamEnum.ePIDLoopPeriod, 1, 0x00, PID_TURNING, 10);
 
         /**
          * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
          * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
          */
-        driveRightA.configAuxPIDPolarity(false, 10);
+        m_driveRightA.configAuxPIDPolarity(false, 10);
 
-        driveRightA.selectProfileSlot(SLOT_DISTANCE, PID_DISTANCE);
-        driveRightA.selectProfileSlot(SLOT_TURNING, PID_TURNING);
+        m_driveRightA.selectProfileSlot(SLOT_DISTANCE, PID_DISTANCE);
+        m_driveRightA.selectProfileSlot(SLOT_TURNING, PID_TURNING);
 
     }
 
     public void zeroSensors() {
-        driveLeftA.getSensorCollection().setQuadraturePosition(0, 10);
-        driveRightA.getSensorCollection().setQuadraturePosition(0, 10);
-        pigeonIMU.setYaw(0, 10);
-        pigeonIMU.setAccumZAngle(0, 10);
+        m_driveLeftA.getSensorCollection().setQuadraturePosition(0, 10);
+        m_driveRightA.getSensorCollection().setQuadraturePosition(0, 10);
+        m_pigeonIMU.setYaw(0, 10);
+        m_pigeonIMU.setAccumZAngle(0, 10);
         System.out.println("Chassis: All sensors are zeroed.");
     }
 
     public void zeroEncoder() {
-        driveLeftA.getSensorCollection().setQuadraturePosition(0, 10);
-        driveRightA.getSensorCollection().setQuadraturePosition(0, 10);
+        m_driveLeftA.getSensorCollection().setQuadraturePosition(0, 10);
+        m_driveRightA.getSensorCollection().setQuadraturePosition(0, 10);
         System.out.println("Chassis: Encoders are zeroed.");
     }
 
 
     public double getYaw() {
         double[] imuData = new double[3];
-        pigeonIMU.getYawPitchRoll(imuData);
+        m_pigeonIMU.getYawPitchRoll(imuData);
         return imuData[0];
     }
 

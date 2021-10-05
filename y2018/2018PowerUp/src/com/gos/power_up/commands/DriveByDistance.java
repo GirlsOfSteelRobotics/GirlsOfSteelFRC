@@ -14,41 +14,41 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveByDistance extends Command {
-
-    private final double encoderTicks; //in sensor units
-    private int tim;
-
-    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
-
-    private boolean leftGood;
-    private boolean rightGood;
-
-    private final Shifters.Speed speed;
-
     private static final int ERROR_THRESHOLD = 1000;
     private static final int BIG_ERROR_THRESHOLD = 5000;
 
+    private final double m_encoderTicks; //in sensor units
+    private int m_tim;
+
+    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
+    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+
+    private boolean m_leftGood;
+    private boolean m_rightGood;
+
+    private final Shifters.Speed m_speed;
+
+
     public DriveByDistance(double inches, Shifters.Speed speed) {
         double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
-        encoderTicks = RobotMap.CODES_PER_WHEEL_REV * rotations;
-        this.speed = speed;
+        m_encoderTicks = RobotMap.CODES_PER_WHEEL_REV * rotations;
+        this.m_speed = speed;
 
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
+        requires(Robot.m_chassis);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
         ErrorCode err;
-        Robot.shifters.shiftGear(speed);
+        Robot.m_shifters.shiftGear(m_speed);
 
-        Robot.chassis.setPositionPIDSlot();
+        Robot.m_chassis.setPositionPIDSlot();
 
-        err = leftTalon.setSelectedSensorPosition(0, 0, 20);
+        err = m_leftTalon.setSelectedSensorPosition(0, 0, 20);
         System.out.printf("Error code on left: %s\n", err);
-        err = rightTalon.setSelectedSensorPosition(0, 0, 20);
+        err = m_rightTalon.setSelectedSensorPosition(0, 0, 20);
         System.out.printf("Error code on right: %s\n", err);
 
 
@@ -56,14 +56,14 @@ public class DriveByDistance extends Command {
         //Robot.chassis.setupFPID(rightTalon);
 
 
-        leftTalon.set(ControlMode.Position, encoderTicks);
-        rightTalon.set(ControlMode.Position, -encoderTicks);//!!!
+        m_leftTalon.set(ControlMode.Position, m_encoderTicks);
+        m_rightTalon.set(ControlMode.Position, -m_encoderTicks); //!!!
 
-        tim = 0;
-        System.out.println("Drive by Distance Started " + encoderTicks);
+        m_tim = 0;
+        System.out.println("Drive by Distance Started " + m_encoderTicks);
 
-        leftGood = false;
-        rightGood = false;
+        m_leftGood = false;
+        m_rightGood = false;
 
     }
 
@@ -71,19 +71,19 @@ public class DriveByDistance extends Command {
     @Override
     protected void execute() {
 
-        if ((Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < BIG_ERROR_THRESHOLD)
-            && (Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < BIG_ERROR_THRESHOLD)) {
-            tim++;
+        if ((Math.abs(m_leftTalon.getSelectedSensorPosition(0) - m_encoderTicks) < BIG_ERROR_THRESHOLD)
+            && (Math.abs(m_rightTalon.getSelectedSensorPosition(0) + m_encoderTicks) < BIG_ERROR_THRESHOLD)) {
+            m_tim++;
         }
 
         //tim++;
 
-        leftTalon.set(ControlMode.Position, encoderTicks);
-        rightTalon.set(ControlMode.Position, -encoderTicks);
+        m_leftTalon.set(ControlMode.Position, m_encoderTicks);
+        m_rightTalon.set(ControlMode.Position, -m_encoderTicks);
 
-        SmartDashboard.putNumber("Drive Talon Left Goal", encoderTicks);
-        SmartDashboard.putNumber("Drive Talon Left Position", leftTalon.getSelectedSensorPosition(0));
-        SmartDashboard.putNumber("Drive Talon Left Error", leftTalon.getClosedLoopError(0));
+        SmartDashboard.putNumber("Drive Talon Left Goal", m_encoderTicks);
+        SmartDashboard.putNumber("Drive Talon Left Position", m_leftTalon.getSelectedSensorPosition(0));
+        SmartDashboard.putNumber("Drive Talon Left Error", m_leftTalon.getClosedLoopError(0));
 
         //System.out.println("Left Error: " + (leftTalon.getSelectedSensorPosition(0) - encoderTicks));
         //System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) + encoderTicks));
@@ -94,15 +94,15 @@ public class DriveByDistance extends Command {
     protected boolean isFinished() {
         //return false;
 
-        if (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD) {
-            leftGood = true;
+        if (Math.abs(m_leftTalon.getSelectedSensorPosition(0) - m_encoderTicks) < ERROR_THRESHOLD) {
+            m_leftGood = true;
         }
-        if (Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD) {
-            rightGood = true;
+        if (Math.abs(m_rightTalon.getSelectedSensorPosition(0) + m_encoderTicks) < ERROR_THRESHOLD) {
+            m_rightGood = true;
         }
 
 
-        return (tim > 30 || (leftGood && rightGood));
+        return m_tim > 30 || (m_leftGood && m_rightGood);
 
         /*
         if (encoderTicks > 0) {
@@ -134,7 +134,7 @@ public class DriveByDistance extends Command {
     @Override
     protected void end() {
         System.out.println("DriveByDistance Finished");
-        Robot.chassis.stop();
+        Robot.m_chassis.stop();
 
     }
 

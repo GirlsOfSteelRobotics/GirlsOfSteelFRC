@@ -11,14 +11,14 @@ public class SwitchToDriveBackward extends Command {
 
     public SwitchToDriveBackward() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
+        requires(Robot.m_chassis);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
 
-        Robot.oi.setDriveDirection(OI.DriveDirection.kREV);
+        Robot.m_oi.setDriveDirection(OI.DriveDirection.kREV);
     }
 
     // Called repeatedly when this Command is scheduled to run

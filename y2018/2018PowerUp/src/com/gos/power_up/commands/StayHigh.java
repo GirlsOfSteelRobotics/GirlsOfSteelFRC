@@ -11,7 +11,7 @@ public class StayHigh extends Command {
     public StayHigh() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.lift);
+        requires(Robot.m_lift);
     }
 
     // Called just before this Command runs the first time

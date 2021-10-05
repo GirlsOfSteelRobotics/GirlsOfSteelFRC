@@ -81,28 +81,28 @@ public class Blobs extends Subsystem {
     }
 
     public double findSlope(Blob blob1, Blob blob2) {
-        double numer = (blob2.y - blob1.y);
-        double denom = (blob2.x - blob1.x);
+        double numer = blob2.m_y - blob1.m_y;
+        double denom = blob2.m_x - blob1.m_x;
         double slope = numer / denom;
         return slope;
     }
 
     //Finds distance between line (defined by b1 and b2) and point (b3)
     public static double findDistance(Blob b1, Blob b2, Blob b3) {
-        double x1 = b1.x;
-        double x2 = b2.x;
-        double x3 = b3.x;
-        double y1 = b1.y;
-        double y2 = b2.y;
-        double y3 = b3.y;
-        double dist = ((Math.abs(((y2 - y1) * x3) - ((x2 - x1) * y3) + ((x2 * y1) - (y2 * x1))))
-            / (Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)))));
+        double x1 = b1.m_x;
+        double x2 = b2.m_x;
+        double x3 = b3.m_x;
+        double y1 = b1.m_y;
+        double y2 = b2.m_y;
+        double y3 = b3.m_y;
+        double dist = (Math.abs(((y2 - y1) * x3) - ((x2 - x1) * y3) + ((x2 * y1) - (y2 * x1))))
+            / (Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1))));
 
         return dist;
     }
 
     public static void printBlob(Blob b) {
-        System.out.println(b.x + ", " + b.y);
+        System.out.println(b.m_x + ", " + b.m_y);
     }
 
     //returns an Arraylist of blobs sorted by x-coord
@@ -114,7 +114,7 @@ public class Blobs extends Subsystem {
             //Find blob with least x-coord, move it to the end of sortedBlobs
             Blob min = unsortedBlobs.get(0);
             for (int i = 1; i < unsortedBlobs.size(); i++) {
-                if (unsortedBlobs.get(i).x < min.x) {
+                if (unsortedBlobs.get(i).m_x < min.m_x) {
                     min = unsortedBlobs.get(i);
                 }
             }
@@ -141,14 +141,13 @@ public class Blobs extends Subsystem {
                 double tempStd = 0;
                 double tempErr = 0;
                 for (int k = 0; k < blobList.size(); k++) {
-                    if (k != i && k != j) //if not one of the endpoints
-                    {
+                    if (k != i && k != j) { //if not one of the endpoints
                         double distance = findDistance(blobList.get(i), blobList.get(j), blobList.get(k));
                         tempStd += Math.pow(distance, 2);
                         tempErr += distance;
                     }
                 }
-                tempStd = Math.pow((tempStd / blobList.size()), 0.5);
+                tempStd = Math.pow(tempStd / blobList.size(), 0.5);
 
                 if (minErr == -1 || tempErr < minErr) {
                     endpoints[0] = blobList.get(i);
@@ -174,8 +173,8 @@ public class Blobs extends Subsystem {
         //requires input List to be sorted
         double sumDistance = 0;
         for (int i = 0; i < blobList.size() - 1; i++) {
-            double x = Math.pow(blobList.get(i + 1).x - blobList.get(i).x, 2);
-            double y = Math.pow(blobList.get(i + 1).y - blobList.get(i).y, 2);
+            double x = Math.pow(blobList.get(i + 1).m_x - blobList.get(i).m_x, 2);
+            double y = Math.pow(blobList.get(i + 1).m_y - blobList.get(i).m_y, 2);
             sumDistance += Math.pow(x + y, 0.5);
         }
         return sumDistance / (blobList.size() - 1);

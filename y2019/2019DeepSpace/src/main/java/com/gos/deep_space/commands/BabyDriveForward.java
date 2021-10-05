@@ -17,7 +17,7 @@ public class BabyDriveForward extends Command {
     public BabyDriveForward() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.babyDrive);
+        requires(Robot.m_babyDrive);
     }
 
     // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ public class BabyDriveForward extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
+        Robot.m_babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,7 +42,7 @@ public class BabyDriveForward extends Command {
     @Override
     protected void end() {
         System.out.println("end BabyDriveForward");
-        Robot.babyDrive.babyDriveStop();
+        Robot.m_babyDrive.babyDriveStop();
     }
 
 }

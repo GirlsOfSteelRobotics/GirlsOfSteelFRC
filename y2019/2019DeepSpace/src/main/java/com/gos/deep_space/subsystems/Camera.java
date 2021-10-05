@@ -19,20 +19,20 @@ public class Camera extends Subsystem {
     public static final int WIDTH = 320;
     public static final int HEIGHT = 240;
 
-    public CvSource processedStream;
-    public UsbCamera visionCam;
-    public UsbCamera driveCam;
+    public CvSource m_processedStream;
+    public UsbCamera m_visionCam;
+    public UsbCamera m_driveCam;
 
-    private final Mat frame = new Mat();
-    private final VideoWriter videoWriter = new VideoWriter();
-    private int framecount;
+    private final Mat m_frame = new Mat();
+    private final VideoWriter m_videoWriter = new VideoWriter();
+    private int m_framecount;
 
     public Camera() {
         // Start a stream for the camera viewed by the driver/operator
-        driveCam = CameraServer.getInstance().startAutomaticCapture("Driver Camera", RobotMap.DRIVER_CAMERA);
-        driveCam.setResolution(WIDTH, HEIGHT);
-        driveCam.setFPS(20);
-        driveCam.setBrightness(0);
+        m_driveCam = CameraServer.getInstance().startAutomaticCapture("Driver Camera", RobotMap.DRIVER_CAMERA);
+        m_driveCam.setResolution(WIDTH, HEIGHT);
+        m_driveCam.setFPS(20);
+        m_driveCam.setBrightness(0);
 
         // // Create a Camera Server video stream of the given name using the logical camera number
         // visionCam = CameraServer.getInstance().startAutomaticCapture("Vision Camera", RobotMap.VISION_CAMERA);
@@ -64,33 +64,33 @@ public class Camera extends Subsystem {
         String filename = "/media/sda1/VisionCam-" + date + ".avi";
         int format = VideoWriter.fourcc('M', 'J', 'P', 'G');
 
-        boolean result = videoWriter.open(filename, format, FPS, new Size(WIDTH, HEIGHT));
+        boolean result = m_videoWriter.open(filename, format, FPS, new Size(WIDTH, HEIGHT));
 
-        if (result && videoWriter.isOpened()) {
+        if (result && m_videoWriter.isOpened()) {
             System.out.println("openMovieFile: opened file " + filename);
         } else {
             System.out.println("openMovieFile: FAILED to open " + filename + " (is USB drive attached?");
         }
-        framecount = 0;
+        m_framecount = 0;
     }
 
     public void addFrame(Mat frame) {
-        if (videoWriter.isOpened()) {
-            videoWriter.write(frame);
-            framecount++;
+        if (m_videoWriter.isOpened()) {
+            m_videoWriter.write(frame);
+            m_framecount++;
         }
     }
 
     public void closeMovieFile() {
-        if (videoWriter.isOpened()) {
-            System.out.println("closeMovieFile: saving " + framecount / FPS + " sec of video");
-            videoWriter.release();
+        if (m_videoWriter.isOpened()) {
+            System.out.println("closeMovieFile: saving " + m_framecount / FPS + " sec of video");
+            m_videoWriter.release();
         }
     }
 
     public Mat getVisionFrame() {
-        CameraServer.getInstance().getVideo(visionCam).grabFrame(frame);
-        return frame;
+        CameraServer.getInstance().getVideo(m_visionCam).grabFrame(m_frame);
+        return m_frame;
     }
 
 }

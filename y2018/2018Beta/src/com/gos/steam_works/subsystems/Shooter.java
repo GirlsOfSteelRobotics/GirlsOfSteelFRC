@@ -8,8 +8,8 @@ import com.gos.steam_works.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public final class Shooter extends Subsystem {
-    private final WPI_TalonSRX lowShooterMotor;
-    private final WPI_TalonSRX highShooterMotor;
+    private final WPI_TalonSRX m_lowShooterMotor;
+    private final WPI_TalonSRX m_highShooterMotor;
 
     /*
      * private static final double shooterMinSpeed = -0.5; private static final
@@ -34,65 +34,65 @@ public final class Shooter extends Subsystem {
     public static final int AUTO_SHOOTER_SPEED_KEY = 3333;
     private static final double MAX_SHOOTER_ERROR = 0.05;
 
-    private int shooterSpeed = SHOOTER_DEFAULT_SPEED;
-    private boolean lowMotorRunning;
+    private int m_shooterSpeed = SHOOTER_DEFAULT_SPEED;
+    private boolean m_lowMotorRunning;
 
     public Shooter() {
-        lowShooterMotor = new WPI_TalonSRX(RobotMap.LOW_SHOOTER_MOTOR);
-        highShooterMotor = new WPI_TalonSRX(RobotMap.HIGH_SHOOTER_MOTOR);
+        m_lowShooterMotor = new WPI_TalonSRX(RobotMap.LOW_SHOOTER_MOTOR);
+        m_highShooterMotor = new WPI_TalonSRX(RobotMap.HIGH_SHOOTER_MOTOR);
 
-        lowShooterMotor.setNeutralMode(NeutralMode.Brake);
-        highShooterMotor.setNeutralMode(NeutralMode.Brake);
+        m_lowShooterMotor.setNeutralMode(NeutralMode.Brake);
+        m_highShooterMotor.setNeutralMode(NeutralMode.Brake);
 
-        setupEncoder(lowShooterMotor);
-        setupEncoder(highShooterMotor);
+        setupEncoder(m_lowShooterMotor);
+        setupEncoder(m_highShooterMotor);
 
-//		LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
-//		LiveWindow.addActuator("Shooter", "high", highShooterMotor);
-
-        // PID Values
-        lowShooterMotor.config_kF(0, 0.04407, 0); //see p 17 of motion profile manual
-        lowShooterMotor.config_kP(0, 0.01, 0);
-        lowShooterMotor.config_kI(0, 0, 0);
-        lowShooterMotor.config_kD(0, 0, 0);
+        // LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
+        // LiveWindow.addActuator("Shooter", "high", highShooterMotor);
 
         // PID Values
-        highShooterMotor.config_kF(0, 0.02997, 0); //see p 17 of motion profile manual
-        highShooterMotor.config_kP(0, 0.01, 0);
-        highShooterMotor.config_kI(0, 0, 0);
-        highShooterMotor.config_kD(0, 0, 0);
+        m_lowShooterMotor.config_kF(0, 0.04407, 0); //see p 17 of motion profile manual
+        m_lowShooterMotor.config_kP(0, 0.01, 0);
+        m_lowShooterMotor.config_kI(0, 0, 0);
+        m_lowShooterMotor.config_kD(0, 0, 0);
+
+        // PID Values
+        m_highShooterMotor.config_kF(0, 0.02997, 0); //see p 17 of motion profile manual
+        m_highShooterMotor.config_kP(0, 0.01, 0);
+        m_highShooterMotor.config_kI(0, 0, 0);
+        m_highShooterMotor.config_kD(0, 0, 0);
 
 
-//		LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
-//		LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
+        // LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
+        // LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
     }
 
     public void runHighShooterMotor() {
-        highShooterMotor.set(ControlMode.Velocity, shooterSpeed);
+        m_highShooterMotor.set(ControlMode.Velocity, m_shooterSpeed);
     }
 
     public void runLowShooterMotor() {
-        if (lowMotorRunning) {
-            lowShooterMotor.set(ControlMode.Velocity, shooterSpeed * ((double) LOW_MAX_RPM / (double) HIGH_MAX_RPM));
+        if (m_lowMotorRunning) {
+            m_lowShooterMotor.set(ControlMode.Velocity, m_shooterSpeed * ((double) LOW_MAX_RPM / (double) HIGH_MAX_RPM));
         }
     }
 
     public void startLowShooterMotor() {
-        lowMotorRunning = true;
+        m_lowMotorRunning = true;
     }
 
     public void stopLowShooterMotor() {
-        lowMotorRunning = false;
+        m_lowMotorRunning = false;
     }
 
     public boolean isHighShooterAtSpeed() { // TODO: This is broken, always
         // returning true
-        return (highShooterMotor.getClosedLoopError(0) / (double) shooterSpeed) < MAX_SHOOTER_ERROR;
+        return (m_highShooterMotor.getClosedLoopError(0) / (double) m_shooterSpeed) < MAX_SHOOTER_ERROR;
     }
 
     public void stopShooterMotors() {
-        lowShooterMotor.set(ControlMode.Velocity, 0);
-        highShooterMotor.set(ControlMode.Velocity, 0);
+        m_lowShooterMotor.set(ControlMode.Velocity, 0);
+        m_highShooterMotor.set(ControlMode.Velocity, 0);
     }
 
     @Override
@@ -102,22 +102,22 @@ public final class Shooter extends Subsystem {
     }
 
     public void incrementHighShooterSpeed() {
-        if ((shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED) {
-            shooterSpeed += SHOOTER_SPEED_STEP;
+        if ((m_shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED) {
+            m_shooterSpeed += SHOOTER_SPEED_STEP;
         }
-        System.out.println("currentShooterSpeed: " + shooterSpeed);
+        System.out.println("currentShooterSpeed: " + m_shooterSpeed);
     }
 
     public void decrementHighShooterSpeed() {
-        if ((shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED) {
-            shooterSpeed -= SHOOTER_SPEED_STEP;
+        if ((m_shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED) {
+            m_shooterSpeed -= SHOOTER_SPEED_STEP;
         }
-        System.out.println("currentShooterSpeed: " + shooterSpeed);
+        System.out.println("currentShooterSpeed: " + m_shooterSpeed);
     }
 
     public void setShooterSpeed(int speed) {
-        shooterSpeed = speed;
-        System.out.println("currentShooterSpeed has reset to: " + shooterSpeed);
+        m_shooterSpeed = speed;
+        System.out.println("currentShooterSpeed has reset to: " + m_shooterSpeed);
     }
 
     public void setupEncoder(WPI_TalonSRX talon) { // call on both talons
@@ -127,15 +127,15 @@ public final class Shooter extends Subsystem {
     }
 
     public double getHighShooterSpeed() {
-        return highShooterMotor.getSelectedSensorVelocity(0);
+        return m_highShooterMotor.getSelectedSensorVelocity(0);
     }
 
     public double getLowShooterSpeed() {
-        return lowShooterMotor.getSelectedSensorVelocity(0);
+        return m_lowShooterMotor.getSelectedSensorVelocity(0);
     }
 
     public boolean isLowShooterMotorRunning() {
-        return lowMotorRunning;
+        return m_lowMotorRunning;
     }
 
 }

@@ -11,13 +11,13 @@ public class LiftToScale extends Command {
     public LiftToScale() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.lift);
+        requires(Robot.m_lift);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.lift.setLiftToScale();
+        Robot.m_lift.setLiftToScale();
         System.out.println("Lift to Scale Init");
     }
 

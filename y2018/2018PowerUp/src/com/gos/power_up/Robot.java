@@ -33,19 +33,18 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends TimedRobot {
 
-    public static Chassis chassis;
-    public static Shifters shifters;
-    public static Lift lift;
-    public static Wrist wrist;
-    public static Collector collector;
-    public static Blobs blobs;
-    public static Camera camera;
-    public static Climber climber;
-    public static OI oi;
-    public static GameData gameData;
+    public static Chassis m_chassis;
+    public static Shifters m_shifters;
+    public static Lift m_lift;
+    public static Wrist m_wrist;
+    public static Collector m_collector;
+    public static Blobs m_blobs;
+    public static Camera m_camera;
+    public static Climber m_climber;
+    public static OI m_oi;
+    public static GameData m_gameData;
 
     Command m_autonomousCommand;
-    public static String motionProfile = "91-small";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -53,16 +52,16 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        collector = new Collector();
-        chassis = new Chassis();
-        shifters = new Shifters();
-        lift = new Lift();
-        wrist = new Wrist();
-        blobs = new Blobs();
-        camera = new Camera();
-        climber = new Climber();
-        oi = new OI();
-        gameData = new GameData();
+        m_collector = new Collector();
+        m_chassis = new Chassis();
+        m_shifters = new Shifters();
+        m_lift = new Lift();
+        m_wrist = new Wrist();
+        m_blobs = new Blobs();
+        m_camera = new Camera();
+        m_climber = new Climber();
+        m_oi = new OI();
+        m_gameData = new GameData();
     }
 
     /**
@@ -94,26 +93,23 @@ public class Robot extends TimedRobot {
     @SuppressWarnings("PMD.CyclomaticComplexity")
     public void autonomousInit() {
 
-        Robot.chassis.zeroSensors();
-        gameData.reset();
+        Robot.m_chassis.zeroSensors();
+        m_gameData.reset();
 
         System.out.println("Starting Auto...");
         //Get robot side, switch side, scale side, element priority
-        GameData.FieldSide robotSide = gameData.getRobotSide();
-        GameData.FieldElement elementPriority = gameData.getElementPriority();
-        GameData.FieldSide switchSide = gameData.getSwitchSide();
-        GameData.FieldSide scaleSide = gameData.getScaleSide();
-        boolean scaleOverride = gameData.getScaleOverride();
+        GameData.FieldSide robotSide = m_gameData.getRobotSide();
+        GameData.FieldElement elementPriority = m_gameData.getElementPriority();
+        GameData.FieldSide switchSide = m_gameData.getSwitchSide();
+        GameData.FieldSide scaleSide = m_gameData.getScaleSide();
+        boolean scaleOverride = m_gameData.getScaleOverride();
 
-        if (gameData.getNoAuto()) {
-            m_autonomousCommand = null;
-        } else if (robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) //if robot in the corner
+        if (m_gameData.getNoAuto()) {
+            m_autonomousCommand = null; // NOPMD
+        } else if (robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) { //if robot in the corner
+            Robot.m_shifters.shiftGear(Shifters.Speed.kHigh);
 
-        {
-            Robot.shifters.shiftGear(Shifters.Speed.kHigh);
-
-            if (elementPriority == GameData.FieldElement.Switch) //switch priority
-            {
+            if (elementPriority == GameData.FieldElement.Switch) { //switch priority
                 if (switchSide == robotSide) {
                     m_autonomousCommand = new AutoNearSwitch(switchSide);
                 } else if (scaleSide == robotSide) {
@@ -123,8 +119,7 @@ public class Robot extends TimedRobot {
                 } else {
                     m_autonomousCommand = new AutoDriveToBaseline();
                 }
-            } else //scale priority
-            {
+            } else { //scale priority
                 if (scaleSide == robotSide) {
                     m_autonomousCommand = new AutoNearScale(scaleSide);
                 } else if (scaleOverride) {
@@ -136,7 +131,7 @@ public class Robot extends TimedRobot {
                 }
             }
         } else if (robotSide == GameData.FieldSide.middle) {
-            Robot.shifters.shiftGear(Shifters.Speed.kLow);
+            Robot.m_shifters.shiftGear(Shifters.Speed.kLow);
             if (switchSide != GameData.FieldSide.bad) {
                 m_autonomousCommand = new AutoMiddleSwitch(switchSide);
             } else {
@@ -177,8 +172,8 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
-        lift.setGoalLiftPosition(lift.getLiftPosition());
-        wrist.setGoalWristPosition(wrist.getWristPosition());
+        m_lift.setGoalLiftPosition(m_lift.getLiftPosition());
+        m_wrist.setGoalWristPosition(m_wrist.getWristPosition());
     }
 
     /**

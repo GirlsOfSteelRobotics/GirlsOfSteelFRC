@@ -11,8 +11,8 @@ public class LidarLitePWM {
      */
     private static final int CALIBRATION_OFFSET = -18;
 
-    private final Counter counter;
-    private int printedWarningCount = 5;
+    private final Counter m_counter;
+    private int m_printedWarningCount = 5;
 
     /**
      * Create an object for a LIDAR-Lite attached to some digital input on the roboRIO
@@ -20,11 +20,11 @@ public class LidarLitePWM {
      * @param source The DigitalInput or DigitalSource where the LIDAR-Lite is attached (ex: new DigitalInput(9))
      */
     public LidarLitePWM(DigitalSource source) {
-        counter = new Counter(source);
-        counter.setMaxPeriod(1.0);
+        m_counter = new Counter(source);
+        m_counter.setMaxPeriod(1.0);
         // Configure for measuring rising to falling pulses
-        counter.setSemiPeriodMode(true);
-        counter.reset();
+        m_counter.setSemiPeriodMode(true);
+        m_counter.reset();
     }
 
     /**
@@ -37,8 +37,8 @@ public class LidarLitePWM {
         /* If we haven't seen the first rising to falling pulse, then we have no measurement.
          * This happens when there is no LIDAR-Lite plugged in, btw.
          */
-        if (counter.get() < 1) {
-            if (printedWarningCount-- > 0) {
+        if (m_counter.get() < 1) {
+            if (m_printedWarningCount-- > 0) {
                 System.out.println("LidarLitePWM: waiting for distance measurement");
             }
             return 0;
@@ -46,7 +46,7 @@ public class LidarLitePWM {
         /* getPeriod returns time in seconds. The hardware resolution is microseconds.
          * The LIDAR-Lite unit sends a high signal for 10 microseconds per cm of distance.
          */
-        cm = (counter.getPeriod() * 1000000.0 / 10.0) + CALIBRATION_OFFSET;
+        cm = (m_counter.getPeriod() * 1000000.0 / 10.0) + CALIBRATION_OFFSET;
         return cm;
     }
 }

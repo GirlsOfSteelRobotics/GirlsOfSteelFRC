@@ -23,7 +23,6 @@ public class Blinkin extends SubsystemBase {
             System.out.println("Right Light Controller"); // this never gets made no matter what
         } catch (Exception e) {
             System.out.println("No blink-in in " + Constants.BLINKIN_RIGHT_PWM + ", error: " + e);
-            m_rightLightController = null;
         }
 
         try {
@@ -31,7 +30,6 @@ public class Blinkin extends SubsystemBase {
             System.out.println("Left Light Controller");
         } catch (Exception e) {
             System.out.println("No blink-in in " + Constants.BLINKIN_LEFT_PWM + ", error: " + e);
-            m_leftLightController = null;
         }
 
     }

@@ -37,36 +37,36 @@ public class OI {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank
     }
 
-    private DriveStyle driveStyle;
+    private DriveStyle m_driveStyle;
 
-    private final Joystick drivingGamePad = new Joystick(1);
-    private final Joystick drivingJoystickOne = new Joystick(1);
-    private final Joystick drivingJoystickTwo = new Joystick(2);
-    private final Joystick autonSelector = new Joystick(5);
+    private final Joystick m_drivingGamePad = new Joystick(1);
+    private final Joystick m_drivingJoystickOne = new Joystick(1);
+    private final Joystick m_drivingJoystickTwo = new Joystick(2);
+    private final Joystick m_autonSelector = new Joystick(5);
 
-    private final DigitalInput dio0 = new DigitalInput(0);
-    private final DigitalInput dio1 = new DigitalInput(1);
-    private final DigitalInput dio2 = new DigitalInput(2);
-    private final DigitalInput dio3 = new DigitalInput(3);
-    private final DigitalInput dio4 = new DigitalInput(4);
+    private final DigitalInput m_dio0 = new DigitalInput(0);
+    private final DigitalInput m_dio1 = new DigitalInput(1);
+    private final DigitalInput m_dio2 = new DigitalInput(2);
+    private final DigitalInput m_dio3 = new DigitalInput(3);
+    private final DigitalInput m_dio4 = new DigitalInput(4);
 
-    private DriveDirection driveDirection = DriveDirection.kFWD;
+    private DriveDirection m_driveDirection = DriveDirection.kFWD;
 
-    private JoystickScaling joystickScale = JoystickScaling.linear;
+    private JoystickScaling m_joystickScale = JoystickScaling.linear;
     private static final double DEADBAND = 0.3; //TODO: find a good value
 
     public OI() {
         //BUTTON ASSIGNMENTS
-        JoystickButton shifterDown = new JoystickButton(drivingJoystickOne, 2);
-        JoystickButton shifterUp = new JoystickButton(drivingJoystickOne, 3);
-        JoystickButton driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
-        JoystickButton driveByDistanceHigh = new JoystickButton(drivingJoystickOne, 10);
+        JoystickButton shifterDown = new JoystickButton(m_drivingJoystickOne, 2);
+        JoystickButton shifterUp = new JoystickButton(m_drivingJoystickOne, 3);
+        JoystickButton driveByDistanceLow = new JoystickButton(m_drivingJoystickOne, 9);
+        JoystickButton driveByDistanceHigh = new JoystickButton(m_drivingJoystickOne, 10);
 
-//        JoystickButton liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
-//        JoystickButton liftDown = new JoystickButton(operatorGamePad, 2);
-//
-//        JoystickButton collect = new JoystickButton(operatorGamePad, 3);
-//        JoystickButton release = new JoystickButton(operatorGamePad, 4);
+        //        JoystickButton liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
+        //        JoystickButton liftDown = new JoystickButton(operatorGamePad, 2);
+        //
+        //        JoystickButton collect = new JoystickButton(operatorGamePad, 3);
+        //        JoystickButton release = new JoystickButton(operatorGamePad, 4);
 
         shifterDown.whenPressed(new ShiftDown());
         shifterUp.whenPressed(new ShiftUp());
@@ -79,7 +79,7 @@ public class OI {
         //collect.whileHeld(new Collect());
         //release.whileHeld(new Release());
 
-        drivingGamePad.setTwistChannel(3);
+        m_drivingGamePad.setTwistChannel(3);
         /* Drive by vision (plus back up a few inches when done)
         driveByVision = new JoystickButton(gamePad, 1);
         driveByVision.whenPressed(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));*/
@@ -125,28 +125,28 @@ public class OI {
     }
 
     public double getDrivingJoystickY() {
-        if (driveStyle == DriveStyle.gamePadArcade) {
-            return drivingGamePad.getY();
-        } else if (driveStyle == DriveStyle.joystickArcade) {
-            return drivingJoystickOne.getY();
-        } else if (driveStyle == DriveStyle.gamePadTank) {
-            return drivingGamePad.getY(); //TODO: this should get the Z vertical/rotate value
-        } else if (driveStyle == DriveStyle.joystickTank) {
-            return drivingJoystickOne.getY();
+        if (m_driveStyle == DriveStyle.gamePadArcade) {
+            return m_drivingGamePad.getY();
+        } else if (m_driveStyle == DriveStyle.joystickArcade) {
+            return m_drivingJoystickOne.getY();
+        } else if (m_driveStyle == DriveStyle.gamePadTank) {
+            return m_drivingGamePad.getY(); //TODO: this should get the Z vertical/rotate value
+        } else if (m_driveStyle == DriveStyle.joystickTank) {
+            return m_drivingJoystickOne.getY();
         } else {
             return 0.0;
         }
     }
 
     public double getDrivingJoystickX() {
-        if (driveStyle == DriveStyle.gamePadArcade) {
-            return -drivingGamePad.getZ();
-        } else if (driveStyle == DriveStyle.joystickArcade) {
-            return drivingJoystickOne.getX();
-        } else if (driveStyle == DriveStyle.gamePadTank) {
-            return drivingGamePad.getTwist();
-        } else if (driveStyle == DriveStyle.joystickTank) {
-            return drivingJoystickTwo.getY();
+        if (m_driveStyle == DriveStyle.gamePadArcade) {
+            return -m_drivingGamePad.getZ();
+        } else if (m_driveStyle == DriveStyle.joystickArcade) {
+            return m_drivingJoystickOne.getX();
+        } else if (m_driveStyle == DriveStyle.gamePadTank) {
+            return m_drivingGamePad.getTwist();
+        } else if (m_driveStyle == DriveStyle.joystickTank) {
+            return m_drivingJoystickTwo.getY();
         } else {
             return 0.0;
         }
@@ -156,9 +156,9 @@ public class OI {
     public double getScaledJoystickValue(double input) {
         double output = 0;
 
-        if (joystickScale == JoystickScaling.linear) {
+        if (m_joystickScale == JoystickScaling.linear) {
             output = input;
-        } else if (joystickScale == JoystickScaling.deadband) {
+        } else if (m_joystickScale == JoystickScaling.deadband) {
             if (Math.abs(input) < DEADBAND) {
                 output = 0;
             } else {
@@ -168,7 +168,7 @@ public class OI {
                     output = input + DEADBAND;
                 }
             }
-        } else if (joystickScale == JoystickScaling.quadratic) {
+        } else if (m_joystickScale == JoystickScaling.quadratic) {
             if (input > 0) {
                 output = Math.pow(input, 2);
             } else {
@@ -180,41 +180,41 @@ public class OI {
     }
 
     public void setDriveDirection(DriveDirection driveDirection) {
-        this.driveDirection = driveDirection;
+        this.m_driveDirection = driveDirection;
         System.out.println("Drive direction set to: " + driveDirection);
     }
 
     public void setJoystickScale(JoystickScaling joystickScale) {
-        this.joystickScale = joystickScale;
+        this.m_joystickScale = joystickScale;
         System.out.println("Joystick direction set to: " + joystickScale);
     }
 
     public boolean isJoystickReversed() {
-        return (driveDirection == DriveDirection.kREV);
+        return m_driveDirection == DriveDirection.kREV;
     }
 
     public void setDriveStyle() {
-        if (!dio1.get()) {
-            driveStyle = DriveStyle.joystickArcade;
-        } else if (!dio2.get()) {
-            driveStyle = DriveStyle.gamePadArcade;
-        } else if (!dio3.get()) {
-            driveStyle = DriveStyle.joystickTank;
-        } else if (!dio4.get()) {
-            driveStyle = DriveStyle.gamePadTank;
+        if (!m_dio1.get()) {
+            m_driveStyle = DriveStyle.joystickArcade;
+        } else if (!m_dio2.get()) {
+            m_driveStyle = DriveStyle.gamePadArcade;
+        } else if (!m_dio3.get()) {
+            m_driveStyle = DriveStyle.joystickTank;
+        } else if (!m_dio4.get()) {
+            m_driveStyle = DriveStyle.gamePadTank;
         } else {
             System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
-            driveStyle = DriveStyle.joystickArcade;
+            m_driveStyle = DriveStyle.joystickArcade;
         }
-        System.out.println("Drive Mode: " + driveStyle);
+        System.out.println("Drive Mode: " + m_driveStyle);
     }
 
     public DriveStyle getDriveStyle() {
-        return driveStyle;
+        return m_driveStyle;
     }
 
     public boolean isSquared() {
-        return !dio0.get();
+        return !m_dio0.get();
     }
 
     /**
@@ -229,10 +229,10 @@ public class OI {
         // Each of the four "button" inputs corresponds to a bit of a binary
         // number encoding the current selection. To simplify wiring, buttons
         // 2-5 were used.
-        int value = 1 * (autonSelector.getRawButton(2) ? 1 : 0)
-            + 2 * (autonSelector.getRawButton(3) ? 1 : 0)
-            + 4 * (autonSelector.getRawButton(4) ? 1 : 0)
-            + 8 * (autonSelector.getRawButton(5) ? 1 : 0);
+        int value = 1 * (m_autonSelector.getRawButton(2) ? 1 : 0)
+            + 2 * (m_autonSelector.getRawButton(3) ? 1 : 0)
+            + 4 * (m_autonSelector.getRawButton(4) ? 1 : 0)
+            + 8 * (m_autonSelector.getRawButton(5) ? 1 : 0);
         System.out.println("Auto Selector Number: " + value);
         return value;
     }

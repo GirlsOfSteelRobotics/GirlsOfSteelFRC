@@ -13,56 +13,56 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  *
  */
 public final class Chassis extends Subsystem {
-    private final WPI_TalonSRX driveLeftA;
-    private final WPI_TalonSRX driveLeftB;
-    private final WPI_TalonSRX driveLeftC;
+    private final WPI_TalonSRX m_driveLeftA;
+    private final WPI_TalonSRX m_driveLeftB;
+    private final WPI_TalonSRX m_driveLeftC;
 
-    private final WPI_TalonSRX driveRightA;
-    private final WPI_TalonSRX driveRightB;
-    private final WPI_TalonSRX driveRightC;
+    private final WPI_TalonSRX m_driveRightA;
+    private final WPI_TalonSRX m_driveRightB;
+    private final WPI_TalonSRX m_driveRightC;
 
-    public DifferentialDrive drive;
+    public DifferentialDrive m_drive;
 
     public Chassis() {
-        driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
-        driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
-        driveLeftC = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_C);
-        driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
-        driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
-        driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
+        m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
+        m_driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
+        m_driveLeftC = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_C);
+        m_driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
+        m_driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
+        m_driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
 
-        driveLeftA.setNeutralMode(NeutralMode.Brake);
-        driveLeftB.setNeutralMode(NeutralMode.Brake);
-        driveLeftC.setNeutralMode(NeutralMode.Brake);
-        driveRightA.setNeutralMode(NeutralMode.Brake);
-        driveRightB.setNeutralMode(NeutralMode.Brake);
-        driveRightC.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftA.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftB.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftC.setNeutralMode(NeutralMode.Brake);
+        m_driveRightA.setNeutralMode(NeutralMode.Brake);
+        m_driveRightB.setNeutralMode(NeutralMode.Brake);
+        m_driveRightC.setNeutralMode(NeutralMode.Brake);
 
-        driveLeftB.follow(driveLeftA);
-        driveLeftC.follow(driveLeftA);
-        driveRightB.follow(driveRightA);
-        driveRightC.follow(driveRightA);
+        m_driveLeftB.follow(m_driveLeftA);
+        m_driveLeftC.follow(m_driveLeftA);
+        m_driveRightB.follow(m_driveRightA);
+        m_driveRightC.follow(m_driveRightA);
 
-        setupEncoder(driveLeftA);
-        setupEncoder(driveRightA);
+        setupEncoder(m_driveLeftA);
+        setupEncoder(m_driveRightA);
 
         //drive.setSafetyEnabled(false);
         //drive.setExpiration(0.2);
         //drive.setMaxOutput(1.0);
 
-        driveLeftA.setInverted(false);
-        driveRightA.setInverted(false);
+        m_driveLeftA.setInverted(false);
+        m_driveRightA.setInverted(false);
 
-        drive = new DifferentialDrive(driveLeftA, driveRightA);
+        m_drive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
         //drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
         //drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
-//		LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
-//		LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
-//		LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
-//		LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
-//		LiveWindow.addActuator("Chassis", "driveRightB", driveRightB);
-//		LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
+        //      LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
+        //      LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
+        //      LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
+        //      LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
+        //      LiveWindow.addActuator("Chassis", "driveRightB", driveRightB);
+        //      LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
     }
 
     @Override
@@ -72,11 +72,11 @@ public final class Chassis extends Subsystem {
     }
 
     public WPI_TalonSRX getLeftTalon() {
-        return driveLeftA;
+        return m_driveLeftA;
     }
 
     public WPI_TalonSRX getRightTalon() {
-        return driveRightA;
+        return m_driveRightA;
     }
 
     public void setupEncoder(WPI_TalonSRX talon) { // only call this on non-follower
@@ -98,12 +98,12 @@ public final class Chassis extends Subsystem {
     }
 
     public void turn(double speed, double curve) {
-        drive.curvatureDrive(speed, curve, false);
+        m_drive.curvatureDrive(speed, curve, false);
     }
 
     public void stop() {
-        driveLeftA.set(ControlMode.PercentOutput, 0);
-        driveRightA.set(ControlMode.PercentOutput, 0);
+        m_driveLeftA.set(ControlMode.PercentOutput, 0);
+        m_driveRightA.set(ControlMode.PercentOutput, 0);
     }
 
 }

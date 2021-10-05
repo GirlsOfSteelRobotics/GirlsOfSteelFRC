@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwitchToCamGear extends Command {
 
     public SwitchToCamGear() {
-        requires(Robot.camera);
+        requires(Robot.m_camera);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.camera.switchToCamGear();
+        Robot.m_camera.switchToCamGear();
     }
 
     // Called repeatedly when this Command is scheduled to run

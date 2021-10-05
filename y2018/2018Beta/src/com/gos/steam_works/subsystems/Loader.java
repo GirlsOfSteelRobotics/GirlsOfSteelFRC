@@ -10,23 +10,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Loader extends Subsystem {
 
-    private final WPI_TalonSRX loaderMotor;
+    private final WPI_TalonSRX m_loaderMotor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public Loader() {
-        loaderMotor = new WPI_TalonSRX(RobotMap.LOADER_MOTOR);
+        m_loaderMotor = new WPI_TalonSRX(RobotMap.LOADER_MOTOR);
 
         //LiveWindow.addActuator("Loader", "loaderMotor", loaderMotor);
     }
 
     public void loadBall(double speed) {
-        loaderMotor.set(ControlMode.PercentOutput, speed);
+        m_loaderMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void stopLoader() {
-        loaderMotor.set(0.0);
+        m_loaderMotor.set(0.0);
     }
 
     @Override

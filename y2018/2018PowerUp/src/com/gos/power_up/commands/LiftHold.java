@@ -10,7 +10,7 @@ public class LiftHold extends Command {
 
     public LiftHold() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.lift);
+        requires(Robot.m_lift);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +22,7 @@ public class LiftHold extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.lift.holdLiftPosition();
+        Robot.m_lift.holdLiftPosition();
 
     }
 

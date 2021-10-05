@@ -23,12 +23,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static Chassis chassis;
-    public static Shifters shifters;
-    public static HatchCollector hatchCollector;
-    public static OI oi;
+    public static Chassis m_chassis;
+    public static Shifters m_shifters;
+    public static HatchCollector m_hatchCollector;
+    public static OI m_oi;
 
-    Command autonomousCommand;
+    Command m_autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -36,13 +36,13 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        chassis = new Chassis();
-        shifters = new Shifters();
-        hatchCollector = new HatchCollector();
+        m_chassis = new Chassis();
+        m_shifters = new Shifters();
+        m_hatchCollector = new HatchCollector();
 
         // Be sure to create the OI object only after creating all subsystems
         // to avoid the code crashing when enabled!!!
-        oi = new OI();
+        m_oi = new OI();
 
         CameraServer.getInstance().startAutomaticCapture("Camera", 0);
     }
@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        autonomousCommand = null;
+        m_autonomousCommand = null; // NOPMD
 
         /*
          * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -96,8 +96,8 @@ public class Robot extends TimedRobot {
          */
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) {
-            autonomousCommand.start();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
         }
     }
 
@@ -115,8 +115,8 @@ public class Robot extends TimedRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) {
-            autonomousCommand.cancel();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
         }
     }
 

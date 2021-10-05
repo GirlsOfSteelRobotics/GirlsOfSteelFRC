@@ -9,16 +9,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Collector extends Subsystem {
 
-    private final WPI_TalonSRX leftCollect;
-    private final WPI_TalonSRX rightCollect;
-
     private static final double SLOW_COLLECTOR_SPEED = 0.15;
     private static final double COLLECTOR_INTAKE_SPEED = 0.4;
     private static final double COLLECTOR_RELEASE_SPEED = 0.35; // .5 pre-GPR
 
+    private final WPI_TalonSRX m_leftCollect;
+    private final WPI_TalonSRX m_rightCollect;
+
     public Collector() {
-        leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_TALON);
-        rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT_TALON);
+        m_leftCollect = new WPI_TalonSRX(RobotMap.COLLECT_LEFT_TALON);
+        m_rightCollect = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT_TALON);
     }
 
     @Override
@@ -31,22 +31,22 @@ public class Collector extends Subsystem {
     // here. Call these from Commands.
 
     public void stop() {
-        leftCollect.stopMotor();
-        rightCollect.stopMotor();
+        m_leftCollect.stopMotor();
+        m_rightCollect.stopMotor();
     }
 
     public void collect() {
-        leftCollect.set(-COLLECTOR_INTAKE_SPEED);
-        rightCollect.set(COLLECTOR_INTAKE_SPEED);
+        m_leftCollect.set(-COLLECTOR_INTAKE_SPEED);
+        m_rightCollect.set(COLLECTOR_INTAKE_SPEED);
     }
 
     public void release() {
-        leftCollect.set(COLLECTOR_RELEASE_SPEED);
-        rightCollect.set(-COLLECTOR_RELEASE_SPEED);
+        m_leftCollect.set(COLLECTOR_RELEASE_SPEED);
+        m_rightCollect.set(-COLLECTOR_RELEASE_SPEED);
     }
 
     public void slowCollect() {
-        leftCollect.set(-SLOW_COLLECTOR_SPEED);
-        rightCollect.set(SLOW_COLLECTOR_SPEED);
+        m_leftCollect.set(-SLOW_COLLECTOR_SPEED);
+        m_rightCollect.set(SLOW_COLLECTOR_SPEED);
     }
 }

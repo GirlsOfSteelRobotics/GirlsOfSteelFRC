@@ -17,7 +17,7 @@ public class ClimberHold extends Command {
     public ClimberHold() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.climber);
+        requires(Robot.m_climber);
     }
 
     // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ public class ClimberHold extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.climber.holdClimberPosition(Climber.ClimberType.All);
+        Robot.m_climber.holdClimberPosition(Climber.ClimberType.All);
         //System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
     }
 
@@ -42,7 +42,7 @@ public class ClimberHold extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.climber.climberStop();
+        Robot.m_climber.climberStop();
         System.out.println("ClimberHold end");
     }
 }

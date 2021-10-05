@@ -10,51 +10,52 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OldTurnInPlace extends Command {
 
-    private final double headingTarget;
-    private final double speed;
-    private final static double ERROR = 3.0;
+    private static final double ERROR = 3.0;
 
-    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final double m_headingTarget;
+    private final double m_speed;
+
+    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
+    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
 
     public OldTurnInPlace(double degrees) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
-        headingTarget = degrees;
-        speed = 0.2;
+        requires(Robot.m_chassis);
+        m_headingTarget = degrees;
+        m_speed = 0.2;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.chassis.setInverted(true);
-        Robot.chassis.zeroSensors();
+        Robot.m_chassis.setInverted(true);
+        Robot.m_chassis.zeroSensors();
         System.out.println("OldTurnInPlace: intitialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (headingTarget > 0) {
-            leftTalon.set(ControlMode.PercentOutput, -speed);
-            rightTalon.set(ControlMode.PercentOutput, speed);
+        if (m_headingTarget > 0) {
+            m_leftTalon.set(ControlMode.PercentOutput, -m_speed);
+            m_rightTalon.set(ControlMode.PercentOutput, m_speed);
         } else {
-            leftTalon.set(ControlMode.PercentOutput, speed);
-            rightTalon.set(ControlMode.PercentOutput, -speed);
+            m_leftTalon.set(ControlMode.PercentOutput, m_speed);
+            m_rightTalon.set(ControlMode.PercentOutput, -m_speed);
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return (Math.abs(Robot.chassis.getYaw() - headingTarget) < ERROR);
+        return Math.abs(Robot.m_chassis.getYaw() - m_headingTarget) < ERROR;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.chassis.stop();
-        Robot.chassis.setInverted(false);
+        Robot.m_chassis.stop();
+        Robot.m_chassis.setInverted(false);
         System.out.println("OldTurnInPlace: finished");
     }
 

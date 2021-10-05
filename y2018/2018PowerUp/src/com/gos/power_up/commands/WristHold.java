@@ -11,19 +11,19 @@ public class WristHold extends Command {
     public WristHold() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.wrist);
+        requires(Robot.m_wrist);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.wrist.holdWristPosition();
+        Robot.m_wrist.holdWristPosition();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.wrist.holdWristPosition();
+        Robot.m_wrist.holdWristPosition();
     }
 
     // Make this return true when this Command no longer needs to run execute()

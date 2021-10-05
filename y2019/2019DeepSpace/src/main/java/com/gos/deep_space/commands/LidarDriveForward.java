@@ -14,57 +14,57 @@ public class LidarDriveForward extends Command {
 
     private static final double DRIVE_SPEED = 0.4;
     private static final double BABYDRIVE_SPEED = 0.3;
-    private final double goalLidar;
-    private final boolean chassis;
+    private final double m_goalLidar;
+    private final boolean m_chassis;
 
     // if boolean chassis is true, then normal drive
     // if chassis is false, then babyDrive
     public LidarDriveForward(double goalLidar, boolean chassis) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        this.chassis = chassis;
-        this.goalLidar = goalLidar;
+        this.m_chassis = chassis;
+        this.m_goalLidar = goalLidar;
 
         if (chassis) {
-            requires(Robot.chassis);
+            requires(Robot.m_chassis);
         } else {
-            requires(Robot.babyDrive);
+            requires(Robot.m_babyDrive);
         }
-        requires(Robot.lidar);
+        requires(Robot.m_lidar);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        System.out.println("LidarDriveForward init, goal lidar: " + goalLidar + ", chassis bool: " + chassis);
+        System.out.println("LidarDriveForward init, goal lidar: " + m_goalLidar + ", chassis bool: " + m_chassis);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (chassis) {
-            Robot.chassis.setSpeed(DRIVE_SPEED);
+        if (m_chassis) {
+            Robot.m_chassis.setSpeed(DRIVE_SPEED);
         } else {
-            Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
+            Robot.m_babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
         }
-        System.out.println("LidarDriveForward lidar distance: " + Robot.lidar.getDistance());
+        System.out.println("LidarDriveForward lidar distance: " + Robot.m_lidar.getDistance());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        double error = Robot.lidar.getDistance() - goalLidar;
+        double error = Robot.m_lidar.getDistance() - m_goalLidar;
         System.out.println("LidarDriveForward error: " + error);
-        return error <= Robot.lidar.LIDAR_TOLERANCE;
+        return error <= Robot.m_lidar.LIDAR_TOLERANCE;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        if (chassis) {
-            Robot.chassis.stop();
+        if (m_chassis) {
+            Robot.m_chassis.stop();
         } else {
-            Robot.babyDrive.babyDriveStop();
+            Robot.m_babyDrive.babyDriveStop();
         }
         System.out.println("LidarDriveForward end");
     }

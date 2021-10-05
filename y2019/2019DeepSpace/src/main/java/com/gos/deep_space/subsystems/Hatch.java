@@ -12,17 +12,17 @@ import com.gos.deep_space.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Hatch extends Subsystem {
-
-    private final WPI_TalonSRX hatchCollector;
-
     private static final double SLOW_COLLECTOR_SPEED = 0.25;
     private static final double COLLECTOR_INTAKE_SPEED = 0.4;
     private static final double COLLECTOR_RELEASE_SPEED = 0.4;
 
+    private final WPI_TalonSRX m_hatchCollector;
+
+
     public Hatch() {
-        hatchCollector = new WPI_TalonSRX(RobotMap.HATCH_TALON);
-        hatchCollector.setInverted(true);
-        addChild("Collector", hatchCollector);
+        m_hatchCollector = new WPI_TalonSRX(RobotMap.HATCH_TALON);
+        m_hatchCollector.setInverted(true);
+        addChild("Collector", m_hatchCollector);
     }
 
     @Override
@@ -34,20 +34,20 @@ public class Hatch extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public void stop() {
-        hatchCollector.stopMotor();
+        m_hatchCollector.stopMotor();
     }
 
     //switched all to opposite sign of what they where bc that's correct on comp bot
 
     public void collect() {
-        hatchCollector.set(-COLLECTOR_INTAKE_SPEED);
+        m_hatchCollector.set(-COLLECTOR_INTAKE_SPEED);
     }
 
     public void release() {
-        hatchCollector.set(COLLECTOR_RELEASE_SPEED);
+        m_hatchCollector.set(COLLECTOR_RELEASE_SPEED);
     }
 
     public void slowCollect() {
-        hatchCollector.set(-SLOW_COLLECTOR_SPEED);
+        m_hatchCollector.set(-SLOW_COLLECTOR_SPEED);
     }
 }

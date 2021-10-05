@@ -24,58 +24,59 @@ import java.util.Scanner;
 @SuppressWarnings("PMD.DataClass")
 public class DriveByMotionProfile extends Command {
 
-    public List<List<Double>> leftPoints;
-    public List<List<Double>> rightPoints;
-    public WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    public WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
-    private final MotionProfileStatus leftStatus;
-    private final MotionProfileStatus rightStatus;
     private static final int kMinPointsInTalon = 5;
-    private SetValueMotionProfile state;
 
-    Notifier notifier = new Notifier(new PeriodicRunnable());
+    private List<List<Double>> m_leftPoints;
+    private List<List<Double>> m_rightPoints;
+    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
+    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final MotionProfileStatus m_leftStatus;
+    private final MotionProfileStatus m_rightStatus;
+    private SetValueMotionProfile m_state;
+
+    private final Notifier m_notifier = new Notifier(new PeriodicRunnable());
 
     public DriveByMotionProfile(String leftFile, String rightFile) {
-        requires(Robot.chassis);
+        requires(Robot.m_chassis);
 
 
         // Load trajectory from file into array
         try {
-            leftPoints = loadMotionProfile(leftFile, true);
-            rightPoints = loadMotionProfile(rightFile, false);
+            m_leftPoints = loadMotionProfile(leftFile, true);
+            m_rightPoints = loadMotionProfile(rightFile, false);
             System.out.println("DriveByMotion: Loaded File");
         } catch (IOException ex) {
             System.err.println("File Not Found: Motion Profile Trajectories");
         }
 
         // Initialize status variables
-        leftStatus = new MotionProfileStatus();
-        rightStatus = new MotionProfileStatus();
+        m_leftStatus = new MotionProfileStatus();
+        m_rightStatus = new MotionProfileStatus();
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.chassis.setVelocityPIDSlot();
+        Robot.m_chassis.setVelocityPIDSlot();
 
         // Set Talon to MP mode
         System.out.println("DriveByMotion: Change Talon to MP Mode");
 
         // Disable MP
-        state = SetValueMotionProfile.Disable;
-        leftTalon.set(ControlMode.MotionProfile, state.value);
-        rightTalon.set(ControlMode.MotionProfile, state.value);
+        m_state = SetValueMotionProfile.Disable;
+        m_leftTalon.set(ControlMode.MotionProfile, m_state.value);
+        m_rightTalon.set(ControlMode.MotionProfile, m_state.value);
         System.out.println("DriveByMotion: Disable MP Mode");
 
         // Push Trajectory
-        pushTrajectory(leftTalon, leftPoints);
-        pushTrajectory(rightTalon, rightPoints);
+        pushTrajectory(m_leftTalon, m_leftPoints);
+        pushTrajectory(m_rightTalon, m_rightPoints);
         System.out.println("DriveByMotion: Push Trajectory");
 
         // Start Periodic Notifier
-        leftTalon.changeMotionControlFramePeriod(5);
-        rightTalon.changeMotionControlFramePeriod(5);
-        notifier.startPeriodic(0.005);
+        m_leftTalon.changeMotionControlFramePeriod(5);
+        m_rightTalon.changeMotionControlFramePeriod(5);
+        m_notifier.startPeriodic(0.005);
         System.out.println("DriveByMotion: Start Periodic");
 
     }
@@ -84,24 +85,24 @@ public class DriveByMotionProfile extends Command {
     @Override
     protected void execute() {
         // get MP status from each talon
-        leftTalon.getMotionProfileStatus(leftStatus);
-        rightTalon.getMotionProfileStatus(rightStatus);
+        m_leftTalon.getMotionProfileStatus(m_leftStatus);
+        m_rightTalon.getMotionProfileStatus(m_rightStatus);
 
         // Enable MP if not already enabled
-        if ((leftStatus.btmBufferCnt > kMinPointsInTalon) && (rightStatus.btmBufferCnt > kMinPointsInTalon)) {
-            state = SetValueMotionProfile.Enable;
+        if ((m_leftStatus.btmBufferCnt > kMinPointsInTalon) && (m_rightStatus.btmBufferCnt > kMinPointsInTalon)) {
+            m_state = SetValueMotionProfile.Enable;
         }
-        leftTalon.set(ControlMode.MotionProfile, state.value);
-        rightTalon.set(ControlMode.MotionProfile, state.value);
+        m_leftTalon.set(ControlMode.MotionProfile, m_state.value);
+        m_rightTalon.set(ControlMode.MotionProfile, m_state.value);
         // System.out.println("DriveByMotion: Execute Setting State: " + state);
 
         // did we get an underrun condition since last time we checked?
-        if (leftStatus.hasUnderrun || rightStatus.hasUnderrun) {
+        if (m_leftStatus.hasUnderrun || m_rightStatus.hasUnderrun) {
             // better log it so we know about it
-            System.out.println("DriveByMotion: A Talon has underrun!!! Left Talon: " + leftStatus.hasUnderrun + " Right Talon: " + rightStatus.hasUnderrun);
+            System.out.println("DriveByMotion: A Talon has underrun!!! Left Talon: " + m_leftStatus.hasUnderrun + " Right Talon: " + m_rightStatus.hasUnderrun);
             // clear the error. This flag does not auto clear, so this way we never miss logging it.
-            leftTalon.clearMotionProfileHasUnderrun(0);
-            rightTalon.clearMotionProfileHasUnderrun(0);
+            m_leftTalon.clearMotionProfileHasUnderrun(0);
+            m_rightTalon.clearMotionProfileHasUnderrun(0);
         }
     }
 
@@ -109,33 +110,33 @@ public class DriveByMotionProfile extends Command {
     @Override
     protected boolean isFinished() {
         // get MP status from each talon
-        leftTalon.getMotionProfileStatus(leftStatus);
-        rightTalon.getMotionProfileStatus(rightStatus);
+        m_leftTalon.getMotionProfileStatus(m_leftStatus);
+        m_rightTalon.getMotionProfileStatus(m_rightStatus);
 
-        boolean left = (leftStatus.activePointValid && leftStatus.isLast);
-        boolean right = (rightStatus.activePointValid && rightStatus.isLast);
+        boolean left = m_leftStatus.activePointValid && m_leftStatus.isLast;
+        boolean right = m_rightStatus.activePointValid && m_rightStatus.isLast;
 
 
         if (left && right) {
-            state = SetValueMotionProfile.Disable;
-            leftTalon.set(ControlMode.MotionProfile, state.value);
-            rightTalon.set(ControlMode.MotionProfile, state.value);
+            m_state = SetValueMotionProfile.Disable;
+            m_leftTalon.set(ControlMode.MotionProfile, m_state.value);
+            m_rightTalon.set(ControlMode.MotionProfile, m_state.value);
             System.out.println("DriveByMotion: Finished");
         }
 
-        return (left && right);
+        return left && right;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        notifier.stop();
+        m_notifier.stop();
 
-        leftTalon.clearMotionProfileTrajectories();
-        rightTalon.clearMotionProfileTrajectories();
+        m_leftTalon.clearMotionProfileTrajectories();
+        m_rightTalon.clearMotionProfileTrajectories();
 
-        leftTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
-        rightTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
+        m_leftTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
+        m_rightTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 
     }
 
@@ -149,7 +150,7 @@ public class DriveByMotionProfile extends Command {
     private List<List<Double>> loadMotionProfile(String filename, boolean isLeft)
         throws IOException {
         List<List<Double>> points = new ArrayList<>();
-        try(InputStream is = Files.newInputStream(Paths.get(filename));
+        try (InputStream is = Files.newInputStream(Paths.get(filename));
             Scanner s = new Scanner(is)) {
             while (s.hasNext()) {
                 List<Double> arr = new ArrayList<>();
@@ -163,12 +164,12 @@ public class DriveByMotionProfile extends Command {
         return points;
     }
 
-    private void pushTrajectory(WPI_TalonSRX _talon, List<List<Double>> points) {
+    private void pushTrajectory(WPI_TalonSRX talon, List<List<Double>> points) {
         // **************handle Underrun
 
         /* create an empty point */
         TrajectoryPoint point = new TrajectoryPoint();
-        _talon.clearMotionProfileTrajectories();
+        talon.clearMotionProfileTrajectories();
 
         /* This is fast since it's just into our TOP buffer */
         int i = 0;
@@ -196,7 +197,7 @@ public class DriveByMotionProfile extends Command {
              * set this to true on the last point
              */
 
-            _talon.pushMotionProfileTrajectory(point);
+            talon.pushMotionProfileTrajectory(point);
             i++;
         }
     }
@@ -204,8 +205,8 @@ public class DriveByMotionProfile extends Command {
     class PeriodicRunnable implements java.lang.Runnable {
         @Override
         public void run() {
-            leftTalon.processMotionProfileBuffer();
-            rightTalon.processMotionProfileBuffer();
+            m_leftTalon.processMotionProfileBuffer();
+            m_rightTalon.processMotionProfileBuffer();
         }
     }
 }

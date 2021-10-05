@@ -16,12 +16,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class BabyDrive extends Subsystem {
 
-    private final WPI_TalonSRX babyDriveTalon;
+    private final WPI_TalonSRX m_babyDriveTalon;
 
     public BabyDrive() {
-        babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
+        m_babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
 
-        babyDriveTalon.setInverted(true);
+        m_babyDriveTalon.setInverted(true);
     }
 
     @Override
@@ -34,10 +34,10 @@ public class BabyDrive extends Subsystem {
     // here. Call these from Commands.
 
     public void babyDriveSetSpeed(double speed) {
-        babyDriveTalon.set(speed);
+        m_babyDriveTalon.set(speed);
     }
 
     public void babyDriveStop() {
-        babyDriveTalon.stopMotor();
+        m_babyDriveTalon.stopMotor();
     }
 }

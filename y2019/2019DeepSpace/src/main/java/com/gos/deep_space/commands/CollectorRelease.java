@@ -14,7 +14,7 @@ public class CollectorRelease extends Command {
     public CollectorRelease() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.collector);
+        requires(Robot.m_collector);
     }
 
     // Called just before this Command runs the first time
@@ -26,7 +26,7 @@ public class CollectorRelease extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.collector.release();
+        Robot.m_collector.release();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +38,7 @@ public class CollectorRelease extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.collector.stop();
+        Robot.m_collector.stop();
         System.out.println("end CollectorRelease");
     }
 

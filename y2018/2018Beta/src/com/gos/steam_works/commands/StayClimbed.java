@@ -9,28 +9,28 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class StayClimbed extends Command {
 
-    private double encPosition;
+    private double m_encPosition;
 
     public StayClimbed() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.climber);
+        requires(Robot.m_climber);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
 
-        Robot.climber.climbMotorB.follow(Robot.climber.climbMotorA);
+        Robot.m_climber.m_climbMotorB.follow(Robot.m_climber.m_climbMotorA);
 
         // Robot.climber.climbMotorA.setPosition(0);
-        encPosition = Robot.climber.climbMotorA.getSelectedSensorPosition(0);
-        System.out.println("Climber Encoder Position: " + encPosition);
+        m_encPosition = Robot.m_climber.m_climbMotorA.getSelectedSensorPosition(0);
+        System.out.println("Climber Encoder Position: " + m_encPosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.climber.climbMotorA.set(ControlMode.Position, encPosition);
+        Robot.m_climber.m_climbMotorA.set(ControlMode.Position, m_encPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()

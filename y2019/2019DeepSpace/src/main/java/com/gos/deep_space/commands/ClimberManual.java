@@ -13,16 +13,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberManual extends Command {
 
-    private final boolean directionExtend;
-    private final Climber.ClimberType type;
+    private final boolean m_directionExtend;
+    private final Climber.ClimberType m_type;
 
     public ClimberManual(boolean directionExtend, Climber.ClimberType climberType) {
-        this.directionExtend = directionExtend;
-        type = climberType;
+        this.m_directionExtend = directionExtend;
+        m_type = climberType;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 
-        requires(Robot.climber);
+        requires(Robot.m_climber);
     }
 
     // Called just before this Command runs the first time
@@ -33,8 +33,8 @@ public class ClimberManual extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.climber.holdClimberPosition(type);
-        Robot.climber.extendClimber(directionExtend, type);
+        Robot.m_climber.holdClimberPosition(m_type);
+        Robot.m_climber.extendClimber(m_directionExtend, m_type);
 
     }
 
@@ -47,7 +47,7 @@ public class ClimberManual extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.climber.climberStop();
+        Robot.m_climber.climberStop();
     }
 
 }

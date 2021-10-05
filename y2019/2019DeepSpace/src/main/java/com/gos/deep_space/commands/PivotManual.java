@@ -13,31 +13,31 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class PivotManual extends Command {
 
-    private final PivotDirection direction;
+    private final PivotDirection m_direction;
 
     public PivotManual(PivotDirection direction) {
-        this.direction = direction;
+        this.m_direction = direction;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.pivot);
+        requires(Robot.m_pivot);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        System.out.println("init PivotManual " + direction);
+        System.out.println("init PivotManual " + m_direction);
 
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (direction == PivotDirection.Up) {
-            Robot.pivot.incrementPivot();
+        if (m_direction == PivotDirection.Up) {
+            Robot.m_pivot.incrementPivot();
         } else {
-            Robot.pivot.decrementPivot();
+            Robot.m_pivot.decrementPivot();
         }
-        Robot.pivot.holdPivotPosition();
+        Robot.m_pivot.holdPivotPosition();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -49,7 +49,7 @@ public class PivotManual extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.pivot.pivotStop();
-        System.out.println("end PivotManual " + direction);
+        Robot.m_pivot.pivotStop();
+        System.out.println("end PivotManual " + m_direction);
     }
 }
