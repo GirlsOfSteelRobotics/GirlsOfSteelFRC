@@ -5,14 +5,13 @@ import com.gos.testboard2020.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Motor extends SubsystemBase {
+    private static final double FAST_SPEED = 0.5;
+    private static final double SLOW_SPEED = 0.25;
 
-    private WPI_TalonSRX mainMotor;
-
-    private final double speed = 0.5;
-    private final double slowSpeed = 0.25;
+    private final WPI_TalonSRX m_mainMotor;
 
     public Motor() {
-        mainMotor = new WPI_TalonSRX(Constants.MAIN_MOTOR_TALON);
+        m_mainMotor = new WPI_TalonSRX(Constants.MAIN_MOTOR_TALON);
     }
 
     @Override
@@ -24,22 +23,22 @@ public class Motor extends SubsystemBase {
     // here. Call these from Commands.
 
     public WPI_TalonSRX getTalon() {
-        return mainMotor;
+        return m_mainMotor;
     }
 
     public void setSpeedMode() {
-        mainMotor.set(0.25);
+        m_mainMotor.set(0.25);
     }
 
     public void motorGoFast() {
-        mainMotor.set(speed);
+        m_mainMotor.set(FAST_SPEED);
     }
 
     public void motorGoSlow() {
-        mainMotor.set(slowSpeed);
+        m_mainMotor.set(SLOW_SPEED);
     }
 
     public void stop() {
-        mainMotor.stopMotor();
+        m_mainMotor.stopMotor();
     }
 }

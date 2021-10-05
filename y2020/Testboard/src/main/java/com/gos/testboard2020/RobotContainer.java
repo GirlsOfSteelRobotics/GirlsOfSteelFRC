@@ -42,7 +42,7 @@ public class RobotContainer {
     private final Motor m_motor;
     private final Limelight m_limelight;
     private final SendableChooser<Command> m_sendableChooser;
-    private Joystick drivingPad;
+    private Joystick m_drivingPad;
 
     /**
      * The container for the robot. Contains subsystems and the OI (joystick/gamepad) object.
@@ -50,8 +50,8 @@ public class RobotContainer {
     public RobotContainer() {
 
         // Create all subsystems in this section:
-        m_blinkin = new Blinkin ();
-        m_camera = new Camera ();
+        m_blinkin = new Blinkin();
+        m_camera = new Camera();
         m_lidar = new Lidar();
         m_motor = new Motor();
         m_limelight = new Limelight();
@@ -73,19 +73,19 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        drivingPad = new Joystick(0);
+        m_drivingPad = new Joystick(0);
 
-        new JoystickButton(drivingPad, 1).	whenPressed(new TryBlinkin(m_blinkin));
-        new JoystickButton(drivingPad, 2).	whenPressed(new ReadLidar(m_lidar));
-        new JoystickButton(drivingPad, 4).	whenPressed(new SpinByLidar(m_motor, m_lidar));
+        new JoystickButton(m_drivingPad, 1).whenPressed(new TryBlinkin(m_blinkin));
+        new JoystickButton(m_drivingPad, 2).whenPressed(new ReadLidar(m_lidar));
+        new JoystickButton(m_drivingPad, 4).whenPressed(new SpinByLidar(m_motor, m_lidar));
 
-        new JoystickButton(drivingPad, 3).whenPressed(new OuterShootAlign2(m_limelight));
+        new JoystickButton(m_drivingPad, 3).whenPressed(new OuterShootAlign2(m_limelight));
 
-        new POVButton(drivingPad, 0).		whenPressed(new SwitchToCamClimb(m_camera));
-        new POVButton(drivingPad, 180).		whenPressed(new SwitchToCamIntake(m_camera));
+        new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(m_camera));
+        new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(m_camera));
     }
 
-  /**
+    /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous

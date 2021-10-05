@@ -12,22 +12,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Camera extends SubsystemBase {
 
-    private UsbCamera camIntake;
-    private UsbCamera camClimb;
-    private VideoSink server;
+    private final UsbCamera m_camIntake;
+    private final UsbCamera m_camClimb;
+    private final VideoSink m_server;
 
     public Camera() {
         if (RobotBase.isSimulation()) {
+            m_camIntake = m_camClimb = null;
+            m_server = null;
             return;
         }
-        camIntake = new UsbCamera("camIntake", Constants.CAMERA_INTAKE);
-        camIntake.setResolution(320, 240);
-        camIntake.setFPS(20);
-        camClimb = new UsbCamera("camClimb", Constants.CAMERA_CLIMB);
-        camClimb.setResolution(320, 240);
-        camClimb.setFPS(20);
-        server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
-        server.setSource(camIntake);
+        m_camIntake = new UsbCamera("camIntake", Constants.CAMERA_INTAKE);
+        m_camIntake.setResolution(320, 240);
+        m_camIntake.setFPS(20);
+        m_camClimb = new UsbCamera("camClimb", Constants.CAMERA_CLIMB);
+        m_camClimb.setResolution(320, 240);
+        m_camClimb.setFPS(20);
+        m_server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
+        m_server.setSource(m_camIntake);
 
         // To see the stream in the Dashboard, add a CameraServer Stream Viewer
     }
@@ -44,7 +46,7 @@ public class Camera extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             return;
         }
-        server.setSource(camClimb);
+        m_server.setSource(m_camClimb);
         System.out.println("Cam Climb!");
     }
 
@@ -53,7 +55,7 @@ public class Camera extends SubsystemBase {
             return;
         }
 
-        server.setSource(camIntake);
+        m_server.setSource(m_camIntake);
         System.out.println("Cam Intake!");
     }
 }

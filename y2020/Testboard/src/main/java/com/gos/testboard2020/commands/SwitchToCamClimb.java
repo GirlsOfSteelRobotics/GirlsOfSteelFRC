@@ -1,8 +1,8 @@
 package com.gos.testboard2020.commands;
 
+import com.gos.testboard2020.subsystems.Camera;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.testboard2020.subsystems.Camera;
 
 public class SwitchToCamClimb extends CommandBase {
 

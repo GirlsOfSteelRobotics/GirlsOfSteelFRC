@@ -1,7 +1,7 @@
 package com.gos.testboard2020.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.networktables.*;
 
 /**
  * Add your docs here.
@@ -66,7 +66,7 @@ public class Limelight extends SubsystemBase {
         // m_limelightDriveCommand = driveCmd;
         // return m_limelightDriveCommand;
 
-        double driveCmd = distance*0.1;
+        double driveCmd = distance * 0.1;
         m_limelightDriveCommand = driveCmd;
         return m_limelightDriveCommand;
     }
