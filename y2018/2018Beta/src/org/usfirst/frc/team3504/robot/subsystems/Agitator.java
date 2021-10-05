@@ -16,7 +16,7 @@ public class Agitator extends Subsystem {
 	public Agitator() {
 		agitator = new DoubleSolenoid(RobotMap.AGITATOR_A, RobotMap.AGITATOR_B);
 
-		LiveWindow.addActuator("Agitator", "agitator", agitator);
+		addChild("agitator", agitator);
 	}
 
 	public void agitateForwards() {

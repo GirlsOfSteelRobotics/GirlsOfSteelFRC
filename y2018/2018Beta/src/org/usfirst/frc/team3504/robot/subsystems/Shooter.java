@@ -125,11 +125,11 @@ public class Shooter extends Subsystem {
 		talon.setSensorPhase(false);
 	}
 
-	public int getHighShooterSpeed() {
+	public double getHighShooterSpeed() {
 		return highShooterMotor.getSelectedSensorVelocity(0);
 	}
 
-	public int getLowShooterSpeed() {
+	public double getLowShooterSpeed() {
 		return lowShooterMotor.getSelectedSensorVelocity(0);
 	}
 
