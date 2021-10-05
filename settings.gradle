@@ -10,6 +10,9 @@ include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
 include 'libraries:GirlsOfSteelLibNavx'
 
+include 'y2018:2018Beta'
+include 'y2018:2018PowerUp'
+
 include 'y2019:2019DeepSpace'
 include 'y2019:OffenseBot'
 
