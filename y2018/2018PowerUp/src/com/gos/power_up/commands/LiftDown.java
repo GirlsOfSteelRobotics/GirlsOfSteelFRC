@@ -1,8 +1,6 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.Robot;
-
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -11,11 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftDown extends Command {
 
 
-
     public LiftDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-            requires(Robot.lift);
+        requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time

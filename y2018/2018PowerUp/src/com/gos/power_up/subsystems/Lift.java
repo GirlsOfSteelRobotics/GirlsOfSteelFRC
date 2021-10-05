@@ -1,12 +1,10 @@
 package com.gos.power_up.subsystems;
 
-import com.gos.power_up.RobotMap;
-import com.gos.power_up.commands.LiftHold;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.RobotMap;
+import com.gos.power_up.commands.LiftHold;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -70,39 +68,36 @@ public class Lift extends Subsystem {
         lift.stopMotor();
     }
 
-    public boolean isAtBottom(){
+    public boolean isAtBottom() {
         return !limitSwitch.get();
     }
 
-    public double getGoalLiftPosition()
-    {
+    public double getGoalLiftPosition() {
         return goalLiftPosition;
     }
 
-    public void setGoalLiftPosition(double goal)
-    {
+    public void setGoalLiftPosition(double goal) {
         goalLiftPosition = goal;
     }
 
-    public double getLiftPosition()
-    {
+    public double getLiftPosition() {
         return lift.getSelectedSensorPosition(0);
     }
 
-    public void enterRecoveryMode()
-    {
+    public void enterRecoveryMode() {
         inRecoveryMode = true;
         System.out.println("Lift IN RECOVERY MODE");
     }
 
-    public void printLimitSwitch()
-    {
-        if (isAtBottom()) System.out.println("Lift: Limit switch ACTIVATED at bottom");
-        else System.out.println("Lift: Limit switch NOT activated at bottom");
+    public void printLimitSwitch() {
+        if (isAtBottom()) {
+            System.out.println("Lift: Limit switch ACTIVATED at bottom");
+        } else {
+            System.out.println("Lift: Limit switch NOT activated at bottom");
+        }
     }
 
-    public void holdLiftPosition()
-    {
+    public void holdLiftPosition() {
         //printLimitSwitch(); ///Testing Limit Switch
 
         lift.getStickyFaults(faults);
@@ -112,10 +107,8 @@ public class Lift extends Subsystem {
             lift.clearStickyFaults(10);
             System.out.println("Lift: Sticky fault detected, IN RECOVERY MODE");
         }
-        if (inRecoveryMode)
-        {
-            if (isAtBottom())
-            {
+        if (inRecoveryMode) {
+            if (isAtBottom()) {
                 lift.setSelectedSensorPosition(0, 0, 10);
                 inRecoveryMode = false;
                 System.out.println("Lift: encoder position recovered (limit switch activated at bottom)");
@@ -124,45 +117,46 @@ public class Lift extends Subsystem {
         lift.set(ControlMode.Position, goalLiftPosition);
         //System.out.println("GoalLiftPosition: " + goalLiftPosition);
     }
-    public void setLiftToScale()
-    {
-        if (!inRecoveryMode) goalLiftPosition = LIFT_SCALE;
-        else System.out.println("Lift in recovery mode, can't go to scale");
-    }
-    public void setLiftToSwitch()
-    {
-        if (!inRecoveryMode) goalLiftPosition = LIFT_SWITCH;
-        else System.out.println("Lift in recovery mode, can't go to switch");
-    }
-    public void setLiftToGround()
-    {
-        if (!inRecoveryMode) goalLiftPosition = LIFT_GROUND;
-        else System.out.println("Lift in recovery mode, can't go to ground");
+
+    public void setLiftToScale() {
+        if (!inRecoveryMode) {
+            goalLiftPosition = LIFT_SCALE;
+        } else {
+            System.out.println("Lift in recovery mode, can't go to scale");
+        }
     }
 
-    public void incrementLift()
-    {
-        double goalPosition = goalLiftPosition + LIFT_INCREMENT;
-        if (!inRecoveryMode && (goalPosition >= LIFT_MAX))
-        {
-            goalLiftPosition = LIFT_MAX;
+    public void setLiftToSwitch() {
+        if (!inRecoveryMode) {
+            goalLiftPosition = LIFT_SWITCH;
+        } else {
+            System.out.println("Lift in recovery mode, can't go to switch");
         }
-        else
-        {
+    }
+
+    public void setLiftToGround() {
+        if (!inRecoveryMode) {
+            goalLiftPosition = LIFT_GROUND;
+        } else {
+            System.out.println("Lift in recovery mode, can't go to ground");
+        }
+    }
+
+    public void incrementLift() {
+        double goalPosition = goalLiftPosition + LIFT_INCREMENT;
+        if (!inRecoveryMode && (goalPosition >= LIFT_MAX)) {
+            goalLiftPosition = LIFT_MAX;
+        } else {
             goalLiftPosition = goalPosition;
             //System.out.println("Lift incremented. New goal : " + goalLiftPosition);
         }
     }
 
-    public void decrementLift()
-    {
+    public void decrementLift() {
         double goalPosition = goalLiftPosition - LIFT_INCREMENT;
-        if (!inRecoveryMode && (goalPosition <= LIFT_MIN))
-        {
+        if (!inRecoveryMode && (goalPosition <= LIFT_MIN)) {
             goalLiftPosition = LIFT_MIN;
-        }
-        else
-        {
+        } else {
             goalLiftPosition = goalPosition;
             //System.out.println("Lift decremented. New goal : " + goalLiftPosition);
         }

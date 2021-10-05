@@ -1,7 +1,6 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -21,7 +20,9 @@ public class TurnToGear extends Command {
 
     public enum Direction {
         kLeft, kRight
-    };
+    }
+
+    ;
 
     private Direction direction;
 
@@ -68,8 +69,7 @@ public class TurnToGear extends Command {
         //return centerX.length == 2;
         if (targetX >= 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

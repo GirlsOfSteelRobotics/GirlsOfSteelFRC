@@ -1,7 +1,6 @@
 package com.gos.steam_works.subsystems;
 
 import com.gos.steam_works.RobotMap;
-
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;

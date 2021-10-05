@@ -1,11 +1,9 @@
 package com.gos.power_up.subsystems;
 
-import com.gos.power_up.RobotMap;
-import com.gos.power_up.commands.WristHold;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.RobotMap;
+import com.gos.power_up.commands.WristHold;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -50,56 +48,45 @@ public class Wrist extends Subsystem {
         wrist.set(speed); //value between -1.0 and 1.0;
     }
 
-    public void setWristPosition(double pos){
+    public void setWristPosition(double pos) {
         wrist.set(ControlMode.Position, pos);
     }
 
-    public void wristStop(){
+    public void wristStop() {
         wrist.stopMotor();
     }
 
-    public void holdWristPosition()
-    {
+    public void holdWristPosition() {
         wrist.set(ControlMode.Position, goalWristPosition);
     }
 
-    public void wristIn()
-    {
+    public void wristIn() {
         double goalPosition = goalWristPosition + WRIST_INCREMENT;
-        if (goalPosition >= WRIST_IN_BOUND)
-        {
+        if (goalPosition >= WRIST_IN_BOUND) {
             goalWristPosition = WRIST_IN_BOUND;
-        }
-        else
-        {
+        } else {
             goalWristPosition = goalPosition;
             //System.out.println("Wrist moved in. New goal : " + goalWristPosition);
         }
 
     }
 
-    public void wristOut()
-    {
+    public void wristOut() {
         double goalPosition = goalWristPosition - WRIST_INCREMENT;
-        if (goalPosition <= WRIST_OUT_BOUND)
-        {
+        if (goalPosition <= WRIST_OUT_BOUND) {
             goalWristPosition = WRIST_OUT_BOUND;
-        }
-        else
-        {
+        } else {
             goalWristPosition = goalPosition;
             //System.out.println("Wrist moved out. New goal : " + goalWristPosition);
         }
 
     }
 
-    public void setGoalWristPosition(double goal)
-    {
+    public void setGoalWristPosition(double goal) {
         goalWristPosition = goal;
     }
 
-    public double getWristPosition()
-    {
+    public double getWristPosition() {
         return wrist.getSelectedSensorPosition(0);
     }
 }

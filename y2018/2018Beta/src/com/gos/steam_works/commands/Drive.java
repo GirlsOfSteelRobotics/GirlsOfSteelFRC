@@ -1,10 +1,8 @@
 package com.gos.steam_works.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.OI;
 import com.gos.steam_works.Robot;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -37,7 +35,7 @@ public class Drive extends Command {
     protected void execute() {
         if (Robot.oi.getDriveStyle() == OI.DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadArcade) {
             Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
-        } else if (Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == OI.DriveStyle.joystickTank){
+        } else if (Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == OI.DriveStyle.joystickTank) {
             Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
         }
     }

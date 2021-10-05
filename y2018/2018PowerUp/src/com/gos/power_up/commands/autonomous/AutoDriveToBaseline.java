@@ -1,7 +1,6 @@
 package com.gos.power_up.commands.autonomous;
 
 import com.gos.power_up.commands.DriveByMotionMagicAbsolute;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

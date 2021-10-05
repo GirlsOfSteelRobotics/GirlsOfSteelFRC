@@ -1,12 +1,10 @@
 package com.gos.steam_works.subsystems;
 
-import com.gos.steam_works.RobotMap;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.steam_works.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shooter extends Subsystem {
@@ -88,7 +86,7 @@ public class Shooter extends Subsystem {
     }
 
     public boolean isHighShooterAtSpeed() { // TODO: This is broken, always
-                                            // returning true
+        // returning true
         return ((double) highShooterMotor.getClosedLoopError(0) / (double) shooterSpeed) < MAX_SHOOTER_ERROR;
     }
 
@@ -103,14 +101,16 @@ public class Shooter extends Subsystem {
     }
 
     public void incrementHighShooterSpeed() {
-        if ((shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED)
+        if ((shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED) {
             shooterSpeed += SHOOTER_SPEED_STEP;
+        }
         System.out.println("currentShooterSpeed: " + shooterSpeed);
     }
 
     public void decrementHighShooterSpeed() {
-        if ((shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED)
+        if ((shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED) {
             shooterSpeed -= SHOOTER_SPEED_STEP;
+        }
         System.out.println("currentShooterSpeed: " + shooterSpeed);
     }
 

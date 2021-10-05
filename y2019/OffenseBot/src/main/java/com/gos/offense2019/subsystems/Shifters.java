@@ -1,7 +1,6 @@
 package com.gos.offense2019.subsystems;
 
 import com.gos.offense2019.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,7 +13,9 @@ public class Shifters extends Subsystem {
 
     public static enum Speed {
         kHigh, kLow
-    };
+    }
+
+    ;
 
     private Speed speed;
 
@@ -24,7 +25,7 @@ public class Shifters extends Subsystem {
 
         addChild("shifterLeft", shifterLeft);
         addChild("shifterRight", shifterRight);
-  }
+    }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

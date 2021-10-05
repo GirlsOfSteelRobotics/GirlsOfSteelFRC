@@ -12,7 +12,6 @@ import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.TurnByMotionMagicAbsolute;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -42,8 +41,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
         //Drive forward and turn in place and drive forward to switch
         addSequential(new DriveByMotionMagicAbsolute(STRAIGHT_1, 0, false));
 
-        if(switchSide == GameData.FieldSide.right)
-        {
+        if (switchSide == GameData.FieldSide.right) {
             addSequential(new TurnByMotionMagicAbsolute(-TURN_DEGREES_1));
             addSequential(new DriveByMotionMagicAbsolute(APPROACH_SWITCH, -TURN_DEGREES_1, false));
 
@@ -53,9 +51,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
 
             //Drive back
             addSequential(new DriveByMotionMagicAbsolute(-(APPROACH_SWITCH + 5), -TURN_DEGREES_1, false));
-        }
-        else if (switchSide == GameData.FieldSide.left)
-        {
+        } else if (switchSide == GameData.FieldSide.left) {
             addSequential(new TurnByMotionMagicAbsolute(TURN_DEGREES_2));
             addSequential(new DriveByMotionMagicAbsolute(APPROACH_SWITCH, TURN_DEGREES_2 - 20, false));
 
@@ -89,13 +85,10 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
         addParallel(new LiftHold());
 
         //Turn in place and drive forward
-        if(switchSide == GameData.FieldSide.right)
-        {
+        if (switchSide == GameData.FieldSide.right) {
             addSequential(new TurnByMotionMagicAbsolute(-TURN_AFTER_STACK));
             addSequential(new DriveByMotionMagicAbsolute(APPROACH_SWITCH + 10, -END_HEADING, false));
-        }
-        else if (switchSide == GameData.FieldSide.left)
-        {
+        } else if (switchSide == GameData.FieldSide.left) {
             addSequential(new TurnByMotionMagicAbsolute(90));
             addSequential(new DriveByMotionMagicAbsolute((APPROACH_SWITCH + 10), 85, false)); //10 was 50 before
         }

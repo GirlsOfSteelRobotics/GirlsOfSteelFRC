@@ -62,6 +62,7 @@ public class GameData {
 
     /**
      * returns what side the robot is on
+     *
      * @return
      */
     public FieldSide getRobotSide() {
@@ -87,6 +88,7 @@ public class GameData {
     public void reset() {
         gameData = null;
     }
+
     /**
      * Which side of the near scale has our alliance color?
      *
@@ -141,8 +143,7 @@ public class GameData {
         int tim = 0;
         gameData = DriverStation.getInstance().getGameSpecificMessage();
 
-        while(tim <= 5 && (gameData == null || gameData.equals("")))
-        {
+        while (tim <= 5 && (gameData == null || gameData.equals(""))) {
             gameData = DriverStation.getInstance().getGameSpecificMessage();
             Timer.delay(0.2);
             tim++;

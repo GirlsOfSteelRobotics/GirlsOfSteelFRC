@@ -1,11 +1,9 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-import com.gos.power_up.subsystems.Shifters;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
+import com.gos.power_up.subsystems.Shifters;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -55,8 +53,9 @@ public class TurnByMotionMagicAbsolute extends Command {
         if (error < TURNING_FINISH_THRESHOLD) {
             System.out.println("TurnByMotionMagicAbsolute: turning degrees reached");
             return true;
-        } else
+        } else {
             return false;
+        }
 
     }
 

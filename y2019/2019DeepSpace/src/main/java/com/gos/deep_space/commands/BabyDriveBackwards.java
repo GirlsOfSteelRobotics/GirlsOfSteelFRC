@@ -7,41 +7,42 @@
 
 package com.gos.deep_space.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import com.gos.deep_space.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class BabyDriveBackwards extends Command {
-  private final double BABYDRIVE_SPEED = 0.4;
-  public BabyDriveBackwards() {
-    requires(Robot.babyDrive);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
+    private final double BABYDRIVE_SPEED = 0.4;
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("init BabyDriveBackwards");
+    public BabyDriveBackwards() {
+        requires(Robot.babyDrive);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    }
 
-  }
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+        System.out.println("init BabyDriveBackwards");
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
-  }
+    }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    Robot.babyDrive.babyDriveStop();
-    System.out.println("end BabyDriveBackwards");
-  }
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        Robot.babyDrive.babyDriveStop();
+        System.out.println("end BabyDriveBackwards");
+    }
 
 }

@@ -7,42 +7,42 @@
 
 package com.gos.deep_space.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import com.gos.deep_space.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 
 
 public class BabyDriveForward extends Command {
-  private final double BABYDRIVE_SPEED = -0.4;
+    private final double BABYDRIVE_SPEED = -0.4;
 
-  public BabyDriveForward() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.babyDrive);
-  }
-
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("init BabyDriveForward");
+    public BabyDriveForward() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+        requires(Robot.babyDrive);
     }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
-  }
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+        System.out.println("init BabyDriveForward");
+    }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    System.out.println("end BabyDriveForward");
-    Robot.babyDrive.babyDriveStop();
-  }
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        System.out.println("end BabyDriveForward");
+        Robot.babyDrive.babyDriveStop();
+    }
 
 }

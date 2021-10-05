@@ -1,7 +1,6 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,7 +11,7 @@ public class Shoot extends Command {
 
     private int loopCounter; // increment each time execute runs
     private boolean isLowMotorRunning = false; // if we have started the low
-                                                // motor yet
+    // motor yet
     private final int LOOP_TIMEOUT = 50; // ~1sec of time
     private int shooterSpeed;
 

@@ -1,7 +1,6 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -16,8 +15,7 @@ public class LiftByVision extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        if (Robot.blobs.distanceBetweenBlobs() == -1)
-        {
+        if (Robot.blobs.distanceBetweenBlobs() == -1) {
             System.out.print("LiftByVision initialize: line not in sight!!");
             end();
         }
@@ -25,8 +23,7 @@ public class LiftByVision extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (Robot.blobs.distanceBetweenBlobs() != -1)
-        {
+        if (Robot.blobs.distanceBetweenBlobs() != -1) {
             Robot.lift.incrementLift();
         }
     }

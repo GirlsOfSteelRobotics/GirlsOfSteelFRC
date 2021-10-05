@@ -1,8 +1,6 @@
 package com.gos.steam_works;
 
-import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.commands.DriveByDistance;
-
 import com.gos.steam_works.commands.ShiftDown;
 import com.gos.steam_works.commands.ShiftUp;
 import com.gos.steam_works.commands.TurnToGear;
@@ -11,7 +9,7 @@ import com.gos.steam_works.commands.autonomous.AutoCenterGear;
 import com.gos.steam_works.commands.autonomous.AutoDoNothing;
 import com.gos.steam_works.commands.autonomous.AutoGear;
 import com.gos.steam_works.commands.autonomous.AutoShooter;
-
+import com.gos.steam_works.subsystems.Shifters;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -25,11 +23,15 @@ public class OI {
 
     public enum DriveDirection {
         kFWD, kREV
-    };
+    }
+
+    ;
 
     public enum JoystickScaling {
         linear, deadband, quadratic
-    };
+    }
+
+    ;
 
 
     //Drive Styles
@@ -37,14 +39,16 @@ public class OI {
     //joystick: tank, one stick arcade
     public enum DriveStyle {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank
-    };
+    }
+
+    ;
 
     private DriveStyle driveStyle;
 
-    private Joystick operatorGamePad = new Joystick (0);
-    private Joystick drivingGamePad = new Joystick (1);
-    private Joystick drivingJoystickOne = new Joystick (1);
-    private Joystick drivingJoystickTwo = new Joystick (2);
+    private Joystick operatorGamePad = new Joystick(0);
+    private Joystick drivingGamePad = new Joystick(1);
+    private Joystick drivingJoystickOne = new Joystick(1);
+    private Joystick drivingJoystickTwo = new Joystick(2);
     private Joystick autonSelector = new Joystick(5);
 
     private DigitalInput dio0 = new DigitalInput(0);
@@ -105,7 +109,6 @@ public class OI {
     }
 
 
-
     public Command getAutonCommand() {
         switch (getAutonSelector()) {
         case 0:
@@ -125,7 +128,7 @@ public class OI {
         case 7:
             return new AutoShooter();
         //case 8:
-            //return new DriveByDistance(-3, Shifters.Speed.kLow);
+        //return new DriveByDistance(-3, Shifters.Speed.kLow);
         case 9: //red boiler
             return new AutoBoilerGearAndShoot(44.0, TurnToGear.Direction.kLeft); //updated 1:04p 4/47/17
         case 10: //blue boiler
@@ -144,16 +147,13 @@ public class OI {
     }
 
     public double getDrivingJoystickY() {
-        if (driveStyle == DriveStyle.gamePadArcade){
+        if (driveStyle == DriveStyle.gamePadArcade) {
             return drivingGamePad.getY();
-        }
-        else if (driveStyle == DriveStyle.joystickArcade) {
+        } else if (driveStyle == DriveStyle.joystickArcade) {
             return drivingJoystickOne.getY();
-        }
-        else if (driveStyle == DriveStyle.gamePadTank) {
+        } else if (driveStyle == DriveStyle.gamePadTank) {
             return drivingGamePad.getY(); //TODO: this should get the Z vertical/rotate value
-        }
-        else if (driveStyle == DriveStyle.joystickTank) {
+        } else if (driveStyle == DriveStyle.joystickTank) {
             return drivingJoystickOne.getY();
         } else {
             return 0.0;
@@ -163,45 +163,39 @@ public class OI {
     public double getDrivingJoystickX() {
         if (driveStyle == DriveStyle.gamePadArcade) {
             return -drivingGamePad.getZ();
-        }
-        else if (driveStyle == DriveStyle.joystickArcade){
-                return drivingJoystickOne.getX();
-        }
-        else if (driveStyle == DriveStyle.gamePadTank) {
+        } else if (driveStyle == DriveStyle.joystickArcade) {
+            return drivingJoystickOne.getX();
+        } else if (driveStyle == DriveStyle.gamePadTank) {
             return drivingGamePad.getTwist();
-        }
-        else if (driveStyle == DriveStyle.joystickTank) {
+        } else if (driveStyle == DriveStyle.joystickTank) {
             return drivingJoystickTwo.getY();
-        }
-        else {
+        } else {
             return 0.0;
         }
     }
 
 
-
-    public double getScaledJoystickValue(double input)
-    {
+    public double getScaledJoystickValue(double input) {
         double output = 0;
 
-        if (joystickScale == JoystickScaling.linear)
-        {
+        if (joystickScale == JoystickScaling.linear) {
             output = input;
-        }
-        else if (joystickScale == JoystickScaling.deadband)
-        {
-            if (Math.abs(input) < DEADBAND)
+        } else if (joystickScale == JoystickScaling.deadband) {
+            if (Math.abs(input) < DEADBAND) {
                 output = 0;
-            else
-            {
-                if (input > 0) output = input - DEADBAND;
-                else output = input + DEADBAND;
+            } else {
+                if (input > 0) {
+                    output = input - DEADBAND;
+                } else {
+                    output = input + DEADBAND;
+                }
             }
-        }
-        else if (joystickScale == JoystickScaling.quadratic)
-        {
-            if (input > 0) output = Math.pow(input, 2);
-            else output = -1 * Math.pow(input, 2);
+        } else if (joystickScale == JoystickScaling.quadratic) {
+            if (input > 0) {
+                output = Math.pow(input, 2);
+            } else {
+                output = -1 * Math.pow(input, 2);
+            }
         }
 
         return output;
@@ -247,7 +241,7 @@ public class OI {
 
     /**
      * Get Autonomous Mode Selector
-     *
+     * <p>
      * Read a physical pushbutton switch attached to a USB gamepad controller,
      * returning an integer that matches the current readout of the switch.
      *
@@ -258,9 +252,9 @@ public class OI {
         // number encoding the current selection. To simplify wiring, buttons
         // 2-5 were used.
         int value = 1 * (autonSelector.getRawButton(2) ? 1 : 0)
-                + 2 * (autonSelector.getRawButton(3) ? 1 : 0)
-                + 4 * (autonSelector.getRawButton(4) ? 1 : 0)
-                + 8 * (autonSelector.getRawButton(5) ? 1 : 0);
+            + 2 * (autonSelector.getRawButton(3) ? 1 : 0)
+            + 4 * (autonSelector.getRawButton(4) ? 1 : 0)
+            + 8 * (autonSelector.getRawButton(5) ? 1 : 0);
         System.out.println("Auto Selector Number: " + value);
         return value;
     }

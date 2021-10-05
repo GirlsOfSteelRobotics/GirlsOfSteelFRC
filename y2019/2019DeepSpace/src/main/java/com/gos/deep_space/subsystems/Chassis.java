@@ -4,11 +4,11 @@ package com.gos.deep_space.subsystems;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.gos.deep_space.RobotMap;
 import com.gos.deep_space.commands.DriveByJoystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.deep_space.RobotMap;
 
 public class Chassis extends Subsystem {
 
@@ -20,7 +20,7 @@ public class Chassis extends Subsystem {
 
     private DifferentialDrive drive;
 
-    public Chassis () {
+    public Chassis() {
         masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
         followerLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_TALON);
 
@@ -58,21 +58,21 @@ public class Chassis extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public WPI_TalonSRX getLeftTalon(){
+    public WPI_TalonSRX getLeftTalon() {
         return masterLeft;
     }
 
-    public WPI_TalonSRX getRightTalon(){
+    public WPI_TalonSRX getRightTalon() {
         return masterRight;
     }
 
     public void driveByJoystick(double yDir, double xDir) {
         SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir);
-        double forward = yDir*Math.abs(yDir);
+        double forward = yDir * Math.abs(yDir);
         drive.arcadeDrive(forward, xDir);
     }
 
-    public void setSpeed(double speed){
+    public void setSpeed(double speed) {
         drive.arcadeDrive(speed, 0);
     }
 

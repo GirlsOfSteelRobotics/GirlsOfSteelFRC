@@ -20,7 +20,6 @@ import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -105,38 +104,44 @@ public class Robot extends TimedRobot {
         GameData.FieldSide scaleSide = gameData.getScaleSide();
         boolean scaleOverride = gameData.getScaleOverride();
 
-        if(gameData.getNoAuto())
-        {
+        if (gameData.getNoAuto()) {
             m_autonomousCommand = null;
-        }
-        else if(robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) //if robot in the corner
+        } else if (robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) //if robot in the corner
 
         {
             Robot.shifters.shiftGear(Shifters.Speed.kHigh);
 
             if (elementPriority == GameData.FieldElement.Switch) //switch priority
             {
-                if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-                else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
-                else if (scaleOverride) m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
-                else m_autonomousCommand = new AutoDriveToBaseline();
-            }
-            else //scale priority
+                if (switchSide == robotSide) {
+                    m_autonomousCommand = new AutoNearSwitch(switchSide);
+                } else if (scaleSide == robotSide) {
+                    m_autonomousCommand = new AutoNearScale(scaleSide);
+                } else if (scaleOverride) {
+                    m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
+                } else {
+                    m_autonomousCommand = new AutoDriveToBaseline();
+                }
+            } else //scale priority
             {
-                if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
-                else if (scaleOverride) m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
-                else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-                else m_autonomousCommand = new AutoDriveToBaseline();
+                if (scaleSide == robotSide) {
+                    m_autonomousCommand = new AutoNearScale(scaleSide);
+                } else if (scaleOverride) {
+                    m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
+                } else if (switchSide == robotSide) {
+                    m_autonomousCommand = new AutoNearSwitch(switchSide);
+                } else {
+                    m_autonomousCommand = new AutoDriveToBaseline();
+                }
             }
-        }
-        else if(robotSide == GameData.FieldSide.middle)
-        {
+        } else if (robotSide == GameData.FieldSide.middle) {
             Robot.shifters.shiftGear(Shifters.Speed.kLow);
-            if (switchSide != GameData.FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitch(switchSide);
-            else m_autonomousCommand = new AutoDriveToBaseline();
-        }
-        else
-        {
+            if (switchSide != GameData.FieldSide.bad) {
+                m_autonomousCommand = new AutoMiddleSwitch(switchSide);
+            } else {
+                m_autonomousCommand = new AutoDriveToBaseline();
+            }
+        } else {
             System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
             m_autonomousCommand = new AutoDriveToBaseline();
         }

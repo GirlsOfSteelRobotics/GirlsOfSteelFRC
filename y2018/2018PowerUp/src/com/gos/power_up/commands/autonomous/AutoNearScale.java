@@ -13,7 +13,6 @@ import com.gos.power_up.commands.TurnByMotionMagic;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToShoot;
 import com.gos.power_up.subsystems.Shifters;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -30,17 +29,14 @@ public class AutoNearScale extends CommandGroup {
         //Move Robot, lift, wrist into position
         addSequential(new DriveByMotionMagic(DISTANCE_FORWARD, 0));
         Robot.shifters.shiftGear(Shifters.Speed.kLow);
-        if (robotPosition == GameData.FieldSide.left)
-        {
+        if (robotPosition == GameData.FieldSide.left) {
             addSequential(new TurnByMotionMagic(-90.0));
             addSequential(new DriveByMotionMagic(DISTANCE_SIDE, -90, false));
             addSequential(new WristToShoot());
             addSequential(new LiftToScale());
             addParallel(new WristHold());
             addParallel(new LiftHold());
-        }
-        else
-        {
+        } else {
             addSequential(new TurnByMotionMagic(90.0));
             addSequential(new DriveByMotionMagic(DISTANCE_SIDE, 90, false));
             addSequential(new WristToShoot());

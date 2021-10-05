@@ -1,10 +1,8 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.steam_works.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -82,7 +80,7 @@ public class DriveByVision extends Command {
          */
         double targetX;
         double height;
-        synchronized(Robot.listener.cameraLock){
+        synchronized (Robot.listener.cameraLock) {
             targetX = Robot.listener.targetX;
             height = Robot.listener.height;
         }
@@ -102,14 +100,15 @@ public class DriveByVision extends Command {
 
 
         double goalLinearVelocity;
-        if (height < 0 && tim.get() < 1)
+        if (height < 0 && tim.get() < 1) {
             goalLinearVelocity = fastLinearVelocity;
-        else if (height < 0) {
+        } else if (height < 0) {
             goalLinearVelocity = slowLinearVelocity;
-        } else if (height >= 52.0)
+        } else if (height >= 52.0) {
             goalLinearVelocity = slowLinearVelocity;
-        else
+        } else {
             goalLinearVelocity = fastLinearVelocity;
+        }
 
 
         // right and left desired wheel speeds in inches per second
@@ -122,13 +121,12 @@ public class DriveByVision extends Command {
         rightTalon.set(ControlMode.Velocity, angVRight);
         leftTalon.set(ControlMode.Velocity, -angVLeft);
 
-        if (targetX >= 0){
+        if (targetX >= 0) {
             System.out.println("Number of Contours: " + 2/*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-                    + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
-        }
-        else {
+                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
+        } else {
             System.out.println("Number of Contours: " + "not 2" /*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-                    + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
+                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + tim.get());
         }
     }
 
@@ -136,7 +134,7 @@ public class DriveByVision extends Command {
     protected boolean isFinished() {
 
         return ((tim.get() > 1 && Math.abs(leftTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY
-                && Math.abs(rightTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY) || (tim.get() > TIMEOUT));
+            && Math.abs(rightTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY) || (tim.get() > TIMEOUT));
     }
 
     // Called once after isFinished returns true

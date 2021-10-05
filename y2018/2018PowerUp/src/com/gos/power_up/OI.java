@@ -7,8 +7,6 @@
 
 package com.gos.power_up;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import com.gos.power_up.commands.ClimbDown;
 import com.gos.power_up.commands.ClimbUp;
 import com.gos.power_up.commands.Collect;
@@ -23,6 +21,8 @@ import com.gos.power_up.commands.ShiftUp;
 import com.gos.power_up.commands.SwitchPosition;
 import com.gos.power_up.commands.WristIn;
 import com.gos.power_up.commands.WristOut;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,13 +31,15 @@ import com.gos.power_up.commands.WristOut;
 public class OI {
     public enum DriveStyle {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank, amazonDrive
-    };
+    }
+
+    ;
 
     private DriveStyle driveStyle;
 
-    private Joystick operatorGamePad = new Joystick (0);
-    private Joystick drivingGamePad = new Joystick (1);
-    private Joystick amazonGamePad = new Joystick (1);
+    private Joystick operatorGamePad = new Joystick(0);
+    private Joystick drivingGamePad = new Joystick(1);
+    private Joystick amazonGamePad = new Joystick(1);
     //private Joystick drivingJoystickOne = new Joystick (1);
     //private Joystick drivingJoystickTwo = new Joystick (2);
 
@@ -185,10 +187,10 @@ public class OI {
     }
 
     public boolean isThrottle() {
-        return amazonGamePad.getRawAxis(3)>.5;
+        return amazonGamePad.getRawAxis(3) > .5;
     }
 
-    public boolean isSpeedy(){
-        return amazonGamePad.getRawAxis(2)>.5;
+    public boolean isSpeedy() {
+        return amazonGamePad.getRawAxis(2) > .5;
     }
 }

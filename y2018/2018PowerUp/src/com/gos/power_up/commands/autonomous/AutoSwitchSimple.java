@@ -7,7 +7,6 @@ import com.gos.power_up.commands.ReleaseFast;
 import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

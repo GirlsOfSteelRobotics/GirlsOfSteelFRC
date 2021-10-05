@@ -1,16 +1,14 @@
 package com.gos.steam_works.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.gos.steam_works.Robot;
+import com.gos.steam_works.RobotMap;
+import edu.wpi.first.wpilibj.command.Command;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import com.gos.steam_works.Robot;
-import com.gos.steam_works.RobotMap;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -133,11 +131,11 @@ public class CreateMotionProfile extends Command {
         BufferedWriter fout = new BufferedWriter(outFile);
 
         for (int x = 0; x < trajectory.size(); x++) { // outer loop to go
-                                                        // through the unknown #
-                                                        // of elements in
-                                                        // ArrayList<ArrayList<Double>>
+            // through the unknown #
+            // of elements in
+            // ArrayList<ArrayList<Double>>
             for (int y = 0; y < 3; y++) // inner loop to go through the three
-                                        // elements of ArrayList<Double>
+            // elements of ArrayList<Double>
             {
                 fout.write(trajectory.get(x).get(y) + " ");
             }
@@ -152,7 +150,7 @@ public class CreateMotionProfile extends Command {
         double leftDiff = 0;
         double rightDiff = 0;
 
-        if (leftMP.size() > 1 && rightMP.size() > 1){
+        if (leftMP.size() > 1 && rightMP.size() > 1) {
             leftDiff = Math.abs(leftMP.get(1).get(0) - leftMP.get(0).get(0));
             rightDiff = Math.abs(rightMP.get(1).get(0) - rightMP.get(0).get(0));
         }
@@ -163,7 +161,7 @@ public class CreateMotionProfile extends Command {
         }
 
         // remove repeated final positions at the end
-        if (leftMP.size() > 1 && rightMP.size() > 1){
+        if (leftMP.size() > 1 && rightMP.size() > 1) {
             leftDiff = Math.abs(leftMP.get(leftMP.size() - 2).get(0) - leftMP.get(leftMP.size() - 1).get(0));
             rightDiff = Math.abs(rightMP.get(rightMP.size() - 2).get(0) - rightMP.get(rightMP.size() - 1).get(0));
         }

@@ -11,7 +11,6 @@ import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.TurnByMotionMagic;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToShoot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -31,8 +30,11 @@ public class AutoFarScale extends CommandGroup {
         addSequential(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
 
         //First turn behind the switch
-        if (scaleSide == GameData.FieldSide.right) addSequential(new AutoTurnRight(TURN_RADIUS_1));
-        else addSequential(new AutoTurnLeft(TURN_RADIUS_1));
+        if (scaleSide == GameData.FieldSide.right) {
+            addSequential(new AutoTurnRight(TURN_RADIUS_1));
+        } else {
+            addSequential(new AutoTurnLeft(TURN_RADIUS_1));
+        }
 
         //Get lift and wrist into position
         addSequential(new LiftToScale());
@@ -41,17 +43,17 @@ public class AutoFarScale extends CommandGroup {
         addParallel(new LiftHold());
 
         //Driving across the field behind the switch
-        if (scaleSide == GameData.FieldSide.right) addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, -90, false));
-        else addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 90, false));
+        if (scaleSide == GameData.FieldSide.right) {
+            addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, -90, false));
+        } else {
+            addSequential(new DriveByMotionMagic(DISTANCE_SIDE_1, 90, false));
+        }
 
         //Turning towards the scale
-        if (scaleSide == GameData.FieldSide.right)
-        {
+        if (scaleSide == GameData.FieldSide.right) {
             addSequential(new DriveByMotionMagic(TURN_RADIUS_2, DEGREES_2));
             addSequential(new TurnByMotionMagic(90));
-        }
-        else
-        {
+        } else {
             addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -DEGREES_2));
             addSequential(new TurnByMotionMagic(-90));
         }

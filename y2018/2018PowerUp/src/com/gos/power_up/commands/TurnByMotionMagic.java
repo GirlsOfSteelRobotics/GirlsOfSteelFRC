@@ -1,10 +1,8 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -41,8 +39,9 @@ public class TurnByMotionMagic extends Command {
         Robot.chassis.configForTurnByMotionMagic();
         // System.out.println("TurnByMotionMagic: configured for motion magic");
 
-        if (resetPigeon)
+        if (resetPigeon) {
             Robot.chassis.zeroSensors();
+        }
 
         System.out.println("TurnByMotionMagic: heading: " + targetHeading + " reset=" + resetPigeon);
 
@@ -66,8 +65,9 @@ public class TurnByMotionMagic extends Command {
         if (error < TURNING_FINISH_THRESHOLD) {
             System.out.println("TurnByMotionMagic: turning degrees reached");
             return true;
-        } else
+        } else {
             return false;
+        }
 
     }
 

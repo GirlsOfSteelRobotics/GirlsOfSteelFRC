@@ -1,18 +1,18 @@
 package com.gos.deep_space.subsystems;
 
+import com.gos.deep_space.RobotMap;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import com.gos.deep_space.RobotMap;
 
 // NOTE: the lidar sensor measurement is from the back of lidar sensor
 
-public class Lidar extends Subsystem{
+public class Lidar extends Subsystem {
 
     public double LIDAR_TOLERANCE = 0; // tune
     private Counter counter;
 
-    public Lidar () {
+    public Lidar() {
         DigitalInput source = new DigitalInput(RobotMap.LIDAR_DIO);
         counter = new Counter(source);
         counter.setMaxPeriod(1.0);

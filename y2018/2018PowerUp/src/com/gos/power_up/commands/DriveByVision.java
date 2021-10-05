@@ -1,11 +1,9 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-import com.gos.power_up.subsystems.Blobs;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
+import com.gos.power_up.subsystems.Blobs;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -27,8 +25,7 @@ public class DriveByVision extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         dist = Robot.blobs.distanceBetweenBlobs();
-        if (Robot.blobs.distanceBetweenBlobs() == -1)
-        {
+        if (Robot.blobs.distanceBetweenBlobs() == -1) {
             System.out.println("DriveByVision initialize: line not in sight!!");
             end();
         }
@@ -38,18 +35,13 @@ public class DriveByVision extends Command {
     protected void execute() {
         dist = Robot.blobs.distanceBetweenBlobs();
         System.out.print("Distance = " + dist + " ");
-        if (dist == -1)
-        {
+        if (dist == -1) {
             System.out.println("DriveByVision: Can't see line!");
-        }
-        else if (dist < Blobs.GOAL_DISTANCE)
-        {//too far --> go forward
+        } else if (dist < Blobs.GOAL_DISTANCE) {//too far --> go forward
             System.out.println("DriveByVision: driving forward");
             leftTalon.set(ControlMode.PercentOutput, SPEED_PERCENT);
             rightTalon.set(ControlMode.PercentOutput, -SPEED_PERCENT);
-        }
-        else if (dist > Blobs.GOAL_DISTANCE)
-        {//too close --> go backward
+        } else if (dist > Blobs.GOAL_DISTANCE) {//too close --> go backward
             System.out.println("DriveByVision: driving backard");
             leftTalon.set(ControlMode.PercentOutput, -SPEED_PERCENT);
             rightTalon.set(ControlMode.PercentOutput, SPEED_PERCENT);

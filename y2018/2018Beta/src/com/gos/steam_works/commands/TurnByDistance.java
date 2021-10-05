@@ -1,12 +1,10 @@
 package com.gos.steam_works.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.Robot;
 import com.gos.steam_works.RobotMap;
 import com.gos.steam_works.subsystems.Shifters;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -43,7 +41,7 @@ public class TurnByDistance extends Command {
         // Robot.chassis.setupFPID(leftTalon);
         // Robot.chassis.setupFPID(rightTalon);
 
-        if (speed == Shifters.Speed.kLow){
+        if (speed == Shifters.Speed.kLow) {
             leftTalon.config_kF(0, 0, 0);
             leftTalon.config_kP(0, 0.17, 0);
             leftTalon.config_kI(0, 0, 0);
@@ -53,8 +51,7 @@ public class TurnByDistance extends Command {
             rightTalon.config_kP(0, 0.17, 0);
             rightTalon.config_kI(0, 0, 0);
             rightTalon.config_kD(0, 0.02, 0);
-        }
-        else if (speed == Shifters.Speed.kHigh){
+        } else if (speed == Shifters.Speed.kHigh) {
             leftTalon.config_kF(0, 0, 0);
             leftTalon.config_kP(0, 0.02, 0);
             leftTalon.config_kI(0, 0, 0);

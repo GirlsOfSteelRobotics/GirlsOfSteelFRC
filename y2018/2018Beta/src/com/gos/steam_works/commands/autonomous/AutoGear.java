@@ -1,11 +1,10 @@
 package com.gos.steam_works.commands.autonomous;
 
-import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.commands.DriveByDistance;
 import com.gos.steam_works.commands.DriveByMotionProfile;
 import com.gos.steam_works.commands.DriveByVision;
 import com.gos.steam_works.commands.TurnToGear.Direction;
-
+import com.gos.steam_works.subsystems.Shifters;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -22,9 +21,9 @@ public class AutoGear extends CommandGroup {
         */
         // Using motion profiles for turns:
         addSequential(new DriveByDistance(distance, Shifters.Speed.kLow));
-        if (direction == Direction.kLeft){
+        if (direction == Direction.kLeft) {
             addSequential(new DriveByMotionProfile("/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat", 1.0));
-        } else if (direction == Direction.kRight){
+        } else if (direction == Direction.kRight) {
             addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
         }
         addSequential(new DriveByVision());

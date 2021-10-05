@@ -1,10 +1,8 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -47,10 +45,9 @@ public class TurnInPlace extends Command {
         System.out.println("Trying to initialize");
         Robot.chassis.setInverted(false);
         Robot.chassis.zeroSensors();
-        System.out.println("Turn in place initialized Heading = " + headingTarget );
+        System.out.println("Turn in place initialized Heading = " + headingTarget);
 
     }
-
 
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,24 +55,23 @@ public class TurnInPlace extends Command {
 
         currentPos = Robot.chassis.getYaw();
         error = (headingTarget - currentPos);
-        dError = ((error - errorLast)/.02);
+        dError = ((error - errorLast) / .02);
 
 
-        tempError = (iError + (error*.02));
-        if (Math.abs(tempError*kI) < .5){
+        tempError = (iError + (error * .02));
+        if (Math.abs(tempError * kI) < .5) {
             iError = tempError;
         }
         System.out.println("current position " + currentPos);
 
-        leftTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
-        rightTalon.set(ControlMode.PercentOutput, ((kP*error)+(kD*dError)+(kI*iError)));
+        leftTalon.set(ControlMode.PercentOutput, ((kP * error) + (kD * dError) + (kI * iError)));
+        rightTalon.set(ControlMode.PercentOutput, ((kP * error) + (kD * dError) + (kI * iError)));
 
-        if (error <1 && dError <10){
+        if (error < 1 && dError < 10) {
             targetReached = true;
         }
 
         errorLast = error;
-
 
 
 //    	if (headingTarget > 0) {

@@ -114,7 +114,6 @@ public class OI {
         backUp.whileHeld(new ClimberManual(true, Climber.ClimberType.Back));
 
 
-
         // allToZero = new POVButton(drivingPad, 180);
         // allToZero.whenPressed(new ClimberAllToZero());
 
@@ -161,10 +160,10 @@ public class OI {
         pivotGround = new JoystickButton(operatingPad, 3);
         pivotGround.whenPressed(new PivotToGround());
 
-        pivotRocket = new JoystickButton (operatingPad, 4);
+        pivotRocket = new JoystickButton(operatingPad, 4);
         pivotRocket.whenPressed(new PivotToRocket());
 
-        pivotShip = new JoystickButton (operatingPad, 10);
+        pivotShip = new JoystickButton(operatingPad, 10);
         pivotShip.whenPressed(new PivotToShip());
 
         // DriveByVision button

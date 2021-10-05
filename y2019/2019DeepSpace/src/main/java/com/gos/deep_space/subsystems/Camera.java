@@ -1,18 +1,16 @@
 package com.gos.deep_space.subsystems;
 
 import com.gos.deep_space.RobotMap;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.videoio.VideoWriter;
 
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.cameraserver.CameraServer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Camera extends Subsystem {
 
@@ -66,10 +64,11 @@ public class Camera extends Subsystem {
 
         boolean result = videoWriter.open(filename, format, FPS, new Size(WIDTH, HEIGHT));
 
-        if (result && videoWriter.isOpened())
+        if (result && videoWriter.isOpened()) {
             System.out.println("openMovieFile: opened file " + filename);
-        else
+        } else {
             System.out.println("openMovieFile: FAILED to open " + filename + " (is USB drive attached?");
+        }
         framecount = 0;
     }
 
@@ -82,7 +81,7 @@ public class Camera extends Subsystem {
 
     public void closeMovieFile() {
         if (videoWriter.isOpened()) {
-            System.out.println("closeMovieFile: saving " + framecount/FPS + " sec of video");
+            System.out.println("closeMovieFile: saving " + framecount / FPS + " sec of video");
             videoWriter.release();
         }
     }

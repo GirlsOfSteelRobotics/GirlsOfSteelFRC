@@ -1,10 +1,8 @@
 package com.gos.power_up.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.commands.CollectorHold;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -51,24 +49,20 @@ public class Collector extends Subsystem {
         collectRight.set(-speed);
     }
 
-    public int getRightCollectorID()
-    {
+    public int getRightCollectorID() {
         return collectRight.getDeviceID();
     }
 
-    public WPI_TalonSRX getRightCollector()
-    {
+    public WPI_TalonSRX getRightCollector() {
         return collectRight;
     }
 
-    public void runCollector()
-    {
+    public void runCollector() {
         collectLeft.set(-collectorSpeed);
         collectRight.set(collectorSpeed);
     }
 
-    public void runSlowCollect()
-    {
+    public void runSlowCollect() {
         System.out.println("Collector: holding cube in");
         collectorSpeed = 0.15;
     }

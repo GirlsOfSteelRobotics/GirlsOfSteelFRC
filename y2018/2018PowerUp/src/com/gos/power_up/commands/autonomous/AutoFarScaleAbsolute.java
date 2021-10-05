@@ -11,7 +11,6 @@ import com.gos.power_up.commands.ReleaseFast;
 import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToShoot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -33,28 +32,34 @@ public class AutoFarScaleAbsolute extends CommandGroup {
         addParallel(new WristHold());
 
         //Initial forward distance past switch
-        if (scaleSide == GameData.FieldSide.right) addSequential(new DriveByMotionMagicAbsolute(DISTANCE_FORWARD_1 + 10.0, 0, false));
-        else addSequential(new DriveByMotionMagicAbsolute(DISTANCE_FORWARD_1, 0, false));
+        if (scaleSide == GameData.FieldSide.right) {
+            addSequential(new DriveByMotionMagicAbsolute(DISTANCE_FORWARD_1 + 10.0, 0, false));
+        } else {
+            addSequential(new DriveByMotionMagicAbsolute(DISTANCE_FORWARD_1, 0, false));
+        }
 
         //First turn behind the switch
-        if (scaleSide == GameData.FieldSide.right) addSequential(new DriveByMotionMagicAbsolute((TURN_RADIUS_1), -TURN_HEADING_1, true));
-        else addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, TURN_HEADING_1, true));
+        if (scaleSide == GameData.FieldSide.right) {
+            addSequential(new DriveByMotionMagicAbsolute((TURN_RADIUS_1), -TURN_HEADING_1, true));
+        } else {
+            addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_1, TURN_HEADING_1, true));
+        }
 
         //Get lift and wrist into position
         addSequential(new LiftToScale());
         addParallel(new LiftHold());
 
         //Driving across the field behind the switch
-        if (scaleSide == GameData.FieldSide.right) addSequential(new DriveByMotionMagicAbsolute((DISTANCE_SIDE_1 - 7.0), -TURN_HEADING_1, false));
-        else addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, TURN_HEADING_1, false));
+        if (scaleSide == GameData.FieldSide.right) {
+            addSequential(new DriveByMotionMagicAbsolute((DISTANCE_SIDE_1 - 7.0), -TURN_HEADING_1, false));
+        } else {
+            addSequential(new DriveByMotionMagicAbsolute(DISTANCE_SIDE_1, TURN_HEADING_1, false));
+        }
 
         //Turning towards the scale
-        if (scaleSide == GameData.FieldSide.right)
-        {
+        if (scaleSide == GameData.FieldSide.right) {
             addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_2, TURN_HEADING_2, true));
-        }
-        else
-        {
+        } else {
             addSequential(new DriveByMotionMagicAbsolute(TURN_RADIUS_2, -TURN_HEADING_2, true));
         }
 

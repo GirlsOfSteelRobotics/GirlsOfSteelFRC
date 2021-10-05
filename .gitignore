@@ -369,5 +369,6 @@ gradle-app.setting
 .ijwb/.idea/*
 .ijwb/.blaze/
 !.ijwb/.idea/externalDependencies.xml
+.idea/checkstyleidea-libs/*
 
 imgui.ini

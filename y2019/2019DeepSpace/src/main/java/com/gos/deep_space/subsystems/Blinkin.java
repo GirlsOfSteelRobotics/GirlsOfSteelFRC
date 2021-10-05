@@ -1,8 +1,8 @@
 package com.gos.deep_space.subsystems;
 
+import com.gos.deep_space.RobotMap;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import com.gos.deep_space.RobotMap;
 
 public class Blinkin extends Subsystem {
     private Spark leftLightController;
@@ -58,50 +58,68 @@ public class Blinkin extends Subsystem {
     public void setLightPattern(LightPattern pattern) {
         switch (pattern) {
         case AUTO_DEFAULT:
-            if (leftLightController != null)
+            if (leftLightController != null) {
                 leftLightController.set(CONFETTI);
-            if (left2LightController != null)
+            }
+            if (left2LightController != null) {
                 left2LightController.set(CONFETTI);
-            if (rightLightController != null)
+            }
+            if (rightLightController != null) {
                 rightLightController.set(CONFETTI);
+            }
             break;
         case TELEOP_DEFAULT:
-            if (leftLightController != null)
+            if (leftLightController != null) {
                 leftLightController.set(RAINBOW_WITH_GLITTER);
-            if (left2LightController != null)
+            }
+            if (left2LightController != null) {
                 left2LightController.set(RAINBOW_WITH_GLITTER);
-            if (rightLightController != null)
+            }
+            if (rightLightController != null) {
                 rightLightController.set(RAINBOW_WITH_GLITTER);
+            }
             break;
         case FORTY_CLIMB:
-            if (leftLightController != null)
+            if (leftLightController != null) {
                 leftLightController.set(BLUE);
-            if (left2LightController != null)
+            }
+            if (left2LightController != null) {
                 left2LightController.set(BLUE);
-            if (rightLightController != null)
+            }
+            if (rightLightController != null) {
                 rightLightController.set(BLUE);
+            }
             break;
         case THIRTY_CLIMB:
-            if (leftLightController != null)
+            if (leftLightController != null) {
                 leftLightController.set(RED);
-            if (left2LightController != null)
+            }
+            if (left2LightController != null) {
                 left2LightController.set(RED);
-            if (rightLightController != null)
+            }
+            if (rightLightController != null) {
                 rightLightController.set(RED);
+            }
         case CLIMBER_THIRD:
-            if (leftLightController != null)
+            if (leftLightController != null) {
                 leftLightController.set(GREEN);
-            if (left2LightController != null)
+            }
+            if (left2LightController != null) {
                 left2LightController.set(GREEN);
-            if (rightLightController != null)
+            }
+            if (rightLightController != null) {
                 rightLightController.set(GREEN);
+            }
         case CLIMBER_SECOND:
-            if (leftLightController != null)
+            if (leftLightController != null) {
                 leftLightController.set(PURPLE);
-            if (left2LightController != null)
+            }
+            if (left2LightController != null) {
                 left2LightController.set(GREEN);
-            if (rightLightController != null)
+            }
+            if (rightLightController != null) {
                 rightLightController.set(GREEN);
+            }
         default:
             break;
         }

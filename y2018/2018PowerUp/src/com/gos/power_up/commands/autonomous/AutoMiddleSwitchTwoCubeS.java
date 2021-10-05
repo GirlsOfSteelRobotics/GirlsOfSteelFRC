@@ -11,7 +11,6 @@ import com.gos.power_up.commands.ReleaseSlow;
 import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -41,17 +40,15 @@ public class AutoMiddleSwitchTwoCubeS extends CommandGroup {
         addParallel(new LiftHold());
 
         //Drive to the switch plate
-        if(switchSide == GameData.FieldSide.right)
-        {
+        if (switchSide == GameData.FieldSide.right) {
             addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, -RIGHT_ANGLE));
             addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, RIGHT_ANGLE));
-        }
-        else if (switchSide == GameData.FieldSide.left)
-        {
+        } else if (switchSide == GameData.FieldSide.left) {
             addSequential(new DriveByMotionMagic(LEFT_DISTANCE, LEFT_ANGLE));
             addSequential(new DriveByMotionMagic(LEFT_DISTANCE, -LEFT_ANGLE));
+        } else {
+            System.out.println("AutoMiddleSwitch: invalid switch side");
         }
-        else System.out.println("AutoMiddleSwitch: invalid switch side");
 
         //Release and back up
         addParallel(new ReleaseSlow());
@@ -65,19 +62,17 @@ public class AutoMiddleSwitchTwoCubeS extends CommandGroup {
         addParallel(new Collect());
 
         //Grab second cube and come back
-        if(switchSide == GameData.FieldSide.right)
-        {
+        if (switchSide == GameData.FieldSide.right) {
             addSequential(new DriveByMotionMagic(TURN_RADIUS_2, TURN_DEGREES_2));
             addParallel(new CollectorHold());
-            addSequential(new DriveByMotionMagic(-TURN_RADIUS_2/2, -20, false));
-        }
-        else if (switchSide == GameData.FieldSide.left)
-        {
+            addSequential(new DriveByMotionMagic(-TURN_RADIUS_2 / 2, -20, false));
+        } else if (switchSide == GameData.FieldSide.left) {
             addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -TURN_DEGREES_2));
             addParallel(new CollectorHold());
-            addSequential(new DriveByMotionMagic(-TURN_RADIUS_2/2, 20, false));
+            addSequential(new DriveByMotionMagic(-TURN_RADIUS_2 / 2, 20, false));
+        } else {
+            System.out.println("AutoMiddleSwitch: invalid switch side");
         }
-        else System.out.println("AutoMiddleSwitch: invalid switch side");
 
         //lift up to shoot out
         addSequential(new WristToCollect());

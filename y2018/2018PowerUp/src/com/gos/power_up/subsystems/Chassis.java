@@ -7,10 +7,6 @@
 
 package com.gos.power_up.subsystems;
 
-import com.gos.power_up.Robot;
-import com.gos.power_up.RobotMap;
-import com.gos.power_up.commands.DriveByJoystick;
-
 import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.FollowerType;
@@ -20,7 +16,9 @@ import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-
+import com.gos.power_up.Robot;
+import com.gos.power_up.RobotMap;
+import com.gos.power_up.commands.DriveByJoystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -194,20 +192,17 @@ public class Chassis extends Subsystem {
         driveRightB.follow(driveRightA, FollowerType.PercentOutput);
     }
 
-    public void setPositionPIDSlot()
-    {
+    public void setPositionPIDSlot() {
         driveLeftA.selectProfileSlot(0, 0);
         driveRightA.selectProfileSlot(0, 0);
     }
 
-    public void setVelocityPIDSlot()
-    {
+    public void setVelocityPIDSlot() {
         driveLeftA.selectProfileSlot(1, 0);
         driveRightA.selectProfileSlot(1, 0);
     }
 
-    public void setInverted(boolean inverted)
-    {
+    public void setInverted(boolean inverted) {
         driveLeftA.setInverted(false);
         driveLeftB.setInverted(false);
 
@@ -215,8 +210,7 @@ public class Chassis extends Subsystem {
         driveRightB.setInverted(inverted);
     }
 
-    public void configForTurnByMotionMagic()
-    {
+    public void configForTurnByMotionMagic() {
 
         /* Remote 1 will be a pigeon */
         driveRightA.configRemoteFeedbackFilter(Robot.collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
@@ -254,8 +248,7 @@ public class Chassis extends Subsystem {
 
     }
 
-    public void configForMotionMagic()
-    {
+    public void configForMotionMagic() {
         driveLeftA.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_DISTANCE, 10);
         /* Remote 0 will be the other side's Talon */
         driveRightA.configRemoteFeedbackFilter(driveLeftA.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_ENCODER, 10);
@@ -311,8 +304,8 @@ public class Chassis extends Subsystem {
         driveRightA.selectProfileSlot(SLOT_TURNING, PID_TURNING);
 
     }
-    public void zeroSensors()
-    {
+
+    public void zeroSensors() {
         driveLeftA.getSensorCollection().setQuadraturePosition(0, 10);
         driveRightA.getSensorCollection().setQuadraturePosition(0, 10);
         pigeonIMU.setYaw(0, 10);
@@ -320,16 +313,14 @@ public class Chassis extends Subsystem {
         System.out.println("Chassis: All sensors are zeroed.");
     }
 
-    public void zeroEncoder()
-    {
+    public void zeroEncoder() {
         driveLeftA.getSensorCollection().setQuadraturePosition(0, 10);
         driveRightA.getSensorCollection().setQuadraturePosition(0, 10);
         System.out.println("Chassis: Encoders are zeroed.");
     }
 
 
-    public double getYaw()
-    {
+    public double getYaw() {
         double[] imuData = new double[3];
         pigeonIMU.getYawPitchRoll(imuData);
         return imuData[0];

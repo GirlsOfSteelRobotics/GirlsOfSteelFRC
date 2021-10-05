@@ -1,19 +1,19 @@
 package com.gos.steam_works.commands;
 
+import com.ctre.phoenix.motion.MotionProfileStatus;
+import com.ctre.phoenix.motion.SetValueMotionProfile;
+import com.ctre.phoenix.motion.TrajectoryPoint;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.gos.steam_works.Robot;
+import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.command.Command;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motion.*;
-
-import com.gos.steam_works.Robot;
-
-import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -142,7 +142,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     private ArrayList<ArrayList<Double>> loadMotionProfile(String filename, boolean isLeft)
-            throws FileNotFoundException {
+        throws FileNotFoundException {
         ArrayList<ArrayList<Double>> points = new ArrayList<ArrayList<Double>>();
         InputStream is = new FileInputStream(filename);
         Scanner s = new Scanner(is);
@@ -177,23 +177,25 @@ public class DriveByMotionProfile extends Command {
 
             System.out.println("DriveByMotionProfile: " + point.position + " " + point.velocity);// + " " + point.timeDurMs);
             point.profileSlotSelect0 = 0; /*
-                                             * which set of gains would you like to
-                                             * use?
-                                             */
+             * which set of gains would you like to
+             * use?
+             */
             //point.velocityOnly = false;
-                                        /*
-                                         * set true to not do any position
-                                         * servo, just velocity feedforward
-                                         */
+            /*
+             * set true to not do any position
+             * servo, just velocity feedforward
+             */
             point.zeroPos = false;
-            if (i == 0)
+            if (i == 0) {
                 point.zeroPos = true; /* set this to true on the first point */
+            }
 
             point.isLastPoint = false;
-            if ((i + 1) == points.size())
+            if ((i + 1) == points.size()) {
                 point.isLastPoint = true; /*
-                                             * set this to true on the last point
-                                             */
+                 * set this to true on the last point
+                 */
+            }
 
             _talon.pushMotionProfileTrajectory(point);
             i++;

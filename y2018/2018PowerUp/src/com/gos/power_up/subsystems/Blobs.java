@@ -1,10 +1,10 @@
 package com.gos.power_up.subsystems;
 
-import java.util.ArrayList;
-
 import com.gos.power_up.Blob;
 import com.gos.power_up.PipelineListener;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -65,54 +65,54 @@ public class Blobs extends Subsystem {
         //setDefaultCommand(new DriveByVision());
     }
 
-    public ArrayList<Blob> makeBlobs(int size){
+    public ArrayList<Blob> makeBlobs(int size) {
         ArrayList<Blob> randomBlobs = new ArrayList<Blob>();
 
         //Populate randomBlobs with Blobs with x- and y-coords between 0 and 10
-        for(int i = 0; i < size; i++){
-            double x = Math.random()*10;
-            double y = Math.random()*10;
+        for (int i = 0; i < size; i++) {
+            double x = Math.random() * 10;
+            double y = Math.random() * 10;
             Blob blob1 = new Blob(x, y);
             randomBlobs.add(blob1);
         }
         return randomBlobs;
     }
 
-    public double findSlope(Blob blob1, Blob blob2){
+    public double findSlope(Blob blob1, Blob blob2) {
         double numer = (blob2.y - blob1.y);
         double denom = (blob2.x - blob1.x);
-        double slope = numer/denom;
+        double slope = numer / denom;
         return slope;
     }
 
     //Finds distance between line (defined by b1 and b2) and point (b3)
-    public static double findDistance(Blob b1, Blob b2, Blob b3){
+    public static double findDistance(Blob b1, Blob b2, Blob b3) {
         double x1 = b1.x;
         double x2 = b2.x;
         double x3 = b3.x;
         double y1 = b1.y;
         double y2 = b2.y;
         double y3 = b3.y;
-        double dist = ((Math.abs(((y2 - y1)*x3) - ((x2 - x1)*y3) + ((x2*y1)-(y2*x1))))
-                /(Math.sqrt(((y2 - y1)*(y2 - y1)) + ((x2 - x1)*(x2 - x1)))));
+        double dist = ((Math.abs(((y2 - y1) * x3) - ((x2 - x1) * y3) + ((x2 * y1) - (y2 * x1))))
+            / (Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)))));
 
         return dist;
     }
 
-    public static void printBlob(Blob b){
+    public static void printBlob(Blob b) {
         System.out.println(b.x + ", " + b.y);
     }
 
     //returns an Arraylist of blobs sorted by x-coord
-    public static ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs){
+    public static ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs) {
         //THIS DESTROYS THE ORIGINAL LIST
         ArrayList<Blob> sortedBlobs = new ArrayList<Blob>();
 
-        while(unsortedBlobs.size() != 0){
+        while (unsortedBlobs.size() != 0) {
             //Find blob with least x-coord, move it to the end of sortedBlobs
             Blob min = unsortedBlobs.get(0);
-            for(int i =1; i < unsortedBlobs.size(); i++){
-                if (unsortedBlobs.get(i).x < min.x){
+            for (int i = 1; i < unsortedBlobs.size(); i++) {
+                if (unsortedBlobs.get(i).x < min.x) {
                     min = unsortedBlobs.get(i);
                 }
             }
@@ -125,7 +125,7 @@ public class Blobs extends Subsystem {
     }
 
     //Returns sorted list of blobs without outliers
-    public static ArrayList<Blob> golfSac(ArrayList<Blob> blobList){
+    public static ArrayList<Blob> golfSac(ArrayList<Blob> blobList) {
         Blob[] endpoints = new Blob[2];
         double minErr = -1;
         double minStd = -1;
@@ -133,21 +133,21 @@ public class Blobs extends Subsystem {
         ArrayList<Blob> returnBlobs = new ArrayList<Blob>();
 
         //Find best line between two blobs
-        for(int i = 0; i < blobList.size() -1 ; i++){
-            for(int j = i+1; j < blobList.size(); j++){
+        for (int i = 0; i < blobList.size() - 1; i++) {
+            for (int j = i + 1; j < blobList.size(); j++) {
                 double tempStd = 0;
                 double tempErr = 0;
-                for(int k = 0; k < blobList.size(); k++){
-                    if(k != i && k != j) //if not one of the endpoints
+                for (int k = 0; k < blobList.size(); k++) {
+                    if (k != i && k != j) //if not one of the endpoints
                     {
                         double distance = findDistance(blobList.get(i), blobList.get(j), blobList.get(k));
                         tempStd += Math.pow(distance, 2);
                         tempErr += distance;
                     }
                 }
-                tempStd = Math.pow((tempStd/blobList.size()), 0.5);
+                tempStd = Math.pow((tempStd / blobList.size()), 0.5);
 
-                if (minErr == -1 || tempErr < minErr){
+                if (minErr == -1 || tempErr < minErr) {
                     endpoints[0] = blobList.get(i);
                     endpoints[1] = blobList.get(j);
                     minErr = tempErr;
@@ -157,9 +157,9 @@ public class Blobs extends Subsystem {
         }
 
         //Add inliers to list of returnBlobs
-        for(int i = 0; i < blobList.size(); i++){
+        for (int i = 0; i < blobList.size(); i++) {
             double dev = findDistance(endpoints[0], endpoints[1], blobList.get(i));
-            if (dev < STD_THRESHOLD * minStd){
+            if (dev < STD_THRESHOLD * minStd) {
                 returnBlobs.add(blobList.get(i));
             }
         }
@@ -167,32 +167,28 @@ public class Blobs extends Subsystem {
         return sortByX(returnBlobs);
     }
 
-    public double findAvgDistance(ArrayList<Blob> blobList)
-    {
+    public double findAvgDistance(ArrayList<Blob> blobList) {
         //requires input ArrayList to be sorted
         double sumDistance = 0;
-        for (int i = 0; i < blobList.size() - 1; i++)
-        {
-            double x = Math.pow(blobList.get(i+1).x - blobList.get(i).x, 2);
-            double y = Math.pow(blobList.get(i+1).y - blobList.get(i).y, 2);
+        for (int i = 0; i < blobList.size() - 1; i++) {
+            double x = Math.pow(blobList.get(i + 1).x - blobList.get(i).x, 2);
+            double y = Math.pow(blobList.get(i + 1).y - blobList.get(i).y, 2);
             sumDistance += Math.pow(x + y, 0.5);
         }
         return sumDistance / (blobList.size() - 1);
     }
 
-    public double distanceBetweenBlobs()
-    {
+    public double distanceBetweenBlobs() {
         ArrayList<Blob> blobList = PipelineListener.blobList;
-        if (blobList.size() < MIN_BLOBS_FOR_LINE) return -1;
+        if (blobList.size() < MIN_BLOBS_FOR_LINE) {
+            return -1;
+        }
 
         ArrayList<Blob> line = golfSac(golfSac(blobList));
-        if (line.size() >= MIN_BLOBS_FOR_LINE)
-        {
+        if (line.size() >= MIN_BLOBS_FOR_LINE) {
             System.out.println("Blobs: Line found. Size = " + line.size());
             return findAvgDistance(line);
-        }
-        else
-        {
+        } else {
             System.out.println("Blobs: Line not found!");
             return -1;
         }

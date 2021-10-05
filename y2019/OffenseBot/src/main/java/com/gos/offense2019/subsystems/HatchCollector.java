@@ -1,7 +1,6 @@
 package com.gos.offense2019.subsystems;
 
 import com.gos.offense2019.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -13,7 +12,7 @@ public class HatchCollector extends Subsystem {
 
     private HatchState state;
 
-    public static enum HatchState{
+    public static enum HatchState {
         kGrab, kRelease
     }
 
@@ -22,7 +21,7 @@ public class HatchCollector extends Subsystem {
         state = HatchState.kRelease;
 
         addChild("piston", piston);
-  }
+    }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

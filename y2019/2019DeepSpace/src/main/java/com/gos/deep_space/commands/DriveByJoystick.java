@@ -1,6 +1,6 @@
 package com.gos.deep_space.commands;
-import com.gos.deep_space.Robot;
 
+import com.gos.deep_space.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveByJoystick extends Command {

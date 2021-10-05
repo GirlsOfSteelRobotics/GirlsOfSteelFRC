@@ -3,12 +3,10 @@ package com.gos.steam_works;
 import com.gos.steam_works.subsystems.Agitator;
 import com.gos.steam_works.subsystems.Camera;
 import com.gos.steam_works.subsystems.Chassis;
+import com.gos.steam_works.subsystems.Climber;
 import com.gos.steam_works.subsystems.Loader;
 import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.subsystems.Shooter;
-//import com.mindsensors.CANLight;
-import com.gos.steam_works.subsystems.Climber;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -92,7 +90,7 @@ public class Robot extends IterativeRobot {
      * chooser code works with the Java SmartDashboard. If you prefer the
      * LabVIEW Dashboard, remove all of the chooser code and uncomment the
      * getString code to get the auto name from the text box below the Gyro
-     *
+     * <p>
      * You can add additional auto modes by adding additional commands to the
      * chooser code above (like the commented example) or additional comparisons
      * to the switch structure below with additional strings & commands.
@@ -104,8 +102,9 @@ public class Robot extends IterativeRobot {
         shifters.shiftGear(Shifters.Speed.kLow);
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.start();
+        }
     }
 
     /**
@@ -120,8 +119,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.cancel();
+        }
 
         // start robot in low gear when starting teleop
         shifters.shiftGear(Shifters.Speed.kLow);
@@ -132,7 +132,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        synchronized(listener.cameraLock) {
+        synchronized (listener.cameraLock) {
             SmartDashboard.putNumber("TargetX", listener.targetX);
             SmartDashboard.putNumber("Height", listener.height);
 

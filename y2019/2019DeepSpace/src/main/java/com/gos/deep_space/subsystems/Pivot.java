@@ -7,16 +7,15 @@
 
 package com.gos.deep_space.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.gos.deep_space.RobotMap;
 import com.gos.deep_space.commands.PivotHold;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import com.gos.deep_space.RobotMap;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Pivot extends Subsystem {
 
-  private WPI_TalonSRX pivot;
+    private WPI_TalonSRX pivot;
     private double goalPivotPosition;
 
     public static final double PIVOT_DOWN_INCREMENT = 125;
@@ -28,52 +27,54 @@ public class Pivot extends Subsystem {
 
     public static enum PivotDirection {
         Up, Down
-    };
+    }
 
-  public Pivot() {
+    ;
+
+    public Pivot() {
         pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
         pivot.setSensorPhase(true);
         setupPivotFPID();
         addChild(pivot);
     }
 
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new PivotHold());
-  }
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new PivotHold());
+    }
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 
     public void setupPivotFPID() {
         pivot.config_kF(0, 0, 10);
         pivot.config_kP(0, 1.5, 10);
         pivot.config_kI(0, 0, 10);
         pivot.config_kD(0, 15, 10);
-  }
+    }
 
-  public void setPivotPosition(double pos){
-    pivot.set(ControlMode.Position, pos);
-  }
+    public void setPivotPosition(double pos) {
+        pivot.set(ControlMode.Position, pos);
+    }
 
-  public void holdPivotPosition(){
+    public void holdPivotPosition() {
         pivot.set(ControlMode.Position, goalPivotPosition);
         //System.out.println("Pivot goal position" + goalPivotPosition +  "actual position " + pivot.getSelectedSensorPosition(0));
-  }
+    }
 
-  public void pivotToGround(){
+    public void pivotToGround() {
         pivot.set(ControlMode.Position, PIVOT_GROUND);
-  }
+    }
 
-  public void pivotToRocket(){
+    public void pivotToRocket() {
         pivot.set(ControlMode.Position, PIVOT_ROCKET);
     }
 
-    public void pivotToCargo(){
+    public void pivotToCargo() {
         pivot.set(ControlMode.Position, PIVOT_CARGO);
-  }
+    }
 
     public void setGoalPivotPosition(double goal) {
         goalPivotPosition = goal;
@@ -83,24 +84,24 @@ public class Pivot extends Subsystem {
         return pivot.getSelectedSensorPosition(0);
     }
 
-    public void incrementPivot () {
+    public void incrementPivot() {
         goalPivotPosition = getPivotPosition();
         goalPivotPosition += PIVOT_UP_INCREMENT;
     }
 
-    public void decrementPivot () {
+    public void decrementPivot() {
         goalPivotPosition = getPivotPosition();
         goalPivotPosition -= PIVOT_DOWN_INCREMENT;
     }
 
     public boolean checkCurrentPivotPosition(double goalPos) {
         boolean isFinished = (goalPos <= getPivotPosition() + PIVOT_TOLERANCE
-    && goalPos  >= getPivotPosition() - PIVOT_TOLERANCE);
-    //System.out.println("isFinished: " + isFinished);
-    return isFinished;
+            && goalPos >= getPivotPosition() - PIVOT_TOLERANCE);
+        //System.out.println("isFinished: " + isFinished);
+        return isFinished;
     }
 
-    public void pivotStop(){
+    public void pivotStop() {
         pivot.stopMotor();
     }
 }

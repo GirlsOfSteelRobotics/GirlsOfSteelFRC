@@ -1,10 +1,8 @@
 package com.gos.steam_works.subsystems;
 
-import com.gos.steam_works.RobotMap;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.steam_works.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**

@@ -1,9 +1,7 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
+import com.gos.steam_works.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

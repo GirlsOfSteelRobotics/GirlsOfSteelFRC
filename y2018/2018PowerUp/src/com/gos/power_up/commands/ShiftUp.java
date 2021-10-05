@@ -2,7 +2,6 @@ package com.gos.power_up.commands;
 
 import com.gos.power_up.Robot;
 import com.gos.power_up.subsystems.Shifters.Speed;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

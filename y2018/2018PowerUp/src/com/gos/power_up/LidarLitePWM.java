@@ -19,7 +19,7 @@ public class LidarLitePWM {
      *
      * @param source The DigitalInput or DigitalSource where the LIDAR-Lite is attached (ex: new DigitalInput(9))
      */
-    public LidarLitePWM (DigitalSource source) {
+    public LidarLitePWM(DigitalSource source) {
         counter = new Counter(source);
         counter.setMaxPeriod(1.0);
         // Configure for measuring rising to falling pulses

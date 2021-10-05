@@ -1,10 +1,8 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -35,13 +33,10 @@ public class OldTurnInPlace extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (headingTarget > 0)
-        {
+        if (headingTarget > 0) {
             leftTalon.set(ControlMode.PercentOutput, -speed);
             rightTalon.set(ControlMode.PercentOutput, speed);
-        }
-        else
-        {
+        } else {
             leftTalon.set(ControlMode.PercentOutput, speed);
             rightTalon.set(ControlMode.PercentOutput, -speed);
         }

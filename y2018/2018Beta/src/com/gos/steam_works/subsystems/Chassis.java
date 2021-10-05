@@ -1,13 +1,11 @@
 package com.gos.steam_works.subsystems;
 
-import com.gos.steam_works.RobotMap;
-import com.gos.steam_works.commands.Drive;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.steam_works.RobotMap;
+import com.gos.steam_works.commands.Drive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -81,7 +79,7 @@ public class Chassis extends Subsystem {
     }
 
     public void setupEncoder(WPI_TalonSRX talon) { // only call this on non-follower
-                                                // talons
+        // talons
         // Set Encoder Types
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
         //talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
@@ -89,7 +87,7 @@ public class Chassis extends Subsystem {
     }
 
     public void setupFPID(WPI_TalonSRX talon) { // values work with QuadEncoder for
-                                            // drive talons
+        // drive talons
         // PID Values
         talon.setSelectedSensorPosition(0, 0, 0);
         talon.config_kF(0, 0, 0);

@@ -1,7 +1,6 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -11,13 +10,13 @@ public class LiftToSwitch extends Command {
 
 
     public LiftToSwitch() {
-            requires(Robot.lift);
+        requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-            Robot.lift.setLiftToSwitch();
-            System.out.println("LiftToSwitch initialized");
+        Robot.lift.setLiftToSwitch();
+        System.out.println("LiftToSwitch initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,7 +25,7 @@ public class LiftToSwitch extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-            return true;
+        return true;
     }
 
     // Called once after isFinished returns true
@@ -37,6 +36,6 @@ public class LiftToSwitch extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-            end();
+        end();
     }
 }

@@ -1,10 +1,8 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

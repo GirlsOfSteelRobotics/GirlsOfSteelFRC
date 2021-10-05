@@ -1,9 +1,8 @@
 package com.gos.steam_works.commands.autonomous;
 
-import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.commands.DriveByDistance;
 import com.gos.steam_works.commands.DriveByVision;
-
+import com.gos.steam_works.subsystems.Shifters;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

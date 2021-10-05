@@ -1,7 +1,6 @@
 package com.gos.steam_works.subsystems;
 
 import com.gos.steam_works.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,7 +13,9 @@ public class Shifters extends Subsystem {
 
     public enum Speed {
         kHigh, kLow
-    };
+    }
+
+    ;
 
     private Speed speed;
 

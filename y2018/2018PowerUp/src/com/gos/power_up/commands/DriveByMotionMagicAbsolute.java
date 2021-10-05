@@ -1,13 +1,11 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-import com.gos.power_up.RobotMap;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
+import com.gos.power_up.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -68,53 +66,53 @@ public class DriveByMotionMagicAbsolute extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        time+=0.02;
+        time += 0.02;
         if (!turning) //if trying to drive straight
         {
             double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
             double error = Math.abs(encoderTicks - currentTicks);
-            if (error < DISTANCE_TIMER_THRESHOLD) timeoutCtr++;
-        }
-        else //if trying to turn to an angle
+            if (error < DISTANCE_TIMER_THRESHOLD) {
+                timeoutCtr++;
+            }
+        } else //if trying to turn to an angle
         {
             double currentHeading = Robot.chassis.getYaw();
             double error = Math.abs(targetHeading - currentHeading);
             //System.out.println("DriveByMotionMagicAbsolute: turning error = " + error);
-            if (error < TURNING_TIMER_THRESHOLD) timeoutCtr++;
+            if (error < TURNING_TIMER_THRESHOLD) {
+                timeoutCtr++;
+            }
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-        if (timeoutCtr > (TIMER_THRESHOLD * 50))
-        {
+        if (timeoutCtr > (TIMER_THRESHOLD * 50)) {
             System.out.println("DriveByMotionMagicAbsolute: timeout reached");
             return true;
-        }
-        else if (!turning) //if trying to drive straight
+        } else if (!turning) //if trying to drive straight
         {
             double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
             double error = Math.abs(encoderTicks - currentTicks);
             //System.out.println("DriveByMotionMagicAbsolute: distance error = " + error);
-            if (error < DISTANCE_FINISH_THRESHOLD)
-            {
+            if (error < DISTANCE_FINISH_THRESHOLD) {
                 System.out.println("DriveByMotionMagicAbsolute: encoder ticks reached");
                 return true;
+            } else {
+                return false;
             }
-            else return false;
-        }
-        else //if trying to turn to an angle
+        } else //if trying to turn to an angle
         {
             double currentHeading = Robot.chassis.getYaw();
             double error = Math.abs(targetHeading - currentHeading);
             //System.out.println("DriveByMotionMagicAbsolute: turning error = " + error);
-            if (error < TURNING_FINISH_THRESHOLD)
-            {
+            if (error < TURNING_FINISH_THRESHOLD) {
                 System.out.println("DriveByMotionMagicAbsolute: turning degrees reached");
                 return true;
+            } else {
+                return false;
             }
-            else return false;
         }
 
     }
@@ -128,7 +126,7 @@ public class DriveByMotionMagicAbsolute extends Command {
         double currentHeading = Robot.chassis.getYaw();
         double degreesError = Math.abs(targetHeading - currentHeading);
 
-        System.out.println("DriveByMotionMagicAbsolute: ended. Error = " + inches/2 + " inches, " + degreesError + " degrees, " + time + " seconds");
+        System.out.println("DriveByMotionMagicAbsolute: ended. Error = " + inches / 2 + " inches, " + degreesError + " degrees, " + time + " seconds");
         Robot.chassis.stop();
         Robot.chassis.setInverted(false);
     }

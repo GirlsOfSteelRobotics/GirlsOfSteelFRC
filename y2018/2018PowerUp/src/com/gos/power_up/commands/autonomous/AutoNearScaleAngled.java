@@ -1,4 +1,3 @@
-
 package com.gos.power_up.commands.autonomous;
 
 import com.gos.power_up.GameData;
@@ -11,7 +10,6 @@ import com.gos.power_up.commands.ReleaseFast;
 import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToShoot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -41,10 +39,11 @@ public class AutoNearScaleAngled extends CommandGroup {
         addSequential(new TimeDelay(3.0));
 
         //turn
-        if (robotPosition == GameData.FieldSide.left)
+        if (robotPosition == GameData.FieldSide.left) {
             addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, -30));
-        else
+        } else {
             addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, 30));
+        }
 
         //release cube and back up
         addParallel(new ReleaseFast(0.5));

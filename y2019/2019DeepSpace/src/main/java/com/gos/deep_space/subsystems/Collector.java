@@ -1,11 +1,8 @@
-
 package com.gos.deep_space.subsystems;
 
-import com.gos.deep_space.RobotMap;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.gos.deep_space.RobotMap;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Add your docs here.

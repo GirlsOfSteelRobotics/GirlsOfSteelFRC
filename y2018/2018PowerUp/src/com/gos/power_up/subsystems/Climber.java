@@ -1,10 +1,8 @@
 package com.gos.power_up.subsystems;
 
-import com.gos.power_up.RobotMap;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,8 +19,8 @@ public class Climber extends Subsystem {
         climbMotor.configContinuousCurrentLimit(200, 10);
 
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+        // Put methods for controlling this subsystem
+        // here. Call these from Commands.
 
     }
 

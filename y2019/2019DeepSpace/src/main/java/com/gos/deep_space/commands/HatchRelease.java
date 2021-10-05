@@ -9,37 +9,38 @@ package com.gos.deep_space.commands;
 
 import com.gos.deep_space.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+
 ;
 
 public class HatchRelease extends Command {
-  public HatchRelease() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.hatch);
-  }
+    public HatchRelease() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+        requires(Robot.hatch);
+    }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("init hatch release");
-  }
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+        System.out.println("init hatch release");
+    }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.hatch.release();
-  }
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        Robot.hatch.release();
+    }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    Robot.hatch.stop();
-    System.out.println("end hatch release");
-  }
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        Robot.hatch.stop();
+        System.out.println("end hatch release");
+    }
 }

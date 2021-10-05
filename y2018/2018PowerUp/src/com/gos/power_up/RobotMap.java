@@ -36,7 +36,6 @@ public class RobotMap {
     public static final int PIGEON = 11; //TODO update
 
 
-
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
     // public static int leftMotor = 1;
@@ -58,7 +57,7 @@ public class RobotMap {
     public static final int LIDAR = 9;
 
     public static final double CODES_PER_WHEEL_REV = 256.0 * (60.0 / 24.0)
-            * (36.0 / 12.0) * 4;
+        * (36.0 / 12.0) * 4;
     // 256.0 is the number of ticks per revolution on the encoder
     // (*4 = 1024 "native units" per rev)
     // 60/24 is the gearbox final stage output

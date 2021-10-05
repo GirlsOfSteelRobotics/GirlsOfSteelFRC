@@ -1,7 +1,6 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReleaseFast extends Command {
 
     private double speed;
+
     public ReleaseFast() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

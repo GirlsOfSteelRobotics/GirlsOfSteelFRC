@@ -1,7 +1,6 @@
 package com.gos.steam_works.commands.autonomous;
 
 import com.gos.steam_works.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

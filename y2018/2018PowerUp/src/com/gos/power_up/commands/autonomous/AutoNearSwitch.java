@@ -12,7 +12,6 @@ import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
 import com.gos.power_up.subsystems.Shifters;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -37,8 +36,11 @@ public class AutoNearSwitch extends CommandGroup {
 
         //Move Robot into position
         addSequential(new DriveByMotionMagic(DISTANCE_FORWARD, 0));
-        if (robotPosition == GameData.FieldSide.left) addSequential(new AutoTurnRight(25.0));
-        else addSequential(new AutoTurnLeft(25.0));
+        if (robotPosition == GameData.FieldSide.left) {
+            addSequential(new AutoTurnRight(25.0));
+        } else {
+            addSequential(new AutoTurnLeft(25.0));
+        }
         addSequential(new DriveByMotionMagic(DISTANCE_SIDE, 0));
 
         //Release and back up

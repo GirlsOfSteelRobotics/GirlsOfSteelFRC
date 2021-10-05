@@ -1,7 +1,6 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -30,40 +29,37 @@ public class DriveByJoystick extends Command {
         double throttleFactor = .9;
 
 
-
         //throttle runs .225 speed
         //speedy is 100%
         //regular is 90% speed
 
         if (highGear == true) {
             throttleFactor = .65;
-            if (Robot.oi.isThrottle()){
+            if (Robot.oi.isThrottle()) {
                 Robot.chassis.getLeftTalon().configOpenloopRamp(0.37, 10); //blinky numbers
                 Robot.chassis.getRightTalon().configOpenloopRamp(0.37, 10);
                 throttleFactor = .2;
-            }
-            else if (Robot.oi.isSpeedy()) {
+            } else if (Robot.oi.isSpeedy()) {
                 Robot.chassis.getLeftTalon().configOpenloopRamp(0.7, 10); //blinky numbers
                 Robot.chassis.getRightTalon().configOpenloopRamp(0.7, 10);
                 throttleFactor = 1;
-            }
-            else
+            } else {
                 throttleFactor = .65;
-        }
-        else {
-            throttleFactor = .9;
-            if (Robot.oi.isThrottle()){
-                throttleFactor = .225;
             }
-            else if (Robot.oi.isSpeedy())
+        } else {
+            throttleFactor = .9;
+            if (Robot.oi.isThrottle()) {
+                throttleFactor = .225;
+            } else if (Robot.oi.isSpeedy()) {
                 throttleFactor = 1;
-            else
+            } else {
                 throttleFactor = .9;
+            }
         }
 
 
-        Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown()*throttleFactor,
-                Robot.oi.getAmazonRightSideToSide()*throttleFactor, true);
+        Robot.chassis.drive.curvatureDrive(Robot.oi.getAmazonLeftUpAndDown() * throttleFactor,
+            Robot.oi.getAmazonRightSideToSide() * throttleFactor, true);
 
 
     }

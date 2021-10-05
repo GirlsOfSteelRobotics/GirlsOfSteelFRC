@@ -1,14 +1,12 @@
 package com.gos.power_up.commands;
 
 
-import com.gos.power_up.Robot;
-import com.gos.power_up.RobotMap;
-import com.gos.power_up.subsystems.Shifters;
-
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.Robot;
+import com.gos.power_up.RobotMap;
+import com.gos.power_up.subsystems.Shifters;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -75,7 +73,9 @@ public class DriveByDistance extends Command {
     protected void execute() {
 
         if ((Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < BIG_ERROR_THRESHOLD)
-                &&(Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < BIG_ERROR_THRESHOLD)) tim++;
+            && (Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < BIG_ERROR_THRESHOLD)) {
+            tim++;
+        }
 
         //tim++;
 
@@ -94,8 +94,12 @@ public class DriveByDistance extends Command {
     protected boolean isFinished() {
         //return false;
 
-        if (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD) leftGood = true;
-        if (Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD) rightGood = true;
+        if (Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < ERROR_THRESHOLD) {
+            leftGood = true;
+        }
+        if (Math.abs(rightTalon.getSelectedSensorPosition(0) + encoderTicks) < ERROR_THRESHOLD) {
+            rightGood = true;
+        }
 
 
         return (tim > 30 || (leftGood && rightGood));

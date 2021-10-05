@@ -10,7 +10,6 @@ import com.gos.power_up.commands.ReleaseSlow;
 import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -31,17 +30,15 @@ public class AutoMiddleSwitch extends CommandGroup {
         addParallel(new WristHold());
         addParallel(new LiftHold());
 
-        if(switchSide == GameData.FieldSide.right)
-        {
+        if (switchSide == GameData.FieldSide.right) {
             addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, -RIGHT_ANGLE));
             addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, RIGHT_ANGLE));
-        }
-        else if (switchSide == GameData.FieldSide.left)
-        {
+        } else if (switchSide == GameData.FieldSide.left) {
             addSequential(new DriveByMotionMagic(LEFT_DISTANCE, LEFT_ANGLE));
             addSequential(new DriveByMotionMagic(LEFT_DISTANCE, -LEFT_ANGLE));
+        } else {
+            System.out.println("AutoMiddleSwitch: invalid switch side");
         }
-        else System.out.println("AutoMiddleSwitch: invalid switch side");
 
         //Release and back up
         addParallel(new ReleaseSlow());
