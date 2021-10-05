@@ -24,7 +24,7 @@ public class Limelight extends SubsystemBase {
 
 
     public Limelight() {
-        System.out.println("Limelight"); 
+        System.out.println("Limelight");
     }
 
     public double getSteerCommand() {
@@ -40,10 +40,10 @@ public class Limelight extends SubsystemBase {
         // else if (tx < 1.0){
         //         steering_adjust = Kp * heading_error + min_command;
         // }
-    
-        // return steering_adjust; 
-            
-        
+
+        // return steering_adjust;
+
+
         double steerCmd = m_tx * STEER_K;
         m_limelightSteerCommand = steerCmd;
         return m_limelightSteerCommand;
@@ -51,7 +51,7 @@ public class Limelight extends SubsystemBase {
     }
 
     public double estimateDistance() {
-        double distance = 48.75 / (Math.tan(Math.toRadians(m_ty + 20))); 
+        double distance = 48.75 / (Math.tan(Math.toRadians(m_ty + 20)));
         System.out.println("ty: " + m_ty);
         System.out.println("distance: " + distance);
         return distance;

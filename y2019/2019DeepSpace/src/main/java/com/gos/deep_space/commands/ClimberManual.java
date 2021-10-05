@@ -13,16 +13,16 @@ import com.gos.deep_space.Robot;
 
 public class ClimberManual extends Command {
 
-  private boolean directionExtend; 
+  private boolean directionExtend;
   private Climber.ClimberType type;
 
   public ClimberManual(boolean directionExtend, Climber.ClimberType climberType){
-    this.directionExtend = directionExtend; 
-    type = climberType; 
+    this.directionExtend = directionExtend;
+    type = climberType;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
 
-    requires(Robot.climber); 
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
@@ -33,8 +33,8 @@ public class ClimberManual extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.holdClimberPosition(type); 
-    Robot.climber.extendClimber(directionExtend, type); 
+    Robot.climber.holdClimberPosition(type);
+    Robot.climber.extendClimber(directionExtend, type);
 
   }
 
@@ -47,7 +47,7 @@ public class ClimberManual extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.climber.climberStop(); 
+    Robot.climber.climberStop();
   }
 
 }

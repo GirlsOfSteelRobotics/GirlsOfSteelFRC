@@ -59,4 +59,3 @@ public class ShootAndDriveToTrenchRightSide extends SequentialCommandGroup {
 
     }
 }
-

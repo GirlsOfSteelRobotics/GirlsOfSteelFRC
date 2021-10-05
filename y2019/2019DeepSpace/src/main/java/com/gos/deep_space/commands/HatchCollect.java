@@ -15,7 +15,7 @@ public class HatchCollect extends Command {
   public HatchCollect() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.hatch); 
+    requires(Robot.hatch);
   }
 
   // Called just before this Command runs the first time
@@ -39,7 +39,7 @@ public class HatchCollect extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-        Robot.hatch.slowCollect(); 
+        Robot.hatch.slowCollect();
         System.out.println("end hatch collect");
   }
 }

@@ -30,7 +30,7 @@ public class ShooterConveyor extends SubsystemBase {
     private final DigitalInput m_breakSensorSecondary;
     private final DigitalInput m_breakSensorTop;
     //private final CANSparkMax m_follower;
-    
+
     private final NetworkTable m_customNetworkTable;
 
     public ShooterConveyor() {

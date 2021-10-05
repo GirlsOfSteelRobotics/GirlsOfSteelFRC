@@ -19,43 +19,42 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoNearScaleAngled extends CommandGroup {
 
-	
-	//distance constants
-	private final double DISTANCE_FORWARD_1 = 235.0;
-	private final double DISTANCE_TURN_1 = 25;
-	private final double BACK_UP = -30.0;
+
+    //distance constants
+    private final double DISTANCE_FORWARD_1 = 235.0;
+    private final double DISTANCE_TURN_1 = 25;
+    private final double BACK_UP = -30.0;
 
 
-	public AutoNearScaleAngled(GameData.FieldSide robotPosition) {
-		System.out.println("AutoFarScale starting");
+    public AutoNearScaleAngled(GameData.FieldSide robotPosition) {
+        System.out.println("AutoFarScale starting");
 
-		//moves robot forward
-		addParallel(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
-		addSequential(new TimeDelay(2.0));
-		
-		//gets lift & wrist into position
-		addSequential(new WristToShoot());
-		addSequential(new LiftToScale());
-		addParallel(new WristHold());
-		addParallel(new LiftHold());
-		addSequential(new TimeDelay(3.0)); 
-		
-		//turn
-		if (robotPosition == GameData.FieldSide.left)
-			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, -30));
-		else
-			addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, 30)); 
+        //moves robot forward
+        addParallel(new DriveByMotionMagic(DISTANCE_FORWARD_1, 0));
+        addSequential(new TimeDelay(2.0));
 
-		//release cube and back up
-		addParallel(new ReleaseFast(0.5));
-		addSequential(new TimeDelay(1.0));
-		addSequential(new DriveByMotionMagic(BACK_UP, 0));
+        //gets lift & wrist into position
+        addSequential(new WristToShoot());
+        addSequential(new LiftToScale());
+        addParallel(new WristHold());
+        addParallel(new LiftHold());
+        addSequential(new TimeDelay(3.0));
 
-		//puts lift down and stops collector
-		addSequential(new CollectPosition());
-		addSequential(new CollectorStop());
-		addParallel(new WristHold());
-		addParallel(new LiftHold());
-	}
+        //turn
+        if (robotPosition == GameData.FieldSide.left)
+            addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, -30));
+        else
+            addSequential(new DriveByMotionMagic(DISTANCE_TURN_1, 30));
+
+        //release cube and back up
+        addParallel(new ReleaseFast(0.5));
+        addSequential(new TimeDelay(1.0));
+        addSequential(new DriveByMotionMagic(BACK_UP, 0));
+
+        //puts lift down and stops collector
+        addSequential(new CollectPosition());
+        addSequential(new CollectorStop());
+        addParallel(new WristHold());
+        addParallel(new LiftHold());
+    }
 }
-

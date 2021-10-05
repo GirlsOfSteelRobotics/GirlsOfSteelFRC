@@ -9,7 +9,7 @@ public class DriveDistanceSmartMotion extends CommandBase {
     private final Chassis m_chassis;
     private final double m_distance;
     private final double m_allowableError;
-    
+
     private double m_leftGoalPosition;
     private double m_rightGoalPosition;
 
@@ -25,14 +25,14 @@ public class DriveDistanceSmartMotion extends CommandBase {
 
     @Override
     public void initialize() {
-        
+
         m_leftGoalPosition = m_chassis.getLeftEncoder() + m_distance;
         m_rightGoalPosition = m_chassis.getRightEncoder() + m_distance;
         System.out.println("Drive Distance Smart Motion Starting; distnace " + m_distance + ", left=" + m_leftGoalPosition + ", " + m_rightGoalPosition + " deadband " + m_allowableError);
     }
 
     @Override
-    public void execute() { 
+    public void execute() {
         m_chassis.driveDistance(m_leftGoalPosition, m_rightGoalPosition);
         // m_chassis.smartVelocityControl(48, 48);
 
@@ -59,6 +59,6 @@ public class DriveDistanceSmartMotion extends CommandBase {
     public void end(boolean interrupted) {
         m_chassis.setSpeed(0);
         System.out.println("Drive Distance Smart Motion, end");
-       
+
     }
 }

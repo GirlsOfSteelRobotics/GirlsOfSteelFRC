@@ -25,12 +25,12 @@ public class DriveDistance extends CommandBase {
     }
 
     @Override
-    public void initialize() { 
+    public void initialize() {
         m_initialPosition = m_chassis.getAverageEncoderDistance();
     }
 
     @Override
-    public void execute() { 
+    public void execute() {
         double currentPosition = m_chassis.getAverageEncoderDistance();
         m_error = m_distance - (currentPosition - m_initialPosition);
 

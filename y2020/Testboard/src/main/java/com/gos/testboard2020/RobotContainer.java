@@ -74,7 +74,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         drivingPad = new Joystick(0);
-    
+
         new JoystickButton(drivingPad, 1).	whenPressed(new TryBlinkin(m_blinkin));
         new JoystickButton(drivingPad, 2).	whenPressed(new ReadLidar(m_lidar));
         new JoystickButton(drivingPad, 4).	whenPressed(new SpinByLidar(m_motor, m_lidar));

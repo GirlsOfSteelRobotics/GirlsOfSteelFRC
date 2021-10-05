@@ -75,7 +75,7 @@ public class RobotContainer {
         m_shooterIntake = new ShooterIntake();
         m_winch = new Winch(isEuropa());
         m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_shooterConveyor, m_shooterIntake, m_limelight);
-        
+
         Shuffleboard.selectTab("Driver Tab");
 
         // This line has to be after all of the subsystems are created!
@@ -85,7 +85,7 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, m_oi));
 
         // Add some testing options to the Autonomous Chooser on the dashboard
-       
+
         CommandScheduler.getInstance().onCommandInitialize(command ->  System.out.println(command.getName() + " is starting"));
         CommandScheduler.getInstance().onCommandFinish(command ->  System.out.println(command.getName() + " has ended"));
         CommandScheduler.getInstance().onCommandInterrupt(command ->  System.out.println(command.getName() + " was interrupted"));
@@ -118,12 +118,12 @@ public class RobotContainer {
     public Chassis getChassis()    {
         return m_chassis;
     }
-    
+
     DigitalInput m_digitalInput = new DigitalInput(Constants.DIGITAL_INPUT_EUROPA);
 
     public final boolean isEuropa() {
         System.out.println("Is this Europa? " + !m_digitalInput.get());
         return !m_digitalInput.get();
     }
-  
+
 }

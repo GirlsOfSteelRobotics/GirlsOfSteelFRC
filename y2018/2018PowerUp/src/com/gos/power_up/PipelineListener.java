@@ -11,22 +11,22 @@ import com.gos.power_up.subsystems.Blobs;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
 
 public class PipelineListener implements VisionRunner.Listener<Pipeline> {
-	public Object cameraLock = new Object(); 
+    public Object cameraLock = new Object();
 
-	public double goalLength = Blobs.MIN_BLOBS_FOR_LINE;
-	public static ArrayList<Blob> blobList = new ArrayList<Blob>();
+    public double goalLength = Blobs.MIN_BLOBS_FOR_LINE;
+    public static ArrayList<Blob> blobList = new ArrayList<Blob>();
 
-	public void copyPipelineOutputs(Pipeline pipeline) {
-		MatOfKeyPoint blobs = (pipeline.findBlobsOutput());
-		synchronized (cameraLock) {
-			List<KeyPoint> gripBlobs = blobs.toList();
-			ArrayList<Blob> returnBlobs = new ArrayList<Blob>();
-			for (int i = 0; i < gripBlobs.size(); i++){
-				Point blob = gripBlobs.get(i).pt;
-				returnBlobs.add(new Blob(blob.x,blob.y));
-			}
-			blobList = returnBlobs;
-		}
-	}
+    public void copyPipelineOutputs(Pipeline pipeline) {
+        MatOfKeyPoint blobs = (pipeline.findBlobsOutput());
+        synchronized (cameraLock) {
+            List<KeyPoint> gripBlobs = blobs.toList();
+            ArrayList<Blob> returnBlobs = new ArrayList<Blob>();
+            for (int i = 0; i < gripBlobs.size(); i++){
+                Point blob = gripBlobs.get(i).pt;
+                returnBlobs.add(new Blob(blob.x,blob.y));
+            }
+            blobList = returnBlobs;
+        }
+    }
 
 }

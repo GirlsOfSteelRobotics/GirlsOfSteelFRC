@@ -36,9 +36,9 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
 
     private static final double CONTROL_PANEL_X = 327;
     private static final double CONTROL_PANEL_Y = -31;
-        
+
     public Command getTrajectoryAutoLineToFrontOfTrench(Chassis chassis) {
-       
+
 
         Trajectory trajectoryAutoLineToFrontOfTrench = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
@@ -51,7 +51,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
         );
         return new FollowTrajectory(trajectoryAutoLineToFrontOfTrench, chassis);
     }
-    
+
     public Command getTrajectoryFrontOfTrenchToControlPanel(Chassis chassis) {
 
         Trajectory trajectoryFrontOfTrenchToControlPanel = TrajectoryGenerator.generateTrajectory(

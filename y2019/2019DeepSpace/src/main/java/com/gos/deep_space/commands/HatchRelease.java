@@ -15,7 +15,7 @@ public class HatchRelease extends Command {
   public HatchRelease() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.hatch); 
+    requires(Robot.hatch);
   }
 
   // Called just before this Command runs the first time

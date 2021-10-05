@@ -17,7 +17,7 @@ public class LiftEnterRecoveryMode extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.lift.enterRecoveryMode();
+        Robot.lift.enterRecoveryMode();
     }
 
 }

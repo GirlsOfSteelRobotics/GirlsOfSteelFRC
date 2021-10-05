@@ -40,4 +40,3 @@ public class ShootToDriveForwardsNoSensor extends SequentialCommandGroup {
         addCommands(new MovePiston(shooterIntake, true));
     }
 }
-

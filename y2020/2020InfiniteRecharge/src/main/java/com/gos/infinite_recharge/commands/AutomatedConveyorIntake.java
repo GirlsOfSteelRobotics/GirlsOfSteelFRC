@@ -21,28 +21,28 @@ public class AutomatedConveyorIntake extends SequentialCommandGroup {
      */
     public AutomatedConveyorIntake(ShooterIntake shooterIntake, ShooterConveyor shooterConveyor) {
 
-        m_shooterIntake = shooterIntake; 
-        m_shooterConveyor = shooterConveyor; 
+        m_shooterIntake = shooterIntake;
+        m_shooterConveyor = shooterConveyor;
 
-        
+
         IntakeCells intakeCell = new IntakeCells(m_shooterIntake, true);
-        ConveyorWhileHeld runConveyor = new ConveyorWhileHeld(shooterConveyor, true); 
+        ConveyorWhileHeld runConveyor = new ConveyorWhileHeld(shooterConveyor, true);
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
-        addCommands(intakeCell.withInterrupt(m_shooterConveyor::getHandoff)); 
+        addCommands(intakeCell.withInterrupt(m_shooterConveyor::getHandoff));
 
         if (m_shooterConveyor.getHandoff()) {
             addCommands(runConveyor.withInterrupt(() -> {
-                return !m_shooterConveyor.getSecondary(); 
-            })); 
+                return !m_shooterConveyor.getSecondary();
+            }));
         }
 
         //conveyor belt runs until secondary break sensor is true (collected ball has been positioned at bottom of conveyor)
         addCommands(new ConveyorWhileHeld(shooterConveyor, true).withInterrupt(() -> {
-            return m_shooterConveyor.getTop() || (m_shooterConveyor.getSecondary() && !m_shooterConveyor.getHandoff()); 
+            return m_shooterConveyor.getTop() || (m_shooterConveyor.getSecondary() && !m_shooterConveyor.getHandoff());
         }));
 
-    
+
         // Use addRequirements() here to declare subsystem dependencies.
     }
 }

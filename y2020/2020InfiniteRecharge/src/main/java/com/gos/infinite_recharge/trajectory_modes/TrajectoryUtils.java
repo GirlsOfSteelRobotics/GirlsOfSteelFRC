@@ -56,6 +56,3 @@ public class TrajectoryUtils {
         return followTrajectory;
     }
 }
-
-
-
