@@ -1,18 +1,20 @@
 package com.gos.steam_works;
 
-import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.vision.VisionRunner;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("PMD")
 public class GripPipelineListener implements VisionRunner.Listener<GripPipeline> {
     public Object cameraLock = new Object();
 
     public double targetX;
     public double height;
 
+    @Override
     public void copyPipelineOutputs(GripPipeline pipeline) {
         ArrayList<MatOfPoint> contours = pipeline.filterContoursOutput();
         synchronized (cameraLock) {

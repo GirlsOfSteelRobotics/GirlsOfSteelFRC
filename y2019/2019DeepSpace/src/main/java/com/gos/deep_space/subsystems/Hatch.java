@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Hatch extends Subsystem {
 
-    private WPI_TalonSRX hatchCollector;
+    private final WPI_TalonSRX hatchCollector;
 
     private static final double SLOW_COLLECTOR_SPEED = 0.25;
     private static final double COLLECTOR_INTAKE_SPEED = 0.4;

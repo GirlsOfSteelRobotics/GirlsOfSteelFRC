@@ -15,6 +15,7 @@ public class CollectorStop extends InstantCommand {
     }
 
     // Called once when the command executes
+    @Override
     protected void initialize() {
         Robot.collector.stop();
     }

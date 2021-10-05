@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 
 public class BabyDriveForward extends Command {
-    private final double BABYDRIVE_SPEED = -0.4;
+    private static final double BABYDRIVE_SPEED = -0.4;
 
     public BabyDriveForward() {
         // Use requires() here to declare subsystem dependencies

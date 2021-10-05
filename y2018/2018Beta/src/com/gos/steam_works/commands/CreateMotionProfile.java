@@ -25,8 +25,8 @@ public class CreateMotionProfile extends Command {
     public String rightFile; // path of file on roborio
     private double leftInitial; // initial encoder position
     private double rightInitial; // initial encoder position
-    private final double DURATION = 20.0;
-    private final double ERROR = 0; // TODO: change
+    private static final double DURATION = 20.0;
+    private static final double ERROR = 0; // TODO: change
 
     public CreateMotionProfile(String leftFileName, String rightFileName) {
         requires(Robot.chassis);
@@ -36,29 +36,31 @@ public class CreateMotionProfile extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
-        leftInitial = (double) leftTalon.getSelectedSensorPosition(0);
-        rightInitial = (double) rightTalon.getSelectedSensorPosition(0);
+        leftInitial = leftTalon.getSelectedSensorPosition(0);
+        rightInitial = rightTalon.getSelectedSensorPosition(0);
 
-        leftTrajectory = new ArrayList<ArrayList<Double>>();
-        rightTrajectory = new ArrayList<ArrayList<Double>>();
+        leftTrajectory = new ArrayList<>();
+        rightTrajectory = new ArrayList<>();
 
-        leftPoint = new ArrayList<Double>();
-        rightPoint = new ArrayList<Double>();
+        leftPoint = new ArrayList<>();
+        rightPoint = new ArrayList<>();
 
         System.out.println("CreateMotionProfile: Starting to Record MP");
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
-        leftPoint = new ArrayList<Double>();
-        rightPoint = new ArrayList<Double>();
+        leftPoint = new ArrayList<>();
+        rightPoint = new ArrayList<>();
 
-        double leftPosition = (double) leftTalon.getSelectedSensorPosition(0) - leftInitial; // in rotations
-        double rightPosition = (double) rightTalon.getSelectedSensorPosition(0) - rightInitial;
+        double leftPosition = leftTalon.getSelectedSensorPosition(0) - leftInitial; // in rotations
+        double rightPosition = rightTalon.getSelectedSensorPosition(0) - rightInitial;
 
-        double leftVelocity = (double) leftTalon.getSelectedSensorPosition(0) / RobotMap.CODES_PER_WHEEL_REV;
-        double rightVelocity = (double) rightTalon.getSelectedSensorPosition(0) / RobotMap.CODES_PER_WHEEL_REV;
+        double leftVelocity = leftTalon.getSelectedSensorPosition(0) / RobotMap.CODES_PER_WHEEL_REV;
+        double rightVelocity = rightTalon.getSelectedSensorPosition(0) / RobotMap.CODES_PER_WHEEL_REV;
 
         /* Other way of getting velocity: divide change in position by time
 
@@ -90,11 +92,13 @@ public class CreateMotionProfile extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         System.out.println("CreateMotionProfile: Done Recording MP");
 
@@ -121,6 +125,7 @@ public class CreateMotionProfile extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

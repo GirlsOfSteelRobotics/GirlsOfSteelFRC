@@ -60,13 +60,14 @@ public class Blobs extends Subsystem {
         */
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new DriveByVision());
     }
 
     public ArrayList<Blob> makeBlobs(int size) {
-        ArrayList<Blob> randomBlobs = new ArrayList<Blob>();
+        ArrayList<Blob> randomBlobs = new ArrayList<>();
 
         //Populate randomBlobs with Blobs with x- and y-coords between 0 and 10
         for (int i = 0; i < size; i++) {
@@ -106,7 +107,7 @@ public class Blobs extends Subsystem {
     //returns an Arraylist of blobs sorted by x-coord
     public static ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs) {
         //THIS DESTROYS THE ORIGINAL LIST
-        ArrayList<Blob> sortedBlobs = new ArrayList<Blob>();
+        ArrayList<Blob> sortedBlobs = new ArrayList<>();
 
         while (unsortedBlobs.size() != 0) {
             //Find blob with least x-coord, move it to the end of sortedBlobs
@@ -130,7 +131,7 @@ public class Blobs extends Subsystem {
         double minErr = -1;
         double minStd = -1;
         final double STD_THRESHOLD = 0.5;
-        ArrayList<Blob> returnBlobs = new ArrayList<Blob>();
+        ArrayList<Blob> returnBlobs = new ArrayList<>();
 
         //Find best line between two blobs
         for (int i = 0; i < blobList.size() - 1; i++) {

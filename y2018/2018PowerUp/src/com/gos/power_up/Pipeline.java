@@ -1,6 +1,6 @@
 package com.gos.power_up;
 
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
+import edu.wpi.first.vision.VisionPipeline;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfKeyPoint;
@@ -20,14 +20,15 @@ import java.io.IOException;
  *
  * @author GRIP
  */
+@SuppressWarnings("PMD")
 public class Pipeline implements VisionPipeline {
 
     //Outputs
-    private Mat resizeImageOutput = new Mat();
-    private Mat hslThreshold0Output = new Mat();
-    private Mat hslThreshold1Output = new Mat();
-    private Mat cvBitwiseOrOutput = new Mat();
-    private MatOfKeyPoint findBlobsOutput = new MatOfKeyPoint();
+    private final Mat resizeImageOutput = new Mat();
+    private final Mat hslThreshold0Output = new Mat();
+    private final Mat hslThreshold1Output = new Mat();
+    private final Mat cvBitwiseOrOutput = new Mat();
+    private final MatOfKeyPoint findBlobsOutput = new MatOfKeyPoint();
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

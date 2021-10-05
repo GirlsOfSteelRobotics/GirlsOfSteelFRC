@@ -17,8 +17,8 @@ public class TurnInPlace extends Command {
     private boolean rightGood;
     private boolean targetReached = false;
 
-    private double headingTarget;
-    private double speed;
+    private final double headingTarget;
+    private final double speed;
     private double currentPos;
     private double error;
     private double errorLast = 0;
@@ -26,12 +26,12 @@ public class TurnInPlace extends Command {
     private double iError = 0;
     private double tempError;
 
-    private double kP = .005;
-    private double kI = 0;
-    private double kD = 0;
+    private static final double kP = .005;
+    private static final double kI = 0;
+    private static final double kD = 0;
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     public TurnInPlace(double degrees) {
         // Use requires() here to declare subsystem dependencies
@@ -41,6 +41,7 @@ public class TurnInPlace extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         System.out.println("Trying to initialize");
         Robot.chassis.setInverted(false);
@@ -51,6 +52,7 @@ public class TurnInPlace extends Command {
 
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 
         currentPos = Robot.chassis.getYaw();
@@ -88,12 +90,14 @@ public class TurnInPlace extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return targetReached;
     }
 
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         System.out.println("TurnInPlace Finished");
         Robot.chassis.stop();
@@ -101,6 +105,7 @@ public class TurnInPlace extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         System.out.println("TurnInPlace Interrupted");
         end();

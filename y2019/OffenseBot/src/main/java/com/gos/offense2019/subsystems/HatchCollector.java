@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class HatchCollector extends Subsystem {
-    private DoubleSolenoid piston;
+    private final DoubleSolenoid piston;
 
     private HatchState state;
 
-    public static enum HatchState {
+    public enum HatchState {
         kGrab, kRelease
     }
 
@@ -39,6 +39,7 @@ public class HatchCollector extends Subsystem {
         return state;
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

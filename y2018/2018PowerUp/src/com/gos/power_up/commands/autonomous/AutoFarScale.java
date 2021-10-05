@@ -17,11 +17,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoFarScale extends CommandGroup {
-    private final double DISTANCE_FORWARD_1 = 175.0;
-    private final double TURN_RADIUS_1 = 100.0;
-    private final double DISTANCE_SIDE_1 = 80.0;
-    private final double TURN_RADIUS_2 = 150.0;
-    private final double DEGREES_2 = 90.0;
+    private static final double DISTANCE_FORWARD_1 = 175.0;
+    private static final double TURN_RADIUS_1 = 100.0;
+    private static final double DISTANCE_SIDE_1 = 80.0;
+    private static final double TURN_RADIUS_2 = 150.0;
+    private static final double DEGREES_2 = 90.0;
 
     public AutoFarScale(GameData.FieldSide scaleSide) {
         System.out.println("AutoFarScale starting: scaleSide=" + scaleSide);

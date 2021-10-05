@@ -20,6 +20,7 @@ import java.util.ArrayList;
 /**
  * Add your docs here.
  */
+@SuppressWarnings("PMD")
 public class GripPipelineListener implements VisionRunner.Listener<GripPipeline> {
     public Object cameraLock = new Object();
 
@@ -37,6 +38,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
     // whose grandfather invented the number 0 which made this problem possible
     public final double HD_RATIO_ERROR = 0.1 * HD_RATIO;
 
+    @Override
     public void copyPipelineOutputs(GripPipeline pipeline) {
         // record vision camera movie
 

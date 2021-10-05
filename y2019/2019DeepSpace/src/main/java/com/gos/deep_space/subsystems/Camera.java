@@ -22,8 +22,8 @@ public class Camera extends Subsystem {
     public UsbCamera visionCam;
     public UsbCamera driveCam;
 
-    private Mat frame = new Mat();
-    private VideoWriter videoWriter = new VideoWriter();
+    private final Mat frame = new Mat();
+    private final VideoWriter videoWriter = new VideoWriter();
     private int framecount;
 
     public Camera() {
@@ -45,6 +45,7 @@ public class Camera extends Subsystem {
         // processedStream = CameraServer.getInstance().putVideo("Processed", 320, 240);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

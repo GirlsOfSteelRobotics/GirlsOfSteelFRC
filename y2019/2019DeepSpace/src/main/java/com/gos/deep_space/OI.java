@@ -40,41 +40,41 @@ public class OI {
     public Joystick drivingPad;
     public Joystick operatingPad;
 
-    private JoystickButton backUp;
-    private JoystickButton backDown;
+    private final JoystickButton backUp;
+    private final JoystickButton backDown;
 
-    private JoystickButton frontUp;
-    private JoystickButton frontDown;
+    private final JoystickButton frontUp;
+    private final JoystickButton frontDown;
 
-    private JoystickButton allUp;
-    private JoystickButton allDown;
+    private final JoystickButton allUp;
+    private final JoystickButton allDown;
 
-    private POVButton toSecondUp;
-    private POVButton toThirdUp;
+    private final POVButton toSecondUp;
+    private final POVButton toThirdUp;
 
     private POVButton allToZero;
-    private POVButton frontToZero;
-    private POVButton backToZero;
+    private final POVButton frontToZero;
+    private final POVButton backToZero;
 
     private POVButton robotToThird;
     private POVButton robotToSecond;
 
     private JoystickButton lidarDrive; // testing purposes only
 
-    private JoystickButton babyDriveForward;
-    private JoystickButton babyDriveBackward;
+    private final JoystickButton babyDriveForward;
+    private final JoystickButton babyDriveBackward;
 
-    private JoystickButton collect;
-    private JoystickButton release;
+    private final JoystickButton collect;
+    private final JoystickButton release;
 
-    private JoystickButton hatchCollect;
-    private JoystickButton hatchRelease;
+    private final JoystickButton hatchCollect;
+    private final JoystickButton hatchRelease;
 
-    private JoystickButton pivotUp;
-    private JoystickButton pivotDown;
-    private JoystickButton pivotGround;
-    private JoystickButton pivotRocket;
-    private JoystickButton pivotShip;
+    private final JoystickButton pivotUp;
+    private final JoystickButton pivotDown;
+    private final JoystickButton pivotGround;
+    private final JoystickButton pivotRocket;
+    private final JoystickButton pivotShip;
 
     private JoystickButton driveByVision;
 

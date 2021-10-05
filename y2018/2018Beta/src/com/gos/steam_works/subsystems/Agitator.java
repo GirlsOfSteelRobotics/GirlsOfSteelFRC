@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Agitator extends Subsystem {
 
-    private DoubleSolenoid agitator;
+    private final DoubleSolenoid agitator;
 
     public Agitator() {
         agitator = new DoubleSolenoid(RobotMap.AGITATOR_A, RobotMap.AGITATOR_B);
@@ -25,6 +25,7 @@ public class Agitator extends Subsystem {
         agitator.set(DoubleSolenoid.Value.kReverse);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

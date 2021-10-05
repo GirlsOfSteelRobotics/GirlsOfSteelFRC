@@ -1,6 +1,6 @@
 package com.gos.steam_works;
 
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
+import edu.wpi.first.vision.VisionPipeline;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -22,13 +22,14 @@ import java.util.List;
  *
  * @author GRIP
  */
+@SuppressWarnings("PMD")
 public class GripPipeline implements VisionPipeline {
 
     //Outputs
-    private Mat resizeImageOutput = new Mat();
-    private Mat hsvThresholdOutput = new Mat();
-    private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-    private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+    private final Mat resizeImageOutput = new Mat();
+    private final Mat hsvThresholdOutput = new Mat();
+    private final ArrayList<MatOfPoint> findContoursOutput = new ArrayList<>();
+    private final ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<>();
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

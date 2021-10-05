@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnByMotionMagicAbsolute extends Command {
 
-    private double targetHeading; // in degrees
+    private final double targetHeading; // in degrees
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     private final static double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
@@ -25,6 +25,7 @@ public class TurnByMotionMagicAbsolute extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         Robot.shifters.shiftGear(Shifters.Speed.kLow);
         Robot.chassis.setInverted(false);
@@ -40,11 +41,13 @@ public class TurnByMotionMagicAbsolute extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
 
         double currentHeading = Robot.chassis.getYaw();
@@ -60,6 +63,7 @@ public class TurnByMotionMagicAbsolute extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
 
         double currentHeading = Robot.chassis.getYaw();
@@ -73,6 +77,7 @@ public class TurnByMotionMagicAbsolute extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         System.out.println("TurnByMotionMagicAbsolute: interrupted");
         end();

@@ -1,12 +1,12 @@
 package com.gos.power_up.subsystems;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Camera extends Subsystem {
 
-    private UsbCamera driveCam;
+    private final UsbCamera driveCam;
 
 
     public Camera() {
@@ -16,6 +16,7 @@ public class Camera extends Subsystem {
         driveCam.setFPS(20);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

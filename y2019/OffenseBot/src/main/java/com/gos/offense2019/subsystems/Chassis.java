@@ -20,15 +20,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * An example subsystem. You can replace me with your own Subsystem.
  */
 public class Chassis extends Subsystem {
-    private WPI_TalonSRX masterLeft;
-    private WPI_TalonSRX followerLeftA;
-    private WPI_TalonSRX followerLeftB;
+    private final WPI_TalonSRX masterLeft;
+    private final WPI_TalonSRX followerLeftA;
+    private final WPI_TalonSRX followerLeftB;
 
-    private WPI_TalonSRX masterRight;
-    private WPI_TalonSRX followerRightA;
-    private WPI_TalonSRX followerRightB;
+    private final WPI_TalonSRX masterRight;
+    private final WPI_TalonSRX followerRightA;
+    private final WPI_TalonSRX followerRightB;
 
-    private DifferentialDrive drive;
+    private final DifferentialDrive drive;
 
     public Chassis() {
         masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
@@ -67,6 +67,7 @@ public class Chassis extends Subsystem {
         drive.setMaxOutput(0.8);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new DriveByJoystick());

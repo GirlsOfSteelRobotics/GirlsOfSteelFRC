@@ -33,38 +33,36 @@ public class OI {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank, amazonDrive
     }
 
-    ;
-
     private DriveStyle driveStyle;
 
-    private Joystick operatorGamePad = new Joystick(0);
-    private Joystick drivingGamePad = new Joystick(1);
-    private Joystick amazonGamePad = new Joystick(1);
+    private final Joystick operatorGamePad = new Joystick(0);
+    private final Joystick drivingGamePad = new Joystick(1);
+    private final Joystick amazonGamePad = new Joystick(1);
     //private Joystick drivingJoystickOne = new Joystick (1);
     //private Joystick drivingJoystickTwo = new Joystick (2);
 
-    private JoystickButton shifterUp;
-    private JoystickButton shifterDown;
+    private final JoystickButton shifterUp;
+    private final JoystickButton shifterDown;
     //private JoystickButton driveByDistanceLow;
     //private JoystickButton driveByMotionProfile;
 
-    private JoystickButton liftUp;
-    private JoystickButton liftDown;
-    private JoystickButton liftToSwitch;
-    private JoystickButton liftEnterRecovery;
-    private JoystickButton liftToGround;
+    private final JoystickButton liftUp;
+    private final JoystickButton liftDown;
+    private final JoystickButton liftToSwitch;
+    private final JoystickButton liftEnterRecovery;
+    private final JoystickButton liftToGround;
 
-    private JoystickButton wristIn;
-    private JoystickButton wristOut;
+    private final JoystickButton wristIn;
+    private final JoystickButton wristOut;
 
-    private JoystickButton collect;
+    private final JoystickButton collect;
     private JoystickButton releaseFast;
-    private JoystickButton releaseSlow;
+    private final JoystickButton releaseSlow;
 
-    private JoystickButton climb;
-    private JoystickButton unClimb;
+    private final JoystickButton climb;
+    private final JoystickButton unClimb;
 
-    private JoystickButton motionMagic;
+    private final JoystickButton motionMagic;
 
     public OI() {
         // Set which joystick axis is retrieved by its getTwist() method

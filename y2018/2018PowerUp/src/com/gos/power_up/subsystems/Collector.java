@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Collector extends Subsystem {
 
-    private WPI_TalonSRX collectLeft;
-    private WPI_TalonSRX collectRight;
+    private final WPI_TalonSRX collectLeft;
+    private final WPI_TalonSRX collectRight;
 
     public double collectorSpeed;
 
@@ -26,6 +26,7 @@ public class Collector extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new CollectorHold());

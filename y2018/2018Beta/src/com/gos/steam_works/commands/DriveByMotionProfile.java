@@ -24,8 +24,8 @@ public class DriveByMotionProfile extends Command {
     public ArrayList<ArrayList<Double>> rightPoints;
     public WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
     public WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
-    private MotionProfileStatus leftStatus;
-    private MotionProfileStatus rightStatus;
+    private final MotionProfileStatus leftStatus;
+    private final MotionProfileStatus rightStatus;
     private static final int kMinPointsInTalon = 5;
     private SetValueMotionProfile state;
     private double multiplier = 1.0;
@@ -52,6 +52,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
 
         Robot.chassis.setupFPID(leftTalon);
@@ -80,6 +81,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         // get MP status from each talon
         leftTalon.getMotionProfileStatus(leftStatus);
@@ -104,6 +106,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         // get MP status from each talon
         leftTalon.getMotionProfileStatus(leftStatus);
@@ -124,6 +127,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         notifier.stop();
 
@@ -137,17 +141,18 @@ public class DriveByMotionProfile extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }
 
     private ArrayList<ArrayList<Double>> loadMotionProfile(String filename, boolean isLeft)
         throws FileNotFoundException {
-        ArrayList<ArrayList<Double>> points = new ArrayList<ArrayList<Double>>();
+        ArrayList<ArrayList<Double>> points = new ArrayList<>();
         InputStream is = new FileInputStream(filename);
         Scanner s = new Scanner(is);
         while (s.hasNext()) {
-            ArrayList<Double> arr = new ArrayList<Double>();
+            ArrayList<Double> arr = new ArrayList<>();
             arr.add(s.nextDouble() * (isLeft ? -1.0 : 1.0)); // p
             arr.add(s.nextDouble() * (isLeft ? -1.0 : 1.0)); // v
             arr.add(s.nextDouble()); // d
@@ -185,17 +190,10 @@ public class DriveByMotionProfile extends Command {
              * set true to not do any position
              * servo, just velocity feedforward
              */
-            point.zeroPos = false;
-            if (i == 0) {
-                point.zeroPos = true; /* set this to true on the first point */
-            }
-
-            point.isLastPoint = false;
-            if ((i + 1) == points.size()) {
-                point.isLastPoint = true; /*
-                 * set this to true on the last point
-                 */
-            }
+            point.zeroPos = i == 0; /* set this to true on the first point */
+            point.isLastPoint = (i + 1) == points.size(); /*
+             * set this to true on the last point
+             */
 
             _talon.pushMotionProfileTrajectory(point);
             i++;
@@ -203,6 +201,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     class PeriodicRunnable implements java.lang.Runnable {
+        @Override
         public void run() {
             leftTalon.processMotionProfileBuffer();
             rightTalon.processMotionProfileBuffer();

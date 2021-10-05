@@ -13,16 +13,16 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveByMotionMagicAbsolute extends Command {
 
-    private double encoderTicks;
-    private double targetHeading;
+    private final double encoderTicks;
+    private final double targetHeading;
 
-    private boolean turning;
+    private final boolean turning;
 
     private int timeoutCtr;
     private double time;
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     private final static double DISTANCE_FINISH_THRESHOLD = 4000; //TODO tune (in encoder ticks)
     private final static double TURNING_FINISH_THRESHOLD = 1.5; //TODO tune (in degrees)
@@ -41,6 +41,7 @@ public class DriveByMotionMagicAbsolute extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         time = 0;
         Robot.chassis.setInverted(true);
@@ -65,6 +66,7 @@ public class DriveByMotionMagicAbsolute extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         time += 0.02;
         if (!turning) //if trying to drive straight
@@ -86,6 +88,7 @@ public class DriveByMotionMagicAbsolute extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
 
         if (timeoutCtr > (TIMER_THRESHOLD * 50)) {
@@ -118,6 +121,7 @@ public class DriveByMotionMagicAbsolute extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
 
         double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
@@ -133,6 +137,7 @@ public class DriveByMotionMagicAbsolute extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         System.out.println("DriveByMotionMagicAbsolute: interrupted");
         end();

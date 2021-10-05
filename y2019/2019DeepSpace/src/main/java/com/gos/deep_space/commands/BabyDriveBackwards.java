@@ -11,7 +11,7 @@ import com.gos.deep_space.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class BabyDriveBackwards extends Command {
-    private final double BABYDRIVE_SPEED = 0.4;
+    private static final double BABYDRIVE_SPEED = 0.4;
 
     public BabyDriveBackwards() {
         requires(Robot.babyDrive);

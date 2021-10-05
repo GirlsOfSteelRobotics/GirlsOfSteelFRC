@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Lift extends Subsystem {
+public final class Lift extends Subsystem {
 
-    private WPI_TalonSRX lift;
-    private DigitalInput limitSwitch;
+    private final WPI_TalonSRX lift;
+    private final DigitalInput limitSwitch;
 
-    private static double goalLiftPosition;
-    private static boolean inRecoveryMode;
+    private double goalLiftPosition;
+    private boolean inRecoveryMode;
 
     public static final double LIFT_MAX = 32500; //TODO tune
     public static final double LIFT_MIN = 0; //TODO tune
@@ -26,7 +26,7 @@ public class Lift extends Subsystem {
     public static final double LIFT_GROUND = 1000; //TODO tune
     public static final double LIFT_INCREMENT = 300; //TODO tune 250
 
-    private StickyFaults faults = new StickyFaults();
+    private final StickyFaults faults = new StickyFaults();
 
     public Lift() {
         lift = new WPI_TalonSRX(RobotMap.LIFT);
@@ -47,6 +47,7 @@ public class Lift extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new LiftHold());

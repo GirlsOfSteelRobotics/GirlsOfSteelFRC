@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberToSetPoint extends Command {
 
-    private double setPoint;
-    private ClimberType type;
+    private final double setPoint;
+    private final ClimberType type;
 
     public ClimberToSetPoint(double setPoint, ClimberType climberType) {
         this.setPoint = setPoint;

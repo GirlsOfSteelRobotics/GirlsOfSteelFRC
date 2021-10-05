@@ -12,7 +12,7 @@ import com.gos.offense2019.subsystems.Shifters.Speed;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Shift extends Command {
-    private Speed speed;
+    private final Speed speed;
 
     public Shift(Speed speed) {
         // Use requires() here to declare subsystem dependencies

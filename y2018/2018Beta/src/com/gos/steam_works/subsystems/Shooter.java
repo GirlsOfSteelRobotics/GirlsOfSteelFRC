@@ -7,9 +7,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Shooter extends Subsystem {
-    private WPI_TalonSRX lowShooterMotor;
-    private WPI_TalonSRX highShooterMotor;
+public final class Shooter extends Subsystem {
+    private final WPI_TalonSRX lowShooterMotor;
+    private final WPI_TalonSRX highShooterMotor;
 
     /*
      * private static final double shooterMinSpeed = -0.5; private static final
@@ -87,7 +87,7 @@ public class Shooter extends Subsystem {
 
     public boolean isHighShooterAtSpeed() { // TODO: This is broken, always
         // returning true
-        return ((double) highShooterMotor.getClosedLoopError(0) / (double) shooterSpeed) < MAX_SHOOTER_ERROR;
+        return (highShooterMotor.getClosedLoopError(0) / (double) shooterSpeed) < MAX_SHOOTER_ERROR;
     }
 
     public void stopShooterMotors() {
@@ -95,6 +95,7 @@ public class Shooter extends Subsystem {
         highShooterMotor.set(ControlMode.Velocity, 0);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

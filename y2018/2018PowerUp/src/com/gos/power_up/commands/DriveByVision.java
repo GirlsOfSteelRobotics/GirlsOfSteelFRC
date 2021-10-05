@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveByVision extends Command {
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     private double dist;
-    private final double SPEED_PERCENT = 0.2;
+    private static final double SPEED_PERCENT = 0.2;
 
     public DriveByVision() {
         // Use requires() here to declare subsystem dependencies
@@ -23,6 +23,7 @@ public class DriveByVision extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         dist = Robot.blobs.distanceBetweenBlobs();
         if (Robot.blobs.distanceBetweenBlobs() == -1) {
@@ -32,6 +33,7 @@ public class DriveByVision extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         dist = Robot.blobs.distanceBetweenBlobs();
         System.out.print("Distance = " + dist + " ");
@@ -49,17 +51,20 @@ public class DriveByVision extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return (dist == -1 || Math.abs(dist - Blobs.GOAL_DISTANCE) < Blobs.ERROR_THRESHOLD);
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.chassis.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Collector extends Subsystem {
 
-    private WPI_TalonSRX leftCollect;
-    private WPI_TalonSRX rightCollect;
+    private final WPI_TalonSRX leftCollect;
+    private final WPI_TalonSRX rightCollect;
 
     private static final double SLOW_COLLECTOR_SPEED = 0.15;
     private static final double COLLECTOR_INTAKE_SPEED = 0.4;

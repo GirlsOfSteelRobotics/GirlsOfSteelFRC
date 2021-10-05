@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoNearScale extends CommandGroup {
 
-    private final double DISTANCE_FORWARD = 295.0;
-    private final double DISTANCE_SIDE = -30.0;
+    private static final double DISTANCE_FORWARD = 295.0;
+    private static final double DISTANCE_SIDE = -30.0;
 
     public AutoNearScale(GameData.FieldSide robotPosition) {
         System.out.println("AutoNearScale starting");

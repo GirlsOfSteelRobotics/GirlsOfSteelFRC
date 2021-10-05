@@ -30,11 +30,11 @@ public class Climber extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    private WPI_TalonSRX climberFront;
-    private WPI_TalonSRX followerClimberFront;
+    private final WPI_TalonSRX climberFront;
+    private final WPI_TalonSRX followerClimberFront;
 
-    private WPI_TalonSRX climberBack;
-    private WPI_TalonSRX followerClimberBack;
+    private final WPI_TalonSRX climberBack;
+    private final WPI_TalonSRX followerClimberBack;
 
     public static final double CLIMBER_EXTEND = 2000;
 
@@ -46,11 +46,9 @@ public class Climber extends Subsystem {
 
     public static final double ALL_TO_ZERO = 0.0;
 
-    public static enum ClimberType {
+    public enum ClimberType {
         All, Front, Back
     }
-
-    ;
 
     public static final int MAX_CRUISE_VELOCITY = 3900; // Anna and Gracie 4/25
     public static final int MAX_ACCELERATION = 10000; // Anna and Gracie 4/25

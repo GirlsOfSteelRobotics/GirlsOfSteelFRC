@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoNearSwitch extends CommandGroup {
 
-    private final double DISTANCE_FORWARD = 130.0;
-    private final double DISTANCE_SIDE = 0.0;
-    private final double BACK_UP = -30;
+    private static final double DISTANCE_FORWARD = 130.0;
+    private static final double DISTANCE_SIDE = 0.0;
+    private static final double BACK_UP = -30;
 
     public AutoNearSwitch(GameData.FieldSide robotPosition) {
         System.out.println("AutoNearSwitch starting");

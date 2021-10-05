@@ -22,13 +22,14 @@ import java.util.List;
  *
  * @author GRIP
  */
+@SuppressWarnings("PMD")
 public class GripPipeline implements VisionPipeline {
     //Outputs
-    private Mat resizeImageOutput = new Mat();
-    private Mat hslThresholdOutput = new Mat();
-    private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-    private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
-    private ArrayList<MatOfPoint> convexHullsOutput = new ArrayList<MatOfPoint>();
+    private final Mat resizeImageOutput = new Mat();
+    private final Mat hslThresholdOutput = new Mat();
+    private final ArrayList<MatOfPoint> findContoursOutput = new ArrayList<>();
+    private final ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<>();
+    private final ArrayList<MatOfPoint> convexHullsOutput = new ArrayList<>();
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

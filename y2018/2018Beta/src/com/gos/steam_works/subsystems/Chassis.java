@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 /**
  *
  */
-public class Chassis extends Subsystem {
-    private WPI_TalonSRX driveLeftA;
-    private WPI_TalonSRX driveLeftB;
-    private WPI_TalonSRX driveLeftC;
+public final class Chassis extends Subsystem {
+    private final WPI_TalonSRX driveLeftA;
+    private final WPI_TalonSRX driveLeftB;
+    private final WPI_TalonSRX driveLeftC;
 
-    private WPI_TalonSRX driveRightA;
-    private WPI_TalonSRX driveRightB;
-    private WPI_TalonSRX driveRightC;
+    private final WPI_TalonSRX driveRightA;
+    private final WPI_TalonSRX driveRightB;
+    private final WPI_TalonSRX driveRightC;
 
     public DifferentialDrive drive;
 
@@ -65,6 +65,7 @@ public class Chassis extends Subsystem {
 //		LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new Drive());

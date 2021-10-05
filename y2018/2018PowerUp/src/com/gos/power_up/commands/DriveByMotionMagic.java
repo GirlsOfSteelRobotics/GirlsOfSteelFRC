@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveByMotionMagic extends Command {
 
-    private double encoderTicks; //in sensor units
-    private double targetHeading; //in degrees
-    private boolean resetPigeon;
+    private final double encoderTicks; //in sensor units
+    private final double targetHeading; //in degrees
+    private final boolean resetPigeon;
 
     private int timeoutCtr;
     private double time;
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     private final static double DISTANCE_FINISH_THRESHOLD = 4000; //TODO tune (in encoder ticks)
     private final static double TURNING_FINISH_THRESHOLD = 1.5; //TODO tune (in degrees)
@@ -48,6 +48,7 @@ public class DriveByMotionMagic extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         time = 0;
         Robot.chassis.setInverted(true);
@@ -75,6 +76,7 @@ public class DriveByMotionMagic extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         time += 0.02;
         if (!resetPigeon || targetHeading == 0) //if trying to drive straight
@@ -96,6 +98,7 @@ public class DriveByMotionMagic extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
 
         if (timeoutCtr > (TIMER_THRESHOLD * 50)) {
@@ -128,6 +131,7 @@ public class DriveByMotionMagic extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
 
         double currentTicks = rightTalon.getSensorCollection().getQuadraturePosition();
@@ -143,6 +147,7 @@ public class DriveByMotionMagic extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         System.out.println("DriveByMotionMagic: interrupted");
         end();

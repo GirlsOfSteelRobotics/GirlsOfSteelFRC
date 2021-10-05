@@ -11,7 +11,7 @@ public class LidarLitePWM {
      */
     private static final int CALIBRATION_OFFSET = -18;
 
-    private Counter counter;
+    private final Counter counter;
     private int printedWarningCount = 5;
 
     /**

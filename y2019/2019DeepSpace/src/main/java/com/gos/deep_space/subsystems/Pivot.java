@@ -13,9 +13,9 @@ import com.gos.deep_space.RobotMap;
 import com.gos.deep_space.commands.PivotHold;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Pivot extends Subsystem {
+public final class Pivot extends Subsystem {
 
-    private WPI_TalonSRX pivot;
+    private final WPI_TalonSRX pivot;
     private double goalPivotPosition;
 
     public static final double PIVOT_DOWN_INCREMENT = 125;
@@ -25,11 +25,9 @@ public class Pivot extends Subsystem {
     public static final double PIVOT_CARGO = -559; // -838
     public static final double PIVOT_TOLERANCE = 100;
 
-    public static enum PivotDirection {
+    public enum PivotDirection {
         Up, Down
     }
-
-    ;
 
     public Pivot() {
         pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);

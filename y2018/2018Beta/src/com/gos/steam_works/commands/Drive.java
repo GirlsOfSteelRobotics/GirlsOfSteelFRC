@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Drive extends Command {
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     public Drive() {
         // Use requires() here to declare subsystem dependencies
@@ -20,6 +20,7 @@ public class Drive extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         // Change mode to Percent Vbus
         // V per sec; 12 = zero to full speed in 1 second
@@ -32,6 +33,7 @@ public class Drive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         if (Robot.oi.getDriveStyle() == OI.DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadArcade) {
             Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
@@ -41,6 +43,7 @@ public class Drive extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
@@ -50,12 +53,14 @@ public class Drive extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

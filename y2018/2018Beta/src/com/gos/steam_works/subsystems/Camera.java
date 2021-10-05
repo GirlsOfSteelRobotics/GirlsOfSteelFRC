@@ -3,7 +3,7 @@ package com.gos.steam_works.subsystems;
 import com.gos.steam_works.RobotMap;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Camera extends Subsystem {
 
-    private UsbCamera camGear;
-    private UsbCamera camClimb;
+    private final UsbCamera camGear;
+    private final UsbCamera camClimb;
     public UsbCamera visionCam;
-    private MjpegServer server;
+    private final MjpegServer server;
 
 
     public Camera() {
@@ -50,6 +50,7 @@ public class Camera extends Subsystem {
         System.out.println("Cam Gear!");
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

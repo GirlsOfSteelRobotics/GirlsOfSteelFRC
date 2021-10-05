@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberManual extends Command {
 
-    private boolean directionExtend;
-    private Climber.ClimberType type;
+    private final boolean directionExtend;
+    private final Climber.ClimberType type;
 
     public ClimberManual(boolean directionExtend, Climber.ClimberType climberType) {
         this.directionExtend = directionExtend;

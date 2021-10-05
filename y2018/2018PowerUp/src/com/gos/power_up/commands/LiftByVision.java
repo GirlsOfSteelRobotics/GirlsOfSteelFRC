@@ -14,6 +14,7 @@ public class LiftByVision extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         if (Robot.blobs.distanceBetweenBlobs() == -1) {
             System.out.print("LiftByVision initialize: line not in sight!!");
@@ -22,6 +23,7 @@ public class LiftByVision extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         if (Robot.blobs.distanceBetweenBlobs() != -1) {
             Robot.lift.incrementLift();
@@ -29,16 +31,19 @@ public class LiftByVision extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return (Robot.blobs.distanceBetweenBlobs() == -1);
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

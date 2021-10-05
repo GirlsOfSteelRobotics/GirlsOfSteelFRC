@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Wrist extends Subsystem {
+public final class Wrist extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    private WPI_TalonSRX wrist;
+    private final WPI_TalonSRX wrist;
     private double goalWristPosition;
 
     public static final double WRIST_IN_BOUND = -60; //TODO tune
@@ -30,6 +30,7 @@ public class Wrist extends Subsystem {
         addChild(wrist);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new WristHold());

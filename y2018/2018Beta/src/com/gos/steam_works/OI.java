@@ -25,13 +25,9 @@ public class OI {
         kFWD, kREV
     }
 
-    ;
-
     public enum JoystickScaling {
         linear, deadband, quadratic
     }
-
-    ;
 
 
     //Drive Styles
@@ -41,41 +37,39 @@ public class OI {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank
     }
 
-    ;
-
     private DriveStyle driveStyle;
 
-    private Joystick operatorGamePad = new Joystick(0);
-    private Joystick drivingGamePad = new Joystick(1);
-    private Joystick drivingJoystickOne = new Joystick(1);
-    private Joystick drivingJoystickTwo = new Joystick(2);
-    private Joystick autonSelector = new Joystick(5);
+    private final Joystick operatorGamePad = new Joystick(0);
+    private final Joystick drivingGamePad = new Joystick(1);
+    private final Joystick drivingJoystickOne = new Joystick(1);
+    private final Joystick drivingJoystickTwo = new Joystick(2);
+    private final Joystick autonSelector = new Joystick(5);
 
-    private DigitalInput dio0 = new DigitalInput(0);
-    private DigitalInput dio1 = new DigitalInput(1);
-    private DigitalInput dio2 = new DigitalInput(2);
-    private DigitalInput dio3 = new DigitalInput(3);
-    private DigitalInput dio4 = new DigitalInput(4);
+    private final DigitalInput dio0 = new DigitalInput(0);
+    private final DigitalInput dio1 = new DigitalInput(1);
+    private final DigitalInput dio2 = new DigitalInput(2);
+    private final DigitalInput dio3 = new DigitalInput(3);
+    private final DigitalInput dio4 = new DigitalInput(4);
 
     private DriveDirection driveDirection = DriveDirection.kFWD;
 
     private JoystickScaling joystickScale = JoystickScaling.linear;
-    private static double DEADBAND = 0.3; //TODO: find a good value
+    private static final double DEADBAND = 0.3; //TODO: find a good value
 
     private JoystickButton switchToForward;
     private JoystickButton switchToBackward;
 
-    private JoystickButton shifterUp;
-    private JoystickButton shifterDown;
+    private final JoystickButton shifterUp;
+    private final JoystickButton shifterDown;
 
-    private JoystickButton driveByDistanceLow;
-    private JoystickButton driveByDistanceHigh;
+    private final JoystickButton driveByDistanceLow;
+    private final JoystickButton driveByDistanceHigh;
 
-    private JoystickButton liftUp;
-    private JoystickButton liftDown;
+    private final JoystickButton liftUp;
+    private final JoystickButton liftDown;
 
-    private JoystickButton collect;
-    private JoystickButton release;
+    private final JoystickButton collect;
+    private final JoystickButton release;
 
     public OI() {
         //BUTTON ASSIGNMENTS

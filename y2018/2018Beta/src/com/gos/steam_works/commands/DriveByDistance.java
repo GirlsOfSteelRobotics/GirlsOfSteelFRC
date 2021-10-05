@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveByDistance extends Command {
 
-    private double rotations;
+    private final double rotations;
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     private double leftInitial;
     private double rightInitial;
 
-    private Shifters.Speed speed;
+    private final Shifters.Speed speed;
 
     public DriveByDistance(double inches, Shifters.Speed speed) {
         rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
@@ -32,6 +32,7 @@ public class DriveByDistance extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         Robot.shifters.shiftGear(speed);
 
@@ -77,6 +78,7 @@ public class DriveByDistance extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         leftTalon.set(ControlMode.Position, -(rotations + leftInitial));
         rightTalon.set(ControlMode.Position, rotations + rightInitial);
@@ -92,6 +94,7 @@ public class DriveByDistance extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         if (rotations > 0) {
             return ((rightTalon.getSelectedSensorPosition(0) > rotations + rightInitial)
@@ -105,6 +108,7 @@ public class DriveByDistance extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.shifters.shiftGear(Shifters.Speed.kLow);
         System.out.println("DriveByDistance Finished");
@@ -112,6 +116,7 @@ public class DriveByDistance extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

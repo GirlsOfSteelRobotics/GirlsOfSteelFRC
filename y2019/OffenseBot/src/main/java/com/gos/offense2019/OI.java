@@ -21,14 +21,14 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    private Joystick drivingPad;
+    private final Joystick drivingPad;
     private Joystick operatingPad;
-    private POVButton shiftUp;
-    private POVButton shiftDown;
-    private Button hatchRelease;
-    private Button hatchGrab;
+    private final POVButton shiftUp;
+    private final POVButton shiftDown;
+    private final Button hatchRelease;
+    private final Button hatchGrab;
 
-    private int slowSpeedButton;
+    private final int slowSpeedButton;
     private final double speedHigh;
     private final double speedLow;
 

@@ -12,7 +12,7 @@ import com.gos.offense2019.subsystems.HatchCollector;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class HatchCollect extends Command {
-    private HatchCollector.HatchState hatchState;
+    private final HatchCollector.HatchState hatchState;
 
     public HatchCollect(HatchCollector.HatchState hatchState) {
         // Use requires() here to declare subsystem dependencies

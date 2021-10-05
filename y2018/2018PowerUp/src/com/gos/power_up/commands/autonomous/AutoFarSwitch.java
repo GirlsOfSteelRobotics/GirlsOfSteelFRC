@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoFarSwitch extends CommandGroup {
-    private final double DISTANCE_FORWARD_1 = 30.0;
-    private final double DISTANCE_SIDE = 130.0;
-    private final double DISTANCE_FORWARD_2 = 30.0;
-    private final double BACK_UP = -30.0;
+    private static final double DISTANCE_FORWARD_1 = 30.0;
+    private static final double DISTANCE_SIDE = 130.0;
+    private static final double DISTANCE_FORWARD_2 = 30.0;
+    private static final double BACK_UP = -30.0;
 
     public AutoFarSwitch(GameData.FieldSide robotPosition) {
         System.out.println("AutoFarSwitch starting");

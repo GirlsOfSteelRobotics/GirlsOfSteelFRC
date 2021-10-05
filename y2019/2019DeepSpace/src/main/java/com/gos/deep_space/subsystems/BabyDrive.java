@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class BabyDrive extends Subsystem {
 
-    private WPI_TalonSRX babyDriveTalon;
+    private final WPI_TalonSRX babyDriveTalon;
 
     public BabyDrive() {
         babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);

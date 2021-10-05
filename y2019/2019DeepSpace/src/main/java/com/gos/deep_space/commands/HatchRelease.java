@@ -10,8 +10,6 @@ package com.gos.deep_space.commands;
 import com.gos.deep_space.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-;
-
 public class HatchRelease extends Command {
     public HatchRelease() {
         // Use requires() here to declare subsystem dependencies

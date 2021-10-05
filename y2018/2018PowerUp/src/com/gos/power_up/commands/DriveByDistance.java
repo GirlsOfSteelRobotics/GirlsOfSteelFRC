@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveByDistance extends Command {
 
-    private double encoderTicks; //in sensor units
+    private final double encoderTicks; //in sensor units
     private int tim;
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     private double leftInitial;
     private double rightInitial;
@@ -27,7 +27,7 @@ public class DriveByDistance extends Command {
     private boolean leftGood;
     private boolean rightGood;
 
-    private Shifters.Speed speed;
+    private final Shifters.Speed speed;
 
     private static final int ERROR_THRESHOLD = 1000;
     private static final int BIG_ERROR_THRESHOLD = 5000;
@@ -42,6 +42,7 @@ public class DriveByDistance extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         ErrorCode err;
         Robot.shifters.shiftGear(speed);
@@ -70,6 +71,7 @@ public class DriveByDistance extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 
         if ((Math.abs(leftTalon.getSelectedSensorPosition(0) - encoderTicks) < BIG_ERROR_THRESHOLD)
@@ -91,6 +93,7 @@ public class DriveByDistance extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         //return false;
 
@@ -131,6 +134,7 @@ public class DriveByDistance extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         System.out.println("DriveByDistance Finished");
         Robot.chassis.stop();
@@ -139,6 +143,7 @@ public class DriveByDistance extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

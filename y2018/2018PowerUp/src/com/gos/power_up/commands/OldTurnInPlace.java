@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OldTurnInPlace extends Command {
 
-    private double headingTarget;
-    private double speed;
+    private final double headingTarget;
+    private final double speed;
     private final static double ERROR = 3.0;
 
-    private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     public OldTurnInPlace(double degrees) {
         // Use requires() here to declare subsystem dependencies
@@ -25,6 +25,7 @@ public class OldTurnInPlace extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         Robot.chassis.setInverted(true);
         Robot.chassis.zeroSensors();
@@ -32,6 +33,7 @@ public class OldTurnInPlace extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         if (headingTarget > 0) {
             leftTalon.set(ControlMode.PercentOutput, -speed);
@@ -43,11 +45,13 @@ public class OldTurnInPlace extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return (Math.abs(Robot.chassis.getYaw() - headingTarget) < ERROR);
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.chassis.stop();
         Robot.chassis.setInverted(false);
@@ -56,6 +60,7 @@ public class OldTurnInPlace extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
     }
 }

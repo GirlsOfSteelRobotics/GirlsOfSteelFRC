@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lidar extends Subsystem {
 
     public double LIDAR_TOLERANCE = 0; // tune
-    private Counter counter;
+    private final Counter counter;
 
     public Lidar() {
         DigitalInput source = new DigitalInput(RobotMap.LIDAR_DIO);

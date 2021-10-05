@@ -25,15 +25,15 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class Chassis extends Subsystem {
+public final class Chassis extends Subsystem {
 
     //Drive talons
-    private WPI_TalonSRX driveLeftA;
-    private WPI_TalonSRX driveLeftB;
+    private final WPI_TalonSRX driveLeftA;
+    private final WPI_TalonSRX driveLeftB;
     private WPI_TalonSRX driveLeftC;
 
-    private WPI_TalonSRX driveRightA;
-    private WPI_TalonSRX driveRightB;
+    private final WPI_TalonSRX driveRightA;
+    private final WPI_TalonSRX driveRightB;
     private WPI_TalonSRX driveRightC;
 
     //Motion Magic constants
@@ -88,12 +88,12 @@ public class Chassis extends Subsystem {
         driveLeftB.setName("Chassis", "driveLeftB");
         driveRightA.setName("Chassis", "driveRightA");
         driveRightB.setName("Chassis", "driveRightB");
-        addChild(driveLeftA);
-        addChild(driveLeftB);
-        addChild(driveLeftC);
-        addChild(driveRightA);
-        addChild(driveRightB);
-        addChild(driveRightC);
+        addChild("driveLeftA", driveLeftA);
+        addChild("driveLeftB", driveLeftB);
+        addChild("driveLeftC", driveLeftC);
+        addChild("driveRightA", driveRightA);
+        addChild("driveRightB", driveRightB);
+        addChild("driveRightC", driveRightC);
 
         setupFPID(driveLeftA);
         setupFPID(driveRightA);
@@ -121,6 +121,7 @@ public class Chassis extends Subsystem {
         drive.setDeadband(0.02);
     }
 
+    @Override
     public void initDefaultCommand() {
         setDefaultCommand(new DriveByJoystick());
         // Set the command for a subsystem here.
@@ -227,7 +228,7 @@ public class Chassis extends Subsystem {
         driveLeftA.configNeutralDeadband(0.001, 10);
         driveRightA.configNeutralDeadband(0.001, 10);
 
-        driveRightA.configMotionAcceleration(3600 / 20, 10);
+        driveRightA.configMotionAcceleration(3600.0 / 20, 10);
         driveRightA.configMotionCruiseVelocity(162, 10); // = 0.9 * (3600 / 20)
 
         /* max out the peak output (for all modes).  However you can

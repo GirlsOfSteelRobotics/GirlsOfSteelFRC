@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LidarDriveForward extends Command {
 
-    private final double DRIVE_SPEED = 0.4, BABYDRIVE_SPEED = 0.3;
-    private double goalLidar;
-    private boolean chassis;
+    private static final double DRIVE_SPEED = 0.4;
+    private static final double BABYDRIVE_SPEED = 0.3;
+    private final double goalLidar;
+    private final boolean chassis;
 
     // if boolean chassis is true, then normal drive
     // if chassis is false, then babyDrive

@@ -19,9 +19,9 @@ public class AutoNearScaleAngled extends CommandGroup {
 
 
     //distance constants
-    private final double DISTANCE_FORWARD_1 = 235.0;
-    private final double DISTANCE_TURN_1 = 25;
-    private final double BACK_UP = -30.0;
+    private static final double DISTANCE_FORWARD_1 = 235.0;
+    private static final double DISTANCE_TURN_1 = 25;
+    private static final double BACK_UP = -30.0;
 
 
     public AutoNearScaleAngled(GameData.FieldSide robotPosition) {

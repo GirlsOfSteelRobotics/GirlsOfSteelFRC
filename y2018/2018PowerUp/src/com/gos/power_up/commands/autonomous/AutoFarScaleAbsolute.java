@@ -17,13 +17,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoFarScaleAbsolute extends CommandGroup {
-    private final double DISTANCE_FORWARD_1 = 160.0;
-    private final double TURN_RADIUS_1 = 110.0;
-    private final double TURN_HEADING_1 = 90.0;//absolute value
-    private final double DISTANCE_SIDE_1 = 110.0;
-    private final double TURN_RADIUS_2 = 80.0;
-    private final double TURN_HEADING_2 = 10;
-    private final double BACK_UP = 30.0;
+    private static final double DISTANCE_FORWARD_1 = 160.0;
+    private static final double TURN_RADIUS_1 = 110.0;
+    private static final double TURN_HEADING_1 = 90.0;//absolute value
+    private static final double DISTANCE_SIDE_1 = 110.0;
+    private static final double TURN_RADIUS_2 = 80.0;
+    private static final double TURN_HEADING_2 = 10;
+    private static final double BACK_UP = 30.0;
 
     public AutoFarScaleAbsolute(GameData.FieldSide scaleSide) {
         System.out.println("AutoFarScaleAbsolute starting: scaleSide=" + scaleSide);

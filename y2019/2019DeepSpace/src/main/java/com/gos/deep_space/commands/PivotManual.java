@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class PivotManual extends Command {
 
-    private PivotDirection direction;
+    private final PivotDirection direction;
 
     public PivotManual(PivotDirection direction) {
         this.direction = direction;

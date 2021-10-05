@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Loader extends Subsystem {
 
-    private WPI_TalonSRX loaderMotor;
+    private final WPI_TalonSRX loaderMotor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -29,6 +29,7 @@ public class Loader extends Subsystem {
         loaderMotor.set(0.0);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
