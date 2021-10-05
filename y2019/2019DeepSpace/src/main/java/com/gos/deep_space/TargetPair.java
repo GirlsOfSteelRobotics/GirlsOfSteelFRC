@@ -5,7 +5,8 @@ import org.opencv.core.RotatedRect;
 
 public class TargetPair {
 
-    RotatedRect left, right;
+    private final RotatedRect left;
+    private final RotatedRect right;
 
     public TargetPair(RotatedRect left, RotatedRect right) {
         this.left = left;

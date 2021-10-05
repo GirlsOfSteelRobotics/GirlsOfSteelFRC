@@ -21,9 +21,6 @@ public class DriveByDistance extends Command {
     private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
     private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
-    private double leftInitial;
-    private double rightInitial;
-
     private boolean leftGood;
     private boolean rightGood;
 

@@ -11,7 +11,6 @@ public class Blinkin extends Subsystem {
 
     private static final double CONFETTI = -0.87;
     private static final double RAINBOW_WITH_GLITTER = -0.89;
-    private static final double COLOR_WAVES = 0.53;
     private static final double GREEN = .77;
     private static final double BLUE = .87;
     private static final double RED = .61;
@@ -21,6 +20,7 @@ public class Blinkin extends Subsystem {
         AUTO_DEFAULT, TELEOP_DEFAULT, FORTY_CLIMB, THIRTY_CLIMB, CLIMBER_THIRD, CLIMBER_SECOND,
     }
 
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Blinkin() {
         try {
             rightLightController = new Spark(RobotMap.BLINKIN_RIGHT_PWM);
@@ -56,6 +56,7 @@ public class Blinkin extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public void setLightPattern(LightPattern pattern) {
         switch (pattern) {
         case AUTO_DEFAULT:
@@ -101,6 +102,7 @@ public class Blinkin extends Subsystem {
             if (rightLightController != null) {
                 rightLightController.set(RED);
             }
+            break;
         case CLIMBER_THIRD:
             if (leftLightController != null) {
                 leftLightController.set(GREEN);
@@ -111,6 +113,7 @@ public class Blinkin extends Subsystem {
             if (rightLightController != null) {
                 rightLightController.set(GREEN);
             }
+            break;
         case CLIMBER_SECOND:
             if (leftLightController != null) {
                 leftLightController.set(PURPLE);
@@ -121,6 +124,7 @@ public class Blinkin extends Subsystem {
             if (rightLightController != null) {
                 rightLightController.set(GREEN);
             }
+            break;
         default:
             break;
         }

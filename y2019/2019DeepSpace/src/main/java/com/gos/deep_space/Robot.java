@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
     public static Camera camera;
     public static Lidar lidar;
     public static OI oi;
-    private VisionThread visionThread;
+    private VisionThread visionThread; // NOPMD
 
     /**
      * This function is run when the robot is first started up and should be used

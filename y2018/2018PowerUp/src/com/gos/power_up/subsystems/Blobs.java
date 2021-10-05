@@ -5,6 +5,7 @@ import com.gos.power_up.PipelineListener;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -66,8 +67,8 @@ public class Blobs extends Subsystem {
         //setDefaultCommand(new DriveByVision());
     }
 
-    public ArrayList<Blob> makeBlobs(int size) {
-        ArrayList<Blob> randomBlobs = new ArrayList<>();
+    public List<Blob> makeBlobs(int size) {
+        List<Blob> randomBlobs = new ArrayList<>();
 
         //Populate randomBlobs with Blobs with x- and y-coords between 0 and 10
         for (int i = 0; i < size; i++) {
@@ -105,11 +106,11 @@ public class Blobs extends Subsystem {
     }
 
     //returns an Arraylist of blobs sorted by x-coord
-    public static ArrayList<Blob> sortByX(ArrayList<Blob> unsortedBlobs) {
+    public static List<Blob> sortByX(List<Blob> unsortedBlobs) {
         //THIS DESTROYS THE ORIGINAL LIST
-        ArrayList<Blob> sortedBlobs = new ArrayList<>();
+        List<Blob> sortedBlobs = new ArrayList<>();
 
-        while (unsortedBlobs.size() != 0) {
+        while (!unsortedBlobs.isEmpty()) {
             //Find blob with least x-coord, move it to the end of sortedBlobs
             Blob min = unsortedBlobs.get(0);
             for (int i = 1; i < unsortedBlobs.size(); i++) {
@@ -126,12 +127,13 @@ public class Blobs extends Subsystem {
     }
 
     //Returns sorted list of blobs without outliers
-    public static ArrayList<Blob> golfSac(ArrayList<Blob> blobList) {
+    @SuppressWarnings("PMD.CyclomaticComplexity")
+    public static List<Blob> golfSac(List<Blob> blobList) {
         Blob[] endpoints = new Blob[2];
         double minErr = -1;
         double minStd = -1;
         final double STD_THRESHOLD = 0.5;
-        ArrayList<Blob> returnBlobs = new ArrayList<>();
+        List<Blob> returnBlobs = new ArrayList<>();
 
         //Find best line between two blobs
         for (int i = 0; i < blobList.size() - 1; i++) {
@@ -158,18 +160,18 @@ public class Blobs extends Subsystem {
         }
 
         //Add inliers to list of returnBlobs
-        for (int i = 0; i < blobList.size(); i++) {
-            double dev = findDistance(endpoints[0], endpoints[1], blobList.get(i));
+        for (Blob blob : blobList) {
+            double dev = findDistance(endpoints[0], endpoints[1], blob);
             if (dev < STD_THRESHOLD * minStd) {
-                returnBlobs.add(blobList.get(i));
+                returnBlobs.add(blob);
             }
         }
 
         return sortByX(returnBlobs);
     }
 
-    public double findAvgDistance(ArrayList<Blob> blobList) {
-        //requires input ArrayList to be sorted
+    public double findAvgDistance(List<Blob> blobList) {
+        //requires input List to be sorted
         double sumDistance = 0;
         for (int i = 0; i < blobList.size() - 1; i++) {
             double x = Math.pow(blobList.get(i + 1).x - blobList.get(i).x, 2);
@@ -180,12 +182,12 @@ public class Blobs extends Subsystem {
     }
 
     public double distanceBetweenBlobs() {
-        ArrayList<Blob> blobList = PipelineListener.blobList;
+        List<Blob> blobList = PipelineListener.blobList;
         if (blobList.size() < MIN_BLOBS_FOR_LINE) {
             return -1;
         }
 
-        ArrayList<Blob> line = golfSac(golfSac(blobList));
+        List<Blob> line = golfSac(golfSac(blobList));
         if (line.size() >= MIN_BLOBS_FOR_LINE) {
             System.out.println("Blobs: Line found. Size = " + line.size());
             return findAvgDistance(line);

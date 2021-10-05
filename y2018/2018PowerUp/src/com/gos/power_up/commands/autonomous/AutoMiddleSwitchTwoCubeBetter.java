@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
+@SuppressWarnings("PMD.DataClass")
 public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
     public final static double STRAIGHT_1 = 40.0;
     public final static double TURN_DEGREES_1 = 30.0;

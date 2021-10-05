@@ -145,20 +145,7 @@ public class Climber extends Subsystem {
 
     public boolean checkCurrentPosition(double goalPos, ClimberType type) {
 
-        boolean isFinished;
-        if (type == ClimberType.All) {
-            isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()
-                && goalPos - CLIMBER_TOLERANCE <= getFrontPosition())
-                && (goalPos + CLIMBER_TOLERANCE >= getBackPosition() && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
-        } else if (type == ClimberType.Front) {
-            isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()
-                && goalPos - CLIMBER_TOLERANCE <= getFrontPosition());
-        } else {
-            isFinished = (goalPos + CLIMBER_TOLERANCE >= getBackPosition()
-                && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
-        }
-
-        isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()
+        boolean isFinished = (goalPos + CLIMBER_TOLERANCE >= getFrontPosition()
             && goalPos - CLIMBER_TOLERANCE <= getFrontPosition())
             && (goalPos + CLIMBER_TOLERANCE >= getBackPosition() && goalPos - CLIMBER_TOLERANCE <= getBackPosition());
 

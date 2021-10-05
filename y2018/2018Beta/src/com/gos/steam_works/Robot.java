@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
 
-    private VisionThread visionThread;
+    private VisionThread visionThread; // NOPMD
 
     /**
      * This function is run when the robot is first started up and should be
@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
             e.printStackTrace();
         }*/
 
-        visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
+        visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener); // NOPMD
         visionThread.start();
 
     }

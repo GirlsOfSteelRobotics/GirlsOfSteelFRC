@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
+@SuppressWarnings("PMD.DataClass")
 public class AutoMiddleSwitchTwoCubeS extends CommandGroup {
     //Parameters for first cube
     public final static double RIGHT_ANGLE = 53.0;

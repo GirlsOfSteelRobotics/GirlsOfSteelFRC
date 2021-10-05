@@ -34,7 +34,7 @@ public class GameData {
     public DigitalInput dioScaleOverride;
     public DigitalInput dioNoAuto;
 
-    private String gameData = null;
+    private String gameData;
 
     /**
      * Prepare a place to record the Game Data string and initialize the DIO ports
@@ -143,13 +143,13 @@ public class GameData {
         int tim = 0;
         gameData = DriverStation.getInstance().getGameSpecificMessage();
 
-        while (tim <= 5 && (gameData == null || gameData.equals(""))) {
+        while (tim <= 5 && (gameData == null || "".equals(gameData))) {
             gameData = DriverStation.getInstance().getGameSpecificMessage();
             Timer.delay(0.2);
             tim++;
         }
 
-        if (gameData.equals("")) {
+        if ("".equals(gameData)) {
             gameData = null;
         }
 

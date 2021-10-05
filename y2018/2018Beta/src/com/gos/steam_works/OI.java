@@ -39,7 +39,6 @@ public class OI {
 
     private DriveStyle driveStyle;
 
-    private final Joystick operatorGamePad = new Joystick(0);
     private final Joystick drivingGamePad = new Joystick(1);
     private final Joystick drivingJoystickOne = new Joystick(1);
     private final Joystick drivingJoystickTwo = new Joystick(2);
@@ -56,33 +55,18 @@ public class OI {
     private JoystickScaling joystickScale = JoystickScaling.linear;
     private static final double DEADBAND = 0.3; //TODO: find a good value
 
-    private JoystickButton switchToForward;
-    private JoystickButton switchToBackward;
-
-    private final JoystickButton shifterUp;
-    private final JoystickButton shifterDown;
-
-    private final JoystickButton driveByDistanceLow;
-    private final JoystickButton driveByDistanceHigh;
-
-    private final JoystickButton liftUp;
-    private final JoystickButton liftDown;
-
-    private final JoystickButton collect;
-    private final JoystickButton release;
-
     public OI() {
         //BUTTON ASSIGNMENTS
-        shifterDown = new JoystickButton(drivingJoystickOne, 2);
-        shifterUp = new JoystickButton(drivingJoystickOne, 3);
-        driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
-        driveByDistanceHigh = new JoystickButton(drivingJoystickOne, 10);
+        JoystickButton shifterDown = new JoystickButton(drivingJoystickOne, 2);
+        JoystickButton shifterUp = new JoystickButton(drivingJoystickOne, 3);
+        JoystickButton driveByDistanceLow = new JoystickButton(drivingJoystickOne, 9);
+        JoystickButton driveByDistanceHigh = new JoystickButton(drivingJoystickOne, 10);
 
-        liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
-        liftDown = new JoystickButton(operatorGamePad, 2);
-
-        collect = new JoystickButton(operatorGamePad, 3);
-        release = new JoystickButton(operatorGamePad, 4);
+//        JoystickButton liftUp = new JoystickButton(operatorGamePad, 1); //TODO: random buttom assignment
+//        JoystickButton liftDown = new JoystickButton(operatorGamePad, 2);
+//
+//        JoystickButton collect = new JoystickButton(operatorGamePad, 3);
+//        JoystickButton release = new JoystickButton(operatorGamePad, 4);
 
         shifterDown.whenPressed(new ShiftDown());
         shifterUp.whenPressed(new ShiftUp());
@@ -102,7 +86,7 @@ public class OI {
 
     }
 
-
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public Command getAutonCommand() {
         switch (getAutonSelector()) {
         case 0:

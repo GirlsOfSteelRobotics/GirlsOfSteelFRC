@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoDriveToBaseline extends CommandGroup {
 
-    private final double DISTANCE_FORWARD = 200;
-
     public AutoDriveToBaseline() {
 
         System.out.println("AutoDriveToBaseline");

@@ -10,19 +10,22 @@ import com.gos.power_up.RobotMap;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  *
  */
+@SuppressWarnings("PMD.DataClass")
 public class DriveByMotionProfile extends Command {
 
-    public ArrayList<ArrayList<Double>> leftPoints;
-    public ArrayList<ArrayList<Double>> rightPoints;
+    public List<List<Double>> leftPoints;
+    public List<List<Double>> rightPoints;
     public WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
     public WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
     private final MotionProfileStatus leftStatus;
@@ -41,7 +44,7 @@ public class DriveByMotionProfile extends Command {
             leftPoints = loadMotionProfile(leftFile, true);
             rightPoints = loadMotionProfile(rightFile, false);
             System.out.println("DriveByMotion: Loaded File");
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             System.err.println("File Not Found: Motion Profile Trajectories");
         }
 
@@ -143,24 +146,24 @@ public class DriveByMotionProfile extends Command {
         end();
     }
 
-    private ArrayList<ArrayList<Double>> loadMotionProfile(String filename, boolean isLeft)
-        throws FileNotFoundException {
-        ArrayList<ArrayList<Double>> points = new ArrayList<>();
-        InputStream is = new FileInputStream(filename);
-        Scanner s = new Scanner(is);
-        while (s.hasNext()) {
-            ArrayList<Double> arr = new ArrayList<>();
-            arr.add(s.nextDouble() * (isLeft ? 1.0 : -1.0)); // p
-            arr.add(s.nextDouble() * (isLeft ? 1.0 : -1.0)); // v
-            arr.add(s.nextDouble()); // d
+    private List<List<Double>> loadMotionProfile(String filename, boolean isLeft)
+        throws IOException {
+        List<List<Double>> points = new ArrayList<>();
+        try(InputStream is = Files.newInputStream(Paths.get(filename));
+            Scanner s = new Scanner(is)) {
+            while (s.hasNext()) {
+                List<Double> arr = new ArrayList<>();
+                arr.add(s.nextDouble() * (isLeft ? 1.0 : -1.0)); // p
+                arr.add(s.nextDouble() * (isLeft ? 1.0 : -1.0)); // v
+                arr.add(s.nextDouble()); // d
 
-            points.add(arr);
+                points.add(arr);
+            }
         }
-        s.close();
         return points;
     }
 
-    private void pushTrajectory(WPI_TalonSRX _talon, ArrayList<ArrayList<Double>> points) {
+    private void pushTrajectory(WPI_TalonSRX _talon, List<List<Double>> points) {
         // **************handle Underrun
 
         /* create an empty point */
@@ -169,7 +172,7 @@ public class DriveByMotionProfile extends Command {
 
         /* This is fast since it's just into our TOP buffer */
         int i = 0;
-        for (ArrayList<Double> arr : points) {
+        for (List<Double> arr : points) {
             /* for each point, fill our structure and pass it to API */
             // Double[] a = (Double[]) arr.toArray();
             point.position = arr.get(0) * RobotMap.CODES_PER_WHEEL_REV * 3.6;

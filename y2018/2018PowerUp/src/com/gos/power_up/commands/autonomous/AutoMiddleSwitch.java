@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
+@SuppressWarnings("PMD.DataClass")
 public class AutoMiddleSwitch extends CommandGroup {
 
     public static final double RIGHT_ANGLE = 53.0;

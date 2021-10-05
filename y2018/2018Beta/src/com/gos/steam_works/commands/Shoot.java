@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shoot extends Command {
 
     private int loopCounter; // increment each time execute runs
-    private boolean isLowMotorRunning = false; // if we have started the low
+    private boolean isLowMotorRunning; // if we have started the low
     // motor yet
     private static final int LOOP_TIMEOUT = 50; // ~1sec of time
     private final int shooterSpeed;

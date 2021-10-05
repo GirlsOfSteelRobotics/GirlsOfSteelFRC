@@ -9,12 +9,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Lidar extends Subsystem {
 
-    public double LIDAR_TOLERANCE = 0; // tune
+    public static final double LIDAR_TOLERANCE = 0; // tune
     private final Counter counter;
 
     public Lidar() {
-        DigitalInput source = new DigitalInput(RobotMap.LIDAR_DIO);
-        counter = new Counter(source);
+        counter = new Counter(new DigitalInput(RobotMap.LIDAR_DIO));
         counter.setMaxPeriod(1.0);
         // Configure for measuring rising to falling pulses
         counter.setSemiPeriodMode(true);

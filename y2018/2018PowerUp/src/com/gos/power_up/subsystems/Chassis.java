@@ -84,10 +84,6 @@ public final class Chassis extends Subsystem {
         driveRightA.setSafetyEnabled(false);
         driveRightB.setSafetyEnabled(false);
 
-        driveLeftA.setName("Chassis", "driveLeftA");
-        driveLeftB.setName("Chassis", "driveLeftB");
-        driveRightA.setName("Chassis", "driveRightA");
-        driveRightB.setName("Chassis", "driveRightB");
         addChild("driveLeftA", driveLeftA);
         addChild("driveLeftB", driveLeftB);
         addChild("driveLeftC", driveLeftC);

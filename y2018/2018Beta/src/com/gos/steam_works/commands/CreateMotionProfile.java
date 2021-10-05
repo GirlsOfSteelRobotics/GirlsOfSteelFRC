@@ -6,21 +6,24 @@ import com.gos.steam_works.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  */
+@SuppressWarnings("PMD.DataClass")
 public class CreateMotionProfile extends Command {
 
-    private ArrayList<ArrayList<Double>> leftTrajectory; // filled with arraylists of points
-    private ArrayList<ArrayList<Double>> rightTrajectory; // filled with arraylists of points
-    public WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    public WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
-    private ArrayList<Double> leftPoint; // position (rev), velocity (rpm), duration
-    private ArrayList<Double> rightPoint; // position (rev), velocity (rpm), duration
+    private List<List<Double>> leftTrajectory; // filled with arraylists of points
+    private List<List<Double>> rightTrajectory; // filled with arraylists of points
+    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
+    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private List<Double> leftPoint; // position (rev), velocity (rpm), duration
+    private List<Double> rightPoint; // position (rev), velocity (rpm), duration
     public String leftFile; // path of file on roborio
     public String rightFile; // path of file on roborio
     private double leftInitial; // initial encoder position
@@ -130,26 +133,26 @@ public class CreateMotionProfile extends Command {
         end();
     }
 
-    private void writeFile(String filePath, ArrayList<ArrayList<Double>> trajectory) throws IOException {
+    private void writeFile(String filePath, List<List<Double>> trajectory) throws IOException {
 
-        FileWriter outFile = new FileWriter(filePath);
-        BufferedWriter fout = new BufferedWriter(outFile);
+        try(BufferedWriter fout = Files.newBufferedWriter(Paths.get(filePath))) {
 
-        for (int x = 0; x < trajectory.size(); x++) { // outer loop to go
-            // through the unknown #
-            // of elements in
-            // ArrayList<ArrayList<Double>>
-            for (int y = 0; y < 3; y++) // inner loop to go through the three
-            // elements of ArrayList<Double>
-            {
-                fout.write(trajectory.get(x).get(y) + " ");
+            for (List<Double> doubles : trajectory) { // outer loop to go
+                // through the unknown #
+                // of elements in
+                // ArrayList<ArrayList<Double>>
+                for (int y = 0; y < 3; y++) // inner loop to go through the three
+                // elements of ArrayList<Double>
+                {
+                    fout.write(doubles.get(y) + " ");
+                }
+                fout.newLine();
             }
-            fout.newLine();
         }
-        fout.close();
     }
 
-    private void cleanTrajectory(ArrayList<ArrayList<Double>> leftMP, ArrayList<ArrayList<Double>> rightMP) {
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
+    private void cleanTrajectory(List<List<Double>> leftMP, List<List<Double>> rightMP) {
         // remove all extra zero positions at the beginning
         // TODO: does first position need to be exactly zero?
         double leftDiff = 0;

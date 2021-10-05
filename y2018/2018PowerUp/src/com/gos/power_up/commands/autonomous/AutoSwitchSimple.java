@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoSwitchSimple extends CommandGroup {
 
-    public final double DISTANCE_FORWARD = 105;
-    public final double BACK_UP = -30;
+    private static final double DISTANCE_FORWARD = 105;
+    private static final double BACK_UP = -30;
 
     public AutoSwitchSimple() {
         System.out.println("AutoSimpleSwitch starting");

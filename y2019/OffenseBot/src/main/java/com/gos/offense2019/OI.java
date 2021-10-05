@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
  */
 public class OI {
     private final Joystick drivingPad;
-    private Joystick operatingPad;
     private final POVButton shiftUp;
     private final POVButton shiftDown;
     private final Button hatchRelease;
@@ -65,11 +64,9 @@ public class OI {
         return (drivingPad.getRawAxis(slowSpeedButton) < 0.1 ? speedHigh : speedLow);
     }
 
-    private double squaredInput(double speed) {
-        double sign = speed / Math.abs(speed);
+    private double squaredInput(double inSpeed) {
+        double sign = inSpeed / Math.abs(inSpeed);
 
-        speed = speed * speed * sign;
-
-        return speed;
+        return inSpeed * inSpeed * sign;
     }
 }

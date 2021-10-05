@@ -11,6 +11,7 @@ import org.opencv.videoio.VideoWriter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Camera extends Subsystem {
 
@@ -56,7 +57,7 @@ public class Camera extends Subsystem {
         // Create a filename based on the current date and time.
         // Avoid colons because they're illegal filename characters on some computers.
         // For example, Dec 25, 2019 at 10:15 am would be: 2019-12-25-10-15-00
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US);
         String date = simpleDateFormat.format(new Date());
 
         // Note: the movie name MUST end with .avi if using the MJPG format!

@@ -10,21 +10,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnInPlace extends Command {
 
-    private double encoderTicks;
-    private static final int ERROR_THRESHOLD = 5;
-
-    private boolean leftGood;
-    private boolean rightGood;
-    private boolean targetReached = false;
+    private boolean targetReached;
 
     private final double headingTarget;
-    private final double speed;
-    private double currentPos;
-    private double error;
-    private double errorLast = 0;
-    private double dError;
-    private double iError = 0;
-    private double tempError;
+    private double errorLast;
+    private double iError;
 
     private static final double kP = .005;
     private static final double kI = 0;
@@ -37,7 +27,6 @@ public class TurnInPlace extends Command {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.chassis);
         headingTarget = degrees;
-        speed = 0.2;
     }
 
     // Called just before this Command runs the first time
@@ -55,12 +44,12 @@ public class TurnInPlace extends Command {
     @Override
     protected void execute() {
 
-        currentPos = Robot.chassis.getYaw();
-        error = (headingTarget - currentPos);
-        dError = ((error - errorLast) / .02);
+        double currentPos = Robot.chassis.getYaw();
+        double error = (headingTarget - currentPos);
+        double dError = ((error - errorLast) / .02);
 
 
-        tempError = (iError + (error * .02));
+        double tempError = (iError + (error * .02));
         if (Math.abs(tempError * kI) < .5) {
             iError = tempError;
         }

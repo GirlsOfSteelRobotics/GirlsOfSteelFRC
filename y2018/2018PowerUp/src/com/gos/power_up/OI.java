@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+@SuppressWarnings("PMD.TooManyFields")
 public class OI {
     public enum DriveStyle {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank, amazonDrive
@@ -56,7 +57,6 @@ public class OI {
     private final JoystickButton wristOut;
 
     private final JoystickButton collect;
-    private JoystickButton releaseFast;
     private final JoystickButton releaseSlow;
 
     private final JoystickButton climb;

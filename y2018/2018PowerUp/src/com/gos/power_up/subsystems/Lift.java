@@ -108,12 +108,10 @@ public final class Lift extends Subsystem {
             lift.clearStickyFaults(10);
             System.out.println("Lift: Sticky fault detected, IN RECOVERY MODE");
         }
-        if (inRecoveryMode) {
-            if (isAtBottom()) {
-                lift.setSelectedSensorPosition(0, 0, 10);
-                inRecoveryMode = false;
-                System.out.println("Lift: encoder position recovered (limit switch activated at bottom)");
-            }
+        if (inRecoveryMode && isAtBottom()) {
+            lift.setSelectedSensorPosition(0, 0, 10);
+            inRecoveryMode = false;
+            System.out.println("Lift: encoder position recovered (limit switch activated at bottom)");
         }
         lift.set(ControlMode.Position, goalLiftPosition);
         //System.out.println("GoalLiftPosition: " + goalLiftPosition);

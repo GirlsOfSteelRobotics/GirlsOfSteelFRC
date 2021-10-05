@@ -35,7 +35,7 @@ public final class Shooter extends Subsystem {
     private static final double MAX_SHOOTER_ERROR = 0.05;
 
     private int shooterSpeed = SHOOTER_DEFAULT_SPEED;
-    private boolean lowMotorRunning = false;
+    private boolean lowMotorRunning;
 
     public Shooter() {
         lowShooterMotor = new WPI_TalonSRX(RobotMap.LOW_SHOOTER_MOTOR);

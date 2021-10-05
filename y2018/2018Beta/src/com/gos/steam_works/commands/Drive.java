@@ -1,6 +1,5 @@
 package com.gos.steam_works.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.OI;
 import com.gos.steam_works.Robot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,9 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class Drive extends Command {
-
-    private final WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-    private final WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
 
     public Drive() {
         // Use requires() here to declare subsystem dependencies
