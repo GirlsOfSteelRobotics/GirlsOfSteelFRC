@@ -7,8 +7,10 @@
 
 package com.gos.offense2019;
 
+import com.gos.offense2019.commands.DriveByJoystick;
 import com.gos.offense2019.commands.HatchCollect;
 import com.gos.offense2019.commands.Shift;
+import com.gos.offense2019.subsystems.Chassis;
 import com.gos.offense2019.subsystems.HatchCollector;
 import com.gos.offense2019.subsystems.Shifters;
 import edu.wpi.first.wpilibj.Joystick;
@@ -27,9 +29,12 @@ public class OI {
     private final double m_speedHigh;
     private final double m_speedLow;
 
-    public OI() {
+    public OI(Chassis chassis, Shifters shifters, HatchCollector hatch) {
         m_drivingPad = new Joystick(0);
         //operatingPad = new Joystick(1);
+
+
+        chassis.setDefaultCommand(new DriveByJoystick(chassis, this));
 
         POVButton shiftUp = new POVButton(m_drivingPad, 0);
         POVButton shiftDown = new POVButton(m_drivingPad, 180);
@@ -41,11 +46,11 @@ public class OI {
         m_speedHigh = 1.0;
         m_speedLow = 0.77;
 
-        shiftUp.whenPressed(new Shift(Shifters.Speed.kHigh));
-        shiftDown.whenPressed(new Shift(Shifters.Speed.kLow));
+        shiftUp.whenPressed(new Shift(shifters, Shifters.Speed.kHigh));
+        shiftDown.whenPressed(new Shift(shifters, Shifters.Speed.kLow));
 
-        hatchRelease.whenPressed(new HatchCollect(HatchCollector.HatchState.kRelease));
-        hatchGrab.whenPressed(new HatchCollect(HatchCollector.HatchState.kGrab));
+        hatchRelease.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kRelease));
+        hatchGrab.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kGrab));
     }
 
     public double getLeftUpAndDown() {

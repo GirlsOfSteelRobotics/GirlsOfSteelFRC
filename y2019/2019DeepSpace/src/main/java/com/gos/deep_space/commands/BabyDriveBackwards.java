@@ -7,41 +7,42 @@
 
 package com.gos.deep_space.commands;
 
-import com.gos.deep_space.Robot;
+import com.gos.deep_space.subsystems.BabyDrive;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class BabyDriveBackwards extends Command {
     private static final double BABYDRIVE_SPEED = 0.4;
 
-    public BabyDriveBackwards() {
-        requires(Robot.m_babyDrive);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    private final BabyDrive m_babyDrive;
+
+    public BabyDriveBackwards(BabyDrive babyDrive) {
+        m_babyDrive = babyDrive;
+        requires(m_babyDrive);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
         System.out.println("init BabyDriveBackwards");
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
-        Robot.m_babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
+        m_babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
-        Robot.m_babyDrive.babyDriveStop();
+        m_babyDrive.babyDriveStop();
         System.out.println("end BabyDriveBackwards");
     }
 

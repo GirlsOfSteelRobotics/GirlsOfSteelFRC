@@ -7,38 +7,43 @@
 
 package com.gos.offense2019.commands;
 
-import com.gos.offense2019.Robot;
+import com.gos.offense2019.OI;
+import com.gos.offense2019.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * An example command.  You can replace me with your own command.
  */
 public class DriveByJoystick extends Command {
-    public DriveByJoystick() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.m_chassis);
+    private final Chassis m_chassis;
+    private final OI m_oi;
+
+    public DriveByJoystick(Chassis chassis, OI oi) {
+        m_chassis = chassis;
+        m_oi = oi;
+        requires(m_chassis);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
         System.out.println("DriveByJoystick init");
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
         // 4 is the axis number right x on the gamepad
-        Robot.m_chassis.driveByJoystick(Robot.m_oi.getLeftUpAndDown(), Robot.m_oi.getRightSideToSide());
+        m_chassis.driveByJoystick(m_oi.getLeftUpAndDown(), m_oi.getRightSideToSide());
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
         System.out.println("DriveByJoystick end");

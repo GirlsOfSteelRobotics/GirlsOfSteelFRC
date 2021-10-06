@@ -7,54 +7,58 @@
 
 package com.gos.deep_space.commands;
 
-import com.gos.deep_space.Robot;
+import com.gos.deep_space.subsystems.Blinkin;
+import com.gos.deep_space.subsystems.Climber;
 import com.gos.deep_space.subsystems.Climber.ClimberType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberToSetPoint extends Command {
+    private final Climber m_climber;
+    private final Blinkin m_blinkin;
 
     private final double m_setPoint;
     private final ClimberType m_type;
 
-    public ClimberToSetPoint(double setPoint, ClimberType climberType) {
+    public ClimberToSetPoint(Climber climber, Blinkin blinkin, double setPoint, ClimberType climberType) {
         this.m_setPoint = setPoint;
         m_type = climberType;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.m_climber);
-        requires(Robot.m_blinkin);
+        m_blinkin = blinkin;
+        m_climber = climber;
+
+        requires(m_climber);
+        requires(m_blinkin);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
-        Robot.m_climber.setGoalClimberPosition(m_setPoint, m_type);
+        m_climber.setGoalClimberPosition(m_setPoint, m_type);
         System.out.println("init Climber To " + m_setPoint);
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
-        System.out.println("goal front position: " + Robot.m_climber.m_goalFrontPosition + "actual front position: "
-            + Robot.m_climber.getFrontPosition());
-        System.out.println("goal back position" + Robot.m_climber.m_goalBackPosition + "actual back position: "
-            + Robot.m_climber.getBackPosition());
+        System.out.println("goal front position: " + m_climber.m_goalFrontPosition + "actual front position: "
+            + m_climber.getFrontPosition());
+        System.out.println("goal back position" + m_climber.m_goalBackPosition + "actual back position: "
+            + m_climber.getBackPosition());
 
-        Robot.m_climber.holdClimberPosition(m_type);
+        m_climber.holdClimberPosition(m_type);
 
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
-        return Robot.m_climber.checkCurrentPosition(m_setPoint, m_type);
+        return m_climber.checkCurrentPosition(m_setPoint, m_type);
 
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
-        Robot.m_climber.climberStop();
+        m_climber.climberStop();
         System.out.println("end Climber To " + m_setPoint);
 
     }

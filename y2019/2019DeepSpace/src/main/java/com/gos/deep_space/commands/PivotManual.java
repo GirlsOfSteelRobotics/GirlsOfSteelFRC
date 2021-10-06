@@ -7,49 +7,49 @@
 
 package com.gos.deep_space.commands;
 
-import com.gos.deep_space.Robot;
+import com.gos.deep_space.subsystems.Pivot;
 import com.gos.deep_space.subsystems.Pivot.PivotDirection;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PivotManual extends Command {
+    private final Pivot m_pivot;
 
     private final PivotDirection m_direction;
 
-    public PivotManual(PivotDirection direction) {
+    public PivotManual(Pivot pivot, PivotDirection direction) {
         this.m_direction = direction;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.m_pivot);
+        this.m_pivot = pivot;
+        requires(m_pivot);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
         System.out.println("init PivotManual " + m_direction);
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
         if (m_direction == PivotDirection.Up) {
-            Robot.m_pivot.incrementPivot();
+            m_pivot.incrementPivot();
         } else {
-            Robot.m_pivot.decrementPivot();
+            m_pivot.decrementPivot();
         }
-        Robot.m_pivot.holdPivotPosition();
+        m_pivot.holdPivotPosition();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
-        Robot.m_pivot.pivotStop();
+        m_pivot.pivotStop();
         System.out.println("end PivotManual " + m_direction);
     }
 }

@@ -3,6 +3,7 @@ package com.gos.steam_works.subsystems;
 import com.gos.steam_works.RobotMap;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -13,7 +14,7 @@ public class Camera extends Subsystem {
 
     private final UsbCamera m_camGear;
     private final UsbCamera m_camClimb;
-    public UsbCamera m_visionCam;
+    private final UsbCamera m_visionCam;
     private final MjpegServer m_server;
 
 
@@ -57,4 +58,7 @@ public class Camera extends Subsystem {
     }
 
 
+    public VideoCamera getVisionCamera() {
+        return m_visionCam;
+    }
 }

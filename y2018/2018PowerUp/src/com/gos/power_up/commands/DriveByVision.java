@@ -2,8 +2,8 @@ package com.gos.power_up.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.power_up.Robot;
 import com.gos.power_up.subsystems.Blobs;
+import com.gos.power_up.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -12,30 +12,36 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveByVision extends Command {
     private static final double SPEED_PERCENT = 0.2;
 
-    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
-    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final Chassis m_chassis;
+    private final Blobs m_blobs;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
 
     private double m_dist;
 
-    public DriveByVision() {
+    public DriveByVision(Chassis chassis, Blobs blobs) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.m_blobs);
+        m_chassis = chassis;
+        m_blobs = blobs;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
+        requires(m_blobs);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
-        m_dist = Robot.m_blobs.distanceBetweenBlobs();
-        if (Robot.m_blobs.distanceBetweenBlobs() == -1) {
+        m_dist = m_blobs.distanceBetweenBlobs();
+        if (m_blobs.distanceBetweenBlobs() == -1) {
             System.out.println("DriveByVision initialize: line not in sight!!");
             end();
         }
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
-        m_dist = Robot.m_blobs.distanceBetweenBlobs();
+        m_dist = m_blobs.distanceBetweenBlobs();
         System.out.print("Distance = " + m_dist + " ");
         if (m_dist == -1) {
             System.out.println("DriveByVision: Can't see line!");
@@ -50,22 +56,17 @@ public class DriveByVision extends Command {
         }
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         return m_dist == -1 || Math.abs(m_dist - Blobs.GOAL_DISTANCE) < Blobs.ERROR_THRESHOLD;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
-        Robot.m_chassis.stop();
+        m_chassis.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

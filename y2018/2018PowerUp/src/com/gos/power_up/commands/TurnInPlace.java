@@ -2,7 +2,7 @@ package com.gos.power_up.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.power_up.Robot;
+import com.gos.power_up.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -20,31 +20,34 @@ public class TurnInPlace extends Command {
     private double m_errorLast;
     private double m_iError;
 
-    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
-    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final Chassis m_chassis;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
 
-    public TurnInPlace(double degrees) {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.m_chassis);
+    public TurnInPlace(Chassis chassis, double degrees) {
+        m_chassis = chassis;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
         m_headingTarget = degrees;
+        requires(m_chassis);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
         System.out.println("Trying to initialize");
-        Robot.m_chassis.setInverted(false);
-        Robot.m_chassis.zeroSensors();
+        m_chassis.setInverted(false);
+        m_chassis.zeroSensors();
         System.out.println("Turn in place initialized Heading = " + m_headingTarget);
 
     }
 
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
 
-        double currentPos = Robot.m_chassis.getYaw();
+        double currentPos = m_chassis.getYaw();
         double error = m_headingTarget - currentPos;
         double dError = (error - m_errorLast) / .02;
 
@@ -77,22 +80,21 @@ public class TurnInPlace extends Command {
         //
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         return m_targetReached;
     }
 
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
         System.out.println("TurnInPlace Finished");
-        Robot.m_chassis.stop();
+        m_chassis.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
+
     @Override
     protected void interrupted() {
         System.out.println("TurnInPlace Interrupted");

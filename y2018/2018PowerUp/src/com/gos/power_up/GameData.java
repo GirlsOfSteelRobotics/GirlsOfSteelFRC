@@ -28,12 +28,12 @@ public class GameData {
     }
 
     // DIO ports used to select autonomous behaviors
-    public DigitalInput m_dioPriority;
-    public DigitalInput m_dioLeft;
-    public DigitalInput m_dioMiddle;
-    public DigitalInput m_dioRight;
-    public DigitalInput m_dioScaleOverride;
-    public DigitalInput m_dioNoAuto;
+    private final DigitalInput m_dioPriority;
+    private final DigitalInput m_dioLeft;
+    private final DigitalInput m_dioMiddle;
+    private final DigitalInput m_dioRight;
+    private final DigitalInput m_dioScaleOverride;
+    private final DigitalInput m_dioNoAuto;
 
     private String m_gameData;
 
@@ -156,5 +156,28 @@ public class GameData {
 
         System.out.println("Raw GameData: " + m_gameData);
         return m_gameData;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+
+        if (getSwitchSide() == GameData.FieldSide.left) {
+            output.append("Switch is on the left");
+        } else if (getSwitchSide() == GameData.FieldSide.right) {
+            output.append("Switch is on the right");
+        } else if (getSwitchSide() == GameData.FieldSide.bad) {
+            output.append("Switch is BAD");
+        }
+
+        if (getScaleSide() == GameData.FieldSide.left) {
+            output.append("Scale is on the left");
+        } else if (getScaleSide() == GameData.FieldSide.right) {
+            output.append("Scale is on the right");
+        } else if (getScaleSide() == GameData.FieldSide.bad) {
+            output.append("Scale is BAD");
+        }
+
+        return output.toString();
     }
 }

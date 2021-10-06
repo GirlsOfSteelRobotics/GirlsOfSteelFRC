@@ -2,8 +2,8 @@ package com.gos.steam_works.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.steam_works.Robot;
 import com.gos.steam_works.RobotMap;
+import com.gos.steam_works.subsystems.Chassis;
 import com.gos.steam_works.subsystems.Shifters;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,26 +15,32 @@ public class DriveByDistance extends Command {
 
     private final double m_rotations;
 
-    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
-    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
 
     private double m_leftInitial;
     private double m_rightInitial;
 
     private final Shifters.Speed m_speed;
 
-    public DriveByDistance(double inches, Shifters.Speed speed) {
+    public DriveByDistance(Chassis chassis, Shifters shifters, double inches, Shifters.Speed speed) {
+        m_chassis = chassis;
+        m_shifters = shifters;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
         m_rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
         this.m_speed = speed;
 
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.m_chassis);
+        requires(m_chassis);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
-        Robot.m_shifters.shiftGear(m_speed);
+        m_shifters.shiftGear(m_speed);
 
         // Robot.chassis.setupFPID(leftTalon);
         // Robot.chassis.setupFPID(rightTalon);
@@ -77,7 +83,7 @@ public class DriveByDistance extends Command {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
         m_leftTalon.set(ControlMode.Position, -(m_rotations + m_leftInitial));
@@ -93,7 +99,7 @@ public class DriveByDistance extends Command {
         //System.out.println("Right Error " + (((rotations + rightInitial)) - rightTalon.getPosition()));
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         if (m_rotations > 0) {
@@ -107,17 +113,12 @@ public class DriveByDistance extends Command {
         }
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
-        Robot.m_shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.kLow);
         System.out.println("DriveByDistance Finished");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

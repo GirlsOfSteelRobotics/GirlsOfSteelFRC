@@ -101,10 +101,6 @@ public class Blobs extends Subsystem {
         return dist;
     }
 
-    public static void printBlob(Blob b) {
-        System.out.println(b.m_x + ", " + b.m_y);
-    }
-
     //returns an Arraylist of blobs sorted by x-coord
     public static List<Blob> sortByX(List<Blob> unsortedBlobs) {
         //THIS DESTROYS THE ORIGINAL LIST

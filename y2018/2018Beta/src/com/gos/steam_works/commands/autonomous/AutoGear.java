@@ -1,9 +1,11 @@
 package com.gos.steam_works.commands.autonomous;
 
+import com.gos.steam_works.GripPipelineListener;
 import com.gos.steam_works.commands.DriveByDistance;
 import com.gos.steam_works.commands.DriveByMotionProfile;
 import com.gos.steam_works.commands.DriveByVision;
 import com.gos.steam_works.commands.TurnToGear.Direction;
+import com.gos.steam_works.subsystems.Chassis;
 import com.gos.steam_works.subsystems.Shifters;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -12,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoGear extends CommandGroup {
 
-    public AutoGear(double distance, Direction direction) {
+    public AutoGear(Chassis chassis, Shifters shifters, GripPipelineListener listener, double distance, Direction direction) {
         /*
         addSequential(new DriveByDistance(distance, Shifters.Speed.kHigh));
         addSequential(new TurnToGear(direction));
@@ -20,14 +22,14 @@ public class AutoGear extends CommandGroup {
         addSequential(new DriveByDistance(-3.0, Shifters.Speed.kLow));
         */
         // Using motion profiles for turns:
-        addSequential(new DriveByDistance(distance, Shifters.Speed.kLow));
+        addSequential(new DriveByDistance(chassis, shifters, distance, Shifters.Speed.kLow));
         if (direction == Direction.kLeft) {
-            addSequential(new DriveByMotionProfile("/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat", 1.0));
+            addSequential(new DriveByMotionProfile(chassis, "/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat", 1.0));
         } else if (direction == Direction.kRight) {
-            addSequential(new DriveByMotionProfile("/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
+            addSequential(new DriveByMotionProfile(chassis, "/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
         }
-        addSequential(new DriveByVision());
-        addSequential(new DriveByDistance(-3.0, Shifters.Speed.kLow));
+        addSequential(new DriveByVision(chassis, listener));
+        addSequential(new DriveByDistance(chassis, shifters, -3.0, Shifters.Speed.kLow));
 
 
         // Add Commands here:

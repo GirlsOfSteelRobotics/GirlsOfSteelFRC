@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 
 public class Climber extends Subsystem {
-    public final WPI_TalonSRX m_climbMotorA;
-    public final WPI_TalonSRX m_climbMotorB;
+    private final WPI_TalonSRX m_climbMotorA;
+    private final WPI_TalonSRX m_climbMotorB;
 
     public Climber() {
         m_climbMotorA = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_A);
@@ -31,24 +31,31 @@ public class Climber extends Subsystem {
         m_climbMotorA.config_kI(0, 0, 0);
         m_climbMotorA.config_kD(0, 0, 0);
 
+        m_climbMotorB.follow(m_climbMotorA);
         // LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
         // LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
     }
 
     public void climb(double speed) {
         m_climbMotorA.set(ControlMode.PercentOutput, speed);
-        m_climbMotorB.set(ControlMode.PercentOutput, speed);
     }
 
     public void stopClimb() {
         m_climbMotorA.set(ControlMode.PercentOutput, 0.0);
-        m_climbMotorB.set(ControlMode.PercentOutput, 0.0);
     }
 
     @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new StayClimbed());
+        setDefaultCommand(new StayClimbed(this));
+    }
+
+    public double getPosition() {
+        return m_climbMotorA.getSelectedSensorPosition();
+    }
+
+    public void goToPosition(double position) {
+        m_climbMotorA.set(ControlMode.Position, position);
     }
 }

@@ -1,6 +1,7 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
+import com.gos.steam_works.GripPipelineListener;
+import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -20,31 +21,33 @@ public class TurnToGear extends Command {
 
     private double m_targetX;
 
+    private final Chassis m_chassis;
+    private final GripPipelineListener m_listener;
     private final Direction m_direction;
 
-    public TurnToGear(Direction direction) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.m_chassis);
+    public TurnToGear(Chassis chassis, GripPipelineListener listener, Direction direction) {
+        m_chassis = chassis;
+        m_listener = listener;
+        requires(m_chassis);
         this.m_direction = direction;
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
         System.out.println("TurnToGear Initialized with direction " + m_direction);
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
-        m_targetX = Robot.m_listener.targetX;
+        m_targetX = m_listener.targetX;
 
         if (m_direction == Direction.kRight) {
-            Robot.m_chassis.turn(0.3, -1.0); // TODO: test
+            m_chassis.turn(0.3, -1.0); // TODO: test
             System.out.println("turning right");
         } else if (m_direction == Direction.kLeft) {
-            Robot.m_chassis.turn(0.3, 1.0);
+            m_chassis.turn(0.3, 1.0);
             System.out.println("turning left");
         }
 
@@ -56,7 +59,7 @@ public class TurnToGear extends Command {
          */
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         System.out.println("targetX: " + m_targetX /*+ " CenterX Length: " + centerX.length*/);
@@ -65,17 +68,12 @@ public class TurnToGear extends Command {
         return m_targetX >= 0;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
-        Robot.m_chassis.stop();
+        m_chassis.stop();
         System.out.println("TurnToGear Finished.");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

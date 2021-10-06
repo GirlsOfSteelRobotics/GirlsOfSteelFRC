@@ -5,7 +5,7 @@ import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.steam_works.Robot;
+import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,8 +26,9 @@ public class DriveByMotionProfile extends Command {
 
     private List<List<Double>> m_leftPoints;
     private List<List<Double>> m_rightPoints;
-    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
-    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final Chassis m_chassis;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
     private final MotionProfileStatus m_leftStatus;
     private final MotionProfileStatus m_rightStatus;
     private SetValueMotionProfile m_state;
@@ -35,8 +36,12 @@ public class DriveByMotionProfile extends Command {
 
     private final Notifier m_notifier = new Notifier(new PeriodicRunnable());
 
-    public DriveByMotionProfile(String leftFile, String rightFile, double multiplier) {
-        requires(Robot.m_chassis);
+    public DriveByMotionProfile(Chassis chassis, String leftFile, String rightFile, double multiplier) {
+
+        m_chassis = chassis;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
+        requires(m_chassis);
 
         this.m_multiplier = multiplier;
 
@@ -54,12 +59,12 @@ public class DriveByMotionProfile extends Command {
         m_rightStatus = new MotionProfileStatus();
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
 
-        Robot.m_chassis.setupFPID(m_leftTalon);
-        Robot.m_chassis.setupFPID(m_rightTalon);
+        m_chassis.setupFPID(m_leftTalon);
+        m_chassis.setupFPID(m_rightTalon);
 
         // Set Talon to MP mode
         System.out.println("DriveByMotion: Change Talon to MP Mode");
@@ -83,7 +88,7 @@ public class DriveByMotionProfile extends Command {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
         // get MP status from each talon
@@ -108,7 +113,7 @@ public class DriveByMotionProfile extends Command {
         }
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         // get MP status from each talon
@@ -129,7 +134,7 @@ public class DriveByMotionProfile extends Command {
         return left && right;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
         m_notifier.stop();
@@ -142,12 +147,7 @@ public class DriveByMotionProfile extends Command {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private List<List<Double>> loadMotionProfile(String filename, boolean isLeft)
         throws IOException {

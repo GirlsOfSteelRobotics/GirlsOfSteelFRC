@@ -21,25 +21,25 @@ public class MotorStop extends CommandBase {
         super.addRequirements(m_motor);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     public void initialize() {
         System.out.println("init MotorStop");
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     public void execute() {
         m_motor.stop();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     public boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     public void end(boolean interrupted) {
         System.out.println("end MotorStop");

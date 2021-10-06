@@ -141,7 +141,6 @@ public class Pipeline implements VisionPipeline {
      * @param hue    The min and max hue
      * @param sat    The min and max saturation
      * @param lum    The min and max luminance
-     * @param output The image in which to store the output.
      */
     private void hslThreshold(Mat input, double[] hue, double[] sat, double[] lum,
                               Mat out) {

@@ -23,10 +23,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static Chassis m_chassis;
-    public static Shifters m_shifters;
-    public static HatchCollector m_hatchCollector;
-    public static OI m_oi;
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final HatchCollector m_hatchCollector;
 
     Command m_autonomousCommand;
 
@@ -34,15 +33,14 @@ public class Robot extends TimedRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    @Override
-    public void robotInit() {
+    public Robot() {
         m_chassis = new Chassis();
         m_shifters = new Shifters();
         m_hatchCollector = new HatchCollector();
 
         // Be sure to create the OI object only after creating all subsystems
         // to avoid the code crashing when enabled!!!
-        m_oi = new OI();
+        new OI(m_chassis, m_shifters, m_hatchCollector);
 
         CameraServer.getInstance().startAutomaticCapture("Camera", 0);
     }

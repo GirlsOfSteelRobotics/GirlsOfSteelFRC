@@ -1,5 +1,6 @@
 package com.gos.steam_works;
 
+import com.gos.steam_works.commands.Drive;
 import com.gos.steam_works.commands.DriveByDistance;
 import com.gos.steam_works.commands.ShiftDown;
 import com.gos.steam_works.commands.ShiftUp;
@@ -9,7 +10,11 @@ import com.gos.steam_works.commands.autonomous.AutoCenterGear;
 import com.gos.steam_works.commands.autonomous.AutoDoNothing;
 import com.gos.steam_works.commands.autonomous.AutoGear;
 import com.gos.steam_works.commands.autonomous.AutoShooter;
+import com.gos.steam_works.subsystems.Agitator;
+import com.gos.steam_works.subsystems.Chassis;
+import com.gos.steam_works.subsystems.Loader;
 import com.gos.steam_works.subsystems.Shifters;
+import com.gos.steam_works.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -19,6 +24,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+@SuppressWarnings("PMD.TooManyFields")
 public class OI {
 
     public enum DriveDirection {
@@ -55,7 +61,22 @@ public class OI {
     private JoystickScaling m_joystickScale = JoystickScaling.linear;
     private static final double DEADBAND = 0.3; //TODO: find a good value
 
-    public OI() {
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final Shooter m_shooter;
+    private final Loader m_loader;
+    private final Agitator m_agitator;
+    private final GripPipelineListener m_pipelineListener;
+
+    public OI(Chassis chassis, Shifters shifters, Shooter shooter, Loader loader, Agitator agitator, GripPipelineListener pipelineListener) {
+
+        m_chassis = chassis;
+        m_shifters = shifters;
+        m_shooter = shooter;
+        m_agitator = agitator;
+        m_loader = loader;
+        m_pipelineListener = pipelineListener;
+
         //BUTTON ASSIGNMENTS
         JoystickButton shifterDown = new JoystickButton(m_drivingJoystickOne, 2);
         JoystickButton shifterUp = new JoystickButton(m_drivingJoystickOne, 3);
@@ -68,10 +89,10 @@ public class OI {
         //        JoystickButton collect = new JoystickButton(operatorGamePad, 3);
         //        JoystickButton release = new JoystickButton(operatorGamePad, 4);
 
-        shifterDown.whenPressed(new ShiftDown());
-        shifterUp.whenPressed(new ShiftUp());
-        driveByDistanceLow.whenPressed(new DriveByDistance(12, Shifters.Speed.kLow));
-        driveByDistanceHigh.whenPressed(new DriveByDistance(12, Shifters.Speed.kHigh));
+        shifterDown.whenPressed(new ShiftDown(m_shifters));
+        shifterUp.whenPressed(new ShiftUp(m_shifters));
+        driveByDistanceLow.whenPressed(new DriveByDistance(m_chassis, m_shifters, 12, Shifters.Speed.kLow));
+        driveByDistanceHigh.whenPressed(new DriveByDistance(m_chassis, m_shifters, 12, Shifters.Speed.kHigh));
 
         //liftUp.whileHeld(new LiftUp());
         //liftDown.whileHeld(new LiftDown());
@@ -84,33 +105,35 @@ public class OI {
         driveByVision = new JoystickButton(gamePad, 1);
         driveByVision.whenPressed(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));*/
 
+
+        m_chassis.setDefaultCommand(new Drive(this, m_chassis));
     }
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
     public Command getAutonCommand() {
         switch (getAutonSelector()) {
         case 0:
-            return new DriveByDistance(45, Shifters.Speed.kHigh);
+            return new DriveByDistance(m_chassis, m_shifters, 45, Shifters.Speed.kHigh);
         case 1:
-            return new DriveByDistance(112.0, Shifters.Speed.kHigh);
+            return new DriveByDistance(m_chassis, m_shifters, 112.0, Shifters.Speed.kHigh);
         case 2:
-            return new AutoCenterGear();
+            return new AutoCenterGear(m_chassis, m_shifters, m_pipelineListener);
         case 3: // red boiler
-            return new AutoGear(44.0, TurnToGear.Direction.kLeft); //updated 1:04p 4/47/17
+            return new AutoGear(m_chassis, m_shifters, m_pipelineListener, 44.0, TurnToGear.Direction.kLeft); //updated 1:04p 4/47/17
         case 4: // red loader
-            return new AutoGear(55.0, TurnToGear.Direction.kRight);
+            return new AutoGear(m_chassis, m_shifters, m_pipelineListener, 55.0, TurnToGear.Direction.kRight);
         case 5: // blue boiler
-            return new AutoGear(44.0, TurnToGear.Direction.kRight); //updated 1:04p 4/47/17
+            return new AutoGear(m_chassis, m_shifters, m_pipelineListener, 44.0, TurnToGear.Direction.kRight); //updated 1:04p 4/47/17
         case 6: // blue loader
-            return new AutoGear(50.0, TurnToGear.Direction.kLeft); //was previously 55.0
+            return new AutoGear(m_chassis, m_shifters, m_pipelineListener, 50.0, TurnToGear.Direction.kLeft); //was previously 55.0
         case 7:
-            return new AutoShooter();
+            return new AutoShooter(m_shooter, m_loader, m_agitator);
         //case 8:
         //return new DriveByDistance(-3, Shifters.Speed.kLow);
         case 9: //red boiler
-            return new AutoBoilerGearAndShoot(44.0, TurnToGear.Direction.kLeft); //updated 1:04p 4/47/17
+            return new AutoBoilerGearAndShoot(m_chassis, m_shifters, m_shooter, m_loader, m_agitator, m_pipelineListener, 44.0, TurnToGear.Direction.kLeft); //updated 1:04p 4/47/17
         case 10: //blue boiler
-            return new AutoBoilerGearAndShoot(44.0, TurnToGear.Direction.kRight); //updated 1:04p 4/47/17
+            return new AutoBoilerGearAndShoot(m_chassis, m_shifters, m_shooter, m_loader, m_agitator, m_pipelineListener, 44.0, TurnToGear.Direction.kRight); //updated 1:04p 4/47/17
         /*case 11:
             return new TurnByDistance(-13.0, -3.0, Shifters.Speed.kLow);
         case 12:
@@ -120,7 +143,7 @@ public class OI {
         case 15:
             return new AutoDoNothing();
         default:
-            return new DriveByDistance(75.5, Shifters.Speed.kLow);
+            return new DriveByDistance(m_chassis, m_shifters, 75.5, Shifters.Speed.kLow);
         }
     }
 

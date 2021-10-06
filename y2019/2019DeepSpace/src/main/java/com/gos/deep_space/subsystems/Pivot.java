@@ -40,7 +40,7 @@ public final class Pivot extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new PivotHold());
+        setDefaultCommand(new PivotHold(this));
     }
 
     // Put methods for controlling this subsystem

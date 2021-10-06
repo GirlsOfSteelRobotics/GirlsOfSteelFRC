@@ -7,6 +7,7 @@
 
 package com.gos.testboard2020;
 
+import com.gos.lib.sensors.LidarLite;
 import com.gos.testboard2020.commands.OuterShootAlign2;
 import com.gos.testboard2020.commands.ReadLidar;
 import com.gos.testboard2020.commands.SpinByLidar;
@@ -15,7 +16,6 @@ import com.gos.testboard2020.commands.SwitchToCamIntake;
 import com.gos.testboard2020.commands.TryBlinkin;
 import com.gos.testboard2020.subsystems.Blinkin;
 import com.gos.testboard2020.subsystems.Camera;
-import com.gos.testboard2020.subsystems.Lidar;
 import com.gos.testboard2020.subsystems.Limelight;
 import com.gos.testboard2020.subsystems.Motor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -38,7 +38,7 @@ public class RobotContainer {
     // The robot's subsystems are declared here
     private final Blinkin m_blinkin;
     private final Camera m_camera;
-    private final Lidar m_lidar;
+    private final LidarLite m_lidar;
     private final Motor m_motor;
     private final Limelight m_limelight;
     private final SendableChooser<Command> m_sendableChooser;
@@ -52,7 +52,7 @@ public class RobotContainer {
         // Create all subsystems in this section:
         m_blinkin = new Blinkin();
         m_camera = new Camera();
-        m_lidar = new Lidar();
+        m_lidar = new LidarLite(Constants.LIDAR_PWM);
         m_motor = new Motor();
         m_limelight = new Limelight();
 
@@ -68,8 +68,8 @@ public class RobotContainer {
 
     /**
      * Use this method to define your button->command mappings.  Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+     * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link edu.wpi.first.wpilibj.XboxController}), and then passing it to a
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {

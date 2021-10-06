@@ -7,6 +7,7 @@
 
 package com.gos.deep_space;
 
+import com.gos.deep_space.subsystems.Camera;
 import edu.wpi.first.vision.VisionRunner;
 import edu.wpi.first.wpilibj.RobotBase;
 import org.opencv.core.Mat;
@@ -31,6 +32,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
     public ArrayList<RotatedRect> rotatedRects;
     public ArrayList<TargetPair> targetPairs;
     public TargetPair goalTargetPair;
+    private final Camera m_camera;
 
     // height distance ratio: (rotated height of the tape which is 5.5 inches) / distance between center of masses of two pieces of tape
     public final double HD_RATIO = 0.5947498932; // (5.5) / (8 + 2(sin(14.5))(2.75 - tan(14.5)))
@@ -38,12 +40,16 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
     // whose grandfather invented the number 0 which made this problem possible
     public final double HD_RATIO_ERROR = 0.1 * HD_RATIO;
 
+    public GripPipelineListener(Camera camera) {
+        m_camera = camera;
+    }
+
     @Override
     public void copyPipelineOutputs(GripPipeline pipeline) {
         // record vision camera movie
 
         if (RobotBase.isReal()) {
-            Robot.m_camera.addFrame(Robot.m_camera.getVisionFrame());
+            m_camera.addFrame(m_camera.getVisionFrame());
         }
         // Get a frame of video from the last step of the pipeline that deals with video
         // (before converting to a list of contours) and send it to the Processed stream
@@ -103,7 +109,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
         // puts a dot in the middle of target pair on the processed image for SmartDashboard
         Imgproc.circle(frame, goalTargetPair.getTargetCenterPoint(), 6, new Scalar(255, 255, 255));
         if (RobotBase.isReal()) {
-            Robot.m_camera.m_processedStream.putFrame(frame);
+            m_camera.m_processedStream.putFrame(frame);
         }
 
     }

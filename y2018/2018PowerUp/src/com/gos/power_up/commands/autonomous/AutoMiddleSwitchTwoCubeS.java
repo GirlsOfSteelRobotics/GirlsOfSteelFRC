@@ -11,6 +11,10 @@ import com.gos.power_up.commands.ReleaseSlow;
 import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
+import com.gos.power_up.subsystems.Chassis;
+import com.gos.power_up.subsystems.Collector;
+import com.gos.power_up.subsystems.Lift;
+import com.gos.power_up.subsystems.Wrist;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -32,61 +36,61 @@ public class AutoMiddleSwitchTwoCubeS extends CommandGroup {
     //After second cube
     public static final double SHORT_BACK_UP = -30.0;
 
-    public AutoMiddleSwitchTwoCubeS(GameData.FieldSide switchSide) {
+    public AutoMiddleSwitchTwoCubeS(Chassis chassis, Lift lift, Wrist wrist, Collector collector, GameData.FieldSide switchSide) {
 
         //Raise lift, lower wrist to get ready to spit cube out
-        addSequential(new WristToCollect());
-        addSequential(new LiftToSwitch());
-        addParallel(new WristHold());
-        addParallel(new LiftHold());
+        addSequential(new WristToCollect(wrist));
+        addSequential(new LiftToSwitch(lift));
+        addParallel(new WristHold(wrist));
+        addParallel(new LiftHold(lift));
 
         //Drive to the switch plate
         if (switchSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, -RIGHT_ANGLE));
-            addSequential(new DriveByMotionMagic(RIGHT_DISTANCE, RIGHT_ANGLE));
+            addSequential(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, -RIGHT_ANGLE));
+            addSequential(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, RIGHT_ANGLE));
         } else if (switchSide == GameData.FieldSide.left) {
-            addSequential(new DriveByMotionMagic(LEFT_DISTANCE, LEFT_ANGLE));
-            addSequential(new DriveByMotionMagic(LEFT_DISTANCE, -LEFT_ANGLE));
+            addSequential(new DriveByMotionMagic(chassis, LEFT_DISTANCE, LEFT_ANGLE));
+            addSequential(new DriveByMotionMagic(chassis, LEFT_DISTANCE, -LEFT_ANGLE));
         } else {
             System.out.println("AutoMiddleSwitch: invalid switch side");
         }
 
         //Release and back up
-        addParallel(new ReleaseSlow());
+        addParallel(new ReleaseSlow(collector));
         addSequential(new TimeDelay(0.5));
-        addSequential(new DriveByMotionMagic(LONG_BACK_UP, 0));
+        addSequential(new DriveByMotionMagic(chassis, LONG_BACK_UP, 0));
 
         //Put lift down and start collecting
-        addSequential(new CollectPosition());
-        addParallel(new WristHold());
-        addParallel(new LiftHold());
-        addParallel(new Collect());
+        addSequential(new CollectPosition(lift, wrist));
+        addParallel(new WristHold(wrist));
+        addParallel(new LiftHold(lift));
+        addParallel(new Collect(collector));
 
         //Grab second cube and come back
         if (switchSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagic(TURN_RADIUS_2, TURN_DEGREES_2));
-            addParallel(new CollectorHold());
-            addSequential(new DriveByMotionMagic(-TURN_RADIUS_2 / 2, -20, false));
+            addSequential(new DriveByMotionMagic(chassis, TURN_RADIUS_2, TURN_DEGREES_2));
+            addParallel(new CollectorHold(collector));
+            addSequential(new DriveByMotionMagic(chassis, -TURN_RADIUS_2 / 2, -20, false));
         } else if (switchSide == GameData.FieldSide.left) {
-            addSequential(new DriveByMotionMagic(TURN_RADIUS_2, -TURN_DEGREES_2));
-            addParallel(new CollectorHold());
-            addSequential(new DriveByMotionMagic(-TURN_RADIUS_2 / 2, 20, false));
+            addSequential(new DriveByMotionMagic(chassis, TURN_RADIUS_2, -TURN_DEGREES_2));
+            addParallel(new CollectorHold(collector));
+            addSequential(new DriveByMotionMagic(chassis, -TURN_RADIUS_2 / 2, 20, false));
         } else {
             System.out.println("AutoMiddleSwitch: invalid switch side");
         }
 
         //lift up to shoot out
-        addSequential(new WristToCollect());
-        addSequential(new LiftToSwitch());
-        addParallel(new WristHold());
-        addParallel(new LiftHold());
+        addSequential(new WristToCollect(wrist));
+        addSequential(new LiftToSwitch(lift));
+        addParallel(new WristHold(wrist));
+        addParallel(new LiftHold(lift));
 
         //Approach switch plate
-        addSequential(new DriveByMotionMagic(-LONG_BACK_UP, 0));
+        addSequential(new DriveByMotionMagic(chassis, -LONG_BACK_UP, 0));
 
         //Release and back up
-        addParallel(new ReleaseSlow());
+        addParallel(new ReleaseSlow(collector));
         addSequential(new TimeDelay(0.5));
-        addSequential(new DriveByMotionMagic(SHORT_BACK_UP, 0));
+        addSequential(new DriveByMotionMagic(chassis, SHORT_BACK_UP, 0));
     }
 }

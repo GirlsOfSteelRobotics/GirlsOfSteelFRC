@@ -4,8 +4,8 @@ package com.gos.power_up.commands;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.power_up.Robot;
 import com.gos.power_up.RobotMap;
+import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Shifters;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,8 +20,10 @@ public class DriveByDistance extends Command {
     private final double m_encoderTicks; //in sensor units
     private int m_tim;
 
-    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
-    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
 
     private boolean m_leftGood;
     private boolean m_rightGood;
@@ -29,22 +31,25 @@ public class DriveByDistance extends Command {
     private final Shifters.Speed m_speed;
 
 
-    public DriveByDistance(double inches, Shifters.Speed speed) {
+    public DriveByDistance(Chassis chassis, Shifters shifters, double inches, Shifters.Speed speed) {
         double rotations = inches / (RobotMap.WHEEL_DIAMETER * Math.PI);
         m_encoderTicks = RobotMap.CODES_PER_WHEEL_REV * rotations;
         this.m_speed = speed;
 
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.m_chassis);
+        m_chassis = chassis;
+        m_shifters = shifters;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
+        requires(m_chassis);
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
         ErrorCode err;
-        Robot.m_shifters.shiftGear(m_speed);
+        m_shifters.shiftGear(m_speed);
 
-        Robot.m_chassis.setPositionPIDSlot();
+        m_chassis.setPositionPIDSlot();
 
         err = m_leftTalon.setSelectedSensorPosition(0, 0, 20);
         System.out.printf("Error code on left: %s\n", err);
@@ -67,7 +72,7 @@ public class DriveByDistance extends Command {
 
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
 
@@ -89,7 +94,7 @@ public class DriveByDistance extends Command {
         //System.out.println("Right Error: " + (rightTalon.getSelectedSensorPosition(0) + encoderTicks));
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         //return false;
@@ -130,18 +135,13 @@ public class DriveByDistance extends Command {
 
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
         System.out.println("DriveByDistance Finished");
-        Robot.m_chassis.stop();
+        m_chassis.stop();
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

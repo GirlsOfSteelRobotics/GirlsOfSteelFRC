@@ -16,9 +16,7 @@ import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.gos.power_up.Robot;
 import com.gos.power_up.RobotMap;
-import com.gos.power_up.commands.DriveByJoystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -47,16 +45,16 @@ public final class Chassis extends Subsystem {
 
     private final PigeonIMU m_pigeonIMU;
 
-    public DifferentialDrive m_drive;
+    private final DifferentialDrive m_drive;
 
     public Chassis() {
-
-        m_pigeonIMU = new PigeonIMU(Robot.m_collector.getRightCollector());
 
         m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
         m_driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
         m_driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
         m_driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
+
+        m_pigeonIMU = new PigeonIMU(m_driveLeftA);
 
         setFollowerMode();
 
@@ -112,9 +110,6 @@ public final class Chassis extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveByJoystick());
-        // Set the command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
     }
 
     public void setupFPID(WPI_TalonSRX talon) { //PID values from DriveByDistance
@@ -203,7 +198,7 @@ public final class Chassis extends Subsystem {
     public void configForTurnByMotionMagic() {
 
         /* Remote 1 will be a pigeon */
-        m_driveRightA.configRemoteFeedbackFilter(Robot.m_collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
+        m_driveRightA.configRemoteFeedbackFilter(m_driveLeftA.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
 
         m_driveRightA.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 10);
         m_driveRightA.configSelectedFeedbackCoefficient(TURN_UNITS_PER_ROTATION / PIGEON_UNITS_PER_ROTATION, 0, 10);
@@ -243,7 +238,7 @@ public final class Chassis extends Subsystem {
         /* Remote 0 will be the other side's Talon */
         m_driveRightA.configRemoteFeedbackFilter(m_driveLeftA.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_ENCODER, 10);
         /* Remote 1 will be a pigeon */
-        m_driveRightA.configRemoteFeedbackFilter(Robot.m_collector.getRightCollectorID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
+        m_driveRightA.configRemoteFeedbackFilter(m_driveLeftA.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw, REMOTE_PIGEON, 10);
         /* setup sum and difference signals */
         m_driveRightA.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, 10);
         m_driveRightA.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.QuadEncoder, 10);
@@ -316,5 +311,7 @@ public final class Chassis extends Subsystem {
         return imuData[0];
     }
 
-
+    public void curvatureDrive(double throttle, double rotation, boolean isQuickTurn) {
+        m_drive.curvatureDrive(throttle, rotation, isQuickTurn);
+    }
 }

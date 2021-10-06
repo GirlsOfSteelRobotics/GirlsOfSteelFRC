@@ -113,7 +113,7 @@ public class Climber extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new ClimberHold());
+        setDefaultCommand(new ClimberHold(this));
     }
 
     // the value in set expiration is in SECONDS not milliseconds

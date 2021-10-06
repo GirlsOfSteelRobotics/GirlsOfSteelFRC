@@ -33,7 +33,7 @@ public final class Wrist extends Subsystem {
     @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new WristHold());
+        setDefaultCommand(new WristHold(this));
 
     }
 

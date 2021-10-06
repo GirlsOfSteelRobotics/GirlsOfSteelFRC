@@ -2,7 +2,8 @@ package com.gos.steam_works.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.steam_works.Robot;
+import com.gos.steam_works.GripPipelineListener;
+import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,21 +29,27 @@ public class DriveByVision extends Command {
     private static final int IMAGE_WIDTH = 320;
     private static final double IMAGE_CENTER = IMAGE_WIDTH / 2.0;
 
-    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
-    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final Chassis m_chassis;
+    private final GripPipelineListener m_listener;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
     private final Timer m_tim;
 
     // width of X or Y in pixels when the robot is at the lift
     // private static final double GOAL_WIDTH = 30; //TODO: test and change
 
-    public DriveByVision() {
+    public DriveByVision(Chassis chassis, GripPipelineListener listener) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.m_chassis);
+        m_chassis = chassis;
+        m_listener = listener;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
+        requires(m_chassis);
         m_tim = new Timer();
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
 
@@ -61,7 +68,7 @@ public class DriveByVision extends Command {
         m_tim.start();
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
 
@@ -81,9 +88,9 @@ public class DriveByVision extends Command {
          */
         double targetX;
         double height;
-        synchronized (Robot.m_listener.cameraLock) {
-            targetX = Robot.m_listener.targetX;
-            height = Robot.m_listener.height;
+        synchronized (m_listener.cameraLock) {
+            targetX = m_listener.targetX;
+            height = m_listener.height;
         }
         // the center of the x and y rectangles (the target)
         double goalAngularVelocity;
@@ -131,24 +138,19 @@ public class DriveByVision extends Command {
         }
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         return (m_tim.get() > 1 && Math.abs(m_leftTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY
             && Math.abs(m_rightTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT);
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
         System.out.println("DriveByVision Finished");
         m_tim.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

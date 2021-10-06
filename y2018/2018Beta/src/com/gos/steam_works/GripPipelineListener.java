@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings("PMD")
 public class GripPipelineListener implements VisionRunner.Listener<GripPipeline> {
-    public Object cameraLock = new Object();
+    public static Object cameraLock = new Object();
 
     public double targetX;
     public double height;

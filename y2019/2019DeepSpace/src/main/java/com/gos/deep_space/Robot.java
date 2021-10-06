@@ -7,34 +7,25 @@ import com.gos.deep_space.subsystems.Chassis;
 import com.gos.deep_space.subsystems.Climber;
 import com.gos.deep_space.subsystems.Collector;
 import com.gos.deep_space.subsystems.Hatch;
-import com.gos.deep_space.subsystems.Lidar;
 import com.gos.deep_space.subsystems.Pivot;
-import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
-    public static Chassis m_chassis;
-    public static Collector m_collector;
-    public static Pivot m_pivot;
-    public static Climber m_climber;
-    public static BabyDrive m_babyDrive;
-    public static Hatch m_hatch;
-    public static Blinkin m_blinkin;
-    public static GripPipelineListener m_listener;
-    public static Camera m_camera;
-    public static Lidar m_lidar;
-    public static OI m_oi;
-    private VisionThread m_visionThread; // NOPMD
+    private final Chassis m_chassis;
+    private final Collector m_collector;
+    private final Pivot m_pivot;
+    private final Climber m_climber;
+    private final BabyDrive m_babyDrive;
+    private final Hatch m_hatch;
+    private final Blinkin m_blinkin;
+    private final Camera m_camera;
+    //    private final GripPipelineListener m_listener;
+    //    private final VisionThread m_visionThread; // NOPMD
 
-    /**
-     * This function is run when the robot is first started up and should be used
-     * for any initialization code.
-     */
-    @Override
-    public void robotInit() {
+    public Robot() {
         m_chassis = new Chassis();
         m_collector = new Collector();
         m_pivot = new Pivot();
@@ -44,10 +35,11 @@ public class Robot extends TimedRobot {
         m_blinkin = new Blinkin();
         if (RobotBase.isReal()) {
             m_camera = new Camera();
+        } else {
+            m_camera = null;
         }
-        m_lidar = new Lidar();
         // Create all subsystems BEFORE creating the Operator Interface (OI)
-        m_oi = new OI();
+        new OI(m_chassis, m_babyDrive, m_blinkin, m_climber, m_collector, m_hatch, m_pivot);
 
         //listener = new GripPipelineListener();
         //visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
@@ -100,7 +92,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
+        m_blinkin.setLightPattern(Blinkin.LightPattern.AUTO_DEFAULT);
         if (RobotBase.isReal()) {
             m_camera.openMovieFile();
         }
@@ -116,7 +108,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+        m_blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
         if (RobotBase.isReal()) {
             m_camera.openMovieFile();
         }
@@ -128,13 +120,13 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
+        m_blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
         double timeRemaining = DriverStation.getInstance().getMatchTime();
         //System.out.println("Robot match time: " + DriverStation.getInstance().getMatchTime());
         if (timeRemaining <= 30) {
-            Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.THIRTY_CLIMB);
+            m_blinkin.setLightPattern(Blinkin.LightPattern.THIRTY_CLIMB);
         } else if (timeRemaining <= 40) {
-            Robot.m_blinkin.setLightPattern(Blinkin.LightPattern.FORTY_CLIMB);
+            m_blinkin.setLightPattern(Blinkin.LightPattern.FORTY_CLIMB);
         }
 
     }

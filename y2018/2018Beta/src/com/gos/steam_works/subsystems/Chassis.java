@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.RobotMap;
-import com.gos.steam_works.commands.Drive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -21,7 +20,7 @@ public final class Chassis extends Subsystem {
     private final WPI_TalonSRX m_driveRightB;
     private final WPI_TalonSRX m_driveRightC;
 
-    public DifferentialDrive m_drive;
+    private final DifferentialDrive m_drive;
 
     public Chassis() {
         m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
@@ -67,10 +66,9 @@ public final class Chassis extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new Drive());
     }
 
+    // TODO(pj) Remove
     public WPI_TalonSRX getLeftTalon() {
         return m_driveLeftA;
     }
@@ -106,4 +104,11 @@ public final class Chassis extends Subsystem {
         m_driveRightA.set(ControlMode.PercentOutput, 0);
     }
 
+    public void arcadeDrive(double speedX, double speedZ, boolean squared) {
+        m_drive.arcadeDrive(speedX, speedZ, squared);
+    }
+
+    public void tankDrive(double left, double right, boolean squared) {
+        m_drive.tankDrive(left, right, squared);
+    }
 }

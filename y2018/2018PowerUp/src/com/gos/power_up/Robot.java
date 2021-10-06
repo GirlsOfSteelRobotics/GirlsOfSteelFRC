@@ -12,8 +12,6 @@ import com.gos.power_up.commands.autonomous.AutoFarScaleAbsolute;
 import com.gos.power_up.commands.autonomous.AutoMiddleSwitch;
 import com.gos.power_up.commands.autonomous.AutoNearScale;
 import com.gos.power_up.commands.autonomous.AutoNearSwitch;
-import com.gos.power_up.subsystems.Blobs;
-import com.gos.power_up.subsystems.Camera;
 import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Climber;
 import com.gos.power_up.subsystems.Collector;
@@ -33,35 +31,25 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends TimedRobot {
 
-    public static Chassis m_chassis;
-    public static Shifters m_shifters;
-    public static Lift m_lift;
-    public static Wrist m_wrist;
-    public static Collector m_collector;
-    public static Blobs m_blobs;
-    public static Camera m_camera;
-    public static Climber m_climber;
-    public static OI m_oi;
-    public static GameData m_gameData;
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final Lift m_lift;
+    private final Wrist m_wrist;
+    private final Collector m_collector;
+    private final Climber m_climber;
+    private final GameData m_gameData;
 
-    Command m_autonomousCommand;
+    private Command m_autonomousCommand;
 
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    @Override
-    public void robotInit() {
+    public Robot() {
         m_collector = new Collector();
         m_chassis = new Chassis();
         m_shifters = new Shifters();
         m_lift = new Lift();
         m_wrist = new Wrist();
-        m_blobs = new Blobs();
-        m_camera = new Camera();
         m_climber = new Climber();
-        m_oi = new OI();
         m_gameData = new GameData();
+        new OI(m_chassis, m_shifters, m_lift, m_wrist, m_climber, m_collector);
     }
 
     /**
@@ -93,7 +81,7 @@ public class Robot extends TimedRobot {
     @SuppressWarnings("PMD.CyclomaticComplexity")
     public void autonomousInit() {
 
-        Robot.m_chassis.zeroSensors();
+        m_chassis.zeroSensors();
         m_gameData.reset();
 
         System.out.println("Starting Auto...");
@@ -107,39 +95,39 @@ public class Robot extends TimedRobot {
         if (m_gameData.getNoAuto()) {
             m_autonomousCommand = null; // NOPMD
         } else if (robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) { //if robot in the corner
-            Robot.m_shifters.shiftGear(Shifters.Speed.kHigh);
+            m_shifters.shiftGear(Shifters.Speed.kHigh);
 
             if (elementPriority == GameData.FieldElement.Switch) { //switch priority
                 if (switchSide == robotSide) {
-                    m_autonomousCommand = new AutoNearSwitch(switchSide);
+                    m_autonomousCommand = new AutoNearSwitch(m_chassis, m_shifters, m_lift, m_wrist, m_collector, switchSide);
                 } else if (scaleSide == robotSide) {
-                    m_autonomousCommand = new AutoNearScale(scaleSide);
+                    m_autonomousCommand = new AutoNearScale(m_chassis, m_shifters, m_lift, m_wrist, m_collector, scaleSide);
                 } else if (scaleOverride) {
-                    m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
+                    m_autonomousCommand = new AutoFarScaleAbsolute(m_chassis, m_lift, m_wrist, m_collector, scaleSide);
                 } else {
-                    m_autonomousCommand = new AutoDriveToBaseline();
+                    m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
                 }
             } else { //scale priority
                 if (scaleSide == robotSide) {
-                    m_autonomousCommand = new AutoNearScale(scaleSide);
+                    m_autonomousCommand = new AutoNearScale(m_chassis, m_shifters, m_lift, m_wrist, m_collector, scaleSide);
                 } else if (scaleOverride) {
-                    m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
+                    m_autonomousCommand = new AutoFarScaleAbsolute(m_chassis, m_lift, m_wrist, m_collector, scaleSide);
                 } else if (switchSide == robotSide) {
-                    m_autonomousCommand = new AutoNearSwitch(switchSide);
+                    m_autonomousCommand = new AutoNearSwitch(m_chassis, m_shifters, m_lift, m_wrist, m_collector, switchSide);
                 } else {
-                    m_autonomousCommand = new AutoDriveToBaseline();
+                    m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
                 }
             }
         } else if (robotSide == GameData.FieldSide.middle) {
-            Robot.m_shifters.shiftGear(Shifters.Speed.kLow);
+            m_shifters.shiftGear(Shifters.Speed.kLow);
             if (switchSide != GameData.FieldSide.bad) {
-                m_autonomousCommand = new AutoMiddleSwitch(switchSide);
+                m_autonomousCommand = new AutoMiddleSwitch(m_chassis, m_lift, m_wrist, m_collector, switchSide);
             } else {
-                m_autonomousCommand = new AutoDriveToBaseline();
+                m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
             }
         } else {
             System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
-            m_autonomousCommand = new AutoDriveToBaseline();
+            m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
         }
 
         System.out.println("Auto: " + m_autonomousCommand);

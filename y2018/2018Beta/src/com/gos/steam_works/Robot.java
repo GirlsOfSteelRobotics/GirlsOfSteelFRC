@@ -3,7 +3,6 @@ package com.gos.steam_works;
 import com.gos.steam_works.subsystems.Agitator;
 import com.gos.steam_works.subsystems.Camera;
 import com.gos.steam_works.subsystems.Chassis;
-import com.gos.steam_works.subsystems.Climber;
 import com.gos.steam_works.subsystems.Loader;
 import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.subsystems.Shooter;
@@ -23,37 +22,34 @@ import edu.wpi.first.vision.VisionThread;
  */
 public class Robot extends IterativeRobot {
 
-    public static OI m_oi;
-    public static Chassis m_chassis;
-    public static Shifters m_shifters;
-    public static Agitator m_agitator;
-    public static Climber m_climber;
-    public static Shooter m_shooter;
-    public static Camera m_camera;
-    public static Loader m_loader;
-    public static GripPipelineListener m_listener;
+    private final OI m_oi;
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final Agitator m_agitator;
+    private final Shooter m_shooter;
+    private final Camera m_camera;
+    private final Loader m_loader;
+    private final GripPipelineListener m_listener;
 
-    Command m_autonomousCommand;
+    private Command m_autonomousCommand;
 
-    private VisionThread m_visionThread; // NOPMD
+    private final VisionThread m_visionThread; // NOPMD
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    @Override
-    public void robotInit() {
+    public Robot() {
         m_chassis = new Chassis();
         m_shifters = new Shifters();
         m_agitator = new Agitator();
-        m_climber = new Climber();
         m_shooter = new Shooter();
         m_camera = new Camera();
         m_loader = new Loader();
         m_listener = new GripPipelineListener();
 
         // Initialize all subsystems before creating the OI
-        m_oi = new OI();
+        m_oi = new OI(m_chassis, m_shifters, m_shooter, m_loader, m_agitator, m_listener);
 
         /*
         try {
@@ -68,7 +64,7 @@ public class Robot extends IterativeRobot {
         }
         */
 
-        m_visionThread = new VisionThread(m_camera.m_visionCam, new GripPipeline(), m_listener); // NOPMD
+        m_visionThread = new VisionThread(m_camera.getVisionCamera(), new GripPipeline(), m_listener); // NOPMD
         m_visionThread.start();
 
     }

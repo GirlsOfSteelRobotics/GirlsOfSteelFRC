@@ -11,6 +11,7 @@ import com.gos.power_up.commands.ClimbDown;
 import com.gos.power_up.commands.ClimbUp;
 import com.gos.power_up.commands.Collect;
 import com.gos.power_up.commands.CollectPosition;
+import com.gos.power_up.commands.DriveByJoystick;
 import com.gos.power_up.commands.DriveByMotionMagic;
 import com.gos.power_up.commands.LiftDown;
 import com.gos.power_up.commands.LiftEnterRecoveryMode;
@@ -21,6 +22,12 @@ import com.gos.power_up.commands.ShiftUp;
 import com.gos.power_up.commands.SwitchPosition;
 import com.gos.power_up.commands.WristIn;
 import com.gos.power_up.commands.WristOut;
+import com.gos.power_up.subsystems.Chassis;
+import com.gos.power_up.subsystems.Climber;
+import com.gos.power_up.subsystems.Collector;
+import com.gos.power_up.subsystems.Lift;
+import com.gos.power_up.subsystems.Shifters;
+import com.gos.power_up.subsystems.Wrist;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -30,6 +37,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 @SuppressWarnings("PMD.TooManyFields")
 public class OI {
+
     public enum DriveStyle {
         joystickArcade, gamePadArcade, joystickTank, gamePadTank, amazonDrive
     }
@@ -45,7 +53,7 @@ public class OI {
     //private JoystickButton driveByDistanceLow;
     //private JoystickButton driveByMotionProfile;
 
-    public OI() {
+    public OI(Chassis chassis, Shifters shifters, Lift lift, Wrist wrist, Climber climber, Collector collector) {
         // Set which joystick axis is retrieved by its getTwist() method
         m_drivingGamePad.setTwistChannel(3);
         m_amazonGamePad.setTwistChannel(4);
@@ -75,30 +83,33 @@ public class OI {
 
         /* BUTTON ACTIONS */
 
-        shifterDown.whenPressed(new ShiftDown());
-        shifterUp.whenPressed(new ShiftUp());
+        shifterDown.whenPressed(new ShiftDown(shifters));
+        shifterUp.whenPressed(new ShiftUp(shifters));
         //driveByDistanceLow.whenPressed(new DriveByDistance(50.0, Shifters.Speed.kLow));
 
         //turn left:
         //driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 
-        liftUp.whileHeld(new LiftUp());
-        liftDown.whileHeld(new LiftDown());
-        liftToSwitch.whenPressed(new SwitchPosition());
-        liftToGround.whenPressed(new CollectPosition());
-        liftEnterRecovery.whenPressed(new LiftEnterRecoveryMode());
+        liftUp.whileHeld(new LiftUp(lift));
+        liftDown.whileHeld(new LiftDown(lift));
+        liftToSwitch.whenPressed(new SwitchPosition(lift, wrist));
+        liftToGround.whenPressed(new CollectPosition(lift, wrist));
+        liftEnterRecovery.whenPressed(new LiftEnterRecoveryMode(lift));
 
-        wristIn.whileHeld(new WristIn());
-        wristOut.whileHeld(new WristOut());
+        wristIn.whileHeld(new WristIn(wrist));
+        wristOut.whileHeld(new WristOut(wrist));
 
-        collect.whileHeld(new Collect());
+        collect.whileHeld(new Collect(collector));
         //releaseFast.whileHeld(new ReleaseFast());
-        releaseSlow.whileHeld(new ReleaseSlow());
+        releaseSlow.whileHeld(new ReleaseSlow(collector));
 
-        climb.whileHeld(new ClimbUp());
-        unClimb.whileHeld(new ClimbDown());
+        climb.whileHeld(new ClimbUp(climber));
+        unClimb.whileHeld(new ClimbDown(climber));
 
-        motionMagic.whenPressed(new DriveByMotionMagic(25.0, -90.0));
+        motionMagic.whenPressed(new DriveByMotionMagic(chassis, 25.0, -90.0));
+
+
+        chassis.setDefaultCommand(new DriveByJoystick(chassis, this));
     }
 
     //    public double getGamePadLeftUpAndDown() {

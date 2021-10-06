@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Climber extends Subsystem {
 
-    public WPI_TalonSRX m_climbMotor;
+    private final WPI_TalonSRX m_climbMotor;
 
     public Climber() {
         m_climbMotor = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR);

@@ -1,8 +1,8 @@
 package com.gos.steam_works.commands;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.steam_works.Robot;
 import com.gos.steam_works.RobotMap;
+import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 import java.io.BufferedWriter;
@@ -20,10 +20,11 @@ public class CreateMotionProfile extends Command {
     private static final double DURATION = 20.0;
     private static final double ERROR = 0; // TODO: change
 
+    private final Chassis m_chassis;
     private List<List<Double>> m_leftTrajectory; // filled with arraylists of points
     private List<List<Double>> m_rightTrajectory; // filled with arraylists of points
-    private final WPI_TalonSRX m_leftTalon = Robot.m_chassis.getLeftTalon();
-    private final WPI_TalonSRX m_rightTalon = Robot.m_chassis.getRightTalon();
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
     private List<Double> m_leftPoint; // position (rev), velocity (rpm), duration
     private List<Double> m_rightPoint; // position (rev), velocity (rpm), duration
     private final String m_leftFile; // path of file on roborio
@@ -31,14 +32,17 @@ public class CreateMotionProfile extends Command {
     private double m_leftInitial; // initial encoder position
     private double m_rightInitial; // initial encoder position
 
-    public CreateMotionProfile(String leftFileName, String rightFileName) {
-        requires(Robot.m_chassis);
+    public CreateMotionProfile(Chassis chassis, String leftFileName, String rightFileName) {
+        m_chassis = chassis;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
+        requires(m_chassis);
         // maybe get file names from smart dashboard input instead?
         m_leftFile = leftFileName;
         m_rightFile = rightFileName;
     }
 
-    // Called just before this Command runs the first time
+
     @Override
     protected void initialize() {
         m_leftInitial = m_leftTalon.getSelectedSensorPosition(0);
@@ -53,7 +57,7 @@ public class CreateMotionProfile extends Command {
         System.out.println("CreateMotionProfile: Starting to Record MP");
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     protected void execute() {
         m_leftPoint = new ArrayList<>();
@@ -94,13 +98,13 @@ public class CreateMotionProfile extends Command {
         System.out.println("CreateMotionProfile: leftPoint: " + m_leftPoint);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
     @Override
     protected void end() {
         System.out.println("CreateMotionProfile: Done Recording MP");
@@ -126,12 +130,7 @@ public class CreateMotionProfile extends Command {
         System.out.println("CreateMotionProfile: Finished");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private void writeFile(String filePath, List<List<Double>> trajectory) throws IOException {
 
