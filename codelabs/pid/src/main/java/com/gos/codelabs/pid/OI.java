@@ -36,7 +36,7 @@ public class OI {
         new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new ElevatorToPositionCommand(lift, ElevatorSubsystem.Positions.LOW));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new ElevatorToPositionCommand(lift, ElevatorSubsystem.Positions.MID));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new ElevatorToPositionCommand(lift, ElevatorSubsystem.Positions.HIGH));
-    
+
         // Shooter
         new JoystickButton(m_operatorJoystick, XboxController.Button.kBumperLeft.value).whileHeld(new ShooterRpmCommand(shooter, 3200));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kBumperRight.value).whileHeld(new ShooterRpmCommand(shooter, 2500));

@@ -1,7 +1,6 @@
 package com.gos.offense2019.subsystems;
 
 import com.gos.offense2019.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -9,43 +8,44 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Shifters extends Subsystem {
-	private DoubleSolenoid shifterLeft;
-	private DoubleSolenoid shifterRight;
-	
-	public static enum Speed {
-		kHigh, kLow
-	};
+    public enum Speed {
+        kHigh, kLow
+    }
 
-	private Speed speed;
+    private final DoubleSolenoid m_shifterLeft;
+    private final DoubleSolenoid m_shifterRight;
 
-	public Shifters() {
-		shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
-		shifterRight = new DoubleSolenoid(RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
+    private Speed m_speed;
 
-		addChild("shifterLeft", shifterLeft);
-		addChild("shifterRight", shifterRight);
-  }
-  
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+    public Shifters() {
+        m_shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
+        m_shifterRight = new DoubleSolenoid(RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
 
-	public void shiftGear(Speed speed) {
-		this.speed = speed;
-		if (speed == Speed.kLow) {
-			shifterLeft.set(DoubleSolenoid.Value.kForward);
-			shifterRight.set(DoubleSolenoid.Value.kForward);
-		} else {
-			shifterLeft.set(DoubleSolenoid.Value.kReverse);
-			shifterRight.set(DoubleSolenoid.Value.kReverse);
-		}
-	}
+        addChild("shifterLeft", m_shifterLeft);
+        addChild("shifterRight", m_shifterRight);
+    }
 
-	public Speed getGearSpeed() {
-		return speed;
-	}
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	}
+    public void shiftGear(Speed speed) {
+        this.m_speed = speed;
+        if (speed == Speed.kLow) {
+            m_shifterLeft.set(DoubleSolenoid.Value.kForward);
+            m_shifterRight.set(DoubleSolenoid.Value.kForward);
+        } else {
+            m_shifterLeft.set(DoubleSolenoid.Value.kReverse);
+            m_shifterRight.set(DoubleSolenoid.Value.kReverse);
+        }
+    }
+
+    public Speed getGearSpeed() {
+        return m_speed;
+    }
+
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+    }
 }

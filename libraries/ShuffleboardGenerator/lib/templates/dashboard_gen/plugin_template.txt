@@ -21,7 +21,7 @@ public class {{overall_config.plugin_name}} extends Plugin {
     public List<ComponentType> getComponents() {
         return ImmutableList.of(
         {%- for widget in overall_config.widgets %}
-            WidgetType.forAnnotatedWidget({{widget.table}}Widget.class){% if not loop.last %}, {%endif%}
+            WidgetType.forAnnotatedWidget({{widget.table}}Widget.class){% if not loop.last %},{%endif%}
         {%- endfor %});
 
     }
@@ -30,7 +30,7 @@ public class {{overall_config.plugin_name}} extends Plugin {
     public List<DataType> getDataTypes() {
         return ImmutableList.of(
         {%- for widget in overall_config.widgets %}
-            {{widget.table}}DataType.INSTANCE{% if not loop.last %}, {%endif%}
+            {{widget.table}}DataType.INSTANCE{% if not loop.last %},{%endif%}
         {%- endfor %});
 
     }

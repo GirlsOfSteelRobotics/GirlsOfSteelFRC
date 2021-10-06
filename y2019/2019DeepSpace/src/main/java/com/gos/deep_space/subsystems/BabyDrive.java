@@ -7,38 +7,37 @@
 
 package com.gos.deep_space.subsystems;
 
-import com.gos.deep_space.RobotMap;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.gos.deep_space.RobotMap;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Add your docs here.
  */
 public class BabyDrive extends Subsystem {
 
-  private WPI_TalonSRX babyDriveTalon;
+    private final WPI_TalonSRX m_babyDriveTalon;
 
-  public BabyDrive() {
-    babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
+    public BabyDrive() {
+        m_babyDriveTalon = new WPI_TalonSRX(RobotMap.BABY_DRIVE_TALON);
 
-    babyDriveTalon.setInverted(true);
-  }
+        m_babyDriveTalon.setInverted(true);
+    }
 
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-  }
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+    }
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 
-  public void babyDriveSetSpeed(double speed) {
-    babyDriveTalon.set(speed);
-  }
+    public void babyDriveSetSpeed(double speed) {
+        m_babyDriveTalon.set(speed);
+    }
 
-  public void babyDriveStop() {
-    babyDriveTalon.stopMotor();
-  }
+    public void babyDriveStop() {
+        m_babyDriveTalon.stopMotor();
+    }
 }

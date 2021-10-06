@@ -1,7 +1,6 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
+import com.gos.steam_works.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -10,56 +9,59 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shoot extends Command {
 
-	private int loopCounter; // increment each time execute runs
-	private boolean isLowMotorRunning = false; // if we have started the low
-												// motor yet
-	private final int LOOP_TIMEOUT = 50; // ~1sec of time
-	private int shooterSpeed;
+    private static final int LOOP_TIMEOUT = 50; // ~1sec of time
 
-	public Shoot(int speed) {
-		requires(Robot.shooter);
-		shooterSpeed = speed;
-	}
+    private final Shooter m_shooter;
+    private int m_loopCounter; // increment each time execute runs
+    private boolean m_isLowMotorRunning; // if we have started the low
+    // motor yet
+    private final int m_shooterSpeed;
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		loopCounter = 0;
-		isLowMotorRunning = false;
-		Robot.shooter.setShooterSpeed(shooterSpeed);
-		SmartDashboard.putBoolean("Low Shooter Running", Robot.shooter.isLowShooterMotorRunning());
-		System.out.println("Shoot Initialzed with " + shooterSpeed + " as speed");
-	}
+    public Shoot(Shooter shooter, int speed) {
+        m_shooter = shooter;
+        requires(m_shooter);
+        m_shooterSpeed = speed;
+    }
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		SmartDashboard.putNumber("High Shooter Speed", Robot.shooter.getHighShooterSpeed());
-		SmartDashboard.putNumber("Low Shooter Speed", Robot.shooter.getLowShooterSpeed());
-		if (!isLowMotorRunning && (Robot.shooter.isHighShooterAtSpeed() || loopCounter > LOOP_TIMEOUT)) {
-			System.out.println("LoopCounter timeout: " + loopCounter + "\t" + Robot.shooter.isHighShooterAtSpeed());
-			Robot.shooter.startLowShooterMotor();
-			isLowMotorRunning = true;
-		}
-		SmartDashboard.putBoolean("Low Shooter Running", Robot.shooter.isLowShooterMotorRunning());
-		Robot.shooter.runHighShooterMotor();
-		Robot.shooter.runLowShooterMotor();
-		loopCounter++;
-	}
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected void initialize() {
+        m_loopCounter = 0;
+        m_isLowMotorRunning = false;
+        m_shooter.setShooterSpeed(m_shooterSpeed);
+        SmartDashboard.putBoolean("Low Shooter Running", m_shooter.isLowShooterMotorRunning());
+        System.out.println("Shoot Initialized with " + m_shooterSpeed + " as speed");
+    }
 
-	// Called once after isFinished returns true
-	protected void end() {
-		Robot.shooter.stopLowShooterMotor();
-		Robot.shooter.stopShooterMotors();
-		System.out.println("Shoot Finished");
-	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void execute() {
+        SmartDashboard.putNumber("High Shooter Speed", m_shooter.getHighShooterSpeed());
+        SmartDashboard.putNumber("Low Shooter Speed", m_shooter.getLowShooterSpeed());
+        if (!m_isLowMotorRunning && (m_shooter.isHighShooterAtSpeed() || m_loopCounter > LOOP_TIMEOUT)) {
+            System.out.println("LoopCounter timeout: " + m_loopCounter + "\t" + m_shooter.isHighShooterAtSpeed());
+            m_shooter.startLowShooterMotor();
+            m_isLowMotorRunning = true;
+        }
+        SmartDashboard.putBoolean("Low Shooter Running", m_shooter.isLowShooterMotorRunning());
+        m_shooter.runHighShooterMotor();
+        m_shooter.runLowShooterMotor();
+        m_loopCounter++;
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    protected void end() {
+        m_shooter.stopLowShooterMotor();
+        m_shooter.stopShooterMotors();
+        System.out.println("Shoot Finished");
+    }
+
+
 }

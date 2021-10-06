@@ -1,43 +1,42 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
+import com.gos.power_up.subsystems.Lift;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class LiftToScale extends Command {
+    private final Lift m_lift;
 
-	public LiftToScale() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.lift);
-	}
+    public LiftToScale(Lift lift) {
+        m_lift = lift;
+        requires(m_lift);
+    }
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.lift.setLiftToScale();
-		System.out.println("Lift to Scale Init");
-	}
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-	}
+    @Override
+    protected void initialize() {
+        m_lift.setLiftToScale();
+        System.out.println("Lift to Scale Init");
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return true;
-	}
 
-	// Called once after isFinished returns true
-	protected void end() {
-		System.out.println("Lift to Scale End");
-	}
+    @Override
+    protected void execute() {
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+
+    @Override
+    protected void end() {
+        System.out.println("Lift to Scale End");
+    }
+
+
 }

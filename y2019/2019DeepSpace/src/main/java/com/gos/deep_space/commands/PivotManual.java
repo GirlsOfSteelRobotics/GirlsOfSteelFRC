@@ -7,49 +7,49 @@
 
 package com.gos.deep_space.commands;
 
-import com.gos.deep_space.Robot;
+import com.gos.deep_space.subsystems.Pivot;
 import com.gos.deep_space.subsystems.Pivot.PivotDirection;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PivotManual extends Command {
+    private final Pivot m_pivot;
 
-  private PivotDirection direction;
+    private final PivotDirection m_direction;
 
-  public PivotManual(PivotDirection direction) {
-    this.direction = direction;
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.pivot);
-  }
-
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("init PivotManual " + direction);
-
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    if (direction == PivotDirection.Up) {
-      Robot.pivot.incrementPivot();
-    } else {
-      Robot.pivot.decrementPivot();
+    public PivotManual(Pivot pivot, PivotDirection direction) {
+        this.m_direction = direction;
+        this.m_pivot = pivot;
+        requires(m_pivot);
     }
-    Robot.pivot.holdPivotPosition();
-  }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    Robot.pivot.pivotStop();
-    System.out.println("end PivotManual " + direction);
-  }
+    @Override
+    protected void initialize() {
+        System.out.println("init PivotManual " + m_direction);
+
+    }
+
+
+    @Override
+    protected void execute() {
+        if (m_direction == PivotDirection.Up) {
+            m_pivot.incrementPivot();
+        } else {
+            m_pivot.decrementPivot();
+        }
+        m_pivot.holdPivotPosition();
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    protected void end() {
+        m_pivot.pivotStop();
+        System.out.println("end PivotManual " + m_direction);
+    }
 }

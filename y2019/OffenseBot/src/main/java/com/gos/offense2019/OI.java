@@ -7,69 +7,67 @@
 
 package com.gos.offense2019;
 
+import com.gos.offense2019.commands.DriveByJoystick;
+import com.gos.offense2019.commands.HatchCollect;
+import com.gos.offense2019.commands.Shift;
+import com.gos.offense2019.subsystems.Chassis;
+import com.gos.offense2019.subsystems.HatchCollector;
+import com.gos.offense2019.subsystems.Shifters;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import com.gos.offense2019.commands.HatchCollect;
-import com.gos.offense2019.commands.Shift;
-import com.gos.offense2019.subsystems.HatchCollector;
-import com.gos.offense2019.subsystems.Shifters;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  private Joystick drivingPad;
-  private Joystick operatingPad;
-  private POVButton shiftUp;
-  private POVButton shiftDown;
-  private Button hatchRelease;
-  private Button hatchGrab;
+    private final Joystick m_drivingPad;
 
-  private int slowSpeedButton;
-  private final double speedHigh;
-  private final double speedLow;
+    private final int m_slowSpeedButton;
+    private final double m_speedHigh;
+    private final double m_speedLow;
 
-  public OI() {
-    drivingPad = new Joystick(0);
-    //operatingPad = new Joystick(1);
+    public OI(Chassis chassis, Shifters shifters, HatchCollector hatch) {
+        m_drivingPad = new Joystick(0);
+        //operatingPad = new Joystick(1);
 
-    shiftUp = new POVButton(drivingPad, 0);
-    shiftDown = new POVButton(drivingPad, 180);
 
-    hatchRelease = new JoystickButton(drivingPad, 5);
-    hatchGrab = new JoystickButton(drivingPad, 6);
+        chassis.setDefaultCommand(new DriveByJoystick(chassis, this));
 
-    slowSpeedButton = 3;
-    speedHigh = 1.0;
-    speedLow = 0.77;
+        POVButton shiftUp = new POVButton(m_drivingPad, 0);
+        POVButton shiftDown = new POVButton(m_drivingPad, 180);
 
-    shiftUp.whenPressed(new Shift(Shifters.Speed.kHigh));
-    shiftDown.whenPressed(new Shift(Shifters.Speed.kLow));
+        Button hatchRelease = new JoystickButton(m_drivingPad, 5);
+        Button hatchGrab = new JoystickButton(m_drivingPad, 6);
 
-    hatchRelease.whenPressed(new HatchCollect(HatchCollector.HatchState.kRelease));
-    hatchGrab.whenPressed(new HatchCollect(HatchCollector.HatchState.kGrab));
-  }
+        m_slowSpeedButton = 3;
+        m_speedHigh = 1.0;
+        m_speedLow = 0.77;
 
-  public double getLeftUpAndDown() {
-		return squaredInput(drivingPad.getY()) * drivingSpeed();
-	}	
+        shiftUp.whenPressed(new Shift(shifters, Shifters.Speed.kHigh));
+        shiftDown.whenPressed(new Shift(shifters, Shifters.Speed.kLow));
 
-	public double getRightSideToSide() {
-		return squaredInput(-drivingPad.getRawAxis(4)) * drivingSpeed();
-  }
+        hatchRelease.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kRelease));
+        hatchGrab.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kGrab));
+    }
 
-  private double drivingSpeed(){
-    return  (drivingPad.getRawAxis(slowSpeedButton) < 0.1 ? speedHigh : speedLow);
-  }
-  
-  private double squaredInput(double speed){
-    double sign = speed / Math.abs(speed);
+    public double getLeftUpAndDown() {
+        return squaredInput(m_drivingPad.getY()) * drivingSpeed();
+    }
 
-    speed = speed * speed * sign;
+    public double getRightSideToSide() {
+        return squaredInput(-m_drivingPad.getRawAxis(4)) * drivingSpeed();
+    }
 
-    return speed;
-  }
+    private double drivingSpeed() {
+        return m_drivingPad.getRawAxis(m_slowSpeedButton) < 0.1 ? m_speedHigh : m_speedLow;
+    }
+
+    private double squaredInput(double inSpeed) {
+        double sign = inSpeed / Math.abs(inSpeed);
+
+        return inSpeed * inSpeed * sign;
+    }
 }

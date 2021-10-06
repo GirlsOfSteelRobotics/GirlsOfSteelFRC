@@ -1,88 +1,79 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
+import com.gos.steam_works.GripPipelineListener;
+import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
 public class TurnToGear extends Command {
+    //double[] defaultValue = new double[0];
+    // private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0;
+    // private static final double TOLERANCE = 5; //TODO: test this (in pixels)
 
-	NetworkTable table;
-	//double[] defaultValue = new double[0];
-	// private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0;
-	// private static final double TOLERANCE = 5; //TODO: test this (in pixels)
+    //double[] centerX = new double[3];
+    // private double currentX;
 
-	//double[] centerX = new double[3];
-	double targetX;
-	// private double currentX;
+    public enum Direction {
+        kLeft, kRight
+    }
 
-	public enum Direction {
-		kLeft, kRight
-	};
+    private double m_targetX;
 
-	private Direction direction;
+    private final Chassis m_chassis;
+    private final GripPipelineListener m_listener;
+    private final Direction m_direction;
 
-	public TurnToGear(Direction direction) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.chassis);
-		this.direction = direction;
-	}
+    public TurnToGear(Chassis chassis, GripPipelineListener listener, Direction direction) {
+        m_chassis = chassis;
+        m_listener = listener;
+        requires(m_chassis);
+        this.m_direction = direction;
+    }
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		System.out.println("TurnToGear Initialized with direction " + direction);
-	}
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-/*		table = NetworkTable.getTable("GRIP/myContoursReport");
+    @Override
+    protected void initialize() {
+        System.out.println("TurnToGear Initialized with direction " + m_direction);
+    }
 
-		centerX = table.getNumberArray("centerX", defaultValue);
-*/
-		targetX = Robot.listener.targetX;
-		
-		if (direction == Direction.kRight) {
-			Robot.chassis.turn(0.3, -1.0); // TODO: test
-			System.out.println("turning right");
-		} else if (direction == Direction.kLeft) {
-			Robot.chassis.turn(0.3, 1.0);
-			System.out.println("turning left");
-		}
 
-		/*
-		 * if(centerX.length == 2) { currentX = (centerX[0] + centerX[1])/2.0;
-		 * SmartDashboard.putBoolean("Gear in Sight", true); } else {
-		 * SmartDashboard.putBoolean("Gear In Sight", false); //TODO: test this
-		 * value and direction }
-		 */
-	}
+    @Override
+    protected void execute() {
+        m_targetX = m_listener.targetX;
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		System.out.println("targetX: " + targetX /*+ " CenterX Length: " + centerX.length*/);
-		
-		//return centerX.length == 2;
-		if (targetX >= 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+        if (m_direction == Direction.kRight) {
+            m_chassis.turn(0.3, -1.0); // TODO: test
+            System.out.println("turning right");
+        } else if (m_direction == Direction.kLeft) {
+            m_chassis.turn(0.3, 1.0);
+            System.out.println("turning left");
+        }
 
-	// Called once after isFinished returns true
-	protected void end() {
-		Robot.chassis.stop();
-		System.out.println("TurnToGear Finished.");
-	}
+        /*
+         * if(centerX.length == 2) { currentX = (centerX[0] + centerX[1])/2.0;
+         * SmartDashboard.putBoolean("Gear in Sight", true); } else {
+         * SmartDashboard.putBoolean("Gear In Sight", false); //TODO: test this
+         * value and direction }
+         */
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+
+    @Override
+    protected boolean isFinished() {
+        System.out.println("targetX: " + m_targetX /*+ " CenterX Length: " + centerX.length*/);
+
+        //return centerX.length == 2;
+        return m_targetX >= 0;
+    }
+
+
+    @Override
+    protected void end() {
+        m_chassis.stop();
+        System.out.println("TurnToGear Finished.");
+    }
+
+
 }

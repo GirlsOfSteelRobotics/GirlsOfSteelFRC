@@ -1,8 +1,7 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.OI;
-import com.gos.steam_works.Robot;
-
+import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,33 +9,37 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SwitchToDriveBackward extends Command {
 
-	public SwitchToDriveBackward() {
-		// Use requires() here to declare subsystem dependencies
-		requires(Robot.chassis);
-	}
+    private final Chassis m_chassis;
+    private final OI m_oi;
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
+    public SwitchToDriveBackward(Chassis chassis, OI oi) {
+        m_chassis = chassis;
+        m_oi = oi;
+        requires(m_chassis);
+    }
 
-		Robot.oi.setDriveDirection(OI.DriveDirection.kREV);
-	}
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-	}
+    @Override
+    protected void initialize() {
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return true;
-	}
+        m_oi.setDriveDirection(OI.DriveDirection.kREV);
+    }
 
-	// Called once after isFinished returns true
-	protected void end() {
-	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void execute() {
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+
+    @Override
+    protected void end() {
+    }
+
+
 }

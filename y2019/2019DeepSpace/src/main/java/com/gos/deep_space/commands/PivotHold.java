@@ -6,41 +6,42 @@
 /*----------------------------------------------------------------------------*/
 
 package com.gos.deep_space.commands;
-import com.gos.deep_space.Robot;
 
+import com.gos.deep_space.subsystems.Pivot;
 import edu.wpi.first.wpilibj.command.Command;
 
 
 public class PivotHold extends Command {
-  public PivotHold() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.pivot);
-  }
+    private final Pivot m_pivot;
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("init PivotHold");
+    public PivotHold(Pivot pivot) {
+        m_pivot = pivot;
+        requires(m_pivot);
+    }
 
-  }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.pivot.holdPivotPosition();
-  }
+    @Override
+    protected void initialize() {
+        System.out.println("init PivotHold");
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-   System.out.println("end PivotHold");
 
-  }
+    @Override
+    protected void execute() {
+        m_pivot.holdPivotPosition();
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    protected void end() {
+        System.out.println("end PivotHold");
+
+    }
 }

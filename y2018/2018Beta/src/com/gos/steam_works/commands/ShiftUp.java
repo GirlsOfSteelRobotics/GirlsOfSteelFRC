@@ -1,8 +1,6 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
 import com.gos.steam_works.subsystems.Shifters;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,35 +8,35 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShiftUp extends Command {
 
-	public ShiftUp() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.shifters);
-	}
+    private final Shifters m_shifters;
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.shifters.shiftGear(Shifters.Speed.kHigh);
+    public ShiftUp(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
+    }
 
-	}
+    @Override
+    protected void initialize() {
+        m_shifters.shiftGear(Shifters.Speed.kHigh);
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-	}
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return true;
-	}
 
-	// Called once after isFinished returns true
-	protected void end() {
+    @Override
+    protected void execute() {
+    }
 
-	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+
+    @Override
+    protected void end() {
+
+    }
+
+
 }

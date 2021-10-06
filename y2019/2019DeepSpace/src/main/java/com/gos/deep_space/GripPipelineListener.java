@@ -7,137 +7,144 @@
 
 package com.gos.deep_space;
 
-import java.util.ArrayList;
-
+import com.gos.deep_space.subsystems.Camera;
+import edu.wpi.first.vision.VisionRunner;
+import edu.wpi.first.wpilibj.RobotBase;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
-import edu.wpi.first.wpilibj.RobotBase;
+import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.first.vision.VisionRunner;
+import java.util.ArrayList;
 
 /**
  * Add your docs here.
  */
+@SuppressWarnings("PMD")
 public class GripPipelineListener implements VisionRunner.Listener<GripPipeline> {
-	public Object cameraLock = new Object();
+    public Object cameraLock = new Object();
 
-	public double targetX;
-	public double height;
-	public double angle;
-	public ArrayList<MatOfPoint> contours;
-	public ArrayList<RotatedRect> rotatedRects;
-	public ArrayList<TargetPair> targetPairs;
-	public TargetPair goalTargetPair;
+    public double targetX;
+    public double height;
+    public double angle;
+    public ArrayList<MatOfPoint> contours;
+    public ArrayList<RotatedRect> rotatedRects;
+    public ArrayList<TargetPair> targetPairs;
+    public TargetPair goalTargetPair;
+    private final Camera m_camera;
 
-	// height distance ratio: (rotated height of the tape which is 5.5 inches) / distance between center of masses of two pieces of tape
-	public final double HD_RATIO = 0.5947498932; // (5.5) / (8 + 2(sin(14.5))(2.75 - tan(14.5))) 
-												// calculated by ziya, vivian, and meghna 
-												// whose grandfather invented the number 0 which made this problem possible
-	public final double HD_RATIO_ERROR = 0.1 * HD_RATIO;
+    // height distance ratio: (rotated height of the tape which is 5.5 inches) / distance between center of masses of two pieces of tape
+    public final double HD_RATIO = 0.5947498932; // (5.5) / (8 + 2(sin(14.5))(2.75 - tan(14.5)))
+    // calculated by ziya, vivian, and meghna
+    // whose grandfather invented the number 0 which made this problem possible
+    public final double HD_RATIO_ERROR = 0.1 * HD_RATIO;
 
-	public void copyPipelineOutputs(GripPipeline pipeline) {
-		// record vision camera movie
+    public GripPipelineListener(Camera camera) {
+        m_camera = camera;
+    }
 
-	    if(RobotBase.isReal())
-	    {
-	        Robot.camera.addFrame(Robot.camera.getVisionFrame());
-	    }
-		// Get a frame of video from the last step of the pipeline that deals with video
-		// (before converting to a list of contours) and send it to the Processed stream
-		Mat frame = pipeline.hslThresholdOutput();
+    @Override
+    public void copyPipelineOutputs(GripPipeline pipeline) {
+        // record vision camera movie
 
-		contours = pipeline.filterContoursOutput();
-		// System.out.println("GripPipelineListener contours.size: " + contours.size());
-		synchronized (cameraLock) {
+        if (RobotBase.isReal()) {
+            m_camera.addFrame(m_camera.getVisionFrame());
+        }
+        // Get a frame of video from the last step of the pipeline that deals with video
+        // (before converting to a list of contours) and send it to the Processed stream
+        Mat frame = pipeline.hslThresholdOutput();
 
-			// creates array of rotated rectangles
-			for (int i = 0; i < contours.size(); i++) {
-				rotatedRects.add(Imgproc.fitEllipseDirect(contours.get(i)));
-			}
+        contours = pipeline.filterContoursOutput();
+        // System.out.println("GripPipelineListener contours.size: " + contours.size());
+        synchronized (cameraLock) {
 
-			// sorts array of rotated rectangles by x coordinate
-			rotatedRects = sortRotatedRects(rotatedRects);
+            // creates array of rotated rectangles
+            for (int i = 0; i < contours.size(); i++) {
+                rotatedRects.add(Imgproc.fitEllipseDirect(contours.get(i)));
+            }
 
-			// for testing/debugging: prints out x coordinated of sorted rotated rects array
-			System.out.println("Sorted X-Coordinates: ");
-			for (RotatedRect x: rotatedRects) {
-				System.out.print(x.center.x + " ");
-			}
+            // sorts array of rotated rectangles by x coordinate
+            rotatedRects = sortRotatedRects(rotatedRects);
 
-			// adds pairs of tape that are angled towards each other and a certain distance apart to array of Target Pair
-			for (int i = 0; i < contours.size() - 1; i++) {
-				TargetPair pair = new TargetPair(rotatedRects.get(i), rotatedRects.get(i + 1));
-				double heightDistanceRatio = pair.getHeight()/pair.getPairDistance();
-				double heightDistanceRatioError = HD_RATIO - heightDistanceRatio;
+            // for testing/debugging: prints out x coordinated of sorted rotated rects array
+            System.out.println("Sorted X-Coordinates: ");
+            for (RotatedRect x : rotatedRects) {
+                System.out.print(x.center.x + " ");
+            }
 
-				if (rotatedRects.get(i).angle < 0 && rotatedRects.get(i + 1).angle > 0
-					&& heightDistanceRatioError < HD_RATIO_ERROR) { // angle < 0 is left target, angle > 0 is right target
-					targetPairs.add(pair);
-				}
-			}
+            // adds pairs of tape that are angled towards each other and a certain distance apart to array of Target Pair
+            for (int i = 0; i < contours.size() - 1; i++) {
+                TargetPair pair = new TargetPair(rotatedRects.get(i), rotatedRects.get(i + 1));
+                double heightDistanceRatio = pair.getHeight() / pair.getPairDistance();
+                double heightDistanceRatioError = HD_RATIO - heightDistanceRatio;
 
-			// sorts target pairs by area of their contours in ascending order
-			targetPairs = sortTargetPairs(targetPairs);
+                if (rotatedRects.get(i).angle < 0 && rotatedRects.get(i + 1).angle > 0
+                    && heightDistanceRatioError < HD_RATIO_ERROR) { // angle < 0 is left target, angle > 0 is right target
+                    targetPairs.add(pair);
+                }
+            }
 
-			// for testing/debugging: prints out average areas of sorted target pairs array
-			System.out.println("Sorted Target Areas: ");
-			for (TargetPair x: targetPairs) {
-				System.out.print(x.getTargetAverageArea() + " ");
-			}
+            // sorts target pairs by area of their contours in ascending order
+            targetPairs = sortTargetPairs(targetPairs);
 
-			// goal pair is the closest (the pair with the largest area)
-			if (targetPairs.size() <= 0) {
-				targetX = -1;
-				height = -1;
-			} else {
-				goalTargetPair = targetPairs.get(targetPairs.size() - 1);
-				targetX = goalTargetPair.getTargetCenterX();
-				height = goalTargetPair.getHeight();
-			}
-		}
+            // for testing/debugging: prints out average areas of sorted target pairs array
+            System.out.println("Sorted Target Areas: ");
+            for (TargetPair x : targetPairs) {
+                System.out.print(x.getTargetAverageArea() + " ");
+            }
 
-		// @Joe why does the editor catch this error first?
-		// puts a dot in the middle of target pair on the processed image for SmartDashboard
-		Imgproc.circle(frame, goalTargetPair.getTargetCenterPoint(), 6, new Scalar(255, 255, 255));
-        if(RobotBase.isReal())
-        {
-		Robot.camera.processedStream.putFrame(frame);
+            // goal pair is the closest (the pair with the largest area)
+            if (targetPairs.size() <= 0) {
+                targetX = -1;
+                height = -1;
+            } else {
+                goalTargetPair = targetPairs.get(targetPairs.size() - 1);
+                targetX = goalTargetPair.getTargetCenterX();
+                height = goalTargetPair.getHeight();
+            }
         }
 
-	}
+        // @Joe why does the editor catch this error first?
+        // puts a dot in the middle of target pair on the processed image for SmartDashboard
+        Imgproc.circle(frame, goalTargetPair.getTargetCenterPoint(), 6, new Scalar(255, 255, 255));
+        if (RobotBase.isReal()) {
+            m_camera.m_processedStream.putFrame(frame);
+        }
 
-	public ArrayList<RotatedRect> sortRotatedRects(ArrayList<RotatedRect> arr) {
-		for (int i = 0; i < arr.size() - 1; i++) {
-			int min = i;
-			for (int j = i + 1; j < arr.size(); j++) {
-				if (arr.get(j).center.x < arr.get(min).center.x)
-					min = j;
-			}
+    }
 
-			RotatedRect temp = arr.get(i);
-			arr.set(i, arr.get(min));
-			arr.set(min, temp);
-		}
+    public ArrayList<RotatedRect> sortRotatedRects(ArrayList<RotatedRect> arr) {
+        for (int i = 0; i < arr.size() - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < arr.size(); j++) {
+                if (arr.get(j).center.x < arr.get(min).center.x) {
+                    min = j;
+                }
+            }
 
-		return arr;
-	}
+            RotatedRect temp = arr.get(i);
+            arr.set(i, arr.get(min));
+            arr.set(min, temp);
+        }
 
-	public ArrayList<TargetPair> sortTargetPairs(ArrayList<TargetPair> arr) {
-		for (int i = 0; i < arr.size() - 1; i++) {
-			int min = i;
-			for (int j = i + 1; j < arr.size(); j++) {
-				if (arr.get(j).getTargetAverageArea() < arr.get(min).getTargetAverageArea())
-					min = j;
-			}
+        return arr;
+    }
 
-			TargetPair temp = arr.get(i);
-			arr.set(i, arr.get(min));
-			arr.set(min, temp);
-		}
+    public ArrayList<TargetPair> sortTargetPairs(ArrayList<TargetPair> arr) {
+        for (int i = 0; i < arr.size() - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < arr.size(); j++) {
+                if (arr.get(j).getTargetAverageArea() < arr.get(min).getTargetAverageArea()) {
+                    min = j;
+                }
+            }
 
-		return arr;
-	}
+            TargetPair temp = arr.get(i);
+            arr.set(i, arr.get(min));
+            arr.set(min, temp);
+        }
+
+        return arr;
+    }
 }

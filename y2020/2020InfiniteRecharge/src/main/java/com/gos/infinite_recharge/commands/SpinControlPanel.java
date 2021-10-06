@@ -17,7 +17,7 @@ public class SpinControlPanel extends CommandBase {
 
     @Override
     public void execute() {
-        m_controlPanel.start(); 
+        m_controlPanel.start();
     }
 
     @Override
@@ -27,7 +27,7 @@ public class SpinControlPanel extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_controlPanel.stop(); 
+        m_controlPanel.stop();
     }
 
 }

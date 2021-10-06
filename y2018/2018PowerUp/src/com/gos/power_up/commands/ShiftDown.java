@@ -1,42 +1,41 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
+import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Shifters.Speed;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class ShiftDown extends Command {
+    private final Shifters m_shifters;
 
-	public ShiftDown() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.shifters);
-	}
+    public ShiftDown(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
+    }
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.shifters.shiftGear(Speed.kLow);
-	}
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-	}
+    @Override
+    protected void initialize() {
+        m_shifters.shiftGear(Speed.kLow);
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return true;
-	}
 
-	// Called once after isFinished returns true
-	protected void end() {
-	}
+    @Override
+    protected void execute() {
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+
+    @Override
+    protected void end() {
+    }
+
+
 }

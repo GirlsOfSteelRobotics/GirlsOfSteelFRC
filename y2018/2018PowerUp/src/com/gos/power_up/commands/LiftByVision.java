@@ -1,48 +1,48 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
+import com.gos.power_up.subsystems.Blobs;
+import com.gos.power_up.subsystems.Lift;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class LiftByVision extends Command {
+    private final Blobs m_blobs;
+    private final Lift m_lift;
 
-    public LiftByVision() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public LiftByVision(Blobs blobs, Lift lift) {
+        m_lift = lift;
+        m_blobs = blobs;
     }
 
-    // Called just before this Command runs the first time
+
+    @Override
     protected void initialize() {
-    	if (Robot.blobs.distanceBetweenBlobs() == -1)
-    	{
-    		System.out.print("LiftByVision initialize: line not in sight!!");
-    		end();
-    	}
+        if (m_blobs.distanceBetweenBlobs() == -1) {
+            System.out.print("LiftByVision initialize: line not in sight!!");
+            end();
+        }
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
+    @Override
     protected void execute() {
-    	if (Robot.blobs.distanceBetweenBlobs() != -1)
-    	{
-    		Robot.lift.incrementLift();
-    	}
+        if (m_blobs.distanceBetweenBlobs() != -1) {
+            m_lift.incrementLift();
+        }
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
+    @Override
     protected boolean isFinished() {
-        return (Robot.blobs.distanceBetweenBlobs() == -1);
+        return m_blobs.distanceBetweenBlobs() == -1;
     }
 
-    // Called once after isFinished returns true
+
+    @Override
     protected void end() {
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+
 }

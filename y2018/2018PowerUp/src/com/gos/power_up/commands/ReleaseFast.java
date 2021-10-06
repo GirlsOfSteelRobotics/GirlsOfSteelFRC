@@ -1,52 +1,49 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
+import com.gos.power_up.subsystems.Collector;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class ReleaseFast extends Command {
+    private final Collector m_collector;
 
-	private double speed;
-    public ReleaseFast() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	speed = 0.9;
-		requires(Robot.collector);
-    }
-    
-    public ReleaseFast(double s) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	speed = s;
-		requires(Robot.collector);
+    private final double m_speed;
+
+    public ReleaseFast(Collector collector) {
+        this(collector, 0.9);
     }
 
-    // Called just before this Command runs the first time
+    public ReleaseFast(Collector collector, double s) {
+        m_speed = s;
+        m_collector = collector;
+        requires(m_collector);
+    }
+
+
+    @Override
     protected void initialize() {
-    	System.out.println("Release");
+        System.out.println("Release");
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
+    @Override
     protected void execute() {
-		Robot.collector.release(speed);
+        m_collector.release(m_speed);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
+    @Override
     protected void end() {
-    	Robot.collector.stop();
+        m_collector.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+
 }

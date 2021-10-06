@@ -1,91 +1,96 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.power_up.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class TurnByMotionMagic extends Command {
+    private static final double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
-	private double targetHeading; // in degrees
-	private boolean resetPigeon;
+    private final double m_targetHeading; // in degrees
+    private final boolean m_resetPigeon;
 
-	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    private final Chassis m_chassis;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
 
-	private final static double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
-	public TurnByMotionMagic(double degrees) {
-		targetHeading = degrees;
-		resetPigeon = true;
-		requires(Robot.chassis);
-		// System.out.println("TurnByMotionMagic: constructed");
-	}
+    public TurnByMotionMagic(Chassis chassis, double degrees) {
+        this(chassis, degrees, true);
+    }
 
-	public TurnByMotionMagic(double degrees, boolean reset) {
-		targetHeading = degrees;
-		resetPigeon = reset;
-		requires(Robot.chassis);
-		// System.out.println("TurnByMotionMagic: constructed");
-	}
+    public TurnByMotionMagic(Chassis chassis, double degrees, boolean reset) {
+        m_targetHeading = degrees;
+        m_resetPigeon = reset;
+        m_chassis = chassis;
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
+        requires(m_chassis);
+        // System.out.println("TurnByMotionMagic: constructed");
+    }
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.chassis.setInverted(false);
 
-		Robot.chassis.configForTurnByMotionMagic();
-		// System.out.println("TurnByMotionMagic: configured for motion magic");
+    @Override
+    protected void initialize() {
+        m_chassis.setInverted(false);
 
-		if (resetPigeon)
-			Robot.chassis.zeroSensors();
+        m_chassis.configForTurnByMotionMagic();
+        // System.out.println("TurnByMotionMagic: configured for motion magic");
 
-		System.out.println("TurnByMotionMagic: heading: " + targetHeading + " reset=" + resetPigeon);
-	
+        if (m_resetPigeon) {
+            m_chassis.zeroSensors();
+        }
 
-		rightTalon.set(ControlMode.MotionMagic, -10 * targetHeading);
-		leftTalon.follow(rightTalon);
+        System.out.println("TurnByMotionMagic: heading: " + m_targetHeading + " reset=" + m_resetPigeon);
 
-	}
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
+        m_rightTalon.set(ControlMode.MotionMagic, -10 * m_targetHeading);
+        m_leftTalon.follow(m_rightTalon);
 
-	}
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		
-		double currentHeading = Robot.chassis.getYaw();
-		double error = Math.abs(targetHeading - currentHeading);
-		// System.out.println("DriveByMotionMagic: turning error = " + error);
-		if (error < TURNING_FINISH_THRESHOLD) {
-			System.out.println("TurnByMotionMagic: turning degrees reached");
-			return true;
-		} else
-			return false; 
 
-	}
+    @Override
+    protected void execute() {
 
-	// Called once after isFinished returns true
-	protected void end() {
+    }
 
-		double currentHeading = Robot.chassis.getYaw();
-		double degreesError = targetHeading - currentHeading;
 
-		System.out.println("TurnByMotionMagic: ended. Error = " + degreesError + " degrees");
-		Robot.chassis.stop();
-		Robot.chassis.setInverted(false);
-	}
+    @Override
+    protected boolean isFinished() {
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		System.out.println("TurnByMotionMagic: interrupted");
-		end();
-	}
+        double currentHeading = m_chassis.getYaw();
+        double error = Math.abs(m_targetHeading - currentHeading);
+        // System.out.println("DriveByMotionMagic: turning error = " + error);
+        if (error < TURNING_FINISH_THRESHOLD) {
+            System.out.println("TurnByMotionMagic: turning degrees reached");
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    @Override
+    protected void end() {
+
+        double currentHeading = m_chassis.getYaw();
+        double degreesError = m_targetHeading - currentHeading;
+
+        System.out.println("TurnByMotionMagic: ended. Error = " + degreesError + " degrees");
+        m_chassis.stop();
+        m_chassis.setInverted(false);
+    }
+
+
+    @Override
+    protected void interrupted() {
+        System.out.println("TurnByMotionMagic: interrupted");
+        end();
+    }
 }

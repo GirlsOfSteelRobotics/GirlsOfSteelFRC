@@ -10,83 +10,81 @@ package com.gos.offense2019.subsystems;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.offense2019.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.offense2019.RobotMap;
-import com.gos.offense2019.commands.DriveByJoystick;
 
 /**
  * An example subsystem. You can replace me with your own Subsystem.
  */
 public class Chassis extends Subsystem {
-	private WPI_TalonSRX masterLeft;
-	private WPI_TalonSRX followerLeftA;
-	private WPI_TalonSRX followerLeftB;
+    private final WPI_TalonSRX m_masterLeft;
+    private final WPI_TalonSRX m_followerLeftA;
+    private final WPI_TalonSRX m_followerLeftB;
 
-	private WPI_TalonSRX masterRight;
-	private WPI_TalonSRX followerRightA;
-	private WPI_TalonSRX followerRightB;
+    private final WPI_TalonSRX m_masterRight;
+    private final WPI_TalonSRX m_followerRightA;
+    private final WPI_TalonSRX m_followerRightB;
 
-	private DifferentialDrive drive;
+    private final DifferentialDrive m_drive;
 
-	public Chassis() {
-		masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
-		followerLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_A_TALON);
-		followerLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_B_TALON);
+    public Chassis() {
+        m_masterLeft = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_MASTER_TALON);
+        m_followerLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_A_TALON);
+        m_followerLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_FOLLOWER_B_TALON);
 
-		masterRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MASTER_TALON);
-		followerRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_A_TALON);
-		followerRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_B_TALON);
+        m_masterRight = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_MASTER_TALON);
+        m_followerRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_A_TALON);
+        m_followerRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_FOLLOWER_B_TALON);
 
-		masterLeft.setNeutralMode(NeutralMode.Brake);
-		followerLeftA.setNeutralMode(NeutralMode.Brake);
-		followerLeftB.setNeutralMode(NeutralMode.Brake);
+        m_masterLeft.setNeutralMode(NeutralMode.Brake);
+        m_followerLeftA.setNeutralMode(NeutralMode.Brake);
+        m_followerLeftB.setNeutralMode(NeutralMode.Brake);
 
-		masterRight.setNeutralMode(NeutralMode.Brake);
-		followerRightA.setNeutralMode(NeutralMode.Brake);
-		followerRightB.setNeutralMode(NeutralMode.Brake);
+        m_masterRight.setNeutralMode(NeutralMode.Brake);
+        m_followerRightA.setNeutralMode(NeutralMode.Brake);
+        m_followerRightB.setNeutralMode(NeutralMode.Brake);
 
-		// inverted should be true for Laika
-		masterLeft.setInverted(false);
-		followerLeftA.setInverted(false);
-		followerLeftB.setInverted(false);
+        // inverted should be true for Laika
+        m_masterLeft.setInverted(false);
+        m_followerLeftA.setInverted(false);
+        m_followerLeftB.setInverted(false);
 
-		masterRight.setInverted(false);
-		followerRightA.setInverted(false);
-		followerRightB.setInverted(false);
+        m_masterRight.setInverted(false);
+        m_followerRightA.setInverted(false);
+        m_followerRightB.setInverted(false);
 
-		followerLeftA.follow(masterLeft, FollowerType.PercentOutput);
-		followerLeftB.follow(masterLeft, FollowerType.PercentOutput);
-		followerRightA.follow(masterRight, FollowerType.PercentOutput);
-		followerRightB.follow(masterRight, FollowerType.PercentOutput);
+        m_followerLeftA.follow(m_masterLeft, FollowerType.PercentOutput);
+        m_followerLeftB.follow(m_masterLeft, FollowerType.PercentOutput);
+        m_followerRightA.follow(m_masterRight, FollowerType.PercentOutput);
+        m_followerRightB.follow(m_masterRight, FollowerType.PercentOutput);
 
-		drive = new DifferentialDrive(masterLeft, masterRight);
-		drive.setSafetyEnabled(true);
-		drive.setExpiration(0.1);
-		drive.setMaxOutput(0.8);
-	}
+        m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
+        m_drive.setSafetyEnabled(true);
+        m_drive.setExpiration(0.1);
+        m_drive.setMaxOutput(0.8);
+    }
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		setDefaultCommand(new DriveByJoystick());
-	}
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+    }
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 
-	public void driveByJoystick(double yDir, double xDir) {
-		SmartDashboard.putString("driveByJoystick?", yDir + "," + xDir);
-		double forward = yDir * Math.abs(yDir);
-		drive.arcadeDrive(forward, xDir);
-	}
+    public void driveByJoystick(double dirY, double dirX) {
+        SmartDashboard.putString("driveByJoystick?", dirY + "," + dirX);
+        double forward = dirY * Math.abs(dirY);
+        m_drive.arcadeDrive(forward, dirX);
+    }
 
-	public void setSpeed(double speed) {
-		drive.arcadeDrive(speed, 0);
-	}
+    public void setSpeed(double speed) {
+        m_drive.arcadeDrive(speed, 0);
+    }
 
-	public void stop() {
-		drive.stopMotor();
-	}
+    public void stop() {
+        m_drive.stopMotor();
+    }
 }

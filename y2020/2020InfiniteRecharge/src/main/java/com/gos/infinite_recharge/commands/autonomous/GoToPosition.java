@@ -39,13 +39,13 @@ public class GoToPosition extends CommandBase {
     public void initialize(){
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
     @Override
     public void execute() {
 
         double currentAngle;
         double dx;
-        double dy; 
+        double dy;
         double angle;
 
         dx = m_finalPositionX - m_chassis.getXInches();
@@ -72,7 +72,7 @@ public class GoToPosition extends CommandBase {
 
         double turnSpeed = m_errorAngle * AUTO_KP_ANGLE.getValue();
 
-        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed 
+        System.out.println("angle " + angle + ", hyp " + m_hyp + ", speed " + speed + ", turnSpeed " + turnSpeed
             + ", currentAngle " + currentAngle + ", errorAngle " + m_errorAngle + ", allowableError" + m_allowableError);
 
         if (speed > MAX_SPEED) {
@@ -96,7 +96,7 @@ public class GoToPosition extends CommandBase {
         return angle;
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
     @Override
     public boolean isFinished() {
         if (m_hyp < m_allowableError) {
@@ -108,7 +108,7 @@ public class GoToPosition extends CommandBase {
         }
     }
 
-    // Called once after isFinished returns true
+
     @Override
     public void end(boolean interrupted) {
         m_chassis.setSpeedAndSteer(0, 0);

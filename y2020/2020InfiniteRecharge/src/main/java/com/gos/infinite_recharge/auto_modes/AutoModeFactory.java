@@ -48,10 +48,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
      * Creates a new AutomatedConveyorIntake.
      */
     public AutoModeFactory(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake, Limelight limelight) {
-       
+
         m_sendableChooser = new SendableChooser<>();
         TrajectoryModeFactory trajectoryModeFactory = new TrajectoryModeFactory();
-        
+
         if (TEST_MODE) {
             double dX = 8 * 12;
             double dY = 8 * 12;
@@ -86,17 +86,17 @@ public class AutoModeFactory extends SequentialCommandGroup {
         }
         m_sendableChooser.addOption("ShootAndDriveToRendezvous",
                 new ShootAndDriveToRendezvous(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory));
-        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight", 
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorCenterOrRight",
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM));
-        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorCenterOrRight", 
+        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorCenterOrRight",
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM));
-        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorLeft", 
+        m_sendableChooser.addOption("ShootToDriveToTargetNoSensorLeft",
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM_LEFT));
-        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorLeft", 
+        m_sendableChooser.addOption("ShootToDriveToTargetWithSensorLeft",
             new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM_LEFT));
 
-           
-           
+
+
         m_sendableChooser.addOption("ShootAndDriveToTrench", new ShootAndDriveToTrench(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory, false, limelight));
         m_sendableChooser.addOption("ShootAndDriveToTrenchRightSide", new ShootAndDriveToTrenchRightSide(chassis, shooter, shooterConveyor, shooterIntake, trajectoryModeFactory, limelight));
         m_sendableChooser.addOption("ShootAndDriveToOpponentsTrench",  new ShootAndDriveToOpponentsTrenchCommandGroup(chassis, shooter,
@@ -105,7 +105,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         if (ENABLE_AUTO_SELECTION) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);
         }
-        
+
 
         m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM);
         //m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, false, Constants.DEFAULT_RPM);

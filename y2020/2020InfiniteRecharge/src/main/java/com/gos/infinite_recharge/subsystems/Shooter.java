@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
     private static final double SHOOTER_KFF = 0.000087; //1 / 10600.0;
     private static final double SHOOTER_KD = 0.0001;
 
-    private static final double ALLOWABLE_ERROR_PERCENT = 1;          
+    private static final double ALLOWABLE_ERROR_PERCENT = 1;
 
 
     private final SimableCANSparkMax m_master;
@@ -39,15 +39,15 @@ public class Shooter extends SubsystemBase {
 
     private final Limelight m_limelight;
 
-    private double m_goalRPM; 
-    
+    private double m_goalRPM;
+
     private final NetworkTable m_customNetworkTable;
 
     private final PropertyManager.IProperty<Double> m_dashboardKp;
     private final PropertyManager.IProperty<Double> m_dashboardKff;
 
     private final NetworkTableEntry m_isAtShooterSpeedEntry;
-    
+
     private ISimWrapper m_simulator;
 
     public Shooter(ShuffleboardTab driveDisplayTab, Limelight limelight) {
@@ -55,7 +55,7 @@ public class Shooter extends SubsystemBase {
         m_follower = new SimableCANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
         m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 8192);
         m_pidController = m_master.getPIDController();
-        
+
         m_dashboardKp = new PropertyManager.DoubleProperty("shooter_kp", SHOOTER_KP);
         m_dashboardKff = new PropertyManager.DoubleProperty("shooter_kff", SHOOTER_KFF);
 
@@ -75,7 +75,7 @@ public class Shooter extends SubsystemBase {
 
         m_master.burnFlash();
         m_follower.burnFlash();
-        
+
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/Shooter");
         NetworkTableInstance.getDefault().getTable("SuperStructure").getEntry(".type").setString("SuperStructure");
 
@@ -83,7 +83,7 @@ public class Shooter extends SubsystemBase {
             .withSize(4, 1)
             .withPosition(0, 0)
             .getEntry();
-            
+
         if (RobotBase.isSimulation()) {
 
             FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getVex775Pro(2), 1.66, .008);
@@ -91,11 +91,11 @@ public class Shooter extends SubsystemBase {
                     new RevMotorControllerSimWrapper(m_master),
                     RevEncoderSimWrapper.create(m_master));
         }
-    } 
+    }
 
-    
+
     public void setRPM(final double rpm) {
-        m_goalRPM = rpm; 
+        m_goalRPM = rpm;
         m_pidController.setReference(rpm, ControlType.kVelocity);
         // double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
         // m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);

@@ -1,7 +1,6 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
+import com.gos.steam_works.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,33 +8,32 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DecrementHighShooter extends Command {
 
-	public DecrementHighShooter() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		// doesn't need requires because that would steal shooter from shootball
-	}
+    private final Shooter m_shooter;
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.shooter.decrementHighShooterSpeed();
-	}
+    public DecrementHighShooter(Shooter shooter) {
+        m_shooter = shooter;
+        // doesn't need requires because that would steal shooter from shootball
+    }
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-	}
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return true;
-	}
+    @Override
+    protected void initialize() {
+        m_shooter.decrementHighShooterSpeed();
+    }
 
-	// Called once after isFinished returns true
-	protected void end() {
-	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void execute() {
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+
+    @Override
+    protected void end() {
+    }
 }

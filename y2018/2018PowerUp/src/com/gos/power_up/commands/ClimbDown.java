@@ -1,43 +1,42 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
+import com.gos.power_up.subsystems.Climber;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class ClimbDown extends Command {
+    private final Climber m_climber;
 
-    public ClimbDown() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.climber);
+    public ClimbDown(Climber climber) {
+        m_climber = climber;
+        requires(m_climber);
     }
 
-    // Called just before this Command runs the first time
+
+    @Override
     protected void initialize() {
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
+    @Override
     protected void execute() {
-    	Robot.climber.climb(-1.0); 
+        m_climber.climb(-1.0);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
+    @Override
     protected void end() {
-    	Robot.climber.stopClimb();
+        m_climber.stopClimb();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end(); 
-    }
-    
+
+
 }

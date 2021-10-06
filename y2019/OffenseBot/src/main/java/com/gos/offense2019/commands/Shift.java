@@ -7,39 +7,40 @@
 
 package com.gos.offense2019.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import com.gos.offense2019.subsystems.Shifters;
 import com.gos.offense2019.subsystems.Shifters.Speed;
-import com.gos.offense2019.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class Shift extends Command {
-  private Speed speed;
+    private final Speed m_speed;
+    private final Shifters m_shifters;
 
-  public Shift(Speed speed) {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.shifters);
-    this.speed = speed;
-  }
+    public Shift(Shifters shifters, Speed speed) {
+        m_shifters = shifters;
+        requires(m_shifters);
+        this.m_speed = speed;
+    }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("Shift(" + speed + ") init");
-    Robot.shifters.shiftGear(speed);
-  }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
+    @Override
+    protected void initialize() {
+        System.out.println("Shift(" + m_speed + ") init");
+        m_shifters.shiftGear(m_speed);
+    }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return true;
-  }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+    @Override
+    protected void execute() {
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+
+    @Override
+    protected void end() {
+    }
 }

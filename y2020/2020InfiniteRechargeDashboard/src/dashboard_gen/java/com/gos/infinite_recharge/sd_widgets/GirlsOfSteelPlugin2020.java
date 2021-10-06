@@ -23,8 +23,8 @@ public class GirlsOfSteelPlugin2020 extends Plugin {
     @Override
     public List<ComponentType> getComponents() {
         return ImmutableList.of(
-            WidgetType.forAnnotatedWidget(SuperStructureWidget.class), 
-            WidgetType.forAnnotatedWidget(LedWidget.class), 
+            WidgetType.forAnnotatedWidget(SuperStructureWidget.class),
+            WidgetType.forAnnotatedWidget(LedWidget.class),
             WidgetType.forAnnotatedWidget(ControlPanelWidget.class));
 
     }
@@ -32,8 +32,8 @@ public class GirlsOfSteelPlugin2020 extends Plugin {
     @Override
     public List<DataType> getDataTypes() {
         return ImmutableList.of(
-            SuperStructureDataType.INSTANCE, 
-            LedDataType.INSTANCE, 
+            SuperStructureDataType.INSTANCE,
+            LedDataType.INSTANCE,
             ControlPanelDataType.INSTANCE);
 
     }

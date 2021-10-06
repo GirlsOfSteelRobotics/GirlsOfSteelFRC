@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Preferences;
  * This class contains basic configurable properties. There is an interface
  * where you can ask for a data type, as well as basic classes that can grab the
  * constants from the network table for faster prototyping.
- * 
+ *
  * @author PJ
  *
  */

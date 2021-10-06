@@ -29,7 +29,7 @@ public class TurnToAngle extends CommandBase {
     public TurnToAngle(Chassis chassis, double angle, double allowableError) {
         m_chassis = chassis;
         m_deadbandHelper = new DeadbandHelper(5);
- 
+
         m_angle = angle;
         m_allowableError = allowableError;
 

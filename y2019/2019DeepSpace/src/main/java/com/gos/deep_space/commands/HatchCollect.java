@@ -7,39 +7,40 @@
 
 package com.gos.deep_space.commands;
 
-import com.gos.deep_space.Robot;
+import com.gos.deep_space.subsystems.Hatch;
 import edu.wpi.first.wpilibj.command.Command;
 
 
 public class HatchCollect extends Command {
-  public HatchCollect() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.hatch); 
-  }
+    private final Hatch m_hatch;
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("init hatch collect");
-  }
+    public HatchCollect(Hatch hatch) {
+        m_hatch = hatch;
+        requires(m_hatch);
+    }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.hatch.collect();
-  }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    @Override
+    protected void initialize() {
+        System.out.println("init hatch collect");
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-        Robot.hatch.slowCollect(); 
+
+    @Override
+    protected void execute() {
+        m_hatch.collect();
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    protected void end() {
+        m_hatch.slowCollect();
         System.out.println("end hatch collect");
-  }
+    }
 }

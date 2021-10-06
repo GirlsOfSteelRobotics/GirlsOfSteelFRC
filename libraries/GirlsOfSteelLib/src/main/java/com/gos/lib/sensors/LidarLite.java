@@ -19,7 +19,7 @@ public class LidarLite {
 
     /**
      * Take a measurement and return the distance in cm
-     * 
+     *
      * @return Distance in cm
      */
     public double getDistance() {

@@ -63,7 +63,7 @@ public class Collector extends SubsystemBase {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public void extendCollector() { 
+    public void extendCollector() {
         m_fourBarLeft.set(FOURBAR_SPEED);
         m_fourBarRight.set(FOURBAR_SPEED);
 
@@ -84,12 +84,11 @@ public class Collector extends SubsystemBase {
     }
 
     public void stopIntake() {
-        m_collector.set(0); 
+        m_collector.set(0);
     }
 
     public void stopFourbar() {
-        m_fourBarLeft.set(0); 
-        m_fourBarRight.set(0); 
+        m_fourBarLeft.set(0);
+        m_fourBarRight.set(0);
     }
 }
-

@@ -12,15 +12,12 @@ import com.gos.power_up.commands.autonomous.AutoFarScaleAbsolute;
 import com.gos.power_up.commands.autonomous.AutoMiddleSwitch;
 import com.gos.power_up.commands.autonomous.AutoNearScale;
 import com.gos.power_up.commands.autonomous.AutoNearSwitch;
-import com.gos.power_up.subsystems.Blobs;
-import com.gos.power_up.subsystems.Camera;
 import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Climber;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -33,160 +30,152 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-	
-	public static Chassis chassis;
-	public static Shifters shifters;
-	public static Lift lift;
-	public static Wrist wrist;
-	public static Collector collector;
-	public static Blobs blobs;
-	public static Camera camera;
-	public static Climber climber; 
-	public static OI oi;
-	public static GameData gameData;
 
-	Command m_autonomousCommand;
-	public static String motionProfile = "91-small";
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final Lift m_lift;
+    private final Wrist m_wrist;
+    private final Collector m_collector;
+    private final Climber m_climber;
+    private final GameData m_gameData;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	@Override
-	public void robotInit() {
-		collector = new Collector();
-		chassis = new Chassis();
-		shifters = new Shifters();
-		lift = new Lift();
-		wrist = new Wrist();
-		blobs = new Blobs();
-		camera = new Camera();
-		climber = new Climber(); 
-		oi = new OI();
-		gameData = new GameData();
-	}
+    private Command m_autonomousCommand;
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
-	@Override
-	public void disabledInit() {
-	}
+    public Robot() {
+        m_collector = new Collector();
+        m_chassis = new Chassis();
+        m_shifters = new Shifters();
+        m_lift = new Lift();
+        m_wrist = new Wrist();
+        m_climber = new Climber();
+        m_gameData = new GameData();
+        new OI(m_chassis, m_shifters, m_lift, m_wrist, m_climber, m_collector);
+    }
 
-	@Override
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
+    /**
+     * This function is called once each time the robot enters Disabled mode.
+     * You can use it to reset any subsystem information you want to clear when
+     * the robot is disabled.
+     */
+    @Override
+    public void disabledInit() {
+    }
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
-	@Override
-	public void autonomousInit() {
-		
-		Robot.chassis.zeroSensors();
-		gameData.reset();
-	
-		System.out.println("Starting Auto...");
-		//Get robot side, switch side, scale side, element priority
-		GameData.FieldSide robotSide = gameData.getRobotSide();
-		GameData.FieldElement elementPriority = gameData.getElementPriority();
-		GameData.FieldSide switchSide = gameData.getSwitchSide();
-		GameData.FieldSide scaleSide = gameData.getScaleSide();
-		boolean scaleOverride = gameData.getScaleOverride();
-		
-		if(gameData.getNoAuto())
-		{
-			m_autonomousCommand = null;
-		}
-		else if(robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) //if robot in the corner
-			
-		{
-			Robot.shifters.shiftGear(Shifters.Speed.kHigh);
+    @Override
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
-			if (elementPriority == GameData.FieldElement.Switch) //switch priority
-			{
-				if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-				else if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
-				else if (scaleOverride) m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
-				else m_autonomousCommand = new AutoDriveToBaseline();
-			}
-			else //scale priority
-			{
-				if (scaleSide == robotSide) m_autonomousCommand = new AutoNearScale(scaleSide);
-				else if (scaleOverride) m_autonomousCommand = new AutoFarScaleAbsolute(scaleSide);
-				else if (switchSide == robotSide) m_autonomousCommand = new AutoNearSwitch(switchSide);
-				else m_autonomousCommand = new AutoDriveToBaseline();
-			}
-		}
-		else if(robotSide == GameData.FieldSide.middle)
-		{
-			Robot.shifters.shiftGear(Shifters.Speed.kLow);
-			if (switchSide != GameData.FieldSide.bad) m_autonomousCommand = new AutoMiddleSwitch(switchSide);
-			else m_autonomousCommand = new AutoDriveToBaseline();
-		}
-		else 
-		{
-			System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
-			m_autonomousCommand = new AutoDriveToBaseline();
-		}
-		
-		System.out.println("Auto: " + m_autonomousCommand);
-			
-		//Other auto commands for testing:
-		//m_autonomousCommand = new AutoDriveToBaseline();
+    /**
+     * This autonomous (along with the chooser code above) shows how to select
+     * between different autonomous modes using the dashboard. The sendable
+     * chooser code works with the Java SmartDashboard. If you prefer the
+     * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+     * getString code to get the auto name from the text box below the Gyro
+     *
+     * <p>You can add additional auto modes by adding additional commands to the
+     * chooser code above (like the commented example) or additional comparisons
+     * to the switch structure below with additional strings & commands.
+     */
+    @Override
+    @SuppressWarnings("PMD.CyclomaticComplexity")
+    public void autonomousInit() {
 
-		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
-		
-		System.out.println("Hopefully auto is runnin");
-	}
+        m_chassis.zeroSensors();
+        m_gameData.reset();
 
-	/**
-	 * This function is called periodically during autonomous.
-	 */
-	@Override
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-	}
+        System.out.println("Starting Auto...");
+        //Get robot side, switch side, scale side, element priority
+        GameData.FieldSide robotSide = m_gameData.getRobotSide();
+        GameData.FieldElement elementPriority = m_gameData.getElementPriority();
+        GameData.FieldSide switchSide = m_gameData.getSwitchSide();
+        GameData.FieldSide scaleSide = m_gameData.getScaleSide();
+        boolean scaleOverride = m_gameData.getScaleOverride();
 
-	@Override
-	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
-		}
-		lift.setGoalLiftPosition(lift.getLiftPosition());
-		wrist.setGoalWristPosition(wrist.getWristPosition());
-	}
+        if (m_gameData.getNoAuto()) {
+            m_autonomousCommand = null; // NOPMD
+        } else if (robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) { //if robot in the corner
+            m_shifters.shiftGear(Shifters.Speed.kHigh);
 
-	/**
-	 * This function is called periodically during operator control.
-	 */
-	@Override
-	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
-	}
+            if (elementPriority == GameData.FieldElement.Switch) { //switch priority
+                if (switchSide == robotSide) {
+                    m_autonomousCommand = new AutoNearSwitch(m_chassis, m_shifters, m_lift, m_wrist, m_collector, switchSide);
+                } else if (scaleSide == robotSide) {
+                    m_autonomousCommand = new AutoNearScale(m_chassis, m_shifters, m_lift, m_wrist, m_collector, scaleSide);
+                } else if (scaleOverride) {
+                    m_autonomousCommand = new AutoFarScaleAbsolute(m_chassis, m_lift, m_wrist, m_collector, scaleSide);
+                } else {
+                    m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
+                }
+            } else { //scale priority
+                if (scaleSide == robotSide) {
+                    m_autonomousCommand = new AutoNearScale(m_chassis, m_shifters, m_lift, m_wrist, m_collector, scaleSide);
+                } else if (scaleOverride) {
+                    m_autonomousCommand = new AutoFarScaleAbsolute(m_chassis, m_lift, m_wrist, m_collector, scaleSide);
+                } else if (switchSide == robotSide) {
+                    m_autonomousCommand = new AutoNearSwitch(m_chassis, m_shifters, m_lift, m_wrist, m_collector, switchSide);
+                } else {
+                    m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
+                }
+            }
+        } else if (robotSide == GameData.FieldSide.middle) {
+            m_shifters.shiftGear(Shifters.Speed.kLow);
+            if (switchSide != GameData.FieldSide.bad) {
+                m_autonomousCommand = new AutoMiddleSwitch(m_chassis, m_lift, m_wrist, m_collector, switchSide);
+            } else {
+                m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
+            }
+        } else {
+            System.out.println("AutoInit: Robot field side from DIO ports invalid!!");
+            m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
+        }
 
-	/**
-	 * This function is called periodically during test mode.
-	 */
-	@Override
-	public void testPeriodic() {
-	}
+        System.out.println("Auto: " + m_autonomousCommand);
+
+        //Other auto commands for testing:
+        //m_autonomousCommand = new AutoDriveToBaseline();
+
+        // schedule the autonomous command (example)
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
+        }
+
+        System.out.println("Hopefully auto is runnin");
+    }
+
+    /**
+     * This function is called periodically during autonomous.
+     */
+    @Override
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+    }
+
+    @Override
+    public void teleopInit() {
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
+        m_lift.setGoalLiftPosition(m_lift.getLiftPosition());
+        m_wrist.setGoalWristPosition(m_wrist.getWristPosition());
+    }
+
+    /**
+     * This function is called periodically during operator control.
+     */
+    @Override
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+    }
+
+    /**
+     * This function is called periodically during test mode.
+     */
+    @Override
+    public void testPeriodic() {
+    }
 }

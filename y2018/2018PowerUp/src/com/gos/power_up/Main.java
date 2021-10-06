@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.gos.deep_space;
+package com.gos.power_up;
 
 import edu.wpi.first.wpilibj.RobotBase;
 

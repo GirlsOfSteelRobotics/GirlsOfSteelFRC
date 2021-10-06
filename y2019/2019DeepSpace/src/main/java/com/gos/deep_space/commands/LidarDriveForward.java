@@ -7,61 +7,72 @@
 
 package com.gos.deep_space.commands;
 
-import com.gos.deep_space.Robot;
+import com.gos.deep_space.subsystems.BabyDrive;
+import com.gos.deep_space.subsystems.Chassis;
+import com.gos.lib.sensors.LidarLite;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LidarDriveForward extends Command {
 
-  private final double DRIVE_SPEED = 0.4, BABYDRIVE_SPEED = 0.3;
-  private double goalLidar;
-  private boolean chassis;
+    private static final double LIDAR_TOLERANCE = 1.0;
+    private static final double DRIVE_SPEED = 0.4;
+    private static final double BABYDRIVE_SPEED = 0.3;
+    private final double m_goalLidar;
+    private final Chassis m_chassis;
+    private final BabyDrive m_babyDrive;
+    private final LidarLite m_lidar;
 
-  // if boolean chassis is true, then normal drive
-  // if chassis is false, then babyDrive
-  public LidarDriveForward(double goalLidar, boolean chassis) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    this.chassis = chassis;
-    this.goalLidar = goalLidar;
+    public LidarDriveForward(Chassis chassis, LidarLite lidar, double goalLidar) {
+        this.m_chassis = chassis;
+        this.m_lidar = lidar;
+        this.m_babyDrive = null; // NOPMD
+        this.m_goalLidar = goalLidar;
 
-    if (chassis)
-      requires(Robot.chassis);
-    else
-      requires(Robot.babyDrive);
-    requires(Robot.lidar);
-  }
+        requires(m_chassis);
+    }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("LidarDriveForward init, goal lidar: " + goalLidar + ", chassis bool: " + chassis);
-  }
+    public LidarDriveForward(BabyDrive babyDrive, LidarLite lidar, double goalLidar) {
+        this.m_chassis = null; // NOPMD
+        this.m_lidar = lidar;
+        this.m_babyDrive = babyDrive;
+        this.m_goalLidar = goalLidar;
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    if (chassis)
-      Robot.chassis.setSpeed(DRIVE_SPEED); 
-    else
-      Robot.babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
-    System.out.println("LidarDriveForward lidar distance: " + Robot.lidar.getDistance());
-  }
+        requires(m_babyDrive);
+    }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    double error = Robot.lidar.getDistance() - goalLidar;
-    System.out.println("LidarDriveForward error: " + error);
-    return error <= Robot.lidar.LIDAR_TOLERANCE;
-  }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    if (chassis)
-      Robot.chassis.stop();
-    else 
-      Robot.babyDrive.babyDriveStop();
-    System.out.println("LidarDriveForward end");
-  }
+    @Override
+    protected void initialize() {
+        System.out.println("LidarDriveForward init, goal lidar: " + m_goalLidar + ", chassis bool: " + m_chassis);
+    }
+
+
+    @Override
+    protected void execute() {
+        if (m_chassis != null) {
+            m_chassis.setSpeed(DRIVE_SPEED);
+        } else {
+            m_babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
+        }
+        System.out.println("LidarDriveForward lidar distance: " + m_lidar.getDistance());
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        double error = m_lidar.getDistance() - m_goalLidar;
+        System.out.println("LidarDriveForward error: " + error);
+        return error <= LIDAR_TOLERANCE;
+    }
+
+
+    @Override
+    protected void end() {
+        if (m_chassis != null) {
+            m_chassis.stop();
+        } else {
+            m_babyDrive.babyDriveStop();
+        }
+        System.out.println("LidarDriveForward end");
+    }
 }

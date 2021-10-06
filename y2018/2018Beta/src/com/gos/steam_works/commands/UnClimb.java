@@ -1,7 +1,6 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
+import com.gos.steam_works.subsystems.Climber;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,34 +8,36 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class UnClimb extends Command {
 
-	public UnClimb() {
-		// Use requires() here to declare subsystem dependencies
-		requires(Robot.climber);
-	}
+    private final Climber m_climber;
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		
-	}
+    public UnClimb(Climber climber) {
+        m_climber = climber;
+        requires(m_climber);
+    }
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		Robot.climber.climb(0.75);
-	}
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected void initialize() {
 
-	// Called once after isFinished returns true
-	protected void end() {
-		Robot.climber.stopClimb();
-	}
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+
+    @Override
+    protected void execute() {
+        m_climber.climb(0.75);
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    protected void end() {
+        m_climber.stopClimb();
+    }
+
+
 }

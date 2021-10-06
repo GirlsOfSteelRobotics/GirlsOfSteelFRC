@@ -6,41 +6,42 @@
 /*----------------------------------------------------------------------------*/
 
 package com.gos.deep_space.commands;
-import com.gos.deep_space.Robot;
 
+import com.gos.deep_space.subsystems.Collector;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CollectorCollect extends Command {
-  public CollectorCollect() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.collector); 
-  }
+    private final Collector m_collector;
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    System.out.println("init CollectorCollect");
-  }
+    public CollectorCollect(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
+    }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.collector.collect();
-  }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    @Override
+    protected void initialize() {
+        System.out.println("init CollectorCollect");
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    Robot.collector.slowCollect(); 
-    System.out.println("end CollectorCollect");
-  }
+
+    @Override
+    protected void execute() {
+        m_collector.collect();
+    }
+
+
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    protected void end() {
+        m_collector.slowCollect();
+        System.out.println("end CollectorCollect");
+    }
 
 
 }

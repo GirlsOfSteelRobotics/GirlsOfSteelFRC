@@ -19,13 +19,19 @@ import com.gos.deep_space.commands.ClimberManual;
 import com.gos.deep_space.commands.ClimberToSetPoint;
 import com.gos.deep_space.commands.CollectorCollect;
 import com.gos.deep_space.commands.CollectorRelease;
+import com.gos.deep_space.commands.DriveByJoystick;
 import com.gos.deep_space.commands.HatchCollect;
 import com.gos.deep_space.commands.HatchRelease;
 import com.gos.deep_space.commands.PivotManual;
 import com.gos.deep_space.commands.PivotToGround;
 import com.gos.deep_space.commands.PivotToRocket;
 import com.gos.deep_space.commands.PivotToShip;
+import com.gos.deep_space.subsystems.BabyDrive;
+import com.gos.deep_space.subsystems.Blinkin;
+import com.gos.deep_space.subsystems.Chassis;
 import com.gos.deep_space.subsystems.Climber;
+import com.gos.deep_space.subsystems.Collector;
+import com.gos.deep_space.subsystems.Hatch;
 import com.gos.deep_space.subsystems.Pivot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -36,148 +42,111 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	
-	public Joystick drivingPad;
-	public Joystick operatingPad;
 
-	private JoystickButton backUp;
-	private JoystickButton backDown;
+    private final Joystick m_drivingPad;
+    private final Joystick m_operatingPad;
 
-	private JoystickButton frontUp;
-	private JoystickButton frontDown;
+    public OI(Chassis chassis, BabyDrive babyDrive, Blinkin blinkin, Climber climber, Collector collector, Hatch hatch, Pivot pivot) {
+        m_drivingPad = new Joystick(0);
+        m_operatingPad = new Joystick(1);
 
-	private JoystickButton allUp;
-	private JoystickButton allDown;
+        chassis.setDefaultCommand(new DriveByJoystick(chassis, this));
 
-	private POVButton toSecondUp; 
-	private POVButton toThirdUp; 
+        // Climber buttons
+        POVButton frontToZero = new POVButton(m_drivingPad, 90);
+        frontToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.Front));
 
-	private POVButton allToZero;
-	private POVButton frontToZero;
-	private POVButton backToZero;
+        POVButton backToZero = new POVButton(m_drivingPad, 270);
+        backToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.Back));
 
-	private POVButton robotToThird;
-	private POVButton robotToSecond;
+        POVButton toSecondUp = new POVButton(m_drivingPad, 180);
+        toSecondUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.SECOND_GOAL_POS, Climber.ClimberType.All));
 
-	private JoystickButton lidarDrive; // testing purposes only
+        POVButton toThirdUp = new POVButton(m_drivingPad, 0);
+        toThirdUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.THIRD_GOAL_POS, Climber.ClimberType.All));
 
-	private JoystickButton babyDriveForward; 
-	private JoystickButton babyDriveBackward;
+        JoystickButton frontDown = new JoystickButton(m_drivingPad, 2);
+        frontDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.Front));
 
-	private JoystickButton collect;
-	private JoystickButton release;
+        JoystickButton backDown = new JoystickButton(m_drivingPad, 4);
+        backDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.Back));
 
-	private JoystickButton hatchCollect;
-	private JoystickButton hatchRelease;
+        JoystickButton allUp = new JoystickButton(m_drivingPad, 5);
+        allUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.All));
 
-	private JoystickButton pivotUp;
-	private JoystickButton pivotDown;
-	private JoystickButton pivotGround;
-	private JoystickButton pivotRocket;
-	private JoystickButton pivotShip;
+        JoystickButton allDown = new JoystickButton(m_drivingPad, 6);
+        allDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.All));
 
-	private JoystickButton driveByVision; 
+        JoystickButton frontUp = new JoystickButton(m_drivingPad, 1);
+        frontUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.Front));
 
-	public OI() {
-		drivingPad = new Joystick(0);
-		operatingPad = new Joystick(1);
-
-		// Climber buttons
-		frontToZero = new POVButton(drivingPad, 90);
-		frontToZero.whenPressed(new ClimberToSetPoint(Climber.FIRST_GOAL_POS, Climber.ClimberType.Front));
-
-		backToZero = new POVButton(drivingPad, 270);
-		backToZero.whenPressed(new ClimberToSetPoint(Climber.FIRST_GOAL_POS, Climber.ClimberType.Back));
-
-		toSecondUp = new POVButton(drivingPad, 180);
-		toSecondUp.whenPressed(new ClimberToSetPoint(Climber.SECOND_GOAL_POS, Climber.ClimberType.All));
-
-		toThirdUp = new POVButton(drivingPad, 0);
-		toThirdUp.whenPressed(new ClimberToSetPoint(Climber.THIRD_GOAL_POS, Climber.ClimberType.All));
-		
-		frontDown = new JoystickButton(drivingPad, 2);
-		frontDown.whileHeld(new ClimberManual(false, Climber.ClimberType.Front));
-		
-		backDown = new JoystickButton(drivingPad, 4);
-		backDown.whileHeld(new ClimberManual(false, Climber.ClimberType.Back));
-		
-		allUp = new JoystickButton(drivingPad, 5);
-		allUp.whileHeld(new ClimberManual(true, Climber.ClimberType.All));
-		
-		allDown = new JoystickButton(drivingPad, 6);
-		allDown.whileHeld(new ClimberManual(false, Climber.ClimberType.All));
-
-		frontUp = new JoystickButton(drivingPad, 1);
-		frontUp.whileHeld(new ClimberManual(true, Climber.ClimberType.Front));
-
-		backUp = new JoystickButton(drivingPad, 3);
-		backUp.whileHeld(new ClimberManual(true, Climber.ClimberType.Back));
+        JoystickButton backUp = new JoystickButton(m_drivingPad, 3);
+        backUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.Back));
 
 
-	
-		// allToZero = new POVButton(drivingPad, 180);
-		// allToZero.whenPressed(new ClimberAllToZero());
+        // allToZero = new POVButton(drivingPad, 180);
+        // allToZero.whenPressed(new ClimberAllToZero());
 
-		// robotToSecond = new POVButton(drivingPad, 270);
-		// robotToSecond.whenPressed(new RobotToPlatform(2));
+        // robotToSecond = new POVButton(drivingPad, 270);
+        // robotToSecond.whenPressed(new RobotToPlatform(2));
 
-		// robotToThird = new POVButton(drivingPad, 90);
-		// robotToThird.whenPressed(new RobotToPlatform(3));
+        // robotToThird = new POVButton(drivingPad, 90);
+        // robotToThird.whenPressed(new RobotToPlatform(3));
 
-		//Lidar button (testing purposes only)
-		// lidarDrive = new JoystickButton(drivingPad, 9);
-		// lidarDrive.whenPressed(new LidarDriveForward(82, true));
+        //Lidar button (testing purposes only)
+        // lidarDrive = new JoystickButton(drivingPad, 9);
+        // lidarDrive.whenPressed(new LidarDriveForward(82, true));
 
-		// BabyDrive buttons
-		babyDriveForward = new JoystickButton(drivingPad, 8);
-		babyDriveForward.whileHeld(new BabyDriveForward());
+        // BabyDrive buttons
+        JoystickButton babyDriveForward = new JoystickButton(m_drivingPad, 8);
+        babyDriveForward.whileHeld(new BabyDriveForward(babyDrive));
 
-		babyDriveBackward = new JoystickButton(drivingPad, 7);
-		babyDriveBackward.whileHeld(new BabyDriveBackwards());
+        JoystickButton babyDriveBackward = new JoystickButton(m_drivingPad, 7);
+        babyDriveBackward.whileHeld(new BabyDriveBackwards(babyDrive));
 
-		// Collector buttons
-		collect = new JoystickButton(operatingPad, 5);
-		collect.whileHeld(new CollectorCollect());
+        // Collector buttons
+        JoystickButton collect = new JoystickButton(m_operatingPad, 5);
+        collect.whileHeld(new CollectorCollect(collector));
 
-		release = new JoystickButton(operatingPad, 6);
-		release.whileHeld(new CollectorRelease());
+        JoystickButton release = new JoystickButton(m_operatingPad, 6);
+        release.whileHeld(new CollectorRelease(collector));
 
-		// Hatch buttons
-		hatchCollect = new JoystickButton(operatingPad, 7);
-		hatchCollect.whileHeld(new HatchCollect());
+        // Hatch buttons
+        JoystickButton hatchCollect = new JoystickButton(m_operatingPad, 7);
+        hatchCollect.whileHeld(new HatchCollect(hatch));
 
-		hatchRelease = new JoystickButton(operatingPad, 8);                                                                                                                                                                          
-		hatchRelease.whileHeld(new HatchRelease());
+        JoystickButton hatchRelease = new JoystickButton(m_operatingPad, 8);
+        hatchRelease.whileHeld(new HatchRelease(hatch));
 
-		// Pivot buttons
-		// negative is down, positive is up
-		// must start up
-		pivotUp = new JoystickButton(operatingPad, 2);
-		pivotUp.whileHeld(new PivotManual(Pivot.PivotDirection.Up));
-		
-		pivotDown = new JoystickButton(operatingPad, 1);
-		pivotDown.whileHeld(new PivotManual(Pivot.PivotDirection.Down));
+        // Pivot buttons
+        // negative is down, positive is up
+        // must start up
+        JoystickButton pivotUp = new JoystickButton(m_operatingPad, 2);
+        pivotUp.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.Up));
 
-		pivotGround = new JoystickButton(operatingPad, 3);
-		pivotGround.whenPressed(new PivotToGround());
-		
-		pivotRocket = new JoystickButton (operatingPad, 4);
-		pivotRocket.whenPressed(new PivotToRocket());
+        JoystickButton pivotDown = new JoystickButton(m_operatingPad, 1);
+        pivotDown.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.Down));
 
-		pivotShip = new JoystickButton (operatingPad, 10);
-		pivotShip.whenPressed(new PivotToShip());
+        JoystickButton pivotGround = new JoystickButton(m_operatingPad, 3);
+        pivotGround.whenPressed(new PivotToGround(pivot));
 
-		// DriveByVision button
-		// driveByVision = new JoystickButton (operatingPad, 9); 
-		// driveByVision.whenPressed(new DriveByVision()); 
-	}
+        JoystickButton pivotRocket = new JoystickButton(m_operatingPad, 4);
+        pivotRocket.whenPressed(new PivotToRocket(pivot));
 
-	public double getLeftUpAndDown() {
-		return -drivingPad.getY();
-	}	
+        JoystickButton pivotShip = new JoystickButton(m_operatingPad, 10);
+        pivotShip.whenPressed(new PivotToShip(pivot));
 
-	public double getRightSideToSide() {
-		return drivingPad.getRawAxis(4);
-	}
-	
+        // DriveByVision button
+        // driveByVision = new JoystickButton (operatingPad, 9);
+        // driveByVision.whenPressed(new DriveByVision());
+    }
+
+    public double getLeftUpAndDown() {
+        return -m_drivingPad.getY();
+    }
+
+    public double getRightSideToSide() {
+        return m_drivingPad.getRawAxis(4);
+    }
+
 }

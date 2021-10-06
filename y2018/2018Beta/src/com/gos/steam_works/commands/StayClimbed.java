@@ -1,9 +1,6 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
+import com.gos.steam_works.subsystems.Climber;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -11,40 +8,39 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class StayClimbed extends Command {
 
-	private double encPosition;
+    private final Climber m_climber;
+    private double m_encPosition;
 
-	public StayClimbed() {
-		// Use requires() here to declare subsystem dependencies
-		requires(Robot.climber);
-	}
+    public StayClimbed(Climber climber) {
+        m_climber = climber;
+        requires(m_climber);
+    }
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
 
-		Robot.climber.climbMotorB.follow(Robot.climber.climbMotorA);
+    @Override
+    protected void initialize() {
 
-		// Robot.climber.climbMotorA.setPosition(0);
-		encPosition = Robot.climber.climbMotorA.getSelectedSensorPosition(0);
-		System.out.println("Climber Encoder Position: " + encPosition);
-	}
+        // Robot.climber.climbMotorA.setPosition(0);
+        m_encPosition = m_climber.getPosition();
+        System.out.println("Climber Encoder Position: " + m_encPosition);
+    }
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		Robot.climber.climbMotorA.set(ControlMode.Position, encPosition);
-	}
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected void execute() {
+        m_climber.goToPosition(m_encPosition);
+    }
 
-	// Called once after isFinished returns true
-	protected void end() {
-	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    protected void end() {
+    }
+
+
 }

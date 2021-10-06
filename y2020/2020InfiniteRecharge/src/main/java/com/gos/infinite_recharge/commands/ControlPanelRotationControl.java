@@ -19,7 +19,7 @@ public class ControlPanelRotationControl extends CommandBase {
 
     @Override
     public void execute() {
-        m_controlPanel.start(); 
+        m_controlPanel.start();
         m_colorCount = m_controlPanel.getColorCounter();
         System.out.println("number of colors: " + m_colorCount);
     }
@@ -31,7 +31,7 @@ public class ControlPanelRotationControl extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_controlPanel.stop(); 
+        m_controlPanel.stop();
     }
 
 }

@@ -3,7 +3,7 @@ name: Shuffleboard Generation
 on: [push]
 
 jobs:
-  lint_versions:
+  generate_shuffleboard:
     strategy:
       fail-fast: false
       matrix:

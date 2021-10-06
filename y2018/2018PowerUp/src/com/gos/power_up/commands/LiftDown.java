@@ -1,45 +1,42 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
-
+import com.gos.power_up.subsystems.Lift;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class LiftDown extends Command {
+    private final Lift m_lift;
 
 
-	
-    public LiftDown() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    		requires(Robot.lift);
+    public LiftDown(Lift lift) {
+        m_lift = lift;
+        requires(m_lift);
     }
 
-    // Called just before this Command runs the first time
+
+    @Override
     protected void initialize() {
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
+    @Override
     protected void execute() {
-    	Robot.lift.holdLiftPosition();
-		Robot.lift.decrementLift();
+        m_lift.holdLiftPosition();
+        m_lift.decrementLift();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
+    @Override
     protected boolean isFinished() {
-		return false;
+        return false;
     }
 
-    // Called once after isFinished returns true
+
+    @Override
     protected void end() {
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+
 }

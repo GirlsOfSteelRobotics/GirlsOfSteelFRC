@@ -1,7 +1,6 @@
 package com.gos.offense2019.subsystems;
 
 import com.gos.offense2019.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -9,39 +8,41 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class HatchCollector extends Subsystem {
-    private DoubleSolenoid piston;
 
-    private HatchState state;
-    
-    public static enum HatchState{
+    public enum HatchState {
         kGrab, kRelease
     }
 
-	public HatchCollector() {
-        piston = new DoubleSolenoid(RobotMap.PISTON_A, RobotMap.PISTON_B);
-        state = HatchState.kRelease;
+    private final DoubleSolenoid m_piston;
 
-		addChild("piston", piston);
-  }
-  
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+    private HatchState m_state;
 
-	public void driveHatch(HatchState speed) {
-		this.state = speed;
-		if (speed == HatchState.kRelease) {
-			piston.set(DoubleSolenoid.Value.kForward);
-		} else {
-			piston.set(DoubleSolenoid.Value.kReverse);
-		}
-	}
+    public HatchCollector() {
+        m_piston = new DoubleSolenoid(RobotMap.PISTON_A, RobotMap.PISTON_B);
+        m_state = HatchState.kRelease;
 
-	public HatchState getHatchState() {
-		return state;
-	}
+        addChild("piston", m_piston);
+    }
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	}
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
+
+    public void driveHatch(HatchState speed) {
+        this.m_state = speed;
+        if (speed == HatchState.kRelease) {
+            m_piston.set(DoubleSolenoid.Value.kForward);
+        } else {
+            m_piston.set(DoubleSolenoid.Value.kReverse);
+        }
+    }
+
+    public HatchState getHatchState() {
+        return m_state;
+    }
+
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+    }
 }

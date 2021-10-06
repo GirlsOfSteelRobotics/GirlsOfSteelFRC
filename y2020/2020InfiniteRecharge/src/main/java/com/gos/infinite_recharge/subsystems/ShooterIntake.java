@@ -28,7 +28,7 @@ public class ShooterIntake extends SubsystemBase {
 
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/ShooterIntake");
     }
-    
+
     @Override
     public void periodic() {
         m_customNetworkTable.getEntry("Speed").setDouble(m_motor.getMotorOutputPercent());

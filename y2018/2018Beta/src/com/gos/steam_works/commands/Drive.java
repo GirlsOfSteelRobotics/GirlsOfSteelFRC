@@ -1,64 +1,60 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.OI;
-import com.gos.steam_works.Robot;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class Drive extends Command {
+    private final Chassis m_chassis;
+    private final OI m_oi;
 
-	private WPI_TalonSRX leftTalon = Robot.chassis.getLeftTalon();
-	private WPI_TalonSRX rightTalon = Robot.chassis.getRightTalon();
+    public Drive(OI oi, Chassis chassis) {
+        m_chassis = chassis;
+        m_oi = oi;
+        requires(m_chassis);
+    }
 
-	public Drive() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.chassis);
-	}
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		// Change mode to Percent Vbus
-		// V per sec; 12 = zero to full speed in 1 second
-		//leftTalon.configVoltageCompSaturation(24.0, 0);
-		//rightTalon.configVoltageCompSaturation(24.0, 0);
-		//leftTalon.setVoltageRampRate(24.0);  IS THIS THE SAME AS ABOVE???
-		//rightTalon.setVoltageRampRate(24.0);
-		Robot.oi.setDriveStyle();
-		System.out.println("Squared Units: " + Robot.oi.isSquared());
-	}
+    @Override
+    protected void initialize() {
+        // Change mode to Percent Vbus
+        // V per sec; 12 = zero to full speed in 1 second
+        //leftTalon.configVoltageCompSaturation(24.0, 0);
+        //rightTalon.configVoltageCompSaturation(24.0, 0);
+        //leftTalon.setVoltageRampRate(24.0);  IS THIS THE SAME AS ABOVE???
+        //rightTalon.setVoltageRampRate(24.0);
+        m_oi.setDriveStyle();
+        System.out.println("Squared Units: " + m_oi.isSquared());
+    }
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		if (Robot.oi.getDriveStyle() == OI.DriveStyle.joystickArcade || Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadArcade) {
-			Robot.chassis.drive.arcadeDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
-		} else if (Robot.oi.getDriveStyle() == OI.DriveStyle.gamePadTank || Robot.oi.getDriveStyle() == OI.DriveStyle.joystickTank){
-			Robot.chassis.drive.tankDrive(Robot.oi.getDrivingJoystickY(), Robot.oi.getDrivingJoystickX(), Robot.oi.isSquared());
-		} 
-	}
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected void execute() {
+        if (m_oi.getDriveStyle() == OI.DriveStyle.joystickArcade || m_oi.getDriveStyle() == OI.DriveStyle.gamePadArcade) {
+            m_chassis.arcadeDrive(m_oi.getDrivingJoystickY(), m_oi.getDrivingJoystickX(), m_oi.isSquared());
+        } else if (m_oi.getDriveStyle() == OI.DriveStyle.gamePadTank || m_oi.getDriveStyle() == OI.DriveStyle.joystickTank) {
+            m_chassis.tankDrive(m_oi.getDrivingJoystickY(), m_oi.getDrivingJoystickX(), m_oi.isSquared());
+        }
+    }
 
-	public void stop() {
-		Robot.chassis.stop();
-	}
 
-	// Called once after isFinished returns true
-	protected void end() {
-		stop();
-	}
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+    public void stop() {
+        m_chassis.stop();
+    }
+
+
+    @Override
+    protected void end() {
+        stop();
+    }
+
+
 }

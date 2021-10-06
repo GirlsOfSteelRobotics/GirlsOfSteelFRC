@@ -1,7 +1,6 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.Robot;
-
+import com.gos.power_up.subsystems.Wrist;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,35 +8,36 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WristHold extends Command {
 
-    public WristHold() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.wrist);
+    private final Wrist m_wrist;
+
+    public WristHold(Wrist wrist) {
+        m_wrist = wrist;
+        requires(m_wrist);
     }
 
-    // Called just before this Command runs the first time
+
+    @Override
     protected void initialize() {
-    	Robot.wrist.holdWristPosition();
+        m_wrist.holdWristPosition();
     }
 
-    // Called repeatedly when this Command is scheduled to run
+
+    @Override
     protected void execute() {
-    	Robot.wrist.holdWristPosition();
+        m_wrist.holdWristPosition();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+
+    @Override
     protected void end() {
-    	
+
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+
 }

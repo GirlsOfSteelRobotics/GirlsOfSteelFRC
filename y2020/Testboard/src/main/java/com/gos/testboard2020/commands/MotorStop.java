@@ -7,41 +7,41 @@
 
 package com.gos.testboard2020.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.testboard2020.subsystems.Motor;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class MotorStop extends CommandBase {
 
-  private Motor m_motor;
+    private final Motor m_motor;
 
-  public MotorStop(Motor motor) {
-    m_motor = motor;
-    
-    // Use requires() here to declare subsystem dependencies
-    super.addRequirements(m_motor);
-  }
+    public MotorStop(Motor motor) {
+        m_motor = motor;
 
-  // Called just before this Command runs the first time
-  @Override
-  public void initialize() {
-    System.out.println("init MotorStop");
-  }
+        // Use requires() here to declare subsystem dependencies
+        super.addRequirements(m_motor);
+    }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  public void execute() {
-    m_motor.stop();
-  }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    @Override
+    public void initialize() {
+        System.out.println("init MotorStop");
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  public void end(boolean interrupted) {
-    System.out.println("end MotorStop");
-  }
+
+    @Override
+    public void execute() {
+        m_motor.stop();
+    }
+
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+
+    @Override
+    public void end(boolean interrupted) {
+        System.out.println("end MotorStop");
+    }
 }

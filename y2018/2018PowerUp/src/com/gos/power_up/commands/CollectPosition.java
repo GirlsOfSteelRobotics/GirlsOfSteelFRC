@@ -1,5 +1,7 @@
 package com.gos.power_up.commands;
 
+import com.gos.power_up.subsystems.Lift;
+import com.gos.power_up.subsystems.Wrist;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -7,26 +9,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class CollectPosition extends CommandGroup {
 
-    public CollectPosition() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
+    public CollectPosition(Lift lift, Wrist wrist) {
+        System.out.println("CollectPosition");
+        addSequential(new LiftToGround(lift));
+        addSequential(new WristToCollect(wrist));
 
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
-    	System.out.println("CollectPosition");
-    	addSequential(new LiftToGround());
-    	addSequential(new WristToCollect());
-    	
     }
 }

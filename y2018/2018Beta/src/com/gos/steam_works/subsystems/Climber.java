@@ -1,13 +1,11 @@
 package com.gos.steam_works.subsystems;
 
-import com.gos.steam_works.RobotMap;
-import com.gos.steam_works.commands.StayClimbed;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.gos.steam_works.RobotMap;
+import com.gos.steam_works.commands.StayClimbed;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,41 +13,49 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 
 public class Climber extends Subsystem {
-	public WPI_TalonSRX climbMotorA;
-	public WPI_TalonSRX climbMotorB;
+    private final WPI_TalonSRX m_climbMotorA;
+    private final WPI_TalonSRX m_climbMotorB;
 
-	public Climber() {
-		climbMotorA = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_A);
-		climbMotorB = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_B);
+    public Climber() {
+        m_climbMotorA = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_A);
+        m_climbMotorB = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_B);
 
-		climbMotorA.setNeutralMode(NeutralMode.Brake);
-		climbMotorB.setNeutralMode(NeutralMode.Brake);
+        m_climbMotorA.setNeutralMode(NeutralMode.Brake);
+        m_climbMotorB.setNeutralMode(NeutralMode.Brake);
 
-		climbMotorA.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-		climbMotorA.setSensorPhase(true);
+        m_climbMotorA.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+        m_climbMotorA.setSensorPhase(true);
 
-		climbMotorA.config_kF(0, 0, 0);
-		climbMotorA.config_kP(0, 0.5, 0);
-		climbMotorA.config_kI(0, 0, 0);
-		climbMotorA.config_kD(0, 0, 0);
+        m_climbMotorA.config_kF(0, 0, 0);
+        m_climbMotorA.config_kP(0, 0.5, 0);
+        m_climbMotorA.config_kI(0, 0, 0);
+        m_climbMotorA.config_kD(0, 0, 0);
 
-//		LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
-//		LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
-	}
+        m_climbMotorB.follow(m_climbMotorA);
+        // LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
+        // LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
+    }
 
-	public void climb(double speed) {
-		climbMotorA.set(ControlMode.PercentOutput, speed);
-		climbMotorB.set(ControlMode.PercentOutput, speed);
-	}
+    public void climb(double speed) {
+        m_climbMotorA.set(ControlMode.PercentOutput, speed);
+    }
 
-	public void stopClimb() {
-		climbMotorA.set(ControlMode.PercentOutput, 0.0);
-		climbMotorB.set(ControlMode.PercentOutput, 0.0);
-	}
+    public void stopClimb() {
+        m_climbMotorA.set(ControlMode.PercentOutput, 0.0);
+    }
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new StayClimbed());
-	}
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new StayClimbed(this));
+    }
+
+    public double getPosition() {
+        return m_climbMotorA.getSelectedSensorPosition();
+    }
+
+    public void goToPosition(double position) {
+        m_climbMotorA.set(ControlMode.Position, position);
+    }
 }

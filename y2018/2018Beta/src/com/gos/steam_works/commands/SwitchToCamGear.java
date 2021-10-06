@@ -1,39 +1,40 @@
 package com.gos.steam_works.commands;
 
-import com.gos.steam_works.Robot;
-
+import com.gos.steam_works.subsystems.Camera;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class SwitchToCamGear extends Command {
+    private final Camera m_camera;
 
-	public SwitchToCamGear() {
-		requires(Robot.camera);
-	}
+    public SwitchToCamGear(Camera camera) {
+        m_camera = camera;
+        requires(m_camera);
+    }
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.camera.switchToCamGear();
-	}
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-	}
+    @Override
+    protected void initialize() {
+        m_camera.switchToCamGear();
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return true;
-	}
 
-	// Called once after isFinished returns true
-	protected void end() {
-	}
+    @Override
+    protected void execute() {
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
+
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+
+    @Override
+    protected void end() {
+    }
+
+
 }
