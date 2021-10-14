@@ -121,8 +121,8 @@ public class Buttons extends CommandBase {
               //      "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
 //            System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
             autoTurret.cancel();
-        } 
-        
+        }
+
         if (oi.isTurretSetPositionOn()) {
 //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
 //                  "Turret Set Position On" + oi.getTurretOverrideSwitchValue());
@@ -134,8 +134,8 @@ public class Buttons extends CommandBase {
 //             System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
 //            DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, false);
             setPointTurret.cancel();
-        } 
-        
+        }
+
         if (oi.isTurretManualOn()) {
 //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret On" + oi.getTurretOverrideSwitchValue());
 //              System.out.println("Manual Turret On" + oi.getTurretOverrideSwitchValue());
@@ -149,7 +149,7 @@ public class Buttons extends CommandBase {
         }
 //        DriverStationLCD.getInstance().updateLCD();
     }
-   
+
     protected boolean isFinished() {
         return false;
     }

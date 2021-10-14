@@ -5,17 +5,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TESTTurret extends CommandBase {
 
     double speed;
-    
+
     double pulses;
     boolean inDegrees;
-    
+
     public TESTTurret(){
         requires(turret);
         SmartDashboard.putDouble("Turret Jags Speed", 0.0);
         SmartDashboard.putDouble("Turret Encoder Pulses", 0.0);
         SmartDashboard.putBoolean("Turret Encoder in Degrees",false);
     }
-    
+
     protected void initialize() {
         turret.disablePID();
     }
@@ -40,5 +40,5 @@ public class TESTTurret extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
@@ -144,7 +143,7 @@ public class Arm extends SimpleRobot {
 
             Sholval = Shol1.getPosition();
             //this sets the soft stops
-            
+
             //Shol1.configSoftPositionLimits(0.0, -0.2);
 
         } catch (CANTimeoutException ex) {
@@ -472,8 +471,8 @@ public class Arm extends SimpleRobot {
 
     /**
      * Function sets the shoulder to a certain revolutions
-     * per minute based on a scaling factor. 
-     * 
+     * per minute based on a scaling factor.
+     *
      * @param axisval, value from joystick to scale to rpms
      */
     public void slavespeedvoltage(double axisval) {
@@ -564,7 +563,7 @@ public class Arm extends SimpleRobot {
      * Function is our own version of arcade drive.
      * The yaxis will be used for going straight and backwards,
      * and the xaxis will be used for turning.
-     * 
+     *
      * @param yaxis, move axis
      * @param xaxis, turn axis
      */
@@ -639,7 +638,7 @@ public class Arm extends SimpleRobot {
 
                  message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(Pdes));
             } else {
-                
+
                 Pdes = 0.0;//reset Pdes anytime encoder resets
                 Shol1.changeControlMode(CANJaguar.ControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
@@ -654,7 +653,7 @@ public class Arm extends SimpleRobot {
     return returnval;
     }
 
- 
+
     /**
      * Function is used for the hardware limit switch.
      * The switch tells the code if it's ok to move the arm

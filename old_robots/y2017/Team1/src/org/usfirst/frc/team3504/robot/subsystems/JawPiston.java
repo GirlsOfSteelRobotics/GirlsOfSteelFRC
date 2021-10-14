@@ -9,19 +9,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class JawPiston extends Subsystem {
-    
-	
-	private DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
-	
-	public void pistonsOut(){
-    	jawPiston.set(DoubleSolenoid.Value.kForward);
-		System.out.println("Jaw Piston out");
-	}
-    
+
+
+    private DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
+
+    public void pistonsOut(){
+        jawPiston.set(DoubleSolenoid.Value.kForward);
+        System.out.println("Jaw Piston out");
+    }
+
     public void pistonsIn(){
-    	jawPiston.set(DoubleSolenoid.Value.kReverse);
-		System.out.println("Jaw Piston in");
-		
+        jawPiston.set(DoubleSolenoid.Value.kReverse);
+        System.out.println("Jaw Piston in");
+
     }
 
     public void initDefaultCommand() {
@@ -29,4 +29,3 @@ public class JawPiston extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 }
-

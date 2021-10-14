@@ -5,7 +5,7 @@ public class DisableShooter extends CommandBase {
     public DisableShooter(){
         requires(shooter);
     }
-    
+
     protected void initialize() {
         shooter.disablePID();
         shooter.stopJags();
@@ -23,5 +23,5 @@ public class DisableShooter extends CommandBase {
 
     protected void interrupted() {
     }
-    
+
 }

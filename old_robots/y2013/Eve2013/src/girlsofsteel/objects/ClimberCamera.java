@@ -13,5 +13,5 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class ClimberCamera {
      public static boolean isConnected() {
         return NetworkTable.getTable("camera").isConnected();
-    }   
+    }
 }

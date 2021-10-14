@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  *
  */
 public class ShootBall extends CommandGroup {
-    
+
     public  ShootBall() {
-    	//operator lines up pivot
-    	addSequential(new ShooterPistonsOut()); //tilt shooter partially so that ball doesn't fall out
-    	addSequential(new ReleaseBall()); //need to test exact seconds for delay
-    	addParallel(new ShooterPistonsIn()); //tilts shooter all the way up
-    	addParallel(new WaitCommand(5));
-    	addSequential(new StopShooterWheels());
+        //operator lines up pivot
+        addSequential(new ShooterPistonsOut()); //tilt shooter partially so that ball doesn't fall out
+        addSequential(new ReleaseBall()); //need to test exact seconds for delay
+        addParallel(new ShooterPistonsIn()); //tilts shooter all the way up
+        addParallel(new WaitCommand(5));
+        addSequential(new StopShooterWheels());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

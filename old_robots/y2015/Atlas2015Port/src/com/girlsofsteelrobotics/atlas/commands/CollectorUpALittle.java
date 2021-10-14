@@ -17,7 +17,7 @@ public class CollectorUpALittle extends CommandBase {
     double startTime;
     double putDownTime = 0.15;
     double changeInTime;
-    
+
     public CollectorUpALittle() {
     //Doesn't require collector because it needs to be used while the collector wheels are spinning
     }
@@ -25,14 +25,14 @@ public class CollectorUpALittle extends CommandBase {
     protected void initialize() {
         startTime = Timer.getFPGATimestamp();
         System.out.println("Collector up a little!!!!!!!!!!!");
-        
+
         collector.collectorWheelReverse();
     }
 
     protected void execute() {
-        
+
         changeInTime = Timer.getFPGATimestamp() - startTime;
-        if(changeInTime < putDownTime) 
+        if(changeInTime < putDownTime)
             collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed);
         else
             collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);

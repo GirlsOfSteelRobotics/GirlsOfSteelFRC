@@ -10,8 +10,6 @@ import girlsofsteel.commands.HoldChassisInPlace;
 import girlsofsteel.commands.KickerUsingLimitSwitch;
 import girlsofsteel.commands.ManipulatorArmDownPID;
 import girlsofsteel.commands.ManipulatorArmUpPID;
-import girlsofsteel.commands.ManipulatorManualDown;
-import girlsofsteel.commands.ManipulatorManualUp;
 import girlsofsteel.commands.STOPKICKER;
 import girlsofsteel.commands.TrussShot;
 import girlsofsteel.tests.TestingDrivingStraight;
@@ -95,7 +93,7 @@ public class OI {
 //        bothKicks = new JoystickButton(chassisJoystick, X);
 //        bothKicks.whileHeld(new MoveKickerSide(2));
         manipulatorUp = new JoystickButton(operatorJoystick, R1);
-        manipulatorUp.whileHeld(new ManipulatorArmUpPID()); 
+        manipulatorUp.whileHeld(new ManipulatorArmUpPID());
           //manipulatorUp.whileHeld(new ManipulatorManualUp());
         //manipulatorUp.whenReleased(new StopManipulator());
 
@@ -138,7 +136,7 @@ public class OI {
         //  lowGoalShoot.whenPressed(new ShootLowGoal());
        // scaledArcadeDrive = new JoystickButton(chassisJoystick, L2);
         // scaledArcadeDrive.whenPressed(new ScaledArcadeDrive(slowpokescale));
-      //  manipulatorUp = new JoystickButton(operatorJoystick, R1); 
+      //  manipulatorUp = new JoystickButton(operatorJoystick, R1);
         // manipulatorUp.whileHeld(new ManipulatorManualUp());
       //  manipulatorDown = new JoystickButton(operatorJoystick, R2);
         //  manipulatorDown.whileHeld(new ManipulatorManualDown());

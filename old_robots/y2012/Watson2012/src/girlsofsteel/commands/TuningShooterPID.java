@@ -1,24 +1,24 @@
 package girlsofsteel.commands;
 
 public class TuningShooterPID extends CommandBase {
-    
+
     boolean run = false;
-    
+
     //for tuning the p value
     double step = 0.025;
     double max = 0.3;
-    
+
 //    //for tuning the i value -> using the p value that we like
 //    double step = 0.002;
 //    double max = 0.1;
-    
+
     int meanLength = (int) ((max-step)/step);
-    
+
     int startSetPoint = 5;
     int maxSetPoint = 30;
-    
+
     int dataLength = maxSetPoint - startSetPoint;
-    
+
     int count = 0;
     int number = 0;
     double[] deviations = new double[dataLength];
@@ -39,13 +39,13 @@ public class TuningShooterPID extends CommandBase {
     //p 0.075 = index 2
     //p 0.275 = index 10
     //(p-0.025)/0.025 = index -> p = 0.025(index)+0.025
-    
+
     double error = shooter.VELOCITY_ERROR_RANGE;
-    
+
     public TuningShooterPID(){
         requires(shooter);
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -65,7 +65,7 @@ public class TuningShooterPID extends CommandBase {
                     ex.printStackTrace();
                 }
                 //collect and store the data into the deviations and differences
-                //arrays for a single set point 
+                //arrays for a single set point
                 for(int i=0; i<dataLength; i++){
                     if(deviations[i] == 0){//find the next empty slot in the array
                         deviations[i] = calculateDeviationData(setPoint);
@@ -103,7 +103,7 @@ public class TuningShooterPID extends CommandBase {
                     //arrays
                     deviationMeans[i] = deviationMean; //store the deviation for
                     //1 p value in a slot
-                    differencesMeans[i] = differencesMean;//same, but for the 
+                    differencesMeans[i] = differencesMean;//same, but for the
                     //differences between the set point and mean rate
                     devSetPointMeans[i] = devSetPointMean;//same, but for the
                     //deviation from the set point
@@ -124,11 +124,11 @@ public class TuningShooterPID extends CommandBase {
         }
         run = true;
     }
-    
+
     protected boolean isFinished(){
         return run;
     }
-    
+
     protected void end(){
         shooter.disablePID();
         shooter.stopEncoder();
@@ -137,10 +137,10 @@ public class TuningShooterPID extends CommandBase {
         int indexDiffLow = getIndexofLowest(differencesMeans);
         System.out.println("At val=" + ((indexDevLow*step)+step) + "Lowest Deviation Mean:" +
                 deviationMeans[indexDevLow] + " Difference Mean:"
-                + differencesMeans[indexDevLow] + " Deviation Set Point:" + 
+                + differencesMeans[indexDevLow] + " Deviation Set Point:" +
                 devSetPointMeans[indexDevLow]);
         System.out.println("At val=" + ((indexDiffLow*step)+step) + "Lowest Difference Mean:"
-                + differencesMeans[indexDiffLow] + " Deviation Mean:" + 
+                + differencesMeans[indexDiffLow] + " Deviation Mean:" +
                 deviationMeans[indexDiffLow] + " Deviation Set Point:" +
                 devSetPointMeans[indexDiffLow]);
         double bestVal = getBestVal();
@@ -151,11 +151,11 @@ public class TuningShooterPID extends CommandBase {
                 + " Difference Mean:" + differencesMeans[indexDevSetPointLow] +
                 " Deviation Mean:" + deviationMeans[indexDevSetPointLow]);
     }
-    
+
     protected void interrupted() {
         end();
     }
-    
+
     int counter = 0;
     double totalRates = 0;
     double[] rates = new double[100];
@@ -166,7 +166,7 @@ public class TuningShooterPID extends CommandBase {
     double differenceMean;
     double standardDeviation;
     double setPointToRateMean;
-    
+
     //adds the encoder rates of the shooter wheel to an array -> it only has 100
     //spaces so once those 100 are filled up, it starts filling up spots starting
     //from the beginning (0)
@@ -177,7 +177,7 @@ public class TuningShooterPID extends CommandBase {
             counter = 0;
         }
     }
-            
+
     //adds all the rates in the array then divides by the number of items in the array
     public double calculateRateMean(){
         totalRates = 0;
@@ -195,11 +195,11 @@ public class TuningShooterPID extends CommandBase {
         System.out.println("Rate Sum:" + rateSum + " & Rate Mean:" + rateMean);
         return rateMean;
     }
-    
+
     public double getRateMean(){
         return rateMean;
     }
-    
+
     //how close to the mean all the rates are -> we want this to be as small as 3possible
     public double calculateStandardDeviation(){
         differenceMean = 0;
@@ -216,11 +216,11 @@ public class TuningShooterPID extends CommandBase {
         standardDeviation = Math.sqrt(differenceSum)/totalRates;
         return standardDeviation;
     }
-    
+
     public double getDifferenceSum(){
         return differenceSum;
     }
-    
+
     public double calculateDeviationData(double setPoint){
         for(int j=0; j<100; j++){
             if(shooter.getEncoderRate()<setPoint+1 && shooter.getEncoderRate()>setPoint-1){
@@ -244,7 +244,7 @@ public class TuningShooterPID extends CommandBase {
         mean = sum / (double) count;
         return mean;
     }
-    
+
     protected void refreshData() {
         count = 0;
         for (int i = 0; i < dataLength; i++) {
@@ -268,7 +268,7 @@ public class TuningShooterPID extends CommandBase {
         standardDeviation = 0;
         setPointToRateMean = 0;
     }
-    
+
     protected int getIndexofLowest(double[] array){
         int index = 0;
         double lowest = 999999999;
@@ -280,7 +280,7 @@ public class TuningShooterPID extends CommandBase {
         }
         return index;
     }
-    
+
     protected double getBestVal(){
         double p;
         double lowestDev = 999999999;
@@ -296,7 +296,7 @@ public class TuningShooterPID extends CommandBase {
         p = (indexDev*step)+step;
         return p;
     }
-    
+
     protected double deviationFromSetPoint(double setPoint){
         double deviationSetPoint = 0;
         for(int i=0; i<totalRates; i++){
@@ -304,5 +304,5 @@ public class TuningShooterPID extends CommandBase {
         }
         return deviationSetPoint;
     }
-    
+
 }

@@ -20,7 +20,7 @@ public class AutoShoot extends CommandBase {
     double batteryVoltage;
     DriverStation driver;
     int counter;
-    
+
     public AutoShoot() {
         requires(feeder);
         requires(shooter);
@@ -31,9 +31,9 @@ public class AutoShoot extends CommandBase {
     protected void initialize() {
         desiredSpeed = OI.ENCODER_SPEED;
         shot = false;
-        
+
     }
-    
+
     protected void execute() {
         shooter.setJags(oi.JAG_SPEED);
         batteryVoltage = driver.getBatteryVoltage();

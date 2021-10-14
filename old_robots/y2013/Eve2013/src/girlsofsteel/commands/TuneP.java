@@ -156,7 +156,7 @@ public class TuneP extends CommandBase {
             double sumSquareDeviations = 0;
             for(int j=0; j<rightRates[p].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((rightRates[p][j]-mean) * 
+                sumSquareDeviations += ((rightRates[p][j]-mean) *
                         (rightRates[p][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
@@ -165,7 +165,7 @@ public class TuneP extends CommandBase {
             setpointDeviations[0][p] = mean-setpoint;
             standardDeviations[0][p] = standardDeviation;
         }//end p for
-        
+
         //back Ps & rates
         for(int p=0; p<backRates.length; p++){//for every p value
             double sum = 0;
@@ -178,7 +178,7 @@ public class TuneP extends CommandBase {
             double sumSquareDeviations = 0;
             for(int j=0; j<backRates[p].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((backRates[p][j]-mean) * 
+                sumSquareDeviations += ((backRates[p][j]-mean) *
                         (backRates[p][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
@@ -187,7 +187,7 @@ public class TuneP extends CommandBase {
             setpointDeviations[1][p] = mean - setpoint;
             standardDeviations[1][p] = standardDeviation;
         }//end p for
-        
+
         //left Ps & rates
         for(int p=0; p<leftRates.length; p++){//for every p value
             double sum = 0;
@@ -200,7 +200,7 @@ public class TuneP extends CommandBase {
             double sumSquareDeviations = 0;
             for(int j=0; j<leftRates[p].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((leftRates[p][j]-mean) * 
+                sumSquareDeviations += ((leftRates[p][j]-mean) *
                         (leftRates[p][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
@@ -209,21 +209,21 @@ public class TuneP extends CommandBase {
             setpointDeviations[2][p] = mean - setpoint;
             standardDeviations[2][p] = standardDeviation;
         }//end p for
-        
+
         //for every i in averages
         String message = "";
         for (int i = 0; i < standardDeviations[0].length; i++) {
-            message += ((i * interval) + bP) + " : " + 
+            message += ((i * interval) + bP) + " : " +
                     setpointDeviations[0][i] + " " + standardDeviations[0][i] +
                     " " + setpointTimes[0][i] + " " + setpointDeviations[1][i] +
                     " " + standardDeviations[1][i] + " " + setpointTimes[1][i] +
-                    " " + setpointDeviations[2][i] + " " + 
+                    " " + setpointDeviations[2][i] + " " +
                     standardDeviations[2][i] + " " + setpointTimes[2][i] + "\n";
         }//end for
-        
+
         //print message to a file
         String url = "file///Tune_P.txt";
-        
+
         String contents = "";
         try{
             FileConnection c = (FileConnection) Connector.open(url);
@@ -237,7 +237,7 @@ public class TuneP extends CommandBase {
         }catch(IOException ex){
             ex.printStackTrace();
         }
-        
+
         try{
             FileConnection c = (FileConnection) Connector.open(url);
             OutputStreamWriter writer = new OutputStreamWriter(
@@ -247,7 +247,7 @@ public class TuneP extends CommandBase {
         }catch(IOException ex){
             ex.printStackTrace();
         }
-        
+
     }//end end()
 
     // Called when another command which requires one or more of the same

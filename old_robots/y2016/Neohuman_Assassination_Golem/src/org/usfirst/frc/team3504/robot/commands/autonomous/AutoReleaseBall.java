@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoReleaseBall extends Command {
 
-	private Timer tim;
-	private double time;
-	
+    private Timer tim;
+    private double time;
+
     public AutoReleaseBall(double time) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.claw);
@@ -21,12 +21,12 @@ public class AutoReleaseBall extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	tim.start();
+        tim.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.claw.collectRelease(.9);
+        Robot.claw.collectRelease(.9);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,12 +36,12 @@ public class AutoReleaseBall extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.claw.collectRelease(0);
+        Robot.claw.collectRelease(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+        end();
     }
 }

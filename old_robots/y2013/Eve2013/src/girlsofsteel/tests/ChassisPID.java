@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
 
 public class ChassisPID extends CommandBase {
-    
+
     double rate;
-    
+
     double rightP;
     double rightI;
     double rightD;
@@ -16,11 +16,11 @@ public class ChassisPID extends CommandBase {
     double leftP;
     double leftI;
     double leftD;
-    
+
     public ChassisPID(){
         requires(chassis);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         chassis.initRatePIDs();
@@ -88,7 +88,7 @@ public class ChassisPID extends CommandBase {
                 chassis.getRightEncoderRate());
         SmartDashboard.putNumber("Back Encoder",
                 chassis.getBackEncoderRate());
-        SmartDashboard.putNumber("Left Encoder", 
+        SmartDashboard.putNumber("Left Encoder",
                 chassis.getLeftEncoderRate());
     }
 
@@ -106,5 +106,5 @@ public class ChassisPID extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

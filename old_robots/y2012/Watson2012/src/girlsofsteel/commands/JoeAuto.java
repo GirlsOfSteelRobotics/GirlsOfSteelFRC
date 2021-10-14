@@ -35,11 +35,11 @@ public class JoeAuto extends CommandGroup {
                 addSequential(new BridgeUp());
                 addSequential(new MoveToSetPoint(-0.5), 3);
             }
-            
+
             if (autoShootFromBridge) {
                 addSequential(new Shoot(CommandBase.shooter.BRIDGE_SPEED), 10);
             }
-            
+
             if (goBackToKey) {
                 addSequential(new MoveToSetPoint(-yDistance));
                 addSequential(new PrintCommand("Back to Key"));

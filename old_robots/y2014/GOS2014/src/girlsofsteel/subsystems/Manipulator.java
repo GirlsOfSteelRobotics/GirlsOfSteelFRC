@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -36,56 +35,56 @@ public class Manipulator extends Subsystem {
     private static double manipulatorJagSpeedUp = -1.0;
     private static final double gearRatio = 13.0/70.0;
     private static final double distancePerPulse = (pulsePerRotation * gearRatio)/pulsePerRotation; //360 is the number of degrees in a circle
-    
+
     /*
-   (theta:360 as arcLength:circumference) -> use this to find out theta and distance 
-    
+   (theta:360 as arcLength:circumference) -> use this to find out theta and distance
+
     1.) Pulses per rotation of encoder (get Raw) Yes
     2.) Set distance per pulse to be in degrees (getDistance, full rotation = 360) Yes
     3.) Tune PID
-    
+
     */
-    
+
     //Old p for the practice bot arm
     private static  double p = 0.1; //negative for the competition robot
     //private static double p = 0.12; //positive for the 2nd chassis
     private static  double i = 0.0;
     private static  double d = 0.0;
-   
+
     //96 is from the old arm that was on the practice bot
     //private static int ZERO_ENCODER_VALUE = 86; //101 is the max angle, -17 (SHOULD BE CONSTANT) is how off from the horizontal all the way down is
-    
+
     private static int ZERO_ENCODER_VALUE = 89; //Practice bot <- //92; //COMPETITION BOT
-    
+
     public Manipulator() {
         p = Configuration.manipulatorPivotP;
-        
+
         ZERO_ENCODER_VALUE = Configuration.pivotEncoderZeroValue;
-        
+
         manipulatorJag = new Jaguar(RobotMap.MANIPULATOR_JAG);
         bobTheArmEncoder = new Encoder(RobotMap.MANIPULATOR_ENCODER_A, RobotMap.MANIPULATOR_ENCODER_B, true, CounterBase.EncodingType.k2X); //reverse boolean is true on the 2nd robot
         bobTheArmEncoder.setDistancePerPulse(distancePerPulse); //assuming there's 360 pulses per revoluation
 
         dasBootLights = new Relay(RobotMap.LIGHTS);
         angle = maxAngle;
-        
-        
+
+
         manipulatorPID = new EncoderGoSPIDController(p, i, d, bobTheArmEncoder, new PIDOutput() {
 
             public void pidWrite(double output) {
                 manipulatorJag.set(output);
             }
         }, EncoderGoSPIDController.POSITION, ZERO_ENCODER_VALUE);
-        
+
         System.out.println("Encoder Value ------------ " + manipulatorPID.getSignedDistance());
-        
+
         //Starts the PID COMMENT THIS OUT WHEN YOU DO MANIPULATOR ENCODER TESTING
         startPID();
         initEncoder();
         resetPIDError();
     }
 
-    //these are the lights that could be used to signal other teams if we are 
+    //these are the lights that could be used to signal other teams if we are
     //ready to pass, etc.
     public void turnDasBootLightsOn() {
         dasBootLights.set(Relay.Value.kForward);
@@ -114,7 +113,7 @@ public class Manipulator extends Subsystem {
         if (desiredAngle == angle) {
             return;
         } else if (desiredAngle > angle) {
-            manipulatorJag.set(.1); //assuming that 100% power is okay                 
+            manipulatorJag.set(.1); //assuming that 100% power is okay
         } else {
             manipulatorJag.set(-.1);
         }
@@ -122,7 +121,7 @@ public class Manipulator extends Subsystem {
 //        if (desiredAngle == angle) {
 //            System.out.println("Here");
 //        } else if (desiredAngle > angle) {
-//            manipulatorJag.set(0.3); //assuming that 100% power is okay                 
+//            manipulatorJag.set(0.3); //assuming that 100% power is okay
 //        } else {
 //            manipulatorJag.set(-0.3);
 //        }
@@ -149,7 +148,7 @@ public class Manipulator extends Subsystem {
         //output:What we want the angle of the robot to be
         //What it will do: It will use the camera to calculate the angle that needs to be used
         // by using the distance from the camera to the goal.
-        //Purpose: To tell us what the angle of the robot should be in order to score 
+        //Purpose: To tell us what the angle of the robot should be in order to score
     }
 
     private void setAngle() {
@@ -158,8 +157,8 @@ public class Manipulator extends Subsystem {
         System.out.println("Bob says: " + bobTheArmEncoder.get());
         this.angle = proportionalAngle;
     }
-   
-    
+
+
     public void moveManipulatorDown() {
         manipulatorJag.set(manipulatorJagSpeedDown * Configuration.desiredAnglePivotArmSign);
     }//Sets/returns the speed of the manipulator jag for manual adjusting using buttons on PS3 controller
@@ -175,7 +174,7 @@ public class Manipulator extends Subsystem {
 
 //    public double getCurrentAngle(double angle) {
 //        bobTheArmEncoder.get();
-//        angle += (bobTheArmEncoder.get() * pulsePerTick); //depends on what .get does 
+//        angle += (bobTheArmEncoder.get() * pulsePerTick); //depends on what .get does
 //        return angle;
 //    }
 
@@ -245,62 +244,59 @@ public class Manipulator extends Subsystem {
     public double getRaw() {
         return bobTheArmEncoder.getRaw();
     }
-    
+
     protected void initDefaultCommand() {
     }
 
-    
+
     public void resetPIDError() {
         manipulatorPID.resetError();
     }
-    
+
     public double getAbsoluteDistance() {
         return bobTheArmEncoder.getDistance() + ZERO_ENCODER_VALUE;//the horizontal zero
     }
-    
+
     public double getDistance() {
         return bobTheArmEncoder.getDistance();
     }
-    
+
     /*
     Zero the manipulator arm at the horizontal (horizontal is 0) NEED TODO
     */
     public void setSetPoint(double setpoint) {
         manipulatorPID.setSetPoint(setpoint);
     }
-    
+
     public void stopEncoder() {
         bobTheArmEncoder.stop();
     }
     public void disablePID() {
         manipulatorPID.disable();
     }
-    
+
     public void setPID(double p1, double i1,double d1) {
         manipulatorPID.setPID(p1, i1, d1);
     }
-    
+
     public void startPID() {
         manipulatorPID.enable();
         //manipulatorPID.setOutputThreshold(1.0); Possibly needed for the velocity control but not for position PID
     }
-    
+
     public double getError() {
         return manipulatorPID.getError();
     }
-    
+
     public double getEncoder() {
         return bobTheArmEncoder.get();
     }
-    
+
     public void holdAngle() {
         setSetPoint(getAbsoluteDistance());
     }
-    
+
     public double getSetPoint() {
         return manipulatorPID.getSetPoint();
     }
 }
-
-
-

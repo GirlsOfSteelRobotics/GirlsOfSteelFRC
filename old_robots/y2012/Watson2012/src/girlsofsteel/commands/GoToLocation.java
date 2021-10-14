@@ -6,7 +6,7 @@ public class GoToLocation extends CommandBase {
     double y;
     double degreesToFace; //degree change relative to beginning position of the
     //robot to end facing
-    
+
     public GoToLocation(double x, double y, double degreesToFace){
         this.x = x;
         this.y = y;

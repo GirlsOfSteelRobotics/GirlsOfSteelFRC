@@ -6,13 +6,13 @@ import girlsofsteel.objects.Camera;
 public class ShootBestFitLine extends CommandBase {
 
     Joystick operatorJoystick;
-    
+
     double cameraDistance;
-    
+
     public ShootBestFitLine(){
         requires(shooter);
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -41,5 +41,5 @@ public class ShootBestFitLine extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

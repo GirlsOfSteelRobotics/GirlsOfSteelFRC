@@ -11,13 +11,13 @@ import girlsofsteel.Configuration;
  * @author sophia, sonia
  */
 public class HoldChassisInPlace extends CommandBase {
-    
+
     private double setPoint;
-    
+
     public HoldChassisInPlace()
     {
         requires(chassis);
-        
+
     }
 
     protected void initialize() {
@@ -44,7 +44,7 @@ public class HoldChassisInPlace extends CommandBase {
         {
             chassis.setLeftJag(0.0);
         }
-        
+
         if(chassis.getRightEncoder() > 0)
         {
             chassis.setRightJag(.2);
@@ -74,5 +74,5 @@ public class HoldChassisInPlace extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

@@ -12,7 +12,7 @@ public class JawIn extends Command {
     public JawIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.jaw);
+        requires(Robot.jaw);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class JawIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.jaw.pistonsIn();
+        Robot.jaw.pistonsIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()

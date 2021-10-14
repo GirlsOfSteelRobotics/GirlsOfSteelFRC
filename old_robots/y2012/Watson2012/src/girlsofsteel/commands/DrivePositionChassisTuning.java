@@ -14,7 +14,7 @@ public class DrivePositionChassisTuning extends CommandBase{
         SmartDashboard.putDouble("Right Encoder Position", 0.0);
         SmartDashboard.putDouble("Left Encoder Position", 0.0);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         chassis.initPositionPIDs();
@@ -42,5 +42,5 @@ public class DrivePositionChassisTuning extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

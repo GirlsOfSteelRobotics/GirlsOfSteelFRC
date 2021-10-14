@@ -3,14 +3,14 @@ package girlsofsteel.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTTurnToSetPoint extends CommandBase {
-    
+
     double degreesToTurn;
-    
+
     public TESTTurnToSetPoint(){
         requires(chassis);
         SmartDashboard.putDouble("Turn,degrees", 0.0);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         chassis.initPositionPIDs();
@@ -37,5 +37,5 @@ public class TESTTurnToSetPoint extends CommandBase {
     protected void interrupted() {
         end();
     }
-   
+
 }

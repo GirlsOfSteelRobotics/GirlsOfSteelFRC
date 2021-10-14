@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.Joystick;
 public class DriveSlowVelocity extends CommandBase {
 
     Joystick driverJoystick;
-    
+
     double xAxis;
     double yAxis;
-    
+
     public DriveSlowVelocity(){
         requires(chassis);
     }
-    
+
     protected void initialize() {
         driverJoystick = oi.getDriverJoystick();
         chassis.initEncoders();
@@ -39,5 +39,5 @@ public class DriveSlowVelocity extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

@@ -12,9 +12,9 @@ import girlsofsteel.commands.CommandBase;
  */
     public class ChassisJagsAndEncoders extends CommandBase {
     //copied from KiwiDrive code
-    
+
     double speed;
-    
+
     public ChassisJagsAndEncoders(){
         requires(chassis);
 //        SmartDashboard.putBoolean("Right Jag", false);
@@ -25,7 +25,7 @@ import girlsofsteel.commands.CommandBase;
 //        SmartDashboard.putNumber("Back Encoder:", chassis.getBackEncoderDistance());
 //        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
     }
@@ -43,8 +43,8 @@ import girlsofsteel.commands.CommandBase;
 //        }
 //        if(SmartDashboard.getBoolean("Left Jag", false)){
 //            chassis.setLeftJag(speed);
-//        }      
-        
+//        }
+
         //tests to see if Jags goes to set speed
         double allowedError = 0.05;
         double desiredSpeed = 0.2;
@@ -85,7 +85,7 @@ import girlsofsteel.commands.CommandBase;
         if (speed > desiredSpeed - allowedError && speed < desiredSpeed + allowedError) {
             System.out.println("Passed Left Jag speed test");
         }
-    
+
     }
     protected boolean isFinished() {
         return false;
@@ -99,6 +99,6 @@ import girlsofsteel.commands.CommandBase;
     protected void interrupted() {
         end();
     }
-    
- 
+
+
 }

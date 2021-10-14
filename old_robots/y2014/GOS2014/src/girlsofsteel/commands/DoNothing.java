@@ -14,7 +14,7 @@ public class DoNothing extends CommandBase {
     public DoNothing() {
         requires(driving);
     }
-    
+
     protected void initialize() {
         //smanipulator.disablePID();
     }

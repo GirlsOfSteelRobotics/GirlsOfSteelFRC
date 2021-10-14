@@ -9,15 +9,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoLowBarAndScore extends CommandGroup {
-    
+
     public  AutoLowBarAndScore() {
-    	addSequential(new NudgeFlapDown());
-    	addSequential(new AutoDriveBackwards(186, .6));
-    	addSequential(new NudgeFlapUp()); 
-    	addSequential(new AutoTurn(21, 0.3));
-    	addSequential(new AutoDriveForward(140, .6));
-    	addSequential(new AutoPivotDown(0.5));
-    	addSequential(new AutoReleaseBall(2.0));
+        addSequential(new NudgeFlapDown());
+        addSequential(new AutoDriveBackwards(186, .6));
+        addSequential(new NudgeFlapUp());
+        addSequential(new AutoTurn(21, 0.3));
+        addSequential(new AutoDriveForward(140, .6));
+        addSequential(new AutoPivotDown(0.5));
+        addSequential(new AutoReleaseBall(2.0));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

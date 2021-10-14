@@ -17,7 +17,7 @@ public class TestPivotArmPID extends CommandBase{
      private double desiredAngle;
     private double currentAngle;
     private double allowedAngleError;
-    
+
     public TestPivotArmPID() {
         requires(manipulator);
         allowedAngleError = 2; //2 degrees of error on both sides allowed

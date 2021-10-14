@@ -6,7 +6,7 @@ public class ReverseTopMiddleRollers extends CommandBase {
         requires(collector);
         requires(shooter);
     }
-    
+
     protected void initialize() {
     }
 
@@ -27,5 +27,5 @@ public class ReverseTopMiddleRollers extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

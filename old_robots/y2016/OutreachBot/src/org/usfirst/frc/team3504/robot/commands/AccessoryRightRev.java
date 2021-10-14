@@ -21,7 +21,7 @@ public class AccessoryRightRev extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.accessoryMotors.startRight(Direction.kRev);
+        Robot.accessoryMotors.startRight(Direction.kRev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,12 +31,12 @@ public class AccessoryRightRev extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-		Robot.accessoryMotors.stopRight();
+        Robot.accessoryMotors.stopRight();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+        end();
     }
 }

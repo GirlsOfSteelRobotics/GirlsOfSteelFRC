@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class SwitchToForward extends CommandGroup {
-    
+
     public  SwitchToForward() {
-    	addParallel(new SwitchToCamClaw());
-    	addParallel(new DriveForward()); 
+        addParallel(new SwitchToCamClaw());
+        addParallel(new DriveForward());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

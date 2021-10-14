@@ -18,7 +18,7 @@ public class TestJags extends CommandBase {
     public TestJags() {
         requires(chassis);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         }
@@ -40,5 +40,5 @@ public class TestJags extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

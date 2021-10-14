@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Nudge extends CommandBase {
 
     Joystick driverJoystick;
-    
+
     double xValue;
-    
+
     public Nudge(){
         requires(chassis);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         chassis.initHoldPosition();
@@ -38,5 +38,5 @@ public class Nudge extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

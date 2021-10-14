@@ -11,5 +11,5 @@ package girlsofsteel.commands;
  * @author Parent
  */
 public class GoalHot {
-    
+
 }

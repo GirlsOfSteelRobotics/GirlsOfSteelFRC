@@ -6,12 +6,12 @@ public class Collect extends CommandBase {
     public Collect(){
         requires(collector);
     }
-    
+
     protected void initialize() {
         collector.forwardBrush();
         collector.forwardMiddleConveyor();
     }
-    
+
     protected void execute() {
     }
 
@@ -27,5 +27,5 @@ public class Collect extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

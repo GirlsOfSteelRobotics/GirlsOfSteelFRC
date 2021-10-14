@@ -14,7 +14,7 @@ import girlsofsteel.Configuration;
 public class ManipulatorArmUpPID extends CommandBase {
 
     double angle;
-    
+
     public ManipulatorArmUpPID() {
         requires(manipulator);
     }

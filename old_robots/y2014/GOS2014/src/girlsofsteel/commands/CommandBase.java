@@ -2,7 +2,6 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import girlsofsteel.OI;
-import girlsofsteel.RobotMap;
 import girlsofsteel.objects.Camera;
 import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.Collector;

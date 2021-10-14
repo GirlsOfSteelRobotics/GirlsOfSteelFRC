@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class Portcullis extends CommandGroup {
-    
+
     public  Portcullis() {
-    	//addSequential(new FlapUp());
-    	addSequential(new Drive(5,0)); //FIXME: need real values
-    	//addSequential(new FlapUp()); 
+        //addSequential(new FlapUp());
+        addSequential(new Drive(5,0)); //FIXME: need real values
+        //addSequential(new FlapUp());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

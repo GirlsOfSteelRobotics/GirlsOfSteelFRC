@@ -28,7 +28,7 @@ public class EngageCollector extends CommandBase {
      */
     protected void initialize() {
     }
-    
+
     /**
      * This turns on the jag to engage the collector to the pivot arm.
      * @author Sophia, Sonia

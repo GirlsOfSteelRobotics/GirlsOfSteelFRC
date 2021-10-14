@@ -12,7 +12,7 @@ public class ShooterIn extends Command {
     public ShooterIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shooter);
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class ShooterIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.pistonIn();
+        Robot.shooter.pistonIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()

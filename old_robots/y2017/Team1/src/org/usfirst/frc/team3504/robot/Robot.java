@@ -20,14 +20,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static DriveSystem driveSystem;
-	public static OI oi;
-	public static Subsystem chassis;
-	public static Shifters shifters;
-	public static Arm arm;
-	public static JawPiston jaw;
-	public static Shooter shooter;
-	public static Collector collecter;
+    public static DriveSystem driveSystem;
+    public static OI oi;
+    public static Subsystem chassis;
+    public static Shifters shifters;
+    public static Arm arm;
+    public static JawPiston jaw;
+    public static Shooter shooter;
+    public static Collector collecter;
 
     Command autonomousCommand;
     SendableChooser<Command> chooser;
@@ -37,47 +37,47 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	driveSystem = new DriveSystem();
+        driveSystem = new DriveSystem();
         shifters = new Shifters();
        // arm = new Arm();
         jaw = new JawPiston();
-        shooter = new Shooter(); 
-        
+        shooter = new Shooter();
+
         //all subsystems must be initialized before creating OI
-		oi = new OI();
+        oi = new OI();
         chooser = new SendableChooser<Command>();
-        
+
         chooser.addDefault("Default: Do Nothing", new AutoDoNothing());
         chooser.addObject("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(10.0, 0.5));
         SmartDashboard.putData("Auto mode", chooser);
     }
-	
-	/**
+
+    /**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
+     * the robot is disabled.
      */
     public void disabledInit(){
 
     }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
-	 * below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
-	 * or additional comparisons to the switch structure below with additional strings & commands.
-	 */
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
+
+    /**
+     * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
+     * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
+     * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
+     * below the Gyro
+     *
+     * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
+     * or additional comparisons to the switch structure below with additional strings & commands.
+     */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        
-    	// schedule the autonomous command (example)
+
+        // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -89,8 +89,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
@@ -102,7 +102,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */

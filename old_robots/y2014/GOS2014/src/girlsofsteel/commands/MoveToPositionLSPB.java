@@ -62,8 +62,8 @@ public class MoveToPositionLSPB extends CommandBase {
         boolean ret = ((Math.abs(chassis.getLeftEncoderDistance() - setPoint) < offBy)
                 && (Math.abs(chassis.getRightEncoderDistance() - setPoint) < offBy))
                 || (chassis.getLeftEncoderDistance() > Math.abs(setPoint))
-                || (chassis.getRightEncoderDistance() > Math.abs(setPoint)); 
-        
+                || (chassis.getRightEncoderDistance() > Math.abs(setPoint));
+
         System.out.println("First: " + (Math.abs(chassis.getLeftEncoderDistance() - setPoint) < offBy));
         System.out.println("Second: " + (Math.abs(chassis.getRightEncoderDistance() - setPoint) < offBy));
         System.out.println("Third: " + (chassis.getLeftEncoderDistance() > Math.abs(setPoint)));
@@ -74,7 +74,7 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     protected void end() {
-        
+
         chassis.disablePositionPID();
         chassis.stopJags();
         chassis.stopEncoders();

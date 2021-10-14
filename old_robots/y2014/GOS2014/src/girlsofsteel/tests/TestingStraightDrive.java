@@ -14,9 +14,9 @@ import girlsofsteel.commands.CommandBase;
 public class TestingStraightDrive extends CommandBase{
 
     public TestingStraightDrive(){
-         requires(chassis);  
+         requires(chassis);
     }
-    
+
     protected void initialize() {
         System.out.println("Initializing TDS command.");
         chassis.initEncoders();
@@ -39,5 +39,5 @@ public class TestingStraightDrive extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

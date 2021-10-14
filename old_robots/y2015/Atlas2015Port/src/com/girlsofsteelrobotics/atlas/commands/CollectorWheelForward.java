@@ -11,7 +11,7 @@ package com.girlsofsteelrobotics.atlas.commands;
  * @author Heather, Sophia, Sonia
  */
 public class CollectorWheelForward extends CommandBase {
-    
+
     /**
      * There is nothing in this method.
      * @author Sophia, Sonia
@@ -26,16 +26,16 @@ public class CollectorWheelForward extends CommandBase {
      * @author Sophia, Sonia
      */
     protected void initialize() {
-       
+
     }
 
     /**
-     * This rolls the collector wheel forward.  
+     * This rolls the collector wheel forward.
      * It can be used to bring the ball into the trident.
      * @author Sophia, Sonia
      */
     protected void execute() {
-       collector.collectorWheelFoward(); 
+       collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
 
     /**
@@ -47,7 +47,7 @@ public class CollectorWheelForward extends CommandBase {
         return false;
         //return CommandBase.collector.isCollectorEngaged();
     }
-    
+
     /**
      * This stops the collector wheel.
      * @author Sophia, Sonia
@@ -64,6 +64,6 @@ public class CollectorWheelForward extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
-    
+
+
 }

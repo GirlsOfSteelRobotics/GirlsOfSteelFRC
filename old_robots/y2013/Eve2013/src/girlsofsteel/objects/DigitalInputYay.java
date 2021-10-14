@@ -11,6 +11,6 @@ package girlsofsteel.objects;
 public class DigitalInputYay {
      public DigitalInputYay()
      {
-         
+
      }
 }

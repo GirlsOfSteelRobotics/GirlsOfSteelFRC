@@ -10,18 +10,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *THIS IS IN METERS
- * 
+ *
  * Requires driving because it should override arcade drive
- * 
+ *
  * @author Sylvie
  */
 public class MoveToPosition extends CommandBase{
 
     private double distance;
     private double offBy = 0.03;
-    
+
     public MoveToPosition(double distance) {
-        requires(driving); 
+        requires(driving);
         this.distance = distance;
     }
 
@@ -56,5 +56,5 @@ public class MoveToPosition extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

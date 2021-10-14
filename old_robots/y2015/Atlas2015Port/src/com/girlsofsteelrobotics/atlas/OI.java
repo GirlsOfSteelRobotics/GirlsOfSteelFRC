@@ -10,8 +10,6 @@ import com.girlsofsteelrobotics.atlas.commands.HoldChassisInPlace;
 import com.girlsofsteelrobotics.atlas.commands.KickerUsingLimitSwitch;
 import com.girlsofsteelrobotics.atlas.commands.ManipulatorArmDownPID;
 import com.girlsofsteelrobotics.atlas.commands.ManipulatorArmUpPID;
-import com.girlsofsteelrobotics.atlas.commands.ManipulatorManualDown;
-import com.girlsofsteelrobotics.atlas.commands.ManipulatorManualUp;
 import com.girlsofsteelrobotics.atlas.commands.STOPKICKER;
 import com.girlsofsteelrobotics.atlas.commands.TrussShot;
 import com.girlsofsteelrobotics.atlas.tests.TestingDrivingStraight;
@@ -95,7 +93,7 @@ public class OI {
 //        bothKicks = new JoystickButton(chassisJoystick, X);
 //        bothKicks.whileHeld(new MoveKickerSide(2));
         manipulatorUp = new JoystickButton(operatorJoystick, R1);
-        manipulatorUp.whileHeld(new ManipulatorArmUpPID()); 
+        manipulatorUp.whileHeld(new ManipulatorArmUpPID());
           //manipulatorUp.whileHeld(new ManipulatorManualUp());
         //manipulatorUp.whenReleased(new StopManipulator());
 
@@ -138,7 +136,7 @@ public class OI {
         //  lowGoalShoot.whenPressed(new ShootLowGoal());
        // scaledArcadeDrive = new JoystickButton(chassisJoystick, L2);
         // scaledArcadeDrive.whenPressed(new ScaledArcadeDrive(slowpokescale));
-      //  manipulatorUp = new JoystickButton(operatorJoystick, R1); 
+      //  manipulatorUp = new JoystickButton(operatorJoystick, R1);
         // manipulatorUp.whileHeld(new ManipulatorManualUp());
       //  manipulatorDown = new JoystickButton(operatorJoystick, R2);
         //  manipulatorDown.whileHeld(new ManipulatorManualDown());

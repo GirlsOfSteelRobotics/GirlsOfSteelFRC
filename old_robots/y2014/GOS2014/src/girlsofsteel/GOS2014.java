@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.ArcadeDrive;
-import girlsofsteel.commands.AutonomousLowGoalHot;
 import girlsofsteel.commands.CommandBase;
 import girlsofsteel.commands.DoNothing;
 import girlsofsteel.commands.KickerUsingLimitSwitch;
@@ -43,17 +42,17 @@ public class GOS2014 extends IterativeRobot {
         autonomousCommand = new DoNothing();
 
         auto = new AutonomousChooser();
-        
+
         // Initialize all subsystems
         CommandBase.init();
         Configuration.configureForRobot(Configuration.COMPETITION_ROBOT);
         //SmartDashboard.putData(new TestKickerEncoder());
-        
+
         SmartDashboard.putData(new KickerUsingLimitSwitch(-1, true));
         SmartDashboard.putData(new TestKickerEncoder());
         SmartDashboard.putData(new TuneManipulatorPID());
         SmartDashboard.putData(new ManualPositionPIDTuner());
-        
+
    //     SmartDashboard.putData(new FullTester());
     }
 
@@ -75,7 +74,7 @@ public class GOS2014 extends IterativeRobot {
 
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
 
@@ -90,7 +89,7 @@ public class GOS2014 extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());  
+        SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         Scheduler.getInstance().run();
         //Configuration.configureForRobot((int) SmartDashboard.getNumber("Robot Configuration"));
 //        SmartDashboard.putNumber("robotCameraAngle",(double)CommandBase.camera.getVerticalAngleOffset());

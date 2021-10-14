@@ -17,9 +17,9 @@ public class ShiftDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		Robot.shifters.shiftLeft(Speed.kLow);
-		Robot.shifters.shiftRight(Speed.kLow);
-		//Robot.ledlights.redLight();
+        Robot.shifters.shiftLeft(Speed.kLow);
+        Robot.shifters.shiftRight(Speed.kLow);
+        //Robot.ledlights.redLight();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,8 +28,8 @@ public class ShiftDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		// The solenoid setting commands should complete immediately
-		return true;
+        // The solenoid setting commands should complete immediately
+        return true;
     }
 
     // Called once after isFinished returns true
@@ -39,6 +39,6 @@ public class ShiftDown extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+        end();
     }
 }

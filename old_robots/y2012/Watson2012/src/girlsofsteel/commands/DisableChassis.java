@@ -5,7 +5,7 @@ public class DisableChassis extends CommandBase {
     public DisableChassis(){
         requires(chassis);
     }
-    
+
     protected void initialize() {
         chassis.stopJags();
     }
@@ -22,5 +22,5 @@ public class DisableChassis extends CommandBase {
 
     protected void interrupted() {
     }
-    
+
 }

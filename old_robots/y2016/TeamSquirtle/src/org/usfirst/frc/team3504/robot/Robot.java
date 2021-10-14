@@ -4,7 +4,6 @@ package org.usfirst.frc.team3504.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDrive;
@@ -22,11 +21,11 @@ import org.usfirst.frc.team3504.robot.subsystems.Shifters;
  */
 public class Robot extends IterativeRobot {
 
-	public static OI oi;
-	public static Chassis chassis;
-	public static Camera camera; 
-	public static Shifters shifters;
-	public static Ramp ramp;
+    public static OI oi;
+    public static Chassis chassis;
+    public static Camera camera;
+    public static Shifters shifters;
+    public static Ramp ramp;
 
     Command autonomousCommand;
 
@@ -35,20 +34,20 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		RobotMap.init();
-		chassis = new Chassis();
-        camera = new Camera(); 
+        RobotMap.init();
+        chassis = new Chassis();
+        camera = new Camera();
         shifters = new Shifters();
         ramp = new Ramp();
-		// instantiate the command used for the autonomous period
+        // instantiate the command used for the autonomous period
         oi = new OI();
         autonomousCommand = new AutoDrive();
-        
+
     }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
+
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
@@ -63,8 +62,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
@@ -84,7 +83,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */

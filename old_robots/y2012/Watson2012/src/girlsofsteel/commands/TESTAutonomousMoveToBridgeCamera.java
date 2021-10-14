@@ -1,8 +1,6 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import girlsofsteel.objects.Camera;
 
 public class TESTAutonomousMoveToBridgeCamera extends CommandGroup {
 
@@ -22,5 +20,5 @@ public class TESTAutonomousMoveToBridgeCamera extends CommandGroup {
         addSequential(new MoveToSetPoint(-0.5), 3.0);
         addSequential(new BridgeUp());
     }
-    
+
 }

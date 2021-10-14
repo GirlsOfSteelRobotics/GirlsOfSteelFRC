@@ -17,7 +17,7 @@ public class ResetEncoder extends CommandBase{
     }
 
     protected void interrupted() {
-      
+
     }
-    
+
 }

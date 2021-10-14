@@ -1,7 +1,6 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -22,7 +21,7 @@ public class ScaledArcadeDrive extends CommandBase {
     protected void initialize() {
         joystick = oi.getChassisJoystick();
         //SmartDashboard.putNumber("Scale", 1);
-        
+
     }
 
     protected void execute() {

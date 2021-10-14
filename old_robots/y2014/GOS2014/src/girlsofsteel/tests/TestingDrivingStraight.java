@@ -1,7 +1,7 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- 
+
 2nd chassis drives straight without any adjustments
 */
 package girlsofsteel.tests;
@@ -15,12 +15,12 @@ import girlsofsteel.commands.CommandBase;
  * This needs to be tested by the end of 2/13/14
  */
 public class TestingDrivingStraight extends CommandBase{
-    
-    
+
+
     public TestingDrivingStraight(){
-         requires(chassis);  
+         requires(chassis);
     }
-    
+
     protected void initialize() {
         System.out.println("Initializing TDS command.");
         SmartDashboard.putNumber("LeftJagAdjust", 0); //Setting LeftJagAdjust  variable to zero in SmartDashboard
@@ -51,5 +51,5 @@ public class TestingDrivingStraight extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

@@ -9,22 +9,22 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class NudgeFlapUp extends Command {
-	Timer time = new Timer();
-	
+    Timer time = new Timer();
+
     public NudgeFlapUp() {
-    	
+
         // Use requires() here to declare subsystem dependencies
         requires(Robot.flap);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	time.start();
+        time.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.flap.setTalon(-.5);
+        Robot.flap.setTalon(-.5);
 
     }
 
@@ -35,12 +35,12 @@ public class NudgeFlapUp extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.flap.stopTalon();
+        Robot.flap.stopTalon();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+        end();
     }
 }

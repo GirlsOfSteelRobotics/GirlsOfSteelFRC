@@ -12,14 +12,14 @@ public class ResetEncoderDistance extends Command {
     public ResetEncoderDistance() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.chassis);
+        requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetEncoderDistance();
-    	Robot.flap.resetDistance();
-    	Robot.pivot.resetDistance();
+        Robot.chassis.resetEncoderDistance();
+        Robot.flap.resetDistance();
+        Robot.pivot.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run

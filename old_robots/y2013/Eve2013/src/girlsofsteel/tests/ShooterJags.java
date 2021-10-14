@@ -4,21 +4,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
 
 public class ShooterJags extends CommandBase {
-    
+
     double speed = 0.0;
 
     int counter = 0;
     boolean pushed;
     double time;
-    
+
     double WAIT_TIME = 1.0;
-    
+
     public ShooterJags(){
         SmartDashboard.putBoolean("Shooter Jags", false);
         SmartDashboard.putNumber("Jag Speed", 0.0);
         SmartDashboard.putBoolean("Click When Done Testing Shooter Jags", false);
     }
-    
+
     protected void initialize() {
         speed = SmartDashboard.getNumber("Jag Speed", 0.0);
         counter = 0;
@@ -63,5 +63,5 @@ public class ShooterJags extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

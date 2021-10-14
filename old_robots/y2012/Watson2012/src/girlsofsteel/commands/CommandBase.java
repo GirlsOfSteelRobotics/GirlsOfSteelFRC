@@ -18,7 +18,7 @@ public abstract class CommandBase extends Command {
     public static Collector collector = new Collector();
     public static Shooter shooter = new Shooter();
     public static Turret turret = new Turret();
-    
+
     public static void init() {
         oi = new OI();
     }

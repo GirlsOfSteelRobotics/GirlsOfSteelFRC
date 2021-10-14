@@ -20,7 +20,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     private static final double PULSES = 1600.0;
     private static final double ENCODER_UNIT = 360.0 / PULSES;
     public final double TURRET_OVERRIDE_DEADZONE = 0.5;
-    
+
     Jaguar turretJag = new Jaguar(RobotMap.TURRET_JAG);
     Encoder encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
             RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
@@ -32,16 +32,16 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
 
     public Turret() {
     }
-    
+
     public void initDefaultCommand(){
-        
+
     }
-    
+
     public void changeTurretOffset(){
         double turretOffset = SmartDashboard.getDouble("Turret Offset", 0.0);
         offsetAngle = turretOffset;
     }
-    
+
     //sets the unit -> only used in TEST -> degrees or just pulses
     public void setEncoderUnit(double pulses, boolean inDegrees){
         if(inDegrees){
@@ -51,7 +51,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         }
         encoder.start();
     }
-    
+
     //initalizes encoder -> sets the unit to degrees
     public void initEncoder(){
         encoder.setDistancePerPulse(ENCODER_UNIT); //degrees
@@ -87,14 +87,14 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     public void setPDs(double pVal, double dVal){
         PID.setPID(pVal, 0.0, dVal);
     }
-    
+
     //just in case the PID loop starts freaking out & you need to re-assing the
     //PID values in execute (used in chassis -> don't think it's having a probelem
     //in chassis's PIDs
     public void setPDs(){
         PID.setPID(p, i, d);
     }
-    
+
     public void disablePID() {
         PID.disable();
     }
@@ -151,7 +151,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         //maps the speed of the turret to the knob values
         return speed;
     }
-    
+
     public void autoTrack() { //only works when the camera has the target (a boolean
         //in the Camera object)
         double diffAngle = Camera.getDiffAngle();//get the angle you are off from
@@ -163,5 +163,5 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         //subtract the offset angle that the shooter shoots straight from
         setPIDSetPoint(setPoint);
     }
-    
+
 }

@@ -12,13 +12,13 @@ public class ShiftLowGear extends Command {
     public ShiftLowGear() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shifters);
+        requires(Robot.shifters);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shifters.shiftLeft(false);
-    	Robot.shifters.shiftRight(false);
+        Robot.shifters.shiftLeft(false);
+        Robot.shifters.shiftRight(false);
     }
 
     // Called repeatedly when this Command is scheduled to run

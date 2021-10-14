@@ -52,12 +52,12 @@ public class ChassisLSPBPlanner extends CommandBase {
 
     protected boolean isFinished() {
         boolean ret =  (/*Math.abs(chassis.getLeftEncoderDistance() - setPoint) < 0.05) || */
-                ((Math.abs(chassis.getRightEncoderDistance() - setPoint) < 0.01 ) 
+                ((Math.abs(chassis.getRightEncoderDistance() - setPoint) < 0.01 )
                 || (Math.abs(chassis.getRightEncoderDistance()) > Math.abs(setPoint)))
                 && graphed); //Right encoder/pid is flipped TODO configuration
         if(ret)
          System.out.println("finished ");
-        
+
         return ret;
     }
 

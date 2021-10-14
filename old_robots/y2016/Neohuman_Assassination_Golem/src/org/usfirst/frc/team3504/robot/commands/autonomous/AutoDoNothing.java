@@ -12,7 +12,7 @@ public class AutoDoNothing extends Command {
     public AutoDoNothing() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.chassis);
+        requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time

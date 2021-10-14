@@ -7,7 +7,7 @@ public class TESTGyro extends CommandBase {
     public TESTGyro(){
         requires(chassis);
     }
-    
+
     protected void initialize() {
     }
 
@@ -27,5 +27,5 @@ public class TESTGyro extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

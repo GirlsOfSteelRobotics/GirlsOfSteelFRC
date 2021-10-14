@@ -15,7 +15,7 @@ public class IsGoalHot extends CommandBase {
     int bool;
     double average = 0;
     int i;
-    
+
     protected void initialize() {
         i = 0;
     }

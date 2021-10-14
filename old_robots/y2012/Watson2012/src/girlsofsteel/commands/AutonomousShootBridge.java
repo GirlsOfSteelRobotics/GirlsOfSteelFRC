@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import girlsofsteel.objects.Camera;
 
 public class AutonomousShootBridge extends CommandGroup {
-    
+
     public AutonomousShootBridge(){
         if(Camera.foundTarget()){
             addParallel(new ShootUsingTable(false));
@@ -22,5 +22,5 @@ public class AutonomousShootBridge extends CommandGroup {
         }
         addSequential(new BridgeDown());
     }
-    
+
 }

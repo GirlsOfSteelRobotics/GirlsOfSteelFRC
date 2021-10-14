@@ -38,5 +38,5 @@ public class ManualShoot extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

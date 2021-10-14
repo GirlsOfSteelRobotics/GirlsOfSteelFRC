@@ -16,13 +16,13 @@ package com.girlsofsteelrobotics.atlas.tests;
 //    public TestChassisEncoder() {
 //        requires(chassis);
 //    }
-//    
+//
 //    protected void initialize() {
 //        chassis.initEncoders();
 //        }
 //
 //    protected void execute() {
-//        
+//
 //    }
 //
 //    protected boolean isFinished() {
@@ -36,5 +36,5 @@ package com.girlsofsteelrobotics.atlas.tests;
 //    protected void interrupted() {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-//    
+//
 //}

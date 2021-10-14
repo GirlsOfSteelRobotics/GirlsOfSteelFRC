@@ -11,16 +11,16 @@ import girlsofsteel.RobotMap;
 import girlsofsteel.objects.EncoderGoSPIDController;
 
 public class Chassis extends Subsystem {
-    
+
     public static final double DISTANCE_BACKBOARD_TO_BRIDGE = 7.0104;
     //backboard to where we need to be to push the bridge down
     public static final double DISTANCE_KEY_TO_BRIDGE = 2.03;
     //set place in the key (where we have dead-reckoning) to where we need to be
     //to push the bridge down
-    
+
     private static final double SLOW_MAX_RATE = 0.5;//the slowest rate in m/s
     //used for the bridge velocity PID control
-    
+
     public static final double DEADZONE_RANGE = 0.3;
     //deadzone range for the driver's controller
     //TODO find the integral threshold for the chassis's rate PIDs
@@ -39,7 +39,7 @@ public class Chassis extends Subsystem {
             RobotMap.ENCODER_RIGHT_CHANNEL_B, false, CounterBase.EncodingType.k4X);
 
     private Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
-            RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);    
+            RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
     private final double WHEEL_DIAMETER = 0.1524; //in meters
     private final double GEAR_RATIO = 15.0 / 24.0;
     private final double PULSES_RIGHT = 250.0;
@@ -52,13 +52,13 @@ public class Chassis extends Subsystem {
 //            RobotMap.ENCODER_RIGHT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
 //
 //    private Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
-//            RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);  
+//            RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
 //    private final double PRACTICE_GEAR_RATIO = 12.0 / 22.0;
 //    private final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * PRACTICE_GEAR_RATIO) / 360.0;
 //    private final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * PRACTICE_GEAR_RATIO) / 250.0;
-     
+
     //create info for PIDs
-    
+
     //rate p & i & d values -> same for the left & right -> tuned for PIT comp
     private final static double rateP = 0.75;
     private final static double rateI = 0.1;
@@ -142,7 +142,7 @@ public class Chassis extends Subsystem {
     }
 
     //yAxis -> positive jag speed might be backwards
-    
+
     public void driveJagsLinearSlowTurning(double xAxis,double yAxis, double turningScale){
         xAxis = deadzone(xAxis, DEADZONE_RANGE)*turningScale;
         yAxis = -deadzone(yAxis, DEADZONE_RANGE);
@@ -150,12 +150,12 @@ public class Chassis extends Subsystem {
         setRightJags((yAxis - xAxis));
         setLeftJags((yAxis + xAxis));
     }
-    
+
     public void driveJagsSquared(double xAxis, double yAxis, double scale) {
 
         xAxis = square(deadzone(xAxis, DEADZONE_RANGE), scale);
         yAxis = -square(deadzone(yAxis, DEADZONE_RANGE), scale);
-        
+
         setRightJags((yAxis - xAxis));
         setLeftJags((yAxis + xAxis));
 
@@ -194,17 +194,17 @@ public class Chassis extends Subsystem {
         rightPositionPID.enable();
         leftPositionPID.enable();
     }
-    
+
     public void holdPosition(){
         setPositionPIDSetPoint(0.0);
     }
-    
+
     public void nudge(double xValue){
         double setPoint = 0.0;
         setPoint = setPoint + xValue*0.0025;
         setPositionPIDSetPoint(setPoint);
     }
-    
+
     public void driveVelocitySquared(double xAxis, double yAxis, double scale) {
 
         double maxRate = Math.sqrt(MAX_RATE);
@@ -322,7 +322,7 @@ public class Chassis extends Subsystem {
 
         return newJoystickValue;
     }
-    
+
     public void goToLocation(double x, double y, double degreesToFace){
         double degreesToTurn = MathUtils.atan2(y, x)*180/Math.PI;
         double distanceToMove = Math.sqrt((x*x)+(y*y));
@@ -330,7 +330,7 @@ public class Chassis extends Subsystem {
         move(distanceToMove);
         turn(degreesToFace - degreesToTurn);
     }
-    
+
     //autonomous move method
     public void move(double distance){
         setPositionPIDSetPoint(distance);
@@ -428,7 +428,7 @@ public class Chassis extends Subsystem {
         rightPositionPID.setPID(rightP,positionRightI,rightD);
         leftPositionPID.setPID(leftP,positionLeftI,leftD);
     }
-    
+
     public void setPIDsPosition(){
         rightPositionPID.setPID(positionRightP,positionRightI,positionRightD);
         leftPositionPID.setPID(positionLeftP, positionLeftI, positionLeftD);
@@ -438,7 +438,7 @@ public class Chassis extends Subsystem {
         rightRatePID.setPID(rateP, rateI, rateD);
         leftRatePID.setPID(rateP, rateI, rateD);
     }
-    
+
     public void setRatePIDSetPoint(double setPoint) {
         rightRatePID.setSetPoint(setPoint);
         leftRatePID.setSetPoint(setPoint);
@@ -461,7 +461,7 @@ public class Chassis extends Subsystem {
         stopJags();
     }
 
-    //encoder    
+    //encoder
     public void initEncoders() {
         rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
         leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);

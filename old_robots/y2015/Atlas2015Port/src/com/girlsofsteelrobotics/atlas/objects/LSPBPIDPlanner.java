@@ -1,13 +1,13 @@
 /*
- * A planner class that will connect position PID with velocity PID. 
+ * A planner class that will connect position PID with velocity PID.
  * See LSPB for more information
 
  Point a refers to when the robot should stop accelerating and the velocity
  graph reaches the flat part. Point b refers to when the robot should start
  deccelerating and slants back down. Point c is the last point of the velocity
- trapezoid and is also the base of the trapezoid. 
+ trapezoid and is also the base of the trapezoid.
 
- ToDO Prepare for special case when total distance is less than 1.5(?) 
+ ToDO Prepare for special case when total distance is less than 1.5(?)
 
  */
 package com.girlsofsteelrobotics.atlas.objects;
@@ -33,7 +33,7 @@ public class LSPBPIDPlanner {
     private boolean triangle = false;
 
     /*
-     This constructor defaults the velocity and acceleration 
+     This constructor defaults the velocity and acceleration
      */
     public LSPBPIDPlanner() {
         //To use the LSPB You must first 1.) call calculateVelocityGraph()
@@ -50,17 +50,17 @@ public class LSPBPIDPlanner {
     /*
      Sets the values of pointA, pointB, and pointC and also puts together the
      velocity graph.
-    
+
      D = (x+y)v
      D = ((v/a) + y)v
      D/v = (v/a) + y
      D/v - (v/a) = B - A
      B = D/v
-    
+
      x = A
      y = B-A
      x = (v/a)
-    
+
      */
     public void calculateVelocityGraph(double desiredDistance) {
 //        pointA = (velocity/acceleration);
@@ -88,7 +88,7 @@ public class LSPBPIDPlanner {
     }
 
     /*
-     Returns the corresponding position setpoint given time 
+     Returns the corresponding position setpoint given time
      */
     public double getDesiredPosition(double time) {
         time /= 1000; //To get milliseconds into seconds
@@ -141,7 +141,7 @@ public class LSPBPIDPlanner {
     }
 
     /*
-     Integrates the decelerating part of the velocity graph to get position 
+     Integrates the decelerating part of the velocity graph to get position
      from pointB to pointC
      */
     private double decelerating(double time) {

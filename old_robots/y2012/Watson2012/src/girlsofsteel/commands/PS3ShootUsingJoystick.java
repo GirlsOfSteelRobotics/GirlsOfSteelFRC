@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.Joystick;
 
 
 public class PS3ShootUsingJoystick extends CommandBase{
-    
+
     Joystick operatorJoystick;
-    
+
     double speed;
-    
+
     public PS3ShootUsingJoystick(){
         requires(shooter);
     }
@@ -42,5 +42,5 @@ public class PS3ShootUsingJoystick extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

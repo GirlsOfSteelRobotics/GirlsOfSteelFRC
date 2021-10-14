@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.Joystick;
  * @author appasamysm
  */
 public class MoveManipulatorWithSlider extends CommandBase {
-    
+
     //Joystick thinks top is zero
     //Joystick thinks bottom is full
     Joystick driver;
-    
+
     private double fullRangeOnSlider = 100;
     private double maxManipulatorAngle = 110;
     private double minManipulatorAngle = -3;
-    
+
     public MoveManipulatorWithSlider()
     {
         requires(manipulator);
@@ -44,5 +44,5 @@ public class MoveManipulatorWithSlider extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

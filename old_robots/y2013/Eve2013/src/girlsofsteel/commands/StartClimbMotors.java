@@ -15,8 +15,8 @@ public class StartClimbMotors extends CommandBase {
     }
 
     //Command for starting the motors to begin climbing
-    
-    
+
+
     protected void initialize() {
     }
 
@@ -37,5 +37,5 @@ public class StartClimbMotors extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

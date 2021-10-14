@@ -37,5 +37,5 @@ public class ManipulatorManualUp extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

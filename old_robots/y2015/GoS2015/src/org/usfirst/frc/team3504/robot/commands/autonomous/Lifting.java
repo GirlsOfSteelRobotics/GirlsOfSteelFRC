@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class Lifting extends CommandGroup {
 
-	public Lifting() {
+    public Lifting() {
 
-		addSequential(new ShackOut());
-		addSequential(new AngleCollectorIn());
-		addSequential(new AutoCollector());
-		addSequential(new ShackIn());
-		addSequential(new AngleCollectorOut());
-		addSequential(new AutoLift(Lifter.DISTANCE_ONE_TOTE));
-		// addSequential(new ShackOut());
-		addSequential(new AutoLift(Lifter.DISTANCE_ZERO_TOTES));
+        addSequential(new ShackOut());
+        addSequential(new AngleCollectorIn());
+        addSequential(new AutoCollector());
+        addSequential(new ShackIn());
+        addSequential(new AngleCollectorOut());
+        addSequential(new AutoLift(Lifter.DISTANCE_ONE_TOTE));
+        // addSequential(new ShackOut());
+        addSequential(new AutoLift(Lifter.DISTANCE_ZERO_TOTES));
 
-	}
+    }
 }

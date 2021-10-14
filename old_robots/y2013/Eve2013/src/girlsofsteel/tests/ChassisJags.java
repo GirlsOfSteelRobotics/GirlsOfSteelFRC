@@ -4,13 +4,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
 
 public class ChassisJags extends CommandBase {
-    
+
     double speed;
-    
+
     public ChassisJags(){
         requires(chassis);
     }
-    
+
     protected void initialize() {
         SmartDashboard.putBoolean("Chassis Jags", true);
         SmartDashboard.putBoolean("Right Jag", false);
@@ -53,5 +53,5 @@ public class ChassisJags extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

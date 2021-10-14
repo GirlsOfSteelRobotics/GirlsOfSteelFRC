@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class Shoot extends CommandGroup {
-    
+
     public  Shoot() {
-    	addParallel(new Release());
-    	addSequential(new TimeDelay(1.0));
-    	addSequential(new PusherOut()); 
-    	addSequential(new StopShooter()); 
-    	
+        addParallel(new Release());
+        addSequential(new TimeDelay(1.0));
+        addSequential(new PusherOut());
+        addSequential(new StopShooter());
+
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

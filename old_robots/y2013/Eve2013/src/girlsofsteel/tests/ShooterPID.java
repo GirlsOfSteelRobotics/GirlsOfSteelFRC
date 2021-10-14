@@ -17,11 +17,11 @@ public class ShooterPID extends CommandBase{
     double p;
     double i;
     double encoderValue;
-    
+
     public ShooterPID(){
         requires(shooter);
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -35,10 +35,10 @@ public class ShooterPID extends CommandBase{
         speed = SmartDashboard.getNumber("Shooter Speed", 0.0);
         p = SmartDashboard.getNumber("p value", 0.0);
         i = SmartDashboard.getNumber("i value", 0.0);
-        
+
         shooter.setPIDValues(p, i, 0.0);
         shooter.setPIDspeed(speed);
-        
+
         //print encoder value
         SmartDashboard.putNumber("Encoder Value",
                 shooter.getEncoderRate());
@@ -54,5 +54,5 @@ public class ShooterPID extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

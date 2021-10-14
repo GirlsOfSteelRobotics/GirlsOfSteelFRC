@@ -1,7 +1,7 @@
 package girlsofsteel.objects;
 
 public class MapDouble {
-    
+
     private double velocity = 0.0;
     private double distance = 0.0;
 
@@ -9,11 +9,11 @@ public class MapDouble {
         this.distance = distance;
         this.velocity = velocity;
     }
-    
+
     public double getVelocity(){
         return velocity;
     }
-    
+
     public double getDistance(){
         return distance;
     }
@@ -28,5 +28,5 @@ public class MapDouble {
             return 0;
         }
     }
-    
+
 }

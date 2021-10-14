@@ -5,7 +5,7 @@ public class HoldPosition extends CommandBase {
     public HoldPosition(){
         requires(chassis);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         chassis.initHoldPosition();
@@ -28,5 +28,5 @@ public class HoldPosition extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

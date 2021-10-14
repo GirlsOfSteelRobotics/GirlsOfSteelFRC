@@ -14,26 +14,25 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Drive extends Subsystem {
     RobotDrive robotDrive = RobotMap.driveRobotDrive;
     public static final double AUTO_DRIVE_SPEED = -0.1;
-    
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new DriveCommand());
+        setDefaultCommand(new DriveCommand());
     }
-    
+
     public void moveByJoystick(Joystick joystick) {
-    	robotDrive.arcadeDrive(joystick);
+        robotDrive.arcadeDrive(joystick);
     }
-    
+
     public void driveAuto() {
-    	robotDrive.drive(AUTO_DRIVE_SPEED,0);
+        robotDrive.drive(AUTO_DRIVE_SPEED,0);
     }
-  
+
     public void stop() {
-    	robotDrive.drive(0,0);
+        robotDrive.drive(0,0);
     }
 }
-

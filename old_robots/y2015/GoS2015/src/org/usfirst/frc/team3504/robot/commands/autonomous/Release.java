@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class Release extends CommandGroup {
 
-	public Release() {
-		addSequential(new ShackOut());
-		addSequential(new AngleCollectorOut());
+    public Release() {
+        addSequential(new ShackOut());
+        addSequential(new AngleCollectorOut());
 
-	}
+    }
 }

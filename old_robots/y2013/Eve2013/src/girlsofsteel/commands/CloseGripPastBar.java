@@ -17,10 +17,10 @@ public class CloseGripPastBar extends CommandBase{
 
     public CloseGripPastBar(Gripper gripper) {
         this.gripper = gripper;
-        
+
         requires(gripper);
     }
-    
+
     protected void initialize() {
     }
 
@@ -37,5 +37,5 @@ public class CloseGripPastBar extends CommandBase{
 
     protected void interrupted() {
     }
-    
+
 }

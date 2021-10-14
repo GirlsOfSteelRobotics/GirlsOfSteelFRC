@@ -11,14 +11,14 @@ public class TankDrive extends CommandBase {
     need joystick here
     inputs are joysticks
     outputs are motors
-    
+
     */
 Joystick left;
 Joystick right;
-    
+
 public TankDrive() {
-  requires(driving);  
-}    
+  requires(driving);
+}
     protected void initialize() {
         left = oi.getChassisJoystick();
         right = oi.getOperatorJoystick();
@@ -27,7 +27,7 @@ public TankDrive() {
     protected void execute() {
         //System.out.println("Right: " + right.getY() + "\nLeft: " + left.getY());
         chassis.tankDrive(right.getY(),left.getY());
-        
+
     }
 
     protected boolean isFinished() {
@@ -41,5 +41,5 @@ public TankDrive() {
     protected void interrupted() {
         end();
     }
-    
+
 }

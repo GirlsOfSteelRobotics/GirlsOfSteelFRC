@@ -13,11 +13,11 @@ public class RetractClimberPiston extends CommandBase{
     public RetractClimberPiston() {
         requires (climber);
     }
-    
-    
+
+
 
     protected void initialize() {
-        
+
     }
 
     protected void execute() {
@@ -33,5 +33,5 @@ public class RetractClimberPiston extends CommandBase{
 
     protected void interrupted() {
     }
-    
+
 }

@@ -12,7 +12,7 @@ public class Release extends Command {
     public Release() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.manipulator); 
+        requires(Robot.manipulator);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class Release extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.manipulator.collectIn(.75); 
+        Robot.manipulator.collectIn(.75);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,12 +31,12 @@ public class Release extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.manipulator.stopCollector();
+        Robot.manipulator.stopCollector();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end(); 
+        end();
     }
 }

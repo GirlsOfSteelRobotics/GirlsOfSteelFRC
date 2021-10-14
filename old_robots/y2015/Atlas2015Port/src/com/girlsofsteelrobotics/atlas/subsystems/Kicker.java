@@ -31,7 +31,7 @@ public class Kicker extends Subsystem {
     private Encoder kickerEncoder;
 
     private DigitalInput kickerLimitSwitch;
-    
+
     private EncoderGoSPIDController kickerPositionPID;
     public LSPBPIDPlanner kickerPlanner;
 
@@ -72,12 +72,12 @@ public class Kicker extends Subsystem {
     public void setSpikeForward() {
         kickerJag.set(Relay.Value.kForward); //Checked 04/08/14: forward is forward
     }
-    
+
     public void setSpikeBackwards() {
         kickerJag.set(Relay.Value.kReverse);
     }
     */
-    
+
     public void initEncoders() {
         kickerEncoder.setDistancePerPulse(distancePerPulse);
     }
@@ -97,7 +97,7 @@ public class Kicker extends Subsystem {
     public double getRaw() {
         return kickerEncoder.getRaw();
     }
-    
+
     public void setJag(double speed) {
         kickerJag.set(speed);
     }
@@ -109,11 +109,11 @@ public class Kicker extends Subsystem {
     public void setTalon(double speed) {
         kickerTalon.set(speed);
     }
-    
+
     public void stopTalon() {
         kickerTalon.set(0.0);
     }
-    
+
     protected void initDefaultCommand() {
     }
 
@@ -169,7 +169,7 @@ public class Kicker extends Subsystem {
     public void setEncoderReverseDirection(boolean reverseDirection) {
         kickerEncoder.setReverseDirection(reverseDirection);
     }
-    
+
     public boolean getLimitSwitch()
     {
         //Is backward!

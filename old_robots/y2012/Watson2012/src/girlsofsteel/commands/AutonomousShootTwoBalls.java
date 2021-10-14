@@ -4,12 +4,12 @@ public class AutonomousShootTwoBalls extends CommandBase {
 
     double timeToShootTwoBalls = 5.0; //TODO find how long shooting 2 balls takes
     double cameraDistance;
-    
+
     public AutonomousShootTwoBalls(){
         requires(shooter);
         requires(collector);
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -41,5 +41,5 @@ public class AutonomousShootTwoBalls extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

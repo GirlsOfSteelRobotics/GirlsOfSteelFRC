@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.girlsofsteelrobotics.atlas.commands.ArcadeDrive;
-import com.girlsofsteelrobotics.atlas.commands.AutonomousLowGoalHot;
 import com.girlsofsteelrobotics.atlas.commands.CommandBase;
 import com.girlsofsteelrobotics.atlas.commands.DoNothing;
 import com.girlsofsteelrobotics.atlas.commands.KickerUsingLimitSwitch;
@@ -43,17 +42,17 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new DoNothing();
 
         auto = new AutonomousChooser();
-        
+
         // Initialize all subsystems
         CommandBase.init();
         Configuration.configureForRobot(Configuration.COMPETITION_ROBOT);
         //SmartDashboard.putData(new TestKickerEncoder());
-        
+
         SmartDashboard.putData(new KickerUsingLimitSwitch(-1, true));
         SmartDashboard.putData(new TestKickerEncoder());
         SmartDashboard.putData(new TuneManipulatorPID());
         SmartDashboard.putData(new ManualPositionPIDTuner());
-        
+
    //     SmartDashboard.putData(new FullTester());
     }
 
@@ -75,7 +74,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
 
@@ -90,7 +89,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());  
+        SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         Scheduler.getInstance().run();
         //Configuration.configureForRobot((int) SmartDashboard.getNumber("Robot Configuration"));
 //        SmartDashboard.putNumber("robotCameraAngle",(double)CommandBase.camera.getVerticalAngleOffset());

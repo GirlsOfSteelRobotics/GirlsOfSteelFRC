@@ -6,19 +6,19 @@ public class TESTShooterPID extends CommandBase {
 
     boolean autoShoot;
     boolean bank;
-    
+
     double speed;
     double setpoint;
-    
+
     double p;
     double i;
     double d;
-    
+
     double rate;
     double difference;
-    
+
     double[] rateList;
-    
+
     public TESTShooterPID() {
         requires(shooter);
         SmartDashboard.putDouble("Shooter Setpoint", 0.0);
@@ -29,7 +29,7 @@ public class TESTShooterPID extends CommandBase {
 //        SmartDashboard.putBoolean("Bank?", false);
         SmartDashboard.putDouble("Shooter Encoder", shooter.getEncoderRate());
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();

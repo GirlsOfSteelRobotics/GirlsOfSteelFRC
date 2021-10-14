@@ -3,21 +3,21 @@ package girlsofsteel.commands;
 public class AutoShootMany extends CommandBase {
 
     public final static double WAIT_TIME = 1.0;
-    
+
     int shots;
     double desiredVoltage;
-    
+
     int counter;
     boolean pushed;
     double time;
-    
+
     public AutoShootMany(int numShots, double desiredVoltage){
         requires(shooter);
         requires(feeder);
         shots = numShots;
         this.desiredVoltage = desiredVoltage;
     }
-    
+
     protected void initialize() {
         counter = 0;
         pushed = false;
@@ -54,5 +54,5 @@ public class AutoShootMany extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

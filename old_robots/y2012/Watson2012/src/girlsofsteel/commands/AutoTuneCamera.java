@@ -9,11 +9,11 @@ public class AutoTuneCamera extends CommandBase {
     //public static final double HALF_COURT = 7.1 // meters
     //public static final double STEP = 0.5; //meters
     public static final double ERROR_THRESHOLD = 0.1;
-    
+
     public AutoTuneCamera(){
         requires(chassis);
     }
-    
+
     //returns average of a set of 10 data pouints from the camera if it's stable
     private double getStableRation(){
         int n = 10;
@@ -23,7 +23,7 @@ public class AutoTuneCamera extends CommandBase {
             values[i] = 1/Camera.getImageTargetRatio();
             //System.out.println(values[i]);
             sumOfData += values[i];
-            
+
             try{
                 Thread.sleep(50);
             }catch(Exception ex){
@@ -42,7 +42,7 @@ public class AutoTuneCamera extends CommandBase {
         }
         return -1; //can't use the data
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         int nSteps = 10; //(int)(HALF_COURT/STEP);
@@ -77,7 +77,7 @@ public class AutoTuneCamera extends CommandBase {
                             + "often, retune RGB");
                     continue;
                 }
-                
+
                 double distCamera = Camera.getXDistance(); //meter from the
                 //center of the turret to the backboard when the rollers are
                 //facing the bridge
@@ -86,7 +86,7 @@ public class AutoTuneCamera extends CommandBase {
                 SmartDashboard.putDouble("Chassis Encoder",
                         chassis.getRightEncoderDistance());
                 System.out.println(distanceData[count] + ", " + ratio +
-                        " CD=" + distCamera + " Err=" + (distCamera - 
+                        " CD=" + distCamera + " Err=" + (distCamera -
                         distanceData[count]));
                 count++;
             }
@@ -96,7 +96,7 @@ public class AutoTuneCamera extends CommandBase {
                 distanceData, count);
         double a = ab[0];
         double b = ab[1];
-        
+
         if(!Double.isNaN(a)){
             NetworkTable table = NetworkTable.getTable("camera");
             table.putDouble("slope", a);
@@ -119,7 +119,7 @@ public class AutoTuneCamera extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }
 
 class LinearRegressionAuto{
@@ -137,7 +137,7 @@ class LinearRegressionAuto{
         }
         double xBar = sumX/n;
         double yBar = sumY/n;
-        
+
         //second pass: compute summary statistics
         double xXBar = 0.0;
         double yYBar = 0.0;
@@ -149,7 +149,7 @@ class LinearRegressionAuto{
         }
         double beta1 = xYBar/xXBar;
         double beta0 = yBar - beta1*xBar;
-        
+
         double[] ab = new double[2];
         ab[0] = beta1; // a in the equation ax+b
         ab[1] = beta0; //b in the equation ax+b

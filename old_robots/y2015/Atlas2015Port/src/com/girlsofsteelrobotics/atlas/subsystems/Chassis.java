@@ -60,13 +60,13 @@ public class Chassis extends Subsystem {
 
 //    private double leftDistancePerPulsePosition = (wheelCircumference) / (leftPulsePerRevolution * gearRatio);//(leftPulsePerRevolution * gearRatio) / (wheelCircumference);
 //    private double rightDistancePerPulsePosition = (wheelCircumference) / (rightPulsePerRevolution * gearRatio);//(rightPulsePerRevolution * gearRatio) / (wheelCircumference);
-//    
+//
     //Practice bot, 4/19/14 based on raw values after pushing robot forward 5.68 meters
     //Divided the raw values by four because the distances were off by a factor of four
 //    private double leftDistancePerPulsePosition = (5.68 / (24163.5/4.0));
 //    private double rightDistancePerPulsePosition = (5.68 / (25416/4));
-    
-    
+
+
     //Competition robot, 4/23/14 pushed the robot forward 1 meter
     //Divided the raw values by four because the distances were off by a factor of four
     private double leftDistancePerPulsePosition = (1.0 / (4810.4/4.0));
@@ -216,7 +216,7 @@ public class Chassis extends Subsystem {
      Inputs: joysticks (2), y values for both joysticks
      Outputs: method doesn't need any return values
      How to test:
-     -connect two jags to testing board 
+     -connect two jags to testing board
      -check to see if jags move in correct direction
      -this corresponds with the colour they show
      -if joysticks are pushed forward, both jags should turn forwards
@@ -406,7 +406,7 @@ public class Chassis extends Subsystem {
     /*
      Takes in the encoder values at the start time and then checks if the robot
      has moved since
-    
+
      (must be called in a loop to get the updated results)
      */
     public boolean isMoving() {

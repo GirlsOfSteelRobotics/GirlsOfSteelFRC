@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CameraShooterTest extends CommandBase {
 
     double speed;
-    
+
     public CameraShooterTest() {
         requires(shooter);
         requires(collector);

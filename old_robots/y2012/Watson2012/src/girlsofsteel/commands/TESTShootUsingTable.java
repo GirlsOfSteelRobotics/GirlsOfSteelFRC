@@ -8,7 +8,7 @@ public class TESTShootUsingTable extends CommandBase {
     double speed;
     double cameraDistance;
     double distance;
-    
+
     public TESTShootUsingTable() {
         requires(shooter);
 //        SmartDashboard.putDouble("Bank Addition", 0.0);

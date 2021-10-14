@@ -20,7 +20,7 @@ public class TESTAll extends CommandGroup {
         SmartDashboard.putData(new Shooter());
         SmartDashboard.putData(new Climber());
         //NOT WORKING FIX****************************************************************
-        
+
     }
 
 }

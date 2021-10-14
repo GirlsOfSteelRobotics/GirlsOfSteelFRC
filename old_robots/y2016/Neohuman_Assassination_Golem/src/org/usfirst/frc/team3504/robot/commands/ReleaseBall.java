@@ -11,10 +11,10 @@ public class ReleaseBall extends Command {
     public ReleaseBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	if(RobotMap.USING_CLAW)
-    		requires(Robot.claw);
-    	else
-    		requires(Robot.shooter);
+        if(RobotMap.USING_CLAW)
+            requires(Robot.claw);
+        else
+            requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -23,10 +23,10 @@ public class ReleaseBall extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(RobotMap.USING_CLAW)
-    		Robot.claw.collectRelease(.8);
-    	else
-    		Robot.shooter.spinWheels(-1);
+        if(RobotMap.USING_CLAW)
+            Robot.claw.collectRelease(.8);
+        else
+            Robot.shooter.spinWheels(-1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,15 +36,15 @@ public class ReleaseBall extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	if(RobotMap.USING_CLAW)
-    		Robot.claw.stopCollecting();
-    	else
-    		Robot.shooter.stop();
+        if(RobotMap.USING_CLAW)
+            Robot.claw.stopCollecting();
+        else
+            Robot.shooter.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+        end();
     }
 }

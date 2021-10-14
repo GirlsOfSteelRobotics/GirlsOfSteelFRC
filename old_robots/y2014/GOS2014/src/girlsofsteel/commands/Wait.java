@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 /**
  *
  * @author Sylvie and Heather
- * 
+ *
  * This waits for the given number of SECONDSSSS
  */
 public class Wait extends CommandBase {

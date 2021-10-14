@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.Joystick;
 public class PS3ManualTurret extends CommandBase {
 
     Joystick operatorJoystick;
-    
+
     double speed;
-    
+
     public PS3ManualTurret(){
         requires(turret);
     }
-    
+
     protected void initialize() {
         operatorJoystick = oi.getOperatorJoystick();
     }
@@ -31,5 +31,5 @@ public class PS3ManualTurret extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

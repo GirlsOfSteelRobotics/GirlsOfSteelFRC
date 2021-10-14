@@ -14,7 +14,7 @@ public class Rotate extends CommandBase {
         if(targetRotate){
             desiredTheta = theta;
         }else{
-            desiredTheta = chassis.getGyroAngle() - 
+            desiredTheta = chassis.getGyroAngle() -
                     chassis.getFieldAdjustment() + theta;
         }
     }
@@ -23,7 +23,7 @@ public class Rotate extends CommandBase {
         if(targetRotate){
             desiredTheta = theta;
         }else{
-            desiredTheta = chassis.getGyroAngle() - 
+            desiredTheta = chassis.getGyroAngle() -
                     chassis.getFieldAdjustment() + theta;
         }
         chassis.startAutoRotation();
@@ -82,5 +82,5 @@ public class Rotate extends CommandBase {
             }
         }
     }
-    
+
 }

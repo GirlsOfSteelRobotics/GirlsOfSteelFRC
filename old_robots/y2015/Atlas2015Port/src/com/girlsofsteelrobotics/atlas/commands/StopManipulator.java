@@ -15,7 +15,7 @@ public class StopManipulator extends CommandBase {
     {
         requires(manipulator);
     }
-    
+
     protected void initialize() {
         manipulator.stopManipulator();
     }
@@ -32,5 +32,5 @@ public class StopManipulator extends CommandBase {
 
     protected void interrupted() {
     }
-    
+
 }

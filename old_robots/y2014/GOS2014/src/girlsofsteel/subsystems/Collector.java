@@ -3,7 +3,6 @@
  */
 package girlsofsteel.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -11,7 +10,7 @@ import girlsofsteel.Configuration;
 import girlsofsteel.RobotMap;
 
 /**
- * This class is for the subsystem Collector. 
+ * This class is for the subsystem Collector.
  * @author Heather, Sonia, Sophia
  */
 public class Collector extends Subsystem {
@@ -21,7 +20,7 @@ public class Collector extends Subsystem {
      * @author Sonia, Sophia
      */
     private Relay collectorWheelSpike;
-    
+
     /**
      * this is the jag that moves the collector up and down to collect or release the ball.
      * @author Sonia, Sophia
@@ -37,12 +36,12 @@ public class Collector extends Subsystem {
         collectorWheelSpike = new Relay(RobotMap.COLLECTOR_WHEEL_SPIKE);
         collectorJag = new Jaguar(RobotMap.COLLECTOR_JAG);
         }
-    
-    
+
+
     public void moveCollectorToZJoystick(double zVertical) {
         collectorJag.set(zVertical);
     }
-    
+
     /**
      * This method sets the wheel spike to the forward setting
      * @author Sonia, Sophia
@@ -50,7 +49,7 @@ public class Collector extends Subsystem {
     public void collectorWheelFoward() {
         collectorWheelSpike.set(Configuration.collectorWheelForwardSpeed);
     } //Set the wheel spike to the forward setting
-    
+
      /**
      * This method sets the wheel spike to the reverse setting
      * @author Sonia, Sophia
@@ -58,7 +57,7 @@ public class Collector extends Subsystem {
     public void collectorWheelReverse() {
         collectorWheelSpike.set(Configuration.collectorWheelBackwardSpeed);
     }//set the wheel spike to the reverse setting
-    
+
     /**
      * This method stops the wheel from spinning
      * @author Sonia, Sophia
@@ -79,7 +78,7 @@ public class Collector extends Subsystem {
     {
         return collectorJag.getSpeed();
     }
-    
+
     /**
      * There is nothing in this method
      * @author Sonia, Sophia

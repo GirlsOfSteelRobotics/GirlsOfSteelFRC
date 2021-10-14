@@ -4,9 +4,7 @@
  */
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import girlsofsteel.objects.Camera;
 
 /**
  * Moves the robot to the correct position and releases it into the low goal.

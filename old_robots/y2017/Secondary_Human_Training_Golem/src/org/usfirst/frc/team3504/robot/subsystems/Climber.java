@@ -13,41 +13,41 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 
 public class Climber extends Subsystem {
-	public CANTalon climbMotorA;
-	public CANTalon climbMotorB;
+    public CANTalon climbMotorA;
+    public CANTalon climbMotorB;
 
-	public Climber() {
-		climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
-		climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
+    public Climber() {
+        climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
+        climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
 
-		climbMotorA.enableBrakeMode(true);
-		climbMotorB.enableBrakeMode(true);
+        climbMotorA.enableBrakeMode(true);
+        climbMotorB.enableBrakeMode(true);
 
-		climbMotorA.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-		climbMotorA.reverseSensor(true);
+        climbMotorA.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+        climbMotorA.reverseSensor(true);
 
-		climbMotorA.setF(0);
-		climbMotorA.setP(0.5);
-		climbMotorA.setI(0);
-		climbMotorA.setD(0);
+        climbMotorA.setF(0);
+        climbMotorA.setP(0.5);
+        climbMotorA.setI(0);
+        climbMotorA.setD(0);
 
-		LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
-		LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
-	}
+        LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
+        LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
+    }
 
-	public void climb(double speed) {
-		climbMotorA.set(speed);
-		climbMotorB.set(speed);
-	}
+    public void climb(double speed) {
+        climbMotorA.set(speed);
+        climbMotorB.set(speed);
+    }
 
-	public void stopClimb() {
-		climbMotorA.set(0.0);
-		climbMotorB.set(0.0);
-	}
+    public void stopClimb() {
+        climbMotorA.set(0.0);
+        climbMotorB.set(0.0);
+    }
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new StayClimbed());
-	}
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new StayClimbed());
+    }
 }

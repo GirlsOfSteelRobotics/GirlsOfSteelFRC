@@ -6,19 +6,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TESTDriveSlowVelocity extends CommandBase {
 
     Joystick driverJoystick;
-    
+
     double xAxis;
     double yAxis;
-    
+
     double p;
     double i;
-    
+
     public TESTDriveSlowVelocity(){
         requires(chassis);
         SmartDashboard.putDouble("Chassis P", 0.0);
         SmartDashboard.putDouble("Chassis I", 0.0);
     }
-    
+
     protected void initialize() {
         driverJoystick = oi.getDriverJoystick();
         chassis.initEncoders();
@@ -47,5 +47,5 @@ public class TESTDriveSlowVelocity extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

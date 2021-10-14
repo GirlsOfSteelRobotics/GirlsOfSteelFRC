@@ -20,15 +20,15 @@ public class Shooter extends Subsystem {
     //shooting from the bridge button board stufficles
     public final double MIN_SLIDER = 0.0;
     public final double MAX_SLIDER = 3.15;
-    
+
     public final double VELOCITY_ERROR_RANGE = 1.0;//this is the speed that the
     //shooter wheel can be off by before it shoots the ball
     //hopefully this can be lowered once the PID is tuned nicely
     public final double SCALE_TOP_ROLLERS_OFF = 5.0;
-    
+
     private final double MAX_SHOOTER_VELOCITY = 41.0;
     private final double PID_OUTPUT_THRESHOLD = 0.05;//change in voltage
-    
+
     //constants -> meters if a distance
     public final double TOP_HOOP_HEIGHT = 2.4892;
     public final double ROBOT_HEIGHT = 1.2065;//floor to the axis of the shooter wheel
@@ -66,12 +66,12 @@ public class Shooter extends Subsystem {
                     setJags(output);
                 }
             }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
-    
+
     public Shooter(){
         populate();//adds all the values in the table below to the shooting table
         //to find distances based on data
     }
-    
+
     protected void initDefaultCommand() {
     }
 
@@ -112,7 +112,7 @@ public class Shooter extends Subsystem {
     public void setPIDSpeed(double speed) {
         PID.setSetPoint(speed);
     }
-    
+
     //re-assigns the P & I values -> the D value is always 0.0 because it is a
     //rate PID controller
     public void setPIDValues(double p, double i, double d){
@@ -128,7 +128,7 @@ public class Shooter extends Subsystem {
     public double getPIDSetPoint(){
         return PID.getSetPoint();
     }
-    
+
     //if the shooter wheel is within the set point range it will return true
     //used to decide if the top rollers should be run or not
     public boolean isWithinSetPoint(double setPoint) {
@@ -148,19 +148,19 @@ public class Shooter extends Subsystem {
                 && PID.getRate() < setPoint + errorRange);
         }
     }
-    
+
     public void disablePID() {
         PID.disable();
     }
-    
+
     public void resetPIDError(){
         PID.resetError();
     }
-    
+
     public double getDistance(){//from the fender to the camera -> in meters
         return Camera.getXDistance() - 38*(0.0254/1.0);//fender is 38inches
     }
-    
+
     public void shoot(double speed){
         setPIDValues();
         setPIDSpeed(speed);
@@ -172,7 +172,7 @@ public class Shooter extends Subsystem {
             }
         }
     }
-    
+
     public void autoShoot(double cameraDistance){
         setPIDValues();
         double velocity;
@@ -187,7 +187,7 @@ public class Shooter extends Subsystem {
             }
         }
     }
-    
+
     public void autoShootBestFitLine(double cameraDistance){
         setPIDValues();
         double velocity;
@@ -201,7 +201,7 @@ public class Shooter extends Subsystem {
             }
         }
     }
-    
+
     //now tuned for banking...
 //    public void TESTAutoShootBank(double bankAddition, double cameraDistance){
 //        setPIDValues();
@@ -219,7 +219,7 @@ public class Shooter extends Subsystem {
 //            }
 //        }
 //    }
-//    
+//
 //    public void autoShootBank(double cameraDistance){
 //        setPIDValues();
 //        double xDistance;
@@ -236,7 +236,7 @@ public class Shooter extends Subsystem {
 //            }
 //        }
 //    }
-    
+
     public void shootUsingBallVelocity(double velocity) {
         double newVelocity = velocity * (5.5 / 4.0);
         //the velocity of the wheel must be altered to give the ball the correct
@@ -308,7 +308,7 @@ public class Shooter extends Subsystem {
         angleCompensation = ((-hangTime * robotVelocityX) / newXDistance) * (180.0 / Math.PI);
         return angleCompensation;//returns degrees
     }
-    
+
     //table sorting shooter experimental values calculator
     SortedVector.Comparator comparator = new MapDoubleComparator();
     //Sorted array sorts greatest to least
@@ -318,7 +318,7 @@ public class Shooter extends Subsystem {
     //ball should be shot at
     public void populate() {
         //new data (4/20/12):
-        
+
         list.addElement(new MapDouble(24.1,193.5));
         list.addElement(new MapDouble(2.87,20.75));
         list.addElement(new MapDouble(3.175,21.3));
@@ -328,7 +328,7 @@ public class Shooter extends Subsystem {
         list.addElement(new MapDouble(5.613,26.7));
         list.addElement(new MapDouble(6.223,27.7));
         list.addElement(new MapDouble(6.68,28.8));
-        
+
         //old data:
 //        list.addElement(new MapDouble(0.0, 0.0));
 //        list.addElement(new MapDouble(2.2733, 20.15));
@@ -357,7 +357,7 @@ public class Shooter extends Subsystem {
 
     /**
      * @param distance, needs to get here from the camera*-
-     * @return 
+     * @return
      */
     public double getVelocityFrTable(double distance) {
         int index = (int) Math.ceil(list.size() / 2.0);
@@ -369,7 +369,7 @@ public class Shooter extends Subsystem {
         if (list.size() == 0) {
             return 0;//ends the getVelocityFrTable method -> sends a velocity of 0
         }
-        
+
         //Sorted array is sorted greatest to least
         //assigns the last value to the lowest point -> and the first to the last
         MapDouble lowest = (MapDouble) list.lastElement();
@@ -386,7 +386,7 @@ public class Shooter extends Subsystem {
         else if (distance > highest.getDistance()) {//same as above, but for a
             //higher number of the highest point in the table
             //creates a line between the highest point and a value that we won't reach
-            //returns the velocity on this line -> at the highest 
+            //returns the velocity on this line -> at the highest
 //            return interpolate(distance, highest.getDistance(), highest.getVelocity(), highest.getDistance() + 5, MAX_SHOOTER_VELOCITY);
             return MAX_SHOOTER_VELOCITY;//if the distance is above anything in
             //the table -> shoot at the highest the velocity
@@ -432,12 +432,12 @@ public class Shooter extends Subsystem {
 
     public double getEncoderRate() {
         return encoder.getRate();
-    } 
-    
+    }
+
     public double getEncoderDistance() {
         return encoder.getDistance();
     }
-    
+
     //button board stuff -> not used
     //This is for the manual shoot speed change when using the slider
     public double manualShooterSpeedConverter(double sliderValue) {
@@ -446,12 +446,12 @@ public class Shooter extends Subsystem {
         double speed = ((maxShooterValue - minShooterValue) * (sliderValue - MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER); //Shooter value
         return speed;
     }
-    
+
     public double getIncrementValue(double sliderValue){
         double minIncrementValue = -2.0;
         double maxIncrementValue = 2.0;
         double incrementValue = ((maxIncrementValue - minIncrementValue)*(sliderValue-MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER);
         return incrementValue;
     }
-    
+
 }

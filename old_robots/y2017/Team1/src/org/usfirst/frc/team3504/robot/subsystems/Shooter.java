@@ -9,29 +9,29 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  *
  */
 public class Shooter extends Subsystem {
-    
-	private DoubleSolenoid shooterPistonLeft;
-	private DoubleSolenoid shooterPistonRight;
+
+    private DoubleSolenoid shooterPistonLeft;
+    private DoubleSolenoid shooterPistonRight;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	
-	public Shooter()
-	{
-		shooterPistonLeft = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
-		shooterPistonRight = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
 
-	}
-	public void pistonOut()
-	{
-		shooterPistonLeft.set(DoubleSolenoid.Value.kForward);
-		shooterPistonRight.set(DoubleSolenoid.Value.kForward);
-	}
-	
-	public void pistonIn()
-	{
-		shooterPistonLeft.set(DoubleSolenoid.Value.kReverse);
-		shooterPistonRight.set(DoubleSolenoid.Value.kReverse);
-	}
+    public Shooter()
+    {
+        shooterPistonLeft = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
+        shooterPistonRight = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
+
+    }
+    public void pistonOut()
+    {
+        shooterPistonLeft.set(DoubleSolenoid.Value.kForward);
+        shooterPistonRight.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void pistonIn()
+    {
+        shooterPistonLeft.set(DoubleSolenoid.Value.kReverse);
+        shooterPistonRight.set(DoubleSolenoid.Value.kReverse);
+    }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

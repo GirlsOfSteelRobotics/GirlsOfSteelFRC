@@ -6,16 +6,16 @@ public class TESTTurretPID extends CommandBase {
 
     double p;
     double d;
-    
+
     double setpoint;
-    
+
     public TESTTurretPID(){
         requires(turret);
         SmartDashboard.putDouble("Turret Setpoint", 0.0);
         SmartDashboard.putDouble("Turret P", 0.0);
         SmartDashboard.putDouble("Turret D", 0.0);
     }
-    
+
     protected void initialize() {
         turret.initEncoder();
         turret.enablePID();
@@ -41,5 +41,5 @@ public class TESTTurretPID extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

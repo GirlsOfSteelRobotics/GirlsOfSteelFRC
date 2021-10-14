@@ -19,7 +19,7 @@ public class OpenGripAtBar extends CommandBase {
     }
 
     protected void initialize() {
-        
+
     }
 
     protected void execute() {

@@ -1,7 +1,7 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- * 
+ *
  * |\  |
  * | \ |
  * |  \|OTE!!! larger margin for error in shooter than for Watson :)
@@ -41,7 +41,7 @@ public class Shooter extends Subsystem {
     private double d = 0.0;
     //Array of ShooterPoints objects to track voltage, encoder speed, and battery voltage of shooting
     public ShooterPoint[] speeds = new ShooterPoint[100];
-    
+
     boolean shoot = false;
 
     public Shooter() {
@@ -51,7 +51,7 @@ public class Shooter extends Subsystem {
         //This is the special shooter speed controller.
         magSpeed = new MagneticSpeedSensor(RobotMap.DIGITAL_INTPUT_CHANNEL);
 
-        //Makes the PIDController  
+        //Makes the PIDController
         PID = new PIDController(p, i, d, magSpeed,
                 new PIDOutput() {
                     public void pidWrite(double output) {
@@ -152,7 +152,7 @@ public class Shooter extends Subsystem {
     /*
      * Make the "speeds" array a one-dimensional array with with objects of speeds (with voltage, encoder speed, and battery).
      * This will make things easier and perfect
-     * 
+     *
      * TODO:
      * Having found actual values for "speeds", use MatLab to get a BFL. Then use the BFL to get more accurate values.
      */
@@ -205,15 +205,15 @@ public class Shooter extends Subsystem {
     public void setShootTrue(){
         shoot = true;
     }
-    
+
     public void setShootFalse(){
         shoot = false;
     }
-    
+
     public boolean isTimeToShoot(){
         return shoot;
     }
-    
+
     protected void initDefaultCommand() {
     }
 }

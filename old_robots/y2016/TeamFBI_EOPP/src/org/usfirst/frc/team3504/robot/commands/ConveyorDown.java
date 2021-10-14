@@ -6,32 +6,32 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ConveyorDown extends Command {
 
-	public ConveyorDown() {
-		requires(Robot.manipulator);
-	}
-	
-	@Override
-	protected void initialize() {
-	}
+    public ConveyorDown() {
+        requires(Robot.manipulator);
+    }
 
-	@Override
-	protected void execute() {
-		Robot.manipulator.manipulatorConveyorBeltMotorLeft(false);
-		Robot.manipulator.manipulatorConveyorBeltMotorRight(false);
-	}
+    @Override
+    protected void initialize() {
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+    @Override
+    protected void execute() {
+        Robot.manipulator.manipulatorConveyorBeltMotorLeft(false);
+        Robot.manipulator.manipulatorConveyorBeltMotorRight(false);
+    }
 
-	@Override
-	protected void end() {
-		Robot.manipulator.stopConveyorBeltMotor();
-	}
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
 
-	@Override
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void end() {
+        Robot.manipulator.stopConveyorBeltMotor();
+    }
+
+    @Override
+    protected void interrupted() {
+        end();
+    }
 }

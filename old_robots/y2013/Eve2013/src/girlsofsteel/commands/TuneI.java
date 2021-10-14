@@ -7,25 +7,25 @@ import java.io.*;
 import javax.microedition.io.Connector;
 
 public class TuneI extends CommandBase {
-    
+
     double setpoint;
     double bI;
     double eI;
     double interval;
-    
+
     boolean right = false;
     boolean back = false;
     boolean left = false;
-    
+
     double[][] rightRates;
     double[][] backRates;
     double[][] leftRates;
     int counter;
     int numRates;
-    
+
     double[][] setpointDeviations;
     double[][] standardDeviations;
-    
+
     public TuneI(double setpoint, double beginningI, double endingI) {
         this.setpoint = setpoint;
         bI = beginningI;
@@ -75,20 +75,20 @@ public class TuneI extends CommandBase {
             left = false;
             counter++;
         }//end for
-        
+
     }//end execute
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
     }
-    
+
     // Called once after isFinished returns true
     protected void end() {
         chassis.stopRatePIDs();
         chassis.stopEncoders();
         chassis.stopJags();
-        
+
         //right Is & rates
         for(int i=0; i<rightRates.length; i++){//for every i value
             double sum = 0;
@@ -101,7 +101,7 @@ public class TuneI extends CommandBase {
             double sumSquareDeviations = 0;
             for(int j=0; j<rightRates[i].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((rightRates[i][j]-mean) * 
+                sumSquareDeviations += ((rightRates[i][j]-mean) *
                         (rightRates[i][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
@@ -110,7 +110,7 @@ public class TuneI extends CommandBase {
             setpointDeviations[0][i] = mean-setpoint;
             standardDeviations[0][i] = standardDeviation;
         }//end i for
-        
+
         //back Is & rates
         for(int i=0; i<backRates.length; i++){//for every i value
             double sum = 0;
@@ -123,7 +123,7 @@ public class TuneI extends CommandBase {
             double sumSquareDeviations = 0;
             for(int j=0; j<backRates[i].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((backRates[i][j]-mean) * 
+                sumSquareDeviations += ((backRates[i][j]-mean) *
                         (backRates[i][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
@@ -132,7 +132,7 @@ public class TuneI extends CommandBase {
             setpointDeviations[1][i] = mean - setpoint;
             standardDeviations[1][i] = standardDeviation;
         }//end i for
-        
+
         //left Is & rates
         for(int i=0; i<leftRates.length; i++){//for every i value
             double sum = 0;
@@ -145,7 +145,7 @@ public class TuneI extends CommandBase {
             double sumSquareDeviations = 0;
             for(int j=0; j<leftRates[i].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((leftRates[i][j]-mean) * 
+                sumSquareDeviations += ((leftRates[i][j]-mean) *
                         (leftRates[i][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
@@ -154,20 +154,20 @@ public class TuneI extends CommandBase {
             setpointDeviations[2][i] = mean - setpoint;
             standardDeviations[2][i] = standardDeviation;
         }//end i for
-        
+
         //for every i in averages
         String message = "";
         for (int i = 0; i < standardDeviations[0].length; i++) {
-            message += ((i * interval) + bI) + " : " + 
+            message += ((i * interval) + bI) + " : " +
                     setpointDeviations[0][i] + " " + standardDeviations[0][i] +
-                    " " + setpointDeviations[1][i] + " " + 
+                    " " + setpointDeviations[1][i] + " " +
                     standardDeviations[1][i] + " " + setpointDeviations[2][i] +
                     " " + standardDeviations[2][i] + "\n";
         }//end for
-        
+
         //print message to a file
         String url = "file///Tune_I.txt";
-        
+
         String contents = "";
         try{
             FileConnection c = (FileConnection) Connector.open(url);
@@ -181,7 +181,7 @@ public class TuneI extends CommandBase {
         }catch(IOException ex){
             ex.printStackTrace();
         }
-        
+
         try{
             FileConnection c = (FileConnection) Connector.open(url);
             OutputStreamWriter writer = new OutputStreamWriter(
@@ -198,17 +198,17 @@ public class TuneI extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
     private boolean isWithinSetpoint(){
         if((setpoint-1.0) < chassis.getRightEncoderRate() &&
                 chassis.getRightEncoderRate() > (setpoint+1.0)){
             right = true;
         }
-        if((setpoint-1.0) < chassis.getBackEncoderRate() && 
+        if((setpoint-1.0) < chassis.getBackEncoderRate() &&
                 chassis.getBackEncoderRate() > (setpoint+1.0)){
             back = true;
         }
-        if((setpoint-1.0) < chassis.getLeftEncoderRate() && 
+        if((setpoint-1.0) < chassis.getLeftEncoderRate() &&
                 chassis.getLeftEncoderRate() > (setpoint+1.0)){
             left = true;
         }
@@ -216,5 +216,5 @@ public class TuneI extends CommandBase {
             return true;
         return false;
     }
-    
+
 }

@@ -6,7 +6,7 @@ public class StopChassis extends CommandBase {
         requires(drive);
         requires(chassis);
     }
-    
+
     protected void initialize() {
     }
 
@@ -24,5 +24,5 @@ public class StopChassis extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

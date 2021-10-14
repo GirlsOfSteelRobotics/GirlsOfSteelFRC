@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import girlsofsteel.objects.PositionInfo;
 
 public class Autonomous extends CommandGroup {
-    
+
     public Autonomous(int shootingPosition, int shots, boolean move){
         int angle = PositionInfo.getAngle(shootingPosition);
         double speed = PositionInfo.getSpeed(shootingPosition);
@@ -19,5 +19,5 @@ public class Autonomous extends CommandGroup {
         }
         addSequential(new AutoShootMany(shots, speed));
     }
-    
+
 }

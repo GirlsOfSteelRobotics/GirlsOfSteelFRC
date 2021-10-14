@@ -11,5 +11,5 @@ package com.girlsofsteelrobotics.atlas.commands;
  * @author Parent
  */
 public class GoalHot {
-    
+
 }

@@ -7,7 +7,7 @@ import girlsofsteel.objects.Camera;
 
 
 public class AutonomousBridgeShoot extends CommandGroup {
-    
+
     public AutonomousBridgeShoot(){
         if(Camera.foundTarget()){
             double distance = CommandBase.chassis.DISTANCE_BACKBOARD_TO_BRIDGE
@@ -22,5 +22,5 @@ public class AutonomousBridgeShoot extends CommandGroup {
             addParallel(new Shoot(CommandBase.shooter.BRIDGE_SPEED));
         }
     }
-    
+
 }

@@ -11,11 +11,11 @@ import com.girlsofsteelrobotics.atlas.Configuration;
 /**
  *
  * @author Sylvie
- * 
+ *
  * Angle 0 is considered to be the horizontal
  * -18.3 degrees is the actual bottom
  * Top limit of the arm unknown (probably around 100?)
- * 
+ *
  */
 public class setArmAnglePID extends CommandBase {
 
@@ -24,8 +24,8 @@ public class setArmAnglePID extends CommandBase {
     private double changedTime;
     private double startTime;
     private double allowedAngleError;
-    
-    
+
+
     public setArmAnglePID(double desiredAngle) {
         requires(manipulator);
         this.desiredAngle = desiredAngle;
@@ -37,7 +37,7 @@ public class setArmAnglePID extends CommandBase {
         angle = desiredAngle * Configuration.desiredAnglePivotArmSign;
     }
 
-    protected void execute() {  
+    protected void execute() {
         if (angle < -18.2) {
             angle = -18.2;
         }

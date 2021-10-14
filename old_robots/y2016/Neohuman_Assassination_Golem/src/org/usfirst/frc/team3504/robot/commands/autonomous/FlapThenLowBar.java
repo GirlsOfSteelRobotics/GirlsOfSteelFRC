@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class FlapThenLowBar extends CommandGroup {
-    
+
     public  FlapThenLowBar(double inches, double speed) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -21,9 +21,9 @@ public class FlapThenLowBar extends CommandGroup {
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
 
-    	addSequential(new NudgeFlapDown());
-    	addSequential(new AutoDriveBackwards(inches, speed));
-    	
+        addSequential(new NudgeFlapDown());
+        addSequential(new AutoDriveBackwards(inches, speed));
+
         // A command group will require all of the subsystems that each member
         // would require.
         // e.g. if Command1 requires chassis, and Command2 requires arm,

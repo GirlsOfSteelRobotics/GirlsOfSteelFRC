@@ -8,21 +8,21 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class Drive extends Command {
-	private double move;
-	private double angle;
+    private double move;
+    private double angle;
 
     public Drive(double distance, double rotate) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.chassis);
-    	move = distance;
-    	angle = rotate;
-    	
+        requires(Robot.chassis);
+        move = distance;
+        angle = rotate;
+
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.drive(move, angle);
+        Robot.chassis.drive(move, angle);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,6 +41,6 @@ public class Drive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+        end();
     }
 }

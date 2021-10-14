@@ -2,13 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
 
-NOTE!!!: The starting configuration of the pivot arm is STRAIGHT UP because 
+NOTE!!!: The starting configuration of the pivot arm is STRAIGHT UP because
 the pivot arm has to stay within the perimeter restraints
 
  */
 package girlsofsteel.commands;
-import girlsofsteel.Configuration;
-import girlsofsteel.OI;
 /**
  *
  * @author Sophia, Sam, and Abby
@@ -20,12 +18,12 @@ public class SetArmAngle extends CommandBase{
 
     private double angle = 0.0;
     private double desired;
-    
+
     public SetArmAngle (double desiredAngle){
         requires(manipulator);
         desired = desiredAngle;
     }
-    
+
     protected void initialize() {
         manipulator.init();
     }
@@ -38,8 +36,8 @@ public class SetArmAngle extends CommandBase{
         manipulator.moveJag(desired);
         angle = manipulator.getAbsoluteDistance();//TODO check logic
 
-        // Calls SetArmAngle function. Passes angle from constructor.      
-       
+        // Calls SetArmAngle function. Passes angle from constructor.
+
         //double joystickPostion;
         //joystickPostion = oi.getRightJoystick().getRawAxis(3);
         //System.out.println ("joystickPostition");
@@ -47,7 +45,7 @@ public class SetArmAngle extends CommandBase{
 //        double m=90;
 //        double x = joystickPosition;
 //        joystickPosition = m*x/2 + m/2;
-        
+
         //SetArmAngle isn't a method yet....setArmAngle(joystickPosition);
         /* create a varable thats a double
          * read the knob with joystick.getraw axis (3)
@@ -70,5 +68,5 @@ public class SetArmAngle extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

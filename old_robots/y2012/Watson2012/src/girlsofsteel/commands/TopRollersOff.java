@@ -20,5 +20,5 @@ public class TopRollersOff extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

@@ -3,11 +3,11 @@ package girlsofsteel.commands;
 public class StartGyro extends CommandBase {
 
     int angle;
-    
+
     public StartGyro(int angle){
         this.angle = angle;
     }
-    
+
     protected void initialize() {
     }
 
@@ -25,5 +25,5 @@ public class StartGyro extends CommandBase {
 
     protected void interrupted() {
     }
-    
+
 }

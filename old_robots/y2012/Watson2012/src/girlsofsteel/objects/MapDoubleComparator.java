@@ -9,5 +9,5 @@ public class MapDoubleComparator implements SortedVector.Comparator {
         MapDouble o2 = (MapDouble) object2;
         return o1.compare(o2);
     }
-   
+
 }

@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TESTShooter extends CommandBase {
 
     double speed;
-    
+
     public TESTShooter(){
         SmartDashboard.putDouble("Shooter Jag Speed", 0.0);
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
     }
@@ -32,5 +32,5 @@ public class TESTShooter extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

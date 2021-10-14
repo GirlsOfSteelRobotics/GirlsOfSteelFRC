@@ -4,13 +4,11 @@
  */
 package girlsofsteel.commands;
 
-import girlsofsteel.objects.PositionInfo;
-import girlsofsteel.objects.ShooterCamera;
 
 public class Shoot extends CommandBase {
 
     boolean camera;
-    
+
     double speed;
     double time;
 
@@ -19,7 +17,7 @@ public class Shoot extends CommandBase {
         camera = false;
         requires(shooter);
     }
-    
+
     public Shoot(){
         camera = true;
         requires(shooter);

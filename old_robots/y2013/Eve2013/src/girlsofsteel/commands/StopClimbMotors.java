@@ -15,10 +15,10 @@ public class StopClimbMotors extends CommandBase {
     }
 
     //stops the motors used for climbing
-    
-    
+
+
     protected void initialize() {
-      
+
     }
 
     protected void execute() {
@@ -35,5 +35,5 @@ public class StopClimbMotors extends CommandBase {
 
     protected void interrupted() {
     }
-    
+
 }

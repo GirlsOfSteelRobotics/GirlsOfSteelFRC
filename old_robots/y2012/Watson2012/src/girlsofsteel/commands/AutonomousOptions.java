@@ -3,7 +3,7 @@ package girlsofsteel.commands;
 import girlsofsteel.objects.Camera;
 
 public class AutonomousOptions extends CommandBase {
-    
+
     boolean autoTrack;//auto track the target using the camera & turret PID
     boolean autoShoot;//shoot using the camera
     boolean shootFromKey;//dead reckoning shooting from the key
@@ -19,10 +19,10 @@ public class AutonomousOptions extends CommandBase {
     //in after moving to the bridge
     boolean goBackToKey;//move back to the key (starting place)
     boolean shootFromKeyAfterBridge;//after moving back to the key, you shoot
-    
+
     double KEY_SPEED = shooter.KEY_SPEED;
     double FACE_START = 0.0;
-    
+
     public AutonomousOptions(boolean autoTrack, boolean autoShoot,
             boolean shootFromKey, boolean moveToBridge, boolean getXDistanceCamera,
             double xDistance,

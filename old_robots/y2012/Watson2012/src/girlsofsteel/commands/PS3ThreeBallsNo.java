@@ -1,11 +1,11 @@
 package girlsofsteel.commands;
 
 public class PS3ThreeBallsNo extends CommandBase{
-    
+
     public PS3ThreeBallsNo(){
         requires(collector);
     }
-    
+
     protected void initialize() {
     }
 
@@ -26,5 +26,5 @@ public class PS3ThreeBallsNo extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

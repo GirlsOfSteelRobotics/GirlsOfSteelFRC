@@ -36,5 +36,5 @@ public class Home extends Command {
     protected void interrupted() {
         end();
     }
-    
+
 }

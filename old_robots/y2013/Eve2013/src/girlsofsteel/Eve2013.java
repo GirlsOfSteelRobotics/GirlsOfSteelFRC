@@ -41,14 +41,14 @@ public class Eve2013 extends IterativeRobot {
         CommandBase.init();
         PositionInfo.init();
         SmartDashboard.putBoolean("Reset Netbook", true);
-        
+
         SmartDashboard.putData(new RunClimberBackwards());
-        
+
         SmartDashboard.putData(new ShooterJags());
-        
+
         //Drivers
         autonomous = new AutonomousChooser();
-        
+
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
@@ -58,13 +58,13 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-       
+
     }
 
     public void autonomousInit() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-        
+
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
@@ -85,7 +85,7 @@ public class Eve2013 extends IterativeRobot {
     public void autonomousPeriodic() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-        
+
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
@@ -107,7 +107,7 @@ public class Eve2013 extends IterativeRobot {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
       //  System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
-        
+
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
@@ -119,7 +119,7 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
         // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
         //new OpenAllGrippers().start();
@@ -136,7 +136,7 @@ public class Eve2013 extends IterativeRobot {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
     //    System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
-        
+
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", CommandBase.shooter.isTimeToShoot());
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
@@ -160,7 +160,7 @@ public class Eve2013 extends IterativeRobot {
     public void testPeriodic() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-        
+
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
@@ -178,7 +178,7 @@ public class Eve2013 extends IterativeRobot {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
  //       System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
-        
+
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
@@ -195,7 +195,7 @@ public class Eve2013 extends IterativeRobot {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
 //        System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
-        
+
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());

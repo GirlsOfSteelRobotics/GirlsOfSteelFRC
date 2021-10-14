@@ -11,21 +11,21 @@ import girlsofsteel.objects.GoSPIDController;
 import girlsofsteel.objects.SmoothEncoder;
 
 /**
- * Chassis subsystem for kiwi drive: creates jags, encoders, PID, & drive 
+ * Chassis subsystem for kiwi drive: creates jags, encoders, PID, & drive
  * function. UNIT: inches
  */
 public class Chassis extends Subsystem {
-    
+
     //tentative angles from 0 being straight forward
     public static final double ROTATION_THRESHOLD = 10;
     public static final int FEEDER_RIGHT = -88;
     public static final int FEEDER_LEFT = 6;
     public static final int BACK_RIGHT_OFFSET = 49;
     public static final int BACK_LEFT_OFFSET = 46;
-    
+
     //scale for rotation
     public static final double SLOW_ROTATE = 0.3;
-    public static final double SCALE = 0.04; 
+    public static final double SCALE = 0.04;
     public static final double DEADZONE_VALUE = 0.2;
     //robot info
     public static final double WHEEL_DIAMETER = 6.0;
@@ -44,7 +44,7 @@ public class Chassis extends Subsystem {
     //left wheel = (cos(248*pi/180),sin(248*pi/180))
     public static final double LEFT_X = -0.3746065934;
     public static final double LEFT_Y = -0.9271838546;
-    
+
     //Lengths on the wheel triangle
     public static final double A_LENGTH = 33;
     public static final double B_LENGTH = 25;
@@ -52,7 +52,7 @@ public class Chassis extends Subsystem {
     public static final double X_LENGTH = A_LENGTH/2;
     public static final double Y_LENGTH = Math.sqrt((B_LENGTH*B_LENGTH)-(
             X_LENGTH*X_LENGTH))/2;
-    
+
     //the length of each wheel from the center
     public static final double RIGHT_WHEEL_ROBOT_RADIUS = 21.60873; /* for Eve: Math.sqrt(
             (X_LENGTH*X_LENGTH)+(Y_LENGTH*Y_LENGTH)); */
@@ -64,7 +64,7 @@ public class Chassis extends Subsystem {
     private double[] wheelRadii = new double[3];
     //encoder info
     public static final boolean REVERSE_DIRECTION = true;
-    
+
     //create jags
     private Jaguar rightJag;
     private Jaguar backJag;
@@ -125,8 +125,8 @@ public class Chassis extends Subsystem {
         wheelXs[LEFT_WHEEL] = LEFT_X;
         wheelYs[RIGHT_WHEEL] = RIGHT_Y;
         wheelYs[BACK_WHEEL] = BACK_Y;
-        wheelYs[LEFT_WHEEL] = LEFT_Y; 
-        
+        wheelYs[LEFT_WHEEL] = LEFT_Y;
+
         //robot radii
         wheelRadii[RIGHT_WHEEL] = RIGHT_WHEEL_ROBOT_RADIUS;
         wheelRadii[BACK_WHEEL] = BACK_WHEEL_ROBOT_RADIUS;
@@ -147,7 +147,7 @@ public class Chassis extends Subsystem {
 //        leftEncoder = new Encoder(RobotMap.LEFT_WHEEL_CHANNEL_A,
 //                RobotMap.LEFT_WHEEL_CHANNEL_B, REVERSE_DIRECTION,
 //                EncodingType.k4X);
-        
+
         //smooth encoders
         rightEncoder = new SmoothEncoder(RobotMap.RIGHT_WHEEL_CHANNEL_A,
                 RobotMap.RIGHT_WHEEL_CHANNEL_B, !REVERSE_DIRECTION,
@@ -178,9 +178,9 @@ public class Chassis extends Subsystem {
 //                        setLeftJag(output);
 //                    }
 //                });
-        
+
         //GoSPID
-        rightPIDRate = new GoSPIDController(rightP, rightI, rightD, 
+        rightPIDRate = new GoSPIDController(rightP, rightI, rightD,
                 rightEncoder, new PIDOutput(){
                     public void pidWrite(double output){
                         setRightJag(output);
@@ -199,7 +199,7 @@ public class Chassis extends Subsystem {
                     }
                 }, GoSPIDController.RATE);//ADD integral constant
 
-        
+
         rightPIDPosition = new GoSPIDController(rightPositionP, rightPositionI,
                 rightPositionD, rightEncoder,
                 new PIDOutput(){
@@ -221,9 +221,9 @@ public class Chassis extends Subsystem {
                         setLeftJag(output);
                     }
                 }, GoSPIDController.POSITION);
-        
+
         gyro = new Gyro(RobotMap.GYRO_PORT);
-        
+
         gyroOn = false;
         rotating = false;
         manualRotationDisabled = false;
@@ -276,15 +276,15 @@ public double getLeftEncoderDistance() {
     public double getRightEncoderRate(){
         return rightEncoder.getRate(); //(negative because jags are negative too) ~KiwiDrive
     }
-    
+
     public double getBackEncoderRate(){
         return backEncoder.getRate();
     }
-    
+
     public double getLeftEncoderRate(){
         return leftEncoder.getRate();
     }
-    
+
     public void stopEncoders() {
         rightEncoder.stop();
         backEncoder.stop();
@@ -308,27 +308,27 @@ public double getLeftEncoderDistance() {
         backPIDRate.enable();
         leftPIDRate.enable();
     }
-    
+
     public void setRightPIDRateValues(double p, double i, double d){
         rightPIDRate.setPID(p, i, d);
 
     }
-    
+
     public void setBackPIDRateValues(double p, double i, double d){
-        backPIDRate.setPID(p, i, d); 
+        backPIDRate.setPID(p, i, d);
     }
-    
+
     public void setLeftPIDRateValues(double p, double i, double d){
         leftPIDRate.setPID(p, i, d);
     }
-    
+
     //from kiwi code
     public void setPIDValue () {
         rightPIDRate.setPID(rightP, rightI, rightD);
         backPIDRate.setPID(backP, backI, backD);
         leftPIDRate.setPID(leftP, leftI, leftD);
     }
-    
+
     public void setRightPIDRate(double rate) {
         rightPIDRate.setSetpoint(rate);
     }
@@ -340,7 +340,7 @@ public double getLeftEncoderDistance() {
     public void setLeftPIDRate(double rate) {
         leftPIDRate.setSetpoint(rate);
     }
-    
+
     public void stopRatePIDs() {
         setRightPIDRate(0.0);
         setBackPIDRate(0.0);
@@ -349,7 +349,7 @@ public double getLeftEncoderDistance() {
         backPIDRate.disable();
         leftPIDRate.disable();
     }
-    
+
     public void initHoldPosition(){
         rightEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         backEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
@@ -367,7 +367,7 @@ public double getLeftEncoderDistance() {
         backPIDPosition.setSetpoint(0.0);
         leftPIDPosition.setSetpoint(0.0);
     }
-    
+
     public void disablePositionPIDs(){
         rightPIDPosition.disable();
         backPIDPosition.disable();
@@ -380,15 +380,15 @@ public double getLeftEncoderDistance() {
         fieldAdjustment = -angle;
         gyroAdjustment = angle;
     }
-    
+
     public double getFieldAdjustment(){
         return fieldAdjustment;
     }
-    
+
     public boolean isGyroEnabled(){
         return gyroOn;
     }
-    
+
     private double getGyro(){
         double angle = -gyro.getAngle();
         while(angle < 0){
@@ -399,18 +399,18 @@ public double getLeftEncoderDistance() {
         }
         return angle;
     }
-    
+
     public void resetGyro(){
         gyroOn = true;
         //gyro.reset(); NOT WORKING! (solution below)
         gyroAdjustment = -getGyro();
         fieldAdjustment -= getGyro();
     }
-    
+
     public void stopGyro(){
         gyroOn = false;
     }
-    
+
     public double getGyroAngle(){
         double angle;
         angle = getGyro() + gyroAdjustment;
@@ -420,9 +420,9 @@ public double getLeftEncoderDistance() {
         angle = angle % 360; //put angle between 0-360
         return angle;
     }
-    
+
     //kiwi drive
-    public void driveVoltage(double x, double y, double th, double scale, 
+    public void driveVoltage(double x, double y, double th, double scale,
             boolean gyro){
          double commandScale = Math.max(Math.abs(x),Math.abs(y));
         // scales command back to desired magnitude
@@ -447,8 +447,8 @@ public double getLeftEncoderDistance() {
                 getDeadzoneScaled(y), getDeadzoneScaled(th), BACK_WHEEL)*scale;
         double leftVoltage = getWheelVelocity(getDeadzoneScaled(x),
                 getDeadzoneScaled(y), getDeadzoneScaled(th), LEFT_WHEEL)*scale;
-        
-        if(Math.abs(rightVoltage) > 1 || Math.abs(backVoltage) > 1 || 
+
+        if(Math.abs(rightVoltage) > 1 || Math.abs(backVoltage) > 1 ||
                 Math.abs(leftVoltage) > 1){
             double max = Math.abs(rightVoltage);
             if(max < Math.abs(backVoltage))
@@ -459,15 +459,15 @@ public double getLeftEncoderDistance() {
             backVoltage = backVoltage/max;
             leftVoltage = leftVoltage/max;
         }
-        
+
      //   System.out.println("Right: " + rightVoltage + "\tRA: " + rightJag.get()
      //           + "\tBack: " + backVoltage + "\tBA: " + backJag.get()
      //           + "\tLeft: " + leftVoltage + "\tLA: " + leftJag.get());
-        
+
         setRightJag(rightVoltage);
         setBackJag(backVoltage);
         setLeftJag(leftVoltage);
-        
+
     }//end drive
 
     public void driveVelocity(double x, double y, double th, double scale, boolean gyro){
@@ -486,9 +486,9 @@ public double getLeftEncoderDistance() {
         setLeftPIDRate(getWheelVelocity(getDeadzoneScaled(x),
                 getDeadzoneScaled(y), getDeadzoneScaled(th), LEFT_WHEEL)*scale);
     }
-    
+
     /**
-     * Adjusts the given axis value to a different x & y orientation from the 
+     * Adjusts the given axis value to a different x & y orientation from the
      * gyro (whichever direction the robot is facing, the starting straight is
      * straight).
      * @param value joystick axis value
@@ -518,61 +518,61 @@ public double getLeftEncoderDistance() {
         double[] returnXY = {x2,y2};
         return returnXY;
     }
-    
+
     private double getDeadzoneScaled(double value){
         if(value > DEADZONE_VALUE){
-            return (value / (1 - DEADZONE_VALUE)) - DEADZONE_VALUE; 
+            return (value / (1 - DEADZONE_VALUE)) - DEADZONE_VALUE;
         }else if(value < -DEADZONE_VALUE){
             return (value / (1 - DEADZONE_VALUE)) + DEADZONE_VALUE;
         }else{
             return 0.0;
         }
     }
-    
+
     private double getWheelVelocity(double x, double y, double th, int wheel) {
-        
+
         //speed = dot product of robot's (x,y) & wheel (x,y)
         double speed = (x*wheelXs[wheel]) + (y*wheelYs[wheel]);
-        
+
         double rotation = th * wheelRadii[wheel] * SCALE;
-        
+
         if(manualRotationDisabled){//the rotate command is controlling rotation
             rotation = 0;
         }
-        
+
         if(rotating){//voltage mode!
             rotation = SLOW_ROTATE * wheelRadii[wheel] * SCALE;
             if(negative){
                 rotation *= -1.0;
             }
         }
-        
+
         return speed + rotation;
     }
-    
+
     public void startManualRotation(){//when drivers should control rotation
         manualRotationDisabled = false;
     }
-    
+
     public void startAutoRotation(){
         manualRotationDisabled = true;
     }
-    
+
     public void stopAutoRotation(){
         manualRotationDisabled = false;
         rotating = false;
     }
-    
-    //when drivers cannot control rotation, but there is no need to currently 
+
+    //when drivers cannot control rotation, but there is no need to currently
     //rotate to a given point
     public void pauseAutoRotation(){
         rotating = false;
     }
-    
+
     public boolean isAutoRotating(){
         return manualRotationDisabled;
     }
-    
+
     public void autoRotateTestBot(double theta){
         rotating = true;
         //decide negative or positive

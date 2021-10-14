@@ -2,9 +2,7 @@ package girlsofsteel;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.commands.*;
-import girlsofsteel.objects.ShooterCamera;
 import girlsofsteel.subsystems.*;
 
 /**
@@ -17,7 +15,7 @@ public class OI {
     public static double JAG_SPEED = 1.0;
     public static double ENCODER_SPEED = 50;
     public static double VOLTAGE_SPEED = 12.0;
-    
+
     //PS3 button numbers
     private static final int SQUARE = 1;
     private static final int X = 2;
@@ -36,7 +34,7 @@ public class OI {
     private static final int SHOOTER_JOYSTICK_PORT = 2;
     private Joystick driverJoystick;
     private Joystick operatorJoystick;
-    
+
     //Driver Buttons
     private JoystickButton startDrive;
     private JoystickButton stopChassis;
@@ -48,7 +46,7 @@ public class OI {
     private JoystickButton rotateLeft;
     private JoystickButton rotateShootingBackRight;
     private JoystickButton rotateShootingBackLeft;
-    
+
     //Operator Buttons
     private JoystickButton prepShoot;
     private JoystickButton prepShootPyramid;
@@ -69,7 +67,7 @@ public class OI {
         //Defining Joysticks
         driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
         operatorJoystick = new Joystick(SHOOTER_JOYSTICK_PORT);
-        
+
              //Defining Driver Buttons - microsoft joytick
         startDrive = new JoystickButton(driverJoystick, 9);
         startDrive.whenPressed(new Drive(1.0, 0.5, false));
@@ -102,8 +100,8 @@ public class OI {
 //        lowerBlocker = new JoystickButton(driverJoystick, 8);
 //        lowerBlocker.whenPressed(new LowerBlocker());
 
-        
-        
+
+
         //Defining Operator Buttons
         prepShoot = new JoystickButton(operatorJoystick, R1);
         prepShoot.whileHeld(new Shoot(0.9));
@@ -132,10 +130,10 @@ public class OI {
         toggleBlocker = new JoystickButton(operatorJoystick, L1);
         toggleBlocker.whenPressed(new Blocking());
     }
-    
+
      public Joystick getDrivingJoystick(){
-        
+
         return driverJoystick;
-        
+
     }//end getDriverJoystick
 }

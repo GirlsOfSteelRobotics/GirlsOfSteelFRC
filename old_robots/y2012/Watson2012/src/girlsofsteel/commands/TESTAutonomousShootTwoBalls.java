@@ -7,9 +7,9 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
     double timeToShootTwoBalls;
     double xDistance;
     double velocity;
-    
+
     double range = shooter.VELOCITY_ERROR_RANGE; //shooter wheel needs to be within this range for rates before it will shoot
-    
+
     public TESTAutonomousShootTwoBalls(){
         SmartDashboard.putDouble("ASTB,speed", 0.0);
         SmartDashboard.putDouble("ASTB,time",0.0);
@@ -19,7 +19,7 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
         requires(turret);
         requires(bridge);
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -59,5 +59,5 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

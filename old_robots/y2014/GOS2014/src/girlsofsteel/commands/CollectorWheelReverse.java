@@ -11,7 +11,7 @@ package girlsofsteel.commands;
  * @author Abby, Sophia, Sonia
  */
 public class CollectorWheelReverse extends CommandBase{
-    
+
     /**
      * There is nothing in this method.
      * @author Sophia, Sonia
@@ -26,11 +26,11 @@ public class CollectorWheelReverse extends CommandBase{
      * @author Sophia, Sonia
      */
     protected void initialize() {
-        
+
     }
 
     /**
-     * This rolls the collector wheel backwards.  
+     * This rolls the collector wheel backwards.
      * It can be used to release the ball.
      * @author Sophia, Sonia
      */
@@ -64,5 +64,5 @@ public class CollectorWheelReverse extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

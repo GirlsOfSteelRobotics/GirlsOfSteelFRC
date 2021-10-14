@@ -2,7 +2,6 @@ package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.girlsofsteelrobotics.atlas.objects.Camera;
 
 public class AutoTuneCamera extends CommandBase {
 
@@ -49,7 +48,7 @@ public class AutoTuneCamera extends CommandBase {
         double[] imageTargetRatioData = new double[nSteps];
         double[] distanceData = new double[nSteps];
         int count = 0;
-                    
+
         while (count < nSteps) {
             try {
                 Thread.sleep(4000); //4 seconds time out

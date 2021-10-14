@@ -66,7 +66,7 @@ public class ManualPositionPIDTuner extends CommandBase {
 
         System.out.println("Get left chassis raw: " + chassis.getLeftRaw());
         System.out.println("Get right chassis raw: " + chassis.getRightRaw());
-        
+
         if (pid) {
             if (p != 0 && setpoint != 0) {
                 System.out.println("Here ---------------------------------");
@@ -81,8 +81,8 @@ public class ManualPositionPIDTuner extends CommandBase {
         boolean finished =  (Math.abs((chassis.getLeftEncoderDistance() - setpoint)) < offBy || Math.abs((chassis.getRightEncoderDistance()-setpoint)) < offBy) && (setpoint != 0);
         System.out.println("Position PID is finished: " + finished);
         return finished;
-    }   
-    
+    }
+
     protected void end() {
         if (pid) {
             chassis.disablePositionPID();

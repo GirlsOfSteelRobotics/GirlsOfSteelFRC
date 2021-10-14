@@ -15,16 +15,16 @@ import com.girlsofsteelrobotics.atlas.commands.CommandBase;
 public class TestManipulatorJag extends CommandBase {
     Joystick joystick;
     private int i = 0;
-    
+
     public TestManipulatorJag () {
         requires(manipulator);
     }
-                
+
     protected void initialize() {
         joystick = oi.getOperatorJoystick();
         System.out.println("Test Manipulator Jag is running");
     }
- 
+
     protected void execute() {
 //        i++;
 //        while(i == 1)
@@ -51,5 +51,5 @@ public class TestManipulatorJag extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

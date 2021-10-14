@@ -35,7 +35,7 @@ public class EncoderGoSPIDController implements Runnable {
     //two "int type" that the GoSPIDController can be
     public static final int RATE = 1;
     public static final int POSITION = 2;
-    
+
     public EncoderGoSPIDController(double Kp,double Ki,double Kd,Encoder encoder,
             PIDOutput jags, int type){
         this.Kp = Kp;
@@ -45,7 +45,7 @@ public class EncoderGoSPIDController implements Runnable {
         this.jags = jags;
         this.type = type;
     }
-    
+
     public EncoderGoSPIDController(double Kp,double Ki,double Kd,Encoder encoder,
             PIDOutput jags, int type, double integralThreshold){
         this.Kp = Kp;
@@ -56,23 +56,23 @@ public class EncoderGoSPIDController implements Runnable {
         this.type = type;
         this.integralThreshold = integralThreshold;
     }
-    
+
     public synchronized void setPID(double p, double i, double d){
         Kp = p;
         Ki = i;
         Kd = d;
         errorSum = 0;
     }
-    
+
     public synchronized void setOutputThreshold(double outputThreshold){
         this.outputThreshold = outputThreshold;
     }
-    
+
     //used to set a new setPoint (desired value) -> must to start up PID
     public synchronized void setSetPoint(double setPoint) {
         this.setPoint = setPoint;
     }
-    
+
     //used to start & run the PID
     public void enable(){
         currentTime = System.currentTimeMillis()/1000.0; //initialization
@@ -84,23 +84,23 @@ public class EncoderGoSPIDController implements Runnable {
         PIDEnabled = true;
         new Thread(this).start(); //doesn't block the normal code & functions
     }
-    
+
     //stops the PID
     public synchronized void disable(){
         PIDEnabled = false; //changes the while condition for run
     }
-    
+
     public void resetError(){
         error = 0.0;
         previousError = 0.0;
         errorSum = 0.0;
     }
-    
+
     public void run(){
         double output = 0.0;
         while(PIDEnabled){ //must be set to run -> through setSetPoint
             //conditions to run -> only when the error is more than desire
-            
+
             synchronized (this) {//add for thread safety of variables
                 previousTime = currentTime;
                 previousPosition = currentPosition;
@@ -126,7 +126,7 @@ public class EncoderGoSPIDController implements Runnable {
         }
         jags.pidWrite(0.0);
     }
-    
+
     private synchronized void calculateRate(){
         if(currentTime != previousTime){
             rate = (currentPosition - previousPosition)/(currentTime - previousTime);
@@ -134,7 +134,7 @@ public class EncoderGoSPIDController implements Runnable {
             rate = 0;
         }
     }
-    
+
     private synchronized void calculateError(){
         double currentValue = 0;
         if(type == RATE){
@@ -147,13 +147,13 @@ public class EncoderGoSPIDController implements Runnable {
         }
         error = setPoint - currentValue;
     }
-    
+
     public double getRate(){
         return rate;
     }
-    
+
     public double getSetPoint(){
         return setPoint;
     }
-    
+
 }

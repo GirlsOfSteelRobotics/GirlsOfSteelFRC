@@ -117,8 +117,8 @@ public class ShooterCamera {
         double xDifference;
         double angle = (47.0 / 2.0) * (Math.PI / 180.0); //maximum angle for the camera view (in one direction) -> changed to radians
         xDifference = getTopHorizontalDifference() * Math.tan(angle);
-        //half of the camera view (tan of angle * x distance from target * 
-        //the xDistance is not in this equation because 
+        //half of the camera view (tan of angle * x distance from target *
+        //the xDistance is not in this equation because
         return xDifference;
     }
 
@@ -126,8 +126,8 @@ public class ShooterCamera {
         double xDifference;
         double angle = (47.0 / 2.0) * (Math.PI / 180.0); //maximum angle for the camera view (in one direction) -> changed to radians
         xDifference = getSideHorizontalDifference() * Math.tan(angle);
-        //half of the camera view (tan of angle * x distance from target * 
-        //the xDistance is not in this equation because 
+        //half of the camera view (tan of angle * x distance from target *
+        //the xDistance is not in this equation because
         return xDifference;
     }
 

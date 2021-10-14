@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj.Joystick;
  * @author Mackenzie
  */
 public class ArcadeDrive extends CommandBase{
-    
+
     Joystick joystick1; //randomly picked right joystick from robot map
-    
+
     double Xcoord;
     double Ycoord;
     double XcoordSq;
     double YcoordSq;
-    
+
     public ArcadeDrive() {
         requires(driving);
     }
@@ -49,5 +49,5 @@ public class ArcadeDrive extends CommandBase{
     protected void interrupted() {
         end();
     }
-     
+
 }

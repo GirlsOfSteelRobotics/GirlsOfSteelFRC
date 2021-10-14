@@ -20,5 +20,5 @@ public class BridgeDownContinuous extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

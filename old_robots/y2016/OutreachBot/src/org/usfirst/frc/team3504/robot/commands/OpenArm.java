@@ -12,12 +12,12 @@ public class OpenArm extends Command {
     public OpenArm() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.manipulator);
+        requires(Robot.manipulator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.manipulator.openArm();
+        Robot.manipulator.openArm();
     }
 
     // Called repeatedly when this Command is scheduled to run

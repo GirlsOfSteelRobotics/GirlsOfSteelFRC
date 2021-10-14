@@ -24,5 +24,5 @@ public class ToggleGyro extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

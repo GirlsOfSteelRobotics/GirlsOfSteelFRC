@@ -17,21 +17,21 @@ public class CloseAllGrippers extends CommandBase{
     }
 
     //Command for closing the bottom gripper around the pyramid
-    
-    
+
+
     protected void initialize() {
-         
+
     }
 
     protected void execute() {
 //        topGripper.closeGrip();
 //        middleGripper.closeGrip();
-        bottomGripper.closeGrip();  
+        bottomGripper.closeGrip();
     }
 
     protected boolean isFinished() {
             return true;
-        
+
     }
 
     protected void end() {
@@ -39,5 +39,5 @@ public class CloseAllGrippers extends CommandBase{
 
     protected void interrupted() {
     }
-    
+
 }

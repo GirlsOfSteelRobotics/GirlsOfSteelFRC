@@ -5,7 +5,7 @@ public class HoldChassis extends CommandBase {
     public HoldChassis(){
         requires(drive);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         chassis.initHoldPosition();
@@ -28,5 +28,5 @@ public class HoldChassis extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

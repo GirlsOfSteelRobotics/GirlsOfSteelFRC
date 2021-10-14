@@ -11,11 +11,11 @@
 // * @author Sonia and Alex
 // */
 //public class LightSensorFeeder extends CommandBase {
-//    
+//
 //    boolean previousLight;
-//    
+//
 //    //This command constantly counts the number of frisbees in the feeder, using a light sensor
-//    
+//
 //    protected void initialize() {
 //    }
 //
@@ -26,11 +26,11 @@
 //            feeder.addToFrisbeeCounter();
 //        }
 //        previousLight = feeder.getLightSensor();
-//       
+//
 //        //This prints # of frisbees to the driver station
-//        //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, 
+//        //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1,
 //                //"Number of Frisbees:" + feeder.getFrisbeeCounter());
-//       
+//
 //       //Prints to smart dashboard
 //       SmartDashboard.putNumber("Number of Frisbees", feeder.getFrisbeeCounter());
 //    }
@@ -46,5 +46,5 @@
 //    protected void interrupted() {
 //        end();
 //    }
-//    
+//
 //}

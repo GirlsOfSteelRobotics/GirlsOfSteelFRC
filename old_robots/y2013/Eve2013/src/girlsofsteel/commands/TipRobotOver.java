@@ -15,11 +15,11 @@ public class TipRobotOver extends CommandBase{
     }
 
     //will extend the piston to tip the robot over onto the pyramid
-    
-    
+
+
     protected void initialize() {
-        
-        
+
+
     }
 
     protected void execute() {
@@ -31,10 +31,10 @@ public class TipRobotOver extends CommandBase{
     }
 
     protected void end() {
-        
+
     }
 
     protected void interrupted() {
     }
-    
+
 }

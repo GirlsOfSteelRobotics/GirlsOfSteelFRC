@@ -6,17 +6,17 @@ import edu.wpi.first.wpilibj.Joystick;
 public class DriveVelocityLinear extends CommandBase{
 
     Joystick joystick;
-    
+
     double xAxis;
     double yAxis;
-    
+
     double scale;
-    
+
     public DriveVelocityLinear(double scale){
         requires(chassis);
         this.scale = scale;
     }
-    
+
     protected void initialize() {
         joystick = oi.getDriverJoystick();
         chassis.initEncoders();
@@ -46,5 +46,5 @@ public class DriveVelocityLinear extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

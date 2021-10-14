@@ -20,7 +20,6 @@ import girlsofsteel.commands.ReverseTopMiddleRollers;
 import girlsofsteel.commands.Shoot;
 import girlsofsteel.commands.ShootUsingTable;
 import girlsofsteel.commands.StopCollectors;
-import girlsofsteel.commands.TopRollersReverse;
 import girlsofsteel.commands.TurretTrackTarget;
 
 public class OI {
@@ -29,10 +28,10 @@ public class OI {
     private final double NORMAL_DRIVE = 1.0;
     private final double MEDIUM_DRIVE = 0.75;
     private final double SLOW_DRIVE = 0.55;
-    
+
     private final double HALF_TURNING = 0.5;
     private final double MEDIUM_TURNING = 0.75;
-    
+
     //TODO find out what the driver buttons should be
     //driver joystick (PS3)
     private final int DRIVER_JOYSTICK_PORT = 1;
@@ -55,7 +54,7 @@ public class OI {
     private static JoystickButton bridgeArmDown;
     private static final int HOLD_POSITION_BUTTON = 1; //square
     private static JoystickButton holdPosition;
-    
+
     //TODO find out the buttons desired for the operator
     //operator controller (PS3)
     private static final int OPERATOR_JOYSTICK_PORT = 2;
@@ -80,7 +79,7 @@ public class OI {
     private static JoystickButton shootFromKey;
     private static final int REVERSE_TOP_MIDDLE_ROLLERS_BUTTON = 9; //select
     private static JoystickButton reverseTopMiddleRollers;
-    
+
     //buttons
     private static final int AUTO_SHOOT_PHYSICAL_BUTTON = 9;
     private static final int STOP_SHOOTER_PHYSICAL_BUTTON = 16;
@@ -172,7 +171,7 @@ public class OI {
     public Joystick getOperatorJoystick() {
         return operatorJoystick;
     }
-    
+
     public boolean isCollectCameraDataPressed(){
 //        if(operatorJoystick.getRawButton(COLLECT_CAMERA_DATA)){
         if(true){
@@ -181,7 +180,7 @@ public class OI {
             return false;
         }
     }
-    
+
     //buttons
     //shooter
     boolean autoShootRunning = false;
@@ -189,7 +188,7 @@ public class OI {
     boolean topRollersOverriden = false;
     int currValue = 0;
     int preValue = 0;
-    
+
     public boolean isShootRunning() {
         try {
             if (DriverStation.getInstance().getEnhancedIO().getDigital(AUTO_SHOOT_PHYSICAL_BUTTON)) {
@@ -217,7 +216,7 @@ public class OI {
         }
         return stopShooterRunning;
     }
-    
+
 //This button is an analog(because we ran out of digital) so I changed the following function.
     public boolean areTopRollersOverriden() {
 //        double switchValue = 0.0;
@@ -439,7 +438,7 @@ public class OI {
         }
     }
 
-    //slider    
+    //slider
     public double getShooterSliderValue() {
         double sliderValue = 0.0;
         try {
@@ -458,11 +457,11 @@ public class OI {
         } catch (EnhancedIOException ex) {
             ex.printStackTrace();
         }
-       
+
         if(currValue - preValue > deadzone){
            returnVal = -5.0;
         }
-        
+
         else if(currValue - preValue < -deadzone){
             returnVal = 5.0;
         }
@@ -475,7 +474,7 @@ public class OI {
 
     /*
      * Autonomous Counter Analog Values:
-     * 
+     *
      * 1: A1
      * 2: A3
      * 3: A1 & A3
@@ -526,7 +525,7 @@ public class OI {
         }
 
         int autoNumber = 0;
-        
+
         if(auto1 && !auto2 && !auto3 && !auto5 && !auto7){
             autoNumber = 1;
         }
@@ -572,7 +571,7 @@ public class OI {
         else if(auto1 && auto2 && !auto3 && auto5 && !auto7){
             autoNumber = 15;
         }
-        
+
         System.out.println("auto1: " + auto1 + "auto2: " + auto2 + "auto3: " + auto3 + "auto5: " + auto5 + "auto7: " + auto7);
         return autoNumber;
 

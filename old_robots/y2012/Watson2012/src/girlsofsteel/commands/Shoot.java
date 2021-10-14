@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Shoot extends CommandBase {
 
     Joystick operatorJoystick;
-    
+
     double speed;
-    
+
     public Shoot(double speed){
         this.speed = speed;
         requires(shooter);
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -42,5 +42,5 @@ public class Shoot extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

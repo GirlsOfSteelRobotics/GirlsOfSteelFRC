@@ -2,7 +2,6 @@ package com.girlsofsteelrobotics.atlas.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import com.girlsofsteelrobotics.atlas.OI;
-import com.girlsofsteelrobotics.atlas.RobotMap;
 import com.girlsofsteelrobotics.atlas.objects.Camera;
 import com.girlsofsteelrobotics.atlas.subsystems.Chassis;
 import com.girlsofsteelrobotics.atlas.subsystems.Collector;

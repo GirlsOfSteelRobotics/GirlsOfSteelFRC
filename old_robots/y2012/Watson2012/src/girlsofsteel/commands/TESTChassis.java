@@ -3,9 +3,9 @@ package girlsofsteel.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTChassis extends CommandBase {
-    
+
     double speed;
-    
+
     public TESTChassis(){
         requires(chassis);
         SmartDashboard.putBoolean("Right Jags", false);
@@ -15,7 +15,7 @@ public class TESTChassis extends CommandBase {
         SmartDashboard.putDouble("Left Encoder", chassis.getLeftEncoderDistance());
         SmartDashboard.putDouble("Left Scale", 1.0);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
     }
@@ -47,5 +47,5 @@ public class TESTChassis extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

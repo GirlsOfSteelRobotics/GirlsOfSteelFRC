@@ -4,8 +4,6 @@
  */
 package girlsofsteel.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;

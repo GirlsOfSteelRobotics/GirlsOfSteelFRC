@@ -5,7 +5,6 @@
 
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import girlsofsteel.subsystems.Feeder;
 
 /**

@@ -6,7 +6,7 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
     double timeToShootTwoBalls = 7.0;
     double xDistance;
     double velocity;
-    
+
     public AutonomousKeyShootTwoBalls(boolean autoTrack){
         requires(shooter);
         requires(collector);
@@ -14,7 +14,7 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
         requires(chassis);
         this.autoTrack = autoTrack;
     }
-    
+
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -52,5 +52,5 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

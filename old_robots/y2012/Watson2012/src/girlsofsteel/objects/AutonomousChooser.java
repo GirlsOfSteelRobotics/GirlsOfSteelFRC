@@ -64,7 +64,7 @@ public class AutonomousChooser {
 //    final boolean AUTO_SHOOT_BRIDGE = true;
 //    final boolean BACK_TO_KEY = true;
 //    final boolean SHOOT_KEY_AFTER_BRIDGE = true;
-//   
+//
 //    final double X_STAY_IN_PLACE = 0.0;
 //    final double Y_STAY_IN_PLACE = 0.0;
 //    final double X_CENTER_COOPER = 0.0;
@@ -73,7 +73,7 @@ public class AutonomousChooser {
 //    final double Y_LEFT_COOPER = 2.3114;
 //    final double X_RIGHT_COOPER = -1.8415;
 //    final double Y_RIGHT_COOPER = 2.3114;
-//    
+//
 //    final double X_CENTER_ALLIANCE = -3.4671;
 //    final double Y_CENTER_ALLIANCE = 1.0922;
 //    final double X_LEFT_ALLIANCE = -1.6256;

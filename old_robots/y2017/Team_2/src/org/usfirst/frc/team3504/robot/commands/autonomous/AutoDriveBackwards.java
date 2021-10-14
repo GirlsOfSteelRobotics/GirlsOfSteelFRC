@@ -9,9 +9,9 @@ import org.usfirst.frc.team3504.robot.Robot;
  *
  */
 public class AutoDriveBackwards extends Command {
-    
+
     @SuppressWarnings("unused")
-	private double inches;
+    private double inches;
     private double speed;
 
 
@@ -44,7 +44,7 @@ public class AutoDriveBackwards extends Command {
     // Called once after isFinished returns true
     protected void end() {
         Robot.chassis.stop();
-        
+
     }
 
 

@@ -9,15 +9,15 @@ import girlsofsteel.commands.CommandBase;
 
 /**
  *
- * @author 
+ * @author
  */
 public class TestingUltrasonicSensor extends CommandBase{
- 
+
     public TestingUltrasonicSensor()
     {
         //requires(ultra);
     }
-    
+
     protected void initialize() {
        // ultra.enable();
     }
@@ -36,4 +36,3 @@ public class TestingUltrasonicSensor extends CommandBase{
     protected void interrupted() {
     }
 }
-

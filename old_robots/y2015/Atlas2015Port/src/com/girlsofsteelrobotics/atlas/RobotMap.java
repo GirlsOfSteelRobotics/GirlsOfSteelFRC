@@ -44,13 +44,13 @@ public class RobotMap {
      public static final int LEFT_ENCODER_A = 1; //Checked on updated list 2/11/14
      public static final int LEFT_ENCODER_B = 2; //Checked on updated list 2/11/14
      */
-    
+
      public static final int RIGHT_ENCODER_A = 3; //Checked on updated list 2/11/14
      public static final int RIGHT_ENCODER_B = 4; //Checked on updated list 2/11/14
      public static final int LEFT_ENCODER_A = 1; //Checked on updated list 2/11/14
      public static final int LEFT_ENCODER_B = 2; //Checked on updated list 2/11/14
-     
-     
+
+
     public static final int ULTRASONIC_SENSOR_PORT = 3;
 
     public static final String CollectorEncoderReader = "Collector Encoder Reader";

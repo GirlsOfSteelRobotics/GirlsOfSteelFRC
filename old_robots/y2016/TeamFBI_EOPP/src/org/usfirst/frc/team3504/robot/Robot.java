@@ -21,11 +21,11 @@ import org.usfirst.frc.team3504.robot.subsystems.Shifters;
  */
 public class Robot extends IterativeRobot {
 
-	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static OI oi;
-	public static Drive drive;
-	public static Manipulator manipulator;
-	public static Shifters shifters;
+    //public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    public static OI oi;
+    public static Drive drive;
+    public static Manipulator manipulator;
+    public static Shifters shifters;
     Command autonomousCommand;
     SendableChooser autoChooser;
 
@@ -34,25 +34,25 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		RobotMap.init();
-		drive = new Drive();
-		manipulator = new Manipulator();
-		shifters = new Shifters();
-		//autoChooser = new SendableChooser();
-		//autoChooser.addDefault("Auto Drive", new AutoDrive());
-		oi = new OI();
-		autonomousCommand = new AutoDrive();
+        RobotMap.init();
+        drive = new Drive();
+        manipulator = new Manipulator();
+        shifters = new Shifters();
+        //autoChooser = new SendableChooser();
+        //autoChooser.addDefault("Auto Drive", new AutoDrive());
+        oi = new OI();
+        autonomousCommand = new AutoDrive();
     }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
+
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	//autonomousCommand = (Command) autoChooser.getSelected();
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+        //autonomousCommand = (Command) autoChooser.getSelected();
+        if (autonomousCommand != null)
+            autonomousCommand.start();
     }
 
     /**
@@ -63,12 +63,12 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-    	if (autonomousCommand != null)
-			autonomousCommand.cancel();
+        if (autonomousCommand != null)
+            autonomousCommand.cancel();
     }
 
     /**
@@ -85,12 +85,12 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
         LiveWindow.run();
     }
-    
+
 }

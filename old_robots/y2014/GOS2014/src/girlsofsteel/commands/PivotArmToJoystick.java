@@ -6,7 +6,6 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
@@ -38,7 +37,7 @@ public class PivotArmToJoystick extends CommandBase {
             angle--; //-= 1.5;
         }
             manipulator.holdAngle();
-        
+
     }
 
     protected boolean isFinished() {

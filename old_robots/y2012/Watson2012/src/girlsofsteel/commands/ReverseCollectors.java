@@ -5,7 +5,7 @@ public class ReverseCollectors extends CommandBase {
     public ReverseCollectors(){
         requires(collector);
     }
-    
+
     protected void initialize() {
     }
 
@@ -26,5 +26,5 @@ public class ReverseCollectors extends CommandBase {
     protected void interrupted() {
         end();
     }
-            
+
 }

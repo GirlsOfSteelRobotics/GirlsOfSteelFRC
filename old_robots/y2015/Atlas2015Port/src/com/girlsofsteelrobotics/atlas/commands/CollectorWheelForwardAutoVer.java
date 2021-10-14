@@ -14,8 +14,8 @@ import com.girlsofsteelrobotics.atlas.objects.Camera;
  * @author Heather, Jisue
  */
 public class CollectorWheelForwardAutoVer extends CommandBase {
-    
-  
+
+
     double time = 2.5; //when 3 seconds pass it will drop the ball
     double startTime;
     public CollectorWheelForwardAutoVer(){
@@ -31,16 +31,16 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
        startTime = Timer.getFPGATimestamp();
        CommandBase.camera.isHot = hotAtLeastOnce();//CommandBase.camera.isGoalHot(); //Get is hot here
        System.out.println("CAMERA IS HOT?::: " + CommandBase.camera.isHot);
-               
+
     }
 
     /**
-     * This rolls the collector wheel forward.  
+     * This rolls the collector wheel forward.
      * It can be used to bring the ball into the trident.
      * @author Sophia, Sonia
      */
     protected void execute() {
-       collector.collectorWheelFoward(); 
+       collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
 
     /**
@@ -52,7 +52,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
         return Timer.getFPGATimestamp() - startTime > time;
         //return CommandBase.collector.isCollectorEngaged();
     }
-    
+
     /**
      * This stops the collector wheel.
      * @author Sophia, Sonia
@@ -69,7 +69,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
     /*
     If the method sees hot at least one time, it will return true
     */

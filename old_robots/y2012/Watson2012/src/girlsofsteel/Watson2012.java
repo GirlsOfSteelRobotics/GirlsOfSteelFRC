@@ -14,9 +14,9 @@ public class Watson2012 extends IterativeRobot {
     Command driveJagsLinear;
     Command turretTracking;
     Command collect;
-    
+
     AutonomousChooser auto;
-    
+
     public void robotInit() {
         // Initialize all subsystems
         CommandBase.init();
@@ -26,12 +26,12 @@ public class Watson2012 extends IterativeRobot {
         driveJagsLinear = new DriveSlowTurning(1.0, 0.5);
         turretTracking = new TurretTrackTarget();
         collect = new Collect();
-        
+
         SmartDashboard.putData(Scheduler.getInstance());
-        
+
 //        buttons = new Buttons();//runs different commands based on the physical buttons/switches
     }
-    
+
     public void autonomousInit() {
         turretTracking.start();
         collect.start();

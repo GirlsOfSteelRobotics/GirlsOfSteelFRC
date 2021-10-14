@@ -20,8 +20,8 @@ public class Climber extends CommandBase {
         requires(climber);
 
         SmartDashboard.putString("Comand called", "comand called");
-        
-        
+
+
 
         SmartDashboard.putBoolean("Spikes", false);
         SmartDashboard.putBoolean("Spikes Foward Backwards", false);
@@ -35,7 +35,7 @@ public class Climber extends CommandBase {
     }
 
     protected void execute() {
-       
+
 
         if (SmartDashboard.getBoolean("Spikes", false) && SmartDashboard.getBoolean("Spikes Foward Backwards", false)) {
             climber.forwardRightClimberSpike();

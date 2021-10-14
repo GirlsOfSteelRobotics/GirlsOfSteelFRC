@@ -11,11 +11,11 @@ import girlsofsteel.tests.TestCollector;
 /**
  *
  * @author Sylvie Lee
- * 
+ *
  * NOTE: KICKER STUFF HAS NOT BEEN ADDED IN HERE YET
  *
  * The point of this is to test all the functions of the robot quickly in the pit.
- * 
+ *
  * 1.) Arcade Drive
  *  - moving forwards, backwards, turning left and right
  * 2.) Pivot Arm
@@ -42,7 +42,7 @@ import girlsofsteel.tests.TestCollector;
  *  - Test first just mobility (this might just be tied in with position chassis PID testing)
  *  - Low goal autonomous
  *  - High goal autonomous (when we get one)
- *  - High goal w/ hot goal (when we get one) 
+ *  - High goal w/ hot goal (when we get one)
  *
  */
 public class FullTester extends CommandBase {
@@ -63,7 +63,7 @@ public class FullTester extends CommandBase {
         SmartDashboard.putData(new AutonomousLowGoal()); //The low goal autonomous
         SmartDashboard.putData(new AutonomousMobility()); //To test the mobility autonomous (go forwards)
         //SmartDashboard.putData(new TestKicker());
-       
+
     }
 
     protected void initialize() {

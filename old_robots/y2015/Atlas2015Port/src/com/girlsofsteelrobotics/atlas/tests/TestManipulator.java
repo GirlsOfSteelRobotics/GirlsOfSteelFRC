@@ -13,7 +13,7 @@ import com.girlsofsteelrobotics.atlas.commands.CommandBase;
  * @author sophia
  */
 public class TestManipulator extends CommandBase{
-    
+
     double speed;
     public TestManipulator(){
         requires(manipulator);
@@ -43,6 +43,6 @@ public class TestManipulator extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
-           
+
+
 }

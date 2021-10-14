@@ -5,7 +5,7 @@ public class DisableTurret extends CommandBase {
     public DisableTurret(){
         requires(turret);
     }
-    
+
     protected void initialize() {
         turret.disablePID();
         turret.stopJag();
@@ -24,5 +24,5 @@ public class DisableTurret extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

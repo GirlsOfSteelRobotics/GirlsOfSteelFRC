@@ -14,7 +14,7 @@ public class StopCollector extends CommandBase {
     public StopCollector() {
         requires(collector);
     }
-    
+
     protected void initialize() {
     }
 

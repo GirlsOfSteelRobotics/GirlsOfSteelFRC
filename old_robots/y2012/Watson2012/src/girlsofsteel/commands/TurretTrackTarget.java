@@ -6,9 +6,9 @@ import girlsofsteel.objects.Camera;
 public class TurretTrackTarget extends CommandBase {
 
     Joystick operatorJoystick;
-    
+
     double difference; //How much the driver wants it to move
-    
+
     public TurretTrackTarget() {
         requires(turret);
     }

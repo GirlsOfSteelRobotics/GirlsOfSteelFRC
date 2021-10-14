@@ -11,7 +11,6 @@ import girlsofsteel.subsystems.DriveFlag;
 import girlsofsteel.subsystems.Feeder;
 import girlsofsteel.subsystems.Gripper;
 import girlsofsteel.subsystems.Shooter;
-import girlsofsteel.objects.PositionInfo;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -38,7 +37,7 @@ public abstract class CommandBase extends Command {
     public static Gripper bottomGripper = new Gripper(bottomOpenSwitch, topOpenBottomCloseSwitch, RobotMap.OPEN_BOTTOM_GRIPPER_SOLENOID, RobotMap.CLOSE_BOTTOM_GRIPPER_SOLENOID);
 //    public static Gripper topGripper = new Gripper(topOpenBottomCloseSwitch, topCloseMiddleOppenSwitch, RobotMap.OPEN_TOP_GRIPPER_SOLENOID, RobotMap.CLOSE_TOP_GRIPPER_SOLENOID);
 //    public static Gripper middleGripper = new Gripper(topCloseMiddleOppenSwitch, middleCloseSwitch, RobotMap.OPEN_MIDDLE_GRIPPER_SOLENOID, RobotMap.CLOSE_MIDDLE_GRIPPER_SOLENOID);
-    
+
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
@@ -46,7 +45,7 @@ public abstract class CommandBase extends Command {
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
-        
+
 
         // Show what command your subsystem is running on the SmartDashboard
 //        SmartDashboard.putData(exampleSubsystem);

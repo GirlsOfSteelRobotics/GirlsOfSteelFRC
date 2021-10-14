@@ -17,128 +17,128 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveSystem extends Subsystem implements PIDOutput{
-	private CANTalon driveLeftA;
-	private CANTalon driveLeftB;
-	private CANTalon driveLeftC;
+    private CANTalon driveLeftA;
+    private CANTalon driveLeftB;
+    private CANTalon driveLeftC;
 
-	private CANTalon driveRightA;
-	private CANTalon driveRightB;
-	private CANTalon driveRightC;
+    private CANTalon driveRightA;
+    private CANTalon driveRightB;
+    private CANTalon driveRightC;
 
-	private RobotDrive robotDrive;
+    private RobotDrive robotDrive;
 
-	private double encOffsetValueRight = 0;
-	private double encOffsetValueLeft = 0;
+    private double encOffsetValueRight = 0;
+    private double encOffsetValueLeft = 0;
 
-	//using the Nav board
-	public PIDController turnController;
+    //using the Nav board
+    public PIDController turnController;
 
-	static final double kP = 0.03; //TODO: adjust these
-	static final double kI = 0.00;
-	static final double kD = 0.00;
-	static final double kF = 0.00;
+    static final double kP = 0.03; //TODO: adjust these
+    static final double kI = 0.00;
+    static final double kD = 0.00;
+    static final double kF = 0.00;
 
-	static final double kToleranceDegrees = 2.0f;
+    static final double kToleranceDegrees = 2.0f;
 
-	boolean rotateToAngle = false;
+    boolean rotateToAngle = false;
 
-	double rotateToAngleRate;
+    double rotateToAngleRate;
 
-	public DriveSystem() {
-		driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
-		driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
-		driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
-		driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
-		driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
-		driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
+    public DriveSystem() {
+        driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
+        driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
+        driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
+        driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
+        driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
+        driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
 
-		driveLeftA.enableBrakeMode(true);
-		driveLeftB.enableBrakeMode(true);
-		driveLeftC.enableBrakeMode(true);
-		driveRightA.enableBrakeMode(true);
-		driveRightB.enableBrakeMode(true);
-		driveRightC.enableBrakeMode(true);
+        driveLeftA.enableBrakeMode(true);
+        driveLeftB.enableBrakeMode(true);
+        driveLeftC.enableBrakeMode(true);
+        driveRightA.enableBrakeMode(true);
+        driveRightB.enableBrakeMode(true);
+        driveRightC.enableBrakeMode(true);
 
-		robotDrive = new RobotDrive(driveLeftA, driveRightA);
+        robotDrive = new RobotDrive(driveLeftA, driveRightA);
 
-		// Set some safety controls for the drive system
-		robotDrive.setSafetyEnabled(true);
-		robotDrive.setExpiration(0.1);
-		robotDrive.setSensitivity(0.5);
-		robotDrive.setMaxOutput(1.0);
-		
-		driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
-		driveLeftB.set(driveLeftA.getDeviceID());
-		driveLeftC.set(driveLeftA.getDeviceID());
-		driveRightB.set(driveRightA.getDeviceID());
-		driveRightC.set(driveRightA.getDeviceID());
-	}
+        // Set some safety controls for the drive system
+        robotDrive.setSafetyEnabled(true);
+        robotDrive.setExpiration(0.1);
+        robotDrive.setSensitivity(0.5);
+        robotDrive.setMaxOutput(1.0);
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		setDefaultCommand( new DriveByJoystick() );
-	}
-	
-	public void takeJoystickInputs(Joystick joystk) {
-		robotDrive.arcadeDrive(joystk);
-	}
+        driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+        driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+        driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        driveLeftB.set(driveLeftA.getDeviceID());
+        driveLeftC.set(driveLeftA.getDeviceID());
+        driveRightB.set(driveRightA.getDeviceID());
+        driveRightC.set(driveRightA.getDeviceID());
+    }
 
-	public void driveByJoystick(double Y, double X) {
-		SmartDashboard.putString("driveByJoystick?", Y + "," + X);
-		robotDrive.arcadeDrive(Y,X);
-	}
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        setDefaultCommand( new DriveByJoystick() );
+    }
 
-	public void drive(double moveValue, double rotateValue){
-		robotDrive.arcadeDrive(moveValue, rotateValue);
-	}
+    public void takeJoystickInputs(Joystick joystk) {
+        robotDrive.arcadeDrive(joystk);
+    }
 
-	public void driveSpeed(double speed){
-		robotDrive.drive(-speed, 0);
-	}
+    public void driveByJoystick(double Y, double X) {
+        SmartDashboard.putString("driveByJoystick?", Y + "," + X);
+        robotDrive.arcadeDrive(Y,X);
+    }
 
-	public void stop() {
-		robotDrive.drive(0, 0);
-	}
-	
+    public void drive(double moveValue, double rotateValue){
+        robotDrive.arcadeDrive(moveValue, rotateValue);
+    }
 
-	public void printEncoderValues() {
-		getEncoderDistance();
-	}
+    public void driveSpeed(double speed){
+        robotDrive.drive(-speed, 0);
+    }
 
-	public double getEncoderRight() {
-		return -driveRightA.getEncPosition();
-	}
+    public void stop() {
+        robotDrive.drive(0, 0);
+    }
 
-	public double getEncoderLeft() {
-		return driveLeftA.getEncPosition();
-	}
 
-	public double getEncoderDistance() {
-		if (Robot.shifters.getGearSpeed()) {
-			SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-			SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
-		}
-		else {
-			SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
-			SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
-			return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
-		}
-	}
+    public void printEncoderValues() {
+        getEncoderDistance();
+    }
 
-	public void resetEncoderDistance() {
-		encOffsetValueRight = getEncoderRight();
-		encOffsetValueLeft = getEncoderLeft();
-		getEncoderDistance();
-	}
+    public double getEncoderRight() {
+        return -driveRightA.getEncPosition();
+    }
 
-	@Override
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		
-	}
+    public double getEncoderLeft() {
+        return driveLeftA.getEncPosition();
+    }
+
+    public double getEncoderDistance() {
+        if (Robot.shifters.getGearSpeed()) {
+            SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
+            SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
+            return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
+        }
+        else {
+            SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
+            SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
+            return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
+        }
+    }
+
+    public void resetEncoderDistance() {
+        encOffsetValueRight = getEncoderRight();
+        encOffsetValueLeft = getEncoderLeft();
+        getEncoderDistance();
+    }
+
+    @Override
+    public void pidWrite(double output) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

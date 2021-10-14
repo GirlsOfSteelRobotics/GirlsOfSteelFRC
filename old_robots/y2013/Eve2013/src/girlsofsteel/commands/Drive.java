@@ -7,13 +7,13 @@ public class Drive extends CommandBase {
 
     double turningScale;
     double scale;
-    
+
     Joystick joystick;
     double x;
     double y;
     double th;
     boolean gyroOn;
-    
+
     public Drive(double scale, double turningScale, boolean gyroOn) {
         requires(drive);
         this.scale = scale;

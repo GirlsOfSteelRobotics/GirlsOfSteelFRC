@@ -20,5 +20,5 @@ public class TopRollersReverse extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

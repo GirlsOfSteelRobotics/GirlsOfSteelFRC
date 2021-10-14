@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoLowBarAndTurn extends CommandGroup {
-    
+
     public  AutoLowBarAndTurn() {
-    	addSequential(new NudgeFlapDown());
-    	addSequential(new AutoDriveBackwards(156, .6));
-    	addSequential(new NudgeFlapUp()); 
-    	addSequential(new AutoTurn(21, 0.1));
+        addSequential(new NudgeFlapDown());
+        addSequential(new AutoDriveBackwards(156, .6));
+        addSequential(new NudgeFlapUp());
+        addSequential(new AutoTurn(21, 0.1));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

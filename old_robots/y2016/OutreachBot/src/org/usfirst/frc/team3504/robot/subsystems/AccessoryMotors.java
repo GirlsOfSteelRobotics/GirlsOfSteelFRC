@@ -10,47 +10,47 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  *
  */
 public class AccessoryMotors extends Subsystem {
-	private Victor accessoryLeft;
-	private Victor accessoryRight;
-	
-	public enum Direction {kFwd, kRev};
-	
-	public AccessoryMotors() {
-		accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);
-		LiveWindow.addActuator("Accessory Motors", "Accessory Left", accessoryLeft);
+    private Victor accessoryLeft;
+    private Victor accessoryRight;
 
-		accessoryRight = new Victor(RobotMap.ACCESSORY_RIGHT_PORT);		
-		LiveWindow.addActuator("Accessory Motors", "Accessory Right", accessoryRight);
+    public enum Direction {kFwd, kRev};
+
+    public AccessoryMotors() {
+        accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);
+        LiveWindow.addActuator("Accessory Motors", "Accessory Left", accessoryLeft);
+
+        accessoryRight = new Victor(RobotMap.ACCESSORY_RIGHT_PORT);
+        LiveWindow.addActuator("Accessory Motors", "Accessory Right", accessoryRight);
     }
-    
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	//There's no default command for this subsystem
+        //There's no default command for this subsystem
     }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	public void startLeft(Direction direction) {
-		if (direction == Direction.kFwd)
-			accessoryLeft.set(1.0);
-		else
-			accessoryLeft.set(-1.0);
-	}
+    public void startLeft(Direction direction) {
+        if (direction == Direction.kFwd)
+            accessoryLeft.set(1.0);
+        else
+            accessoryLeft.set(-1.0);
+    }
 
-	public void startRight(Direction direction) {
-		if (direction == Direction.kFwd)
-			accessoryRight.set(1.0);
-		else
-			accessoryRight.set(-1.0);
-	}
+    public void startRight(Direction direction) {
+        if (direction == Direction.kFwd)
+            accessoryRight.set(1.0);
+        else
+            accessoryRight.set(-1.0);
+    }
 
-	public void stopLeft() {
-		accessoryLeft.set(0.0);
-	}
+    public void stopLeft() {
+        accessoryLeft.set(0.0);
+    }
 
-	public void stopRight() {
-		accessoryRight.set(0.0);
-	}
+    public void stopRight() {
+        accessoryRight.set(0.0);
+    }
 }

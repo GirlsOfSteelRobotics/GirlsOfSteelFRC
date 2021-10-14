@@ -15,40 +15,40 @@ import girlsofsteel.objects.*;
  * @author Heather
  */
 public class Climber extends Subsystem {
-    
+
     //cLIMBER sPIKES
     private Relay rightClimberSpike = new Relay(RobotMap.RIGHT_CLIMBER_SPIKE);
     private Relay leftClimberSpike = new Relay(RobotMap.LEFT_CLIMBER_SPIKE);
-    
+
 
     private Solenoid extendLifterPistonSolenoid = new Solenoid(
             RobotMap.LIFTER_MODULE, RobotMap.EXTEND_LIFTER_PISTON_SOLENOID);
     private Solenoid retractLifterPistonSolenoid = new Solenoid(
             RobotMap.LIFTER_MODULE, RobotMap.RETRACT_LIFTER_PISTON_SOLENOID);
 
-    
+
     //Piston methods
     public void extendLifterPiston() {
         extendLifterPistonSolenoid.set(true);
         retractLifterPistonSolenoid.set(false);
     }
-    
+
     public void retractLifterPiston() {
         retractLifterPistonSolenoid.set(true);
         extendLifterPistonSolenoid.set(false);
     }
-    
+
     //TODO figure out how to check piston
-    
+
     public boolean isPistonExtended() {
         return extendLifterPistonSolenoid.get();
     }
-    
+
     //Spikes methods
     public void forwardRightClimberSpike() {
         rightClimberSpike.set(Relay.Value.kReverse);
     }
-    
+
     public void reverseRightClimberSpike() {
         rightClimberSpike.set(Relay.Value.kForward);
     }
@@ -56,11 +56,11 @@ public class Climber extends Subsystem {
     public void stopRightClimberSpike() {
         rightClimberSpike.set(Relay.Value.kOff);
     }
-    
+
     public void forwardLeftClimberSpike() {
         leftClimberSpike.set(Relay.Value.kForward);
     }
-    
+
     public void reverseLeftClimberSpike() {
         leftClimberSpike.set(Relay.Value.kReverse);
     }
@@ -71,6 +71,6 @@ public class Climber extends Subsystem {
 
     protected void initDefaultCommand() {
     }
-    
-    
+
+
 }

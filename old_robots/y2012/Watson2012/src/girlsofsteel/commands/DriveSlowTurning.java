@@ -5,18 +5,18 @@ import edu.wpi.first.wpilibj.Joystick;
 public class DriveSlowTurning extends CommandBase{
 
     Joystick joystick;
-    
+
     double scale;
     double turningScale;
     double xAxis;
     double yAxis;
-    
+
     public DriveSlowTurning(double scale, double turningScale){
         requires(chassis);
         this.scale = scale;
         this.turningScale = turningScale;
     }
-    
+
     protected void initialize() {
         joystick = oi.getDriverJoystick();
     }
@@ -38,5 +38,5 @@ public class DriveSlowTurning extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

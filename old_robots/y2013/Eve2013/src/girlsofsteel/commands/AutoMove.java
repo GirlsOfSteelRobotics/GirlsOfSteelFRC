@@ -5,9 +5,9 @@ public class AutoMove extends CommandBase {
     double x;
     double y;
     double time;
-    
+
     double startTime;
-    
+
     /**
      * Moves in the direction given for a certain amount of time automatically.
      * @param x the percentage to move in the x direction (-1 to 1)
@@ -19,7 +19,7 @@ public class AutoMove extends CommandBase {
         this.y = y;
         this.time = time;
     }
-    
+
     protected void initialize() {
         startTime = timeSinceInitialized();
     }
@@ -39,5 +39,5 @@ public class AutoMove extends CommandBase {
     protected void interrupted() {
         end();
     }
-    
+
 }

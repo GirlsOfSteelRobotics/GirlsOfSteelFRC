@@ -43,7 +43,3 @@ public class AutoDoNothing extends Command {
     protected void interrupted() {
     }
 }
-
-
-
-

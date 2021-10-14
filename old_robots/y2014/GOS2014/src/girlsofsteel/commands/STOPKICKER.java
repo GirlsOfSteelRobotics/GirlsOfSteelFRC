@@ -8,7 +8,7 @@ package girlsofsteel.commands;
 /**
  *
  * @author Sylvie
- * 
+ *
  * Stops the kicker wherever it is (does not stop the PID)
  */
 public class STOPKICKER extends CommandBase {
@@ -16,7 +16,7 @@ public class STOPKICKER extends CommandBase {
     public STOPKICKER() {
         requires(kicker);
     }
-    
+
     protected void initialize() {
     }
 

@@ -1,14 +1,14 @@
 package girlsofsteel.commands;
 
 public class TurnToSetPoint extends CommandBase {
-    
+
     double degreesToTurn;
-    
+
     public TurnToSetPoint(double degrees){
         degreesToTurn = degrees;
         requires(chassis);
     }
-    
+
     protected void initialize() {
         chassis.initEncoders();
         chassis.initPositionPIDs();
@@ -30,5 +30,5 @@ public class TurnToSetPoint extends CommandBase {
     protected void interrupted() {
         end();
     }
-   
+
 }

@@ -12,5 +12,5 @@ public class CameraAuto extends CommandGroup {
             addSequential(new Rotate(turnTheta, true));
         }
     }
-    
+
 }

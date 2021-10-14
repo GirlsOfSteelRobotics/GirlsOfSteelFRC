@@ -11,9 +11,9 @@ package girlsofsteel.commands;
  * Drivers can use it to stop the collector wheel manually
  * @author Abby, Sophia, Sonia
  */
-//This is a seperate command to stop the wheel aside from the automatic 
+//This is a seperate command to stop the wheel aside from the automatic
 public class CollectorWheelStop extends CommandBase{
-    
+
     /**
      * This command requires the collector.
      * @author Sophia, Sonia
@@ -21,13 +21,13 @@ public class CollectorWheelStop extends CommandBase{
     public CollectorWheelStop(){
         requires (collector);
     }
-    
+
     /**
      * There is nothing in this method.
      * @author Sophia, Sonia
      */
     protected void initialize() {
-     
+
     }
 
      /**
@@ -35,17 +35,17 @@ public class CollectorWheelStop extends CommandBase{
      * @author Sophia, Sonia
      */
     protected void execute() {
-         
+
     }
 
     /**
      * This command only needs to run once so it returns true.
-     * @return true because it needs to run once 
+     * @return true because it needs to run once
      * @author Sophia, Sonia
      */
     protected boolean isFinished() {
         return true;
-        
+
     }
 
     /**
@@ -62,7 +62,7 @@ public class CollectorWheelStop extends CommandBase{
      * @author Sophia, Sonia
      */
     protected void interrupted() {
-        
+
     }
-    
+
 }

@@ -5,16 +5,16 @@ import edu.wpi.first.wpilibj.Joystick;
 public class DriveJagsLinear extends CommandBase{
 
     Joystick joystick;
-    
+
     double scale;
     double xAxis;
     double yAxis;
-    
+
     public DriveJagsLinear(double scale){
         requires(chassis);
         this.scale = scale;
     }
-    
+
     protected void initialize() {
         joystick = oi.getDriverJoystick();
     }
@@ -36,5 +36,5 @@ public class DriveJagsLinear extends CommandBase{
     protected void interrupted() {
         end();
     }
-    
+
 }

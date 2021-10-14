@@ -70,14 +70,14 @@ public class ManualTuneCamera extends CommandBase {
         if (SmartDashboard.getBoolean("collect data", false)) {
             //for (int n = 0; n < 5; n++) {
             if (!chassis.isMoving()) {
-                
+
                 try {
-                    Thread.sleep(2000);//3 seconds time out. 
+                    Thread.sleep(2000);//3 seconds time out.
                 } catch (Exception ex) {
                 }
-                
+
                 double ratio = 0;
-                
+
                 //Try 10 times for an aceptable average.
                 for (int i = 0; i < 10; i++) {
                     ratio = this.getStableRatio();
@@ -86,12 +86,12 @@ public class ManualTuneCamera extends CommandBase {
                         break;
                     }
                 }
-                
+
                 distanceData[count] = (chassis.getRightEncoderDistance());
                 System.out.println("collected one data point " + distanceData[count] + ", " + ratio);
                 //Start against the bridge. distance to target is he initial distance minus the distance travled.
 //                chassis.move(Step);
-                
+
                 if (ratio >= 0) {
 //                }
                     imageTargetRatioData[count] = ratio;
@@ -99,15 +99,15 @@ public class ManualTuneCamera extends CommandBase {
                     System.out.println("collected one data point " + distanceData[count] + ", " + ratio);
 
                 }
-                
+
             }
-            
+
             if (count > 50) {
                 count = 49;
             } else {
                 count++;
             }
-            
+
         }
     }
 
@@ -132,7 +132,7 @@ public class ManualTuneCamera extends CommandBase {
             // print results
             System.out.println("y   = " + a + " * x + " + b);
         }
-        
+
         chassis.stopJags();
         chassis.endEncoders();
     }

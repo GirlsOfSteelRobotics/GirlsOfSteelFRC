@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveSpeed extends Command {
-	
-	/* TODO: put in encoders in chassis, than use them to make a method to see if robot has gone that distance, and put that in is finished for DriveSpeed
-	 * 
-	 * 
-	 */
-	
+
+    /* TODO: put in encoders in chassis, than use them to make a method to see if robot has gone that distance, and put that in is finished for DriveSpeed
+     *
+     *
+     */
+
     public DriveSpeed() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

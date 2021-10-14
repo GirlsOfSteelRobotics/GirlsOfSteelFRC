@@ -20,7 +20,7 @@
 //    public cRioLights() throws VisaException {
 //            ledSerial = new SerialPort(9600);
 //            ledSerial.setWriteBufferMode(kFlushOnAccess);
-//        //And then something like this to write out a character whenever you want the 
+//        //And then something like this to write out a character whenever you want the
 ////lights to change:
 //        byte[] msg = {'r'};
 //

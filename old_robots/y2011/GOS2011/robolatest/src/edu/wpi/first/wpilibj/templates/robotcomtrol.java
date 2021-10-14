@@ -6,8 +6,6 @@
 /*----------------------------------------------------------------------------*/
 package edu.wpi.first.wpilibj.templates;
 
-import com.sun.squawk.io.BufferedReader;
-import com.sun.squawk.microedition.io.FileConnection;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -19,12 +17,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import javax.microedition.io.Connector;
 
 
 
@@ -309,7 +301,7 @@ public class robotcomtrol extends SimpleRobot {
                     ex.printStackTrace();
                 }
                 ClawO.set(false);
-                
+
             }
         }
     }
@@ -378,7 +370,7 @@ public class robotcomtrol extends SimpleRobot {
                 //dont change diff the first time
                 flag = false;
             } else {
-                
+
                 diff = currenttime - prevtime;
                // message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(diff));
             }
@@ -726,7 +718,7 @@ message.updateLCD();
         {
             ClawO.set((false));
         }
-        
+
         if (stick.getRawButton(2)) {
             ClawC.set(true);
             message.println(DriverStationLCD.Line.kUser4, 5, "Claw Close");
@@ -736,7 +728,7 @@ message.updateLCD();
         {
             ClawC.set((false));
         }
-        
+
         if (joy.getRawButton(3)) {
             MBDeplo.set(true);
             message.println(DriverStationLCD.Line.kUser4, 5, "Mini Bot Deployed");
@@ -745,7 +737,7 @@ message.updateLCD();
         {
             MBDeplo.set(false);
         }
-        
+
         if (joy.getRawButton(5)) {
             MBReverse.set(true);
             message.println(DriverStationLCD.Line.kUser4, 5, "Mini Bot Retracted");
@@ -754,7 +746,7 @@ message.updateLCD();
         {
              MBReverse.set(false);
         }
-        
+
         if (armstick.getRawButton(9)) {
             //double print = matchmaker(slot);
             //print is the value it moved it

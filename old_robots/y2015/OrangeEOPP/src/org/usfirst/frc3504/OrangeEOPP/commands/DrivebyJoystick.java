@@ -15,9 +15,9 @@ import org.usfirst.frc3504.OrangeEOPP.Robot;
  *
  */
 public class  DrivebyJoystick extends Command {
-    
+
     Joystick joy;
-    
+
     public DrivebyJoystick() {
         //get joystick
         requires(Robot.drive);
@@ -31,7 +31,7 @@ public class  DrivebyJoystick extends Command {
         //move in direction of joystick
        // double x = joy.getX();
        // double y = joy.getY();
-        
+
         Robot.drive.move(Robot.oi.getJoystick());
     }
     // Make this return true when this Command no longer needs to run execute()

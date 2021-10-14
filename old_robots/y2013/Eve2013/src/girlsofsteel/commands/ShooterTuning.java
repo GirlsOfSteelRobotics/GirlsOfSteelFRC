@@ -1,9 +1,9 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- * 
- * Make shoot method that given a desired encoder speed and current battery voltage, 
- * it will set the jags to a suitable speed from the table. Also be prepared to 
+ *
+ * Make shoot method that given a desired encoder speed and current battery voltage,
+ * it will set the jags to a suitable speed from the table. Also be prepared to
  * extrapolate values (see code from last year).
  */
 package girlsofsteel.commands;
@@ -52,7 +52,7 @@ public class ShooterTuning extends CommandBase {
                 System.out.println("Point Voltage: " + speed + "\t");
                 System.out.print("Point Shooter Encoder Speed: " + shooter.getEncoderRate());
                 System.out.println("Point Battery Voltage: " + batteryVoltage);
-   
+
     }
 
     protected boolean isFinished() {
