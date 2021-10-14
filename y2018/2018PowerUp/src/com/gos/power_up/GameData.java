@@ -160,7 +160,7 @@ public class GameData {
 
     @Override
     public String toString() {
-        StringBuilder output = new StringBuilder();
+        StringBuilder output = new StringBuilder(30);
 
         if (getSwitchSide() == GameData.FieldSide.left) {
             output.append("Switch is on the left");

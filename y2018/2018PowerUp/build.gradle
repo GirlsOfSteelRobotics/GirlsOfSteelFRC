@@ -6,7 +6,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
-def ROBOT_MAIN_CLASS = "com.gos.steam_works.Main"
+def ROBOT_MAIN_CLASS = "com.gos.power_up.Main"
 
 sourceSets {
     main {

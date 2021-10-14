@@ -6,20 +6,21 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
-<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.gos.infinite_recharge.sd_widgets.control_panel.ControlPanelController">
+<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.gos.infinite_recharge.sd_widgets.control_panel.ControlPanelController">
 
 
     <children>
         <StackPane>
             <children>
-                <PieChart fx:id="m_controlPanel"/>
+                <PieChart fx:id="m_controlPanel" />
                 <Pane>
 
                     <Group>
                         <children>
-                            <Circle radius="3" centerX="60" centerY="100"/>
-                            <Rectangle x="95" y="0" height="200" width="10"/>
+                            <Circle radius="3" centerX="60" centerY="100" />
+                            <Rectangle x="95" y="0" height="200" width="10" />
                         </children>
                     </Group>
                 </Pane>

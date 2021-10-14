@@ -34,7 +34,8 @@ public class DriveStraightDistanceSmartMotionControlCommand extends CommandBase 
     @Override
     public boolean isFinished() {
         double error = m_chassis.getAverageDistance() - m_goalDistance;
-        return m_deadbandHelper.setIsGood(Math.abs(error) < m_allowableError);
+        m_deadbandHelper.setIsGood(Math.abs(error) < m_allowableError);
+        return m_deadbandHelper.isFinished();
     }
 
     @Override

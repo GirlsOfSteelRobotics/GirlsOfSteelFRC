@@ -201,7 +201,7 @@ public class DriveByMotionProfile extends Command {
         }
     }
 
-    class PeriodicRunnable implements java.lang.Runnable {
+    private class PeriodicRunnable implements Runnable {
         @Override
         public void run() {
             m_leftTalon.processMotionProfileBuffer();

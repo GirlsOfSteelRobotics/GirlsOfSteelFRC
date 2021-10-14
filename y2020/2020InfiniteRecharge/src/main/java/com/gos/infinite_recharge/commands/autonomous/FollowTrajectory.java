@@ -13,6 +13,13 @@ import org.snobotv2.coordinate_gui.RamsetePublisher;
 
 public class FollowTrajectory extends SequentialCommandGroup {
 
+    private final Chassis m_chassis;
+    private final Trajectory m_trajectory;
+    private final RamsetePublisher m_ramsetePublisher;
+
+    private double m_goalVelocityLeft;
+    private double m_goalVelocityRight;
+
     public static class AutoConstants {
         public static final double slowSpeedMetersPerSecond = Units.inchesToMeters(48);
         public static final double slowAccelerationMetersPerSecondSquared = Units.inchesToMeters(96);
@@ -38,13 +45,6 @@ public class FollowTrajectory extends SequentialCommandGroup {
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
     }
-
-    private final Chassis m_chassis;
-    private final Trajectory m_trajectory;
-    private final RamsetePublisher m_ramsetePublisher;
-
-    private double m_goalVelocityLeft;
-    private double m_goalVelocityRight;
 
 
     public FollowTrajectory(Trajectory trajectory, Chassis chassis) {

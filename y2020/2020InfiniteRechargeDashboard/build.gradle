@@ -12,6 +12,8 @@ ext {
 
 application {
     mainClassName = 'com.gos.infinite_recharge.sd_widgets.super_structure.SuperStructureStandaloneMain'
+    //    mainClassName = 'com.gos.infinite_recharge.sd_widgets.leds.LedStandaloneMain'
+    //    mainClassName = 'com.gos.infinite_recharge.sd_widgets.control_panel.ControlPanelStandaloneMain'
 }
 
 apply from: "${rootDir}/libraries/build_scripts/custom_dashboard_helper.gradle"
