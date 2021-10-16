@@ -199,15 +199,12 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
                 DriveConstants.kDriveKinematics,
                 DriveConstants.maxVoltage);
 
-        TrajectoryConfig config =
-            new TrajectoryConfig(maxSpeedMetersPerSecond,
-                    maxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
-
-        return config;
+        return new TrajectoryConfig(maxSpeedMetersPerSecond,
+                maxAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(DriveConstants.kDriveKinematics)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint);
     }
 
     public static TrajectoryConfig getTrajectoryConfig() {

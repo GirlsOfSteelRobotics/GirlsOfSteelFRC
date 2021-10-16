@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
     private final Shifters m_shifters;
     private final HatchCollector m_hatchCollector;
 
-    Command m_autonomousCommand;
+    private Command m_autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be

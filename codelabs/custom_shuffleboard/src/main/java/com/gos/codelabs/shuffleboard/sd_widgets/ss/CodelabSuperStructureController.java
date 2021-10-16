@@ -48,10 +48,7 @@ public class CodelabSuperStructureController {
         m_pane.setMinHeight(MAX_HEIGHT * minWidthMultiplier);
         m_pane.setMinWidth(MAX_WIDTH * minWidthMultiplier);
 
-        DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> {
-            double output = Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
-            return output;
-        }, m_pane.widthProperty(), m_pane.heightProperty());
+        DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT), m_pane.widthProperty(), m_pane.heightProperty());
 
         Scale scale = new Scale();
         scale.xProperty().bind(scaleBinding);

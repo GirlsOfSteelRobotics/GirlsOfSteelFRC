@@ -18,11 +18,12 @@ import edu.wpi.first.wpilibj.Preferences;
  */
 public final class PropertyManager {
 
+    private static final Set<String> REGISTERED_KEYS = new HashSet<>();
+
     private PropertyManager() {
 
     }
 
-    private static final Set<String> REGISTERED_KEYS = new HashSet<>();
 
     public static void purgeExtraKeys() {
         Collection<String> keys = Preferences.getInstance().getKeys();
@@ -33,7 +34,7 @@ public final class PropertyManager {
         }
     }
 
-    public static interface IProperty<TypeT> {
+    public interface IProperty<TypeT> {
         TypeT getValue();
 
         String getName();

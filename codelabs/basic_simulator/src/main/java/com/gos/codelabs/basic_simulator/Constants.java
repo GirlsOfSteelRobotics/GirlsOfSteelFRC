@@ -97,15 +97,13 @@ public final class Constants {
 
         public static ElevatorSim createSim() {
 
-            ElevatorSim elevatorSim = new ElevatorSim(
+            return new ElevatorSim(
                     ElevatorSimConstants.kElevatorGearbox,
                     ElevatorSimConstants.kElevatorGearing,
                     ElevatorSimConstants.kCarriageMass,
                     ElevatorSimConstants.kElevatorDrumRadius,
                     ElevatorSimConstants.kMinElevatorHeight,
                     ElevatorSimConstants.kMaxElevatorHeight);
-
-            return elevatorSim;
         }
 
         private ElevatorSimConstants() {

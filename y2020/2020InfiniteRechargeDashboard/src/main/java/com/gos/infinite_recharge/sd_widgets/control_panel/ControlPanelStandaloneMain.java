@@ -9,48 +9,63 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NPathComplexity"})
 public class ControlPanelStandaloneMain {
-    private final ControlPanelController m_controller;
-    private double m_wheelAngle;
+    private final ControlPanelWidget m_controller;
 
-    public ControlPanelStandaloneMain(Scene scene, ControlPanelController robotController) {
+    private double m_controlPanelSimAngle;
+
+    public ControlPanelStandaloneMain(Scene scene, ControlPanelWidget robotController) {
         m_controller = robotController;
-        m_controller.setColorConsumer((ControlPanelController.Colors color) -> {
-        });
-        m_wheelAngle = 0;
-        handleUpdate();
 
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
             switch (code) {
+
+            // ControlPanel
             case A:
-                m_wheelAngle -= 1;
+                m_controlPanelSimAngle -= 1;
                 break;
-            case D:
-                m_wheelAngle += 1;
+            case Q:
+                m_controlPanelSimAngle += 1;
                 break;
+
+
+
+
+
 
             default:
                 // ignored
             }
             handleUpdate();
         });
-
-        scene.setOnKeyReleased(event -> handleUpdate());
     }
 
     private void handleUpdate() {
-        m_controller.setControlPanelData(m_wheelAngle, "");
-    }
 
+        try {
+
+            ControlPanelData data = new ControlPanelData(
+                m_controlPanelSimAngle,
+                0.0,
+                0.0,
+                0.0,
+                "yellow"
+            );
+            m_controller.dataProperty().setValue(data);
+        } catch (ClassCastException ignored) {
+            // don't worry about it
+        }
+    }
 
     public static class PseudoMain extends Application {
 
         @Override
         public void start(Stage primaryStage) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("control_panel.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("control_panel_widget.fxml"));
             Pane root = loader.load();
-            ControlPanelController controller = loader.getController();
+            ControlPanelWidget controller = loader.getController();
 
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

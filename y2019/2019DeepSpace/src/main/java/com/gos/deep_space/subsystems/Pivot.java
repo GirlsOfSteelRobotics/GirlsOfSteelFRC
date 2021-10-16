@@ -96,7 +96,7 @@ public final class Pivot extends Subsystem {
         boolean isFinished = (goalPos <= getPivotPosition() + PIVOT_TOLERANCE)
             && (goalPos >= getPivotPosition() - PIVOT_TOLERANCE);
         //System.out.println("isFinished: " + isFinished);
-        return isFinished;
+        return isFinished; // NOPMD
     }
 
     public void pivotStop() {
