@@ -1,4 +1,4 @@
-package com.gos.codelabs.pid.auton;
+package com.gos.codelabs.pid.auton_modes;
 
 import com.gos.codelabs.pid.Constants;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.util.Units;
-import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.codelabs.pid.commands.auton.DriveTrajectoryCommand;
 import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public final class TrajectoryFactory {
 
     }
 
-    public static Command getTestStraightAcrossFieldTrajectory(ChassisSubsystem chassis) {
+    public static CommandBase getTestStraightAcrossFieldTrajectory(ChassisSubsystem chassis) {
 
         TrajectoryConfig config = getTrajectoryConfig();
 
@@ -43,7 +43,7 @@ public final class TrajectoryFactory {
         return DriveTrajectoryCommand.createWithVelocity(chassis, trajectory, true);
     }
 
-    public static Command getTestSCurveTrajectory(ChassisSubsystem chassis) {
+    public static CommandBase getTestSCurveTrajectory(ChassisSubsystem chassis) {
 
         TrajectoryConfig config = getTrajectoryConfig();
 
@@ -57,7 +57,7 @@ public final class TrajectoryFactory {
     }
 
 
-    public static Command getTestStraightForwardTestTrajectory(ChassisSubsystem chassis) {
+    public static CommandBase getTestStraightForwardTestTrajectory(ChassisSubsystem chassis) {
 
         TrajectoryConfig config = getTrajectoryConfig();
 
@@ -70,7 +70,7 @@ public final class TrajectoryFactory {
         return DriveTrajectoryCommand.createWithVelocity(chassis, trajectory, true);
     }
 
-    public static Command getTestStraightBackwardsTestTrajectory(ChassisSubsystem chassis) {
+    public static CommandBase getTestStraightBackwardsTestTrajectory(ChassisSubsystem chassis) {
 
         TrajectoryConfig config = getTrajectoryConfig();
         config.setReversed(true);

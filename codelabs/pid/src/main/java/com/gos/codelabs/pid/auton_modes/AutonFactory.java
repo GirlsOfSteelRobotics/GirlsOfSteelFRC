@@ -1,4 +1,4 @@
-package com.gos.codelabs.pid.auton;
+package com.gos.codelabs.pid.auton_modes;
 
 import com.gos.codelabs.pid.RobotContainer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

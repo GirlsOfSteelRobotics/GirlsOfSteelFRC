@@ -10,7 +10,6 @@ public class ElevatorToPositionCommand extends CommandBase {
     private final boolean m_holdAtPosition;
     private boolean m_finished;
 
-
     public ElevatorToPositionCommand(ElevatorSubsystem lift, ElevatorSubsystem.Positions position) {
         this(lift, position, false);
     }
