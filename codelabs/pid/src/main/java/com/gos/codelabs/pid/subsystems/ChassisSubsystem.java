@@ -121,6 +121,14 @@ public class ChassisSubsystem extends SubsystemBase {
                 .build();
     }
 
+    public void setThrottle(double speed) {
+        setSpeedAndSteer(speed, 0);
+    }
+
+    public void setSpin(double spin) {
+        setSpeedAndSteer(0, spin);
+    }
+
     public void setSpeedAndSteer(double speed, double steer) {
         m_differentialDrive.arcadeDrive(speed, steer);
     }
