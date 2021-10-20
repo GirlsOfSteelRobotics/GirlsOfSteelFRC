@@ -1,7 +1,6 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
-import com.gos.codelabs.pid.SmartDashboardNames;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -9,9 +8,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANPIDController.ArbFFUnits;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -41,12 +38,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private final SimableCANSparkMax m_liftMotor;
     private final CANEncoder m_liftEncoder;
+    private final DigitalInput m_lowerLimitSwitch;
+    private final DigitalInput m_upperLimitSwitch;
     private final CANPIDController m_pidController;
     private final PidProperty m_pidProperty;
-
-    private final NetworkTableEntry m_motorSpeedEntry;
-    private final NetworkTableEntry m_desiredHeightEntry;
-    private final NetworkTableEntry m_heightEntry;
+    private double m_desiredHeight;
 
     private ISimWrapper m_elevatorSim;
 
@@ -55,10 +51,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_liftEncoder = m_liftMotor.getEncoder();
         m_pidController = m_liftMotor.getPIDController();
 
-        NetworkTable table = NetworkTableInstance.getDefault().getTable(SmartDashboardNames.SUPER_STRUCTURE_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_TABLE_NAME);
-        m_motorSpeedEntry = table.getEntry(SmartDashboardNames.ELEVATOR_MOTOR_SPEED);
-        m_heightEntry = table.getEntry(SmartDashboardNames.ELEVATOR_HEIGHT);
-        m_desiredHeightEntry = table.getEntry(SmartDashboardNames.ELEVATOR_DESIRED_HEIGHT);
+        m_lowerLimitSwitch = new DigitalInput(Constants.DIO_LIFT_LOWER_LIMIT);
+        m_upperLimitSwitch = new DigitalInput(Constants.DIO_LIFT_UPPER_LIMIT);
 
         m_pidProperty = new RevPidPropertyBuilder("Elevator", false, m_pidController, 0)
                 .addP(0)
@@ -77,23 +71,49 @@ public class ElevatorSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_pidProperty.updateIfChanged();
+    }
 
-        m_motorSpeedEntry.setNumber(m_liftMotor.getAppliedOutput());
-        m_heightEntry.setNumber(Units.metersToInches(getHeight()));
+    public boolean goToPosition(Positions position) {
+        return goToPosition(position.m_heightMeters);
     }
 
     public boolean goToPosition(double position) {
-        m_desiredHeightEntry.setNumber(Units.metersToInches(position));
+        m_desiredHeight = position;
         m_pidController.setReference(position, ControlType.kSmartMotion, 0, FindElevatorGravityCompensationCommand.ELEVATOR_SPEED.getValue(), ArbFFUnits.kPercentOut);
         return false;
     }
 
+    public boolean isAtLowerLimit() {
+        return m_lowerLimitSwitch.get();
+    }
+
+    public boolean isAtUpperLimit() {
+        return m_upperLimitSwitch.get();
+    }
+
     public void setSpeed(double speed) {
+        m_desiredHeight = -999;
         m_liftMotor.set(speed);
     }
 
-    public double getHeight() {
+    public double getHeightMeters() {
         return m_liftEncoder.getPosition();
+    }
+
+    public double getHeightInches() {
+        return Units.metersToInches(getHeightMeters());
+    }
+
+    public double getDesiredHeightMeters() {
+        return m_desiredHeight;
+    }
+
+    public double getDesiredHeightInches() {
+        return Units.metersToInches(getDesiredHeightMeters());
+    }
+
+    public double getMotorSpeed() {
+        return m_liftMotor.getAppliedOutput();
     }
 
     @Override

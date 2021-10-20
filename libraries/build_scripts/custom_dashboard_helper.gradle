@@ -9,7 +9,7 @@ repositories {
 }
 
 ext {
-    shuffleboard_version = "2020.1.2"
+    shuffleboard_version = "2021.3.1"
 }
 
 task install_shuffleboard_plugins(type: Copy) {
@@ -57,7 +57,5 @@ dependencies {
 
     compile 'edu.wpi.first.shuffleboard:shuffleboard:' + shuffleboard_version
     compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard.plugin:networktables:' + shuffleboard_version
     compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard.plugin:networktables:' + shuffleboard_version
 }

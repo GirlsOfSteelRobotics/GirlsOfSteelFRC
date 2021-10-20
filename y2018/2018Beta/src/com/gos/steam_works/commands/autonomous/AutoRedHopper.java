@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoRedHopper extends CommandGroup {
 
+    @SuppressWarnings("PMD.UnnecessaryConstructor")
     public AutoRedHopper() {
         // addSequential(new AutoDriveForward(156, .6)); //TODO: change //cross
         // baseline

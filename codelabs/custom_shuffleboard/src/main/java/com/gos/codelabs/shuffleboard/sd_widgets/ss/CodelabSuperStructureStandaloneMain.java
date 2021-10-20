@@ -36,30 +36,30 @@ public class CodelabSuperStructureStandaloneMain {
             case A:
                 m_elevatorSpeed = -0.75;
                 break;
-            case S:
+            case W:
                 m_elevatorHeight -= 1;
                 break;
-            case W:
+            case S:
                 m_elevatorHeight += 1;
                 break;
 
-            case X:
+            case DIGIT1:
                 m_elevatorAtUpperLimit = true;
                 break;
 
-            case Y:
+            case DIGIT2:
                 m_elevatorAtLowerLimit = true;
                 break;
             // Punch
 
-            case D:
+            case DIGIT3:
                 m_punchPunchExtended = true;
                 break;
             // SpinningWheel
-            case O:
+            case E:
                 m_spinningWheelSpeed = 0.5;
                 break;
-            case L:
+            case D:
                 m_spinningWheelSpeed = -0.5;
                 break;
 
@@ -81,21 +81,21 @@ public class CodelabSuperStructureStandaloneMain {
                 break;
 
 
-            case X:
+            case DIGIT1:
                 m_elevatorAtUpperLimit = false;
                 break;
 
-            case Y:
+            case DIGIT2:
                 m_elevatorAtLowerLimit = false;
                 break;
             // Punch
 
-            case D:
+            case DIGIT3:
                 m_punchPunchExtended = false;
                 break;
             // SpinningWheel
-            case O:
-            case L:
+            case E:
+            case D:
                 m_spinningWheelSpeed = 0;
                 break;
             default:

@@ -20,6 +20,7 @@ public class Blobs extends Subsystem {
     public static final int GOAL_DISTANCE = 50;
     public static final int ERROR_THRESHOLD = 20;
 
+    @SuppressWarnings("PMD.UnnecessaryConstructor")
     public Blobs() {
         /*
         ArrayList<Blob> randomBlobs = makeBlobs(100); //randomly generated blobs
@@ -83,8 +84,7 @@ public class Blobs extends Subsystem {
     public double findSlope(Blob blob1, Blob blob2) {
         double numer = blob2.m_y - blob1.m_y;
         double denom = blob2.m_x - blob1.m_x;
-        double slope = numer / denom;
-        return slope;
+        return numer / denom;
     }
 
     //Finds distance between line (defined by b1 and b2) and point (b3)
@@ -95,10 +95,9 @@ public class Blobs extends Subsystem {
         double y1 = b1.m_y;
         double y2 = b2.m_y;
         double y3 = b3.m_y;
-        double dist = (Math.abs(((y2 - y1) * x3) - ((x2 - x1) * y3) + ((x2 * y1) - (y2 * x1))))
-            / (Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1))));
 
-        return dist;
+        return (Math.abs(((y2 - y1) * x3) - ((x2 - x1) * y3) + ((x2 * y1) - (y2 * x1))))
+            / (Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1))));
     }
 
     //returns an Arraylist of blobs sorted by x-coord
@@ -123,12 +122,12 @@ public class Blobs extends Subsystem {
     }
 
     //Returns sorted list of blobs without outliers
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity"})
     public static List<Blob> golfSac(List<Blob> blobList) {
         Blob[] endpoints = new Blob[2];
         double minErr = -1;
         double minStd = -1;
-        final double STD_THRESHOLD = 0.5;
+        final double STD_THRESHOLD = 0.5; // NOPMD
         List<Blob> returnBlobs = new ArrayList<>();
 
         //Find best line between two blobs

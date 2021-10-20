@@ -8,9 +8,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
+@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NPathComplexity"})
 public class LedStandaloneMain {
 
     private static final String RAINBOW_PATTERN = "-128,127,0,0,-128,119,0,0,-128,110,0,0,-128,101,0,0,-128,92,0,0,-128,83,0,0,-128,74,0,0,-128,65,0,0,-128,56,0,0,-128,47,0,0,-128,0,0,0,-128,0,9,0,-128,0,18,0,-128,0,27,0,-128,0,36,0,-128,0,45,0,-128,0,54,0,-128,0,63,0,-128,0,72,0,-128,0,81,0,127,0,-128,0,119,0,-128,0,110,0,-128,0,101,0,-128,0,92,0,-128,0,83,0,-128,0,74,0,-128,0,65,0,-128,0,56,0,-128,0,47,0,-128,0,0,0,-128,0,0,9,-128,0,0,18,-128,0,0,27,-128,0,0,36,-128,0,0,45,-128,0,0,54,-128,0,0,63,-128,0,0,72,-128,0,0,81,-128,0,0,-128,127,0,0,-128,119,0,0,-128,110,0,0,-128,101,0,0,-128,92,0,0,-128,83,0,0,-128,74,0,0,-128,65,0,0,-128,56,0,0,-128,47,0,0,-128,0,0,9,-128,0,0,18,-128,0,0,27,-128,0,0,36,-128,0,0,45,-128,0,0,54,-128,0,0,63,-128,0,0,72,-128,0,0,81,-128,0,0,";
@@ -18,42 +17,45 @@ public class LedStandaloneMain {
     private static final String GREEN_PATTERN = "0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,";
     private static final String BLUE_PATTERN = "-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,-1,0,0,0,";
 
-    private final LedWidget m_widget;
-    private String m_activePattern;
+    private final LedWidget m_controller;
 
-    public LedStandaloneMain(Scene scene, LedWidget controller) {
-        m_widget = controller;
-        m_activePattern = "";
+    private String m_ledValues;
+
+    public LedStandaloneMain(Scene scene, LedWidget robotController) {
+        m_controller = robotController;
+        m_ledValues = "";
 
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
             switch (code) {
 
             case A:
-                m_activePattern = RAINBOW_PATTERN;
+                m_ledValues = RAINBOW_PATTERN;
                 break;
             case S:
-                m_activePattern = RED_PATTERN;
+                m_ledValues = RED_PATTERN;
                 break;
             case D:
-                m_activePattern = GREEN_PATTERN;
+                m_ledValues = GREEN_PATTERN;
                 break;
             case F:
-                m_activePattern = BLUE_PATTERN;
+                m_ledValues = BLUE_PATTERN;
                 break;
             default:
-                break;
+                // ignored
             }
-
             handleUpdate();
         });
     }
 
     private void handleUpdate() {
+
         try {
-            Map<String, Object> map = new HashMap<>();
-            map.putAll(new LedData(m_activePattern).asMap());
-            m_widget.dataProperty().setValue(new LedData(map));
+
+            LedData data = new LedData(
+                m_ledValues
+            );
+            m_controller.dataProperty().setValue(data);
         } catch (ClassCastException ignored) {
             // don't worry about it
         }

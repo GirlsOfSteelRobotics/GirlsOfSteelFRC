@@ -18,6 +18,7 @@ public class BaseTestFixture {
 
     protected static final double DOUBLE_EPSILON = 1e-6;
 
+    @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
     @Before
     public void setupSimulator() {
         try {

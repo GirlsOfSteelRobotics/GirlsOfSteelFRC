@@ -159,7 +159,7 @@ public class Climber extends Subsystem {
         // System.out.println("down lower: " + ((goalPos - CLIMBER_TOLERANCE) <=
         // getBackPosition()));
 
-        return isFinished;
+        return isFinished; // NOPMD
     }
 
     public void holdClimberPosition(ClimberType type) {

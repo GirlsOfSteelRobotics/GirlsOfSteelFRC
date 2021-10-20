@@ -52,7 +52,6 @@ public class TrajectoryUtils {
 
     public static Command createTrajectory(String fileName, TrajectoryConfig trajectoryConfig, Chassis chassis) {
         Trajectory trajectory = loadingTrajectory(fileName, trajectoryConfig);
-        FollowTrajectory followTrajectory = new FollowTrajectory(trajectory, chassis);
-        return followTrajectory;
+        return new FollowTrajectory(trajectory, chassis);
     }
 }
