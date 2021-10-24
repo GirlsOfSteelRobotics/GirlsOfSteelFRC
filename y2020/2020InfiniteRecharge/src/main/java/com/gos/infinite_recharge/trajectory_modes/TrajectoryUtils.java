@@ -2,6 +2,7 @@ package com.gos.infinite_recharge.trajectory_modes;
 
 import com.gos.infinite_recharge.commands.autonomous.FollowTrajectory;
 import com.gos.infinite_recharge.subsystems.Chassis;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.spline.Spline;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
@@ -20,7 +21,8 @@ public class TrajectoryUtils {
     //reads file & spits out trajectory
     public static Trajectory loadingTrajectory(String fileName, TrajectoryConfig trajectoryConfig) {
         TrajectoryGenerator.ControlVectorList list = new TrajectoryGenerator.ControlVectorList();
-        try (BufferedReader reader = Files.newBufferedReader(Path.of(fileName))) {
+        Path fullFile = Filesystem.getDeployDirectory().toPath().resolve(fileName);
+        try (BufferedReader reader = Files.newBufferedReader(fullFile)) {
 
             // Read the CSV header
             reader.readLine();
