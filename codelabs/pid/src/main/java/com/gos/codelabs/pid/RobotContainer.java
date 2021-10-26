@@ -4,12 +4,15 @@
 
 package com.gos.codelabs.pid;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.codelabs.pid.auton.AutonFactory;
+import com.gos.codelabs.pid.auton_modes.AutonFactory;
 import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
 import com.gos.codelabs.pid.subsystems.ElevatorSubsystem;
+import com.gos.codelabs.pid.subsystems.PunchSubsystem;
 import com.gos.codelabs.pid.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,7 +24,8 @@ public class RobotContainer {
     // Subsystems
     private final ChassisSubsystem m_chassisSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
-    private final ShooterSubsystem m_spinningWheelSubsystem;
+    private final PunchSubsystem m_punchSubsystem;
+    private final ShooterSubsystem m_shooterSubsystem;
 
     private final AutonFactory m_autonFactory;
 
@@ -31,14 +35,16 @@ public class RobotContainer {
     public RobotContainer() {
         m_chassisSubsystem = new ChassisSubsystem();
         m_elevatorSubsystem = new ElevatorSubsystem();
-        m_spinningWheelSubsystem = new ShooterSubsystem();
+        m_punchSubsystem = new PunchSubsystem();
+        m_shooterSubsystem = new ShooterSubsystem();
 
         new OI(this);
         new CommandTester(this);
-
-        NetworkTableInstance.getDefault().getTable("SuperStructure").getEntry(".type").setString("SuperStructure");
-
         m_autonFactory = new AutonFactory(this);
+
+        Shuffleboard.getTab("Command Tester").add("Super Structure Widget", new SuperstructureSendable())
+            .withWidget(SmartDashboardNames.WIDGET_NAME)
+            .withSize(4, 4);
     }
 
     /**
@@ -58,7 +64,31 @@ public class RobotContainer {
         return m_chassisSubsystem;
     }
 
+    public PunchSubsystem getPunch() {
+        return m_punchSubsystem;
+    }
+
     public ShooterSubsystem getShooter() {
-        return m_spinningWheelSubsystem;
+        return m_shooterSubsystem;
+    }
+
+    private class SuperstructureSendable implements Sendable {
+
+        @Override
+        public void initSendable(SendableBuilder builder) {
+            builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE_TABLE_NAME);
+
+            builder.addDoubleProperty(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_MOTOR_SPEED, m_elevatorSubsystem::getMotorSpeed, null);
+            builder.addDoubleProperty(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_HEIGHT, m_elevatorSubsystem::getHeightInches, null);
+            builder.addDoubleProperty(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_DESIRED_HEIGHT, m_elevatorSubsystem::getDesiredHeightInches, null);
+            builder.addBooleanProperty(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_UPPER_LIMIT_SWITCH, m_elevatorSubsystem::isAtUpperLimit, null);
+            builder.addBooleanProperty(SmartDashboardNames.ELEVATOR_TABLE_NAME + "/" + SmartDashboardNames.ELEVATOR_LOWER_LIMIT_SWITCH, m_elevatorSubsystem::isAtLowerLimit, null);
+
+            builder.addBooleanProperty(SmartDashboardNames.PUNCH_TABLE_NAME + "/" + SmartDashboardNames.PUNCH_IS_EXTENDED, m_punchSubsystem::isExtended, null);
+
+            builder.addDoubleProperty(SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME + "/" + SmartDashboardNames.SPINNING_WHEEL_MOTOR_SPEED, m_shooterSubsystem::getMotorSpeed, null);
+            builder.addDoubleProperty(SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME + "/" + SmartDashboardNames.SPINNING_WHEEL_RPM, m_shooterSubsystem::getRpm, null);
+            builder.addDoubleProperty(SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME + "/" + SmartDashboardNames.SPINNING_WHEEL_DESIRED_RPM, m_shooterSubsystem::getDesiredRpm, null);
+        }
     }
 }

@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
      * to the switch structure below with additional strings & commands.
      */
     @Override
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity"})
     public void autonomousInit() {
 
         m_chassis.zeroSensors();

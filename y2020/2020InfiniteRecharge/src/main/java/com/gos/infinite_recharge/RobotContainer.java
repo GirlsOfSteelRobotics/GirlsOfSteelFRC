@@ -55,6 +55,7 @@ public class RobotContainer {
     private final Winch m_winch;
     private final AutoModeFactory m_autoModeFactory;
     private final OI m_oi;
+    private final DigitalInput m_digitalInput = new DigitalInput(Constants.DIGITAL_INPUT_EUROPA);
 
     /**
      * The container for the robot. Contains subsystems and the OI (joystick/gamepad) object.
@@ -119,7 +120,6 @@ public class RobotContainer {
         return m_chassis;
     }
 
-    DigitalInput m_digitalInput = new DigitalInput(Constants.DIGITAL_INPUT_EUROPA);
 
     public final boolean isEuropa() {
         System.out.println("Is this Europa? " + !m_digitalInput.get());

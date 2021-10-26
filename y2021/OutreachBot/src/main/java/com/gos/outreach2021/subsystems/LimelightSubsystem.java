@@ -31,8 +31,7 @@ public class LimelightSubsystem extends SubsystemBase {
     }
 
     public double limelightDistance() {
-        double d = (OBJECT_HEIGHT - ROBOT_HEIGHT) / Math.tan(Math.toRadians(m_elevationAngle.getDouble(-999)));
-        return d;
+        return (OBJECT_HEIGHT - ROBOT_HEIGHT) / Math.tan(Math.toRadians(m_elevationAngle.getDouble(-999)));
     }
 
 

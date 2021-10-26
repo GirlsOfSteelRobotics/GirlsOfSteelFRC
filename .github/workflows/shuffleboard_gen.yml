@@ -8,10 +8,6 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
-        config_file:
-          - codelabs/custom_shuffleboard/dashboard.yml
-          - y2020/2020InfiniteRechargeDashboard/dashboard.yml
-          - y2021/OutreachBotDashboard/dashboard.yml
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -22,9 +18,18 @@ jobs:
       - name: Install Dependencies
         run: pip3 install -r requirements.txt
 
-      - name: Run Linter
-        run: python generate_dashboard.py --config_file=../../${{ matrix.config_file }}
+      - name: Re-gen Codelab
+        run: python generate_dashboard.py --config_file=../../codelabs/custom_shuffleboard/dashboard.yml
         working-directory: libraries/ShuffleboardGenerator
+
+      - name: Re-gen 2020
+        run: python generate_dashboard.py --config_file=../../y2020/2020InfiniteRechargeDashboard/dashboard.yml
+        working-directory: libraries/ShuffleboardGenerator
+
+      - name: Re-gen 2021
+        run: python generate_dashboard.py --config_file=../../y2021/OutreachBotDashboard/dashboard.yml
+        working-directory: libraries/ShuffleboardGenerator
+
       - name: Check output
         run: git --no-pager diff --exit-code HEAD
       - name: Print Debug Message

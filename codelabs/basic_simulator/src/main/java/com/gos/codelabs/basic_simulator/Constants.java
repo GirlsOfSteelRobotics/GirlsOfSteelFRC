@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.system.LinearSystem;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpiutil.math.VecBuilder;
 import edu.wpi.first.wpiutil.math.numbers.N2;
 
 /**
@@ -47,7 +48,8 @@ public final class Constants {
     public static final int CAN_CHASSIS_RIGHT_B = 4;
     public static final int CAN_LIFT_MOTOR = 5;
     public static final int CAN_SPINNING_MOTOR = 6;
-    public static final int CAN_PIGEON = 7;
+
+    public static final boolean SIMULATE_SENSOR_NOISE = false;
 
     private Constants() {
 
@@ -59,7 +61,7 @@ public final class Constants {
         public static final DCMotor kDriveGearbox = DCMotor.getCIM(2);
         public static final double kDriveGearing = 8;
 
-        public static final double kTrackwidthMeters = 0.69;
+        public static final double kTrackWidthMeters = 0.69;
         public static final double kWheelDiameterMeters = 0.15;
 
         public static final double ksVolts = 0.22;
@@ -73,16 +75,20 @@ public final class Constants {
                         kvVoltSecondsPerRadian, kaVoltSecondsSquaredPerRadian);
 
         public static final DifferentialDriveKinematics kDriveKinematics =
-                new DifferentialDriveKinematics(kTrackwidthMeters);
+                new DifferentialDriveKinematics(kTrackWidthMeters);
 
         public static DifferentialDrivetrainSim createSim() {
             return new DifferentialDrivetrainSim(
                     kDrivetrainPlant,
                     kDriveGearbox,
                     kDriveGearing,
-                    kTrackwidthMeters,
+                    kTrackWidthMeters,
                     kWheelDiameterMeters / 2.0,
-                    null);
+                SIMULATE_SENSOR_NOISE ? VecBuilder.fill(0, 0, 0.0001, 0.1, 0.1, 0.005, 0.005) : null); // NOPMD
+        }
+
+        private DrivetrainConstants() {
+
         }
     }
 
@@ -97,15 +103,14 @@ public final class Constants {
 
         public static ElevatorSim createSim() {
 
-            ElevatorSim elevatorSim = new ElevatorSim(
+            return new ElevatorSim(
                     ElevatorSimConstants.kElevatorGearbox,
                     ElevatorSimConstants.kElevatorGearing,
                     ElevatorSimConstants.kCarriageMass,
                     ElevatorSimConstants.kElevatorDrumRadius,
                     ElevatorSimConstants.kMinElevatorHeight,
-                    ElevatorSimConstants.kMaxElevatorHeight);
-
-            return elevatorSim;
+                    ElevatorSimConstants.kMaxElevatorHeight,
+                    SIMULATE_SENSOR_NOISE ?  VecBuilder.fill(0.01) : null); // NOPMD
         }
 
         private ElevatorSimConstants() {
@@ -119,7 +124,8 @@ public final class Constants {
         public static final double kInertia = 0.008;
 
         public static FlywheelSim createSim() {
-            return new FlywheelSim(FlywheelSimConstants.kGearbox, FlywheelSimConstants.kGearing, FlywheelSimConstants.kInertia);
+            return new FlywheelSim(FlywheelSimConstants.kGearbox, FlywheelSimConstants.kGearing, FlywheelSimConstants.kInertia,
+                    SIMULATE_SENSOR_NOISE ? VecBuilder.fill(0.5) : null); // NOPMD
         }
 
         private FlywheelSimConstants() {

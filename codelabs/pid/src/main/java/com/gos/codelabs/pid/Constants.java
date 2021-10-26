@@ -32,6 +32,15 @@ public final class Constants {
     // Sensor / Actuator ports
     /////////////////////////////////
 
+    // PWM
+
+    // Digital IO
+    public static final int DIO_LIFT_LOWER_LIMIT = 0;
+    public static final int DIO_LIFT_UPPER_LIMIT = 1;
+
+    // Solenoids
+    public static final int SOLENOID_PUNCH = 0;
+
     // CAN
     public static final int CAN_CHASSIS_LEFT_A = 1;
     public static final int CAN_CHASSIS_LEFT_B = 2;

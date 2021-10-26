@@ -54,7 +54,7 @@ public class Blinkin extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity"})
     public void setLightPattern(LightPattern pattern) {
         switch (pattern) {
         case AUTO_DEFAULT:

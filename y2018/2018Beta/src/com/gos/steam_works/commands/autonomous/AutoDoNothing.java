@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoDoNothing extends Command {
 
-    public AutoDoNothing() {
-    }
-
 
     @Override
     protected void initialize() {

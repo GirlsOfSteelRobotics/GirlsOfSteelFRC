@@ -185,6 +185,7 @@ def maybe_add_standalone_buttons(widget_config):
         else:
             if 'sim_keys' not in entry:
                 entry['sim_keys'] = double_keys.pop(0)
+            if 'sim_value' not in entry and 'sim_incr' not in entry:
                 entry['sim_value'] = .25
 
     for child in widget_config['children_tables']:
