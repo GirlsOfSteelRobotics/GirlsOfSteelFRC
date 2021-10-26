@@ -5,6 +5,7 @@ import com.gos.codelabs.gitflow.subsystems.AshleyCodelab2021Part1SubsystemsSubsy
 import com.gos.codelabs.gitflow.subsystems.ChassisSubsystem;
 import com.gos.codelabs.gitflow.subsystems.GraceGCodeLab2020Subsystem;
 import com.gos.codelabs.gitflow.subsystems.JacksonCodelab2020Part1Part1;
+import com.gos.codelabs.gitflow.subsystems.JustinaCodelab2021Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.PJCodelab2021Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.RaynaCodeLab2021Part1Subsystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -35,6 +36,8 @@ public class RobotContainer {
     private PJCodelab2021Part1Subsystem m_pjCodelab2021Part1;
     private GraceGCodeLab2020Subsystem m_gracecodeLab2020pt1;
     private RaynaCodeLab2021Part1Subsystem m_rayna2021CodeLab1;
+    private JustinaCodelab2021Part1Subsystem m_justinaCodeLab2021Part1;
+
 
     ///////////////////////////////////////
     // Don't touch things below here
