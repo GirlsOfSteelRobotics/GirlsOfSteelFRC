@@ -15,8 +15,7 @@ widgets:
           - type: double
             name: hoodAngle
             dasboard_constant: HOOD_ANGLE
-#            sim_value: 0.75
-#            sim_keys: [ A, Q ]
+            sim_incr: 2
           - type: double
             name: hoodMotorSpeed
             dasboard_constant: HOOD_MOTOR_SPEED

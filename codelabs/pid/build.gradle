@@ -84,35 +84,3 @@ jar {
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
-
-
-///////////////////////////////////////
-// Shuffleboard widget helpers
-repositories {
-    mavenLocal()
-    maven { url "http://raw.githubusercontent.com/pjreiniger/maven_repo/master" }
-}
-
-configurations {
-    shuffleboard_widgets
-}
-
-dependencies {
-    // Helper for getting the coordinate gui from maven into the shuffleboard area
-    shuffleboard_widgets 'com.gos.codelabs.sd_widgets:RobotWidget:2021.0.0'
-}
-
-task deleteOldWidgets(type: Delete) {
-    delete fileTree("${System.getProperty("user.home")}/Shuffleboard/plugins") {
-        include '**/*.jar'
-    }
-    followSymlinks = true
-}
-
-task copyWidgets(type: Copy, dependsOn: deleteOldWidgets) {
-    group = "Girls of Steel"
-    description = "Copies any Girls of Steel widgets from maven into the shuffleboard area"
-    from configurations.shuffleboard_widgets
-    into("${System.getProperty("user.home")}/Shuffleboard/plugins")
-}
-///////////////////////////////////////

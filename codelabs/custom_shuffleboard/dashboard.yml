@@ -15,27 +15,22 @@ widgets:
           name: speed
           dasboard_constant: ELEVATOR_MOTOR_SPEED
           sim_value: 0.75
-          sim_keys: [Q, A]
         - type: double
           name: height
           dasboard_constant: ELEVATOR_HEIGHT
           sim_incr: 1
-          sim_keys: [S, W]
         - type: boolean
           name: atUpperLimit
           dasboard_constant: ELEVATOR_UPPER_LIMIT_SWITCH
-          sim_keys: X
         - type: boolean
           name: atLowerLimit
           dasboard_constant: ELEVATOR_LOWER_LIMIT_SWITCH
-          sim_keys: Y
     - table: Punch
       table_name: PUNCH_TABLE_NAME
       entries:
         - type: boolean
           name: punchExtended
           dasboard_constant: PUNCH_IS_EXTENDED
-          sim_keys: D
     - table: SpinningWheel
       table_name: SPINNING_WHEEL_TABLE_NAME
       entries:
@@ -43,4 +38,3 @@ widgets:
           name: speed
           dasboard_constant: SPINNING_WHEEL_MOTOR_SPEED
           sim_value: 0.5
-          sim_keys: [ O, L ]

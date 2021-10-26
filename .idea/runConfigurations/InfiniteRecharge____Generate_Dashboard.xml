@@ -12,7 +12,7 @@
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <module name="" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/libraries/ShuffleboardGenerator/generate_dashboard.py" />
-    <option name="PARAMETERS" value="--config=$PROJECT_DIR$/2020InfiniteRechargeDashboard/dashboard.yml --force_standalone_main" />
+    <option name="PARAMETERS" value="--config=$PROJECT_DIR$/y2020/2020InfiniteRechargeDashboard/dashboard.yml" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

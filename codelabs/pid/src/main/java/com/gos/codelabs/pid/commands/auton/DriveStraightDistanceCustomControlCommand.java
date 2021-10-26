@@ -34,7 +34,8 @@ public class DriveStraightDistanceCustomControlCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         boolean isFinished = false; // TODO implement
-        return m_deadbandHelper.setIsGood(isFinished);
+        m_deadbandHelper.setIsGood(isFinished);
+        return m_deadbandHelper.isFinished();
     }
 
     @Override

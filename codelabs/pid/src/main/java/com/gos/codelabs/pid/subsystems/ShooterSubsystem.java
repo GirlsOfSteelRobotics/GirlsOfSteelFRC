@@ -8,15 +8,11 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
-import com.gos.codelabs.pid.SmartDashboardNames;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.ControlType;
 import com.revrobotics.SimableCANSparkMax;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.lib.properties.PidProperty;
@@ -32,11 +28,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private final CANEncoder m_encoder;
     private final CANPIDController m_pidController;
     private final PidProperty m_pidProperty;
+    private double m_desiredRpm;
     private ISimWrapper m_simulator;
-
-    private final NetworkTableEntry m_motorSpeedEntry;
-    private final NetworkTableEntry m_rpmEntry;
-    private final NetworkTableEntry m_desiredRpmEntry;
 
     public ShooterSubsystem() {
         m_wheelMotor = new SimableCANSparkMax(Constants.CAN_SPINNING_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushed);
@@ -47,11 +40,6 @@ public class ShooterSubsystem extends SubsystemBase {
                 .addP(0)
                 .addFF(0)
                 .build();
-
-        NetworkTable table = NetworkTableInstance.getDefault().getTable(SmartDashboardNames.SUPER_STRUCTURE_TABLE_NAME + "/" + SmartDashboardNames.SPINNING_WHEEL_TABLE_NAME);
-        m_motorSpeedEntry = table.getEntry(SmartDashboardNames.SPINNING_WHEEL_MOTOR_SPEED);
-        m_rpmEntry = table.getEntry(SmartDashboardNames.SPINNING_WHEEL_RPM);
-        m_desiredRpmEntry = table.getEntry(SmartDashboardNames.SPINNING_WHEEL_DESIRED_RPM);
 
         if (RobotBase.isSimulation()) {
             m_simulator = new FlywheelSimWrapper(Constants.FlywheelSimConstants.createSim(),
@@ -65,7 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void spinAtRpm(double rpm) {
-        m_desiredRpmEntry.setNumber(rpm);
+        m_desiredRpm = rpm;
         m_pidController.setReference(rpm, ControlType.kVelocity);
     }
 
@@ -73,24 +61,30 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_encoder.getVelocity();
     }
 
+    public double getDesiredRpm() {
+        return m_desiredRpm;
+    }
+
     public boolean isAtRpm(double rpm) {
         return Math.abs(getRpm() - rpm) < 10;
     }
 
+    public double getMotorSpeed() {
+        return m_wheelMotor.getAppliedOutput();
+    }
+
     public void stop() {
+        m_desiredRpm = -999;
         m_wheelMotor.set(0);
     }
 
     @Override
     public void periodic() {
         m_pidProperty.updateIfChanged();
-        m_motorSpeedEntry.setNumber(m_wheelMotor.get());
-        m_rpmEntry.setNumber(getRpm());
     }
 
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
     }
-
 }
