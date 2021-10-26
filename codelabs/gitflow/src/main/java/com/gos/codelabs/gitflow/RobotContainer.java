@@ -1,6 +1,7 @@
 package com.gos.codelabs.gitflow;
 
 import com.gos.codelabs.gitflow.commands.TeleopDriveCommand;
+import com.gos.codelabs.gitflow.subsystems.AshleyCodelab2021Part1SubsystemsSubsystem;
 import com.gos.codelabs.gitflow.subsystems.ChassisSubsystem;
 import com.gos.codelabs.gitflow.subsystems.GraceGCodeLab2020Subsystem;
 import com.gos.codelabs.gitflow.subsystems.JacksonCodelab2020Part1Part1;
@@ -29,6 +30,7 @@ public class RobotContainer {
     private PJCodelab2020Part1Subsystem m_pjCodelab2020Part1;
     private PJCodelab2020Part2Subsystem m_pjCodelab2020Part2;
     private JacksonCodelab2020Part1Part1 m_jacksonCodeLab2020Part1;
+    private AshleyCodelab2021Part1SubsystemsSubsystem m_ashley2021CodelabPart1;
     private PJCodelab2021Part1Subsystem m_pjCodelab2021Part1;
     private GraceGCodeLab2020Subsystem m_gracecodeLab2020pt1;
 
