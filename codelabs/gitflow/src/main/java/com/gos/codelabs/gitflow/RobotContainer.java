@@ -3,6 +3,7 @@ package com.gos.codelabs.gitflow;
 import com.gos.codelabs.gitflow.commands.TeleopDriveCommand;
 import com.gos.codelabs.gitflow.subsystems.ChassisSubsystem;
 import com.gos.codelabs.gitflow.subsystems.JacksonCodelab2020Part1Part1;
+import com.gos.codelabs.gitflow.subsystems.PJCodelab2021Part1Subsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,6 +28,7 @@ public class RobotContainer {
     private PJCodelab2020Part1Subsystem m_pjCodelab2020Part1;
     private PJCodelab2020Part2Subsystem m_pjCodelab2020Part2;
     private JacksonCodelab2020Part1Part1 m_jacksonCodeLab2020Part1;
+    private PJCodelab2021Part1Subsystem m_pjCodelab2021Part1;
 
     ///////////////////////////////////////
     // Don't touch things below here
