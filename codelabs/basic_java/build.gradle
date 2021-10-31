@@ -5,7 +5,7 @@ plugins {
 
 apply plugin : "java"
 ext {
-    javaMainClass = "RunCalculator"
+    javaMainClass = "com.gos.codelabs.basic_java.RunCalculator"
 }
 
 application {
@@ -17,9 +17,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.testng:testng:7.1.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'junit:junit:4.12'
+    testRuntime("org.junit.vintage:junit-vintage-engine:5.2.0")
 }
 
 test {

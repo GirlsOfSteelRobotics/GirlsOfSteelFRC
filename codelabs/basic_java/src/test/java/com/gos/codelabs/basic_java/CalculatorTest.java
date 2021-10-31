@@ -1,4 +1,6 @@
-import org.junit.jupiter.api.Test;
+package com.gos.codelabs.basic_java;
+
+import org.junit.Test;
 
 public class CalculatorTest {
     @Test
@@ -10,7 +12,6 @@ public class CalculatorTest {
 
     @Test
     public void testSubtraction() {
-        //TODO your code here
     }
 
     //TODO add tests for
