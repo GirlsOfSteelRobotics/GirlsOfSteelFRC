@@ -12,6 +12,9 @@ public class CalculatorTest {
 
     @Test
     public void testSubtraction() {
+        Calculator myCalculator = new Calculator();
+        double result = myCalculator.subtract(5, 5);
+        assert result == 0;
     }
 
     //TODO add tests for
