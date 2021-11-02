@@ -10,17 +10,21 @@ public class RunCalculator {
         Calculator myCalculator = new Calculator();
         System.out.println("Input a number. What operation do you want to use? Add = 1, Subtract = 2, Multiply = 3, Divide = 4");
         double number = input.nextDouble();
+        System.out.println("Enter x: ");
+        double x = input.nextDouble();
+        System.out.println("Enter y: ");
+        double y = input.nextDouble();
         if (number == 1) {
-            System.out.println(myCalculator.add(5, 6));
+            System.out.println(myCalculator.add(x, y));
         }
         if (number == 2) {
-            System.out.println(myCalculator.subtract(5, 6));
+            System.out.println(myCalculator.subtract(x, y));
         }
         if (number == 3) {
-            System.out.println(myCalculator.multiply(5, 6));
+            System.out.println(myCalculator.multiply(x, y));
         }
         if (number == 4) {
-            System.out.println(myCalculator.divide(5, 6));
+            System.out.println(myCalculator.divide(x, y));
         }
         input.close();
 
