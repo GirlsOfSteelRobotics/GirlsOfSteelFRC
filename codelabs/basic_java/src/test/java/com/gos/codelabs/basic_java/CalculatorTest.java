@@ -8,6 +8,14 @@ public class CalculatorTest {
         Calculator myCalculator = new Calculator();
         double result = myCalculator.add(3, 4);
         assert result == 7;
+        result = myCalculator.add(-3,3);
+        assert result == 0;
+        result = myCalculator.subtract(2,3);
+        assert result == -1;
+        result = myCalculator.divide(2,2);
+        assert result == 1;
+        result = myCalculator.multiply(2,3);
+        assert result == 6;
     }
 
     @Test
