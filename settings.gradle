@@ -5,6 +5,7 @@ include 'codelabs:custom_shuffleboard'
 include 'codelabs:gitflow'
 include 'codelabs:pid'
 include 'codelabs:basic_java'
+include 'codelabs:first_robot_code'
 
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
