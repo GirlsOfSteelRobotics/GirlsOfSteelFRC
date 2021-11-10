@@ -13,7 +13,7 @@ import com.gos.calisto.v2.subsystems.ExampleSubsystem;
  */
 public class ExampleCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField", "FieldCanBeLocal"})
-    private final ExampleSubsystem subsystem;
+    private final ExampleSubsystem m_subsystem;
 
     /**
      * Creates a new ExampleCommand.
@@ -21,7 +21,7 @@ public class ExampleCommand extends CommandBase {
      * @param subsystem The subsystem used by this command.
      */
     public ExampleCommand(ExampleSubsystem subsystem) {
-        this.subsystem = subsystem;
+        this.m_subsystem = subsystem;
         addRequirements(subsystem);
     }
 

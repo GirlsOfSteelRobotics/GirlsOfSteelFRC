@@ -15,4 +15,5 @@ package com.gos.calisto.v2;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
 }

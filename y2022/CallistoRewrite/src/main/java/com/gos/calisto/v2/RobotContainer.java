@@ -17,9 +17,9 @@ import com.gos.calisto.v2.subsystems.ExampleSubsystem;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-    private final ExampleCommand autonomousCommand = new ExampleCommand(exampleSubsystem);
+    private final ExampleCommand m_autonomousCommand = new ExampleCommand(m_exampleSubsystem);
 
 
     /**
@@ -49,6 +49,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return autonomousCommand;
+        return m_autonomousCommand;
     }
 }
