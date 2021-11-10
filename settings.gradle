@@ -24,3 +24,5 @@ include 'y2020:Testboard'
 
 include 'y2021:OutreachBot'
 include 'y2021:OutreachBotDashboard'
+
+include 'y2022:CallistoRewrite'
