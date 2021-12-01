@@ -58,7 +58,7 @@ public class OI {
         //new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld();
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));
         new JoystickButton(m_operatingPad, Button.kY.value).whenPressed(new MovePiston(shooterIntake, false));
-        new POVButton(m_operatingPad, 90).whenPressed(new TuneRPM(shooter));
+        //new POVButton(m_operatingPad, 90).whenPressed(new TuneRPM(shooter));
         new POVButton(m_operatingPad, 0).whenPressed(new ConveyorAdvanceOneUnit(shooterConveyor));
         new POVButton(m_operatingPad, 180).whenPressed(new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
         new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld(new RunShooterRPMWhileHeld(shooter, Constants.LONG_RPM));
