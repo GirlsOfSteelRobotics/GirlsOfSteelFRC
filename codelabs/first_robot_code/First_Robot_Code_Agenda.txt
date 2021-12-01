@@ -1,0 +1,18 @@
+Today's Agenda
+
+First Robot Code codelab
+	- Download the codelab from GitHub
+	- Read over Robot.java to learn what it does
+	- Deploy code to the test board
+		Use the "(First Robot Code) Deploy" run config
+	- Fire up the Driver Station and try it out!
+
+Tour of the Test Board
+	- aka: crash course in FRC electronics
+	- Why do we need a motor controller?
+	- Why does the gearbox encoder do for us?
+
+Your turn for programming
+	- Update the codelab so the motor 
+	  only runs when the trigger is pressed
+	- Convert from Joystick to XBoxController
