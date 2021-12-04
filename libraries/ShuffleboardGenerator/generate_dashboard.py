@@ -4,6 +4,18 @@ import os
 import sys
 
 
+
+def get_this_directory():
+
+    try:
+        from rules_python.python.runfiles import runfiles
+        r = runfiles.Create()
+        this_file = r.Rlocation("__main__/libraries/ShuffleboardGenerator/generate_dashboard.py")
+        return  os.path.dirname(this_file)
+
+    except ModuleNotFoundError:
+        return os.path.dirname(os.path.realpath(__file__))
+
 def main(argv):
     import argparse
 
@@ -21,7 +33,7 @@ def main(argv):
     parser.add_argument('--force_standard', action="store_true", help='Force overwriting all of the non-autogenerted files')
 
     args = parser.parse_args(argv)
-    this_dir = os.path.dirname(os.path.realpath(__file__))
+    this_dir = get_this_directory()
 
     template_dir = os.path.join(this_dir, "lib", "templates")
     print(template_dir)

@@ -3,6 +3,7 @@ load("//build_scripts/bazel/shuffleboard:shuffleboard_widget.bzl", "shuffleboard
 
 shuffleboard_widget(
     name = "OutreachBotDashboard",
+    generation_config_file = ":dashboard.yml",
     package = "com.gos.outreach.shuffleboard",
 )
 

@@ -3,6 +3,7 @@ load("//build_scripts/bazel/shuffleboard:shuffleboard_widget.bzl", "shuffleboard
 
 shuffleboard_widget(
     name = "custom_shuffleboard",
+    generation_config_file = ":dashboard.yml",
     package = "com.gos.codelabs.shuffleboard.sd_widgets",
 )
 

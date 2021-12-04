@@ -3,8 +3,9 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
 gos_java_robot(
     name = "GOS2014",
     srcs = glob(["src/**/*.java"]),
+    disable_checkstyle = True,
     disable_pmd = True,
-    main_class = "com.gos.codelabs.first_code_lab.Main",
+    main_class = "girlsofsteel.Main",
     deps = [
         "//old_robots/LegacyLibraries",
         "@bazelrio//libraries/java/ctre/phoenix",
