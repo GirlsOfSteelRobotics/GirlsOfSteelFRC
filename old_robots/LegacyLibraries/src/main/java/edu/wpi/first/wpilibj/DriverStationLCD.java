@@ -27,6 +27,6 @@ public final class DriverStationLCD {
     }
 
     public void updateLCD() {
-        throw new UnsupportedOperationException();
+
     }
 }

@@ -3,6 +3,7 @@ load("//build_scripts/bazel/shuffleboard:shuffleboard_widget.bzl", "shuffleboard
 
 shuffleboard_widget(
     name = "2020InfiniteRechargeDashboard",
+    generation_config_file = ":dashboard.yml",
     package = "com.gos.infinite_recharge.sd_widgets",
 )
 

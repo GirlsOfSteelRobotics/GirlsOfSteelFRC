@@ -18,7 +18,6 @@ gos_java_robot(
 gos_junit4_test(
     name = "test",
     srcs = glob(["src/test/java/**/*.java"]),
-    disable_pmd = True,
     # The tests fail on main (on purpose), so make it so you manually have to run it
     tags = ["manual"],
     deps = [

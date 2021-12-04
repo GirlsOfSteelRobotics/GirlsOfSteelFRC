@@ -24,7 +24,7 @@ generate_version_file = rule(
     },
 )
 
-def shuffleboard_widget(name, package, srcs = None, **kwargs):
+def shuffleboard_widget(name, package, generation_config_file, srcs = None, **kwargs):
     generate_version_file(
         name = "generate-version",
         output_file = "PluginVersion.java",
