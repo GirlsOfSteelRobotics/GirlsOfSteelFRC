@@ -364,6 +364,9 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,intellij+iml,bazel,eclipse,visualstudiocode,python
 
+# Ignore user bazel settings
+user.bazelrc
+
 # Extra intellij things
 .idea/libraries-with-intellij-classes.xml
 .ijwb/.idea/*

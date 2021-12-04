@@ -1,0 +1,41 @@
+name: Bazel
+
+on: [pull_request, push]
+
+jobs:
+  build:
+    # TODO(PJ) Remove this, make bazel first class citizen.
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: bazel build //... -k --config=remote
+
+
+  buildifier:
+    name: "buildifier"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.15.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15.x
+        id: go
+
+      - uses: actions/checkout@v2
+
+      - name: Install Buildifier
+        run: |
+          cd $(mktemp -d)
+          GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@4.0.1
+
+      - name: Run buildifier
+        run: buildifier --lint=fix -r .
+
+      - name: Check Output
+        run: git --no-pager diff --exit-code HEAD

@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "LegacyLibraries",
+    srcs = glob(["src/**/*.java"]),
+    disable_pmd = True,
+    visibility = ["//old_robots:__subpackages__"],
+    deps = [
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/wpilib/old_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

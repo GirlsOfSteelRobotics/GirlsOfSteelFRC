@@ -1,0 +1,16 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
+
+gos_java_robot(
+    name = "2018Beta",
+    srcs = glob(["src/**/*.java"]),
+    main_class = "com.gos.steam_works.Main",
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/opencv",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/cscore",
+        "@bazelrio//libraries/java/wpilib/old_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)
