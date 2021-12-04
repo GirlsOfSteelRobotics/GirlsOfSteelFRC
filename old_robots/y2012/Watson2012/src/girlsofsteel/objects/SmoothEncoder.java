@@ -21,7 +21,7 @@ public class SmoothEncoder extends Encoder {
 
     @Override
     public double getRate() {
-        for (int i = NUMBER_OF_VALUES-1; i > 0; i --){
+        for (int i = NUMBER_OF_VALUES-1; i > 0; i --){ // NOPMD(AvoidArrayLoops)
             values[i] = values[i-1];
         }
         values[0]=super.getRate();

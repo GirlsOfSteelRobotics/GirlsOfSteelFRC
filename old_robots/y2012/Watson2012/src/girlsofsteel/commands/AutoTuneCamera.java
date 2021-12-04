@@ -19,7 +19,7 @@ public class AutoTuneCamera extends CommandBase {
         int n = 10;
         double sumOfData = 0;
         double[] values = new double[n];
-        for(int i=0; i<n; i++){
+        for(int i=0; i<n; i++){ // NOPMD(AvoidArrayLoops)
             values[i] = 1/Camera.getImageTargetRatio();
             //System.out.println(values[i]);
             sumOfData += values[i];
@@ -138,7 +138,7 @@ class LinearRegressionAuto{
             sumX += x[i];
             sumX2 += x[i] * x[i];
             sumY += y[i];
-            i++;
+            i++; // NOPMD
         }
         double xBar = sumX/n;
         double yBar = sumY/n;

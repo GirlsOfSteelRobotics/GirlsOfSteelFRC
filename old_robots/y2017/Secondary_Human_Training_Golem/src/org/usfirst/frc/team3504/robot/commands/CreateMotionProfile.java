@@ -3,7 +3,10 @@ package org.usfirst.frc.team3504.robot.commands;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -17,12 +20,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class CreateMotionProfile extends Command {
 
-    private ArrayList<ArrayList<Double>> leftTrajectory; // filled with arraylists of points
-    private ArrayList<ArrayList<Double>> rightTrajectory; // filled with arraylists of points
+    private List<List<Double>> leftTrajectory; // filled with arraylists of points
+    private List<List<Double>> rightTrajectory; // filled with arraylists of points
     public CANTalon leftTalon = Robot.chassis.getLeftTalon();
     public CANTalon rightTalon = Robot.chassis.getRightTalon();
-    private ArrayList<Double> leftPoint; // position (rev), velocity (rpm), duration
-    private ArrayList<Double> rightPoint; // position (rev), velocity (rpm), duration
+    private List<Double> leftPoint; // position (rev), velocity (rpm), duration
+    private List<Double> rightPoint; // position (rev), velocity (rpm), duration
     public String leftFile; // path of file on roborio
     public String rightFile; // path of file on roborio
     private double leftInitial; // initial encoder position
@@ -43,8 +46,8 @@ public class CreateMotionProfile extends Command {
         leftInitial = leftTalon.getPosition();
         rightInitial = rightTalon.getPosition();
 
-        leftTrajectory = new ArrayList<ArrayList<Double>>();
-        rightTrajectory = new ArrayList<ArrayList<Double>>();
+        leftTrajectory = new ArrayList<List<Double>>();
+        rightTrajectory = new ArrayList<List<Double>>();
 
         leftPoint = new ArrayList<Double>();
         rightPoint = new ArrayList<Double>();
@@ -132,10 +135,9 @@ public class CreateMotionProfile extends Command {
         end();
     }
 
-    private void writeFile(String filePath, ArrayList<ArrayList<Double>> trajectory) throws IOException {
+    private void writeFile(String filePath, List<List<Double>> trajectory) throws IOException {
 
-        FileWriter outFile = new FileWriter(filePath);
-        BufferedWriter fout = new BufferedWriter(outFile);
+        BufferedWriter fout =  Files.newBufferedWriter(Paths.get(filePath));
 
         for (int x = 0; x < trajectory.size(); x++) { // outer loop to go
                                                         // through the unknown #
@@ -151,7 +153,7 @@ public class CreateMotionProfile extends Command {
         fout.close();
     }
 
-    private void cleanTrajectory(ArrayList<ArrayList<Double>> leftMP, ArrayList<ArrayList<Double>> rightMP) {
+    private void cleanTrajectory(List<List<Double>> leftMP, List<List<Double>> rightMP) {
         // remove all extra zero positions at the beginning
         // TODO: does first position need to be exactly zero?
         double leftDiff = 0;

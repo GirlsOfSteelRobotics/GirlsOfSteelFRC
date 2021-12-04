@@ -28,7 +28,7 @@ public class Chassis extends Subsystem {
     private static final double INTEGRAL_THRESHOLD = 999999999;
     //how to: print out the errorSum & see where it levels off, make this a bit higher
     //highest error acculumation amount
-    private final double EPSILON = 0.05;//the ewrror range for PID position control
+    private static final double EPSILON = 0.05;//the ewrror range for PID position control
     //create Jags
     private final Jaguar rightJags = new Jaguar(RobotMap.RIGHT_JAGS);
     private final Jaguar leftJags = new Jaguar(RobotMap.LEFT_JAGS);
@@ -41,13 +41,13 @@ public class Chassis extends Subsystem {
 
     private final Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
             RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
-    private final double WHEEL_DIAMETER = 0.1524; //in meters
-    private final double GEAR_RATIO = 15.0 / 24.0;
-    private final double PULSES_RIGHT = 250.0;
-    private final double PULSES_LEFT = 360.0;
-    private final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.065) / PULSES_RIGHT;//m per s
-    private final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.07) / PULSES_LEFT;
-    private final double ROBOT_DIAMETER = 0.8128; //the radius*2 of the circle the robot makes while turning in place
+    private static final double WHEEL_DIAMETER = 0.1524; //in meters
+    private static final double GEAR_RATIO = 15.0 / 24.0;
+    private static final double PULSES_RIGHT = 250.0;
+    private static final double PULSES_LEFT = 360.0;
+    private static final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.065) / PULSES_RIGHT;//m per s
+    private static final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.07) / PULSES_LEFT;
+    private static final double ROBOT_DIAMETER = 0.8128; //the radius*2 of the circle the robot makes while turning in place
     //practice:
 //    private Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
 //            RobotMap.ENCODER_RIGHT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
@@ -115,15 +115,15 @@ public class Chassis extends Subsystem {
     private final static double MAX_ACCELERATION = 0.5; //TODO find the max acceleration of the chassis
     //again, make sure you can find this easily at comp
     //^^max acceleration -> used in the acceleration limiting method on the PID controllers
-    private double previousTime = 0.0;
-    private double currentTime = 0.0;
+    private double previousTime;
+    private double currentTime;
     private double changeInTime = (currentTime - previousTime);
-    private double setPointVelocityR = 0.0;
-    private double setPointVelocityL = 0.0;
-    private double currentVelocityR = 0.0;
-    private double currentVelocityL = 0.0;
-    private double desiredChangeInVelocityR = 0.0;
-    private double desiredChangeInVelocityL = 0.0;
+    private double setPointVelocityR;
+    private double setPointVelocityL;
+    private double currentVelocityR;
+    private double currentVelocityL;
+    private double desiredChangeInVelocityR;
+    private double desiredChangeInVelocityL;
 
     public Chassis() {
         resetGyro();
@@ -309,7 +309,7 @@ public class Chassis extends Subsystem {
      * @param double joystickValue, @param double deadZoneRange
      */
     private double deadzone(double joystickValue, double deadZoneRange) {
-        double newJoystickValue = 0.0;
+        double newJoystickValue;
         if (joystickValue > deadZoneRange) {
             newJoystickValue = (joystickValue / (1 - deadZoneRange)) - deadZoneRange;
         } else if (joystickValue < (-1 * deadZoneRange)) {

@@ -20,11 +20,13 @@ public class TestManipulatorJag extends CommandBase {
         requires(manipulator);
     }
 
+    @Override
     protected void initialize() {
         joystick = oi.getOperatorJoystick();
         System.out.println("Test Manipulator Jag is running");
     }
 
+    @Override
     protected void execute() {
 //        i++;
 //        while(i == 1)
@@ -40,14 +42,17 @@ public class TestManipulatorJag extends CommandBase {
         //manipulator.moveJags(joystick.getY());
     }
 
+    @Override
     protected boolean isFinished() {
         return true;
     }
 
+    @Override
     protected void end() {
        manipulator.stopTestJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

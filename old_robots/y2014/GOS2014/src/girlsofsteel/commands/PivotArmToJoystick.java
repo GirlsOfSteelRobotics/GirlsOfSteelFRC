@@ -13,20 +13,22 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class PivotArmToJoystick extends CommandBase {
 
-    Joystick operator;
-    int count;
-    double angle;
+    private final Joystick operator;
+    private int count;
+    private double angle;
 
     public PivotArmToJoystick() {
         requires(manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
         operator = CommandBase.oi.getOperatorJoystick();
     }
 
+    @Override
     protected void initialize() {
         angle = manipulator.getAbsoluteDistance();
         count = 0;
     }
 
+    @Override
     protected void execute() {
         System.out.println("Operator Y: " + operator.getY());
         if (operator.getY() > 0.5) {
@@ -40,14 +42,17 @@ public class PivotArmToJoystick extends CommandBase {
 
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         manipulator.holdAngle();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

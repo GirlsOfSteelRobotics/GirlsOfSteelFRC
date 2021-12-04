@@ -24,17 +24,17 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
-    public static Shooter shooter = new Shooter();
-    public static Climber climber = new Climber();
-    public static Feeder feeder = new Feeder();
-    public static Chassis chassis = new Chassis();
-    public static DriveFlag drive = new DriveFlag();
-    public static EveCompressor compressor = new EveCompressor();
+    public static final Shooter shooter = new Shooter();
+    public static final Climber climber = new Climber();
+    public static final Feeder feeder = new Feeder();
+    public static final Chassis chassis = new Chassis();
+    public static final DriveFlag drive = new DriveFlag();
+    public static final EveCompressor compressor = new EveCompressor();
     public static final DigitalInput topOpenBottomCloseSwitch = new DigitalInput(RobotMap.TOP_GRIPPER_OPEN_BOTTOM_GRIPPER_CLOSE_SWITCH);
     public static final DigitalInput topCloseMiddleOppenSwitch = new DigitalInput(RobotMap.TOP_GRIPPER_CLOSE_MIDDLE_GRIPPER_OPEN_SWITCH);
     public static final DigitalInput middleCloseSwitch = new DigitalInput(RobotMap.MIDDLE_GRIPPER_CLOSE_SWITCH);
     public static final DigitalInput bottomOpenSwitch = new DigitalInput(RobotMap.BOTTOM_GRIPPER_OPEN_SWITCH);
-    public static Gripper bottomGripper = new Gripper(bottomOpenSwitch, topOpenBottomCloseSwitch, RobotMap.OPEN_BOTTOM_GRIPPER_SOLENOID, RobotMap.CLOSE_BOTTOM_GRIPPER_SOLENOID);
+    public static final Gripper bottomGripper = new Gripper(bottomOpenSwitch, topOpenBottomCloseSwitch, RobotMap.OPEN_BOTTOM_GRIPPER_SOLENOID, RobotMap.CLOSE_BOTTOM_GRIPPER_SOLENOID);
 //    public static Gripper topGripper = new Gripper(topOpenBottomCloseSwitch, topCloseMiddleOppenSwitch, RobotMap.OPEN_TOP_GRIPPER_SOLENOID, RobotMap.CLOSE_TOP_GRIPPER_SOLENOID);
 //    public static Gripper middleGripper = new Gripper(topCloseMiddleOppenSwitch, middleCloseSwitch, RobotMap.OPEN_MIDDLE_GRIPPER_SOLENOID, RobotMap.CLOSE_MIDDLE_GRIPPER_SOLENOID);
 

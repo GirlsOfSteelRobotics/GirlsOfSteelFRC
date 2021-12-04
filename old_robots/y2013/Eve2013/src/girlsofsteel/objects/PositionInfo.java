@@ -7,10 +7,9 @@ public class PositionInfo {
     public static final int BACK_RIGHT = 1;
     public static final int BACK_LEFT = 2;
 
-    static Position[] positions;
+    private static final Position[] positions = new Position[4];
 
     public static void init(){
-        positions = new Position[4];
         //set the should-be 3 positions here
         positions[NO_POSITION] = new Position(0,0);
         positions[BACK_RIGHT] = new Position(

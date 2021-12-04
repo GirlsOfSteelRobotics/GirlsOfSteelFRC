@@ -22,11 +22,13 @@ public class PivotArmToJoystick extends CommandBase {
         operator = CommandBase.oi.getOperatorJoystick();
     }
 
+    @Override
     protected void initialize() {
         angle = manipulator.getAbsoluteDistance();
         count = 0;
     }
 
+    @Override
     protected void execute() {
         System.out.println("Operator Y: " + operator.getY());
         if (operator.getY() > 0.5) {
@@ -40,14 +42,17 @@ public class PivotArmToJoystick extends CommandBase {
 
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         manipulator.holdAngle();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

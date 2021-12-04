@@ -23,6 +23,7 @@ public class Shoot extends CommandBase {
         requires(shooter);
     }
 
+    @Override
     protected void initialize() {
         if(camera){
 //            speed = PositionInfo.getSpeed(ShooterCamera.getLocation());
@@ -33,15 +34,18 @@ public class Shoot extends CommandBase {
 //        shooter.initPID();
     }
 
+    @Override
     protected void execute() {
         if (timeSinceInitialized() - time > 2) shooter.setShootTrue();
         shooter.setJags(speed);
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
 //        shooter.disablePID();
         shooter.stopJags();
@@ -49,6 +53,7 @@ public class Shoot extends CommandBase {
         shooter.setShootFalse();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

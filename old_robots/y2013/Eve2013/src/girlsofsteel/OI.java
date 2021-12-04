@@ -12,9 +12,9 @@ import girlsofsteel.subsystems.*;
 
 public class OI {
 
-    public static double JAG_SPEED = 1.0;
-    public static double ENCODER_SPEED = 50;
-    public static double VOLTAGE_SPEED = 12.0;
+    public static final double JAG_SPEED = 1.0;
+    public static final double ENCODER_SPEED = 50;
+    public static final double VOLTAGE_SPEED = 12.0;
 
     //PS3 button numbers
     private static final int SQUARE = 1;
@@ -42,14 +42,11 @@ public class OI {
     private final JoystickButton normalDrive;
     private final JoystickButton liningDrive;
     private final JoystickButton disableRotation;
-    private JoystickButton rotateRight;
-    private JoystickButton rotateLeft;
     private final JoystickButton rotateShootingBackRight;
     private final JoystickButton rotateShootingBackLeft;
 
     //Operator Buttons
     private final JoystickButton prepShoot;
-    private JoystickButton prepShootPyramid;
     private final JoystickButton loadFrisbee;
     private final JoystickButton tipOver;
     private final JoystickButton retract;
@@ -60,8 +57,6 @@ public class OI {
     private final JoystickButton stopClimbing;
     private final JoystickButton stopClimbing2;
     private final JoystickButton toggleBlocker;
-    private JoystickButton raiseBlocker;
-    private JoystickButton lowerBlocker;
 
     public OI() {
         //Defining Joysticks

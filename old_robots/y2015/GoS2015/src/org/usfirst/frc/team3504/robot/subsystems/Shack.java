@@ -6,18 +6,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shack extends Subsystem {
 
-    private final DoubleSolenoid shack;
+    private final DoubleSolenoid m_shack;
 
     public Shack() {
-        shack = new DoubleSolenoid(RobotMap.LEFT_SHACK_MODULE, RobotMap.LEFT_SHACK_CHANNEL_A, RobotMap.LEFT_SHACK_CHANNEL_B);
+        m_shack = new DoubleSolenoid(RobotMap.LEFT_SHACK_MODULE, RobotMap.LEFT_SHACK_CHANNEL_A, RobotMap.LEFT_SHACK_CHANNEL_B);
     }
 
     public void ShackIn() {
-        shack.set(DoubleSolenoid.Value.kForward);
+        m_shack.set(DoubleSolenoid.Value.kForward);
     }
 
     public void ShackOut() {
-        shack.set(DoubleSolenoid.Value.kReverse);
+        m_shack.set(DoubleSolenoid.Value.kReverse);
     }
 
     @Override

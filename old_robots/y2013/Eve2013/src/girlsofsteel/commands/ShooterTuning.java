@@ -28,12 +28,14 @@ public class ShooterTuning extends CommandBase {
         driver = DriverStation.getInstance();
     }
 
+    @Override
     protected void initialize() {
         SmartDashboard.putNumber("speed", 0.0);
         SmartDashboard.putBoolean("test speed", false);
     }
     double time;
 
+    @Override
     protected void execute() {
         if (SmartDashboard.getBoolean("test speed", false)) {
             batteryVoltage = RobotController.getBatteryVoltage();
@@ -56,14 +58,17 @@ public class ShooterTuning extends CommandBase {
 
     }
 
+    @Override
     protected boolean isFinished() {
         return done;
     }
 
+    @Override
     protected void end() {
      shooter.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

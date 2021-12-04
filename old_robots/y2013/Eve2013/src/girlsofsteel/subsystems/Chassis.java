@@ -16,6 +16,7 @@ import girlsofsteel.objects.SmoothEncoder;
  * Chassis subsystem for kiwi drive: creates jags, encoders, PID, & drive
  * function. UNIT: inches
  */
+@SuppressWarnings("PMD.ExcessivePublicCount")
 public class Chassis extends Subsystem {
 
     //tentative angles from 0 being straight forward

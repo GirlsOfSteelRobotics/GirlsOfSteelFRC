@@ -16,10 +16,12 @@ public class IsGoalHot extends CommandBase {
     double average = 0;
     int i;
 
+    @Override
     protected void initialize() {
         i = 0;
     }
 
+    @Override
     protected void execute() {
         if (CommandBase.camera.isGoalHot()) {
             bool = 1;
@@ -30,10 +32,12 @@ public class IsGoalHot extends CommandBase {
         i++;
     }
 
+    @Override
     protected boolean isFinished() {
         return i > hots.length;
     }
 
+    @Override
     protected void end() {
         for (int i=0;i<hots.length;i++){
             average += hots[i];
@@ -45,6 +49,7 @@ public class IsGoalHot extends CommandBase {
             CommandBase.camera.isHot = false;
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

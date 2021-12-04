@@ -27,6 +27,7 @@ public class MoveToPosition extends CommandBase{
 
     MoveToPosition() {
     }
+    @Override
     protected void initialize() {
        chassis.initPositionPIDS();
        chassis.resetPositionPIDError();
@@ -34,6 +35,7 @@ public class MoveToPosition extends CommandBase{
        //SmartDashboard.putNumber("Distance", 0);
     }
 
+    @Override
     protected void execute() {
         //distance = SmartDashboard.getNumber("Distance", 0);
         chassis.setPosition(distance);
@@ -41,18 +43,21 @@ public class MoveToPosition extends CommandBase{
         SmartDashboard.putNumber("Right Encoder: ", chassis.getRightEncoderDistance());
     }
 
+    @Override
     protected boolean isFinished() {
         //Is finished when our position is within the "off by" range of the setpoint
 
         return (Math.abs((chassis.getLeftEncoderDistance() - distance)) < offBy);
     }
 
+    @Override
     protected void end() {
         chassis.disablePositionPID();
         chassis.stopEncoders();
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

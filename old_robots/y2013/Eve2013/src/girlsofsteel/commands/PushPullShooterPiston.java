@@ -14,20 +14,22 @@ import girlsofsteel.OI;
  */
 public class PushPullShooterPiston extends CommandBase {
 
-    double desiredSpeed;
-    double time;
-    boolean shot = false;
+    private double desiredSpeed;
+    private double time;
+    private boolean shot;
 
     public PushPullShooterPiston() {
         requires(feeder);
         setInterruptible(false);
     }
 
+    @Override
     protected void initialize() {
         desiredSpeed = OI.ENCODER_SPEED;
         shot = false;
     }
 
+    @Override
     protected void execute() {
         SmartDashboard.putNumber("Encoder Rate", shooter.getEncoderRate());
         if(shooter.isTimeToShoot()){
@@ -37,14 +39,17 @@ public class PushPullShooterPiston extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return shot && timeSinceInitialized() - time > 0.2;
     }
 
+    @Override
     protected void end() {
         feeder.pullShooter();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

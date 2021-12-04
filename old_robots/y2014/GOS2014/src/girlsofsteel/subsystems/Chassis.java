@@ -39,19 +39,19 @@ public class Chassis extends Subsystem {
     public LSPBPIDPlanner rightChassisPlanner;
 
     //need the p for 2nd robot
-    private double Ppright = 0.5; //Competition chassis gains 0.2
+    private final double Ppright; //Competition chassis gains 0.2
     private final double Piright = 0;
     private final double Pdright = 0;
-    private double Ppleft = 0.5; //Competition chassis gains 0.2
+    private final double Ppleft; //Competition chassis gains 0.2
     private final double Pileft = 0;
     private final double Pdleft = 0;
 
-    private final double Vpright = 0.0;
-    private final double Viright = 0.0;
-    private final double Vdright = 0.0;
-    private final double Vpleft = 0.0;
-    private final double Vileft = 0.0;
-    private final double Vdleft = 0.0;
+    private static final double Vpright = 0.0;
+    private static final double Viright = 0.0;
+    private static final double Vdright = 0.0;
+    private static final double Vpleft = 0.0;
+    private static final double Vileft = 0.0;
+    private static final double Vdleft = 0.0;
 
     private final double leftPulsePerRevolution = 360;  //pretty sure it's correct
     private final double rightPulsePerRevolution = 360;
@@ -424,7 +424,8 @@ public class Chassis extends Subsystem {
         double movingOffset = 0.05; //How much the encoders will change to be called "moving"
         double startTime = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - startTime < 400) { //Waits 400 milliseconds
+        while (System.currentTimeMillis() - startTime < 400) { // NOPMD(EmptyWhileStmt)
+            //Waits 400 milliseconds
         }
         double currentRightPosition = rightEncoder.getDistance();
         double currentLeftPosition = leftEncoder.getDistance();

@@ -25,6 +25,7 @@ public class CollectorWheelForward extends CommandBase {
      * There is nothing in this method.
      * @author Sophia, Sonia
      */
+    @Override
     protected void initialize() {
 
     }
@@ -34,6 +35,7 @@ public class CollectorWheelForward extends CommandBase {
      * It can be used to bring the ball into the trident.
      * @author Sophia, Sonia
      */
+    @Override
     protected void execute() {
        collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
@@ -43,6 +45,7 @@ public class CollectorWheelForward extends CommandBase {
      * @return false always
      * @author Sophia, Sonia
      */
+    @Override
     protected boolean isFinished() {
         return false;
         //return CommandBase.collector.isCollectorEngaged();
@@ -52,6 +55,7 @@ public class CollectorWheelForward extends CommandBase {
      * This stops the collector wheel.
      * @author Sophia, Sonia
      */
+    @Override
     protected void end() {
         collector.stopCollectorWheel();
         //The wheel stops moving once the collector is engaged and has the ball in its grip
@@ -61,6 +65,7 @@ public class CollectorWheelForward extends CommandBase {
      * This calls the end() method to stop the collector wheel
      * @author Sophia, Sonia
      */
+    @Override
     protected void interrupted() {
         end();
     }

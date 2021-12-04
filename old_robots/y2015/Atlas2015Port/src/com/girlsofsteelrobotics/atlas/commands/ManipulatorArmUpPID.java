@@ -19,10 +19,12 @@ public class ManipulatorArmUpPID extends CommandBase {
         requires(manipulator);
     }
 
+    @Override
     protected void initialize() {
         angle = manipulator.getAbsoluteDistance();
     }
 
+    @Override
     protected void execute() {
         System.out.println("Up Encoder Value: " + manipulator.getAbsoluteDistance());
 //        System.out.println("Up Angle Setpoint: " + angle * Configuration.desiredAnglePivotArmSign);
@@ -33,14 +35,17 @@ public class ManipulatorArmUpPID extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         manipulator.holdAngle();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

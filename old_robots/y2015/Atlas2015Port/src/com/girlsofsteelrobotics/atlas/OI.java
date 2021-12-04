@@ -65,17 +65,12 @@ public class OI {
     private final JoystickButton collectorArmDownAndIn;
 
     //collector wheel goes forward and backward
-    private JoystickButton collectorWheelOut;
     private final JoystickButton collectorWheelIn;
 
     private final JoystickButton loadKicker;
     private final JoystickButton kick;
     private final JoystickButton kickerSTOP;
     private final JoystickButton trussShot;
-
-    private JoystickButton leftKick;
-    private JoystickButton rightKick;
-    private JoystickButton bothKicks;
 
     //Buttons for testManipulatorJags
     /*JoystickButton testJagsForwardButton = new JoystickButton(rightJoystick, 4);

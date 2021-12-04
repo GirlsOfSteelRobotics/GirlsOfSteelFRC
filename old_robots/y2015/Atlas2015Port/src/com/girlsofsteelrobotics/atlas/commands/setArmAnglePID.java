@@ -33,10 +33,12 @@ public class setArmAnglePID extends CommandBase {
         startTime = Timer.getFPGATimestamp();
     }
 
+    @Override
     protected void initialize() {
         angle = desiredAngle * Configuration.desiredAnglePivotArmSign;
     }
 
+    @Override
     protected void execute() {
         if (angle < -18.2) {
             angle = -18.2;
@@ -50,14 +52,17 @@ public class setArmAnglePID extends CommandBase {
         changedTime = Timer.getFPGATimestamp() - startTime;
     }
 
+    @Override
     protected boolean isFinished() {
         return Math.abs(desiredAngle-manipulator.getAbsoluteDistance()) < allowedAngleError;
     }
 
+    @Override
     protected void end() {
         manipulator.holdAngle();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

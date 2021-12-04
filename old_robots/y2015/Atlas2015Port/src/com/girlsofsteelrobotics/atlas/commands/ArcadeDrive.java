@@ -24,11 +24,13 @@ public class ArcadeDrive extends CommandBase{
         requires(driving);
     }
 
+    @Override
     protected void initialize() {
         System.out.println("ARCADE DRIVE______________________________________________________");
         joystick1= oi.getChassisJoystick();
     }
 
+    @Override
     protected void execute() {
         Xcoord = joystick1.getX();
         //XcoordSq = chassis.square(Xcoord, 1.0);
@@ -38,14 +40,17 @@ public class ArcadeDrive extends CommandBase{
         //System.out.println("");
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

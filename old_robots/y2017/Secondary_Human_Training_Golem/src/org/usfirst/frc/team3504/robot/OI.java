@@ -143,7 +143,7 @@ public class OI {
             shifterUp = new JoystickButton(drivingStickForward, 3);
 
             // BACKWARDS BUTTONS
-            if (drivingStickBackward.getName() != "") {
+            if (!drivingStickBackward.getName().isEmpty()) {
                 //DRIVER BUTTONS
                 // Button to change between drive joysticks on trigger
                 switchToBackward = new JoystickButton(drivingStickBackward, 1);

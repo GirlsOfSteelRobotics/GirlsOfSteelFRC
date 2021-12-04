@@ -21,10 +21,12 @@ public class TestingCollector extends CommandBase {
         direction = true;
     }
 
+    @Override
     protected void initialize() {
         collector.collectorWheelFoward();
     }
 
+    @Override
     protected void execute() {
 
         direction = !direction;
@@ -36,13 +38,16 @@ public class TestingCollector extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 

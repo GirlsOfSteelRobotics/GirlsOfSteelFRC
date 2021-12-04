@@ -22,8 +22,8 @@ public class GripPipeline implements VisionPipeline {
     //Outputs
     private final Mat resizeImageOutput = new Mat();
     private final Mat hsvThresholdOutput = new Mat();
-    private final ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-    private final ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+    private final List<MatOfPoint> findContoursOutput = new ArrayList<>();
+    private final List<MatOfPoint> filterContoursOutput = new ArrayList<>();
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -53,7 +53,7 @@ public class GripPipeline implements VisionPipeline {
         findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
         // Step Filter_Contours0:
-        ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
+        List<MatOfPoint> filterContoursContours = findContoursOutput;
         double filterContoursMinArea = 100.0;
         double filterContoursMinPerimeter = 0.0;
         double filterContoursMinWidth = 0.0;
@@ -92,7 +92,7 @@ public class GripPipeline implements VisionPipeline {
      * This method is a generated getter for the output of a Find_Contours.
      * @return ArrayList<MatOfPoint> output from Find_Contours.
      */
-    public ArrayList<MatOfPoint> findContoursOutput() {
+    public List<MatOfPoint> findContoursOutput() {
         return findContoursOutput;
     }
 
@@ -100,7 +100,7 @@ public class GripPipeline implements VisionPipeline {
      * This method is a generated getter for the output of a Filter_Contours.
      * @return ArrayList<MatOfPoint> output from Filter_Contours.
      */
-    public ArrayList<MatOfPoint> filterContoursOutput() {
+    public List<MatOfPoint> filterContoursOutput() {
         return filterContoursOutput;
     }
 

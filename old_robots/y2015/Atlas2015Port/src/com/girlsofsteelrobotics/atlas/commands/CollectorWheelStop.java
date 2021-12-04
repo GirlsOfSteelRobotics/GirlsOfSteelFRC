@@ -26,6 +26,7 @@ public class CollectorWheelStop extends CommandBase{
      * There is nothing in this method.
      * @author Sophia, Sonia
      */
+    @Override
     protected void initialize() {
 
     }
@@ -34,6 +35,7 @@ public class CollectorWheelStop extends CommandBase{
      * There is nothing in this method.
      * @author Sophia, Sonia
      */
+     @Override
     protected void execute() {
 
     }
@@ -43,6 +45,7 @@ public class CollectorWheelStop extends CommandBase{
      * @return true because it needs to run once
      * @author Sophia, Sonia
      */
+    @Override
     protected boolean isFinished() {
         return true;
 
@@ -52,6 +55,7 @@ public class CollectorWheelStop extends CommandBase{
      * This method stops the collector wheel.
      * @author Sophia, Sonia
      */
+    @Override
     protected void end() {
         collector.stopCollectorWheel();
         //The collector wheel can now be stopped manually by drivers.
@@ -61,6 +65,7 @@ public class CollectorWheelStop extends CommandBase{
      * There is nothing in this method.
      * @author Sophia, Sonia
      */
+    @Override
     protected void interrupted() {
 
     }

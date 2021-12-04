@@ -22,20 +22,25 @@ public class Wait extends CommandBase {
         time = sec;
     }
 
+    @Override
     protected void initialize() {
         startTime = Timer.getFPGATimestamp();
     }
 
+    @Override
     protected void execute() {
     }
 
+    @Override
     protected boolean isFinished() {
         return Timer.getFPGATimestamp() - startTime > time;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

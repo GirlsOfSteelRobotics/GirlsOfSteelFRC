@@ -27,10 +27,12 @@ public class MoveKicker extends CommandBase {
         this.pos = pos;
     }
 
+    @Override
     protected void initialize() {
         firstTime = true;
     }
 
+    @Override
     protected void execute() {
         if(firstTime) {
             switch(pos) {
@@ -42,6 +44,7 @@ public class MoveKicker extends CommandBase {
                     break;
                 default:
                     System.out.println("Error! Not a valid input parameter");
+                    break;
             }
             kicker.kickerPlanner.calculateVelocityGraph(setpoint);
             startTime = System.currentTimeMillis(); //MILLISECONDS
@@ -53,6 +56,7 @@ public class MoveKicker extends CommandBase {
         encoderValue350Modded = kicker.getEncoderDistance() % 360;
     }
 
+    @Override
     protected boolean isFinished() {
         encoderValue350Modded = kicker.getEncoderDistance() % 360;
         boolean thereYet = Math.abs(encoderValue350Modded - setpoint) < allowedOffBy;
@@ -60,10 +64,12 @@ public class MoveKicker extends CommandBase {
         return thereYet || over;
     }
 
+    @Override
     protected void end() {
         kicker.holdPosition();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

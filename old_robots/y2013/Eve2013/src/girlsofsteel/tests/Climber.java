@@ -31,9 +31,11 @@ public class Climber extends CommandBase {
         SmartDashboard.putBoolean("Top grip Open Close", false);
     }
 
+    @Override
     protected void initialize() {
     }
 
+    @Override
     protected void execute() {
 
 
@@ -68,13 +70,16 @@ public class Climber extends CommandBase {
 
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 }

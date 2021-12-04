@@ -19,6 +19,7 @@ public class Rotate extends CommandBase {
         }
     }
 
+    @Override
     protected void initialize() {
         if(targetRotate){
             desiredTheta = theta;
@@ -36,6 +37,7 @@ public class Rotate extends CommandBase {
         System.out.println("Initializing + ");
     }
 
+    @Override
     protected void execute() {
         getDifference();
         System.out.println("Gyro: " + chassis.getGyroAngle() + "\tCurrent: "
@@ -50,15 +52,18 @@ public class Rotate extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return !chassis.isAutoRotating();
     }
 
+    @Override
     protected void end() {
         System.out.println("Stopped rotation");
         chassis.stopAutoRotation();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

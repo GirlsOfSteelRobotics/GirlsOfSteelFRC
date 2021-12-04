@@ -231,14 +231,6 @@ public class OI {
         return false;
     }
 
-    private boolean isButtonFunctionOn(boolean on, int buttonNumber) {
-        if (isButtonPressed(buttonNumber)) { //if the button is pressed will switch the true/false
-            on = on != true;
-        }
-
-        return on;
-    }
-
     public boolean isButtonPressed(int buttonNumber) {
         boolean buttonValue = false;
         try {

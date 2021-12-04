@@ -29,12 +29,14 @@ public class AutoShoot extends CommandBase {
         counter = 0;
     }
 
+    @Override
     protected void initialize() {
         desiredSpeed = OI.ENCODER_SPEED;
         shot = false;
 
     }
 
+    @Override
     protected void execute() {
         shooter.setJags(oi.JAG_SPEED);
         batteryVoltage = RobotController.getBatteryVoltage();
@@ -51,15 +53,18 @@ public class AutoShoot extends CommandBase {
 //        }
     }
 
+    @Override
     protected boolean isFinished() {
         return shot && timeSinceInitialized() - time > 0.2;
     }
 
+    @Override
     protected void end() {
         feeder.pullShooter();
         shooter.setJags(0.0);
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

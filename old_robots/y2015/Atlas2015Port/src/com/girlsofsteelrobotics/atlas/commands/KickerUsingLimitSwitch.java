@@ -27,6 +27,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
         smartDashboard = usingSD;
     }
 
+    @Override
     protected void initialize() {
         if (!testingLimit) {
             if (smartDashboard) {
@@ -43,6 +44,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
         }
     }
 
+    @Override
     protected void execute() {
         if (!testingLimit) {
             changeInTime = System.currentTimeMillis() - startTime;
@@ -77,6 +79,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
 
     }
 
+    @Override
     protected boolean isFinished() {
         System.out.println("Is the limit hit: " + kicker.getLimitSwitch());
         if (!testingLimit) {
@@ -98,11 +101,13 @@ public class KickerUsingLimitSwitch extends CommandBase {
         return false;
     }
 
+    @Override
     protected void end() {
         //kicker.stopJag();
         kicker.stopTalon();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

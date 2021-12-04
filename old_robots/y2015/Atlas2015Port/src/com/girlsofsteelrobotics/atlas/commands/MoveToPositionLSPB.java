@@ -28,6 +28,7 @@ public class MoveToPositionLSPB extends CommandBase {
 //        chassis.resetEncoders();
     }
 
+    @Override
     protected void initialize() {
         SmartDashboard.putNumber("Setpoint Before", setPoint);
         setPoint *= Configuration.signOfChassisPositionPIDSetpoint;
@@ -42,6 +43,7 @@ public class MoveToPositionLSPB extends CommandBase {
         chassis.rightChassisPlanner.calculateVelocityGraph(setPoint);
     }
 
+    @Override
     protected void execute() {
         //System.out.println("Left Encoder: " + chassis.getLeftEncoderDistance() + "Right Encoder" + chassis.getRightEncoderDistance());
         changeInTime = System.currentTimeMillis() - startTime;
@@ -54,6 +56,7 @@ public class MoveToPositionLSPB extends CommandBase {
         System.out.println("Left encoder: " + chassis.getLeftEncoderDistance() + "\tRight encoder: " + chassis.getRightEncoderDistance());
     }
 
+    @Override
     protected boolean isFinished() {
         if (changeInTime > 3000) {
             System.out.println("Time Exit Out of Chassis");
@@ -73,6 +76,7 @@ public class MoveToPositionLSPB extends CommandBase {
         //This is bad. doesn't work for negatve. TODO fix later
     }
 
+    @Override
     protected void end() {
 
         chassis.disablePositionPID();
@@ -80,6 +84,7 @@ public class MoveToPositionLSPB extends CommandBase {
         setPoint *= Configuration.signOfChassisPositionPIDSetpoint; //To undo what we did before
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

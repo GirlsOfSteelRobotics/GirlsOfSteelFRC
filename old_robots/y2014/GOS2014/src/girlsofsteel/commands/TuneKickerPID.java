@@ -44,11 +44,13 @@ public class TuneKickerPID extends CommandBase {
        requires(chassis);
     }
 
+    @Override
     protected void initialize() {
         kicker.initPIDS();
         kicker.initEncoders();
     }
 
+    @Override
     protected void execute() {
         for(double a = startP; a < maxP; a += incrementP) {
             //for(double a = startI; < maxI; a += incrementI)
@@ -93,11 +95,13 @@ public class TuneKickerPID extends CommandBase {
        done = true;
     }
 
+    @Override
     protected boolean isFinished() {
         return done;
     }
 
 
+    @Override
     protected void end() {
         getBest();
         chassis.stopJags();
@@ -107,11 +111,12 @@ public class TuneKickerPID extends CommandBase {
 
     }
 
+    @Override
     protected void interrupted() {
         end();
     }
 
-    private double getMean(double[] array) {
+    private double getMean(double... array) {
 
         for(int i = 0; i < array.length; i++) {
            mean += array[i];
@@ -128,7 +133,7 @@ public class TuneKickerPID extends CommandBase {
         double variance = getMean(numbers);
         return variance;
     }
-    private double getDeviation(double center, double[] array) {
+    private double getDeviation(double center, double... array) {
         double average = center;
         if (center == 0)
             average = getMean(array);

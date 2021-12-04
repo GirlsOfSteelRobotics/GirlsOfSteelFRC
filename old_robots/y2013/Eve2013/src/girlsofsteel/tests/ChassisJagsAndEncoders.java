@@ -26,10 +26,12 @@ import girlsofsteel.commands.CommandBase;
 //        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
     }
 
+    @Override
     protected void execute() {
 //        speed = SmartDashboard.getNumber("Jag speed", 0.0);
 //        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoderDistance());
@@ -87,15 +89,18 @@ import girlsofsteel.commands.CommandBase;
         }
 
     }
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
         chassis.stopEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

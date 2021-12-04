@@ -14,34 +14,34 @@ import girlsofsteel.objects.SmoothEncoder;
 
 public class Shooter extends Subsystem {
 
-    public final double KEY_SPEED = 24.0;//dead-reckoning speed to use for
+    public static final double KEY_SPEED = 24.0;//dead-reckoning speed to use for
     //shooting with the key
-    public final double BRIDGE_SPEED = 29.0;//MAGIC value for speed when
+    public static final double BRIDGE_SPEED = 29.0;//MAGIC value for speed when
     //shooting from the bridge button board stufficles
-    public final double MIN_SLIDER = 0.0;
-    public final double MAX_SLIDER = 3.15;
+    private static final double MIN_SLIDER = 0.0;
+    private static final double MAX_SLIDER = 3.15;
 
-    public final double VELOCITY_ERROR_RANGE = 1.0;//this is the speed that the
+    public static final double VELOCITY_ERROR_RANGE = 1.0;//this is the speed that the
     //shooter wheel can be off by before it shoots the ball
     //hopefully this can be lowered once the PID is tuned nicely
-    public final double SCALE_TOP_ROLLERS_OFF = 5.0;
+    private static final double SCALE_TOP_ROLLERS_OFF = 5.0;
 
-    private final double MAX_SHOOTER_VELOCITY = 41.0;
-    private final double PID_OUTPUT_THRESHOLD = 0.05;//change in voltage
+    private static final double MAX_SHOOTER_VELOCITY = 41.0;
+    private static final double PID_OUTPUT_THRESHOLD = 0.05;//change in voltage
 
     //constants -> meters if a distance
-    public final double TOP_HOOP_HEIGHT = 2.4892;
-    public final double ROBOT_HEIGHT = 1.2065;//floor to the axis of the shooter wheel
-    private final double WHEEL_DIAMETER = 0.2032;//shooter wheel diameter
-    private final double GEAR_RATIO = 1.0;//gear ratio of the shooter wheel
-    private final double PULSES = 100.0;
-    private final double ENCODER_UNIT = (Math.PI * WHEEL_DIAMETER * GEAR_RATIO) / PULSES;
+    private static final double TOP_HOOP_HEIGHT = 2.4892;
+    private static final double ROBOT_HEIGHT = 1.2065;//floor to the axis of the shooter wheel
+    private static final double WHEEL_DIAMETER = 0.2032;//shooter wheel diameter
+    private static final double GEAR_RATIO = 1.0;//gear ratio of the shooter wheel
+    private static final double PULSES = 100.0;
+    private static final double ENCODER_UNIT = (Math.PI * WHEEL_DIAMETER * GEAR_RATIO) / PULSES;
     //don't change this! ^^ just a formula
-    double angle;
-    double yDistance = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
+    private double angle;
+    private final double yDistance = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
     //from the shooter to the top basket
-    double hangTime;
-    double newXDistance;
+    private double hangTime;
+    private double newXDistance;
     private final Jaguar jags = new Jaguar(RobotMap.SHOOTER_JAGS);
 //    CHANGE FOR REAL WATSON:
 //    public Encoder encoder = new Encoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,

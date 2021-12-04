@@ -21,6 +21,7 @@ public class TestingDrivingStraight extends CommandBase{
          requires(chassis);
     }
 
+    @Override
     protected void initialize() {
         System.out.println("Initializing TDS command.");
         SmartDashboard.putNumber("LeftJagAdjust", 0); //Setting LeftJagAdjust  variable to zero in SmartDashboard
@@ -28,6 +29,7 @@ public class TestingDrivingStraight extends CommandBase{
         chassis.initEncoders();
     }
 
+    @Override
     protected void execute() {
         double RightJagAdjust = SmartDashboard.getNumber("RightJagAdjust", 0);
         double LeftJagAdjust = SmartDashboard.getNumber("LeftJagAdjust", 0);
@@ -39,15 +41,18 @@ public class TestingDrivingStraight extends CommandBase{
         SmartDashboard.putNumber("Right side Voltage", chassis.getRightRaw());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.setRightJag(0.0);
         chassis.setLeftJag(0.0);
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

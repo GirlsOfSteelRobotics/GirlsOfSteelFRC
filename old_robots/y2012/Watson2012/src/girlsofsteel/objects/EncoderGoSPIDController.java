@@ -8,18 +8,18 @@ import edu.wpi.first.wpilibj.Timer;
 public class EncoderGoSPIDController implements Runnable {
 
     //constructor
-    private double Kp = 0.0;
-    private double Ki = 0.0;
-    private double Kd = 0.0;
+    private double Kp;
+    private double Ki;
+    private double Kd;
     private final Encoder encoder;
     private final PIDOutput jags;
     private final int type;
     //for setSetPoint()
     private double setPoint;
     //used for calculating error -> for PID (P,I,&D)
-    private double error = 0.0;
-    private double previousError = 0.0;
-    private double errorSum = 0.0;
+    private double error;
+    private double previousError;
+    private double errorSum;
     //boolean to switch the PID controller on/off -> condition for the while loop
     private boolean PIDEnabled = true;
     //calculate time & position

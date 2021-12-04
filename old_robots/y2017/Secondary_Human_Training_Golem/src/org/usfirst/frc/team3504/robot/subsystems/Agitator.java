@@ -11,20 +11,20 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Agitator extends Subsystem {
 
-    private final DoubleSolenoid agitator;
+    private final DoubleSolenoid m_agitator;
 
     public Agitator() {
-        agitator = new DoubleSolenoid(RobotMap.AGITATOR_A, RobotMap.AGITATOR_B);
+        m_agitator = new DoubleSolenoid(RobotMap.AGITATOR_A, RobotMap.AGITATOR_B);
 
-        addChild("agitator", agitator);
+        addChild("agitator", m_agitator);
     }
 
     public void agitateForwards() {
-        agitator.set(DoubleSolenoid.Value.kForward);
+        m_agitator.set(DoubleSolenoid.Value.kForward);
     }
 
     public void agitateBackwards() {
-        agitator.set(DoubleSolenoid.Value.kReverse);
+        m_agitator.set(DoubleSolenoid.Value.kReverse);
     }
 
     @Override

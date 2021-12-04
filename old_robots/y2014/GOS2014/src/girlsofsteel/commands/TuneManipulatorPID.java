@@ -24,6 +24,7 @@ public class TuneManipulatorPID extends CommandBase {
         requires(manipulator);
     }
 
+    @Override
     protected void initialize() {
         manipulator.initEncoder();
         if (pid) {
@@ -39,6 +40,7 @@ public class TuneManipulatorPID extends CommandBase {
         }
     }
 
+    @Override
     protected void execute() {
         if (pid) {
             p = SmartDashboard.getNumber("Pivot P", 0);
@@ -61,11 +63,13 @@ public class TuneManipulatorPID extends CommandBase {
         System.out.print("\tRaw pivot: " + manipulator.getRaw());
     }
 
+    @Override
     protected boolean isFinished() {
         return setpoint > 110 || setpoint < -17;
 
     }
 
+    @Override
     protected void end() {
         manipulator.stopManipulator();
         manipulator.stopEncoder();
@@ -74,6 +78,7 @@ public class TuneManipulatorPID extends CommandBase {
         }
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

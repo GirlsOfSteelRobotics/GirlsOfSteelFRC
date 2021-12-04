@@ -20,10 +20,12 @@ public class Blocking extends CommandBase{
             requires (feeder);
         }
 
+    @Override
     protected void initialize() {
 
     }
 
+    @Override
     protected void execute() {
             blockerRaised = Feeder.getIsRaised();
             oldBlockerRaised = blockerRaised;
@@ -38,13 +40,16 @@ public class Blocking extends CommandBase{
             newBlockerRaised = Feeder.getIsRaised();
     }
 
+    @Override
     protected boolean isFinished() {
         return oldBlockerRaised != newBlockerRaised;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

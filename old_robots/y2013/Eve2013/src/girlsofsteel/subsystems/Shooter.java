@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
 import girlsofsteel.objects.MagneticSpeedSensor;
 import girlsofsteel.objects.ShooterPoint;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -132,7 +135,7 @@ public class Shooter extends Subsystem {
             if (speeds[i] == null) {
                 ShooterPoint point = new ShooterPoint(voltage, encoderSpeed, battery);
                 speeds[i] = point;
-                i = speeds.length;
+                i = speeds.length; // NOPMD
             }
         }
     }
@@ -167,14 +170,14 @@ public class Shooter extends Subsystem {
         /*The vector where close points will be saved
          * NOTE: Because this vector is generic, when getting values from the array it is necessary to CAST the value to a ShooterPoint
          */
-        Vector closePoints = new Vector();
+        List<ShooterPoint> closePoints = new ArrayList<>();
 
         //Get all points close to the main point and add them to the closePoints array
         for (int i = 0; i < speeds.length; i++) {
             //The other point
             ShooterPoint otherPoint = speeds[i];
             if (getDistance(encoderSpeed, battery, otherPoint.getEncoderSpeed(), otherPoint.getBattery()) < rangeCutOff) {
-                closePoints.addElement(otherPoint);
+                closePoints.add(otherPoint);
             }
         }
 
@@ -183,7 +186,7 @@ public class Shooter extends Subsystem {
 
         //Find the average of all the voltages for the close points
         for (int k = 0; k < closePoints.size(); k++) {
-            ShooterPoint otherPoint = (ShooterPoint) closePoints.elementAt(k);
+            ShooterPoint otherPoint = closePoints.get(k);
             closePointVoltage = otherPoint.getVoltage();
             voltage += closePointVoltage;
         }

@@ -2,45 +2,45 @@ package girlsofsteel.commands;
 
 public class TuningShooterPID extends CommandBase {
 
-    boolean run = false;
+    private boolean run = false;
 
     //for tuning the p value
-    double step = 0.025;
-    double max = 0.3;
+    private final double step = 0.025;
+    private final double max = 0.3;
 
 //    //for tuning the i value -> using the p value that we like
 //    double step = 0.002;
 //    double max = 0.1;
 
-    int meanLength = (int) ((max-step)/step);
+    private final int meanLength = (int) ((max-step)/step);
 
-    int startSetPoint = 5;
-    int maxSetPoint = 30;
+    private final int startSetPoint = 5;
+    private final int maxSetPoint = 30;
 
-    int dataLength = maxSetPoint - startSetPoint;
+    private final int dataLength = maxSetPoint - startSetPoint;
 
-    int count = 0;
-    int number = 0;
-    double[] deviations = new double[dataLength];
-    double[] differences = new double[dataLength];
-    double[] devSetPoints = new double[dataLength];//deviation from set point
+    private int count;
+    private int number;
+    private double[] deviations = new double[dataLength];
+    private double[] differences = new double[dataLength];
+    private double[] devSetPoints = new double[dataLength];//deviation from set point
     //setPoint 5 = index 0
     //setPoint 6 = index 1
     //setPoint 30 = index 25
     //setPoint - 5 = index
-    double deviationMean = 0;
-    double differencesMean = 0;
-    double devSetPointMean = 0;
-    double[] deviationMeans = new double[meanLength];
-    double[] differencesMeans = new double[meanLength];
-    double[] devSetPointMeans = new double[meanLength];
+    private double deviationMean;
+    private double differencesMean;
+    private double devSetPointMean;
+    private double[] deviationMeans = new double[meanLength];
+    private double[] differencesMeans = new double[meanLength];
+    private double[] devSetPointMeans = new double[meanLength];
     //p 0.025 = index 0
     //p 0.05 = index 1
     //p 0.075 = index 2
     //p 0.275 = index 10
     //(p-0.025)/0.025 = index -> p = 0.025(index)+0.025
 
-    double error = shooter.VELOCITY_ERROR_RANGE;
+    private final double error = shooter.VELOCITY_ERROR_RANGE;
 
     public TuningShooterPID(){
         requires(shooter);
@@ -161,16 +161,16 @@ public class TuningShooterPID extends CommandBase {
         end();
     }
 
-    int counter = 0;
-    double totalRates = 0;
-    double[] rates = new double[100];
-    double[] variences = new double[rates.length];
-    double rateSum;
-    double differenceSum;
-    double rateMean;
-    double differenceMean;
-    double standardDeviation;
-    double setPointToRateMean;
+    private int counter;
+    private double totalRates;
+    private double[] rates = new double[100];
+    private double[] variences = new double[rates.length];
+    private double rateSum;
+    private double differenceSum;
+    private double rateMean;
+    private double differenceMean;
+    private double standardDeviation;
+    private double setPointToRateMean;
 
     //adds the encoder rates of the shooter wheel to an array -> it only has 100
     //spaces so once those 100 are filled up, it starts filling up spots starting
@@ -240,7 +240,7 @@ public class TuningShooterPID extends CommandBase {
         return calculateStandardDeviation();
     }
 
-    protected double calculateMean(double[] array) {
+    protected double calculateMean(double... array) {
         double sum = 0;
         double mean = 0;
         for (int i = 0; i < count; i++) {
@@ -274,7 +274,7 @@ public class TuningShooterPID extends CommandBase {
         setPointToRateMean = 0;
     }
 
-    protected int getIndexofLowest(double[] array){
+    protected int getIndexofLowest(double... array){
         int index = 0;
         double lowest = 999999999;
         for(int i=0; i<array.length; i++){

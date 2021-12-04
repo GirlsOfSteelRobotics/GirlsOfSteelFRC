@@ -19,24 +19,29 @@ public class CloseAllGrippers extends CommandBase{
     //Command for closing the bottom gripper around the pyramid
 
 
+    @Override
     protected void initialize() {
 
     }
 
+    @Override
     protected void execute() {
 //        topGripper.closeGrip();
 //        middleGripper.closeGrip();
         bottomGripper.closeGrip();
     }
 
+    @Override
     protected boolean isFinished() {
             return true;
 
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 

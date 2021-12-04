@@ -24,10 +24,12 @@ public class SetArmAngle extends CommandBase{
         desired = desiredAngle;
     }
 
+    @Override
     protected void initialize() {
         manipulator.init();
     }
 
+    @Override
     protected void execute() {
         //manipulator.getCurrentAngle(angle);
         System.out.println("Setting the angle! :D");
@@ -56,15 +58,18 @@ public class SetArmAngle extends CommandBase{
          */
     }
 
+    @Override
     protected boolean isFinished() {
         System.out.println("Isfinished: " + manipulator.checkAngle(angle));
         return manipulator.checkAngle(desired);
     }
 
+    @Override
     protected void end() {
         manipulator.stopJag();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

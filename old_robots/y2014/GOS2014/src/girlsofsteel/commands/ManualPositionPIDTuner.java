@@ -23,6 +23,7 @@ public class ManualPositionPIDTuner extends CommandBase {
 
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
         chassis.resetEncoders();
@@ -37,6 +38,7 @@ public class ManualPositionPIDTuner extends CommandBase {
         SmartDashboard.putBoolean("Resetencoder", false);
     }
 
+    @Override
     protected void execute() {
         if (pid) {
             setpoint = SmartDashboard.getNumber("Chassis Position setpoint", 0);
@@ -77,12 +79,14 @@ public class ManualPositionPIDTuner extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         boolean finished =  (Math.abs((chassis.getLeftEncoderDistance() - setpoint)) < offBy || Math.abs((chassis.getRightEncoderDistance()-setpoint)) < offBy) && (setpoint != 0);
         System.out.println("Position PID is finished: " + finished);
         return finished;
     }
 
+    @Override
     protected void end() {
         if (pid) {
             chassis.disablePositionPID();
@@ -90,6 +94,7 @@ public class ManualPositionPIDTuner extends CommandBase {
         chassis.stopEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }
