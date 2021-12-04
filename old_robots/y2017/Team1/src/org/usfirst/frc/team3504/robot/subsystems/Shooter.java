@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  */
 public class Shooter extends Subsystem {
 
-    private DoubleSolenoid shooterPistonLeft;
-    private DoubleSolenoid shooterPistonRight;
+    private final DoubleSolenoid shooterPistonLeft;
+    private final DoubleSolenoid shooterPistonRight;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -33,6 +33,7 @@ public class Shooter extends Subsystem {
         shooterPistonRight.set(DoubleSolenoid.Value.kReverse);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

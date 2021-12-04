@@ -46,11 +46,13 @@ public class TuningShooterPID extends CommandBase {
         requires(shooter);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
     }
 
+    @Override
     protected void execute(){
         for(double n=step; n<max; n+=step){//starts at step, goes to max - step
             for(int setPoint = startSetPoint; setPoint<=maxSetPoint; setPoint++){
@@ -58,7 +60,7 @@ public class TuningShooterPID extends CommandBase {
                 shooter.resetPIDError();
 //                shooter.setPIDValues(n, 0.0, 0.0); //for tuning the p
                 shooter.setPIDValues(0.025, n, 0.0); //for tuning the i
-                shooter.setPIDSpeed((double)setPoint);
+                shooter.setPIDSpeed(setPoint);
                 try {
                     wait(1500);//wait 1.5 seconds so the speed catches on
                 } catch (InterruptedException ex) {
@@ -125,10 +127,12 @@ public class TuningShooterPID extends CommandBase {
         run = true;
     }
 
+    @Override
     protected boolean isFinished(){
         return run;
     }
 
+    @Override
     protected void end(){
         shooter.disablePID();
         shooter.stopEncoder();
@@ -152,6 +156,7 @@ public class TuningShooterPID extends CommandBase {
                 " Deviation Mean:" + deviationMeans[indexDevSetPointLow]);
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

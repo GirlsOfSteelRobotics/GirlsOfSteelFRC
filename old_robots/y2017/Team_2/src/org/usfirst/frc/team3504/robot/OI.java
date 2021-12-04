@@ -15,15 +15,15 @@ public class OI {
     // You create one by telling it which joystick it's on and which button
     // number it is.
 
-    private JoystickButton collectIn;
-    private JoystickButton release;
-    private JoystickButton shoot;
-    private JoystickButton pivotUp;
-    private JoystickButton pivotDown;
-    private JoystickButton pusherOut;
+    private final JoystickButton collectIn;
+    private final JoystickButton release;
+    private final JoystickButton shoot;
+    private final JoystickButton pivotUp;
+    private final JoystickButton pivotDown;
+    private final JoystickButton pusherOut;
 
-    private Joystick stick;
-    private Joystick gamePad;
+    private final Joystick stick;
+    private final Joystick gamePad;
 
     // Button button = new JoystickButton(stick, buttonNumber);
 

@@ -15,10 +15,10 @@ import girlsofsteel.RobotMap;
  * @author Heather
  */
 public class Gripper extends Subsystem{
-    private DigitalInput openGripperSwitch;
-    private DigitalInput closeGripperSwitch;
-    private Solenoid openSolenoid;
-    private Solenoid closeSolenoid;
+    private final DigitalInput openGripperSwitch;
+    private final DigitalInput closeGripperSwitch;
+    private final Solenoid openSolenoid;
+    private final Solenoid closeSolenoid;
 
     public Gripper(DigitalInput openGripperSwitch, DigitalInput closeGripperSwitch,
             int openSolenoidPort, int closeSolenoidPort) {
@@ -60,6 +60,7 @@ public class Gripper extends Subsystem{
     }
     //This will count how many bar you hit, until you get to three at which point it returns true.
 
+    @Override
     protected void initDefaultCommand() {
     }
 }

@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Shifters extends Subsystem {
-    private DoubleSolenoid shifterLeft;
-    private DoubleSolenoid shifterRight;
+    private final DoubleSolenoid shifterLeft;
+    private final DoubleSolenoid shifterRight;
 
-    public enum Speed {kHigh, kLow};
+    public enum Speed {kHigh, kLow}
 
     public boolean inHighGear;
 
@@ -59,6 +59,7 @@ public class Shifters extends Subsystem {
     public boolean getGearSpeed() {
         return inHighGear;
     }
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

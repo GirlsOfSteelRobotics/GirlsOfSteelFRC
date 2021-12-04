@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  *
  */
 public class Shifters extends Subsystem {
-    private DoubleSolenoid shifterLeft;
-    private DoubleSolenoid shifterRight;
+    private final DoubleSolenoid shifterLeft;
+    private final DoubleSolenoid shifterRight;
 
     public enum Speed {
         kHigh, kLow
-    };
+    }
 
     private Speed speed;
 
@@ -47,6 +47,7 @@ public class Shifters extends Subsystem {
         return speed;
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

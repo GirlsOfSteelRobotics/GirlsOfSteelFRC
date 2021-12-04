@@ -14,25 +14,30 @@ import org.usfirst.frc3504.OrangeEOPP.Robot;
  */
 public class Home extends Command {
 
+    @Override
     protected void initialize() {
         //Uses the shooter
         requires(Robot.shooter);
     }
 
+    @Override
     protected void execute() {
         //Turn on the motors to move in the home direction
         Robot.shooter.home();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         //Stop the motors when the button is no longer held
         Robot.shooter.stop();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

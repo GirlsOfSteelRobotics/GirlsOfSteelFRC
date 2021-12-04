@@ -9,7 +9,7 @@ package com.girlsofsteelrobotics.atlas.commands;
  */
 public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
-    private double loadingEncoderPosition = .45; // this value is "about"; currentEncoderValue % 360
+    private final double loadingEncoderPosition = .45; // this value is "about"; currentEncoderValue % 360
 
     public KickerWithoutPIDUsingEncoders(int loadingOrShooting) //0 = loading; 1 = shooting
     {

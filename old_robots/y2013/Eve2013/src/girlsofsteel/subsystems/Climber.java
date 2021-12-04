@@ -17,13 +17,13 @@ import girlsofsteel.objects.*;
 public class Climber extends Subsystem {
 
     //cLIMBER sPIKES
-    private Relay rightClimberSpike = new Relay(RobotMap.RIGHT_CLIMBER_SPIKE);
-    private Relay leftClimberSpike = new Relay(RobotMap.LEFT_CLIMBER_SPIKE);
+    private final Relay rightClimberSpike = new Relay(RobotMap.RIGHT_CLIMBER_SPIKE);
+    private final Relay leftClimberSpike = new Relay(RobotMap.LEFT_CLIMBER_SPIKE);
 
 
-    private Solenoid extendLifterPistonSolenoid = new Solenoid(
+    private final Solenoid extendLifterPistonSolenoid = new Solenoid(
             RobotMap.LIFTER_MODULE, RobotMap.EXTEND_LIFTER_PISTON_SOLENOID);
-    private Solenoid retractLifterPistonSolenoid = new Solenoid(
+    private final Solenoid retractLifterPistonSolenoid = new Solenoid(
             RobotMap.LIFTER_MODULE, RobotMap.RETRACT_LIFTER_PISTON_SOLENOID);
 
 
@@ -69,6 +69,7 @@ public class Climber extends Subsystem {
         leftClimberSpike.set(Relay.Value.kOff);
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 

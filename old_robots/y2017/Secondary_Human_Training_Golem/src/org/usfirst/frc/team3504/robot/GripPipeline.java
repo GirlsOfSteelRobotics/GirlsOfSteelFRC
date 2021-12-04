@@ -20,10 +20,10 @@ import org.opencv.objdetect.*;
 public class GripPipeline implements VisionPipeline {
 
     //Outputs
-    private Mat resizeImageOutput = new Mat();
-    private Mat hsvThresholdOutput = new Mat();
-    private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-    private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+    private final Mat resizeImageOutput = new Mat();
+    private final Mat hsvThresholdOutput = new Mat();
+    private final ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
+    private final ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

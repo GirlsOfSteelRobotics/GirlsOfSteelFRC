@@ -16,7 +16,7 @@ import girlsofsteel.commands.CommandBase;
 public class TestPivotArmPID extends CommandBase{
      private double desiredAngle;
     private double currentAngle;
-    private double allowedAngleError;
+    private final double allowedAngleError;
 
     public TestPivotArmPID() {
         requires(manipulator);

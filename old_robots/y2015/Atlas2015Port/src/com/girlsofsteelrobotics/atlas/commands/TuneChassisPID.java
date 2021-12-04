@@ -11,33 +11,33 @@ package com.girlsofsteelrobotics.atlas.commands;
  * @author Mackenzie
  */
 public class TuneChassisPID extends CommandBase {
-    private double startP = 0;
-    private double maxP = 0.3; //max value of p
-    private double incrementP = 0.05; //how much p goes up by
+    private final double startP = 0;
+    private final double maxP = 0.3; //max value of p
+    private final double incrementP = 0.05; //how much p goes up by
 
     private boolean done = false;
 
-    private double setPoint = 0; //starting speed
-    private double maxSetPoint = 5;  //find max chassis speed
+    private final double setPoint = 0; //starting speed
+    private final double maxSetPoint = 5;  //find max chassis speed
 
     //for one setpoint:
-    private int lengthSetPoint = (int)(maxSetPoint-setPoint); //length of arraay
-    private double[] devSetPoint = new double[lengthSetPoint]; //deviation from setpoint
-    private double[] meanDiff = new double[lengthSetPoint]; //mean of difference between rate & mean rate
-    private double[] devRate = new double [lengthSetPoint]; //deviation from mean rate
+    private final int lengthSetPoint = (int)(maxSetPoint-setPoint); //length of arraay
+    private final double[] devSetPoint = new double[lengthSetPoint]; //deviation from setpoint
+    private final double[] meanDiff = new double[lengthSetPoint]; //mean of difference between rate & mean rate
+    private final double[] devRate = new double [lengthSetPoint]; //deviation from mean rate
     //means of the individual set point arrays
     //for each p value
-    private int lengthP = (int)( (maxP-startP) / incrementP);
-    private double[] meanDevSetPoint = new double[lengthP];
-    private double[] overallMeanDiff = new double[lengthP];
-    private double[] meanDevRate = new double[lengthP];
+    private final int lengthP = (int)( (maxP-startP) / incrementP);
+    private final double[] meanDevSetPoint = new double[lengthP];
+    private final double[] overallMeanDiff = new double[lengthP];
+    private final double[] meanDevRate = new double[lengthP];
 
-    private double startI = 0;
-    private double maxI = 0.5; //max
-    private double incrementI = 0.05;
+    private final double startI = 0;
+    private final double maxI = 0.5; //max
+    private final double incrementI = 0.05;
 
 
-    private double[] rates = new double[100];//rate of wheel spins
+    private final double[] rates = new double[100];//rate of wheel spins
     private double mean = 0; //the average.
     public TuneChassisPID (){
        requires(chassis);

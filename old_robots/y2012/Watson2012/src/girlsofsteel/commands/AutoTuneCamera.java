@@ -43,6 +43,7 @@ public class AutoTuneCamera extends CommandBase {
         return -1; //can't use the data
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
         int nSteps = 10; //(int)(HALF_COURT/STEP);
@@ -106,16 +107,20 @@ public class AutoTuneCamera extends CommandBase {
         }
     }
 
+    @Override
     protected void execute() {
     }
 
+    @Override
     protected boolean isFinished() {
         return true;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

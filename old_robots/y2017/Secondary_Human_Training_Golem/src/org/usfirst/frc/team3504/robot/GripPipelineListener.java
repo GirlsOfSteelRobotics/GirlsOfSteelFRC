@@ -14,6 +14,7 @@ public class GripPipelineListener implements VisionRunner.Listener<GripPipeline>
     public double targetX;
     public double height;
 
+    @Override
     public void copyPipelineOutputs(GripPipeline pipeline) {
         ArrayList<MatOfPoint> contours = pipeline.filterContoursOutput();
         synchronized (cameraLock) {

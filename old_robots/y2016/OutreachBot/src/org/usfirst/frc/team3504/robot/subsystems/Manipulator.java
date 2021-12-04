@@ -14,10 +14,10 @@ public class Manipulator extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    private CANTalon pivotMotor;
-    private CANTalon collectorMotor;
-    private DoubleSolenoid shooter; //shoots the ball
-    private DoubleSolenoid arm; //opens and closes the arm to get the ball in
+    private final CANTalon pivotMotor;
+    private final CANTalon collectorMotor;
+    private final DoubleSolenoid shooter; //shoots the ball
+    private final DoubleSolenoid arm; //opens and closes the arm to get the ball in
 
     public Manipulator() {
         pivotMotor = new CANTalon(RobotMap.ARM_PIVOT_CAN_ID);
@@ -66,6 +66,7 @@ public class Manipulator extends Subsystem {
         pivotMotor.set(0);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

@@ -16,11 +16,13 @@ public class TESTTurretPID extends CommandBase {
         SmartDashboard.putNumber("Turret D", 0.0);
     }
 
+    @Override
     protected void initialize() {
         turret.initEncoder();
         turret.enablePID();
     }
 
+    @Override
     protected void execute() {
         p = SmartDashboard.getNumber("Turret P", 0.0);
         d = SmartDashboard.getNumber("Turret D", 0.0);
@@ -29,15 +31,18 @@ public class TESTTurretPID extends CommandBase {
         turret.setPIDSetPoint(setpoint);
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         turret.disablePID();
         turret.stopJag();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

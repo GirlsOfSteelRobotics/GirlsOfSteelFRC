@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class ScaledArcadeDrive extends CommandBase {
 
-    private double scale;
+    private final double scale;
     Joystick joystick;
     private double x;
     private double y;

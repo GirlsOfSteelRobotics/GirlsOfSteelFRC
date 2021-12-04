@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MoveToPosition extends CommandBase{
 
     private double distance;
-    private double offBy = 0.03;
+    private final double offBy = 0.03;
 
     public MoveToPosition(double distance) {
         requires(driving);

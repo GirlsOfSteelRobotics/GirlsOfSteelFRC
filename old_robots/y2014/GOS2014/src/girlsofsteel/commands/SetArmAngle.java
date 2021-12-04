@@ -17,7 +17,7 @@ package girlsofsteel.commands;
 public class SetArmAngle extends CommandBase{
 
     private double angle = 0.0;
-    private double desired;
+    private final double desired;
 
     public SetArmAngle (double desiredAngle){
         requires(manipulator);

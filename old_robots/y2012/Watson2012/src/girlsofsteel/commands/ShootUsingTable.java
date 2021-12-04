@@ -16,6 +16,7 @@ public class ShootUsingTable extends CommandBase {
         this.bank = bank;
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -25,6 +26,7 @@ public class ShootUsingTable extends CommandBase {
         //shooter data table
     }
 
+    @Override
     protected void execute() {
 //        if(bank){
 //            shooter.autoShootBank(cameraDistance);
@@ -38,11 +40,13 @@ public class ShootUsingTable extends CommandBase {
         System.out.println("Encoder Values:" + shooter.getEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return !Camera.isConnected(); //return opposite so when it is connected
         //it returns false so it does NOT finish
     }
 
+    @Override
     protected void end() {
         if(!oi.areTopRollersOverriden()){
             shooter.topRollersOff();
@@ -51,6 +55,7 @@ public class ShootUsingTable extends CommandBase {
         shooter.stopEncoder();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

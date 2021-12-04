@@ -11,11 +11,13 @@ public class TESTMoveToSetPoint extends CommandBase {
         SmartDashboard.putNumber("Move,distance", 0.0);
     }
 
+    @Override
     protected void initialize(){
         chassis.initEncoders();
         chassis.initPositionPIDs();
     }
 
+    @Override
     protected void execute(){
         chassis.setPIDsPosition();
         distanceToMove = SmartDashboard.getNumber("Move,distance", 0.0);
@@ -24,15 +26,18 @@ public class TESTMoveToSetPoint extends CommandBase {
         SmartDashboard.putNumber("Left Encoder Position", chassis.getLeftEncoderDistance());
     }
 
+    @Override
     protected boolean isFinished(){
         return chassis.isMoveFinished(distanceToMove);
     }
 
+    @Override
     protected void end(){
         chassis.disablePositionPIDs();
         chassis.endEncoders();
     }
 
+    @Override
     protected void interrupted(){
         end();
     }

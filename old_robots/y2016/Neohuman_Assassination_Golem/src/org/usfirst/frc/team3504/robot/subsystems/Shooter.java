@@ -17,10 +17,10 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    private CANTalon shooterMotor1;
-    private CANTalon shooterMotor2;
-    private DoubleSolenoid shooterPiston1;
-    private DoubleSolenoid shooterPiston2;
+    private final CANTalon shooterMotor1;
+    private final CANTalon shooterMotor2;
+    private final DoubleSolenoid shooterPiston1;
+    private final DoubleSolenoid shooterPiston2;
 
 
     public Shooter() {
@@ -48,6 +48,7 @@ public class Shooter extends Subsystem {
         System.out.println("Right Piston in");
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

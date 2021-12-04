@@ -13,12 +13,14 @@ public class Shoot extends CommandBase {
         requires(shooter);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
         operatorJoystick = oi.getOperatorJoystick();
     }
 
+    @Override
     protected void execute() {
         shooter.shoot(speed);
         if(Math.abs(operatorJoystick.getThrottle()) >= 0.3 ||
@@ -27,10 +29,12 @@ public class Shoot extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         if(!oi.areTopRollersOverriden()){
             shooter.topRollersOff();
@@ -39,6 +43,7 @@ public class Shoot extends CommandBase {
         shooter.stopEncoder();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

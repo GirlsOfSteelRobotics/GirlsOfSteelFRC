@@ -10,11 +10,13 @@ public class IncrementShoot extends CommandBase {
         requires(shooter);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
     }
 
+    @Override
     protected void execute() {
         sliderValue = oi.getShooterSliderValue();
         incrementValue = shooter.getIncrementValue(sliderValue);
@@ -26,15 +28,18 @@ public class IncrementShoot extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         shooter.topRollersOff();
         shooter.disablePID();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

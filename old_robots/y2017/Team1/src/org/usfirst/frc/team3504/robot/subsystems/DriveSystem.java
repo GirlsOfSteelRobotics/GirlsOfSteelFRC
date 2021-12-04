@@ -18,15 +18,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveSystem extends Subsystem implements PIDOutput{
-    private CANTalon driveLeftA;
-    private CANTalon driveLeftB;
-    private CANTalon driveLeftC;
+    private final CANTalon driveLeftA;
+    private final CANTalon driveLeftB;
+    private final CANTalon driveLeftC;
 
-    private CANTalon driveRightA;
-    private CANTalon driveRightB;
-    private CANTalon driveRightC;
+    private final CANTalon driveRightA;
+    private final CANTalon driveRightB;
+    private final CANTalon driveRightC;
 
-    private RobotDrive robotDrive;
+    private final RobotDrive robotDrive;
 
     private double encOffsetValueRight = 0;
     private double encOffsetValueLeft = 0;
@@ -78,6 +78,7 @@ public class DriveSystem extends Subsystem implements PIDOutput{
         driveRightC.set(driveRightA.getDeviceID());
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand( new DriveByJoystick() );

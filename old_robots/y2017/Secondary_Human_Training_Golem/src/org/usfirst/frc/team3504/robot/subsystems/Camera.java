@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Camera extends Subsystem {
 
-    private UsbCamera camGear;
-    private UsbCamera camClimb;
+    private final UsbCamera camGear;
+    private final UsbCamera camClimb;
     public UsbCamera visionCam;
-    private MjpegServer server;
+    private final MjpegServer server;
 
 
     public Camera() {
@@ -56,6 +56,7 @@ public class Camera extends Subsystem {
         System.out.println("Cam Gear!");
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

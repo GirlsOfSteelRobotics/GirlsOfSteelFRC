@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  *
  */
 public class Shifters extends Subsystem {
-    private DoubleSolenoid shifterLeft;
-    private DoubleSolenoid shifterRight;
+    private final DoubleSolenoid shifterLeft;
+    private final DoubleSolenoid shifterRight;
 
-    public enum Speed {kHigh, kLow};
+    public enum Speed {kHigh, kLow}
 
     public Shifters() {
         shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
@@ -23,6 +23,7 @@ public class Shifters extends Subsystem {
         addChild("Shifter Right", shifterRight);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

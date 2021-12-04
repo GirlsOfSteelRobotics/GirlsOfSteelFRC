@@ -10,7 +10,7 @@ public final class DriverStationLCD {
         kUser3,
         kUser4,
         kUser5,
-        kUser6;
+        kUser6
     }
 
     private DriverStationLCD() {

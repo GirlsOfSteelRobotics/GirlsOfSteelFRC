@@ -51,16 +51,16 @@ public class OI {
     //private JoystickButton armDown;
 
     //jaw
-    private JoystickButton jawIn;
-    private JoystickButton jawOut;
+    private final JoystickButton jawIn;
+    private final JoystickButton jawOut;
 
     //shooter piston
-    private JoystickButton shooterIn;
-    private JoystickButton shooterOut;
+    private final JoystickButton shooterIn;
+    private final JoystickButton shooterOut;
 
     //shifters
-    private JoystickButton shiftUp;
-    private JoystickButton shiftDown;
+    private final JoystickButton shiftUp;
+    private final JoystickButton shiftDown;
 
     public OI() {
 

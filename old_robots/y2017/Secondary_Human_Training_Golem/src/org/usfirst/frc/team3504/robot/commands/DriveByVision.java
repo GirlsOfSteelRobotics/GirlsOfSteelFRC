@@ -26,9 +26,9 @@ public class DriveByVision extends Command {
     public CANTalon rightTalon = Robot.chassis.getRightTalon();
     private final int TIMEOUT = 8;
     private final int SLIPPING_VELOCITY = 850;
-    private Timer tim;
-    private double slowLinearVelocity = 22; // TODO: change (in/s)
-    private double fastLinearVelocity = 28; // TODO: change (in/s)
+    private final Timer tim;
+    private final double slowLinearVelocity = 22; // TODO: change (in/s)
+    private final double fastLinearVelocity = 28; // TODO: change (in/s)
 
     // width of X or Y in pixels when the robot is at the lift
     // private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -47,6 +47,7 @@ public class DriveByVision extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
 
         // not calling setupFPID because other PID values override
@@ -68,6 +69,7 @@ public class DriveByVision extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 
         /*table = NetworkTable.getTable("GRIP/myContoursReport");
@@ -137,6 +139,7 @@ public class DriveByVision extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
 
         return ((tim.get() > 1 && Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY
@@ -144,6 +147,7 @@ public class DriveByVision extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         System.out.println("DriveByVision Finished");
         tim.stop();
@@ -151,6 +155,7 @@ public class DriveByVision extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

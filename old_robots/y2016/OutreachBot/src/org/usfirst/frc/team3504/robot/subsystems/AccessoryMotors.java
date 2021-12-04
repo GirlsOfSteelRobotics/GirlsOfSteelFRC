@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  *
  */
 public class AccessoryMotors extends Subsystem {
-    private Victor accessoryLeft;
-    private Victor accessoryRight;
+    private final Victor accessoryLeft;
+    private final Victor accessoryRight;
 
-    public enum Direction {kFwd, kRev};
+    public enum Direction {kFwd, kRev}
 
     public AccessoryMotors() {
         accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);
@@ -23,6 +23,7 @@ public class AccessoryMotors extends Subsystem {
         addChild("Accessory Right", accessoryRight);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

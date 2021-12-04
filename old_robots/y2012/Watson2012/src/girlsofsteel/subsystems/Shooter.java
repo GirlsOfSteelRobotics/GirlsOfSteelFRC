@@ -52,16 +52,17 @@ public class Shooter extends Subsystem {
     public Encoder encoder = new SmoothEncoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
             RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
             CounterBase.EncodingType.k4X);
-    private Relay topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
+    private final Relay topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
     double p = 0.4;//0.25;//0.25;//0.15;//0.1;//0.25;
     double i = 50.0;//2.5;//0.06;//0.0002;
     double d = 0.0;
     //integral threshold -> cuts of the value that is being multipled by the i term
     //with the PID output
     double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
-    private EncoderGoSPIDController PID = new EncoderGoSPIDController(p, i, d, encoder,
+    private final EncoderGoSPIDController PID = new EncoderGoSPIDController(p, i, d, encoder,
             new PIDOutput() {
 
+                @Override
                 public void pidWrite(double output) {
                     setJags(output);
                 }
@@ -72,6 +73,7 @@ public class Shooter extends Subsystem {
         //to find distances based on data
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 

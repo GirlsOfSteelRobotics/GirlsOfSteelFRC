@@ -33,13 +33,13 @@ public class Chassis extends Subsystem {
     private final Jaguar rightJags = new Jaguar(RobotMap.RIGHT_JAGS);
     private final Jaguar leftJags = new Jaguar(RobotMap.LEFT_JAGS);
     //create gyro
-    private Gyro gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
+    private final Gyro gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
     //create stuff for encoders
     //CHANGE FOR REAL WATSON:
-    private Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
+    private final Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
             RobotMap.ENCODER_RIGHT_CHANNEL_B, false, CounterBase.EncodingType.k4X);
 
-    private Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
+    private final Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
             RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
     private final double WHEEL_DIAMETER = 0.1524; //in meters
     private final double GEAR_RATIO = 15.0 / 24.0;
@@ -70,38 +70,42 @@ public class Chassis extends Subsystem {
     private final static double positionLeftP = 0.48;//0.4;//practice bot:0.48;
     private final static double positionLeftI = 0.0;
     private final static double positionLeftD = 0.1;
-    private EncoderGoSPIDController rightRatePID = new EncoderGoSPIDController(rateP,
+    private final EncoderGoSPIDController rightRatePID = new EncoderGoSPIDController(rateP,
             rateI, rateD, rightEncoder,
             //this is an anonymous class, it lets us send values to both jags
             //new output parameter
             new PIDOutput() {
 
+        @Override
         public void pidWrite(double output) {
             setRightJags(output);
             }
         }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
-    private EncoderGoSPIDController leftRatePID = new EncoderGoSPIDController(rateP,
+    private final EncoderGoSPIDController leftRatePID = new EncoderGoSPIDController(rateP,
             rateI, rateD, leftEncoder,
             //this is an anonymous class, it lets us send values to both jags
             //new output parameter
             new PIDOutput() {
 
+        @Override
         public void pidWrite(double output) {
             setLeftJags(output);
             }
         }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
-    private EncoderGoSPIDController rightPositionPID = new EncoderGoSPIDController(
+    private final EncoderGoSPIDController rightPositionPID = new EncoderGoSPIDController(
             positionRightP, positionRightI, positionRightD, rightEncoder,
             new PIDOutput() {
 
+                @Override
                 public void pidWrite(double output) {
                     setRightJags(output);
                 }
             }, EncoderGoSPIDController.POSITION);
-    private EncoderGoSPIDController leftPositionPID = new EncoderGoSPIDController(
+    private final EncoderGoSPIDController leftPositionPID = new EncoderGoSPIDController(
             positionLeftP, positionLeftI, positionLeftD, leftEncoder,
             new PIDOutput() {
 
+                @Override
                 public void pidWrite(double output) {
                     setLeftJags(output);
                 }
@@ -125,6 +129,7 @@ public class Chassis extends Subsystem {
         resetGyro();
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 
@@ -367,41 +372,25 @@ public class Chassis extends Subsystem {
         double distance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
         double degrees = MathUtils.atan2(yDistance, xDistance)*180/Math.PI;
         if (isMoveFinished(distance)) {
-            if(isTurnFinished(degrees)){
-                return true;
-            }else{
-                return false;
-            }
+            return isTurnFinished(degrees);
         } else {
             return false;
         }
     }
 
     public boolean isMoveFinished(double distanceToMove) {
-        if (isWithinRange(getRightEncoderDistance(), distanceToMove)
-                && isWithinRange(getLeftEncoderDistance(), distanceToMove)) {
-            return true;
-        } else {
-            return false;
-        }
+        return isWithinRange(getRightEncoderDistance(), distanceToMove)
+            && isWithinRange(getLeftEncoderDistance(), distanceToMove);
     }
 
     public boolean isTurnFinished(double degreesToTurn) {
         double setPoint = convertDegreesToPositionChange(degreesToTurn);
-        if (isWithinRange(getRightEncoderDistance(), setPoint)
-                && isWithinRange(getLeftEncoderDistance(), setPoint)) {
-            return true;
-        } else {
-            return false;
-        }
+        return isWithinRange(getRightEncoderDistance(), setPoint)
+            && isWithinRange(getLeftEncoderDistance(), setPoint);
     }
 
     private boolean isWithinRange(double point, double target) {
-        if (point > target - EPSILON && point < target + EPSILON) {
-            return true;
-        } else {
-            return false;
-        }
+        return point > target - EPSILON && point < target + EPSILON;
     }
 
     //PID
@@ -496,11 +485,7 @@ public class Chassis extends Subsystem {
 
     public boolean isMoving() {
         //if the encoder rates are 0 the robot is not moving
-        if (rightEncoder.getRate() == 0.0 && leftEncoder.getRate() == 0.0) {
-            return false;
-        } else {
-            return true;
-        }
+        return rightEncoder.getRate() != 0.0 || leftEncoder.getRate() != 0.0;
     }
 
     public void resetGyro() {

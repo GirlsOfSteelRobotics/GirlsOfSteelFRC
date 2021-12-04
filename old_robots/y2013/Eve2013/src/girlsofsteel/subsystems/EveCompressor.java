@@ -11,7 +11,7 @@ public class EveCompressor extends Subsystem {
     //Changed so that compressor turns on/off automatically
     //Add back to smartdashboard for manual
 //    private Relay compressorSpike;
-    private Compressor autoCompressor;
+    private final Compressor autoCompressor;
 
     public EveCompressor(){
 //        compressorSpike = new Relay(RobotMap.COMPRESSOR_RELAY_PORT);
@@ -27,6 +27,7 @@ public class EveCompressor extends Subsystem {
 //        compressorSpike.set(Relay.Value.kOff);
 //    }
 
+    @Override
     protected void initDefaultCommand() {
     }
 

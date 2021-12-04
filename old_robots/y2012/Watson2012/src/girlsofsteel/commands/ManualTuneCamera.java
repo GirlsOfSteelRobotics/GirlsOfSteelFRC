@@ -56,12 +56,14 @@ public class ManualTuneCamera extends CommandBase {
         return -1;//-1 means that it can't use the data.
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
 //        chassis.initPositionPIDs();
         driverJoystick = oi.getDriverJoystick();
     }
 
+    @Override
     protected void execute() {
         //xAxis = driverJoystick.getX() * 0.5;
         //yAxis = driverJoystick.getY() * 0.5;
@@ -111,14 +113,12 @@ public class ManualTuneCamera extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
-        if ((chassis.getRightEncoderDistance()) > HalfCourt - 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return (chassis.getRightEncoderDistance()) > HalfCourt - 2;
     }
 
+    @Override
     protected void end() {
         System.out.println("data collection done! cnt=" + count);
         double[] ab = LineReg.bestFit(imageTargetRatioData, distanceData, count + 1);
@@ -137,6 +137,7 @@ public class ManualTuneCamera extends CommandBase {
         chassis.endEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

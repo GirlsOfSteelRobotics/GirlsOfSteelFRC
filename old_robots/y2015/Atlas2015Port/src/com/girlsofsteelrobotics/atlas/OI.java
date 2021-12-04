@@ -34,8 +34,8 @@ public class OI {
     private static final int R1 = 6;
 
     //Joystick Ports
-    private Joystick operatorJoystick;
-    private Joystick chassisJoystick;
+    private final Joystick operatorJoystick;
+    private final Joystick chassisJoystick;
 
     //Buttons for kicker
     private JoystickButton releaseKickerButton;
@@ -47,31 +47,31 @@ public class OI {
 
     //Buttons for manipulator
     // private JoystickButton testManipulatorJag;
-    private JoystickButton manipulatorUp;
-    private JoystickButton manipulatorDown;
+    private final JoystickButton manipulatorUp;
+    private final JoystickButton manipulatorDown;
     // private JoystickButton manipulatorStop;
 
     //Buttons for driving
-    private JoystickButton testStraightDriveButton;
+    private final JoystickButton testStraightDriveButton;
     // private JoystickButton tankDrive;
     private JoystickButton arcadeDrive;
-    private JoystickButton holdChassis; //create button later wherever the drivers want it...
-    private JoystickButton holdChassis2;
+    private final JoystickButton holdChassis; //create button later wherever the drivers want it...
+    private final JoystickButton holdChassis2;
 
     //Buttons for Operator Controller
     //Collector arm goes up/down
-    private JoystickButton collectorArmUp;
-    private JoystickButton collectorArmDownAndOut;
-    private JoystickButton collectorArmDownAndIn;
+    private final JoystickButton collectorArmUp;
+    private final JoystickButton collectorArmDownAndOut;
+    private final JoystickButton collectorArmDownAndIn;
 
     //collector wheel goes forward and backward
     private JoystickButton collectorWheelOut;
-    private JoystickButton collectorWheelIn;
+    private final JoystickButton collectorWheelIn;
 
-    private JoystickButton loadKicker;
-    private JoystickButton kick;
-    private JoystickButton kickerSTOP;
-    private JoystickButton trussShot;
+    private final JoystickButton loadKicker;
+    private final JoystickButton kick;
+    private final JoystickButton kickerSTOP;
+    private final JoystickButton trussShot;
 
     private JoystickButton leftKick;
     private JoystickButton rightKick;

@@ -3,6 +3,7 @@ package girlsofsteel.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.PrintCommand;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
 
 public class AutonomousCommandGroup extends CommandGroup {
 
@@ -33,7 +34,7 @@ public class AutonomousCommandGroup extends CommandGroup {
 
         if (Camera.isConnected() && Camera.getXDistance() != 0) {
             //If we are ever going to use this we shouldn't be using this method. Use a command!
-            yDistance = CommandBase.chassis.DISTANCE_BACKBOARD_TO_BRIDGE
+            yDistance = Chassis.DISTANCE_BACKBOARD_TO_BRIDGE
                     - Camera.getXDistance();
             //distance from backboard to bridge = half the field
             //(with bridge/2 + space between robot and bridge to push bridge
@@ -51,7 +52,7 @@ public class AutonomousCommandGroup extends CommandGroup {
         if (moveToBridge) {
             if(Camera.isConnected() && Camera.getXDistance() != 0){
                 //if the camera has found the target at least once
-                yDistance = CommandBase.chassis.DISTANCE_BACKBOARD_TO_BRIDGE
+                yDistance = Chassis.DISTANCE_BACKBOARD_TO_BRIDGE
                         - Camera.getXDistance();
             }
             addSequential(new MoveToSetPoint(yDistance), 2.0);

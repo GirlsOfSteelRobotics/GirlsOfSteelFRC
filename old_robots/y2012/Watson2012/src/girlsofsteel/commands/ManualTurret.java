@@ -9,10 +9,12 @@ public class ManualTurret extends CommandBase {
         requires(turret);
     }
 
+    @Override
     protected void initialize() {
         turret.disablePID();
     }
 
+    @Override
     protected void execute() {
         knobValue = oi.getTurretKnobValue(turret.TURRET_OVERRIDE_DEADZONE);
         if (knobValue > 0) {
@@ -24,14 +26,17 @@ public class ManualTurret extends CommandBase {
         turret.setJagSpeed(speed);
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         turret.stopJag();
     }
 
+    @Override
     protected void interrupted() {
     }
 }

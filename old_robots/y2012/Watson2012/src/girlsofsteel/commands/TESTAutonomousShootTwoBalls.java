@@ -20,11 +20,13 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
         requires(bridge);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
     }
 
+    @Override
     protected void execute() {
         timeToShootTwoBalls = SmartDashboard.getNumber("ASTB,time", 0.0);
         velocity = SmartDashboard.getNumber("ASTB,speed", 0.0);
@@ -41,14 +43,12 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
-        if(timeSinceInitialized() > timeToShootTwoBalls){
-            return true;
-        }else{
-            return false;
-        }
+        return timeSinceInitialized() > timeToShootTwoBalls;
     }
 
+    @Override
     protected void end() {
         shooter.disablePID();
         shooter.topRollersOff();
@@ -56,6 +56,7 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
         collector.stopMiddleConveyor();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -12,9 +12,11 @@ public class Buttons extends CommandBase {
     Command setPointTurret = new SetPointTurret();
     Command manualTurret = new ManualTurret();
 
+    @Override
     protected void initialize() {
     }
 
+    @Override
     protected void execute() {
         //rollers
         if (oi.areTopRollersOverriden()) {
@@ -150,10 +152,12 @@ public class Buttons extends CommandBase {
 //        DriverStationLCD.getInstance().updateLCD();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         collector.stopBrush();
         collector.stopMiddleConveyor();
@@ -164,6 +168,7 @@ public class Buttons extends CommandBase {
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

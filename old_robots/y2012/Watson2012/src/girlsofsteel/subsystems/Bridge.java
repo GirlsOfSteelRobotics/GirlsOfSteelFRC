@@ -41,6 +41,7 @@ public class Bridge extends Subsystem {
 
     public Bridge(){
         new Thread() {
+            @Override
             public void run() {
                 while (true) {
                     safetyCheck();
@@ -65,6 +66,7 @@ public class Bridge extends Subsystem {
         }
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 }

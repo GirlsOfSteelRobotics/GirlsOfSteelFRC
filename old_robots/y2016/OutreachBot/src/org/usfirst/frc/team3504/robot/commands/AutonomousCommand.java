@@ -18,12 +18,14 @@ public class AutonomousCommand extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         Robot.driveSystem.resetDistance();
         setTimeout(1.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         Robot.accessoryMotors.startLeft(Direction.kFwd);
         Robot.accessoryMotors.startRight(Direction.kRev);
@@ -32,11 +34,13 @@ public class AutonomousCommand extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return isTimedOut();
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.accessoryMotors.stopLeft();
         Robot.accessoryMotors.stopRight();
@@ -45,6 +49,7 @@ public class AutonomousCommand extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

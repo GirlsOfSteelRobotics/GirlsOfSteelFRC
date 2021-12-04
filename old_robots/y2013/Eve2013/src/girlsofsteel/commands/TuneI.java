@@ -170,7 +170,7 @@ public class TuneI extends CommandBase {
 
         String contents = "";
         try{
-            FileConnection c = (FileConnection) Connector.open(url);
+            FileConnection c = Connector.open(url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     c.openDataInputStream()));
             String line;
@@ -183,7 +183,7 @@ public class TuneI extends CommandBase {
         }
 
         try{
-            FileConnection c = (FileConnection) Connector.open(url);
+            FileConnection c = Connector.open(url);
             OutputStreamWriter writer = new OutputStreamWriter(
                     c.openDataOutputStream());
             writer.write(contents + message);
@@ -212,9 +212,7 @@ public class TuneI extends CommandBase {
                 chassis.getLeftEncoderRate() > (setpoint+1.0)){
             left = true;
         }
-        if(right && back && left)
-            return true;
-        return false;
+        return right && back && left;
     }
 
 }

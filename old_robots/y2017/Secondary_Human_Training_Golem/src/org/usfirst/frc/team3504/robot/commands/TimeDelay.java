@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TimeDelay extends Command {
 
-    private double seconds;
-    private Timer tim;
+    private final double seconds;
+    private final Timer tim;
 
     public TimeDelay(double seconds) {
         // Use requires() here to declare subsystem dependencies
@@ -19,21 +19,25 @@ public class TimeDelay extends Command {
     }
 
     // Called just before this Command runs the first times
+    @Override
     protected void initialize() {
         tim.start();
         System.out.println("TimeDelay Initialzed with " + seconds + " seconds as parameter");
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return (tim.get() > seconds);
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         tim.stop();
         System.out.println("TimeDelay Finished");
@@ -41,6 +45,7 @@ public class TimeDelay extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Collector extends Subsystem {
 
-    private CANTalon collectorMotor;
+    private final CANTalon collectorMotor;
 
     public Collector() {
     collectorMotor = new CANTalon(RobotMap.COLLECTOR_MOTOR);
@@ -30,6 +30,7 @@ public class Collector extends Subsystem {
         collectorMotor.set(0.0);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

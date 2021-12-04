@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class JawPiston extends Subsystem {
 
 
-    private DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
+    private final DoubleSolenoid jawPiston = new DoubleSolenoid(RobotMap.PCM_ARM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
 
     public void pistonsOut(){
         jawPiston.set(DoubleSolenoid.Value.kForward);
@@ -24,6 +24,7 @@ public class JawPiston extends Subsystem {
 
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

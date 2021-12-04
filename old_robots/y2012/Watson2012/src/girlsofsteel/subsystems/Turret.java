@@ -25,15 +25,16 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     Jaguar turretJag = new Jaguar(RobotMap.TURRET_JAG);
     Encoder encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
             RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
-    private double p = 0.2;//0.45;
-    private double i = 0.0;
-    private double d = 0.0;
+    private final double p = 0.2;//0.45;
+    private final double i = 0.0;
+    private final double d = 0.0;
     PIDController PID = new PIDController(p, i, d, this, this);
     boolean pressedRightSwitch = false;
 
     public Turret() {
     }
 
+    @Override
     public void initDefaultCommand(){
 
     }
@@ -66,11 +67,13 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     }
 
     //stuff for the PID
+    @Override
     public void pidWrite(double output) {
         setJagSpeed(output);
     }
 
     //more stuff for the PID
+    @Override
     public double pidGet() {
         return getTurretAngle();
     }

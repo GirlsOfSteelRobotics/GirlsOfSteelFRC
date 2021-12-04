@@ -14,7 +14,7 @@ public class Pivot extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private CANTalon pivotMotor;
+    private final CANTalon pivotMotor;
 
     private double encOffsetValue = 0;
 
@@ -47,6 +47,7 @@ public class Pivot extends Subsystem {
         pivotMotor.set(-speed);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

@@ -34,12 +34,14 @@ public class TESTAutonomousCenter extends CommandGroup {
         //shoot again -> using camera distance & the table
     }
 
+    @Override
     public void end(){
         new DisableChassis().start();
         new DisableShooter().start();
         new StopCollectors().start();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

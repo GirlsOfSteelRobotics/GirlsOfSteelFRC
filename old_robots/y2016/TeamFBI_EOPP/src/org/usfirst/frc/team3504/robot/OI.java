@@ -16,16 +16,16 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 
     // Joysticks
-    private Joystick operatorJoystick;
-    private Joystick chassisJoystick;
+    private final Joystick operatorJoystick;
+    private final Joystick chassisJoystick;
 
     //Driving
-    private JoystickButton shiftUp;
-    private JoystickButton shiftDown;
+    private final JoystickButton shiftUp;
+    private final JoystickButton shiftDown;
 
     //Collector
-    private JoystickButton conveyorUp;
-    private JoystickButton conveyorDown;
+    private final JoystickButton conveyorUp;
+    private final JoystickButton conveyorDown;
 
     public OI() {
         // Joysticks

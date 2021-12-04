@@ -43,14 +43,14 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 
     // Joysticks
-    private Joystick operatorJoystick;
-    private Joystick chassisJoystick;
+    private final Joystick operatorJoystick;
+    private final Joystick chassisJoystick;
 
     // Collector
-    private LTButton collectTote;
-    private RTButton releaseTote;
-    private JoystickButton angleIn;
-    private JoystickButton angleOut;
+    private final LTButton collectTote;
+    private final RTButton releaseTote;
+    private final JoystickButton angleIn;
+    private final JoystickButton angleOut;
 
     // Finger
     private JoystickButton fingersDown;
@@ -74,15 +74,15 @@ public class OI {
     private JoystickButton driveLeft;
 
     // Shack Buttons
-    private JoystickButton shackIn;
-    private JoystickButton shackOut;
+    private final JoystickButton shackIn;
+    private final JoystickButton shackOut;
 
     // Ultrasonic buttons
     private JoystickButton getDistance;
 
     // Gyro Button
-    private JoystickButton resetGyro;
-    private JoystickButton getGyro;
+    private final JoystickButton resetGyro;
+    private final JoystickButton getGyro;
 
     // PID button
     private JoystickButton pidLifterTesting;

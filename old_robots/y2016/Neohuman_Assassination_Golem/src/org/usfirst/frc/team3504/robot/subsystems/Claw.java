@@ -15,7 +15,7 @@ public class Claw extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private CANTalon clawMotor;
+    private final CANTalon clawMotor;
 
 
     public Claw() {
@@ -32,6 +32,7 @@ public class Claw extends Subsystem {
         clawMotor.set(0.0);
         SmartDashboard.putBoolean("Claw Off", false);
     }
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

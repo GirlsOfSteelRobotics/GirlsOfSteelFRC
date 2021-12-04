@@ -36,6 +36,7 @@ public class Eve2013 extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
 
         // Initialize all subsystems
@@ -62,6 +63,7 @@ public class Eve2013 extends IterativeRobot {
 
     }
 
+    @Override
     public void autonomousInit() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
@@ -83,6 +85,7 @@ public class Eve2013 extends IterativeRobot {
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
@@ -104,6 +107,7 @@ public class Eve2013 extends IterativeRobot {
         //     SmartDashboard.putBoolean("Right position to shoot?", ShooterCamera.atShootPosition());
     }
 
+    @Override
     public void teleopInit() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
@@ -133,6 +137,7 @@ public class Eve2013 extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
@@ -158,6 +163,7 @@ public class Eve2013 extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
@@ -174,6 +180,7 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("L1", "toggle blocker");
     }
 
+    @Override
     public void disabledPeriodic() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
@@ -191,6 +198,7 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("L1", "toggle blocker");
     }//from KiwiDrive code
 
+    @Override
     public void disabledInit() {
         //Testing
 //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());

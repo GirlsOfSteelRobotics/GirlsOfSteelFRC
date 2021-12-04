@@ -32,11 +32,11 @@ public class OI {
 
     public enum DriveDirection {
         kFWD, kREV
-    };
+    }
 
     public enum JoystickScaling {
         linear, deadband, quadratic
-    };
+    }
 
 
     //Drive Styles
@@ -44,7 +44,7 @@ public class OI {
     //joystick: tank, one stick arcade
     public enum DriveStyle {
         oneStickArcade, gamePadArcade, twoStickTank, gamePadTank, droperation
-    };
+    }
 
     public static DriveStyle driveStyle = DriveStyle.oneStickArcade;
 
@@ -52,7 +52,7 @@ public class OI {
         boolean rozieDrive = false;
 
         //Rozie's Nonsense: Project Droperation.
-        private Joystick roziePad = new Joystick(5);
+        private final Joystick roziePad = new Joystick(5);
 
     private Joystick drivingStickSpeed;
     private Joystick drivingStickRotate;
@@ -61,13 +61,13 @@ public class OI {
     private Joystick drivingStickRight;
     private Joystick drivingStickLeft;
     private Joystick drivingGamePad;
-    private Joystick operatingGamePad;
-    private Joystick autonSelector;
+    private final Joystick operatingGamePad;
+    private final Joystick autonSelector;
 
     private DriveDirection driveDirection = DriveDirection.kFWD;
 
     private JoystickScaling joystickScale = JoystickScaling.linear;
-    private static double DEADBAND = 0.3; //TODO: find a good value
+    private static final double DEADBAND = 0.3; //TODO: find a good value
 
     private JoystickButton switchToForward;
     private JoystickButton switchToBackward;
@@ -76,14 +76,14 @@ public class OI {
     private JoystickButton shifterDown;
 
     private JoystickButton shoot;
-    private JoystickButton shootGear;
-    private JoystickButton shootKey;
+    private final JoystickButton shootGear;
+    private final JoystickButton shootKey;
 
     private JoystickButton climb;
     private JoystickButton unClimb;
 
-    private JoystickButton incrementHighShooter;
-    private JoystickButton decrementHighShooter;
+    private final JoystickButton incrementHighShooter;
+    private final JoystickButton decrementHighShooter;
 
     private JoystickButton driveByVision;
 

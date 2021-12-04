@@ -16,10 +16,12 @@ public class TESTTurret extends CommandBase {
         SmartDashboard.putBoolean("Turret Encoder in Degrees",false);
     }
 
+    @Override
     protected void initialize() {
         turret.disablePID();
     }
 
+    @Override
     protected void execute() {
         speed = SmartDashboard.getNumber("Turret Jags Speed", 0.0);
         turret.setJagSpeed(speed);
@@ -29,14 +31,17 @@ public class TESTTurret extends CommandBase {
         SmartDashboard.putNumber("Turret Encoder", turret.getEncoderDistance());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         turret.stopJag();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

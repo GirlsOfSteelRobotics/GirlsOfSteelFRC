@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shack extends Subsystem {
 
-    private DoubleSolenoid shack;
+    private final DoubleSolenoid shack;
 
     public Shack() {
         shack = new DoubleSolenoid(RobotMap.LEFT_SHACK_MODULE, RobotMap.LEFT_SHACK_CHANNEL_A, RobotMap.LEFT_SHACK_CHANNEL_B);

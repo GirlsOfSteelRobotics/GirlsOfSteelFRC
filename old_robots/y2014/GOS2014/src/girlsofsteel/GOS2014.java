@@ -37,6 +37,7 @@ public class GOS2014 extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
         // instantiate the command used for the autonomous period
         autonomousCommand = new DoNothing();
@@ -56,6 +57,7 @@ public class GOS2014 extends IterativeRobot {
    //     SmartDashboard.putData(new FullTester());
     }
 
+    @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //new AutonomousMobility().start();
@@ -67,11 +69,13 @@ public class GOS2014 extends IterativeRobot {
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
@@ -88,6 +92,7 @@ public class GOS2014 extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         Scheduler.getInstance().run();
@@ -100,6 +105,7 @@ public class GOS2014 extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
     }
 }

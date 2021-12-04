@@ -25,22 +25,22 @@ import girlsofsteel.objects.LSPBPIDPlanner;
  */
 public class Kicker extends Subsystem {
 
-    private Jaguar kickerJag;
-    private Talon kickerTalon;
+    private final Jaguar kickerJag;
+    private final Talon kickerTalon;
 
-    private Encoder kickerEncoder;
+    private final Encoder kickerEncoder;
 
-    private DigitalInput kickerLimitSwitch;
+    private final DigitalInput kickerLimitSwitch;
 
     private EncoderGoSPIDController kickerPositionPID;
     public LSPBPIDPlanner kickerPlanner;
 
-    private double p = 500; //Works well on the kicker!
-    private double i = 0;
-    private double d = 0;
+    private final double p = 500; //Works well on the kicker!
+    private final double i = 0;
+    private final double d = 0;
 
-    private double pulsePerRevolution = 360;  //correct
-    private double distancePerPulse = 1.0 / pulsePerRevolution; //No gear ratio.
+    private final double pulsePerRevolution = 360;  //correct
+    private final double distancePerPulse = 1.0 / pulsePerRevolution; //No gear ratio.
 
     public Kicker() {
         // Pright = Configuration.rightPositionP; //TODO
@@ -118,6 +118,7 @@ public class Kicker extends Subsystem {
         kickerTalon.set(0.0);
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 

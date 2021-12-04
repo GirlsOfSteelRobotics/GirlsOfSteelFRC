@@ -22,17 +22,17 @@ import com.girlsofsteelrobotics.atlas.objects.EncoderGoSPIDController;
 public class Manipulator extends Subsystem {
 
     private double angle; //starting angle
-    private Jaguar manipulatorJag;
-    private Encoder bobTheArmEncoder;
-    private Relay dasBootLights;
-    private EncoderGoSPIDController manipulatorPID;
+    private final Jaguar manipulatorJag;
+    private final Encoder bobTheArmEncoder;
+    private final Relay dasBootLights;
+    private final EncoderGoSPIDController manipulatorPID;
     private static final double minAngle = 0; //needs to be changed, not correct
     private static final double maxAngle = 113; //110 for comp bot//also needs to be changed
-    private static double pulsePerRotation = 360; //THIS IS CORRECT FOR THE COMPETITION ROBOT
+    private static final double pulsePerRotation = 360; //THIS IS CORRECT FOR THE COMPETITION ROBOT
     private double desiredAngle;
-    private static double manipulatorJagSpeedStop = 0.0;
-    private static double manipulatorJagSpeedDown = 1.0;
-    private static double manipulatorJagSpeedUp = -1.0;
+    private static final double manipulatorJagSpeedStop = 0.0;
+    private static final double manipulatorJagSpeedDown = 1.0;
+    private static final double manipulatorJagSpeedUp = -1.0;
     private static final double gearRatio = 13.0/70.0;
     private static final double distancePerPulse = (pulsePerRotation * gearRatio)/pulsePerRotation; //360 is the number of degrees in a circle
 
@@ -48,8 +48,8 @@ public class Manipulator extends Subsystem {
     //Old p for the practice bot arm
     private static  double p = 0.1; //negative for the competition robot
     //private static double p = 0.12; //positive for the 2nd chassis
-    private static  double i = 0.0;
-    private static  double d = 0.0;
+    private static final double i = 0.0;
+    private static final double d = 0.0;
 
     //96 is from the old arm that was on the practice bot
     //private static int ZERO_ENCODER_VALUE = 86; //101 is the max angle, -17 (SHOULD BE CONSTANT) is how off from the horizontal all the way down is
@@ -71,6 +71,7 @@ public class Manipulator extends Subsystem {
 
         manipulatorPID = new EncoderGoSPIDController(p, i, d, bobTheArmEncoder, new PIDOutput() {
 
+            @Override
             public void pidWrite(double output) {
                 manipulatorJag.set(output);
             }
@@ -244,6 +245,7 @@ public class Manipulator extends Subsystem {
         return bobTheArmEncoder.getRaw();
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 

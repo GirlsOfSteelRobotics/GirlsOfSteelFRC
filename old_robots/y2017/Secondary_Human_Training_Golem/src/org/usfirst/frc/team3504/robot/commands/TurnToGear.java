@@ -21,9 +21,9 @@ public class TurnToGear extends Command {
 
     public enum Direction {
         kLeft, kRight
-    };
+    }
 
-    private Direction direction;
+    private final Direction direction;
 
     public TurnToGear(Direction direction) {
         // Use requires() here to declare subsystem dependencies
@@ -33,12 +33,14 @@ public class TurnToGear extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         System.out.println("TurnToGear Initialized with direction " + direction);
         Robot.chassis.setPercentVbusMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 /*		table = NetworkTable.getTable("GRIP/myContoursReport");
 
@@ -63,19 +65,16 @@ public class TurnToGear extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         System.out.println("targetX: " + targetX /*+ " CenterX Length: " + centerX.length*/);
 
         //return centerX.length == 2;
-        if (targetX >= 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return targetX >= 0;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.chassis.stop();
         System.out.println("TurnToGear Finished.");
@@ -83,6 +82,7 @@ public class TurnToGear extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

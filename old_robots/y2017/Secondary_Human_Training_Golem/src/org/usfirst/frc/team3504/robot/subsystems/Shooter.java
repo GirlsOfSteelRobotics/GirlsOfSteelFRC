@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Shooter extends Subsystem {
-    private CANTalon lowShooterMotor;
-    private CANTalon highShooterMotor;
+    private final CANTalon lowShooterMotor;
+    private final CANTalon highShooterMotor;
 
     /*
      * private static final double shooterMinSpeed = -0.5; private static final
@@ -96,7 +96,7 @@ public class Shooter extends Subsystem {
 
     public boolean isHighShooterAtSpeed() { // TODO: This is broken, always
                                             // returning true
-        return ((double) highShooterMotor.getClosedLoopError() / (double) shooterSpeed) < MAX_SHOOTER_ERROR;
+        return (highShooterMotor.getClosedLoopError() / (double) shooterSpeed) < MAX_SHOOTER_ERROR;
     }
 
     public void stopShooterMotors() {
@@ -104,6 +104,7 @@ public class Shooter extends Subsystem {
         highShooterMotor.set(0);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

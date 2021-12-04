@@ -32,34 +32,34 @@ public class OI {
     //Joystick Ports + Joysticks
     private static final int DRIVER_JOYSTICK_PORT = 1;
     private static final int SHOOTER_JOYSTICK_PORT = 2;
-    private Joystick driverJoystick;
-    private Joystick operatorJoystick;
+    private final Joystick driverJoystick;
+    private final Joystick operatorJoystick;
 
     //Driver Buttons
-    private JoystickButton startDrive;
-    private JoystickButton stopChassis;
-    private JoystickButton gyroDrive;
-    private JoystickButton normalDrive;
-    private JoystickButton liningDrive;
-    private JoystickButton disableRotation;
+    private final JoystickButton startDrive;
+    private final JoystickButton stopChassis;
+    private final JoystickButton gyroDrive;
+    private final JoystickButton normalDrive;
+    private final JoystickButton liningDrive;
+    private final JoystickButton disableRotation;
     private JoystickButton rotateRight;
     private JoystickButton rotateLeft;
-    private JoystickButton rotateShootingBackRight;
-    private JoystickButton rotateShootingBackLeft;
+    private final JoystickButton rotateShootingBackRight;
+    private final JoystickButton rotateShootingBackLeft;
 
     //Operator Buttons
-    private JoystickButton prepShoot;
+    private final JoystickButton prepShoot;
     private JoystickButton prepShootPyramid;
-    private JoystickButton loadFrisbee;
-    private JoystickButton tipOver;
-    private JoystickButton retract;
-    private JoystickButton closeBottomGrip;
-    private JoystickButton openBottomGrip;
-    private JoystickButton closeTopGrip;
-    private JoystickButton climb;
-    private JoystickButton stopClimbing;
-    private JoystickButton stopClimbing2;
-    private JoystickButton toggleBlocker;
+    private final JoystickButton loadFrisbee;
+    private final JoystickButton tipOver;
+    private final JoystickButton retract;
+    private final JoystickButton closeBottomGrip;
+    private final JoystickButton openBottomGrip;
+    private final JoystickButton closeTopGrip;
+    private final JoystickButton climb;
+    private final JoystickButton stopClimbing;
+    private final JoystickButton stopClimbing2;
+    private final JoystickButton toggleBlocker;
     private JoystickButton raiseBlocker;
     private JoystickButton lowerBlocker;
 

@@ -19,13 +19,13 @@ public class Collector extends Subsystem {
      *This spike moves the wheel on the collector arm.
      * @author Sonia, Sophia
      */
-    private Relay collectorWheelSpike;
+    private final Relay collectorWheelSpike;
 
     /**
      * this is the jag that moves the collector up and down to collect or release the ball.
      * @author Sonia, Sophia
      */
-    private Jaguar collectorJag;
+    private final Jaguar collectorJag;
 
 
     /**
@@ -83,6 +83,7 @@ public class Collector extends Subsystem {
      * There is nothing in this method
      * @author Sonia, Sophia
      */
+    @Override
     protected void initDefaultCommand() {
     }
 }

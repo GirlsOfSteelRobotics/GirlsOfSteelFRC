@@ -24,9 +24,11 @@ public class MagneticPulseCounter implements Runnable {
         digiPut = new DigitalInput(channel);
     }
 
+    @Override
     public void run() {
         pulsesBetweenTime = new int[relevant];
         new Thread() {
+            @Override
             public void run() {
                 while (!done) {
                     //False = received pulse

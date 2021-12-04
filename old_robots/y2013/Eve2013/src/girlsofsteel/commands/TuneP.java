@@ -226,7 +226,7 @@ public class TuneP extends CommandBase {
 
         String contents = "";
         try{
-            FileConnection c = (FileConnection) Connector.open(url);
+            FileConnection c = Connector.open(url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     c.openDataInputStream()));
             String line;
@@ -239,7 +239,7 @@ public class TuneP extends CommandBase {
         }
 
         try{
-            FileConnection c = (FileConnection) Connector.open(url);
+            FileConnection c = Connector.open(url);
             OutputStreamWriter writer = new OutputStreamWriter(
                     c.openDataOutputStream());
             writer.write(contents + message);

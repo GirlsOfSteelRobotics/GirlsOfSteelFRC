@@ -11,13 +11,13 @@ package com.girlsofsteelrobotics.atlas.commands;
  */
 public class MoveKicker extends CommandBase {
 
-    private double allowedOffBy = 0.05; //Degrees
+    private final double allowedOffBy = 0.05; //Degrees
     private double encoderValue350Modded;
     private double setpoint;
     //This is one tooth away from kicking
     private final double loaded = 0.0; //Starting position is loaded pos
     private final double shoot = 0.111111; //The angle degree needed to kick
-    private int pos;
+    private final int pos;
     private boolean firstTime;
     private double startTime;
     private double changeInTime;

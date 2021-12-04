@@ -15,6 +15,7 @@ public class Camera extends Subsystem {
         //server.startAutomaticCapture("cam0");
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 }

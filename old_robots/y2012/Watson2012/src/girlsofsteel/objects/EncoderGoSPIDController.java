@@ -11,9 +11,9 @@ public class EncoderGoSPIDController implements Runnable {
     private double Kp = 0.0;
     private double Ki = 0.0;
     private double Kd = 0.0;
-    private Encoder encoder;
-    private PIDOutput jags;
-    private int type;
+    private final Encoder encoder;
+    private final PIDOutput jags;
+    private final int type;
     //for setSetPoint()
     private double setPoint;
     //used for calculating error -> for PID (P,I,&D)
@@ -96,6 +96,7 @@ public class EncoderGoSPIDController implements Runnable {
         errorSum = 0.0;
     }
 
+    @Override
     public void run(){
         double output = 0.0;
         while(PIDEnabled){ //must be set to run -> through setSetPoint

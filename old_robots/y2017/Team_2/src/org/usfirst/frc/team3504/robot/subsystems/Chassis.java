@@ -16,17 +16,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Chassis extends Subsystem {
-    private CANTalon driveLeftA;
-    private CANTalon driveLeftB;
+    private final CANTalon driveLeftA;
+    private final CANTalon driveLeftB;
 
-    private CANTalon driveRightA;
-    private CANTalon driveRightB;
+    private final CANTalon driveRightA;
+    private final CANTalon driveRightB;
 
-    private RobotDrive robotDrive;
+    private final RobotDrive robotDrive;
 
     private CANTalon leftTalon;
     private CANTalon rightTalon;
-    private static double maxEncoder = 360;
+    private static final double maxEncoder = 360;
     private double encOffsetValue = 0;
 
 
@@ -55,6 +55,7 @@ public class Chassis extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new DriveByJoystick());

@@ -29,9 +29,9 @@ public class Chassis extends Subsystem {
     // Gyro
     boolean getGyro;
     double oldDirection;
-    private AHRS IMUGyro;
-    private double oldXGyroDisplacement = 0;
-    private double oldYGyroDisplacement = 0;
+    private final AHRS IMUGyro;
+    private final double oldXGyroDisplacement = 0;
+    private final double oldYGyroDisplacement = 0;
 
 
     // Variables used to reset the encoders
@@ -40,9 +40,9 @@ public class Chassis extends Subsystem {
     double initialRearLeftEncoderDistance;
     double initialRearRightEncoderDistance;
 
-    private double topSpeed = 400;
+    private final double topSpeed = 400;
 
-    private RobotDrive gosDrive;
+    private final RobotDrive gosDrive;
 
     // PID Constants
     private static final double kP = 1.0;
@@ -401,6 +401,7 @@ public class Chassis extends Subsystem {
         return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance()) / 4 * inchesPerTick);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new DriveByJoystick());

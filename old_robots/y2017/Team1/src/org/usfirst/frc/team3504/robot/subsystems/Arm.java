@@ -26,6 +26,7 @@ public class Arm extends Subsystem {
         armPiston.set(DoubleSolenoid.Value.kReverse);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

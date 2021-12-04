@@ -47,6 +47,7 @@ public class AutonomousOptions extends CommandBase {
         this.shootFromKeyAfterBridge = shootFromKeyAfterBridge;
     }
 
+    @Override
     protected void initialize() {
         turret.initEncoder();
         turret.enablePID();
@@ -55,6 +56,7 @@ public class AutonomousOptions extends CommandBase {
         chassis.initPositionPIDs();
     }
 
+    @Override
     protected void execute() {
         if(getXDistanceCamera){
             xDistance = 5.3939 - Camera.getXDistance();
@@ -89,10 +91,12 @@ public class AutonomousOptions extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         turret.disablePID();
         turret.stopJag();
@@ -107,6 +111,7 @@ public class AutonomousOptions extends CommandBase {
         collector.stopMiddleConveyor();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -20,8 +20,8 @@ public class ShooterCamera {
     static double widthOfDesiredPosition;
 
     public ShooterCamera() {
-        SmartDashboard.putNumber("top arget angle offset", this.getTopDiffAngle());
-        SmartDashboard.putNumber("top target angle offset", this.getSideDiffAngle());
+        SmartDashboard.putNumber("top arget angle offset", getTopDiffAngle());
+        SmartDashboard.putNumber("top target angle offset", getSideDiffAngle());
     }
     static double positionOneAngleOffset = -7.2;
     static double positionTwoAngleOffset = 0;

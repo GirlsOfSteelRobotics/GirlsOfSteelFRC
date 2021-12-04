@@ -17,12 +17,14 @@ public class DriveVelocityLinear extends CommandBase{
         this.scale = scale;
     }
 
+    @Override
     protected void initialize() {
         joystick = oi.getDriverJoystick();
         chassis.initEncoders();
         chassis.initRatePIDs();
     }
 
+    @Override
     protected void execute() {
         chassis.setPIDsRate();
         xAxis = joystick.getX()*scale;
@@ -33,16 +35,19 @@ public class DriveVelocityLinear extends CommandBase{
         DriverStationLCD.getInstance().updateLCD();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.disableRatePIDs();
         chassis.resetEncoders();
         chassis.endEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -27,6 +27,7 @@ public class Collector extends Subsystem{
         return !collectorLimitSwitch.get();
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 

@@ -19,11 +19,11 @@ import girlsofsteel.Configuration;
  */
 public class setArmAnglePID extends CommandBase {
 
-    private double desiredAngle;
+    private final double desiredAngle;
     private double angle;
     private double changedTime;
-    private double startTime;
-    private double allowedAngleError;
+    private final double startTime;
+    private final double allowedAngleError;
 
 
     public setArmAnglePID(double desiredAngle) {

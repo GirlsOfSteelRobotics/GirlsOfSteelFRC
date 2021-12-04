@@ -16,7 +16,7 @@ public class ShootLowGoal extends CommandGroup {
      * This variable (0) stores the angle for the collector arm in order to shoot into the low goal.
      * @author Sonia, Sophia
      */
-    private double kickAngle = 0;
+    private final double kickAngle = 0;
 
     /**
      * This method sets the arm angle to 0 and reverses the collector wheel in order to shoot the ball into the low

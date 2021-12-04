@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lifter extends Subsystem {
 
-    private CANTalon liftTalon;
+    private final CANTalon liftTalon;
 
-    private DigitalInput liftTopLimit;
-    private DigitalInput liftBottomLimit;
+    private final DigitalInput liftTopLimit;
+    private final DigitalInput liftBottomLimit;
 
 
     // 170 is one rotation
