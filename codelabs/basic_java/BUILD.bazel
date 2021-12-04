@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot", "gos_junit4_test")
+
+gos_java_robot(
+    name = "basic_java",
+    srcs = glob(["src/main/java/**/*.java"]),
+    main_class = "com.gos.codelabs.first_code_lab.Main",
+)
+
+gos_junit4_test(
+    name = "test",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = ["basic_java"],
+)

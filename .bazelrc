@@ -1,0 +1,12 @@
+try-import %workspace%/user.bazelrc
+
+build --java_language_version=11
+build --java_runtime_version=roboriojdk_11
+
+test --test_output=errors
+
+# For Roborio
+build:for-roborio --platforms=@bazelrio//platforms/roborio
+
+# Remote Cache
+import .bazelrc-buildbuddy

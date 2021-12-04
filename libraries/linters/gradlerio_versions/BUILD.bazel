@@ -1,0 +1,5 @@
+py_binary(
+    name = "lint_gradlerio_versions",
+    srcs = ["lint_gradlerio_versions.py"],
+    deps = ["@rules_python//python/runfiles"],
+)
