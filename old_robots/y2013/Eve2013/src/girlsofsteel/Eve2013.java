@@ -8,6 +8,7 @@ package girlsofsteel;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,7 +51,7 @@ public class Eve2013 extends IterativeRobot {
         autonomous = new AutonomousChooser();
 
         SmartDashboard.putBoolean("Press Shoot?", false);
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");
@@ -67,7 +68,7 @@ public class Eve2013 extends IterativeRobot {
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");
@@ -88,7 +89,7 @@ public class Eve2013 extends IterativeRobot {
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");
@@ -110,7 +111,7 @@ public class Eve2013 extends IterativeRobot {
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");
@@ -139,7 +140,7 @@ public class Eve2013 extends IterativeRobot {
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", CommandBase.shooter.isTimeToShoot());
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");
@@ -163,7 +164,7 @@ public class Eve2013 extends IterativeRobot {
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");
@@ -171,7 +172,6 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-        LiveWindow.run();
     }
 
     public void disabledPeriodic() {
@@ -181,7 +181,7 @@ public class Eve2013 extends IterativeRobot {
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");
@@ -198,7 +198,7 @@ public class Eve2013 extends IterativeRobot {
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
-        SmartDashboard.putNumber ("Battery Voltage", driver.getBatteryVoltage());
+        SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");
         SmartDashboard.putString("CIRCLE", "start chains");

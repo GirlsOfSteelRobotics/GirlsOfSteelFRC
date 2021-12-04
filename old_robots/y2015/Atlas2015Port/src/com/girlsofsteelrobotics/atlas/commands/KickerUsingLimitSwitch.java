@@ -47,7 +47,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
         if (!testingLimit) {
             changeInTime = System.currentTimeMillis() - startTime;
             if (smartDashboard) {
-                loadingOrShooting = (int) SmartDashboard.getNumber("Position");
+                loadingOrShooting = (int) SmartDashboard.getNumber("Position", 0);
             }
             if (loadingOrShooting == 0) //loading
             {
@@ -67,7 +67,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
             }
         }
         if (testingMotor) {
-            double motorSpeed = SmartDashboard.getNumber("Turn Kicker Jag");
+            double motorSpeed = SmartDashboard.getNumber("Turn Kicker Jag", 0);
             System.out.println("Sending: " + motorSpeed);
             //kicker.setJag(motorSpeed);
             kicker.setTalon(motorSpeed);

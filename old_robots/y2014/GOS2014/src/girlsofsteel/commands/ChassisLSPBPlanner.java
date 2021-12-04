@@ -31,7 +31,7 @@ public class ChassisLSPBPlanner extends CommandBase {
     }
 
     protected void execute() {
-        setPoint = SmartDashboard.getNumber("LSPB Setpoint");
+        setPoint = SmartDashboard.getNumber("LSPB Setpoint", 0);
         if (setPoint != 0) {
             if (!graphed) {
                 startTime = System.currentTimeMillis();

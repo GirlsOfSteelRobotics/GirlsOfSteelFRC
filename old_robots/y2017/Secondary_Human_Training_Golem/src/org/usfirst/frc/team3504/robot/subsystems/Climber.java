@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.StayClimbed;
 
@@ -20,10 +22,10 @@ public class Climber extends Subsystem {
         climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
         climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
 
-        climbMotorA.enableBrakeMode(true);
-        climbMotorB.enableBrakeMode(true);
+        climbMotorA.setNeutralMode(NeutralMode.Brake);
+        climbMotorB.setNeutralMode(NeutralMode.Brake);
 
-        climbMotorA.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+        climbMotorA.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
         climbMotorA.reverseSensor(true);
 
         climbMotorA.setF(0);
@@ -31,8 +33,8 @@ public class Climber extends Subsystem {
         climbMotorA.setI(0);
         climbMotorA.setD(0);
 
-        LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
-        LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
+        addChild("climbMotorA", climbMotorA);
+        addChild("climbMotorB", climbMotorB);
     }
 
     public void climb(double speed) {

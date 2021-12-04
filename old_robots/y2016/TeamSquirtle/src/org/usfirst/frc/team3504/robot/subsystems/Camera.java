@@ -27,7 +27,7 @@ public class Camera extends Subsystem {
     public Camera() {
 
         server = CameraServer.getInstance();
-        server.setQuality(50);
+//        server.setQuality(50);
 
 
         server = CameraServer.getInstance();
@@ -48,7 +48,7 @@ public class Camera extends Subsystem {
     }
 
     public void sendToDashboard() {
-        server.startAutomaticCapture(cam);
+//        server.startAutomaticCapture(cam);
     }
 
     // Put methods for controlling this subsystem

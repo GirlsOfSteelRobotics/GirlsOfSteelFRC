@@ -24,20 +24,20 @@ public class TestCollector extends CommandBase {
     }
 
     protected void execute() {
-        collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed));
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward) == true) {
+        collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed, 0));
+        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward, false) == true) {
             collector.collectorWheelFoward();
             // forward
         } else{
         collector.stopCollectorWheel();
         }
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward) == true) {
+        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward, false) == true) {
             collector.collectorWheelReverse();
             // backward
         } else {
             collector.stopCollectorWheel();
         }
-//        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeStop) == true) {
+//        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeStop, false) == true) {
 //            collector.stopCollectorWheel();
 //        }
         double collectorEncoderValue = collector.getCollectorSpeed();

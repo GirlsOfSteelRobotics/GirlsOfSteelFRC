@@ -97,12 +97,10 @@ public class Shooter extends Subsystem {
 
     public void initEncoder() {
         encoder.setDistancePerPulse(ENCODER_UNIT);
-        encoder.start();
-    }
+           }
 
     public void stopEncoder() {
-        encoder.stop();
-    }
+           }
 
     public void initPID() {
         PID.setOutputThreshold(PID_OUTPUT_THRESHOLD);

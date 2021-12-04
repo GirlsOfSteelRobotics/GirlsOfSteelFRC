@@ -8,7 +8,7 @@ public class TESTMoveToSetPoint extends CommandBase {
 
     public TESTMoveToSetPoint(){
         requires(chassis);
-        SmartDashboard.putDouble("Move,distance", 0.0);
+        SmartDashboard.putNumber("Move,distance", 0.0);
     }
 
     protected void initialize(){
@@ -18,10 +18,10 @@ public class TESTMoveToSetPoint extends CommandBase {
 
     protected void execute(){
         chassis.setPIDsPosition();
-        distanceToMove = SmartDashboard.getDouble("Move,distance", 0.0);
+        distanceToMove = SmartDashboard.getNumber("Move,distance", 0.0);
         chassis.move(distanceToMove);
-        SmartDashboard.putDouble("Right Encoder Position", chassis.getRightEncoderDistance());
-        SmartDashboard.putDouble("Left Encoder Position", chassis.getLeftEncoderDistance());
+        SmartDashboard.putNumber("Right Encoder Position", chassis.getRightEncoderDistance());
+        SmartDashboard.putNumber("Left Encoder Position", chassis.getLeftEncoderDistance());
     }
 
     protected boolean isFinished(){

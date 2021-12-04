@@ -9,6 +9,7 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -35,7 +36,7 @@ public class ShooterTuning extends CommandBase {
 
     protected void execute() {
         if (SmartDashboard.getBoolean("test speed", false)) {
-            batteryVoltage = driver.getBatteryVoltage();
+            batteryVoltage = RobotController.getBatteryVoltage();
             speed = SmartDashboard.getNumber("speed", 0.0);
             time = timeSinceInitialized();
             shooter.setJags(speed);

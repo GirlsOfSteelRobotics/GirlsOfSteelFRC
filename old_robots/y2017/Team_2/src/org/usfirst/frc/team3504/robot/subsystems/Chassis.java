@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
@@ -35,10 +36,10 @@ public class Chassis extends Subsystem {
         driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
         driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
 
-        driveLeftA.enableBrakeMode(true);
-        driveLeftB.enableBrakeMode(true);
-        driveRightA.enableBrakeMode(true);
-        driveRightB.enableBrakeMode(true);
+        driveLeftA.setNeutralMode(NeutralMode.Brake);
+        driveLeftB.setNeutralMode(NeutralMode.Brake);
+        driveRightA.setNeutralMode(NeutralMode.Brake);
+        driveRightB.setNeutralMode(NeutralMode.Brake);
 
         driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
         driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);

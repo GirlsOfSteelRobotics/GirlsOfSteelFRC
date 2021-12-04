@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.ctre.phoenix.motion.MotionProfileStatus;
+import com.ctre.phoenix.motion.SetValueMotionProfile;
+import com.ctre.phoenix.motion.TrajectoryPoint;
 import org.usfirst.frc.team3504.robot.Robot;
 
 import com.ctre.CANTalon;
@@ -22,10 +25,10 @@ public class DriveByMotionProfile extends Command {
     public ArrayList<ArrayList<Double>> rightPoints;
     public CANTalon leftTalon = Robot.chassis.getLeftTalon();
     public CANTalon rightTalon = Robot.chassis.getRightTalon();
-    private CANTalon.MotionProfileStatus leftStatus;
-    private CANTalon.MotionProfileStatus rightStatus;
+    private MotionProfileStatus leftStatus;
+    private MotionProfileStatus rightStatus;
     private static final int kMinPointsInTalon = 5;
-    private CANTalon.SetValueMotionProfile state;
+    private SetValueMotionProfile state;
     private double multiplier = 1.0;
 
     Notifier notifier = new Notifier(new PeriodicRunnable());
@@ -45,8 +48,8 @@ public class DriveByMotionProfile extends Command {
         }
 
         // Initialize status variables
-        leftStatus = new CANTalon.MotionProfileStatus();
-        rightStatus = new CANTalon.MotionProfileStatus();
+        leftStatus = new MotionProfileStatus();
+        rightStatus = new MotionProfileStatus();
     }
 
     // Called just before this Command runs the first time
@@ -60,7 +63,7 @@ public class DriveByMotionProfile extends Command {
         System.out.println("DriveByMotion: Change Talon to MP Mode");
 
         // Disable MP
-        state = CANTalon.SetValueMotionProfile.Disable;
+        state = SetValueMotionProfile.Disable;
         leftTalon.set(state.value);
         rightTalon.set(state.value);
         System.out.println("DriveByMotion: Disable MP Mode");
@@ -86,7 +89,7 @@ public class DriveByMotionProfile extends Command {
 
         // Enable MP if not already enabled
         if ((leftStatus.btmBufferCnt > kMinPointsInTalon) && (rightStatus.btmBufferCnt > kMinPointsInTalon)) {
-            state = CANTalon.SetValueMotionProfile.Enable;
+            state = SetValueMotionProfile.Enable;
         }
         leftTalon.set(state.value);
         rightTalon.set(state.value);
@@ -108,12 +111,12 @@ public class DriveByMotionProfile extends Command {
         leftTalon.getMotionProfileStatus(leftStatus);
         rightTalon.getMotionProfileStatus(rightStatus);
 
-        boolean left = (leftStatus.activePointValid && leftStatus.activePoint.isLastPoint);
-        boolean right = (rightStatus.activePointValid && rightStatus.activePoint.isLastPoint);
+        boolean left = (leftStatus.activePointValid && leftStatus.isLast);
+        boolean right = (rightStatus.activePointValid && rightStatus.isLast);
 
 
         if (left && right) {
-            state = CANTalon.SetValueMotionProfile.Disable;
+            state = SetValueMotionProfile.Disable;
             leftTalon.set(state.value);
             rightTalon.set(state.value);
             System.out.println("DriveByMotion: Finished");
@@ -129,8 +132,8 @@ public class DriveByMotionProfile extends Command {
         leftTalon.clearMotionProfileTrajectories();
         rightTalon.clearMotionProfileTrajectories();
 
-        leftTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
-        rightTalon.set(CANTalon.SetValueMotionProfile.Disable.value);
+        leftTalon.set(SetValueMotionProfile.Disable.value);
+        rightTalon.set(SetValueMotionProfile.Disable.value);
 
     }
 
@@ -161,7 +164,7 @@ public class DriveByMotionProfile extends Command {
         // **************handle Underrun
 
         /* create an empty point */
-        CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
+        TrajectoryPoint point = new TrajectoryPoint();
         _talon.clearMotionProfileTrajectories();
 
         /* This is fast since it's just into our TOP buffer */
@@ -172,17 +175,13 @@ public class DriveByMotionProfile extends Command {
             point.position = arr.get(0);
 
             point.velocity = arr.get(1) * multiplier;
-            point.timeDurMs = (int)(arr.get(2) / multiplier);
+            point.timeDur = (int)(arr.get(2) / multiplier);
 
-            System.out.println("DriveByMotionProfile: " + point.position + " " + point.velocity + " " + point.timeDurMs);
-            point.profileSlotSelect = 0; /*
+            System.out.println("DriveByMotionProfile: " + point.position + " " + point.velocity + " " + point.timeDur);
+            point.profileSlotSelect0 = 0; /*
                                              * which set of gains would you like to
                                              * use?
                                              */
-            point.velocityOnly = false; /*
-                                         * set true to not do any position
-                                         * servo, just velocity feedforward
-                                         */
             point.zeroPos = false;
             if (i == 0)
                 point.zeroPos = true; /* set this to true on the first point */

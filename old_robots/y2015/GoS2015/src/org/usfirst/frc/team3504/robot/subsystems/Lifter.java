@@ -5,8 +5,8 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.lifter.LiftByJoystick;
 
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,18 +37,18 @@ public class Lifter extends Subsystem {
         SmartDashboard.putNumber("I value", 0);
         SmartDashboard.putNumber("D value", 0);
 
-        liftTalon.changeControlMode(ControlMode.Position);
-        liftTalon.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
-                SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+        liftTalon.changeControlMode(CANTalon.TalonControlMode.Position);
+        liftTalon.setPID(SmartDashboard.getNumber("P value", 0), SmartDashboard.getNumber("I value", 0),
+                SmartDashboard.getNumber("D value", 0), 0, 0, 0, 0);
 
         SmartDashboard.putNumber("Lifter Setpoint", 1700);
     }
 
     public void tunePID() {
-        liftTalon.setPID(SmartDashboard.getNumber("P value"), SmartDashboard.getNumber("I value"),
-                SmartDashboard.getNumber("D value"), 0, 0, 0, 0);
+        liftTalon.setPID(SmartDashboard.getNumber("P value", 0), SmartDashboard.getNumber("I value", 0),
+                SmartDashboard.getNumber("D value", 0), 0, 0, 0, 0);
 
-        liftTalon.set(SmartDashboard.getNumber("Lifter Setpoint")); // Number of
+        liftTalon.set(SmartDashboard.getNumber("Lifter Setpoint", 0)); // Number of
                                                                     // encoder
                                                                     // ticks
     }

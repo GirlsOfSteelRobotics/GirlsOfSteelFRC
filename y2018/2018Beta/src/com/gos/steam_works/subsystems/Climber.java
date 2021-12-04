@@ -32,8 +32,8 @@ public class Climber extends Subsystem {
         m_climbMotorA.config_kD(0, 0, 0);
 
         m_climbMotorB.follow(m_climbMotorA);
-        // LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
-        // LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
+        // addChild("climbMotorA", climbMotorA);
+        // addChild("climbMotorB", climbMotorB);
     }
 
     public void climb(double speed) {

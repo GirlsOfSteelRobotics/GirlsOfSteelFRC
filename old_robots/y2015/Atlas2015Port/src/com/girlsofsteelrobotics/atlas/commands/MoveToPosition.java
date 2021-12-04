@@ -35,7 +35,7 @@ public class MoveToPosition extends CommandBase{
     }
 
     protected void execute() {
-        //distance = SmartDashboard.getNumber("Distance");
+        //distance = SmartDashboard.getNumber("Distance", 0);
         chassis.setPosition(distance);
         SmartDashboard.putNumber("Left Encoder: ", chassis.getLeftEncoderDistance());
         SmartDashboard.putNumber("Right Encoder: ", chassis.getRightEncoderDistance());

@@ -18,8 +18,8 @@ public class Collector extends Subsystem {
     public Collector() {
     collectorMotor = new CANTalon(RobotMap.COLLECTOR_MOTOR);
     collectorMotor.changeControlMode(TalonControlMode.PercentVbus);
-    //LiveWindow.addActuator("Collector", "Talon", collectorMotor1);
-    //LiveWindow.addActuator("Collector", "Talon", collectorMotor2);
+    //addChild("Talon", collectorMotor1);
+    //addChild("Talon", collectorMotor2);
     }
 
     public void spinWheels(double speed) {

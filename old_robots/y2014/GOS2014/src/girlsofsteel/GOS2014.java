@@ -91,7 +91,7 @@ public class GOS2014 extends IterativeRobot {
     public void teleopPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         Scheduler.getInstance().run();
-        //Configuration.configureForRobot((int) SmartDashboard.getNumber("Robot Configuration"));
+        //Configuration.configureForRobot((int) SmartDashboard.getNumber("Robot Configuration", 0));
 //        SmartDashboard.putNumber("robotCameraAngle",(double)CommandBase.camera.getVerticalAngleOffset());
 //        System.out.println("Camera Angle: " + (double)CommandBase.camera.getVerticalAngleOffset());
 //        SmartDashboard.putNumber("robotDistance",(double)CommandBase.camera.getDistanceToTarget());
@@ -101,6 +101,5 @@ public class GOS2014 extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-        LiveWindow.run();
     }
 }

@@ -11,9 +11,9 @@ public class TESTTurretPID extends CommandBase {
 
     public TESTTurretPID(){
         requires(turret);
-        SmartDashboard.putDouble("Turret Setpoint", 0.0);
-        SmartDashboard.putDouble("Turret P", 0.0);
-        SmartDashboard.putDouble("Turret D", 0.0);
+        SmartDashboard.putNumber("Turret Setpoint", 0.0);
+        SmartDashboard.putNumber("Turret P", 0.0);
+        SmartDashboard.putNumber("Turret D", 0.0);
     }
 
     protected void initialize() {
@@ -22,10 +22,10 @@ public class TESTTurretPID extends CommandBase {
     }
 
     protected void execute() {
-        p = SmartDashboard.getDouble("Turret P", 0.0);
-        d = SmartDashboard.getDouble("Turret D", 0.0);
+        p = SmartDashboard.getNumber("Turret P", 0.0);
+        d = SmartDashboard.getNumber("Turret D", 0.0);
         turret.setPDs(p, d);
-        setpoint = SmartDashboard.getDouble("Turret Setpoint", 0.0);
+        setpoint = SmartDashboard.getNumber("Turret Setpoint", 0.0);
         turret.setPIDSetPoint(setpoint);
     }
 

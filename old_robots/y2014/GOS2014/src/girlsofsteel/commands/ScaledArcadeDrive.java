@@ -27,7 +27,7 @@ public class ScaledArcadeDrive extends CommandBase {
     protected void execute() {
         x = joystick.getX();
         y = joystick.getY();
-        //scale = SmartDashboard.getNumber("Scale");
+        //scale = SmartDashboard.getNumber("Scale", 0);
         chassis.scaleArcadeDrive(x, y, scale);
     }
 

@@ -80,7 +80,6 @@ public class Kicker extends Subsystem {
 
     public void initEncoders() {
         kickerEncoder.setDistancePerPulse(distancePerPulse);
-        kickerEncoder.start();
 
     }
 
@@ -97,7 +96,6 @@ public class Kicker extends Subsystem {
     }
 
     public void stopEncoders() {
-        kickerEncoder.stop();
     }
 
     public double getRaw() {

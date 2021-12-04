@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.RobotMap;
@@ -38,7 +39,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     }
 
     public void changeTurretOffset(){
-        double turretOffset = SmartDashboard.getDouble("Turret Offset", 0.0);
+        double turretOffset = SmartDashboard.getNumber("Turret Offset", 0.0);
         offsetAngle = turretOffset;
     }
 
@@ -49,14 +50,12 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         }else{
             encoder.setDistancePerPulse(1.0/pulses);
         }
-        encoder.start();
-    }
+           }
 
     //initalizes encoder -> sets the unit to degrees
     public void initEncoder(){
         encoder.setDistancePerPulse(ENCODER_UNIT); //degrees
-        encoder.start();
-    }
+           }
 
     public void setJagSpeed(double speed) {
         turretJag.set(-speed);
@@ -162,6 +161,17 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         //the set point is the difference of the angle plus where the turret is currently
         //subtract the offset angle that the shooter shoots straight from
         setPIDSetPoint(setPoint);
+    }
+
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        throw new UnsupportedOperationException();
     }
 
 }

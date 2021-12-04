@@ -28,8 +28,8 @@ public class Shooter extends Subsystem {
         shooterMotor1.changeControlMode(TalonControlMode.PercentVbus);
         shooterMotor2 = new CANTalon(RobotMap.SHOOTER_MOTOR_B);
         shooterMotor2.changeControlMode(TalonControlMode.PercentVbus);
-        LiveWindow.addActuator("Shooter", "Talon", shooterMotor1);
-        LiveWindow.addActuator("Shooter", "Talon", shooterMotor2);
+        addChild("Talon", shooterMotor1);
+        addChild("Talon", shooterMotor2);
         shooterPiston1 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
         shooterPiston2 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
     }

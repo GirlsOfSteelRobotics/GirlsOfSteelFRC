@@ -57,14 +57,14 @@ public class Watson2012 extends IterativeRobot {
         Scheduler.getInstance().run();
         SmartDashboard.putBoolean("Camera is connected?", Camera.isConnected());
         SmartDashboard.putBoolean("Target is found?", Camera.foundTarget());
-        SmartDashboard.putDouble("Camera Distance", Camera.getXDistance());
-        SmartDashboard.putDouble("Shooter Encoder", CommandBase.shooter.getEncoderRate());
+        SmartDashboard.putNumber("Camera Distance", Camera.getXDistance());
+        SmartDashboard.putNumber("Shooter Encoder", CommandBase.shooter.getEncoderRate());
     }
 
     public void disabledPeriodic() {
         SmartDashboard.putBoolean("Camera is connected?", Camera.isConnected());
         SmartDashboard.putBoolean("Target is found?", Camera.foundTarget());
-        SmartDashboard.putDouble("Camera Distance", Camera.getXDistance());
-        SmartDashboard.putDouble("Shooter Encoder", CommandBase.shooter.getEncoderRate());
+        SmartDashboard.putNumber("Camera Distance", Camera.getXDistance());
+        SmartDashboard.putNumber("Shooter Encoder", CommandBase.shooter.getEncoderRate());
     }
 }

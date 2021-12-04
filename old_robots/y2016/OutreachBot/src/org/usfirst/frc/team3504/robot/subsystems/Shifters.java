@@ -17,10 +17,10 @@ public class Shifters extends Subsystem {
 
     public Shifters() {
         shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
-        LiveWindow.addActuator("Shifters", "Shifter Left", shifterLeft);
+        addChild("Shifter Left", shifterLeft);
 
         shifterRight = new DoubleSolenoid(RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
-        LiveWindow.addActuator("Shifters", "Shifter Right", shifterRight);
+        addChild("Shifter Right", shifterRight);
     }
 
     public void initDefaultCommand() {

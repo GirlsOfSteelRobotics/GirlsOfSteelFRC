@@ -15,7 +15,7 @@ public class EveCompressor extends Subsystem {
 
     public EveCompressor(){
 //        compressorSpike = new Relay(RobotMap.COMPRESSOR_RELAY_PORT);
-        autoCompressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, RobotMap.COMPRESSOR_RELAY_PORT);
+        autoCompressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL);
         autoCompressor.start();
     }
 

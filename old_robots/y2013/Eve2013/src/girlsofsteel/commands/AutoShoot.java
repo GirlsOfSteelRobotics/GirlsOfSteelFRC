@@ -5,6 +5,7 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.OI;
 
@@ -36,7 +37,7 @@ public class AutoShoot extends CommandBase {
 
     protected void execute() {
         shooter.setJags(oi.JAG_SPEED);
-        batteryVoltage = driver.getBatteryVoltage();
+        batteryVoltage = RobotController.getBatteryVoltage();
         SmartDashboard.putNumber("Encoder Rate", shooter.getEncoderRate());
         SmartDashboard.putNumber("Battery Voltage", batteryVoltage);
         if (shooter.getEncoderRate() >= desiredSpeed && !shot) {

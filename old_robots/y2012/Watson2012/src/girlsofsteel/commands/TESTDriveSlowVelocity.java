@@ -15,8 +15,8 @@ public class TESTDriveSlowVelocity extends CommandBase {
 
     public TESTDriveSlowVelocity(){
         requires(chassis);
-        SmartDashboard.putDouble("Chassis P", 0.0);
-        SmartDashboard.putDouble("Chassis I", 0.0);
+        SmartDashboard.putNumber("Chassis P", 0.0);
+        SmartDashboard.putNumber("Chassis I", 0.0);
     }
 
     protected void initialize() {
@@ -26,8 +26,8 @@ public class TESTDriveSlowVelocity extends CommandBase {
     }
 
     protected void execute() {
-        p = SmartDashboard.getDouble("Chassis P", 0.0);
-        i = SmartDashboard.getDouble("Chassis I", 0.0);
+        p = SmartDashboard.getNumber("Chassis P", 0.0);
+        i = SmartDashboard.getNumber("Chassis I", 0.0);
         chassis.setRatePIDValues(p,i,0.0);
         xAxis = driverJoystick.getX();
         yAxis = driverJoystick.getY();

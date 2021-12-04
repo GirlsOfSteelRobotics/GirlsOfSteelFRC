@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot;
 
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -47,10 +47,10 @@ public class RobotMap {
         conveyorBeltMotorLeft = new CANTalon(7);
         // Follower: The m_motor will run at the same throttle as the specified
         // other talon.
-        driveSystemDriveLeft1.changeControlMode(CANTalon.ControlMode.Follower);
-        driveSystemDriveLeft2.changeControlMode(CANTalon.ControlMode.Follower);
-        driveSystemDriveRight1.changeControlMode(CANTalon.ControlMode.Follower);
-        driveSystemDriveRight2.changeControlMode(CANTalon.ControlMode.Follower);
+        driveSystemDriveLeft1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        driveSystemDriveLeft2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        driveSystemDriveRight1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        driveSystemDriveRight2.changeControlMode(CANTalon.TalonControlMode.Follower);
         //set arguments refer to CANTalon port numbers
         driveSystemDriveLeft1.set(0);
         driveSystemDriveRight1.set(1);

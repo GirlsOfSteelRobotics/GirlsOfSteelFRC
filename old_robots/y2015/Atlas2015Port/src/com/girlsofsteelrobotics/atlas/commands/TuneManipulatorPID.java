@@ -41,10 +41,10 @@ public class TuneManipulatorPID extends CommandBase {
 
     protected void execute() {
         if (pid) {
-            p = SmartDashboard.getNumber("Pivot P");
-            i = SmartDashboard.getNumber("Pivot I");
-            d = SmartDashboard.getNumber("Pivot D");
-            setpoint = SmartDashboard.getNumber("Pivot setpoint");
+            p = SmartDashboard.getNumber("Pivot P", 0);
+            i = SmartDashboard.getNumber("Pivot I", 0);
+            d = SmartDashboard.getNumber("Pivot D", 0);
+            setpoint = SmartDashboard.getNumber("Pivot setpoint", 0);
 
             if (setpoint != 0) {
                 manipulator.setSetPoint((double) setpoint);

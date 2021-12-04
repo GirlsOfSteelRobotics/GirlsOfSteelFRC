@@ -1,13 +1,12 @@
 package com.girlsofsteelrobotics.atlas.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.SensorBase;
 import com.girlsofsteelrobotics.atlas.RobotMap;
 
 //Created by FRC team 3357
 //2008
 //http://www.chiefdelphi.com/forums/showthread.php?t=82409
-public class UltrasonicSensor extends SensorBase {///*
+public class UltrasonicSensor  {///*
 
 /**
  *

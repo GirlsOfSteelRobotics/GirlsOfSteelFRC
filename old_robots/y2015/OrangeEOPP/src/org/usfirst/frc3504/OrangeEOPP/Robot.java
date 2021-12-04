@@ -79,6 +79,5 @@ public class Robot extends IterativeRobot {
      * This function called periodically during test mode
      */
     public void testPeriodic() {
-        LiveWindow.run();
     }
 }

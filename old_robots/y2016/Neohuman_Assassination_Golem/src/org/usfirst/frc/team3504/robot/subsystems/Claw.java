@@ -20,7 +20,7 @@ public class Claw extends Subsystem {
 
     public Claw() {
         clawMotor = new CANTalon(RobotMap.CLAW_MOTOR);
-        LiveWindow.addActuator("Claw", "Talon", clawMotor);
+        addChild("Talon", clawMotor);
     }
 
     public void collectRelease(double speed) {

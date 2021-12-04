@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.Drive;
@@ -33,12 +35,12 @@ public class Chassis extends Subsystem {
         driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
         driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
 
-        driveLeftA.enableBrakeMode(true);
-        driveLeftB.enableBrakeMode(true);
-        driveLeftC.enableBrakeMode(true);
-        driveRightA.enableBrakeMode(true);
-        driveRightB.enableBrakeMode(true);
-        driveRightC.enableBrakeMode(true);
+        driveLeftA.setNeutralMode(NeutralMode.Brake);
+        driveLeftB.setNeutralMode(NeutralMode.Brake);
+        driveLeftC.setNeutralMode(NeutralMode.Brake);
+        driveRightA.setNeutralMode(NeutralMode.Brake);
+        driveRightB.setNeutralMode(NeutralMode.Brake);
+        driveRightC.setNeutralMode(NeutralMode.Brake);
 
         driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
         driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -62,12 +64,12 @@ public class Chassis extends Subsystem {
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
-        LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
-        LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
-        LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
-        LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
-        LiveWindow.addActuator("Chassis", "driveRightB", driveRightB);
-        LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
+        addChild("driveLeftA", driveLeftA);
+        addChild("driveLeftB", driveLeftB);
+        addChild("driveLeftC", driveLeftC);
+        addChild("driveRightA", driveRightA);
+        addChild("driveRightB", driveRightB);
+        addChild("driveRightC", driveRightC);
     }
 
     public void initDefaultCommand() {
@@ -94,7 +96,7 @@ public class Chassis extends Subsystem {
     public void setupEncoder(CANTalon talon) { // only call this on non-follower
                                                 // talons
         // Set Encoder Types
-        talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+        talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
         talon.reverseSensor(false);
     }

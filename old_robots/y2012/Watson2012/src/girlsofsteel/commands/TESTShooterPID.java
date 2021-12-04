@@ -21,13 +21,13 @@ public class TESTShooterPID extends CommandBase {
 
     public TESTShooterPID() {
         requires(shooter);
-        SmartDashboard.putDouble("Shooter Setpoint", 0.0);
-        SmartDashboard.putDouble("Shooter,p", 0.0);
-        SmartDashboard.putDouble("Shooter,i", 0.0);
-//        SmartDashboard.putDouble("Shooter,d", 0.0);
+        SmartDashboard.putNumber("Shooter Setpoint", 0.0);
+        SmartDashboard.putNumber("Shooter,p", 0.0);
+        SmartDashboard.putNumber("Shooter,i", 0.0);
+//        SmartDashboard.putNumber("Shooter,d", 0.0);
 //        SmartDashboard.putBoolean("Auto Shoot?", false);
 //        SmartDashboard.putBoolean("Bank?", false);
-        SmartDashboard.putDouble("Shooter Encoder", shooter.getEncoderRate());
+        SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
     }
 
     protected void initialize() {
@@ -38,13 +38,13 @@ public class TESTShooterPID extends CommandBase {
     protected void execute() {
 //        autoShoot = SmartDashboard.getBoolean("Auto Shoot?", false);
 //        bank = SmartDashboard.getBoolean("Bank?", false);
-//        SmartDashboard.putDouble("Shooter Encoder", shooter.getEncoderRate());
+//        SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
 //        if(!autoShoot){
-            p = SmartDashboard.getDouble("Shooter,p", 0.0);
-            i = SmartDashboard.getDouble("Shooter,i",0.0);
-//            d = SmartDashboard.getDouble("Shooter,d",0.0);
+            p = SmartDashboard.getNumber("Shooter,p", 0.0);
+            i = SmartDashboard.getNumber("Shooter,i",0.0);
+//            d = SmartDashboard.getNumber("Shooter,d",0.0);
             shooter.setPIDValues(p, i, d);
-            setpoint = SmartDashboard.getDouble("Shooter Setpoint", 0.0);
+            setpoint = SmartDashboard.getNumber("Shooter Setpoint", 0.0);
             shooter.setPIDSpeed(setpoint);
 //        }else{
 //            if(bank){
@@ -53,7 +53,7 @@ public class TESTShooterPID extends CommandBase {
 //                shooter.autoShoot();
 //            }
 //        }
-            SmartDashboard.putDouble("Shooter Encoder", shooter.getEncoderRate());
+            SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
     }
 
     protected boolean isFinished() {

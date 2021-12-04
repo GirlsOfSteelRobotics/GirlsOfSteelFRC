@@ -30,7 +30,7 @@ public class Camera {
     }
 
     public static boolean foundTarget() {
-        return isConnected() && (NetworkTable.getTable("camera").getBoolean("isTargetLeft")||NetworkTable.getTable("camera").getBoolean("isTargetRight"));
+        return isConnected() && (NetworkTable.getTable("camera").getBoolean("isTargetLeft", false)||NetworkTable.getTable("camera").getBoolean("isTargetRight", false));
     }
 
     public double getDistanceToTarget() { // -1 to 1 -> position horizontally of the backboard on the screen

@@ -8,7 +8,7 @@ public class TESTTurnToSetPoint extends CommandBase {
 
     public TESTTurnToSetPoint(){
         requires(chassis);
-        SmartDashboard.putDouble("Turn,degrees", 0.0);
+        SmartDashboard.putNumber("Turn,degrees", 0.0);
     }
 
     protected void initialize() {
@@ -17,7 +17,7 @@ public class TESTTurnToSetPoint extends CommandBase {
     }
 
     protected void execute() {
-        degreesToTurn = SmartDashboard.getDouble("Turn,degrees", 0.0);
+        degreesToTurn = SmartDashboard.getNumber("Turn,degrees", 0.0);
         chassis.turn(degreesToTurn);
     }
 

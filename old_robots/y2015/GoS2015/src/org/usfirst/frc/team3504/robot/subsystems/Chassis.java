@@ -1,13 +1,14 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
 
-import com.kauailabs.navx_mxp.AHRS;
+import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
@@ -70,32 +71,30 @@ public class Chassis extends Subsystem {
         rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
         rearLeftWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
 
-        frontRightWheel.enableBrakeMode(true);
-        frontLeftWheel.enableBrakeMode(true);
-        rearRightWheel.enableBrakeMode(true);
-        rearLeftWheel.enableBrakeMode(true);
+        frontRightWheel.setNeutralMode(NeutralMode.Brake);
+        frontLeftWheel.setNeutralMode(NeutralMode.Brake);
+        rearRightWheel.setNeutralMode(NeutralMode.Brake);
+        rearLeftWheel.setNeutralMode(NeutralMode.Brake);
 
-        frontRightWheel.changeControlMode(ControlMode.Speed);
+        frontRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
         frontRightWheel.setPID(kP, kI, kD);
         frontRightWheel.reverseSensor(true);
 
-        frontLeftWheel.changeControlMode(ControlMode.Speed);
+        frontLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
         frontLeftWheel.setPID(kP, kI, kD);
         frontLeftWheel.reverseSensor(true);
 
-        rearRightWheel.changeControlMode(ControlMode.Speed);
+        rearRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
         rearRightWheel.setPID(kP, kI, kD);
         rearRightWheel.reverseSensor(true);
 
-        rearLeftWheel.changeControlMode(ControlMode.Speed);
+        rearLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
         rearLeftWheel.setPID(kP, kI, kD);
         rearLeftWheel.reverseSensor(true);
 
         getGyro = true;
 
-        SerialPort temp = new SerialPort(57600, Port.kMXP);
-
-        IMUGyro = new AHRS(temp);
+        IMUGyro = new AHRS(Port.kMXP);
 
         IMUGyro.zeroYaw();
 
@@ -122,35 +121,35 @@ public class Chassis extends Subsystem {
         SmartDashboard.putNumber("Bus Voltage", frontRightWheel.getBusVoltage());
         SmartDashboard.putNumber("Closed Loop Error", frontRightWheel.getClosedLoopError());
 
-        frontRightWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        frontRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
         printPositionsToSmartDashboard();
 
-        frontLeftWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        frontLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
 
-        rearRightWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        rearRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
 
-        rearLeftWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        rearLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
 
-        frontLeftWheel.set((SmartDashboard.getNumber("Front Left")) * 750);
-        frontRightWheel.set((SmartDashboard.getNumber("Front Right")) * 750);
-        rearRightWheel.set((SmartDashboard.getNumber("Rear Right")) * 750);
-        rearLeftWheel.set(SmartDashboard.getNumber("Rear Left") * 750);
+        frontLeftWheel.set((SmartDashboard.getNumber("Front Left", 0)) * 750);
+        frontRightWheel.set((SmartDashboard.getNumber("Front Right", 0)) * 750);
+        rearRightWheel.set((SmartDashboard.getNumber("Rear Right", 0)) * 750);
+        rearLeftWheel.set(SmartDashboard.getNumber("Rear Left", 0) * 750);
     }
 
     /**

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import com.ctre.CANTalon;
@@ -45,14 +47,14 @@ public class Shooter extends Subsystem {
         lowShooterMotor.changeControlMode(TalonControlMode.Speed);
         highShooterMotor.changeControlMode(TalonControlMode.Speed);
 
-        lowShooterMotor.enableBrakeMode(false);
-        highShooterMotor.enableBrakeMode(false);
+        lowShooterMotor.setNeutralMode(NeutralMode.Coast);
+        highShooterMotor.setNeutralMode(NeutralMode.Coast);
 
         setupEncoder(lowShooterMotor);
         setupEncoder(highShooterMotor);
 
-        LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
-        LiveWindow.addActuator("Shooter", "high", highShooterMotor);
+        addChild("low", lowShooterMotor);
+        addChild("high", highShooterMotor);
 
         // PID Values
         lowShooterMotor.setF(0.04407); // see p 17 of motion profile manual
@@ -70,8 +72,8 @@ public class Shooter extends Subsystem {
         highShooterMotor.setI(0.0);
         highShooterMotor.setD(0.0);
 
-        LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
-        LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
+        addChild("lowShooterMotor", lowShooterMotor);
+        addChild("highShooterMotor", highShooterMotor);
     }
 
     public void runHighShooterMotor() {
@@ -126,7 +128,7 @@ public class Shooter extends Subsystem {
 
     public void setupEncoder(CANTalon talon) { // call on both talons
         // Set Encoder Types
-        talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+        talon.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
         talon.reverseSensor(false);
     }
 

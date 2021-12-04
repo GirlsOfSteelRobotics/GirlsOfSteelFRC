@@ -20,7 +20,7 @@ public class Loader extends Subsystem {
     public Loader() {
         loaderMotor = new CANTalon(RobotMap.LOADER_MOTOR);
 
-        LiveWindow.addActuator("Loader", "loaderMotor", loaderMotor);
+        addChild("loaderMotor", loaderMotor);
     }
 
     public void loadBall(double speed) {

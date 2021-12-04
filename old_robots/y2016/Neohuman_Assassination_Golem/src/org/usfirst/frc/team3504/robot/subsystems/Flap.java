@@ -1,12 +1,12 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -19,16 +19,16 @@ public class Flap extends Subsystem {
 
     public Flap(){
         flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
-        LiveWindow.addActuator("Flap", "Talon", flapTalon);
+        addChild("Talon", flapTalon);
 
         if(RobotMap.USING_LIMIT_SWITCHES) {
-            flapTalon.ConfigFwdLimitSwitchNormallyOpen(false);
-            flapTalon.ConfigRevLimitSwitchNormallyOpen(false);
+            flapTalon.configFwdLimitSwitchNormallyOpen(false);
+            flapTalon.configRevLimitSwitchNormallyOpen(false);
         }
         else {
             flapTalon.enableLimitSwitch(false, false);
         }
-        flapTalon.enableBrakeMode(true);
+        flapTalon.setNeutralMode(NeutralMode.Brake);
     }
 
     public void initDefaultCommand() {
@@ -57,10 +57,10 @@ public class Flap extends Subsystem {
 
     //assuming that going forward will raise the flap and going backwards will lower the flap
     public boolean getTopLimitSwitch(){
-        return flapTalon.isFwdLimitSwitchClosed();
+        return flapTalon.isFwdLimitSwitchClosed() == 0;
     }
     public boolean getBottomLimitSwitch(){
-        return flapTalon.isRevLimitSwitchClosed();
+        return flapTalon.isRevLimitSwitchClosed() == 0;
     }
 
     public double getFlapEncoder() {

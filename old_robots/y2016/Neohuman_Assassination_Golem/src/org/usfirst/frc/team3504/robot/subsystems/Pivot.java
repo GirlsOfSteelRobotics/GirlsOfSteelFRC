@@ -1,11 +1,11 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -21,16 +21,16 @@ public class Pivot extends Subsystem {
     public Pivot() {
 
         pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
-        LiveWindow.addActuator("Pivot", "Talon", pivotMotor);
+        addChild("Talon", pivotMotor);
 
         if(RobotMap.USING_LIMIT_SWITCHES) {
-            pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
-            pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
+            pivotMotor.configFwdLimitSwitchNormallyOpen(false);
+            pivotMotor.configRevLimitSwitchNormallyOpen(false);
         }
         else {
             pivotMotor.enableLimitSwitch(false, false);
         }
-        pivotMotor.enableBrakeMode(true);
+        pivotMotor.setNeutralMode(NeutralMode.Brake);
 
     }
 
@@ -54,11 +54,11 @@ public class Pivot extends Subsystem {
     }
 
     public boolean getTopLimitSwitch(){
-        return !pivotMotor.isRevLimitSwitchClosed();
+        return pivotMotor.isRevLimitSwitchClosed() == 0;
     }
 
     public boolean getBottomLimitSwitch(){
-        return !pivotMotor.isFwdLimitSwitchClosed();
+        return pivotMotor.isFwdLimitSwitchClosed() == 0;
     }
 
     public double getEncoderRight() {

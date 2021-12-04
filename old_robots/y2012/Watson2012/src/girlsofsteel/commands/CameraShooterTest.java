@@ -9,12 +9,12 @@ public class CameraShooterTest extends CommandBase {
     public CameraShooterTest() {
         requires(shooter);
         requires(collector);
-        SmartDashboard.putDouble("CST,speed", 0.0);
+        SmartDashboard.putNumber("CST,speed", 0.0);
         SmartDashboard.putBoolean("shoot", false);
         SmartDashboard.putBoolean("top rollers", false);
         SmartDashboard.putBoolean("collectors", false);
-        SmartDashboard.putDouble("CST,P", 0.0);
-        SmartDashboard.putDouble("CST,I", 0.0);
+        SmartDashboard.putNumber("CST,P", 0.0);
+        SmartDashboard.putNumber("CST,I", 0.0);
     }
 
     protected void initialize() {
@@ -23,8 +23,8 @@ public class CameraShooterTest extends CommandBase {
     }
 
     protected void execute() {
-        shooter.setPIDValues(SmartDashboard.getDouble("CST,P",0.0), SmartDashboard.getDouble("CST,I",0.0),0.0);
-        speed = SmartDashboard.getDouble("CST,speed", 0.0);
+        shooter.setPIDValues(SmartDashboard.getNumber("CST,P",0.0), SmartDashboard.getNumber("CST,I",0.0),0.0);
+        speed = SmartDashboard.getNumber("CST,speed", 0.0);
         if(SmartDashboard.getBoolean("collectors", false)){
             collector.reverseBrush();
             collector.reverseMiddleConveyor();
@@ -43,7 +43,7 @@ public class CameraShooterTest extends CommandBase {
             shooter.setPIDSpeed(0.0);
         }
         SmartDashboard.putBoolean("ready to shoot", shooter.isWithinSetPoint(speed));
-        SmartDashboard.putDouble("Enc rate shoot: ", shooter.getEncoderRate());
+        SmartDashboard.putNumber("Enc rate shoot: ", shooter.getEncoderRate());
     }
 
     protected boolean isFinished() {

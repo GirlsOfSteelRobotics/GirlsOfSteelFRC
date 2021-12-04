@@ -156,8 +156,6 @@ public class Chassis extends Subsystem {
         rightEncoder.setDistancePerPulse(rightDistancePerPulsePosition);
         leftEncoder.setDistancePerPulse(leftDistancePerPulsePosition);
 
-        rightEncoder.start();
-        leftEncoder.start();
 
     }
 
@@ -187,8 +185,6 @@ public class Chassis extends Subsystem {
     }
 
     public void stopEncoders() {
-        rightEncoder.stop();
-        leftEncoder.stop();
     }
 
     public double getLeftRaw() {

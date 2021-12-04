@@ -7,8 +7,8 @@ public class TESTAutonomousMoveToBridgeCamera extends CommandGroup {
     public TESTAutonomousMoveToBridgeCamera(){
         requires(CommandBase.chassis);
 //        SmartDashboard.putBoolean("Camera?", false);
-//        SmartDashboard.putDouble("Distc ance from backboard to bridge", 0.0);
-//        SmartDashboard.putDouble("Distance from robot to bridge", 0.0);
+//        SmartDashboard.putNumber("Distc ance from backboard to bridge", 0.0);
+//        SmartDashboard.putNumber("Distance from robot to bridge", 0.0);
 //        if(Camera.isConnected() && SmartDashboard.getBoolean("Camera?", false)){
 //            double distance = SmartDashboard.getDouble("Distance from backboard to bridge",
 //                0.0) - Camera.getXDistance();

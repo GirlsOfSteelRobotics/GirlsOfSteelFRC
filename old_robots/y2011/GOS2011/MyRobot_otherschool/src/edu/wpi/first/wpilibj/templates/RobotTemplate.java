@@ -9,6 +9,7 @@ package edu.wpi.first.wpilibj.templates;
 
 import com.sun.squawk.util.MathUtils;
 
+import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 //  import edu.wpi.first.wpilibj.DriverStation;
@@ -18,7 +19,6 @@ import edu.wpi.first.wpilibj.Joystick;
 //  import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.addons.CANJaguar;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -42,7 +42,7 @@ public class RobotTemplate extends IterativeRobot {
     CANJaguar possesR = new CANJaguar(7);
 
     // the kicker
-    CANJaguar kicker = new CANJaguar(9, CANJaguar.ControlMode.kPercentVoltage);
+    CANJaguar kicker = new CANJaguar(9, CANJaguar.TalonControlMode.kPercentVoltage);
 
     RobotDrive myDrive = new RobotDrive(driveFL, driveRL, driveFR, driveRR);
 
@@ -165,13 +165,13 @@ public class RobotTemplate extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        driveFL.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-        driveRL.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-        driveFR.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-        driveRR.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-        possesL.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-        possesR.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-        kicker.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+        driveFL.setNeutralMode(NeutralMode.kCoast);
+        driveRL.setNeutralMode(NeutralMode.kCoast);
+        driveFR.setNeutralMode(NeutralMode.kCoast);
+        driveRR.setNeutralMode(NeutralMode.kCoast);
+        possesL.setNeutralMode(NeutralMode.kBrake);
+        possesR.setNeutralMode(NeutralMode.kBrake);
+        kicker.setNeutralMode(NeutralMode.kBrake);
 
         myDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         myDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);

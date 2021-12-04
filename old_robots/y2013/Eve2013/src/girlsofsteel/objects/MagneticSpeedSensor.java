@@ -4,6 +4,7 @@
 package girlsofsteel.objects;
 
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 
 /**
  *
@@ -25,5 +26,15 @@ public class MagneticSpeedSensor implements PIDSource {
 
     public double pidGet() {
         return get();
+    }
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        throw new UnsupportedOperationException();
     }
 }

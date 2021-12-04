@@ -12,38 +12,38 @@ include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
 include 'libraries:GirlsOfSteelLibNavx'
 
-//include 'old_robots:LegacyLibraries'
-//
+include 'old_robots:LegacyLibraries'
+
 //include 'old_robots:y2011:GOS2011:Drive'
 //include 'old_robots:y2011:GOS2011:MyRobot_otherschool'
 //include 'old_robots:y2011:GOS2011:robolatest'
-//
-//include 'old_robots:y2012:Watson2012'
-//
-//include 'old_robots:y2013:Eve2013'
-//
-//include 'old_robots:y2014:GOS2014'
-//
-//include 'old_robots:y2015:Atlas2015Port'
-//include 'old_robots:y2015:BlueTeamEOPP'
-//include 'old_robots:y2015:GoS2015'
-//include 'old_robots:y2015:OrangeEOPP'
-//
-//include 'old_robots:y2016:Neohuman_Assassination_Golem'
-//include 'old_robots:y2016:OutreachBot'
-//include 'old_robots:y2016:TeamFBI_EOPP'
-//include 'old_robots:y2016:TeamSquirtle'
-//
-//include 'old_robots:y2017:Secondary_Human_Training_Golem'
-//include 'old_robots:y2017:Team1'
-//include 'old_robots:y2017:Team_2'
-//
-//
-//include 'y2018:2018Beta'
-//include 'y2018:2018PowerUp'
-//
-//include 'y2019:2019DeepSpace'
-//include 'y2019:OffenseBot'
+
+include 'old_robots:y2012:Watson2012'
+
+include 'old_robots:y2013:Eve2013'
+
+include 'old_robots:y2014:GOS2014'
+
+include 'old_robots:y2015:Atlas2015Port'
+include 'old_robots:y2015:BlueTeamEOPP'
+include 'old_robots:y2015:GoS2015'
+include 'old_robots:y2015:OrangeEOPP'
+
+include 'old_robots:y2016:Neohuman_Assassination_Golem'
+include 'old_robots:y2016:OutreachBot'
+include 'old_robots:y2016:TeamFBI_EOPP'
+include 'old_robots:y2016:TeamSquirtle'
+
+include 'old_robots:y2017:Secondary_Human_Training_Golem'
+include 'old_robots:y2017:Team1'
+include 'old_robots:y2017:Team_2'
+
+
+include 'y2018:2018Beta'
+include 'y2018:2018PowerUp'
+
+include 'y2019:2019DeepSpace'
+include 'y2019:OffenseBot'
 
 include 'y2020:2020InfiniteRecharge'
 include 'y2020:2020InfiniteRechargeDashboard'

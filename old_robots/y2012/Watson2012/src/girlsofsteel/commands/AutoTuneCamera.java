@@ -83,7 +83,7 @@ public class AutoTuneCamera extends CommandBase {
                 //facing the bridge
                 imageTargetRatioData[count] = ratio;
                 distanceData[count] = (chassis.getRightEncoderDistance())+1.45;
-                SmartDashboard.putDouble("Chassis Encoder",
+                SmartDashboard.putNumber("Chassis Encoder",
                         chassis.getRightEncoderDistance());
                 System.out.println(distanceData[count] + ", " + ratio +
                         " CD=" + distCamera + " Err=" + (distCamera -

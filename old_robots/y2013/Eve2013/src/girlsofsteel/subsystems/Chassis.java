@@ -1,8 +1,10 @@
     package girlsofsteel.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -222,7 +224,7 @@ public class Chassis extends Subsystem {
                     }
                 }, GoSPIDController.POSITION);
 
-        gyro = new Gyro(RobotMap.GYRO_PORT);
+        gyro = new AnalogGyro(RobotMap.GYRO_PORT);
 
         gyroOn = false;
         rotating = false;
@@ -257,9 +259,6 @@ public class Chassis extends Subsystem {
         rightEncoder.setDistancePerPulse(RIGHT_ENCODER_UNIT);
         backEncoder.setDistancePerPulse(BACK_ENCODER_UNIT);
         leftEncoder.setDistancePerPulse(LEFT_ENCODER_UNIT);
-        rightEncoder.start();
-        backEncoder.start();
-        leftEncoder.start();
     }
 
     public double getRightEncoderDistance() {
@@ -286,9 +285,6 @@ public double getLeftEncoderDistance() {
     }
 
     public void stopEncoders() {
-        rightEncoder.stop();
-        backEncoder.stop();
-        leftEncoder.stop();
     }
 
     //PIDs
@@ -301,9 +297,9 @@ public double getLeftEncoderDistance() {
         leftEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
         */
         //for GoS PID
-        rightEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        backEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        leftEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+        rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        backEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
         rightPIDRate.enable();
         backPIDRate.enable();
         leftPIDRate.enable();
@@ -351,9 +347,9 @@ public double getLeftEncoderDistance() {
     }
 
     public void initHoldPosition(){
-        rightEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        backEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        leftEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+        rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        backEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
         rightPIDPosition.setPID(rightPositionP, rightPositionI, rightPositionD);
         backPIDPosition.setPID(backPositionP, backPositionI, backPositionD);
         leftPIDPosition.setPID(leftPositionP, leftPositionI, leftPositionD);

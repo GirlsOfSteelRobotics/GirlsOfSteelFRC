@@ -3,7 +3,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,18 +26,18 @@ public class DriveSystem extends Subsystem {
 
     public DriveSystem() {
         driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Left A", driveLeftA);
+        //addChild("Drive Left A", driveLeftA);
         driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Left B", driveLeftB);
+        //addChild("Drive Left B", driveLeftB);
         driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Left C", driveLeftC);
+        //addChild("Drive Left C", driveLeftC);
 
         driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Right A", driveRightA);
+        //addChild("Drive Right A", driveRightA);
         driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Right B", driveRightB);
+        //addChild("Drive Right B", driveRightB);
         driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Right C", driveRightC);
+        //addChild("Drive Right C", driveRightC);
 
         // On each side, all three drive motors MUST run at the same speed.
         // Use the CAN Talon Follower mode to set the speed of B and C,

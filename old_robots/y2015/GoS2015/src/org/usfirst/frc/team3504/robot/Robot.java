@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
         Robot.chassis.resetGyro();
         oi = new OI();
         autoChooser = new SendableChooser();
-        autoChooser.addDefault("Right Autonomous", new RightAutonomous());
+        //autoChooser.addDefault("Right Autonomous", new RightAutonomous());
         //autoChooser.addDefault("AutoDriveRight", new AutoDriveRight(100));
         //autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft(150));
         //autoChooser.addObject("AutoDriveForward", new AutoDriveForward(50));
@@ -121,7 +121,6 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-        LiveWindow.run();
     }
 
 }

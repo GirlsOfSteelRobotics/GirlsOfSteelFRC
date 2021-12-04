@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.cscore.MjpegServer;
@@ -21,14 +22,18 @@ public class Camera extends Subsystem {
     public Camera() {
         camGear = new UsbCamera("camGear", RobotMap.CAMERA_GEAR);
         camGear.setResolution(320, 240);
-        camGear.setFPS(10);
         camClimb = new UsbCamera("camClimb", RobotMap.CAMERA_CLIMB);
         camClimb.setResolution(320, 240);
-        camClimb.setFPS(10);
         visionCam = new UsbCamera("visionCam", RobotMap.VISION_CAMERA);
         visionCam.setResolution(320, 240);
-        visionCam.setFPS(10);
         visionCam.setExposureManual(16);
+
+        if (RobotBase.isReal()) {
+            camGear.setFPS(10);
+            camClimb.setFPS(10);
+            visionCam.setFPS(10);
+        }
+
         CameraServer.getInstance().addCamera(camGear);
         CameraServer.getInstance().addCamera(camClimb);
         CameraServer.getInstance().addCamera(visionCam);

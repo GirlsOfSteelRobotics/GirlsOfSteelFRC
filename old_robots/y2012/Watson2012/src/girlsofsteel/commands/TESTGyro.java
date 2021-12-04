@@ -12,9 +12,9 @@ public class TESTGyro extends CommandBase {
     }
 
     protected void execute() {
-        SmartDashboard.putDouble("Gyro Angle",chassis.getTheta());
-        SmartDashboard.putDouble("Turret Encoder Angle",turret.getEncoderDistance());
-        SmartDashboard.putDouble("Turret Angle (Summation)", turret.getTurretAngle());
+        SmartDashboard.putNumber("Gyro Angle",chassis.getTheta());
+        SmartDashboard.putNumber("Turret Encoder Angle",turret.getEncoderDistance());
+        SmartDashboard.putNumber("Turret Angle (Summation)", turret.getTurretAngle());
     }
 
     protected boolean isFinished() {

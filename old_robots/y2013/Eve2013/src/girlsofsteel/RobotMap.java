@@ -130,7 +130,7 @@ public class RobotMap {
     public static final int OPEN_MIDDLE_GRIPPER_SOLENOID = 4;
     public static final int CLOSE_MIDDLE_GRIPPER_SOLENOID = 3;
     public static final int OPEN_BOTTOM_GRIPPER_SOLENOID = 7;
-    public static final int CLOSE_BOTTOM_GRIPPER_SOLENOID = 8;
+    public static final int CLOSE_BOTTOM_GRIPPER_SOLENOID = 6;
     //blocker
     public static final int BLOCKER_MODULE = 2;
     public static final int OPEN_BLOCKER_SOLENOID = 1;

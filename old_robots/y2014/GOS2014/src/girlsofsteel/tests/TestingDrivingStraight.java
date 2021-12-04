@@ -29,8 +29,8 @@ public class TestingDrivingStraight extends CommandBase{
     }
 
     protected void execute() {
-        double RightJagAdjust = SmartDashboard.getNumber("RightJagAdjust");
-        double LeftJagAdjust = SmartDashboard.getNumber("LeftJagAdjust");
+        double RightJagAdjust = SmartDashboard.getNumber("RightJagAdjust", 0);
+        double LeftJagAdjust = SmartDashboard.getNumber("LeftJagAdjust", 0);
         chassis.setLeftJag(.5 * LeftJagAdjust);
         chassis.setRightJag(.5 * RightJagAdjust);
         SmartDashboard.putNumber("ActualSpeedLeft",chassis.getRateLeftEncoder());

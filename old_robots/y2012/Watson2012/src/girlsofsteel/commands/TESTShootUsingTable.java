@@ -11,8 +11,8 @@ public class TESTShootUsingTable extends CommandBase {
 
     public TESTShootUsingTable() {
         requires(shooter);
-//        SmartDashboard.putDouble("Bank Addition", 0.0);
-        SmartDashboard.putDouble("Distance", 0.0);
+//        SmartDashboard.putNumber("Bank Addition", 0.0);
+        SmartDashboard.putNumber("Distance", 0.0);
     }
 
     protected void initialize() {
@@ -22,11 +22,11 @@ public class TESTShootUsingTable extends CommandBase {
     }
 
     protected void execute() {
-//        addition = SmartDashboard.getDouble("Bank Addition", 0.0);
+//        addition = SmartDashboard.getNumber("Bank Addition", 0.0);
 //        shooter.TESTAutoShootBank(addition,cameraDistance);
-        distance = SmartDashboard.getDouble("Distance", 0.0);
+        distance = SmartDashboard.getNumber("Distance", 0.0);
         shooter.autoShoot(distance);
-        SmartDashboard.putDouble("Shooter Encoder",shooter.getEncoderRate());
+        SmartDashboard.putNumber("Shooter Encoder",shooter.getEncoderRate());
     }
 
     protected boolean isFinished() {

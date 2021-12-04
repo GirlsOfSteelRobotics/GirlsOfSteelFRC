@@ -16,7 +16,6 @@ public class SmoothEncoder extends Encoder {
     }
 
     public void start() {
-        super.start();
         totalDataPoints = 0;
     }
 

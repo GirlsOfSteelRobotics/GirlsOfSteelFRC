@@ -31,7 +31,7 @@ public class TestKickerEncoder extends CommandBase {
     }
 
     protected void execute() {
-        direction = SmartDashboard.getNumber("Direction");
+        direction = SmartDashboard.getNumber("Direction", 0);
         if (direction == 1) {
             kicker.setTalon(0.5);
         } else if (direction == -1) {

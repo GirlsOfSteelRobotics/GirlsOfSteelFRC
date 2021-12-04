@@ -32,7 +32,7 @@ public class TestPivotArmPID extends CommandBase{
     }
 
     protected void execute() {
-        //desiredAngle = SmartDashboard.getNumber("Pivot Angle");
+        //desiredAngle = SmartDashboard.getNumber("Pivot Angle", 0);
         //manipulator.setSetPoint(desiredAngle);
         currentAngle = manipulator.getAbsoluteDistance();
         SmartDashboard.putNumber("Pivot Arm Encoder Value", currentAngle);

@@ -17,10 +17,10 @@ public class AccessoryMotors extends Subsystem {
 
     public AccessoryMotors() {
         accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);
-        LiveWindow.addActuator("Accessory Motors", "Accessory Left", accessoryLeft);
+        addChild("Accessory Left", accessoryLeft);
 
         accessoryRight = new Victor(RobotMap.ACCESSORY_RIGHT_PORT);
-        LiveWindow.addActuator("Accessory Motors", "Accessory Right", accessoryRight);
+        addChild("Accessory Right", accessoryRight);
     }
 
     public void initDefaultCommand() {

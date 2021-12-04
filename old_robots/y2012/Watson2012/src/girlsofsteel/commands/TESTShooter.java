@@ -7,7 +7,7 @@ public class TESTShooter extends CommandBase {
     double speed;
 
     public TESTShooter(){
-        SmartDashboard.putDouble("Shooter Jag Speed", 0.0);
+        SmartDashboard.putNumber("Shooter Jag Speed", 0.0);
     }
 
     protected void initialize() {
@@ -15,9 +15,9 @@ public class TESTShooter extends CommandBase {
     }
 
     protected void execute() {
-        speed = SmartDashboard.getDouble("Shooter Jag Speed", 0.0);
+        speed = SmartDashboard.getNumber("Shooter Jag Speed", 0.0);
         shooter.setJags(speed);
-        SmartDashboard.putDouble("Shooter Encoder", shooter.getEncoderRate());
+        SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
     }
 
     protected boolean isFinished() {

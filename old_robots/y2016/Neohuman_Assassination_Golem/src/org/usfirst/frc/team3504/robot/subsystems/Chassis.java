@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team3504.robot.Robot;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
@@ -54,12 +55,12 @@ public class Chassis extends Subsystem implements PIDOutput{
         driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
         driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
 
-        driveLeftA.enableBrakeMode(true);
-        driveLeftB.enableBrakeMode(true);
-        driveLeftC.enableBrakeMode(true);
-        driveRightA.enableBrakeMode(true);
-        driveRightB.enableBrakeMode(true);
-        driveRightC.enableBrakeMode(true);
+        driveLeftA.setNeutralMode(NeutralMode.Brake);
+        driveLeftB.setNeutralMode(NeutralMode.Brake);
+        driveLeftC.setNeutralMode(NeutralMode.Brake);
+        driveRightA.setNeutralMode(NeutralMode.Brake);
+        driveRightB.setNeutralMode(NeutralMode.Brake);
+        driveRightC.setNeutralMode(NeutralMode.Brake);
 
         robotDrive = new RobotDrive(driveLeftA, driveRightA);
 
@@ -79,8 +80,8 @@ public class Chassis extends Subsystem implements PIDOutput{
         driveRightC.set(driveRightA.getDeviceID());
 
 
-        LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
-        LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
+        addChild("driveLeftA", driveLeftA);
+        addChild("driveRightA", driveRightA);
 
         //for the NavBoards
 /**

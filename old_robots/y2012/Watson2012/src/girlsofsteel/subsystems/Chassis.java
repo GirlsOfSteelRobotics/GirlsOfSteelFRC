@@ -1,9 +1,10 @@
 package girlsofsteel.subsystems;
 
 import com.sun.squawk.util.MathUtils;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -32,7 +33,7 @@ public class Chassis extends Subsystem {
     private final Jaguar rightJags = new Jaguar(RobotMap.RIGHT_JAGS);
     private final Jaguar leftJags = new Jaguar(RobotMap.LEFT_JAGS);
     //create gyro
-    private Gyro gyro = new Gyro(RobotMap.GYRO_RATE_ANALOG);
+    private Gyro gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
     //create stuff for encoders
     //CHANGE FOR REAL WATSON:
     private Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
@@ -467,8 +468,6 @@ public class Chassis extends Subsystem {
         leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
 //        rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
 //        leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
-        rightEncoder.start();
-        leftEncoder.start();
     }
 
     public double getRightEncoderDistance() {
@@ -493,8 +492,6 @@ public class Chassis extends Subsystem {
     }
 
     public void endEncoders() {
-        rightEncoder.stop();
-        leftEncoder.stop();
     }
 
     public boolean isMoving() {

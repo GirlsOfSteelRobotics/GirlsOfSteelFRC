@@ -39,13 +39,13 @@ public class ManualPositionPIDTuner extends CommandBase {
 
     protected void execute() {
         if (pid) {
-            setpoint = SmartDashboard.getNumber("Chassis Position setpoint");
-            p = SmartDashboard.getNumber("Position P: ");
-            i = SmartDashboard.getNumber("Position I: ");
-            d = SmartDashboard.getNumber("Position D: ");
+            setpoint = SmartDashboard.getNumber("Chassis Position setpoint", 0);
+            p = SmartDashboard.getNumber("Position P: ", 0);
+            i = SmartDashboard.getNumber("Position I: ", 0);
+            d = SmartDashboard.getNumber("Position D: ", 0);
         }
 
-        reset = SmartDashboard.getBoolean("Resetencoder");
+        reset = SmartDashboard.getBoolean("Resetencoder", false);
 
         if (reset) {
             chassis.resetEncoders();
