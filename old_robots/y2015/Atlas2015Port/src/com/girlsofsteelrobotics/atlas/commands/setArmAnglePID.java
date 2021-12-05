@@ -19,11 +19,11 @@ import com.girlsofsteelrobotics.atlas.Configuration;
  */
 public class setArmAnglePID extends CommandBase {
 
-    private double desiredAngle;
+    private final double desiredAngle;
     private double angle;
     private double changedTime;
-    private double startTime;
-    private double allowedAngleError;
+    private final double startTime;
+    private final double allowedAngleError;
 
 
     public setArmAnglePID(double desiredAngle) {
@@ -33,10 +33,12 @@ public class setArmAnglePID extends CommandBase {
         startTime = Timer.getFPGATimestamp();
     }
 
+    @Override
     protected void initialize() {
         angle = desiredAngle * Configuration.desiredAnglePivotArmSign;
     }
 
+    @Override
     protected void execute() {
         if (angle < -18.2) {
             angle = -18.2;
@@ -50,14 +52,17 @@ public class setArmAnglePID extends CommandBase {
         changedTime = Timer.getFPGATimestamp() - startTime;
     }
 
+    @Override
     protected boolean isFinished() {
         return Math.abs(desiredAngle-manipulator.getAbsoluteDistance()) < allowedAngleError;
     }
 
+    @Override
     protected void end() {
         manipulator.holdAngle();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

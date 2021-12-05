@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoShoot extends CommandGroup {
 
-    private double angle = CommandBase.camera.getVerticalAngleOffset();
-    private boolean shoot = false;
-    private double error = 1; //magic
+    private final double angle = CommandBase.camera.getVerticalAngleOffset();
+    private final boolean shoot = false;
+    private final double error = 1; //magic
 
     public AutoShoot() {
         addSequential(new setArmAnglePID(angle));

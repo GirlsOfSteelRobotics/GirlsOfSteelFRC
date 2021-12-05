@@ -8,7 +8,6 @@ import org.usfirst.frc.team3504.robot.commands.StayClimbed;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -47,6 +46,7 @@ public class Climber extends Subsystem {
         climbMotorB.set(0.0);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

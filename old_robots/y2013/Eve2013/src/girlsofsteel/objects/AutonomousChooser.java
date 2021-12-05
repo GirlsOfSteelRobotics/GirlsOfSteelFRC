@@ -9,8 +9,8 @@ import girlsofsteel.commands.DoNothing;
 
 public class AutonomousChooser {
 
-    SendableChooser chooser;
-    Command autonomousCommand;
+    private final SendableChooser chooser;
+    private Command autonomousCommand;
 
     public AutonomousChooser(){
         chooser = new SendableChooser();

@@ -16,6 +16,7 @@ import girlsofsteel.objects.SmoothEncoder;
  * Chassis subsystem for kiwi drive: creates jags, encoders, PID, & drive
  * function. UNIT: inches
  */
+@SuppressWarnings("PMD.ExcessivePublicCount")
 public class Chassis extends Subsystem {
 
     //tentative angles from 0 being straight forward
@@ -61,20 +62,20 @@ public class Chassis extends Subsystem {
     public static final double BACK_WHEEL_ROBOT_RADIUS = 11.16635; // for Eve: Y_LENGTH;
     public static final double LEFT_WHEEL_ROBOT_RADIUS = RIGHT_WHEEL_ROBOT_RADIUS; // value = 21.60873
             // for Eve: Math.sqrt((X_LENGTH*X_LENGTH)+(Y_LENGTH*Y_LENGTH));
-    private double[] wheelXs = new double[3];
-    private double[] wheelYs = new double[3];
-    private double[] wheelRadii = new double[3];
+    private final double[] wheelXs = new double[3];
+    private final double[] wheelYs = new double[3];
+    private final double[] wheelRadii = new double[3];
     //encoder info
     public static final boolean REVERSE_DIRECTION = true;
 
     //create jags
-    private Jaguar rightJag;
-    private Jaguar backJag;
-    private Jaguar leftJag;
+    private final Jaguar rightJag;
+    private final Jaguar backJag;
+    private final Jaguar leftJag;
     //create encoders
-    private Encoder rightEncoder;
-    private Encoder backEncoder;
-    private Encoder leftEncoder;
+    private final Encoder rightEncoder;
+    private final Encoder backEncoder;
+    private final Encoder leftEncoder;
     private static final double ENCODER_PULSES = 360.0;//CHANGE for real robot
     private static final double RIGHT_ENCODER_UNIT = (WHEEL_DIAMETER * Math.PI
             * GEAR_RATIO) / ENCODER_PULSES;
@@ -87,12 +88,12 @@ public class Chassis extends Subsystem {
 //    private PIDController backPIDRate;
 //    private PIDController leftPIDRate;
     //create GoSPID
-    private GoSPIDController rightPIDRate;
-    private GoSPIDController backPIDRate;
-    private GoSPIDController leftPIDRate;
-    private GoSPIDController rightPIDPosition;
-    private GoSPIDController backPIDPosition;
-    private GoSPIDController leftPIDPosition;
+    private final GoSPIDController rightPIDRate;
+    private final GoSPIDController backPIDRate;
+    private final GoSPIDController leftPIDRate;
+    private final GoSPIDController rightPIDPosition;
+    private final GoSPIDController backPIDPosition;
+    private final GoSPIDController leftPIDPosition;
     private static final double rightP = 0.0;//CHANGE for real robot
     private static final double rightI = 0.0;//CHANGE for real robot
     private static final double rightD = 0.0;//CHANGE for real robot
@@ -112,13 +113,13 @@ public class Chassis extends Subsystem {
     private static final double leftPositionI = 0.0;//CHANGE for real robot
     private static final double leftPositionD = 0.0;//CHANGE for real robot
     //gryo
-    private Gyro gyro;
+    private final Gyro gyro;
     private boolean gyroOn;
     private boolean rotating;
     private boolean manualRotationDisabled;
     private boolean negative;
-    double gyroAdjustment;
-    double fieldAdjustment;
+    private double gyroAdjustment;
+    private double fieldAdjustment;
 
     public Chassis() {
         //wheel x & ys
@@ -184,18 +185,21 @@ public class Chassis extends Subsystem {
         //GoSPID
         rightPIDRate = new GoSPIDController(rightP, rightI, rightD,
                 rightEncoder, new PIDOutput(){
+                    @Override
                     public void pidWrite(double output){
                         setRightJag(output);
                     }
                 }, GoSPIDController.RATE); //ADD integral constant
         backPIDRate = new GoSPIDController(backP, backI, backD, backEncoder,
                 new PIDOutput(){
+                    @Override
                     public void pidWrite(double output){
                         setBackJag(output);
                     }
                 }, GoSPIDController.RATE);//ADD integral constant
         leftPIDRate = new GoSPIDController(leftP, leftI, leftD, leftEncoder,
                 new PIDOutput(){
+                    @Override
                     public void pidWrite(double output){
                         setLeftJag(output);
                     }
@@ -205,6 +209,7 @@ public class Chassis extends Subsystem {
         rightPIDPosition = new GoSPIDController(rightPositionP, rightPositionI,
                 rightPositionD, rightEncoder,
                 new PIDOutput(){
+                    @Override
                     public void pidWrite(double output){
                         setRightJag(output);
                     }
@@ -212,6 +217,7 @@ public class Chassis extends Subsystem {
         backPIDPosition = new GoSPIDController(backPositionP, backPositionI,
                 backPositionD, backEncoder,
                 new PIDOutput(){
+                    @Override
                     public void pidWrite(double output){
                         setBackJag(output);
                     }
@@ -219,6 +225,7 @@ public class Chassis extends Subsystem {
         leftPIDPosition = new GoSPIDController(leftPositionP, leftPositionI,
                 leftPositionD, leftEncoder,
                 new PIDOutput(){
+                    @Override
                     public void pidWrite(double output){
                         setLeftJag(output);
                     }
@@ -447,10 +454,12 @@ public double getLeftEncoderDistance() {
         if(Math.abs(rightVoltage) > 1 || Math.abs(backVoltage) > 1 ||
                 Math.abs(leftVoltage) > 1){
             double max = Math.abs(rightVoltage);
-            if(max < Math.abs(backVoltage))
+            if(max < Math.abs(backVoltage)) {
                 max = Math.abs(backVoltage);
-            if(max < Math.abs(leftVoltage))
+            }
+            if(max < Math.abs(leftVoltage)) {
                 max = Math.abs(leftVoltage);
+            }
             rightVoltage = rightVoltage/max;
             backVoltage = backVoltage/max;
             leftVoltage = leftVoltage/max;
@@ -581,6 +590,7 @@ public double getLeftEncoderDistance() {
         }
     }
 
+    @Override
     public void initDefaultCommand() {
     }//end initDefaultCommand
 }//end Chassis subsystem

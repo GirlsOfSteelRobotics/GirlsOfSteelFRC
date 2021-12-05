@@ -6,24 +6,26 @@ public class AutoBridgeDown extends CommandBase {
         requires(bridge);
     }
 
+    @Override
     protected void initialize() {
     }
 
+    @Override
     protected void execute() {
         bridge.downBridgeArm();
     }
 
+    @Override
     protected boolean isFinished() {
-        if(timeSinceInitialized() > 3){
-            return true;
-        }
-        return false;
+        return timeSinceInitialized() > 3;
     }
 
+    @Override
     protected void end() {
         System.out.println("AutoBridgeDown Done");
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

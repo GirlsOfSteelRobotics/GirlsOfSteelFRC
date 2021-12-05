@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Collector extends Subsystem {
 
     // Talons
-    private CANTalon rightCollector;
-    private CANTalon leftCollector;
+    private final CANTalon rightCollector;
+    private final CANTalon leftCollector;
 
     // Pistons
-    private DoubleSolenoid collectorLeftSolenoid;
-    private DoubleSolenoid collectorRightSolenoid;
+    private final DoubleSolenoid collectorLeftSolenoid;
+    private final DoubleSolenoid collectorRightSolenoid;
 
     // Triggers (Collect/Release Tote Buttons)
-    private Joystick collectorTrigger;
+    private final Joystick collectorTrigger;
 
     private final static double speed = .5;
 
@@ -43,10 +43,12 @@ public class Collector extends Subsystem {
     }
 
     public void collectReleaseTote() {
-        if (collectorTrigger.getZ() < -0.5) // release
+        if (collectorTrigger.getZ() < -0.5) { // release
             collectorToteOut();
-        else if (collectorTrigger.getZ() > 0.5) // collect
+        }
+        else if (collectorTrigger.getZ() > 0.5) { // collect
             collectorToteIn();
+        }
         else {
             rightCollector.set(0);
             leftCollector.set(0);
@@ -95,6 +97,7 @@ public class Collector extends Subsystem {
         SmartDashboard.putBoolean("Collector Off", false);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());

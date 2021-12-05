@@ -1,53 +1,67 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.commands.buttons.*;
-import org.usfirst.frc.team3504.robot.commands.camera.*;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3504.robot.commands.CollectBall;
+import org.usfirst.frc.team3504.robot.commands.PivotDown;
+import org.usfirst.frc.team3504.robot.commands.PivotUp;
+import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShooterPistonsIn;
+import org.usfirst.frc.team3504.robot.commands.ShooterPistonsOut;
+import org.usfirst.frc.team3504.robot.commands.StopShooterWheels;
+import org.usfirst.frc.team3504.robot.commands.ShootBall;
+import org.usfirst.frc.team3504.robot.commands.FlapUp;
+import org.usfirst.frc.team3504.robot.commands.FlapDown;
+import org.usfirst.frc.team3504.robot.commands.PivotMiddle;
+import org.usfirst.frc.team3504.robot.commands.ResetEncoderDistance;
+import org.usfirst.frc.team3504.robot.commands.RotateToDesiredAngle;
+import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    public enum DriveDirection {kFWD, kREV};
+    public enum DriveDirection {kFWD, kREV}
 
     /**
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
      */
     //IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-    boolean rozieDrive = false;
+    private final boolean rozieDrive = false;
 
 
-    private Joystick drivingStickForward = new Joystick(0);
-    private Joystick drivingStickBackward = new Joystick(1);
+    private final Joystick drivingStickForward = new Joystick(0);
+    private final Joystick drivingStickBackward = new Joystick(1);
     // The button board gets plugged into USB and acts like a Joystick
-    private Joystick gamePad = new Joystick(2);
-    private Joystick buttonBoard = new Joystick(3);
+    private final Joystick gamePad = new Joystick(2);
+    private final Joystick buttonBoard = new Joystick(3);
     // The autonomous command selector is uses buttons 2-5
-    private Joystick autonSelector = new Joystick(4);
+    private final Joystick autonSelector = new Joystick(4);
 
     //Rozie's Nonsense: Project Droperation.
-    private Joystick roziePad = new Joystick(5);
+    private final Joystick roziePad = new Joystick(5);
 
 
 
     //JOYSTICK BUTTONS
     //private JoystickButton shiftUpButton;
-    private JoystickButton shiftDownButton;
+    private final JoystickButton shiftDownButton;
 
     //private JoystickButton shiftUpButton2; //for backwards joystick
-    private JoystickButton shiftDownButton2; //for backwards joystick
+    private final JoystickButton shiftDownButton2; //for backwards joystick
 
     private DriveDirection driveDirection = DriveDirection.kFWD;
 
-    private JoystickButton switchCam;
-    private JoystickButton switchCam2; //for backwards joystick
+    private final JoystickButton switchCam;
+    private final JoystickButton switchCam2; //for backwards joystick
 
-    private JoystickButton switchToForward;
-    private JoystickButton switchToBackward;
+    private final JoystickButton switchToForward;
+    private final JoystickButton switchToBackward;
 
     //ROZIE DECLARATIONS
     /**
@@ -74,22 +88,22 @@ public class OI {
     //private	JoystickButton rollersOutButtonBoard;
 
     //game pad
-    private JoystickButton collectBallButton;
-    private JoystickButton releaseBallButton;
-    private JoystickButton flapUp;
-    private JoystickButton flapDown;
+    private final JoystickButton collectBallButton;
+    private final JoystickButton releaseBallButton;
+    private final JoystickButton flapUp;
+    private final JoystickButton flapDown;
     //private JoystickButton flapUpRocker;
     //private JoystickButton flapDownRocker;
-    private JoystickButton pivotUp;
-    private JoystickButton pivotDown;
-    private JoystickButton pivotMiddle;
-    private JoystickButton testDesiredRotationAngle;  //for NavBoard
+    private final JoystickButton pivotUp;
+    private final JoystickButton pivotDown;
+    private final JoystickButton pivotMiddle;
+    private final JoystickButton testDesiredRotationAngle;  //for NavBoard
     //private JoystickButton resetGyro;
     //private JoystickButton shootBall;
     private JoystickButton shooterPistonsOut;
     private JoystickButton shooterPistonsIn;
-    private JoystickButton resetEncoders;
-    private JoystickButton shooterStop;
+    private final JoystickButton resetEncoders;
+    private final JoystickButton shooterStop;
 
 
     private static final int AXIS_DPAD = 6;

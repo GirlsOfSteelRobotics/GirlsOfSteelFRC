@@ -5,22 +5,23 @@ import girlsofsteel.commands.CommandBase;
 
 public class ChassisPID extends CommandBase {
 
-    double rate;
+    private double rate;
 
-    double rightP;
-    double rightI;
-    double rightD;
-    double backP;
-    double backI;
-    double backD;
-    double leftP;
-    double leftI;
-    double leftD;
+    private double rightP;
+    private double rightI;
+    private double rightD;
+    private double backP;
+    private double backI;
+    private double backD;
+    private double leftP;
+    private double leftI;
+    private double leftD;
 
     public ChassisPID(){
         requires(chassis);
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
         chassis.initRatePIDs();
@@ -43,6 +44,7 @@ public class ChassisPID extends CommandBase {
         SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderRate());
     }
 
+    @Override
     protected void execute() {
         //get rate
         rate = SmartDashboard.getNumber("PID rate", 0.0);
@@ -92,17 +94,20 @@ public class ChassisPID extends CommandBase {
                 chassis.getLeftEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return false; //from KiwiDrive
         //Eve:  return !SmartDashboard.getBoolean("Click When Done Testing Chassis PID", true);
     }
 
+    @Override
     protected void end() {
         chassis.stopRatePIDs();
         chassis.stopEncoders();
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 @SuppressWarnings("PMD")
-public class FileConnection {
+public class FileConnection implements AutoCloseable {
     private final String m_url;
     private FileInputStream m_inputStream;
     private FileOutputStream m_outputStream;
@@ -35,6 +35,7 @@ public class FileConnection {
         return openDataOutputStream();
     }
 
+    @Override
     public void close() throws IOException {
         if (m_inputStream != null) {
             m_inputStream.close();

@@ -14,7 +14,7 @@ public class Shoot extends Command {
     private boolean isLowMotorRunning = false; // if we have started the low
                                                 // motor yet
     private final int LOOP_TIMEOUT = 50; // ~1sec of time
-    private int shooterSpeed;
+    private final int shooterSpeed;
 
     public Shoot(int speed) {
         requires(Robot.shooter);
@@ -22,6 +22,7 @@ public class Shoot extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         loopCounter = 0;
         isLowMotorRunning = false;
@@ -31,6 +32,7 @@ public class Shoot extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         SmartDashboard.putNumber("High Shooter Speed", Robot.shooter.getHighShooterSpeed());
         SmartDashboard.putNumber("Low Shooter Speed", Robot.shooter.getLowShooterSpeed());
@@ -46,11 +48,13 @@ public class Shoot extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.shooter.stopLowShooterMotor();
         Robot.shooter.stopShooterMotors();
@@ -59,6 +63,7 @@ public class Shoot extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

@@ -14,16 +14,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TuneManipulatorPID extends CommandBase {
 
-    double p = 0;
-    double i = 0;
-    double d = 0;
-    double setpoint = 0;
-    boolean pid = false;
+    private double p = 0;
+    private double i = 0;
+    private double d = 0;
+    private double setpoint = 0;
+    private final boolean pid = false;
 
     public TuneManipulatorPID() {
         requires(manipulator);
     }
 
+    @Override
     protected void initialize() {
         manipulator.initEncoder();
         if (pid) {
@@ -39,6 +40,7 @@ public class TuneManipulatorPID extends CommandBase {
         }
     }
 
+    @Override
     protected void execute() {
         if (pid) {
             p = SmartDashboard.getNumber("Pivot P", 0);
@@ -61,11 +63,13 @@ public class TuneManipulatorPID extends CommandBase {
         System.out.print("\tRaw pivot: " + manipulator.getRaw());
     }
 
+    @Override
     protected boolean isFinished() {
         return setpoint > 110 || setpoint < -17;
 
     }
 
+    @Override
     protected void end() {
         manipulator.stopManipulator();
         manipulator.stopEncoder();
@@ -74,6 +78,7 @@ public class TuneManipulatorPID extends CommandBase {
         }
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

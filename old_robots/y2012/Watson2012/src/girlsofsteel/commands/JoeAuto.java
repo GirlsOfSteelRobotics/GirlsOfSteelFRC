@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.PrintCommand;
 
 public class JoeAuto extends CommandGroup {
 
+    @SuppressWarnings("PMD.UnusedFormalParameter")
     public JoeAuto(boolean autoTrack, boolean autoShoot,
             boolean shootFromKey, boolean moveToBridge, boolean getXDistanceCamera,
             double xDistance,

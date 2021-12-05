@@ -3,8 +3,23 @@
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3504.robot.commands.AccessoryLeftFwd;
+import org.usfirst.frc.team3504.robot.commands.AccessoryLeftRev;
+import org.usfirst.frc.team3504.robot.commands.AccessoryRightFwd;
+import org.usfirst.frc.team3504.robot.commands.AccessoryRightRev;
+import org.usfirst.frc.team3504.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team3504.robot.commands.CloseArm;
+import org.usfirst.frc.team3504.robot.commands.CollectBall;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.OpenArm;
+import org.usfirst.frc.team3504.robot.commands.PivotDown;
+import org.usfirst.frc.team3504.robot.commands.PivotUp;
+import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.ShootBall;
+import org.usfirst.frc.team3504.robot.commands.ShooterIn;
 
-import org.usfirst.frc.team3504.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator

@@ -13,7 +13,7 @@ public class NIVision {
     }
 
     public enum ImageType {
-        IMAGE_HSL, IMAGE_U8;
+        IMAGE_HSL, IMAGE_U8
     }
 
     public static class Range {

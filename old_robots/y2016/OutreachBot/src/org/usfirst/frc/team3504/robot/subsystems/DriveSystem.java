@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveSystem extends Subsystem {
-    private CANTalon driveLeftA;
-    private CANTalon driveLeftB;
-    private CANTalon driveLeftC;
+    private final CANTalon driveLeftA;
+    private final CANTalon driveLeftB;
+    private final CANTalon driveLeftC;
 
-    private CANTalon driveRightA;
-    private CANTalon driveRightB;
-    private CANTalon driveRightC;
+    private final CANTalon driveRightA;
+    private final CANTalon driveRightB;
+    private final CANTalon driveRightC;
 
-    private RobotDrive robotDrive;
+    private final RobotDrive robotDrive;
 
-    double encOffsetValue = 0;
+    private double encOffsetValue = 0;
 
     public DriveSystem() {
         driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
@@ -66,6 +66,7 @@ public class DriveSystem extends Subsystem {
         //robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new DriveByJoystick());

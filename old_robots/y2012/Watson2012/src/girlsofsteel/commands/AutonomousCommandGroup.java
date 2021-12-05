@@ -3,16 +3,17 @@ package girlsofsteel.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.PrintCommand;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
 
 public class AutonomousCommandGroup extends CommandGroup {
 
-    boolean shoot;//at the start of autonomous
-    boolean moveToBridge;//do you want to move towards the bridge?
-    double yDistance;//only work when moveToBridge is true
-    boolean shootFromBridge;//use camera to shoot from the position you are
+    private final boolean shoot;//at the start of autonomous
+    private final boolean moveToBridge;//do you want to move towards the bridge?
+    private final double yDistance;//only work when moveToBridge is true
+    private final boolean shootFromBridge;//use camera to shoot from the position you are
     //in after moving to the bridge
-    boolean goBackToKey;//move back to the key (starting place)
-    boolean shootFromKeyAfterBridge;//after moving back to the key, you shoot
+    private final boolean goBackToKey;//move back to the key (starting place)
+    private final boolean shootFromKeyAfterBridge;//after moving back to the key, you shoot
 
     public AutonomousCommandGroup(boolean shoot, boolean moveToBridge,
             double yDistance,
@@ -33,7 +34,7 @@ public class AutonomousCommandGroup extends CommandGroup {
 
         if (Camera.isConnected() && Camera.getXDistance() != 0) {
             //If we are ever going to use this we shouldn't be using this method. Use a command!
-            yDistance = CommandBase.chassis.DISTANCE_BACKBOARD_TO_BRIDGE
+            yDistance = Chassis.DISTANCE_BACKBOARD_TO_BRIDGE
                     - Camera.getXDistance();
             //distance from backboard to bridge = half the field
             //(with bridge/2 + space between robot and bridge to push bridge
@@ -51,7 +52,7 @@ public class AutonomousCommandGroup extends CommandGroup {
         if (moveToBridge) {
             if(Camera.isConnected() && Camera.getXDistance() != 0){
                 //if the camera has found the target at least once
-                yDistance = CommandBase.chassis.DISTANCE_BACKBOARD_TO_BRIDGE
+                yDistance = Chassis.DISTANCE_BACKBOARD_TO_BRIDGE
                         - Camera.getXDistance();
             }
             addSequential(new MoveToSetPoint(yDistance), 2.0);

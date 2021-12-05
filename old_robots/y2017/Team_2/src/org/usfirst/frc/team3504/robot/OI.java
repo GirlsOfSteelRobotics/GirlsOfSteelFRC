@@ -2,8 +2,12 @@ package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import org.usfirst.frc.team3504.robot.commands.*;
+import org.usfirst.frc.team3504.robot.commands.CollectIn;
+import org.usfirst.frc.team3504.robot.commands.PivotDown;
+import org.usfirst.frc.team3504.robot.commands.PivotUp;
+import org.usfirst.frc.team3504.robot.commands.PusherOut;
+import org.usfirst.frc.team3504.robot.commands.Release;
+import org.usfirst.frc.team3504.robot.commands.Shoot;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -15,15 +19,15 @@ public class OI {
     // You create one by telling it which joystick it's on and which button
     // number it is.
 
-    private JoystickButton collectIn;
-    private JoystickButton release;
-    private JoystickButton shoot;
-    private JoystickButton pivotUp;
-    private JoystickButton pivotDown;
-    private JoystickButton pusherOut;
+    private final JoystickButton collectIn;
+    private final JoystickButton release;
+    private final JoystickButton shoot;
+    private final JoystickButton pivotUp;
+    private final JoystickButton pivotDown;
+    private final JoystickButton pusherOut;
 
-    private Joystick stick;
-    private Joystick gamePad;
+    private final Joystick stick;
+    private final Joystick gamePad;
 
     // Button button = new JoystickButton(stick, buttonNumber);
 

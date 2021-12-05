@@ -21,6 +21,7 @@ public class PivotDown extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         /*if (Robot.pivot.getPosition() == 1)
             encoderToUse = EncoderValueUp;
@@ -35,6 +36,7 @@ public class PivotDown extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         Robot.pivot.tiltUpandDown(0.3);
         SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
@@ -42,11 +44,13 @@ public class PivotDown extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
          return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         SmartDashboard.putString("pivot down", "ending");
         Robot.pivot.tiltUpandDown(0);
@@ -54,6 +58,7 @@ public class PivotDown extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

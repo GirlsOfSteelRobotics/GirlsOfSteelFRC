@@ -1,6 +1,5 @@
 package girlsofsteel;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -36,50 +35,50 @@ public class OI {
     //TODO find out what the driver buttons should be
     //driver joystick (PS3)
     private final int DRIVER_JOYSTICK_PORT = 1;
-    private Joystick driverJoystick;
+    private final Joystick driverJoystick;
     private static final int DISABLE_CHASSIS_BUTTON_LEFT = 5; //L1 button on driverJoystick
-    private static JoystickButton disableChassisLeft;
+    private final JoystickButton disableChassisLeft;
     private static final int DISABLE_CHASSIS_BUTTON_RIGHT = 6; //R1 button on driverJoystick
-    private static JoystickButton disableChassisRight;
+    private final JoystickButton disableChassisRight;
     private static final int NORMAL_DRIVE_JAGS_BUTTON = 7; //L2 button on driverJoystick
-    private static JoystickButton normalDriveJags;
+    private final JoystickButton normalDriveJags;
     private static final int MEDIUM_DRIVE_JAGS_BUTTON = 8; //R2
-    private static JoystickButton mediumDriveJags;
+    private final JoystickButton mediumDriveJags;
     private static final int SLOW_DRIVE_JAGS_BUTTON = 3; //circle
-    private static JoystickButton slowDriveJags;
+    private final JoystickButton slowDriveJags;
     private static final int DRIVE_SLOW_VELOCITY_BUTTON = 10; //start
-    private static JoystickButton driveSlowVelocity;
+    private final JoystickButton driveSlowVelocity;
     private static final int BRIDGE_ARM_UP_BUTTON = 4; //triangle button on driverJoystick
-    private static JoystickButton bridgeArmUp;
+    private final JoystickButton bridgeArmUp;
     private static final int BRIDGE_ARM_DOWN_BUTTON = 2; //x
-    private static JoystickButton bridgeArmDown;
+    private final JoystickButton bridgeArmDown;
     private static final int HOLD_POSITION_BUTTON = 1; //square
-    private static JoystickButton holdPosition;
+    private final JoystickButton holdPosition;
 
     //TODO find out the buttons desired for the operator
     //operator controller (PS3)
     private static final int OPERATOR_JOYSTICK_PORT = 2;
-    private static Joystick operatorJoystick;
+    private final Joystick operatorJoystick;
     private static final int DISABLE_SHOOTER_BUTTON = 8; //R2 on operatorJoystick
-    private static JoystickButton disableShooter;
+    private final JoystickButton disableShooter;
     private static final int AUTO_SHOOT_BUTTON = 6; //R1 on operatorJoystick
-    private static JoystickButton autoShoot;
+    private final JoystickButton autoShoot;
     private static final int TURRET_OVERRIDE_BUTTON = 5; //L1 on operatorJoystick
-    private static JoystickButton turretOverride;
+    private final JoystickButton turretOverride;
     private static final int DISABLE_TURRET_BUTTON = 7; //L2
-    private static JoystickButton disableTurret;
+    private final JoystickButton disableTurret;
     private static final int RESTART_TURRET_TRACKING_BUTTON = 10; //start on operatorJoystick
-    private static JoystickButton restartTurretTracking;
+    private final JoystickButton restartTurretTracking;
     private static final int COLLECT_BALLS_BUTTON = 2; //x button on operatorJoystick
-    private static JoystickButton collectBalls;
+    private final JoystickButton collectBalls;
     private static final int STOP_COLLECTOR_BUTTON = 3; //circle on operatorJoystick
-    private static JoystickButton stopCollector;
+    private final JoystickButton stopCollector;
     private static final int COLLECTORS_REVERSE_BUTTON = 4; //triangle
-    private static JoystickButton collectorsReverse;
+    private final JoystickButton collectorsReverse;
     private static final int SHOOT_FROM_KEY_BUTTON = 1; //square
-    private static JoystickButton shootFromKey;
+    private final JoystickButton shootFromKey;
     private static final int REVERSE_TOP_MIDDLE_ROLLERS_BUTTON = 9; //select
-    private static JoystickButton reverseTopMiddleRollers;
+    private final JoystickButton reverseTopMiddleRollers;
 
     //buttons
     private static final int AUTO_SHOOT_PHYSICAL_BUTTON = 9;
@@ -109,8 +108,16 @@ public class OI {
     private static final int AUTONOMOUS_COUNTER_FIVE = 5;
     private static final int AUTONOMOUS_COUNTER_SEVEN = 7;
     //lights -> TODO figure out lights (digital input numbers & how to use)
-    public final int SHOOTER_LIGHT_A = 36;
-    public final int SHOOTER_LIGHT_B = 37;
+    public static final int SHOOTER_LIGHT_A = 36;
+    public static final int SHOOTER_LIGHT_B = 37;
+
+    //buttons
+    //shooter
+    private boolean autoShootRunning = false;
+    private boolean stopShooterRunning = false;
+    private final boolean topRollersOverriden = false;
+    private int currValue = 0;
+    private int preValue = 0;
 
     //  Default Constructor
     public OI() {
@@ -175,20 +182,8 @@ public class OI {
 
     public boolean isCollectCameraDataPressed(){
 //        if(operatorJoystick.getRawButton(COLLECT_CAMERA_DATA)){
-        if(true){
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
-
-    //buttons
-    //shooter
-    boolean autoShootRunning = false;
-    boolean stopShooterRunning = false;
-    boolean topRollersOverriden = false;
-    int currValue = 0;
-    int preValue = 0;
 
     public boolean isShootRunning() {
         try {
@@ -233,18 +228,6 @@ public class OI {
 //            return false;
 //        }
         return false;
-    }
-
-    private boolean isButtonFunctionOn(boolean on, int buttonNumber) {
-        if (isButtonPressed(buttonNumber)) { //if the button is pressed will switch the true/false
-            if (on == true) {
-                on = false;
-            } else {
-                on = true;
-            }
-        }
-
-        return on;
     }
 
     public boolean isButtonPressed(int buttonNumber) {
@@ -318,125 +301,65 @@ public class OI {
 
     //switch -- turret
     public boolean isTurretAutoOn() {
-        if (getTurretOverrideSwitchValue() == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return getTurretOverrideSwitchValue() == 2;
     }
 
     public boolean isTurretSetPositionOn() {
-        if (getTurretOverrideSwitchValue() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return getTurretOverrideSwitchValue() == 1;
     }
 
     public boolean isTurretManualOn() {
-        if (getTurretOverrideSwitchValue() == 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return getTurretOverrideSwitchValue() == 3;
     }
 
     //switch -- shooter
     public boolean isShooterAutoOn() {
-        if (getShooterOverrideSwitchValue() == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return getShooterOverrideSwitchValue() == 2;
     }
 
     public boolean isShooterIncrementOn() {
-        if (getShooterOverrideSwitchValue() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return getShooterOverrideSwitchValue() == 1;
     }
 
     public boolean isShooterManualOn() {
-        if (getShooterOverrideSwitchValue() == 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return getShooterOverrideSwitchValue() == 3;
     }
 
     //rollers
     public boolean isBrushForward() {
-        if (getBrushSwitchValue() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return getBrushSwitchValue() == 1;
     }
 
     public boolean isBrushOff() {
-        if (getBrushSwitchValue() == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return getBrushSwitchValue() == 2;
     }
 
     public boolean isBrushReverse() {
-        if (getBrushSwitchValue() == 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return getBrushSwitchValue() == 3;
     }
 
     public boolean isMiddleCollectorForward() {
-        if (getMiddleCollectorSwitchValue() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return getMiddleCollectorSwitchValue() == 1;
     }
 
     public boolean isMiddleCollectorOff() {
-        if (getMiddleCollectorSwitchValue() == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return getMiddleCollectorSwitchValue() == 2;
     }
 
     public boolean isMiddleCollectorReverse() {
-        if (getMiddleCollectorSwitchValue() == 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return getMiddleCollectorSwitchValue() == 3;
     }
 
     public boolean areTopRollersForward() {
-        if (getTopRollersSwitchValue() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return getTopRollersSwitchValue() == 1;
     }
 
     public boolean areTopRollersOff() {
-        if (getTopRollersSwitchValue() == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return getTopRollersSwitchValue() == 2;
     }
 
     public boolean areTopRollersReverse() {
-        if (getTopRollersSwitchValue() == 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return getTopRollersSwitchValue() == 3;
     }
 
     //slider
@@ -579,11 +502,7 @@ public class OI {
     }
 
     private boolean changeAnalogs(double analogValue) {
-        if (analogValue > 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return analogValue > 3;
     }
 //If ever used, change line numbers in the driver station prints
     public void printAnalogAutonomous() {

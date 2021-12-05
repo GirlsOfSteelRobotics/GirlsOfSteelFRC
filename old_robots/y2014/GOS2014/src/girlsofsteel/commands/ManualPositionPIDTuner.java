@@ -10,19 +10,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManualPositionPIDTuner extends CommandBase {
 
-    double setpoint;
-    double p = 0.0;
-    double i;
-    double d;
-    double offBy = 0.05;
-    boolean reset;
-    boolean pid = false;
+    private double setpoint;
+    private double p = 0.0;
+    private double i;
+    private double d;
+    private final double offBy = 0.05;
+    private boolean reset;
+    private final boolean pid = false;
 
     public ManualPositionPIDTuner() {
         requires(driving);
 
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
         chassis.resetEncoders();
@@ -37,6 +38,7 @@ public class ManualPositionPIDTuner extends CommandBase {
         SmartDashboard.putBoolean("Resetencoder", false);
     }
 
+    @Override
     protected void execute() {
         if (pid) {
             setpoint = SmartDashboard.getNumber("Chassis Position setpoint", 0);
@@ -77,12 +79,14 @@ public class ManualPositionPIDTuner extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         boolean finished =  (Math.abs((chassis.getLeftEncoderDistance() - setpoint)) < offBy || Math.abs((chassis.getRightEncoderDistance()-setpoint)) < offBy) && (setpoint != 0);
         System.out.println("Position PID is finished: " + finished);
         return finished;
     }
 
+    @Override
     protected void end() {
         if (pid) {
             chassis.disablePositionPID();
@@ -90,6 +94,7 @@ public class ManualPositionPIDTuner extends CommandBase {
         chassis.stopEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

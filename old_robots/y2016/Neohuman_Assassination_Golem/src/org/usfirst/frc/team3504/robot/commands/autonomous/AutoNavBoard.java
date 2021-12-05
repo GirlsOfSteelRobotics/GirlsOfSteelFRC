@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoNavBoard extends Command {
 
-    private double inches;
+    private final double inches;
 
     public AutoNavBoard(double distance) {
         // Use requires() here to declare subsystem dependencies
@@ -18,23 +18,27 @@ public class AutoNavBoard extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         Robot.chassis.resetEncoderDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         Robot.chassis.driveSpeed(-.4);
         Robot.chassis.printEncoderValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
          return Robot.chassis.getEncoderDistance() >= inches;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

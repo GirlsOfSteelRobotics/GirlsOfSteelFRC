@@ -13,15 +13,15 @@ import girlsofsteel.objects.Camera;
  */
 public class ManualTuneCamera extends CommandBase {
 
-    Joystick driverJoystick;
-    double xAxis;
-    double yAxis;
+    private Joystick driverJoystick;
+    private double xAxis;
+    private double yAxis;
     public static final double HalfCourt = 7.1; //meaters (7.1)
     public static final double Step = .5; //meaters
     public static final double ErrorThreshold = .01;
-    int count = 0;
-    double[] imageTargetRatioData = new double[50];
-    double[] distanceData = new double[50];
+    private int count = 0;
+    private double[] imageTargetRatioData = new double[50];
+    private double[] distanceData = new double[50];
 
     public ManualTuneCamera() {
         requires(chassis);
@@ -33,7 +33,7 @@ public class ManualTuneCamera extends CommandBase {
         int max = 10;
         double sumOfData = 0;
         double[] values = new double[max];
-        for (int i = 0; i < max; i++) {
+        for (int i = 0; i < max; i++) { // NOPMD(AvoidArrayLoops)
             values[i] = Camera.getImageTargetRatio();
             //System.out.println(values[i]);
             sumOfData += values[i];
@@ -56,12 +56,14 @@ public class ManualTuneCamera extends CommandBase {
         return -1;//-1 means that it can't use the data.
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
 //        chassis.initPositionPIDs();
         driverJoystick = oi.getDriverJoystick();
     }
 
+    @Override
     protected void execute() {
         //xAxis = driverJoystick.getX() * 0.5;
         //yAxis = driverJoystick.getY() * 0.5;
@@ -111,14 +113,12 @@ public class ManualTuneCamera extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
-        if ((chassis.getRightEncoderDistance()) > HalfCourt - 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return (chassis.getRightEncoderDistance()) > HalfCourt - 2;
     }
 
+    @Override
     protected void end() {
         System.out.println("data collection done! cnt=" + count);
         double[] ab = LineReg.bestFit(imageTargetRatioData, distanceData, count + 1);
@@ -137,6 +137,7 @@ public class ManualTuneCamera extends CommandBase {
         chassis.endEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }
@@ -148,7 +149,9 @@ class LineReg {
         int n = 0;
 
         // first pass: read in data, compute xbar and ybar
-        double sumx = 0.0, sumy = 0.0, sumx2 = 0.0;
+        double sumx = 0.0;
+        double sumy = 0.0;
+        double sumx2 = 0.0;
         for (; n < size; ++n) {
             sumx += x[n];
             sumx2 += x[n] * x[n];
@@ -159,7 +162,9 @@ class LineReg {
         double ybar = sumy / n;
 
         // second pass: compute summary statistics
-        double xxbar = 0.0, yybar = 0.0, xybar = 0.0;
+        double xxbar = 0.0;
+        double yybar = 0.0;
+        double xybar = 0.0;
         for (int i = 0; i < n; i++) {
             xxbar += (x[i] - xbar) * (x[i] - xbar);
             yybar += (y[i] - ybar) * (y[i] - ybar);

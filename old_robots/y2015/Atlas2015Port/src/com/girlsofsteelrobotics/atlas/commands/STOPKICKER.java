@@ -17,19 +17,24 @@ public class STOPKICKER extends CommandBase {
         requires(kicker);
     }
 
+    @Override
     protected void initialize() {
     }
 
+    @Override
     protected void execute() {
     }
 
+    @Override
     protected boolean isFinished() {
         return false; //this never ends.
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -1,21 +1,22 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 
+    import edu.wpi.first.wpilibj.SpeedController;
     import org.usfirst.frc.team3504.robot.RobotMap;
 
             import edu.wpi.first.wpilibj.command.Subsystem;
-    import edu.wpi.first.wpilibj.*;
 
     /**
      *
      */
     public class Manipulator extends Subsystem {
-        SpeedController conveyorBeltMotorRight = RobotMap.conveyorBeltMotorRight;
-        SpeedController conveyorBeltMotorLeft = RobotMap.conveyorBeltMotorLeft;
+        private final SpeedController conveyorBeltMotorRight = RobotMap.conveyorBeltMotorRight;
+        private final SpeedController conveyorBeltMotorLeft = RobotMap.conveyorBeltMotorLeft;
 
         // Put methods for controlling this subsystem
         // here. Call these from Commands.
 
+        @Override
         public void initDefaultCommand() {
             // Set the default command for a subsystem here.
             //setDefaultCommand(new MySpecialCommand());

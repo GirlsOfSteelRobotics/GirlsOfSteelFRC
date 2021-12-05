@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Flap extends Subsystem {
 
-    private CANTalon flapTalon;
+    private final CANTalon flapTalon;
     private static final double maxEncoder = 360; //max encoder val
     private double encOffsetValue = 0;
 
@@ -31,6 +31,7 @@ public class Flap extends Subsystem {
         flapTalon.setNeutralMode(NeutralMode.Brake);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

@@ -12,7 +12,7 @@ public class Ramp extends Subsystem {
     public static DoubleSolenoid rightramp = RobotMap.DSRightRamp;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    public void Up(){
+    public void Up(){ // NOPMD(ShortMethodName)
         rightramp.set(DoubleSolenoid.Value.kForward);
     }
 
@@ -20,6 +20,7 @@ public class Ramp extends Subsystem {
         rightramp.set(DoubleSolenoid.Value.kReverse);
     }
 
+    @Override
     public void initDefaultCommand() {
 
         // Set the default command for a subsystem here.

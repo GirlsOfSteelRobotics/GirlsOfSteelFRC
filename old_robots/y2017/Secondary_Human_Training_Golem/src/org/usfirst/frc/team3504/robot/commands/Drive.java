@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Command {
 
-    private CANTalon leftTalon = Robot.chassis.getLeftTalon();
-    private CANTalon rightTalon = Robot.chassis.getRightTalon();
+    private final CANTalon leftTalon = Robot.chassis.getLeftTalon();
+    private final CANTalon rightTalon = Robot.chassis.getRightTalon();
 
     public Drive() {
         // Use requires() here to declare subsystem dependencies
@@ -24,6 +24,7 @@ public class Drive extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         // Change mode to Percent Vbus
         Robot.chassis.setPercentVbusMode();
@@ -34,6 +35,7 @@ public class Drive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         if (OI.driveStyle == DriveStyle.oneStickArcade
                 || OI.driveStyle == DriveStyle.gamePadArcade) {
@@ -50,6 +52,7 @@ public class Drive extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
@@ -59,12 +62,14 @@ public class Drive extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

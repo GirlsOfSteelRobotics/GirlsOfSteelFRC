@@ -15,22 +15,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Chassis extends Subsystem{
 
-    CANTalon rt1 = RobotMap.rightTalon1;
-    CANTalon rt2 = RobotMap.rightTalon2;
-    CANTalon rt3 = RobotMap.rightTalon3;
-    CANTalon lt1 = RobotMap.leftTalon1;
-    CANTalon lt2 = RobotMap.leftTalon2;
-    CANTalon lt3 = RobotMap.leftTalon3;
-    RobotDrive driveSystem = RobotMap.driveSystem;
-
-    public Chassis() {
-
-    }
+    private final CANTalon rt1 = RobotMap.rightTalon1;
+    private final CANTalon rt2 = RobotMap.rightTalon2;
+    private final CANTalon rt3 = RobotMap.rightTalon3;
+    private final CANTalon lt1 = RobotMap.leftTalon1;
+    private final CANTalon lt2 = RobotMap.leftTalon2;
+    private final CANTalon lt3 = RobotMap.leftTalon3;
+    private final RobotDrive driveSystem = RobotMap.driveSystem;
 
     public void driveByJoystick(Joystick stick) {
         driveSystem.arcadeDrive(stick);
     }
 
+    @Override
     public void initDefaultCommand() {
         setDefaultCommand(new DriveByJoystick());
     }

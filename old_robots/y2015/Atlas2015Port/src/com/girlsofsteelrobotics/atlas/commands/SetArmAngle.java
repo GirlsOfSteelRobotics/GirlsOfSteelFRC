@@ -16,18 +16,20 @@ package com.girlsofsteelrobotics.atlas.commands;
 
 public class SetArmAngle extends CommandBase{
 
-    private double angle = 0.0;
-    private double desired;
+    private double angle;
+    private final double desired;
 
     public SetArmAngle (double desiredAngle){
         requires(manipulator);
         desired = desiredAngle;
     }
 
+    @Override
     protected void initialize() {
         manipulator.init();
     }
 
+    @Override
     protected void execute() {
         //manipulator.getCurrentAngle(angle);
         System.out.println("Setting the angle! :D");
@@ -56,15 +58,18 @@ public class SetArmAngle extends CommandBase{
          */
     }
 
+    @Override
     protected boolean isFinished() {
         System.out.println("Isfinished: " + manipulator.checkAngle(angle));
         return manipulator.checkAngle(desired);
     }
 
+    @Override
     protected void end() {
         manipulator.stopJag();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

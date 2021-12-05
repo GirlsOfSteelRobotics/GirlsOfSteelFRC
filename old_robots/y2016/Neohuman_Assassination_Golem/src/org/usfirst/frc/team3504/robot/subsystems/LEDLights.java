@@ -11,14 +11,11 @@ public class LEDLights extends Subsystem {
 
 
     //SerialPort serialPort = new SerialPort(9600, SerialPort.Port.kUSB);
-    SerialPort serialPort;
+    private SerialPort serialPort;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public LEDLights() {
-        //serialPort = new SerialPort(9600, SerialPort.Port.kOnboard);
-    }
     /**
     public void blueLight(){
         serialPort.writeString("b");
@@ -58,6 +55,7 @@ public class LEDLights extends Subsystem {
         }
     }
     **/
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

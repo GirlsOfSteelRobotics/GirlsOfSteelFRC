@@ -11,43 +11,45 @@ package com.girlsofsteelrobotics.atlas.commands;
  * @author Mackenzie
  */
 public class TuneChassisPID extends CommandBase {
-    private double startP = 0;
-    private double maxP = 0.3; //max value of p
-    private double incrementP = 0.05; //how much p goes up by
+    private final double startP = 0;
+    private final double maxP = 0.3; //max value of p
+    private final double incrementP = 0.05; //how much p goes up by
 
     private boolean done = false;
 
-    private double setPoint = 0; //starting speed
-    private double maxSetPoint = 5;  //find max chassis speed
+    private final double setPoint = 0; //starting speed
+    private final double maxSetPoint = 5;  //find max chassis speed
 
     //for one setpoint:
-    private int lengthSetPoint = (int)(maxSetPoint-setPoint); //length of arraay
-    private double[] devSetPoint = new double[lengthSetPoint]; //deviation from setpoint
-    private double[] meanDiff = new double[lengthSetPoint]; //mean of difference between rate & mean rate
-    private double[] devRate = new double [lengthSetPoint]; //deviation from mean rate
+    private final int lengthSetPoint = (int)(maxSetPoint-setPoint); //length of arraay
+    private final double[] devSetPoint = new double[lengthSetPoint]; //deviation from setpoint
+    private final double[] meanDiff = new double[lengthSetPoint]; //mean of difference between rate & mean rate
+    private final double[] devRate = new double [lengthSetPoint]; //deviation from mean rate
     //means of the individual set point arrays
     //for each p value
-    private int lengthP = (int)( (maxP-startP) / incrementP);
-    private double[] meanDevSetPoint = new double[lengthP];
-    private double[] overallMeanDiff = new double[lengthP];
-    private double[] meanDevRate = new double[lengthP];
+    private final int lengthP = (int)( (maxP-startP) / incrementP);
+    private final double[] meanDevSetPoint = new double[lengthP];
+    private final double[] overallMeanDiff = new double[lengthP];
+    private final double[] meanDevRate = new double[lengthP];
 
-    private double startI = 0;
-    private double maxI = 0.5; //max
-    private double incrementI = 0.05;
+    private final double startI = 0;
+    private final double maxI = 0.5; //max
+    private final double incrementI = 0.05;
 
 
-    private double[] rates = new double[100];//rate of wheel spins
+    private final double[] rates = new double[100];//rate of wheel spins
     private double mean = 0; //the average.
     public TuneChassisPID (){
        requires(chassis);
     }
 
+    @Override
     protected void initialize() {
         chassis.initPositionPIDS();
         chassis.initEncoders();
     }
 
+    @Override
     protected void execute() {
         for(double a = startP; a < maxP; a += incrementP) {
             //for(double a = startI; < maxI; a += incrementI)
@@ -93,24 +95,27 @@ public class TuneChassisPID extends CommandBase {
        done = true;
     }
 
+    @Override
     protected boolean isFinished() {
         return done;
     }
 
 
+    @Override
     protected void end() {
-        getBest();
+        printBest();
         chassis.stopJags();
         chassis.disablePositionPID();
         //print the good p and setpoint values
 
     }
 
+    @Override
     protected void interrupted() {
         end();
     }
 
-    private double getMean(double[] array) {
+    private double getMean(double... array) {
 
         for(int i = 0; i < array.length; i++) {
            mean += array[i];
@@ -127,10 +132,11 @@ public class TuneChassisPID extends CommandBase {
         double variance = getMean(numbers);
         return variance;
     }
-    private double getDeviation(double center, double[] array) {
+    private double getDeviation(double center, double... array) {
         double average = center;
-        if (center == 0)
+        if (center == 0) {
             average = getMean(array);
+        }
         double variance = getVariance(average);
         return Math.sqrt(variance);
     }
@@ -153,7 +159,8 @@ public class TuneChassisPID extends CommandBase {
 
         }
     }
-    public void getBest() {
+
+    public void printBest() {
         double lowestSetPointDev = 100;
         double lowestRateDev = 100;
         double lowestMeanDiff = 100;
@@ -163,20 +170,23 @@ public class TuneChassisPID extends CommandBase {
         double pLowestMeanDiff = 0;
 
         for(int j = 0; j < devSetPoint.length; j++) {
-            if (devSetPoint[j] < lowestSetPointDev)
-               lowestSetPointDev = devSetPoint[j];
+            if (devSetPoint[j] < lowestSetPointDev) {
+                lowestSetPointDev = devSetPoint[j];
+            }
             pLowestSetPointDev = startP + (j * incrementP);
             // pLowestSetPointDev = startI + (j * incrementI);
         }
         for (int k = 0; k < devRate.length; k++) {
-            if (devRate[k] < lowestRateDev)
+            if (devRate[k] < lowestRateDev) {
                 lowestRateDev = devRate[k];
+            }
             pLowestRateDev = startP + (k * incrementP);
             // pLowestRateDev = startI + (k * incrementI);
         }
         for (int m = 0; m < meanDiff.length; m++) {
-            if (meanDiff[m] < lowestMeanDiff)
+            if (meanDiff[m] < lowestMeanDiff) {
                 lowestMeanDiff = meanDiff[m];
+            }
             pLowestMeanDiff = startP + (m * incrementP);
             // pLowestMeanDiff = startP + (m * incrementP);
         }

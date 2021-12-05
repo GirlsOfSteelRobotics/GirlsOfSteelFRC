@@ -14,7 +14,7 @@ public class Pivot extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private CANTalon pivotMotor;
+    private final CANTalon pivotMotor;
 
     private double encOffsetValue = 0;
 
@@ -35,18 +35,22 @@ public class Pivot extends Subsystem {
     }
 
     public int getPosition() {
-        if (getTopLimitSwitch() == true)
+        if (getTopLimitSwitch() == true) {
             return 1;
-        else if(getBottomLimitSwitch() == true)
+        }
+        else if(getBottomLimitSwitch() == true) {
             return -1;
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     public void tiltUpandDown(double speed) {
         pivotMotor.set(-speed);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

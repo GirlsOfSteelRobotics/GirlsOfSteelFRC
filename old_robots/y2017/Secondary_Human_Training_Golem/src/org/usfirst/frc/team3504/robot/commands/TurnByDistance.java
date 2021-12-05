@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TurnByDistance extends Command {
 
-    private double rotationsRight;
-    private double rotationsLeft;
+    private final double rotationsRight;
+    private final double rotationsLeft;
 
-    private CANTalon leftTalon = Robot.chassis.getLeftTalon();
-    private CANTalon rightTalon = Robot.chassis.getRightTalon();
+    private final CANTalon leftTalon = Robot.chassis.getLeftTalon();
+    private final CANTalon rightTalon = Robot.chassis.getRightTalon();
 
     private double leftInitial;
     private double rightInitial;
 
-    private Shifters.Speed speed;
+    private final Shifters.Speed speed;
 
     public TurnByDistance(double rightInches, double leftInches, Shifters.Speed speed) {
         rotationsRight = rightInches / (RobotMap.WHEEL_DIAMETER * Math.PI);
@@ -35,6 +35,7 @@ public class TurnByDistance extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         Robot.chassis.setPositionMode();
 
@@ -87,6 +88,7 @@ public class TurnByDistance extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         leftTalon.set(-(rotationsLeft + leftInitial));
         rightTalon.set(rotationsRight + rightInitial);
@@ -102,11 +104,13 @@ public class TurnByDistance extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.shifters.shiftGear(Shifters.Speed.kLow);
         System.out.println("TurnByDistance Finished");
@@ -114,6 +118,7 @@ public class TurnByDistance extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

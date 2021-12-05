@@ -1,12 +1,28 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveLeft;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveRight;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoFirstPickup;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLift;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoOneTote;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPlow;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoToteAndContainer;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnClockwise;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnCounterClockwise;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
+import org.usfirst.frc.team3504.robot.subsystems.Lifter;
+import org.usfirst.frc.team3504.robot.subsystems.Shack;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,13 +41,14 @@ public class Robot extends IterativeRobot {
     public static Lifter lifter;
     public static OI oi;
     public static Shack shack;
-    Command autonomousCommand;
-    SendableChooser autoChooser;
+    private Command autonomousCommand;
+    private SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
         chassis = new Chassis();
         //camera = new Camera();
@@ -76,43 +93,51 @@ public class Robot extends IterativeRobot {
 
     }
 
+    @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
         autonomousCommand = (Command) autoChooser.getSelected();
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.start();
+        }
     }
 
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.cancel();
+        }
     }
 
     /**
      * This function is called when the disabled button is hit. You can use it
      * to reset subsystems before shutting down.
      */
+    @Override
     public void disabledInit() {
     }
 
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
@@ -120,6 +145,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
     }
 

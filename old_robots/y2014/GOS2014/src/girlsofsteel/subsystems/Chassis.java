@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
 import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.PIDOutput;
 import girlsofsteel.Configuration;
 import girlsofsteel.objects.EncoderGoSPIDController;
@@ -24,40 +23,40 @@ import girlsofsteel.objects.LSPBPIDPlanner;
  */
 public class Chassis extends Subsystem {
 
-    private Jaguar rightJag;
-    private Jaguar leftJag;
+    private final Jaguar rightJag;
+    private final Jaguar leftJag;
 
     //RobotDrive drive = new RobotDrive(rightJag, leftJag); USE THIS IF DRIVING CODE DOESN'T WORK
-    private double deadZoneScale = 0.3;
+    private final double deadZoneScale = 0.3;
 
-    private Encoder rightEncoder;
-    private Encoder leftEncoder;
+    private final Encoder rightEncoder;
+    private final Encoder leftEncoder;
 
-    private EncoderGoSPIDController leftPositionPID;
-    private EncoderGoSPIDController rightPositionPID;
+    private final EncoderGoSPIDController leftPositionPID;
+    private final EncoderGoSPIDController rightPositionPID;
     public LSPBPIDPlanner leftChassisPlanner;
     public LSPBPIDPlanner rightChassisPlanner;
 
     //need the p for 2nd robot
-    private double Ppright = 0.5; //Competition chassis gains 0.2
-    private double Piright = 0;
-    private double Pdright = 0;
-    private double Ppleft = 0.5; //Competition chassis gains 0.2
-    private double Pileft = 0;
-    private double Pdleft = 0;
+    private final double Ppright; //Competition chassis gains 0.2
+    private final double Piright = 0;
+    private final double Pdright = 0;
+    private final double Ppleft; //Competition chassis gains 0.2
+    private final double Pileft = 0;
+    private final double Pdleft = 0;
 
-    private double Vpright = 0.0;
-    private double Viright = 0.0;
-    private double Vdright = 0.0;
-    private double Vpleft = 0.0;
-    private double Vileft = 0.0;
-    private double Vdleft = 0.0;
+    private static final double Vpright = 0.0;
+    private static final double Viright = 0.0;
+    private static final double Vdright = 0.0;
+    private static final double Vpleft = 0.0;
+    private static final double Vileft = 0.0;
+    private static final double Vdleft = 0.0;
 
-    private double leftPulsePerRevolution = 360;  //pretty sure it's correct
-    private double rightPulsePerRevolution = 360;
-    private double wheelCircumference = 0.152 * Math.PI; //In meters
+    private final double leftPulsePerRevolution = 360;  //pretty sure it's correct
+    private final double rightPulsePerRevolution = 360;
+    private final double wheelCircumference = 0.152 * Math.PI; //In meters
 
-    private double gearRatio = 8.0 / 5.0; //CORRECT ON THE COMPETITION CHASSIS
+    private final double gearRatio = 8.0 / 5.0; //CORRECT ON THE COMPETITION CHASSIS
 
 //    private double leftDistancePerPulsePosition = (wheelCircumference) / (leftPulsePerRevolution * gearRatio);//(leftPulsePerRevolution * gearRatio) / (wheelCircumference);
 //    private double rightDistancePerPulsePosition = (wheelCircumference) / (rightPulsePerRevolution * gearRatio);//(rightPulsePerRevolution * gearRatio) / (wheelCircumference);
@@ -70,8 +69,8 @@ public class Chassis extends Subsystem {
 
     //Competition robot, 4/23/14 pushed the robot forward 1 meter
     //Divided the raw values by four because the distances were off by a factor of four
-    private double leftDistancePerPulsePosition = (1.0 / (4810.4/4.0));
-    private double rightDistancePerPulsePosition = (1.0 / (4957.5/4));
+    private final double leftDistancePerPulsePosition = (1.0 / (4810.4/4.0));
+    private final double rightDistancePerPulsePosition = (1.0 / (4957.5/4));
 
     public Chassis() {
         leftChassisPlanner = new LSPBPIDPlanner();
@@ -105,6 +104,7 @@ public class Chassis extends Subsystem {
          */
         rightPositionPID = new EncoderGoSPIDController(Ppright, Piright, Pdright, rightEncoder, new PIDOutput() {
 
+            @Override
             public void pidWrite(double output) {
                 rightJag.set(output);
             }
@@ -112,6 +112,7 @@ public class Chassis extends Subsystem {
 
         leftPositionPID = new EncoderGoSPIDController(Ppleft, Pileft, Pdleft, leftEncoder, new PIDOutput() {
 
+            @Override
             public void pidWrite(double output) {
                 leftJag.set(output);
             }
@@ -320,6 +321,7 @@ public class Chassis extends Subsystem {
         //System.out.println("right: " + (-(x-y)) +"\n left: " + (x+y));
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 
@@ -421,7 +423,8 @@ public class Chassis extends Subsystem {
         double movingOffset = 0.05; //How much the encoders will change to be called "moving"
         double startTime = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - startTime < 400) { //Waits 400 milliseconds
+        while (System.currentTimeMillis() - startTime < 400) { // NOPMD(EmptyWhileStmt)
+            //Waits 400 milliseconds
         }
         double currentRightPosition = rightEncoder.getDistance();
         double currentLeftPosition = leftEncoder.getDistance();

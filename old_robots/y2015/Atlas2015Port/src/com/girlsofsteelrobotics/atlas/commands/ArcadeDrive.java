@@ -13,22 +13,24 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class ArcadeDrive extends CommandBase{
 
-    Joystick joystick1; //randomly picked right joystick from robot map
+    private Joystick joystick1; //randomly picked right joystick from robot map
 
-    double Xcoord;
-    double Ycoord;
-    double XcoordSq;
-    double YcoordSq;
+    private double Xcoord;
+    private double Ycoord;
+    private double XcoordSq;
+    private double YcoordSq;
 
     public ArcadeDrive() {
         requires(driving);
     }
 
+    @Override
     protected void initialize() {
         System.out.println("ARCADE DRIVE______________________________________________________");
         joystick1= oi.getChassisJoystick();
     }
 
+    @Override
     protected void execute() {
         Xcoord = joystick1.getX();
         //XcoordSq = chassis.square(Xcoord, 1.0);
@@ -38,14 +40,17 @@ public class ArcadeDrive extends CommandBase{
         //System.out.println("");
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

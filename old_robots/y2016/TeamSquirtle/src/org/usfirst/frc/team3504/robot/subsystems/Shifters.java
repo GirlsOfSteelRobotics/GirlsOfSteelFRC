@@ -13,8 +13,8 @@ public class Shifters extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    private DoubleSolenoid shifterLeft = RobotMap.DSLeft;
-    private DoubleSolenoid shifterRight = RobotMap.DSRight;
+    private final DoubleSolenoid shifterLeft = RobotMap.DSLeft;
+    private final DoubleSolenoid shifterRight = RobotMap.DSRight;
 
 
     public void shiftLeft(boolean highgear) {
@@ -37,6 +37,7 @@ public class Shifters extends Subsystem {
         }
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

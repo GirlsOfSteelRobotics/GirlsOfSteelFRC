@@ -17,11 +17,13 @@ public class TestingStraightDrive extends CommandBase{
          requires(chassis);
     }
 
+    @Override
     protected void initialize() {
         System.out.println("Initializing TDS command.");
         chassis.initEncoders();
     }
 
+    @Override
     protected void execute() {
         //System.out.print("Left Encoder: " + chassis.getLeftEncoder());
         //System.out.println(" Right Encoder: " + chassis.getRightEncoder());
@@ -29,13 +31,16 @@ public class TestingStraightDrive extends CommandBase{
         SmartDashboard.putNumber("right encoder distance: ", chassis.getRightEncoderDistance());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

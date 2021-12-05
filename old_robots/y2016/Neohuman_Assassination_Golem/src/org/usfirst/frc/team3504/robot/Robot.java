@@ -1,12 +1,21 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Flap;
+import org.usfirst.frc.team3504.robot.subsystems.Claw;
+import org.usfirst.frc.team3504.robot.subsystems.Pivot;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
+import org.usfirst.frc.team3504.robot.commands.autonomous.FlapThenLowBar;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLowBarAndScore;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoLowBarAndTurn;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -34,13 +43,14 @@ public class Robot extends IterativeRobot {
 //	public static LEDLights ledlights;
     public static Shooter shooter;
 
-    Command autonomousCommand;
-    SendableChooser<Command> autoChooser;
+    private Command autonomousCommand;
+    private SendableChooser<Command> autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
         // Start by initializing each subsystem
         chassis = new Chassis();
@@ -65,7 +75,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
 
         // Populate the SmartDashboard menu for choosing the autonomous command to run
-        autoChooser = new SendableChooser<Command>();
+        autoChooser = new SendableChooser<>();
         //drive backwards:
         autoChooser.addDefault("Do Nothing", new AutoDoNothing());
         autoChooser.addObject("Reach Defense", new AutoDriveBackwards(101, .4)); //55
@@ -91,9 +101,11 @@ public class Robot extends IterativeRobot {
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
      */
+    @Override
     public void disabledInit(){
     }
 
+    @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
 
@@ -108,11 +120,12 @@ public class Robot extends IterativeRobot {
      * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
      * or additional comparisons to the switch structure below with additional strings & commands.
      */
+    @Override
     public void autonomousInit() {
-        autonomousCommand = (Command) autoChooser.getSelected();
+        autonomousCommand = autoChooser.getSelected();
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand != null) { autonomousCommand.start(); }
 
  //       Robot.ledlights.autoLights();
 
@@ -124,6 +137,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
        // Robot.chassis.ahrsToSmartDashboard();
@@ -131,12 +145,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Pivot Encoder", Robot.pivot.getEncoderDistance());
     }
 
+    @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+        if (autonomousCommand != null) { autonomousCommand.cancel(); }
 
         // Start the robot out in low gear when starting teleop
         shifters.shiftLeft(Shifters.Speed.kLow);
@@ -148,6 +163,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
       // Robot.chassis.ahrsToSmartDashboard();
        SmartDashboard.putNumber("FlapEncoder",Robot.flap.getFlapEncoderDistance());
@@ -158,6 +174,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
     }
 }

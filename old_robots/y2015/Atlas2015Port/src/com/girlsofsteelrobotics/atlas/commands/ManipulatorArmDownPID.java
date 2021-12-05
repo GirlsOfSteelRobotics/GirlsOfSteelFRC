@@ -19,10 +19,12 @@ public class ManipulatorArmDownPID extends CommandBase {
         requires(manipulator);
     }
 
+    @Override
     protected void initialize() {
         angle = manipulator.getAbsoluteDistance();
     }
 
+    @Override
     protected void execute() {
 
         System.out.println("Down Encoder Value: " + manipulator.getAbsoluteDistance());
@@ -35,14 +37,17 @@ public class ManipulatorArmDownPID extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         manipulator.holdAngle();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -15,12 +15,13 @@ public class ChassisLSPBPlanner extends CommandBase {
     private double startTime; //milliseconds
     private double changeInTime;
     private double setPoint;
-    boolean graphed;
+    private boolean graphed;
 
     public ChassisLSPBPlanner() {
         requires(driving);
     }
 
+    @Override
     protected void initialize() {
         graphed = false;
         startTime = System.currentTimeMillis();
@@ -30,6 +31,7 @@ public class ChassisLSPBPlanner extends CommandBase {
         SmartDashboard.putNumber("LSPB Setpoint", 0.0);
     }
 
+    @Override
     protected void execute() {
         setPoint = SmartDashboard.getNumber("LSPB Setpoint", 0);
         if (setPoint != 0) {
@@ -50,22 +52,26 @@ public class ChassisLSPBPlanner extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         boolean ret =  (/*Math.abs(chassis.getLeftEncoderDistance() - setPoint) < 0.05) || */
                 ((Math.abs(chassis.getRightEncoderDistance() - setPoint) < 0.01 )
                 || (Math.abs(chassis.getRightEncoderDistance()) > Math.abs(setPoint)))
                 && graphed); //Right encoder/pid is flipped TODO configuration
-        if(ret)
-         System.out.println("finished ");
+        if(ret) {
+            System.out.println("finished ");
+        }
 
         return ret;
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
         chassis.disablePositionPID();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

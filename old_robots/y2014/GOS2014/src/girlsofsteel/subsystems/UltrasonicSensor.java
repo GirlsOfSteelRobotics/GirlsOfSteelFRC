@@ -103,7 +103,7 @@ public class UltrasonicSensor {///*
     private double voltage_range; //The range of the voltages returned by the sensor (maximum - minimum)
     private double min_distance;  //Minimum distance the ultrasonic sensor can return in inches
     private double distance_range;//The range of the distances returned by this class in inches (maximum - minimum)
-    AnalogInput channel;
+    private final AnalogInput channel;
     //constructor
     public UltrasonicSensor() {
         channel = new AnalogInput(RobotMap.ULTRASONIC_SENSOR_PORT);
@@ -138,12 +138,11 @@ public class UltrasonicSensor {///*
      */
 
     public double getRangeInInches() {
-        double range;
         //if we're not using units, return -1, a range that will most likely never be returned
         if (!use_units) {
             return -1.0;
         }
-        range = channel.getVoltage();
+        double range = channel.getVoltage();
         if (range < min_voltage) {
             return -2.0;
         }
@@ -160,12 +159,11 @@ public class UltrasonicSensor {///*
      */
 
     public double getRangeInCM() {
-        double range;
         //if we're not using units, return -1, a range that will most likely never be returned
         if (!use_units) {
             return -1.0;
         }
-        range = channel.getVoltage();
+        double range = channel.getVoltage();
         if (range < min_voltage) {
             return -2.0;
         }

@@ -5,13 +5,13 @@ import girlsofsteel.commands.CommandBase;
 
 public class ShooterJags extends CommandBase {
 
-    double speed = 0.0;
+    private double speed = 0.0;
 
-    int counter = 0;
-    boolean pushed;
-    double time;
+    private int counter = 0;
+    private boolean pushed;
+    private double time;
 
-    double WAIT_TIME = 1.0;
+    private final double WAIT_TIME = 1.0;
 
     public ShooterJags(){
         SmartDashboard.putBoolean("Shooter Jags", false);
@@ -19,17 +19,20 @@ public class ShooterJags extends CommandBase {
         SmartDashboard.putBoolean("Click When Done Testing Shooter Jags", false);
     }
 
+    @Override
     protected void initialize() {
         speed = SmartDashboard.getNumber("Jag Speed", 0.0);
         counter = 0;
         pushed = false;
         shooter.setJags(speed);
         time = timeSinceInitialized();
-        while(timeSinceInitialized() - time < 4){
+        while(timeSinceInitialized() - time < 4){ // NOPMD(EmptyWhileStmt)
+            // Wait for init
         }//overall wait time is 4 + WAIT_TIME = 5
         time = timeSinceInitialized();
     }
 
+    @Override
     protected void execute() {
         if(SmartDashboard.getBoolean("Shooter Jags", false)){
 //            shooter.setJags(speed);
@@ -51,15 +54,18 @@ public class ShooterJags extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return SmartDashboard.getBoolean("Click When Done Testing Shooter Jags",
                 false);
     }
 
+    @Override
     protected void end() {
         shooter.setJags(0.0);
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

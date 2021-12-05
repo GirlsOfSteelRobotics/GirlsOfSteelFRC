@@ -8,11 +8,12 @@ public class RTButton extends Trigger {
     /*
      * This is the RT button that when pressed returns negative  values
      */
-    private Joystick operator;
+    private final Joystick operator;
 
     public RTButton(Joystick operatorJoystick){
         operator = operatorJoystick;
     }
+    @Override
     public boolean get(){
         SmartDashboard.putNumber("Z Right Value", operator.getRawAxis(3));
         return operator.getRawAxis(3) > 0.1 ;

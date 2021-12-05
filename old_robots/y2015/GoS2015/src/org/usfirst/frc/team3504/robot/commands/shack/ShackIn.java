@@ -13,21 +13,26 @@ public class ShackIn extends Command {
         requires(Robot.shack);
     }
 
+    @Override
     protected void initialize() {
         Robot.shack.ShackIn();
     }
 
+    @Override
     protected void execute() {
 
     }
 
+    @Override
     protected boolean isFinished() {
         return true;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

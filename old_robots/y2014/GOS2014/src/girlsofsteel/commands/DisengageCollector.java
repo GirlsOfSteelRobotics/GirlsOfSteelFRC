@@ -26,6 +26,7 @@ public class DisengageCollector extends CommandBase {
      * This method does not have anything in it.
      * @author Sophia, Sonia
      */
+    @Override
     protected void initialize() {
     }
 
@@ -33,6 +34,7 @@ public class DisengageCollector extends CommandBase {
      * This turns on the jag to disengage the collector to the pivot arm.
      * @author Sophia, Sonia
      */
+     @Override
     protected void execute() {
         //System.out.println("execute---------------------");
         collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); //1 for competition bot, -1 for practice bot
@@ -44,6 +46,7 @@ public class DisengageCollector extends CommandBase {
      * @return False (Never ends)
      * @author Sophia, Sonia
      */
+    @Override
     protected boolean isFinished() {
         //System.out.println(collector.isCollectorDisengaged());
         return false;////Only for monday (2/10) testing, with use of hardstop
@@ -55,6 +58,7 @@ public class DisengageCollector extends CommandBase {
      * At the end of the command, the collector arm jag is turned off.
      * @author Sophia, Sonia
      */
+    @Override
     protected void end() {
         collector.stopCollector();
     }//the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
@@ -63,6 +67,7 @@ public class DisengageCollector extends CommandBase {
      * If the command is interrupted, it calls the end() method.
      * @author Sophia, Sonia
      */
+    @Override
     protected void interrupted() {
         end();
     }

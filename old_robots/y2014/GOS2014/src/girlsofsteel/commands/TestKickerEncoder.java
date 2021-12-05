@@ -14,14 +14,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TestKickerEncoder extends CommandBase {
 
-    double startTime;
-    double changeTime;
-    double direction;
+    private double startTime;
+    private double changeTime;
+    private double direction;
 
     public TestKickerEncoder() {
         requires(kicker);
     }
 
+    @Override
     protected void initialize() {
         kicker.stopJag();
         kicker.initEncoders();
@@ -30,6 +31,7 @@ public class TestKickerEncoder extends CommandBase {
         SmartDashboard.putNumber("Direction", 0.0);
     }
 
+    @Override
     protected void execute() {
         direction = SmartDashboard.getNumber("Direction", 0);
         if (direction == 1) {
@@ -43,14 +45,17 @@ public class TestKickerEncoder extends CommandBase {
         changeTime = Timer.getFPGATimestamp() - startTime;
     }
 
+    @Override
     protected boolean isFinished() {
         return false; //changeTime > 5;
     }
 
+    @Override
     protected void end() {
         kicker.stopJag();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

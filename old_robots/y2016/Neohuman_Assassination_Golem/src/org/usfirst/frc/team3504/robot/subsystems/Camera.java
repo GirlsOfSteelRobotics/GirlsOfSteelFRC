@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
+@SuppressWarnings("PMD")
 public class Camera extends Subsystem {
 
 //	private CameraServer server;
@@ -105,6 +106,7 @@ public class Camera extends Subsystem {
 //		}
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new UpdateCam());

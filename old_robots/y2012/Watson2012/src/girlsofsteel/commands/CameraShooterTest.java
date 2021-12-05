@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CameraShooterTest extends CommandBase {
 
-    double speed;
+    private double speed;
 
     public CameraShooterTest() {
         requires(shooter);
@@ -17,11 +17,13 @@ public class CameraShooterTest extends CommandBase {
         SmartDashboard.putNumber("CST,I", 0.0);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
     }
 
+    @Override
     protected void execute() {
         shooter.setPIDValues(SmartDashboard.getNumber("CST,P",0.0), SmartDashboard.getNumber("CST,I",0.0),0.0);
         speed = SmartDashboard.getNumber("CST,speed", 0.0);
@@ -46,14 +48,17 @@ public class CameraShooterTest extends CommandBase {
         SmartDashboard.putNumber("Enc rate shoot: ", shooter.getEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         shooter.disablePID();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

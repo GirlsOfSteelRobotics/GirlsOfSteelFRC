@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AutoDriveBackwards extends Command {
 
-    private double inches;
-    private double speed;
+    private final double inches;
+    private final double speed;
 
     public AutoDriveBackwards(double distance, double speed) {
         // Use requires() here to declare subsystem dependencies
@@ -22,6 +22,7 @@ public class AutoDriveBackwards extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         Robot.chassis.resetEncoderDistance();
         SmartDashboard.putNumber("Autonomous Distance", inches);
@@ -29,12 +30,14 @@ public class AutoDriveBackwards extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         Robot.chassis.driveSpeed(-speed);
         Robot.chassis.printEncoderValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return Robot.chassis.getEncoderDistance() >= Math.abs(inches);	//for competition bot
         //return Robot.chassis.getEncoderDistance() >= inches;	//this is what works on practice bot.. don't know if its the same as competition since we switched it on practice
@@ -42,6 +45,7 @@ public class AutoDriveBackwards extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         Robot.chassis.stop();
         SmartDashboard.putBoolean("Autonomous is Finished!", true);
@@ -49,6 +53,7 @@ public class AutoDriveBackwards extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

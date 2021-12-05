@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Manipulator extends Subsystem {
-    private CANTalon collectRight;
-    private CANTalon collectLeft;
+    private final CANTalon collectRight;
+    private final CANTalon collectLeft;
 
-    private DoubleSolenoid pusher;
+    private final DoubleSolenoid pusher;
 
-    private CANTalon pivotA;
-    private CANTalon pivotB;
+    private final CANTalon pivotA;
+    private final CANTalon pivotB;
 
     public Manipulator() {
         collectRight = new CANTalon(RobotMap.COLLECT_RIGHT);
@@ -31,6 +31,7 @@ public class Manipulator extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

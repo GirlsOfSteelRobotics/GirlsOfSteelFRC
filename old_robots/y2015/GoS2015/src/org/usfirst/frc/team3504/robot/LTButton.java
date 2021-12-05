@@ -8,11 +8,12 @@ public class LTButton extends Trigger{
     /*
      * This is the LT button that when pressed returns positive values
      */
-    private Joystick operator;
+    private final Joystick operator;
 
     public LTButton(Joystick operatorJoystick){
         operator = operatorJoystick;
     }
+    @Override
     public boolean get(){
         SmartDashboard.putNumber("Z Left Value", operator.getZ());
         return operator.getZ() > 0.1 ;

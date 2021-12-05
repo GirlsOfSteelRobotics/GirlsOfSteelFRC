@@ -12,22 +12,21 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class Chassis extends Subsystem implements PIDOutput{
-    private CANTalon driveLeftA;
-    private CANTalon driveLeftB;
-    private CANTalon driveLeftC;
+    private final CANTalon driveLeftA;
+    private final CANTalon driveLeftB;
+    private final CANTalon driveLeftC;
 
-    private CANTalon driveRightA;
-    private CANTalon driveRightB;
-    private CANTalon driveRightC;
+    private final CANTalon driveRightA;
+    private final CANTalon driveRightB;
+    private final CANTalon driveRightC;
 
-    private RobotDrive robotDrive;
+    private final RobotDrive robotDrive;
 
     private double encOffsetValueRight = 0;
     private double encOffsetValueLeft = 0;
@@ -36,16 +35,16 @@ public class Chassis extends Subsystem implements PIDOutput{
     public PIDController turnController;
     //public AHRS ahrs;
 
-    static final double kP = 0.03; //TODO: adjust these
-    static final double kI = 0.00;
-    static final double kD = 0.00;
-    static final double kF = 0.00;
+    private static final double kP = 0.03; //TODO: adjust these
+    private static final double kI = 0.00;
+    private static final double kD = 0.00;
+    private static final double kF = 0.00;
 
-    static final double kToleranceDegrees = 2.0f;
+    private static final double kToleranceDegrees = 2.0f;
 
-    boolean rotateToAngle = false;
+    private final boolean rotateToAngle = false;
 
-    double rotateToAngleRate;
+    private double rotateToAngleRate;
 
     public Chassis() {
         driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
@@ -104,6 +103,7 @@ public class Chassis extends Subsystem implements PIDOutput{
 
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand( new DriveByJoystick() );

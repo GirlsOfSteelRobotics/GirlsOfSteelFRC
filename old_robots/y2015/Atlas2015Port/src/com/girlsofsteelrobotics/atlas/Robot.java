@@ -9,7 +9,6 @@ package com.girlsofsteelrobotics.atlas;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.girlsofsteelrobotics.atlas.commands.ArcadeDrive;
 import com.girlsofsteelrobotics.atlas.commands.CommandBase;
@@ -30,13 +29,14 @@ import com.girlsofsteelrobotics.atlas.objects.Camera;
  */
 public class Robot extends IterativeRobot {
 
-    AutonomousChooser auto;
-    Command autonomousCommand;
+    private AutonomousChooser auto;
+    private Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
         // instantiate the command used for the autonomous period
         autonomousCommand = new DoNothing();
@@ -56,6 +56,7 @@ public class Robot extends IterativeRobot {
    //     SmartDashboard.putData(new FullTester());
     }
 
+    @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //new AutonomousMobility().start();
@@ -67,11 +68,13 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
@@ -88,6 +91,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
         Scheduler.getInstance().run();
@@ -100,6 +104,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
     }
 }

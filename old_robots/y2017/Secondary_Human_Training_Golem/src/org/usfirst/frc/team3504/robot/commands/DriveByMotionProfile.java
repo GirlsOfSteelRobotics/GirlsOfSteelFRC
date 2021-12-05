@@ -1,9 +1,11 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
@@ -21,17 +23,17 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveByMotionProfile extends Command {
 
-    public ArrayList<ArrayList<Double>> leftPoints;
-    public ArrayList<ArrayList<Double>> rightPoints;
+    public List<List<Double>> leftPoints;
+    public List<List<Double>> rightPoints;
     public CANTalon leftTalon = Robot.chassis.getLeftTalon();
     public CANTalon rightTalon = Robot.chassis.getRightTalon();
-    private MotionProfileStatus leftStatus;
-    private MotionProfileStatus rightStatus;
+    private final MotionProfileStatus leftStatus;
+    private final MotionProfileStatus rightStatus;
     private static final int kMinPointsInTalon = 5;
     private SetValueMotionProfile state;
-    private double multiplier = 1.0;
+    private final double multiplier;
 
-    Notifier notifier = new Notifier(new PeriodicRunnable());
+    private final Notifier notifier = new Notifier(new PeriodicRunnable());
 
     public DriveByMotionProfile(String leftFile, String rightFile, double multiplier) {
         requires(Robot.chassis);
@@ -43,7 +45,7 @@ public class DriveByMotionProfile extends Command {
             leftPoints = loadMotionProfile(leftFile, true);
             rightPoints = loadMotionProfile(rightFile, false);
             System.out.println("DriveByMotion: Loaded File");
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             System.err.println("File Not Found: Motion Profile Trajectories");
         }
 
@@ -53,6 +55,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
 
         Robot.chassis.setupFPID(leftTalon);
@@ -82,6 +85,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
         // get MP status from each talon
         leftTalon.getMotionProfileStatus(leftStatus);
@@ -106,6 +110,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         // get MP status from each talon
         leftTalon.getMotionProfileStatus(leftStatus);
@@ -126,6 +131,7 @@ public class DriveByMotionProfile extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         notifier.stop();
 
@@ -139,17 +145,18 @@ public class DriveByMotionProfile extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }
 
-    private ArrayList<ArrayList<Double>> loadMotionProfile(String filename, boolean isLeft)
-            throws FileNotFoundException {
-        ArrayList<ArrayList<Double>> points = new ArrayList<ArrayList<Double>>();
-        InputStream is = new FileInputStream(filename);
+    private List<List<Double>> loadMotionProfile(String filename, boolean isLeft)
+            throws IOException {
+        List<List<Double>> points = new ArrayList<>();
+        InputStream is = Files.newInputStream(Paths.get(filename));
         Scanner s = new Scanner(is);
         while (s.hasNext()) {
-            ArrayList<Double> arr = new ArrayList<Double>();
+            List<Double> arr = new ArrayList<>();
             arr.add(s.nextDouble() * (isLeft ? -1.0 : 1.0)); // p
             arr.add(s.nextDouble() * (isLeft ? -1.0 : 1.0)); // v
             arr.add(s.nextDouble()); // d
@@ -160,7 +167,7 @@ public class DriveByMotionProfile extends Command {
         return points;
     }
 
-    private void pushTrajectory(CANTalon _talon, ArrayList<ArrayList<Double>> points) {
+    private void pushTrajectory(CANTalon _talon, List<List<Double>> points) {
         // **************handle Underrun
 
         /* create an empty point */
@@ -169,7 +176,7 @@ public class DriveByMotionProfile extends Command {
 
         /* This is fast since it's just into our TOP buffer */
         int i = 0;
-        for (ArrayList<Double> arr : points) {
+        for (List<Double> arr : points) {
             /* for each point, fill our structure and pass it to API */
             // Double[] a = (Double[]) arr.toArray();
             point.position = arr.get(0);
@@ -182,22 +189,18 @@ public class DriveByMotionProfile extends Command {
                                              * which set of gains would you like to
                                              * use?
                                              */
-            point.zeroPos = false;
-            if (i == 0)
-                point.zeroPos = true; /* set this to true on the first point */
-
-            point.isLastPoint = false;
-            if ((i + 1) == points.size())
-                point.isLastPoint = true; /*
-                                             * set this to true on the last point
-                                             */
+            point.zeroPos = i == 0; /* set this to true on the first point */
+            point.isLastPoint = (i + 1) == points.size(); /*
+                                         * set this to true on the last point
+                                         */
 
             _talon.pushMotionProfileTrajectory(point);
             i++;
         }
     }
 
-    class PeriodicRunnable implements java.lang.Runnable {
+    private class PeriodicRunnable implements Runnable {
+        @Override
         public void run() {
             leftTalon.processMotionProfileBuffer();
             rightTalon.processMotionProfileBuffer();

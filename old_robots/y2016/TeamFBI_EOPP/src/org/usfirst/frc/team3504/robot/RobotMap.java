@@ -36,7 +36,7 @@ public class RobotMap {
     //public static int cameraSession = NIVision.IMAtQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 
 
-    static void init() {
+    public static void init() {
         driveSystemDriveLeft0 = new CANTalon(0);
         driveSystemDriveRight0 = new CANTalon(1);
         driveSystemDriveLeft1 = new CANTalon(2);

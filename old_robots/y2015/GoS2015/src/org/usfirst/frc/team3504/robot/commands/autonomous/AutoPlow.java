@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoPlow extends CommandGroup {
 
     // collects one container and three totes and takes them to the autozone
-    double distanceFwd1;
-    double distanceFwd2;
-    double distanceLeft1;
-    double distanceBack1;
-    double distanceFirst1;
+    private final double distanceFwd1;
+    private final double distanceFwd2;
+    private final double distanceLeft1;
+    private final double distanceBack1;
+    private final double distanceFirst1;
 
     public AutoPlow() {
         distanceFwd1 = 55;// was 82.15 distance on field is actually 55in

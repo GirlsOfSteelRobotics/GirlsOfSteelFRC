@@ -14,25 +14,30 @@ import org.usfirst.frc3504.OrangeEOPP.Robot;
  */
 public class Tilt extends Command {
 
+    @Override
     protected void initialize() {
         //Uses the shooter
         requires(Robot.shooter);
     }
 
+    @Override
     protected void execute() {
         //Starts the motor in the direction of the goal
         Robot.shooter.tilt();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         //Stops the shooter when the button is released
         Robot.shooter.stop();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

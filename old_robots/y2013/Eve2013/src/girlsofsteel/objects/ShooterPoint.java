@@ -10,9 +10,9 @@ package girlsofsteel.objects;
  * @author Sylvie
  */
 public class ShooterPoint {
-    double voltage;
-    double encoderSpeed;
-    double battery;
+    private final double voltage;
+    private final double encoderSpeed;
+    private final double battery;
 
     public ShooterPoint(double voltage, double encoderSpeed, double battery){
         this.voltage = voltage;

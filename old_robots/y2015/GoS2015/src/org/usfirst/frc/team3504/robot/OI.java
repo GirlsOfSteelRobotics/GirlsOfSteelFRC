@@ -1,10 +1,14 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.commands.collector.*;
-import org.usfirst.frc.team3504.robot.commands.drive.*;
-import org.usfirst.frc.team3504.robot.commands.lifter.*;
-import org.usfirst.frc.team3504.robot.commands.shack.*;
+
+import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
+import org.usfirst.frc.team3504.robot.commands.collector.ReleaseTote;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
+import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
+import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -43,14 +47,14 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 
     // Joysticks
-    private Joystick operatorJoystick;
-    private Joystick chassisJoystick;
+    private final Joystick operatorJoystick;
+    private final Joystick chassisJoystick;
 
     // Collector
-    private LTButton collectTote;
-    private RTButton releaseTote;
-    private JoystickButton angleIn;
-    private JoystickButton angleOut;
+    private final LTButton collectTote;
+    private final RTButton releaseTote;
+    private final JoystickButton angleIn;
+    private final JoystickButton angleOut;
 
     // Finger
     private JoystickButton fingersDown;
@@ -74,15 +78,15 @@ public class OI {
     private JoystickButton driveLeft;
 
     // Shack Buttons
-    private JoystickButton shackIn;
-    private JoystickButton shackOut;
+    private final JoystickButton shackIn;
+    private final JoystickButton shackOut;
 
     // Ultrasonic buttons
     private JoystickButton getDistance;
 
     // Gyro Button
-    private JoystickButton resetGyro;
-    private JoystickButton getGyro;
+    private final JoystickButton resetGyro;
+    private final JoystickButton getGyro;
 
     // PID button
     private JoystickButton pidLifterTesting;

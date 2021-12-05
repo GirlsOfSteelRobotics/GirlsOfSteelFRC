@@ -18,7 +18,8 @@ public class AutonomousHotHighGoal extends CommandGroup{
     public AutonomousHotHighGoal() {
         addSequential(new MoveToPosition(1));
         addParallel(new setArmAnglePID(30));
-    if (Camera.isGoalHot())
+    if (Camera.isGoalHot()) {
         addSequential(new ShootHigh());
+    }
 }
 }

@@ -4,7 +4,6 @@ package org.usfirst.frc.team3504.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import org.usfirst.frc.team3504.robot.commands.AutoDrive;
@@ -26,13 +25,14 @@ public class Robot extends IterativeRobot {
     public static Drive drive;
     public static Manipulator manipulator;
     public static Shifters shifters;
-    Command autonomousCommand;
-    SendableChooser autoChooser;
+    private Command autonomousCommand;
+    private SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
         RobotMap.init();
         drive = new Drive();
@@ -44,37 +44,44 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new AutoDrive();
     }
 
+    @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //autonomousCommand = (Command) autoChooser.getSelected();
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.start();
+        }
     }
 
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.cancel();
+        }
     }
 
     /**
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
      */
+    @Override
     public void disabledInit(){
 
     }
@@ -82,6 +89,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
@@ -89,6 +97,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
     }
 

@@ -15,27 +15,32 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Wait extends CommandBase {
 
-    double time;
-    double startTime;
+    private final double time;
+    private double startTime;
 
     public Wait(double sec) {
         time = sec;
     }
 
+    @Override
     protected void initialize() {
         startTime = Timer.getFPGATimestamp();
     }
 
+    @Override
     protected void execute() {
     }
 
+    @Override
     protected boolean isFinished() {
         return Timer.getFPGATimestamp() - startTime > time;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -1,7 +1,7 @@
 package girlsofsteel.objects;
 
 import com.sun.squawk.util.MathUtils;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Camera {
 

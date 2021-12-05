@@ -11,13 +11,13 @@ package girlsofsteel.commands;
  */
 public class MoveKicker extends CommandBase {
 
-    private double allowedOffBy = 0.05; //Degrees
+    private final double allowedOffBy = 0.05; //Degrees
     private double encoderValue350Modded;
     private double setpoint;
     //This is one tooth away from kicking
     private final double loaded = 0.0; //Starting position is loaded pos
     private final double shoot = 0.111111; //The angle degree needed to kick
-    private int pos;
+    private final int pos;
     private boolean firstTime;
     private double startTime;
     private double changeInTime;
@@ -27,10 +27,12 @@ public class MoveKicker extends CommandBase {
         this.pos = pos;
     }
 
+    @Override
     protected void initialize() {
         firstTime = true;
     }
 
+    @Override
     protected void execute() {
         if(firstTime) {
             switch(pos) {
@@ -42,6 +44,7 @@ public class MoveKicker extends CommandBase {
                     break;
                 default:
                     System.out.println("Error! Not a valid input parameter");
+                    break;
             }
             kicker.kickerPlanner.calculateVelocityGraph(setpoint);
             startTime = System.currentTimeMillis(); //MILLISECONDS
@@ -53,6 +56,7 @@ public class MoveKicker extends CommandBase {
         encoderValue350Modded = kicker.getEncoderDistance() % 360;
     }
 
+    @Override
     protected boolean isFinished() {
         encoderValue350Modded = kicker.getEncoderDistance() % 360;
         boolean thereYet = Math.abs(encoderValue350Modded - setpoint) < allowedOffBy;
@@ -60,10 +64,12 @@ public class MoveKicker extends CommandBase {
         return thereYet || over;
     }
 
+    @Override
     protected void end() {
         kicker.holdPosition();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

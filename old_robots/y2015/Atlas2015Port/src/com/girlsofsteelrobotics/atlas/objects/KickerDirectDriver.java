@@ -22,10 +22,10 @@ import edu.wpi.first.wpilibj.Jaguar;
  */
 public class KickerDirectDriver {
 
-    Encoder leftEncoder;
-    Encoder rightEncoder;
-    Jaguar leftJag;
-    Jaguar rightJag;
+    private final Encoder leftEncoder;
+    private final Encoder rightEncoder;
+    private final Jaguar leftJag;
+    private final Jaguar rightJag;
     private final double JAG_TOP_FORWARD_SPEED = 1;
     private final double JAG_TOP_BACKWARDS_SPEED = -1;
 

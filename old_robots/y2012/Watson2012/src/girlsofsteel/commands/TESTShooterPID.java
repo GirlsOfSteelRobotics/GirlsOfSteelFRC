@@ -4,20 +4,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTShooterPID extends CommandBase {
 
-    boolean autoShoot;
-    boolean bank;
+    private boolean autoShoot;
+    private boolean bank;
 
-    double speed;
-    double setpoint;
+    private double speed;
+    private double setpoint;
 
-    double p;
-    double i;
-    double d;
+    private double p;
+    private double i;
+    private double d;
 
-    double rate;
-    double difference;
+    private double rate;
+    private double difference;
 
-    double[] rateList;
+    private double[] rateList;
 
     public TESTShooterPID() {
         requires(shooter);
@@ -30,11 +30,13 @@ public class TESTShooterPID extends CommandBase {
         SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
     }
 
+    @Override
     protected void execute() {
 //        autoShoot = SmartDashboard.getBoolean("Auto Shoot?", false);
 //        bank = SmartDashboard.getBoolean("Bank?", false);
@@ -56,16 +58,19 @@ public class TESTShooterPID extends CommandBase {
             SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         shooter.disablePID();
         shooter.stopEncoder();
         shooter.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -5,10 +5,10 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 
-import org.opencv.core.*;
-import org.opencv.core.Core.*;
-import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
+import org.opencv.core.*; // NOPMD(UnnecessaryImport)
+import org.opencv.core.Core.*; // NOPMD(UnnecessaryImport)
+import org.opencv.imgproc.*; // NOPMD(UnnecessaryImport)
+import org.opencv.objdetect.*; // NOPMD(UnnecessaryImport)
 
 /**
 * GripPipeline class.
@@ -17,16 +17,17 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
+@SuppressWarnings({"PMD.ControlStatementBraces"})
 public class GripPipeline implements VisionPipeline {
 
     //Outputs
-    private Mat resizeImageOutput = new Mat();
-    private Mat hsvThresholdOutput = new Mat();
-    private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-    private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+    private final Mat resizeImageOutput = new Mat();
+    private final Mat hsvThresholdOutput = new Mat();
+    private final List<MatOfPoint> findContoursOutput = new ArrayList<>();
+    private final List<MatOfPoint> filterContoursOutput = new ArrayList<>();
 
     static {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // NOPMD
     }
 
     /**
@@ -53,7 +54,7 @@ public class GripPipeline implements VisionPipeline {
         findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
         // Step Filter_Contours0:
-        ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
+        List<MatOfPoint> filterContoursContours = findContoursOutput;
         double filterContoursMinArea = 100.0;
         double filterContoursMinPerimeter = 0.0;
         double filterContoursMinWidth = 0.0;
@@ -92,7 +93,7 @@ public class GripPipeline implements VisionPipeline {
      * This method is a generated getter for the output of a Find_Contours.
      * @return ArrayList<MatOfPoint> output from Find_Contours.
      */
-    public ArrayList<MatOfPoint> findContoursOutput() {
+    public List<MatOfPoint> findContoursOutput() {
         return findContoursOutput;
     }
 
@@ -100,7 +101,7 @@ public class GripPipeline implements VisionPipeline {
      * This method is a generated getter for the output of a Filter_Contours.
      * @return ArrayList<MatOfPoint> output from Filter_Contours.
      */
-    public ArrayList<MatOfPoint> filterContoursOutput() {
+    public List<MatOfPoint> filterContoursOutput() {
         return filterContoursOutput;
     }
 
@@ -193,7 +194,7 @@ public class GripPipeline implements VisionPipeline {
             mopHull.create((int) hull.size().height, 1, CvType.CV_32SC2);
             for (int j = 0; j < hull.size().height; j++) {
                 int index = (int)hull.get(j, 0)[0];
-                double[] point = new double[] { contour.get(index, 0)[0], contour.get(index, 0)[1]};
+                double[] point = new double[] { contour.get(index, 0)[0], contour.get(index, 0)[1]}; // NOPMD
                 mopHull.put(j, 0, point);
             }
             final double solid = 100 * area / Imgproc.contourArea(mopHull);

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTChassis extends CommandBase {
 
-    double speed;
+    private double speed;
 
     public TESTChassis(){
         requires(chassis);
@@ -16,10 +16,12 @@ public class TESTChassis extends CommandBase {
         SmartDashboard.putNumber("Left Scale", 1.0);
     }
 
+    @Override
     protected void initialize() {
         chassis.initEncoders();
     }
 
+    @Override
     protected void execute() {
         speed = SmartDashboard.getNumber("Jag speed", 0.0);
         SmartDashboard.putNumber("Right Encoder:", chassis.getRightEncoderDistance());
@@ -35,15 +37,18 @@ public class TESTChassis extends CommandBase {
         System.out.println("L:" + chassis.getLeftEncoderDistance());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
         chassis.endEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

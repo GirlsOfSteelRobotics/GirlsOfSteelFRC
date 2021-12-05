@@ -11,21 +11,20 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
  */
 public class Chassis extends Subsystem {
-    private CANTalon driveLeftA;
-    private CANTalon driveLeftB;
-    private CANTalon driveLeftC;
+    private final CANTalon driveLeftA;
+    private final CANTalon driveLeftB;
+    private final CANTalon driveLeftC;
 
-    private CANTalon driveRightA;
-    private CANTalon driveRightB;
-    private CANTalon driveRightC;
+    private final CANTalon driveRightA;
+    private final CANTalon driveRightB;
+    private final CANTalon driveRightC;
 
-    private RobotDrive robotDrive;
+    private final RobotDrive robotDrive;
 
     public Chassis() {
         driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
@@ -72,6 +71,7 @@ public class Chassis extends Subsystem {
         addChild("driveRightC", driveRightC);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new Drive());

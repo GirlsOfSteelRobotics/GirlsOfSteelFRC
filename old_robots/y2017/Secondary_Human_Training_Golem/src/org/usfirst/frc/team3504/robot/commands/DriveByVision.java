@@ -14,21 +14,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveByVision extends Command {
 
-    NetworkTable table;
+    private NetworkTable table;
 
     private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust
     // (rad/s) current
     // value works
     private static final int IMAGE_WIDTH = 320;
     private static final double IMAGE_CENTER = IMAGE_WIDTH / 2.0;
-    double[] defaultValue = new double[0];
+    private final double[] defaultValue = new double[0];
     public CANTalon leftTalon = Robot.chassis.getLeftTalon();
     public CANTalon rightTalon = Robot.chassis.getRightTalon();
     private final int TIMEOUT = 8;
     private final int SLIPPING_VELOCITY = 850;
-    private Timer tim;
-    private double slowLinearVelocity = 22; // TODO: change (in/s)
-    private double fastLinearVelocity = 28; // TODO: change (in/s)
+    private final Timer tim;
+    private final double slowLinearVelocity = 22; // TODO: change (in/s)
+    private final double fastLinearVelocity = 28; // TODO: change (in/s)
 
     // width of X or Y in pixels when the robot is at the lift
     // private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -47,6 +47,7 @@ public class DriveByVision extends Command {
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
 
         // not calling setupFPID because other PID values override
@@ -68,6 +69,7 @@ public class DriveByVision extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 
         /*table = NetworkTable.getTable("GRIP/myContoursReport");
@@ -106,14 +108,17 @@ public class DriveByVision extends Command {
 
 
         double goalLinearVelocity;
-        if (height < 0 && tim.get() < 1)
+        if (height < 0 && tim.get() < 1) {
             goalLinearVelocity = fastLinearVelocity;
+        }
         else if (height < 0) {
             goalLinearVelocity = slowLinearVelocity;
-        } else if (height >= 52.0)
+        } else if (height >= 52.0) {
             goalLinearVelocity = slowLinearVelocity;
-        else
+        }
+        else {
             goalLinearVelocity = fastLinearVelocity;
+        }
 
 
         // right and left desired wheel speeds in inches per second
@@ -137,6 +142,7 @@ public class DriveByVision extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
 
         return ((tim.get() > 1 && Math.abs(leftTalon.getEncVelocity()) < SLIPPING_VELOCITY
@@ -144,6 +150,7 @@ public class DriveByVision extends Command {
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         System.out.println("DriveByVision Finished");
         tim.stop();
@@ -151,6 +158,7 @@ public class DriveByVision extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }
