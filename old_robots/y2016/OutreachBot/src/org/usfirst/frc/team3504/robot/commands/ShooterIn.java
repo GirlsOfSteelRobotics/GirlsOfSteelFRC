@@ -1,24 +1,24 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 
 /**
  *
  */
 public class ShooterIn extends Command {
 
-    public ShooterIn() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.manipulator);
+    private final Manipulator m_manipulator;
+
+    public ShooterIn(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.manipulator.shooterIn();
+        m_manipulator.shooterIn();
         System.out.println("shooter in");
     }
 

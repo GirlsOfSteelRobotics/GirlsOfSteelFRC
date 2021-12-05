@@ -2,17 +2,21 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.OI;
+import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
 
 /**
  *
  */
 public class DriveByJoystick extends Command {
 
-    public DriveByJoystick() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveSystem);
+    private final DriveSystem m_driveSystem;
+    private final OI m_oi;
+
+    public DriveByJoystick(OI oi, DriveSystem driveSystem) {
+        m_oi = oi;
+        m_driveSystem = driveSystem;
+        requires(m_driveSystem);
     }
 
     // Called just before this Command runs the first time
@@ -23,10 +27,10 @@ public class DriveByJoystick extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.driveSystem.takeJoystickInputs(Robot.oi.getDriveStick());
+        m_driveSystem.takeJoystickInputs(m_oi.getDriveStick());
 
-        SmartDashboard.putNumber("Drive Left Encoder ", Robot.driveSystem.getEncoderLeft());
-        SmartDashboard.putNumber("Drive Right Encoder ", Robot.driveSystem.getEncoderRight());
+        SmartDashboard.putNumber("Drive Left Encoder ", m_driveSystem.getEncoderLeft());
+        SmartDashboard.putNumber("Drive Right Encoder ", m_driveSystem.getEncoderRight());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +42,7 @@ public class DriveByJoystick extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.driveSystem.stop();
+        m_driveSystem.stop();
     }
 
     // Called when another command which requires one or more of the same

@@ -2,35 +2,39 @@ package org.usfirst.frc.team3504.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors;
 import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors.Direction;
+import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
 
 /**
  *
  */
 public class AutonomousCommand extends Command {
 
-    public AutonomousCommand() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.accessoryMotors);
-        requires(Robot.driveSystem);
+    private final DriveSystem m_driveSystem;
+    private final AccessoryMotors m_accessoryMotors;
+
+    public AutonomousCommand(DriveSystem driveSystem, AccessoryMotors accessoryMotors) {
+        m_driveSystem = driveSystem;
+        m_accessoryMotors = accessoryMotors;
+        requires(accessoryMotors);
+        requires(driveSystem);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.driveSystem.resetDistance();
+        m_driveSystem.resetDistance();
         setTimeout(1.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.accessoryMotors.startLeft(Direction.kFwd);
-        Robot.accessoryMotors.startRight(Direction.kRev);
-        Robot.driveSystem.forward();
-        SmartDashboard.putNumber("Encoder Distance", Robot.driveSystem.getEncoderDistance());
+        m_accessoryMotors.startLeft(Direction.kFwd);
+        m_accessoryMotors.startRight(Direction.kRev);
+        m_driveSystem.forward();
+        SmartDashboard.putNumber("Encoder Distance", m_driveSystem.getEncoderDistance());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,9 +46,9 @@ public class AutonomousCommand extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.accessoryMotors.stopLeft();
-        Robot.accessoryMotors.stopRight();
-        Robot.driveSystem.stop();
+        m_accessoryMotors.stopLeft();
+        m_accessoryMotors.stopRight();
+        m_driveSystem.stop();
     }
 
     // Called when another command which requires one or more of the same
