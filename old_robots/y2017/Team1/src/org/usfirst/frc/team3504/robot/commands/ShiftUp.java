@@ -2,25 +2,25 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
 
 /**
  *
  */
 public class ShiftUp extends Command {
+    private final Shifters m_shifters;
 
-    public ShiftUp() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.shifters);
+    public ShiftUp(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shifters.shiftLeft(Speed.kHigh);
-        Robot.shifters.shiftRight(Speed.kHigh);
+        m_shifters.shiftLeft(Speed.kHigh);
+        m_shifters.shiftRight(Speed.kHigh);
     }
 
     // Called repeatedly when this Command is scheduled to run

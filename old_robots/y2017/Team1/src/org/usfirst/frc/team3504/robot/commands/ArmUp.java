@@ -1,17 +1,17 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Arm;
+
 /**
  *
  */
 public class ArmUp extends Command {
+    private final Arm m_arm;
 
-    public ArmUp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.arm);
+    public ArmUp(Arm arm) {
+        m_arm = arm;
+        requires(m_arm);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +22,7 @@ public class ArmUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.arm.armUp();
+        m_arm.armUp();
     }
 
     // Make this return true when this Command no longer needs to run execute()
