@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TestKickerEncoder extends CommandBase {
 
-    double startTime;
-    double changeTime;
-    double direction;
+    private double startTime;
+    private double changeTime;
+    private double direction;
 
     public TestKickerEncoder() {
         requires(kicker);

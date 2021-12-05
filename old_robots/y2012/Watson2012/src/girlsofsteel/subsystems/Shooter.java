@@ -1,7 +1,12 @@
 package girlsofsteel.subsystems;
 
 import com.sun.squawk.util.MathUtils;
-import edu.wpi.first.wpilibj.*;
+//import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.SortedVector;
 import girlsofsteel.RobotMap;
@@ -53,12 +58,12 @@ public class Shooter extends Subsystem {
             RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
             CounterBase.EncodingType.k4X);
     private final Relay topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
-    double p = 0.4;//0.25;//0.25;//0.15;//0.1;//0.25;
-    double i = 50.0;//2.5;//0.06;//0.0002;
-    double d = 0.0;
+    private final double p = 0.4;//0.25;//0.25;//0.15;//0.1;//0.25;
+    private final double i = 50.0;//2.5;//0.06;//0.0002;
+    private final double d = 0.0;
     //integral threshold -> cuts of the value that is being multipled by the i term
     //with the PID output
-    double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
+    private final double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
     private final EncoderGoSPIDController PID = new EncoderGoSPIDController(p, i, d, encoder,
             new PIDOutput() {
 
@@ -67,6 +72,11 @@ public class Shooter extends Subsystem {
                     setJags(output);
                 }
             }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
+
+    //table sorting shooter experimental values calculator
+    private  final SortedVector.Comparator comparator = new MapDoubleComparator();
+    //Sorted array sorts greatest to least
+    private final SortedVector list = new SortedVector(comparator);
 
     public Shooter(){
         populate();//adds all the values in the table below to the shooting table
@@ -309,10 +319,6 @@ public class Shooter extends Subsystem {
         return angleCompensation;//returns degrees
     }
 
-    //table sorting shooter experimental values calculator
-    SortedVector.Comparator comparator = new MapDoubleComparator();
-    //Sorted array sorts greatest to least
-    SortedVector list = new SortedVector(comparator);
 
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
@@ -360,15 +366,11 @@ public class Shooter extends Subsystem {
      * @return
      */
     public double getVelocityFrTable(double distance) {
-        int index = (int) Math.ceil(list.size() / 2.0);
-        MapDouble currentValue = (MapDouble) list.elementAt(index);
-        MapDouble currentLow = new MapDouble(0.0, 0.0);
-        MapDouble currentMax = new MapDouble(0.0, 0.0);
-        boolean end = false;
 
         if (list.size() == 0) {
             return 0;//ends the getVelocityFrTable method -> sends a velocity of 0
         }
+
 
         //Sorted array is sorted greatest to least
         //assigns the last value to the lowest point -> and the first to the last
@@ -391,6 +393,12 @@ public class Shooter extends Subsystem {
             return MAX_SHOOTER_VELOCITY;//if the distance is above anything in
             //the table -> shoot at the highest the velocity
         }
+
+        int index = (int) Math.ceil(list.size() / 2.0);
+        MapDouble currentValue = (MapDouble) list.elementAt(index);
+        MapDouble currentLow = new MapDouble(0.0, 0.0);
+        MapDouble currentMax = new MapDouble(0.0, 0.0);
+        boolean end = false;
 
         //find the values above & below the distance you're looking for
         while (!end) {

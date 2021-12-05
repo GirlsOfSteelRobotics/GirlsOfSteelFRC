@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveVelocityChassisTuning extends CommandBase {
-            Joystick joystick;
+            private Joystick joystick;
     public DriveVelocityChassisTuning(){
         SmartDashboard.putNumber("DVCT,p", 0.0);
         SmartDashboard.putNumber("DVCT,i", 0.0);

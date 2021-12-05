@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTAutonomousCenter extends CommandGroup {
 
-    boolean autoTrack;
+    private final boolean autoTrack;
 
-    double distance = 1.3;
+    private final double distance = 1.3;
 
-    double time;
+    private double time;
 
     public TESTAutonomousCenter(){
         SmartDashboard.putBoolean("Auto Track?", false);

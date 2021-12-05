@@ -3,7 +3,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous.planning;
 public class AutoRightGearRightTalon {
     public static final int kNumPoints =185;
     // Position (rotations)	Velocity (RPM)	Duration (ms)
-    public static double [][]Points = new double[][]{
+    public static double [][]Points = new double[][]{ // NOPMD(UseShortArrayInitializer)
         {0,	0	,10},
         {0.0039789,	23.873	,10},
         {0.011937,	47.746	,10},

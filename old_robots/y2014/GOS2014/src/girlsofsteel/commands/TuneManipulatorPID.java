@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TuneManipulatorPID extends CommandBase {
 
-    double p = 0;
-    double i = 0;
-    double d = 0;
-    double setpoint = 0;
-    boolean pid = false;
+    private double p = 0;
+    private double i = 0;
+    private double d = 0;
+    private double setpoint = 0;
+    private final boolean pid = false;
 
     public TuneManipulatorPID() {
         requires(manipulator);

@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Camera extends Subsystem {
 
-    CameraServer server;
+    private final CameraServer server;
 
     public Camera() {
-        //server = CameraServer.getInstance();
+        server = CameraServer.getInstance();
         //server.setQuality(50);
         // the camera name (ex "cam0") can be found through the roborio web
         // interface

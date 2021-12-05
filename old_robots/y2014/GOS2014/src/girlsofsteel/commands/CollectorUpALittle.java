@@ -14,13 +14,9 @@ import girlsofsteel.Configuration;
  */
 public class CollectorUpALittle extends CommandBase {
 
-    double startTime;
-    double putDownTime = 0.15;
-    double changeInTime;
-
-    public CollectorUpALittle() {
-    //Doesn't require collector because it needs to be used while the collector wheels are spinning
-    }
+    private double startTime;
+    private final double putDownTime = 0.15;
+    private double changeInTime;
 
     @Override
     protected void initialize() {
@@ -34,10 +30,11 @@ public class CollectorUpALittle extends CommandBase {
     protected void execute() {
 
         changeInTime = Timer.getFPGATimestamp() - startTime;
-        if(changeInTime < putDownTime)
+        if(changeInTime < putDownTime) {
             collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed);
-        else
+        } else {
             collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);
+        }
     }
 
     @Override

@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class PS3SetPointTurret extends CommandBase {
 
-    Joystick operatorJoystick;
-    double angle;
+    private  Joystick operatorJoystick;
+    private double angle;
 
     public PS3SetPointTurret() {
         requires(turret);

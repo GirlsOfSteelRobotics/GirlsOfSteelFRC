@@ -12,9 +12,9 @@ import girlsofsteel.subsystems.Feeder;
  * @author GirlsOfSTEEL
  */
 public class Blocking extends CommandBase{
-    boolean blockerRaised = false;
-    boolean newBlockerRaised = false;
-    boolean oldBlockerRaised = false;
+    private boolean blockerRaised = false;
+    private boolean newBlockerRaised = false;
+    private boolean oldBlockerRaised = false;
         public Blocking(){
             blockerRaised = false;
             requires (feeder);

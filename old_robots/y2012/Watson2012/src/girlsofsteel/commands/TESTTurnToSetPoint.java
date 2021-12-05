@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTTurnToSetPoint extends CommandBase {
 
-    double degreesToTurn;
+    private double degreesToTurn;
 
     public TESTTurnToSetPoint(){
         requires(chassis);

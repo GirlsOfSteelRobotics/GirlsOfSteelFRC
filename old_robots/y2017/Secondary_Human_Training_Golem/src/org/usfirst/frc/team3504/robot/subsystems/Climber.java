@@ -8,7 +8,6 @@ import org.usfirst.frc.team3504.robot.commands.StayClimbed;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *

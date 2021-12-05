@@ -8,11 +8,9 @@ import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
 import com.kauailabs.navx.frc.AHRS;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -27,18 +25,18 @@ public class Chassis extends Subsystem {
     public static CANTalon rearLeftWheel;
 
     // Gyro
-    boolean getGyro;
-    double oldDirection;
+    private boolean getGyro;
+    private double oldDirection;
     private final AHRS IMUGyro;
     private final double oldXGyroDisplacement = 0;
     private final double oldYGyroDisplacement = 0;
 
 
     // Variables used to reset the encoders
-    double initialFrontLeftEncoderDistance;
-    double initialFrontRightEncoderDistance;
-    double initialRearLeftEncoderDistance;
-    double initialRearRightEncoderDistance;
+    private double initialFrontLeftEncoderDistance;
+    private double initialFrontRightEncoderDistance;
+    private double initialRearLeftEncoderDistance;
+    private double initialRearRightEncoderDistance;
 
     private final double topSpeed = 400;
 
@@ -159,12 +157,15 @@ public class Chassis extends Subsystem {
      * 0.25, then scales up to return 1 for an input of 1
      */
     private double beattieDeadBand(double x) {
-        if (x > 0)
+        if (x > 0) {
             return Math.pow(x, 1.0 / x);
-        else if (x < 0)
+        }
+        else if (x < 0) {
             return -beattieDeadBand(-x);
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     /**
@@ -174,12 +175,15 @@ public class Chassis extends Subsystem {
      * 0.5, then scales up to return 1 for an input of 1
      */
     private double beattieTwistDeadBand(double x) {
-        if (x > 0)
+        if (x > 0) {
             return Math.pow(x, 4.0 / x);
-        else if (x < 0)
+        }
+        else if (x < 0) {
             return -beattieTwistDeadBand(-x);
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     /**
@@ -190,11 +194,13 @@ public class Chassis extends Subsystem {
      */
     private double throttleSpeed(Joystick stick) {
         double temp = (-stick.getThrottle() + 1) / 2;
-        if (temp < .1)
+        if (temp < .1) {
             return .1;
+        }
 
-        else
+        else {
             return temp;
+        }
     }
 
     public double getGyroAngle() {
@@ -210,15 +216,16 @@ public class Chassis extends Subsystem {
      * robot or the field It enables or disables the use of the current gyro
      * reading in mecanumDrive_Cartesian()
      */
-    public void getGyro() {
+    public void getGyro() { // NOPMD(LinguisticNaming)
         getGyro = !getGyro;
         SmartDashboard.putBoolean("Gyro: ", getGyro);
     }
 
     public void moveByJoystick(Joystick stick) {
         double temp = IMUGyro.getYaw();
-        if (temp < 0)
+        if (temp < 0) {
             temp = temp + 360;
+        }
 
         SmartDashboard.putNumber("GYRO Get Yaw", temp);
         SmartDashboard.putNumber("Throttle Speeddddd", throttleSpeed(stick));

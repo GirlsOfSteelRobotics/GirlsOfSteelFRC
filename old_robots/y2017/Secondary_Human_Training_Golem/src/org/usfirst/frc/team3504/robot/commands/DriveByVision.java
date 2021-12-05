@@ -14,14 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveByVision extends Command {
 
-    NetworkTable table;
+    private NetworkTable table;
 
     private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust
     // (rad/s) current
     // value works
     private static final int IMAGE_WIDTH = 320;
     private static final double IMAGE_CENTER = IMAGE_WIDTH / 2.0;
-    double[] defaultValue = new double[0];
+    private final double[] defaultValue = new double[0];
     public CANTalon leftTalon = Robot.chassis.getLeftTalon();
     public CANTalon rightTalon = Robot.chassis.getRightTalon();
     private final int TIMEOUT = 8;
@@ -108,14 +108,17 @@ public class DriveByVision extends Command {
 
 
         double goalLinearVelocity;
-        if (height < 0 && tim.get() < 1)
+        if (height < 0 && tim.get() < 1) {
             goalLinearVelocity = fastLinearVelocity;
+        }
         else if (height < 0) {
             goalLinearVelocity = slowLinearVelocity;
-        } else if (height >= 52.0)
+        } else if (height >= 52.0) {
             goalLinearVelocity = slowLinearVelocity;
-        else
+        }
+        else {
             goalLinearVelocity = fastLinearVelocity;
+        }
 
 
         // right and left desired wheel speeds in inches per second

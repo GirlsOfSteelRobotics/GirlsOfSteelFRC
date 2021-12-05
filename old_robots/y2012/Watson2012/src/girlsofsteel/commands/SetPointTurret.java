@@ -2,7 +2,7 @@ package girlsofsteel.commands;
 
 public class SetPointTurret extends CommandBase {
 
-    double knobValue;
+    private double knobValue;
 
     public SetPointTurret() {
         requires(turret);

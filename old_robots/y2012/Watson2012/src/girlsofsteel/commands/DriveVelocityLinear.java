@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DriveVelocityLinear extends CommandBase{
 
-    Joystick joystick;
+    private Joystick joystick;
 
-    double xAxis;
-    double yAxis;
+    private double xAxis;
+    private double yAxis;
 
-    double scale;
+    private final double scale;
 
     public DriveVelocityLinear(double scale){
         requires(chassis);

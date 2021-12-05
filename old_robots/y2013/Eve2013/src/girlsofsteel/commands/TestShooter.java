@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TestShooter extends CommandBase {
 
-    double speed;
+    private double speed;
 
     public TestShooter(){
         SmartDashboard.putNumber("Speed", 0.0);

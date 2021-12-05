@@ -5,10 +5,10 @@ import girlsofsteel.objects.Camera;
 
 public class ShootUsingTable extends CommandBase {
 
-    Joystick operatorJoystick;
+    private Joystick operatorJoystick;
 
-    boolean bank;//bank does not do anything -> tuned for banking
-    double cameraDistance;
+    private final boolean bank;//bank does not do anything -> tuned for banking
+    private double cameraDistance;
 
     public ShootUsingTable(boolean bank) { //bank = false for autonomous
         //bank = true for everything else (should be fairly straight to the hoop

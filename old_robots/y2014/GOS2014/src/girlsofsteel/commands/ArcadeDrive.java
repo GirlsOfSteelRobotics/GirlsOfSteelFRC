@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class ArcadeDrive extends CommandBase{
 
-    Joystick joystick1; //randomly picked right joystick from robot map
+    private Joystick joystick1; //randomly picked right joystick from robot map
 
-    double Xcoord;
-    double Ycoord;
-    double XcoordSq;
-    double YcoordSq;
+    private double Xcoord;
+    private double Ycoord;
+    private double XcoordSq;
+    private double YcoordSq;
 
     public ArcadeDrive() {
         requires(driving);

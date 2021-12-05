@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  */
 public class TurnToGear extends Command {
 
-    NetworkTable table;
+    private NetworkTable table;
     //double[] defaultValue = new double[0];
     // private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0;
     // private static final double TOLERANCE = 5; //TODO: test this (in pixels)
 
     //double[] centerX = new double[3];
-    double targetX;
+    private double targetX;
     // private double currentX;
 
     public enum Direction {

@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shifters extends Subsystem{
 
-    DoubleSolenoid shifterLeft = RobotMap.shiftersShifterLeft;
-    DoubleSolenoid shifterRight = RobotMap.shiftersShifterRight;
+    private final DoubleSolenoid shifterLeft = RobotMap.shiftersShifterLeft;
+    private final DoubleSolenoid shifterRight = RobotMap.shiftersShifterRight;
 
     @Override
     public void initDefaultCommand() {

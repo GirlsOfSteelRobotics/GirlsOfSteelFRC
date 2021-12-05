@@ -8,7 +8,6 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Shooter extends Subsystem {
     private final CANTalon lowShooterMotor;
@@ -111,14 +110,16 @@ public class Shooter extends Subsystem {
     }
 
     public void incrementHighShooterSpeed() {
-        if ((shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED)
+        if ((shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED) {
             shooterSpeed += SHOOTER_SPEED_STEP;
+        }
         System.out.println("currentShooterSpeed: " + shooterSpeed);
     }
 
     public void decrementHighShooterSpeed() {
-        if ((shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED)
+        if ((shooterSpeed - SHOOTER_SPEED_STEP) >= SHOOTER_MIN_SPEED) {
             shooterSpeed -= SHOOTER_SPEED_STEP;
+        }
         System.out.println("currentShooterSpeed: " + shooterSpeed);
     }
 

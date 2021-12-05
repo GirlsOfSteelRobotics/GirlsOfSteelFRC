@@ -2,8 +2,8 @@ package girlsofsteel.commands;
 
 public class ManualTurret extends CommandBase {
 
-    double knobValue;
-    double speed;
+    private double knobValue;
+    private double speed;
 
     public ManualTurret() {
         requires(turret);

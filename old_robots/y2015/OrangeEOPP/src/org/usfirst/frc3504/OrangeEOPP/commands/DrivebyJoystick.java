@@ -16,7 +16,7 @@ import org.usfirst.frc3504.OrangeEOPP.Robot;
  */
 public class  DrivebyJoystick extends Command {
 
-    Joystick joy;
+    private Joystick joy;
 
     public DrivebyJoystick() {
         //get joystick

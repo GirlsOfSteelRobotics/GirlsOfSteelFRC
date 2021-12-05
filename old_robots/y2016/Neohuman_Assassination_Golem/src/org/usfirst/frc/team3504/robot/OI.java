@@ -1,11 +1,25 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.*;
-import org.usfirst.frc.team3504.robot.commands.buttons.*;
-import org.usfirst.frc.team3504.robot.commands.camera.*;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3504.robot.commands.CollectBall;
+import org.usfirst.frc.team3504.robot.commands.PivotDown;
+import org.usfirst.frc.team3504.robot.commands.PivotUp;
+import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShooterPistonsIn;
+import org.usfirst.frc.team3504.robot.commands.ShooterPistonsOut;
+import org.usfirst.frc.team3504.robot.commands.StopShooterWheels;
+import org.usfirst.frc.team3504.robot.commands.ShootBall;
+import org.usfirst.frc.team3504.robot.commands.FlapUp;
+import org.usfirst.frc.team3504.robot.commands.FlapDown;
+import org.usfirst.frc.team3504.robot.commands.PivotMiddle;
+import org.usfirst.frc.team3504.robot.commands.ResetEncoderDistance;
+import org.usfirst.frc.team3504.robot.commands.RotateToDesiredAngle;
+import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,7 +32,7 @@ public class OI {
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
      */
     //IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-    boolean rozieDrive = false;
+    private final boolean rozieDrive = false;
 
 
     private final Joystick drivingStickForward = new Joystick(0);

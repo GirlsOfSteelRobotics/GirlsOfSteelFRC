@@ -24,8 +24,9 @@ public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
     @Override
     protected void execute() {
-        if(kicker.getEncoder() % 360 < loadingEncoderPosition)
+        if(kicker.getEncoder() % 360 < loadingEncoderPosition) {
             kicker.setJag(1.0);
+        }
     }
 
     @Override

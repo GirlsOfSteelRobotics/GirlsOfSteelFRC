@@ -1,10 +1,14 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.commands.collector.*;
-import org.usfirst.frc.team3504.robot.commands.drive.*;
-import org.usfirst.frc.team3504.robot.commands.lifter.*;
-import org.usfirst.frc.team3504.robot.commands.shack.*;
+
+import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
+import org.usfirst.frc.team3504.robot.commands.collector.ReleaseTote;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
+import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
+import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;

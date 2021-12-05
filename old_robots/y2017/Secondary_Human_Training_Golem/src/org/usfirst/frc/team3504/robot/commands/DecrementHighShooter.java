@@ -9,12 +9,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DecrementHighShooter extends Command {
 
-    public DecrementHighShooter() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        // doesn't need requires because that would steal shooter from shootball
-    }
-
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {

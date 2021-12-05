@@ -34,7 +34,7 @@ public class RobotMap {
     public static DoubleSolenoid DSRight;
     public static DoubleSolenoid DSRightRamp;
 
-    static void init() {
+    public static void init() {
         rightTalon1 = new CANTalon(1);
         leftTalon1 = new CANTalon(4);
         rightTalon2 = new CANTalon(2);

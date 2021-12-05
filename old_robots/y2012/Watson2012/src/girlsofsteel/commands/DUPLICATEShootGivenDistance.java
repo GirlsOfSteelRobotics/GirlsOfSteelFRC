@@ -2,7 +2,7 @@ package girlsofsteel.commands;
 
 public class DUPLICATEShootGivenDistance extends CommandBase {
 
-    double speed;
+    private final double speed;
 
     public DUPLICATEShootGivenDistance(double speed) {
         requires(shooter);

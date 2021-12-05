@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
 import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.PIDOutput;
 import girlsofsteel.Configuration;
 import girlsofsteel.objects.EncoderGoSPIDController;

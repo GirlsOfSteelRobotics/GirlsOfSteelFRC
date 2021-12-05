@@ -7,11 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoKeepFlapUp extends Command {
 
-    public AutoKeepFlapUp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
-
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {

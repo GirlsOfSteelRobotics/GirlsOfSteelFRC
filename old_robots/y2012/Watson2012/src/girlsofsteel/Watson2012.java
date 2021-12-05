@@ -1,21 +1,26 @@
 package girlsofsteel;
 
+import girlsofsteel.commands.AutoTuneCamera;
+import girlsofsteel.commands.Collect;
+import girlsofsteel.commands.CommandBase;
+import girlsofsteel.commands.DriveSlowTurning;
+import girlsofsteel.commands.TurretTrackTarget;
 import girlsofsteel.objects.AutonomousChooser;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import girlsofsteel.commands.*;
+//import girlsofsteel.commands.*;
 import girlsofsteel.objects.Camera;
 
 public class Watson2012 extends IterativeRobot {
 
 //    Command buttons;
-    Command driveJagsLinear;
-    Command turretTracking;
-    Command collect;
+    private Command driveJagsLinear;
+    private Command turretTracking;
+    private Command collect;
 
-    AutonomousChooser auto;
+    private AutonomousChooser auto;
 
     @Override
     public void robotInit() {

@@ -14,11 +14,11 @@ import com.girlsofsteelrobotics.atlas.Configuration;
  */
 public class MoveToPositionLSPB extends CommandBase {
 
-    double setPoint = 0.0;
-    double startTime;
-    double changeInTime;
-    boolean firstTime = true;
-    double offBy = 0.05;
+    private double setPoint = 0.0;
+    private double startTime;
+    private double changeInTime;
+    private final boolean firstTime = true;
+    private final double offBy = 0.05;
 
     public MoveToPositionLSPB(double setPoint) {
         requires(driving);

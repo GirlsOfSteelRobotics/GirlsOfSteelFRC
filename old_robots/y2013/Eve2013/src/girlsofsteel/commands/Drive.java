@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Drive extends CommandBase {
 
-    double turningScale;
-    double scale;
+    private final double turningScale;
+    private final double scale;
 
-    Joystick joystick;
-    double x;
-    double y;
-    double th;
-    boolean gyroOn;
+    private Joystick joystick;
+    private double x;
+    private double y;
+    private double th;
+    private final boolean gyroOn;
 
     public Drive(double scale, double turningScale, boolean gyroOn) {
         requires(drive);

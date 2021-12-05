@@ -15,7 +15,7 @@ public class ChassisLSPBPlanner extends CommandBase {
     private double startTime; //milliseconds
     private double changeInTime;
     private double setPoint;
-    boolean graphed;
+    private boolean graphed;
 
     public ChassisLSPBPlanner() {
         requires(driving);
@@ -58,8 +58,9 @@ public class ChassisLSPBPlanner extends CommandBase {
                 ((Math.abs(chassis.getRightEncoderDistance() - setPoint) < 0.01 )
                 || (Math.abs(chassis.getRightEncoderDistance()) > Math.abs(setPoint)))
                 && graphed); //Right encoder/pid is flipped TODO configuration
-        if(ret)
-         System.out.println("finished ");
+        if(ret) {
+            System.out.println("finished ");
+        }
 
         return ret;
     }

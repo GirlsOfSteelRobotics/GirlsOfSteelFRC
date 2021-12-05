@@ -11,10 +11,15 @@
 
 package org.usfirst.frc3504.BlueTeamEOPP;
 
-import org.usfirst.frc3504.BlueTeamEOPP.commands.*;
+import org.usfirst.frc3504.BlueTeamEOPP.commands.AutonomousCommand;
+import org.usfirst.frc3504.BlueTeamEOPP.commands.CloseShooter;
+import org.usfirst.frc3504.BlueTeamEOPP.commands.DriveBackward;
+import org.usfirst.frc3504.BlueTeamEOPP.commands.DriveByJoystick;
+import org.usfirst.frc3504.BlueTeamEOPP.commands.DriveForward;
+import org.usfirst.frc3504.BlueTeamEOPP.commands.OpenShooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.buttons.*;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**

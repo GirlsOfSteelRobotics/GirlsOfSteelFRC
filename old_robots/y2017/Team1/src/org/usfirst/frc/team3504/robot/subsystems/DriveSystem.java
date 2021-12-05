@@ -34,16 +34,16 @@ public class DriveSystem extends Subsystem implements PIDOutput{
     //using the Nav board
     public PIDController turnController;
 
-    static final double kP = 0.03; //TODO: adjust these
-    static final double kI = 0.00;
-    static final double kD = 0.00;
-    static final double kF = 0.00;
+    private static final double kP = 0.03; //TODO: adjust these
+    private static final double kI = 0.00;
+    private static final double kD = 0.00;
+    private static final double kF = 0.00;
 
-    static final double kToleranceDegrees = 2.0f;
+    private static final double kToleranceDegrees = 2.0f;
 
-    boolean rotateToAngle = false;
+    private final boolean rotateToAngle = false;
 
-    double rotateToAngleRate;
+    private double rotateToAngleRate;
 
     public DriveSystem() {
         driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);

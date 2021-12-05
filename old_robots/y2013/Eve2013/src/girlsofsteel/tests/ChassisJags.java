@@ -5,7 +5,7 @@ import girlsofsteel.commands.CommandBase;
 
 public class ChassisJags extends CommandBase {
 
-    double speed;
+    private double speed;
 
     public ChassisJags(){
         requires(chassis);

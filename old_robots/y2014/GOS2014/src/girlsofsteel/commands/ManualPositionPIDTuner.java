@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManualPositionPIDTuner extends CommandBase {
 
-    double setpoint;
-    double p = 0.0;
-    double i;
-    double d;
-    double offBy = 0.05;
-    boolean reset;
-    boolean pid = false;
+    private double setpoint;
+    private double p = 0.0;
+    private double i;
+    private double d;
+    private final double offBy = 0.05;
+    private boolean reset;
+    private final boolean pid = false;
 
     public ManualPositionPIDTuner() {
         requires(driving);

@@ -9,15 +9,14 @@ package girlsofsteel.tests;
  * @author Resetar
  */
 import com.sun.squawk.util.MathUtils;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import girlsofsteel.commands.CommandBase;
 
 public class TestingGetVerticalAngleOffset extends CommandBase {
 
-    double heightOfGoal = 2.57175; //needs to be changed based on initial height of robot
-    double distance;
-    double initialVelocity = 8.65; //based on initialVelocity of TEST KICKER (CHANGE)
-    double gravity = 9.82;
+    private final double heightOfGoal = 2.57175; //needs to be changed based on initial height of robot
+    private double distance;
+    private final double initialVelocity = 8.65; //based on initialVelocity of TEST KICKER (CHANGE)
+    private final double gravity = 9.82;
 
     public double getVerticalAngleOffset(double x, double y) {
         x = distance;

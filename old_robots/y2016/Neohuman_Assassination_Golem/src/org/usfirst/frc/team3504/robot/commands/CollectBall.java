@@ -11,10 +11,12 @@ public class CollectBall extends Command {
     public CollectBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        if(RobotMap.USING_CLAW)
+        if(RobotMap.USING_CLAW) {
             requires(Robot.claw);
-        else
+        }
+        else {
             requires(Robot.shooter);
+        }
     }
 
     // Called just before this Command runs the first time
@@ -25,10 +27,12 @@ public class CollectBall extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(RobotMap.USING_CLAW)
+        if(RobotMap.USING_CLAW) {
             Robot.claw.collectRelease(-1.1);
-        else
+        }
+        else {
             Robot.shooter.spinWheels(1);
+        }
 
     }
 
@@ -41,10 +45,12 @@ public class CollectBall extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        if(RobotMap.USING_CLAW)
+        if(RobotMap.USING_CLAW) {
             Robot.claw.stopCollecting();
-        else
+        }
+        else {
             Robot.shooter.stop();
+        }
     }
 
     // Called when another command which requires one or more of the same

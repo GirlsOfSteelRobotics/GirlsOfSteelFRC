@@ -4,20 +4,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTShooterPID extends CommandBase {
 
-    boolean autoShoot;
-    boolean bank;
+    private boolean autoShoot;
+    private boolean bank;
 
-    double speed;
-    double setpoint;
+    private double speed;
+    private double setpoint;
 
-    double p;
-    double i;
-    double d;
+    private double p;
+    private double i;
+    private double d;
 
-    double rate;
-    double difference;
+    private double rate;
+    private double difference;
 
-    double[] rateList;
+    private double[] rateList;
 
     public TESTShooterPID() {
         requires(shooter);

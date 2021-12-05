@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Drive extends Subsystem {
-    RobotDrive robotDrive = RobotMap.driveRobotDrive;
+    private final RobotDrive robotDrive = RobotMap.driveRobotDrive;
     public static final double AUTO_DRIVE_SPEED = -0.1;
 
     // Put methods for controlling this subsystem

@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Nudge extends CommandBase {
 
-    Joystick driverJoystick;
+    private Joystick driverJoystick;
 
-    double xValue;
+    private double xValue;
 
     public Nudge(){
         requires(chassis);

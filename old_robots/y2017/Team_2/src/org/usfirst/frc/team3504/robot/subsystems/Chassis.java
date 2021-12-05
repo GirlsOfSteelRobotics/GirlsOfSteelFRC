@@ -90,7 +90,7 @@ public class Chassis extends Subsystem {
         getEncoderDistance();
     }
 
-    public void getEncoderDistance(){
+    public void getEncoderDistance(){ // NOPMD(LinguisticNaming)
         SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightEncoderPosition());
         SmartDashboard.putNumber("Left Encoder", Robot.chassis.getLeftEncoderPosition());
     }

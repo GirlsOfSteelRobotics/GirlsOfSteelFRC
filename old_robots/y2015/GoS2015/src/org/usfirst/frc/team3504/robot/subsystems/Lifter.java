@@ -6,7 +6,6 @@ import org.usfirst.frc.team3504.robot.commands.lifter.LiftByJoystick;
 
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -73,12 +72,15 @@ public class Lifter extends Subsystem {
             SmartDashboard.putString("In", "in throttle zero");
             liftTalon.set(liftTalon.getSetpoint());
         } else {
-            if (isAtTop() && Robot.oi.getOperatorJoystick().getY() < .2)
+            if (isAtTop() && Robot.oi.getOperatorJoystick().getY() < .2) {
                 liftTalon.set(liftTalon.getSetpoint());
-            else if (isAtBottom() && Robot.oi.getOperatorJoystick().getY() > .2)
+            }
+            else if (isAtBottom() && Robot.oi.getOperatorJoystick().getY() > .2) {
                 liftTalon.set(liftTalon.getSetpoint());
-            else
+            }
+            else {
                 liftTalon.set(liftTalon.get() - (300 * Robot.oi.getOperatorJoystick().getY()));
+            }
             SmartDashboard.putString("In", "not in throttle zero");
         }
     }

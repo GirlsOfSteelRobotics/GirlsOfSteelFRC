@@ -1,6 +1,5 @@
 package girlsofsteel;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -112,6 +111,14 @@ public class OI {
     public static final int SHOOTER_LIGHT_A = 36;
     public static final int SHOOTER_LIGHT_B = 37;
 
+    //buttons
+    //shooter
+    private boolean autoShootRunning = false;
+    private boolean stopShooterRunning = false;
+    private final boolean topRollersOverriden = false;
+    private int currValue = 0;
+    private int preValue = 0;
+
     //  Default Constructor
     public OI() {
         driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
@@ -177,14 +184,6 @@ public class OI {
 //        if(operatorJoystick.getRawButton(COLLECT_CAMERA_DATA)){
         return true;
     }
-
-    //buttons
-    //shooter
-    boolean autoShootRunning = false;
-    boolean stopShooterRunning = false;
-    boolean topRollersOverriden = false;
-    int currValue = 0;
-    int preValue = 0;
 
     public boolean isShootRunning() {
         try {

@@ -17,16 +17,6 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      *
      * @author Sophia, Sonia
      */
-    public CollectorWheelReverseAutoVer() {
-        //Doesn't have the requires stuff because we want to be able to lift
-        // the collector and spin the wheel at the same time
-    }
-
-    /**
-     * There is nothing in this method.
-     *
-     * @author Sophia, Sonia
-     */
     @Override
     protected void initialize() {
     }

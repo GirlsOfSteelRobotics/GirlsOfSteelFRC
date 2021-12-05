@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTTurretPID extends CommandBase {
 
-    double p;
-    double d;
+    private double p;
+    private double d;
 
-    double setpoint;
+    private double setpoint;
 
     public TESTTurretPID(){
         requires(turret);

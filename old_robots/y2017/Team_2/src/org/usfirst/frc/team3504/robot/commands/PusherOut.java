@@ -9,12 +9,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class PusherOut extends Command {
 
-    public PusherOut() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        //requires(Robot.manipulator); // commented out to allow for shoot group to run
-    }
-
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {

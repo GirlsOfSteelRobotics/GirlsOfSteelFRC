@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,11 +45,11 @@ public class CreateMotionProfile extends Command {
         leftInitial = leftTalon.getPosition();
         rightInitial = rightTalon.getPosition();
 
-        leftTrajectory = new ArrayList<List<Double>>();
-        rightTrajectory = new ArrayList<List<Double>>();
+        leftTrajectory = new ArrayList<>();
+        rightTrajectory = new ArrayList<>();
 
-        leftPoint = new ArrayList<Double>();
-        rightPoint = new ArrayList<Double>();
+        leftPoint = new ArrayList<>();
+        rightPoint = new ArrayList<>();
 
         System.out.println("CreateMotionProfile: Starting to Record MP");
     }
@@ -58,8 +57,8 @@ public class CreateMotionProfile extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        leftPoint = new ArrayList<Double>();
-        rightPoint = new ArrayList<Double>();
+        leftPoint = new ArrayList<>();
+        rightPoint = new ArrayList<>();
 
         double leftPosition = (double) leftTalon.getPosition() - leftInitial; // in rotations
         double rightPosition = (double) rightTalon.getPosition() - rightInitial;

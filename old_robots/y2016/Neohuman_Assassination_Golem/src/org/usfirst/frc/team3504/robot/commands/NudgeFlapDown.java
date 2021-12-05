@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class NudgeFlapDown extends Command {
-    Timer time = new Timer();
+    private final Timer time = new Timer();
 
     public NudgeFlapDown() {
 

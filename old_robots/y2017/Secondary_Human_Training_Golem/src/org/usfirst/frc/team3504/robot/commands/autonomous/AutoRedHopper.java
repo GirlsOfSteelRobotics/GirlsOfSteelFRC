@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
+@SuppressWarnings("PMD")
 public class AutoRedHopper extends CommandGroup {
 
     public AutoRedHopper() {

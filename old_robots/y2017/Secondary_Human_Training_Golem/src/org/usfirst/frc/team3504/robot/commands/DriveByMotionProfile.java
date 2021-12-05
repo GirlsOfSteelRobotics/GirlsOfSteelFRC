@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -35,7 +33,7 @@ public class DriveByMotionProfile extends Command {
     private SetValueMotionProfile state;
     private final double multiplier;
 
-    Notifier notifier = new Notifier(new PeriodicRunnable());
+    private final Notifier notifier = new Notifier(new PeriodicRunnable());
 
     public DriveByMotionProfile(String leftFile, String rightFile, double multiplier) {
         requires(Robot.chassis);
@@ -201,7 +199,7 @@ public class DriveByMotionProfile extends Command {
         }
     }
 
-    class PeriodicRunnable implements java.lang.Runnable {
+    private class PeriodicRunnable implements Runnable {
         @Override
         public void run() {
             leftTalon.processMotionProfileBuffer();

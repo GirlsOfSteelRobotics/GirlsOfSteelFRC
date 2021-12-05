@@ -2,9 +2,9 @@ package girlsofsteel.commands;
 
 public class GoToLocation extends CommandBase {
 
-    double x;
-    double y;
-    double degreesToFace; //degree change relative to beginning position of the
+    private final double x;
+    private final double y;
+    private final double degreesToFace; //degree change relative to beginning position of the
     //robot to end facing
 
     public GoToLocation(double x, double y, double degreesToFace){

@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTShootUsingTable extends CommandBase {
 
-    double addition;
-    double speed;
-    double cameraDistance;
-    double distance;
+    private double addition;
+    private double speed;
+    private double cameraDistance;
+    private double distance;
 
     public TESTShootUsingTable() {
         requires(shooter);

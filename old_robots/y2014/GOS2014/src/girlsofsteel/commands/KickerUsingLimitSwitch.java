@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class KickerUsingLimitSwitch extends CommandBase {
 
     private int loadingOrShooting;
-    boolean isLoaded;
-    boolean testingLimit = false;
-    boolean testingMotor = false;
-    boolean smartDashboard;
+    private boolean isLoaded;
+    private final boolean testingLimit = false;
+    private final boolean testingMotor = false;
+    private final boolean smartDashboard;
     private double startTime;
     private double changeInTime;
 

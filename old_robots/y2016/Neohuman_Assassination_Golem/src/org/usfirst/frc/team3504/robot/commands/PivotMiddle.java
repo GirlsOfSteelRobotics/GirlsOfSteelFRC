@@ -27,8 +27,9 @@ public class PivotMiddle extends Command {
         if (Robot.pivot.getPosition() == 1) {
             encoderToUse = EncoderValueUp;
             speed = -.1;}
-        else if (Robot.pivot.getPosition() == 0)
+        else if (Robot.pivot.getPosition() == 0) {
             encoderToUse = EncoderValueMiddle;
+        }
         else {
             encoderToUse = EncoderValueDown;
             speed = .1; }
@@ -46,12 +47,15 @@ public class PivotMiddle extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        if (speed == 1)
+        if (speed == 1) {
             return Robot.pivot.getEncoderDistance() <= encoderToUse;
-        else if (speed == -1)
+        }
+        else if (speed == -1) {
             return Robot.pivot.getEncoderDistance() >= encoderToUse;
-        else
+        }
+        else {
             return true;
+        }
     }
 
     // Called once after isFinished returns true

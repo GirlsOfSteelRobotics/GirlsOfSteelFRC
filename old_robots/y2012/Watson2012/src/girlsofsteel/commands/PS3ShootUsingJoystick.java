@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class PS3ShootUsingJoystick extends CommandBase{
 
-    Joystick operatorJoystick;
+    private Joystick operatorJoystick;
 
-    double speed;
+    private double speed;
 
     public PS3ShootUsingJoystick(){
         requires(shooter);

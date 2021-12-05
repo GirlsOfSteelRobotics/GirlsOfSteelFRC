@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class PivotArmToJoystick extends CommandBase {
 
-    Joystick operator;
-    int count;
-    double angle;
+    private final Joystick operator;
+    private int count;
+    private double angle;
 
     public PivotArmToJoystick() {
         requires(manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS

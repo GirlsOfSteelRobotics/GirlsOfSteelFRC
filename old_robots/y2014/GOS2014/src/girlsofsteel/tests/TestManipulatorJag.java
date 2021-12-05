@@ -13,7 +13,7 @@ import girlsofsteel.commands.CommandBase;
  * @author sam
  */
 public class TestManipulatorJag extends CommandBase {
-    Joystick joystick;
+    private Joystick joystick;
     private final int i = 0;
 
     public TestManipulatorJag () {

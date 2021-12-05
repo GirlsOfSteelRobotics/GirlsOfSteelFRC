@@ -11,10 +11,10 @@ package girlsofsteel.commands;
  */
 public class IsGoalHot extends CommandBase {
 
-    double[] hots = new double[10];
-    int bool;
-    double average = 0;
-    int i;
+    private double[] hots = new double[10];
+    private int bool;
+    private double average = 0;
+    private int i;
 
     @Override
     protected void initialize() {
@@ -45,8 +45,9 @@ public class IsGoalHot extends CommandBase {
         average /= hots.length;
          if(average >= 0.5){ //If it's dead even, just say that it's HOT
             CommandBase.camera.isHot = true;
-        }else
-            CommandBase.camera.isHot = false;
+        }else {
+             CommandBase.camera.isHot = false;
+         }
     }
 
     @Override

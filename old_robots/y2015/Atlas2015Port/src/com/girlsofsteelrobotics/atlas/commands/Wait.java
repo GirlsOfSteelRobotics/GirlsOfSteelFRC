@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Wait extends CommandBase {
 
-    double time;
-    double startTime;
+    private final double time;
+    private double startTime;
 
     public Wait(double sec) {
         time = sec;

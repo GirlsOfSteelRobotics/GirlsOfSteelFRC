@@ -22,7 +22,7 @@ public class DriveSystem extends Subsystem {
 
     private final RobotDrive robotDrive;
 
-    double encOffsetValue = 0;
+    private double encOffsetValue = 0;
 
     public DriveSystem() {
         driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);

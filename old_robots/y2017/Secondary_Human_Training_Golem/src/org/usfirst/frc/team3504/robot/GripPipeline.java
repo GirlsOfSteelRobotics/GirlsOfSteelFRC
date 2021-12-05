@@ -5,10 +5,10 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 
-import org.opencv.core.*;
-import org.opencv.core.Core.*;
-import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
+import org.opencv.core.*; // NOPMD(UnnecessaryImport)
+import org.opencv.core.Core.*; // NOPMD(UnnecessaryImport)
+import org.opencv.imgproc.*; // NOPMD(UnnecessaryImport)
+import org.opencv.objdetect.*; // NOPMD(UnnecessaryImport)
 
 /**
 * GripPipeline class.
@@ -17,6 +17,7 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
+@SuppressWarnings({"PMD.ControlStatementBraces"})
 public class GripPipeline implements VisionPipeline {
 
     //Outputs
@@ -26,7 +27,7 @@ public class GripPipeline implements VisionPipeline {
     private final List<MatOfPoint> filterContoursOutput = new ArrayList<>();
 
     static {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // NOPMD
     }
 
     /**
@@ -193,7 +194,7 @@ public class GripPipeline implements VisionPipeline {
             mopHull.create((int) hull.size().height, 1, CvType.CV_32SC2);
             for (int j = 0; j < hull.size().height; j++) {
                 int index = (int)hull.get(j, 0)[0];
-                double[] point = new double[] { contour.get(index, 0)[0], contour.get(index, 0)[1]};
+                double[] point = new double[] { contour.get(index, 0)[0], contour.get(index, 0)[1]}; // NOPMD
                 mopHull.put(j, 0, point);
             }
             final double solid = 100 * area / Imgproc.contourArea(mopHull);

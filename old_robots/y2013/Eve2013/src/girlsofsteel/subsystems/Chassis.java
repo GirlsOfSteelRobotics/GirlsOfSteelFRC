@@ -118,8 +118,8 @@ public class Chassis extends Subsystem {
     private boolean rotating;
     private boolean manualRotationDisabled;
     private boolean negative;
-    double gyroAdjustment;
-    double fieldAdjustment;
+    private double gyroAdjustment;
+    private double fieldAdjustment;
 
     public Chassis() {
         //wheel x & ys
@@ -454,10 +454,12 @@ public double getLeftEncoderDistance() {
         if(Math.abs(rightVoltage) > 1 || Math.abs(backVoltage) > 1 ||
                 Math.abs(leftVoltage) > 1){
             double max = Math.abs(rightVoltage);
-            if(max < Math.abs(backVoltage))
+            if(max < Math.abs(backVoltage)) {
                 max = Math.abs(backVoltage);
-            if(max < Math.abs(leftVoltage))
+            }
+            if(max < Math.abs(leftVoltage)) {
                 max = Math.abs(leftVoltage);
+            }
             rightVoltage = rightVoltage/max;
             backVoltage = backVoltage/max;
             leftVoltage = leftVoltage/max;

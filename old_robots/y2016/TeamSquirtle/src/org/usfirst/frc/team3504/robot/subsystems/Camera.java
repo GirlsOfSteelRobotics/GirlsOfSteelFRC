@@ -13,24 +13,21 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
  *
  */
 public class Camera extends Subsystem {
-    CameraServer server;
+    private final CameraServer server;
 
-    USBCamera cam; //FIXME: How do you tell it which camera
-    Image frame;
-    Image resultFrame;
+    private final USBCamera cam; //FIXME: How do you tell it which camera
+    private final Image frame;
+    private final Image resultFrame;
 
     //Constants: Need to check numbers
-    NIVision.Range TUBE_HUE_RANGE = new NIVision.Range(136, 182);
-    NIVision.Range TUBE_SATURATION_RANGE = new NIVision.Range(45, 255);
-    NIVision.Range TUBE_LUMINANCE_RANGE = new NIVision.Range(116, 255);
+    private final NIVision.Range TUBE_HUE_RANGE = new NIVision.Range(136, 182);
+    private final NIVision.Range TUBE_SATURATION_RANGE = new NIVision.Range(45, 255);
+    private final NIVision.Range TUBE_LUMINANCE_RANGE = new NIVision.Range(116, 255);
 
     public Camera() {
 
         server = CameraServer.getInstance();
 //        server.setQuality(50);
-
-
-        server = CameraServer.getInstance();
         cam = new USBCamera();
 
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_HSL, 0);

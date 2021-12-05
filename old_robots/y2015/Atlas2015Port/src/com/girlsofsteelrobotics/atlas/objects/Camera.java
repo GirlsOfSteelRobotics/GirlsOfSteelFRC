@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Camera {
     //magic value must change
-    double heightOfGoal = 2.57; //actually height of goal - height of robot CHANGE
-    double distance = 0;
+    private final double heightOfGoal = 2.57; //actually height of goal - height of robot CHANGE
+    private final double distance;
      //Need to change this command into meters and not inches
-    double initialVelocity = 8.65;
-    double gravity = 9.82;
+    private final double initialVelocity = 8.65;
+    private final double gravity = 9.82;
     public static boolean isHot = false;
 
     public Camera() {
@@ -51,7 +51,7 @@ public class Camera {
         double g = gravity;
         double v = initialVelocity;
         //make sure all numbers are in metric units
-        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
+//        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
         double negativeAngle = Math.atan(square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
         //return angle;
         return negativeAngle;

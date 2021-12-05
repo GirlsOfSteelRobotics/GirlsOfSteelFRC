@@ -2,8 +2,21 @@ package girlsofsteel;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import girlsofsteel.commands.*;
-import girlsofsteel.subsystems.*;
+import girlsofsteel.commands.Drive;
+import girlsofsteel.commands.StopChassis;
+import girlsofsteel.commands.DisableRotation;
+import girlsofsteel.commands.Rotate;
+import girlsofsteel.commands.Shoot;
+import girlsofsteel.commands.PushPullShooterPiston;
+import girlsofsteel.commands.TipRobotOver;
+import girlsofsteel.commands.RetractClimberPiston;
+import girlsofsteel.commands.CloseBottomGrip;
+import girlsofsteel.commands.OpenAllGrippers;
+import girlsofsteel.commands.CloseTopGrip;
+import girlsofsteel.commands.StartClimbMotors;
+import girlsofsteel.commands.StopClimbMotors;
+import girlsofsteel.commands.Blocking;
+//import girlsofsteel.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator

@@ -10,11 +10,6 @@ package girlsofsteel.commands;
  */
 public class CloseTopGrip extends CommandBase{
 
-    public CloseTopGrip() {
-
-//        requires(topGripper);
-    }
-
     //Command for closing the bottom gripper around the pyramid
 
 

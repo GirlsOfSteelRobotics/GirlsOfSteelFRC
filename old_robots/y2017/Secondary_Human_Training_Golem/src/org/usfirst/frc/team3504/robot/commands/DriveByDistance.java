@@ -110,8 +110,9 @@ public class DriveByDistance extends Command {
         } else if (rotations < 0) {
             return ((rightTalon.getPosition() < rotations + rightInitial)
                     && (-leftTalon.getPosition() < rotations + leftInitial));
-        } else
+        } else {
             return true;
+        }
     }
 
     // Called once after isFinished returns true

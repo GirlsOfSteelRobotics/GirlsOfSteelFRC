@@ -7,10 +7,10 @@ package girlsofsteel.commands;
 
 public class Shoot extends CommandBase {
 
-    boolean camera;
+    private final boolean camera;
 
-    double speed;
-    double time;
+    private double speed;
+    private double time;
 
     public Shoot(double speed) {
         this.speed = speed;
@@ -36,7 +36,7 @@ public class Shoot extends CommandBase {
 
     @Override
     protected void execute() {
-        if (timeSinceInitialized() - time > 2) shooter.setShootTrue();
+        if (timeSinceInitialized() - time > 2) { shooter.setShootTrue(); }
         shooter.setJags(speed);
     }
 

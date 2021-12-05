@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DriveSlowVelocity extends CommandBase {
 
-    Joystick driverJoystick;
+    private Joystick driverJoystick;
 
-    double xAxis;
-    double yAxis;
+    private double xAxis;
+    private double yAxis;
 
     public DriveSlowVelocity(){
         requires(chassis);

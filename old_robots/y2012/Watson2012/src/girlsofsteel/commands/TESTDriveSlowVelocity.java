@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTDriveSlowVelocity extends CommandBase {
 
-    Joystick driverJoystick;
+    private Joystick driverJoystick;
 
-    double xAxis;
-    double yAxis;
+    private double xAxis;
+    private double yAxis;
 
-    double p;
-    double i;
+    private double p;
+    private double i;
 
     public TESTDriveSlowVelocity(){
         requires(chassis);

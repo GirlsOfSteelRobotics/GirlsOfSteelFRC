@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DriveSlowTurning extends CommandBase{
 
-    Joystick joystick;
+    private Joystick joystick;
 
-    double scale;
-    double turningScale;
-    double xAxis;
-    double yAxis;
+    private final double scale;
+    private final double turningScale;
+    private double xAxis;
+    private double yAxis;
 
     public DriveSlowTurning(double scale, double turningScale){
         requires(chassis);

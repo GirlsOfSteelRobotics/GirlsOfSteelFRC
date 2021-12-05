@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
+@SuppressWarnings("PMD")
 public class Camera extends Subsystem {
 
 //	private CameraServer server;

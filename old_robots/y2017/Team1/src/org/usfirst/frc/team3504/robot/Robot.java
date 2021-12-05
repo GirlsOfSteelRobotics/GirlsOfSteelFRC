@@ -1,15 +1,19 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForwards;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
+import org.usfirst.frc.team3504.robot.subsystems.Arm;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
+import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team3504.robot.subsystems.JawPiston;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,8 +33,8 @@ public class Robot extends IterativeRobot {
     public static Shooter shooter;
     public static Collector collecter;
 
-    Command autonomousCommand;
-    SendableChooser<Command> chooser;
+    private Command autonomousCommand;
+    private SendableChooser<Command> chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -46,7 +50,7 @@ public class Robot extends IterativeRobot {
 
         //all subsystems must be initialized before creating OI
         oi = new OI();
-        chooser = new SendableChooser<Command>();
+        chooser = new SendableChooser<>();
 
         chooser.addDefault("Default: Do Nothing", new AutoDoNothing());
         chooser.addObject("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(10.0, 0.5));
@@ -82,7 +86,7 @@ public class Robot extends IterativeRobot {
         autonomousCommand = chooser.getSelected();
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand != null) { autonomousCommand.start(); }
     }
 
     /**
@@ -99,7 +103,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+        if (autonomousCommand != null) { autonomousCommand.cancel(); }
     }
 
     /**

@@ -2,7 +2,8 @@ package girlsofsteel.commands;
 
 public class MoveToSetPoint extends CommandBase {
 
-    double distanceToMove;
+    private double timeFinished = -1;
+    private final double distanceToMove;
 
     public MoveToSetPoint(double distance) {
         distanceToMove = distance;
@@ -49,5 +50,4 @@ public class MoveToSetPoint extends CommandBase {
     protected void interrupted() {
         end();
     }
-    private double timeFinished = -1;
 }

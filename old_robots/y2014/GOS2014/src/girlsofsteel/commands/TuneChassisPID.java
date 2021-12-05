@@ -135,8 +135,9 @@ public class TuneChassisPID extends CommandBase {
     }
     private double getDeviation(double center, double... array) {
         double average = center;
-        if (center == 0)
+        if (center == 0) {
             average = getMean(array);
+        }
         double variance = getVariance(average);
         return Math.sqrt(variance);
     }
@@ -159,7 +160,7 @@ public class TuneChassisPID extends CommandBase {
 
         }
     }
-    public void getBest() {
+    public void getBest() { // NOPMD(LinguisticNaming)
         double lowestSetPointDev = 100;
         double lowestRateDev = 100;
         double lowestMeanDiff = 100;
@@ -169,20 +170,23 @@ public class TuneChassisPID extends CommandBase {
         double pLowestMeanDiff = 0;
 
         for(int j = 0; j < devSetPoint.length; j++) {
-            if (devSetPoint[j] < lowestSetPointDev)
-               lowestSetPointDev = devSetPoint[j];
+            if (devSetPoint[j] < lowestSetPointDev) {
+                lowestSetPointDev = devSetPoint[j];
+            }
             pLowestSetPointDev = startP + (j * incrementP);
             // pLowestSetPointDev = startI + (j * incrementI);
         }
         for (int k = 0; k < devRate.length; k++) {
-            if (devRate[k] < lowestRateDev)
+            if (devRate[k] < lowestRateDev) {
                 lowestRateDev = devRate[k];
+            }
             pLowestRateDev = startP + (k * incrementP);
             // pLowestRateDev = startI + (k * incrementI);
         }
         for (int m = 0; m < meanDiff.length; m++) {
-            if (meanDiff[m] < lowestMeanDiff)
+            if (meanDiff[m] < lowestMeanDiff) {
                 lowestMeanDiff = meanDiff[m];
+            }
             pLowestMeanDiff = startP + (m * incrementP);
             // pLowestMeanDiff = startP + (m * incrementP);
         }

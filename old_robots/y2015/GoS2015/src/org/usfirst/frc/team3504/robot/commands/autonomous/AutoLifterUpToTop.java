@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoLifterUpToTop extends Command {
 
-    double initialVal;
+    private double initialVal;
 
     public AutoLifterUpToTop() {
         requires(Robot.lifter);

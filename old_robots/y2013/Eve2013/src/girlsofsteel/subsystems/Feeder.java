@@ -7,7 +7,6 @@ package girlsofsteel.subsystems;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
-import girlsofsteel.objects.*;
 
 /**
  *

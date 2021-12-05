@@ -2,10 +2,10 @@ package girlsofsteel.commands;
 
 public class AutonomousKeyShootTwoBalls extends CommandBase {
 
-    boolean autoTrack = false;
-    double timeToShootTwoBalls = 7.0;
-    double xDistance;
-    double velocity;
+    private final boolean autoTrack;
+    private final double timeToShootTwoBalls = 7.0;
+    private double xDistance;
+    private double velocity;
 
     public AutonomousKeyShootTwoBalls(boolean autoTrack){
         requires(shooter);

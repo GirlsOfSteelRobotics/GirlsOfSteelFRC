@@ -8,23 +8,23 @@ import javax.microedition.io.Connector;
 
 public class TuneI extends CommandBase {
 
-    double setpoint;
-    double bI;
-    double eI;
-    double interval;
+    private final double setpoint;
+    private final double bI;
+    private final double eI;
+    private final double interval;
 
-    boolean right = false;
-    boolean back = false;
-    boolean left = false;
+    private boolean right = false;
+    private boolean back = false;
+    private boolean left = false;
 
-    double[][] rightRates;
-    double[][] backRates;
-    double[][] leftRates;
-    int counter;
-    int numRates;
+    private double[][] rightRates;
+    private double[][] backRates;
+    private double[][] leftRates;
+    private int counter;
+    private final int numRates;
 
-    double[][] setpointDeviations;
-    double[][] standardDeviations;
+    private double[][] setpointDeviations;
+    private double[][] standardDeviations;
 
     public TuneI(double setpoint, double beginningI, double endingI) {
         this.setpoint = setpoint;

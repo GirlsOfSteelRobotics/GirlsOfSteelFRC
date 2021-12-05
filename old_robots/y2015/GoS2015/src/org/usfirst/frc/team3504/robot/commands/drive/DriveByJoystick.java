@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveByJoystick extends Command {
 
-    Joystick chassisJoystick;
+    private Joystick chassisJoystick;
 
     public DriveByJoystick() {
         // Use requires() here to declare subsystem dependencies

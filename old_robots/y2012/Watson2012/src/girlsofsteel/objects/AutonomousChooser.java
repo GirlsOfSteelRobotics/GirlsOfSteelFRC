@@ -10,14 +10,14 @@ import girlsofsteel.commands.DelayReverseRollers;
 
 public class AutonomousChooser {
 
-    boolean shoot = true;
-    boolean moveToBridge = true;
-    double yDistance = 2.7;
-    boolean shootFromBridge = true;
-    boolean goBackToKey = true;
-    boolean shootFromKeyAfterBridge = true;
-    SendableChooser chooser;
-    Command autonomousCommand;
+    private final boolean shoot = true;
+    private final boolean moveToBridge = true;
+    private final double yDistance = 2.7;
+    private final boolean shootFromBridge = true;
+    private final boolean goBackToKey = true;
+    private final boolean shootFromKeyAfterBridge = true;
+    private final SendableChooser chooser;
+    private Command autonomousCommand;
 
     public AutonomousChooser() {
         chooser = new SendableChooser();

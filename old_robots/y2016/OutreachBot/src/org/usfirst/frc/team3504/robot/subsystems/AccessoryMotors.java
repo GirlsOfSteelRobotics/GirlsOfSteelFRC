@@ -4,7 +4,6 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -34,17 +33,21 @@ public class AccessoryMotors extends Subsystem {
     // here. Call these from Commands.
 
     public void startLeft(Direction direction) {
-        if (direction == Direction.kFwd)
+        if (direction == Direction.kFwd) {
             accessoryLeft.set(1.0);
-        else
+        }
+        else {
             accessoryLeft.set(-1.0);
+        }
     }
 
     public void startRight(Direction direction) {
-        if (direction == Direction.kFwd)
+        if (direction == Direction.kFwd) {
             accessoryRight.set(1.0);
-        else
+        }
+        else {
             accessoryRight.set(-1.0);
+        }
     }
 
     public void stopLeft() {

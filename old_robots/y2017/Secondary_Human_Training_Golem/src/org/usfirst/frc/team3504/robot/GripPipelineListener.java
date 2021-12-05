@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.opencv.core.MatOfPoint;

@@ -13,10 +13,10 @@ import girlsofsteel.commands.CommandBase;
  */
 public class ShooterPID extends CommandBase{
 
-    double speed;
-    double p;
-    double i;
-    double encoderValue;
+    private double speed;
+    private double p;
+    private double i;
+    private double encoderValue;
 
     public ShooterPID(){
         requires(shooter);

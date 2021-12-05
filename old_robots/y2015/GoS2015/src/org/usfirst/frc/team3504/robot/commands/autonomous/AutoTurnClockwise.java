@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoTurnClockwise extends Command {
 
-    double gyroInitial;
+    private double gyroInitial;
 
     public AutoTurnClockwise() {
         // Use requires() here to declare subsystem dependencies

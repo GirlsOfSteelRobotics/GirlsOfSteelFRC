@@ -13,7 +13,7 @@ import girlsofsteel.subsystems.Gripper;
 
 //this command reads the limit switches under the grippers. When press the grippers will close after safely passing the bar
 public class CloseGripPastBar extends CommandBase{
-    Gripper gripper;
+    private final Gripper gripper;
 
     public CloseGripPastBar(Gripper gripper) {
         this.gripper = gripper;

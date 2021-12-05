@@ -2,9 +2,9 @@ package girlsofsteel.commands;
 
 public class IncrementShoot extends CommandBase {
 
-    double sliderValue;
-    double incrementValue;
-    double speed;
+    private double sliderValue;
+    private double incrementValue;
+    private double speed;
 
     public IncrementShoot() {
         requires(shooter);

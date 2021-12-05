@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTTurret extends CommandBase {
 
-    double speed;
+    private double speed;
 
-    double pulses;
-    boolean inDegrees;
+    private double pulses;
+    private boolean inDegrees;
 
     public TESTTurret(){
         requires(turret);

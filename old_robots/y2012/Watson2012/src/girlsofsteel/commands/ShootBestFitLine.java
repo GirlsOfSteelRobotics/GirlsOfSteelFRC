@@ -5,9 +5,9 @@ import girlsofsteel.objects.Camera;
 
 public class ShootBestFitLine extends CommandBase {
 
-    Joystick operatorJoystick;
+    private Joystick operatorJoystick;
 
-    double cameraDistance;
+    private double cameraDistance;
 
     public ShootBestFitLine(){
         requires(shooter);

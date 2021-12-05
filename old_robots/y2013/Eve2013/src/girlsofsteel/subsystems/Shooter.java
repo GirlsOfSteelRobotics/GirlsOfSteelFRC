@@ -8,7 +8,10 @@
  */
 package girlsofsteel.subsystems;
 
-import edu.wpi.first.wpilibj.*;
+//import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
 import girlsofsteel.objects.MagneticSpeedSensor;
@@ -16,7 +19,6 @@ import girlsofsteel.objects.ShooterPoint;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  *
@@ -45,7 +47,7 @@ public class Shooter extends Subsystem {
     //Array of ShooterPoints objects to track voltage, encoder speed, and battery voltage of shooting
     public ShooterPoint[] speeds = new ShooterPoint[100];
 
-    boolean shoot = false;
+    private boolean shoot = false;
 
     public Shooter() {
         //Shooter Jag

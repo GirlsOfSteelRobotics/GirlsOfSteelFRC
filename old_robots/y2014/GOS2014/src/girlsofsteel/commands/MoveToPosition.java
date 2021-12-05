@@ -20,13 +20,15 @@ public class MoveToPosition extends CommandBase{
     private double distance;
     private final double offBy = 0.03;
 
+    public MoveToPosition() {
+        this(0.0);
+    }
+
     public MoveToPosition(double distance) {
         requires(driving);
         this.distance = distance;
     }
 
-    MoveToPosition() {
-    }
     @Override
     protected void initialize() {
        chassis.initPositionPIDS();

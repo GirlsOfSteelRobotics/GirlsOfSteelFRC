@@ -2,11 +2,11 @@ package girlsofsteel.commands;
 
 public class Rotate extends CommandBase {
 
-    boolean targetRotate;
-    double theta;
-    double desiredTheta;
-    double current;
-    double difference;
+    private final boolean targetRotate;
+    private final double theta;
+    private double desiredTheta;
+    private double current;
+    private double difference;
 
     public Rotate(double theta, boolean targetRotate) {
         this.targetRotate = targetRotate;
@@ -68,6 +68,7 @@ public class Rotate extends CommandBase {
         end();
     }
 
+    @SuppressWarnings("PMD.LinguisticNaming")
     private void getDifference(){
         //get current
         current = chassis.getGyroAngle() - chassis.getFieldAdjustment();

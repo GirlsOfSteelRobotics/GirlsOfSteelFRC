@@ -9,7 +9,6 @@ package com.girlsofsteelrobotics.atlas;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.girlsofsteelrobotics.atlas.commands.ArcadeDrive;
 import com.girlsofsteelrobotics.atlas.commands.CommandBase;
@@ -30,8 +29,8 @@ import com.girlsofsteelrobotics.atlas.objects.Camera;
  */
 public class Robot extends IterativeRobot {
 
-    AutonomousChooser auto;
-    Command autonomousCommand;
+    private AutonomousChooser auto;
+    private Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be

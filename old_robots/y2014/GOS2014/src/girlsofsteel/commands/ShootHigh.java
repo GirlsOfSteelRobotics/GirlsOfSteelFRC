@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  * @author
  */
+@SuppressWarnings("PMD")
 public class ShootHigh extends CommandGroup {
 
     private double angle;

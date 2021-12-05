@@ -14,7 +14,7 @@ public class MoveManipulatorWithSlider extends CommandBase {
 
     //Joystick thinks top is zero
     //Joystick thinks bottom is full
-    Joystick driver;
+    private final Joystick driver;
 
     private final double fullRangeOnSlider = 100;
     private final double maxManipulatorAngle = 110;

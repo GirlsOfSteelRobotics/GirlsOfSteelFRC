@@ -13,7 +13,6 @@ import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
@@ -37,7 +36,7 @@ public class Robot extends IterativeRobot {
     public static Loader loader;
     public static GripPipelineListener listener;
 
-    Command autonomousCommand;
+    private Command autonomousCommand;
 
     private VisionThread visionThread;
 
@@ -110,8 +109,9 @@ public class Robot extends IterativeRobot {
         shifters.shiftGear(Shifters.Speed.kLow);
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.start();
+        }
     }
 
     /**
@@ -128,8 +128,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.cancel();
+        }
 
         // start robot in low gear when starting teleop
         shifters.shiftGear(Shifters.Speed.kLow);

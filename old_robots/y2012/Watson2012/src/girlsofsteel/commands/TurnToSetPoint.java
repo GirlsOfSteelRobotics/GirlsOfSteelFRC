@@ -2,7 +2,7 @@ package girlsofsteel.commands;
 
 public class TurnToSetPoint extends CommandBase {
 
-    double degreesToTurn;
+    private final double degreesToTurn;
 
     public TurnToSetPoint(double degrees){
         degreesToTurn = degrees;

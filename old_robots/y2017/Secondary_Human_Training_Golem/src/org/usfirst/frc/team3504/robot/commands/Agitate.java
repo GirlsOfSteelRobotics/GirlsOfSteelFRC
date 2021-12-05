@@ -24,10 +24,12 @@ public class Agitate extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (loopCounter % 10 == 0)
+        if (loopCounter % 10 == 0) {
             Robot.agitator.agitateBackwards();
-        else if (loopCounter % 5 == 0)
+        }
+        else if (loopCounter % 5 == 0) {
             Robot.agitator.agitateForwards();
+        }
 
         loopCounter++;
     }

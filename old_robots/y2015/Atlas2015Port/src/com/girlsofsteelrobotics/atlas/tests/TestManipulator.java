@@ -14,7 +14,7 @@ import com.girlsofsteelrobotics.atlas.commands.CommandBase;
  */
 public class TestManipulator extends CommandBase{
 
-    double speed;
+    private double speed;
     public TestManipulator(){
         requires(manipulator);
     }

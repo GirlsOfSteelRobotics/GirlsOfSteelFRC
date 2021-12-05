@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTSetPointTurret extends CommandBase {
 
-    double angle;
+    private double angle;
 
     public TESTSetPointTurret() {
         requires(turret);

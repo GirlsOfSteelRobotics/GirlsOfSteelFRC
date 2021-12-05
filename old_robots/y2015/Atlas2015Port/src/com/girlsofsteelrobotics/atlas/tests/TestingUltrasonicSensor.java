@@ -13,11 +13,6 @@ import com.girlsofsteelrobotics.atlas.commands.CommandBase;
  */
 public class TestingUltrasonicSensor extends CommandBase{
 
-    public TestingUltrasonicSensor()
-    {
-        //requires(ultra);
-    }
-
     @Override
     protected void initialize() {
        // ultra.enable();

@@ -49,7 +49,7 @@ public class OI {
     public static DriveStyle driveStyle = DriveStyle.oneStickArcade;
 
     //IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-        boolean rozieDrive = false;
+        private final boolean rozieDrive = false;
 
         //Rozie's Nonsense: Project Droperation.
         private final Joystick roziePad = new Joystick(5);
@@ -320,18 +320,19 @@ public class OI {
         }
         else if (joystickScale == JoystickScaling.deadband)
         {
-            if (Math.abs(input) < DEADBAND)
+            if (Math.abs(input) < DEADBAND) {
                 output = 0;
+            }
             else
             {
-                if (input > 0) output = input - DEADBAND;
-                else output = input + DEADBAND;
+                if (input > 0) {output = input - DEADBAND; }
+                else {output = input + DEADBAND; }
             }
         }
         else if (joystickScale == JoystickScaling.quadratic)
         {
-            if (input > 0) output = Math.pow(input, 2);
-            else output = -1 * Math.pow(input, 2);
+            if (input > 0) { output = Math.pow(input, 2); }
+            else { output = -1 * Math.pow(input, 2); }
         }
 
         return output;

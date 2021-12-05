@@ -13,8 +13,8 @@ public class TankDrive extends CommandBase {
     outputs are motors
 
     */
-Joystick left;
-Joystick right;
+private Joystick left;
+private Joystick right;
 
 public TankDrive() {
   requires(driving);

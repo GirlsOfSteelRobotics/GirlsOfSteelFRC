@@ -34,8 +34,8 @@ public class PositionInfo {
 
     private static class Position{
 
-        int angle;
-        double speed;
+        private final int angle;
+        private final double speed;
 
         public Position(int angleAdjustment, double shooterSpeed){
             angle = angleAdjustment;

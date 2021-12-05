@@ -40,6 +40,17 @@ public class TuningShooterPID extends CommandBase {
     //p 0.275 = index 10
     //(p-0.025)/0.025 = index -> p = 0.025(index)+0.025
 
+    private int counter;
+    private double totalRates;
+    private double[] rates = new double[100];
+    private double[] variences = new double[rates.length];
+    private double rateSum;
+    private double differenceSum;
+    private double rateMean;
+    private double differenceMean;
+    private double standardDeviation;
+    private double setPointToRateMean;
+
     private final double error = shooter.VELOCITY_ERROR_RANGE;
 
     public TuningShooterPID(){
@@ -161,16 +172,6 @@ public class TuningShooterPID extends CommandBase {
         end();
     }
 
-    private int counter;
-    private double totalRates;
-    private double[] rates = new double[100];
-    private double[] variences = new double[rates.length];
-    private double rateSum;
-    private double differenceSum;
-    private double rateMean;
-    private double differenceMean;
-    private double standardDeviation;
-    private double setPointToRateMean;
 
     //adds the encoder rates of the shooter wheel to an array -> it only has 100
     //spaces so once those 100 are filled up, it starts filling up spots starting

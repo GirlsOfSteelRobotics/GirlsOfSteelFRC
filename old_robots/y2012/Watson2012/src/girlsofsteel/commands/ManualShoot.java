@@ -2,8 +2,8 @@ package girlsofsteel.commands;
 
 public class ManualShoot extends CommandBase {
 
-    double sliderValue;
-    double shooterSpeed;
+    private double sliderValue;
+    private double shooterSpeed;
 
     public ManualShoot() {
         requires(shooter);

@@ -15,12 +15,12 @@ import girlsofsteel.OI;
  */
 public class AutoShoot extends CommandBase {
 
-    double desiredSpeed;
-    double time;
-    boolean shot;
-    double batteryVoltage;
-    DriverStation driver;
-    int counter;
+    private double desiredSpeed;
+    private double time;
+    private boolean shot;
+    private double batteryVoltage;
+    private final DriverStation driver;
+    private final int counter;
 
     public AutoShoot() {
         requires(feeder);

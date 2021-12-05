@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTMoveToSetPoint extends CommandBase {
 
-    double distanceToMove;
+    private double distanceToMove;
 
     public TESTMoveToSetPoint(){
         requires(chassis);

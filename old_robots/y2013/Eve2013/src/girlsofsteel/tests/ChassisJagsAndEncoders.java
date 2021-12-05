@@ -13,7 +13,7 @@ import girlsofsteel.commands.CommandBase;
     public class ChassisJagsAndEncoders extends CommandBase {
     //copied from KiwiDrive code
 
-    double speed;
+    private double speed;
 
     public ChassisJagsAndEncoders(){
         requires(chassis);

@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Shoot extends CommandBase {
 
-    Joystick operatorJoystick;
+    private Joystick operatorJoystick;
 
-    double speed;
+    private final double speed;
 
     public Shoot(double speed){
         this.speed = speed;

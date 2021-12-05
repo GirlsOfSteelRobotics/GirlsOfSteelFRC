@@ -17,11 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterTuning extends CommandBase {
 
-    double batteryVoltage;
-    DriverStation driver;
-    int counter;
-    boolean done;
-    double speed = 0.0;
+    private double batteryVoltage;
+    private final DriverStation driver;
+    private int counter;
+    private boolean done;
+    private double speed = 0.0;
+    private double time;
 
     public ShooterTuning() {
         requires(shooter);
@@ -33,7 +34,6 @@ public class ShooterTuning extends CommandBase {
         SmartDashboard.putNumber("speed", 0.0);
         SmartDashboard.putBoolean("test speed", false);
     }
-    double time;
 
     @Override
     protected void execute() {

@@ -4,24 +4,24 @@ import girlsofsteel.objects.Camera;
 
 public class AutonomousOptions extends CommandBase {
 
-    boolean autoTrack;//auto track the target using the camera & turret PID
-    boolean autoShoot;//shoot using the camera
-    boolean shootFromKey;//dead reckoning shooting from the key
-    boolean moveToBridge;//do you want to move towards the bridge?
-    boolean getXDistanceCamera;//get the distance from the target from the camera
+    private final boolean autoTrack;//auto track the target using the camera & turret PID
+    private final boolean autoShoot;//shoot using the camera
+    private final boolean shootFromKey;//dead reckoning shooting from the key
+    private final boolean moveToBridge;//do you want to move towards the bridge?
+    private final boolean getXDistanceCamera;//get the distance from the target from the camera
     //and calculate how much you need to move to get a certain distance from the
     //bridge -> TODO write method that calculates our position on the field so
     //we can get the yDistance too
-    double xDistance;//distances to get to the bridge
-    double yDistance;//only work when moveToBridge is true
-    boolean bridgeCollect;//true -> push down bridge & start collectors
-    boolean autoShootFromBridge;//use camera to shoot from the position you are
+    private double xDistance;//distances to get to the bridge
+    private final double yDistance;//only work when moveToBridge is true
+    private final boolean bridgeCollect;//true -> push down bridge & start collectors
+    private final boolean autoShootFromBridge;//use camera to shoot from the position you are
     //in after moving to the bridge
-    boolean goBackToKey;//move back to the key (starting place)
-    boolean shootFromKeyAfterBridge;//after moving back to the key, you shoot
+    private final boolean goBackToKey;//move back to the key (starting place)
+    private final boolean shootFromKeyAfterBridge;//after moving back to the key, you shoot
 
-    double KEY_SPEED = shooter.KEY_SPEED;
-    double FACE_START = 0.0;
+    private final double KEY_SPEED = shooter.KEY_SPEED;
+    private final double FACE_START = 0.0;
 
     public AutonomousOptions(boolean autoTrack, boolean autoShoot,
             boolean shootFromKey, boolean moveToBridge, boolean getXDistanceCamera,

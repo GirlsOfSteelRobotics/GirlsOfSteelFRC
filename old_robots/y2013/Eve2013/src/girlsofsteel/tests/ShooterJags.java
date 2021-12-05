@@ -5,13 +5,13 @@ import girlsofsteel.commands.CommandBase;
 
 public class ShooterJags extends CommandBase {
 
-    double speed = 0.0;
+    private double speed = 0.0;
 
-    int counter = 0;
-    boolean pushed;
-    double time;
+    private int counter = 0;
+    private boolean pushed;
+    private double time;
 
-    double WAIT_TIME = 1.0;
+    private final double WAIT_TIME = 1.0;
 
     public ShooterJags(){
         SmartDashboard.putBoolean("Shooter Jags", false);

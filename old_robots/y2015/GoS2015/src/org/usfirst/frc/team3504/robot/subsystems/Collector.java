@@ -43,10 +43,12 @@ public class Collector extends Subsystem {
     }
 
     public void collectReleaseTote() {
-        if (collectorTrigger.getZ() < -0.5) // release
+        if (collectorTrigger.getZ() < -0.5) { // release
             collectorToteOut();
-        else if (collectorTrigger.getZ() > 0.5) // collect
+        }
+        else if (collectorTrigger.getZ() > 0.5) { // collect
             collectorToteIn();
+        }
         else {
             rightCollector.set(0);
             leftCollector.set(0);

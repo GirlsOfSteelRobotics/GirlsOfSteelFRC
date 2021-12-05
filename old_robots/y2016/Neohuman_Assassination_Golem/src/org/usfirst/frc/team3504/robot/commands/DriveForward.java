@@ -10,11 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveForward extends Command {
 
-    public DriveForward() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
-
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {

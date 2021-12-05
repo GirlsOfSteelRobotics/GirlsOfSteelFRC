@@ -11,7 +11,7 @@ import girlsofsteel.subsystems.Gripper;
  * @author sam
  */
 public class OpenGripAtBar extends CommandBase {
-    Gripper gripper;
+    private final Gripper gripper;
 
     public OpenGripAtBar(Gripper gripper) {
         requires (gripper);

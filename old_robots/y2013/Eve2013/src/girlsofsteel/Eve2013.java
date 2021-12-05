@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
-import girlsofsteel.commands.*;
-import girlsofsteel.tests.*;
+import girlsofsteel.commands.RunClimberBackwards;
+import girlsofsteel.commands.OpenAllGrippers;
+import girlsofsteel.commands.Drive;
+import girlsofsteel.tests.ShooterJags;
 import girlsofsteel.objects.AutonomousChooser;
 import girlsofsteel.objects.PositionInfo;
 import girlsofsteel.objects.ShooterCamera;
@@ -29,8 +30,8 @@ import girlsofsteel.objects.ShooterCamera;
  */
 public class Eve2013 extends IterativeRobot {
 
-    AutonomousChooser autonomous;
-    DriverStation driver = DriverStation.getInstance();
+    private AutonomousChooser autonomous;
+    private final DriverStation driver = DriverStation.getInstance();
 
     /**
      * This function is run when the robot is first started up and should be

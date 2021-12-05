@@ -2,8 +2,8 @@ package girlsofsteel.commands;
 
 public class AutonomousShootTwoBalls extends CommandBase {
 
-    double timeToShootTwoBalls = 5.0; //TODO find how long shooting 2 balls takes
-    double cameraDistance;
+    private final double timeToShootTwoBalls = 5.0; //TODO find how long shooting 2 balls takes
+    private double cameraDistance;
 
     public AutonomousShootTwoBalls(){
         requires(shooter);

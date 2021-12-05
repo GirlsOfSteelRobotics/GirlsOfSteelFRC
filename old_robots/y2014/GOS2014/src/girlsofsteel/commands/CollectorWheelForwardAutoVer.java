@@ -16,12 +16,8 @@ import girlsofsteel.objects.Camera;
 public class CollectorWheelForwardAutoVer extends CommandBase {
 
 
-    double time = 2.5; //when 3 seconds pass it will drop the ball
-    double startTime;
-    public CollectorWheelForwardAutoVer(){
-        //Doesn't have the requires stuff because we want to be able to lift
-        // the collector and spin the wheel at the same time
-    }
+    private final double time = 2.5; //when 3 seconds pass it will drop the ball
+    private double startTime;
 
     /**
      * There is nothing in this method.
@@ -80,8 +76,9 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
     */
     private boolean hotAtLeastOnce() {
         for(int i = 0; i < 30; i++) {
-            if(Camera.isGoalHot())
+            if(Camera.isGoalHot()) {
                 return true;
+            }
         }
         return false;
     }

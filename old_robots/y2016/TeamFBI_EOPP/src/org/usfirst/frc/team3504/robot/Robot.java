@@ -4,7 +4,6 @@ package org.usfirst.frc.team3504.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import org.usfirst.frc.team3504.robot.commands.AutoDrive;
@@ -26,8 +25,8 @@ public class Robot extends IterativeRobot {
     public static Drive drive;
     public static Manipulator manipulator;
     public static Shifters shifters;
-    Command autonomousCommand;
-    SendableChooser autoChooser;
+    private Command autonomousCommand;
+    private SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -54,8 +53,9 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //autonomousCommand = (Command) autoChooser.getSelected();
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.start();
+        }
     }
 
     /**
@@ -72,8 +72,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
+        if (autonomousCommand != null) {
             autonomousCommand.cancel();
+        }
     }
 
     /**

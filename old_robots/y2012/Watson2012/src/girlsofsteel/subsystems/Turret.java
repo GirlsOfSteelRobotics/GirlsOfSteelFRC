@@ -31,9 +31,6 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     private final PIDController PID = new PIDController(p, i, d, this, this);
     private static final boolean pressedRightSwitch = false;
 
-    public Turret() {
-    }
-
     @Override
     public void initDefaultCommand(){
 

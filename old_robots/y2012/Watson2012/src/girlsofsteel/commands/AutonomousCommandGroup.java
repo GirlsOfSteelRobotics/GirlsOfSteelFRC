@@ -7,13 +7,13 @@ import girlsofsteel.subsystems.Chassis;
 
 public class AutonomousCommandGroup extends CommandGroup {
 
-    boolean shoot;//at the start of autonomous
-    boolean moveToBridge;//do you want to move towards the bridge?
-    double yDistance;//only work when moveToBridge is true
-    boolean shootFromBridge;//use camera to shoot from the position you are
+    private final boolean shoot;//at the start of autonomous
+    private final boolean moveToBridge;//do you want to move towards the bridge?
+    private final double yDistance;//only work when moveToBridge is true
+    private final boolean shootFromBridge;//use camera to shoot from the position you are
     //in after moving to the bridge
-    boolean goBackToKey;//move back to the key (starting place)
-    boolean shootFromKeyAfterBridge;//after moving back to the key, you shoot
+    private final boolean goBackToKey;//move back to the key (starting place)
+    private final boolean shootFromKeyAfterBridge;//after moving back to the key, you shoot
 
     public AutonomousCommandGroup(boolean shoot, boolean moveToBridge,
             double yDistance,

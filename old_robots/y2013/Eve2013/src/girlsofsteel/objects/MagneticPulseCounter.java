@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class MagneticPulseCounter implements Runnable {
 
-    DigitalInput digiPut;
-    int pulses;
-    boolean done = false;
-    int[] pulsesBetweenTime;
-    int counter = -1;
-    final static long timeLength = 50; //Times checked per second (10)
-    final static int relevant = 20; //How much data is kept
+    private final DigitalInput digiPut;
+    private int pulses;
+    private final boolean done = false;
+    private int[] pulsesBetweenTime;
+    private int counter = -1;
+    private final static long timeLength = 50; //Times checked per second (10)
+    private final static int relevant = 20; //How much data is kept
 
     public MagneticPulseCounter(int channel) {
         digiPut = new DigitalInput(channel);

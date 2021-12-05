@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DriveJagsLinear extends CommandBase{
 
-    Joystick joystick;
+    private Joystick joystick;
 
-    double scale;
-    double xAxis;
-    double yAxis;
+    private final double scale;
+    private double xAxis;
+    private double yAxis;
 
     public DriveJagsLinear(double scale){
         requires(chassis);

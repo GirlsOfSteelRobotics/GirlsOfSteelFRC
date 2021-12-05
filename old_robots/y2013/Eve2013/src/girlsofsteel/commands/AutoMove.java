@@ -2,11 +2,11 @@ package girlsofsteel.commands;
 
 public class AutoMove extends CommandBase {
 
-    double x;
-    double y;
-    double time;
+    private final double x;
+    private final double y;
+    private final double time;
 
-    double startTime;
+    private double startTime;
 
     /**
      * Moves in the direction given for a certain amount of time automatically.

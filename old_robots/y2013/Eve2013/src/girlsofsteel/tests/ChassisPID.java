@@ -5,17 +5,17 @@ import girlsofsteel.commands.CommandBase;
 
 public class ChassisPID extends CommandBase {
 
-    double rate;
+    private double rate;
 
-    double rightP;
-    double rightI;
-    double rightD;
-    double backP;
-    double backI;
-    double backD;
-    double leftP;
-    double leftI;
-    double leftD;
+    private double rightP;
+    private double rightI;
+    private double rightD;
+    private double backP;
+    private double backI;
+    private double backD;
+    private double leftP;
+    private double leftI;
+    private double leftD;
 
     public ChassisPID(){
         requires(chassis);

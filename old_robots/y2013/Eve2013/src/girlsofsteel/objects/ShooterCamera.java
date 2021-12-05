@@ -13,19 +13,19 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterCamera {
-    //magic value must change
+    private static final double positionOneAngleOffset = -7.2;
+    private static final double positionTwoAngleOffset = 0;
+    private static final double positionThreeAngleOffset = 0;
 
-    static double epsilon = 5;
-    static double heightOfDesiredPosition;
-    static double widthOfDesiredPosition;
+    //magic value must change
+    private static double epsilon = 5;
+    private static double heightOfDesiredPosition;
+    private static double widthOfDesiredPosition;
 
     public ShooterCamera() {
         SmartDashboard.putNumber("top arget angle offset", getTopDiffAngle());
         SmartDashboard.putNumber("top target angle offset", getSideDiffAngle());
     }
-    static double positionOneAngleOffset = -7.2;
-    static double positionTwoAngleOffset = 0;
-    static double positionThreeAngleOffset = 0;
 
     public static int getLocation() {
         if (atShootPositionOne()) {

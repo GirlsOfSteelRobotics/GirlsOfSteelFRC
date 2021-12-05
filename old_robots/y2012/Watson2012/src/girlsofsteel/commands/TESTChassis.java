@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTChassis extends CommandBase {
 
-    double speed;
+    private double speed;
 
     public TESTChassis(){
         requires(chassis);

@@ -13,15 +13,15 @@ import girlsofsteel.objects.Camera;
  */
 public class ManualTuneCamera extends CommandBase {
 
-    Joystick driverJoystick;
-    double xAxis;
-    double yAxis;
+    private Joystick driverJoystick;
+    private double xAxis;
+    private double yAxis;
     public static final double HalfCourt = 7.1; //meaters (7.1)
     public static final double Step = .5; //meaters
     public static final double ErrorThreshold = .01;
-    int count = 0;
-    double[] imageTargetRatioData = new double[50];
-    double[] distanceData = new double[50];
+    private int count = 0;
+    private double[] imageTargetRatioData = new double[50];
+    private double[] distanceData = new double[50];
 
     public ManualTuneCamera() {
         requires(chassis);

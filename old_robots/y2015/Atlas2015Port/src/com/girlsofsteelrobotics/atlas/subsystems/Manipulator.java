@@ -129,8 +129,9 @@ public class Manipulator extends Subsystem {
     }
 
     public void moveAngle() {
-        if(angle == desiredAngle)
+        if(angle == desiredAngle) {
             return;
+        }
         else if (angle < desiredAngle) {
             manipulatorJag.set(.1);
             Timer.delay(0.5);

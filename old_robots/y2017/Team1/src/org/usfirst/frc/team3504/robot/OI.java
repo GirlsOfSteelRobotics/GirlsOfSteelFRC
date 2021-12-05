@@ -1,9 +1,15 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.*;
+//import org.usfirst.frc.team3504.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3504.robot.commands.JawIn;
+import org.usfirst.frc.team3504.robot.commands.JawOut;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.ShooterIn;
+import org.usfirst.frc.team3504.robot.commands.ShooterOut;
 
 /**
  * This class is the glue that binds the controls on the physical operator
