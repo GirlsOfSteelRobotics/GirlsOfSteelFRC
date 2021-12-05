@@ -1,35 +1,19 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.subsystems.Shooter;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team3504.robot.subsystems.Agitator;
+import org.usfirst.frc.team3504.robot.subsystems.Loader;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 /**
  *
  */
 public class CombinedShootKey extends CommandGroup {
 
-    public CombinedShootKey() {
-        addParallel(new Shoot(Shooter.AUTO_SHOOTER_SPEED_KEY));
+    public CombinedShootKey(Agitator agitator, Shooter shooter, Loader loader) {
+        addParallel(new Shoot(shooter, Shooter.AUTO_SHOOTER_SPEED_KEY));
         addSequential(new TimeDelay(0.75));
-        addParallel(new Agitate());
-        addSequential(new LoadBall());
-
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        // addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        // addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+        addParallel(new Agitate(agitator));
+        addSequential(new LoadBall(loader));
     }
 }

@@ -92,6 +92,6 @@ jar {
 tasks.withType(Checkstyle) {
     enabled = false
 }
-tasks.withType(Pmd) {
-    enabled = false
-}
+//tasks.withType(Pmd) {
+//    enabled = false
+//}

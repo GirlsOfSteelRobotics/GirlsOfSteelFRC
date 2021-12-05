@@ -1,22 +1,24 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 
 /**
  *
  */
 public class SwitchToCamGear extends Command {
 
-    public SwitchToCamGear() {
-        requires(Robot.camera);
+    private final Camera m_camera;
+
+    public SwitchToCamGear(Camera camera) {
+        m_camera = camera;
+        requires(m_camera);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.camera.switchToCamGear();
+        m_camera.switchToCamGear();
     }
 
     // Called repeatedly when this Command is scheduled to run

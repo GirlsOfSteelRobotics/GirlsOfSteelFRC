@@ -9,6 +9,8 @@ def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
             srcs = srcs,
             rulesets = ["//styleguide:pmd_rules"],
         )
+    else:
+        print("PMD Disabled for " + name)
 
 def gos_java_library(name, srcs, disable_pmd = False, disable_checkstyle = False, **kwargs):
     native.java_library(

@@ -1,18 +1,23 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 /**
  *
  */
 public class DecrementHighShooter extends Command {
 
+    private final Shooter m_shooter;
+
+    public DecrementHighShooter(Shooter shooter) {
+        m_shooter = shooter;
+    }
+
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shooter.decrementHighShooterSpeed();
+        m_shooter.decrementHighShooterSpeed();
     }
 
     // Called repeatedly when this Command is scheduled to run
