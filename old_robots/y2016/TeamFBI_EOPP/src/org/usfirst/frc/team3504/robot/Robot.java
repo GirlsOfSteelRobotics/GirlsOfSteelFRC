@@ -4,9 +4,8 @@ package org.usfirst.frc.team3504.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
 import org.usfirst.frc.team3504.robot.commands.AutoDrive;
+import org.usfirst.frc.team3504.robot.commands.DriveCommand;
 import org.usfirst.frc.team3504.robot.subsystems.Drive;
 import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
@@ -21,12 +20,21 @@ import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 public class Robot extends IterativeRobot {
 
     //public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    public static OI oi;
-    public static Drive drive;
-    public static Manipulator manipulator;
-    public static Shifters shifters;
-    private Command autonomousCommand;
-    private SendableChooser autoChooser;
+    private final OI m_oi;
+    private final Drive m_drive;
+    private final Manipulator m_manipulator;
+    private final Shifters m_shifters;
+    private final Command m_autonomousCommand;
+
+    public Robot() {
+        m_drive = new Drive();
+        m_manipulator = new Manipulator();
+        m_shifters = new Shifters();
+        //autoChooser = new SendableChooser();
+        //autoChooser.addDefault("Auto Drive", new AutoDrive());
+        m_oi = new OI(m_shifters, m_manipulator);
+        m_autonomousCommand = new AutoDrive(m_drive);
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -34,14 +42,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-        RobotMap.init();
-        drive = new Drive();
-        manipulator = new Manipulator();
-        shifters = new Shifters();
-        //autoChooser = new SendableChooser();
-        //autoChooser.addDefault("Auto Drive", new AutoDrive());
-        oi = new OI();
-        autonomousCommand = new AutoDrive();
+
+        m_drive.setDefaultCommand(new DriveCommand(m_oi, m_drive));
     }
 
     @Override
@@ -53,8 +55,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //autonomousCommand = (Command) autoChooser.getSelected();
-        if (autonomousCommand != null) {
-            autonomousCommand.start();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
         }
     }
 
@@ -72,8 +74,8 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) {
-            autonomousCommand.cancel();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
         }
     }
 

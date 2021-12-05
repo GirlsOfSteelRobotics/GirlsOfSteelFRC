@@ -1,50 +1,50 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 
-    import edu.wpi.first.wpilibj.SpeedController;
-    import org.usfirst.frc.team3504.robot.RobotMap;
-
-            import edu.wpi.first.wpilibj.command.Subsystem;
+import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
     /**
      *
      */
     public class Manipulator extends Subsystem {
-        private final SpeedController conveyorBeltMotorRight = RobotMap.conveyorBeltMotorRight;
-        private final SpeedController conveyorBeltMotorLeft = RobotMap.conveyorBeltMotorLeft;
+        private final SpeedController m_conveyorBeltMotorRight;
+        private final SpeedController m_conveyorBeltMotorLeft;
 
-        // Put methods for controlling this subsystem
-        // here. Call these from Commands.
+        public Manipulator() {
+
+            m_conveyorBeltMotorRight = new CANTalon(6);
+            m_conveyorBeltMotorLeft = new CANTalon(7);
+        }
 
         @Override
         public void initDefaultCommand() {
-            // Set the default command for a subsystem here.
-            //setDefaultCommand(new MySpecialCommand());
         }
 
         public void manipulatorConveyorBeltMotorRight (boolean fwd) {
             if (fwd) {
-                conveyorBeltMotorRight.set(1.0);
+                m_conveyorBeltMotorRight.set(1.0);
             }
             else{
-                conveyorBeltMotorRight.set(-1.0);
+                m_conveyorBeltMotorRight.set(-1.0);
             }
 
         }
 
         public void manipulatorConveyorBeltMotorLeft (boolean fwd) {
             if (fwd) {
-                conveyorBeltMotorLeft.set(1.0);
+                m_conveyorBeltMotorLeft.set(1.0);
             }
             else{
-                conveyorBeltMotorLeft.set(-1.0);
+                m_conveyorBeltMotorLeft.set(-1.0);
             }
 
         }
 
         public void stopConveyorBeltMotor() {
-            conveyorBeltMotorRight.set(0.0);
-            conveyorBeltMotorLeft.set(0.0);
+            m_conveyorBeltMotorRight.set(0.0);
+            m_conveyorBeltMotorLeft.set(0.0);
         }
 
     }

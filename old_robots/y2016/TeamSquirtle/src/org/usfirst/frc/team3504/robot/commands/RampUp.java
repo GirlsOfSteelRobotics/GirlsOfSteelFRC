@@ -1,18 +1,18 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Ramp;
 
 /**
  *
  */
 public class RampUp extends Command {
 
-    public RampUp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.ramp);
+    private final Ramp m_ramp;
+
+    public RampUp(Ramp ramp) {
+        m_ramp = ramp;
+        requires(m_ramp);
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +23,7 @@ public class RampUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.ramp.Up();
+        m_ramp.up();
     }
 
     // Make this return true when this Command no longer needs to run execute()

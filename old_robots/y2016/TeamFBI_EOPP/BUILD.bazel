@@ -4,7 +4,6 @@ gos_java_robot(
     name = "TeamFBI_EOPP",
     srcs = glob(["src/**/*.java"]),
     disable_checkstyle = True,
-    disable_pmd = True,
     main_class = "org.usfirst.frc.team3504.robot.Main",
     deps = [
         "//old_robots/LegacyLibraries",

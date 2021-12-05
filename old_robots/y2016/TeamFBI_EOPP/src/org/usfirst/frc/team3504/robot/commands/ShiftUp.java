@@ -1,20 +1,21 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 public class ShiftUp extends Command {
 
-    public ShiftUp() {
-        requires(Robot.shifters);
+    private final Shifters m_shifters;
+
+    public ShiftUp(Shifters shifters){
+        m_shifters = shifters;
+        requires(m_shifters);
     }
+
     @Override
     protected void initialize() {
-        Robot.shifters.shiftLeft(true);
-        Robot.shifters.shiftRight(true);
-        // TODO Auto-generated method stub
-
+        m_shifters.shiftLeft(true);
+        m_shifters.shiftRight(true);
     }
 
     @Override
