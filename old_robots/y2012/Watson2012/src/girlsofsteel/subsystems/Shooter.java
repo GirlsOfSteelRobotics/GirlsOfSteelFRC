@@ -1,7 +1,6 @@
 package girlsofsteel.subsystems;
 
 import com.sun.squawk.util.MathUtils;
-//import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;

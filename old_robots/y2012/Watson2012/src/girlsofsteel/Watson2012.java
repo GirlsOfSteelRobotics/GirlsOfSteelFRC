@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import girlsofsteel.commands.*;
 import girlsofsteel.objects.Camera;
 
 public class Watson2012 extends IterativeRobot {

@@ -11,8 +11,6 @@
 
 package org.usfirst.frc3504.BlueTeamEOPP;
 
-//import edu.wpi.first.wpilibj.*;
-
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;

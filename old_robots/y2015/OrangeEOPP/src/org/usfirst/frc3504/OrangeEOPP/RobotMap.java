@@ -9,8 +9,6 @@
 // it from being updated in the future.
 package org.usfirst.frc3504.OrangeEOPP;
 
-//import edu.wpi.first.wpilibj.*;
-
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;

@@ -17,8 +17,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc3504.BlueTeamEOPP.commands.AutonomousCommand;
 import org.usfirst.frc3504.BlueTeamEOPP.subsystems.DriveSystem;
 import org.usfirst.frc3504.BlueTeamEOPP.subsystems.Shooter;
-//import org.usfirst.frc3504.BlueTeamEOPP.commands.*;
-//import org.usfirst.frc3504.BlueTeamEOPP.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the

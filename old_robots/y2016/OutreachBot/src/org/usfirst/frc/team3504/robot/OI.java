@@ -20,7 +20,6 @@ import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.ShootBall;
 import org.usfirst.frc.team3504.robot.commands.ShooterIn;
 
-//import org.usfirst.frc.team3504.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator

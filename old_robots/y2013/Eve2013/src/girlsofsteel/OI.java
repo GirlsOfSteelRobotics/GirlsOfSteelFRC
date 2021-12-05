@@ -16,7 +16,6 @@ import girlsofsteel.commands.CloseTopGrip;
 import girlsofsteel.commands.StartClimbMotors;
 import girlsofsteel.commands.StopClimbMotors;
 import girlsofsteel.commands.Blocking;
-//import girlsofsteel.subsystems.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator

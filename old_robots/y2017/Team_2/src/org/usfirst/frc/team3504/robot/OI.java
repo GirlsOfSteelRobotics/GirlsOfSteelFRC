@@ -9,8 +9,6 @@ import org.usfirst.frc.team3504.robot.commands.PusherOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
 
-//import org.usfirst.frc.team3504.robot.commands.*;
-
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.

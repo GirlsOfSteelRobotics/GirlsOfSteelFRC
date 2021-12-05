@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import org.usfirst.frc3504.BlueTeamEOPP.RobotMap;
-//import org.usfirst.frc3504.BlueTeamEOPP.commands.*;
-//import edu.wpi.first.wpilibj.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc3504.BlueTeamEOPP.commands.DriveByJoystick;
