@@ -1,9 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 
 
 /**
@@ -11,13 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class PivotUp extends Command {
 
+    private final Manipulator m_manipulator;
 
-    public PivotUp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.manipulator);
+    public PivotUp(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
-
 
     // Called just before this Command runs the first time
     @Override
@@ -28,7 +26,7 @@ public class PivotUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.manipulator.pivotUp(.5);
+        m_manipulator.pivotUp(.5);
     }
 
 
@@ -42,7 +40,7 @@ public class PivotUp extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.manipulator.stopPivot();
+        m_manipulator.stopPivot();
     }
 
 
