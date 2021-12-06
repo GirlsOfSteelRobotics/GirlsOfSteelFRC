@@ -2,7 +2,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 
 /**
@@ -11,9 +11,8 @@ import org.usfirst.frc.team3504.robot.Robot;
 public class AutoDoNothing extends Command {
 
 
-    public AutoDoNothing() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
+    public AutoDoNothing(Chassis chassis) {
+        requires(chassis);
     }
 
 

@@ -1,23 +1,24 @@
 package org.usfirst.frc.team3504.robot.commands.camera;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 
 /**
  *
  */
 public class SwitchToCamFlap extends Command {
 
-    public SwitchToCamFlap() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.camera);
+    private final Camera m_camera;
+
+    public SwitchToCamFlap(Camera camera) {
+        m_camera = camera;
+        requires(m_camera);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.camera.switchToCamFlap();
+        m_camera.switchToCamFlap();
     }
 
     // Called repeatedly when this Command is scheduled to run

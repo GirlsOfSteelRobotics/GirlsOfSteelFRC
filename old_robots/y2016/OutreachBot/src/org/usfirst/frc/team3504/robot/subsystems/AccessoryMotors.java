@@ -1,25 +1,24 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
  *
  */
 public class AccessoryMotors extends Subsystem {
-    private final Victor accessoryLeft;
-    private final Victor accessoryRight;
+    private final Victor m_accessoryLeft;
+    private final Victor m_accessoryRight;
 
     public enum Direction {kFwd, kRev}
 
     public AccessoryMotors() {
-        accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);
-        addChild("Accessory Left", accessoryLeft);
+        m_accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);
+        addChild("Accessory Left", m_accessoryLeft);
 
-        accessoryRight = new Victor(RobotMap.ACCESSORY_RIGHT_PORT);
-        addChild("Accessory Right", accessoryRight);
+        m_accessoryRight = new Victor(RobotMap.ACCESSORY_RIGHT_PORT);
+        addChild("Accessory Right", m_accessoryRight);
     }
 
     @Override
@@ -34,27 +33,27 @@ public class AccessoryMotors extends Subsystem {
 
     public void startLeft(Direction direction) {
         if (direction == Direction.kFwd) {
-            accessoryLeft.set(1.0);
+            m_accessoryLeft.set(1.0);
         }
         else {
-            accessoryLeft.set(-1.0);
+            m_accessoryLeft.set(-1.0);
         }
     }
 
     public void startRight(Direction direction) {
         if (direction == Direction.kFwd) {
-            accessoryRight.set(1.0);
+            m_accessoryRight.set(1.0);
         }
         else {
-            accessoryRight.set(-1.0);
+            m_accessoryRight.set(-1.0);
         }
     }
 
     public void stopLeft() {
-        accessoryLeft.set(0.0);
+        m_accessoryLeft.set(0.0);
     }
 
     public void stopRight() {
-        accessoryRight.set(0.0);
+        m_accessoryRight.set(0.0);
     }
 }

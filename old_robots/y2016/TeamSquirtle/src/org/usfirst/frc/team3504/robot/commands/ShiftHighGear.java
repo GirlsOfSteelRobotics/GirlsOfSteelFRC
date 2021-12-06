@@ -1,18 +1,18 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 /**
  *
  */
 public class ShiftHighGear extends Command {
 
-    public ShiftHighGear() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.shifters);
+    private final Shifters m_shifters;
+
+    public ShiftHighGear(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     // Called just before this Command runs the first time
@@ -24,8 +24,8 @@ public class ShiftHighGear extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.shifters.shiftLeft(true);
-        Robot.shifters.shiftRight(true);
+        m_shifters.shiftLeft(true);
+        m_shifters.shiftRight(true);
     }
 
     // Make this return true when this Command no longer needs to run execute()

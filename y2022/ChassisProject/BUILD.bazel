@@ -1,7 +1,7 @@
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
 
 gos_java_robot(
-    name = "CallistoRewrite",
+    name = "ChassisProject",
     srcs = glob(["src/main/java/**/*.java"]),
     disable_checkstyle = True,
     disable_pmd = True,

@@ -1,30 +1,37 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
-import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3504.robot.commands.CollectBall;
+import org.usfirst.frc.team3504.robot.commands.FlapDown;
+import org.usfirst.frc.team3504.robot.commands.FlapUp;
 import org.usfirst.frc.team3504.robot.commands.PivotDown;
+import org.usfirst.frc.team3504.robot.commands.PivotMiddle;
 import org.usfirst.frc.team3504.robot.commands.PivotUp;
 import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
+import org.usfirst.frc.team3504.robot.commands.ResetEncoderDistance;
+import org.usfirst.frc.team3504.robot.commands.RotateToDesiredAngle;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShootBall;
 import org.usfirst.frc.team3504.robot.commands.ShooterPistonsIn;
 import org.usfirst.frc.team3504.robot.commands.ShooterPistonsOut;
 import org.usfirst.frc.team3504.robot.commands.StopShooterWheels;
-import org.usfirst.frc.team3504.robot.commands.ShootBall;
-import org.usfirst.frc.team3504.robot.commands.FlapUp;
-import org.usfirst.frc.team3504.robot.commands.FlapDown;
-import org.usfirst.frc.team3504.robot.commands.PivotMiddle;
-import org.usfirst.frc.team3504.robot.commands.ResetEncoderDistance;
-import org.usfirst.frc.team3504.robot.commands.RotateToDesiredAngle;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToBackward;
+import org.usfirst.frc.team3504.robot.commands.buttons.SwitchToForward;
 import org.usfirst.frc.team3504.robot.commands.camera.SwitchCam;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Claw;
+import org.usfirst.frc.team3504.robot.subsystems.Flap;
+import org.usfirst.frc.team3504.robot.subsystems.Pivot;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+@SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.NcssCount"})
 public class OI {
     public enum DriveDirection {kFWD, kREV}
 
@@ -32,186 +39,180 @@ public class OI {
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
      */
     //IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-    private final boolean rozieDrive = false;
+    private static final boolean rozieDrive = false;
 
-
-    private final Joystick drivingStickForward = new Joystick(0);
-    private final Joystick drivingStickBackward = new Joystick(1);
+    private final Joystick m_drivingStickForward = new Joystick(0);
+    private final Joystick m_drivingStickBackward = new Joystick(1);
     // The button board gets plugged into USB and acts like a Joystick
-    private final Joystick gamePad = new Joystick(2);
-    private final Joystick buttonBoard = new Joystick(3);
+    private final Joystick m_gamePad = new Joystick(2);
+    private final Joystick m_buttonBoard = new Joystick(3);
     // The autonomous command selector is uses buttons 2-5
-    private final Joystick autonSelector = new Joystick(4);
+    private final Joystick m_autonSelector = new Joystick(4);
 
     //Rozie's Nonsense: Project Droperation.
-    private final Joystick roziePad = new Joystick(5);
+    private final Joystick m_roziePad = new Joystick(5);
 
 
 
     //JOYSTICK BUTTONS
     //private JoystickButton shiftUpButton;
-    private final JoystickButton shiftDownButton;
+    private final JoystickButton m_shiftDownButton;
 
     //private JoystickButton shiftUpButton2; //for backwards joystick
-    private final JoystickButton shiftDownButton2; //for backwards joystick
+    private final JoystickButton m_shiftDownButton2; //for backwards joystick
 
-    private DriveDirection driveDirection = DriveDirection.kFWD;
+    private DriveDirection m_driveDirection = DriveDirection.kFWD;
 
-    private final JoystickButton switchCam;
-    private final JoystickButton switchCam2; //for backwards joystick
+    private final JoystickButton m_switchCam;
+    private final JoystickButton m_switchCam2; //for backwards joystick
 
-    private final JoystickButton switchToForward;
-    private final JoystickButton switchToBackward;
+    private final JoystickButton m_switchToForward;
+    private final JoystickButton m_switchToBackward;
 
     //ROZIE DECLARATIONS
     /**
      * ROZIE
      */
-    private JoystickButton rozieShiftDownButton;
-    private JoystickButton rozieFlapUp;
-    private JoystickButton rozieFlapDown;
-    private JoystickButton roziePivotUp;
-    private JoystickButton roziePivotDown;
+    private JoystickButton m_rozieShiftDownButton;
+    private JoystickButton m_rozieFlapUp;
+    private JoystickButton m_rozieFlapDown;
+    private JoystickButton m_roziePivotUp;
+    private JoystickButton m_roziePivotDown;
 
 
     //button board
-    private JoystickButton collectBallButtonBoard;
-    private JoystickButton releaseBallButtonBoard;
-    private JoystickButton flapUpButtonBoard;
-    private JoystickButton flapDownButtonBoard;
-    private JoystickButton pivotUpButtonBoard;
-    private JoystickButton pivotDownButtonBoard;
-    private JoystickButton shootBallButtonBoard;
+    private JoystickButton m_collectBallButtonBoard;
+    private JoystickButton m_releaseBallButtonBoard;
+    private JoystickButton m_flapUpButtonBoard;
+    private JoystickButton m_flapDownButtonBoard;
+    private JoystickButton m_pivotUpButtonBoard;
+    private JoystickButton m_pivotDownButtonBoard;
+    private JoystickButton m_shootBallButtonBoard;
     //private JoystickButton shooterPistonsOutButtonBoard;
     //private JoystickButton shooterPistonsInButtonBoard;
     //private JoystickButton rollersInButtonBoard;
     //private	JoystickButton rollersOutButtonBoard;
 
     //game pad
-    private final JoystickButton collectBallButton;
-    private final JoystickButton releaseBallButton;
-    private final JoystickButton flapUp;
-    private final JoystickButton flapDown;
+    private final JoystickButton m_collectBallButton;
+    private final JoystickButton m_releaseBallButton;
+    private final JoystickButton m_flapUp;
+    private final JoystickButton m_flapDown;
     //private JoystickButton flapUpRocker;
     //private JoystickButton flapDownRocker;
-    private final JoystickButton pivotUp;
-    private final JoystickButton pivotDown;
-    private final JoystickButton pivotMiddle;
-    private final JoystickButton testDesiredRotationAngle;  //for NavBoard
+    private final JoystickButton m_pivotUp;
+    private final JoystickButton m_pivotDown;
+    private final JoystickButton m_pivotMiddle;
+    private final JoystickButton m_testDesiredRotationAngle;  //for NavBoard
     //private JoystickButton resetGyro;
     //private JoystickButton shootBall;
-    private JoystickButton shooterPistonsOut;
-    private JoystickButton shooterPistonsIn;
-    private final JoystickButton resetEncoders;
-    private final JoystickButton shooterStop;
+    private JoystickButton m_shooterPistonsOut;
+    private JoystickButton m_shooterPistonsIn;
+    private final JoystickButton m_resetEncoders;
+    private final JoystickButton m_shooterStop;
 
 
     private static final int AXIS_DPAD = 6;
 
     //Flap: Rocker (2 buttons) + 2 buttons, Pivot: 3 buttons, Claw: 2 Buttons, Other: 3 Buttons (defenses & scoring), Shooter: 2 buttons - total 12 buttons + rocker
 
-    public OI() {
+    public OI(Chassis chassis, Shifters shifters, Claw claw, Shooter shooter, Flap flap, Pivot pivot, Camera camera) {
 
         //DriveStick Buttons
 
         //shiftUpButton = new JoystickButton(drivingStickForward, 4);
         //shiftUpButton.whenPressed(new ShiftUp());
-        shiftDownButton = new JoystickButton(drivingStickForward, 3);
-        shiftDownButton.whenPressed(new ShiftDown());
+        m_shiftDownButton = new JoystickButton(m_drivingStickForward, 3);
+        m_shiftDownButton.whenPressed(new ShiftDown(shifters));
 
         //shiftUpButton2 = new JoystickButton (drivingStickBackward, 4);
         //shiftUpButton2.whenPressed (new ShiftUp());
-        shiftDownButton2 = new JoystickButton (drivingStickBackward, 3);
-        shiftDownButton2.whenPressed(new ShiftDown());
+        m_shiftDownButton2 = new JoystickButton (m_drivingStickBackward, 3);
+        m_shiftDownButton2.whenPressed(new ShiftDown(shifters));
 
-        switchCam = new JoystickButton(drivingStickForward, 10);
-        switchCam.whenPressed(new SwitchCam());
+        m_switchCam = new JoystickButton(m_drivingStickForward, 10);
+        m_switchCam.whenPressed(new SwitchCam(camera));
 
-        switchCam2 = new JoystickButton(drivingStickBackward, 10);
-        switchCam2.whenPressed(new SwitchCam());
+        m_switchCam2 = new JoystickButton(m_drivingStickBackward, 10);
+        m_switchCam2.whenPressed(new SwitchCam(camera));
 
-        switchToForward = new JoystickButton(drivingStickForward, 1);
-        switchToForward.whenPressed(new SwitchToForward());
+        m_switchToForward = new JoystickButton(m_drivingStickForward, 1);
+        m_switchToForward.whenPressed(new SwitchToForward(this, camera));
 
 
-        switchToBackward = new JoystickButton(drivingStickBackward, 1);
-        switchToBackward.whenPressed(new SwitchToBackward());
+        m_switchToBackward = new JoystickButton(m_drivingStickBackward, 1);
+        m_switchToBackward.whenPressed(new SwitchToBackward(this, camera));
 
         // Button board buttons
-        if (buttonBoard.getButtonCount() > 0){
-        shooterPistonsOut = new JoystickButton(buttonBoard, 3);
-        shooterPistonsOut.whenPressed(new ShooterPistonsOut());
-        shooterPistonsIn = new JoystickButton(buttonBoard, 4);
-        shooterPistonsIn.whenPressed(new ShooterPistonsIn());
-        shootBallButtonBoard = new JoystickButton(buttonBoard, 6);
-        shootBallButtonBoard.whenPressed(new ShootBall());
-        pivotUpButtonBoard = new JoystickButton(buttonBoard, 7);
-        pivotUpButtonBoard.whileHeld(new PivotUp());
-        collectBallButtonBoard = new JoystickButton(buttonBoard, 8);
-        collectBallButtonBoard.whileHeld(new CollectBall());
-        releaseBallButtonBoard = new JoystickButton(buttonBoard, 9);
-        releaseBallButtonBoard.whileHeld(new ReleaseBall());
-        pivotDownButtonBoard = new JoystickButton(buttonBoard, 10);
-        pivotDownButtonBoard.whileHeld(new PivotDown());
-        flapUpButtonBoard = new JoystickButton(buttonBoard, 11);
-        flapUpButtonBoard.whileHeld(new FlapUp());
-        flapDownButtonBoard = new JoystickButton(buttonBoard, 12);
-        flapDownButtonBoard.whileHeld(new FlapDown());
+        if (m_buttonBoard.getButtonCount() > 0){
+        m_shooterPistonsOut = new JoystickButton(m_buttonBoard, 3);
+        m_shooterPistonsOut.whenPressed(new ShooterPistonsOut(shooter));
+        m_shooterPistonsIn = new JoystickButton(m_buttonBoard, 4);
+        m_shooterPistonsIn.whenPressed(new ShooterPistonsIn(shooter));
+        m_shootBallButtonBoard = new JoystickButton(m_buttonBoard, 6);
+        m_shootBallButtonBoard.whenPressed(new ShootBall(claw, shooter));
+        m_pivotUpButtonBoard = new JoystickButton(m_buttonBoard, 7);
+        m_pivotUpButtonBoard.whileHeld(new PivotUp(pivot));
+        m_collectBallButtonBoard = new JoystickButton(m_buttonBoard, 8);
+        m_collectBallButtonBoard.whileHeld(new CollectBall(claw, shooter));
+        m_releaseBallButtonBoard = new JoystickButton(m_buttonBoard, 9);
+        m_releaseBallButtonBoard.whileHeld(new ReleaseBall(claw, shooter));
+        m_pivotDownButtonBoard = new JoystickButton(m_buttonBoard, 10);
+        m_pivotDownButtonBoard.whileHeld(new PivotDown(pivot));
+        m_flapUpButtonBoard = new JoystickButton(m_buttonBoard, 11);
+        m_flapUpButtonBoard.whileHeld(new FlapUp(flap));
+        m_flapDownButtonBoard = new JoystickButton(m_buttonBoard, 12);
+        m_flapDownButtonBoard.whileHeld(new FlapDown(flap));
         }
 
         //GamePad Buttons
 
         // these work for both claw and shooter
-        collectBallButton = new JoystickButton(gamePad, 5);
-        collectBallButton.whileHeld(new CollectBall());
-        releaseBallButton = new JoystickButton(gamePad, 6);
-        releaseBallButton.whileHeld(new ReleaseBall());
-        shooterStop = new JoystickButton(gamePad, 1);
-        shooterStop.whenPressed(new StopShooterWheels());
-
-
-        if(!RobotMap.USING_CLAW) {
-            // Put any claw-specific button assignments in here
-        }
+        m_collectBallButton = new JoystickButton(m_gamePad, 5);
+        m_collectBallButton.whileHeld(new CollectBall(claw, shooter));
+        m_releaseBallButton = new JoystickButton(m_gamePad, 6);
+        m_releaseBallButton.whileHeld(new ReleaseBall(claw, shooter));
+        m_shooterStop = new JoystickButton(m_gamePad, 1);
+        m_shooterStop.whenPressed(new StopShooterWheels(claw, shooter));
 
         //flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 
-        flapUp = new JoystickButton(gamePad, 8);//switched 7 & 8 again
-        flapUp.whileHeld(new FlapUp()); //false because it is not rocker button
-        flapDown = new JoystickButton(gamePad, 7);
-        flapDown.whileHeld(new FlapDown());
+        m_flapUp = new JoystickButton(m_gamePad, 8);//switched 7 & 8 again
+        m_flapUp.whileHeld(new FlapUp(flap)); //false because it is not rocker button
+        m_flapDown = new JoystickButton(m_gamePad, 7);
+        m_flapDown.whileHeld(new FlapDown(flap));
         //flapUpRocker = new JoystickButton(buttonBoard, 5);
         //flapUpRocker.whileHeld(new FlapUp(true); //true because using rocker
         //flapDownRocker = new JoystickButton(buttonBoard, 6);
         //flapDownRocker.whileHeld(new FlapUp(true));//^^
 
         //pivot
-        pivotUp = new JoystickButton(gamePad, 3); //switched 2 & 3 again
-        pivotUp.whileHeld(new PivotUp());
-        pivotDown = new JoystickButton(gamePad, 2);
-        pivotDown.whileHeld(new PivotDown());
-        pivotMiddle = new JoystickButton(gamePad, 4); //this is always left unused
-        pivotMiddle.whileHeld(new PivotMiddle());
+        m_pivotUp = new JoystickButton(m_gamePad, 3); //switched 2 & 3 again
+        m_pivotUp.whileHeld(new PivotUp(pivot));
+        m_pivotDown = new JoystickButton(m_gamePad, 2);
+        m_pivotDown.whileHeld(new PivotDown(pivot));
+        m_pivotMiddle = new JoystickButton(m_gamePad, 4); //this is always left unused
+        m_pivotMiddle.whileHeld(new PivotMiddle(pivot));
 
         //test nav board
-        testDesiredRotationAngle = new JoystickButton(drivingStickForward, 7);
-        testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(.2, 90));
+        m_testDesiredRotationAngle = new JoystickButton(m_drivingStickForward, 7);
+        m_testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(chassis, .2, 90));
 
-        resetEncoders = new JoystickButton(gamePad, 9);
-        resetEncoders.whenPressed(new ResetEncoderDistance());
+        m_resetEncoders = new JoystickButton(m_gamePad, 9);
+        m_resetEncoders.whenPressed(new ResetEncoderDistance(chassis, flap, pivot));
 
         //ROZIE STUFF!!!!
-        if (rozieDrive == true){
-            rozieShiftDownButton = new JoystickButton(roziePad, 3);
-            rozieShiftDownButton.whenPressed(new ShiftDown());
-            rozieFlapUp = new JoystickButton(roziePad, 8);//switched 7 & 8 again
-            rozieFlapUp.whileHeld(new FlapUp()); //false because it is not rocker button
-            rozieFlapDown = new JoystickButton(roziePad, 7);
-            rozieFlapDown.whileHeld(new FlapDown());
-            roziePivotUp = new JoystickButton(roziePad, 3); //switched 2 & 3 again
-            roziePivotUp.whileHeld(new PivotUp());
-            roziePivotDown = new JoystickButton(roziePad, 2);
-            roziePivotDown.whileHeld(new PivotDown());
+        if (rozieDrive){
+            m_rozieShiftDownButton = new JoystickButton(m_roziePad, 3);
+            m_rozieShiftDownButton.whenPressed(new ShiftDown(shifters));
+            m_rozieFlapUp = new JoystickButton(m_roziePad, 8);//switched 7 & 8 again
+            m_rozieFlapUp.whileHeld(new FlapUp(flap)); //false because it is not rocker button
+            m_rozieFlapDown = new JoystickButton(m_roziePad, 7);
+            m_rozieFlapDown.whileHeld(new FlapDown(flap));
+            m_roziePivotUp = new JoystickButton(m_roziePad, 3); //switched 2 & 3 again
+            m_roziePivotUp.whileHeld(new PivotUp(pivot));
+            m_roziePivotDown = new JoystickButton(m_roziePad, 2);
+            m_roziePivotDown.whileHeld(new PivotDown(pivot));
         }
 
 
@@ -221,44 +222,44 @@ public class OI {
 
 
     public double getDrivingJoystickY() {
-        if (rozieDrive == true){
-            return roziePad.getY();
+        if (rozieDrive){
+            return m_roziePad.getY();
         }
-        else if (driveDirection == DriveDirection.kFWD){
-            return drivingStickForward.getY();
+        else if (m_driveDirection == DriveDirection.kFWD){
+            return m_drivingStickForward.getY();
         }
         else {
-            return -drivingStickBackward.getY();
+            return -m_drivingStickBackward.getY();
         }
     }
 
     public double getDrivingJoystickX() {
-        if (rozieDrive == true){
-            return roziePad.getX();
+        if (rozieDrive){
+            return m_roziePad.getX();
         }
-        else if (driveDirection == DriveDirection.kFWD){
-            return drivingStickForward.getX();
+        else if (m_driveDirection == DriveDirection.kFWD){
+            return m_drivingStickForward.getX();
         }
         else {
-            return drivingStickBackward.getX();
+            return m_drivingStickBackward.getX();
         }
     }
 
     public double getOperatorStickThrottle() {
-        return gamePad.getThrottle();
+        return m_gamePad.getThrottle();
     }
 
     public void setDriveDirection(DriveDirection driveDirection) {
-        this.driveDirection = driveDirection;
+        this.m_driveDirection = driveDirection;
         System.out.println("Drive direction set to: " + driveDirection);
     }
 
     public boolean isJoystickReversed() {
-        return (driveDirection == DriveDirection.kREV);
+        return (m_driveDirection == DriveDirection.kREV);
     }
 
     public double getDPadX() {
-        return gamePad.getRawAxis(AXIS_DPAD);
+        return m_gamePad.getRawAxis(AXIS_DPAD);
     }
 
     public boolean getDPadLeft() {
@@ -280,11 +281,9 @@ public class OI {
     public int getAutonSelector() {
         // Each of the four "button" inputs corresponds to a bit of a binary number
         // encoding the current selection. To simplify wiring, buttons 2-5 were used.
-        int value =
-                1 * (autonSelector.getRawButton(2) ? 1 : 0) +
-                2 * (autonSelector.getRawButton(3) ? 1 : 0) +
-                4 * (autonSelector.getRawButton(4) ? 1 : 0) +
-                8 *	(autonSelector.getRawButton(5) ? 1 : 0);
-        return value;
+        return 1 * (m_autonSelector.getRawButton(2) ? 1 : 0) +
+                2 * (m_autonSelector.getRawButton(3) ? 1 : 0) +
+                4 * (m_autonSelector.getRawButton(4) ? 1 : 0) +
+                8 *	(m_autonSelector.getRawButton(5) ? 1 : 0);
     }
 }

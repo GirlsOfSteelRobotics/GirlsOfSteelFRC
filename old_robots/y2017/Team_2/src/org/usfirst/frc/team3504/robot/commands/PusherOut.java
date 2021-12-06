@@ -1,19 +1,24 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 
 /**
  *
  */
 public class PusherOut extends Command {
 
+    private final Manipulator m_manipulator;
+
+    public PusherOut(Manipulator manipulator) {
+        m_manipulator = manipulator;
+    }
+
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
         setTimeout(.5);
-        Robot.manipulator.pusherOut();
+        m_manipulator.pusherOut();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,7 +35,7 @@ public class PusherOut extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.manipulator.pusherIn();
+        m_manipulator.pusherIn();
     }
 
     // Called when another command which requires one or more of the same

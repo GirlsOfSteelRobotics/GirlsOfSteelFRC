@@ -1,42 +1,44 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import org.usfirst.frc.team3504.robot.GripPipelineListener;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class TurnToGear extends Command {
 
-    private NetworkTable table;
+    private final GripPipelineListener m_pipelineListener;
+    private final Chassis m_chassis;
     //double[] defaultValue = new double[0];
     // private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0;
     // private static final double TOLERANCE = 5; //TODO: test this (in pixels)
 
     //double[] centerX = new double[3];
-    private double targetX;
+    private double m_targetX;
     // private double currentX;
 
     public enum Direction {
         kLeft, kRight
     }
 
-    private final Direction direction;
+    private final Direction m_direction;
 
-    public TurnToGear(Direction direction) {
+    public TurnToGear(Chassis chassis, GripPipelineListener pipelineListener, Direction direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.chassis);
-        this.direction = direction;
+        m_chassis = chassis;
+        m_pipelineListener = pipelineListener;
+        requires(m_chassis);
+        this.m_direction = direction;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        System.out.println("TurnToGear Initialized with direction " + direction);
-        Robot.chassis.setPercentVbusMode();
+        System.out.println("TurnToGear Initialized with direction " + m_direction);
+        m_chassis.setPercentVbusMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -46,13 +48,13 @@ public class TurnToGear extends Command {
 
         centerX = table.getNumberArray("centerX", defaultValue);
 */
-        targetX = Robot.listener.targetX;
+        m_targetX = m_pipelineListener.getTargetX();
 
-        if (direction == Direction.kRight) {
-            Robot.chassis.turn(0.3, -1.0); // TODO: test
+        if (m_direction == Direction.kRight) {
+            m_chassis.turn(0.3, -1.0); // TODO: test
             System.out.println("turning right");
-        } else if (direction == Direction.kLeft) {
-            Robot.chassis.turn(0.3, 1.0);
+        } else if (m_direction == Direction.kLeft) {
+            m_chassis.turn(0.3, 1.0);
             System.out.println("turning left");
         }
 
@@ -67,16 +69,16 @@ public class TurnToGear extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        System.out.println("targetX: " + targetX /*+ " CenterX Length: " + centerX.length*/);
+        System.out.println("targetX: " + m_targetX /*+ " CenterX Length: " + centerX.length*/);
 
         //return centerX.length == 2;
-        return targetX >= 0;
+        return m_targetX >= 0;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.chassis.stop();
+        m_chassis.stop();
         System.out.println("TurnToGear Finished.");
     }
 

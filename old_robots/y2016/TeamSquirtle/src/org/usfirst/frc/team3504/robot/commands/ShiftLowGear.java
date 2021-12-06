@@ -1,25 +1,25 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 /**
  *
  */
 public class ShiftLowGear extends Command {
 
-    public ShiftLowGear() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.shifters);
+    private final Shifters m_shifters;
+
+    public ShiftLowGear(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shifters.shiftLeft(false);
-        Robot.shifters.shiftRight(false);
+        m_shifters.shiftLeft(false);
+        m_shifters.shiftRight(false);
     }
 
     // Called repeatedly when this Command is scheduled to run

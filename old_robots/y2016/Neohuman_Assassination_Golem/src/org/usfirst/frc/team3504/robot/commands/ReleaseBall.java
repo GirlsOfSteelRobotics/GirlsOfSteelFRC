@@ -1,21 +1,25 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.subsystems.Claw;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 
 public class ReleaseBall extends Command {
 
-    public ReleaseBall() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    private final Claw m_claw;
+    private final Shooter m_shooter;
+
+    public ReleaseBall(Claw claw, Shooter shooter) {
+        m_claw = claw;
+        m_shooter = shooter;
+
         if(RobotMap.USING_CLAW) {
-            requires(Robot.claw);
+            requires(m_claw);
         }
         else {
-            requires(Robot.shooter);
+            requires(m_shooter);
         }
     }
 
@@ -28,10 +32,10 @@ public class ReleaseBall extends Command {
     @Override
     protected void execute() {
         if(RobotMap.USING_CLAW) {
-            Robot.claw.collectRelease(.8);
+            m_claw.collectRelease(.8);
         }
         else {
-            Robot.shooter.spinWheels(-1);
+            m_shooter.spinWheels(-1);
         }
     }
 
@@ -45,10 +49,10 @@ public class ReleaseBall extends Command {
     @Override
     protected void end() {
         if(RobotMap.USING_CLAW) {
-            Robot.claw.stopCollecting();
+            m_claw.stopCollecting();
         }
         else {
-            Robot.shooter.stop();
+            m_shooter.stop();
         }
     }
 

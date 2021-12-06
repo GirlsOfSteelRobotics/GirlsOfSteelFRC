@@ -1,18 +1,18 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 /**
  *
  */
 public class ShooterOut extends Command {
 
-    public ShooterOut() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.shooter);
+    private final Shooter m_shooter;
+
+    public ShooterOut(Shooter shooter) {
+        m_shooter = shooter;
+        requires(m_shooter);
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +23,7 @@ public class ShooterOut extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.shooter.pistonOut();
+        m_shooter.pistonOut();
     }
 
     // Make this return true when this Command no longer needs to run execute()

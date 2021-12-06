@@ -8,6 +8,7 @@ import org.usfirst.frc.team3504.robot.commands.PivotUp;
 import org.usfirst.frc.team3504.robot.commands.PusherOut;
 import org.usfirst.frc.team3504.robot.commands.Release;
 import org.usfirst.frc.team3504.robot.commands.Shoot;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -19,22 +20,22 @@ public class OI {
     // You create one by telling it which joystick it's on and which button
     // number it is.
 
-    private final JoystickButton collectIn;
-    private final JoystickButton release;
-    private final JoystickButton shoot;
-    private final JoystickButton pivotUp;
-    private final JoystickButton pivotDown;
-    private final JoystickButton pusherOut;
+    private final JoystickButton m_collectIn;
+    private final JoystickButton m_release;
+    private final JoystickButton m_shoot;
+    private final JoystickButton m_pivotUp;
+    private final JoystickButton m_pivotDown;
+    private final JoystickButton m_pusherOut;
 
-    private final Joystick stick;
-    private final Joystick gamePad;
+    private final Joystick m_stick;
+    private final Joystick m_gamePad;
 
     // Button button = new JoystickButton(stick, buttonNumber);
 
-    public OI(){
+    public OI(Manipulator manipulator){
 
-    stick = new Joystick(0);
-    gamePad = new Joystick(1);
+    m_stick = new Joystick(0);
+    m_gamePad = new Joystick(1);
 
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -43,39 +44,26 @@ public class OI {
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
-    collectIn = new JoystickButton(gamePad, 5);
-    collectIn.whileHeld(new CollectIn());
+    m_collectIn = new JoystickButton(m_gamePad, 5);
+    m_collectIn.whileHeld(new CollectIn(manipulator));
 
-    release = new JoystickButton(gamePad, 6);
-    release.whileHeld(new Release());
+    m_release = new JoystickButton(m_gamePad, 6);
+    m_release.whileHeld(new Release(manipulator));
 
-    shoot = new JoystickButton(gamePad, 3);
-    shoot.whenPressed(new Shoot());
+    m_shoot = new JoystickButton(m_gamePad, 3);
+    m_shoot.whenPressed(new Shoot(manipulator));
 
-    pivotUp = new JoystickButton(gamePad, 4);
-    pivotUp.whileHeld(new PivotUp());
+    m_pivotUp = new JoystickButton(m_gamePad, 4);
+    m_pivotUp.whileHeld(new PivotUp(manipulator));
 
-    pivotDown = new JoystickButton(gamePad, 2);
-    pivotDown.whileHeld(new PivotDown());
+    m_pivotDown = new JoystickButton(m_gamePad, 2);
+    m_pivotDown.whileHeld(new PivotDown(manipulator));
 
-    pusherOut = new JoystickButton(gamePad, 9);
-    pusherOut.whenPressed(new PusherOut());
-
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
-
+    m_pusherOut = new JoystickButton(m_gamePad, 9);
+    m_pusherOut.whenPressed(new PusherOut(manipulator));
     }
 
     public Joystick getStick() {
-        return stick;
+        return m_stick;
     }
 }

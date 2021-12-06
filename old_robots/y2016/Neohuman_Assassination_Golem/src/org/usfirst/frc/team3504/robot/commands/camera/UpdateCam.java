@@ -1,18 +1,18 @@
 package org.usfirst.frc.team3504.robot.commands.camera;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 
 /**
  *
  */
 public class UpdateCam extends Command {
 
+    private final Camera m_camera;
 
-    public UpdateCam() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.camera);
+    public UpdateCam(Camera camera) {
+        m_camera = camera;
+        requires(m_camera);
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class UpdateCam extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.camera.getImage();
+        m_camera.getImage();
     }
 
     // Make this return true when this Command no longer needs to run execute()

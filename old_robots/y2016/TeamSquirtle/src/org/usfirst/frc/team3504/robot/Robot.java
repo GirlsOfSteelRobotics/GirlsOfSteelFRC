@@ -4,7 +4,7 @@ package org.usfirst.frc.team3504.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
@@ -20,13 +20,23 @@ import org.usfirst.frc.team3504.robot.subsystems.Shifters;
  */
 public class Robot extends IterativeRobot {
 
-    public static OI oi;
-    public static Chassis chassis;
-    public static Camera camera;
-    public static Shifters shifters;
-    public static Ramp ramp;
+    private final OI m_oi;
+    private final Chassis m_chassis;
+    private final Camera m_camera; // NOPMD
+    private final Shifters m_shifters;
+    private final Ramp m_ramp;
 
-    private Command autonomousCommand;
+    private final Command m_autonomousCommand;
+
+    public Robot() {
+        m_chassis = new Chassis();
+        m_camera = new Camera();
+        m_shifters = new Shifters();
+        m_ramp = new Ramp();
+        // instantiate the command used for the autonomous period
+        m_oi = new OI(m_shifters, m_ramp);
+        m_autonomousCommand = new AutoDrive(m_chassis);
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -34,15 +44,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-        RobotMap.init();
-        chassis = new Chassis();
-        camera = new Camera();
-        shifters = new Shifters();
-        ramp = new Ramp();
-        // instantiate the command used for the autonomous period
-        oi = new OI();
-        autonomousCommand = new AutoDrive();
 
+       m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
     }
 
     @Override
@@ -53,7 +56,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) { autonomousCommand.start(); }
+        if (m_autonomousCommand != null) { m_autonomousCommand.start(); }
     }
 
     /**
@@ -70,7 +73,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) { autonomousCommand.cancel(); }
+        if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
     }
 
     /**

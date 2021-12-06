@@ -1,26 +1,34 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Flap;
+import org.usfirst.frc.team3504.robot.subsystems.Pivot;
 
 /**
  *
  */
 public class ResetEncoderDistance extends Command {
 
-    public ResetEncoderDistance() {
+    private final Chassis m_chassis;
+    private final Flap m_flap;
+    private final Pivot m_pivot;
+
+    public ResetEncoderDistance(Chassis chassis, Flap flap, Pivot pivot) {
+        m_chassis = chassis;
+        m_flap = flap;
+        m_pivot = pivot;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.chassis);
+        requires(m_chassis);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.chassis.resetEncoderDistance();
-        Robot.flap.resetDistance();
-        Robot.pivot.resetDistance();
+        m_chassis.resetEncoderDistance();
+        m_flap.resetDistance();
+        m_pivot.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run

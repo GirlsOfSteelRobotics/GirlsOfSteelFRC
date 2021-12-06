@@ -7,18 +7,18 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TimeDelay extends Command {
 
-    private final double seconds;
+    private final double m_seconds;
 
     public TimeDelay(double seconds) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        this.seconds = seconds;
+        this.m_seconds = seconds;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        setTimeout(seconds);
+        setTimeout(m_seconds);
     }
 
     // Called repeatedly when this Command is scheduled to run

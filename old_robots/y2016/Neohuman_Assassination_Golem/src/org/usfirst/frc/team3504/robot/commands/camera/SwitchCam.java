@@ -1,24 +1,24 @@
 package org.usfirst.frc.team3504.robot.commands.camera;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Camera;
 
 /**
  *
  */
 public class SwitchCam extends Command {
 
-    public SwitchCam() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.camera);
+    private final Camera m_camera;
+
+    public SwitchCam(Camera camera) {
+        m_camera = camera;
+        requires(m_camera);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.camera.switchCam();
+        m_camera.switchCam();
     }
 
     // Called repeatedly when this Command is scheduled to run

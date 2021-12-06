@@ -19,94 +19,71 @@ import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
 import org.usfirst.frc.team3504.robot.commands.ShootBall;
 import org.usfirst.frc.team3504.robot.commands.ShooterIn;
+import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors;
+import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 
-/**
+ /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+ @SuppressWarnings("PMD.DataClass")
 public class OI {
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
+    public final JoystickButton m_joystickButton3;
+    public final JoystickButton m_joystickButton2;
 
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
+    public final JoystickButton m_closeArm;
+    public final JoystickButton m_openArm;
+    public final JoystickButton m_collectBall;
+    public final JoystickButton m_releaseBall;
+    public final JoystickButton m_shootBall;
+    public final JoystickButton m_shooterIn;
+    public final JoystickButton m_pivotUp;
+    public final JoystickButton m_pivotDown;
 
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
+    public final Joystick m_driveStick;
+    public final Joystick m_operatorGamePad;
 
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
+    public OI(Shifters shifters, DriveSystem driveSystem, Manipulator manipulator, AccessoryMotors accessoryMotors) {
+        m_driveStick = new Joystick(0);
+        m_operatorGamePad = new Joystick(1);
 
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
+        m_joystickButton2 = new JoystickButton(m_driveStick, 2);
+        m_joystickButton2.whenPressed(new ShiftDown(shifters));
+        m_joystickButton3 = new JoystickButton(m_driveStick, 3);
+        m_joystickButton3.whenPressed(new ShiftUp(shifters));
 
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
-
-    public JoystickButton joystickButton3;
-    public JoystickButton joystickButton2;
-
-    public JoystickButton closeArm;
-    public JoystickButton openArm;
-    public JoystickButton collectBall;
-    public JoystickButton releaseBall;
-    public JoystickButton shootBall;
-    public JoystickButton shooterIn;
-    public JoystickButton pivotUp;
-    public JoystickButton pivotDown;
-
-    public Joystick driveStick;
-    public Joystick operatorGamePad;
-
-    public OI() {
-        driveStick = new Joystick(0);
-        operatorGamePad = new Joystick(1);
-//for attack3 joystick
-
-        joystickButton2 = new JoystickButton(driveStick, 2);
-        joystickButton2.whenPressed(new ShiftDown());
-        joystickButton3 = new JoystickButton(driveStick, 3);
-        joystickButton3.whenPressed(new ShiftUp());
-
-        closeArm = new JoystickButton(operatorGamePad, 6); //good
-        closeArm.whenPressed(new CloseArm());
-        openArm = new JoystickButton(operatorGamePad, 5); //good
-        openArm.whenPressed(new OpenArm());
-        collectBall = new JoystickButton(operatorGamePad, 3); //good
-        collectBall.whileHeld(new CollectBall());
-        releaseBall = new JoystickButton(operatorGamePad, 4); //good
-        releaseBall.whileHeld(new ReleaseBall());
-        shootBall = new JoystickButton(operatorGamePad, 2);
-        shootBall.whenPressed(new ShootBall());
-        shooterIn = new JoystickButton(operatorGamePad, 1);
-        shooterIn.whenPressed(new ShooterIn());
-        pivotUp = new JoystickButton(operatorGamePad, 7); //good
-        pivotUp.whileHeld(new PivotUp());
-        pivotDown = new JoystickButton(operatorGamePad, 8); //good
-        pivotDown.whileHeld(new PivotDown());
+        m_closeArm = new JoystickButton(m_operatorGamePad, 6); //good
+        m_closeArm.whenPressed(new CloseArm(manipulator));
+        m_openArm = new JoystickButton(m_operatorGamePad, 5); //good
+        m_openArm.whenPressed(new OpenArm(manipulator));
+        m_collectBall = new JoystickButton(m_operatorGamePad, 3); //good
+        m_collectBall.whileHeld(new CollectBall(manipulator));
+        m_releaseBall = new JoystickButton(m_operatorGamePad, 4); //good
+        m_releaseBall.whileHeld(new ReleaseBall(manipulator));
+        m_shootBall = new JoystickButton(m_operatorGamePad, 2);
+        m_shootBall.whenPressed(new ShootBall(manipulator));
+        m_shooterIn = new JoystickButton(m_operatorGamePad, 1);
+        m_shooterIn.whenPressed(new ShooterIn(manipulator));
+        m_pivotUp = new JoystickButton(m_operatorGamePad, 7); //good
+        m_pivotUp.whileHeld(new PivotUp(manipulator));
+        m_pivotDown = new JoystickButton(m_operatorGamePad, 8); //good
+        m_pivotDown.whileHeld(new PivotDown(manipulator));
 
         // SmartDashboard Buttons
-        SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
-        SmartDashboard.putData("DriveByJoystick", new DriveByJoystick());
-        SmartDashboard.putData("Shift Up", new ShiftUp());
-        SmartDashboard.putData("Shift Down", new ShiftDown());
-        SmartDashboard.putData("Accessory Left Fwd", new AccessoryLeftFwd());
-        SmartDashboard.putData("Accessory Left Rev", new AccessoryLeftRev());
-        SmartDashboard.putData("Accessory Right Fwd", new AccessoryRightFwd());
-        SmartDashboard.putData("Accessory Right Rev", new AccessoryRightRev());
+        SmartDashboard.putData("Autonomous Command", new AutonomousCommand(driveSystem, accessoryMotors));
+        SmartDashboard.putData("DriveByJoystick", new DriveByJoystick(this, driveSystem));
+        SmartDashboard.putData("Shift Up", new ShiftUp(shifters));
+        SmartDashboard.putData("Shift Down", new ShiftDown(shifters));
+        SmartDashboard.putData("Accessory Left Fwd", new AccessoryLeftFwd(accessoryMotors));
+        SmartDashboard.putData("Accessory Left Rev", new AccessoryLeftRev(accessoryMotors));
+        SmartDashboard.putData("Accessory Right Fwd", new AccessoryRightFwd(accessoryMotors));
+        SmartDashboard.putData("Accessory Right Rev", new AccessoryRightRev(accessoryMotors));
     }
 
     public Joystick getDriveStick() {
-        return driveStick;
+        return m_driveStick;
     }
 }

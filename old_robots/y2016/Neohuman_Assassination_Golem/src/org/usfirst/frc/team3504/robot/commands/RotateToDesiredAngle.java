@@ -1,22 +1,22 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class RotateToDesiredAngle extends Command {
-    private final double move;
-    private final double desiredAngle;
+    private final Chassis m_chassis;
+    private final double m_move;
+    private final double m_desiredAngle; // NOPMD
 
-    public RotateToDesiredAngle(double moveValue, double angle) {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
-        move = moveValue;
-        desiredAngle = angle;
+    public RotateToDesiredAngle(Chassis chassis, double moveValue, double angle) {
+        m_chassis = chassis;
+        requires(m_chassis);
+        m_move = moveValue;
+        m_desiredAngle = angle;
     }
 
     // Called just before this Command runs the first time
@@ -32,8 +32,8 @@ public class RotateToDesiredAngle extends Command {
             // Y axis for forward movement, and the current
             // calculated rotation rate (or joystick Z axis),
             // depending upon whether "rotate to angle" is active.
-            Robot.chassis.drive(move, Robot.chassis.getRotationAngleRate());
-        } catch( RuntimeException ex ) {
+            m_chassis.drive(m_move, m_chassis.getRotationAngleRate());
+        } catch( RuntimeException ex ) { // NOPMD
             DriverStation.reportError("Error communicating with drive system:  " + ex.getMessage(), true);
         }
     }
@@ -48,7 +48,7 @@ public class RotateToDesiredAngle extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.chassis.stop();
+        m_chassis.stop();
     }
 
     // Called when another command which requires one or more of the same

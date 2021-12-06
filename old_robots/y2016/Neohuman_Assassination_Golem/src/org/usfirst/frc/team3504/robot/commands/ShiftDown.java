@@ -1,25 +1,25 @@
 package org.usfirst.frc.team3504.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
 
 /**
  *
  */
 public class ShiftDown extends Command {
+    private final Shifters m_shifters;
 
-    public ShiftDown() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.shifters);
+    public ShiftDown(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.shifters.shiftLeft(Speed.kLow);
-        Robot.shifters.shiftRight(Speed.kLow);
+        m_shifters.shiftLeft(Speed.kLow);
+        m_shifters.shiftRight(Speed.kLow);
         //Robot.ledlights.redLight();
     }
 

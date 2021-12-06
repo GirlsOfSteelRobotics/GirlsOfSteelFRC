@@ -1,14 +1,19 @@
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
-
-import org.opencv.core.*; // NOPMD(UnnecessaryImport)
-import org.opencv.core.Core.*; // NOPMD(UnnecessaryImport)
-import org.opencv.imgproc.*; // NOPMD(UnnecessaryImport)
-import org.opencv.objdetect.*; // NOPMD(UnnecessaryImport)
 
 /**
 * GripPipeline class.
@@ -17,7 +22,7 @@ import org.opencv.objdetect.*; // NOPMD(UnnecessaryImport)
 *
 * @author GRIP
 */
-@SuppressWarnings({"PMD.ControlStatementBraces"})
+@SuppressWarnings("PMD")
 public class GripPipeline implements VisionPipeline {
 
     //Outputs

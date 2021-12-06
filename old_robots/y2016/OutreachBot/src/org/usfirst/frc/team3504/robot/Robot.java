@@ -23,14 +23,29 @@ public class Robot extends IterativeRobot {
 
     // Declare and initialize each subsystem
     // The constructor will create motor and sensor objects and do other setup
-    public static final DriveSystem driveSystem = new DriveSystem();
-    public static final AccessoryMotors accessoryMotors = new AccessoryMotors();
-    public static final Shifters shifters = new Shifters();
-    public static final Manipulator manipulator = new Manipulator();
-    public static OI oi;
+    private final DriveSystem m_driveSystem;
+    private final AccessoryMotors m_accessoryMotors;
+    private final Shifters m_shifters;
+    private final Manipulator m_manipulator;
+    private final OI m_oi;
 
-    private Command autonomousCommand;
-    private SendableChooser chooser;
+    private Command m_autonomousCommand;
+    private final SendableChooser m_chooser;
+
+    public Robot() {
+        m_driveSystem = new DriveSystem();
+        m_accessoryMotors = new AccessoryMotors();
+        m_shifters = new Shifters();
+        m_manipulator = new Manipulator();
+        m_oi = new OI(m_shifters, m_driveSystem, m_manipulator, m_accessoryMotors);
+
+        // Allow the driver to choose the autonomous command from a SmartDashboard menu
+        m_chooser = new SendableChooser();
+        m_chooser.addDefault("Default Auto", new AutonomousCommand(m_driveSystem, m_accessoryMotors));
+        // chooser.addObject("My Auto", new MyAutoCommand());
+        SmartDashboard.putData("Auto mode", m_chooser);
+        SmartDashboard.putData(new DriveByJoystick(m_oi, m_driveSystem));
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,15 +53,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-        // Initialize the operator interface (joysticks and button mappings)
-        oi = new OI();
-
-        // Allow the driver to choose the autonomous command from a SmartDashboard menu
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new AutonomousCommand());
-        // chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
-        SmartDashboard.putData(new DriveByJoystick());
+        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi, m_driveSystem));
     }
 
     /**
@@ -72,10 +79,10 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        m_autonomousCommand = (Command) m_chooser.getSelected();
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) { autonomousCommand.start(); }
+        if (m_autonomousCommand != null) { m_autonomousCommand.start(); }
     }
 
     /**
@@ -92,7 +99,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) { autonomousCommand.cancel(); }
+        if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
     }
 
     /**

@@ -1,17 +1,15 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class Turn180 extends Command {
 
-    public Turn180() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
+    public Turn180(Chassis chassis) {
+        requires(chassis);
     }
 
     // Called just before this Command runs the first time

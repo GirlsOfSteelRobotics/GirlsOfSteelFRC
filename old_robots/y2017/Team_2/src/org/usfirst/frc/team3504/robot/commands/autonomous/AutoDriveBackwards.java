@@ -2,7 +2,7 @@ package org.usfirst.frc.team3504.robot.commands.autonomous;
 
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.Robot;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 
 /**
@@ -11,16 +11,16 @@ import org.usfirst.frc.team3504.robot.Robot;
 public class AutoDriveBackwards extends Command {
 
     @SuppressWarnings("unused")
-    private final double inches;
-    private final double speed;
+    private final double m_inches;
+    private final double m_speed;
+    private final Chassis m_chassis;
 
 
-    public AutoDriveBackwards(double inches, double speed) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.chassis);
-        this.inches = inches;
-        this.speed = speed;
+    public AutoDriveBackwards(Chassis chassis, double inches, double speed) {
+        requires(chassis);
+        m_inches = inches;
+        m_speed = speed;
+        m_chassis = chassis;
     }
 
 
@@ -33,7 +33,7 @@ public class AutoDriveBackwards extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.chassis.driveSpeed(-speed);
+        m_chassis.driveSpeed(-m_speed);
     }
 
 
@@ -47,8 +47,7 @@ public class AutoDriveBackwards extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.chassis.stop();
-
+        m_chassis.stop();
     }
 
 
