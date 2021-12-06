@@ -7,7 +7,6 @@ import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.Collector;
 import girlsofsteel.subsystems.Driving;
 import girlsofsteel.subsystems.Kicker;
-//import girlsofsteel.subsystems.Kicker;
 import girlsofsteel.subsystems.Manipulator;
 import girlsofsteel.subsystems.UltrasonicSensor;
 
