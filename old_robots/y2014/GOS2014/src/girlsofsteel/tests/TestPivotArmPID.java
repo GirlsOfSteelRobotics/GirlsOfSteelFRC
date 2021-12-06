@@ -48,7 +48,6 @@ public class TestPivotArmPID extends CommandBase{
     @Override
     protected void end() {
         manipulator.stopManipulator();
-        manipulator.stopEncoder();
         manipulator.disablePID();
     }
 

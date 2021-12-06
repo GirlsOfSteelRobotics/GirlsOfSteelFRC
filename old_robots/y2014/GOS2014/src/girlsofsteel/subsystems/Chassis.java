@@ -39,18 +39,18 @@ public class Chassis extends Subsystem {
 
     //need the p for 2nd robot
     private final double Ppright; //Competition chassis gains 0.2
-    private final double Piright = 0;
-    private final double Pdright = 0;
+    private static final double Piright = 0;
+    private static final double Pdright = 0;
     private final double Ppleft; //Competition chassis gains 0.2
-    private final double Pileft = 0;
-    private final double Pdleft = 0;
+    private static final double Pileft = 0;
+    private static final double Pdleft = 0;
 
-    private static final double Vpright = 0.0;
-    private static final double Viright = 0.0;
-    private static final double Vdright = 0.0;
-    private static final double Vpleft = 0.0;
-    private static final double Vileft = 0.0;
-    private static final double Vdleft = 0.0;
+    private final double Vpright = 0.0;
+    private final double Viright = 0.0;
+    private final double Vdright = 0.0;
+    private final double Vpleft = 0.0;
+    private final double Vileft = 0.0;
+    private final double Vdleft = 0.0;
 
     private final double leftPulsePerRevolution = 360;  //pretty sure it's correct
     private final double rightPulsePerRevolution = 360;
@@ -156,8 +156,6 @@ public class Chassis extends Subsystem {
     public void initEncoders() {
         rightEncoder.setDistancePerPulse(rightDistancePerPulsePosition);
         leftEncoder.setDistancePerPulse(leftDistancePerPulsePosition);
-
-
     }
 
     public double getLeftEncoderDistance() {
@@ -183,9 +181,6 @@ public class Chassis extends Subsystem {
 
     public double getRightEncoder() {
         return rightEncoder.get();
-    }
-
-    public void stopEncoders() {
     }
 
     public double getLeftRaw() {

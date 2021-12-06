@@ -8,7 +8,6 @@ package girlsofsteel.tests;
  *
  * @author Resetar
  */
-import com.sun.squawk.util.MathUtils;
 import girlsofsteel.commands.CommandBase;
 
 public class TestingGetVerticalAngleOffset extends CommandBase {
@@ -26,8 +25,8 @@ public class TestingGetVerticalAngleOffset extends CommandBase {
         //for ( var x=1.524; x<4.572; x+.01){
         for ( int i=0; i<100; i++){
             x += 0.1;
-            double positiveAngle = MathUtils.atan((square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
-            double negativeAngle = MathUtils.atan((square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
+            double positiveAngle = Math.atan((square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
+            double negativeAngle = Math.atan((square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
             System.out.println("x = " + x + "\tpositiveAngle = "
                     + positiveAngle + "\tnegativeAngle = " + negativeAngle);
         }

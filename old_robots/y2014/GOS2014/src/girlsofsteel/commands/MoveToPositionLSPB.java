@@ -81,7 +81,6 @@ public class MoveToPositionLSPB extends CommandBase {
 
         chassis.disablePositionPID();
         chassis.stopJags();
-        chassis.stopEncoders();
         setPoint *= Configuration.signOfChassisPositionPIDSetpoint; //To undo what we did before
     }
 
