@@ -1,18 +1,18 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Flap;
 
 /**
  *
  */
 public class FlapUp extends Command {
 
-    public FlapUp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.flap);
+    private final Flap m_flap;
+
+    public FlapUp(Flap flap) {
+        m_flap = flap;
+        requires(m_flap);
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +23,7 @@ public class FlapUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.flap.setTalon(-.5);
+        m_flap.setTalon(-.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +35,7 @@ public class FlapUp extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.flap.setTalon(0);
+        m_flap.setTalon(0);
     }
 
     // Called when another command which requires one or more of the same

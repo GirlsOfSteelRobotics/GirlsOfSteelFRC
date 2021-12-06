@@ -1,9 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3504.robot.subsystems.Pivot;
 
 
 public class PivotUp extends Command {
@@ -14,10 +13,11 @@ public class PivotUp extends Command {
     private double encoderToUse = 0;
     */
 
-    public PivotUp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.pivot);
+    private final Pivot m_pivot;
+
+    public PivotUp(Pivot pivot) {
+        m_pivot = pivot;
+        requires(m_pivot);
     }
 
     // Called just before this Command runs the first time
@@ -39,9 +39,9 @@ public class PivotUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.pivot.tiltUpandDown(-0.3);
-        SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
-        SmartDashboard.putBoolean("Bottom Pivot LS", Robot.pivot.getBottomLimitSwitch());
+        m_pivot.tiltUpandDown(-0.3);
+        SmartDashboard.putBoolean("Top Pivot LS:", m_pivot.getTopLimitSwitch());
+        SmartDashboard.putBoolean("Bottom Pivot LS", m_pivot.getBottomLimitSwitch());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -54,7 +54,7 @@ public class PivotUp extends Command {
     @Override
     protected void end() {
         SmartDashboard.putString("pivot up", "ending");
-        Robot.pivot.tiltUpandDown(0);
+        m_pivot.tiltUpandDown(0);
     }
 
     // Called when another command which requires one or more of the same

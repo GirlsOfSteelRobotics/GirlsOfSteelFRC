@@ -1,19 +1,24 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.OI.DriveDirection;
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.OI;
+import org.usfirst.frc.team3504.robot.OI.DriveDirection;
 
 /**
  *
  */
 public class DriveForward extends Command {
 
+    private final OI m_oi;
+
+    public DriveForward(OI oi) {
+        m_oi = oi;
+    }
+
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.oi.setDriveDirection(DriveDirection.kFWD);
+        m_oi.setDriveDirection(DriveDirection.kFWD);
     }
 
     // Called repeatedly when this Command is scheduled to run

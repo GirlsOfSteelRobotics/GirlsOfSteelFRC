@@ -1,17 +1,12 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class LEDLights extends Subsystem {
-
-
-    //SerialPort serialPort = new SerialPort(9600, SerialPort.Port.kUSB);
-    private SerialPort serialPort;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

@@ -1,29 +1,28 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class Drive extends Command {
-    private final double move;
-    private final double angle;
+    private final Chassis m_chassis;
+    private final double m_move;
+    private final double m_angle;
 
-    public Drive(double distance, double rotate) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.chassis);
-        move = distance;
-        angle = rotate;
+    public Drive(Chassis chassis, double distance, double rotate) {
+        m_chassis = chassis;
+        requires(m_chassis);
+        m_move = distance;
+        m_angle = rotate;
 
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.chassis.drive(move, angle);
+        m_chassis.drive(m_move, m_angle);
     }
 
     // Called repeatedly when this Command is scheduled to run

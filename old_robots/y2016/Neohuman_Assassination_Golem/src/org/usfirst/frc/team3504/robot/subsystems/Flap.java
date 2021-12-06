@@ -1,34 +1,32 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import com.ctre.CANTalon;
-
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
  *
  */
 public class Flap extends Subsystem {
 
-    private final CANTalon flapTalon;
     private static final double maxEncoder = 360; //max encoder val
-    private double encOffsetValue = 0;
+
+    private final CANTalon m_flapTalon;
+    private double m_encOffsetValue;
 
     public Flap(){
-        flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
-        addChild("Talon", flapTalon);
+        m_flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
+        addChild("Talon", m_flapTalon);
 
         if(RobotMap.USING_LIMIT_SWITCHES) {
-            flapTalon.configFwdLimitSwitchNormallyOpen(false);
-            flapTalon.configRevLimitSwitchNormallyOpen(false);
+            m_flapTalon.configFwdLimitSwitchNormallyOpen(false);
+            m_flapTalon.configRevLimitSwitchNormallyOpen(false);
         }
         else {
-            flapTalon.enableLimitSwitch(false, false);
+            m_flapTalon.enableLimitSwitch(false, false);
         }
-        flapTalon.setNeutralMode(NeutralMode.Brake);
+        m_flapTalon.setNeutralMode(NeutralMode.Brake);
     }
 
     @Override
@@ -41,15 +39,11 @@ public class Flap extends Subsystem {
     // here. Call these from Commands.
 
     public void setTalon(double speed){
-        flapTalon.set(speed);
+        m_flapTalon.set(speed);
     }
 
     public void stopTalon(){
-        flapTalon.set(0.0);
-    }
-
-    public double getThrottle() {
-        return Robot.oi.getOperatorStickThrottle();
+        m_flapTalon.set(0.0);
     }
 
     public double getMaxEnc() {
@@ -58,21 +52,21 @@ public class Flap extends Subsystem {
 
     //assuming that going forward will raise the flap and going backwards will lower the flap
     public boolean getTopLimitSwitch(){
-        return flapTalon.isFwdLimitSwitchClosed() == 0;
+        return m_flapTalon.isFwdLimitSwitchClosed() == 0;
     }
     public boolean getBottomLimitSwitch(){
-        return flapTalon.isRevLimitSwitchClosed() == 0;
+        return m_flapTalon.isRevLimitSwitchClosed() == 0;
     }
 
     public double getFlapEncoder() {
-        return flapTalon.getEncPosition();
+        return m_flapTalon.getEncPosition();
     }
 
     public double getFlapEncoderDistance() {
-        return (getFlapEncoder() - encOffsetValue); //TODO: know how far encoder is
+        return (getFlapEncoder() - m_encOffsetValue); //TODO: know how far encoder is
     }
 
     public void resetDistance() {
-        encOffsetValue = getFlapEncoder();
+        m_encOffsetValue = getFlapEncoder();
     }
 }

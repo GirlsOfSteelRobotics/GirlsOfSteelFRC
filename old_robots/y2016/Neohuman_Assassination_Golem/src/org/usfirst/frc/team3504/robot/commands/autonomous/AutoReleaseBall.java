@@ -1,46 +1,47 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Claw;
 
 /**
  *
  */
 public class AutoReleaseBall extends Command {
 
-    private final Timer tim;
-    private final double time;
+    private final Claw m_claw;
+    private final Timer m_tim;
+    private final double m_time;
 
-    public AutoReleaseBall(double time) {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.claw);
-        this.time = time;
-        tim = new Timer();
+    public AutoReleaseBall(Claw claw, double time) {
+        m_claw = claw;
+        requires(m_claw);
+        m_time = time;
+        m_tim = new Timer();
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        tim.start();
+        m_tim.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.claw.collectRelease(.9);
+        m_claw.collectRelease(.9);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false; //tim.get() >= time;
+        return m_tim.get() >= m_time;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.claw.collectRelease(0);
+        m_claw.collectRelease(0);
     }
 
     // Called when another command which requires one or more of the same
