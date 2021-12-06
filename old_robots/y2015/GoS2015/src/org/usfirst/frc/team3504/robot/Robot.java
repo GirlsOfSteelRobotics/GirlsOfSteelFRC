@@ -1,5 +1,10 @@
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoCollector;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
@@ -12,19 +17,14 @@ import org.usfirst.frc.team3504.robot.commands.autonomous.AutoPlow;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoToteAndContainer;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnClockwise;
 import org.usfirst.frc.team3504.robot.commands.autonomous.AutoTurnCounterClockwise;
-import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
 import org.usfirst.frc.team3504.robot.commands.autonomous.Lifting;
+import org.usfirst.frc.team3504.robot.commands.autonomous.Release;
+import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.lifter.LiftByJoystick;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Collector;
 import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 import org.usfirst.frc.team3504.robot.subsystems.Shack;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,14 +35,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-    public static Chassis chassis;
-    public static Camera camera;
-    public static Collector collector;
-    public static Lifter lifter;
-    public static OI oi;
-    public static Shack shack;
-    private Command autonomousCommand;
-    private SendableChooser autoChooser;
+    private final Chassis m_chassis;
+    private final Collector m_collector;
+    private final Lifter m_lifter;
+    private final OI m_oi;
+    private final Shack m_shack;
+    private final SendableChooser m_autoChooser;
+    private Command m_autonomousCommand;
+
+    public Robot() {
+        m_chassis = new Chassis();
+        m_collector = new Collector();
+        m_lifter = new Lifter();
+        m_shack = new Shack();
+        m_oi = new OI(m_chassis, m_collector, m_shack);
+        m_autoChooser = new SendableChooser();
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -50,14 +58,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-        chassis = new Chassis();
-        //camera = new Camera();
-        collector = new Collector();
-        lifter = new Lifter();
-        shack = new Shack();
-        Robot.chassis.resetGyro();
-        oi = new OI();
-        autoChooser = new SendableChooser();
+        m_chassis.resetGyro();
+
         //autoChooser.addDefault("Right Autonomous", new RightAutonomous());
         //autoChooser.addDefault("AutoDriveRight", new AutoDriveRight(100));
         //autoChooser.addObject("AutoDriveLeft", new AutoDriveLeft(150));
@@ -71,25 +73,29 @@ public class Robot extends IterativeRobot {
         //autoChooser.addObject("Lifting", new Lifting());
         //autoChooser.addObject("Release", new Release());
 
-        SmartDashboard.putData("Auto mode", autoChooser);
-        SmartDashboard.putData("AutoCollector", new AutoCollector());
-        SmartDashboard.putData("AutoDriveBackwards", new AutoDriveBackwards(50));
-        SmartDashboard.putData("AutoDriveForward", new AutoDriveForward(50));
-        SmartDashboard.putData("AutoDriveLeft", new AutoDriveLeft(50));
-        SmartDashboard.putData("AutoDriveRight", new AutoDriveRight(50));
-        SmartDashboard.putData("AutoFirstPickup", new AutoFirstPickup());
-        SmartDashboard.putData("AutoLift 0", new AutoLift(Lifter.DISTANCE_ZERO_TOTES));
-        SmartDashboard.putData("AutoLift 1", new AutoLift(Lifter.DISTANCE_ONE_TOTE));
-        SmartDashboard.putData("AutoLift 2", new AutoLift(Lifter.DISTANCE_TWO_TOTES));
-        SmartDashboard.putData("AutoLift 3", new AutoLift(Lifter.DISTANCE_THREE_TOTES));
-        SmartDashboard.putData("AutoLift 4", new AutoLift(Lifter.DISTANCE_FOUR_TOTES));
-        SmartDashboard.putData("AutoOneTote", new AutoOneTote());
-        SmartDashboard.putData("AutoPlow", new AutoPlow());
-        SmartDashboard.putData("AutoToteAndContaienr", new AutoToteAndContainer());
-        SmartDashboard.putData("AutoTurnClockwise", new AutoTurnClockwise());
-        SmartDashboard.putData("AutoTurnCounterClockwise", new AutoTurnCounterClockwise());
-        SmartDashboard.putData("Lifting", new Lifting());
-        SmartDashboard.putData("Release", new Release());
+        SmartDashboard.putData("Auto mode", m_autoChooser);
+        SmartDashboard.putData("AutoCollector", new AutoCollector(m_collector));
+        SmartDashboard.putData("AutoDriveBackwards", new AutoDriveBackwards(m_chassis, 50));
+        SmartDashboard.putData("AutoDriveForward", new AutoDriveForward(m_chassis, 50));
+        SmartDashboard.putData("AutoDriveLeft", new AutoDriveLeft(m_chassis, 50));
+        SmartDashboard.putData("AutoDriveRight", new AutoDriveRight(m_chassis, 50));
+        SmartDashboard.putData("AutoFirstPickup", new AutoFirstPickup(m_chassis, 10));
+        SmartDashboard.putData("AutoLift 0", new AutoLift(m_lifter, Lifter.DISTANCE_ZERO_TOTES));
+        SmartDashboard.putData("AutoLift 1", new AutoLift(m_lifter, Lifter.DISTANCE_ONE_TOTE));
+        SmartDashboard.putData("AutoLift 2", new AutoLift(m_lifter, Lifter.DISTANCE_TWO_TOTES));
+        SmartDashboard.putData("AutoLift 3", new AutoLift(m_lifter, Lifter.DISTANCE_THREE_TOTES));
+        SmartDashboard.putData("AutoLift 4", new AutoLift(m_lifter, Lifter.DISTANCE_FOUR_TOTES));
+        SmartDashboard.putData("AutoOneTote", new AutoOneTote(m_chassis, m_collector, m_shack, m_lifter));
+        SmartDashboard.putData("AutoPlow", new AutoPlow(m_chassis, m_shack, m_collector, m_lifter));
+        SmartDashboard.putData("AutoToteAndContaienr", new AutoToteAndContainer(m_chassis, m_shack, m_collector, m_lifter));
+        SmartDashboard.putData("AutoTurnClockwise", new AutoTurnClockwise(m_chassis));
+        SmartDashboard.putData("AutoTurnCounterClockwise", new AutoTurnCounterClockwise(m_chassis));
+        SmartDashboard.putData("Lifting", new Lifting(m_shack, m_collector, m_lifter));
+        SmartDashboard.putData("Release", new Release(m_shack, m_collector));
+
+        // Default commands
+        m_lifter.setDefaultCommand(new LiftByJoystick(m_oi, m_lifter));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
 
     }
 
@@ -101,9 +107,9 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = (Command) autoChooser.getSelected();
-        if (autonomousCommand != null) {
-            autonomousCommand.start();
+        m_autonomousCommand = (Command) m_autoChooser.getSelected();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
         }
     }
 
@@ -121,8 +127,8 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) {
-            autonomousCommand.cancel();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
         }
     }
 

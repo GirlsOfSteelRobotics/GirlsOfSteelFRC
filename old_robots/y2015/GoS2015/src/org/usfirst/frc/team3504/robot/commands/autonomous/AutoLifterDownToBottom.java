@@ -1,22 +1,23 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.subsystems.Lifter;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 
 /*
  *
  */
 public class AutoLifterDownToBottom extends Command {
 
-    public AutoLifterDownToBottom() {
-        requires(Robot.lifter);
+    private final Lifter m_lifter;
+
+    public AutoLifterDownToBottom(Lifter lifter) {
+        m_lifter = lifter;
+        requires(m_lifter);
     }
 
     @Override
     protected void initialize() {
-        Robot.lifter.setPosition(Lifter.DISTANCE_ZERO_TOTES);
+        m_lifter.setPosition(Lifter.DISTANCE_ZERO_TOTES);
     }
 
     @Override
@@ -25,12 +26,12 @@ public class AutoLifterDownToBottom extends Command {
 
     @Override
     protected boolean isFinished() {
-        return (Robot.lifter.isAtPosition() || Robot.lifter.isAtBottom());
+        return (m_lifter.isAtPosition() || m_lifter.isAtBottom());
     }
 
     @Override
     protected void end() {
-        Robot.lifter.stop();
+        m_lifter.stop();
     }
 
     @Override

@@ -1,16 +1,18 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
 
 /**
  *
  */
 public class AutoCollector extends Command {
+    
+    private final Collector m_collector;
 
-    public AutoCollector() {
-        requires(Robot.collector);
+    public AutoCollector(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +24,7 @@ public class AutoCollector extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.collector.collectorToteIn();
+        m_collector.collectorToteIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +36,7 @@ public class AutoCollector extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.collector.stopCollecting();
+        m_collector.stopCollecting();
     }
 
     // Called when another command which requires one or more of the same

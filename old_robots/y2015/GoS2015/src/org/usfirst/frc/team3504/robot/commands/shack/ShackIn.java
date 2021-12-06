@@ -1,21 +1,23 @@
 package org.usfirst.frc.team3504.robot.commands.shack;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Shack;
 
 /**
  *
  */
 public class ShackIn extends Command {
 
-    public ShackIn() {
-        requires(Robot.shack);
+    private final Shack m_shack;
+
+    public ShackIn(Shack shack) {
+        m_shack = shack;
+        requires(m_shack);
     }
 
     @Override
     protected void initialize() {
-        Robot.shack.ShackIn();
+        m_shack.shackIn();
     }
 
     @Override

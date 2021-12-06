@@ -1,35 +1,34 @@
 package org.usfirst.frc.team3504.robot.commands.drive;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.OI;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class DriveByJoystick extends Command {
 
-    private Joystick chassisJoystick;
+    private final Chassis m_chassis;
+    private final Joystick m_chassisJoystick;
 
-    public DriveByJoystick() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.chassis);
+    public DriveByJoystick(OI oi, Chassis chassis) {
+        m_chassis = chassis;
+        m_chassisJoystick = oi.getChassisJoystick();
+        requires(m_chassis);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        chassisJoystick = Robot.oi.getChassisJoystick();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.chassis.printPositionsToSmartDashboard();
-        Robot.chassis.moveByJoystick(chassisJoystick);
+        m_chassis.printPositionsToSmartDashboard();
+        m_chassis.moveByJoystick(m_chassisJoystick);
     }
 
     // Make this return true when this Command no longer needs to run execute()

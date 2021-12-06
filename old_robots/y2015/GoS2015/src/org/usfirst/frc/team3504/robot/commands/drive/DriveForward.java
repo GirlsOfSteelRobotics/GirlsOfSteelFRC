@@ -1,12 +1,14 @@
 package org.usfirst.frc.team3504.robot.commands.drive;
 
-import org.usfirst.frc.team3504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 public class DriveForward extends Command {
+    private final Chassis m_chassis;
 
-    public DriveForward() {
-        requires(Robot.chassis);
+    public DriveForward(Chassis chassis) {
+        m_chassis = chassis;
+        requires(m_chassis);
     }
 
     @Override
@@ -15,7 +17,7 @@ public class DriveForward extends Command {
 
     @Override
     protected void execute() {
-        Robot.chassis.driveForward();
+        m_chassis.driveForward();
     }
 
     @Override
@@ -25,7 +27,7 @@ public class DriveForward extends Command {
 
     @Override
     protected void end() {
-        Robot.chassis.stop();
+        m_chassis.stop();
     }
 
     @Override
