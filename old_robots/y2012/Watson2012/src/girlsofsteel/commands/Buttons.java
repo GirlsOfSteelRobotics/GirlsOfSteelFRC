@@ -5,16 +5,18 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Buttons extends CommandBase {
 
-    Command autoShoot = new ShootUsingTable(true);
-    Command incrementShoot = new IncrementShoot();
-    Command manualShoot = new ManualShoot();
-    Command autoTurret = new TurretTrackTarget();
-    Command setPointTurret = new SetPointTurret();
-    Command manualTurret = new ManualTurret();
+    private final Command autoShoot = new ShootUsingTable(true);
+    private final Command incrementShoot = new IncrementShoot();
+    private final Command manualShoot = new ManualShoot();
+    private final Command autoTurret = new TurretTrackTarget();
+    private final Command setPointTurret = new SetPointTurret();
+    private final Command manualTurret = new ManualTurret();
 
+    @Override
     protected void initialize() {
     }
 
+    @Override
     protected void execute() {
         //rollers
         if (oi.areTopRollersOverriden()) {
@@ -150,10 +152,12 @@ public class Buttons extends CommandBase {
 //        DriverStationLCD.getInstance().updateLCD();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         collector.stopBrush();
         collector.stopMiddleConveyor();
@@ -164,6 +168,7 @@ public class Buttons extends CommandBase {
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

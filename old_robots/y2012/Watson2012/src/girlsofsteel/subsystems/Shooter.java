@@ -1,7 +1,11 @@
 package girlsofsteel.subsystems;
 
 import com.sun.squawk.util.MathUtils;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.SortedVector;
 import girlsofsteel.RobotMap;
@@ -14,34 +18,34 @@ import girlsofsteel.objects.SmoothEncoder;
 
 public class Shooter extends Subsystem {
 
-    public final double KEY_SPEED = 24.0;//dead-reckoning speed to use for
+    public static final double KEY_SPEED = 24.0;//dead-reckoning speed to use for
     //shooting with the key
-    public final double BRIDGE_SPEED = 29.0;//MAGIC value for speed when
+    public static final double BRIDGE_SPEED = 29.0;//MAGIC value for speed when
     //shooting from the bridge button board stufficles
-    public final double MIN_SLIDER = 0.0;
-    public final double MAX_SLIDER = 3.15;
+    private static final double MIN_SLIDER = 0.0;
+    private static final double MAX_SLIDER = 3.15;
 
-    public final double VELOCITY_ERROR_RANGE = 1.0;//this is the speed that the
+    public static final double VELOCITY_ERROR_RANGE = 1.0;//this is the speed that the
     //shooter wheel can be off by before it shoots the ball
     //hopefully this can be lowered once the PID is tuned nicely
-    public final double SCALE_TOP_ROLLERS_OFF = 5.0;
+    private static final double SCALE_TOP_ROLLERS_OFF = 5.0;
 
-    private final double MAX_SHOOTER_VELOCITY = 41.0;
-    private final double PID_OUTPUT_THRESHOLD = 0.05;//change in voltage
+    private static final double MAX_SHOOTER_VELOCITY = 41.0;
+    private static final double PID_OUTPUT_THRESHOLD = 0.05;//change in voltage
 
     //constants -> meters if a distance
-    public final double TOP_HOOP_HEIGHT = 2.4892;
-    public final double ROBOT_HEIGHT = 1.2065;//floor to the axis of the shooter wheel
-    private final double WHEEL_DIAMETER = 0.2032;//shooter wheel diameter
-    private final double GEAR_RATIO = 1.0;//gear ratio of the shooter wheel
-    private final double PULSES = 100.0;
-    private final double ENCODER_UNIT = (Math.PI * WHEEL_DIAMETER * GEAR_RATIO) / PULSES;
+    private static final double TOP_HOOP_HEIGHT = 2.4892;
+    private static final double ROBOT_HEIGHT = 1.2065;//floor to the axis of the shooter wheel
+    private static final double WHEEL_DIAMETER = 0.2032;//shooter wheel diameter
+    private static final double GEAR_RATIO = 1.0;//gear ratio of the shooter wheel
+    private static final double PULSES = 100.0;
+    private static final double ENCODER_UNIT = (Math.PI * WHEEL_DIAMETER * GEAR_RATIO) / PULSES;
     //don't change this! ^^ just a formula
-    double angle;
-    double yDistance = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
+    private double angle;
+    private final double yDistance = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
     //from the shooter to the top basket
-    double hangTime;
-    double newXDistance;
+    private double hangTime;
+    private double newXDistance;
     private final Jaguar jags = new Jaguar(RobotMap.SHOOTER_JAGS);
 //    CHANGE FOR REAL WATSON:
 //    public Encoder encoder = new Encoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
@@ -52,26 +56,33 @@ public class Shooter extends Subsystem {
     public Encoder encoder = new SmoothEncoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
             RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
             CounterBase.EncodingType.k4X);
-    private Relay topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
-    double p = 0.4;//0.25;//0.25;//0.15;//0.1;//0.25;
-    double i = 50.0;//2.5;//0.06;//0.0002;
-    double d = 0.0;
+    private final Relay topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
+    private final double p = 0.4;//0.25;//0.25;//0.15;//0.1;//0.25;
+    private final double i = 50.0;//2.5;//0.06;//0.0002;
+    private final double d = 0.0;
     //integral threshold -> cuts of the value that is being multipled by the i term
     //with the PID output
-    double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
-    private EncoderGoSPIDController PID = new EncoderGoSPIDController(p, i, d, encoder,
+    private final double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
+    private final EncoderGoSPIDController PID = new EncoderGoSPIDController(p, i, d, encoder,
             new PIDOutput() {
 
+                @Override
                 public void pidWrite(double output) {
                     setJags(output);
                 }
             }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
+
+    //table sorting shooter experimental values calculator
+    private  final SortedVector.Comparator comparator = new MapDoubleComparator();
+    //Sorted array sorts greatest to least
+    private final SortedVector list = new SortedVector(comparator);
 
     public Shooter(){
         populate();//adds all the values in the table below to the shooting table
         //to find distances based on data
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 
@@ -97,12 +108,10 @@ public class Shooter extends Subsystem {
 
     public void initEncoder() {
         encoder.setDistancePerPulse(ENCODER_UNIT);
-        encoder.start();
-    }
+           }
 
     public void stopEncoder() {
-        encoder.stop();
-    }
+           }
 
     public void initPID() {
         PID.setOutputThreshold(PID_OUTPUT_THRESHOLD);
@@ -309,10 +318,6 @@ public class Shooter extends Subsystem {
         return angleCompensation;//returns degrees
     }
 
-    //table sorting shooter experimental values calculator
-    SortedVector.Comparator comparator = new MapDoubleComparator();
-    //Sorted array sorts greatest to least
-    SortedVector list = new SortedVector(comparator);
 
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
@@ -360,15 +365,11 @@ public class Shooter extends Subsystem {
      * @return
      */
     public double getVelocityFrTable(double distance) {
-        int index = (int) Math.ceil(list.size() / 2.0);
-        MapDouble currentValue = (MapDouble) list.elementAt(index);
-        MapDouble currentLow = new MapDouble(0.0, 0.0);
-        MapDouble currentMax = new MapDouble(0.0, 0.0);
-        boolean end = false;
 
         if (list.size() == 0) {
             return 0;//ends the getVelocityFrTable method -> sends a velocity of 0
         }
+
 
         //Sorted array is sorted greatest to least
         //assigns the last value to the lowest point -> and the first to the last
@@ -391,6 +392,12 @@ public class Shooter extends Subsystem {
             return MAX_SHOOTER_VELOCITY;//if the distance is above anything in
             //the table -> shoot at the highest the velocity
         }
+
+        int index = (int) Math.ceil(list.size() / 2.0);
+        MapDouble currentValue = (MapDouble) list.elementAt(index);
+        MapDouble currentLow = new MapDouble(0.0, 0.0);
+        MapDouble currentMax = new MapDouble(0.0, 0.0);
+        boolean end = false;
 
         //find the values above & below the distance you're looking for
         while (!end) {

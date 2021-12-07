@@ -11,28 +11,33 @@ import girlsofsteel.subsystems.Gripper;
  * @author sam
  */
 public class OpenGripAtBar extends CommandBase {
-    Gripper gripper;
+    private final Gripper gripper;
 
     public OpenGripAtBar(Gripper gripper) {
         requires (gripper);
         this.gripper = gripper;
     }
 
+    @Override
     protected void initialize() {
 
     }
 
+    @Override
     protected void execute() {
     }
 
+    @Override
     protected boolean isFinished() {
         return gripper.atBar();
     }
 
+    @Override
     protected void end() {
         gripper.openGrip();
     }
 
+    @Override
     protected void interrupted() {
     }
 }

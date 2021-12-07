@@ -13,11 +13,11 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
-    public static Bridge bridge = new Bridge();
-    public static Chassis chassis = new Chassis();
-    public static Collector collector = new Collector();
-    public static Shooter shooter = new Shooter();
-    public static Turret turret = new Turret();
+    public static final Bridge bridge = new Bridge();
+    public static final Chassis chassis = new Chassis();
+    public static final Collector collector = new Collector();
+    public static final Shooter shooter = new Shooter();
+    public static final Turret turret = new Turret();
 
     public static void init() {
         oi = new OI();

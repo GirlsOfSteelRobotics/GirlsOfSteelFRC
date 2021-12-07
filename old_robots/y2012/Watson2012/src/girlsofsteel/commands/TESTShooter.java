@@ -4,31 +4,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTShooter extends CommandBase {
 
-    double speed;
+    private double speed;
 
     public TESTShooter(){
-        SmartDashboard.putDouble("Shooter Jag Speed", 0.0);
+        SmartDashboard.putNumber("Shooter Jag Speed", 0.0);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
     }
 
+    @Override
     protected void execute() {
-        speed = SmartDashboard.getDouble("Shooter Jag Speed", 0.0);
+        speed = SmartDashboard.getNumber("Shooter Jag Speed", 0.0);
         shooter.setJags(speed);
-        SmartDashboard.putDouble("Shooter Encoder", shooter.getEncoderRate());
+        SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         shooter.stopJags();
         shooter.stopEncoder();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -15,20 +15,25 @@ public class RaiseBlocker extends CommandBase{
         requires(feeder);
     }
 
+    @Override
     protected void initialize() {
     }
 
+    @Override
     protected void execute() {
         feeder.pushBlocker();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

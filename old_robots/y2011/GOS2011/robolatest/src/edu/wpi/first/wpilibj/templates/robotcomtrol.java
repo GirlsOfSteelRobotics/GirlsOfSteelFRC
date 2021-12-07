@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 package edu.wpi.first.wpilibj.templates;
 
+import com.ctre.CANTalon;
+import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -14,9 +16,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
-import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.cscore.AxisCamera;
 
 
 
@@ -138,11 +140,11 @@ public class robotcomtrol extends SimpleRobot {
         }
 
         /*SholEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
-         *SholEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+         *SholEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
          *SholPID = new PIDController (Sholp, Sholi, Shold, SholEncoder, insertjaghere);
          *SholEncoder.setDistancePerPulse(distancepulse);
          *ElbEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
-         *ElbEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+         *ElbEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
          *ElbPID = new PIDController (Elbp, Elbi, Elbd, ElbEncoder, insertjaghere);
          *ElbEncoder.setDistancePerPulse(distancepulse);
          */
@@ -173,13 +175,13 @@ public class robotcomtrol extends SimpleRobot {
         try {
             //this sets neutral mode for all of the motors
 
-            FrontLeft.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            FrontRight.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            RearLeft.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            RearRight.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            Shol1.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            Shol2.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-            Elbow.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            FrontLeft.setNeutralMode(NeutralMode.kBrake);
+            FrontRight.setNeutralMode(NeutralMode.kBrake);
+            RearLeft.setNeutralMode(NeutralMode.kBrake);
+            RearRight.setNeutralMode(NeutralMode.kBrake);
+            Shol1.setNeutralMode(NeutralMode.kBrake);
+            Shol2.setNeutralMode(NeutralMode.kCoast);
+            Elbow.setNeutralMode(NeutralMode.kBrake);
 
         } catch (CANTimeoutException ex) {
             message.println(DriverStationLCD.Line.kUser6, 1, "ERROR sets nuetral");
@@ -187,9 +189,8 @@ public class robotcomtrol extends SimpleRobot {
             ex.printStackTrace();
         }
 
-        /*SholEncoder.start();
+        /*
          * SholPID.enable();
-         * ElbEncoder.start();
          * ElbPID.enable();
          */
 
@@ -198,17 +199,17 @@ public class robotcomtrol extends SimpleRobot {
     public void autonomous() {
         double starttime = ((double) System.currentTimeMillis() / 1000.0);
         try {
-            RearLeft.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            RearLeft.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             RearLeft.enableControl();
-            RearRight.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            RearRight.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             RearRight.enableControl();
-            FrontLeft.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            FrontLeft.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             FrontLeft.enableControl();
-            FrontRight.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            FrontRight.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             FrontRight.enableControl();
-            Shol1.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             Shol1.enableControl();
-            Shol2.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            Shol2.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             Shol2.enableControl();
         } catch (CANTimeoutException ex) {
 
@@ -321,9 +322,9 @@ public class robotcomtrol extends SimpleRobot {
      */
     public void operatorControl() {
         try {
-             RearLeft.changeControlMode(CANJaguar.ControlMode.kVoltage);
+             RearLeft.changeControlMode(CANTalon.TalonControlMode.kVoltage);
              RearLeft.enableControl();
-             RearRight.changeControlMode(CANJaguar.ControlMode.kVoltage);
+             RearRight.changeControlMode(CANTalon.TalonControlMode.kVoltage);
              RearRight.enableControl();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
@@ -335,7 +336,7 @@ public class robotcomtrol extends SimpleRobot {
 
         int val = 0;
         try {
-            Shol1.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             Shol1.enableControl();
 
         } catch (CANTimeoutException ex) {
@@ -499,7 +500,7 @@ public class robotcomtrol extends SimpleRobot {
                 Shol1.setX(voltval);
                 setshol2(voltval);
             } else {
-                Shol1.changeControlMode(CANJaguar.ControlMode.kVoltage);
+                Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
                 Shol1.enableControl();
             }
         } catch (CANTimeoutException ex) {
@@ -605,7 +606,7 @@ message.updateLCD();
             } else {
 
                 Pdes = 0.0;//reset Pdes anytime encoder resets
-                Shol1.changeControlMode(CANJaguar.ControlMode.kPosition);
+                Shol1.changeControlMode(CANTalon.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();
             }

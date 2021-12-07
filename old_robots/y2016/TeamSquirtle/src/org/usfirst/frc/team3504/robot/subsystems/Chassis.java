@@ -1,42 +1,49 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap;
-//ok this is cool but I dont have any of the FRC function things so i have a ton of errors.
-//~Rozie
-
-
-
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Chassis extends Subsystem{
 
-    CANTalon rt1 = RobotMap.rightTalon1;
-    CANTalon rt2 = RobotMap.rightTalon2;
-    CANTalon rt3 = RobotMap.rightTalon3;
-    CANTalon lt1 = RobotMap.leftTalon1;
-    CANTalon lt2 = RobotMap.leftTalon2;
-    CANTalon lt3 = RobotMap.leftTalon3;
-    RobotDrive driveSystem = RobotMap.driveSystem;
+    private final CANTalon m_rightTalon1;
+    private final CANTalon m_leftTalon1;
+    private final CANTalon m_rightTalon2;
+    private final CANTalon m_leftTalon2;
+    private final CANTalon m_rightTalon3;
+    private final CANTalon m_leftTalon3;
+    private final RobotDrive m_driveSystem;
+
 
     public Chassis() {
+        m_rightTalon1 = new CANTalon(1);
+        m_rightTalon2 = new CANTalon(2);
+        m_rightTalon3 = new CANTalon(3);
+        m_leftTalon1 = new CANTalon(4);
+        m_leftTalon2 = new CANTalon(5);
+        m_leftTalon3 = new CANTalon(6);
+
+        m_rightTalon2.follow(m_rightTalon1);
+        m_rightTalon3.follow(m_rightTalon1);
+
+        m_leftTalon2.follow(m_leftTalon1);
+        m_leftTalon3.follow(m_leftTalon1);
+
+        m_driveSystem = new RobotDrive(m_rightTalon1, m_leftTalon1);
 
     }
 
     public void driveByJoystick(Joystick stick) {
-        driveSystem.arcadeDrive(stick);
+        m_driveSystem.arcadeDrive(stick);
     }
 
+    @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveByJoystick());
     }
 
     public void driveForward() {
-        driveSystem.drive(.5, 0);
+        m_driveSystem.drive(.5, 0);
     }
 
     public double resetDistance() {

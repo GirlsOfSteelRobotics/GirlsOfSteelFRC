@@ -1,21 +1,16 @@
 package org.usfirst.frc.team3504.robot;
 
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team3504.robot.subsystems.Agitator;
-//import com.mindsensors.CANLight;
 import org.usfirst.frc.team3504.robot.subsystems.Camera;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 import org.usfirst.frc.team3504.robot.subsystems.Climber;
 import org.usfirst.frc.team3504.robot.subsystems.Loader;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 import org.usfirst.frc.team3504.robot.subsystems.Shooter;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionThread;
 
 
 /**
@@ -27,36 +22,36 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  */
 public class Robot extends IterativeRobot {
 
-    public static OI oi;
-    public static Chassis chassis;
-    public static Shifters shifters;
-    public static Agitator agitator;
-    public static Climber climber;
-    public static Shooter shooter;
-    public static Camera camera;
-    public static Loader loader;
-    public static GripPipelineListener listener;
+    private final OI m_oi;
+    private final Chassis m_chassis;
+    private final Shifters m_shifters;
+    private final Agitator m_agitator;
+    private final Climber m_climber;
+    private final Shooter m_shooter;
+    private final Camera m_camera;
+    private final Loader m_loader;
 
-    Command autonomousCommand;
+    private Command m_autonomousCommand;
 
-    private VisionThread visionThread;
+    public Robot() {
+        m_chassis = new Chassis();
+        m_shifters = new Shifters();
+        m_agitator = new Agitator();
+        m_climber = new Climber();
+        m_shooter = new Shooter();
+        m_camera = new Camera();
+        m_loader = new Loader();
+
+        // Initialize all subsystems before creating the OI
+        m_oi = new OI(m_chassis, m_shifters, m_agitator, m_shooter, m_loader, m_climber, m_camera);
+    }
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
-        chassis = new Chassis();
-        shifters = new Shifters();
-        agitator = new Agitator();
-        climber = new Climber();
-        shooter = new Shooter();
-        camera = new Camera();
-        loader = new Loader();
-        listener = new GripPipelineListener();
-
-        // Initialize all subsystems before creating the OI
-        oi = new OI();
 /*
         try {
             @SuppressWarnings("unused")
@@ -69,8 +64,6 @@ public class Robot extends IterativeRobot {
             e.printStackTrace();
         }*/
 
-        visionThread = new VisionThread(camera.visionCam, new GripPipeline(), listener);
-        visionThread.start();
 
     }
 
@@ -79,11 +72,13 @@ public class Robot extends IterativeRobot {
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
      */
+    @Override
     public void disabledInit() {
         System.out.println("DisabledInit shifting into high gear");
-        shifters.shiftGear(Shifters.Speed.kHigh);
+        m_shifters.shiftGear(Shifters.Speed.kHigh);
     }
 
+    @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
     }
@@ -99,53 +94,54 @@ public class Robot extends IterativeRobot {
      * chooser code above (like the commented example) or additional comparisons
      * to the switch structure below with additional strings & commands.
      */
+    @Override
     public void autonomousInit() {
-        autonomousCommand = oi.getAutonCommand();
+        m_autonomousCommand = m_oi.getAutonCommand();
 
         // start the robot out in low gear when starting autonomous
-        shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.kLow);
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null)
-            autonomousCommand.start();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
+        }
     }
 
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
-            autonomousCommand.cancel();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
 
         // start robot in low gear when starting teleop
-        shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.kLow);
     }
 
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        synchronized(listener.cameraLock) {
-            SmartDashboard.putNumber("TargetX", listener.targetX);
-            SmartDashboard.putNumber("Height", listener.height);
-
-        }
     }
 
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
-        LiveWindow.run();
     }
 
 }

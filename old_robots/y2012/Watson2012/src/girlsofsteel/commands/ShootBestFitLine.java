@@ -5,14 +5,15 @@ import girlsofsteel.objects.Camera;
 
 public class ShootBestFitLine extends CommandBase {
 
-    Joystick operatorJoystick;
+    private Joystick operatorJoystick;
 
-    double cameraDistance;
+    private double cameraDistance;
 
     public ShootBestFitLine(){
         requires(shooter);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -20,6 +21,7 @@ public class ShootBestFitLine extends CommandBase {
         cameraDistance = Camera.getXDistance();
     }
 
+    @Override
     protected void execute() {
         shooter.autoShootBestFitLine(cameraDistance);
         if(Math.abs(operatorJoystick.getThrottle()) >= 0.3 ||
@@ -28,16 +30,19 @@ public class ShootBestFitLine extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
         return !Camera.isConnected();
     }
 
+    @Override
     protected void end() {
         shooter.topRollersOff();
         shooter.disablePID();
         shooter.stopEncoder();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

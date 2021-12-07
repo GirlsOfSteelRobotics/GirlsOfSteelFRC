@@ -14,14 +14,11 @@ import girlsofsteel.Configuration;
  */
 public class CollectorUpALittle extends CommandBase {
 
-    double startTime;
-    double putDownTime = 0.15;
-    double changeInTime;
+    private double startTime;
+    private final double putDownTime = 0.15;
+    private double changeInTime;
 
-    public CollectorUpALittle() {
-    //Doesn't require collector because it needs to be used while the collector wheels are spinning
-    }
-
+    @Override
     protected void initialize() {
         startTime = Timer.getFPGATimestamp();
         System.out.println("Collector up a little!!!!!!!!!!!");
@@ -29,24 +26,29 @@ public class CollectorUpALittle extends CommandBase {
         collector.collectorWheelReverse();
     }
 
+    @Override
     protected void execute() {
 
         changeInTime = Timer.getFPGATimestamp() - startTime;
-        if(changeInTime < putDownTime)
-            collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed);
-        else
+        if(changeInTime < putDownTime) {
+            collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); }
+        else {
             collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);
+        }
     }
 
+    @Override
     protected boolean isFinished(){
         return changeInTime > .3;
     }
 
+    @Override
     protected void end() {
         collector.stopCollector();
         collector.stopCollectorWheel();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

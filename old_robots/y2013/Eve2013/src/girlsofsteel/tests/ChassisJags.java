@@ -5,12 +5,13 @@ import girlsofsteel.commands.CommandBase;
 
 public class ChassisJags extends CommandBase {
 
-    double speed;
+    private double speed;
 
     public ChassisJags(){
         requires(chassis);
     }
 
+    @Override
     protected void initialize() {
         SmartDashboard.putBoolean("Chassis Jags", true);
         SmartDashboard.putBoolean("Right Jag", false);
@@ -19,6 +20,7 @@ public class ChassisJags extends CommandBase {
         SmartDashboard.putNumber("Jag Speed", 0.0);
     }
 
+    @Override
     protected void execute() {
         speed = SmartDashboard.getNumber("Jag Speed", 0.0);
         if(SmartDashboard.getBoolean("Right Jag", false)){
@@ -41,15 +43,18 @@ public class ChassisJags extends CommandBase {
         SmartDashboard.putNumber("Left Rate", chassis.getLeftEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
         //Eve:  return !SmartDashboard.getBoolean("Chassis Jags", true);
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

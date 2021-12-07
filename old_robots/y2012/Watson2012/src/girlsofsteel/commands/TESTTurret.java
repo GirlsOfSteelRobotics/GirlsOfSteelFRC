@@ -4,39 +4,44 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTTurret extends CommandBase {
 
-    double speed;
+    private double speed;
 
-    double pulses;
-    boolean inDegrees;
+    private double pulses;
+    private boolean inDegrees;
 
     public TESTTurret(){
         requires(turret);
-        SmartDashboard.putDouble("Turret Jags Speed", 0.0);
-        SmartDashboard.putDouble("Turret Encoder Pulses", 0.0);
+        SmartDashboard.putNumber("Turret Jags Speed", 0.0);
+        SmartDashboard.putNumber("Turret Encoder Pulses", 0.0);
         SmartDashboard.putBoolean("Turret Encoder in Degrees",false);
     }
 
+    @Override
     protected void initialize() {
         turret.disablePID();
     }
 
+    @Override
     protected void execute() {
-        speed = SmartDashboard.getDouble("Turret Jags Speed", 0.0);
+        speed = SmartDashboard.getNumber("Turret Jags Speed", 0.0);
         turret.setJagSpeed(speed);
-        pulses = SmartDashboard.getDouble("Turret Encoder Pulses", 0.0);
+        pulses = SmartDashboard.getNumber("Turret Encoder Pulses", 0.0);
         inDegrees = SmartDashboard.getBoolean("Turret Encoder in Degrees",false);
         turret.setEncoderUnit(pulses, inDegrees);
-        SmartDashboard.putDouble("Turret Encoder", turret.getEncoderDistance());
+        SmartDashboard.putNumber("Turret Encoder", turret.getEncoderDistance());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         turret.stopJag();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

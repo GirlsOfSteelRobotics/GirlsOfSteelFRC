@@ -4,35 +4,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTShootUsingTable extends CommandBase {
 
-    double addition;
-    double speed;
-    double cameraDistance;
-    double distance;
+    private double addition;
+    private double speed;
+    private double cameraDistance;
+    private double distance;
 
     public TESTShootUsingTable() {
         requires(shooter);
-//        SmartDashboard.putDouble("Bank Addition", 0.0);
-        SmartDashboard.putDouble("Distance", 0.0);
+//        SmartDashboard.putNumber("Bank Addition", 0.0);
+        SmartDashboard.putNumber("Distance", 0.0);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
         cameraDistance = shooter.getDistance();
     }
 
+    @Override
     protected void execute() {
-//        addition = SmartDashboard.getDouble("Bank Addition", 0.0);
+//        addition = SmartDashboard.getNumber("Bank Addition", 0.0);
 //        shooter.TESTAutoShootBank(addition,cameraDistance);
-        distance = SmartDashboard.getDouble("Distance", 0.0);
+        distance = SmartDashboard.getNumber("Distance", 0.0);
         shooter.autoShoot(distance);
-        SmartDashboard.putDouble("Shooter Encoder",shooter.getEncoderRate());
+        SmartDashboard.putNumber("Shooter Encoder",shooter.getEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         if(!oi.areTopRollersOverriden()){
             shooter.topRollersOff();
@@ -41,6 +45,7 @@ public class TESTShootUsingTable extends CommandBase {
         shooter.stopEncoder();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

@@ -16,21 +16,26 @@ public class RetractClimberPiston extends CommandBase{
 
 
 
+    @Override
     protected void initialize() {
 
     }
 
+    @Override
     protected void execute() {
         climber.retractLifterPiston();
     }
 
+    @Override
     protected boolean isFinished() {
         return !climber.isPistonExtended();
     }
 
+    @Override
     protected void end() {
     }
 
+    @Override
     protected void interrupted() {
     }
 

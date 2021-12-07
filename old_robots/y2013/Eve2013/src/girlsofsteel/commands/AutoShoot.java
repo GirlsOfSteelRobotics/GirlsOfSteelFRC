@@ -5,6 +5,7 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.OI;
 
@@ -14,12 +15,12 @@ import girlsofsteel.OI;
  */
 public class AutoShoot extends CommandBase {
 
-    double desiredSpeed;
-    double time;
-    boolean shot;
-    double batteryVoltage;
-    DriverStation driver;
-    int counter;
+    private double desiredSpeed;
+    private double time;
+    private boolean shot;
+    private double batteryVoltage;
+    private final DriverStation driver;
+    private final int counter;
 
     public AutoShoot() {
         requires(feeder);
@@ -28,15 +29,17 @@ public class AutoShoot extends CommandBase {
         counter = 0;
     }
 
+    @Override
     protected void initialize() {
         desiredSpeed = OI.ENCODER_SPEED;
         shot = false;
 
     }
 
+    @Override
     protected void execute() {
         shooter.setJags(oi.JAG_SPEED);
-        batteryVoltage = driver.getBatteryVoltage();
+        batteryVoltage = RobotController.getBatteryVoltage();
         SmartDashboard.putNumber("Encoder Rate", shooter.getEncoderRate());
         SmartDashboard.putNumber("Battery Voltage", batteryVoltage);
         if (shooter.getEncoderRate() >= desiredSpeed && !shot) {
@@ -50,15 +53,18 @@ public class AutoShoot extends CommandBase {
 //        }
     }
 
+    @Override
     protected boolean isFinished() {
         return shot && timeSinceInitialized() - time > 0.2;
     }
 
+    @Override
     protected void end() {
         feeder.pullShooter();
         shooter.setJags(0.0);
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

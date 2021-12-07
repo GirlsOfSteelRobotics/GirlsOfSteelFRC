@@ -8,12 +8,17 @@
  */
 package girlsofsteel.subsystems;
 
-import edu.wpi.first.wpilibj.*;
+//import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
 import girlsofsteel.objects.MagneticSpeedSensor;
 import girlsofsteel.objects.ShooterPoint;
-import java.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,9 +26,9 @@ import java.util.Vector;
  */
 public class Shooter extends Subsystem {
 
-    private Jaguar shooterJag;
+    private final Jaguar shooterJag;
     //Makes the special speed control sensor
-    private MagneticSpeedSensor magSpeed;
+    private final MagneticSpeedSensor magSpeed;
     //angle between the shooter and the slot
     private final double ANGLE = 20.0; //This is NOT magic
     //height of the top slot that the Frisbee can be shot into
@@ -35,14 +40,14 @@ public class Shooter extends Subsystem {
     //how much shooter wheel is off by
     public final double VELOCITY_ERROR_RANGE = 1.0; //MAGIC
     //p, i, and d values FROM LAST YEAR CHECK FOR THIS YEAR
-    private PIDController PID;
+    private final PIDController PID;
     private double p = 0.0;
     private double i = 0.0;
     private double d = 0.0;
     //Array of ShooterPoints objects to track voltage, encoder speed, and battery voltage of shooting
     public ShooterPoint[] speeds = new ShooterPoint[100];
 
-    boolean shoot = false;
+    private boolean shoot = false;
 
     public Shooter() {
         //Shooter Jag
@@ -54,6 +59,7 @@ public class Shooter extends Subsystem {
         //Makes the PIDController
         PID = new PIDController(p, i, d, magSpeed,
                 new PIDOutput() {
+                    @Override
                     public void pidWrite(double output) {
                         setJags(output);
                     }
@@ -131,7 +137,7 @@ public class Shooter extends Subsystem {
             if (speeds[i] == null) {
                 ShooterPoint point = new ShooterPoint(voltage, encoderSpeed, battery);
                 speeds[i] = point;
-                i = speeds.length;
+                i = speeds.length; // NOPMD
             }
         }
     }
@@ -166,14 +172,14 @@ public class Shooter extends Subsystem {
         /*The vector where close points will be saved
          * NOTE: Because this vector is generic, when getting values from the array it is necessary to CAST the value to a ShooterPoint
          */
-        Vector closePoints = new Vector();
+        List<ShooterPoint> closePoints = new ArrayList<>();
 
         //Get all points close to the main point and add them to the closePoints array
         for (int i = 0; i < speeds.length; i++) {
             //The other point
             ShooterPoint otherPoint = speeds[i];
             if (getDistance(encoderSpeed, battery, otherPoint.getEncoderSpeed(), otherPoint.getBattery()) < rangeCutOff) {
-                closePoints.addElement(otherPoint);
+                closePoints.add(otherPoint);
             }
         }
 
@@ -182,7 +188,7 @@ public class Shooter extends Subsystem {
 
         //Find the average of all the voltages for the close points
         for (int k = 0; k < closePoints.size(); k++) {
-            ShooterPoint otherPoint = (ShooterPoint) closePoints.elementAt(k);
+            ShooterPoint otherPoint = closePoints.get(k);
             closePointVoltage = otherPoint.getVoltage();
             voltage += closePointVoltage;
         }
@@ -214,6 +220,7 @@ public class Shooter extends Subsystem {
         return shoot;
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 }

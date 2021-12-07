@@ -1,16 +1,21 @@
 package org.usfirst.frc.team3504.robot.commands.drive;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.OI;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /*
  *
  */
 public class DriveLeft extends Command {
+    private final Joystick m_joystick;
+    private final Chassis m_chassis;
 
-    public DriveLeft() {
-        requires(Robot.chassis);
+    public DriveLeft(OI oi, Chassis chassis) {
+        m_chassis = chassis;
+        m_joystick = oi.getChassisJoystick();
+        requires(m_chassis);
     }
 
     @Override
@@ -19,7 +24,7 @@ public class DriveLeft extends Command {
 
     @Override
     protected void execute() {
-        Robot.chassis.driveLeft();
+        m_chassis.driveLeft(m_joystick);
     }
 
     @Override
@@ -29,7 +34,7 @@ public class DriveLeft extends Command {
 
     @Override
     protected void end() {
-        Robot.chassis.stop();
+        m_chassis.stop();
     }
 
     @Override

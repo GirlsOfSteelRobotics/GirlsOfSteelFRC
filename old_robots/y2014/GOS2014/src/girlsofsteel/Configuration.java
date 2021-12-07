@@ -77,7 +77,7 @@ public class Configuration {
         //printAllValues(robot);
     }
 
-    private static void printAllValues(int robot) {
+    public static void printAllValues(int robot) {
         System.out.println("Robot Number: " + robot);
         System.out.println("Left Encoder Reverse: " + leftEncoderReverse);
         System.out.println("Right Encoder Reverse: " + rightEncoderReverse);

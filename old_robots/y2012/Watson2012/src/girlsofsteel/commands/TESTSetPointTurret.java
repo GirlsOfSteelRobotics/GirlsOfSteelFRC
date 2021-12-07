@@ -4,31 +4,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTSetPointTurret extends CommandBase {
 
-    double angle;
+    private double angle;
 
     public TESTSetPointTurret() {
         requires(turret);
-        SmartDashboard.putDouble("Turret Relative Angle", 0.0);
+        SmartDashboard.putNumber("Turret Relative Angle", 0.0);
     }
 
+    @Override
     protected void initialize() {
         turret.initEncoder();
         turret.enablePID();
     }
 
+    @Override
     protected void execute() {
-        angle = SmartDashboard.getDouble("Turret Relative Angle", 0.0);
+        angle = SmartDashboard.getNumber("Turret Relative Angle", 0.0);
         turret.setPIDSetPoint(turret.getEncoderDistance() + angle);
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         turret.stopJag();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

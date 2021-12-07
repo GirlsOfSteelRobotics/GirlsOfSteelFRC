@@ -1,6 +1,5 @@
 package girlsofsteel.objects;
 
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
@@ -15,9 +14,9 @@ public class EncoderGoSPIDController implements Runnable {
     private int ZERO_ENCODER_VALUE = 0;
     private double output;
 
-    private Encoder encoder;
-    private PIDOutput jags;
-    private int type;
+    private final Encoder encoder;
+    private final PIDOutput jags;
+    private final int type;
     //for setSetPoint()
     private double setPoint;
     //used for calculating error -> for PID (P,I,&D)
@@ -126,6 +125,7 @@ public class EncoderGoSPIDController implements Runnable {
         errorSum = 0.0;
     }
 
+    @Override
     public void run() {
         output = 0.0;
         while (PIDEnabled) { //must be set to run -> through setSetPoint
@@ -177,8 +177,12 @@ public class EncoderGoSPIDController implements Runnable {
         } else if (type == POSITION) {
             currentValue = getSignedDistance();//encoder.getDistance();
         } else {
+            /* The DriverStationLCD call was removed in 2015 WPIlib because the
+             * LCD area of the driver station interface was removed.
+             * Should be changed to SmartDashboard instead.
             DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6,
                     1, "Error: The encoder is not set to rate (1) or position (2)");
+            */
         }
         error = setPoint - currentValue;
     }

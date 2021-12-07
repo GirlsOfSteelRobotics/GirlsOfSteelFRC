@@ -5,24 +5,26 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DriveVelocityLinear extends CommandBase{
 
-    Joystick joystick;
+    private Joystick joystick;
 
-    double xAxis;
-    double yAxis;
+    private double xAxis;
+    private double yAxis;
 
-    double scale;
+    private final double scale;
 
     public DriveVelocityLinear(double scale){
         requires(chassis);
         this.scale = scale;
     }
 
+    @Override
     protected void initialize() {
         joystick = oi.getDriverJoystick();
         chassis.initEncoders();
         chassis.initRatePIDs();
     }
 
+    @Override
     protected void execute() {
         chassis.setPIDsRate();
         xAxis = joystick.getX()*scale;
@@ -33,16 +35,19 @@ public class DriveVelocityLinear extends CommandBase{
         DriverStationLCD.getInstance().updateLCD();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.disableRatePIDs();
         chassis.resetEncoders();
         chassis.endEncoders();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

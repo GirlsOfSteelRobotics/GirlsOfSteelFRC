@@ -95,10 +95,20 @@ def fix_gradlerio_build_file(versions):
                 f.write(new_content)
 
 
+def get_this_directory():
+
+    try:
+        from rules_python.python.runfiles import runfiles
+        r = runfiles.Create()
+        this_file = r.Rlocation("__main__/libraries/linters/gradlerio_versions/lint_gradlerio_versions.py")
+        return  os.path.dirname(this_file)
+
+    except ModuleNotFoundError:
+        return os.path.dirname(os.path.realpath(__file__))
+
 def main():
 
-    this_dir = os.path.dirname(os.path.realpath(__file__))
-    base_directory = os.path.join(this_dir, "..", "..", "..")
+    base_directory = os.path.join(get_this_directory(), "..", "..", "..")
 
     gradlerio_versions, vendor_deps_versions = get_versions(base_directory)
 

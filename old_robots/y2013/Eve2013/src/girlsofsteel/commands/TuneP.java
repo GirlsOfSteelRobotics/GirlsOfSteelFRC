@@ -11,26 +11,26 @@ import javax.microedition.io.Connector;
 public class TuneP extends CommandBase {
 
     //set to what TuneI gives
-    double rightI = 0.0;
-    double backI = 0.0;
-    double leftI = 0.0;
-    double setpoint;
-    double bP;
-    double eP;
-    double interval;
-    int counter;
-    boolean done = false;
-    boolean right = false;
-    boolean back = false;
-    boolean left = false;
-    int numRates;
-    double[][] rightRates;
-    double[][] backRates;
-    double[][] leftRates;
-    double zeroTime;
-    double[][] setpointTimes;
-    double[][] setpointDeviations;
-    double[][] standardDeviations;
+    private double rightI;
+    private double backI;
+    private double leftI;
+    private final double setpoint;
+    private final double bP;
+    private final double eP;
+    private final double interval;
+    private int counter;
+    private boolean done;
+    private boolean right;
+    private boolean back;
+    private boolean left;
+    private final int numRates;
+    private double[][] rightRates;
+    private double[][] backRates;
+    private double[][] leftRates;
+    private double zeroTime;
+    private double[][] setpointTimes;
+    private double[][] setpointDeviations;
+    private double[][] standardDeviations;
 
     public TuneP(double setpoint, double beginningP, double endingP) {
         this.setpoint = setpoint;
@@ -51,12 +51,14 @@ public class TuneP extends CommandBase {
     }//constructor
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         chassis.initEncoders();
         chassis.initRatePIDs();
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 
         for (double p = bP; p < eP; p += interval) {
@@ -134,11 +136,14 @@ public class TuneP extends CommandBase {
     }//end execute
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
+    @SuppressWarnings("PMD.UseStringBufferForStringAppends")
     protected void end() {
         chassis.stopRatePIDs();
         chassis.stopEncoders();
@@ -225,10 +230,9 @@ public class TuneP extends CommandBase {
         String url = "file///Tune_P.txt";
 
         String contents = "";
-        try{
-            FileConnection c = (FileConnection) Connector.open(url);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    c.openDataInputStream()));
+        try (FileConnection c = Connector.open(url);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(
+                 c.openDataInputStream()))){
             String line;
             while((line = reader.readLine()) != null){
                 contents += line + "\n";
@@ -238,10 +242,10 @@ public class TuneP extends CommandBase {
             ex.printStackTrace();
         }
 
-        try{
-            FileConnection c = (FileConnection) Connector.open(url);
-            OutputStreamWriter writer = new OutputStreamWriter(
-                    c.openDataOutputStream());
+        try (FileConnection c = Connector.open(url);
+             OutputStreamWriter writer = new OutputStreamWriter(
+                 c.openDataOutputStream())){
+
             writer.write(contents + message);
             c.close();
         }catch(IOException ex){
@@ -252,6 +256,7 @@ public class TuneP extends CommandBase {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

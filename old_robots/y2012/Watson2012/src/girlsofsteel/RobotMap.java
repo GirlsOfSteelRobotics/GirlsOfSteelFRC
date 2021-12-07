@@ -30,7 +30,7 @@ public class RobotMap {
 //    public static final int BRIDGE_ARM_SPIKE = 5;
 
     //collector
-    public static final int MIDDLE_COLLECTOR_SPIKE = 4;
+    public static final int MIDDLE_COLLECTOR_SPIKE = 0;
     public static final int BRUSH_JAG = 6;
 //    public static final int BRUSH_SPIKE = 6;
     public static final int COLLECTOR_LIMIT_SWITCH = 9;

@@ -15,18 +15,22 @@ public class ManipulatorManualUp extends CommandBase {
         requires (manipulator);
     }
 
+    @Override
     protected void initialize() {
         manipulator.disablePID();
     }
 
+    @Override
     protected void execute() {
         manipulator.moveManipulatorUp();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         manipulator.stopManipulator();
 //        manipulator.resetPIDError();
@@ -34,6 +38,7 @@ public class ManipulatorManualUp extends CommandBase {
         manipulator.initEncoder();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

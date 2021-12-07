@@ -56,12 +56,12 @@ public final class Chassis extends Subsystem {
         //drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
         //drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
-        //      LiveWindow.addActuator("Chassis", "driveLeftA", driveLeftA);
-        //      LiveWindow.addActuator("Chassis", "driveLeftB", driveLeftB);
-        //      LiveWindow.addActuator("Chassis", "driveLeftC", driveLeftC);
-        //      LiveWindow.addActuator("Chassis", "driveRightA", driveRightA);
-        //      LiveWindow.addActuator("Chassis", "driveRightB", driveRightB);
-        //      LiveWindow.addActuator("Chassis", "driveRightC", driveRightC);
+        //      addChild("driveLeftA", driveLeftA);
+        //      addChild("driveLeftB", driveLeftB);
+        //      addChild("driveLeftC", driveLeftC);
+        //      addChild("driveRightA", driveRightA);
+        //      addChild("driveRightB", driveRightB);
+        //      addChild("driveRightC", driveRightC);
     }
 
     @Override

@@ -11,8 +11,23 @@
 
 package com.gos.outreach2021;
 
-import com.gos.outreach2021.commands.*;
-import com.gos.outreach2021.subsystems.*;
+import com.gos.outreach2021.commands.AimWithLimelightCommand;
+import com.gos.outreach2021.commands.DriveByJoystick;
+import com.gos.outreach2021.commands.ExtendCollector;
+import com.gos.outreach2021.commands.FeedIn;
+import com.gos.outreach2021.commands.FeedOut;
+import com.gos.outreach2021.commands.IntakeBall;
+import com.gos.outreach2021.commands.LimelightHoodControlCommand;
+import com.gos.outreach2021.commands.RetractCollector;
+import com.gos.outreach2021.commands.ReverseBall;
+import com.gos.outreach2021.commands.RunShooter;
+import com.gos.outreach2021.commands.SetHoodAngleCommand;
+import com.gos.outreach2021.commands.StopShooter;
+import com.gos.outreach2021.subsystems.Chassis;
+import com.gos.outreach2021.subsystems.Collector;
+import com.gos.outreach2021.subsystems.LEDSubsystem;
+import com.gos.outreach2021.subsystems.LimelightSubsystem;
+import com.gos.outreach2021.subsystems.Shooter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

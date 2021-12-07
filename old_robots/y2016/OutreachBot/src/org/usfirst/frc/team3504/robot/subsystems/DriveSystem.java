@@ -1,104 +1,101 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
  *
  */
 public class DriveSystem extends Subsystem {
-    private CANTalon driveLeftA;
-    private CANTalon driveLeftB;
-    private CANTalon driveLeftC;
+    private final CANTalon m_driveLeftA;
+    private final CANTalon m_driveLeftB;
+    private final CANTalon m_driveLeftC;
 
-    private CANTalon driveRightA;
-    private CANTalon driveRightB;
-    private CANTalon driveRightC;
+    private final CANTalon m_driveRightA;
+    private final CANTalon m_driveRightB;
+    private final CANTalon m_driveRightC;
 
-    private RobotDrive robotDrive;
+    private final RobotDrive m_robotDrive;
 
-    double encOffsetValue = 0;
+    private double m_encOffsetValue;
 
     public DriveSystem() {
-        driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Left A", driveLeftA);
-        driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Left B", driveLeftB);
-        driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Left C", driveLeftC);
+        m_driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
+        //addChild("Drive Left A", driveLeftA);
+        m_driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
+        //addChild("Drive Left B", driveLeftB);
+        m_driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
+        //addChild("Drive Left C", driveLeftC);
 
-        driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Right A", driveRightA);
-        driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Right B", driveRightB);
-        driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
-        //LiveWindow.addActuator("Drive System", "Drive Right C", driveRightC);
+        m_driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
+        //addChild("Drive Right A", driveRightA);
+        m_driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
+        //addChild("Drive Right B", driveRightB);
+        m_driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
+        //addChild("Drive Right C", driveRightC);
 
         // On each side, all three drive motors MUST run at the same speed.
         // Use the CAN Talon Follower mode to set the speed of B and C,
         // making always run at the same speed as A.
-        driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveLeftB.set(driveLeftA.getDeviceID());
-        driveLeftC.set(driveLeftA.getDeviceID());
-        driveRightB.set(driveRightA.getDeviceID());
-        driveRightC.set(driveRightA.getDeviceID());
+        m_driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveLeftB.set(m_driveLeftA.getDeviceID());
+        m_driveLeftC.set(m_driveLeftA.getDeviceID());
+        m_driveRightB.set(m_driveRightA.getDeviceID());
+        m_driveRightC.set(m_driveRightA.getDeviceID());
 
         // Define a robot drive object in terms of only the A motors.
         // The B and C motors will play along at the same speed (see above.)
-        robotDrive = new RobotDrive(driveLeftA, driveRightA);
+        m_robotDrive = new RobotDrive(m_driveLeftA, m_driveRightA);
 
         // Set some safety controls for the drive system
-        robotDrive.setSafetyEnabled(true);
-        robotDrive.setExpiration(0.1);
-        robotDrive.setSensitivity(0.5);
-        robotDrive.setMaxOutput(1.0);
+        m_robotDrive.setSafetyEnabled(true);
+        m_robotDrive.setExpiration(0.1);
+        m_robotDrive.setSensitivity(0.5);
+        m_robotDrive.setMaxOutput(1.0);
         //robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         //robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         //robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
         //robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
     }
 
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new DriveByJoystick());
     }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void takeJoystickInputs(Joystick joystk) {
-        robotDrive.arcadeDrive(joystk);
+        m_robotDrive.arcadeDrive(joystk);
     }
 
     public void forward() {
-        robotDrive.drive(1.0, 0);
+        m_robotDrive.drive(1.0, 0);
     }
 
     public void stop() {
-        robotDrive.drive(/* speed */0, /* curve */0);
+        m_robotDrive.drive(/* speed */0, /* curve */0);
     }
 
     public double getEncoderRight() {
-        return driveRightA.getEncPosition();
+        return m_driveRightA.getEncPosition();
     }
 
     public double getEncoderLeft() {
-        return driveLeftA.getEncPosition();
+        return m_driveLeftA.getEncPosition();
     }
 
     public double getEncoderDistance() {
-        return (getEncoderLeft() - encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
+        return (getEncoderLeft() - m_encOffsetValue) * RobotMap.DISTANCE_PER_PULSE;
     }
 
     public void resetDistance() {
-        encOffsetValue = getEncoderLeft();
+        m_encOffsetValue = getEncoderLeft();
     }
 }

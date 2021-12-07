@@ -1,45 +1,44 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class AutoNavBoard extends Command {
 
-    private double inches;
+    private final Chassis m_chassis;
+    private final double m_inches;
 
-    public AutoNavBoard(double distance) {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.chassis);
-        inches = distance;
+    public AutoNavBoard(Chassis chassis, double distance) {
+        m_chassis = chassis;
+        requires(m_chassis);
+        m_inches = distance;
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
-        Robot.chassis.resetEncoderDistance();
+        m_chassis.resetEncoderDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
-        Robot.chassis.driveSpeed(-.4);
-        Robot.chassis.printEncoderValues();
+        m_chassis.driveSpeed(-.4);
+        m_chassis.printEncoderValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
-         return Robot.chassis.getEncoderDistance() >= inches;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-        end();
+         return m_chassis.getEncoderDistance() >= m_inches;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

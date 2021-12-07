@@ -26,6 +26,7 @@ public class EngageCollector extends CommandBase {
      * This method does not have anything in it.
      * @author Sophia, Sonia
      */
+    @Override
     protected void initialize() {
     }
 
@@ -33,6 +34,7 @@ public class EngageCollector extends CommandBase {
      * This turns on the jag to engage the collector to the pivot arm.
      * @author Sophia, Sonia
      */
+    @Override
     protected void execute() {
         collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //-1 for competition robot, 1 for practice robot
     }//Collector arm moves down to collect and hold ball in trident
@@ -42,6 +44,7 @@ public class EngageCollector extends CommandBase {
      * @return False (Never ends)
      * @author Sophia, Sonia
      */
+    @Override
     protected boolean isFinished() {
         return false;//Only for monday (2/10) testing, with use of hardstop
         //return collector.isCollectorEngaged();//Will be used, but not for monday (2/10) testing because there are not limit switches
@@ -52,6 +55,7 @@ public class EngageCollector extends CommandBase {
      * At the end of the command, the collector arm jag is turned off.
      * @author Sophia, Sonia
      */
+    @Override
     protected void end() {
         collector.stopCollector();
         System.out.println("End of Engage Collector Command.");
@@ -61,6 +65,7 @@ public class EngageCollector extends CommandBase {
      * If the command is interrupted, it calls the end() method.
      * @author Sophia, Sonia
      */
+    @Override
     protected void interrupted() {
         end();
     }

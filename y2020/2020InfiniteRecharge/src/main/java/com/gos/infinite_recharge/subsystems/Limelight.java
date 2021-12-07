@@ -2,10 +2,11 @@ package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
 import com.gos.lib.sensors.LidarLite;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.HttpCamera.HttpCameraKind;
-import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -48,14 +49,14 @@ public class Limelight extends SubsystemBase {
 
     private static final double ALLOWABLE_ERROR = 2;
     private static final double MIN_AREA = 0.5;
-    private PIDController m_steerPID;
+    private final PIDController m_steerPID;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     // private boolean m_LimelightHasValidTarget = false;
     private double m_limelightDriveCommand = 0.0;
-    private double m_limelightSteerCommand = 0.0;
-    private LidarLite m_lidarLite;
+    private final double m_limelightSteerCommand = 0.0;
+    private final LidarLite m_lidarLite;
     // private double tv =
     // NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     private double m_tx;

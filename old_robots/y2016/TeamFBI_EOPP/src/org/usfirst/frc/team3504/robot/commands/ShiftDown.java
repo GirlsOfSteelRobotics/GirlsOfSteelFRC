@@ -1,21 +1,23 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 public class ShiftDown extends Command {
 
-    public ShiftDown(){
-        requires(Robot.shifters);
+    private final Shifters m_shifters;
+
+    public ShiftDown(Shifters shifters){
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
 
     @Override
     protected void initialize() {
         // TODO Auto-generated method stub
-        Robot.shifters.shiftLeft(false);
-        Robot.shifters.shiftRight(false);
+        m_shifters.shiftLeft(false);
+        m_shifters.shiftRight(false);
     }
 
     @Override

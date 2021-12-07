@@ -1,12 +1,14 @@
 package org.usfirst.frc.team3504.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team3504.robot.commands.ConveyorDown;
 import org.usfirst.frc.team3504.robot.commands.ConveyorUp;
 import org.usfirst.frc.team3504.robot.commands.ShiftDown;
 import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -16,38 +18,38 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 
     // Joysticks
-    private Joystick operatorJoystick;
-    private Joystick chassisJoystick;
+    private final Joystick m_operatorJoystick;
+    private final Joystick m_chassisJoystick;
 
     //Driving
-    private JoystickButton shiftUp;
-    private JoystickButton shiftDown;
+    private final JoystickButton m_shiftUp;
+    private final JoystickButton m_shiftDown;
 
     //Collector
-    private JoystickButton conveyorUp;
-    private JoystickButton conveyorDown;
+    private final JoystickButton m_conveyorUp;
+    private final JoystickButton m_conveyorDown;
 
-    public OI() {
+    public OI(Shifters shifters, Manipulator manipulator) {
         // Joysticks
-        operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
-        chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
+        m_operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
+        m_chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 
-        conveyorUp = new JoystickButton(operatorJoystick, 5); //TODO: change
-        conveyorUp.whileHeld(new ConveyorUp());
-        conveyorDown = new JoystickButton(operatorJoystick, 4); //TODO: change
-        conveyorDown.whileHeld(new ConveyorDown());
+        m_conveyorUp = new JoystickButton(m_operatorJoystick, 5); //TODO: change
+        m_conveyorUp.whileHeld(new ConveyorUp(manipulator));
+        m_conveyorDown = new JoystickButton(m_operatorJoystick, 4); //TODO: change
+        m_conveyorDown.whileHeld(new ConveyorDown(manipulator));
 
-        shiftUp = new JoystickButton(chassisJoystick, 5); //TODO: change
-        shiftUp.whenPressed(new ShiftUp());
-        shiftDown = new JoystickButton(chassisJoystick, 3); //TODO: change
-        shiftDown.whenPressed(new ShiftDown());
+        m_shiftUp = new JoystickButton(m_chassisJoystick, 5); //TODO: change
+        m_shiftUp.whenPressed(new ShiftUp(shifters));
+        m_shiftDown = new JoystickButton(m_chassisJoystick, 3); //TODO: change
+        m_shiftDown.whenPressed(new ShiftDown(shifters));
     }
 
     public Joystick getChassisJoystick() {
-        return chassisJoystick;
+        return m_chassisJoystick;
     }
 
     public Joystick getOperatorJoystick() {
-        return operatorJoystick;
+        return m_operatorJoystick;
     }
 }

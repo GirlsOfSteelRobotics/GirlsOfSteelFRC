@@ -12,7 +12,7 @@ public class Bridge extends Subsystem {
     public DigitalInput upLimitSwitch = new DigitalInput(RobotMap.BRIDGE_UP_LIMIT_SWITCH);
     public DigitalInput downLimitSwitch = new DigitalInput(RobotMap.BRIDGE_DOWN_LIMIT_SWITCH);
     public boolean goingUp;
-    final double JAG_SPEED = 1.0;
+    private final double JAG_SPEED = 1.0;
 
     public boolean isFullyUp() {
         return upLimitSwitch.get();
@@ -41,6 +41,7 @@ public class Bridge extends Subsystem {
 
     public Bridge(){
         new Thread() {
+            @Override
             public void run() {
                 while (true) {
                     safetyCheck();
@@ -65,6 +66,7 @@ public class Bridge extends Subsystem {
         }
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 }

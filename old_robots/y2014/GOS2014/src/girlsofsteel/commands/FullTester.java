@@ -66,27 +66,30 @@ public class FullTester extends CommandBase {
 
     }
 
+    @Override
     protected void initialize() {
     }
 
+    @Override
     protected void execute() {
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
         chassis.disablePositionPID();
-        chassis.stopEncoders();
         manipulator.stopJag();
-        manipulator.stopEncoder();
         manipulator.disablePID();
         collector.stopCollector();
         collector.stopCollectorWheel();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

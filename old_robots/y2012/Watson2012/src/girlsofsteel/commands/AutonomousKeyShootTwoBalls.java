@@ -2,10 +2,10 @@ package girlsofsteel.commands;
 
 public class AutonomousKeyShootTwoBalls extends CommandBase {
 
-    boolean autoTrack = false;
-    double timeToShootTwoBalls = 7.0;
-    double xDistance;
-    double velocity;
+    private final boolean autoTrack;
+    private final double timeToShootTwoBalls = 7.0;
+    private double xDistance;
+    private double velocity;
 
     public AutonomousKeyShootTwoBalls(boolean autoTrack){
         requires(shooter);
@@ -15,11 +15,13 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
         this.autoTrack = autoTrack;
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
     }
 
+    @Override
     protected void execute() {
         shooter.setPIDValues();
         if(autoTrack){
@@ -34,14 +36,12 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
-        if(timeSinceInitialized() > timeToShootTwoBalls){
-            return true;
-        }else{
-            return false;
-        }
+        return timeSinceInitialized() > timeToShootTwoBalls;
     }
 
+    @Override
     protected void end() {
         shooter.disablePID();
         shooter.topRollersOff();
@@ -49,6 +49,7 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
         collector.stopMiddleConveyor();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

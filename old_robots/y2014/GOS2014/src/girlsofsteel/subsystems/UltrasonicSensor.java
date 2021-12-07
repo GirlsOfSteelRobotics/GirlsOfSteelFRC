@@ -1,63 +1,12 @@
-//package girlsofsteel.subsystems;
-//
-//import edu.wpi.first.wpilibj.DigitalOutput;
-//import edu.wpi.first.wpilibj.Ultrasonic;
-//import edu.wpi.first.wpilibj.command.Subsystem;
-//import girlsofsteel.RobotMap;
-//
-///**
-// *
-// * @author Sonia is a fail
-// */
-//public class UltrasonicSensor extends Subsystem{
-//
-//    /*
-//     * Current Status: It prints out zero for the range, and the isRangeValid() method
-//     * returns false.  It is no longer erroring, and it is connected to the ultrasonic
-//     * sensor, because the isEnabled() method returns true.
-//     */
-//    Ultrasonic sensor;
-//
-//    public UltrasonicSensor() {
-//        sensor = new Ultrasonic(DigitalOutput.kPwmChannels, RobotMap.ULTRASONIC_SENSOR_PORT, Ultrasonic.Unit.kMillimeter);
-//    }
-//
-//    public void enable()
-//    {
-//        sensor.setEnabled(true);
-//        sensor.setAutomaticMode(true);
-//    }
-//
-//    public void disable()
-//    {
-//        sensor.setEnabled(false);
-//    }
-//    public double getDistance()
-//    {
-//        sensor.ping();
-//        System.out.println(sensor.isRangeValid());
-//        return sensor.getRangeMM();
-//    }
-//
-//    protected void initDefaultCommand() {
-//
-//    }
-//
-//
-//}
-
-
-
 package girlsofsteel.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.SensorBase;
+import edu.wpi.first.wpilibj.AnalogInput;
 import girlsofsteel.RobotMap;
 
 //Created by FRC team 3357
 //2008
 //http://www.chiefdelphi.com/forums/showthread.php?t=82409
-public class UltrasonicSensor extends SensorBase {///*
+public class UltrasonicSensor  {///*
 
 /**
  *
@@ -104,10 +53,10 @@ public class UltrasonicSensor extends SensorBase {///*
     private double voltage_range; //The range of the voltages returned by the sensor (maximum - minimum)
     private double min_distance;  //Minimum distance the ultrasonic sensor can return in inches
     private double distance_range;//The range of the distances returned by this class in inches (maximum - minimum)
-    AnalogChannel channel;
+    private final AnalogInput channel;
     //constructor
     public UltrasonicSensor() {
-        channel = new AnalogChannel(RobotMap.ULTRASONIC_SENSOR_PORT);
+        channel = new AnalogInput(RobotMap.ULTRASONIC_SENSOR_PORT);
       //  default values
         use_units = true;
         min_voltage = 2.5;
@@ -118,7 +67,7 @@ public class UltrasonicSensor extends SensorBase {///*
    // constructor
     public UltrasonicSensor(int _channel, boolean _use_units, double _min_voltage,
             double _max_voltage, double _min_distance, double _max_distance) {
-        channel = new AnalogChannel(_channel);
+        channel = new AnalogInput(_channel);
      //   only use unit-specific variables if we're using units
         if (_use_units) {
             use_units = true;
@@ -139,12 +88,11 @@ public class UltrasonicSensor extends SensorBase {///*
      */
 
     public double getRangeInInches() {
-        double range;
         //if we're not using units, return -1, a range that will most likely never be returned
         if (!use_units) {
             return -1.0;
         }
-        range = channel.getVoltage();
+        double range = channel.getVoltage();
         if (range < min_voltage) {
             return -2.0;
         }
@@ -161,12 +109,11 @@ public class UltrasonicSensor extends SensorBase {///*
      */
 
     public double getRangeInCM() {
-        double range;
         //if we're not using units, return -1, a range that will most likely never be returned
         if (!use_units) {
             return -1.0;
         }
-        range = channel.getVoltage();
+        double range = channel.getVoltage();
         if (range < min_voltage) {
             return -2.0;
         }

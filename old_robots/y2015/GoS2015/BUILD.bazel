@@ -1,0 +1,15 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
+
+gos_java_robot(
+    name = "Gos2015",
+    srcs = glob(["src/**/*.java"]),
+    disable_checkstyle = True,
+    main_class = "org.usfirst.frc.team3504.robot.Main",
+    deps = [
+        "//old_robots/LegacyLibraries",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/kauailabs/navx",
+        "@bazelrio//libraries/java/wpilib/old_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

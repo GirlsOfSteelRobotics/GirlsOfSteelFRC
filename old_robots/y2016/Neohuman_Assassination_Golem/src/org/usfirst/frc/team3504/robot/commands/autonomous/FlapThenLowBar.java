@@ -1,33 +1,17 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.commands.NudgeFlapDown;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team3504.robot.commands.NudgeFlapDown;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Flap;
 
 /**
  *
  */
 public class FlapThenLowBar extends CommandGroup {
 
-    public  FlapThenLowBar(double inches, double speed) {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        addSequential(new NudgeFlapDown());
-        addSequential(new AutoDriveBackwards(inches, speed));
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+    public  FlapThenLowBar(Chassis chassis, Flap flap, double inches, double speed) {
+        addSequential(new NudgeFlapDown(flap));
+        addSequential(new AutoDriveBackwards(chassis, inches, speed));
     }
 }

@@ -2,11 +2,11 @@ package girlsofsteel.commands;
 
 public class AutoMove extends CommandBase {
 
-    double x;
-    double y;
-    double time;
+    private final double x;
+    private final double y;
+    private final double time;
 
-    double startTime;
+    private double startTime;
 
     /**
      * Moves in the direction given for a certain amount of time automatically.
@@ -20,22 +20,27 @@ public class AutoMove extends CommandBase {
         this.time = time;
     }
 
+    @Override
     protected void initialize() {
         startTime = timeSinceInitialized();
     }
 
+    @Override
     protected void execute() {
         chassis.driveVoltage(x, y, 0, 1.0, true);
     }
 
+    @Override
     protected boolean isFinished() {
         return timeSinceInitialized() - startTime > time;
     }
 
+    @Override
     protected void end() {
         chassis.stopJags();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

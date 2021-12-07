@@ -1,106 +1,95 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-
 import com.ctre.CANTalon;
-
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
  *
  */
 public class DriveSystem extends Subsystem implements PIDOutput{
-    private CANTalon driveLeftA;
-    private CANTalon driveLeftB;
-    private CANTalon driveLeftC;
 
-    private CANTalon driveRightA;
-    private CANTalon driveRightB;
-    private CANTalon driveRightC;
+    private final CANTalon m_driveLeftA;
+    private final CANTalon m_driveLeftB;
+    private final CANTalon m_driveLeftC;
 
-    private RobotDrive robotDrive;
+    private final CANTalon m_driveRightA;
+    private final CANTalon m_driveRightB;
+    private final CANTalon m_driveRightC;
 
-    private double encOffsetValueRight = 0;
-    private double encOffsetValueLeft = 0;
+    private final RobotDrive m_robotDrive;
+
+    private double m_encOffsetValueRight;
+    private double m_encOffsetValueLeft;
 
     //using the Nav board
-    public PIDController turnController;
+    public PIDController m_turnController;
 
-    static final double kP = 0.03; //TODO: adjust these
-    static final double kI = 0.00;
-    static final double kD = 0.00;
-    static final double kF = 0.00;
+    private final Shifters m_shifters;
 
-    static final double kToleranceDegrees = 2.0f;
+    public DriveSystem(Shifters shifters) {
+        m_shifters = shifters;
+        m_driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
+        m_driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
+        m_driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
+        m_driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
+        m_driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
+        m_driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
 
-    boolean rotateToAngle = false;
+        m_driveLeftA.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftB.setNeutralMode(NeutralMode.Brake);
+        m_driveLeftC.setNeutralMode(NeutralMode.Brake);
+        m_driveRightA.setNeutralMode(NeutralMode.Brake);
+        m_driveRightB.setNeutralMode(NeutralMode.Brake);
+        m_driveRightC.setNeutralMode(NeutralMode.Brake);
 
-    double rotateToAngleRate;
-
-    public DriveSystem() {
-        driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
-        driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
-        driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
-        driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
-        driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
-        driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
-
-        driveLeftA.enableBrakeMode(true);
-        driveLeftB.enableBrakeMode(true);
-        driveLeftC.enableBrakeMode(true);
-        driveRightA.enableBrakeMode(true);
-        driveRightB.enableBrakeMode(true);
-        driveRightC.enableBrakeMode(true);
-
-        robotDrive = new RobotDrive(driveLeftA, driveRightA);
+        m_robotDrive = new RobotDrive(m_driveLeftA, m_driveRightA);
 
         // Set some safety controls for the drive system
-        robotDrive.setSafetyEnabled(true);
-        robotDrive.setExpiration(0.1);
-        robotDrive.setSensitivity(0.5);
-        robotDrive.setMaxOutput(1.0);
+        m_robotDrive.setSafetyEnabled(true);
+        m_robotDrive.setExpiration(0.1);
+        m_robotDrive.setSensitivity(0.5);
+        m_robotDrive.setMaxOutput(1.0);
 
-        driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
-        driveLeftB.set(driveLeftA.getDeviceID());
-        driveLeftC.set(driveLeftA.getDeviceID());
-        driveRightB.set(driveRightA.getDeviceID());
-        driveRightC.set(driveRightA.getDeviceID());
+        m_driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveLeftB.set(m_driveLeftA.getDeviceID());
+        m_driveLeftC.set(m_driveLeftA.getDeviceID());
+        m_driveRightB.set(m_driveRightA.getDeviceID());
+        m_driveRightC.set(m_driveRightA.getDeviceID());
     }
 
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand( new DriveByJoystick() );
     }
 
     public void takeJoystickInputs(Joystick joystk) {
-        robotDrive.arcadeDrive(joystk);
+        m_robotDrive.arcadeDrive(joystk);
     }
 
-    public void driveByJoystick(double Y, double X) {
-        SmartDashboard.putString("driveByJoystick?", Y + "," + X);
-        robotDrive.arcadeDrive(Y,X);
+    public void driveByJoystick(double throttle, double steer) {
+        SmartDashboard.putString("driveByJoystick?", throttle + "," + steer);
+        m_robotDrive.arcadeDrive(throttle, steer);
     }
 
     public void drive(double moveValue, double rotateValue){
-        robotDrive.arcadeDrive(moveValue, rotateValue);
+        m_robotDrive.arcadeDrive(moveValue, rotateValue);
     }
 
     public void driveSpeed(double speed){
-        robotDrive.drive(-speed, 0);
+        m_robotDrive.drive(-speed, 0);
     }
 
     public void stop() {
-        robotDrive.drive(0, 0);
+        m_robotDrive.drive(0, 0);
     }
 
 
@@ -109,29 +98,29 @@ public class DriveSystem extends Subsystem implements PIDOutput{
     }
 
     public double getEncoderRight() {
-        return -driveRightA.getEncPosition();
+        return -m_driveRightA.getEncPosition();
     }
 
     public double getEncoderLeft() {
-        return driveLeftA.getEncPosition();
+        return m_driveLeftA.getEncPosition();
     }
 
     public double getEncoderDistance() {
-        if (Robot.shifters.getGearSpeed()) {
-            SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-            SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
-            return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
+        if (m_shifters.getGearSpeed()) {
+            SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
+            SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - m_encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
+            return (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
         }
         else {
-            SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
-            SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
-            return (getEncoderRight() - encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
+            SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
+            SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - m_encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
+            return (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;
         }
     }
 
     public void resetEncoderDistance() {
-        encOffsetValueRight = getEncoderRight();
-        encOffsetValueLeft = getEncoderLeft();
+        m_encOffsetValueRight = getEncoderRight();
+        m_encOffsetValueLeft = getEncoderLeft();
         getEncoderDistance();
     }
 
