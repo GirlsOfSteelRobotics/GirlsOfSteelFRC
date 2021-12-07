@@ -1,47 +1,53 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Agitator;
 
 public class Agitate extends Command {
 
-    private int loopCounter;
+    private final Agitator m_agitator;
+    private int m_loopCounter;
 
-    public Agitate() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.agitator);
+    public Agitate(Agitator agitator) {
+        m_agitator = agitator;
+        requires(m_agitator);
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         System.out.println("Agitate Initialzed");
-        loopCounter = 0;
+        m_loopCounter = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
-        if (loopCounter % 10 == 0)
-            Robot.agitator.agitateBackwards();
-        else if (loopCounter % 5 == 0)
-            Robot.agitator.agitateForwards();
+        if (m_loopCounter % 10 == 0) {
+            m_agitator.agitateBackwards();
+        }
+        else if (m_loopCounter % 5 == 0) {
+            m_agitator.agitateForwards();
+        }
 
-        loopCounter++;
+        m_loopCounter++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         System.out.println("Agitate Finished");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

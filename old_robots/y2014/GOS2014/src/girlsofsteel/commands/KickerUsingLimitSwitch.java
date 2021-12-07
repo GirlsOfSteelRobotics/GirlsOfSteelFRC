@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class KickerUsingLimitSwitch extends CommandBase {
 
     private int loadingOrShooting;
-    boolean isLoaded;
-    boolean testingLimit = false;
-    boolean testingMotor = false;
-    boolean smartDashboard;
+    private boolean isLoaded;
+    private final boolean testingLimit = false;
+    private final boolean testingMotor = false;
+    private final boolean smartDashboard;
     private double startTime;
     private double changeInTime;
 
@@ -27,6 +27,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
         smartDashboard = usingSD;
     }
 
+    @Override
     protected void initialize() {
         if (!testingLimit) {
             if (smartDashboard) {
@@ -43,11 +44,12 @@ public class KickerUsingLimitSwitch extends CommandBase {
         }
     }
 
+    @Override
     protected void execute() {
         if (!testingLimit) {
             changeInTime = System.currentTimeMillis() - startTime;
             if (smartDashboard) {
-                loadingOrShooting = (int) SmartDashboard.getNumber("Position");
+                loadingOrShooting = (int) SmartDashboard.getNumber("Position", 0);
             }
             if (loadingOrShooting == 0) //loading
             {
@@ -67,7 +69,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
             }
         }
         if (testingMotor) {
-            double motorSpeed = SmartDashboard.getNumber("Turn Kicker Jag");
+            double motorSpeed = SmartDashboard.getNumber("Turn Kicker Jag", 0);
             System.out.println("Sending: " + motorSpeed);
             //kicker.setJag(motorSpeed);
             kicker.setTalon(motorSpeed);
@@ -77,6 +79,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
 
     }
 
+    @Override
     protected boolean isFinished() {
         System.out.println("Is the limit hit: " + kicker.getLimitSwitch());
         if (!testingLimit) {
@@ -98,11 +101,13 @@ public class KickerUsingLimitSwitch extends CommandBase {
         return false;
     }
 
+    @Override
     protected void end() {
         //kicker.stopJag();
         kicker.stopTalon();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

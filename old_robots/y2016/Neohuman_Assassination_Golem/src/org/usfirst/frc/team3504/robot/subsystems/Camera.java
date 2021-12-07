@@ -1,16 +1,12 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.commands.camera.UpdateCam;
-
-//import com.ni.vision.NIVision;
-//import com.ni.vision.NIVision.Image;
-
-//import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team3504.robot.commands.camera.UpdateCam;
 
 /**
  *
  */
+@SuppressWarnings("PMD")
 public class Camera extends Subsystem {
 
 //	private CameraServer server;
@@ -105,8 +101,9 @@ public class Camera extends Subsystem {
 //		}
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new UpdateCam());
+        setDefaultCommand(new UpdateCam(this));
     }
 }

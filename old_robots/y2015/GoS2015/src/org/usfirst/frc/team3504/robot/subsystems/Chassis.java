@@ -1,47 +1,19 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.drive.DriveByJoystick;
-
-import com.kauailabs.navx_mxp.AHRS;
-
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.SerialPort.Port;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public class Chassis extends Subsystem {
-
-    // CANTalons
-    public static CANTalon frontRightWheel;
-    public static CANTalon frontLeftWheel;
-    public static CANTalon rearRightWheel;
-    public static CANTalon rearLeftWheel;
-
-    // Gyro
-    boolean getGyro;
-    double oldDirection;
-    private AHRS IMUGyro;
-    private double oldXGyroDisplacement = 0;
-    private double oldYGyroDisplacement = 0;
-
-
-    // Variables used to reset the encoders
-    double initialFrontLeftEncoderDistance;
-    double initialFrontRightEncoderDistance;
-    double initialRearLeftEncoderDistance;
-    double initialRearRightEncoderDistance;
-
-    private double topSpeed = 400;
-
-    private RobotDrive gosDrive;
 
     // PID Constants
     private static final double kP = 1.0;
@@ -64,93 +36,112 @@ public class Chassis extends Subsystem {
     private static final double MIN_SPEED_STRAFING = .3;
     private static final double MAX_SPEED_STRAFING = .7;
 
+    private static final double topSpeed = 400;
+
+    // CANTalons
+    private final CANTalon m_frontRightWheel;
+    private final CANTalon m_frontLeftWheel;
+    private final CANTalon m_rearRightWheel;
+    private final CANTalon m_rearLeftWheel;
+
+    // Gyro
+    private boolean m_getGyro;
+    private final AHRS m_gyro;
+
+
+    // Variables used to reset the encoders
+    private double m_initialFrontLeftEncoderDistance;
+    private double m_initialFrontRightEncoderDistance;
+    private double m_initialRearLeftEncoderDistance;
+    private double m_initialRearRightEncoderDistance;
+
+    private final RobotDrive m_gosDrive;
+
     public Chassis() {
-        frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
-        frontLeftWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
-        rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
-        rearLeftWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
+        m_frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
+        m_frontLeftWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
+        m_rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
+        m_rearLeftWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
 
-        frontRightWheel.enableBrakeMode(true);
-        frontLeftWheel.enableBrakeMode(true);
-        rearRightWheel.enableBrakeMode(true);
-        rearLeftWheel.enableBrakeMode(true);
+        m_frontRightWheel.setNeutralMode(NeutralMode.Brake);
+        m_frontLeftWheel.setNeutralMode(NeutralMode.Brake);
+        m_rearRightWheel.setNeutralMode(NeutralMode.Brake);
+        m_rearLeftWheel.setNeutralMode(NeutralMode.Brake);
 
-        frontRightWheel.changeControlMode(ControlMode.Speed);
-        frontRightWheel.setPID(kP, kI, kD);
-        frontRightWheel.reverseSensor(true);
+        m_frontRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_frontRightWheel.setPID(kP, kI, kD);
+        m_frontRightWheel.reverseSensor(true);
 
-        frontLeftWheel.changeControlMode(ControlMode.Speed);
-        frontLeftWheel.setPID(kP, kI, kD);
-        frontLeftWheel.reverseSensor(true);
+        m_frontLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_frontLeftWheel.setPID(kP, kI, kD);
+        m_frontLeftWheel.reverseSensor(true);
 
-        rearRightWheel.changeControlMode(ControlMode.Speed);
-        rearRightWheel.setPID(kP, kI, kD);
-        rearRightWheel.reverseSensor(true);
+        m_rearRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_rearRightWheel.setPID(kP, kI, kD);
+        m_rearRightWheel.reverseSensor(true);
 
-        rearLeftWheel.changeControlMode(ControlMode.Speed);
-        rearLeftWheel.setPID(kP, kI, kD);
-        rearLeftWheel.reverseSensor(true);
+        m_rearLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_rearLeftWheel.setPID(kP, kI, kD);
+        m_rearLeftWheel.reverseSensor(true);
 
-        getGyro = true;
+        m_getGyro = true;
 
-        SerialPort temp = new SerialPort(57600, Port.kMXP);
+        m_gyro = new AHRS(Port.kMXP);
 
-        IMUGyro = new AHRS(temp);
+        m_gyro.zeroYaw();
 
-        IMUGyro.zeroYaw();
+        m_gosDrive = new RobotDrive(m_rearLeftWheel, m_rearRightWheel, m_frontLeftWheel, m_frontRightWheel);
 
-        gosDrive = new RobotDrive(rearLeftWheel, rearRightWheel, frontLeftWheel, frontRightWheel);
-
-        gosDrive.setMaxOutput(topSpeed);
+        m_gosDrive.setMaxOutput(topSpeed);
 
         // Invert the left side motors
-        gosDrive.setInvertedMotor(MotorType.kRearRight, true);
-        gosDrive.setInvertedMotor(MotorType.kFrontRight, true);
-        gosDrive.setExpiration(0.1);
-        gosDrive.setSafetyEnabled(false);
+        m_gosDrive.setInvertedMotor(MotorType.kRearRight, true);
+        m_gosDrive.setInvertedMotor(MotorType.kFrontRight, true);
+        m_gosDrive.setExpiration(0.1);
+        m_gosDrive.setSafetyEnabled(false);
         SmartDashboard.putNumber("Front Left", 0.0);
         SmartDashboard.putNumber("Front Right", 0.0);
         SmartDashboard.putNumber("Rear Right", 0.0);
         SmartDashboard.putNumber("Rear Left", 0.0);
         SmartDashboard.putBoolean("Velocity?", true);
-        SmartDashboard.putBoolean("Gyro: ", getGyro);
+        SmartDashboard.putBoolean("Gyro: ", m_getGyro);
 
         SmartDashboard.putNumber("F val", 0);
     }
 
     public void spinWheelsSlowly() {
-        SmartDashboard.putNumber("Bus Voltage", frontRightWheel.getBusVoltage());
-        SmartDashboard.putNumber("Closed Loop Error", frontRightWheel.getClosedLoopError());
+        SmartDashboard.putNumber("Bus Voltage", m_frontRightWheel.getBusVoltage());
+        SmartDashboard.putNumber("Closed Loop Error", m_frontRightWheel.getClosedLoopError());
 
-        frontRightWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        m_frontRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
         printPositionsToSmartDashboard();
 
-        frontLeftWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        m_frontLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
 
-        rearRightWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        m_rearRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
 
-        rearLeftWheel.setPID(SmartDashboard.getNumber("P value"),
-        SmartDashboard.getNumber("I value"),
-        SmartDashboard.getNumber("D value"),
-        SmartDashboard.getNumber("F val"),
+        m_rearLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
+        SmartDashboard.getNumber("I value", 0),
+        SmartDashboard.getNumber("D value", 0),
+        SmartDashboard.getNumber("F val", 0),
         0, 0, 0);
 
-        frontLeftWheel.set((SmartDashboard.getNumber("Front Left")) * 750);
-        frontRightWheel.set((SmartDashboard.getNumber("Front Right")) * 750);
-        rearRightWheel.set((SmartDashboard.getNumber("Rear Right")) * 750);
-        rearLeftWheel.set(SmartDashboard.getNumber("Rear Left") * 750);
+        m_frontLeftWheel.set((SmartDashboard.getNumber("Front Left", 0)) * 750);
+        m_frontRightWheel.set((SmartDashboard.getNumber("Front Right", 0)) * 750);
+        m_rearRightWheel.set((SmartDashboard.getNumber("Rear Right", 0)) * 750);
+        m_rearLeftWheel.set(SmartDashboard.getNumber("Rear Left", 0) * 750);
     }
 
     /**
@@ -160,12 +151,15 @@ public class Chassis extends Subsystem {
      * 0.25, then scales up to return 1 for an input of 1
      */
     private double beattieDeadBand(double x) {
-        if (x > 0)
+        if (x > 0) {
             return Math.pow(x, 1.0 / x);
-        else if (x < 0)
+        }
+        else if (x < 0) {
             return -beattieDeadBand(-x);
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     /**
@@ -175,12 +169,15 @@ public class Chassis extends Subsystem {
      * 0.5, then scales up to return 1 for an input of 1
      */
     private double beattieTwistDeadBand(double x) {
-        if (x > 0)
+        if (x > 0) {
             return Math.pow(x, 4.0 / x);
-        else if (x < 0)
+        }
+        else if (x < 0) {
             return -beattieTwistDeadBand(-x);
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     /**
@@ -191,19 +188,21 @@ public class Chassis extends Subsystem {
      */
     private double throttleSpeed(Joystick stick) {
         double temp = (-stick.getThrottle() + 1) / 2;
-        if (temp < .1)
+        if (temp < .1) {
             return .1;
+        }
 
-        else
+        else {
             return temp;
+        }
     }
 
     public double getGyroAngle() {
-        return IMUGyro.getYaw();
+        return m_gyro.getYaw();
     }
 
     public void resetGyro() {
-        IMUGyro.zeroYaw();
+        m_gyro.zeroYaw();
     }
 
     /**
@@ -211,30 +210,31 @@ public class Chassis extends Subsystem {
      * robot or the field It enables or disables the use of the current gyro
      * reading in mecanumDrive_Cartesian()
      */
-    public void getGyro() {
-        getGyro = !getGyro;
-        SmartDashboard.putBoolean("Gyro: ", getGyro);
+    public void getGyro() { // NOPMD(LinguisticNaming)
+        m_getGyro = !m_getGyro;
+        SmartDashboard.putBoolean("Gyro: ", m_getGyro);
     }
 
     public void moveByJoystick(Joystick stick) {
-        double temp = IMUGyro.getYaw();
-        if (temp < 0)
+        double temp = m_gyro.getYaw();
+        if (temp < 0) {
             temp = temp + 360;
+        }
 
         SmartDashboard.putNumber("GYRO Get Yaw", temp);
         SmartDashboard.putNumber("Throttle Speeddddd", throttleSpeed(stick));
-        SmartDashboard.putNumber("FUSED HEADING!!!!!", IMUGyro.getFusedHeading());
-        SmartDashboard.putNumber("Closed Loop Error", frontRightWheel.getClosedLoopError());
+        SmartDashboard.putNumber("FUSED HEADING!!!!!", m_gyro.getFusedHeading());
+        SmartDashboard.putNumber("Closed Loop Error", m_frontRightWheel.getClosedLoopError());
 
-        gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
+        m_gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
                 beattieDeadBand(stick.getX()) * throttleSpeed(stick),
                 (beattieTwistDeadBand(stick.getTwist())) * throttleSpeed(stick),
-                getGyro ? temp : 0);
+                m_getGyro ? temp : 0);
 
-        SmartDashboard.putNumber("Sending Val Front Left", frontLeftWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Rear Left", rearLeftWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Front Right", frontRightWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Rear Right", rearRightWheel.getSetpoint());
+        SmartDashboard.putNumber("Sending Val Front Left", m_frontLeftWheel.getSetpoint());
+        SmartDashboard.putNumber("Sending Val Rear Left", m_rearLeftWheel.getSetpoint());
+        SmartDashboard.putNumber("Sending Val Front Right", m_frontRightWheel.getSetpoint());
+        SmartDashboard.putNumber("Sending Val Rear Right", m_rearRightWheel.getSetpoint());
 
     }
 
@@ -279,48 +279,48 @@ public class Chassis extends Subsystem {
 
     public void autoDriveRight(double goalDist) {
         // figure out what the angle should be
-        gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);
+        m_gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);
     }
 
     public void autoDriveLeft(double goalDist) {
-        gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceLeft()), 0, 0);
+        m_gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceLeft()), 0, 0);
     }
 
     public void autoDriveBackward(double goalDist) {
         // check to make sure this angle is correct
-        gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), 270, 0);
+        m_gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), 270, 0);
     }
 
     public void autoDriveForward(double goalDist) {
-        gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceForward()), 90, 0);
+        m_gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceForward()), 90, 0);
     }
 
     public void autoTurnClockwise() {
-        gosDrive.mecanumDrive_Cartesian(0, 0, autoSpeed, 0);
+        m_gosDrive.mecanumDrive_Cartesian(0, 0, autoSpeed, 0);
     }
 
     public void autoTurnCounterclockwise() {
-        gosDrive.mecanumDrive_Cartesian(0, 0, -autoSpeed, 0);
+        m_gosDrive.mecanumDrive_Cartesian(0, 0, -autoSpeed, 0);
     }
 
     public void driveForward() {
-        gosDrive.mecanumDrive_Polar(1, 90, 0);
+        m_gosDrive.mecanumDrive_Polar(1, 90, 0);
     }
 
-    public void driveBackward() {
-        gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(Robot.oi.getChassisJoystick()), 0, 0);
+    public void driveBackward(Joystick chassisJoystick) {
+        m_gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(chassisJoystick), 0, 0);
     }
 
-    public void driveRight() {
-        gosDrive.mecanumDrive_Cartesian(-throttleSpeed(Robot.oi.getChassisJoystick()), 0, 0, 0);
+    public void driveRight(Joystick chassisJoystick) {
+        m_gosDrive.mecanumDrive_Cartesian(-throttleSpeed(chassisJoystick), 0, 0, 0);
     }
 
-    public void driveLeft() {
-        gosDrive.mecanumDrive_Cartesian(throttleSpeed(Robot.oi.getChassisJoystick()), 0, 0, 0);
+    public void driveLeft(Joystick chassisJoystick) {
+        m_gosDrive.mecanumDrive_Cartesian(throttleSpeed(chassisJoystick), 0, 0, 0);
     }
 
     public void stop() {
-        gosDrive.stopMotor();
+        m_gosDrive.stopMotor();
     }
 
     public void printPositionsToSmartDashboard() {
@@ -329,10 +329,10 @@ public class Chassis extends Subsystem {
     //	SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncPosition());//rearLeftWheel.getSpeed());
     //	SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncPosition());//rearRightWheel.getSpeed());
 
-        SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getSpeed());
-        SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getSpeed());
-        SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getSpeed());
-        SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getSpeed());
+        SmartDashboard.putNumber("Front Left Velocity", m_frontLeftWheel.getSpeed());
+        SmartDashboard.putNumber("Front Right Velocity", m_frontRightWheel.getSpeed());
+        SmartDashboard.putNumber("Back Left Velocity", m_rearLeftWheel.getSpeed());
+        SmartDashboard.putNumber("Back Right Velocity", m_rearRightWheel.getSpeed());
     }
 
     /**
@@ -340,10 +340,10 @@ public class Chassis extends Subsystem {
      * current encoder values for comparison after driving
      */
     public void resetDistance() {
-        initialFrontLeftEncoderDistance = frontLeftWheel.getEncPosition();
-        initialFrontRightEncoderDistance = frontRightWheel.getEncPosition();
-        initialRearLeftEncoderDistance = rearLeftWheel.getEncPosition();
-        initialRearRightEncoderDistance = rearRightWheel.getEncPosition();
+        m_initialFrontLeftEncoderDistance = m_frontLeftWheel.getEncPosition();
+        m_initialFrontRightEncoderDistance = m_frontRightWheel.getEncPosition();
+        m_initialRearLeftEncoderDistance = m_rearLeftWheel.getEncPosition();
+        m_initialRearRightEncoderDistance = m_rearRightWheel.getEncPosition();
     }
 
     /**
@@ -353,19 +353,19 @@ public class Chassis extends Subsystem {
      * right.
      */
     private double rearRightEncoderDistance() {
-        return Math.abs(rearRightWheel.getEncPosition() - initialRearRightEncoderDistance);
+        return Math.abs(m_rearRightWheel.getEncPosition() - m_initialRearRightEncoderDistance);
     }
 
     private double frontRightEncoderDistance() {
-        return Math.abs(frontRightWheel.getEncPosition() - initialFrontRightEncoderDistance);
+        return Math.abs(m_frontRightWheel.getEncPosition() - m_initialFrontRightEncoderDistance);
     }
 
     private double frontLeftEncoderDistance() {
-        return Math.abs(frontLeftWheel.getEncPosition() - initialFrontLeftEncoderDistance);
+        return Math.abs(m_frontLeftWheel.getEncPosition() - m_initialFrontLeftEncoderDistance);
     }
 
     private double rearLeftEncoderDistance() {
-        return Math.abs(rearLeftWheel.getEncPosition() - initialRearLeftEncoderDistance);
+        return Math.abs(m_rearLeftWheel.getEncPosition() - m_initialRearLeftEncoderDistance);
     }
 
     /**
@@ -402,8 +402,7 @@ public class Chassis extends Subsystem {
         return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance()) / 4 * inchesPerTick);
     }
 
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new DriveByJoystick());
     }
 }

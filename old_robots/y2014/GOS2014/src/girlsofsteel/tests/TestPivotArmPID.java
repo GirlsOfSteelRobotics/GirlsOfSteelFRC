@@ -16,13 +16,14 @@ import girlsofsteel.commands.CommandBase;
 public class TestPivotArmPID extends CommandBase{
      private double desiredAngle;
     private double currentAngle;
-    private double allowedAngleError;
+    private final double allowedAngleError;
 
     public TestPivotArmPID() {
         requires(manipulator);
         allowedAngleError = 2; //2 degrees of error on both sides allowed
     }
 
+    @Override
     protected void initialize() {
        // manipulator.initEncoder();
        // manipulator.resetPIDError();
@@ -31,23 +32,26 @@ public class TestPivotArmPID extends CommandBase{
         SmartDashboard.putNumber("Pivot Arm Encoder Value", 0.0);
     }
 
+    @Override
     protected void execute() {
-        //desiredAngle = SmartDashboard.getNumber("Pivot Angle");
+        //desiredAngle = SmartDashboard.getNumber("Pivot Angle", 0);
         //manipulator.setSetPoint(desiredAngle);
         currentAngle = manipulator.getAbsoluteDistance();
         SmartDashboard.putNumber("Pivot Arm Encoder Value", currentAngle);
     }
 
+    @Override
     protected boolean isFinished() {
         return false;//Math.abs(desiredAngle-currentAngle) < allowedAngleError;
     }
 
+    @Override
     protected void end() {
         manipulator.stopManipulator();
-        manipulator.stopEncoder();
         manipulator.disablePID();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

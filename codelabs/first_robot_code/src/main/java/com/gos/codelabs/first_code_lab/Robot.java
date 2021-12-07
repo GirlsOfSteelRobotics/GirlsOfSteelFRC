@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         double speed = m_stick.getX();
-        boolean trigger = m_stick.getTrigger();
+        boolean trigger = m_stick.getTrigger(); // NOPMD
         m_motor.set(speed);
     }
 

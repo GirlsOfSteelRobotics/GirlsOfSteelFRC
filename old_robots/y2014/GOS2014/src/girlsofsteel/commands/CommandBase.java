@@ -7,7 +7,6 @@ import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.Collector;
 import girlsofsteel.subsystems.Driving;
 import girlsofsteel.subsystems.Kicker;
-//import girlsofsteel.subsystems.Kicker;
 import girlsofsteel.subsystems.Manipulator;
 import girlsofsteel.subsystems.UltrasonicSensor;
 
@@ -21,13 +20,13 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
-    public static Chassis chassis = new Chassis();
-    public static Manipulator manipulator = new Manipulator();
-    public static Kicker kicker = new Kicker();
-    public static Collector collector = new Collector();
-    public static Driving driving = new Driving();
-    public static UltrasonicSensor ultra = new UltrasonicSensor();
-    public static Camera camera = new Camera();
+    public static final Chassis chassis = new Chassis();
+    public static final Manipulator manipulator = new Manipulator();
+    public static final Kicker kicker = new Kicker();
+    public static final Collector collector = new Collector();
+    public static final Driving driving = new Driving();
+    public static final UltrasonicSensor ultra = new UltrasonicSensor();
+    public static final Camera camera = new Camera();
 
 
     public static void init() {

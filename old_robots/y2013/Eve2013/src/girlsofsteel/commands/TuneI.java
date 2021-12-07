@@ -8,23 +8,23 @@ import javax.microedition.io.Connector;
 
 public class TuneI extends CommandBase {
 
-    double setpoint;
-    double bI;
-    double eI;
-    double interval;
+    private final double setpoint;
+    private final double bI;
+    private final double eI;
+    private final double interval;
 
-    boolean right = false;
-    boolean back = false;
-    boolean left = false;
+    private boolean right = false;
+    private boolean back = false;
+    private boolean left = false;
 
-    double[][] rightRates;
-    double[][] backRates;
-    double[][] leftRates;
-    int counter;
-    int numRates;
+    private double[][] rightRates;
+    private double[][] backRates;
+    private double[][] leftRates;
+    private int counter;
+    private final int numRates;
 
-    double[][] setpointDeviations;
-    double[][] standardDeviations;
+    private double[][] setpointDeviations;
+    private double[][] standardDeviations;
 
     public TuneI(double setpoint, double beginningI, double endingI) {
         this.setpoint = setpoint;
@@ -44,12 +44,14 @@ public class TuneI extends CommandBase {
     }//constructor
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         chassis.initEncoders();
         chassis.initRatePIDs();
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
 
         //set setpoint -- all 3 wheels at the same time
@@ -79,11 +81,14 @@ public class TuneI extends CommandBase {
     }//end execute
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
+    @SuppressWarnings("PMD.UseStringBufferForStringAppends")
     protected void end() {
         chassis.stopRatePIDs();
         chassis.stopEncoders();
@@ -169,10 +174,10 @@ public class TuneI extends CommandBase {
         String url = "file///Tune_I.txt";
 
         String contents = "";
-        try{
-            FileConnection c = (FileConnection) Connector.open(url);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    c.openDataInputStream()));
+        try (FileConnection c = Connector.open(url);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(
+                 c.openDataInputStream()))){
+
             String line;
             while((line = reader.readLine()) != null){
                 contents += line + "\n";
@@ -182,10 +187,9 @@ public class TuneI extends CommandBase {
             ex.printStackTrace();
         }
 
-        try{
-            FileConnection c = (FileConnection) Connector.open(url);
+        try (FileConnection c = Connector.open(url);
             OutputStreamWriter writer = new OutputStreamWriter(
-                    c.openDataOutputStream());
+                    c.openDataOutputStream())) {
             writer.write(contents + message);
             c.close();
         }catch(IOException ex){
@@ -195,6 +199,7 @@ public class TuneI extends CommandBase {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }
@@ -212,9 +217,7 @@ public class TuneI extends CommandBase {
                 chassis.getLeftEncoderRate() > (setpoint+1.0)){
             left = true;
         }
-        if(right && back && left)
-            return true;
-        return false;
+        return right && back && left;
     }
 
 }

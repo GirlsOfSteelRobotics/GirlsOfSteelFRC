@@ -14,16 +14,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TuneManipulatorPID extends CommandBase {
 
-    double p = 0;
-    double i = 0;
-    double d = 0;
-    double setpoint = 0;
-    boolean pid = false;
+    private double p;
+    private double i;
+    private double d;
+    private double setpoint ;
+    private final boolean pid = false;
 
     public TuneManipulatorPID() {
         requires(manipulator);
     }
 
+    @Override
     protected void initialize() {
         manipulator.initEncoder();
         if (pid) {
@@ -39,12 +40,13 @@ public class TuneManipulatorPID extends CommandBase {
         }
     }
 
+    @Override
     protected void execute() {
         if (pid) {
-            p = SmartDashboard.getNumber("Pivot P");
-            i = SmartDashboard.getNumber("Pivot I");
-            d = SmartDashboard.getNumber("Pivot D");
-            setpoint = SmartDashboard.getNumber("Pivot setpoint");
+            p = SmartDashboard.getNumber("Pivot P", 0);
+            i = SmartDashboard.getNumber("Pivot I", 0);
+            d = SmartDashboard.getNumber("Pivot D", 0);
+            setpoint = SmartDashboard.getNumber("Pivot setpoint", 0);
 
             if (setpoint != 0) {
                 manipulator.setSetPoint((double) setpoint);
@@ -61,19 +63,21 @@ public class TuneManipulatorPID extends CommandBase {
         System.out.print("\tRaw pivot: " + manipulator.getRaw());
     }
 
+    @Override
     protected boolean isFinished() {
         return setpoint > 110 || setpoint < -17;
 
     }
 
+    @Override
     protected void end() {
         manipulator.stopManipulator();
-        manipulator.stopEncoder();
         if (pid) {
             manipulator.disablePID();
         }
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

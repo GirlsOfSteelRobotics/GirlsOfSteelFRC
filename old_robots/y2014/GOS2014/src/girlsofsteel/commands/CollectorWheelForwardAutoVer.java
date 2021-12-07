@@ -16,17 +16,14 @@ import girlsofsteel.objects.Camera;
 public class CollectorWheelForwardAutoVer extends CommandBase {
 
 
-    double time = 2.5; //when 3 seconds pass it will drop the ball
-    double startTime;
-    public CollectorWheelForwardAutoVer(){
-        //Doesn't have the requires stuff because we want to be able to lift
-        // the collector and spin the wheel at the same time
-    }
+    private final double time = 2.5; //when 3 seconds pass it will drop the ball
+    private double startTime;
 
     /**
      * There is nothing in this method.
      * @author Sophia, Sonia
      */
+    @Override
     protected void initialize() {
        startTime = Timer.getFPGATimestamp();
        CommandBase.camera.isHot = hotAtLeastOnce();//CommandBase.camera.isGoalHot(); //Get is hot here
@@ -39,6 +36,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * It can be used to bring the ball into the trident.
      * @author Sophia, Sonia
      */
+    @Override
     protected void execute() {
        collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
@@ -48,6 +46,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * @return false always
      * @author Sophia, Sonia
      */
+    @Override
     protected boolean isFinished() {
         return Timer.getFPGATimestamp() - startTime > time;
         //return CommandBase.collector.isCollectorEngaged();
@@ -57,6 +56,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * This stops the collector wheel.
      * @author Sophia, Sonia
      */
+    @Override
     protected void end() {
         collector.stopCollectorWheel();
         //The wheel stops moving once the collector is engaged and has the ball in its grip
@@ -66,6 +66,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * This calls the end() method to stop the collector wheel
      * @author Sophia, Sonia
      */
+    @Override
     protected void interrupted() {
         end();
     }
@@ -75,8 +76,9 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
     */
     private boolean hotAtLeastOnce() {
         for(int i = 0; i < 30; i++) {
-            if(Camera.isGoalHot())
+            if(Camera.isGoalHot()) {
                 return true;
+            }
         }
         return false;
     }

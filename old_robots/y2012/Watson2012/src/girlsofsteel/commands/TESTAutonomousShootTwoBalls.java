@@ -4,15 +4,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TESTAutonomousShootTwoBalls extends CommandBase {
 
-    double timeToShootTwoBalls;
-    double xDistance;
-    double velocity;
+    private double timeToShootTwoBalls;
+    private double xDistance;
+    private double velocity;
 
-    double range = shooter.VELOCITY_ERROR_RANGE; //shooter wheel needs to be within this range for rates before it will shoot
+    private final double range = shooter.VELOCITY_ERROR_RANGE; //shooter wheel needs to be within this range for rates before it will shoot
 
     public TESTAutonomousShootTwoBalls(){
-        SmartDashboard.putDouble("ASTB,speed", 0.0);
-        SmartDashboard.putDouble("ASTB,time",0.0);
+        SmartDashboard.putNumber("ASTB,speed", 0.0);
+        SmartDashboard.putNumber("ASTB,time",0.0);
         requires(shooter);
         requires(chassis);
         requires(collector);
@@ -20,14 +20,16 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
         requires(bridge);
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
     }
 
+    @Override
     protected void execute() {
-        timeToShootTwoBalls = SmartDashboard.getDouble("ASTB,time", 0.0);
-        velocity = SmartDashboard.getDouble("ASTB,speed", 0.0);
+        timeToShootTwoBalls = SmartDashboard.getNumber("ASTB,time", 0.0);
+        velocity = SmartDashboard.getNumber("ASTB,speed", 0.0);
         xDistance = shooter.getDistance();
 //        velocity = shooter.getBallVelocityFrTable(xDistance);
 //        this.ballVelocity = shooter.getImmobileBallVelocity(xDistance);
@@ -41,14 +43,12 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
         }
     }
 
+    @Override
     protected boolean isFinished() {
-        if(timeSinceInitialized() > timeToShootTwoBalls){
-            return true;
-        }else{
-            return false;
-        }
+        return timeSinceInitialized() > timeToShootTwoBalls;
     }
 
+    @Override
     protected void end() {
         shooter.disablePID();
         shooter.topRollersOff();
@@ -56,6 +56,7 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
         collector.stopMiddleConveyor();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

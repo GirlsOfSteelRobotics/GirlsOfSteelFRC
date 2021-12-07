@@ -1,73 +1,68 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
  *
  */
 public class Manipulator extends Subsystem {
-    private CANTalon collectRight;
-    private CANTalon collectLeft;
+    private final CANTalon m_collectRight;
+    private final CANTalon m_collectLeft;
 
-    private DoubleSolenoid pusher;
+    private final DoubleSolenoid m_pusher;
 
-    private CANTalon pivotA;
-    private CANTalon pivotB;
+    private final CANTalon m_pivotA;
+    private final CANTalon m_pivotB;
 
     public Manipulator() {
-        collectRight = new CANTalon(RobotMap.COLLECT_RIGHT);
-        collectLeft = new CANTalon(RobotMap.COLLECT_LEFT);
+        m_collectRight = new CANTalon(RobotMap.COLLECT_RIGHT);
+        m_collectLeft = new CANTalon(RobotMap.COLLECT_LEFT);
 
-        pusher = new DoubleSolenoid(0, 1);
+        m_pusher = new DoubleSolenoid(0, 1);
 
-        pivotA = new CANTalon(RobotMap.PIVOT_RIGHT);
-        pivotB = new CANTalon(RobotMap.PIVOT_LEFT);
+        m_pivotA = new CANTalon(RobotMap.PIVOT_RIGHT);
+        m_pivotB = new CANTalon(RobotMap.PIVOT_LEFT);
     }
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     }
 
     public void collectIn(double speed){
-        collectRight.set(speed);
-        collectLeft.set(speed);
+        m_collectRight.set(speed);
+        m_collectLeft.set(speed);
     }
 
     public void pusherOut(){
-        pusher.set(DoubleSolenoid.Value.kForward);
+        m_pusher.set(DoubleSolenoid.Value.kForward);
     }
 
     public void pusherIn(){
-        pusher.set(DoubleSolenoid.Value.kReverse);
+        m_pusher.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void pivotUp(double speed){
         System.out.println("Pivot Up Speed" + speed);
-        pivotA.set(-speed);
-        pivotB.set(-speed);
+        m_pivotA.set(-speed);
+        m_pivotB.set(-speed);
     }
 
     public void pivotDown(double speed){
         System.out.println("Pivot Down Speed" + speed);
-        pivotA.set(speed);
-        pivotB.set(speed);
+        m_pivotA.set(speed);
+        m_pivotB.set(speed);
     }
 
     public void stopCollector() {
-        collectRight.set(0);
-        collectLeft.set(0);
+        m_collectRight.set(0);
+        m_collectLeft.set(0);
     }
 
     public void stopPivot(){
-        pivotA.set(0);
-        pivotB.set(0);
+        m_pivotA.set(0);
+        m_pivotB.set(0);
     }
 }

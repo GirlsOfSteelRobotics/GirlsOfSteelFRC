@@ -1,0 +1,14 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
+
+gos_java_robot(
+    name = "TeamSquirtle",
+    srcs = glob(["src/**/*.java"]),
+    disable_checkstyle = True,
+    main_class = "org.usfirst.frc.team3504.robot.Main",
+    deps = [
+        "//old_robots/LegacyLibraries",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/wpilib/old_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

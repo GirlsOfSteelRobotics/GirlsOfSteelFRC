@@ -1,0 +1,29 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot", "gos_junit4_test")
+
+gos_java_robot(
+    name = "basic_simulator",
+    srcs = glob(["src/main/java/**/*.java"]),
+    disable_pmd = True,
+    main_class = "com.gos.codelabs.basic_simulator.Main",
+    deps = [
+        "@bazelrio//libraries/java/rev/sparkmax",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)
+
+gos_junit4_test(
+    name = "test",
+    srcs = glob(["src/test/java/**/*.java"]),
+    # The tests fail on main (on purpose), so make it so you manually have to run it
+    tags = ["manual"],
+    deps = [
+        ":basic_simulator",
+        "@bazelrio//libraries/java/wpilib/hal",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

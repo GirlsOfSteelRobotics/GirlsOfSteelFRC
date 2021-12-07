@@ -10,11 +10,11 @@ import girlsofsteel.RobotMap;
 
 public class Collector extends Subsystem{
 
-    DigitalInput collectorLimitSwitch = new DigitalInput(RobotMap.COLLECTOR_LIMIT_SWITCH);
+    private  final DigitalInput collectorLimitSwitch = new DigitalInput(RobotMap.COLLECTOR_LIMIT_SWITCH);
 
-    Jaguar brushJag = new Jaguar(RobotMap.BRUSH_JAG);
+    private final Jaguar brushJag = new Jaguar(RobotMap.BRUSH_JAG);
 //    Relay brushSpike = new Relay(RobotMap.BRUSH_SPIKE);
-    Relay middleConveyorSpike = new Relay(RobotMap.MIDDLE_COLLECTOR_SPIKE);
+    private final Relay middleConveyorSpike = new Relay(RobotMap.MIDDLE_COLLECTOR_SPIKE);
 
     public Collector () {
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
@@ -27,6 +27,7 @@ public class Collector extends Subsystem{
         return !collectorLimitSwitch.get();
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 

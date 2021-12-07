@@ -15,6 +15,7 @@ import girlsofsteel.commands.CommandBase;
  */
 public class TestCollector extends CommandBase {
 
+    @Override
     protected void initialize() {
         SmartDashboard.putNumber(RobotMap.CollectorJagSpeed, 0.0);
         SmartDashboard.putBoolean(RobotMap.CollectorWheelSpikeForward, false);
@@ -23,21 +24,22 @@ public class TestCollector extends CommandBase {
 
     }
 
+    @Override
     protected void execute() {
-        collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed));
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward) == true) {
+        collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed, 0));
+        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward, false) == true) {
             collector.collectorWheelFoward();
             // forward
         } else{
         collector.stopCollectorWheel();
         }
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward) == true) {
+        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward, false) == true) {
             collector.collectorWheelReverse();
             // backward
         } else {
             collector.stopCollectorWheel();
         }
-//        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeStop) == true) {
+//        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeStop, false) == true) {
 //            collector.stopCollectorWheel();
 //        }
         double collectorEncoderValue = collector.getCollectorSpeed();
@@ -46,15 +48,18 @@ public class TestCollector extends CommandBase {
 
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
 
     }
 
+    @Override
     protected void end() {
 
     }
 
+    @Override
     protected void interrupted() {
 
     }

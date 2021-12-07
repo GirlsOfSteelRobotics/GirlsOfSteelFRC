@@ -1,43 +1,24 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.*;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3504.robot.commands.JawIn;
+import org.usfirst.frc.team3504.robot.commands.JawOut;
+import org.usfirst.frc.team3504.robot.commands.ShiftDown;
+import org.usfirst.frc.team3504.robot.commands.ShiftUp;
+import org.usfirst.frc.team3504.robot.commands.ShooterIn;
+import org.usfirst.frc.team3504.robot.commands.ShooterOut;
+import org.usfirst.frc.team3504.robot.subsystems.JawPiston;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
-
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
-    public Joystick driveStick;
-    public Joystick gamePad;
+    public Joystick m_driveStick;
+    public Joystick m_gamePad;
 
     //shooting
     //private JoystickButton shootPrep;
@@ -51,21 +32,21 @@ public class OI {
     //private JoystickButton armDown;
 
     //jaw
-    private JoystickButton jawIn;
-    private JoystickButton jawOut;
+    private final JoystickButton m_jawIn;
+    private final JoystickButton m_jawOut;
 
     //shooter piston
-    private JoystickButton shooterIn;
-    private JoystickButton shooterOut;
+    private final JoystickButton m_shooterIn;
+    private final JoystickButton m_shooterOut;
 
     //shifters
-    private JoystickButton shiftUp;
-    private JoystickButton shiftDown;
+    private final JoystickButton m_shiftUp;
+    private final JoystickButton m_shiftDown;
 
-    public OI() {
+    public OI(Shifters shifters, JawPiston jaw, Shooter shooter) {
 
-        driveStick = new Joystick(0);
-        gamePad = new Joystick(1);
+        m_driveStick = new Joystick(0);
+        m_gamePad = new Joystick(1);
 
     /*	shootPrep = new JoystickButton(gamePad, 2);
         shootPrep.whenPressed(new ShootPrep());
@@ -82,23 +63,23 @@ public class OI {
         armDown.whenPressed(new ArmDown());
         */
 
-        shiftUp = new JoystickButton(gamePad, 10);
-        shiftUp.whenPressed(new ShiftUp());
-        shiftDown = new JoystickButton(gamePad, 9);
-        shiftDown.whenPressed(new ShiftDown());
+        m_shiftUp = new JoystickButton(m_gamePad, 10);
+        m_shiftUp.whenPressed(new ShiftUp(shifters));
+        m_shiftDown = new JoystickButton(m_gamePad, 9);
+        m_shiftDown.whenPressed(new ShiftDown(shifters));
 
-        jawIn = new JoystickButton(gamePad, 5);
-        jawIn.whenPressed(new JawIn());
-        jawOut = new JoystickButton(gamePad , 6);
-        jawOut.whenPressed(new JawOut());
+        m_jawIn = new JoystickButton(m_gamePad, 5);
+        m_jawIn.whenPressed(new JawIn(jaw));
+        m_jawOut = new JoystickButton(m_gamePad, 6);
+        m_jawOut.whenPressed(new JawOut(jaw));
 
-        shooterIn = new JoystickButton(gamePad, 1);
-        shooterIn.whenPressed(new ShooterIn());
-        shooterOut = new JoystickButton(gamePad, 4);
-        shooterOut.whenPressed(new ShooterOut());
+        m_shooterIn = new JoystickButton(m_gamePad, 1);
+        m_shooterIn.whenPressed(new ShooterIn(shooter));
+        m_shooterOut = new JoystickButton(m_gamePad, 4);
+        m_shooterOut.whenPressed(new ShooterOut(shooter));
     }
 
     public Joystick getDriveStick() {
-        return driveStick;
+        return m_driveStick;
     }
 }

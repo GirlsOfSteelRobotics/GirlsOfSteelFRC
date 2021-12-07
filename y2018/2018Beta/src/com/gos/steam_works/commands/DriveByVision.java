@@ -88,7 +88,7 @@ public class DriveByVision extends Command {
          */
         double targetX;
         double height;
-        synchronized (m_listener.cameraLock) {
+        synchronized (GripPipelineListener.cameraLock) {
             targetX = m_listener.targetX;
             height = m_listener.height;
         }

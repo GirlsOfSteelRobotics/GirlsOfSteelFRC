@@ -137,7 +137,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        synchronized (m_listener.cameraLock) {
+        synchronized (GripPipelineListener.cameraLock) {
             SmartDashboard.putNumber("TargetX", m_listener.targetX);
             SmartDashboard.putNumber("Height", m_listener.height);
 

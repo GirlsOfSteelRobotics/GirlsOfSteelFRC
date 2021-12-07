@@ -47,8 +47,8 @@ public final class Shooter extends Subsystem {
         setupEncoder(m_lowShooterMotor);
         setupEncoder(m_highShooterMotor);
 
-        // LiveWindow.addActuator("Shooter", "low", lowShooterMotor);
-        // LiveWindow.addActuator("Shooter", "high", highShooterMotor);
+        // addChild("low", lowShooterMotor);
+        // addChild("high", highShooterMotor);
 
         // PID Values
         m_lowShooterMotor.config_kF(0, 0.04407, 0); //see p 17 of motion profile manual
@@ -63,8 +63,8 @@ public final class Shooter extends Subsystem {
         m_highShooterMotor.config_kD(0, 0, 0);
 
 
-        // LiveWindow.addActuator("Shooter", "lowShooterMotor", lowShooterMotor);
-        // LiveWindow.addActuator("Shooter", "highShooterMotor", highShooterMotor);
+        // addChild("lowShooterMotor", lowShooterMotor);
+        // addChild("highShooterMotor", highShooterMotor);
     }
 
     public void runHighShooterMotor() {

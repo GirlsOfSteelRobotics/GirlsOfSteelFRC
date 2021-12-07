@@ -18,8 +18,8 @@ package girlsofsteel.objects;
  */
 public class LSPBPIDPlanner {
 
-    private double velocity = 3;
-    private double acceleration = 6;
+    private double velocity;
+    private final double acceleration;
     private boolean negativeSetpoint;
     private double desiredOverallDistance;
     private double lastAccelerating;

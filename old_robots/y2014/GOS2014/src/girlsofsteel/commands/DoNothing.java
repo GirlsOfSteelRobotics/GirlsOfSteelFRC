@@ -15,10 +15,12 @@ public class DoNothing extends CommandBase {
         requires(driving);
     }
 
+    @Override
     protected void initialize() {
         //smanipulator.disablePID();
     }
 
+    @Override
     protected void execute() {
         //manipulator.stopJag();
 //        chassis.stopJags();
@@ -26,10 +28,12 @@ public class DoNothing extends CommandBase {
 //        collector.stopCollectorWheel();
     }
 
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
+    @Override
     protected void end() {
         //manipulator.stopJag();
 //        chassis.stopJags();
@@ -38,6 +42,7 @@ public class DoNothing extends CommandBase {
         //manipulator.startPID();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

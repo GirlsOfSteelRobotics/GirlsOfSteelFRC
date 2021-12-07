@@ -1,11 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 
 /**
@@ -13,25 +10,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Collector extends Subsystem {
 
-    private CANTalon collectorMotor;
+    private final CANTalon m_collectorMotor;
 
     public Collector() {
-    collectorMotor = new CANTalon(RobotMap.COLLECTOR_MOTOR);
-    collectorMotor.changeControlMode(TalonControlMode.PercentVbus);
-    //LiveWindow.addActuator("Collector", "Talon", collectorMotor1);
-    //LiveWindow.addActuator("Collector", "Talon", collectorMotor2);
+    m_collectorMotor = new CANTalon(RobotMap.COLLECTOR_MOTOR);
     }
 
     public void spinWheels(double speed) {
-        collectorMotor.set(speed);
+        m_collectorMotor.set(speed);
     }
 
     public void stop() {
-        collectorMotor.set(0.0);
+        m_collectorMotor.set(0.0);
     }
 
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     }
 }

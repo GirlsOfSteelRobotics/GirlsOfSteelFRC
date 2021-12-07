@@ -1,11 +1,9 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import com.ctre.CANTalon;
-
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.usfirst.frc.team3504.robot.RobotMap;
 
 /**
  *
@@ -14,39 +12,43 @@ public class Pivot extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private CANTalon pivotMotor;
+    private final CANTalon m_pivotMotor;
 
-    private double encOffsetValue = 0;
+    private double m_encOffsetValue;
 
     public Pivot() {
 
-        pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
-        LiveWindow.addActuator("Pivot", "Talon", pivotMotor);
+        m_pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
+        addChild("Talon", m_pivotMotor);
 
         if(RobotMap.USING_LIMIT_SWITCHES) {
-            pivotMotor.ConfigFwdLimitSwitchNormallyOpen(false);
-            pivotMotor.ConfigRevLimitSwitchNormallyOpen(false);
+            m_pivotMotor.configFwdLimitSwitchNormallyOpen(false);
+            m_pivotMotor.configRevLimitSwitchNormallyOpen(false);
         }
         else {
-            pivotMotor.enableLimitSwitch(false, false);
+            m_pivotMotor.enableLimitSwitch(false, false);
         }
-        pivotMotor.enableBrakeMode(true);
+        m_pivotMotor.setNeutralMode(NeutralMode.Brake);
 
     }
 
     public int getPosition() {
-        if (getTopLimitSwitch() == true)
+        if (getTopLimitSwitch()) {
             return 1;
-        else if(getBottomLimitSwitch() == true)
+        }
+        else if(getBottomLimitSwitch()) {
             return -1;
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     public void tiltUpandDown(double speed) {
-        pivotMotor.set(-speed);
+        m_pivotMotor.set(-speed);
     }
 
+    @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -54,22 +56,22 @@ public class Pivot extends Subsystem {
     }
 
     public boolean getTopLimitSwitch(){
-        return !pivotMotor.isRevLimitSwitchClosed();
+        return m_pivotMotor.isRevLimitSwitchClosed() == 0;
     }
 
     public boolean getBottomLimitSwitch(){
-        return !pivotMotor.isFwdLimitSwitchClosed();
+        return m_pivotMotor.isFwdLimitSwitchClosed() == 0;
     }
 
     public double getEncoderRight() {
-        return pivotMotor.getEncPosition();
+        return m_pivotMotor.getEncPosition();
     }
 
     public double getEncoderDistance() {
-        return (getEncoderRight() - encOffsetValue); //TODO: Know where encoder is
+        return (getEncoderRight() - m_encOffsetValue); //TODO: Know where encoder is
     }
 
     public void resetDistance() {
-        encOffsetValue = getEncoderRight();
+        m_encOffsetValue = getEncoderRight();
     }
 }

@@ -1,9 +1,8 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3504.robot.subsystems.Pivot;
 
 
 public class PivotDown extends Command {
@@ -14,13 +13,15 @@ public class PivotDown extends Command {
     private double encoderToUse = 0;
     */
 
-    public PivotDown() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-        requires(Robot.pivot);
+    private final Pivot m_pivot;
+
+    public PivotDown(Pivot pivot) {
+        m_pivot = pivot;
+        requires(m_pivot);
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
         /*if (Robot.pivot.getPosition() == 1)
             encoderToUse = EncoderValueUp;
@@ -35,25 +36,29 @@ public class PivotDown extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
-        Robot.pivot.tiltUpandDown(0.3);
-        SmartDashboard.putBoolean("Top Pivot LS:", Robot.pivot.getTopLimitSwitch());
-        SmartDashboard.putBoolean("Bottom Pivot LS", Robot.pivot.getBottomLimitSwitch());
+        m_pivot.tiltUpandDown(0.3);
+        SmartDashboard.putBoolean("Top Pivot LS:", m_pivot.getTopLimitSwitch());
+        SmartDashboard.putBoolean("Bottom Pivot LS", m_pivot.getBottomLimitSwitch());
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
          return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         SmartDashboard.putString("pivot down", "ending");
-        Robot.pivot.tiltUpandDown(0);
+        m_pivot.tiltUpandDown(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }

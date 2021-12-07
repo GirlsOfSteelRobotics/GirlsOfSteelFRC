@@ -16,15 +16,7 @@ public class CollectorWheelReverse extends CommandBase{
      * There is nothing in this method.
      * @author Sophia, Sonia
      */
-    public CollectorWheelReverse(){
-        //Doesn't have the requires stuff because we want to be able to lift
-        // the collector and spin the wheel at the same time
-    }
-
-    /**
-     * There is nothing in this method.
-     * @author Sophia, Sonia
-     */
+    @Override
     protected void initialize() {
 
     }
@@ -34,6 +26,7 @@ public class CollectorWheelReverse extends CommandBase{
      * It can be used to release the ball.
      * @author Sophia, Sonia
      */
+    @Override
     protected void execute() {
         collector.collectorWheelReverse(); //use specific method for clarity
     }
@@ -44,6 +37,7 @@ public class CollectorWheelReverse extends CommandBase{
      * @return false always
      * @author Sophia, Sonia
      */
+       @Override
     protected boolean isFinished() {
         return false;
     }
@@ -52,6 +46,7 @@ public class CollectorWheelReverse extends CommandBase{
      * This stops the collector wheel.
      * @author Sophia, Sonia
      */
+     @Override
     protected void end() {
         collector.stopCollectorWheel();
         //stops wheel once the command is finished
@@ -61,6 +56,7 @@ public class CollectorWheelReverse extends CommandBase{
      * This calls the end() method to stop the collector wheel
      * @author Sophia, Sonia
      */
+     @Override
     protected void interrupted() {
         end();
     }

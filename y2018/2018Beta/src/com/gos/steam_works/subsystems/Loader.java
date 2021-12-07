@@ -18,7 +18,7 @@ public class Loader extends Subsystem {
     public Loader() {
         m_loaderMotor = new WPI_TalonSRX(RobotMap.LOADER_MOTOR);
 
-        //LiveWindow.addActuator("Loader", "loaderMotor", loaderMotor);
+        //addChild("loaderMotor", loaderMotor);
     }
 
     public void loadBall(double speed) {

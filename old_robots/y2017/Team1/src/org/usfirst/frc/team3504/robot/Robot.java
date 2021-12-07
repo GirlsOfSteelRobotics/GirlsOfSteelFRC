@@ -1,15 +1,17 @@
 package org.usfirst.frc.team3504.robot;
 
-import org.usfirst.frc.team3504.robot.commands.autonomous.*;
-import org.usfirst.frc.team3504.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
+import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForwards;
+import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team3504.robot.subsystems.JawPiston;
+import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import org.usfirst.frc.team3504.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,36 +22,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-    public static DriveSystem driveSystem;
-    public static OI oi;
-    public static Subsystem chassis;
-    public static Shifters shifters;
-    public static Arm arm;
-    public static JawPiston jaw;
-    public static Shooter shooter;
-    public static Collector collecter;
+    private final DriveSystem m_driveSystem;
+    private final Shifters m_shifters;
+    private final JawPiston m_jaw;
+    private final Shooter m_shooter;
+    private final OI m_oi;
 
-    Command autonomousCommand;
-    SendableChooser<Command> chooser;
+    private Command m_autonomousCommand;
+    private final SendableChooser<Command> m_chooser;
+
+    public Robot() {
+        m_shifters = new Shifters();
+        m_driveSystem = new DriveSystem(m_shifters);
+        m_jaw = new JawPiston();
+        m_shooter = new Shooter();
+
+        //all subsystems must be initialized before creating OI
+        m_oi = new OI(m_shifters, m_jaw, m_shooter);
+
+        m_chooser = new SendableChooser<>();
+        m_chooser.addDefault("Default: Do Nothing", new AutoDoNothing(m_driveSystem));
+        m_chooser.addObject("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(m_driveSystem, 10.0, 0.5));
+        SmartDashboard.putData("Auto mode", m_chooser);
+    }
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit() {
-        driveSystem = new DriveSystem();
-        shifters = new Shifters();
-       // arm = new Arm();
-        jaw = new JawPiston();
-        shooter = new Shooter();
 
-        //all subsystems must be initialized before creating OI
-        oi = new OI();
-        chooser = new SendableChooser<Command>();
-
-        chooser.addDefault("Default: Do Nothing", new AutoDoNothing());
-        chooser.addObject("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(10.0, 0.5));
-        SmartDashboard.putData("Auto mode", chooser);
+        // Default commands
+        m_driveSystem.setDefaultCommand( new DriveByJoystick(m_oi, m_driveSystem) );
     }
 
     /**
@@ -57,10 +62,12 @@ public class Robot extends IterativeRobot {
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
      */
+    @Override
     public void disabledInit(){
 
     }
 
+    @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
     }
@@ -74,31 +81,35 @@ public class Robot extends IterativeRobot {
      * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
      * or additional comparisons to the switch structure below with additional strings & commands.
      */
+    @Override
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        m_autonomousCommand = m_chooser.getSelected();
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (m_autonomousCommand != null) { m_autonomousCommand.start(); }
     }
 
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+        if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
     }
 
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
@@ -106,7 +117,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic() {
-        LiveWindow.run();
     }
 }

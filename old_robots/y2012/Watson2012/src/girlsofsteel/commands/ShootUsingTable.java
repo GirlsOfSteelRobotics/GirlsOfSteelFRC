@@ -5,10 +5,10 @@ import girlsofsteel.objects.Camera;
 
 public class ShootUsingTable extends CommandBase {
 
-    Joystick operatorJoystick;
+    private Joystick operatorJoystick;
 
-    boolean bank;//bank does not do anything -> tuned for banking
-    double cameraDistance;
+    private final boolean bank;//bank does not do anything -> tuned for banking
+    private double cameraDistance;
 
     public ShootUsingTable(boolean bank) { //bank = false for autonomous
         //bank = true for everything else (should be fairly straight to the hoop
@@ -16,6 +16,7 @@ public class ShootUsingTable extends CommandBase {
         this.bank = bank;
     }
 
+    @Override
     protected void initialize() {
         shooter.initEncoder();
         shooter.initPID();
@@ -25,6 +26,7 @@ public class ShootUsingTable extends CommandBase {
         //shooter data table
     }
 
+    @Override
     protected void execute() {
 //        if(bank){
 //            shooter.autoShootBank(cameraDistance);
@@ -38,11 +40,13 @@ public class ShootUsingTable extends CommandBase {
         System.out.println("Encoder Values:" + shooter.getEncoderRate());
     }
 
+    @Override
     protected boolean isFinished() {
         return !Camera.isConnected(); //return opposite so when it is connected
         //it returns false so it does NOT finish
     }
 
+    @Override
     protected void end() {
         if(!oi.areTopRollersOverriden()){
             shooter.topRollersOff();
@@ -51,6 +55,7 @@ public class ShootUsingTable extends CommandBase {
         shooter.stopEncoder();
     }
 
+    @Override
     protected void interrupted() {
         end();
     }

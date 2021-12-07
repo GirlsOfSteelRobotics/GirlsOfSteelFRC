@@ -1,13 +1,15 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 
 public class ConveyorDown extends Command {
 
-    public ConveyorDown() {
-        requires(Robot.manipulator);
+    private final Manipulator m_manipulator;
+
+    public ConveyorDown(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     @Override
@@ -16,8 +18,8 @@ public class ConveyorDown extends Command {
 
     @Override
     protected void execute() {
-        Robot.manipulator.manipulatorConveyorBeltMotorLeft(false);
-        Robot.manipulator.manipulatorConveyorBeltMotorRight(false);
+        m_manipulator.manipulatorConveyorBeltMotorLeft(false);
+        m_manipulator.manipulatorConveyorBeltMotorRight(false);
     }
 
     @Override
@@ -27,7 +29,7 @@ public class ConveyorDown extends Command {
 
     @Override
     protected void end() {
-        Robot.manipulator.stopConveyorBeltMotor();
+        m_manipulator.stopConveyorBeltMotor();
     }
 
     @Override

@@ -1,66 +1,79 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.usfirst.frc.team3504.robot.Robot;
-import org.usfirst.frc.team3504.robot.RobotMap;
-
 import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.RobotMap;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  */
 public class CreateMotionProfile extends Command {
+    private static final double DURATION = 20.0;
+    private static final double ERROR = 0; // TODO: change
 
-    private ArrayList<ArrayList<Double>> leftTrajectory; // filled with arraylists of points
-    private ArrayList<ArrayList<Double>> rightTrajectory; // filled with arraylists of points
-    public CANTalon leftTalon = Robot.chassis.getLeftTalon();
-    public CANTalon rightTalon = Robot.chassis.getRightTalon();
-    private ArrayList<Double> leftPoint; // position (rev), velocity (rpm), duration
-    private ArrayList<Double> rightPoint; // position (rev), velocity (rpm), duration
-    public String leftFile; // path of file on roborio
-    public String rightFile; // path of file on roborio
-    private double leftInitial; // initial encoder position
-    private double rightInitial; // initial encoder position
-    private final double DURATION = 20.0;
-    private final double ERROR = 0; // TODO: change
+    private final Chassis m_chassis;
+    private final List<List<Double>> m_leftTrajectory; // filled with arraylists of points
+    private final List<List<Double>> m_rightTrajectory; // filled with arraylists of points
+    private final List<Double> m_leftPoint; // position (rev), velocity (rpm), duration
+    private final List<Double> m_rightPoint; // position (rev), velocity (rpm), duration
+    private final String m_leftFile; // path of file on roborio
+    private final String m_rightFile; // path of file on roborio
+    private final CANTalon m_leftTalon;
+    private final CANTalon m_rightTalon;
+    private double m_leftInitial; // initial encoder position
+    private double m_rightInitial; // initial encoder position
 
-    public CreateMotionProfile(String leftFileName, String rightFileName) {
-        requires(Robot.chassis);
+    public CreateMotionProfile(Chassis chassis, String leftFileName, String rightFileName) {
+        m_chassis = chassis;
+        requires(m_chassis);
         // maybe get file names from smart dashboard input instead?
-        leftFile = leftFileName;
-        rightFile = rightFileName;
+        m_leftFile = leftFileName;
+        m_rightFile = rightFileName;
+
+        m_leftTalon = m_chassis.getLeftTalon();
+        m_rightTalon = m_chassis.getRightTalon();
+
+        m_leftTrajectory = new ArrayList<>();
+        m_rightTrajectory = new ArrayList<>();
+
+        m_leftPoint = new ArrayList<>();
+        m_rightPoint = new ArrayList<>();
     }
 
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
-        leftInitial = (double) leftTalon.getPosition();
-        rightInitial = (double) rightTalon.getPosition();
+        m_leftInitial = m_leftTalon.getPosition();
+        m_rightInitial = m_rightTalon.getPosition();
 
-        leftTrajectory = new ArrayList<ArrayList<Double>>();
-        rightTrajectory = new ArrayList<ArrayList<Double>>();
+        m_leftTrajectory.clear();
+        m_rightTrajectory.clear();
 
-        leftPoint = new ArrayList<Double>();
-        rightPoint = new ArrayList<Double>();
+        m_leftPoint.clear();
+        m_rightPoint.clear();
 
         System.out.println("CreateMotionProfile: Starting to Record MP");
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
-        leftPoint = new ArrayList<Double>();
-        rightPoint = new ArrayList<Double>();
+        m_leftPoint.clear();
+        m_rightPoint.clear();
 
-        double leftPosition = (double) leftTalon.getPosition() - leftInitial; // in rotations
-        double rightPosition = (double) rightTalon.getPosition() - rightInitial;
+        double leftPosition = (double) m_leftTalon.getPosition() - m_leftInitial; // in rotations
+        double rightPosition = (double) m_rightTalon.getPosition() - m_rightInitial;
 
-        double leftVelocity = (double) leftTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
-        double rightVelocity = (double) rightTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
+        double leftVelocity = (double) m_leftTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
+        double rightVelocity = (double) m_rightTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
 
         /* Other way of getting velocity: divide change in position by time
 
@@ -74,46 +87,48 @@ public class CreateMotionProfile extends Command {
         */
 
         // Get encoder position and velocity from left talon
-        leftPoint.add(-leftPosition);
-        leftPoint.add(-leftVelocity / RobotMap.CODES_PER_WHEEL_REV); // is this in RPM?
-        leftPoint.add(DURATION); // should be the frequency of execute()
+        m_leftPoint.add(-leftPosition);
+        m_leftPoint.add(-leftVelocity / RobotMap.CODES_PER_WHEEL_REV); // is this in RPM?
+        m_leftPoint.add(DURATION); // should be the frequency of execute()
 
 
         // Get encoder position and velocity from right talon
-        rightPoint.add(rightPosition); //rotations
-        rightPoint.add(rightVelocity); //TODO: needs to be RPM
-        rightPoint.add(DURATION); // should be the frequency of execute()
+        m_rightPoint.add(rightPosition); //rotations
+        m_rightPoint.add(rightVelocity); //TODO: needs to be RPM
+        m_rightPoint.add(DURATION); // should be the frequency of execute()
 
         // Add position and velocity to motion profile
-        leftTrajectory.add(leftPoint);
-        rightTrajectory.add(rightPoint);
+        m_leftTrajectory.add(m_leftPoint);
+        m_rightTrajectory.add(m_rightPoint);
 
-        System.out.println("CreateMotionProfile: leftPoint: " + leftPoint);
+        System.out.println("CreateMotionProfile: leftPoint: " + m_leftPoint);
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
         System.out.println("CreateMotionProfile: Done Recording MP");
 
         // remove same positions at beginning and end
         // need to do both together to make sure they have the same length
-        cleanTrajectory(leftTrajectory, rightTrajectory);
+        cleanTrajectory(m_leftTrajectory, m_rightTrajectory);
 
         // Create left motion profile
         try {
-            writeFile(leftFile, leftTrajectory);
+            writeFile(m_leftFile, m_leftTrajectory);
         } catch (IOException e) {
             System.err.println("CreateMotionProfile: Left file not created");
         }
 
         // Create right motion profile
         try {
-            writeFile(rightFile, rightTrajectory);
+            writeFile(m_rightFile, m_rightTrajectory);
         } catch (IOException e) {
             System.err.println("CreateMotionProfile: Right file not created");
         }
@@ -123,30 +138,31 @@ public class CreateMotionProfile extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
         end();
     }
 
-    private void writeFile(String filePath, ArrayList<ArrayList<Double>> trajectory) throws IOException {
+    private void writeFile(String filePath, List<List<Double>> trajectory) throws IOException {
 
-        FileWriter outFile = new FileWriter(filePath);
-        BufferedWriter fout = new BufferedWriter(outFile);
+        try(BufferedWriter fout =  Files.newBufferedWriter(Paths.get(filePath))) {
 
-        for (int x = 0; x < trajectory.size(); x++) { // outer loop to go
-                                                        // through the unknown #
-                                                        // of elements in
-                                                        // ArrayList<ArrayList<Double>>
-            for (int y = 0; y < 3; y++) // inner loop to go through the three
-                                        // elements of ArrayList<Double>
-            {
-                fout.write(trajectory.get(x).get(y) + " ");
+            for (List<Double> trajectoryPoints : trajectory) { // outer loop to go
+                // through the unknown #
+                // of elements in
+                // ArrayList<ArrayList<Double>>
+                for (int y = 0; y < 3; y++) // inner loop to go through the three
+                // elements of ArrayList<Double>
+                {
+                    fout.write(trajectoryPoints.get(y) + " ");
+                }
+                fout.newLine();
             }
-            fout.newLine();
         }
-        fout.close();
     }
 
-    private void cleanTrajectory(ArrayList<ArrayList<Double>> leftMP, ArrayList<ArrayList<Double>> rightMP) {
+    @SuppressWarnings({"PMD.NPathComplexity", "PMD.CyclomaticComplexity"})
+    private void cleanTrajectory(List<List<Double>> leftMP, List<List<Double>> rightMP) {
         // remove all extra zero positions at the beginning
         // TODO: does first position need to be exactly zero?
         double leftDiff = 0;

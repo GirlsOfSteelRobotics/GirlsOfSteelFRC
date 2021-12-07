@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
@@ -131,13 +131,13 @@ public class Arm extends SimpleRobot {
 
             //this sets neutral mode for all of the motors
 
-            FrontLeft.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-            FrontRight.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-            RearLeft.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-            RearRight.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-            Shol1.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            Shol2.configNeutralMode(CANJaguar.NeutralMode.kCoast);
-            Elbow.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            FrontLeft.setNeutralMode(NeutralMode.kCoast);
+            FrontRight.setNeutralMode(NeutralMode.kCoast);
+            RearLeft.setNeutralMode(NeutralMode.kCoast);
+            RearRight.setNeutralMode(NeutralMode.kCoast);
+            Shol1.setNeutralMode(NeutralMode.kBrake);
+            Shol2.setNeutralMode(NeutralMode.kCoast);
+            Elbow.setNeutralMode(NeutralMode.kBrake);
 
             //this is setting the position refrances for the sholder and elbow
 
@@ -188,7 +188,7 @@ public class Arm extends SimpleRobot {
 
         int val = 0;
         try {
-            Shol1.changeControlMode(CANJaguar.ControlMode.kVoltage);
+            Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
             Shol1.enableControl();
 
         } catch (CANTimeoutException ex) {
@@ -431,7 +431,7 @@ public class Arm extends SimpleRobot {
                 returnval = Shol1.getPosition();
                 } else {
                 Pdes = 0.0; //change everytime position resets
-                Shol1.changeControlMode(CANJaguar.ControlMode.kPosition);
+                Shol1.changeControlMode(CANTalon.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();
             }
@@ -459,7 +459,7 @@ public class Arm extends SimpleRobot {
                 Shol1.setX(voltval);
                 setshol2(voltval);
             } else {
-                Shol1.changeControlMode(CANJaguar.ControlMode.kVoltage);
+                Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
                 Shol1.enableControl();
             }
         } catch (CANTimeoutException ex) {
@@ -549,7 +549,7 @@ public class Arm extends SimpleRobot {
                  Timer.delay(0.01);
             } else {
                 Pdes = 0.0;//reset anytime encoder gets reset
-                Shol1.changeControlMode(CANJaguar.ControlMode.kPosition);
+                Shol1.changeControlMode(CANTalon.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();
             }
@@ -589,9 +589,9 @@ public class Arm extends SimpleRobot {
                 if (RearLeft.getControlMode().equals(CANJaguar.ControlMode.kVoltage)
                         && RearRight.getControlMode().equals(CANJaguar.ControlMode.kVoltage)) {
                 } else {
-                    RearLeft.changeControlMode(CANJaguar.ControlMode.kVoltage);
+                    RearLeft.changeControlMode(CANTalon.TalonControlMode.kVoltage);
                     RearLeft.enableControl();
-                    RearRight.changeControlMode(CANJaguar.ControlMode.kVoltage);
+                    RearRight.changeControlMode(CANTalon.TalonControlMode.kVoltage);
                     RearRight.enableControl();
                 }
             } catch (CANTimeoutException ex) {
@@ -640,7 +640,7 @@ public class Arm extends SimpleRobot {
             } else {
 
                 Pdes = 0.0;//reset Pdes anytime encoder resets
-                Shol1.changeControlMode(CANJaguar.ControlMode.kPosition);
+                Shol1.changeControlMode(CANTalon.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();}
 

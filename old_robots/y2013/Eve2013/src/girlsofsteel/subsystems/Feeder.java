@@ -7,7 +7,6 @@ package girlsofsteel.subsystems;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
-import girlsofsteel.objects.*;
 
 /**
  *
@@ -15,10 +14,10 @@ import girlsofsteel.objects.*;
  */
 public class Feeder extends Subsystem {
     //Shooter piston
-    private Solenoid frontPiston;
-    private Solenoid backPiston;
-    private Solenoid frontBlocker;
-    private Solenoid backBlocker;
+    private final Solenoid frontPiston;
+    private final Solenoid backPiston;
+    private final Solenoid frontBlocker;
+    private final Solenoid backBlocker;
     private static boolean isRaised;
 
     public Feeder() {
@@ -59,6 +58,7 @@ public class Feeder extends Subsystem {
         backBlocker.set(false);
     }
 
+    @Override
     protected void initDefaultCommand() {
     }
 }

@@ -1,9 +1,7 @@
 
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import org.usfirst.frc.team3504.robot.RobotMap;
-import org.usfirst.frc.team3504.robot.commands.DriveCommand;
-
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,27 +10,60 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Drive extends Subsystem {
-    RobotDrive robotDrive = RobotMap.driveRobotDrive;
     public static final double AUTO_DRIVE_SPEED = -0.1;
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+    private final CANTalon m_driveSystemDriveLeft0;
+    private final CANTalon m_driveSystemDriveRight0;
+    private final CANTalon m_driveSystemDriveLeft1;
+    private final CANTalon m_driveSystemDriveRight1;
+    private final CANTalon m_driveSystemDriveLeft2;
+    private final CANTalon m_driveSystemDriveRight2;
 
+    private final RobotDrive m_robotDrive;
+
+    public Drive() {
+        m_driveSystemDriveLeft0 = new CANTalon(0);
+        m_driveSystemDriveRight0 = new CANTalon(1);
+        m_driveSystemDriveLeft1 = new CANTalon(2);
+        m_driveSystemDriveRight1 = new CANTalon(3);
+        m_driveSystemDriveLeft2 = new CANTalon(4);
+        m_driveSystemDriveRight2 = new CANTalon(5);
+
+        // Follower: The m_motor will run at the same throttle as the specified
+        // other talon.
+        m_driveSystemDriveLeft1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveSystemDriveLeft2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveSystemDriveRight1.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveSystemDriveRight2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        //set arguments refer to CANTalon port numbers
+        m_driveSystemDriveLeft1.set(0);
+        m_driveSystemDriveRight1.set(1);
+        m_driveSystemDriveLeft2.set(0);
+        m_driveSystemDriveRight2.set(1);
+
+        m_robotDrive = new RobotDrive(m_driveSystemDriveLeft0, m_driveSystemDriveRight0);
+
+        m_robotDrive.setSafetyEnabled(true);
+        m_robotDrive.setExpiration(0.1);
+        m_robotDrive.setSensitivity(0.5);
+        m_robotDrive.setMaxOutput(1.0);
+        //driveSystemRobotDrive2.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+
+    }
+
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new DriveCommand());
     }
 
     public void moveByJoystick(Joystick joystick) {
-        robotDrive.arcadeDrive(joystick);
+        m_robotDrive.arcadeDrive(joystick);
     }
 
     public void driveAuto() {
-        robotDrive.drive(AUTO_DRIVE_SPEED,0);
+        m_robotDrive.drive(AUTO_DRIVE_SPEED,0);
     }
 
     public void stop() {
-        robotDrive.drive(0,0);
+        m_robotDrive.drive(0,0);
     }
 }

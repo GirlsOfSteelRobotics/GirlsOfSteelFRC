@@ -1,8 +1,7 @@
 package org.usfirst.frc.team3504.robot.commands.collector;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
 
 /*
  * Command order for suckers should be changed based on what
@@ -11,14 +10,17 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AngleCollectorIn extends Command {
 
-    public AngleCollectorIn() {
-        requires(Robot.collector);
+    private final Collector m_collector;
+
+    public AngleCollectorIn(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
     protected void initialize() {
         // Only needs to run once to move collector pneumatic in
-        Robot.collector.collectorIn();
+        m_collector.collectorIn();
     }
 
     @Override

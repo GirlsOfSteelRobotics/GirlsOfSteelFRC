@@ -1,0 +1,13 @@
+load("@gos_pip_deps//:requirements.bzl", "requirement")
+
+py_binary(
+    name = "ShuffleboardGenerator",
+    srcs = glob(["**/*.py"]),
+    data = glob(["lib/templates/**"]),
+    main = "generate_dashboard.py",
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("jinja2"),
+        "@rules_python//python/runfiles",
+    ],
+)

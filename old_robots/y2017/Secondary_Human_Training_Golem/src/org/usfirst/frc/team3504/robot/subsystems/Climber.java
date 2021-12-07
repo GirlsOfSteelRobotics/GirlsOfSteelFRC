@@ -1,53 +1,62 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
+import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.StayClimbed;
-
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
  */
 
 public class Climber extends Subsystem {
-    public CANTalon climbMotorA;
-    public CANTalon climbMotorB;
+    private final CANTalon m_climbMotorA;
+    private final CANTalon m_climbMotorB;
 
     public Climber() {
-        climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
-        climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
+        m_climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
+        m_climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
 
-        climbMotorA.enableBrakeMode(true);
-        climbMotorB.enableBrakeMode(true);
+        m_climbMotorB.follow(m_climbMotorA);
 
-        climbMotorA.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-        climbMotorA.reverseSensor(true);
+        m_climbMotorA.setNeutralMode(NeutralMode.Brake);
+        m_climbMotorB.setNeutralMode(NeutralMode.Brake);
 
-        climbMotorA.setF(0);
-        climbMotorA.setP(0.5);
-        climbMotorA.setI(0);
-        climbMotorA.setD(0);
+        m_climbMotorA.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+        m_climbMotorA.reverseSensor(true);
 
-        LiveWindow.addActuator("Climber", "climbMotorA", climbMotorA);
-        LiveWindow.addActuator("Climber", "climbMotorB", climbMotorB);
+        m_climbMotorA.setF(0);
+        m_climbMotorA.setP(0.5);
+        m_climbMotorA.setI(0);
+        m_climbMotorA.setD(0);
+
+
+        addChild("climbMotorA", m_climbMotorA);
+        addChild("climbMotorB", m_climbMotorB);
     }
 
     public void climb(double speed) {
-        climbMotorA.set(speed);
-        climbMotorB.set(speed);
+        m_climbMotorA.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void goToPosition(double encPosition) {
+        m_climbMotorA.set(ControlMode.Position, encPosition);
+    }
+
+    public double getPosition() {
+        return m_climbMotorA.getPosition();
     }
 
     public void stopClimb() {
-        climbMotorA.set(0.0);
-        climbMotorB.set(0.0);
+        m_climbMotorA.set(ControlMode.PercentOutput, 0.0);
+        m_climbMotorB.set(ControlMode.PercentOutput, 0.0);
     }
 
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new StayClimbed());
+        setDefaultCommand(new StayClimbed(this));
     }
 }

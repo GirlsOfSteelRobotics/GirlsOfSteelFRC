@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.RobotMap;
@@ -13,32 +14,30 @@ import girlsofsteel.objects.Camera;
 
 public class Turret extends Subsystem implements PIDOutput, PIDSource {
 
-    public double offsetAngle = 0.34;
+    private double offsetAngle = 0.34;
     //knob stuff doesn't really matter -> below are magical values we don't have
-    static final double MAX_TURRET_KNOB_VALUE = 0.0;
-    static final double MIN_TURRET_KNOB_VALUE = 10.0;
+    private static final double MAX_TURRET_KNOB_VALUE = 0.0;
+    private static final double MIN_TURRET_KNOB_VALUE = 10.0;
     private static final double PULSES = 1600.0;
     private static final double ENCODER_UNIT = 360.0 / PULSES;
-    public final double TURRET_OVERRIDE_DEADZONE = 0.5;
+    public static final double TURRET_OVERRIDE_DEADZONE = 0.5;
 
-    Jaguar turretJag = new Jaguar(RobotMap.TURRET_JAG);
-    Encoder encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
+    private final Jaguar turretJag = new Jaguar(RobotMap.TURRET_JAG);
+    private final Encoder encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
             RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
-    private double p = 0.2;//0.45;
-    private double i = 0.0;
-    private double d = 0.0;
-    PIDController PID = new PIDController(p, i, d, this, this);
-    boolean pressedRightSwitch = false;
+    private static final double p = 0.2;//0.45;
+    private static final double i = 0.0;
+    private static final double d = 0.0;
+    private final PIDController PID = new PIDController(p, i, d, this, this);
+    private static final boolean pressedRightSwitch = false;
 
-    public Turret() {
-    }
-
+    @Override
     public void initDefaultCommand(){
 
     }
 
     public void changeTurretOffset(){
-        double turretOffset = SmartDashboard.getDouble("Turret Offset", 0.0);
+        double turretOffset = SmartDashboard.getNumber("Turret Offset", 0.0);
         offsetAngle = turretOffset;
     }
 
@@ -49,14 +48,12 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         }else{
             encoder.setDistancePerPulse(1.0/pulses);
         }
-        encoder.start();
-    }
+           }
 
     //initalizes encoder -> sets the unit to degrees
     public void initEncoder(){
         encoder.setDistancePerPulse(ENCODER_UNIT); //degrees
-        encoder.start();
-    }
+           }
 
     public void setJagSpeed(double speed) {
         turretJag.set(-speed);
@@ -67,11 +64,13 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     }
 
     //stuff for the PID
+    @Override
     public void pidWrite(double output) {
         setJagSpeed(output);
     }
 
     //more stuff for the PID
+    @Override
     public double pidGet() {
         return getTurretAngle();
     }
@@ -162,6 +161,17 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         //the set point is the difference of the angle plus where the turret is currently
         //subtract the offset angle that the shooter shoots straight from
         setPIDSetPoint(setPoint);
+    }
+
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        throw new UnsupportedOperationException();
     }
 
 }

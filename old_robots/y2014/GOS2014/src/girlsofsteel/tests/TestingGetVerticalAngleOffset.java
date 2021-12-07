@@ -8,16 +8,14 @@ package girlsofsteel.tests;
  *
  * @author Resetar
  */
-import com.sun.squawk.util.MathUtils;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import girlsofsteel.commands.CommandBase;
 
 public class TestingGetVerticalAngleOffset extends CommandBase {
 
-    double heightOfGoal = 2.57175; //needs to be changed based on initial height of robot
-    double distance;
-    double initialVelocity = 8.65; //based on initialVelocity of TEST KICKER (CHANGE)
-    double gravity = 9.82;
+    private final double heightOfGoal = 2.57175; //needs to be changed based on initial height of robot
+    private double distance;
+    private final double initialVelocity = 8.65; //based on initialVelocity of TEST KICKER (CHANGE)
+    private final double gravity = 9.82;
 
     public double getVerticalAngleOffset(double x, double y) {
         x = distance;
@@ -27,8 +25,8 @@ public class TestingGetVerticalAngleOffset extends CommandBase {
         //for ( var x=1.524; x<4.572; x+.01){
         for ( int i=0; i<100; i++){
             x += 0.1;
-            double positiveAngle = MathUtils.atan((square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
-            double negativeAngle = MathUtils.atan((square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
+            double positiveAngle = Math.atan((square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
+            double negativeAngle = Math.atan((square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v))))/g*x);
             System.out.println("x = " + x + "\tpositiveAngle = "
                     + positiveAngle + "\tnegativeAngle = " + negativeAngle);
         }
@@ -44,28 +42,30 @@ public class TestingGetVerticalAngleOffset extends CommandBase {
         return powerFourNum1;
     }
 
-    private double getDistanceToTarget() { // -1 to 1 -> position horizontally of the backboard on the screen
-        return NetworkTable.getTable("camera").getNumber("Distance", 0);
-    }
     // Called just before this Command runs the first time
+    @Override
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     protected void execute() {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
+    @Override
     protected void end() {
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    @Override
     protected void interrupted() {
     }
 }
