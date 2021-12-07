@@ -24,10 +24,7 @@ include 'old_robots:y2013:Eve2013'
 
 include 'old_robots:y2014:GOS2014'
 
-include 'old_robots:y2015:Atlas2015Port'
-include 'old_robots:y2015:BlueTeamEOPP'
 include 'old_robots:y2015:GoS2015'
-include 'old_robots:y2015:OrangeEOPP'
 
 include 'old_robots:y2016:Neohuman_Assassination_Golem'
 include 'old_robots:y2016:OutreachBot'

@@ -1,26 +1,26 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Lifter;
 
 /**
  *
  */
 public class AutoLift extends Command {
 
-    private final double distance;
+    private final Lifter m_lifter;
+    private final double m_distance;
 
-    public AutoLift(double distance) {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.lifter);
-        this.distance = distance;
+    public AutoLift(Lifter lifter, double distance) {
+        m_lifter = lifter;
+        requires(m_lifter);
+        this.m_distance = distance;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.lifter.setPosition(distance);
+        m_lifter.setPosition(m_distance);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,13 +32,13 @@ public class AutoLift extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return Robot.lifter.isAtPosition();
+        return m_lifter.isAtPosition();
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.lifter.stop();
+        m_lifter.stop();
     }
 
     // Called when another command which requires one or more of the same

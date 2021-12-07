@@ -31,8 +31,8 @@ public class CollectorUpALittle extends CommandBase {
 
         changeInTime = Timer.getFPGATimestamp() - startTime;
         if(changeInTime < putDownTime) {
-            collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed);
-        } else {
+            collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); }
+        else {
             collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);
         }
     }

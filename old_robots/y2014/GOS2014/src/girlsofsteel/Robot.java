@@ -4,21 +4,21 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-package com.girlsofsteelrobotics.atlas;
+package girlsofsteel;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.girlsofsteelrobotics.atlas.commands.ArcadeDrive;
-import com.girlsofsteelrobotics.atlas.commands.CommandBase;
-import com.girlsofsteelrobotics.atlas.commands.DoNothing;
-import com.girlsofsteelrobotics.atlas.commands.KickerUsingLimitSwitch;
-import com.girlsofsteelrobotics.atlas.commands.ManualPositionPIDTuner;
-import com.girlsofsteelrobotics.atlas.commands.TestKickerEncoder;
-import com.girlsofsteelrobotics.atlas.commands.TuneManipulatorPID;
-import com.girlsofsteelrobotics.atlas.objects.AutonomousChooser;
-import com.girlsofsteelrobotics.atlas.objects.Camera;
+import girlsofsteel.commands.ArcadeDrive;
+import girlsofsteel.commands.CommandBase;
+import girlsofsteel.commands.DoNothing;
+import girlsofsteel.commands.KickerUsingLimitSwitch;
+import girlsofsteel.commands.ManualPositionPIDTuner;
+import girlsofsteel.commands.TestKickerEncoder;
+import girlsofsteel.commands.TuneManipulatorPID;
+import girlsofsteel.objects.AutonomousChooser;
+import girlsofsteel.objects.Camera;
 
 /**
  * The VM is configured to automatically run this class, and to call the

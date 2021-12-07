@@ -1,53 +1,3 @@
-//package girlsofsteel.subsystems;
-//
-//import edu.wpi.first.wpilibj.DigitalOutput;
-//import edu.wpi.first.wpilibj.Ultrasonic;
-//import edu.wpi.first.wpilibj.command.Subsystem;
-//import girlsofsteel.RobotMap;
-//
-///**
-// *
-// * @author Sonia is a fail
-// */
-//public class UltrasonicSensor extends Subsystem{
-//
-//    /*
-//     * Current Status: It prints out zero for the range, and the isRangeValid() method
-//     * returns false.  It is no longer erroring, and it is connected to the ultrasonic
-//     * sensor, because the isEnabled() method returns true.
-//     */
-//    Ultrasonic sensor;
-//
-//    public UltrasonicSensor() {
-//        sensor = new Ultrasonic(DigitalOutput.kPwmChannels, RobotMap.ULTRASONIC_SENSOR_PORT, Ultrasonic.Unit.kMillimeter);
-//    }
-//
-//    public void enable()
-//    {
-//        sensor.setEnabled(true);
-//        sensor.setAutomaticMode(true);
-//    }
-//
-//    public void disable()
-//    {
-//        sensor.setEnabled(false);
-//    }
-//    public double getDistance()
-//    {
-//        sensor.ping();
-//        System.out.println(sensor.isRangeValid());
-//        return sensor.getRangeMM();
-//    }
-//
-//    protected void initDefaultCommand() {
-//
-//    }
-//
-//
-//}
-
-
-
 package girlsofsteel.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -56,7 +6,7 @@ import girlsofsteel.RobotMap;
 //Created by FRC team 3357
 //2008
 //http://www.chiefdelphi.com/forums/showthread.php?t=82409
-public class UltrasonicSensor {///*
+public class UltrasonicSensor  {///*
 
 /**
  *

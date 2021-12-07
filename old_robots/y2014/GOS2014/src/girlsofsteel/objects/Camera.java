@@ -4,7 +4,6 @@ package girlsofsteel.objects;
  *
  * @author Heather
  */
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Camera {
@@ -51,8 +50,8 @@ public class Camera {
         double g = gravity;
         double v = initialVelocity;
         //make sure all numbers are in metric units
-//        double positiveAngle = MathUtils.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
-        double negativeAngle = MathUtils.atan(square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
+//        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
+        double negativeAngle = Math.atan(square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
         //return angle;
         return negativeAngle;
     }

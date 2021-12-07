@@ -71,7 +71,6 @@ public class HoldChassisInPlace extends CommandBase {
     protected void end() {
         chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0, 0);
         chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0, 0);
-        chassis.stopEncoders();
         chassis.disablePositionPID();
     }
 

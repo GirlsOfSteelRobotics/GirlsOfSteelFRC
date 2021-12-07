@@ -103,9 +103,8 @@ public class TuneChassisPID extends CommandBase {
 
     @Override
     protected void end() {
-        getBest();
+        printBest();
         chassis.stopJags();
-        chassis.stopEncoders();
         chassis.disablePositionPID();
         //print the good p and setpoint values
 
@@ -160,7 +159,8 @@ public class TuneChassisPID extends CommandBase {
 
         }
     }
-    public void getBest() { // NOPMD(LinguisticNaming)
+
+    public void printBest() {
         double lowestSetPointDev = 100;
         double lowestRateDev = 100;
         double lowestMeanDiff = 100;

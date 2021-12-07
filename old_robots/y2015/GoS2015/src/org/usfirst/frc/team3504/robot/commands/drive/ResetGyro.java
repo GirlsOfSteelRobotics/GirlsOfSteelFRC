@@ -1,16 +1,17 @@
 package org.usfirst.frc.team3504.robot.commands.drive;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class ResetGyro extends Command {
+    private final Chassis m_chassis;
 
-    public ResetGyro() {
-        requires(Robot.chassis);
+    public ResetGyro(Chassis chassis) {
+        m_chassis = chassis;
+        requires(m_chassis);
     }
 
     // Use requires() here to declare subsystem dependencies
@@ -24,7 +25,7 @@ public class ResetGyro extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.chassis.resetGyro();
+        m_chassis.resetGyro();
     }
 
     // Make this return true when this Command no longer needs to run execute()

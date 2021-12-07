@@ -1,48 +1,49 @@
 package org.usfirst.frc.team3504.robot.commands.autonomous;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class AutoDriveForward extends Command {
 
-    private final double distance;
+    private final Chassis m_chassis;
+    private final double m_distance;
 
-    public AutoDriveForward(double distance) {
-        requires(Robot.chassis);
-        this.distance = distance;
+    public AutoDriveForward(Chassis chassis, double distance) {
+        m_chassis = chassis;
+        requires(m_chassis);
+        this.m_distance = distance;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.chassis.resetDistance();
+        m_chassis.resetDistance();
         // setTimeout(3);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.chassis.autoDriveForward(distance);
+        m_chassis.autoDriveForward(m_distance);
 
 
-        Robot.chassis.printPositionsToSmartDashboard();
+        m_chassis.printPositionsToSmartDashboard();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
         // return isTimedOut();
-        return (Robot.chassis.getDistanceForward() > distance);
+        return (m_chassis.getDistanceForward() > m_distance);
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.chassis.stop();
+        m_chassis.stop();
     }
 
     // Called when another command which requires one or more of the same

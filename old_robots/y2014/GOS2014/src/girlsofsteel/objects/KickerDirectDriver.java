@@ -41,6 +41,8 @@ public class KickerDirectDriver {
     has not been reached.
     */
     public void moveTillSetpoint(double setpoint) {
+        rightEncoder.reset();
+        leftEncoder.reset();
         double leftDistance;
         double rightDistance;
         boolean rightLagging = false; //Indicates if the speed of the right has been reduced to match the left

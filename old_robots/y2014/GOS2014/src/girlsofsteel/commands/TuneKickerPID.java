@@ -105,7 +105,6 @@ public class TuneKickerPID extends CommandBase {
     protected void end() {
         getBest();
         chassis.stopJags();
-        chassis.stopEncoders();
         chassis.disablePositionPID();
         //print the good p and setpoint values
 
@@ -160,6 +159,7 @@ public class TuneKickerPID extends CommandBase {
 
         }
     }
+
     public void getBest() { // NOPMD(LinguisticNaming)
         double lowestSetPointDev = 100;
         double lowestRateDev = 100;

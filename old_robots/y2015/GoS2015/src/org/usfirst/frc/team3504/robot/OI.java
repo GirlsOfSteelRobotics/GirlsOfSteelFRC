@@ -1,116 +1,64 @@
 package org.usfirst.frc.team3504.robot;
 
 
-import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
-import org.usfirst.frc.team3504.robot.commands.collector.ReleaseTote;
-import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
-import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
-import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
-import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
-import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
-import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorIn;
+import org.usfirst.frc.team3504.robot.commands.collector.AngleCollectorOut;
+import org.usfirst.frc.team3504.robot.commands.collector.CollectTote;
+import org.usfirst.frc.team3504.robot.commands.collector.ReleaseTote;
+import org.usfirst.frc.team3504.robot.commands.drive.GetGyro;
+import org.usfirst.frc.team3504.robot.commands.drive.ResetGyro;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackIn;
+import org.usfirst.frc.team3504.robot.commands.shack.ShackOut;
+import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
+import org.usfirst.frc.team3504.robot.subsystems.Shack;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    // // CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a
-    // joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
-
-    // // TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-
-    // Start the command when the button is released and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
 
     // Joysticks
-    private final Joystick operatorJoystick;
-    private final Joystick chassisJoystick;
+    private final Joystick m_operatorJoystick;
+    private final Joystick m_chassisJoystick;
 
     // Collector
-    private final LTButton collectTote;
-    private final RTButton releaseTote;
-    private final JoystickButton angleIn;
-    private final JoystickButton angleOut;
-
-    // Finger
-    private JoystickButton fingersDown;
-    private JoystickButton fingersUp;
-
-    // Lifting
-    private JoystickButton liftUp;
-    private JoystickButton liftDown;
-    private JoystickButton liftOneTote;
-
-    // Auto Buttons
-    private JoystickButton autoDriveForward;
-    private JoystickButton autoDriveBackwards;
-    private JoystickButton autoDriveLeft;
-    private JoystickButton autoDriveRight;
-
-    // Drive Buttons
-    private JoystickButton driveForward;
-    private JoystickButton driveBackward;
-    private JoystickButton driveRight;
-    private JoystickButton driveLeft;
+    private final LTButton m_collectTote;
+    private final RTButton m_releaseTote;
+    private final JoystickButton m_angleIn;
+    private final JoystickButton m_angleOut;
 
     // Shack Buttons
-    private final JoystickButton shackIn;
-    private final JoystickButton shackOut;
-
-    // Ultrasonic buttons
-    private JoystickButton getDistance;
+    private final JoystickButton m_shackIn;
+    private final JoystickButton m_shackOut;
 
     // Gyro Button
-    private final JoystickButton resetGyro;
-    private final JoystickButton getGyro;
+    private final JoystickButton m_resetGyro;
+    private final JoystickButton m_getGyro;
 
-    // PID button
-    private JoystickButton pidLifterTesting;
-
-    public OI() {
+    public OI(Chassis chassis, Collector collector, Shack shack) {
         // Joysticks
-        operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
-        chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
+        m_operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
+        m_chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 
         //Collectors: collect/release tote on z-axis
-        collectTote = new LTButton(operatorJoystick);
-        collectTote.whileActive(new CollectTote());
-        releaseTote = new RTButton(operatorJoystick);
-        releaseTote.whileActive(new ReleaseTote());
-        angleIn = new JoystickButton(operatorJoystick, 5); //hello sonia i am so interested in ur life please tell me everything
-        angleIn.whenPressed(new AngleCollectorIn()); //omg sonia u dont even exist in real life am i just dreaming i think im loopy
-        angleOut = new JoystickButton(operatorJoystick, 6); //what is going on i am so confused what does this even mean
-        angleOut.whenPressed(new AngleCollectorOut()); //lolol lets rap
+        m_collectTote = new LTButton(m_operatorJoystick);
+        m_collectTote.whileActive(new CollectTote(collector));
+        m_releaseTote = new RTButton(m_operatorJoystick);
+        m_releaseTote.whileActive(new ReleaseTote(collector));
+        m_angleIn = new JoystickButton(m_operatorJoystick, 5); //hello sonia i am so interested in ur life please tell me everything
+        m_angleIn.whenPressed(new AngleCollectorIn(collector)); //omg sonia u dont even exist in real life am i just dreaming i think im loopy
+        m_angleOut = new JoystickButton(m_operatorJoystick, 6); //what is going on i am so confused what does this even mean
+        m_angleOut.whenPressed(new AngleCollectorOut(collector)); //lolol lets rap
 
         // Shack
-        shackIn = new JoystickButton(operatorJoystick, 1);
-        shackIn.whenPressed(new ShackIn());
-        shackOut = new JoystickButton(operatorJoystick, 2);
-        shackOut.whenPressed(new ShackOut());
+        m_shackIn = new JoystickButton(m_operatorJoystick, 1);
+        m_shackIn.whenPressed(new ShackIn(shack));
+        m_shackOut = new JoystickButton(m_operatorJoystick, 2);
+        m_shackOut.whenPressed(new ShackOut(shack));
 
         // Lifting
         // liftUp = new JoystickButton(operatorJoystick, 7);
@@ -141,10 +89,10 @@ public class OI {
          */
 
         // Gyro Buttons
-        resetGyro = new JoystickButton(chassisJoystick, 17);
-        resetGyro.whenPressed(new ResetGyro());
-        getGyro = new JoystickButton(chassisJoystick, 18);
-        getGyro.whenPressed(new GetGyro());
+        m_resetGyro = new JoystickButton(m_chassisJoystick, 17);
+        m_resetGyro.whenPressed(new ResetGyro(chassis));
+        m_getGyro = new JoystickButton(m_chassisJoystick, 18);
+        m_getGyro.whenPressed(new GetGyro(chassis));
 
         // Pid TESTING
         // pidLifterTesting = new JoystickButton(chassisJoystick, 10);
@@ -152,10 +100,10 @@ public class OI {
     }
 
     public Joystick getOperatorJoystick() {
-        return operatorJoystick;
+        return m_operatorJoystick;
     }
 
     public Joystick getChassisJoystick() {
-        return chassisJoystick;
+        return m_chassisJoystick;
     }
 }

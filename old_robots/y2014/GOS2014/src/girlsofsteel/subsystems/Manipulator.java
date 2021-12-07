@@ -270,8 +270,6 @@ public class Manipulator extends Subsystem {
         manipulatorPID.setSetPoint(setpoint);
     }
 
-    public void stopEncoder() {
-    }
     public void disablePID() {
         manipulatorPID.disable();
     }

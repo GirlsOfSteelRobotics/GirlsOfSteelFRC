@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TuneManipulatorPID extends CommandBase {
 
-    private double p = 0;
-    private double i = 0;
-    private double d = 0;
-    private double setpoint = 0;
+    private double p;
+    private double i;
+    private double d;
+    private double setpoint ;
     private final boolean pid = false;
 
     public TuneManipulatorPID() {
@@ -72,7 +72,6 @@ public class TuneManipulatorPID extends CommandBase {
     @Override
     protected void end() {
         manipulator.stopManipulator();
-        manipulator.stopEncoder();
         if (pid) {
             manipulator.disablePID();
         }

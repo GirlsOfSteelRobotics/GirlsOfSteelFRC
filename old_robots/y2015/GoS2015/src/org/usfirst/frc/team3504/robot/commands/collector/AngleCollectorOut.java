@@ -1,21 +1,23 @@
 package org.usfirst.frc.team3504.robot.commands.collector;
 
-import org.usfirst.frc.team3504.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3504.robot.subsystems.Collector;
 
 /*
  *
  */
 public class AngleCollectorOut extends Command {
 
-    public AngleCollectorOut() {
-        requires(Robot.collector);
+    private final Collector m_collector;
+
+    public AngleCollectorOut(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
     protected void initialize() {
-        Robot.collector.collectorOut();
+        m_collector.collectorOut();
     }
 
     @Override

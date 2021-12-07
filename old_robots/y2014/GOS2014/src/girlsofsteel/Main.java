@@ -7,6 +7,7 @@ public final class Main {
     }
 
     public static void main(String... args) {
-        RobotBase.startRobot(GOS2014::new);
+        RobotBase.startRobot(Robot::new);
     }
 }
+
