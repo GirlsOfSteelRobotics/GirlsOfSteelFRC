@@ -13,7 +13,6 @@ import com.gos.infinite_recharge.commands.RunShooterRPMWhileHeld;
 import com.gos.infinite_recharge.commands.SpinControlPanel;
 import com.gos.infinite_recharge.commands.SwitchToCamClimb;
 import com.gos.infinite_recharge.commands.SwitchToCamIntake;
-import com.gos.infinite_recharge.commands.TuneRPM;
 import com.gos.infinite_recharge.commands.VelocityControlDrivingTuning;
 import com.gos.infinite_recharge.commands.WinchWind;
 import com.gos.infinite_recharge.subsystems.Camera;
