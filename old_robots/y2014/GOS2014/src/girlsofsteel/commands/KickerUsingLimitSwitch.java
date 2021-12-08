@@ -5,6 +5,7 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Kicker;
 
 /**
  *
@@ -12,90 +13,91 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class KickerUsingLimitSwitch extends CommandBase {
 
-    private int loadingOrShooting;
-    private boolean isLoaded;
-    private final boolean testingLimit = false;
-    private final boolean testingMotor = false;
-    private final boolean smartDashboard;
-    private double startTime;
-    private double changeInTime;
+    private final Kicker m_kicker;
+    private int m_loadingOrShooting;
+    private boolean m_isLoaded;
+    private static final boolean m_testingLimit = false;
+    private static final boolean m_testingMotor = false;
+    private final boolean m_smartDashboard;
+    private double m_startTime;
+    private double m_changeInTime;
 
-    public KickerUsingLimitSwitch(int position, boolean usingSD) //0 = loading; 1 = shooting
+    public KickerUsingLimitSwitch(Kicker kicker, int position, boolean usingSD) //0 = loading; 1 = shooting
     {
-        requires(kicker);
-        loadingOrShooting = position;
-        smartDashboard = usingSD;
+        m_kicker = kicker;
+        requires(m_kicker);
+        m_loadingOrShooting = position;
+        m_smartDashboard = usingSD;
     }
 
     @Override
     protected void initialize() {
-        if (!testingLimit) {
-            if (smartDashboard) {
+        if (!m_testingLimit) {
+            if (m_smartDashboard) {
                 SmartDashboard.putNumber("Position", -1);
             }
-            if (loadingOrShooting == 1 && kicker.getLimitSwitch()) //the shooter is already loaded
+            if (m_loadingOrShooting == 1 && m_kicker.getLimitSwitch()) //the shooter is already loaded
             {
-                isLoaded = true;
+                m_isLoaded = true;
             }
-            startTime = System.currentTimeMillis();
+            m_startTime = System.currentTimeMillis();
         }
-        if (testingMotor) {
+        if (m_testingMotor) {
             SmartDashboard.putNumber("Turn Kicker Jag", 0.0);
         }
     }
 
     @Override
     protected void execute() {
-        if (!testingLimit) {
-            changeInTime = System.currentTimeMillis() - startTime;
-            if (smartDashboard) {
-                loadingOrShooting = (int) SmartDashboard.getNumber("Position", 0);
+        if (!m_testingLimit) {
+            m_changeInTime = System.currentTimeMillis() - m_startTime;
+            if (m_smartDashboard) {
+                m_loadingOrShooting = (int) SmartDashboard.getNumber("Position", 0);
             }
-            if (loadingOrShooting == 0) //loading
+            if (m_loadingOrShooting == 0) //loading
             {
-                if (!kicker.getLimitSwitch()) {
+                if (!m_kicker.getLimitSwitch()) {
                     //kicker.setJag(1.0);
-                    kicker.setTalon(1.0);
+                    m_kicker.setTalon(1.0);
                     System.out.println("In loading, sent 1 to the jag");
                 } else {
                     System.out.println("Not sending a signal");
                 }
-            } else if (loadingOrShooting == 1) //Comment this out if using smart dashboard
-            {
-                if (kicker.getLimitSwitch()) {
+                //Comment this out if using smart dashboard
+            } else if (m_loadingOrShooting == 1 && m_kicker.getLimitSwitch()) {
                     //kicker.setJag(1.0);
-                    kicker.setTalon(1.0);
+                    m_kicker.setTalon(1.0);
                 }
-            }
+
         }
-        if (testingMotor) {
+        if (m_testingMotor) {
             double motorSpeed = SmartDashboard.getNumber("Turn Kicker Jag", 0);
             System.out.println("Sending: " + motorSpeed);
             //kicker.setJag(motorSpeed);
-            kicker.setTalon(motorSpeed);
+            m_kicker.setTalon(motorSpeed);
         }
 
-        SmartDashboard.putBoolean("Limit Switch", kicker.getLimitSwitch());
+        SmartDashboard.putBoolean("Limit Switch", m_kicker.getLimitSwitch());
 
     }
 
     @Override
     protected boolean isFinished() {
-        System.out.println("Is the limit hit: " + kicker.getLimitSwitch());
-        if (!testingLimit) {
-            if(changeInTime > 5000) {
+        System.out.println("Is the limit hit: " + m_kicker.getLimitSwitch());
+        if (!m_testingLimit) {
+            if(m_changeInTime > 5000) {
                 return true; //If more than 5 seconds have passed, stop trying! It probably means the battery is burned out... OR motor is burned out...
             }
-            if (loadingOrShooting == 0) {
-                return kicker.getLimitSwitch();
-            } else if (loadingOrShooting == 1) {
-                System.out.println("IS loaded " + isLoaded);
+            if (m_loadingOrShooting == 0) {
+                return m_kicker.getLimitSwitch();
+            } else if (m_loadingOrShooting == 1) {
+                System.out.println("IS loaded " + m_isLoaded);
                 //comment this out if using SmartDashboard
-                if (!isLoaded && !smartDashboard) //trying to shoot but the shooter is not loaded
+                if (!m_isLoaded && !m_smartDashboard) //trying to shoot but the shooter is not loaded
                 {
                     return true;
                 }
-                return kicker.getLimitSwitch() == false;
+                return !m_kicker.getLimitSwitch();
             }
         }
         return false;
@@ -104,7 +106,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
     @Override
     protected void end() {
         //kicker.stopJag();
-        kicker.stopTalon();
+        m_kicker.stopTalon();
     }
 
     @Override

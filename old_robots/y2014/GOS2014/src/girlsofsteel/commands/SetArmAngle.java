@@ -7,6 +7,9 @@ the pivot arm has to stay within the perimeter restraints
 
  */
 package girlsofsteel.commands;
+
+import girlsofsteel.subsystems.Manipulator;
+
 /**
  *
  * @author Sophia, Sam, and Abby
@@ -16,17 +19,19 @@ package girlsofsteel.commands;
 
 public class SetArmAngle extends CommandBase{
 
-    private double angle;
-    private final double desired;
+    private final Manipulator m_manipulator;
+    private double m_angle;
+    private final double m_desired;
 
-    public SetArmAngle (double desiredAngle){
-        requires(manipulator);
-        desired = desiredAngle;
+    public SetArmAngle (Manipulator manipulator, double desiredAngle){
+        m_manipulator = manipulator;
+        requires(m_manipulator);
+        m_desired = desiredAngle;
     }
 
     @Override
     protected void initialize() {
-        manipulator.init();
+        m_manipulator.init();
     }
 
     @Override
@@ -34,9 +39,9 @@ public class SetArmAngle extends CommandBase{
         //manipulator.getCurrentAngle(angle);
         System.out.println("Setting the angle! :D");
 //        manipulator.moveAngle();
-        System.out.println(angle);
-        manipulator.moveJag(desired);
-        angle = manipulator.getAbsoluteDistance();//TODO check logic
+        System.out.println(m_angle);
+        m_manipulator.moveJag(m_desired);
+        m_angle = m_manipulator.getAbsoluteDistance();//TODO check logic
 
         // Calls SetArmAngle function. Passes angle from constructor.
 
@@ -60,13 +65,13 @@ public class SetArmAngle extends CommandBase{
 
     @Override
     protected boolean isFinished() {
-        System.out.println("Isfinished: " + manipulator.checkAngle(angle));
-        return manipulator.checkAngle(desired);
+        System.out.println("Isfinished: " + m_manipulator.checkAngle(m_angle));
+        return m_manipulator.checkAngle(m_desired);
     }
 
     @Override
     protected void end() {
-        manipulator.stopJag();
+        m_manipulator.stopJag();
     }
 
     @Override

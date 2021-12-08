@@ -5,6 +5,7 @@
 package girlsofsteel.tests;
 
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Collector;
 
 /**
  *
@@ -13,28 +14,29 @@ import girlsofsteel.commands.CommandBase;
 public class TestingCollector extends CommandBase {
 
     //not finished
-    private boolean direction;
-    private boolean history;
+    private final Collector m_collector;
+    private boolean m_direction;
 
-    public TestingCollector() {
-        requires(collector);
-        direction = true;
+    public TestingCollector(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
+        m_direction = true;
     }
 
     @Override
     protected void initialize() {
-        collector.collectorWheelFoward();
+        m_collector.collectorWheelFoward();
     }
 
     @Override
     protected void execute() {
 
-        direction = !direction;
-        collector.stopCollectorWheel();
-        if (direction) {
-            collector.collectorWheelFoward();
+        m_direction = !m_direction;
+        m_collector.stopCollectorWheel();
+        if (m_direction) {
+            m_collector.collectorWheelFoward();
         } else {
-            collector.collectorWheelReverse();
+            m_collector.collectorWheelReverse();
         }
     }
 

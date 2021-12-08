@@ -6,6 +6,12 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.OI;
+import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Driving;
+import girlsofsteel.subsystems.Manipulator;
 import girlsofsteel.tests.TestCollector;
 
 /**
@@ -47,21 +53,29 @@ import girlsofsteel.tests.TestCollector;
  */
 public class FullTester extends CommandBase {
 
-    public FullTester() {
-        SmartDashboard.putData(new ArcadeDrive()); //to test arcade drive
+    private final Chassis m_chassis;
+    private final Manipulator m_manipulator;
+    private final Collector m_collector;
+
+    public FullTester(OI oi, Chassis chassis, Driving driving, Camera camera, Manipulator manipulator, Collector collector) {
+        m_chassis = chassis;
+        m_manipulator = manipulator;
+        m_collector = collector;
+
+        SmartDashboard.putData(new ArcadeDrive(oi, driving, m_chassis)); //to test arcade drive
         //SmartDashboard.putData(new setArmAnglePID(90)); //to test pivot arm PID
         //SmartDashboard.putData(new TestPivotArmPID()); //Tests the pivot arm w/ smartdashboard inputs for setpoint
-        SmartDashboard.putData(new TuneManipulatorPID()); //To tune the pivot arm PID if necessary
-        SmartDashboard.putData(new TestCollector()); //to test collector arm + wheel
+        SmartDashboard.putData(new TuneManipulatorPID(manipulator)); //To tune the pivot arm PID if necessary
+        SmartDashboard.putData(new TestCollector(collector)); //to test collector arm + wheel
 //        SmartDashboard.putData(new CollectorWheelForward()); //probably uneccessary since we have testcollector()
 //        SmartDashboard.putData(new CollectorWheelReverse()); //^
 //        SmartDashboard.putData(new CollectorWheelStop()); //^
-        SmartDashboard.putData(new ManualPositionPIDTuner()); //To tune the position chassis PID
-        SmartDashboard.putData(new ChassisLSPBPlanner());
-        SmartDashboard.putData(new MoveToPositionLSPB(0.0));
+        SmartDashboard.putData(new ManualPositionPIDTuner(chassis, driving)); //To tune the position chassis PID
+        SmartDashboard.putData(new ChassisLSPBPlanner(chassis, driving));
+        SmartDashboard.putData(new MoveToPositionLSPB(chassis, driving, 0.0));
         //SmartDashboard.putData(new VelocityPIDTuner()); //To tune the velocity chassis PID
-        SmartDashboard.putData(new AutonomousLowGoal()); //The low goal autonomous
-        SmartDashboard.putData(new AutonomousMobility()); //To test the mobility autonomous (go forwards)
+        SmartDashboard.putData(new AutonomousLowGoal(chassis, driving, camera, manipulator, collector)); //The low goal autonomous
+        SmartDashboard.putData(new AutonomousMobility(chassis, driving)); //To test the mobility autonomous (go forwards)
         //SmartDashboard.putData(new TestKicker());
 
     }
@@ -81,12 +95,12 @@ public class FullTester extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.stopJags();
-        chassis.disablePositionPID();
-        manipulator.stopJag();
-        manipulator.disablePID();
-        collector.stopCollector();
-        collector.stopCollectorWheel();
+        m_chassis.stopJags();
+        m_chassis.disablePositionPID();
+        m_manipulator.stopJag();
+        m_manipulator.disablePID();
+        m_collector.stopCollector();
+        m_collector.stopCollectorWheel();
     }
 
     @Override

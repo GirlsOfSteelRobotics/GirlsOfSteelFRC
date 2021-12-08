@@ -8,6 +8,7 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Chassis;
 
 /**
  *
@@ -16,9 +17,11 @@ import girlsofsteel.commands.CommandBase;
  */
 public class TestingDrivingStraight extends CommandBase{
 
+    private final Chassis m_chassis;
 
-    public TestingDrivingStraight(){
-         requires(chassis);
+    public TestingDrivingStraight(Chassis chassis){
+        m_chassis = chassis;
+         requires(m_chassis);
     }
 
     @Override
@@ -26,19 +29,19 @@ public class TestingDrivingStraight extends CommandBase{
         System.out.println("Initializing TDS command.");
         SmartDashboard.putNumber("LeftJagAdjust", 0); //Setting LeftJagAdjust  variable to zero in SmartDashboard
         SmartDashboard.putNumber("RightJagAdjust", 0); //Same as line above
-        chassis.initEncoders();
+        m_chassis.initEncoders();
     }
 
     @Override
     protected void execute() {
-        double RightJagAdjust = SmartDashboard.getNumber("RightJagAdjust", 0);
-        double LeftJagAdjust = SmartDashboard.getNumber("LeftJagAdjust", 0);
-        chassis.setLeftJag(.5 * LeftJagAdjust);
-        chassis.setRightJag(.5 * RightJagAdjust);
-        SmartDashboard.putNumber("ActualSpeedLeft",chassis.getRateLeftEncoder());
-        SmartDashboard.putNumber("AcutalSpeedRight",chassis.getRateRightEncoder());
-        SmartDashboard.putNumber("Left side Voltage", chassis.getLeftRaw());
-        SmartDashboard.putNumber("Right side Voltage", chassis.getRightRaw());
+        double rightJagAdjust = SmartDashboard.getNumber("RightJagAdjust", 0);
+        double leftJagAdjust = SmartDashboard.getNumber("LeftJagAdjust", 0);
+        m_chassis.setLeftJag(.5 * leftJagAdjust);
+        m_chassis.setRightJag(.5 * rightJagAdjust);
+        SmartDashboard.putNumber("ActualSpeedLeft", m_chassis.getRateLeftEncoder());
+        SmartDashboard.putNumber("AcutalSpeedRight", m_chassis.getRateRightEncoder());
+        SmartDashboard.putNumber("Left side Voltage", m_chassis.getLeftRaw());
+        SmartDashboard.putNumber("Right side Voltage", m_chassis.getRightRaw());
     }
 
     @Override
@@ -48,8 +51,8 @@ public class TestingDrivingStraight extends CommandBase{
 
     @Override
     protected void end() {
-        chassis.setRightJag(0.0);
-        chassis.setLeftJag(0.0);
+        m_chassis.setRightJag(0.0);
+        m_chassis.setLeftJag(0.0);
     }
 
     @Override

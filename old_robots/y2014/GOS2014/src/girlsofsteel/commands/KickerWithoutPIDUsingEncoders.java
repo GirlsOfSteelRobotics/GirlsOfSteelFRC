@@ -4,17 +4,22 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Kicker;
+
 /**
  * @author < ( *0* ) >
  */
 public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
-    private final double loadingEncoderPosition = .45; // this value is "about"; currentEncoderValue % 360
+    private static final double m_loadingEncoderPosition = .45; // this value is "about"; currentEncoderValue % 360
+
+    private final Kicker m_kicker;
 
     @SuppressWarnings("PMD.UnusedFormalParameter")
-    public KickerWithoutPIDUsingEncoders(int loadingOrShooting) //0 = loading; 1 = shooting
+    public KickerWithoutPIDUsingEncoders(Kicker kicker, int loadingOrShooting) //0 = loading; 1 = shooting
     {
-        requires(kicker);
+        m_kicker = kicker;
+        requires(m_kicker);
     }
 
     @Override
@@ -24,8 +29,8 @@ public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
     @Override
     protected void execute() {
-        if(kicker.getEncoder() % 360 < loadingEncoderPosition) {
-            kicker.setJag(1.0);
+        if(m_kicker.getEncoder() % 360 < m_loadingEncoderPosition) {
+            m_kicker.setJag(1.0);
         }
     }
 
@@ -36,7 +41,7 @@ public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
     @Override
     protected void end() {
-        kicker.stopJag();
+        m_kicker.stopJag();
     }
 
     @Override

@@ -5,6 +5,8 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  * This command shoots into the low goal and assumes that the drivers have lined up already.
@@ -16,16 +18,16 @@ public class ShootLowGoal extends CommandGroup {
      * This variable (0) stores the angle for the collector arm in order to shoot into the low goal.
      * @author Sonia, Sophia
      */
-    private final double kickAngle = 0;
+    private static final double m_kickAngle = 0;
 
     /**
      * This method sets the arm angle to 0 and reverses the collector wheel in order to shoot the ball into the low
      * goal.
      * @author Sonia, Sophia
      */
-    public ShootLowGoal()
+    public ShootLowGoal(Manipulator manipulator, Collector collector)
     {
-        addSequential(new SetArmAngle(kickAngle));
-        addSequential(new CollectorWheelReverse());
+        addSequential(new SetArmAngle(manipulator, m_kickAngle));
+        addSequential(new CollectorWheelReverse(collector));
     }
 }

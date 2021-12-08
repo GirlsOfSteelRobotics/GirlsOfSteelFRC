@@ -9,13 +9,13 @@
  */
 package girlsofsteel.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import girlsofsteel.RobotMap;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import girlsofsteel.RobotMap;
 import girlsofsteel.objects.EncoderGoSPIDController;
 import girlsofsteel.objects.LSPBPIDPlanner;
 
@@ -25,33 +25,29 @@ import girlsofsteel.objects.LSPBPIDPlanner;
  */
 public class Kicker extends Subsystem {
 
-    private final Jaguar kickerJag;
-    private final Talon kickerTalon;
+    private static final double m_pulsePerRevolution = 360;  //correct
+    private static final double m_distancePerPulse = 1.0 / m_pulsePerRevolution; //No gear ratio.
 
-    private final Encoder kickerEncoder;
+    private final Jaguar m_kickerJag;
+    private final Talon m_kickerTalon;
 
-    private final DigitalInput kickerLimitSwitch;
+    private final Encoder m_kickerEncoder;
 
-    private EncoderGoSPIDController kickerPositionPID;
-    public LSPBPIDPlanner kickerPlanner;
+    private final DigitalInput m_kickerLimitSwitch;
 
-    private final double p = 500; //Works well on the kicker!
-    private final double i = 0;
-    private final double d = 0;
-
-    private final double pulsePerRevolution = 360;  //correct
-    private final double distancePerPulse = 1.0 / pulsePerRevolution; //No gear ratio.
+    private EncoderGoSPIDController m_kickerPositionPID;
+    private final LSPBPIDPlanner m_kickerPlanner;
 
     public Kicker() {
         // Pright = Configuration.rightPositionP; //TODO
         // Pleft = Configuration.leftPositionP;
 
-        kickerJag = new Jaguar(RobotMap.KICKER_MOTOR);
-        kickerTalon = new Talon(7);
+        m_kickerJag = new Jaguar(RobotMap.KICKER_MOTOR);
+        m_kickerTalon = new Talon(7);
 
-        kickerEncoder = new Encoder(RobotMap.KICKER_ENCODER_A, RobotMap.KICKER_ENCODER_B, true, CounterBase.EncodingType.k2X);
+        m_kickerEncoder = new Encoder(RobotMap.KICKER_ENCODER_A, RobotMap.KICKER_ENCODER_B, true, CounterBase.EncodingType.k2X);
 
-        kickerPlanner = new LSPBPIDPlanner(0.025);
+        m_kickerPlanner = new LSPBPIDPlanner(0.025);
 
 
 //        kickerPositionPID = new EncoderGoSPIDController(p, i, d, kickerEncoder, new PIDOutput() {
@@ -61,11 +57,11 @@ public class Kicker extends Subsystem {
 //            }
 //        }, 2, false, true); //false to reverse encoder, true to MOD the value
 
-       kickerLimitSwitch = new DigitalInput(RobotMap.KICKER_LIMIT);
+       m_kickerLimitSwitch = new DigitalInput(RobotMap.KICKER_LIMIT);
     }
 
     public void holdPosition() {
-        kickerPositionPID.setSetPoint(kickerEncoder.getDistance());
+        m_kickerPositionPID.setSetPoint(m_kickerEncoder.getDistance());
     }
 
     /*
@@ -79,39 +75,39 @@ public class Kicker extends Subsystem {
     */
 
     public void initEncoders() {
-        kickerEncoder.setDistancePerPulse(distancePerPulse);
+        m_kickerEncoder.setDistancePerPulse(m_distancePerPulse);
     }
 
     public double getEncoderDistance() {
-        return kickerEncoder.getDistance();
+        return m_kickerEncoder.getDistance();
     }
 
     public double getRateEncoder() {
-        return kickerEncoder.getRate();
+        return m_kickerEncoder.getRate();
     }
 
     public double getEncoder() {
-        return kickerEncoder.get();
+        return m_kickerEncoder.get();
     }
 
     public double getRaw() {
-        return kickerEncoder.getRaw();
+        return m_kickerEncoder.getRaw();
     }
 
     public void setJag(double speed) {
-        kickerJag.set(speed);
+        m_kickerJag.set(speed);
     }
 
     public void stopJag() {
-        kickerJag.set(0.0);
+        m_kickerJag.set(0.0);
     }
 
     public void setTalon(double speed) {
-        kickerTalon.set(speed);
+        m_kickerTalon.set(speed);
     }
 
     public void stopTalon() {
-        kickerTalon.set(0.0);
+        m_kickerTalon.set(0.0);
     }
 
     @Override
@@ -119,20 +115,20 @@ public class Kicker extends Subsystem {
     }
 
     public void resetEncoders() {
-        kickerEncoder.reset();
+        m_kickerEncoder.reset();
     }
 
     public void initPIDS() {
-        kickerPositionPID.enable();
-        kickerPositionPID.setSetPoint(0.0);
+        m_kickerPositionPID.enable();
+        m_kickerPositionPID.setSetPoint(0.0);
     }
 
     public void resetPIDError() {
-        kickerPositionPID.resetError();
+        m_kickerPositionPID.resetError();
     }
 
     public void setLeftPIDValues(double p, double i, double d) {
-        kickerPositionPID.setPID(p, i, d);
+        m_kickerPositionPID.setPID(p, i, d);
     }
 
     /**
@@ -144,7 +140,7 @@ public class Kicker extends Subsystem {
      *
      */
     public void setPIDValues(double p, double i, double d) {
-        kickerPositionPID.setPID(p, i, d);
+        m_kickerPositionPID.setPID(p, i, d);
     }
 
     /**
@@ -156,25 +152,28 @@ public class Kicker extends Subsystem {
      * values
      */
     public void setPIDPosition(double setPoint) {
-        kickerPositionPID.setSetPoint(setPoint);
+        m_kickerPositionPID.setSetPoint(setPoint);
     }
 
     /**
      * @author Sylvie, Arushi, Jisue this disables position PIDs
      */
     public void disablePositionPID() {
-        kickerPositionPID.setSetPoint(0);
-        kickerPositionPID.disable();
+        m_kickerPositionPID.setSetPoint(0);
+        m_kickerPositionPID.disable();
     }
 
     public void setEncoderReverseDirection(boolean reverseDirection) {
-        kickerEncoder.setReverseDirection(reverseDirection);
+        m_kickerEncoder.setReverseDirection(reverseDirection);
     }
 
     public boolean getLimitSwitch()
     {
         //Is backward!
-        return !kickerLimitSwitch.get(); //true when the kicker is fully loaded
+        return !m_kickerLimitSwitch.get(); //true when the kicker is fully loaded
     }
 
+    public LSPBPIDPlanner getKickerPlanner() {
+        return m_kickerPlanner;
+    }
 }

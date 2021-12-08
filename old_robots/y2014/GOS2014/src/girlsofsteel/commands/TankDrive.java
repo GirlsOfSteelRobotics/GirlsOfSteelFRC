@@ -1,6 +1,9 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Driving;
 
 /**
  *
@@ -13,14 +16,16 @@ public class TankDrive extends CommandBase {
     outputs are motors
 
     */
-    private final Joystick left;
-    private final Joystick right;
+    private final Joystick m_left;
+    private final Joystick m_right;
+    private final Chassis m_chassis;
 
-public TankDrive() {
+public TankDrive(OI oi, Chassis chassis, Driving driving) {
   requires(driving);
+  m_chassis = chassis;
 
-    left = oi.getChassisJoystick();
-    right = oi.getOperatorJoystick();
+    m_left = oi.getChassisJoystick();
+    m_right = oi.getOperatorJoystick();
 }
     @Override
     protected void initialize() {
@@ -29,7 +34,7 @@ public TankDrive() {
     @Override
     protected void execute() {
         //System.out.println("Right: " + right.getY() + "\nLeft: " + left.getY());
-        chassis.tankDrive(right.getY(),left.getY());
+        m_chassis.tankDrive(m_right.getY(), m_left.getY());
 
     }
 
@@ -40,7 +45,7 @@ public TankDrive() {
 
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

@@ -5,14 +5,19 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Collector;
+
 /**
  *
  * @author user
  */
 public class StopCollector extends CommandBase {
 
-    public StopCollector() {
-        requires(collector);
+    private final Collector m_collector;
+
+    public StopCollector(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
@@ -21,7 +26,7 @@ public class StopCollector extends CommandBase {
 
     @Override
     protected void execute() {
-        collector.moveCollectorUpOrDown(0.0);
+        m_collector.moveCollectorUpOrDown(0.0);
     }
 
     @Override

@@ -8,6 +8,7 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Collector;
 
 /**
  * Moves the collector wheel forward for autonomous and has an is finished case
@@ -16,8 +17,16 @@ import girlsofsteel.objects.Camera;
 public class CollectorWheelForwardAutoVer extends CommandBase {
 
 
-    private final double time = 2.5; //when 3 seconds pass it will drop the ball
-    private double startTime;
+    private static final double m_time = 2.5; //when 3 seconds pass it will drop the ball
+
+    private final Collector m_collector;
+    private final Camera m_camera;
+    private double m_startTime;
+
+    public CollectorWheelForwardAutoVer(Collector collector, Camera camera) {
+        m_collector = collector;
+        m_camera = camera;
+    }
 
     /**
      * There is nothing in this method.
@@ -25,9 +34,9 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      */
     @Override
     protected void initialize() {
-       startTime = Timer.getFPGATimestamp();
-       CommandBase.camera.isHot = hotAtLeastOnce();//CommandBase.camera.isGoalHot(); //Get is hot here
-       System.out.println("CAMERA IS HOT?::: " + CommandBase.camera.isHot);
+       m_startTime = Timer.getFPGATimestamp();
+       m_camera.setIsHot(hotAtLeastOnce());//CommandBase.camera.isGoalHot(); //Get is hot here
+       System.out.println("CAMERA IS HOT?::: " + m_camera.isHot());
 
     }
 
@@ -38,7 +47,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      */
     @Override
     protected void execute() {
-       collector.collectorWheelFoward();
+       m_collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
 
     /**
@@ -48,7 +57,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        return Timer.getFPGATimestamp() - startTime > time;
+        return Timer.getFPGATimestamp() - m_startTime > m_time;
         //return CommandBase.collector.isCollectorEngaged();
     }
 
@@ -58,7 +67,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      */
     @Override
     protected void end() {
-        collector.stopCollectorWheel();
+        m_collector.stopCollectorWheel();
         //The wheel stops moving once the collector is engaged and has the ball in its grip
     }
 

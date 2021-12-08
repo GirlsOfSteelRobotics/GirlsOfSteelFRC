@@ -1,6 +1,8 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Chassis;
 
 /**
  *
@@ -8,29 +10,31 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class ScaledArcadeDrive extends CommandBase {
 
-    private final double scale;
-    private Joystick joystick;
-    private double x;
-    private double y;
+    private final Joystick m_joystick;
+    private final Chassis m_chassis;
+    private final double m_scale;
+    private double m_x;
+    private double m_y;
 
-    public ScaledArcadeDrive(double scale) {
-        requires(chassis);
-        this.scale = scale;
+    public ScaledArcadeDrive(OI oi, Chassis chassis, double scale) {
+        m_chassis = chassis;
+        m_joystick = oi.getChassisJoystick();
+        requires(m_chassis);
+        this.m_scale = scale;
     }
 
     @Override
     protected void initialize() {
-        joystick = oi.getChassisJoystick();
         //SmartDashboard.putNumber("Scale", 1);
 
     }
 
     @Override
     protected void execute() {
-        x = joystick.getX();
-        y = joystick.getY();
+        m_x = m_joystick.getX();
+        m_y = m_joystick.getY();
         //scale = SmartDashboard.getNumber("Scale", 0);
-        chassis.scaleArcadeDrive(x, y, scale);
+        m_chassis.scaleArcadeDrive(m_x, m_y, m_scale);
     }
 
     @Override
@@ -40,7 +44,7 @@ public class ScaledArcadeDrive extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

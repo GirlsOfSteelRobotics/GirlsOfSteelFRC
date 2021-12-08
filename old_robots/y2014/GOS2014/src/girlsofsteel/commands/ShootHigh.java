@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 @SuppressWarnings("PMD")
 public class ShootHigh extends CommandGroup {
 
-    private double angle;
-
     public ShootHigh() {
 //        addParallel(new setArmAnglePID(angle));
 //        addParallel(new LoadKicker());

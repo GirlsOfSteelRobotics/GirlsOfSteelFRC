@@ -6,80 +6,44 @@ import girlsofsteel.RobotMap;
 //Created by FRC team 3357
 //2008
 //http://www.chiefdelphi.com/forums/showthread.php?t=82409
-public class UltrasonicSensor  {///*
+public class UltrasonicSensor  {
 
-/**
- *
- * @author
- */
-    /*
-     * Current Status: It prints out zero for the range, and the isRangeValid() method
-     * returns false.  It is no longer erroring, and it is connected to the ultrasonic
-     * sensor, because the isEnabled() method returns true.
-//
-//    Ultrasonic sensor;
-//
-//    public UltrasonicSensor() {
-//        sensor = new Ultrasonic(DigitalOutput.kPwmChannels, RobotMap.ULTRASONIC_SENSOR_PORT, Ultrasonic.Unit.kMillimeter);
-//    }
-//
-//    public void enable()
-//    {
-//        sensor.setEnabled(true);
-//        sensor.setAutomaticMode(true);
-//    }
-//
-//    public void disable()
-//    {
-//        sensor.setEnabled(false);
-//    }
-//    public double getDistance()
-//    {
-//        sensor.ping();
-//        System.out.println(sensor.isRangeValid());
-//        return sensor.getRangeInches();
-//    }
-//
-//    protected void initDefaultCommand() {
-//
-//    }     */
+    private static final double IN_TO_CM_CONVERSION = 2.54;
 
+    private boolean m_useUnits;    //Are we using units or just returning voltage?
+    private double m_minVoltage;	  //Minimum voltage the ultrasonic sensor can return
+    private double m_voltageRange; //The range of the voltages returned by the sensor (maximum - minimum)
+    private double m_minDistance;  //Minimum distance the ultrasonic sensor can return in inches
+    private double m_distanceRange; //The range of the distances returned by this class in inches (maximum - minimum)
+    private final AnalogInput m_channel;
 
-
-
-    private final double IN_TO_CM_CONVERSION = 2.54;
-    private boolean use_units;    //Are we using units or just returning voltage?
-    private double min_voltage;	  //Minimum voltage the ultrasonic sensor can return
-    private double voltage_range; //The range of the voltages returned by the sensor (maximum - minimum)
-    private double min_distance;  //Minimum distance the ultrasonic sensor can return in inches
-    private double distance_range;//The range of the distances returned by this class in inches (maximum - minimum)
-    private final AnalogInput channel;
     //constructor
     public UltrasonicSensor() {
-        channel = new AnalogInput(RobotMap.ULTRASONIC_SENSOR_PORT);
+        m_channel = new AnalogInput(RobotMap.ULTRASONIC_SENSOR_PORT);
       //  default values
-        use_units = true;
-        min_voltage = 2.5;
-        voltage_range = 5.5 - min_voltage;
-        min_distance = 6.0;
-        distance_range = 254.0 - min_distance;
+        m_useUnits = true;
+        m_minVoltage = 2.5;
+        m_voltageRange = 5.5 - m_minVoltage;
+        m_minDistance = 6.0;
+        m_distanceRange = 254.0 - m_minDistance;
     }
+
    // constructor
-    public UltrasonicSensor(int _channel, boolean _use_units, double _min_voltage,
-            double _max_voltage, double _min_distance, double _max_distance) {
-        channel = new AnalogInput(_channel);
+    public UltrasonicSensor(int channel, boolean useUnits, double minVoltage,
+            double maxVoltage, double minDistance, double maxDistance) {
+        m_channel = new AnalogInput(channel);
      //   only use unit-specific variables if we're using units
-        if (_use_units) {
-            use_units = true;
-            min_voltage = _min_voltage;
-            voltage_range = _max_voltage - _min_voltage;
-            min_distance = _min_distance;
-            distance_range = _max_distance - _min_distance;
+        if (useUnits) {
+            m_useUnits = true;
+            m_minVoltage = minVoltage;
+            m_voltageRange = maxVoltage - minVoltage;
+            m_minDistance = minDistance;
+            m_distanceRange = maxDistance - minDistance;
         }
     }
    //  Just get the voltage.
     private double getVoltage() {
-        return channel.getVoltage();
+        return m_channel.getVoltage();
     }
     /* GetRangeInInches
      * Returns the range in inches
@@ -89,17 +53,17 @@ public class UltrasonicSensor  {///*
 
     public double getRangeInInches() {
         //if we're not using units, return -1, a range that will most likely never be returned
-        if (!use_units) {
+        if (!m_useUnits) {
             return -1.0;
         }
-        double range = channel.getVoltage();
-        if (range < min_voltage) {
+        double range = m_channel.getVoltage();
+        if (range < m_minVoltage) {
             return -2.0;
         }
       //  first, normalize the voltage
-        range = (range - min_voltage) / voltage_range;
+        range = (range - m_minVoltage) / m_voltageRange;
       //  next, denormalize to the unit range
-        range = (range * distance_range) + min_distance;
+        range = (range * m_distanceRange) + m_minDistance;
         return range;
     }
     /* GetRangeInCM
@@ -110,17 +74,17 @@ public class UltrasonicSensor  {///*
 
     public double getRangeInCM() {
         //if we're not using units, return -1, a range that will most likely never be returned
-        if (!use_units) {
+        if (!m_useUnits) {
             return -1.0;
         }
-        double range = channel.getVoltage();
-        if (range < min_voltage) {
+        double range = m_channel.getVoltage();
+        if (range < m_minVoltage) {
             return -2.0;
         }
        // first, normalize the voltage
-        range = (range - min_voltage) / voltage_range;
+        range = (range - m_minVoltage) / m_voltageRange;
        // next, denormalize to the unit range
-        range = (range * distance_range) + min_distance;
+        range = (range * m_distanceRange) + m_minDistance;
        // finally, convert to centimeters
         range *= IN_TO_CM_CONVERSION;
         return range;

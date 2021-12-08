@@ -5,16 +5,21 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Kicker;
+
 /**
  *
  * @author Sylvie
  *
  * Stops the kicker wherever it is (does not stop the PID)
  */
-public class STOPKICKER extends CommandBase {
+public class StopKicker extends CommandBase {
 
-    public STOPKICKER() {
-        requires(kicker);
+    private final Kicker m_kicker;
+
+    public StopKicker(Kicker kicker) {
+        m_kicker = kicker;
+        requires(m_kicker);
     }
 
     @Override

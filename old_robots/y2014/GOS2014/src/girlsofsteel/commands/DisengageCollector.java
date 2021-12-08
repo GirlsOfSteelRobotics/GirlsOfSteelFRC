@@ -5,6 +5,7 @@
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
+import girlsofsteel.subsystems.Collector;
 
 /**
  * This command disengages the collector arm on the manipulator.  It moves the
@@ -14,13 +15,16 @@ import girlsofsteel.Configuration;
 //This command moves arm wheel to retrieve ball.
 public class DisengageCollector extends CommandBase {
 
+    private final Collector m_collector;
+
      /**
      * This command uses the collector subsystem.
      * @author Sophia, Sonia
      */
-    public DisengageCollector() {
-        requires(collector);
-    }
+     public DisengageCollector(Collector collector) {
+         m_collector = collector;
+         requires (m_collector);
+     }
 
     /**
      * This method does not have anything in it.
@@ -37,7 +41,7 @@ public class DisengageCollector extends CommandBase {
      @Override
     protected void execute() {
         //System.out.println("execute---------------------");
-        collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); //1 for competition bot, -1 for practice bot
+        m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); //1 for competition bot, -1 for practice bot
         //collector arm moves up to release ball and return to "ready" position to collect the ball again
     }
 
@@ -60,7 +64,7 @@ public class DisengageCollector extends CommandBase {
      */
     @Override
     protected void end() {
-        collector.stopCollector();
+        m_collector.stopCollector();
     }//the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
 
     /**

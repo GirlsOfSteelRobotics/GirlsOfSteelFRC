@@ -7,36 +7,39 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Driving;
 
 /**
  * @author Mackenzie
  */
 public class ArcadeDrive extends CommandBase{
 
-    private Joystick joystick1; //randomly picked right joystick from robot map
+    private final Chassis m_chassis;
+    private final Joystick m_joystick1; //randomly picked right joystick from robot map
 
-    private double Xcoord;
-    private double Ycoord;
-    private double XcoordSq;
-    private double YcoordSq;
+    private double m_xCoord;
+    private double m_yCoord;
 
-    public ArcadeDrive() {
+    public ArcadeDrive(OI oi, Driving driving, Chassis chassis) {
+        m_chassis = chassis;
+        m_joystick1 = oi.getChassisJoystick();
         requires(driving);
     }
 
     @Override
     protected void initialize() {
         System.out.println("ARCADE DRIVE______________________________________________________");
-        joystick1= oi.getChassisJoystick();
     }
 
     @Override
     protected void execute() {
-        Xcoord = joystick1.getX();
+        m_xCoord = m_joystick1.getX();
         //XcoordSq = chassis.square(Xcoord, 1.0);
-        Ycoord = joystick1.getY();
+        m_yCoord = m_joystick1.getY();
         //YcoordSq = chassis.square(Ycoord, 1.0);
-        chassis.arcadeDrive(-Xcoord, -Ycoord);
+        m_chassis.arcadeDrive(-m_xCoord, -m_yCoord);
         //System.out.println("");
     }
 
@@ -47,7 +50,7 @@ public class ArcadeDrive extends CommandBase{
 
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

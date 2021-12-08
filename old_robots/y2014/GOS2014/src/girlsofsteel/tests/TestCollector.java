@@ -8,12 +8,19 @@ package girlsofsteel.tests;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.RobotMap;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Collector;
 
 /**
  *
  * @author Abby
  */
 public class TestCollector extends CommandBase {
+
+    private final Collector m_collector;
+
+    public TestCollector(Collector collector) {
+        m_collector = collector;
+    }
 
     @Override
     protected void initialize() {
@@ -26,23 +33,23 @@ public class TestCollector extends CommandBase {
 
     @Override
     protected void execute() {
-        collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed, 0));
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward, false) == true) {
-            collector.collectorWheelFoward();
+        m_collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed, 0));
+        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward, false)) {
+            m_collector.collectorWheelFoward();
             // forward
         } else{
-        collector.stopCollectorWheel();
+        m_collector.stopCollectorWheel();
         }
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward, false) == true) {
-            collector.collectorWheelReverse();
+        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward, false)) {
+            m_collector.collectorWheelReverse();
             // backward
         } else {
-            collector.stopCollectorWheel();
+            m_collector.stopCollectorWheel();
         }
 //        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeStop, false) == true) {
 //            collector.stopCollectorWheel();
 //        }
-        double collectorEncoderValue = collector.getCollectorSpeed();
+        double collectorEncoderValue = m_collector.getCollectorSpeed();
         SmartDashboard.putNumber(RobotMap.CollectorEncoderReader, collectorEncoderValue);
         //This should print out the encoder vlaue on screen. Maybe.
 

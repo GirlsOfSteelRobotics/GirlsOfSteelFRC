@@ -6,6 +6,7 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Chassis;
 
 /**
  *
@@ -13,22 +14,25 @@ import girlsofsteel.commands.CommandBase;
  */
 public class TestingStraightDrive extends CommandBase{
 
-    public TestingStraightDrive(){
-         requires(chassis);
+    private final Chassis m_chassis;
+
+    public TestingStraightDrive(Chassis chassis){
+        m_chassis = chassis;
+         requires(m_chassis);
     }
 
     @Override
     protected void initialize() {
         System.out.println("Initializing TDS command.");
-        chassis.initEncoders();
+        m_chassis.initEncoders();
     }
 
     @Override
     protected void execute() {
         //System.out.print("Left Encoder: " + chassis.getLeftEncoder());
         //System.out.println(" Right Encoder: " + chassis.getRightEncoder());
-        SmartDashboard.putNumber("Left Encoder Distance: ", chassis.getLeftEncoderDistance());
-        SmartDashboard.putNumber("right encoder distance: ", chassis.getRightEncoderDistance());
+        SmartDashboard.putNumber("Left Encoder Distance: ", m_chassis.getLeftEncoderDistance());
+        SmartDashboard.putNumber("right encoder distance: ", m_chassis.getRightEncoderDistance());
     }
 
     @Override

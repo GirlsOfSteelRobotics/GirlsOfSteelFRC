@@ -4,25 +4,25 @@
  */
 package girlsofsteel.tests;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
  * @author sam
  */
 public class TestManipulatorJag extends CommandBase {
-    private Joystick joystick;
-    private final int i = 0;
 
-    public TestManipulatorJag () {
-        requires(manipulator);
+    private final Manipulator m_manipulator;
+
+    public TestManipulatorJag (Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     @Override
     protected void initialize() {
-        joystick = oi.getOperatorJoystick();
         System.out.println("Test Manipulator Jag is running");
     }
 
@@ -32,11 +32,11 @@ public class TestManipulatorJag extends CommandBase {
 //        while(i == 1)
 //        {
             System.out.println("Here");
-            manipulator.testJagsForward();
+            m_manipulator.testJagsForward();
             Timer.delay (5);
-            manipulator.stopTestJags();
+            m_manipulator.stopTestJags();
             Timer.delay (5);
-            manipulator.testJagsBackward();
+            m_manipulator.testJagsBackward();
             Timer.delay (5);
 //        }
         //manipulator.moveJags(joystick.getY());
@@ -49,7 +49,7 @@ public class TestManipulatorJag extends CommandBase {
 
     @Override
     protected void end() {
-       manipulator.stopTestJags();
+       m_manipulator.stopTestJags();
     }
 
     @Override

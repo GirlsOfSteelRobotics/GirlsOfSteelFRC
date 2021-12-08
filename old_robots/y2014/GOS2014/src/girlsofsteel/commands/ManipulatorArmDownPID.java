@@ -6,6 +6,7 @@
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -13,27 +14,29 @@ import girlsofsteel.Configuration;
  */
 public class ManipulatorArmDownPID extends CommandBase {
 
-    private double angle;
+    private final Manipulator m_manipulator;
+    private double m_angle;
 
-    public ManipulatorArmDownPID() {
-        requires(manipulator);
+    public ManipulatorArmDownPID(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     @Override
     protected void initialize() {
-        angle = manipulator.getAbsoluteDistance();
+        m_angle = m_manipulator.getAbsoluteDistance();
     }
 
     @Override
     protected void execute() {
 
-        System.out.println("Down Encoder Value: " + manipulator.getAbsoluteDistance());
+        System.out.println("Down Encoder Value: " + m_manipulator.getAbsoluteDistance());
         //System.out.println("Down Angle Setpoint: " + angle);
         //System.out.println("Error: " + manipulator.getError());
 
-        manipulator.setSetPoint(angle * Configuration.desiredAnglePivotArmSign);
-        if (angle > -18.2) {
-            angle -= 3;
+        m_manipulator.setSetPoint(m_angle * Configuration.desiredAnglePivotArmSign);
+        if (m_angle > -18.2) {
+            m_angle -= 3;
         }
     }
 
@@ -44,7 +47,7 @@ public class ManipulatorArmDownPID extends CommandBase {
 
     @Override
     protected void end() {
-        manipulator.holdAngle();
+        m_manipulator.holdAngle();
     }
 
     @Override

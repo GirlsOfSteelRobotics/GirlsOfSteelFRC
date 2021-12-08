@@ -7,6 +7,7 @@ package girlsofsteel.tests;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.RobotMap;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -14,9 +15,12 @@ import girlsofsteel.commands.CommandBase;
  */
 public class TestManipulator extends CommandBase{
 
-    private double speed;
-    public TestManipulator(){
-        requires(manipulator);
+    private final Manipulator m_manipulator;
+    private double m_speed;
+
+    public TestManipulator(Manipulator manipulator){
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     @Override
@@ -26,11 +30,11 @@ public class TestManipulator extends CommandBase{
 
     @Override
     protected void execute() {
-        speed = SmartDashboard.getNumber(RobotMap.manipulatorSD, 0.0);
+        m_speed = SmartDashboard.getNumber(RobotMap.manipulatorSD, 0.0);
         if(SmartDashboard.getBoolean(RobotMap.manipulatorSD, false)){
-            manipulator.setJag(speed);
+            m_manipulator.setJag(m_speed);
         }else{
-            manipulator.setJag(0.0);
+            m_manipulator.setJag(0.0);
         }
     }
 
@@ -41,7 +45,7 @@ public class TestManipulator extends CommandBase{
 
     @Override
     protected void end() {
-        manipulator.stopJag();
+        m_manipulator.stopJag();
     }
 
     @Override

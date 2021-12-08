@@ -7,6 +7,7 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import girlsofsteel.Configuration;
+import girlsofsteel.subsystems.Collector;
 
 /**
  *
@@ -14,38 +15,44 @@ import girlsofsteel.Configuration;
  */
 public class CollectorUpALittle extends CommandBase {
 
-    private double startTime;
-    private final double putDownTime = 0.15;
-    private double changeInTime;
+    private static final double m_putDownTime = 0.15;
+
+    private final Collector m_collector;
+    private double m_startTime;
+    private double m_changeInTime;
+
+    public CollectorUpALittle(Collector collector) {
+        m_collector = collector;
+    }
 
     @Override
     protected void initialize() {
-        startTime = Timer.getFPGATimestamp();
+        m_startTime = Timer.getFPGATimestamp();
         System.out.println("Collector up a little!!!!!!!!!!!");
 
-        collector.collectorWheelReverse();
+        m_collector.collectorWheelReverse();
     }
 
     @Override
     protected void execute() {
 
-        changeInTime = Timer.getFPGATimestamp() - startTime;
-        if(changeInTime < putDownTime) {
-            collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); }
+        m_changeInTime = Timer.getFPGATimestamp() - m_startTime;
+        if(m_changeInTime < m_putDownTime) {
+            m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); }
         else {
-            collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);
+            m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);
         }
     }
 
     @Override
     protected boolean isFinished(){
-        return changeInTime > .3;
+        return m_changeInTime > .3;
     }
 
     @Override
     protected void end() {
-        collector.stopCollector();
-        collector.stopCollectorWheel();
+        m_collector.stopCollector();
+        m_collector.stopCollectorWheel();
     }
 
     @Override

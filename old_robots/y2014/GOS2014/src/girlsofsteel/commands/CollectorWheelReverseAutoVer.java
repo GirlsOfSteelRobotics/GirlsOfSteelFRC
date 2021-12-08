@@ -5,12 +5,23 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Collector;
+
 /**
  * Moves the collector wheel backwards.
  *
  * @author Abby, Sophia, Sonia
  */
 public class CollectorWheelReverseAutoVer extends CommandBase {
+
+    private final Camera m_camera;
+    private final Collector m_collector;
+
+    public CollectorWheelReverseAutoVer(Collector collector, Camera camera) {
+        m_collector = collector;
+        m_camera = camera;
+    }
 
     /**
      * There is nothing in this method.
@@ -29,15 +40,15 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      */
     @Override
     protected void execute() {
-        if (camera.isHot == false) {
+        if (!m_camera.isHot()) {
             try {
                 Thread.sleep(4500);
-            } catch (Exception ex) {
+            } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
         }
-        System.out.println("camera is hot" + camera.isHot);
-        collector.collectorWheelReverse(); //use specific method for clarit
+        System.out.println("camera is hot" + m_camera.isHot());
+        m_collector.collectorWheelReverse(); //use specific method for clarit
     }
     //The wheel reverses to release the ball. Possibly for both gentle and long passes.
 
@@ -59,7 +70,7 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      */
     @Override
     protected void end() {
-        collector.stopCollectorWheel();
+        m_collector.stopCollectorWheel();
         //stops wheel once the command is finished
     }
 

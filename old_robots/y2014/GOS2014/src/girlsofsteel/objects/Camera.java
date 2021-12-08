@@ -6,17 +6,18 @@ package girlsofsteel.objects;
  */
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Camera {
     //magic value must change
-    private final double heightOfGoal = 2.57; //actually height of goal - height of robot CHANGE
-    private final double distance;
-     //Need to change this command into meters and not inches
-    private final double initialVelocity = 8.65;
-    private final double gravity = 9.82;
-    public static boolean isHot = false;
+    private static final double m_heightOfGoal = 2.57; //actually height of goal - height of robot CHANGE
+    //Need to change this command into meters and not inches
+    private static final double m_initialVelocity = 8.65;
+    private static final double m_gravity = 9.82;
+    private final double m_distance;
+    private boolean m_isHot;
 
     public Camera() {
-        distance = this.getDistanceToTarget();
+        m_distance = this.getDistanceToTarget();
     }
 
     public static boolean isConnected() {
@@ -32,7 +33,7 @@ public class Camera {
         return isConnected() && (NetworkTable.getTable("camera").getBoolean("isTargetLeft", false)||NetworkTable.getTable("camera").getBoolean("isTargetRight", false));
     }
 
-    public double getDistanceToTarget() { // -1 to 1 -> position horizontally of the backboard on the screen
+    public final double getDistanceToTarget() { // -1 to 1 -> position horizontally of the backboard on the screen
         //Need to change this into metrics
         //return NetworkTable.getTable("camera").getNumber("distance", 0);
         return NetworkTable.getTable("camera").getNumber("distance", 0);
@@ -45,25 +46,30 @@ public class Camera {
     }
 
    public double getVerticalAngleOffset() {
-        double x = distance;
-        double y = heightOfGoal; //needs to be changed based on initial height of robot
-        double g = gravity;
-        double v = initialVelocity;
+        double x = m_distance;
+        double y = m_heightOfGoal; //needs to be changed based on initial height of robot
+        double g = m_gravity;
+        double v = m_initialVelocity;
         //make sure all numbers are in metric units
 //        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
-        double negativeAngle = Math.atan(square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
-        //return angle;
-        return negativeAngle;
+       //return angle;
+        return Math.atan(square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
     }
 
     //mathUtils didn't have a squaring function (had to make our own)
      private double square(double num1) {
-        double squareNum1 = num1 * num1;
-        return squareNum1;
+         return num1 * num1;
     }
 
     private double fourthPower(double num1) {
-        double powerFourNum1 = num1 * num1 * num1 * num1;
-        return powerFourNum1;
+        return num1 * num1 * num1 * num1;
+    }
+
+    public boolean isHot() {
+        return m_isHot;
+    }
+
+    public void setIsHot(boolean isHot) {
+        m_isHot = isHot;
     }
 }

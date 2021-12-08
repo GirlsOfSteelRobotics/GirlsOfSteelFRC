@@ -5,6 +5,7 @@
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
+import girlsofsteel.subsystems.Collector;
 
 /**
  * This command engages the collector arm to the manipulator.  It moves the
@@ -13,13 +14,15 @@ import girlsofsteel.Configuration;
  */
 //This command moves arm wheel to retrieve ball.
 public class EngageCollector extends CommandBase {
+    private final Collector m_collector;
 
     /**
      * This command uses the collector subsystem.
      * @author Sophia, Sonia
      */
-    public EngageCollector() {
-        requires(collector);
+    public EngageCollector(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     /**
@@ -36,7 +39,7 @@ public class EngageCollector extends CommandBase {
      */
     @Override
     protected void execute() {
-        collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //-1 for competition robot, 1 for practice robot
+        m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //-1 for competition robot, 1 for practice robot
     }//Collector arm moves down to collect and hold ball in trident
 
     /**
@@ -57,7 +60,7 @@ public class EngageCollector extends CommandBase {
      */
     @Override
     protected void end() {
-        collector.stopCollector();
+        m_collector.stopCollector();
         System.out.println("End of Engage Collector Command.");
     }
 

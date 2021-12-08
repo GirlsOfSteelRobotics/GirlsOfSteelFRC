@@ -5,8 +5,8 @@
  */
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import girlsofsteel.Configuration;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -17,49 +17,47 @@ import girlsofsteel.Configuration;
  * Top limit of the arm unknown (probably around 100?)
  *
  */
-public class setArmAnglePID extends CommandBase {
+public class SetArmAnglePID extends CommandBase {
 
-    private final double desiredAngle;
-    private double angle;
-    private double changedTime;
-    private final double startTime;
-    private final double allowedAngleError;
+    private final Manipulator m_manipulator;
+    private final double m_desiredAngle;
+    private double m_angle;
+    private final double m_allowedAngleError;
 
 
-    public setArmAnglePID(double desiredAngle) {
-        requires(manipulator);
-        this.desiredAngle = desiredAngle;
-        allowedAngleError = 4; //2 degrees of error on both sides allowed
-        startTime = Timer.getFPGATimestamp();
+    public SetArmAnglePID(Manipulator manipulator, double desiredAngle) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
+        m_desiredAngle = desiredAngle;
+        m_allowedAngleError = 4; //2 degrees of error on both sides allowed
     }
 
     @Override
     protected void initialize() {
-        angle = desiredAngle * Configuration.desiredAnglePivotArmSign;
+        m_angle = m_desiredAngle * Configuration.desiredAnglePivotArmSign;
     }
 
     @Override
     protected void execute() {
-        if (angle < -18.2) {
-            angle = -18.2;
+        if (m_angle < -18.2) {
+            m_angle = -18.2;
         }
-        else if(angle > 113) {
-            angle = 110;
+        else if(m_angle > 113) {
+            m_angle = 110;
         }
-        manipulator.setSetPoint(angle);
+        m_manipulator.setSetPoint(m_angle);
         //System.out.println("SSEENNNTTTT AARRRMMMMMMMMM AANNNGGLLLLEEE ----- "+angle);
         //System.out.println("AARRRMMMMMMMMM AANNNGGLLLLEEE ----- "+manipulator.getDistance());
-        changedTime = Timer.getFPGATimestamp() - startTime;
     }
 
     @Override
     protected boolean isFinished() {
-        return Math.abs(desiredAngle-manipulator.getAbsoluteDistance()) < allowedAngleError;
+        return Math.abs(m_desiredAngle - m_manipulator.getAbsoluteDistance()) < m_allowedAngleError;
     }
 
     @Override
     protected void end() {
-        manipulator.holdAngle();
+        m_manipulator.holdAngle();
     }
 
     @Override

@@ -8,6 +8,9 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Driving;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -15,9 +18,9 @@ import girlsofsteel.objects.Camera;
  */
 public class AutonomousHotHighGoal extends CommandGroup{
 
-    public AutonomousHotHighGoal() {
-        addSequential(new MoveToPosition(1));
-        addParallel(new setArmAnglePID(30));
+    public AutonomousHotHighGoal(Chassis chassis, Driving driving, Manipulator manipulator) {
+        addSequential(new MoveToPosition(chassis, driving, 1));
+        addParallel(new SetArmAnglePID(manipulator, 30));
     if (Camera.isGoalHot()) {
         addSequential(new ShootHigh());
     }
