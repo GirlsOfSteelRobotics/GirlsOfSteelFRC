@@ -67,7 +67,7 @@ public class Shooter extends SubsystemBase {
         m_encoder.setInverted(true);
 
         m_master.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
-        m_master.setInverted(true);
+        m_master.setInverted(false);
         m_follower.follow(m_master, true);
 
         m_pidController.setP(SHOOTER_KP);
