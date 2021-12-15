@@ -8,6 +8,7 @@ import com.revrobotics.EncoderType;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
@@ -108,8 +109,8 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         double rpm = m_encoder.getVelocity();
-        // SmartDashboard.putNumber("RPM", rpm);
-        // SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
+        SmartDashboard.putNumber("RPM", rpm);
+        SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
         m_customNetworkTable.getEntry("Speed").setDouble(m_master.get());
         m_customNetworkTable.getEntry("Current RPM").setDouble(rpm);
         m_customNetworkTable.getEntry("Goal RPM").setDouble(m_goalRPM);
