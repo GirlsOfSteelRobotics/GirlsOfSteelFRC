@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,11 +13,11 @@ public class Claw extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private final CANTalon m_clawMotor;
+    private final WPI_TalonSRX m_clawMotor;
 
 
     public Claw() {
-        m_clawMotor = new CANTalon(RobotMap.CLAW_MOTOR);
+        m_clawMotor = new WPI_TalonSRX(RobotMap.CLAW_MOTOR);
         addChild("Talon", m_clawMotor);
     }
 

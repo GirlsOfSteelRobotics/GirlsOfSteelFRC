@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
@@ -15,13 +15,13 @@ import org.usfirst.frc.team3504.robot.RobotMap;
  */
 public class DriveSystem extends Subsystem implements PIDOutput{
 
-    private final CANTalon m_driveLeftA;
-    private final CANTalon m_driveLeftB;
-    private final CANTalon m_driveLeftC;
+    private final WPI_TalonSRX m_driveLeftA;
+    private final WPI_TalonSRX m_driveLeftB;
+    private final WPI_TalonSRX m_driveLeftC;
 
-    private final CANTalon m_driveRightA;
-    private final CANTalon m_driveRightB;
-    private final CANTalon m_driveRightC;
+    private final WPI_TalonSRX m_driveRightA;
+    private final WPI_TalonSRX m_driveRightB;
+    private final WPI_TalonSRX m_driveRightC;
 
     private final RobotDrive m_robotDrive;
 
@@ -35,12 +35,12 @@ public class DriveSystem extends Subsystem implements PIDOutput{
 
     public DriveSystem(Shifters shifters) {
         m_shifters = shifters;
-        m_driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A_CAN_ID);
-        m_driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B_CAN_ID);
-        m_driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C_CAN_ID);
-        m_driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A_CAN_ID);
-        m_driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B_CAN_ID);
-        m_driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C_CAN_ID);
+        m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A_CAN_ID);
+        m_driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B_CAN_ID);
+        m_driveLeftC = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_C_CAN_ID);
+        m_driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A_CAN_ID);
+        m_driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B_CAN_ID);
+        m_driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C_CAN_ID);
 
         m_driveLeftA.setNeutralMode(NeutralMode.Brake);
         m_driveLeftB.setNeutralMode(NeutralMode.Brake);

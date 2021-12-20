@@ -6,7 +6,6 @@ gos_java_robot(
     disable_checkstyle = True,
     main_class = "org.usfirst.frc.team3504.robot.Main",
     deps = [
-        "//old_robots/LegacyLibraries",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/opencv",
         "@bazelrio//libraries/java/wpilib/cameraserver",

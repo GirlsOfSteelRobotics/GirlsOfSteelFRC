@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motion.TrajectoryPoint;
@@ -25,8 +25,8 @@ public class DriveByMotionProfile extends Command {
     private static final int kMinPointsInTalon = 5;
 
     private final Chassis m_chassis;
-    private final CANTalon m_leftTalon;
-    private final CANTalon m_rightTalon;
+    private final WPI_TalonSRX m_leftTalon;
+    private final WPI_TalonSRX m_rightTalon;
     private final List<List<Double>> m_leftPoints;
     private final List<List<Double>> m_rightPoints;
     private final MotionProfileStatus m_leftStatus;
@@ -178,7 +178,7 @@ public class DriveByMotionProfile extends Command {
         return points;
     }
 
-    private void pushTrajectory(CANTalon talon, List<List<Double>> points) {
+    private void pushTrajectory(WPI_TalonSRX talon, List<List<Double>> points) {
         // **************handle Underrun
 
         /* create an empty point */

@@ -12,8 +12,6 @@ include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
 include 'libraries:GirlsOfSteelLibNavx'
 
-include 'old_robots:LegacyLibraries'
-
 //include 'old_robots:y2011:GOS2011:Drive'
 //include 'old_robots:y2011:GOS2011:MyRobot_otherschool'
 //include 'old_robots:y2011:GOS2011:robolatest'

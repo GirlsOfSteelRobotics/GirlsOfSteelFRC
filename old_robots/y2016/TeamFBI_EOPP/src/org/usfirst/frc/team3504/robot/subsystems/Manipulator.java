@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
         public Manipulator() {
 
-            m_conveyorBeltMotorRight = new CANTalon(6);
-            m_conveyorBeltMotorLeft = new CANTalon(7);
+            m_conveyorBeltMotorRight = new WPI_TalonSRX(6);
+            m_conveyorBeltMotorLeft = new WPI_TalonSRX(7);
         }
 
         @Override

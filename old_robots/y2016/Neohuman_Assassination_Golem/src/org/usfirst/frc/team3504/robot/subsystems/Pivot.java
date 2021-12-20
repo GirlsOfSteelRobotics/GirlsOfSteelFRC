@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,13 +13,13 @@ public class Pivot extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private final CANTalon m_pivotMotor;
+    private final WPI_TalonSRX m_pivotMotor;
 
     private double m_encOffsetValue;
 
     public Pivot() {
 
-        m_pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
+        m_pivotMotor = new WPI_TalonSRX(RobotMap.PIVOT_MOTOR);
         addChild("Talon", m_pivotMotor);
 
         m_pivotMotor.overrideSoftLimitsEnable(!RobotMap.USING_LIMIT_SWITCHES);

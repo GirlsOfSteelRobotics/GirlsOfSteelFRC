@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,13 +18,13 @@ public class Lifter extends Subsystem {
     public static final double DISTANCE_THREE_TOTES = -3000;// -31359;
     public static final double DISTANCE_FOUR_TOTES = -15000;// -41812;
 
-    private final CANTalon m_liftTalon;
+    private final WPI_TalonSRX m_liftTalon;
 
     private final DigitalInput m_liftTopLimit;
     private final DigitalInput m_liftBottomLimit;
 
     public Lifter() {
-        m_liftTalon = new CANTalon(RobotMap.FORKLIFT_CHANNEL_A);
+        m_liftTalon = new WPI_TalonSRX(RobotMap.FORKLIFT_CHANNEL_A);
         m_liftTopLimit = new DigitalInput(RobotMap.FORKLIFT_TOP_LIMIT);
         m_liftBottomLimit = new DigitalInput(RobotMap.FORKLIFT_BOTTOM_LIMIT);
 

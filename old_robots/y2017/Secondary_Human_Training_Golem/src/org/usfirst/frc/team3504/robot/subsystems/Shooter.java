@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -32,14 +32,14 @@ public class Shooter extends Subsystem {
     public static final int AUTO_SHOOTER_SPEED_KEY = 3333;
     private static final double MAX_SHOOTER_ERROR = 0.05;
 
-    private final CANTalon m_lowShooterMotor;
-    private final CANTalon m_highShooterMotor;
+    private final WPI_TalonSRX m_lowShooterMotor;
+    private final WPI_TalonSRX m_highShooterMotor;
     private int m_shooterSpeed = SHOOTER_DEFAULT_SPEED;
     private boolean m_lowMotorRunning;
 
     public Shooter() {
-        m_lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
-        m_highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR);
+        m_lowShooterMotor = new WPI_TalonSRX(RobotMap.LOW_SHOOTER_MOTOR);
+        m_highShooterMotor = new WPI_TalonSRX(RobotMap.HIGH_SHOOTER_MOTOR);
 
         m_lowShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_highShooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -123,7 +123,7 @@ public class Shooter extends Subsystem {
         System.out.println("currentShooterSpeed has reset to: " + m_shooterSpeed);
     }
 
-    public final void setupEncoder(CANTalon talon) { // call on both talons
+    public final void setupEncoder(WPI_TalonSRX talon) { // call on both talons
         // Set Encoder Types
         talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         talon.setSensorPhase(true);

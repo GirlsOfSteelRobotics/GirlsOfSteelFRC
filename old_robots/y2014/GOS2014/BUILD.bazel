@@ -6,7 +6,6 @@ gos_java_robot(
     disable_checkstyle = True,
     main_class = "girlsofsteel.Main",
     deps = [
-        "//old_robots/LegacyLibraries",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/old_commands",
