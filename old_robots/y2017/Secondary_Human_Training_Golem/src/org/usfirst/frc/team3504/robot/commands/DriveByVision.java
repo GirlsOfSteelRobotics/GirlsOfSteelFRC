@@ -61,10 +61,10 @@ public class DriveByVision extends Command {
         m_chassis.setSpeedMode();
 
         // tuned by janet and ziya on 2/20, overrides PID set in chassis method
-        m_leftTalon.setF(0.22); // carpet on practice field
-        m_leftTalon.setP(0.235);
-        m_rightTalon.setF(0.2);
-        m_rightTalon.setP(0.235);
+        m_leftTalon.config_kF(0, 0.22); // carpet on practice field
+        m_leftTalon.config_kP(0, 0.235);
+        m_rightTalon.config_kF(0, 0.2);
+        m_rightTalon.config_kP(0, 0.235);
 
         System.out.println("DriveByVision Initialized");
 

@@ -35,36 +35,6 @@ public class CANTalon extends WPI_TalonSRX implements Sendable, SpeedController 
         m_activeControlMode = controlMode;
     }
 
-    public void setP(double kp) {
-        config_kP(0, kp);
-    }
-
-    public void setI(double ki) {
-        config_kI(0, ki);
-    }
-
-    public void setD(double kd) {
-        config_kD(0, kd);
-    }
-
-    public void setF(double kf) {
-        config_kF(0, kf);
-    }
-
-    public void setPID(double p, double i, double d) {
-        setPID(p, i, d, 0, 0, 0, 0);
-    }
-
-    public void setPID(double p, double i, double d, double f, int izone, double closeLoopRampRate,
-                       int profile) {
-        setP(p);
-        setI(i);
-        setD(d);
-        setF(f);
-        config_IntegralZone(profile, izone);
-        configClosedloopRamp(closeLoopRampRate);
-    }
-
     public double getSetpoint() {
         return getClosedLoopTarget();
     }

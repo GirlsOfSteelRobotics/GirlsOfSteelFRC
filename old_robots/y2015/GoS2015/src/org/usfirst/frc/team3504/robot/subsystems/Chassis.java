@@ -69,19 +69,27 @@ public class Chassis extends Subsystem {
         m_rearLeftWheel.setNeutralMode(NeutralMode.Brake);
 
         m_frontRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_frontRightWheel.setPID(kP, kI, kD);
+        m_frontRightWheel.config_kP(0, kP);
+        m_frontRightWheel.config_kI(0, kI);
+        m_frontRightWheel.config_kD(0, kD);
         m_frontRightWheel.reverseSensor(true);
 
         m_frontLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_frontLeftWheel.setPID(kP, kI, kD);
+        m_frontLeftWheel.config_kP(0, kP);
+        m_frontLeftWheel.config_kI(0, kI);
+        m_frontLeftWheel.config_kD(0, kD);
         m_frontLeftWheel.reverseSensor(true);
 
         m_rearRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_rearRightWheel.setPID(kP, kI, kD);
+        m_rearRightWheel.config_kP(0, kP);
+        m_rearRightWheel.config_kI(0, kI);
+        m_rearRightWheel.config_kD(0, kD);
         m_rearRightWheel.reverseSensor(true);
 
         m_rearLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_rearLeftWheel.setPID(kP, kI, kD);
+        m_rearLeftWheel.config_kP(0, kP);
+        m_rearLeftWheel.config_kI(0, kI);
+        m_rearLeftWheel.config_kD(0, kD);
         m_rearLeftWheel.reverseSensor(true);
 
         m_getGyro = true;
@@ -113,30 +121,26 @@ public class Chassis extends Subsystem {
         SmartDashboard.putNumber("Bus Voltage", m_frontRightWheel.getBusVoltage());
         SmartDashboard.putNumber("Closed Loop Error", m_frontRightWheel.getClosedLoopError());
 
-        m_frontRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_frontRightWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_frontRightWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_frontRightWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_frontRightWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
         printPositionsToSmartDashboard();
 
-        m_frontLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_frontRightWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_frontRightWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_frontRightWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_frontRightWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
 
-        m_rearRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_rearRightWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_rearRightWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_rearRightWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_rearRightWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
 
-        m_rearLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_rearLeftWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_rearLeftWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_rearLeftWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_rearLeftWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
 
         m_frontLeftWheel.set((SmartDashboard.getNumber("Front Left", 0)) * 750);
         m_frontRightWheel.set((SmartDashboard.getNumber("Front Right", 0)) * 750);

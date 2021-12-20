@@ -100,10 +100,10 @@ public class Chassis extends Subsystem {
                                             // drive talons
         // PID Values
         talon.setPosition(0);
-        talon.setF(0);
-        talon.setP(0.32); // 0.64 good
-        talon.setI(0.0);
-        talon.setD(0.0);
+        talon.config_kF(0, 0);
+        talon.config_kP(0, 0.32); // 0.64 good
+        talon.config_kI(0, 0.0);
+        talon.config_kD(0, 0.0);
     }
 
     public void turn(double speed, double curve) {

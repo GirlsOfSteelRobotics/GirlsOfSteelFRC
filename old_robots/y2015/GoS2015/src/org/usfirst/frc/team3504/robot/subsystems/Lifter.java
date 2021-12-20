@@ -32,15 +32,17 @@ public class Lifter extends Subsystem {
         SmartDashboard.putNumber("D value", 0);
 
         m_liftTalon.changeControlMode(CANTalon.TalonControlMode.Position);
-        m_liftTalon.setPID(SmartDashboard.getNumber("P value", 0), SmartDashboard.getNumber("I value", 0),
-                SmartDashboard.getNumber("D value", 0), 0, 0, 0, 0);
+        m_liftTalon.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_liftTalon.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_liftTalon.config_kD(0, SmartDashboard.getNumber("D value", 0));
 
         SmartDashboard.putNumber("Lifter Setpoint", 1700);
     }
 
     public void tunePID() {
-        m_liftTalon.setPID(SmartDashboard.getNumber("P value", 0), SmartDashboard.getNumber("I value", 0),
-                SmartDashboard.getNumber("D value", 0), 0, 0, 0, 0);
+        m_liftTalon.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_liftTalon.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_liftTalon.config_kD(0, SmartDashboard.getNumber("D value", 0));
 
         m_liftTalon.set(SmartDashboard.getNumber("Lifter Setpoint", 0)); // Number of
                                                                     // encoder

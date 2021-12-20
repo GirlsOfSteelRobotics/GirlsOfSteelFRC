@@ -49,30 +49,30 @@ public class TurnByDistance extends Command {
         // Robot.chassis.setupFPID(rightTalon);
 
         if (m_speed == Shifters.Speed.kLow){
-            m_leftTalon.setP(0.17);
-            m_rightTalon.setP(0.17);
+            m_leftTalon.config_kP(0, 0.17);
+            m_rightTalon.config_kP(0, 0.17);
 
-            m_leftTalon.setI(0.0);
-            m_rightTalon.setI(0.0);
+            m_leftTalon.config_kI(0, 0.0);
+            m_rightTalon.config_kI(0, 0.0);
 
-            m_leftTalon.setD(0.02);
-            m_rightTalon.setD(0.02);
+            m_leftTalon.config_kD(0, 0.02);
+            m_rightTalon.config_kD(0, 0.02);
 
-            m_leftTalon.setF(0.0);
-            m_rightTalon.setF(0.0);
+            m_leftTalon.config_kF(0, 0.0);
+            m_rightTalon.config_kF(0, 0.0);
         }
         else if (m_speed == Shifters.Speed.kHigh){
-            m_leftTalon.setP(0.02);
-            m_rightTalon.setP(0.02);
+            m_leftTalon.config_kP(0, 0.02);
+            m_rightTalon.config_kP(0, 0.02);
 
-            m_leftTalon.setI(0.0);
-            m_rightTalon.setI(0.0);
+            m_leftTalon.config_kI(0, 0.0);
+            m_rightTalon.config_kI(0, 0.0);
 
-            m_leftTalon.setD(0.04);
-            m_rightTalon.setD(0.04);
+            m_leftTalon.config_kD(0, 0.04);
+            m_rightTalon.config_kD(0, 0.04);
 
-            m_leftTalon.setF(0.0);
-            m_rightTalon.setF(0.0);
+            m_leftTalon.config_kF(0, 0.0);
+            m_rightTalon.config_kF(0, 0.0);
         }
 
 

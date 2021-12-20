@@ -54,20 +54,20 @@ public class Shooter extends Subsystem {
         addChild("high", m_highShooterMotor);
 
         // PID Values
-        m_lowShooterMotor.setF(0.04407); // see p 17 of motion profile manual
+        m_lowShooterMotor.config_kF(0, 0.04407); // see p 17 of motion profile manual
                                         // 0.04407
         // lowShooterMotor.setF(0); //see p 17 of motion profile manual
-        m_lowShooterMotor.setP(0.01);
-        m_lowShooterMotor.setI(0.0);
-        m_lowShooterMotor.setD(0.0);
+        m_lowShooterMotor.config_kP(0, 0.01);
+        m_lowShooterMotor.config_kI(0, 0.0);
+        m_lowShooterMotor.config_kD(0, 0.0);
 
         // PID Values
-        m_highShooterMotor.setF(0.02997); // see p 17 of motion profile manual
+        m_highShooterMotor.config_kF(0, 0.02997); // see p 17 of motion profile manual
                                         // 0.02997
         // highShooterMotor.setF(0);
-        m_highShooterMotor.setP(0.01);
-        m_highShooterMotor.setI(0.0);
-        m_highShooterMotor.setD(0.0);
+        m_highShooterMotor.config_kP(0, 0.01);
+        m_highShooterMotor.config_kI(0, 0.0);
+        m_highShooterMotor.config_kD(0, 0.0);
 
         addChild("lowShooterMotor", m_lowShooterMotor);
         addChild("highShooterMotor", m_highShooterMotor);
