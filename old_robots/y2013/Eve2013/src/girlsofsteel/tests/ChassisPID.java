@@ -2,29 +2,32 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Chassis;
 
 public class ChassisPID extends CommandBase {
 
-    private double rate;
+    private final Chassis m_chassis;
+    private double m_rate;
 
-    private double rightP;
-    private double rightI;
-    private double rightD;
-    private double backP;
-    private double backI;
-    private double backD;
-    private double leftP;
-    private double leftI;
-    private double leftD;
+    private double m_rightP;
+    private double m_rightI;
+    private double m_rightD;
+    private double m_backP;
+    private double m_backI;
+    private double m_backD;
+    private double m_leftP;
+    private double m_leftI;
+    private double m_leftD;
 
-    public ChassisPID(){
+    public ChassisPID(Chassis chassis){
+        m_chassis = chassis;
         requires(chassis);
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initRatePIDs();
+        m_chassis.initEncoders();
+        m_chassis.initRatePIDs();
         SmartDashboard.putNumber("PID rate", 0.0);
         SmartDashboard.putBoolean("Right PID", false);
         SmartDashboard.putBoolean("Back PID", false);
@@ -39,59 +42,59 @@ public class ChassisPID extends CommandBase {
         SmartDashboard.putNumber("Left P", 0.0);
         SmartDashboard.putNumber("Left I", 0.0);
         SmartDashboard.putNumber("Left D", 0.0);
-        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoderRate());
-        SmartDashboard.putNumber("Back Encoder", chassis.getBackEncoderRate());
-        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderRate());
+        SmartDashboard.putNumber("Right Encoder", m_chassis.getRightEncoderRate());
+        SmartDashboard.putNumber("Back Encoder", m_chassis.getBackEncoderRate());
+        SmartDashboard.putNumber("Left Encoder", m_chassis.getLeftEncoderRate());
     }
 
     @Override
     protected void execute() {
         //get rate
-        rate = SmartDashboard.getNumber("PID rate", 0.0);
+        m_rate = SmartDashboard.getNumber("PID rate", 0.0);
         //get P, I, & D's
         //SmartDashboard.getBoolean("Click When Done Testing Chassis PID", false);
-        rightP = SmartDashboard.getNumber("Right P", 0.0);
-        rightI = SmartDashboard.getNumber("Right I", 0.0);
-        rightD = SmartDashboard.getNumber("Right D", 0.0);
-        backP = SmartDashboard.getNumber("Back P", 0.0);
-        backI = SmartDashboard.getNumber("Back I", 0.0);
-        backD = SmartDashboard.getNumber("Back D", 0.0);
-        leftP = SmartDashboard.getNumber("Left P", 0.0);
-        leftI = SmartDashboard.getNumber("Left I", 0.0);
-        leftD = SmartDashboard.getNumber("Left D", 0.0);
+        m_rightP = SmartDashboard.getNumber("Right P", 0.0);
+        m_rightI = SmartDashboard.getNumber("Right I", 0.0);
+        m_rightD = SmartDashboard.getNumber("Right D", 0.0);
+        m_backP = SmartDashboard.getNumber("Back P", 0.0);
+        m_backI = SmartDashboard.getNumber("Back I", 0.0);
+        m_backD = SmartDashboard.getNumber("Back D", 0.0);
+        m_leftP = SmartDashboard.getNumber("Left P", 0.0);
+        m_leftI = SmartDashboard.getNumber("Left I", 0.0);
+        m_leftD = SmartDashboard.getNumber("Left D", 0.0);
         //set P, I, D values
-        chassis.setRightPIDRateValues(rightP, rightI, rightD);
-        System.out.println("Right P: " + rightP + " I:" + rightI + " D: " + rightD);
-        chassis.setBackPIDRateValues(backP, backI, backD);
-        chassis.setLeftPIDRateValues(leftP, leftI, leftD);
+        m_chassis.setRightPIDRateValues(m_rightP, m_rightI, m_rightD);
+        System.out.println("Right P: " + m_rightP + " I:" + m_rightI + " D: " + m_rightD);
+        m_chassis.setBackPIDRateValues(m_backP, m_backI, m_backD);
+        m_chassis.setLeftPIDRateValues(m_leftP, m_leftI, m_leftD);
         //get rate
-        rate = SmartDashboard.getNumber("PID rate", 0.0);
+        m_rate = SmartDashboard.getNumber("PID rate", 0.0);
         //set the rate if enabled
         //right setting
         if(SmartDashboard.getBoolean("Right PID", false)){
-            chassis.setRightPIDRate(rate);
+            m_chassis.setRightPIDRate(m_rate);
         }else{
-            chassis.setRightPIDRate(0.0);
+            m_chassis.setRightPIDRate(0.0);
         }
         //back setting
         if(SmartDashboard.getBoolean("Back PID", false)){
-            chassis.setBackPIDRate(rate);
+            m_chassis.setBackPIDRate(m_rate);
         }else{
-            chassis.setBackPIDRate(0.0);
+            m_chassis.setBackPIDRate(0.0);
         }
         //left setting
         if(SmartDashboard.getBoolean("Left ", false)){
-            chassis.setLeftPIDRate(rate);
+            m_chassis.setLeftPIDRate(m_rate);
         }else{
-            chassis.setLeftPIDRate(0.0);
+            m_chassis.setLeftPIDRate(0.0);
         }
         //print encoder rates
         SmartDashboard.putNumber("Right Encoder",
-                chassis.getRightEncoderRate());
+            m_chassis.getRightEncoderRate());
         SmartDashboard.putNumber("Back Encoder",
-                chassis.getBackEncoderRate());
+            m_chassis.getBackEncoderRate());
         SmartDashboard.putNumber("Left Encoder",
-                chassis.getLeftEncoderRate());
+            m_chassis.getLeftEncoderRate());
     }
 
     @Override
@@ -102,9 +105,9 @@ public class ChassisPID extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.stopRatePIDs();
-        chassis.stopEncoders();
-        chassis.stopJags();
+        m_chassis.stopRatePIDs();
+        m_chassis.stopEncoders();
+        m_chassis.stopJags();
     }
 
     @Override

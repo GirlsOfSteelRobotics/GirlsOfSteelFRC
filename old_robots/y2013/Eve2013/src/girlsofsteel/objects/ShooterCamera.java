@@ -12,13 +12,13 @@ import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class ShooterCamera {
     private static final double positionOneAngleOffset = -7.2;
     private static final double positionTwoAngleOffset = 0;
-    private static final double positionThreeAngleOffset = 0;
 
     //magic value must change
-    private static double epsilon = 5;
+    private static final double epsilon = 5;
     private static double heightOfDesiredPosition;
     private static double widthOfDesiredPosition;
 

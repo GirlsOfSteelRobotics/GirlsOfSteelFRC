@@ -2,18 +2,24 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Feeder;
+import girlsofsteel.subsystems.Shooter;
 
 public class ShooterJags extends CommandBase {
 
-    private double speed = 0.0;
+    private static final double WAIT_TIME = 1.0;
 
-    private int counter = 0;
-    private boolean pushed;
-    private double time;
+    private final Shooter m_shooter;
+    private final Feeder m_feeder;
 
-    private final double WAIT_TIME = 1.0;
+    private double m_speed;
 
-    public ShooterJags(){
+    private boolean m_pushed;
+    private double m_time;
+
+    public ShooterJags(Feeder feeder, Shooter shooter){
+        m_feeder = feeder;
+        m_shooter = shooter;
         SmartDashboard.putBoolean("Shooter Jags", false);
         SmartDashboard.putNumber("Jag Speed", 0.0);
         SmartDashboard.putBoolean("Click When Done Testing Shooter Jags", false);
@@ -21,18 +27,18 @@ public class ShooterJags extends CommandBase {
 
     @Override
     protected void initialize() {
-        speed = SmartDashboard.getNumber("Jag Speed", 0.0);
-        counter = 0;
-        pushed = false;
-        shooter.setJags(speed);
-        time = timeSinceInitialized();
-        while(timeSinceInitialized() - time < 4){ // NOPMD(EmptyWhileStmt)
+        m_speed = SmartDashboard.getNumber("Jag Speed", 0.0);
+        m_pushed = false;
+        m_shooter.setJags(m_speed);
+        m_time = timeSinceInitialized();
+        while(timeSinceInitialized() - m_time < 4){ // NOPMD(EmptyWhileStmt)
             // Wait for init
         }//overall wait time is 4 + WAIT_TIME = 5
-        time = timeSinceInitialized();
+        m_time = timeSinceInitialized();
     }
 
     @Override
+    @SuppressWarnings("PMD.CollapsibleIfStatements")
     protected void execute() {
         if(SmartDashboard.getBoolean("Shooter Jags", false)){
 //            shooter.setJags(speed);
@@ -40,16 +46,16 @@ public class ShooterJags extends CommandBase {
 //        }else{
 //            shooter.setJags(0.0);
 //        }
-        if(timeSinceInitialized() - time > WAIT_TIME){
-            if(!pushed){
-                feeder.pushShooter();
-                pushed = true;
+        if(timeSinceInitialized() - m_time > WAIT_TIME){
+            if(!m_pushed){
+                m_feeder.pushShooter();
+                m_pushed = true;
             }else{
-                feeder.pullShooter();
-                pushed = false;
+                m_feeder.pullShooter();
+                m_pushed = false;
 //                counter++;
             }
-            time = timeSinceInitialized();
+            m_time = timeSinceInitialized();
         }
         }
     }
@@ -62,7 +68,7 @@ public class ShooterJags extends CommandBase {
 
     @Override
     protected void end() {
-        shooter.setJags(0.0);
+        m_shooter.setJags(0.0);
     }
 
     @Override

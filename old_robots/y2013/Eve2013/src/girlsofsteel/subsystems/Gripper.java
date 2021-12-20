@@ -14,48 +14,48 @@ import girlsofsteel.RobotMap;
  * @author Heather
  */
 public class Gripper extends Subsystem{
-    private final DigitalInput openGripperSwitch;
-    private final DigitalInput closeGripperSwitch;
-    private final Solenoid openSolenoid;
-    private final Solenoid closeSolenoid;
+    private final DigitalInput m_openGripperSwitch;
+    private final DigitalInput m_closeGripperSwitch;
+    private final Solenoid m_openSolenoid;
+    private final Solenoid m_closeSolenoid;
 
     public Gripper(DigitalInput openGripperSwitch, DigitalInput closeGripperSwitch,
             int openSolenoidPort, int closeSolenoidPort) {
-        this.openGripperSwitch = openGripperSwitch;
-        this.closeGripperSwitch = closeGripperSwitch;
+        this.m_openGripperSwitch = openGripperSwitch;
+        this.m_closeGripperSwitch = closeGripperSwitch;
 
-        openSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE, openSolenoidPort);
-        closeSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE,closeSolenoidPort);
+        m_openSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE, openSolenoidPort);
+        m_closeSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE,closeSolenoidPort);
     }
 
     //Moves the pneumatic piston slider out
     public void closeGrip() {
-        openSolenoid.set(true);
-        closeSolenoid.set(false);
+        m_openSolenoid.set(true);
+        m_closeSolenoid.set(false);
     }
 
     //Getter method -> Tells if the piston slider is out (true) or in (false)
     public boolean gripperClosed(){
-        return closeSolenoid.get();
+        return m_closeSolenoid.get();
     }
 
 
     //Moves the pneumatic piston slider in
     public void openGrip() {
 
-        openSolenoid.set(false);
-        closeSolenoid.set(true);
+        m_openSolenoid.set(false);
+        m_closeSolenoid.set(true);
     }
     //Limit Switch Method
 
     //at bar means hitting open limit switch...PLEASE CHECK THIS!!!!!!!!
     public boolean atBar() {
-        return !openGripperSwitch.get();
+        return !m_openGripperSwitch.get();
     } //Tells you that you have gone up a bar (the switch hitting a corner)
 
     //past bar means not hitting closed limit switch...PLEASE CHECK THIS!!!!!!!!
     public boolean pastBar(){
-        return !closeGripperSwitch.get();
+        return !m_closeGripperSwitch.get();
     }
     //This will count how many bar you hit, until you get to three at which point it returns true.
 

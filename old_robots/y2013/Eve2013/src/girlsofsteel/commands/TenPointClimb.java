@@ -1,6 +1,8 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import girlsofsteel.subsystems.Climber;
+import girlsofsteel.subsystems.Gripper;
 
 /**
  *
@@ -8,19 +10,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class TenPointClimb extends CommandGroup {
 
-    public TenPointClimb() {
+    public TenPointClimb(Climber climber, Gripper gripper) {
 
         //Closes all grippers
-        addSequential(new CloseBottomGrip());
-        addParallel(new RetractClimberPiston());
+        addSequential(new CloseBottomGrip(gripper));
+        addParallel(new RetractClimberPiston(climber));
         //Starts motors to begin climbing
-        addSequential(new StartClimbMotors());
+        addSequential(new StartClimbMotors(climber));
 
 //        addSequential(new OpenGripAtBar(CommandBase.middleGripper));
 //        addSequential(new CloseGripPastBar(CommandBase.middleGripper));
 
         //Stops the climbing movement
-        addSequential(new StopClimbMotors());
+        addSequential(new StopClimbMotors(climber));
     }
 }
 //put in manual grips (open/close grips) (smart dash board)

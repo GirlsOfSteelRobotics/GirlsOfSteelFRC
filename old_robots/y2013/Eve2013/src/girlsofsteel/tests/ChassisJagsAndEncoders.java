@@ -5,6 +5,7 @@
 package girlsofsteel.tests;
 
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Chassis;
 
 /**
  *
@@ -13,10 +14,12 @@ import girlsofsteel.commands.CommandBase;
     public class ChassisJagsAndEncoders extends CommandBase {
     //copied from KiwiDrive code
 
-    private double speed;
+    private final Chassis m_chassis;
+    private double m_speed;
 
-    public ChassisJagsAndEncoders(){
-        requires(chassis);
+    public ChassisJagsAndEncoders(Chassis chassis){
+        m_chassis = chassis;
+        requires(m_chassis);
 //        SmartDashboard.putBoolean("Right Jag", false);
 //        SmartDashboard.putBoolean("Back Jag", false);
 //        SmartDashboard.putBoolean("Left Jag", false);
@@ -28,10 +31,11 @@ import girlsofsteel.commands.CommandBase;
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
+        m_chassis.initEncoders();
     }
 
     @Override
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
     protected void execute() {
 //        speed = SmartDashboard.getNumber("Jag speed", 0.0);
 //        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoderDistance());
@@ -50,41 +54,41 @@ import girlsofsteel.commands.CommandBase;
         //tests to see if Jags goes to set speed
         double allowedError = 0.05;
         double desiredSpeed = 0.2;
-        chassis.setRightJag(desiredSpeed);
+        m_chassis.setRightJag(desiredSpeed);
             try {
                 wait(1000);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(); // NOPMD
             }
-        speed = chassis.getRightEncoderRate();
-        if (speed > desiredSpeed - allowedError && speed < desiredSpeed + allowedError) {
+        m_speed = m_chassis.getRightEncoderRate();
+        if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
             System.out.println("Passed Right Jag speed test");
         }
 //        System.out.println("R Distance:" + chassis.getRightEncoderDistance());
         //System.out.println("R Rate: " + chassis.getRightEncoderRate());
         desiredSpeed = 0.3;
-        chassis.setBackJag(desiredSpeed);
+        m_chassis.setBackJag(desiredSpeed);
             try {
                 wait(1000);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace();// NOPMD
             }
 //        System.out.println("B Distance:" + chassis.getBackEncoderDistance());
         //System.out.println("B Rate: " + chassis.getBackEncoderRate());
-        speed = chassis.getBackEncoderRate();
-        if (speed > desiredSpeed - allowedError && speed < desiredSpeed + allowedError) {
+        m_speed = m_chassis.getBackEncoderRate();
+        if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
             System.out.println("Passed Back Jag speed test");
         }
         desiredSpeed = 0.4;
-        chassis.setLeftJag(desiredSpeed);
+        m_chassis.setLeftJag(desiredSpeed);
         try {
                 wait(1000);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace();// NOPMD
             }
 //        System.out.println("L Distance:" + chassis.getLeftEncoderDistance());
-        speed = chassis.getLeftEncoderRate();
-        if (speed > desiredSpeed - allowedError && speed < desiredSpeed + allowedError) {
+        m_speed = m_chassis.getLeftEncoderRate();
+        if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
             System.out.println("Passed Left Jag speed test");
         }
 
@@ -96,8 +100,8 @@ import girlsofsteel.commands.CommandBase;
 
     @Override
     protected void end() {
-        chassis.stopJags();
-        chassis.stopEncoders();
+        m_chassis.stopJags();
+        m_chassis.stopEncoders();
     }
 
     @Override

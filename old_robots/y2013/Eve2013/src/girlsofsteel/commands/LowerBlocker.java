@@ -5,14 +5,19 @@
 
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Feeder;
+
 /**
  *
  * @author GirlsOfSTEEL
  */
 public class LowerBlocker extends CommandBase{
 
-    public LowerBlocker(){
-        requires(feeder);
+    private final Feeder m_feeder;
+
+    public LowerBlocker(Feeder feeder){
+        m_feeder = feeder;
+        requires(m_feeder);
     }
 
     @Override
@@ -21,7 +26,7 @@ public class LowerBlocker extends CommandBase{
 
     @Override
     protected void execute() {
-        feeder.pullBlocker();
+        m_feeder.pullBlocker();
     }
 
     @Override

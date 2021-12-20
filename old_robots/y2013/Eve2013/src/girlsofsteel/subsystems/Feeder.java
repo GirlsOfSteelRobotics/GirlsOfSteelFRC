@@ -14,48 +14,48 @@ import girlsofsteel.RobotMap;
  */
 public class Feeder extends Subsystem {
     //Shooter piston
-    private final Solenoid frontPiston;
-    private final Solenoid backPiston;
-    private final Solenoid frontBlocker;
-    private final Solenoid backBlocker;
-    private static boolean isRaised;
+    private final Solenoid m_frontPiston;
+    private final Solenoid m_backPiston;
+    private final Solenoid m_frontBlocker;
+    private final Solenoid m_backBlocker;
+    private boolean m_isRaised;
 
     public Feeder() {
         //Shooter piston
-        frontPiston = new Solenoid(RobotMap.SHOOTER_MODULE, RobotMap.SHOOTER_PISTON_FRONT);
-        backPiston = new Solenoid(RobotMap.SHOOTER_MODULE, RobotMap.SHOOTER_PISTON_BACK);
-        frontBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, RobotMap.OPEN_BLOCKER_SOLENOID);
-        backBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, RobotMap.CLOSE_BLOCKER_SOLENOID);
-        isRaised = false;
+        m_frontPiston = new Solenoid(RobotMap.SHOOTER_MODULE, RobotMap.SHOOTER_PISTON_FRONT);
+        m_backPiston = new Solenoid(RobotMap.SHOOTER_MODULE, RobotMap.SHOOTER_PISTON_BACK);
+        m_frontBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, RobotMap.OPEN_BLOCKER_SOLENOID);
+        m_backBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, RobotMap.CLOSE_BLOCKER_SOLENOID);
+        m_isRaised = false;
     }
 
-    public static boolean getIsRaised() {
-        return isRaised;
+    public boolean getIsRaised() {
+        return m_isRaised;
     }
 
-    public static void setIsRaised(boolean newRaised) {
-        isRaised = newRaised;
+    public void setIsRaised(boolean newRaised) {
+        m_isRaised = newRaised;
     }
 
     //Shooter Piston Methods
     public void pushShooter() {
-        frontPiston.set(false);
-        backPiston.set(true);
+        m_frontPiston.set(false);
+        m_backPiston.set(true);
     }
 
     public void pullShooter() {
-        frontPiston.set(true);
-        backPiston.set(false);
+        m_frontPiston.set(true);
+        m_backPiston.set(false);
     }
 
     public void pushBlocker(){
-        frontBlocker.set(false);
-        backBlocker.set(true);
+        m_frontBlocker.set(false);
+        m_backBlocker.set(true);
     }
 
     public void pullBlocker(){
-        frontBlocker.set(true);
-        backBlocker.set(false);
+        m_frontBlocker.set(true);
+        m_backBlocker.set(false);
     }
 
     @Override

@@ -1,11 +1,15 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class StartGyro extends CommandBase {
 
-    private int angle;
+    private final Chassis m_chassis;
+    private int m_angle;
 
-    public StartGyro(int angle){
-        this.angle = angle;
+    public StartGyro(Chassis chassis, int angle){
+        m_chassis = chassis;
+        this.m_angle = angle;
     }
 
     @Override
@@ -14,8 +18,8 @@ public class StartGyro extends CommandBase {
 
     @Override
     protected void execute() {
-        angle -= chassis.getGyroAngle();
-        chassis.setFieldAdjustment(angle);
+        m_angle -= m_chassis.getGyroAngle();
+        m_chassis.setFieldAdjustment(m_angle);
     }
 
     @Override

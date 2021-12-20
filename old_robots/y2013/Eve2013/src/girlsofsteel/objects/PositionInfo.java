@@ -1,5 +1,7 @@
 package girlsofsteel.objects;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class PositionInfo {
 
     //CHANGE NAMES TO BE SPECIFIC PLACES & ADD ANGLES
@@ -13,10 +15,10 @@ public class PositionInfo {
         //set the should-be 3 positions here
         positions[NO_POSITION] = new Position(0,0);
         positions[BACK_RIGHT] = new Position(
-                girlsofsteel.commands.CommandBase.chassis.BACK_RIGHT_OFFSET,
+                Chassis.BACK_RIGHT_OFFSET,
                 0.735);//78
         positions[BACK_LEFT] = new Position(
-                girlsofsteel.commands.CommandBase.chassis.BACK_LEFT_OFFSET,
+            Chassis.BACK_LEFT_OFFSET,
                 0.81);
     }//end constructor
 
@@ -34,20 +36,20 @@ public class PositionInfo {
 
     private static class Position{
 
-        private final int angle;
-        private final double speed;
+        private final int m_angle;
+        private final double m_speed;
 
         public Position(int angleAdjustment, double shooterSpeed){
-            angle = angleAdjustment;
-            speed = shooterSpeed;
+            m_angle = angleAdjustment;
+            m_speed = shooterSpeed;
         }
 
         public int getAngle(){
-            return angle;
+            return m_angle;
         }
 
         public double getSpeed(){
-            return speed;
+            return m_speed;
         }
 
     }//end inner class

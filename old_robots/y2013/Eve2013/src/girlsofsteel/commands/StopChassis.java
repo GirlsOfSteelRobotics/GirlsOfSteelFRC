@@ -1,8 +1,14 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.DriveFlag;
+
 public class StopChassis extends CommandBase {
 
-    public StopChassis(){
+    private final Chassis m_chassis;
+
+    public StopChassis(Chassis chassis, DriveFlag drive){
+        m_chassis = chassis;
         requires(drive);
         requires(chassis);
     }
@@ -13,7 +19,7 @@ public class StopChassis extends CommandBase {
 
     @Override
     protected void execute() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

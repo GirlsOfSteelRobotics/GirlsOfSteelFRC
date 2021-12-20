@@ -12,51 +12,52 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class MagneticPulseCounter implements Runnable {
 
-    private final DigitalInput digiPut;
-    private int pulses;
-    private final boolean done = false;
-    private int[] pulsesBetweenTime;
-    private int counter = -1;
-    private final static long timeLength = 50; //Times checked per second (10)
-    private final static int relevant = 20; //How much data is kept
+    private static final long timeLength = 50; //Times checked per second (10)
+    private static final int relevant = 20; //How much data is kept
+
+    private final DigitalInput m_digiPut;
+    private int m_pulses;
+    private static final boolean m_done = false;
+    private int[] m_pulsesBetweenTime;
+    private int m_counter = -1;
 
     public MagneticPulseCounter(int channel) {
-        digiPut = new DigitalInput(channel);
+        m_digiPut = new DigitalInput(channel);
     }
 
     @Override
     public void run() {
-        pulsesBetweenTime = new int[relevant];
-        new Thread() {
+        m_pulsesBetweenTime = new int[relevant];
+        new Thread() { // NOPMD
             @Override
             public void run() {
-                while (!done) {
+                while (!m_done) {
                     //False = received pulse
-                    while (digiPut.get() && !done) {
+                    while (m_digiPut.get() && !m_done) {
                         Thread.yield();
                     }
-                    pulses++;
+                    m_pulses++;
                 }
             }
         }.start();
 
-        while (!done) {
+        while (!m_done) {
             try {
                 Thread.sleep(timeLength);
-                counter++;
-                pulsesBetweenTime[counter % relevant] = pulses;
-                pulses = 0;
+                m_counter++;
+                m_pulsesBetweenTime[m_counter % relevant] = m_pulses;
+                m_pulses = 0;
             } catch (InterruptedException ex) {
             }
         }
     }
 
     public double getRate() {
-        double rate = 0.0;
+        double rate;
         int sum = 0;
 
         for (int i = 0; i < relevant; i++) {
-            sum += pulsesBetweenTime[i];
+            sum += m_pulsesBetweenTime[i];
         }
 
         rate = (sum / (double) (relevant*timeLength))*1000;

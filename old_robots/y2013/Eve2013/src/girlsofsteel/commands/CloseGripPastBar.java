@@ -13,10 +13,10 @@ import girlsofsteel.subsystems.Gripper;
 
 //this command reads the limit switches under the grippers. When press the grippers will close after safely passing the bar
 public class CloseGripPastBar extends CommandBase{
-    private final Gripper gripper;
+    private final Gripper m_gripper;
 
     public CloseGripPastBar(Gripper gripper) {
-        this.gripper = gripper;
+        this.m_gripper = gripper;
 
         requires(gripper);
     }
@@ -31,12 +31,12 @@ public class CloseGripPastBar extends CommandBase{
 
     @Override
     protected boolean isFinished() {
-        return gripper.pastBar();
+        return m_gripper.pastBar();
     }
 
     @Override
     protected void end() {
-        gripper.closeGrip();
+        m_gripper.closeGrip();
     }
 
     @Override

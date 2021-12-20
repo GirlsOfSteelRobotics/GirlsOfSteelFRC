@@ -1,14 +1,22 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class ToggleGyro extends CommandBase {
+
+    private final Chassis m_chassis;
+
+    public ToggleGyro(Chassis chassis) {
+        m_chassis = chassis;
+    }
 
     @Override
     protected void initialize() {
-        if(chassis.isGyroEnabled())
+        if(m_chassis.isGyroEnabled())
         {
-            chassis.stopGyro();
+            m_chassis.stopGyro();
         }else{
-            chassis.resetGyro();
+            m_chassis.resetGyro();
         }
     }
 

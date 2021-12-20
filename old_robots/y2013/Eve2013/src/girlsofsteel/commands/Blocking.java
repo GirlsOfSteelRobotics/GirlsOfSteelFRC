@@ -12,12 +12,15 @@ import girlsofsteel.subsystems.Feeder;
  * @author GirlsOfSTEEL
  */
 public class Blocking extends CommandBase{
-    private boolean blockerRaised = false;
-    private boolean newBlockerRaised = false;
-    private boolean oldBlockerRaised = false;
-        public Blocking(){
-            blockerRaised = false;
-            requires (feeder);
+    private final Feeder m_feeder;
+    private boolean m_blockerRaised;
+    private boolean m_newBlockerRaised;
+    private boolean m_oldBlockerRaised;
+
+        public Blocking(Feeder feeder){
+            m_feeder = feeder;
+            m_blockerRaised = false;
+            requires (m_feeder);
         }
 
     @Override
@@ -27,22 +30,22 @@ public class Blocking extends CommandBase{
 
     @Override
     protected void execute() {
-            blockerRaised = Feeder.getIsRaised();
-            oldBlockerRaised = blockerRaised;
-            if(!blockerRaised){
-                feeder.pushBlocker();
-                Feeder.setIsRaised(true);
+            m_blockerRaised = m_feeder.getIsRaised();
+            m_oldBlockerRaised = m_blockerRaised;
+            if(!m_blockerRaised){
+                m_feeder.pushBlocker();
+                m_feeder.setIsRaised(true);
             }
             else{
-                feeder.pullBlocker();
-                Feeder.setIsRaised(false);
+                m_feeder.pullBlocker();
+                m_feeder.setIsRaised(false);
             }
-            newBlockerRaised = Feeder.getIsRaised();
+            m_newBlockerRaised = m_feeder.getIsRaised();
     }
 
     @Override
     protected boolean isFinished() {
-        return oldBlockerRaised != newBlockerRaised;
+        return m_oldBlockerRaised != m_newBlockerRaised;
     }
 
     @Override

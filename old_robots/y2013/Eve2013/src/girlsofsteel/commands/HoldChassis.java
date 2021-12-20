@@ -1,20 +1,26 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.DriveFlag;
+
 public class HoldChassis extends CommandBase {
 
-    public HoldChassis(){
+    private final Chassis m_chassis;
+
+    public HoldChassis(Chassis chassis, DriveFlag drive){
         requires(drive);
+        m_chassis = chassis;
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initHoldPosition();
+        m_chassis.initEncoders();
+        m_chassis.initHoldPosition();
     }
 
     @Override
     protected void execute() {
-        chassis.holdPosition();
+        m_chassis.holdPosition();
     }
 
     @Override
@@ -24,9 +30,9 @@ public class HoldChassis extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.disablePositionPIDs();
-        chassis.stopEncoders();
-        chassis.stopJags();
+        m_chassis.disablePositionPIDs();
+        m_chassis.stopEncoders();
+        m_chassis.stopJags();
     }
 
     @Override

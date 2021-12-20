@@ -2,40 +2,45 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.DriveFlag;
 
 public class Drive extends CommandBase {
 
-    private final double turningScale;
-    private final double scale;
+    private final double m_turningScale;
+    private final double m_scale;
 
-    private Joystick joystick;
-    private double x;
-    private double y;
-    private double th;
-    private final boolean gyroOn;
+    private final Joystick m_joystick;
+    private final Chassis m_chassis;
+    private double m_x;
+    private double m_y;
+    private double m_th;
+    private final boolean m_gyroOn;
 
-    public Drive(double scale, double turningScale, boolean gyroOn) {
+    public Drive(OI oi, Chassis chassis, DriveFlag drive, double scale, double turningScale, boolean gyroOn) {
         requires(drive);
-        this.scale = scale;
-        this.turningScale = turningScale;
-        this.gyroOn = gyroOn;
+        m_chassis = chassis;
+        this.m_scale = scale;
+        this.m_turningScale = turningScale;
+        this.m_gyroOn = gyroOn;
+        m_joystick = oi.getDrivingJoystick();
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        joystick = oi.getDrivingJoystick();
-        chassis.resetGyro();
-        chassis.startManualRotation();
+        m_chassis.resetGyro();
+        m_chassis.startManualRotation();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        x = joystick.getX()*scale;
-        y = joystick.getY()*scale;
-        th = joystick.getZ()*turningScale;
-        chassis.driveVoltage(x, y, th, 1.0, gyroOn);
+        m_x = m_joystick.getX()* m_scale;
+        m_y = m_joystick.getY()* m_scale;
+        m_th = m_joystick.getZ()* m_turningScale;
+        m_chassis.driveVoltage(m_x, m_y, m_th, 1.0, m_gyroOn);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -47,7 +52,7 @@ public class Drive extends CommandBase {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     // Called when another command which requires one or more of the same

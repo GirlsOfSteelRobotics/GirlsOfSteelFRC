@@ -2,6 +2,8 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
+import girlsofsteel.subsystems.Climber;
+import girlsofsteel.subsystems.Gripper;
 
 /**
  *
@@ -9,14 +11,15 @@ import edu.wpi.first.wpilibj.command.WaitForChildren;
  */
 public class FullClimb extends CommandGroup {
 
-    public FullClimb()
+    @SuppressWarnings("PMD.CloseResource")
+    public FullClimb(Climber climber, Gripper bottomGripper)
     {
 
         //Closes all grippers
-        addSequential(new CloseBottomGrip());
-        addParallel(new RetractClimberPiston());
+        addSequential(new CloseBottomGrip(bottomGripper));
+        addParallel(new RetractClimberPiston(climber));
         //Starts motors to begin climbing
-        addSequential(new StartClimbMotors());
+        addSequential(new StartClimbMotors(climber));
 
         CommandGroup topGripperSequence=new CommandGroup();
         CommandGroup middleGripperSequence=new CommandGroup();
@@ -31,8 +34,8 @@ public class FullClimb extends CommandGroup {
 //            topGripperSequence.addSequential(new CloseGripPastBar(CommandBase.topGripper));
 //            middleGripperSequence.addSequential(new OpenGripAtBar(CommandBase.middleGripper));
 //            middleGripperSequence.addSequential(new CloseGripPastBar(CommandBase.middleGripper));
-            bottomGripperSequence.addSequential(new OpenGripAtBar(CommandBase.bottomGripper));
-            bottomGripperSequence.addSequential(new CloseGripPastBar(CommandBase.bottomGripper));
+            bottomGripperSequence.addSequential(new OpenGripAtBar(bottomGripper));
+            bottomGripperSequence.addSequential(new CloseGripPastBar(bottomGripper));
         }
         addParallel(middleGripperSequence);
         addParallel(bottomGripperSequence);
@@ -42,7 +45,7 @@ public class FullClimb extends CommandGroup {
         //This is so that we can move up the vertical part of the pyramid.
 //        addSequential(new OpenGripAtBar(CommandBase.topGripper));
         //Stops the climbing movement
-        addSequential(new StopClimbMotors());
+        addSequential(new StopClimbMotors(climber));
     }
 
 }

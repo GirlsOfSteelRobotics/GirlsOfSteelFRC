@@ -1,22 +1,22 @@
     package girlsofsteel.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import girlsofsteel.RobotMap;
-import girlsofsteel.objects.GoSPIDController;
-import girlsofsteel.objects.SmoothEncoder;
+    import edu.wpi.first.wpilibj.AnalogGyro;
+    import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+    import edu.wpi.first.wpilibj.Encoder;
+    import edu.wpi.first.wpilibj.Jaguar;
+    import edu.wpi.first.wpilibj.PIDOutput;
+    import edu.wpi.first.wpilibj.PIDSourceType;
+    import edu.wpi.first.wpilibj.command.Subsystem;
+    import edu.wpi.first.wpilibj.interfaces.Gyro;
+    import girlsofsteel.RobotMap;
+    import girlsofsteel.objects.GoSPIDController;
+    import girlsofsteel.objects.SmoothEncoder;
 
 /**
  * Chassis subsystem for kiwi drive: creates jags, encoders, PID, & drive
  * function. UNIT: inches
  */
-@SuppressWarnings("PMD.ExcessivePublicCount")
+@SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.GodClass", "PMD.TooManyFields", "PMD.TooManyMethods"})
 public class Chassis extends Subsystem {
 
     //tentative angles from 0 being straight forward
@@ -62,38 +62,41 @@ public class Chassis extends Subsystem {
     public static final double BACK_WHEEL_ROBOT_RADIUS = 11.16635; // for Eve: Y_LENGTH;
     public static final double LEFT_WHEEL_ROBOT_RADIUS = RIGHT_WHEEL_ROBOT_RADIUS; // value = 21.60873
             // for Eve: Math.sqrt((X_LENGTH*X_LENGTH)+(Y_LENGTH*Y_LENGTH));
-    private final double[] wheelXs = new double[3];
-    private final double[] wheelYs = new double[3];
-    private final double[] wheelRadii = new double[3];
+
+    private static final double ENCODER_PULSES = 360.0;//CHANGE for real robot
+    private static final double RIGHT_ENCODER_UNIT = (WHEEL_DIAMETER * Math.PI
+        * GEAR_RATIO) / ENCODER_PULSES;
+    private static final double BACK_ENCODER_UNIT = (WHEEL_DIAMETER * Math.PI
+        * GEAR_RATIO) / ENCODER_PULSES;
+    private static final double LEFT_ENCODER_UNIT = (WHEEL_DIAMETER * Math.PI
+        * GEAR_RATIO) / ENCODER_PULSES;
+
+
+    private final double[] m_wheelXs = new double[3];
+    private final double[] m_wheelYs = new double[3];
+    private final double[] m_wheelRadii = new double[3];
     //encoder info
     public static final boolean REVERSE_DIRECTION = true;
 
     //create jags
-    private final Jaguar rightJag;
-    private final Jaguar backJag;
-    private final Jaguar leftJag;
+    private final Jaguar m_rightJag;
+    private final Jaguar m_backJag;
+    private final Jaguar m_leftJag;
     //create encoders
-    private final Encoder rightEncoder;
-    private final Encoder backEncoder;
-    private final Encoder leftEncoder;
-    private static final double ENCODER_PULSES = 360.0;//CHANGE for real robot
-    private static final double RIGHT_ENCODER_UNIT = (WHEEL_DIAMETER * Math.PI
-            * GEAR_RATIO) / ENCODER_PULSES;
-    private static final double BACK_ENCODER_UNIT = (WHEEL_DIAMETER * Math.PI
-            * GEAR_RATIO) / ENCODER_PULSES;
-    private static final double LEFT_ENCODER_UNIT = (WHEEL_DIAMETER * Math.PI
-            * GEAR_RATIO) / ENCODER_PULSES;
+    private final Encoder m_rightEncoder;
+    private final Encoder m_backEncoder;
+    private final Encoder m_leftEncoder;
     //create normal PID
 //    private PIDController rightPIDRate;
 //    private PIDController backPIDRate;
 //    private PIDController leftPIDRate;
     //create GoSPID
-    private final GoSPIDController rightPIDRate;
-    private final GoSPIDController backPIDRate;
-    private final GoSPIDController leftPIDRate;
-    private final GoSPIDController rightPIDPosition;
-    private final GoSPIDController backPIDPosition;
-    private final GoSPIDController leftPIDPosition;
+    private final GoSPIDController m_rightPIDRate;
+    private final GoSPIDController m_backPIDRate;
+    private final GoSPIDController m_leftPIDRate;
+    private final GoSPIDController m_rightPIDPosition;
+    private final GoSPIDController m_backPIDPosition;
+    private final GoSPIDController m_leftPIDPosition;
     private static final double rightP = 0.0;//CHANGE for real robot
     private static final double rightI = 0.0;//CHANGE for real robot
     private static final double rightD = 0.0;//CHANGE for real robot
@@ -113,32 +116,33 @@ public class Chassis extends Subsystem {
     private static final double leftPositionI = 0.0;//CHANGE for real robot
     private static final double leftPositionD = 0.0;//CHANGE for real robot
     //gryo
-    private final Gyro gyro;
-    private boolean gyroOn;
-    private boolean rotating;
-    private boolean manualRotationDisabled;
-    private boolean negative;
-    private double gyroAdjustment;
-    private double fieldAdjustment;
+    private final Gyro m_gyro;
+    private boolean m_gyroOn;
+    private boolean m_rotating;
+    private boolean m_manualRotationDisabled;
+    private boolean m_negative;
+    private double m_gyroAdjustment;
+    private double m_fieldAdjustment;
 
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     public Chassis() {
         //wheel x & ys
-        wheelXs[RIGHT_WHEEL] = RIGHT_X;
-        wheelXs[BACK_WHEEL] = BACK_X;
-        wheelXs[LEFT_WHEEL] = LEFT_X;
-        wheelYs[RIGHT_WHEEL] = RIGHT_Y;
-        wheelYs[BACK_WHEEL] = BACK_Y;
-        wheelYs[LEFT_WHEEL] = LEFT_Y;
+        m_wheelXs[RIGHT_WHEEL] = RIGHT_X;
+        m_wheelXs[BACK_WHEEL] = BACK_X;
+        m_wheelXs[LEFT_WHEEL] = LEFT_X;
+        m_wheelYs[RIGHT_WHEEL] = RIGHT_Y;
+        m_wheelYs[BACK_WHEEL] = BACK_Y;
+        m_wheelYs[LEFT_WHEEL] = LEFT_Y;
 
         //robot radii
-        wheelRadii[RIGHT_WHEEL] = RIGHT_WHEEL_ROBOT_RADIUS;
-        wheelRadii[BACK_WHEEL] = BACK_WHEEL_ROBOT_RADIUS;
-        wheelRadii[LEFT_WHEEL] = LEFT_WHEEL_ROBOT_RADIUS;
+        m_wheelRadii[RIGHT_WHEEL] = RIGHT_WHEEL_ROBOT_RADIUS;
+        m_wheelRadii[BACK_WHEEL] = BACK_WHEEL_ROBOT_RADIUS;
+        m_wheelRadii[LEFT_WHEEL] = LEFT_WHEEL_ROBOT_RADIUS;
 
         //jags
-        rightJag = new Jaguar(RobotMap.RIGHT_WHEEL_JAG);
-        backJag = new Jaguar(RobotMap.BACK_WHEEL_JAG);
-        leftJag = new Jaguar(RobotMap.LEFT_WHEEL_JAG);
+        m_rightJag = new Jaguar(RobotMap.RIGHT_WHEEL_JAG);
+        m_backJag = new Jaguar(RobotMap.BACK_WHEEL_JAG);
+        m_leftJag = new Jaguar(RobotMap.LEFT_WHEEL_JAG);
 
         //normal encoders
 //        rightEncoder = new Encoder(RobotMap.RIGHT_WHEEL_CHANNEL_A,
@@ -152,13 +156,13 @@ public class Chassis extends Subsystem {
 //                EncodingType.k4X);
 
         //smooth encoders
-        rightEncoder = new SmoothEncoder(RobotMap.RIGHT_WHEEL_CHANNEL_A,
+        m_rightEncoder = new SmoothEncoder(RobotMap.RIGHT_WHEEL_CHANNEL_A,
                 RobotMap.RIGHT_WHEEL_CHANNEL_B, !REVERSE_DIRECTION,
                 EncodingType.k4X);
-        backEncoder = new SmoothEncoder(RobotMap.BACK_WHEEL_CHANNEL_A,
+        m_backEncoder = new SmoothEncoder(RobotMap.BACK_WHEEL_CHANNEL_A,
                 RobotMap.BACK_WHEEL_CHANNEL_B, REVERSE_DIRECTION,
                 EncodingType.k4X);
-        leftEncoder = new SmoothEncoder(RobotMap.LEFT_WHEEL_CHANNEL_A,
+        m_leftEncoder = new SmoothEncoder(RobotMap.LEFT_WHEEL_CHANNEL_A,
                 RobotMap.LEFT_WHEEL_CHANNEL_B, REVERSE_DIRECTION,
                 EncodingType.k4X);
 
@@ -183,21 +187,21 @@ public class Chassis extends Subsystem {
 //                });
 
         //GoSPID
-        rightPIDRate = new GoSPIDController(rightP, rightI, rightD,
-                rightEncoder, new PIDOutput(){
+        m_rightPIDRate = new GoSPIDController(rightP, rightI, rightD,
+            m_rightEncoder, new PIDOutput(){
                     @Override
                     public void pidWrite(double output){
                         setRightJag(output);
                     }
                 }, GoSPIDController.RATE); //ADD integral constant
-        backPIDRate = new GoSPIDController(backP, backI, backD, backEncoder,
+        m_backPIDRate = new GoSPIDController(backP, backI, backD, m_backEncoder,
                 new PIDOutput(){
                     @Override
                     public void pidWrite(double output){
                         setBackJag(output);
                     }
                 }, GoSPIDController.RATE);//ADD integral constant
-        leftPIDRate = new GoSPIDController(leftP, leftI, leftD, leftEncoder,
+        m_leftPIDRate = new GoSPIDController(leftP, leftI, leftD, m_leftEncoder,
                 new PIDOutput(){
                     @Override
                     public void pidWrite(double output){
@@ -206,24 +210,24 @@ public class Chassis extends Subsystem {
                 }, GoSPIDController.RATE);//ADD integral constant
 
 
-        rightPIDPosition = new GoSPIDController(rightPositionP, rightPositionI,
-                rightPositionD, rightEncoder,
+        m_rightPIDPosition = new GoSPIDController(rightPositionP, rightPositionI,
+                rightPositionD, m_rightEncoder,
                 new PIDOutput(){
                     @Override
                     public void pidWrite(double output){
                         setRightJag(output);
                     }
                 }, GoSPIDController.POSITION);
-        backPIDPosition = new GoSPIDController(backPositionP, backPositionI,
-                backPositionD, backEncoder,
+        m_backPIDPosition = new GoSPIDController(backPositionP, backPositionI,
+                backPositionD, m_backEncoder,
                 new PIDOutput(){
                     @Override
                     public void pidWrite(double output){
                         setBackJag(output);
                     }
                 }, GoSPIDController.POSITION);
-        leftPIDPosition = new GoSPIDController(leftPositionP, leftPositionI,
-                leftPositionD, leftEncoder,
+        m_leftPIDPosition = new GoSPIDController(leftPositionP, leftPositionI,
+                leftPositionD, m_leftEncoder,
                 new PIDOutput(){
                     @Override
                     public void pidWrite(double output){
@@ -231,27 +235,27 @@ public class Chassis extends Subsystem {
                     }
                 }, GoSPIDController.POSITION);
 
-        gyro = new AnalogGyro(RobotMap.GYRO_PORT);
+        m_gyro = new AnalogGyro(RobotMap.GYRO_PORT);
 
-        gyroOn = false;
-        rotating = false;
-        manualRotationDisabled = false;
-        negative = false;
-        gyroAdjustment = 0.0;
-        fieldAdjustment = 0.0;
+        m_gyroOn = false;
+        m_rotating = false;
+        m_manualRotationDisabled = false;
+        m_negative = false;
+        m_gyroAdjustment = 0.0;
+        m_fieldAdjustment = 0.0;
     }//end constructor
 
     //set jags
     public void setRightJag(double speed) {
-        rightJag.set(-speed);
+        m_rightJag.set(-speed);
     }
 
     public void setBackJag(double speed) {
-        backJag.set(-speed);
+        m_backJag.set(-speed);
     }
 
     public void setLeftJag(double speed) {
-        leftJag.set(-speed);
+        m_leftJag.set(-speed);
     }
 
     //stop jags
@@ -263,32 +267,32 @@ public class Chassis extends Subsystem {
 
     //set encoders
     public void initEncoders() {
-        rightEncoder.setDistancePerPulse(RIGHT_ENCODER_UNIT);
-        backEncoder.setDistancePerPulse(BACK_ENCODER_UNIT);
-        leftEncoder.setDistancePerPulse(LEFT_ENCODER_UNIT);
+        m_rightEncoder.setDistancePerPulse(RIGHT_ENCODER_UNIT);
+        m_backEncoder.setDistancePerPulse(BACK_ENCODER_UNIT);
+        m_leftEncoder.setDistancePerPulse(LEFT_ENCODER_UNIT);
     }
 
     public double getRightEncoderDistance() {
-        return rightEncoder.getDistance();
+        return m_rightEncoder.getDistance();
     }
 
     public double getBackEncoderDistance() {
-        return backEncoder.getDistance();
+        return m_backEncoder.getDistance();
     }
 
 public double getLeftEncoderDistance() {
-        return leftEncoder.getDistance();
+        return m_leftEncoder.getDistance();
     }
     public double getRightEncoderRate(){
-        return rightEncoder.getRate(); //(negative because jags are negative too) ~KiwiDrive
+        return m_rightEncoder.getRate(); //(negative because jags are negative too) ~KiwiDrive
     }
 
     public double getBackEncoderRate(){
-        return backEncoder.getRate();
+        return m_backEncoder.getRate();
     }
 
     public double getLeftEncoderRate(){
-        return leftEncoder.getRate();
+        return m_leftEncoder.getRate();
     }
 
     public void stopEncoders() {
@@ -296,7 +300,7 @@ public double getLeftEncoderDistance() {
 
     //PIDs
     public void initRatePIDs() {
-        rightPIDRate.setOutputThreshold(0.05);//CHANGE maybe?
+        m_rightPIDRate.setOutputThreshold(0.05);//CHANGE maybe?
         /*
         //for normal PID
         rightEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
@@ -304,96 +308,96 @@ public double getLeftEncoderDistance() {
         leftEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
         */
         //for GoS PID
-        rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        backEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        rightPIDRate.enable();
-        backPIDRate.enable();
-        leftPIDRate.enable();
+        m_rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        m_backEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        m_leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        m_rightPIDRate.enable();
+        m_backPIDRate.enable();
+        m_leftPIDRate.enable();
     }
 
     public void setRightPIDRateValues(double p, double i, double d){
-        rightPIDRate.setPID(p, i, d);
+        m_rightPIDRate.setPID(p, i, d);
 
     }
 
     public void setBackPIDRateValues(double p, double i, double d){
-        backPIDRate.setPID(p, i, d);
+        m_backPIDRate.setPID(p, i, d);
     }
 
     public void setLeftPIDRateValues(double p, double i, double d){
-        leftPIDRate.setPID(p, i, d);
+        m_leftPIDRate.setPID(p, i, d);
     }
 
     //from kiwi code
     public void setPIDValue () {
-        rightPIDRate.setPID(rightP, rightI, rightD);
-        backPIDRate.setPID(backP, backI, backD);
-        leftPIDRate.setPID(leftP, leftI, leftD);
+        m_rightPIDRate.setPID(rightP, rightI, rightD);
+        m_backPIDRate.setPID(backP, backI, backD);
+        m_leftPIDRate.setPID(leftP, leftI, leftD);
     }
 
     public void setRightPIDRate(double rate) {
-        rightPIDRate.setSetpoint(rate);
+        m_rightPIDRate.setSetpoint(rate);
     }
 
     public void setBackPIDRate(double rate) {
-        backPIDRate.setSetpoint(rate);
+        m_backPIDRate.setSetpoint(rate);
     }
 
     public void setLeftPIDRate(double rate) {
-        leftPIDRate.setSetpoint(rate);
+        m_leftPIDRate.setSetpoint(rate);
     }
 
     public void stopRatePIDs() {
         setRightPIDRate(0.0);
         setBackPIDRate(0.0);
         setLeftPIDRate(0.0);
-        rightPIDRate.disable();
-        backPIDRate.disable();
-        leftPIDRate.disable();
+        m_rightPIDRate.disable();
+        m_backPIDRate.disable();
+        m_leftPIDRate.disable();
     }
 
     public void initHoldPosition(){
-        rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        backEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        rightPIDPosition.setPID(rightPositionP, rightPositionI, rightPositionD);
-        backPIDPosition.setPID(backPositionP, backPositionI, backPositionD);
-        leftPIDPosition.setPID(leftPositionP, leftPositionI, leftPositionD);
-        rightPIDPosition.enable();
-        backPIDPosition.enable();
-        leftPIDPosition.enable();
+        m_rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        m_backEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        m_leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        m_rightPIDPosition.setPID(rightPositionP, rightPositionI, rightPositionD);
+        m_backPIDPosition.setPID(backPositionP, backPositionI, backPositionD);
+        m_leftPIDPosition.setPID(leftPositionP, leftPositionI, leftPositionD);
+        m_rightPIDPosition.enable();
+        m_backPIDPosition.enable();
+        m_leftPIDPosition.enable();
     }
 
     public void holdPosition(){
-        rightPIDPosition.setSetpoint(0.0);
-        backPIDPosition.setSetpoint(0.0);
-        leftPIDPosition.setSetpoint(0.0);
+        m_rightPIDPosition.setSetpoint(0.0);
+        m_backPIDPosition.setSetpoint(0.0);
+        m_leftPIDPosition.setSetpoint(0.0);
     }
 
     public void disablePositionPIDs(){
-        rightPIDPosition.disable();
-        backPIDPosition.disable();
-        leftPIDPosition.disable();
+        m_rightPIDPosition.disable();
+        m_backPIDPosition.disable();
+        m_leftPIDPosition.disable();
         stopJags();
     }
 
     //gyro
     public void setFieldAdjustment(int angle){
-        fieldAdjustment = -angle;
-        gyroAdjustment = angle;
+        m_fieldAdjustment = -angle;
+        m_gyroAdjustment = angle;
     }
 
     public double getFieldAdjustment(){
-        return fieldAdjustment;
+        return m_fieldAdjustment;
     }
 
     public boolean isGyroEnabled(){
-        return gyroOn;
+        return m_gyroOn;
     }
 
     private double getGyro(){
-        double angle = -gyro.getAngle();
+        double angle = -m_gyro.getAngle();
         while(angle < 0){
             angle += 360;
         }
@@ -404,19 +408,19 @@ public double getLeftEncoderDistance() {
     }
 
     public void resetGyro(){
-        gyroOn = true;
+        m_gyroOn = true;
         //gyro.reset(); NOT WORKING! (solution below)
-        gyroAdjustment = -getGyro();
-        fieldAdjustment -= getGyro();
+        m_gyroAdjustment = -getGyro();
+        m_fieldAdjustment -= getGyro();
     }
 
     public void stopGyro(){
-        gyroOn = false;
+        m_gyroOn = false;
     }
 
     public double getGyroAngle(){
         double angle;
-        angle = getGyro() + gyroAdjustment;
+        angle = getGyro() + m_gyroAdjustment;
         while(angle < 360){
             angle += 360;
         }
@@ -425,6 +429,7 @@ public double getLeftEncoderDistance() {
     }
 
     //kiwi drive
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public void driveVoltage(double x, double y, double th, double scale,
             boolean gyro){
          double commandScale = Math.max(Math.abs(x),Math.abs(y));
@@ -475,6 +480,7 @@ public double getLeftEncoderDistance() {
 
     }//end drive
 
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public void driveVelocity(double x, double y, double th, double scale, boolean gyro){
         //kiwi drive code does not have "double scale" or "boolean gyro"
         y = -y;
@@ -520,8 +526,7 @@ public double getLeftEncoderDistance() {
 //            x2 = x2 * (y/y2);
 //            y2 = y2 * (y/y2);
 //        }
-        double[] returnXY = {x2,y2};
-        return returnXY;
+        return new double[] {x2,y2};
     }
 
     private double getDeadzoneScaled(double value){
@@ -537,17 +542,17 @@ public double getLeftEncoderDistance() {
     private double getWheelVelocity(double x, double y, double th, int wheel) {
 
         //speed = dot product of robot's (x,y) & wheel (x,y)
-        double speed = (x*wheelXs[wheel]) + (y*wheelYs[wheel]);
+        double speed = (x* m_wheelXs[wheel]) + (y* m_wheelYs[wheel]);
 
-        double rotation = th * wheelRadii[wheel] * SCALE;
+        double rotation = th * m_wheelRadii[wheel] * SCALE;
 
-        if(manualRotationDisabled){//the rotate command is controlling rotation
+        if(m_manualRotationDisabled){//the rotate command is controlling rotation
             rotation = 0;
         }
 
-        if(rotating){//voltage mode!
-            rotation = SLOW_ROTATE * wheelRadii[wheel] * SCALE;
-            if(negative){
+        if(m_rotating){//voltage mode!
+            rotation = SLOW_ROTATE * m_wheelRadii[wheel] * SCALE;
+            if(m_negative){
                 rotation *= -1.0;
             }
         }
@@ -556,37 +561,37 @@ public double getLeftEncoderDistance() {
     }
 
     public void startManualRotation(){//when drivers should control rotation
-        manualRotationDisabled = false;
+        m_manualRotationDisabled = false;
     }
 
     public void startAutoRotation(){
-        manualRotationDisabled = true;
+        m_manualRotationDisabled = true;
     }
 
     public void stopAutoRotation(){
-        manualRotationDisabled = false;
-        rotating = false;
+        m_manualRotationDisabled = false;
+        m_rotating = false;
     }
 
     //when drivers cannot control rotation, but there is no need to currently
     //rotate to a given point
     public void pauseAutoRotation(){
-        rotating = false;
+        m_rotating = false;
     }
 
     public boolean isAutoRotating(){
-        return manualRotationDisabled;
+        return m_manualRotationDisabled;
     }
 
     public void autoRotateTestBot(double theta){
-        rotating = true;
+        m_rotating = true;
         //decide negative or positive
         if(theta > 0){
             System.out.println("positively");
-            negative = false;
+            m_negative = false;
         }else{
             System.out.println("negatively");
-            negative = true;
+            m_negative = true;
         }
     }
 

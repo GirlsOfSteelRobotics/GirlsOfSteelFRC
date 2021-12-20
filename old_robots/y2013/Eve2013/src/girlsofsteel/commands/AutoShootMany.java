@@ -1,59 +1,67 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Feeder;
+import girlsofsteel.subsystems.Shooter;
+
 public class AutoShootMany extends CommandBase {
 
-    public final static double WAIT_TIME = 1.0;
+    public static final double WAIT_TIME = 1.0;
 
-    private final int shots;
-    private final double desiredVoltage;
+    private final int m_shots;
+    private final double m_desiredVoltage;
 
-    private int counter;
-    private boolean pushed;
-    private double time;
+    private final Shooter m_shooter;
+    private final Feeder m_feeder;
 
-    public AutoShootMany(int numShots, double desiredVoltage){
-        requires(shooter);
-        requires(feeder);
-        shots = numShots;
-        this.desiredVoltage = desiredVoltage;
+    private int m_counter;
+    private boolean m_pushed;
+    private double m_time;
+
+    public AutoShootMany(Shooter shooter, Feeder feeder, int numShots, double desiredVoltage){
+        m_shooter = shooter;
+        m_feeder = feeder;
+        requires(m_shooter);
+        requires(m_feeder);
+        m_shots = numShots;
+        this.m_desiredVoltage = desiredVoltage;
     }
 
     @Override
     protected void initialize() {
-        counter = 0;
-        pushed = false;
-        shooter.setJags(desiredVoltage);
-        time = timeSinceInitialized();
-        while(timeSinceInitialized() - time < 4){ // NOPMD(EmptyWhileStmt)
+        m_counter = 0;
+        m_pushed = false;
+        m_shooter.setJags(m_desiredVoltage);
+        m_time = timeSinceInitialized();
+        while(timeSinceInitialized() - m_time < 4){ // NOPMD(EmptyWhileStmt)
             //overall wait time is 4 + WAIT_TIME = 5
         }
-        time = timeSinceInitialized();
+        m_time = timeSinceInitialized();
     }
 
     @Override
     protected void execute() {
-        if(timeSinceInitialized() - time > WAIT_TIME){
-            if(!pushed){
-                feeder.pushShooter();
-                pushed = true;
+        if(timeSinceInitialized() - m_time > WAIT_TIME){
+            if(!m_pushed){
+                m_feeder.pushShooter();
+                m_pushed = true;
             }else{
-                feeder.pullShooter();
-                pushed = false;
+                m_feeder.pullShooter();
+                m_pushed = false;
 //                counter++;
             }
-            time = timeSinceInitialized();
+            m_time = timeSinceInitialized();
         }
     }
 
     @Override
     protected boolean isFinished() {
-        return counter >= shots;//counter is never changed -> continue to shoot
+        return m_counter >= m_shots;//counter is never changed -> continue to shoot
             //just in case a frisbee got stuck
     }
 
     @Override
     protected void end() {
-        shooter.stopJags();
+        m_shooter.stopJags();
     }
 
     @Override

@@ -10,25 +10,25 @@ package girlsofsteel.objects;
  * @author Sylvie
  */
 public class ShooterPoint {
-    private final double voltage;
-    private final double encoderSpeed;
-    private final double battery;
+    private final double m_voltage;
+    private final double m_encoderSpeed;
+    private final double m_battery;
 
     public ShooterPoint(double voltage, double encoderSpeed, double battery){
-        this.voltage = voltage;
-        this.encoderSpeed = encoderSpeed;
-        this.battery = battery;
+        this.m_voltage = voltage;
+        this.m_encoderSpeed = encoderSpeed;
+        this.m_battery = battery;
     }
 
     public double getVoltage(){
-        return voltage;
+        return m_voltage;
     }
 
     public double getEncoderSpeed(){
-        return encoderSpeed;
+        return m_encoderSpeed;
     }
 
     public double getBattery(){
-        return battery;
+        return m_battery;
     }
 }

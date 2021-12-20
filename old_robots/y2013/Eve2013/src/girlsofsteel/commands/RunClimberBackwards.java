@@ -4,14 +4,19 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Climber;
+
 /**
  *
  * @author sam
  */
 public class RunClimberBackwards extends CommandBase {
 
-    public RunClimberBackwards() {
-         requires (climber);
+    private final Climber m_climber;
+
+    public RunClimberBackwards(Climber climber) {
+        m_climber = climber;
+         requires (m_climber);
     }
 
     //Command for starting the motors to begin climbing
@@ -23,8 +28,8 @@ public class RunClimberBackwards extends CommandBase {
 
     @Override
     protected void execute() {
-        climber.reverseLeftClimberSpike();
-        climber.reverseRightClimberSpike();
+        m_climber.reverseLeftClimberSpike();
+        m_climber.reverseRightClimberSpike();
     }
 
     @Override
@@ -34,8 +39,8 @@ public class RunClimberBackwards extends CommandBase {
 
     @Override
     protected void end() {
-        climber.stopLeftClimberSpike();
-        climber.stopRightClimberSpike();
+        m_climber.stopLeftClimberSpike();
+        m_climber.stopRightClimberSpike();
     }
 
     @Override

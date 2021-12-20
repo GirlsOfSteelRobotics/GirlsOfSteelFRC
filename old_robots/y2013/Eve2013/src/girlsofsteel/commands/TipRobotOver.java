@@ -4,14 +4,20 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Climber;
+
 /**
  *
  * @author sam
  */
 public class TipRobotOver extends CommandBase{
 
-    public TipRobotOver() {
-        requires (climber);
+
+    private final Climber m_climber;
+
+    public TipRobotOver(Climber climber) {
+        m_climber = climber;
+        requires (m_climber);
     }
 
     //will extend the piston to tip the robot over onto the pyramid
@@ -25,12 +31,12 @@ public class TipRobotOver extends CommandBase{
 
     @Override
     protected void execute() {
-        climber.extendLifterPiston();
+        m_climber.extendLifterPiston();
     }
 
     @Override
     protected boolean isFinished() {
-        return climber.isPistonExtended();
+        return m_climber.isPistonExtended();
     }
 
     @Override
