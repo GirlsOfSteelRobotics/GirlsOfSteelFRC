@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -41,8 +41,8 @@ public class Shooter extends Subsystem {
         m_lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
         m_highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR);
 
-        m_lowShooterMotor.changeControlMode(TalonControlMode.Speed);
-        m_highShooterMotor.changeControlMode(TalonControlMode.Speed);
+        m_lowShooterMotor.changeControlMode(ControlMode.Velocity);
+        m_highShooterMotor.changeControlMode(ControlMode.Velocity);
 
         m_lowShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_highShooterMotor.setNeutralMode(NeutralMode.Coast);

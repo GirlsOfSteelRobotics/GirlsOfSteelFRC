@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -40,10 +41,10 @@ public class DriveSystem extends Subsystem {
         // On each side, all three drive motors MUST run at the same speed.
         // Use the CAN Talon Follower mode to set the speed of B and C,
         // making always run at the same speed as A.
-        m_driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveLeftB.changeControlMode(ControlMode.Follower);
+        m_driveLeftC.changeControlMode(ControlMode.Follower);
+        m_driveRightB.changeControlMode(ControlMode.Follower);
+        m_driveRightC.changeControlMode(ControlMode.Follower);
         m_driveLeftB.set(m_driveLeftA.getDeviceID());
         m_driveLeftC.set(m_driveLeftA.getDeviceID());
         m_driveRightB.set(m_driveRightA.getDeviceID());

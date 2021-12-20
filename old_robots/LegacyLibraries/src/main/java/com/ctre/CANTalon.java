@@ -3,25 +3,13 @@ package com.ctre;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedController;
 
 @SuppressWarnings("PMD.GodClass")
 public class CANTalon extends WPI_TalonSRX implements Sendable, SpeedController {
 
-    private TalonControlMode m_activeControlMode = TalonControlMode.PercentVbus;
-
-
-    public enum TalonControlMode {
-        Follower,
-        Position,
-        Speed,
-        PercentVbus,
-        MotionProfile,
-        kPercentVoltage,
-        kVoltage,
-    }
+    private ControlMode m_activeControlMode = ControlMode.PercentOutput;
 
     private final int m_deviceNumber; // NOPMD
     private double m_encoderCodesPerRev = 1;
@@ -31,7 +19,7 @@ public class CANTalon extends WPI_TalonSRX implements Sendable, SpeedController 
         m_deviceNumber = deviceNumber;
     }
 
-    public void changeControlMode(TalonControlMode controlMode) {
+    public void changeControlMode(ControlMode controlMode) {
         m_activeControlMode = controlMode;
     }
 
@@ -51,35 +39,22 @@ public class CANTalon extends WPI_TalonSRX implements Sendable, SpeedController 
     public void set(double val) {
 
         double actualVal = val;
-        ControlMode controlMode;
 
         switch (m_activeControlMode) {
         case Follower:
-            controlMode = ControlMode.Follower;
+        case PercentOutput:
+        case Velocity:
+        case MotionProfile:
+            // No special updates
             break;
         case Position:
-            controlMode = ControlMode.Position;
             actualVal = val * m_encoderCodesPerRev;
-            break;
-        case PercentVbus:
-        case kPercentVoltage:
-            controlMode = ControlMode.PercentOutput;
-            break;
-        case kVoltage:
-            controlMode = ControlMode.PercentOutput;
-            actualVal = val / RobotController.getBatteryVoltage();
-            break;
-        case Speed:
-            controlMode = ControlMode.Velocity;
-            break;
-        case MotionProfile:
-            controlMode = ControlMode.MotionProfile;
             break;
         default:
             throw new IllegalArgumentException();
         }
 
-        set(controlMode, actualVal);
+        set(m_activeControlMode, actualVal);
     }
 
     public int getPosition() {

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -32,8 +33,8 @@ public class Chassis extends Subsystem {
         m_driveRightA.setNeutralMode(NeutralMode.Brake);
         m_driveRightB.setNeutralMode(NeutralMode.Brake);
 
-        m_driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveLeftB.changeControlMode(ControlMode.Follower);
+        m_driveRightB.changeControlMode(ControlMode.Follower);
         m_driveLeftB.set(m_driveLeftA.getDeviceID());
         m_driveRightB.set(m_driveRightA.getDeviceID());
 

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
@@ -68,25 +69,25 @@ public class Chassis extends Subsystem {
         m_rearRightWheel.setNeutralMode(NeutralMode.Brake);
         m_rearLeftWheel.setNeutralMode(NeutralMode.Brake);
 
-        m_frontRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_frontRightWheel.changeControlMode(ControlMode.Velocity);
         m_frontRightWheel.config_kP(0, kP);
         m_frontRightWheel.config_kI(0, kI);
         m_frontRightWheel.config_kD(0, kD);
         m_frontRightWheel.reverseSensor(true);
 
-        m_frontLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_frontLeftWheel.changeControlMode(ControlMode.Velocity);
         m_frontLeftWheel.config_kP(0, kP);
         m_frontLeftWheel.config_kI(0, kI);
         m_frontLeftWheel.config_kD(0, kD);
         m_frontLeftWheel.reverseSensor(true);
 
-        m_rearRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_rearRightWheel.changeControlMode(ControlMode.Velocity);
         m_rearRightWheel.config_kP(0, kP);
         m_rearRightWheel.config_kI(0, kI);
         m_rearRightWheel.config_kD(0, kD);
         m_rearRightWheel.reverseSensor(true);
 
-        m_rearLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
+        m_rearLeftWheel.changeControlMode(ControlMode.Velocity);
         m_rearLeftWheel.config_kP(0, kP);
         m_rearLeftWheel.config_kI(0, kI);
         m_rearLeftWheel.config_kD(0, kD);
