@@ -7,6 +7,7 @@ gos_java_robot(
     disable_pmd = True,
     main_class = "frc.robot.Main",
     deps = [
+        "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/hal",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
