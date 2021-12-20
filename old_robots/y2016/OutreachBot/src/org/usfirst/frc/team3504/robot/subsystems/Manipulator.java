@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -43,27 +44,27 @@ public class Manipulator extends Subsystem {
     }
 
     public void collectBall() {
-        m_collectorMotor.set(-1);
+        m_collectorMotor.set(ControlMode.PercentOutput, -1);
     }
 
     public void releaseBall() {
-        m_collectorMotor.set(1);
+        m_collectorMotor.set(ControlMode.PercentOutput, 1);
     }
 
     public void stopCollecting() {
-        m_collectorMotor.set(0);
+        m_collectorMotor.set(ControlMode.PercentOutput, 0);
     }
 
     public void pivotUp() {
-        m_pivotMotor.set(1);
+        m_pivotMotor.set(ControlMode.PercentOutput, 1);
     }
 
     public void pivotDown() {
-        m_pivotMotor.set(-1);
+        m_pivotMotor.set(ControlMode.PercentOutput, -1);
     }
 
     public void stopPivot() {
-        m_pivotMotor.set(0);
+        m_pivotMotor.set(ControlMode.PercentOutput, 0);
     }
 
     @Override

@@ -41,9 +41,6 @@ public class Shooter extends Subsystem {
         m_lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
         m_highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR);
 
-        m_lowShooterMotor.changeControlMode(ControlMode.Velocity);
-        m_highShooterMotor.changeControlMode(ControlMode.Velocity);
-
         m_lowShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_highShooterMotor.setNeutralMode(NeutralMode.Coast);
 
@@ -74,12 +71,12 @@ public class Shooter extends Subsystem {
     }
 
     public void runHighShooterMotor() {
-        m_highShooterMotor.set(m_shooterSpeed);
+        m_highShooterMotor.set(ControlMode.Velocity, m_shooterSpeed);
     }
 
     public void runLowShooterMotor() {
         if (m_lowMotorRunning) {
-            m_lowShooterMotor.set(m_shooterSpeed * ((double) LOW_MAX_RPM / (double) HIGH_MAX_RPM));
+            m_lowShooterMotor.set(ControlMode.Velocity, m_shooterSpeed * ((double) LOW_MAX_RPM / (double) HIGH_MAX_RPM));
         }
     }
 
@@ -97,8 +94,8 @@ public class Shooter extends Subsystem {
     }
 
     public void stopShooterMotors() {
-        m_lowShooterMotor.set(0);
-        m_highShooterMotor.set(0);
+        m_lowShooterMotor.set(ControlMode.PercentOutput, 0);
+        m_highShooterMotor.set(ControlMode.PercentOutput, 0);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -39,11 +40,11 @@ public class Flap extends Subsystem {
     // here. Call these from Commands.
 
     public void setTalon(double speed){
-        m_flapTalon.set(speed);
+        m_flapTalon.set(ControlMode.PercentOutput, speed);
     }
 
     public void stopTalon(){
-        m_flapTalon.set(0.0);
+        m_flapTalon.set(ControlMode.PercentOutput, 0.0);
     }
 
     public double getMaxEnc() {

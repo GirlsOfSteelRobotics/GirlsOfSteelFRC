@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
@@ -17,11 +18,11 @@ public class Collector extends Subsystem {
     }
 
     public void spinWheels(double speed) {
-        m_collectorMotor.set(speed);
+        m_collectorMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void stop() {
-        m_collectorMotor.set(0.0);
+        m_collectorMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
     @Override

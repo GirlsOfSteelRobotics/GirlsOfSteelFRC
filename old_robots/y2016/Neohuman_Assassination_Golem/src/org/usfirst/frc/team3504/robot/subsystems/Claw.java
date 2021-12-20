@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -21,12 +22,12 @@ public class Claw extends Subsystem {
     }
 
     public void collectRelease(double speed) {
-        m_clawMotor.set(speed);
+        m_clawMotor.set(ControlMode.PercentOutput, speed);
 
     }
 
     public void stopCollecting(){
-        m_clawMotor.set(0.0);
+        m_clawMotor.set(ControlMode.PercentOutput, 0.0);
         SmartDashboard.putBoolean("Claw Off", false);
     }
     @Override

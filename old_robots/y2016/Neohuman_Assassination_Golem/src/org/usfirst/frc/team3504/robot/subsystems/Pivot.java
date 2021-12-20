@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -45,7 +46,7 @@ public class Pivot extends Subsystem {
     }
 
     public void tiltUpandDown(double speed) {
-        m_pivotMotor.set(-speed);
+        m_pivotMotor.set(ControlMode.PercentOutput, -speed);
     }
 
     @Override

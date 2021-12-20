@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -53,14 +52,10 @@ public class Chassis extends Subsystem implements PIDOutput{
         m_robotDrive.setSensitivity(0.5);
         m_robotDrive.setMaxOutput(1.0);
 
-        m_driveLeftB.changeControlMode(ControlMode.Follower);
-        m_driveLeftC.changeControlMode(ControlMode.Follower);
-        m_driveRightB.changeControlMode(ControlMode.Follower);
-        m_driveRightC.changeControlMode(ControlMode.Follower);
-        m_driveLeftB.set(m_driveLeftA.getDeviceID());
-        m_driveLeftC.set(m_driveLeftA.getDeviceID());
-        m_driveRightB.set(m_driveRightA.getDeviceID());
-        m_driveRightC.set(m_driveRightA.getDeviceID());
+        m_driveLeftB.follow(m_driveLeftA);
+        m_driveLeftC.follow(m_driveLeftA);
+        m_driveRightB.follow(m_driveRightA);
+        m_driveRightC.follow(m_driveRightA);
 
 
         addChild("driveLeftA", m_driveLeftA);
