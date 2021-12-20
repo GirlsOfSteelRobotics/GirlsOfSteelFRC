@@ -16,6 +16,14 @@ sourceSets {
     }
 }
 
+sourceSets {
+    test {
+        java {
+            srcDirs 'test/java'
+        }
+    }
+}
+
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
