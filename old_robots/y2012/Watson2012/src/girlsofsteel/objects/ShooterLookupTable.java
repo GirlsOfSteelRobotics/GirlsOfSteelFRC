@@ -8,7 +8,7 @@ public class ShooterLookupTable {
     private static final double MAX_SHOOTER_VELOCITY = 41.0;
 
     //Sorted array sorts greatest to least
-    private final TreeMap<Double, Double> m_list = new TreeMap<>();
+    private final TreeMap<Double, Double> m_list = new TreeMap<>(); // NOPMD(LooseCoupling)
 
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
@@ -56,10 +56,6 @@ public class ShooterLookupTable {
      * @return
      */
     public double getVelocityFrTable(double distance) {
-
-        if (m_list.size() == 0) {
-            return 0;//ends the getVelocityFrTable method -> sends a velocity of 0
-        }
 
         Map.Entry<Double, Double> floor = m_list.floorEntry(distance);
         // Below the min. Just zero it out
