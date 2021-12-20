@@ -3,7 +3,6 @@ package org.usfirst.frc.team3504.robot.subsystems;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.vision.VisionPipeline;
-import edu.wpi.first.vision.VisionRunner;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.opencv.core.Core;
