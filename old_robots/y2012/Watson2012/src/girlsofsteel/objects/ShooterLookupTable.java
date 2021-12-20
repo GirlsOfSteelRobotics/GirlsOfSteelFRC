@@ -1,30 +1,29 @@
 package girlsofsteel.objects;
 
-import edu.wpi.first.wpilibj.util.SortedVector;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ShooterLookupTable {
 
     private static final double MAX_SHOOTER_VELOCITY = 41.0;
 
-    //table sorting shooter experimental values calculator
-    private  final SortedVector.Comparator m_comparator = new MapDoubleComparator();
     //Sorted array sorts greatest to least
-    private final SortedVector m_list = new SortedVector(m_comparator);
+    private final TreeMap<Double, Double> m_list = new TreeMap<>();
 
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
     public ShooterLookupTable() {
         //new data (4/20/12):
 
-        m_list.addElement(new MapDouble(2.87,20.75));
-        m_list.addElement(new MapDouble(3.175,21.3));
-        m_list.addElement(new MapDouble(3.785,21.9));
-        m_list.addElement(new MapDouble(4.394,23.7));
-        m_list.addElement(new MapDouble(5.004,24.82));
-        m_list.addElement(new MapDouble(5.613,26.7));
-        m_list.addElement(new MapDouble(6.223,27.7));
-        m_list.addElement(new MapDouble(6.68,28.8));
-        m_list.addElement(new MapDouble(24.1,193.5));
+        m_list.put(2.87, 20.75);
+        m_list.put(3.175, 21.3);
+        m_list.put(3.785, 21.9);
+        m_list.put(4.394, 23.7);
+        m_list.put(5.004, 24.82);
+        m_list.put(5.613, 26.7);
+        m_list.put(6.223, 27.7);
+        m_list.put(6.68, 28.8);
+        m_list.put(24.1, 193.5);
 
         //old data:
 //        list.addElement(new MapDouble(0.0, 0.0));
@@ -62,60 +61,28 @@ public class ShooterLookupTable {
             return 0;//ends the getVelocityFrTable method -> sends a velocity of 0
         }
 
-
-        //Sorted array is sorted greatest to least
-        //assigns the last value to the lowest point -> and the first to the last
-        MapDouble lowest = (MapDouble) m_list.lastElement();
-        MapDouble highest = (MapDouble) m_list.firstElement();
-
-        //PLEASE make a test point SUPER close to the basket
-        if (distance < lowest.getDistance()) {//if the distance is lower than the
-            //lowest point -> then it will return the velocity of the lowest point
-            //in the table
-            //draws a line from the origin to the lowest point -> finds the velocity
-            //based on the distance
-            return interpolate(distance, 0, 0, lowest.getDistance(), lowest.getVelocity());
-        } //ALSO PLEASE make a test point on the other side or as close to the bridge as possible
-        else if (distance > highest.getDistance()) {//same as above, but for a
-            //higher number of the highest point in the table
-            //creates a line between the highest point and a value that we won't reach
-            //returns the velocity on this line -> at the highest
-//            return interpolate(distance, highest.getDistance(), highest.getVelocity(), highest.getDistance() + 5, MAX_SHOOTER_VELOCITY);
-            return MAX_SHOOTER_VELOCITY;//if the distance is above anything in
-            //the table -> shoot at the highest the velocity
+        Map.Entry<Double, Double> floor = m_list.floorEntry(distance);
+        // Below the min. Just zero it out
+        if (floor == null) {
+            return 0;
         }
 
-        int index = (int) Math.ceil(m_list.size() / 2.0);
-        MapDouble currentValue;
-        MapDouble currentLow = new MapDouble(0.0, 0.0);
-        MapDouble currentMax = new MapDouble(0.0, 0.0);
-        boolean end = false;
+        Map.Entry<Double, Double> ceiling = m_list.ceilingEntry(distance);
 
-        //find the values above & below the distance you're looking for
-        while (!end) {
-            currentValue = ((MapDouble) m_list.elementAt(index));
-
-            if (currentValue.getDistance() == currentLow.getDistance() || currentValue.getDistance() == currentMax.getDistance()) {
-                end = true;
-            }
-
-
-            if (currentValue.getDistance() < distance) {
-                currentLow = currentValue;
-                index = index - 1;
-            } else if (currentValue.getDistance() > distance) {
-                currentMax = currentValue;
-                index = index + 1;
-            } else {
-                return currentValue.getVelocity();
-            }
+        // Above the max. Return the cap
+        if (ceiling == null) {
+            return MAX_SHOOTER_VELOCITY;
         }
 
-        //assigns the distances & velocities
-        double distance1 = currentLow.getDistance();
-        double velocity1 = currentLow.getVelocity();
-        double distance2 = currentMax.getDistance();
-        double velocity2 = currentMax.getVelocity();
+        // The basically impossible chance that you hit a lookup key exactly
+        if (floor.equals(ceiling)) {
+            return floor.getValue();
+        }
+
+        double distance1 = floor.getKey();
+        double velocity1 = floor.getValue();
+        double distance2 = ceiling.getKey();
+        double velocity2 = ceiling.getValue();
         //finds the velocity needed based on the distance
         return interpolate(distance, distance1, velocity1, distance2, velocity2);
     }
