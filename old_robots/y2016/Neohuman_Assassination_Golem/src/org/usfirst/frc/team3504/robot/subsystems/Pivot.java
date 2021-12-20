@@ -22,13 +22,7 @@ public class Pivot extends Subsystem {
         m_pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
         addChild("Talon", m_pivotMotor);
 
-        if(RobotMap.USING_LIMIT_SWITCHES) {
-            m_pivotMotor.configFwdLimitSwitchNormallyOpen(false);
-            m_pivotMotor.configRevLimitSwitchNormallyOpen(false);
-        }
-        else {
-            m_pivotMotor.enableLimitSwitch(false, false);
-        }
+        m_pivotMotor.overrideSoftLimitsEnable(!RobotMap.USING_LIMIT_SWITCHES);
         m_pivotMotor.setNeutralMode(NeutralMode.Brake);
 
     }

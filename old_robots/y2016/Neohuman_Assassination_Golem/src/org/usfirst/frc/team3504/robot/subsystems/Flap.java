@@ -20,13 +20,7 @@ public class Flap extends Subsystem {
         m_flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
         addChild("Talon", m_flapTalon);
 
-        if(RobotMap.USING_LIMIT_SWITCHES) {
-            m_flapTalon.configFwdLimitSwitchNormallyOpen(false);
-            m_flapTalon.configRevLimitSwitchNormallyOpen(false);
-        }
-        else {
-            m_flapTalon.enableLimitSwitch(false, false);
-        }
+        m_flapTalon.overrideLimitSwitchesEnable(!RobotMap.USING_LIMIT_SWITCHES);
         m_flapTalon.setNeutralMode(NeutralMode.Brake);
     }
 

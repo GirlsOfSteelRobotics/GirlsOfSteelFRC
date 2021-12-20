@@ -126,7 +126,7 @@ public class Shooter extends Subsystem {
     public final void setupEncoder(CANTalon talon) { // call on both talons
         // Set Encoder Types
         talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        talon.reverseSensor(false);
+        talon.setSensorPhase(true);
     }
 
     public double getHighShooterSpeed() {

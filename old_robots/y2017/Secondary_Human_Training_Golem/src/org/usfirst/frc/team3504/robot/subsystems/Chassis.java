@@ -92,7 +92,7 @@ public class Chassis extends Subsystem {
                                                 // talons
         // Set Encoder Types
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        talon.reverseSensor(false);
+        talon.setSensorPhase(true);
     }
 
     public void setupDefaultFPID() { // values work with QuadEncoder for

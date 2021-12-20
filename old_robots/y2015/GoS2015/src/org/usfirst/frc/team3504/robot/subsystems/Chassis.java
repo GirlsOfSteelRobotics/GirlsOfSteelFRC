@@ -72,22 +72,22 @@ public class Chassis extends Subsystem {
         m_frontRightWheel.config_kP(0, kP);
         m_frontRightWheel.config_kI(0, kI);
         m_frontRightWheel.config_kD(0, kD);
-        m_frontRightWheel.reverseSensor(true);
+        m_frontRightWheel.setSensorPhase(false);
 
         m_frontLeftWheel.config_kP(0, kP);
         m_frontLeftWheel.config_kI(0, kI);
         m_frontLeftWheel.config_kD(0, kD);
-        m_frontLeftWheel.reverseSensor(true);
+        m_frontLeftWheel.setSensorPhase(false);
 
         m_rearRightWheel.config_kP(0, kP);
         m_rearRightWheel.config_kI(0, kI);
         m_rearRightWheel.config_kD(0, kD);
-        m_rearRightWheel.reverseSensor(true);
+        m_rearRightWheel.setSensorPhase(false);
 
         m_rearLeftWheel.config_kP(0, kP);
         m_rearLeftWheel.config_kI(0, kI);
         m_rearLeftWheel.config_kD(0, kD);
-        m_rearLeftWheel.reverseSensor(true);
+        m_rearLeftWheel.setSensorPhase(false);
 
         m_getGyro = true;
 
