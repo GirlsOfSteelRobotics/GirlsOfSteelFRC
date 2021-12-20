@@ -1,7 +1,6 @@
 package girlsofsteel.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,9 +16,7 @@ public class Collector extends Subsystem{
     private final Relay m_middleConveyorSpike = new Relay(RobotMap.MIDDLE_COLLECTOR_SPIKE);
 
     public Collector () {
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
-                "New ball?" + getLimitSwitch());
-        DriverStationLCD.getInstance().updateLCD();
+        System.out.println("New ball?" + getLimitSwitch());
     }
 
     // true == pressed (of getRealSwitch)

@@ -2,7 +2,6 @@ package girlsofsteel;
 
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import girlsofsteel.commands.BridgeDown;
@@ -192,8 +191,8 @@ public class OI {
             if (DriverStationEnhancedIO.getInstance().getDigital(AUTO_SHOOT_PHYSICAL_BUTTON)) {
                 m_stopShooterRunning = false;
                 m_autoShootRunning = true;
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + m_stopShooterRunning);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + m_autoShootRunning);
+                System.out.println("Stop Shoot:" + m_stopShooterRunning);
+                System.out.println("Shoot:" + m_autoShootRunning);
             }
         } catch (EnhancedIOException ex) {
             ex.printStackTrace();
@@ -206,8 +205,8 @@ public class OI {
             if (DriverStationEnhancedIO.getInstance().getDigital(STOP_SHOOTER_PHYSICAL_BUTTON)) {
                 m_stopShooterRunning = true;
                 m_autoShootRunning = false;
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + m_stopShooterRunning);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + m_autoShootRunning);
+                System.out.println("Stop Shoot:" + m_stopShooterRunning);
+                System.out.println("Shoot:" + m_autoShootRunning);
             }
         } catch (EnhancedIOException ex) {
             ex.printStackTrace();
@@ -296,7 +295,7 @@ public class OI {
             switchValue = 1;
         } else { //THIS SHOULD NEVER HAPPEN.
             switchValue = 4;
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "ERROR WITH THE SWITCH VALUE");
+            System.out.println("ERROR WITH THE SWITCH VALUE");
         }
         return switchValue;
     }
@@ -509,34 +508,13 @@ public class OI {
 //If ever used, change line numbers in the driver station prints
     public void printAnalogAutonomous() {
         try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Counter 1:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_ONE));
+            System.out.println("Counter 1:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_ONE));
+            System.out.println("Counter 2:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_TWO));
+            System.out.println("Counter 3:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_THREE));
+            System.out.println("Counter 5:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_FIVE));
+            System.out.println("Counter 7:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_SEVEN));
         } catch (EnhancedIOException ex) {
             ex.printStackTrace();
         }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Counter 2:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_TWO));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 1, "Counter 3:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_THREE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Counter 5:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_FIVE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Counter 7:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_SEVEN));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
     }
 }

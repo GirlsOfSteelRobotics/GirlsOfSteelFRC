@@ -1,6 +1,5 @@
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
 import girlsofsteel.subsystems.Chassis;
 
@@ -33,9 +32,8 @@ public class DriveVelocityLinear extends CommandBase{
         m_xAxis = m_joystick.getX()* m_scale;
         m_yAxis = m_joystick.getY()* m_scale;
         m_chassis.driveVelocityLinear(m_xAxis, m_yAxis);
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "R:" + m_chassis.getRightEncoderRate());
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "L:" + m_chassis.getLeftEncoderRate());
-        DriverStationLCD.getInstance().updateLCD();
+        System.out.println("R:" + m_chassis.getRightEncoderRate());
+        System.out.println("L:" + m_chassis.getLeftEncoderRate());
     }
 
     @Override
