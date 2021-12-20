@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,8 +31,6 @@ public class DriveByVision extends Command {
     private final Timer m_tim;
     private final Camera m_camera;
     private final Chassis m_chassis;
-    private final CANTalon m_leftTalon;
-    private final CANTalon m_rightTalon;
 
     // width of X or Y in pixels when the robot is at the lift
     // private static final double GOAL_WIDTH = 30; //TODO: test and change
@@ -43,8 +40,6 @@ public class DriveByVision extends Command {
         // eg. requires(chassis);
         m_chassis = chassis;
         m_camera = camera;
-        m_leftTalon = m_chassis.getLeftTalon();
-        m_rightTalon = m_chassis.getRightTalon();
         requires(m_chassis);
         m_tim = new Timer();
     }
@@ -54,17 +49,10 @@ public class DriveByVision extends Command {
     protected void initialize() {
 
         // not calling setupFPID because other PID values override
-        m_leftTalon.setSelectedSensorPosition(0);
-        m_rightTalon.setSelectedSensorPosition(0);
-
-        // Change motor control to speed in the -1..+1 range
-        m_chassis.setSpeedMode();
+        m_chassis.setEncoderPositions(0, 0);
 
         // tuned by janet and ziya on 2/20, overrides PID set in chassis method
-        m_leftTalon.config_kF(0, 0.22); // carpet on practice field
-        m_leftTalon.config_kP(0, 0.235);
-        m_rightTalon.config_kF(0, 0.2);
-        m_rightTalon.config_kP(0, 0.235);
+        m_chassis.setPid(0.235, 0, 0, 0.22);
 
         System.out.println("DriveByVision Initialized");
 
@@ -129,8 +117,7 @@ public class DriveByVision extends Command {
         double angVRight = 75 * vRight / (2 * Math.PI * WHEEL_RADIUS); // (RPM)
         double angVLeft = 75 * vLeft / (2 * Math.PI * WHEEL_RADIUS);
         // send desired wheel speeds to Talon set to velocity control mode
-        m_rightTalon.set(angVRight);
-        m_leftTalon.set(-angVLeft);
+        m_chassis.setVelocityGoal(angVLeft, -angVRight);
 
         if (targetX >= 0){
             System.out.println("Number of Contours: " + 2/*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
@@ -146,8 +133,8 @@ public class DriveByVision extends Command {
     @Override
     protected boolean isFinished() {
 
-        return ((m_tim.get() > 1 && Math.abs(m_leftTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY
-                && Math.abs(m_rightTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT));
+        return ((m_tim.get() > 1 && Math.abs(m_chassis.getLeftVelocity()) < SLIPPING_VELOCITY
+                && Math.abs(m_chassis.getRightVelocity()) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT));
     }
 
     // Called once after isFinished returns true

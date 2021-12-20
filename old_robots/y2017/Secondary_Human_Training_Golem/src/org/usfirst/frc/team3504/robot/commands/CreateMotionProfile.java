@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
@@ -26,8 +25,6 @@ public class CreateMotionProfile extends Command {
     private final List<Double> m_rightPoint; // position (rev), velocity (rpm), duration
     private final String m_leftFile; // path of file on roborio
     private final String m_rightFile; // path of file on roborio
-    private final CANTalon m_leftTalon;
-    private final CANTalon m_rightTalon;
     private double m_leftInitial; // initial encoder position
     private double m_rightInitial; // initial encoder position
 
@@ -37,9 +34,6 @@ public class CreateMotionProfile extends Command {
         // maybe get file names from smart dashboard input instead?
         m_leftFile = leftFileName;
         m_rightFile = rightFileName;
-
-        m_leftTalon = m_chassis.getLeftTalon();
-        m_rightTalon = m_chassis.getRightTalon();
 
         m_leftTrajectory = new ArrayList<>();
         m_rightTrajectory = new ArrayList<>();
@@ -51,8 +45,8 @@ public class CreateMotionProfile extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_leftInitial = m_leftTalon.getSelectedSensorPosition();
-        m_rightInitial = m_rightTalon.getSelectedSensorPosition();
+        m_leftInitial = m_chassis.getLeftPosition();
+        m_rightInitial = m_chassis.getRightPosition();
 
         m_leftTrajectory.clear();
         m_rightTrajectory.clear();
@@ -69,11 +63,11 @@ public class CreateMotionProfile extends Command {
         m_leftPoint.clear();
         m_rightPoint.clear();
 
-        double leftPosition = m_leftTalon.getSelectedSensorPosition() - m_leftInitial; // in rotations
-        double rightPosition = m_rightTalon.getSelectedSensorPosition() - m_rightInitial;
+        double leftPosition = m_chassis.getLeftPosition() - m_leftInitial; // in rotations
+        double rightPosition = m_chassis.getRightPosition() - m_rightInitial;
 
-        double leftVelocity = m_leftTalon.getSelectedSensorVelocity() / RobotMap.CODES_PER_WHEEL_REV;
-        double rightVelocity = m_rightTalon.getSelectedSensorVelocity() / RobotMap.CODES_PER_WHEEL_REV;
+        double leftVelocity = m_chassis.getLeftVelocity() / RobotMap.CODES_PER_WHEEL_REV;
+        double rightVelocity = m_chassis.getRightVelocity() / RobotMap.CODES_PER_WHEEL_REV;
 
         /* Other way of getting velocity: divide change in position by time
 

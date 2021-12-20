@@ -38,7 +38,6 @@ public class TurnToGear extends Command {
     @Override
     protected void initialize() {
         System.out.println("TurnToGear Initialized with direction " + m_direction);
-        m_chassis.setPercentVbusMode();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3504.robot.OI;
@@ -14,28 +13,13 @@ public class Drive extends Command {
 
     private final Chassis m_chassis;
     private final OI m_oi;
-    private final CANTalon m_leftTalon;
-    private final CANTalon m_rightTalon;
 
     public Drive(OI oi, Chassis chassis) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         m_chassis = chassis;
         m_oi = oi;
-        m_leftTalon = m_chassis.getLeftTalon();
-        m_rightTalon = m_chassis.getRightTalon();
         requires(m_chassis);
-    }
-
-    // Called just before this Command runs the first time
-    @Override
-    protected void initialize() {
-        // Change mode to Percent Vbus
-        m_chassis.setPercentVbusMode();
-
-        // V per sec; 12 = zero to full speed in 1 second
-        m_leftTalon.setVoltageRampRate(24.0);
-        m_rightTalon.setVoltageRampRate(24.0);
     }
 
     // Called repeatedly when this Command is scheduled to run

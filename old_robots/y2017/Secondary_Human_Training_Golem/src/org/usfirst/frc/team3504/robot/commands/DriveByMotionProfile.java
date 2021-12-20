@@ -4,6 +4,7 @@ import com.ctre.CANTalon;
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motion.TrajectoryPoint;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
@@ -70,17 +71,15 @@ public class DriveByMotionProfile extends Command {
     @Override
     protected void initialize() {
 
-        m_chassis.setupFPID(m_leftTalon);
-        m_chassis.setupFPID(m_rightTalon);
+        m_chassis.setupDefaultFPID();
 
         // Set Talon to MP mode
-        m_chassis.setMotionProfileMode();
         System.out.println("DriveByMotion: Change Talon to MP Mode");
 
         // Disable MP
         m_state = SetValueMotionProfile.Disable;
-        m_leftTalon.set(m_state.value);
-        m_rightTalon.set(m_state.value);
+        m_leftTalon.set(ControlMode.MotionProfile, m_state.value);
+        m_rightTalon.set(ControlMode.MotionProfile, m_state.value);
         System.out.println("DriveByMotion: Disable MP Mode");
 
         // Push Trajectory
@@ -107,8 +106,8 @@ public class DriveByMotionProfile extends Command {
         if ((m_leftStatus.btmBufferCnt > kMinPointsInTalon) && (m_rightStatus.btmBufferCnt > kMinPointsInTalon)) {
             m_state = SetValueMotionProfile.Enable;
         }
-        m_leftTalon.set(m_state.value);
-        m_rightTalon.set(m_state.value);
+        m_leftTalon.set(ControlMode.MotionProfile, m_state.value);
+        m_rightTalon.set(ControlMode.MotionProfile, m_state.value);
         // System.out.println("DriveByMotion: Execute Setting State: " + state);
 
         // did we get an underrun condition since last time we checked?
@@ -134,8 +133,8 @@ public class DriveByMotionProfile extends Command {
 
         if (left && right) {
             m_state = SetValueMotionProfile.Disable;
-            m_leftTalon.set(m_state.value);
-            m_rightTalon.set(m_state.value);
+            m_leftTalon.set(ControlMode.MotionProfile, m_state.value);
+            m_rightTalon.set(ControlMode.MotionProfile, m_state.value);
             System.out.println("DriveByMotion: Finished");
         }
 
@@ -150,8 +149,8 @@ public class DriveByMotionProfile extends Command {
         m_leftTalon.clearMotionProfileTrajectories();
         m_rightTalon.clearMotionProfileTrajectories();
 
-        m_leftTalon.set(SetValueMotionProfile.Disable.value);
-        m_rightTalon.set(SetValueMotionProfile.Disable.value);
+        m_leftTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
+        m_rightTalon.set(ControlMode.MotionProfile, SetValueMotionProfile.Disable.value);
 
     }
 

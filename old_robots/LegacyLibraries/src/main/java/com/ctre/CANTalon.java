@@ -42,11 +42,6 @@ public class CANTalon extends WPI_TalonSRX implements Sendable, SpeedController 
         set(m_activeControlMode, actualVal);
     }
 
-    public void setVoltageRampRate(double voltsPerSecond) {
-        double rampRate = 12.0 / voltsPerSecond;
-        configOpenloopRamp(rampRate);
-    }
-
     public void reverseSensor(boolean reverse) {
         setSensorPhase(!reverse);
     }
