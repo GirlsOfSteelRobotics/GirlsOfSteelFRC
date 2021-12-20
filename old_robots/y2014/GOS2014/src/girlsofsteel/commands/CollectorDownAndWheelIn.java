@@ -7,14 +7,15 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import girlsofsteel.subsystems.Collector;
 
 /**
  *
  * @author Sylvie and Heather
  */
 public class CollectorDownAndWheelIn extends CommandGroup{
-    public CollectorDownAndWheelIn () {
-        addParallel(new CollectorWheelForward());
-        addParallel(new EngageCollector());
+    public CollectorDownAndWheelIn (Collector collector) {
+        addParallel(new CollectorWheelForward(collector));
+        addParallel(new EngageCollector(collector));
     }
 }

@@ -6,6 +6,7 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -14,22 +15,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TuneManipulatorPID extends CommandBase {
 
-    private double p;
-    private double i;
-    private double d;
-    private double setpoint ;
-    private final boolean pid = false;
+    private double m_p;
+    private double m_i;
+    private double m_d;
+    private double m_setpoint;
+    private static final boolean m_pid = false;
+    private final Manipulator m_manipulator;
 
-    public TuneManipulatorPID() {
-        requires(manipulator);
+    public TuneManipulatorPID(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     @Override
     protected void initialize() {
-        manipulator.initEncoder();
-        if (pid) {
-            manipulator.resetPIDError();
-            manipulator.startPID();
+        m_manipulator.initEncoder();
+        if (m_pid) {
+            m_manipulator.resetPIDError();
+            m_manipulator.startPID();
             SmartDashboard.putNumber("Pivot P", 0);
             SmartDashboard.putNumber("Pivot I", 0);
             SmartDashboard.putNumber("Pivot D", 0);
@@ -42,38 +45,38 @@ public class TuneManipulatorPID extends CommandBase {
 
     @Override
     protected void execute() {
-        if (pid) {
-            p = SmartDashboard.getNumber("Pivot P", 0);
-            i = SmartDashboard.getNumber("Pivot I", 0);
-            d = SmartDashboard.getNumber("Pivot D", 0);
-            setpoint = SmartDashboard.getNumber("Pivot setpoint", 0);
+        if (m_pid) {
+            m_p = SmartDashboard.getNumber("Pivot P", 0);
+            m_i = SmartDashboard.getNumber("Pivot I", 0);
+            m_d = SmartDashboard.getNumber("Pivot D", 0);
+            m_setpoint = SmartDashboard.getNumber("Pivot setpoint", 0);
 
-            if (setpoint != 0) {
-                manipulator.setSetPoint((double) setpoint);
-                manipulator.setPID(p, i, d);
+            if (m_setpoint != 0) {
+                m_manipulator.setSetPoint((double) m_setpoint);
+                m_manipulator.setPID(m_p, m_i, m_d);
             }
-            SmartDashboard.putNumber("Pivot Error: ", manipulator.getError());
-            SmartDashboard.putNumber("P: ", p);
+            SmartDashboard.putNumber("Pivot Error: ", m_manipulator.getError());
+            SmartDashboard.putNumber("P: ", m_p);
         }
-        SmartDashboard.putNumber("Pivot encoder distance", manipulator.getAbsoluteDistance());
-        SmartDashboard.putNumber("REAL PIVOT ENCODER", manipulator.getDistance());
-        SmartDashboard.putNumber("Pivot encoder get", manipulator.getEncoder());
+        SmartDashboard.putNumber("Pivot encoder distance", m_manipulator.getAbsoluteDistance());
+        SmartDashboard.putNumber("REAL PIVOT ENCODER", m_manipulator.getDistance());
+        SmartDashboard.putNumber("Pivot encoder get", m_manipulator.getEncoder());
 
-        System.out.println("PIVOT ENCODER: " + manipulator.getAbsoluteDistance());
-        System.out.print("\tRaw pivot: " + manipulator.getRaw());
+        System.out.println("PIVOT ENCODER: " + m_manipulator.getAbsoluteDistance());
+        System.out.print("\tRaw pivot: " + m_manipulator.getRaw());
     }
 
     @Override
     protected boolean isFinished() {
-        return setpoint > 110 || setpoint < -17;
+        return m_setpoint > 110 || m_setpoint < -17;
 
     }
 
     @Override
     protected void end() {
-        manipulator.stopManipulator();
-        if (pid) {
-            manipulator.disablePID();
+        m_manipulator.stopManipulator();
+        if (m_pid) {
+            m_manipulator.disablePID();
         }
     }
 

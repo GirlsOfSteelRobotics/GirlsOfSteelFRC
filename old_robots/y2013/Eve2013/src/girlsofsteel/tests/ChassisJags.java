@@ -2,13 +2,16 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Chassis;
 
 public class ChassisJags extends CommandBase {
 
-    private double speed;
+    private final Chassis m_chassis;
+    private double m_speed;
 
-    public ChassisJags(){
-        requires(chassis);
+    public ChassisJags(Chassis chassis){
+        m_chassis = chassis;
+        requires(m_chassis);
     }
 
     @Override
@@ -22,25 +25,25 @@ public class ChassisJags extends CommandBase {
 
     @Override
     protected void execute() {
-        speed = SmartDashboard.getNumber("Jag Speed", 0.0);
+        m_speed = SmartDashboard.getNumber("Jag Speed", 0.0);
         if(SmartDashboard.getBoolean("Right Jag", false)){
-            chassis.setRightJag(speed);
+            m_chassis.setRightJag(m_speed);
         }else{
-            chassis.setRightJag(0.0);
+            m_chassis.setRightJag(0.0);
         }
         if(SmartDashboard.getBoolean("Back Jag", false)){
-            chassis.setBackJag(speed);
+            m_chassis.setBackJag(m_speed);
         }else{
-            chassis.setBackJag(0.0);
+            m_chassis.setBackJag(0.0);
         }
         if(SmartDashboard.getBoolean("Left Jag", false)){
-            chassis.setLeftJag(speed);
+            m_chassis.setLeftJag(m_speed);
         }else{
-            chassis.setLeftJag(0.0);
+            m_chassis.setLeftJag(0.0);
         }
-        SmartDashboard.putNumber("Right Rate", chassis.getRightEncoderRate());
-        SmartDashboard.putNumber("Back Rate", chassis.getBackEncoderRate());
-        SmartDashboard.putNumber("Left Rate", chassis.getLeftEncoderRate());
+        SmartDashboard.putNumber("Right Rate", m_chassis.getRightEncoderRate());
+        SmartDashboard.putNumber("Back Rate", m_chassis.getBackEncoderRate());
+        SmartDashboard.putNumber("Left Rate", m_chassis.getLeftEncoderRate());
     }
 
     @Override
@@ -51,7 +54,7 @@ public class ChassisJags extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

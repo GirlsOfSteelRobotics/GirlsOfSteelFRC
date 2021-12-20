@@ -8,25 +8,25 @@
  */
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Shooter;
 
 /**
  * @author Sylvie
  */
 public class ShooterTuning extends CommandBase {
 
-    private double batteryVoltage;
-    private final DriverStation driver;
-    private int counter;
-    private boolean done;
-    private double speed = 0.0;
-    private double time;
+    private final Shooter m_shooter;
+    private double m_batteryVoltage;
+    private int m_counter;
+    private boolean m_done;
+    private double m_speed;
+    private double m_time;
 
-    public ShooterTuning() {
-        requires(shooter);
-        driver = DriverStation.getInstance();
+    public ShooterTuning(Shooter shooter) {
+        m_shooter = shooter;
+        requires(m_shooter);
     }
 
     @Override
@@ -38,34 +38,34 @@ public class ShooterTuning extends CommandBase {
     @Override
     protected void execute() {
         if (SmartDashboard.getBoolean("test speed", false)) {
-            batteryVoltage = RobotController.getBatteryVoltage();
-            speed = SmartDashboard.getNumber("speed", 0.0);
-            time = timeSinceInitialized();
-            shooter.setJags(speed);
-            if (timeSinceInitialized() - time > 3) {
-                shooter.fillArray(speed, shooter.getEncoderRate(), batteryVoltage);
-                time = timeSinceInitialized();
-                counter++;
+            m_batteryVoltage = RobotController.getBatteryVoltage();
+            m_speed = SmartDashboard.getNumber("speed", 0.0);
+            m_time = timeSinceInitialized();
+            m_shooter.setJags(m_speed);
+            if (timeSinceInitialized() - m_time > 3) {
+                m_shooter.fillArray(m_speed, m_shooter.getEncoderRate(), m_batteryVoltage);
+                m_time = timeSinceInitialized();
+                m_counter++;
             }
             //arbitrary number
-            if (counter == 25) {
-                done = true;
+            if (m_counter == 25) {
+                m_done = true;
             }
         }
-                System.out.println("Point Voltage: " + speed + "\t");
-                System.out.print("Point Shooter Encoder Speed: " + shooter.getEncoderRate());
-                System.out.println("Point Battery Voltage: " + batteryVoltage);
+                System.out.println("Point Voltage: " + m_speed + "\t");
+                System.out.print("Point Shooter Encoder Speed: " + m_shooter.getEncoderRate());
+                System.out.println("Point Battery Voltage: " + m_batteryVoltage);
 
     }
 
     @Override
     protected boolean isFinished() {
-        return done;
+        return m_done;
     }
 
     @Override
     protected void end() {
-     shooter.stopJags();
+        m_shooter.stopJags();
     }
 
     @Override

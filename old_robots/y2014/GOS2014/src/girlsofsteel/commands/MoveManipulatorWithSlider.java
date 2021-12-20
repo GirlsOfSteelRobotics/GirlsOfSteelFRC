@@ -5,6 +5,8 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -14,16 +16,18 @@ public class MoveManipulatorWithSlider extends CommandBase {
 
     //Joystick thinks top is zero
     //Joystick thinks bottom is full
-    private final Joystick driver;
+    private final Joystick m_driver;
+    private final Manipulator m_manipulator;
 
-    private final double fullRangeOnSlider = 100;
-    private final double maxManipulatorAngle = 110;
-    private final double minManipulatorAngle = -3;
+    private static final double m_fullRangeOnSlider = 100;
+    private static final double m_maxManipulatorAngle = 110;
+    private static final double m_minManipulatorAngle = -3;
 
-    public MoveManipulatorWithSlider()
+    public MoveManipulatorWithSlider(OI oi, Manipulator manipulator)
     {
-        requires(manipulator);
-        driver = oi.getChassisJoystick();
+        m_manipulator = manipulator;
+        m_driver = oi.getChassisJoystick();
+        requires(m_manipulator);
     }
 
     @Override
@@ -32,8 +36,8 @@ public class MoveManipulatorWithSlider extends CommandBase {
 
     @Override
     protected void execute() {
-        double angle = ((driver.getZ()/fullRangeOnSlider)*maxManipulatorAngle)+minManipulatorAngle;
-        manipulator.setSetPoint(angle);
+        double angle = ((m_driver.getZ()/ m_fullRangeOnSlider)* m_maxManipulatorAngle)+ m_minManipulatorAngle;
+        m_manipulator.setSetPoint(angle);
     }
 
     @Override

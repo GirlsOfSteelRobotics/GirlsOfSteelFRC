@@ -4,6 +4,8 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Manipulator;
+
 /**
  *
  * @author appasamysm
@@ -11,14 +13,17 @@ package girlsofsteel.commands;
 //Is this nessisary?
 public class StopManipulator extends CommandBase {
 
-    public StopManipulator()
+    private final Manipulator m_manipulator;
+
+    public StopManipulator(Manipulator manipulator)
     {
-        requires(manipulator);
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     @Override
     protected void initialize() {
-        manipulator.stopManipulator();
+        m_manipulator.stopManipulator();
     }
 
     @Override

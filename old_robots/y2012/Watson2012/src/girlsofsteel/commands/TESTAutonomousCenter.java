@@ -2,19 +2,27 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Shooter;
+import girlsofsteel.subsystems.Turret;
 
 public class TESTAutonomousCenter extends CommandGroup {
 
-    private final boolean autoTrack;
+    private final boolean m_autoTrack;
 
-    private final double distance = 1.3;
+    private final Chassis m_chassis;
+    private final Collector m_collector;
+    private final Shooter m_shooter;
 
-    private double time;
+    public TESTAutonomousCenter(Chassis chassis, Collector collector, Shooter shooter, Turret turret){
+        m_chassis = chassis;
+        m_collector = collector;
+        m_shooter = shooter;
 
-    public TESTAutonomousCenter(){
         SmartDashboard.putBoolean("Auto Track?", false);
-        autoTrack = SmartDashboard.getBoolean("Auto Track?", false);
-        addSequential(new AutonomousKeyShootTwoBalls(autoTrack));
+        m_autoTrack = SmartDashboard.getBoolean("Auto Track?", false);
+        addSequential(new AutonomousKeyShootTwoBalls(chassis, collector, shooter, turret, m_autoTrack));
         /* inits shooter encoder & PID
          * gets distance from the camera
          * gets the velocity needed to shoot using that distance
@@ -36,9 +44,9 @@ public class TESTAutonomousCenter extends CommandGroup {
 
     @Override
     public void end(){
-        new DisableChassis().start();
-        new DisableShooter().start();
-        new StopCollectors().start();
+        new DisableChassis(m_chassis).start();
+        new DisableShooter(m_shooter).start();
+        new StopCollectors(m_collector).start();
     }
 
     @Override

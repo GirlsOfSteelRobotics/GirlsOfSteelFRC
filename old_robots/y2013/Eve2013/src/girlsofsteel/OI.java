@@ -2,26 +2,33 @@ package girlsofsteel;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import girlsofsteel.commands.Drive;
-import girlsofsteel.commands.StopChassis;
+import girlsofsteel.commands.Blocking;
+import girlsofsteel.commands.CloseBottomGrip;
+import girlsofsteel.commands.CloseTopGrip;
 import girlsofsteel.commands.DisableRotation;
+import girlsofsteel.commands.Drive;
+import girlsofsteel.commands.OpenAllGrippers;
+import girlsofsteel.commands.PushPullShooterPiston;
+import girlsofsteel.commands.RetractClimberPiston;
 import girlsofsteel.commands.Rotate;
 import girlsofsteel.commands.Shoot;
-import girlsofsteel.commands.PushPullShooterPiston;
-import girlsofsteel.commands.TipRobotOver;
-import girlsofsteel.commands.RetractClimberPiston;
-import girlsofsteel.commands.CloseBottomGrip;
-import girlsofsteel.commands.OpenAllGrippers;
-import girlsofsteel.commands.CloseTopGrip;
 import girlsofsteel.commands.StartClimbMotors;
+import girlsofsteel.commands.StopChassis;
 import girlsofsteel.commands.StopClimbMotors;
-import girlsofsteel.commands.Blocking;
+import girlsofsteel.commands.TipRobotOver;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Climber;
+import girlsofsteel.subsystems.DriveFlag;
+import girlsofsteel.subsystems.Feeder;
+import girlsofsteel.subsystems.Gripper;
+import girlsofsteel.subsystems.Shooter;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 
+@SuppressWarnings({"PMD.TooManyFields"})
 public class OI {
 
     public static final double JAG_SPEED = 1.0;
@@ -44,61 +51,61 @@ public class OI {
     //Joystick Ports + Joysticks
     private static final int DRIVER_JOYSTICK_PORT = 1;
     private static final int SHOOTER_JOYSTICK_PORT = 2;
-    private final Joystick driverJoystick;
-    private final Joystick operatorJoystick;
+    private final Joystick m_driverJoystick;
+    private final Joystick m_operatorJoystick;
 
     //Driver Buttons
-    private final JoystickButton startDrive;
-    private final JoystickButton stopChassis;
-    private final JoystickButton gyroDrive;
-    private final JoystickButton normalDrive;
-    private final JoystickButton liningDrive;
-    private final JoystickButton disableRotation;
-    private final JoystickButton rotateShootingBackRight;
-    private final JoystickButton rotateShootingBackLeft;
+    private final JoystickButton m_startDrive;
+    private final JoystickButton m_stopChassis;
+    private final JoystickButton m_gyroDrive;
+    private final JoystickButton m_normalDrive;
+    private final JoystickButton m_liningDrive;
+    private final JoystickButton m_disableRotation;
+    private final JoystickButton m_rotateShootingBackRight;
+    private final JoystickButton m_rotateShootingBackLeft;
 
     //Operator Buttons
-    private final JoystickButton prepShoot;
-    private final JoystickButton loadFrisbee;
-    private final JoystickButton tipOver;
-    private final JoystickButton retract;
-    private final JoystickButton closeBottomGrip;
-    private final JoystickButton openBottomGrip;
-    private final JoystickButton closeTopGrip;
-    private final JoystickButton climb;
-    private final JoystickButton stopClimbing;
-    private final JoystickButton stopClimbing2;
-    private final JoystickButton toggleBlocker;
+    private final JoystickButton m_prepShoot;
+    private final JoystickButton m_loadFrisbee;
+    private final JoystickButton m_tipOver;
+    private final JoystickButton m_retract;
+    private final JoystickButton m_closeBottomGrip;
+    private final JoystickButton m_openBottomGrip;
+    private final JoystickButton m_closeTopGrip;
+    private final JoystickButton m_climb;
+    private final JoystickButton m_stopClimbing;
+    private final JoystickButton m_stopClimbing2;
+    private final JoystickButton m_toggleBlocker;
 
-    public OI() {
+    public OI(Chassis chassis, DriveFlag drive, Climber climber, Feeder feeder, Shooter shooter, Gripper gripper) {
         //Defining Joysticks
-        driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
-        operatorJoystick = new Joystick(SHOOTER_JOYSTICK_PORT);
+        m_driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
+        m_operatorJoystick = new Joystick(SHOOTER_JOYSTICK_PORT);
 
              //Defining Driver Buttons - microsoft joytick
-        startDrive = new JoystickButton(driverJoystick, 9);
-        startDrive.whenPressed(new Drive(1.0, 0.5, false));
-        stopChassis = new JoystickButton(driverJoystick, 7);
-        stopChassis.whenPressed(new StopChassis());
-        gyroDrive = new JoystickButton(driverJoystick,11);
-        gyroDrive.whenPressed(new Drive(1.0, 0.5, true));
-        normalDrive = new JoystickButton(driverJoystick, 10);
-        normalDrive.whenPressed(new Drive(1.0, 0.5, false));
-        liningDrive = new JoystickButton(driverJoystick, 12);
-        liningDrive.whenPressed(new Drive(0.5, 0.25, true));
+        m_startDrive = new JoystickButton(m_driverJoystick, 9);
+        m_startDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, false));
+        m_stopChassis = new JoystickButton(m_driverJoystick, 7);
+        m_stopChassis.whenPressed(new StopChassis(chassis, drive));
+        m_gyroDrive = new JoystickButton(m_driverJoystick,11);
+        m_gyroDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, true));
+        m_normalDrive = new JoystickButton(m_driverJoystick, 10);
+        m_normalDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, false));
+        m_liningDrive = new JoystickButton(m_driverJoystick, 12);
+        m_liningDrive.whenPressed(new Drive(this, chassis, drive, 0.5, 0.25, true));
         //disables driver rotation
-        disableRotation = new JoystickButton(driverJoystick, 2);
-        disableRotation.whileHeld(new DisableRotation());
+        m_disableRotation = new JoystickButton(m_driverJoystick, 2);
+        m_disableRotation.whileHeld(new DisableRotation(chassis));
 //        rotateRight = new JoystickButton(driverJoystick, 4);
 //        rotateRight.whenPressed(new Rotate(Chassis.FEEDER_RIGHT, true));
 //        rotateLeft = new JoystickButton(driverJoystick, 3);
 //        rotateLeft.whenPressed(new Rotate(Chassis.FEEDER_LEFT, true));
-        rotateShootingBackRight = new JoystickButton(driverJoystick, 6);
-        rotateShootingBackRight.whenPressed(new Rotate(
+        m_rotateShootingBackRight = new JoystickButton(m_driverJoystick, 6);
+        m_rotateShootingBackRight.whenPressed(new Rotate(chassis,
               //  ShooterCamera.getTopDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
             90, false));
-        rotateShootingBackLeft = new JoystickButton(driverJoystick, 5);
-        rotateShootingBackLeft.whenPressed(new Rotate(
+        m_rotateShootingBackLeft = new JoystickButton(m_driverJoystick, 5);
+        m_rotateShootingBackLeft.whenPressed(new Rotate(chassis,
 //                ShooterCamera.getSideDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
             -90, false));
 //        Working blocker raising code
@@ -110,37 +117,37 @@ public class OI {
 
 
         //Defining Operator Buttons
-        prepShoot = new JoystickButton(operatorJoystick, R1);
-        prepShoot.whileHeld(new Shoot(0.9));
+        m_prepShoot = new JoystickButton(m_operatorJoystick, R1);
+        m_prepShoot.whileHeld(new Shoot(shooter, 0.9));
         //prepShootPyramid = new JoystickButton(operatorJoystick, L1);
         //prepShootPyramid.whileHeld(new Shoot(0.85));
-        loadFrisbee = new JoystickButton(operatorJoystick, X);
-        loadFrisbee.whileHeld(new PushPullShooterPiston());
-        tipOver = new JoystickButton(operatorJoystick, SQUARE);
-        tipOver.whenPressed(new TipRobotOver());
-        retract = new JoystickButton(operatorJoystick, TRIANGLE);
-        retract.whenPressed(new RetractClimberPiston());
-        closeBottomGrip = new JoystickButton(operatorJoystick, SELECT);
-        closeBottomGrip.whenPressed(new CloseBottomGrip());
-        openBottomGrip = new JoystickButton(operatorJoystick, START);
-        openBottomGrip.whenPressed(new OpenAllGrippers());
-        closeTopGrip = new JoystickButton(operatorJoystick, HOME);
-        closeTopGrip.whenPressed(new CloseTopGrip());
-        climb = new JoystickButton(operatorJoystick, CIRCLE);
-        climb.whileHeld(new StartClimbMotors());
-        stopClimbing = new JoystickButton(operatorJoystick, L2);
-        stopClimbing.whenPressed(new StopClimbMotors());
-        stopClimbing2 = new JoystickButton(operatorJoystick, R2);
-        stopClimbing2.whenPressed(new StopClimbMotors());
+        m_loadFrisbee = new JoystickButton(m_operatorJoystick, X);
+        m_loadFrisbee.whileHeld(new PushPullShooterPiston(feeder, shooter));
+        m_tipOver = new JoystickButton(m_operatorJoystick, SQUARE);
+        m_tipOver.whenPressed(new TipRobotOver(climber));
+        m_retract = new JoystickButton(m_operatorJoystick, TRIANGLE);
+        m_retract.whenPressed(new RetractClimberPiston(climber));
+        m_closeBottomGrip = new JoystickButton(m_operatorJoystick, SELECT);
+        m_closeBottomGrip.whenPressed(new CloseBottomGrip(gripper));
+        m_openBottomGrip = new JoystickButton(m_operatorJoystick, START);
+        m_openBottomGrip.whenPressed(new OpenAllGrippers(gripper));
+        m_closeTopGrip = new JoystickButton(m_operatorJoystick, HOME);
+        m_closeTopGrip.whenPressed(new CloseTopGrip());
+        m_climb = new JoystickButton(m_operatorJoystick, CIRCLE);
+        m_climb.whileHeld(new StartClimbMotors(climber));
+        m_stopClimbing = new JoystickButton(m_operatorJoystick, L2);
+        m_stopClimbing.whenPressed(new StopClimbMotors(climber));
+        m_stopClimbing2 = new JoystickButton(m_operatorJoystick, R2);
+        m_stopClimbing2.whenPressed(new StopClimbMotors(climber));
 
         //Raising and lowering the blocker using a toggle
-        toggleBlocker = new JoystickButton(operatorJoystick, L1);
-        toggleBlocker.whenPressed(new Blocking());
+        m_toggleBlocker = new JoystickButton(m_operatorJoystick, L1);
+        m_toggleBlocker.whenPressed(new Blocking(feeder));
     }
 
      public Joystick getDrivingJoystick(){
 
-        return driverJoystick;
+        return m_driverJoystick;
 
     }//end getDriverJoystick
 }

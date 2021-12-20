@@ -1,29 +1,32 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.subsystems.Chassis;
 
 public class Nudge extends CommandBase {
 
-    private Joystick driverJoystick;
+    private final Chassis m_chassis;
+    private final Joystick m_driverJoystick;
 
-    private double xValue;
+    private double m_xValue;
 
-    public Nudge(){
-        requires(chassis);
+    public Nudge(Chassis chassis, Joystick driverJoystick){
+        m_chassis = chassis;
+        this.m_driverJoystick = driverJoystick;
+        requires(m_chassis);
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initHoldPosition();
-        driverJoystick = oi.getDriverJoystick();
+        m_chassis.initEncoders();
+        m_chassis.initHoldPosition();
     }
 
     @Override
     protected void execute() {
-        xValue = driverJoystick.getX();
-        if(-0.2 > xValue || xValue > 0.2){
-            chassis.nudge(xValue);
+        m_xValue = m_driverJoystick.getX();
+        if(-0.2 > m_xValue || m_xValue > 0.2){
+            m_chassis.nudge(m_xValue);
         }
     }
 
@@ -34,9 +37,9 @@ public class Nudge extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.disablePositionPIDs();
-        chassis.endEncoders();
-        chassis.stopJags();
+        m_chassis.disablePositionPIDs();
+        m_chassis.endEncoders();
+        m_chassis.stopJags();
     }
 
     @Override

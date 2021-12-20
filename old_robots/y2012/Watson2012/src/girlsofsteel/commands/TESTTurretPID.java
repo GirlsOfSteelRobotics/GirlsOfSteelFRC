@@ -1,16 +1,20 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Turret;
 
 public class TESTTurretPID extends CommandBase {
 
-    private double p;
-    private double d;
+    private final Turret m_turret;
 
-    private double setpoint;
+    private double m_p;
+    private double m_d;
 
-    public TESTTurretPID(){
-        requires(turret);
+    private double m_setpoint;
+
+    public TESTTurretPID(Turret turret){
+        m_turret = turret;
+        requires(m_turret);
         SmartDashboard.putNumber("Turret Setpoint", 0.0);
         SmartDashboard.putNumber("Turret P", 0.0);
         SmartDashboard.putNumber("Turret D", 0.0);
@@ -18,17 +22,17 @@ public class TESTTurretPID extends CommandBase {
 
     @Override
     protected void initialize() {
-        turret.initEncoder();
-        turret.enablePID();
+        m_turret.initEncoder();
+        m_turret.enablePID();
     }
 
     @Override
     protected void execute() {
-        p = SmartDashboard.getNumber("Turret P", 0.0);
-        d = SmartDashboard.getNumber("Turret D", 0.0);
-        turret.setPDs(p, d);
-        setpoint = SmartDashboard.getNumber("Turret Setpoint", 0.0);
-        turret.setPIDSetPoint(setpoint);
+        m_p = SmartDashboard.getNumber("Turret P", 0.0);
+        m_d = SmartDashboard.getNumber("Turret D", 0.0);
+        m_turret.setPDs(m_p, m_d);
+        m_setpoint = SmartDashboard.getNumber("Turret Setpoint", 0.0);
+        m_turret.setPIDSetPoint(m_setpoint);
     }
 
     @Override
@@ -38,8 +42,8 @@ public class TESTTurretPID extends CommandBase {
 
     @Override
     protected void end() {
-        turret.disablePID();
-        turret.stopJag();
+        m_turret.disablePID();
+        m_turret.stopJag();
     }
 
     @Override

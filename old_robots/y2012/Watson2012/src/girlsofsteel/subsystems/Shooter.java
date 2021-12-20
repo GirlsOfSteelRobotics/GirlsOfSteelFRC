@@ -16,6 +16,7 @@ import girlsofsteel.objects.MapDoubleComparator;
 import girlsofsteel.objects.SmoothEncoder;
 //import girlsofsteel.commands.MiddleCollectorsForward;
 
+@SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods"})
 public class Shooter extends Subsystem {
 
     public static final double KEY_SPEED = 24.0;//dead-reckoning speed to use for
@@ -41,29 +42,31 @@ public class Shooter extends Subsystem {
     private static final double PULSES = 100.0;
     private static final double ENCODER_UNIT = (Math.PI * WHEEL_DIAMETER * GEAR_RATIO) / PULSES;
     //don't change this! ^^ just a formula
-    private double angle;
-    private final double yDistance = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
+    private static final double yDistance = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
     //from the shooter to the top basket
-    private double hangTime;
-    private double newXDistance;
-    private final Jaguar jags = new Jaguar(RobotMap.SHOOTER_JAGS);
+
+    private static final double p = 0.4;//0.25;//0.25;//0.15;//0.1;//0.25;
+    private static final double i = 50.0;//2.5;//0.06;//0.0002;
+    private static final double d = 0.0;
+    //integral threshold -> cuts of the value that is being multipled by the i term
+    //with the PID output
+    private static final double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
+
+    private double m_angle;
+    private double m_hangTime;
+    private double m_newXDistance;
+    private final Jaguar m_jags = new Jaguar(RobotMap.SHOOTER_JAGS);
 //    CHANGE FOR REAL WATSON:
 //    public Encoder encoder = new Encoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
 //            RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
 //            CounterBase.EncodingType.k4X);
 //    private Relay topRollers = new Relay(RobotMap.TOP_ROLLER_SPIKE);
 //    PRACTICE WATSANNE:
-    public Encoder encoder = new SmoothEncoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
+    public Encoder m_encoder = new SmoothEncoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
             RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
             CounterBase.EncodingType.k4X);
-    private final Relay topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
-    private final double p = 0.4;//0.25;//0.25;//0.15;//0.1;//0.25;
-    private final double i = 50.0;//2.5;//0.06;//0.0002;
-    private final double d = 0.0;
-    //integral threshold -> cuts of the value that is being multipled by the i term
-    //with the PID output
-    private final double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
-    private final EncoderGoSPIDController PID = new EncoderGoSPIDController(p, i, d, encoder,
+    private final Relay m_topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
+    private final EncoderGoSPIDController m_pid = new EncoderGoSPIDController(p, i, d, m_encoder,
             new PIDOutput() {
 
                 @Override
@@ -73,9 +76,9 @@ public class Shooter extends Subsystem {
             }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
 
     //table sorting shooter experimental values calculator
-    private  final SortedVector.Comparator comparator = new MapDoubleComparator();
+    private  final SortedVector.Comparator m_comparator = new MapDoubleComparator();
     //Sorted array sorts greatest to least
-    private final SortedVector list = new SortedVector(comparator);
+    private final SortedVector m_list = new SortedVector(m_comparator);
 
     public Shooter(){
         populate();//adds all the values in the table below to the shooting table
@@ -87,7 +90,7 @@ public class Shooter extends Subsystem {
     }
 
     public void setJags(double speed) {
-        jags.set(-speed);
+        m_jags.set(-speed);
     }
 
     public void stopJags() {
@@ -95,47 +98,47 @@ public class Shooter extends Subsystem {
     }
 
     public void topRollersForward() {
-        topRollersSpike.set(Relay.Value.kForward);
+        m_topRollersSpike.set(Relay.Value.kForward);
     }
 
     public void topRollersBackward() {
-        topRollersSpike.set(Relay.Value.kReverse);
+        m_topRollersSpike.set(Relay.Value.kReverse);
     }
 
     public void topRollersOff() {
-        topRollersSpike.set(Relay.Value.kOff);
+        m_topRollersSpike.set(Relay.Value.kOff);
     }
 
     public void initEncoder() {
-        encoder.setDistancePerPulse(ENCODER_UNIT);
+        m_encoder.setDistancePerPulse(ENCODER_UNIT);
            }
 
     public void stopEncoder() {
            }
 
     public void initPID() {
-        PID.setOutputThreshold(PID_OUTPUT_THRESHOLD);
-        PID.enable();
+        m_pid.setOutputThreshold(PID_OUTPUT_THRESHOLD);
+        m_pid.enable();
     }
 
     public void setPIDSpeed(double speed) {
-        PID.setSetPoint(speed);
+        m_pid.setSetPoint(speed);
     }
 
     //re-assigns the P & I values -> the D value is always 0.0 because it is a
     //rate PID controller
     public void setPIDValues(double p, double i, double d){
-        PID.setPID(p, i, d);
+        m_pid.setPID(p, i, d);
     }
 
     //this is for the weird bug in having to reassign PID values in execute
     //must be called in execute before anything else if using the shooter PID
     public void setPIDValues(){
-        PID.setPID(p, i, d);
+        m_pid.setPID(p, i, d);
     }
 
     public double getPIDSetPoint(){
-        return PID.getSetPoint();
+        return m_pid.getSetPoint();
     }
 
     //if the shooter wheel is within the set point range it will return true
@@ -144,8 +147,8 @@ public class Shooter extends Subsystem {
         if(setPoint == 0){//set point will be false if you are not getting a velocity
             return false; //will not run the top rollers if the wheel is not run
         }else{
-            return (PID.getRate() > setPoint - VELOCITY_ERROR_RANGE
-                && PID.getRate() < setPoint + VELOCITY_ERROR_RANGE);
+            return (m_pid.getRate() > setPoint - VELOCITY_ERROR_RANGE
+                && m_pid.getRate() < setPoint + VELOCITY_ERROR_RANGE);
         }
     }
 
@@ -153,17 +156,17 @@ public class Shooter extends Subsystem {
         if(setPoint == 0){//set point will be false if you are not getting a velocity
             return false; //will not run the top rollers if the wheel is not run
         }else{
-            return (PID.getRate() > setPoint - errorRange
-                && PID.getRate() < setPoint + errorRange);
+            return (m_pid.getRate() > setPoint - errorRange
+                && m_pid.getRate() < setPoint + errorRange);
         }
     }
 
     public void disablePID() {
-        PID.disable();
+        m_pid.disable();
     }
 
     public void resetPIDError(){
-        PID.resetError();
+        m_pid.resetError();
     }
 
     public double getDistance(){//from the fender to the camera -> in meters
@@ -250,13 +253,13 @@ public class Shooter extends Subsystem {
         double newVelocity = velocity * (5.5 / 4.0);
         //the velocity of the wheel must be altered to give the ball the correct
         //velocity -> the wheel velocity does not equal the ball velocity
-        PID.setSetPoint(newVelocity);
+        m_pid.setSetPoint(newVelocity);
     }
 
     //shoots using a direct velocity (of the wheel)
     public void shootUsingVelocity(double velocity) {
         double newVelocity = velocity;
-        PID.setSetPoint(newVelocity);
+        m_pid.setSetPoint(newVelocity);
     }
 
     //if the robot is not moving you use this function of physics to calculate
@@ -289,24 +292,24 @@ public class Shooter extends Subsystem {
     //this is the long complicated physics equation that was derived with mentors
     public double getBallVelocity(double xDistance) {
         double velocity;
-        velocity = ((xDistance * Math.sqrt(9.8 / ((2 * (xDistance * Math.cos(angle))) - yDistance))) / Math.tan(angle)) * (5.5 / 4.0);
+        velocity = ((xDistance * Math.sqrt(9.8 / ((2 * (xDistance * Math.cos(m_angle))) - yDistance))) / Math.tan(m_angle)) * (5.5 / 4.0);
         return velocity;
     }
 
     private void calculateAngle(double xDistance) {
-        angle = MathUtils.atan(yDistance / xDistance);//radians
+        m_angle = MathUtils.atan(yDistance / xDistance);//radians
     }
 
     //the compensation that the speed of the ball has to go based on the
     //robot velocity -> new distances of being shot
     private double getSpeedCompensation(double xDistance, double ballVelocity,
             double robotVelocityY) {
-        hangTime = xDistance / (ballVelocity * Math.cos(angle));//angle in radians (needs to be)
+        m_hangTime = xDistance / (ballVelocity * Math.cos(m_angle));//angle in radians (needs to be)
 
-        newXDistance = xDistance - (robotVelocityY * hangTime);
+        m_newXDistance = xDistance - (robotVelocityY * m_hangTime);
 
         double velocity;
-        velocity = getBallVelocity(newXDistance);
+        velocity = getBallVelocity(m_newXDistance);
 
         return velocity;
     }
@@ -314,25 +317,25 @@ public class Shooter extends Subsystem {
     //gets the angle compensation of the turret based on the speed of the robot
     public double getAngleCompensation(double robotVelocityX) {
         double angleCompensation;
-        angleCompensation = ((-hangTime * robotVelocityX) / newXDistance) * (180.0 / Math.PI);
+        angleCompensation = ((-m_hangTime * robotVelocityX) / m_newXDistance) * (180.0 / Math.PI);
         return angleCompensation;//returns degrees
     }
 
 
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
-    public void populate() {
+    public final void populate() {
         //new data (4/20/12):
 
-        list.addElement(new MapDouble(24.1,193.5));
-        list.addElement(new MapDouble(2.87,20.75));
-        list.addElement(new MapDouble(3.175,21.3));
-        list.addElement(new MapDouble(3.785,21.9));
-        list.addElement(new MapDouble(4.394,23.7));
-        list.addElement(new MapDouble(5.004,24.82));
-        list.addElement(new MapDouble(5.613,26.7));
-        list.addElement(new MapDouble(6.223,27.7));
-        list.addElement(new MapDouble(6.68,28.8));
+        m_list.addElement(new MapDouble(24.1,193.5));
+        m_list.addElement(new MapDouble(2.87,20.75));
+        m_list.addElement(new MapDouble(3.175,21.3));
+        m_list.addElement(new MapDouble(3.785,21.9));
+        m_list.addElement(new MapDouble(4.394,23.7));
+        m_list.addElement(new MapDouble(5.004,24.82));
+        m_list.addElement(new MapDouble(5.613,26.7));
+        m_list.addElement(new MapDouble(6.223,27.7));
+        m_list.addElement(new MapDouble(6.68,28.8));
 
         //old data:
 //        list.addElement(new MapDouble(0.0, 0.0));
@@ -366,15 +369,15 @@ public class Shooter extends Subsystem {
      */
     public double getVelocityFrTable(double distance) {
 
-        if (list.size() == 0) {
+        if (m_list.size() == 0) {
             return 0;//ends the getVelocityFrTable method -> sends a velocity of 0
         }
 
 
         //Sorted array is sorted greatest to least
         //assigns the last value to the lowest point -> and the first to the last
-        MapDouble lowest = (MapDouble) list.lastElement();
-        MapDouble highest = (MapDouble) list.firstElement();
+        MapDouble lowest = (MapDouble) m_list.lastElement();
+        MapDouble highest = (MapDouble) m_list.firstElement();
 
         //PLEASE make a test point SUPER close to the basket
         if (distance < lowest.getDistance()) {//if the distance is lower than the
@@ -393,15 +396,15 @@ public class Shooter extends Subsystem {
             //the table -> shoot at the highest the velocity
         }
 
-        int index = (int) Math.ceil(list.size() / 2.0);
-        MapDouble currentValue = (MapDouble) list.elementAt(index);
+        int index = (int) Math.ceil(m_list.size() / 2.0);
+        MapDouble currentValue;
         MapDouble currentLow = new MapDouble(0.0, 0.0);
         MapDouble currentMax = new MapDouble(0.0, 0.0);
         boolean end = false;
 
         //find the values above & below the distance you're looking for
         while (!end) {
-            currentValue = ((MapDouble) list.elementAt(index));
+            currentValue = ((MapDouble) m_list.elementAt(index));
 
             if (currentValue.getDistance() == currentLow.getDistance() || currentValue.getDistance() == currentMax.getDistance()) {
                 end = true;
@@ -432,17 +435,17 @@ public class Shooter extends Subsystem {
     //and the 2 sets of data that the distance lies between (distance & velocity)
     //to find the velocity the shooter wheel should be set at
     private double interpolate(double distance, double distance1, double velocity1, double distance2, double velocity2) {
-        double velocity = 0.0;
+        double velocity;
         velocity = velocity1 + (velocity2 - velocity1) * ((distance - distance1) / (distance2 - distance1));
         return velocity;
     }
 
     public double getEncoderRate() {
-        return encoder.getRate();
+        return m_encoder.getRate();
     }
 
     public double getEncoderDistance() {
-        return encoder.getDistance();
+        return m_encoder.getDistance();
     }
 
     //button board stuff -> not used
@@ -450,15 +453,13 @@ public class Shooter extends Subsystem {
     public double manualShooterSpeedConverter(double sliderValue) {
         double minShooterValue = 14.0;
         double maxShooterValue = 35.0;
-        double speed = ((maxShooterValue - minShooterValue) * (sliderValue - MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER); //Shooter value
-        return speed;
+        return ((maxShooterValue - minShooterValue) * (sliderValue - MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER);
     }
 
     public double getIncrementValue(double sliderValue){
         double minIncrementValue = -2.0;
         double maxIncrementValue = 2.0;
-        double incrementValue = ((maxIncrementValue - minIncrementValue)*(sliderValue-MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER);
-        return incrementValue;
+        return ((maxIncrementValue - minIncrementValue)*(sliderValue-MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER);
     }
 
 }

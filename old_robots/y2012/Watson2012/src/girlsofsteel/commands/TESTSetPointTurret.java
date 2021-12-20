@@ -1,26 +1,29 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Turret;
 
 public class TESTSetPointTurret extends CommandBase {
 
-    private double angle;
+    private final Turret m_turret;
+    private double m_angle;
 
-    public TESTSetPointTurret() {
-        requires(turret);
+    public TESTSetPointTurret(Turret turret) {
+        m_turret = turret;
+        requires(m_turret);
         SmartDashboard.putNumber("Turret Relative Angle", 0.0);
     }
 
     @Override
     protected void initialize() {
-        turret.initEncoder();
-        turret.enablePID();
+        m_turret.initEncoder();
+        m_turret.enablePID();
     }
 
     @Override
     protected void execute() {
-        angle = SmartDashboard.getNumber("Turret Relative Angle", 0.0);
-        turret.setPIDSetPoint(turret.getEncoderDistance() + angle);
+        m_angle = SmartDashboard.getNumber("Turret Relative Angle", 0.0);
+        m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_angle);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class TESTSetPointTurret extends CommandBase {
 
     @Override
     protected void end() {
-        turret.stopJag();
+        m_turret.stopJag();
     }
 
     @Override

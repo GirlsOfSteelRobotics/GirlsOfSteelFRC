@@ -18,19 +18,19 @@ package girlsofsteel.objects;
  */
 public class LSPBPIDPlanner {
 
-    private double velocity;
-    private final double acceleration;
-    private boolean negativeSetpoint;
-    private double desiredOverallDistance;
-    private double lastAccelerating;
-    private double lastConstant;
-    private double pointA; //time when graph changes from accelerating to constant
-    private double pointB;  //time when graph changes from constant to decelerating
-    private double pointC; //time when graph ends
-    private double trianglePoint;
-    private double triangleEndpoint;
-    private double yInterceptOfDecelerating;
-    private boolean triangle = false;
+    private double m_velocity;
+    private final double m_acceleration;
+    private boolean m_negativeSetpoint;
+    private double m_desiredOverallDistance;
+    private double m_lastAccelerating;
+    private double m_lastConstant;
+    private double m_pointA; //time when graph changes from accelerating to constant
+    private double m_pointB;  //time when graph changes from constant to decelerating
+    private double m_pointC; //time when graph ends
+    private double m_trianglePoint;
+    private double m_triangleEndpoint;
+    private double m_yInterceptOfDecelerating;
+    private boolean m_triangle;
 
     /*
      This constructor defaults the velocity and acceleration
@@ -38,13 +38,13 @@ public class LSPBPIDPlanner {
     public LSPBPIDPlanner() {
         //To use the LSPB You must first 1.) call calculateVelocityGraph()
         //2.) Call getDesiredPosition() in some loop getting updated times
-        acceleration = 6; //The default is the chassis's acceleration
+        m_acceleration = 6; //The default is the chassis's acceleration
         //System.out.println("Changed Acceleration!: " + acceleration);
-        velocity = 3;
+        m_velocity = 3;
         }
 
     public LSPBPIDPlanner(double acceleration) {
-        this.acceleration = acceleration;
+        this.m_acceleration = acceleration;
     }
 
     /*
@@ -62,26 +62,27 @@ public class LSPBPIDPlanner {
      x = (v/a)
 
      */
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public void calculateVelocityGraph(double desiredDistance) {
 //        pointA = (velocity/acceleration);
 //        pointB = (desiredDistance/velocity);
 //        pointC = pointA + pointB;
         if (desiredDistance < 0) {
-            negativeSetpoint = true;
+            m_negativeSetpoint = true;
             desiredDistance *= -1;
         } else {
-            negativeSetpoint = false;
+            m_negativeSetpoint = false;
         }
-        desiredOverallDistance = desiredDistance;
-        if (desiredOverallDistance > 1.5) { //based off of the chassis case
+        m_desiredOverallDistance = desiredDistance;
+        if (m_desiredOverallDistance > 1.5) { //based off of the chassis case
             //System.out.println("Velocity: " + velocity + "\tacceleration: " + acceleration);
-            pointC = (desiredOverallDistance / velocity) + (velocity / acceleration);
-            pointB = pointC - (velocity) / acceleration;
-            pointA = pointC - pointB;
-            yInterceptOfDecelerating = velocity + (acceleration * pointB);
+            m_pointC = (m_desiredOverallDistance / m_velocity) + (m_velocity / m_acceleration);
+            m_pointB = m_pointC - (m_velocity) / m_acceleration;
+            m_pointA = m_pointC - m_pointB;
+            m_yInterceptOfDecelerating = m_velocity + (m_acceleration * m_pointB);
             //System.out.println("Point A: " + pointA + "\tPointB: " + pointB + "\tPointC: " + pointC + "\tDesiredDistance: " + desiredOverallDistance);
         } else {
-            triangle = true;
+            m_triangle = true;
             specialTriangleCase();
             //System.out.println("Top of Triangle: " + trianglePoint + "\tEnd of the Triangle: " + triangleEndpoint);
         }
@@ -90,19 +91,20 @@ public class LSPBPIDPlanner {
     /*
      Returns the corresponding position setpoint given time
      */
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public double getDesiredPosition(double time) {
         time /= 1000; //To get milliseconds into seconds
         //System.out.println("Time in seconds: " + time);
-        if (triangle) {
-            if (time < trianglePoint) {
+        if (m_triangle) {
+            if (time < m_trianglePoint) {
                 return accelerating(time);
             } else {
                 return decelerating(time);
             }
         } else {
-            if (time < pointA) {
+            if (time < m_pointA) {
                 return accelerating(time);
-            } else if (time >= pointA && time < pointB) {
+            } else if (time >= m_pointA && time < m_pointB) {
                 return constantVelocity(time);
             } else {
                 return decelerating(time);
@@ -116,10 +118,10 @@ public class LSPBPIDPlanner {
      */
     private double accelerating(double time) {
         //The integral of v(t) = at where a is some constant (your acceleration)
-        double setpoint = ((time * time) * acceleration) / (2.0);
-        lastAccelerating = setpoint;
+        double setpoint = ((time * time) * m_acceleration) / (2.0);
+        m_lastAccelerating = setpoint;
         //System.out.println("In accelerating zone! Sent this setpoint: " + setpoint);
-        if (negativeSetpoint) {
+        if (m_negativeSetpoint) {
             setpoint *= -1;
         }
         return setpoint;
@@ -131,10 +133,10 @@ public class LSPBPIDPlanner {
      */
     private double constantVelocity(double time) {
         //The integral of v(t) = v where v is some constant (your velocity)
-        double setpoint = (velocity * time) - (velocity * pointA) + lastAccelerating;
-        lastConstant = setpoint;
+        double setpoint = (m_velocity * time) - (m_velocity * m_pointA) + m_lastAccelerating;
+        m_lastConstant = setpoint;
         //System.out.println("In the constant zone! Sent this setpoint: " + setpoint + "");
-        if (negativeSetpoint) {
+        if (m_negativeSetpoint) {
             setpoint *= -1;
         }
         return setpoint;
@@ -146,51 +148,51 @@ public class LSPBPIDPlanner {
      */
     private double decelerating(double time) {
         //The integral of v(t) = -ax + v where a is some constant (your acceleration) and v is your velocity
-        double setpoint = 0.0;
+        double setpoint;
 
-        if (triangle) {
-            setpoint = (((-acceleration * (time * time)) / 2.0)
-                    + (yInterceptOfDecelerating * time)) - (((-acceleration
-                    * (trianglePoint * trianglePoint)) / 2.0) + (yInterceptOfDecelerating * trianglePoint));
-            if (time >= triangleEndpoint) {
-                setpoint = desiredOverallDistance;
+        if (m_triangle) {
+            setpoint = (((-m_acceleration * (time * time)) / 2.0)
+                    + (m_yInterceptOfDecelerating * time)) - (((-m_acceleration
+                    * (m_trianglePoint * m_trianglePoint)) / 2.0) + (m_yInterceptOfDecelerating * m_trianglePoint));
+            if (time >= m_triangleEndpoint) {
+                setpoint = m_desiredOverallDistance;
             } else {
-                setpoint += lastAccelerating;
+                setpoint += m_lastAccelerating;
             }
         } else {
-            setpoint = (((-acceleration * (time * time)) / 2.0)
-                    + (yInterceptOfDecelerating * time)) - (((-acceleration
-                    * (pointB * pointB)) / 2.0) + (yInterceptOfDecelerating * pointB));
-            if (time >= pointC) {
-                setpoint = desiredOverallDistance;
+            setpoint = (((-m_acceleration * (time * time)) / 2.0)
+                    + (m_yInterceptOfDecelerating * time)) - (((-m_acceleration
+                    * (m_pointB * m_pointB)) / 2.0) + (m_yInterceptOfDecelerating * m_pointB));
+            if (time >= m_pointC) {
+                setpoint = m_desiredOverallDistance;
             } else {
-                setpoint += lastConstant;//Adds on the cumulative sum from the acceleration and constant sections
+                setpoint += m_lastConstant;//Adds on the cumulative sum from the acceleration and constant sections
             }
         }
         //System.out.println("In the decelerating zone! Sent this setpoint: " + setpoint);
-        if (negativeSetpoint) {
+        if (m_negativeSetpoint) {
             setpoint *= -1;
         }
         return setpoint;
     }
 
     public boolean done(double time) {
-        return time > pointC;
+        return time > m_pointC;
     }
 
     public void specialTriangleCase() {
-        trianglePoint = Math.sqrt(desiredOverallDistance / acceleration);
-        triangleEndpoint = trianglePoint * 2;
+        m_trianglePoint = Math.sqrt(m_desiredOverallDistance / m_acceleration);
+        m_triangleEndpoint = m_trianglePoint * 2;
         //The y-intercept of the decelerating side of the triangle
-        velocity = acceleration * trianglePoint;
-        yInterceptOfDecelerating = 2 * acceleration * trianglePoint;
+        m_velocity = m_acceleration * m_trianglePoint;
+        m_yInterceptOfDecelerating = 2 * m_acceleration * m_trianglePoint;
     }
 
     public double getAcceleration() {
-        return acceleration;
+        return m_acceleration;
     }
 
     public double getDesiredDistance() {
-        return desiredOverallDistance;
+        return m_desiredOverallDistance;
     }
 }

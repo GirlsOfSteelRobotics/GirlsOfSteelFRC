@@ -8,19 +8,19 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
  * @author user
  */
 public class TestPivotArmPID extends CommandBase{
-     private double desiredAngle;
-    private double currentAngle;
-    private final double allowedAngleError;
+    private final Manipulator m_manipulator;
+    private double m_currentAngle;
 
-    public TestPivotArmPID() {
-        requires(manipulator);
-        allowedAngleError = 2; //2 degrees of error on both sides allowed
+    public TestPivotArmPID(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class TestPivotArmPID extends CommandBase{
     protected void execute() {
         //desiredAngle = SmartDashboard.getNumber("Pivot Angle", 0);
         //manipulator.setSetPoint(desiredAngle);
-        currentAngle = manipulator.getAbsoluteDistance();
-        SmartDashboard.putNumber("Pivot Arm Encoder Value", currentAngle);
+        m_currentAngle = m_manipulator.getAbsoluteDistance();
+        SmartDashboard.putNumber("Pivot Arm Encoder Value", m_currentAngle);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class TestPivotArmPID extends CommandBase{
 
     @Override
     protected void end() {
-        manipulator.stopManipulator();
-        manipulator.disablePID();
+        m_manipulator.stopManipulator();
+        m_manipulator.disablePID();
     }
 
     @Override

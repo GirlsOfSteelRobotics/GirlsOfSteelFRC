@@ -15,16 +15,16 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Wait extends CommandBase {
 
-    private final double time;
-    private double startTime;
+    private final double m_time;
+    private double m_startTime;
 
     public Wait(double sec) {
-        time = sec;
+        m_time = sec;
     }
 
     @Override
     protected void initialize() {
-        startTime = Timer.getFPGATimestamp();
+        m_startTime = Timer.getFPGATimestamp();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Wait extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-        return Timer.getFPGATimestamp() - startTime > time;
+        return Timer.getFPGATimestamp() - m_startTime > m_time;
     }
 
     @Override

@@ -7,6 +7,8 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Driving;
 
 /**
  *THIS IS IN METERS
@@ -17,45 +19,48 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class MoveToPosition extends CommandBase{
 
-    private double distance;
-    private final double offBy = 0.03;
+    private static final double m_offBy = 0.03;
 
-    public MoveToPosition() {
-        this(0.0);
+    private final Chassis m_chassis;
+    private double m_distance;
+
+    public MoveToPosition(Chassis chassis, Driving driving) {
+        this(chassis, driving, 0.0);
     }
 
-    public MoveToPosition(double distance) {
+    public MoveToPosition(Chassis chassis, Driving driving, double distance) {
+        m_chassis = chassis;
         requires(driving);
-        this.distance = distance;
+        this.m_distance = distance;
     }
 
     @Override
     protected void initialize() {
-       chassis.initPositionPIDS();
-       chassis.resetPositionPIDError();
-       chassis.initEncoders();
+       m_chassis.initPositionPIDS();
+       m_chassis.resetPositionPIDError();
+       m_chassis.initEncoders();
        //SmartDashboard.putNumber("Distance", 0);
     }
 
     @Override
     protected void execute() {
         //distance = SmartDashboard.getNumber("Distance", 0);
-        chassis.setPosition(distance);
-        SmartDashboard.putNumber("Left Encoder: ", chassis.getLeftEncoderDistance());
-        SmartDashboard.putNumber("Right Encoder: ", chassis.getRightEncoderDistance());
+        m_chassis.setPosition(m_distance);
+        SmartDashboard.putNumber("Left Encoder: ", m_chassis.getLeftEncoderDistance());
+        SmartDashboard.putNumber("Right Encoder: ", m_chassis.getRightEncoderDistance());
     }
 
     @Override
     protected boolean isFinished() {
         //Is finished when our position is within the "off by" range of the setpoint
 
-        return (Math.abs((chassis.getLeftEncoderDistance() - distance)) < offBy);
+        return (Math.abs((m_chassis.getLeftEncoderDistance() - m_distance)) < m_offBy);
     }
 
     @Override
     protected void end() {
-        chassis.disablePositionPID();
-        chassis.stopJags();
+        m_chassis.disablePositionPID();
+        m_chassis.stopJags();
     }
 
     @Override

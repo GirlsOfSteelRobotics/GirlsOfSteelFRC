@@ -12,16 +12,16 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  */
 public class MagneticSpeedSensor implements PIDSource {
 
-    private final MagneticPulseCounter pulseCounter;
+    private final MagneticPulseCounter m_pulseCounter;
 
     //Units: Pulses per second
     public MagneticSpeedSensor(int channel) {
-        pulseCounter = new MagneticPulseCounter(channel);
-        new Thread(pulseCounter).start();
+        m_pulseCounter = new MagneticPulseCounter(channel);
+        new Thread(m_pulseCounter).start(); // NOPMD
     }
 
     public double get() {
-        return pulseCounter.getRate();
+        return m_pulseCounter.getRate();
     }
 
     @Override

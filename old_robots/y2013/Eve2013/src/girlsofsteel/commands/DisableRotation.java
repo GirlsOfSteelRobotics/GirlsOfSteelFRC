@@ -1,10 +1,18 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class DisableRotation extends CommandBase {
+
+    private final Chassis m_chassis;
+
+    public DisableRotation(Chassis chassis) {
+        m_chassis = chassis;
+    }
 
     @Override
     protected void initialize() {
-        chassis.startAutoRotation();
+        m_chassis.startAutoRotation();
     }
 
     @Override
@@ -13,13 +21,13 @@ public class DisableRotation extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-        return !chassis.isAutoRotating();
+        return !m_chassis.isAutoRotating();
     }
 
     @Override
     protected void end() {
-        chassis.stopAutoRotation();
-        chassis.startManualRotation();
+        m_chassis.stopAutoRotation();
+        m_chassis.startManualRotation();
     }
 
     @Override

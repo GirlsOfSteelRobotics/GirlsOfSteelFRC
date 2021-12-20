@@ -19,13 +19,13 @@ public class Collector extends Subsystem {
      *This spike moves the wheel on the collector arm.
      * @author Sonia, Sophia
      */
-    private final Relay collectorWheelSpike;
+    private final Relay m_collectorWheelSpike;
 
     /**
      * this is the jag that moves the collector up and down to collect or release the ball.
      * @author Sonia, Sophia
      */
-    private final Jaguar collectorJag;
+    private final Jaguar m_collectorJag;
 
 
     /**
@@ -33,13 +33,13 @@ public class Collector extends Subsystem {
      * @author Sonia, Sophia
      */
     public Collector() {
-        collectorWheelSpike = new Relay(RobotMap.COLLECTOR_WHEEL_SPIKE);
-        collectorJag = new Jaguar(RobotMap.COLLECTOR_JAG);
+        m_collectorWheelSpike = new Relay(RobotMap.COLLECTOR_WHEEL_SPIKE);
+        m_collectorJag = new Jaguar(RobotMap.COLLECTOR_JAG);
         }
 
 
     public void moveCollectorToZJoystick(double zVertical) {
-        collectorJag.set(zVertical);
+        m_collectorJag.set(zVertical);
     }
 
     /**
@@ -47,7 +47,7 @@ public class Collector extends Subsystem {
      * @author Sonia, Sophia
      */
     public void collectorWheelFoward() {
-        collectorWheelSpike.set(Configuration.collectorWheelForwardSpeed);
+        m_collectorWheelSpike.set(Configuration.collectorWheelForwardSpeed);
     } //Set the wheel spike to the forward setting
 
      /**
@@ -55,7 +55,7 @@ public class Collector extends Subsystem {
      * @author Sonia, Sophia
      */
     public void collectorWheelReverse() {
-        collectorWheelSpike.set(Configuration.collectorWheelBackwardSpeed);
+        m_collectorWheelSpike.set(Configuration.collectorWheelBackwardSpeed);
     }//set the wheel spike to the reverse setting
 
     /**
@@ -63,20 +63,20 @@ public class Collector extends Subsystem {
      * @author Sonia, Sophia
      */
     public void stopCollectorWheel() {
-        collectorWheelSpike.set(Relay.Value.kOff);
+        m_collectorWheelSpike.set(Relay.Value.kOff);
     } //stops the wheel from spinning
 
     public void moveCollectorUpOrDown(double collectorJagSpeed) {
-        collectorJag.set(collectorJagSpeed);
+        m_collectorJag.set(collectorJagSpeed);
     }//Sets/returns the speed of the collector jag as it moves to engage the ball
 
     public void stopCollector() {
-        collectorJag.set(0.0);
+        m_collectorJag.set(0.0);
     }//Stops the collector jag
 
     public double getCollectorSpeed()
     {
-        return collectorJag.getSpeed();
+        return m_collectorJag.getSpeed();
     }
 
     /**

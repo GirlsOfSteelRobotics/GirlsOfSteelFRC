@@ -1,40 +1,43 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Chassis;
 
 public class TESTChassis extends CommandBase {
 
-    private double speed;
+    private final Chassis m_chassis;
+    private double m_speed;
 
-    public TESTChassis(){
-        requires(chassis);
+    public TESTChassis(Chassis chassis){
+        m_chassis = chassis;
+        requires(m_chassis);
         SmartDashboard.putBoolean("Right Jags", false);
         SmartDashboard.putBoolean("Left Jags", false);
         SmartDashboard.putNumber("Jag speed", 0.0);
-        SmartDashboard.putNumber("Right Encoder:", chassis.getRightEncoderDistance());
-        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
+        SmartDashboard.putNumber("Right Encoder:", m_chassis.getRightEncoderDistance());
+        SmartDashboard.putNumber("Left Encoder", m_chassis.getLeftEncoderDistance());
         SmartDashboard.putNumber("Left Scale", 1.0);
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
+        m_chassis.initEncoders();
     }
 
     @Override
     protected void execute() {
-        speed = SmartDashboard.getNumber("Jag speed", 0.0);
-        SmartDashboard.putNumber("Right Encoder:", chassis.getRightEncoderDistance());
-        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
+        m_speed = SmartDashboard.getNumber("Jag speed", 0.0);
+        SmartDashboard.putNumber("Right Encoder:", m_chassis.getRightEncoderDistance());
+        SmartDashboard.putNumber("Left Encoder", m_chassis.getLeftEncoderDistance());
         if(SmartDashboard.getBoolean("Right Jags", false)){
-            chassis.setRightJags(speed);
+            m_chassis.setRightJags(m_speed);
         }
         if(SmartDashboard.getBoolean("Left Jags", false)){
             double leftScale = SmartDashboard.getNumber("Left Scale", 1.0);
-            chassis.setLeftJags(speed*leftScale);
+            m_chassis.setLeftJags(m_speed *leftScale);
         }
-        System.out.println("R:" + chassis.getRightEncoderDistance());
-        System.out.println("L:" + chassis.getLeftEncoderDistance());
+        System.out.println("R:" + m_chassis.getRightEncoderDistance());
+        System.out.println("L:" + m_chassis.getLeftEncoderDistance());
     }
 
     @Override
@@ -44,8 +47,8 @@ public class TESTChassis extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.stopJags();
-        chassis.endEncoders();
+        m_chassis.stopJags();
+        m_chassis.endEncoders();
     }
 
     @Override

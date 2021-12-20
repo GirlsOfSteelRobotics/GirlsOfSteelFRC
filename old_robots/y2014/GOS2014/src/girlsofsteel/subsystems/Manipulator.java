@@ -19,22 +19,23 @@ import girlsofsteel.objects.EncoderGoSPIDController;
  *
  * @author Sophia and Sam
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public class Manipulator extends Subsystem {
-
-    private double angle; //starting angle
-    private final Jaguar manipulatorJag;
-    private final Encoder bobTheArmEncoder;
-    private final Relay dasBootLights;
-    private final EncoderGoSPIDController manipulatorPID;
     private static final double minAngle = 0; //needs to be changed, not correct
     private static final double maxAngle = 113; //110 for comp bot//also needs to be changed
     private static final double pulsePerRotation = 360; //THIS IS CORRECT FOR THE COMPETITION ROBOT
-    private double desiredAngle;
     private static final double manipulatorJagSpeedStop = 0.0;
     private static final double manipulatorJagSpeedDown = 1.0;
     private static final double manipulatorJagSpeedUp = -1.0;
     private static final double gearRatio = 13.0/70.0;
     private static final double distancePerPulse = (pulsePerRotation * gearRatio)/pulsePerRotation; //360 is the number of degrees in a circle
+
+    private double m_angle; //starting angle
+    private final Jaguar m_manipulatorJag;
+    private final Encoder m_bobTheArmEncoder;
+    private final Relay m_dasBootLights;
+    private final EncoderGoSPIDController m_manipulatorPID;
+    private double m_desiredAngle;
 
     /*
    (theta:360 as arcLength:circumference) -> use this to find out theta and distance
@@ -46,7 +47,7 @@ public class Manipulator extends Subsystem {
     */
 
     //Old p for the practice bot arm
-    private static  double p = 0.1; //negative for the competition robot
+    private static final double p = Configuration.manipulatorPivotP;; //negative for the competition robot
     //private static double p = 0.12; //positive for the 2nd chassis
     private static final double i = 0.0;
     private static final double d = 0.0;
@@ -54,30 +55,27 @@ public class Manipulator extends Subsystem {
     //96 is from the old arm that was on the practice bot
     //private static int ZERO_ENCODER_VALUE = 86; //101 is the max angle, -17 (SHOULD BE CONSTANT) is how off from the horizontal all the way down is
 
-    private static int ZERO_ENCODER_VALUE = 89; //Practice bot <- //92; //COMPETITION BOT
+    private static final int ZERO_ENCODER_VALUE = Configuration.pivotEncoderZeroValue;; //Practice bot <- //92; //COMPETITION BOT
 
     public Manipulator() {
-        p = Configuration.manipulatorPivotP;
 
-        ZERO_ENCODER_VALUE = Configuration.pivotEncoderZeroValue;
+        m_manipulatorJag = new Jaguar(RobotMap.MANIPULATOR_JAG);
+        m_bobTheArmEncoder = new Encoder(RobotMap.MANIPULATOR_ENCODER_A, RobotMap.MANIPULATOR_ENCODER_B, true, CounterBase.EncodingType.k2X); //reverse boolean is true on the 2nd robot
+        m_bobTheArmEncoder.setDistancePerPulse(distancePerPulse); //assuming there's 360 pulses per revoluation
 
-        manipulatorJag = new Jaguar(RobotMap.MANIPULATOR_JAG);
-        bobTheArmEncoder = new Encoder(RobotMap.MANIPULATOR_ENCODER_A, RobotMap.MANIPULATOR_ENCODER_B, true, CounterBase.EncodingType.k2X); //reverse boolean is true on the 2nd robot
-        bobTheArmEncoder.setDistancePerPulse(distancePerPulse); //assuming there's 360 pulses per revoluation
-
-        dasBootLights = new Relay(RobotMap.LIGHTS);
-        angle = maxAngle;
+        m_dasBootLights = new Relay(RobotMap.LIGHTS);
+        m_angle = maxAngle;
 
 
-        manipulatorPID = new EncoderGoSPIDController(p, i, d, bobTheArmEncoder, new PIDOutput() {
+        m_manipulatorPID = new EncoderGoSPIDController(p, i, d, m_bobTheArmEncoder, new PIDOutput() {
 
             @Override
             public void pidWrite(double output) {
-                manipulatorJag.set(output);
+                m_manipulatorJag.set(output);
             }
         }, EncoderGoSPIDController.POSITION, ZERO_ENCODER_VALUE);
 
-        System.out.println("Encoder Value ------------ " + manipulatorPID.getSignedDistance());
+        System.out.println("Encoder Value ------------ " + m_manipulatorPID.getSignedDistance());
 
         //Starts the PID COMMENT THIS OUT WHEN YOU DO MANIPULATOR ENCODER TESTING
         startPID();
@@ -88,11 +86,11 @@ public class Manipulator extends Subsystem {
     //these are the lights that could be used to signal other teams if we are
     //ready to pass, etc.
     public void turnDasBootLightsOn() {
-        dasBootLights.set(Relay.Value.kForward);
+        m_dasBootLights.set(Relay.Value.kForward);
     }
 
     public void turnDasBootLightsOff() {
-        dasBootLights.set(Relay.Value.kOff);
+        m_dasBootLights.set(Relay.Value.kOff);
     }
     /*
      if the current angle is smaller than the desired angle: it's moving counterclockwise
@@ -102,21 +100,21 @@ public class Manipulator extends Subsystem {
      */
 
     public boolean checkAngle(double desiredAngle) {
-        return desiredAngle == angle;
+        return desiredAngle == m_angle;
         //if we are allowed to go past zero, this code may not be correct
     }
 
     public void moveJag(double desiredAngle) {
-        this.desiredAngle = desiredAngle;
+        this.m_desiredAngle = desiredAngle;
         if (desiredAngle < minAngle || desiredAngle > maxAngle) {
             throw new IllegalArgumentException("Angle for arm manipulation is invalid");
         }
-        if (desiredAngle == angle) {
+        if (desiredAngle == m_angle) {
             return;
-        } else if (desiredAngle > angle) {
-            manipulatorJag.set(.1); //assuming that 100% power is okay
+        } else if (desiredAngle > m_angle) {
+            m_manipulatorJag.set(.1); //assuming that 100% power is okay
         } else {
-            manipulatorJag.set(-.1);
+            m_manipulatorJag.set(-.1);
         }
         setAngle();
 //        if (desiredAngle == angle) {
@@ -129,22 +127,22 @@ public class Manipulator extends Subsystem {
     }
 
     public void moveAngle() {
-        if(angle == desiredAngle) {
+        if(m_angle == m_desiredAngle) {
             return;
         }
-        else if (angle < desiredAngle) {
-            manipulatorJag.set(.1);
+        else if (m_angle < m_desiredAngle) {
+            m_manipulatorJag.set(.1);
             Timer.delay(0.5);
-            manipulatorJag.set(0.0);
+            m_manipulatorJag.set(0.0);
         } else {
-            manipulatorJag.set(-.1);
+            m_manipulatorJag.set(-.1);
             Timer.delay(0.5);
-            manipulatorJag.set(0.0);
+            m_manipulatorJag.set(0.0);
         }
     }
 
     public double getArmAngle() {
-        return angle;
+        return m_angle;
 
         //input:The sensors (the camera)
         //output:What we want the angle of the robot to be
@@ -155,23 +153,23 @@ public class Manipulator extends Subsystem {
 
     private void setAngle() {
         //USE GEAR RATIO
-        double proportionalAngle = (90.0/288.0) * bobTheArmEncoder.get();
-        System.out.println("Bob says: " + bobTheArmEncoder.get());
-        this.angle = proportionalAngle;
+        double proportionalAngle = (90.0/288.0) * m_bobTheArmEncoder.get();
+        System.out.println("Bob says: " + m_bobTheArmEncoder.get());
+        this.m_angle = proportionalAngle;
     }
 
 
     public void moveManipulatorDown() {
-        manipulatorJag.set(manipulatorJagSpeedDown * Configuration.desiredAnglePivotArmSign);
+        m_manipulatorJag.set(manipulatorJagSpeedDown * Configuration.desiredAnglePivotArmSign);
     }//Sets/returns the speed of the manipulator jag for manual adjusting using buttons on PS3 controller
 
     public void moveManipulatorUp() {
-        manipulatorJag.set(manipulatorJagSpeedUp * Configuration.desiredAnglePivotArmSign);
+        m_manipulatorJag.set(manipulatorJagSpeedUp * Configuration.desiredAnglePivotArmSign);
         //sets/returns the speed of the manipulator jag for manual adjusting using buttons on PS3 controller
     }
 
     public void stopManipulator() {
-        manipulatorJag.set(manipulatorJagSpeedStop);
+        m_manipulatorJag.set(manipulatorJagSpeedStop);
     }//Stops the manipulator jag
 
 //    public double getCurrentAngle(double angle) {
@@ -188,54 +186,54 @@ public class Manipulator extends Subsystem {
         startJag();
     }
 
-    public void initEncoder() {
-        bobTheArmEncoder.reset();
+    public final void initEncoder() {
+        m_bobTheArmEncoder.reset();
         //bobTheArmEncoder.setPIDSourceParameter(PIDSource.PIDSourceParameter.kDistance); //possibly not necessary
         //initialize encoder. I will probably need this. TODO: see if this is needed
     }
 
     public void startJag() {
-        manipulatorJag.set(0);
+        m_manipulatorJag.set(0);
     }
 
-    public void MoveArmTest() {
+    public void moveArmTest() {
         //move the arm moter. Move the jagas forward. Move Jags backward.
     }
 
     public void setJag(double speed) {
-        manipulatorJag.set(speed);
+        m_manipulatorJag.set(speed);
     }
 
     public void stopJag() {
-        manipulatorJag.set(0.0);
+        m_manipulatorJag.set(0.0);
 
-        if (desiredAngle > angle) { //checking direction angle went
-            angle = bobTheArmEncoder.getDistance() + angle;
+        if (m_desiredAngle > m_angle) { //checking direction angle went
+            m_angle = m_bobTheArmEncoder.getDistance() + m_angle;
         } else {
-            angle = angle - bobTheArmEncoder.getDistance();
+            m_angle = m_angle - m_bobTheArmEncoder.getDistance();
         }
-        bobTheArmEncoder.reset();
+        m_bobTheArmEncoder.reset();
         //if we're allowed to go past 0/360 than it doesnt work anymore
     }
 
     public void testJagsForward() {
-        manipulatorJag.set(0.3);
+        m_manipulatorJag.set(0.3);
     }
 
     public void testJagsBackward() {
-        manipulatorJag.set(-0.3);
+        m_manipulatorJag.set(-0.3);
     }
 
     public void stopTestJags() {
-        manipulatorJag.set(0);
+        m_manipulatorJag.set(0);
     }
 
     public void moveJags(double position) {
-        manipulatorJag.set(position);
+        m_manipulatorJag.set(position);
     }
 
     public double getRate() {
-        return bobTheArmEncoder.getRate();
+        return m_bobTheArmEncoder.getRate();
 
    }
 
@@ -243,7 +241,7 @@ public class Manipulator extends Subsystem {
     Doesn't take into account the encoder type (k4x)
     */
     public double getRaw() {
-        return bobTheArmEncoder.getRaw();
+        return m_bobTheArmEncoder.getRaw();
     }
 
     @Override
@@ -251,44 +249,44 @@ public class Manipulator extends Subsystem {
     }
 
 
-    public void resetPIDError() {
-        manipulatorPID.resetError();
+    public final void resetPIDError() {
+        m_manipulatorPID.resetError();
     }
 
     public double getAbsoluteDistance() {
-        return bobTheArmEncoder.getDistance() + ZERO_ENCODER_VALUE;//the horizontal zero
+        return m_bobTheArmEncoder.getDistance() + ZERO_ENCODER_VALUE;//the horizontal zero
     }
 
     public double getDistance() {
-        return bobTheArmEncoder.getDistance();
+        return m_bobTheArmEncoder.getDistance();
     }
 
     /*
     Zero the manipulator arm at the horizontal (horizontal is 0) NEED TODO
     */
     public void setSetPoint(double setpoint) {
-        manipulatorPID.setSetPoint(setpoint);
+        m_manipulatorPID.setSetPoint(setpoint);
     }
 
     public void disablePID() {
-        manipulatorPID.disable();
+        m_manipulatorPID.disable();
     }
 
     public void setPID(double p1, double i1,double d1) {
-        manipulatorPID.setPID(p1, i1, d1);
+        m_manipulatorPID.setPID(p1, i1, d1);
     }
 
-    public void startPID() {
-        manipulatorPID.enable();
+    public final void startPID() {
+        m_manipulatorPID.enable();
         //manipulatorPID.setOutputThreshold(1.0); Possibly needed for the velocity control but not for position PID
     }
 
     public double getError() {
-        return manipulatorPID.getError();
+        return m_manipulatorPID.getError();
     }
 
     public double getEncoder() {
-        return bobTheArmEncoder.get();
+        return m_bobTheArmEncoder.get();
     }
 
     public void holdAngle() {
@@ -296,6 +294,6 @@ public class Manipulator extends Subsystem {
     }
 
     public double getSetPoint() {
-        return manipulatorPID.getSetPoint();
+        return m_manipulatorPID.getSetPoint();
     }
 }

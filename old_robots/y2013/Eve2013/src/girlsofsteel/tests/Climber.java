@@ -7,16 +7,22 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Gripper;
 
 /**
  *
  * @author sam
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Climber extends CommandBase {
 
-    public int state;
+    private final girlsofsteel.subsystems.Climber  m_climber;
+    private final Gripper m_gripper;
+    public int m_state;
 
-    public Climber() {
+    public Climber(girlsofsteel.subsystems.Climber climber, Gripper gripper) {
+        m_climber = climber;
+        m_gripper = gripper;
         requires(climber);
 
         SmartDashboard.putString("Comand called", "comand called");
@@ -40,20 +46,20 @@ public class Climber extends CommandBase {
 
 
         if (SmartDashboard.getBoolean("Spikes", false) && SmartDashboard.getBoolean("Spikes Foward Backwards", false)) {
-            climber.forwardRightClimberSpike();
-            climber.forwardLeftClimberSpike();
+            m_climber.forwardRightClimberSpike();
+            m_climber.forwardLeftClimberSpike();
         } else if(SmartDashboard.getBoolean("Spikes", false) && !SmartDashboard.getBoolean("Spikes Foward Backwards", false)) {
-            climber.reverseLeftClimberSpike();
-            climber.reverseRightClimberSpike();
+            m_climber.reverseLeftClimberSpike();
+            m_climber.reverseRightClimberSpike();
         } else if (!SmartDashboard.getBoolean("Spikes", false)){
-            climber.stopLeftClimberSpike();
-            climber.stopRightClimberSpike();
+            m_climber.stopLeftClimberSpike();
+            m_climber.stopRightClimberSpike();
         }
 
         if (SmartDashboard.getBoolean("Bottom grip Open Close", false)) {
-            bottomGripper.openGrip();
+            m_gripper.openGrip();
         } else {
-            bottomGripper.closeGrip();
+            m_gripper.closeGrip();
         }
 
 //        if (SmartDashboard.getBoolean("Middle grip Open Close", false)) {

@@ -1,10 +1,17 @@
 package girlsofsteel.commands;
 
-public class ReverseTopMiddleRollers extends CommandBase {
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Shooter;
 
-    public ReverseTopMiddleRollers(){
-        requires(collector);
-        requires(shooter);
+public class ReverseTopMiddleRollers extends CommandBase {
+    private final Collector m_collector;
+    private final Shooter m_shooter;
+
+    public ReverseTopMiddleRollers(Collector collector, Shooter shooter){
+        m_collector = collector;
+        m_shooter = shooter;
+        requires(m_collector);
+        requires(m_shooter);
     }
 
     @Override
@@ -13,8 +20,8 @@ public class ReverseTopMiddleRollers extends CommandBase {
 
     @Override
     protected void execute() {
-        collector.reverseMiddleConveyor();
-        shooter.topRollersBackward();
+        m_collector.reverseMiddleConveyor();
+        m_shooter.topRollersBackward();
     }
 
     @Override
@@ -24,8 +31,8 @@ public class ReverseTopMiddleRollers extends CommandBase {
 
     @Override
     protected void end() {
-        collector.stopMiddleConveyor();
-        shooter.topRollersOff();
+        m_collector.stopMiddleConveyor();
+        m_shooter.topRollersOff();
     }
 
     @Override

@@ -5,8 +5,8 @@
  */
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Kicker;
 
 /**
  *
@@ -14,35 +14,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TestKickerEncoder extends CommandBase {
 
-    private double startTime;
-    private double changeTime;
-    private double direction;
+    private final Kicker m_kicker;
+    private double m_direction;
 
-    public TestKickerEncoder() {
-        requires(kicker);
+    public TestKickerEncoder(Kicker kicker) {
+        m_kicker = kicker;
+        requires(m_kicker);
     }
 
     @Override
     protected void initialize() {
-        kicker.stopJag();
-        kicker.initEncoders();
-        kicker.resetEncoders();
-        startTime = Timer.getFPGATimestamp();
+        m_kicker.stopJag();
+        m_kicker.initEncoders();
+        m_kicker.resetEncoders();
         SmartDashboard.putNumber("Direction", 0.0);
     }
 
     @Override
     protected void execute() {
-        direction = SmartDashboard.getNumber("Direction", 0);
-        if (direction == 1) {
-            kicker.setTalon(0.5);
-        } else if (direction == -1) {
-            kicker.setTalon(-.5);
+        m_direction = SmartDashboard.getNumber("Direction", 0);
+        if (m_direction == 1) {
+            m_kicker.setTalon(0.5);
+        } else if (m_direction == -1) {
+            m_kicker.setTalon(-.5);
         }
         else {
-            kicker.stopTalon();
+            m_kicker.stopTalon();
         }
-        changeTime = Timer.getFPGATimestamp() - startTime;
     }
 
     @Override
@@ -52,7 +50,7 @@ public class TestKickerEncoder extends CommandBase {
 
     @Override
     protected void end() {
-        kicker.stopJag();
+        m_kicker.stopJag();
     }
 
     @Override

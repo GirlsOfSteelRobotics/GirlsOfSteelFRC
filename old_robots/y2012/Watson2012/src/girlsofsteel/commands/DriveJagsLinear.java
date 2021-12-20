@@ -1,30 +1,34 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.subsystems.Chassis;
 
 public class DriveJagsLinear extends CommandBase{
 
-    private Joystick joystick;
+    private final Chassis m_chassis;
+    private final Joystick m_joystick;
 
-    private final double scale;
-    private double xAxis;
-    private double yAxis;
+    private final double m_scale;
+    private double m_xAxis;
+    private double m_yAxis;
 
-    public DriveJagsLinear(double scale){
-        requires(chassis);
-        this.scale = scale;
+    public DriveJagsLinear(Chassis chassis, Joystick driverJoystick, double scale){
+        m_chassis = chassis;
+        requires(m_chassis);
+        this.m_scale = scale;
+        m_joystick = driverJoystick;
     }
 
     @Override
     protected void initialize() {
-        joystick = oi.getDriverJoystick();
+
     }
 
     @Override
     protected void execute() {
-        xAxis = joystick.getX() * scale;
-        yAxis = joystick.getY() * scale;
-        chassis.driveJagsLinear(xAxis, yAxis);
+        m_xAxis = m_joystick.getX() * m_scale;
+        m_yAxis = m_joystick.getY() * m_scale;
+        m_chassis.driveJagsLinear(m_xAxis, m_yAxis);
     }
 
     @Override
@@ -34,7 +38,7 @@ public class DriveJagsLinear extends CommandBase{
 
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

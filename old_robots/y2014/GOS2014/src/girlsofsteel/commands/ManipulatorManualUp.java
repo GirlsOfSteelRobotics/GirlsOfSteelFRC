@@ -6,23 +6,28 @@
 
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Manipulator;
+
 /**
  *
  * @author Abby
  */
 public class ManipulatorManualUp extends CommandBase {
-    public ManipulatorManualUp(){
-        requires (manipulator);
+    private final Manipulator m_manipulator;
+
+    public ManipulatorManualUp(Manipulator manipulator){
+        m_manipulator = manipulator;
+        requires (m_manipulator);
     }
 
     @Override
     protected void initialize() {
-        manipulator.disablePID();
+        m_manipulator.disablePID();
     }
 
     @Override
     protected void execute() {
-        manipulator.moveManipulatorUp();
+        m_manipulator.moveManipulatorUp();
     }
 
     @Override
@@ -32,10 +37,10 @@ public class ManipulatorManualUp extends CommandBase {
 
     @Override
     protected void end() {
-        manipulator.stopManipulator();
+        m_manipulator.stopManipulator();
 //        manipulator.resetPIDError();
 //        manipulator.startPID();
-        manipulator.initEncoder();
+        m_manipulator.initEncoder();
     }
 
     @Override

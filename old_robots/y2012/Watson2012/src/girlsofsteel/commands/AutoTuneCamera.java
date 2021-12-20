@@ -3,6 +3,7 @@ package girlsofsteel.commands;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
 
 public class AutoTuneCamera extends CommandBase {
 
@@ -10,8 +11,11 @@ public class AutoTuneCamera extends CommandBase {
     //public static final double STEP = 0.5; //meters
     public static final double ERROR_THRESHOLD = 0.1;
 
-    public AutoTuneCamera(){
-        requires(chassis);
+    private final Chassis m_chassis;
+
+    public AutoTuneCamera(Chassis chassis){
+        m_chassis = chassis;
+        requires(m_chassis);
     }
 
     //returns average of a set of 10 data pouints from the camera if it's stable
@@ -26,7 +30,7 @@ public class AutoTuneCamera extends CommandBase {
 
             try{
                 Thread.sleep(50);
-            }catch(Exception ex){
+            }catch(InterruptedException ex){
                 System.out.println(ex);
             }
         }
@@ -43,9 +47,10 @@ public class AutoTuneCamera extends CommandBase {
         return -1; //can't use the data
     }
 
+    @SuppressWarnings("PMD.CognitiveComplexity")
     @Override
     protected void initialize() {
-        chassis.initEncoders();
+        m_chassis.initEncoders();
         int nSteps = 10; //(int)(HALF_COURT/STEP);
         double[] imageTargetRatioData = new double[nSteps];
         double[] distanceData = new double[nSteps];
@@ -53,9 +58,10 @@ public class AutoTuneCamera extends CommandBase {
         while(count < nSteps){
             try{
                 Thread.sleep(4000); //4 seconds time out
-            }catch(Exception ex){
+            }catch(InterruptedException ex){
+                ex.printStackTrace(); // NOPMD
             }
-            if(!chassis.isMoving()){
+            if(!m_chassis.isMoving()){
                 /*
                 if((chassis.getRightEncoderDistance())>HALF_COURT -2){
                 break;
@@ -83,9 +89,9 @@ public class AutoTuneCamera extends CommandBase {
                 //center of the turret to the backboard when the rollers are
                 //facing the bridge
                 imageTargetRatioData[count] = ratio;
-                distanceData[count] = (chassis.getRightEncoderDistance())+1.45;
+                distanceData[count] = (m_chassis.getRightEncoderDistance())+1.45;
                 SmartDashboard.putNumber("Chassis Encoder",
-                        chassis.getRightEncoderDistance());
+                        m_chassis.getRightEncoderDistance());
                 System.out.println(distanceData[count] + ", " + ratio +
                         " CD=" + distCamera + " Err=" + (distCamera -
                         distanceData[count]));

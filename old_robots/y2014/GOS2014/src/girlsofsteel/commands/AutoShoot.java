@@ -6,6 +6,8 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -13,13 +15,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoShoot extends CommandGroup {
 
-    private final double angle = CommandBase.camera.getVerticalAngleOffset();
-    private final boolean shoot = false;
-    private final double error = 1; //magic
-
-    public AutoShoot() {
-        addSequential(new setArmAnglePID(angle));
-        if(CommandBase.manipulator.getAbsoluteDistance() < angle + error){
-        }
+    public AutoShoot(Camera camera, Manipulator manipulator) {
+        double angle = camera.getVerticalAngleOffset();
+        addSequential(new SetArmAnglePID(manipulator, angle));
     }
 }

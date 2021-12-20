@@ -5,68 +5,75 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.objects.LSPBPIDPlanner;
+import girlsofsteel.subsystems.Kicker;
+
 /**
  *
  * @author Sylvie
  */
 public class MoveKicker extends CommandBase {
+    private static final double m_allowedOffBy = 0.05; //Degrees
+    private static final double m_loaded = 0.0; //Starting position is loaded pos
+    private static final double m_shoot = 0.111111; //The angle degree needed to kick
 
-    private final double allowedOffBy = 0.05; //Degrees
-    private double encoderValue350Modded;
-    private double setpoint;
+    private final Kicker m_kicker;
+    private final LSPBPIDPlanner m_kickerPlanner;
+    private double m_encoderValue350Modded;
+    private double m_setpoint;
     //This is one tooth away from kicking
-    private final double loaded = 0.0; //Starting position is loaded pos
-    private final double shoot = 0.111111; //The angle degree needed to kick
-    private final int pos;
-    private boolean firstTime;
-    private double startTime;
-    private double changeInTime;
-    private double setPointToSendToPID;
+    private final int m_pos;
+    private boolean m_firstTime;
+    private double m_startTime;
+    private double m_changeInTime;
+    private double m_setPointToSendToPID;
 
-    public MoveKicker(int pos) {
-        this.pos = pos;
+    public MoveKicker(Kicker kicker, int pos) {
+        m_kicker = kicker;
+        m_kickerPlanner = m_kicker.getKickerPlanner();
+        m_pos = pos;
     }
 
     @Override
     protected void initialize() {
-        firstTime = true;
+        m_firstTime = true;
     }
 
     @Override
     protected void execute() {
-        if(firstTime) {
-            switch(pos) {
+        if(m_firstTime) {
+            switch(m_pos) {
                 case 0: //loading
-                    setpoint = loaded;
+                    m_setpoint = m_loaded;
                     break;
                 case 1: //kick
-                    setpoint = shoot;
+                    m_setpoint = m_shoot;
                     break;
                 default:
                     System.out.println("Error! Not a valid input parameter");
                     break;
             }
-            kicker.kickerPlanner.calculateVelocityGraph(setpoint);
-            startTime = System.currentTimeMillis(); //MILLISECONDS
-            firstTime = false;
+            m_kickerPlanner.calculateVelocityGraph(m_setpoint);
+            m_startTime = System.currentTimeMillis(); //MILLISECONDS
+            m_firstTime = false;
         }
-        changeInTime = System.currentTimeMillis() - startTime;
-        setPointToSendToPID = kicker.kickerPlanner.getDesiredPosition(changeInTime);
-        kicker.setPIDPosition(setPointToSendToPID);
-        encoderValue350Modded = kicker.getEncoderDistance() % 360;
+        m_changeInTime = System.currentTimeMillis() - m_startTime;
+        m_setPointToSendToPID = m_kickerPlanner.getDesiredPosition(m_changeInTime);
+        m_kicker.setPIDPosition(m_setPointToSendToPID);
+        m_encoderValue350Modded = m_kicker.getEncoderDistance() % 360;
     }
 
     @Override
     protected boolean isFinished() {
-        encoderValue350Modded = kicker.getEncoderDistance() % 360;
-        boolean thereYet = Math.abs(encoderValue350Modded - setpoint) < allowedOffBy;
-        boolean over = Math.abs(encoderValue350Modded) > Math.abs(setpoint);
+        m_encoderValue350Modded = m_kicker.getEncoderDistance() % 360;
+        boolean thereYet = Math.abs(m_encoderValue350Modded - m_setpoint) < m_allowedOffBy;
+        boolean over = Math.abs(m_encoderValue350Modded) > Math.abs(m_setpoint);
         return thereYet || over;
     }
 
     @Override
     protected void end() {
-        kicker.holdPosition();
+        m_kicker.holdPosition();
     }
 
     @Override

@@ -3,51 +3,60 @@ package girlsofsteel.commands;
 import com.sun.squawk.io.BufferedReader;
 import com.sun.squawk.microedition.io.FileConnection;
 import com.sun.squawk.util.MathUtils;
-import java.io.*;
-import javax.microedition.io.Connector;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.DriveFlag;
 
+import javax.microedition.io.Connector;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class TuneI extends CommandBase {
 
-    private final double setpoint;
-    private final double bI;
-    private final double eI;
-    private final double interval;
+    private final double m_setpoint;
+    private final double m_bI;
+    private final double m_eI;
+    private final double m_interval;
 
-    private boolean right = false;
-    private boolean back = false;
-    private boolean left = false;
+    private boolean m_right;
+    private boolean m_back ;
+    private boolean m_left ;
 
-    private double[][] rightRates;
-    private double[][] backRates;
-    private double[][] leftRates;
-    private int counter;
-    private final int numRates;
+    private double[][] m_rightRates;
+    private double[][] m_backRates;
+    private double[][] m_leftRates;
+    private int m_counter;
+    private final int m_numRates;
 
-    private double[][] setpointDeviations;
-    private double[][] standardDeviations;
+    private double[][] m_setpointDeviations;
+    private double[][] m_standardDeviations;
 
-    public TuneI(double setpoint, double beginningI, double endingI) {
-        this.setpoint = setpoint;
-        bI = beginningI;
-        eI = endingI;
-        this.interval = 0.00001;
+    private final Chassis m_chassis;
+
+    public TuneI(Chassis chassis, DriveFlag drive, double setpoint, double beginningI, double endingI) {
+        m_chassis = chassis;
+        this.m_setpoint = setpoint;
+        m_bI = beginningI;
+        m_eI = endingI;
+        this.m_interval = 0.00001;
         requires(chassis);
         requires(drive);
-        numRates = 50;//start number -- change if too long or too short
-        int numIs = (int) MathUtils.round((eI-bI)/interval)+1;
-        rightRates = new double[numIs][numRates];
-        backRates = new double[numIs][numRates];
-        leftRates = new double[numIs][numRates];
-        counter = 0;
-        setpointDeviations = new double[3][numIs];
-        standardDeviations = new double[3][numIs];
+        m_numRates = 50;//start number -- change if too long or too short
+        int numIs = (int) MathUtils.round((m_eI - m_bI)/ m_interval)+1;
+        m_rightRates = new double[numIs][m_numRates];
+        m_backRates = new double[numIs][m_numRates];
+        m_leftRates = new double[numIs][m_numRates];
+        m_counter = 0;
+        m_setpointDeviations = new double[3][numIs];
+        m_standardDeviations = new double[3][numIs];
     }//constructor
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initRatePIDs();
+        m_chassis.initEncoders();
+        m_chassis.initRatePIDs();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -55,27 +64,27 @@ public class TuneI extends CommandBase {
     protected void execute() {
 
         //set setpoint -- all 3 wheels at the same time
-        chassis.setRightPIDRate(setpoint);
-        chassis.setBackPIDRate(setpoint);
-        chassis.setLeftPIDRate(setpoint);
-        for(double i=bI; i<=eI; i+=interval){
+        m_chassis.setRightPIDRate(m_setpoint);
+        m_chassis.setBackPIDRate(m_setpoint);
+        m_chassis.setLeftPIDRate(m_setpoint);
+        for(double i = m_bI; i<= m_eI; i+= m_interval){
             //set i values
-            chassis.setRightPIDRateValues(0.0, i, 0.0);
-            chassis.setBackPIDRateValues(0.0, i, 0.0);
-            chassis.setLeftPIDRateValues(0.0, i, 0.0);
+            m_chassis.setRightPIDRateValues(0.0, i, 0.0);
+            m_chassis.setBackPIDRateValues(0.0, i, 0.0);
+            m_chassis.setLeftPIDRateValues(0.0, i, 0.0);
             //if within setpoint -> record rate for a given amount of time
-            if(isWithinSetpoint() && counter < rightRates.length){
-                for(int j=0; j<numRates; j++){
-                    rightRates[counter][j] = chassis.getRightEncoderRate();
-                    backRates[counter][j] = chassis.getBackEncoderRate();
-                    leftRates[counter][j] = chassis.getLeftEncoderRate();
+            if(isWithinSetpoint() && m_counter < m_rightRates.length){
+                for(int j = 0; j< m_numRates; j++){
+                    m_rightRates[m_counter][j] = m_chassis.getRightEncoderRate();
+                    m_backRates[m_counter][j] = m_chassis.getBackEncoderRate();
+                    m_leftRates[m_counter][j] = m_chassis.getLeftEncoderRate();
                 }//end for
             }//end if
             //reset the within setpoint booleans
-            right = false;
-            back = false;
-            left = false;
-            counter++;
+            m_right = false;
+            m_back = false;
+            m_left = false;
+            m_counter++;
         }//end for
 
     }//end execute
@@ -90,84 +99,84 @@ public class TuneI extends CommandBase {
     @Override
     @SuppressWarnings("PMD.UseStringBufferForStringAppends")
     protected void end() {
-        chassis.stopRatePIDs();
-        chassis.stopEncoders();
-        chassis.stopJags();
+        m_chassis.stopRatePIDs();
+        m_chassis.stopEncoders();
+        m_chassis.stopJags();
 
         //right Is & rates
-        for(int i=0; i<rightRates.length; i++){//for every i value
+        for(int i = 0; i< m_rightRates.length; i++){//for every i value
             double sum = 0;
-            for(int j=0; j<rightRates[i].length; j++){//for every rate
+            for(int j = 0; j< m_rightRates[i].length; j++){//for every rate
                 //add to sum
-                sum += rightRates[i][j];
+                sum += m_rightRates[i][j];
             }//end rate for -- average
             //calculate mean
-            double mean = sum/rightRates[i].length;
+            double mean = sum/ m_rightRates[i].length;
             double sumSquareDeviations = 0;
-            for(int j=0; j<rightRates[i].length; j++){//for every rate
+            for(int j = 0; j< m_rightRates[i].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((rightRates[i][j]-mean) *
-                        (rightRates[i][j]-mean));
+                sumSquareDeviations += ((m_rightRates[i][j]-mean) *
+                        (m_rightRates[i][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
             double standardDeviation = Math.sqrt(sumSquareDeviations/
-                    (rightRates[i].length-1));
-            setpointDeviations[0][i] = mean-setpoint;
-            standardDeviations[0][i] = standardDeviation;
+                    (m_rightRates[i].length-1));
+            m_setpointDeviations[0][i] = mean- m_setpoint;
+            m_standardDeviations[0][i] = standardDeviation;
         }//end i for
 
         //back Is & rates
-        for(int i=0; i<backRates.length; i++){//for every i value
+        for(int i = 0; i< m_backRates.length; i++){//for every i value
             double sum = 0;
-            for(int j=0; j<backRates[i].length; j++){//for every rate
+            for(int j = 0; j< m_backRates[i].length; j++){//for every rate
                 //add to sum
-                sum += backRates[i][j];
+                sum += m_backRates[i][j];
             }//end rate for -- average
             //calculate mean
-            double mean = sum/backRates[i].length;
+            double mean = sum/ m_backRates[i].length;
             double sumSquareDeviations = 0;
-            for(int j=0; j<backRates[i].length; j++){//for every rate
+            for(int j = 0; j< m_backRates[i].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((backRates[i][j]-mean) *
-                        (backRates[i][j]-mean));
+                sumSquareDeviations += ((m_backRates[i][j]-mean) *
+                        (m_backRates[i][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
             double standardDeviation = Math.sqrt(sumSquareDeviations/
-                    (backRates[i].length-1));
-            setpointDeviations[1][i] = mean - setpoint;
-            standardDeviations[1][i] = standardDeviation;
+                    (m_backRates[i].length-1));
+            m_setpointDeviations[1][i] = mean - m_setpoint;
+            m_standardDeviations[1][i] = standardDeviation;
         }//end i for
 
         //left Is & rates
-        for(int i=0; i<leftRates.length; i++){//for every i value
+        for(int i = 0; i< m_leftRates.length; i++){//for every i value
             double sum = 0;
-            for(int j=0; j<leftRates[i].length; j++){//for every rate
+            for(int j = 0; j< m_leftRates[i].length; j++){//for every rate
                 //add to sum
-                sum += leftRates[i][j];
+                sum += m_leftRates[i][j];
             }//end rate for -- average
             //calculate mean
-            double mean = sum/leftRates[i].length;
+            double mean = sum/ m_leftRates[i].length;
             double sumSquareDeviations = 0;
-            for(int j=0; j<leftRates[i].length; j++){//for every rate
+            for(int j = 0; j< m_leftRates[i].length; j++){//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((leftRates[i][j]-mean) *
-                        (leftRates[i][j]-mean));
+                sumSquareDeviations += ((m_leftRates[i][j]-mean) *
+                        (m_leftRates[i][j]-mean));
             }//end rate for -- deviation
             //calculate standard deviation
             double standardDeviation = Math.sqrt(sumSquareDeviations/
-                    (leftRates[i].length-1));
-            setpointDeviations[2][i] = mean - setpoint;
-            standardDeviations[2][i] = standardDeviation;
+                    (m_leftRates[i].length-1));
+            m_setpointDeviations[2][i] = mean - m_setpoint;
+            m_standardDeviations[2][i] = standardDeviation;
         }//end i for
 
         //for every i in averages
         String message = "";
-        for (int i = 0; i < standardDeviations[0].length; i++) {
-            message += ((i * interval) + bI) + " : " +
-                    setpointDeviations[0][i] + " " + standardDeviations[0][i] +
-                    " " + setpointDeviations[1][i] + " " +
-                    standardDeviations[1][i] + " " + setpointDeviations[2][i] +
-                    " " + standardDeviations[2][i] + "\n";
+        for (int i = 0; i < m_standardDeviations[0].length; i++) {
+            message += ((i * m_interval) + m_bI) + " : " +
+                    m_setpointDeviations[0][i] + " " + m_standardDeviations[0][i] +
+                    " " + m_setpointDeviations[1][i] + " " +
+                    m_standardDeviations[1][i] + " " + m_setpointDeviations[2][i] +
+                    " " + m_standardDeviations[2][i] + "\n";
         }//end for
 
         //print message to a file
@@ -184,7 +193,7 @@ public class TuneI extends CommandBase {
             }
             c.close();
         }catch(IOException ex){
-            ex.printStackTrace();
+            ex.printStackTrace(); // NOPMD
         }
 
         try (FileConnection c = Connector.open(url);
@@ -193,7 +202,7 @@ public class TuneI extends CommandBase {
             writer.write(contents + message);
             c.close();
         }catch(IOException ex){
-            ex.printStackTrace();
+            ex.printStackTrace(); // NOPMD
         }
     }//end end()
 
@@ -205,19 +214,19 @@ public class TuneI extends CommandBase {
     }
 
     private boolean isWithinSetpoint(){
-        if((setpoint-1.0) < chassis.getRightEncoderRate() &&
-                chassis.getRightEncoderRate() > (setpoint+1.0)){
-            right = true;
+        if((m_setpoint -1.0) < m_chassis.getRightEncoderRate() &&
+            m_chassis.getRightEncoderRate() > (m_setpoint +1.0)){
+            m_right = true;
         }
-        if((setpoint-1.0) < chassis.getBackEncoderRate() &&
-                chassis.getBackEncoderRate() > (setpoint+1.0)){
-            back = true;
+        if((m_setpoint -1.0) < m_chassis.getBackEncoderRate() &&
+            m_chassis.getBackEncoderRate() > (m_setpoint +1.0)){
+            m_back = true;
         }
-        if((setpoint-1.0) < chassis.getLeftEncoderRate() &&
-                chassis.getLeftEncoderRate() > (setpoint+1.0)){
-            left = true;
+        if((m_setpoint -1.0) < m_chassis.getLeftEncoderRate() &&
+            m_chassis.getLeftEncoderRate() > (m_setpoint +1.0)){
+            m_left = true;
         }
-        return right && back && left;
+        return m_right && m_back && m_left;
     }
 
 }

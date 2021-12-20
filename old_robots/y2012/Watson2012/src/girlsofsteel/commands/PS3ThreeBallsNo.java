@@ -1,9 +1,14 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Collector;
+
 public class PS3ThreeBallsNo extends CommandBase{
 
-    public PS3ThreeBallsNo(){
-        requires(collector);
+    private final Collector m_collector;
+
+    public PS3ThreeBallsNo(Collector collector){
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
@@ -12,8 +17,8 @@ public class PS3ThreeBallsNo extends CommandBase{
 
     @Override
     protected void execute() {
-        collector.stopMiddleConveyor();
-        collector.reverseBrush();
+        m_collector.stopMiddleConveyor();
+        m_collector.reverseBrush();
     }
 
     @Override
@@ -23,8 +28,8 @@ public class PS3ThreeBallsNo extends CommandBase{
 
     @Override
     protected void end() {
-        collector.stopBrush();
-        collector.stopMiddleConveyor();
+        m_collector.stopBrush();
+        m_collector.stopMiddleConveyor();
     }
 
     @Override

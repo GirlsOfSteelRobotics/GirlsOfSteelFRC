@@ -7,15 +7,19 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Driving;
+import girlsofsteel.subsystems.Manipulator;
+
 /**
  *
  * @author Parent
  */
 public class AutonomousHighGoal extends CommandGroup {
 //Magic numbers need to be added!
-    public AutonomousHighGoal() {
-    addSequential(new MoveToPosition());
-    addParallel(new setArmAnglePID(85)); //Magic angle, needs to be corrected
+    public AutonomousHighGoal(Chassis chassis, Driving driving, Manipulator manipulator) {
+    addSequential(new MoveToPosition(chassis, driving));
+    addParallel(new SetArmAnglePID(manipulator, 85)); //Magic angle, needs to be corrected
     addSequential(new ShootHigh()); //ShootHigh command is not finished
 }
 }

@@ -5,13 +5,15 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Driving;
+
 /**
  *
  * @author ClarVie
  */
 public class DoNothing extends CommandBase {
 
-    public DoNothing() {
+    public DoNothing(Driving driving) {
         requires(driving);
     }
 

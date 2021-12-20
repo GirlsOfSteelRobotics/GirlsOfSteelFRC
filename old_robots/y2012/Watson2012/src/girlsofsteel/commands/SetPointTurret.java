@@ -1,23 +1,30 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Turret;
+
 public class SetPointTurret extends CommandBase {
 
-    private double knobValue;
+    private final Turret m_turret;
+    private final OI m_oi;
+    private double m_knobValue;
 
-    public SetPointTurret() {
-        requires(turret);
+    public SetPointTurret(Turret turret, OI oi) {
+        m_turret = turret;
+        m_oi = oi;
+        requires(m_turret);
     }
 
     @Override
     protected void initialize() {
-        turret.initEncoder();
-        turret.enablePID();
+        m_turret.initEncoder();
+        m_turret.enablePID();
     }
 
     @Override
     protected void execute() {
-        knobValue = oi.getTurretKnobValue(turret.TURRET_OVERRIDE_DEADZONE);
-        turret.setPIDSetPoint(turret.getEncoderDistance() + knobValue);
+        m_knobValue = m_oi.getTurretKnobValue(m_turret.TURRET_OVERRIDE_DEADZONE);
+        m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_knobValue);
     }
 
     @Override
@@ -27,7 +34,7 @@ public class SetPointTurret extends CommandBase {
 
     @Override
     protected void end() {
-        turret.stopJag();
+        m_turret.stopJag();
     }
 
     @Override

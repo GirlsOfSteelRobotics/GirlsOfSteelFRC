@@ -6,6 +6,7 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Shooter;
 
 /**
  *
@@ -13,19 +14,18 @@ import girlsofsteel.commands.CommandBase;
  */
 public class ShooterPID extends CommandBase{
 
-    private double speed;
-    private double p;
-    private double i;
-    private double encoderValue;
+    private final Shooter m_shooter;
+    private double m_speed;
 
-    public ShooterPID(){
-        requires(shooter);
+    public ShooterPID(Shooter shooter){
+        m_shooter = shooter;
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
-        shooter.initPID();
+        m_shooter.initEncoder();
+        m_shooter.initPID();
         SmartDashboard.putNumber("Shooter Speed", 0.0);
         SmartDashboard.putNumber("p value", 0.0);
         SmartDashboard.putNumber("i value", 0.0);
@@ -34,16 +34,16 @@ public class ShooterPID extends CommandBase{
 
     @Override
     protected void execute() {
-        speed = SmartDashboard.getNumber("Shooter Speed", 0.0);
-        p = SmartDashboard.getNumber("p value", 0.0);
-        i = SmartDashboard.getNumber("i value", 0.0);
+        m_speed = SmartDashboard.getNumber("Shooter Speed", 0.0);
+        double p = SmartDashboard.getNumber("p value", 0.0);
+        double i = SmartDashboard.getNumber("i value", 0.0);
 
-        shooter.setPIDValues(p, i, 0.0);
-        shooter.setPIDspeed(speed);
+        m_shooter.setPIDValues(p, i, 0.0);
+        m_shooter.setPIDspeed(m_speed);
 
         //print encoder value
         SmartDashboard.putNumber("Encoder Value",
-                shooter.getEncoderRate());
+            m_shooter.getEncoderRate());
     }
 
     @Override

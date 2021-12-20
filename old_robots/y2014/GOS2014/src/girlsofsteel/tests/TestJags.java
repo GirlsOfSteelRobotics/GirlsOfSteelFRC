@@ -8,6 +8,7 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.Chassis;
 
 /**
  *
@@ -15,20 +16,23 @@ import girlsofsteel.commands.CommandBase;
  */
 public class TestJags extends CommandBase {
 
-    public TestJags() {
-        requires(chassis);
+    private final Chassis m_chassis;
+
+    public TestJags(Chassis chassis) {
+        m_chassis = chassis;
+        requires(m_chassis);
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
+        m_chassis.initEncoders();
         }
 
     @Override
     protected void execute() {
-        chassis.setJags(1.0);
-        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoder());
-        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoder());
+        m_chassis.setJags(1.0);
+        SmartDashboard.putNumber("Left Encoder", m_chassis.getLeftEncoder());
+        SmartDashboard.putNumber("Right Encoder", m_chassis.getRightEncoder());
     }
 
     @Override
@@ -38,7 +42,7 @@ public class TestJags extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.setJags(0.0);
+        m_chassis.setJags(0.0);
     }
 
     @Override

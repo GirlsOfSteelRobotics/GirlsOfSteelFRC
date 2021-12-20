@@ -4,16 +4,21 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Gripper;
+
 /**
  *
  * @author sam
  */
 public class OpenAllGrippers extends CommandBase{
 
-    public OpenAllGrippers() {
+    private final Gripper m_gripper;
+
+    public OpenAllGrippers(Gripper bottomGripper) {
 //        requires(topGripper);
 //        requires(middleGripper);
-        requires(bottomGripper);
+        m_gripper = bottomGripper;
+        requires(m_gripper);
     }
 
     //Command for closing the bottom gripper around the pyramid
@@ -28,7 +33,7 @@ public class OpenAllGrippers extends CommandBase{
     protected void execute() {
 //        topGripper.openGrip();
 //        middleGripper.openGrip();
-        bottomGripper.openGrip();
+        m_gripper.openGrip();
     }
 
     @Override

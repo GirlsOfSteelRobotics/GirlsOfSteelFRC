@@ -1,16 +1,20 @@
 package girlsofsteel.commands;
 
 
-public class Collect extends CommandBase {
+import girlsofsteel.subsystems.Collector;
 
-    public Collect(){
-        requires(collector);
+public class Collect extends CommandBase {
+    private final Collector m_collector;
+
+    public Collect(Collector collector){
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
     protected void initialize() {
-        collector.forwardBrush();
-        collector.forwardMiddleConveyor();
+        m_collector.forwardBrush();
+        m_collector.forwardMiddleConveyor();
     }
 
     @Override
@@ -24,8 +28,8 @@ public class Collect extends CommandBase {
 
     @Override
     protected void end() {
-        collector.stopBrush();
-        collector.stopMiddleConveyor();
+        m_collector.stopBrush();
+        m_collector.stopMiddleConveyor();
     }
 
     @Override

@@ -6,6 +6,7 @@
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
+import girlsofsteel.subsystems.Collector;
 
 /**
  *
@@ -13,9 +14,12 @@ import girlsofsteel.Configuration;
  */
 public class MaintainColEngage extends CommandBase {
 
+    private final Collector m_collector;
+
     //Maintains the collector's dissengaged position'
-    public MaintainColEngage() {
-        requires(collector);
+    public MaintainColEngage(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
@@ -25,7 +29,7 @@ public class MaintainColEngage extends CommandBase {
     @Override
     protected void execute() {
        // while (!collector.isCollectorEngaged()) {
-            collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //1 for competition bot, -1 for practice bot
+            m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //1 for competition bot, -1 for practice bot
         //}
     }
 
@@ -36,7 +40,7 @@ public class MaintainColEngage extends CommandBase {
 
     @Override
     protected void end() {
-        collector.stopCollector();
+        m_collector.stopCollector();
     }//the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
 
     @Override

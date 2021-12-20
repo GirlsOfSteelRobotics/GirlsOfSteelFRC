@@ -1,28 +1,32 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class MoveToSetPoint extends CommandBase {
 
-    private double timeFinished = -1;
-    private final double distanceToMove;
+    private final Chassis m_chassis;
+    private double m_timeFinished = -1;
+    private final double m_distanceToMove;
 
-    public MoveToSetPoint(double distance) {
-        distanceToMove = distance;
-        requires(chassis);
+    public MoveToSetPoint(Chassis chassis, double distance) {
+        m_chassis = chassis;
+        m_distanceToMove = distance;
+        requires(m_chassis);
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initPositionPIDs();
-        timeFinished = -1;
+        m_chassis.initEncoders();
+        m_chassis.initPositionPIDs();
+        m_timeFinished = -1;
     }
 
     @Override
     protected void execute() {
-        chassis.setPIDsPosition();
-        chassis.move(distanceToMove);
-        if (timeFinished == -1 && chassis.isMoveFinished(distanceToMove)) {
-            timeFinished = timeSinceInitialized();
+        m_chassis.setPIDsPosition();
+        m_chassis.move(m_distanceToMove);
+        if (m_timeFinished == -1 && m_chassis.isMoveFinished(m_distanceToMove)) {
+            m_timeFinished = timeSinceInitialized();
         }
 //        if(timeSinceInitialized() > 3){
 //            System.out.println("Move to Set Point Timed Out");
@@ -32,7 +36,7 @@ public class MoveToSetPoint extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-        if (timeFinished != -1 && timeSinceInitialized() - timeFinished > 0.5) {
+        if (m_timeFinished != -1 && timeSinceInitialized() - m_timeFinished > 0.5) {
             System.out.println("Move to Set Point Done");
             return true;
         }
@@ -42,8 +46,8 @@ public class MoveToSetPoint extends CommandBase {
     @Override
     protected void end() {
         System.out.println("Done with moving");
-        chassis.disablePositionPIDs();
-        chassis.endEncoders();
+        m_chassis.disablePositionPIDs();
+        m_chassis.endEncoders();
     }
 
     @Override

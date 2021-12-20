@@ -5,39 +5,45 @@
 package girlsofsteel.commands;
 
 
+import girlsofsteel.subsystems.Shooter;
+
 public class Shoot extends CommandBase {
 
-    private final boolean camera;
+    private final boolean m_camera;
 
-    private double speed;
-    private double time;
+    private final Shooter m_shooter;
 
-    public Shoot(double speed) {
-        this.speed = speed;
-        camera = false;
+    private double m_speed;
+    private double m_time;
+
+    public Shoot(Shooter shooter, double speed) {
+        m_shooter = shooter;
+        this.m_speed = speed;
+        m_camera = false;
         requires(shooter);
     }
 
-    public Shoot(){
-        camera = true;
-        requires(shooter);
+    public Shoot(Shooter shooter){
+        m_camera = true;
+        m_shooter = shooter;
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        if(camera){
+        if(m_camera){
 //            speed = PositionInfo.getSpeed(ShooterCamera.getLocation());
-            speed = 0.73;
+            m_speed = 0.73;
         }
-        shooter.initEncoder();
-        time = timeSinceInitialized();
+        m_shooter.initEncoder();
+        m_time = timeSinceInitialized();
 //        shooter.initPID();
     }
 
     @Override
     protected void execute() {
-        if (timeSinceInitialized() - time > 2) { shooter.setShootTrue(); }
-        shooter.setJags(speed);
+        if (timeSinceInitialized() - m_time > 2) { m_shooter.setShootTrue(); }
+        m_shooter.setJags(m_speed);
     }
 
     @Override
@@ -48,9 +54,9 @@ public class Shoot extends CommandBase {
     @Override
     protected void end() {
 //        shooter.disablePID();
-        shooter.stopJags();
-        shooter.stopEncoder();
-        shooter.setShootFalse();
+        m_shooter.stopJags();
+        m_shooter.stopEncoder();
+        m_shooter.setShootFalse();
     }
 
     @Override

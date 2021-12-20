@@ -4,14 +4,19 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Climber;
+
 /**
  *
  * @author sam
  */
 public class StopClimbMotors extends CommandBase {
 
-    public StopClimbMotors() {
-          requires (climber);
+    private final Climber m_climber;
+
+    public StopClimbMotors(Climber climber) {
+        m_climber = climber;
+          requires (m_climber);
     }
 
     //stops the motors used for climbing
@@ -24,8 +29,8 @@ public class StopClimbMotors extends CommandBase {
 
     @Override
     protected void execute() {
-        climber.stopLeftClimberSpike();
-        climber.stopRightClimberSpike();
+        m_climber.stopLeftClimberSpike();
+        m_climber.stopRightClimberSpike();
     }
 
     @Override

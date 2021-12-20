@@ -10,11 +10,11 @@ import girlsofsteel.RobotMap;
 
 public class Collector extends Subsystem{
 
-    private  final DigitalInput collectorLimitSwitch = new DigitalInput(RobotMap.COLLECTOR_LIMIT_SWITCH);
+    private  final DigitalInput m_collectorLimitSwitch = new DigitalInput(RobotMap.COLLECTOR_LIMIT_SWITCH);
 
-    private final Jaguar brushJag = new Jaguar(RobotMap.BRUSH_JAG);
+    private final Jaguar m_brushJag = new Jaguar(RobotMap.BRUSH_JAG);
 //    Relay brushSpike = new Relay(RobotMap.BRUSH_SPIKE);
-    private final Relay middleConveyorSpike = new Relay(RobotMap.MIDDLE_COLLECTOR_SPIKE);
+    private final Relay m_middleConveyorSpike = new Relay(RobotMap.MIDDLE_COLLECTOR_SPIKE);
 
     public Collector () {
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
@@ -24,7 +24,7 @@ public class Collector extends Subsystem{
 
     // true == pressed (of getRealSwitch)
     private boolean getLimitSwitch () {
-        return !collectorLimitSwitch.get();
+        return !m_collectorLimitSwitch.get();
     }
 
     @Override
@@ -32,29 +32,29 @@ public class Collector extends Subsystem{
     }
 
     public void reverseBrush(){
-        brushJag.set(1.0);
+        m_brushJag.set(1.0);
 //        brushSpike.set(Relay.Value.kForward);
     }
 
     public void forwardBrush(){
-        brushJag.set(-1.0);
+        m_brushJag.set(-1.0);
 //        brushSpike.set(Relay.Value.kReverse);
     }
 
     public void stopBrush(){
-        brushJag.set(0.0);
+        m_brushJag.set(0.0);
 //        brushSpike.set(Relay.Value.kOff);
     }
 
     public void forwardMiddleConveyor(){
-        middleConveyorSpike.set(Relay.Value.kReverse);
+        m_middleConveyorSpike.set(Relay.Value.kReverse);
     }
 
     public void reverseMiddleConveyor(){
-        middleConveyorSpike.set(Relay.Value.kForward);
+        m_middleConveyorSpike.set(Relay.Value.kForward);
     }
 
     public void stopMiddleConveyor(){
-        middleConveyorSpike.set(Relay.Value.kOff);
+        m_middleConveyorSpike.set(Relay.Value.kOff);
     }
 }

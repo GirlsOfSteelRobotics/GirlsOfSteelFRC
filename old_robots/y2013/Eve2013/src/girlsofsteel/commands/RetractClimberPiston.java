@@ -4,14 +4,19 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Climber;
+
 /**
  *
  * @author sam
  */
 public class RetractClimberPiston extends CommandBase{
 
-    public RetractClimberPiston() {
-        requires (climber);
+    private final Climber m_climber;
+
+    public RetractClimberPiston(Climber climber) {
+        m_climber = climber;
+        requires (m_climber);
     }
 
 
@@ -23,12 +28,12 @@ public class RetractClimberPiston extends CommandBase{
 
     @Override
     protected void execute() {
-        climber.retractLifterPiston();
+        m_climber.retractLifterPiston();
     }
 
     @Override
     protected boolean isFinished() {
-        return !climber.isPistonExtended();
+        return !m_climber.isPistonExtended();
     }
 
     @Override

@@ -4,10 +4,11 @@
  */
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.OI;
+import girlsofsteel.subsystems.Feeder;
+import girlsofsteel.subsystems.Shooter;
 
 /**
  *
@@ -15,37 +16,38 @@ import girlsofsteel.OI;
  */
 public class AutoShoot extends CommandBase {
 
-    private double desiredSpeed;
-    private double time;
-    private boolean shot;
-    private double batteryVoltage;
-    private final DriverStation driver;
-    private final int counter;
+    private final Feeder m_feeder;
+    private final Shooter m_shooter;
 
-    public AutoShoot() {
-        requires(feeder);
-        requires(shooter);
-        driver = DriverStation.getInstance();
-        counter = 0;
+    private double m_desiredSpeed;
+    private double m_time;
+    private boolean m_shot;
+    private double m_batteryVoltage;
+
+    public AutoShoot(Feeder feeder, Shooter shooter) {
+        m_feeder = feeder;
+        m_shooter = shooter;
+        requires(m_feeder);
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        desiredSpeed = OI.ENCODER_SPEED;
-        shot = false;
+        m_desiredSpeed = OI.ENCODER_SPEED;
+        m_shot = false;
 
     }
 
     @Override
     protected void execute() {
-        shooter.setJags(oi.JAG_SPEED);
-        batteryVoltage = RobotController.getBatteryVoltage();
-        SmartDashboard.putNumber("Encoder Rate", shooter.getEncoderRate());
-        SmartDashboard.putNumber("Battery Voltage", batteryVoltage);
-        if (shooter.getEncoderRate() >= desiredSpeed && !shot) {
-            feeder.pushShooter();
-            time = timeSinceInitialized();
-            shot = true;
+        m_shooter.setJags(OI.JAG_SPEED);
+        m_batteryVoltage = RobotController.getBatteryVoltage();
+        SmartDashboard.putNumber("Encoder Rate", m_shooter.getEncoderRate());
+        SmartDashboard.putNumber("Battery Voltage", m_batteryVoltage);
+        if (m_shooter.getEncoderRate() >= m_desiredSpeed && !m_shot) {
+            m_feeder.pushShooter();
+            m_time = timeSinceInitialized();
+            m_shot = true;
         }
         //if the battery lost voltage and is not going up to speed, it increases the speed
 //        if (timeSinceInitialized() > 4 && batteryVoltage < 11.0 && oi.JAG_SPEED <= 0.95) {
@@ -55,13 +57,13 @@ public class AutoShoot extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-        return shot && timeSinceInitialized() - time > 0.2;
+        return m_shot && timeSinceInitialized() - m_time > 0.2;
     }
 
     @Override
     protected void end() {
-        feeder.pullShooter();
-        shooter.setJags(0.0);
+        m_feeder.pullShooter();
+        m_shooter.setJags(0.0);
     }
 
     @Override

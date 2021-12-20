@@ -1,38 +1,42 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class Rotate extends CommandBase {
 
-    private final boolean targetRotate;
-    private final double theta;
-    private double desiredTheta;
-    private double current;
-    private double difference;
+    private final Chassis m_chassis;
+    private final boolean m_targetRotate;
+    private final double m_theta;
+    private double m_desiredTheta;
+    private double m_current;
+    private double m_difference;
 
-    public Rotate(double theta, boolean targetRotate) {
-        this.targetRotate = targetRotate;
-        this.theta = theta;
+    public Rotate(Chassis chassis, double theta, boolean targetRotate) {
+        m_chassis = chassis;
+        this.m_targetRotate = targetRotate;
+        this.m_theta = theta;
         if(targetRotate){
-            desiredTheta = theta;
+            m_desiredTheta = theta;
         }else{
-            desiredTheta = chassis.getGyroAngle() -
+            m_desiredTheta = chassis.getGyroAngle() -
                     chassis.getFieldAdjustment() + theta;
         }
     }
 
     @Override
     protected void initialize() {
-        if(targetRotate){
-            desiredTheta = theta;
+        if(m_targetRotate){
+            m_desiredTheta = m_theta;
         }else{
-            desiredTheta = chassis.getGyroAngle() -
-                    chassis.getFieldAdjustment() + theta;
+            m_desiredTheta = m_chassis.getGyroAngle() -
+                m_chassis.getFieldAdjustment() + m_theta;
         }
-        chassis.startAutoRotation();
+        m_chassis.startAutoRotation();
         //make desired theta between 0-360
-        while(desiredTheta < 0){
-            desiredTheta += 360;
+        while(m_desiredTheta < 0){
+            m_desiredTheta += 360;
         }
-        desiredTheta = desiredTheta % 360;
+        m_desiredTheta = m_desiredTheta % 360;
         getDifference();
         System.out.println("Initializing + ");
     }
@@ -40,27 +44,27 @@ public class Rotate extends CommandBase {
     @Override
     protected void execute() {
         getDifference();
-        System.out.println("Gyro: " + chassis.getGyroAngle() + "\tCurrent: "
-                + current + "\tDesired: " + desiredTheta + "\tDifference: "
-                + difference);
-        if(desiredTheta - chassis.ROTATION_THRESHOLD > current ||
-                current > desiredTheta + chassis.ROTATION_THRESHOLD){
+        System.out.println("Gyro: " + m_chassis.getGyroAngle() + "\tCurrent: "
+                + m_current + "\tDesired: " + m_desiredTheta + "\tDifference: "
+                + m_difference);
+        if(m_desiredTheta - m_chassis.ROTATION_THRESHOLD > m_current ||
+                m_current > m_desiredTheta + m_chassis.ROTATION_THRESHOLD){
             System.out.print("Rotating...");
-            chassis.autoRotateTestBot(difference);
+            m_chassis.autoRotateTestBot(m_difference);
         }else{
-            chassis.pauseAutoRotation();
+            m_chassis.pauseAutoRotation();
         }
     }
 
     @Override
     protected boolean isFinished() {
-        return !chassis.isAutoRotating();
+        return !m_chassis.isAutoRotating();
     }
 
     @Override
     protected void end() {
         System.out.println("Stopped rotation");
-        chassis.stopAutoRotation();
+        m_chassis.stopAutoRotation();
     }
 
     @Override
@@ -71,20 +75,20 @@ public class Rotate extends CommandBase {
     @SuppressWarnings("PMD.LinguisticNaming")
     private void getDifference(){
         //get current
-        current = chassis.getGyroAngle() - chassis.getFieldAdjustment();
+        m_current = m_chassis.getGyroAngle() - m_chassis.getFieldAdjustment();
         //make it between 0-360
-        while(current < 0){
-            current += 360;
+        while(m_current < 0){
+            m_current += 360;
         }
-        current = current % 360;
+        m_current = m_current % 360;
         //calculate & set the difference
-        if(desiredTheta - current < 180 && desiredTheta - current > - 180){
-            difference = desiredTheta - current;
+        if(m_desiredTheta - m_current < 180 && m_desiredTheta - m_current > - 180){
+            m_difference = m_desiredTheta - m_current;
         }else{
-            if(desiredTheta - current < 0){
-                difference = 360 + desiredTheta - current;
+            if(m_desiredTheta - m_current < 0){
+                m_difference = 360 + m_desiredTheta - m_current;
             }else{
-                difference = 360 - desiredTheta - current;
+                m_difference = 360 - m_desiredTheta - m_current;
             }
         }
     }

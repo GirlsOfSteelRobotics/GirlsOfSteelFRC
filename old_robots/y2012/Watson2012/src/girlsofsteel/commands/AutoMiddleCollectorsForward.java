@@ -1,9 +1,13 @@
 package girlsofsteel.commands;
 
-public class AutoMiddleCollectorsForward extends CommandBase {
+import girlsofsteel.subsystems.Collector;
 
-    public AutoMiddleCollectorsForward() {
-        requires(collector);
+public class AutoMiddleCollectorsForward extends CommandBase {
+    private final Collector m_collector;
+
+    public AutoMiddleCollectorsForward(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
@@ -12,7 +16,7 @@ public class AutoMiddleCollectorsForward extends CommandBase {
 
     @Override
     protected void execute() {
-        collector.forwardMiddleConveyor();
+        m_collector.forwardMiddleConveyor();
     }
 
     @Override

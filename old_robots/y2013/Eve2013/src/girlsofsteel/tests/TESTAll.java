@@ -7,6 +7,9 @@ package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Feeder;
+import girlsofsteel.subsystems.Gripper;
+
 /**
  *
  * @author kateashwood
@@ -14,11 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TESTAll extends CommandGroup {
 
     // Called just before this Command runs the first time
-    public TESTAll() {
+    public TESTAll(Feeder feeder, girlsofsteel.subsystems.Chassis chassis, girlsofsteel.subsystems.Shooter shooter, girlsofsteel.subsystems.Climber climber, Gripper gripper) {
         //add all test commands to smartdashboard
-        SmartDashboard.putData(new Chassis());
-        SmartDashboard.putData(new Shooter());
-        SmartDashboard.putData(new Climber());
+        SmartDashboard.putData(new Chassis(chassis));
+        SmartDashboard.putData(new Shooter(feeder, shooter));
+        SmartDashboard.putData(new Climber(climber, gripper));
         //NOT WORKING FIX****************************************************************
 
     }

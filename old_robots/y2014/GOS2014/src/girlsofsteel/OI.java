@@ -10,14 +10,19 @@ import girlsofsteel.commands.HoldChassisInPlace;
 import girlsofsteel.commands.KickerUsingLimitSwitch;
 import girlsofsteel.commands.ManipulatorArmDownPID;
 import girlsofsteel.commands.ManipulatorArmUpPID;
-import girlsofsteel.commands.STOPKICKER;
+import girlsofsteel.commands.StopKicker;
 import girlsofsteel.commands.TrussShot;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Kicker;
+import girlsofsteel.subsystems.Manipulator;
 import girlsofsteel.tests.TestingDrivingStraight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+@SuppressWarnings({"PMD.TooManyFields"})
 public class OI {
 
     //PS3 button numbers
@@ -27,59 +32,52 @@ public class OI {
     private static final int TRIANGLE = 4;
     private static final int L2 = 7;
     private static final int SELECT = 9;
-    private static final int HOME = 13;
     private static final int START = 10;
     private static final int L1 = 5;
     private static final int R2 = 8;
     private static final int R1 = 6;
 
     //Joystick Ports
-    private final Joystick operatorJoystick;
-    private final Joystick chassisJoystick;
-
-    //Buttons for kicker
-    private JoystickButton releaseKickerButton;
-    private JoystickButton windupKickerButton;
-    private JoystickButton lowGoalShoot;
+    private final Joystick m_operatorJoystick;
+    private final Joystick m_chassisJoystick;
    // JoystickButton testLimitSwitchButton;
     // JoystickButton testing;
     // private JoystickButton testKickerJag;
 
     //Buttons for manipulator
     // private JoystickButton testManipulatorJag;
-    private final JoystickButton manipulatorUp;
-    private final JoystickButton manipulatorDown;
+    private final JoystickButton m_manipulatorUp;
+    private final JoystickButton m_manipulatorDown;
     // private JoystickButton manipulatorStop;
 
     //Buttons for driving
-    private final JoystickButton testStraightDriveButton;
+    private final JoystickButton m_testStraightDriveButton;
     // private JoystickButton tankDrive;
-    private JoystickButton arcadeDrive;
-    private final JoystickButton holdChassis; //create button later wherever the drivers want it...
-    private final JoystickButton holdChassis2;
+    private final JoystickButton m_holdChassis; //create button later wherever the drivers want it...
+    private final JoystickButton m_holdChassis2;
 
     //Buttons for Operator Controller
     //Collector arm goes up/down
-    private final JoystickButton collectorArmUp;
-    private final JoystickButton collectorArmDownAndOut;
-    private final JoystickButton collectorArmDownAndIn;
+    private final JoystickButton m_collectorArmUp;
+    private final JoystickButton m_collectorArmDownAndOut;
+    private final JoystickButton m_collectorArmDownAndIn;
 
     //collector wheel goes forward and backward
-    private final JoystickButton collectorWheelIn;
+    private final JoystickButton m_collectorWheelIn;
 
-    private final JoystickButton loadKicker;
-    private final JoystickButton kick;
-    private final JoystickButton kickerSTOP;
-    private final JoystickButton trussShot;
+    private final JoystickButton m_loadKicker;
+    private final JoystickButton m_kick;
+    private final JoystickButton m_kickerSTOP;
+    private final JoystickButton m_trussShot;
 
     //Buttons for testManipulatorJags
     /*JoystickButton testJagsForwardButton = new JoystickButton(rightJoystick, 4);
      JoystickButton testJagsBackwardButton = new JoystickButton(rightJoystick, 4);
      */
-    public OI() {
+    public OI(Chassis chassis, Kicker kicker, Manipulator manipulator, Collector collector) {
 
-        operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
-        chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
+        m_operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
+        m_chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 
 //        leftKick = new JoystickButton(chassisJoystick, TRIANGLE);
 //        leftKick.whileHeld(new MoveKickerSide(1));
@@ -87,25 +85,25 @@ public class OI {
 //        rightKick.whileHeld(new MoveKickerSide(0));
 //        bothKicks = new JoystickButton(chassisJoystick, X);
 //        bothKicks.whileHeld(new MoveKickerSide(2));
-        manipulatorUp = new JoystickButton(operatorJoystick, R1);
-        manipulatorUp.whileHeld(new ManipulatorArmUpPID());
+        m_manipulatorUp = new JoystickButton(m_operatorJoystick, R1);
+        m_manipulatorUp.whileHeld(new ManipulatorArmUpPID(manipulator));
           //manipulatorUp.whileHeld(new ManipulatorManualUp());
         //manipulatorUp.whenReleased(new StopManipulator());
 
-        manipulatorDown = new JoystickButton(operatorJoystick, R2);
-        manipulatorDown.whileHeld(new ManipulatorArmDownPID());
+        m_manipulatorDown = new JoystickButton(m_operatorJoystick, R2);
+        m_manipulatorDown.whileHeld(new ManipulatorArmDownPID(manipulator));
         //manipulatorDown.whileHeld(new ManipulatorManualDown());
         //manipulatorDown.whenReleased(new StopManipulator());
 
         //starting Operator's button testing
-        collectorArmUp = new JoystickButton(operatorJoystick, TRIANGLE);
-        collectorArmUp.whileHeld(new DisengageCollector());
+        m_collectorArmUp = new JoystickButton(m_operatorJoystick, TRIANGLE);
+        m_collectorArmUp.whileHeld(new DisengageCollector(collector));
 
-        collectorArmDownAndOut = new JoystickButton(operatorJoystick, SQUARE);
-        collectorArmDownAndOut.whileHeld(new CollectorDownWheelOut()); //This will move the collector arm down and turn the wheel
+        m_collectorArmDownAndOut = new JoystickButton(m_operatorJoystick, SQUARE);
+        m_collectorArmDownAndOut.whileHeld(new CollectorDownWheelOut(collector)); //This will move the collector arm down and turn the wheel
         //collectorArmDown.whileHeld(new EngageCollector());
-        collectorArmDownAndIn = new JoystickButton(operatorJoystick, CIRCLE);
-        collectorArmDownAndIn.whileHeld(new CollectorDownAndWheelIn());
+        m_collectorArmDownAndIn = new JoystickButton(m_operatorJoystick, CIRCLE);
+        m_collectorArmDownAndIn.whileHeld(new CollectorDownAndWheelIn(collector));
 
         /*
          Not actually down (its just in) as per driver request
@@ -113,19 +111,19 @@ public class OI {
 //        collectorWheelOut = new JoystickButton(operatorJoystick, L1);
 //        collectorWheelOut.whileHeld(new CollectorWheelReverse());
         //collectorArmDownAndIn.whileHeld(new CollectorDownAndWheelIn());
-        collectorWheelIn = new JoystickButton(operatorJoystick, X);
-        collectorWheelIn.whileHeld(new CollectorWheelForward());
+        m_collectorWheelIn = new JoystickButton(m_operatorJoystick, X);
+        m_collectorWheelIn.whileHeld(new CollectorWheelForward(collector));
 
      //   arcadeDrive = new JoystickButton(chassisJoystick, 5);
         //  arcadeDrive.whenPressed(new ArcadeDrive());
-        testStraightDriveButton = new JoystickButton(chassisJoystick, 5);
-        testStraightDriveButton.whileHeld(new TestingDrivingStraight());
+        m_testStraightDriveButton = new JoystickButton(m_chassisJoystick, 5);
+        m_testStraightDriveButton.whileHeld(new TestingDrivingStraight(chassis));
 
-        holdChassis = new JoystickButton(chassisJoystick, CIRCLE); //3 on the driver joystick
-        holdChassis.whileHeld(new HoldChassisInPlace());
+        m_holdChassis = new JoystickButton(m_chassisJoystick, CIRCLE); //3 on the driver joystick
+        m_holdChassis.whileHeld(new HoldChassisInPlace(chassis));
 
-        holdChassis2 = new JoystickButton(chassisJoystick, L2);
-        holdChassis2.whileHeld(new HoldChassisInPlace());
+        m_holdChassis2 = new JoystickButton(m_chassisJoystick, L2);
+        m_holdChassis2.whileHeld(new HoldChassisInPlace(chassis));
 
       //  lowGoalShoot = new JoystickButton(operatorJoystick, HOME);//Should be changed for driver preference
         //  lowGoalShoot.whenPressed(new ShootLowGoal());
@@ -157,25 +155,25 @@ public class OI {
         //testManipulatorJag = new JoystickButton (rightJoystick,1);
       //  tankDrive = new JoystickButton(chassisJoystick, R1);
         //  tankDrive.whenPressed(new TankDrive());
-        loadKicker = new JoystickButton(operatorJoystick, SELECT);
-        loadKicker.whenPressed(new KickerUsingLimitSwitch(0, false));
+        m_loadKicker = new JoystickButton(m_operatorJoystick, SELECT);
+        m_loadKicker.whenPressed(new KickerUsingLimitSwitch(kicker, 0, false));
 
-        kick = new JoystickButton(operatorJoystick, START); //Change to L2?
-        kick.whenPressed(new KickerUsingLimitSwitch(1, false));
+        m_kick = new JoystickButton(m_operatorJoystick, START); //Change to L2?
+        m_kick.whenPressed(new KickerUsingLimitSwitch(kicker, 1, false));
 
-        trussShot = new JoystickButton(operatorJoystick, L1);
-        trussShot.whenPressed(new TrussShot());
+        m_trussShot = new JoystickButton(m_operatorJoystick, L1);
+        m_trussShot.whenPressed(new TrussShot(manipulator, collector, kicker));
 
-        kickerSTOP = new JoystickButton(operatorJoystick, L2);
-        kickerSTOP.whenPressed(new STOPKICKER());
+        m_kickerSTOP = new JoystickButton(m_operatorJoystick, L2);
+        m_kickerSTOP.whenPressed(new StopKicker(kicker));
     }
 
     public Joystick getOperatorJoystick() {
-        return operatorJoystick;
+        return m_operatorJoystick;
     }
 
     public Joystick getChassisJoystick() {
-        return chassisJoystick;
+        return m_chassisJoystick;
     }
 
     //// CREATING BUTTONS

@@ -1,12 +1,15 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class AutoMove extends CommandBase {
 
-    private final double x;
-    private final double y;
-    private final double time;
+    private final Chassis m_chassis;
+    private final double m_x;
+    private final double m_y;
+    private final double m_time;
 
-    private double startTime;
+    private double m_startTime;
 
     /**
      * Moves in the direction given for a certain amount of time automatically.
@@ -14,30 +17,31 @@ public class AutoMove extends CommandBase {
      * @param y the percentage to move in the y direction (-1 to 1)
      * @param time the length of time to move
      */
-    public AutoMove(double x, double y, double time){
-        this.x = x;
-        this.y = y;
-        this.time = time;
+    public AutoMove(Chassis chassis, double x, double y, double time){
+        m_chassis = chassis;
+        this.m_x = x;
+        this.m_y = y;
+        this.m_time = time;
     }
 
     @Override
     protected void initialize() {
-        startTime = timeSinceInitialized();
+        m_startTime = timeSinceInitialized();
     }
 
     @Override
     protected void execute() {
-        chassis.driveVoltage(x, y, 0, 1.0, true);
+        m_chassis.driveVoltage(m_x, m_y, 0, 1.0, true);
     }
 
     @Override
     protected boolean isFinished() {
-        return timeSinceInitialized() - startTime > time;
+        return timeSinceInitialized() - m_startTime > m_time;
     }
 
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

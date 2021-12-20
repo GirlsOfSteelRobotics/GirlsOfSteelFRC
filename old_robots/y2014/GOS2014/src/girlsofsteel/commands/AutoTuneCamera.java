@@ -2,6 +2,8 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
 
 public class AutoTuneCamera extends CommandBase {
 
@@ -9,8 +11,13 @@ public class AutoTuneCamera extends CommandBase {
     //public static final double STEP = 0.5; //meters
     public static final double ERROR_THRESHOLD = 0.1;
 
-    public AutoTuneCamera() {
-        requires(chassis);
+    private final Chassis m_chassis;
+    private final Camera m_camera;
+
+    public AutoTuneCamera(Chassis chassis, Camera camera) {
+        m_chassis = chassis;
+        m_camera = camera;
+        requires(m_chassis);
     }
 
     //returns average of a set of 10 data pouints from the camera if it's stable
@@ -19,13 +26,13 @@ public class AutoTuneCamera extends CommandBase {
         double sumOfData = 0;
         double[] values = new double[n];
         for (int i = 0; i < n; i++) { // NOPMD(AvoidArrayLoops)
-            values[i] = camera.getImageTargetRatio();
+            values[i] = m_camera.getImageTargetRatio();
             //System.out.println(values[i]);
             sumOfData += values[i];
 
             try {
                 Thread.sleep(50);
-            } catch (Exception ex) {
+            } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
         }
@@ -43,8 +50,9 @@ public class AutoTuneCamera extends CommandBase {
     }
 
     @Override
+    @SuppressWarnings("PMD.CognitiveComplexity")
     protected void initialize() {
-        chassis.initEncoders();
+        m_chassis.initEncoders();
         int nSteps = 10; //(int)(HALF_COURT/STEP);
         double[] imageTargetRatioData = new double[nSteps];
         double[] distanceData = new double[nSteps];
@@ -53,9 +61,10 @@ public class AutoTuneCamera extends CommandBase {
         while (count < nSteps) {
             try {
                 Thread.sleep(4000); //4 seconds time out
-            } catch (Exception ex) {
+            } catch (InterruptedException ex) {
+                System.out.println(ex);
             }
-            if (!chassis.isMoving()) {
+            if (!m_chassis.isMoving()) {
                 /*
                  if((chassis.getRightEncoderDistance())>HALF_COURT -2){
                  break;
@@ -79,13 +88,13 @@ public class AutoTuneCamera extends CommandBase {
                     continue;
                 }
 
-                double distCamera = camera.getDistanceToTarget(); //meter from the
+                double distCamera = m_camera.getDistanceToTarget(); //meter from the
                 //center of the turret to the backboard when the rollers are
                 //facing the bridge
                 imageTargetRatioData[count] = ratio;
-                distanceData[count] = (chassis.getRightEncoderDistance()) + 1.45;
+                distanceData[count] = (m_chassis.getRightEncoderDistance()) + 1.45;
                 SmartDashboard.putNumber("Chassis Encoder",
-                        chassis.getRightEncoderDistance());
+                        m_chassis.getRightEncoderDistance());
                 System.out.println(distanceData[count] + ", " + ratio
                         + " CD=" + distCamera + " Err=" + (distCamera
                         - distanceData[count]));

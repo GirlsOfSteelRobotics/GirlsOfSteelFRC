@@ -5,48 +5,55 @@
  */
 package girlsofsteel.commands;
 
+import girlsofsteel.objects.Camera;
+
 /**
  *
  * @author Sylvie
  */
 public class IsGoalHot extends CommandBase {
 
-    private double[] hots = new double[10];
-    private int bool;
-    private double average = 0;
-    private int i;
+    private final Camera m_camera;
+    private double[] m_hots = new double[10];
+    private int m_bool;
+    private double m_average;
+    private int m_i;
+
+    public IsGoalHot(Camera camera) {
+        m_camera = camera;
+    }
 
     @Override
     protected void initialize() {
-        i = 0;
+        m_i = 0;
     }
 
     @Override
     protected void execute() {
-        if (CommandBase.camera.isGoalHot()) {
-            bool = 1;
+        if (m_camera.isGoalHot()) {
+            m_bool = 1;
         } else {
-            bool = 0;
+            m_bool = 0;
         }
-        hots[i] = bool;
-        i++;
+        m_hots[m_i] = m_bool;
+        m_i++;
     }
 
     @Override
     protected boolean isFinished() {
-        return i > hots.length;
+        return m_i > m_hots.length;
     }
 
     @Override
     protected void end() {
-        for (int i=0;i<hots.length;i++){
-            average += hots[i];
+        for (double hot : m_hots) {
+            m_average += hot;
         }
-        average /= hots.length;
-         if(average >= 0.5){ //If it's dead even, just say that it's HOT
-            CommandBase.camera.isHot = true;
+        m_average /= m_hots.length;
+         if(m_average >= 0.5){ //If it's dead even, just say that it's HOT
+            m_camera.setIsHot(true);
         }else {
-             CommandBase.camera.isHot = false;
+             m_camera.setIsHot(false);
          }
     }
 

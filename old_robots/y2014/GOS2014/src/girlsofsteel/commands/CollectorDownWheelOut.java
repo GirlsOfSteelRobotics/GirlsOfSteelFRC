@@ -6,6 +6,7 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import girlsofsteel.subsystems.Collector;
 
 /**
  *
@@ -13,9 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class CollectorDownWheelOut extends CommandGroup {
 
-    public CollectorDownWheelOut()
+    public CollectorDownWheelOut(Collector collector)
     {
-        addParallel(new EngageCollector());
-        addParallel(new CollectorWheelReverse());
+        addParallel(new EngageCollector(collector));
+        addParallel(new CollectorWheelReverse(collector));
     }
 }

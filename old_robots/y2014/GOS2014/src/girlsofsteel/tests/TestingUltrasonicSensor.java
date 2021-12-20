@@ -6,12 +6,19 @@
 package girlsofsteel.tests;
 
 import girlsofsteel.commands.CommandBase;
+import girlsofsteel.subsystems.UltrasonicSensor;
 
 /**
  *
  * @author
  */
 public class TestingUltrasonicSensor extends CommandBase{
+
+    private final UltrasonicSensor m_ultra;
+
+    public TestingUltrasonicSensor(UltrasonicSensor ultra) {
+        m_ultra = ultra;
+    }
 
     @Override
     protected void initialize() {
@@ -20,7 +27,7 @@ public class TestingUltrasonicSensor extends CommandBase{
 
     @Override
     protected void execute() {
-        System.out.println(ultra.getRangeInInches());
+        System.out.println(m_ultra.getRangeInInches());
     }
 
     @Override

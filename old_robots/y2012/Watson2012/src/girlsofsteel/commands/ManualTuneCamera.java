@@ -1,9 +1,9 @@
 package girlsofsteel.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
 
 
 /*
@@ -13,18 +13,19 @@ import girlsofsteel.objects.Camera;
  */
 public class ManualTuneCamera extends CommandBase {
 
-    private Joystick driverJoystick;
-    private double xAxis;
-    private double yAxis;
+    private final Chassis m_chassis;
+
     public static final double HalfCourt = 7.1; //meaters (7.1)
     public static final double Step = .5; //meaters
     public static final double ErrorThreshold = .01;
-    private int count = 0;
-    private double[] imageTargetRatioData = new double[50];
-    private double[] distanceData = new double[50];
+    private int m_count;
+    private double[] m_imageTargetRatioData = new double[50];
+    private double[] m_distanceData = new double[50];
 
-    public ManualTuneCamera() {
-        requires(chassis);
+
+    public ManualTuneCamera(Chassis chassis) {
+        m_chassis = chassis;
+        requires(m_chassis);
         SmartDashboard.putBoolean("collect data", false);
     }
 
@@ -40,7 +41,8 @@ public class ManualTuneCamera extends CommandBase {
 
             try {
                 Thread.sleep(50);
-            } catch (Exception ex) {
+            } catch (InterruptedException ex) {
+                ex.printStackTrace(); // NOPMD
             }
         }
         double dataAverage = (sumOfData / max);
@@ -58,11 +60,11 @@ public class ManualTuneCamera extends CommandBase {
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
+        m_chassis.initEncoders();
 //        chassis.initPositionPIDs();
-        driverJoystick = oi.getDriverJoystick();
     }
 
+    @SuppressWarnings("PMD")
     @Override
     protected void execute() {
         //xAxis = driverJoystick.getX() * 0.5;
@@ -71,7 +73,7 @@ public class ManualTuneCamera extends CommandBase {
 //        if (oi.isCollectCameraDataPressed()) {
         if (SmartDashboard.getBoolean("collect data", false)) {
             //for (int n = 0; n < 5; n++) {
-            if (!chassis.isMoving()) {
+            if (!m_chassis.isMoving()) {
 
                 try {
                     Thread.sleep(2000);//3 seconds time out.
@@ -89,25 +91,25 @@ public class ManualTuneCamera extends CommandBase {
                     }
                 }
 
-                distanceData[count] = (chassis.getRightEncoderDistance());
-                System.out.println("collected one data point " + distanceData[count] + ", " + ratio);
+                m_distanceData[m_count] = (m_chassis.getRightEncoderDistance());
+                System.out.println("collected one data point " + m_distanceData[m_count] + ", " + ratio);
                 //Start against the bridge. distance to target is he initial distance minus the distance travled.
 //                chassis.move(Step);
 
                 if (ratio >= 0) {
 //                }
-                    imageTargetRatioData[count] = ratio;
-                    distanceData[count] = (chassis.getRightEncoderDistance());
-                    System.out.println("collected one data point " + distanceData[count] + ", " + ratio);
+                    m_imageTargetRatioData[m_count] = ratio;
+                    m_distanceData[m_count] = (m_chassis.getRightEncoderDistance());
+                    System.out.println("collected one data point " + m_distanceData[m_count] + ", " + ratio);
 
                 }
 
             }
 
-            if (count > 50) {
-                count = 49;
+            if (m_count > 50) {
+                m_count = 49;
             } else {
-                count++;
+                m_count++;
             }
 
         }
@@ -115,13 +117,13 @@ public class ManualTuneCamera extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-        return (chassis.getRightEncoderDistance()) > HalfCourt - 2;
+        return (m_chassis.getRightEncoderDistance()) > HalfCourt - 2;
     }
 
     @Override
     protected void end() {
-        System.out.println("data collection done! cnt=" + count);
-        double[] ab = LineReg.bestFit(imageTargetRatioData, distanceData, count + 1);
+        System.out.println("data collection done! cnt=" + m_count);
+        double[] ab = LineReg.bestFit(m_imageTargetRatioData, m_distanceData, m_count + 1);
         double a = ab[0];
         double b = ab[1];
 
@@ -133,8 +135,8 @@ public class ManualTuneCamera extends CommandBase {
             System.out.println("y   = " + a + " * x + " + b);
         }
 
-        chassis.stopJags();
-        chassis.endEncoders();
+        m_chassis.stopJags();
+        m_chassis.endEncoders();
     }
 
     @Override

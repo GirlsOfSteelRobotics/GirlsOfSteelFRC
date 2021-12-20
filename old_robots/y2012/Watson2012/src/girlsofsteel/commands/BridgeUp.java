@@ -1,9 +1,13 @@
 package girlsofsteel.commands;
 
-public class BridgeUp extends CommandBase {
+import girlsofsteel.subsystems.Bridge;
 
-    public BridgeUp() {
-        requires(bridge);
+public class BridgeUp extends CommandBase {
+    private final Bridge m_bridge;
+
+    public BridgeUp(Bridge bridge) {
+        m_bridge = bridge;
+        requires(m_bridge);
     }
 
     @Override
@@ -12,17 +16,17 @@ public class BridgeUp extends CommandBase {
 
     @Override
     protected void execute() {
-        bridge.upBridgeArm();
+        m_bridge.upBridgeArm();
     }
 
     @Override
     protected boolean isFinished() {
-        return bridge.isFullyUp();
+        return m_bridge.isFullyUp();
     }
 
     @Override
     protected void end() {
-        bridge.stopBridgeArm();
+        m_bridge.stopBridgeArm();
         System.out.println("Up Bridge Done");
     }
 

@@ -6,19 +6,24 @@
 /*----------------------------------------------------------------------------*/
 package girlsofsteel;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import girlsofsteel.commands.CommandBase;
-import girlsofsteel.commands.RunClimberBackwards;
-import girlsofsteel.commands.OpenAllGrippers;
 import girlsofsteel.commands.Drive;
-import girlsofsteel.tests.ShooterJags;
+import girlsofsteel.commands.OpenAllGrippers;
+import girlsofsteel.commands.RunClimberBackwards;
 import girlsofsteel.objects.AutonomousChooser;
 import girlsofsteel.objects.PositionInfo;
 import girlsofsteel.objects.ShooterCamera;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Climber;
+import girlsofsteel.subsystems.DriveFlag;
+import girlsofsteel.subsystems.Feeder;
+import girlsofsteel.subsystems.Gripper;
+import girlsofsteel.subsystems.Shooter;
+import girlsofsteel.tests.ShooterJags;
 
 //import girlsofsteel.commands.LightSensorFeeder;
 /**
@@ -28,10 +33,33 @@ import girlsofsteel.objects.ShooterCamera;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Eve2013 extends IterativeRobot {
 
-    private AutonomousChooser autonomous;
-    private final DriverStation driver = DriverStation.getInstance();
+    private AutonomousChooser m_autonomous;
+
+    private final OI m_oi;
+    private final Feeder m_feeder;
+    private final Shooter m_shooter;
+    private final Climber m_climber;
+    private final Chassis m_chassis;
+    private final DriveFlag m_drive;
+    private final Gripper m_gripper;
+
+    @SuppressWarnings("PMD.CloseResource")
+    public Eve2013() {
+        m_feeder = new Feeder();
+        m_shooter = new Shooter();
+        m_climber = new Climber();
+        m_chassis = new Chassis();
+        m_drive = new DriveFlag();
+
+        DigitalInput topOpenBottomCloseSwitch = new DigitalInput(RobotMap.TOP_GRIPPER_OPEN_BOTTOM_GRIPPER_CLOSE_SWITCH);
+        DigitalInput topCloseMiddleOppenSwitch = new DigitalInput(RobotMap.TOP_GRIPPER_CLOSE_MIDDLE_GRIPPER_OPEN_SWITCH);
+        m_gripper = new Gripper(topOpenBottomCloseSwitch, topCloseMiddleOppenSwitch, RobotMap.OPEN_TOP_GRIPPER_SOLENOID, RobotMap.CLOSE_TOP_GRIPPER_SOLENOID);
+
+        m_oi = new OI(m_chassis, m_drive, m_climber, m_feeder, m_shooter, m_gripper);
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -41,16 +69,16 @@ public class Eve2013 extends IterativeRobot {
     public void robotInit() {
 
         // Initialize all subsystems
-        CommandBase.init();
         PositionInfo.init();
         SmartDashboard.putBoolean("Reset Netbook", true);
 
-        SmartDashboard.putData(new RunClimberBackwards());
 
-        SmartDashboard.putData(new ShooterJags());
+        SmartDashboard.putData(new RunClimberBackwards(m_climber));
+
+        SmartDashboard.putData(new ShooterJags(m_feeder, m_shooter));
 
         //Drivers
-        autonomous = new AutonomousChooser();
+        m_autonomous = new AutonomousChooser(m_chassis, m_shooter, m_feeder);
 
         SmartDashboard.putBoolean("Press Shoot?", false);
         SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
@@ -79,8 +107,8 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-        new OpenAllGrippers().start();
-        autonomous.start();
+        new OpenAllGrippers(m_gripper).start();
+        m_autonomous.start();
     }
 
     /**
@@ -129,10 +157,10 @@ public class Eve2013 extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         //new OpenAllGrippers().start();
-        if (autonomous != null) {
-            autonomous.cancel();
+        if (m_autonomous != null) {
+            m_autonomous.cancel();
         }
-        new Drive(1.0, 0.5, true).start();
+        new Drive(m_oi, m_chassis, m_drive, 1.0, 0.5, true).start();
     }
 
     /**
@@ -145,7 +173,7 @@ public class Eve2013 extends IterativeRobot {
     //    System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
 
         //Drivers
-        SmartDashboard.putBoolean("Press Shoot?", CommandBase.shooter.isTimeToShoot());
+        SmartDashboard.putBoolean("Press Shoot?", m_shooter.isTimeToShoot());
         SmartDashboard.putNumber ("Battery Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putString("SELECT", "close bottom grip");
         SmartDashboard.putString("SQUARE", "tilt");

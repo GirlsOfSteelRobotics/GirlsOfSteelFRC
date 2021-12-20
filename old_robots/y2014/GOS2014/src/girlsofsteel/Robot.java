@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.commands.ArcadeDrive;
-import girlsofsteel.commands.CommandBase;
 import girlsofsteel.commands.DoNothing;
 import girlsofsteel.commands.KickerUsingLimitSwitch;
 import girlsofsteel.commands.ManualPositionPIDTuner;
@@ -19,6 +18,11 @@ import girlsofsteel.commands.TestKickerEncoder;
 import girlsofsteel.commands.TuneManipulatorPID;
 import girlsofsteel.objects.AutonomousChooser;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Driving;
+import girlsofsteel.subsystems.Kicker;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,8 +33,24 @@ import girlsofsteel.objects.Camera;
  */
 public class Robot extends IterativeRobot {
 
-    private AutonomousChooser auto;
-    private Command autonomousCommand;
+    private final Chassis m_chassis = new Chassis();
+    private final Manipulator m_manipulator = new Manipulator();
+    private final Kicker m_kicker = new Kicker();
+    private final Collector m_collector = new Collector();
+    private final Driving m_driving = new Driving();
+    private final Camera m_camera = new Camera();
+    private final OI m_oi;
+    private final AutonomousChooser m_auto;
+    private final Command m_autonomousCommand;
+
+    public Robot() {
+        // instantiate the command used for the autonomous period
+        m_autonomousCommand = new DoNothing(m_driving);
+
+        m_oi = new OI(m_chassis, m_kicker, m_manipulator, m_collector);
+
+        m_auto = new AutonomousChooser(m_driving, m_chassis, m_camera, m_collector, m_manipulator);
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,20 +58,20 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new DoNothing();
 
-        auto = new AutonomousChooser();
+        m_chassis.setRightEncoderReverseDirection(Configuration.rightEncoderReverse);
+        m_chassis.setLeftEncoderReverseDirection(Configuration.leftEncoderReverse);
+        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0.0, 0.0);
+        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0.0, 0.0);
+        m_manipulator.setPID(Configuration.manipulatorPivotP, 0.0, 0.0);
+        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0.0, 0.0);
+        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0.0, 0.0);
+        m_manipulator.setPID(Configuration.manipulatorPivotP, 0.0, 0.0);
 
-        // Initialize all subsystems
-        CommandBase.init();
-        Configuration.configureForRobot(Configuration.COMPETITION_ROBOT);
-        //SmartDashboard.putData(new TestKickerEncoder());
-
-        SmartDashboard.putData(new KickerUsingLimitSwitch(-1, true));
-        SmartDashboard.putData(new TestKickerEncoder());
-        SmartDashboard.putData(new TuneManipulatorPID());
-        SmartDashboard.putData(new ManualPositionPIDTuner());
+        SmartDashboard.putData(new KickerUsingLimitSwitch(m_kicker, -1, true));
+        SmartDashboard.putData(new TestKickerEncoder(m_kicker));
+        SmartDashboard.putData(new TuneManipulatorPID(m_manipulator));
+        SmartDashboard.putData(new ManualPositionPIDTuner(m_chassis, m_driving));
 
    //     SmartDashboard.putData(new FullTester());
     }
@@ -62,7 +82,7 @@ public class Robot extends IterativeRobot {
         //new AutonomousMobility().start();
         // new AutonomousLowGoalHot().start();
         //auto.start();
-        autonomousCommand.start();
+        m_autonomousCommand.start();
     }
 
     /**
@@ -81,11 +101,11 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
 
-        autonomousCommand.cancel();
-        if(auto != null) {
-            auto.cancel();
+        m_autonomousCommand.cancel();
+        if(m_auto != null) {
+            m_auto.cancel();
         }
-        new ArcadeDrive().start(); //Starts arcade drive automatically
+        new ArcadeDrive(m_oi, m_driving, m_chassis).start(); //Starts arcade drive automatically
     }
 
     /**

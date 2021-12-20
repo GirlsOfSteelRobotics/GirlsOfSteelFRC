@@ -5,6 +5,7 @@
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
+import girlsofsteel.subsystems.Chassis;
 
 /**
  *
@@ -12,27 +13,29 @@ import girlsofsteel.Configuration;
  */
 public class HoldChassisInPlace extends CommandBase {
 
-    private double setPoint;
+    private final Chassis m_chassis;
+    private double m_setPoint;
 
-    public HoldChassisInPlace()
+    public HoldChassisInPlace(Chassis chassis)
     {
-        requires(chassis);
+        m_chassis = chassis;
+        requires(m_chassis);
 
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initPositionPIDS();
-        chassis.resetPositionPIDError();
-        setPoint = chassis.getLeftEncoderDistance();//The current position, which must be maintained
-        chassis.setLeftPositionPIDValues(5, 0, 0);
-        chassis.setRightPositionPIDValues(5, 0, 0);
+        m_chassis.initEncoders();
+        m_chassis.initPositionPIDS();
+        m_chassis.resetPositionPIDError();
+        m_setPoint = m_chassis.getLeftEncoderDistance();//The current position, which must be maintained
+        m_chassis.setLeftPositionPIDValues(5, 0, 0);
+        m_chassis.setRightPositionPIDValues(5, 0, 0);
     }
 
     @Override
     protected void execute() {
-        chassis.setPosition(setPoint);
+        m_chassis.setPosition(m_setPoint);
         /* USING ENCODERS
         if(chassis.getLeftEncoder() > 0)
         {
@@ -69,9 +72,9 @@ public class HoldChassisInPlace extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0, 0);
-        chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0, 0);
-        chassis.disablePositionPID();
+        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0, 0);
+        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0, 0);
+        m_chassis.disablePositionPID();
     }
 
     @Override

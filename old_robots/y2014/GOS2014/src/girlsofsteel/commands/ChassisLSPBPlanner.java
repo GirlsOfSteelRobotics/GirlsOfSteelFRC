@@ -5,6 +5,9 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.objects.LSPBPIDPlanner;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Driving;
 
 /**
  *
@@ -12,42 +15,48 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ChassisLSPBPlanner extends CommandBase {
 
-    private double startTime; //milliseconds
-    private double changeInTime;
-    private double setPoint;
-    private boolean graphed;
+    private final Chassis m_chassis;
+    private final LSPBPIDPlanner m_leftChassisPlanner;
+    private final LSPBPIDPlanner m_rightChassisPlanner;
+    private double m_startTime; //milliseconds
+    private double m_changeInTime;
+    private double m_setPoint;
+    private boolean m_graphed;
 
-    public ChassisLSPBPlanner() {
+    public ChassisLSPBPlanner(Chassis chassis, Driving driving) {
+        m_chassis = chassis;
+        m_leftChassisPlanner = m_chassis.getLeftChassisPlanner();
+        m_rightChassisPlanner = m_chassis.getRightChassisPlanner();
         requires(driving);
     }
 
     @Override
     protected void initialize() {
-        graphed = false;
-        startTime = System.currentTimeMillis();
-        chassis.initEncoders();
-        chassis.initPositionPIDS();
-        chassis.resetPositionPIDError();
+        m_graphed = false;
+        m_startTime = System.currentTimeMillis();
+        m_chassis.initEncoders();
+        m_chassis.initPositionPIDS();
+        m_chassis.resetPositionPIDError();
         SmartDashboard.putNumber("LSPB Setpoint", 0.0);
     }
 
     @Override
     protected void execute() {
-        setPoint = SmartDashboard.getNumber("LSPB Setpoint", 0);
-        if (setPoint != 0) {
-            if (!graphed) {
-                startTime = System.currentTimeMillis();
-                chassis.leftChassisPlanner.calculateVelocityGraph(setPoint);
-                chassis.rightChassisPlanner.calculateVelocityGraph(setPoint);
-                graphed = true;
+        m_setPoint = SmartDashboard.getNumber("LSPB Setpoint", 0);
+        if (m_setPoint != 0) {
+            if (!m_graphed) {
+                m_startTime = System.currentTimeMillis();
+                m_leftChassisPlanner.calculateVelocityGraph(m_setPoint);
+                m_rightChassisPlanner.calculateVelocityGraph(m_setPoint);
+                m_graphed = true;
             }
 
-            SmartDashboard.putNumber("LSPB Left Encoder", chassis.getLeftEncoderDistance());
-            SmartDashboard.putNumber("LSPB Right Encoder", chassis.getRightEncoderDistance());
-            System.out.print("\tRight Encoder: " + chassis.getRightEncoderDistance());
+            SmartDashboard.putNumber("LSPB Left Encoder", m_chassis.getLeftEncoderDistance());
+            SmartDashboard.putNumber("LSPB Right Encoder", m_chassis.getRightEncoderDistance());
+            System.out.print("\tRight Encoder: " + m_chassis.getRightEncoderDistance());
            // if ((int)changeInTime % 10 == 0) {
-                changeInTime = System.currentTimeMillis() - startTime;
-                chassis.setPositionSeparate(chassis.leftChassisPlanner.getDesiredPosition(changeInTime), chassis.rightChassisPlanner.getDesiredPosition(changeInTime));
+                m_changeInTime = System.currentTimeMillis() - m_startTime;
+                m_chassis.setPositionSeparate(m_leftChassisPlanner.getDesiredPosition(m_changeInTime), m_rightChassisPlanner.getDesiredPosition(m_changeInTime));
            // }
         }
     }
@@ -55,9 +64,9 @@ public class ChassisLSPBPlanner extends CommandBase {
     @Override
     protected boolean isFinished() {
         boolean ret =  (/*Math.abs(chassis.getLeftEncoderDistance() - setPoint) < 0.05) || */
-                ((Math.abs(chassis.getRightEncoderDistance() - setPoint) < 0.01 )
-                || (Math.abs(chassis.getRightEncoderDistance()) > Math.abs(setPoint)))
-                && graphed); //Right encoder/pid is flipped TODO configuration
+                ((Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < 0.01 )
+                || (Math.abs(m_chassis.getRightEncoderDistance()) > Math.abs(m_setPoint)))
+                && m_graphed); //Right encoder/pid is flipped TODO configuration
         if(ret) {
             System.out.println("finished ");
         }
@@ -67,8 +76,8 @@ public class ChassisLSPBPlanner extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.stopJags();
-        chassis.disablePositionPID();
+        m_chassis.stopJags();
+        m_chassis.disablePositionPID();
     }
 
     @Override

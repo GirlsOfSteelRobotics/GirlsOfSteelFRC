@@ -1,28 +1,31 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.subsystems.Turret;
 
 public class PS3SetPointTurret extends CommandBase {
 
-    private  Joystick operatorJoystick;
-    private double angle;
+    private final Turret m_turret;
+    private final Joystick m_operatorJoystick;
+    private double m_angle;
 
-    public PS3SetPointTurret() {
-        requires(turret);
+    public PS3SetPointTurret(Turret turret, Joystick operatorJoystick) {
+        m_turret = turret;
+        this.m_operatorJoystick = operatorJoystick;
+        requires(m_turret);
     }
 
     @Override
     protected void initialize() {
-        turret.initEncoder();
-        turret.enablePID();
-        operatorJoystick = oi.getOperatorJoystick();
+        m_turret.initEncoder();
+        m_turret.enablePID();
     }
 
     @Override
     protected void execute() {
-        angle = operatorJoystick.getX()*5.0;
-        if(angle < -0.5 || angle > 0.5){
-            turret.setPIDSetPoint(turret.getEncoderDistance() + angle);
+        m_angle = m_operatorJoystick.getX()*5.0;
+        if(m_angle < -0.5 || m_angle > 0.5){
+            m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_angle);
         }
     }
 
@@ -33,8 +36,8 @@ public class PS3SetPointTurret extends CommandBase {
 
     @Override
     protected void end() {
-        turret.disablePID();
-        turret.stopJag();
+        m_turret.disablePID();
+        m_turret.stopJag();
     }
 
     @Override

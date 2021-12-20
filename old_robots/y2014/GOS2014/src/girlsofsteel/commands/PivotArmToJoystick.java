@@ -6,6 +6,8 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Manipulator;
 
 /**
  *
@@ -13,32 +15,32 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class PivotArmToJoystick extends CommandBase {
 
-    private final Joystick operator;
-    private int count;
-    private double angle;
+    private final Joystick m_operator;
+    private final Manipulator m_manipulator;
+    private double m_angle;
 
-    public PivotArmToJoystick() {
-        requires(manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
-        operator = CommandBase.oi.getOperatorJoystick();
+    public PivotArmToJoystick(OI oi, Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
+        m_operator = oi.getOperatorJoystick();
     }
 
     @Override
     protected void initialize() {
-        angle = manipulator.getAbsoluteDistance();
-        count = 0;
+        m_angle = m_manipulator.getAbsoluteDistance();
     }
 
     @Override
     protected void execute() {
-        System.out.println("Operator Y: " + operator.getY());
-        if (operator.getY() > 0.5) {
-            manipulator.setSetPoint(angle);
-            angle++; //+= 1.5;
-        } else if (operator.getY() < -0.5) {
-            manipulator.setSetPoint(angle);
-            angle--; //-= 1.5;
+        System.out.println("Operator Y: " + m_operator.getY());
+        if (m_operator.getY() > 0.5) {
+            m_manipulator.setSetPoint(m_angle);
+            m_angle++; //+= 1.5;
+        } else if (m_operator.getY() < -0.5) {
+            m_manipulator.setSetPoint(m_angle);
+            m_angle--; //-= 1.5;
         }
-            manipulator.holdAngle();
+            m_manipulator.holdAngle();
 
     }
 
@@ -49,7 +51,7 @@ public class PivotArmToJoystick extends CommandBase {
 
     @Override
     protected void end() {
-        manipulator.holdAngle();
+        m_manipulator.holdAngle();
     }
 
     @Override
