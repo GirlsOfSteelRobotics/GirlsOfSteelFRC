@@ -1,4 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot", "gos_junit4_test")
 
 gos_java_robot(
     name = "Watson2012",
@@ -12,4 +12,11 @@ gos_java_robot(
         "@bazelrio//libraries/java/wpilib/old_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
     ],
+)
+
+
+gos_junit4_test(
+    name = "test",
+    srcs = glob(["test/**/*.java"]),
+    deps = ["Watson2012"],
 )

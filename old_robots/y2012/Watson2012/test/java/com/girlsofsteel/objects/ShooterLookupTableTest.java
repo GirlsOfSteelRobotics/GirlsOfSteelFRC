@@ -1,9 +1,9 @@
-package girlsofsteel.objects;
+package com.girlsofsteel.objects;
 
+import girlsofsteel.objects.ShooterLookupTable;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class ShooterLookupTableTest {
     private static final double EPSILON = 1e-6;
