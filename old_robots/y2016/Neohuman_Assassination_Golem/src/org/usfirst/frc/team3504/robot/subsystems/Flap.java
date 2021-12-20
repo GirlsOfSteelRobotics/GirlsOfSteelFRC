@@ -59,7 +59,7 @@ public class Flap extends Subsystem {
     }
 
     public double getFlapEncoder() {
-        return m_flapTalon.getEncPosition();
+        return m_flapTalon.getSelectedSensorPosition();
     }
 
     public double getFlapEncoderDistance() {

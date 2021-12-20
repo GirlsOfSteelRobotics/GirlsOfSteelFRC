@@ -65,11 +65,11 @@ public class Chassis extends Subsystem {
     }
 
     public double getRightEncoderPosition(){
-        return m_driveRightA.getEncPosition();
+        return m_driveRightA.getSelectedSensorPosition();
     }
 
     public double getLeftEncoderPosition(){
-        return m_driveLeftA.getEncPosition();
+        return m_driveLeftA.getSelectedSensorPosition();
     }
 
     public void ahrsToSmartDashboard(){

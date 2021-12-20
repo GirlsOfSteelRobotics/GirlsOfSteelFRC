@@ -236,10 +236,10 @@ public class Chassis extends Subsystem {
                 (beattieTwistDeadBand(stick.getTwist())) * throttleSpeed(stick),
                 m_getGyro ? temp : 0);
 
-        SmartDashboard.putNumber("Sending Val Front Left", m_frontLeftWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Rear Left", m_rearLeftWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Front Right", m_frontRightWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Rear Right", m_rearRightWheel.getSetpoint());
+        SmartDashboard.putNumber("Sending Val Front Left", m_frontLeftWheel.getClosedLoopTarget());
+        SmartDashboard.putNumber("Sending Val Rear Left", m_rearLeftWheel.getClosedLoopTarget());
+        SmartDashboard.putNumber("Sending Val Front Right", m_frontRightWheel.getClosedLoopTarget());
+        SmartDashboard.putNumber("Sending Val Rear Right", m_rearRightWheel.getClosedLoopTarget());
 
     }
 
@@ -334,10 +334,10 @@ public class Chassis extends Subsystem {
     //	SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncPosition());//rearLeftWheel.getSpeed());
     //	SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncPosition());//rearRightWheel.getSpeed());
 
-        SmartDashboard.putNumber("Front Left Velocity", m_frontLeftWheel.getSpeed());
-        SmartDashboard.putNumber("Front Right Velocity", m_frontRightWheel.getSpeed());
-        SmartDashboard.putNumber("Back Left Velocity", m_rearLeftWheel.getSpeed());
-        SmartDashboard.putNumber("Back Right Velocity", m_rearRightWheel.getSpeed());
+        SmartDashboard.putNumber("Front Left Velocity", m_frontLeftWheel.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Front Right Velocity", m_frontRightWheel.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Back Left Velocity", m_rearLeftWheel.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Back Right Velocity", m_rearRightWheel.getSelectedSensorVelocity());
     }
 
     /**
@@ -345,10 +345,10 @@ public class Chassis extends Subsystem {
      * current encoder values for comparison after driving
      */
     public void resetDistance() {
-        m_initialFrontLeftEncoderDistance = m_frontLeftWheel.getEncPosition();
-        m_initialFrontRightEncoderDistance = m_frontRightWheel.getEncPosition();
-        m_initialRearLeftEncoderDistance = m_rearLeftWheel.getEncPosition();
-        m_initialRearRightEncoderDistance = m_rearRightWheel.getEncPosition();
+        m_initialFrontLeftEncoderDistance = m_frontLeftWheel.getSelectedSensorPosition();
+        m_initialFrontRightEncoderDistance = m_frontRightWheel.getSelectedSensorPosition();
+        m_initialRearLeftEncoderDistance = m_rearLeftWheel.getSelectedSensorPosition();
+        m_initialRearRightEncoderDistance = m_rearRightWheel.getSelectedSensorPosition();
     }
 
     /**
@@ -358,19 +358,19 @@ public class Chassis extends Subsystem {
      * right.
      */
     private double rearRightEncoderDistance() {
-        return Math.abs(m_rearRightWheel.getEncPosition() - m_initialRearRightEncoderDistance);
+        return Math.abs(m_rearRightWheel.getSelectedSensorPosition() - m_initialRearRightEncoderDistance);
     }
 
     private double frontRightEncoderDistance() {
-        return Math.abs(m_frontRightWheel.getEncPosition() - m_initialFrontRightEncoderDistance);
+        return Math.abs(m_frontRightWheel.getSelectedSensorPosition() - m_initialFrontRightEncoderDistance);
     }
 
     private double frontLeftEncoderDistance() {
-        return Math.abs(m_frontLeftWheel.getEncPosition() - m_initialFrontLeftEncoderDistance);
+        return Math.abs(m_frontLeftWheel.getSelectedSensorPosition() - m_initialFrontLeftEncoderDistance);
     }
 
     private double rearLeftEncoderDistance() {
-        return Math.abs(m_rearLeftWheel.getEncPosition() - m_initialRearLeftEncoderDistance);
+        return Math.abs(m_rearLeftWheel.getSelectedSensorPosition() - m_initialRearLeftEncoderDistance);
     }
 
     /**

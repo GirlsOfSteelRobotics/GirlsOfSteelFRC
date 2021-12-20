@@ -91,7 +91,7 @@ public class Chassis extends Subsystem {
     public final void setupEncoder(CANTalon talon) { // only call this on non-follower
                                                 // talons
         // Set Encoder Types
-        talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+        talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
         talon.reverseSensor(false);
     }
@@ -99,7 +99,7 @@ public class Chassis extends Subsystem {
     public void setupFPID(CANTalon talon) { // values work with QuadEncoder for
                                             // drive talons
         // PID Values
-        talon.setPosition(0);
+        talon.setSelectedSensorPosition(0);
         talon.config_kF(0, 0);
         talon.config_kP(0, 0.32); // 0.64 good
         talon.config_kI(0, 0.0);

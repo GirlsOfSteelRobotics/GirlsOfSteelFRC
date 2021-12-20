@@ -64,7 +64,7 @@ public class Pivot extends Subsystem {
     }
 
     public double getEncoderRight() {
-        return m_pivotMotor.getEncPosition();
+        return m_pivotMotor.getSelectedSensorPosition();
     }
 
     public double getEncoderDistance() {

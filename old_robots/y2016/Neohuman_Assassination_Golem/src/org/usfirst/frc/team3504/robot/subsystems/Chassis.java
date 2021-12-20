@@ -115,11 +115,11 @@ public class Chassis extends Subsystem implements PIDOutput{
     }
 
     public double getEncoderRight() {
-        return -m_driveRightA.getEncPosition();
+        return -m_driveRightA.getSelectedSensorPosition();
     }
 
     public double getEncoderLeft() {
-        return m_driveLeftA.getEncPosition();
+        return m_driveLeftA.getSelectedSensorPosition();
     }
 
     public double getEncoderDistance() {

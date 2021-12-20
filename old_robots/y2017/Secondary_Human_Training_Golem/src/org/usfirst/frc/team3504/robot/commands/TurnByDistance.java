@@ -81,8 +81,8 @@ public class TurnByDistance extends Command {
 
         System.out.println("TurnByDistance Started " + m_rotationsRight + m_rotationsLeft);
 
-        m_leftInitial = -m_leftTalon.getPosition();
-        m_rightInitial = m_rightTalon.getPosition();
+        m_leftInitial = -m_leftTalon.getSelectedSensorPosition();
+        m_rightInitial = m_rightTalon.getSelectedSensorPosition();
 
         m_leftTalon.set(-(m_rotationsLeft + m_leftInitial));
         m_rightTalon.set(m_rotationsRight + m_rightInitial);
@@ -98,8 +98,8 @@ public class TurnByDistance extends Command {
         m_rightTalon.set(m_rotationsRight + m_rightInitial);
 
         SmartDashboard.putNumber("Drive Talon Left Goal", -m_rotationsLeft);
-        SmartDashboard.putNumber("Drive Talon Left Position", m_leftTalon.getPosition());
-        SmartDashboard.putNumber("Drive Talon Left Error", m_leftTalon.getError());
+        SmartDashboard.putNumber("Drive Talon Left Position", m_leftTalon.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Drive Talon Left Error", m_leftTalon.getClosedLoopError());
 
         //System.out.println("Left Goal " + (-(rotations + leftInitial)) + " Right Goal " + (rotations + rightInitial));
         //System.out.println("Left Position " + leftTalon.getPosition() + " Right Position " + rightTalon.getPosition());

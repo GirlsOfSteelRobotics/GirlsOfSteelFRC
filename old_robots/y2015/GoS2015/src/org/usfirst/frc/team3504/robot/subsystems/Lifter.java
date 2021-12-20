@@ -68,13 +68,13 @@ public class Lifter extends Subsystem {
         SmartDashboard.putNumber("Lifter throttle", (operatorJoystick.getY()));
         if ((Math.abs(operatorJoystick.getY()) < .2)) {
             SmartDashboard.putString("In", "in throttle zero");
-            m_liftTalon.set(m_liftTalon.getSetpoint());
+            m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
         } else {
             if (isAtTop() && operatorJoystick.getY() < .2) {
-                m_liftTalon.set(m_liftTalon.getSetpoint());
+                m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
             }
             else if (isAtBottom() && operatorJoystick.getY() > .2) {
-                m_liftTalon.set(m_liftTalon.getSetpoint());
+                m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
             }
             else {
                 m_liftTalon.set(m_liftTalon.get() - (300 * operatorJoystick.getY()));
@@ -96,11 +96,11 @@ public class Lifter extends Subsystem {
     }
 
     public boolean isAtPosition() {
-        return (Math.abs(m_liftTalon.get() - m_liftTalon.getSetpoint()) <= 100);
+        return (Math.abs(m_liftTalon.get() - m_liftTalon.getClosedLoopTarget()) <= 100);
     }
 
     public void printLifter() {
-        SmartDashboard.putNumber("Lifter encoder", m_liftTalon.getEncPosition());
+        SmartDashboard.putNumber("Lifter encoder", m_liftTalon.getSelectedSensorPosition());
         SmartDashboard.putBoolean("Top Limit Switch", !m_liftTopLimit.get());
         SmartDashboard.putBoolean("Bottom Limit", !m_liftBottomLimit.get());
     }
