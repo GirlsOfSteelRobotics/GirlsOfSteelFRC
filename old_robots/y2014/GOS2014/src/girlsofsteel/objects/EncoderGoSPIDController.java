@@ -51,12 +51,12 @@ public class EncoderGoSPIDController implements Runnable {
 
     public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
             PIDOutput jags, int type, int zeroEncoderValue) {
-        this(kp, ki, kd, encoder, jags, type, 0, false, false);
+        this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, false, false);
     }
 
     public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
             PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder) {
-        this(kp, ki, kd, encoder, jags, type, 0, false, false, 999999999);
+        this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, reverseEncoder, modEncoder, 999999999);
     }
 
     public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,

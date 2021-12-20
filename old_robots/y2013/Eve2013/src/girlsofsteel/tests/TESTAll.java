@@ -14,10 +14,10 @@ import girlsofsteel.subsystems.Gripper;
  *
  * @author kateashwood
  */
-public class TestAll extends CommandGroup {
+public class TESTAll extends CommandGroup {
 
     // Called just before this Command runs the first time
-    public TestAll(Feeder feeder, girlsofsteel.subsystems.Chassis chassis, girlsofsteel.subsystems.Shooter shooter, girlsofsteel.subsystems.Climber climber, Gripper gripper) {
+    public TESTAll(Feeder feeder, girlsofsteel.subsystems.Chassis chassis, girlsofsteel.subsystems.Shooter shooter, girlsofsteel.subsystems.Climber climber, Gripper gripper) {
         //add all test commands to smartdashboard
         SmartDashboard.putData(new Chassis(chassis));
         SmartDashboard.putData(new Shooter(feeder, shooter));
