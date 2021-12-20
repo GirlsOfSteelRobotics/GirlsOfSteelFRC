@@ -1,9 +1,13 @@
 package girlsofsteel.commands;
 
-public class BridgeDown extends CommandBase {
+import girlsofsteel.subsystems.Bridge;
 
-    public BridgeDown() {
-        requires(bridge);
+public class BridgeDown extends CommandBase {
+    private final Bridge m_bridge;
+
+    public BridgeDown(Bridge bridge) {
+        m_bridge = bridge;
+        requires(m_bridge);
     }
 
     @Override
@@ -12,12 +16,12 @@ public class BridgeDown extends CommandBase {
 
     @Override
     protected void execute() {
-        bridge.downBridgeArm();
+        m_bridge.downBridgeArm();
     }
 
     @Override
     protected boolean isFinished() {
-        return bridge.hasHitBridge();
+        return m_bridge.hasHitBridge();
     }
 
     @Override

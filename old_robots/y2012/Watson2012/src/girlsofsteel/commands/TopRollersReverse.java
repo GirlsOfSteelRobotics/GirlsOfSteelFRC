@@ -1,6 +1,13 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Shooter;
+
 public class TopRollersReverse extends CommandBase {
+    private final Shooter m_shooter;
+
+    public TopRollersReverse(Shooter shooter) {
+        m_shooter = shooter;
+    }
 
     @Override
     protected void initialize() {
@@ -8,7 +15,7 @@ public class TopRollersReverse extends CommandBase {
 
     @Override
     protected void execute() {
-        shooter.topRollersBackward();
+        m_shooter.topRollersBackward();
     }
 
     @Override
@@ -18,7 +25,7 @@ public class TopRollersReverse extends CommandBase {
 
     @Override
     protected void end() {
-        shooter.topRollersOff();
+        m_shooter.topRollersOff();
     }
 
     @Override

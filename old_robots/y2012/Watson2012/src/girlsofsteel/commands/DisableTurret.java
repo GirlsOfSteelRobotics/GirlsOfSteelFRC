@@ -1,15 +1,19 @@
 package girlsofsteel.commands;
 
-public class DisableTurret extends CommandBase {
+import girlsofsteel.subsystems.Turret;
 
-    public DisableTurret(){
-        requires(turret);
+public class DisableTurret extends CommandBase {
+    private final Turret m_turret;
+
+    public DisableTurret(Turret turret){
+        m_turret = turret;
+        requires(m_turret);
     }
 
     @Override
     protected void initialize() {
-        turret.disablePID();
-        turret.stopJag();
+        m_turret.disablePID();
+        m_turret.stopJag();
     }
 
     @Override

@@ -1,37 +1,40 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Chassis;
 
 public class TESTTurnToSetPoint extends CommandBase {
 
-    private double degreesToTurn;
+    private final Chassis m_chassis;
+    private double m_degreesToTurn;
 
-    public TESTTurnToSetPoint(){
-        requires(chassis);
+    public TESTTurnToSetPoint(Chassis chassis){
+        m_chassis = chassis;
+        requires(m_chassis);
         SmartDashboard.putNumber("Turn,degrees", 0.0);
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initPositionPIDs();
+        m_chassis.initEncoders();
+        m_chassis.initPositionPIDs();
     }
 
     @Override
     protected void execute() {
-        degreesToTurn = SmartDashboard.getNumber("Turn,degrees", 0.0);
-        chassis.turn(degreesToTurn);
+        m_degreesToTurn = SmartDashboard.getNumber("Turn,degrees", 0.0);
+        m_chassis.turn(m_degreesToTurn);
     }
 
     @Override
     protected boolean isFinished() {
-        return chassis.isTurnFinished(degreesToTurn);
+        return m_chassis.isTurnFinished(m_degreesToTurn);
     }
 
     @Override
     protected void end() {
-        chassis.disablePositionPIDs();
-        chassis.endEncoders();
+        m_chassis.disablePositionPIDs();
+        m_chassis.endEncoders();
     }
 
     @Override

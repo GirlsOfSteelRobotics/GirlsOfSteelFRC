@@ -1,32 +1,35 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.subsystems.Chassis;
 
 public class DriveSlowTurning extends CommandBase{
+    private final Chassis m_chassis;
+    private final Joystick m_joystick;
 
-    private Joystick joystick;
+    private final double m_scale;
+    private final double m_turningScale;
+    private double m_xAxis;
+    private double m_yAxis;
 
-    private final double scale;
-    private final double turningScale;
-    private double xAxis;
-    private double yAxis;
-
-    public DriveSlowTurning(double scale, double turningScale){
-        requires(chassis);
-        this.scale = scale;
-        this.turningScale = turningScale;
+    public DriveSlowTurning(Chassis chassis, Joystick driverJoystick, double scale, double turningScale){
+        m_chassis = chassis;
+        m_joystick = driverJoystick;
+        requires(m_chassis);
+        this.m_scale = scale;
+        this.m_turningScale = turningScale;
     }
 
     @Override
     protected void initialize() {
-        joystick = oi.getDriverJoystick();
+
     }
 
     @Override
     protected void execute() {
-        xAxis = joystick.getX()*scale;
-        yAxis = joystick.getY()*scale;
-        chassis.driveJagsLinearSlowTurning(xAxis, yAxis,turningScale);
+        m_xAxis = m_joystick.getX()* m_scale;
+        m_yAxis = m_joystick.getY()* m_scale;
+        m_chassis.driveJagsLinearSlowTurning(m_xAxis, m_yAxis, m_turningScale);
     }
 
     @Override
@@ -36,7 +39,7 @@ public class DriveSlowTurning extends CommandBase{
 
     @Override
     protected void end() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

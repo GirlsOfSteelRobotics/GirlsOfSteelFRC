@@ -1,6 +1,16 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Shooter;
+
 public class DelayReverseRollers extends CommandBase {
+    private final Collector m_collector;
+    private final Shooter m_shooter;
+
+    public DelayReverseRollers(Shooter shooter, Collector collector) {
+        m_collector = collector;
+        m_shooter = shooter;
+    }
 
     @Override
     protected void initialize() {
@@ -9,9 +19,9 @@ public class DelayReverseRollers extends CommandBase {
     @Override
     protected void execute() {
         if(timeSinceInitialized() > 4.0){
-            collector.reverseBrush();
-            collector.reverseMiddleConveyor();
-            shooter.topRollersBackward();
+            m_collector.reverseBrush();
+            m_collector.reverseMiddleConveyor();
+            m_shooter.topRollersBackward();
         }
     }
 
@@ -22,9 +32,9 @@ public class DelayReverseRollers extends CommandBase {
 
     @Override
     protected void end() {
-        collector.stopBrush();
-        collector.stopMiddleConveyor();
-        shooter.topRollersOff();
+        m_collector.stopBrush();
+        m_collector.stopMiddleConveyor();
+        m_shooter.topRollersOff();
     }
 
     @Override

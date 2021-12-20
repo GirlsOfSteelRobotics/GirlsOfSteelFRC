@@ -1,34 +1,36 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Shooter;
 
 public class TESTShootUsingTable extends CommandBase {
+    private final Shooter m_shooter;
+    private final OI m_oi;
 
-    private double addition;
-    private double speed;
-    private double cameraDistance;
-    private double distance;
+    private double m_distance;
 
-    public TESTShootUsingTable() {
-        requires(shooter);
+    public TESTShootUsingTable(OI oi, Shooter shooter) {
+        m_oi = oi;
+        m_shooter = shooter;
+        requires(m_shooter);
 //        SmartDashboard.putNumber("Bank Addition", 0.0);
         SmartDashboard.putNumber("Distance", 0.0);
     }
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
-        shooter.initPID();
-        cameraDistance = shooter.getDistance();
+        m_shooter.initEncoder();
+        m_shooter.initPID();
     }
 
     @Override
     protected void execute() {
 //        addition = SmartDashboard.getNumber("Bank Addition", 0.0);
 //        shooter.TESTAutoShootBank(addition,cameraDistance);
-        distance = SmartDashboard.getNumber("Distance", 0.0);
-        shooter.autoShoot(distance);
-        SmartDashboard.putNumber("Shooter Encoder",shooter.getEncoderRate());
+        m_distance = SmartDashboard.getNumber("Distance", 0.0);
+        m_shooter.autoShoot(m_distance);
+        SmartDashboard.putNumber("Shooter Encoder", m_shooter.getEncoderRate());
     }
 
     @Override
@@ -38,11 +40,11 @@ public class TESTShootUsingTable extends CommandBase {
 
     @Override
     protected void end() {
-        if(!oi.areTopRollersOverriden()){
-            shooter.topRollersOff();
+        if(!m_oi.areTopRollersOverriden()){
+            m_shooter.topRollersOff();
         }
-        shooter.disablePID();
-        shooter.stopEncoder();
+        m_shooter.disablePID();
+        m_shooter.stopEncoder();
     }
 
     @Override

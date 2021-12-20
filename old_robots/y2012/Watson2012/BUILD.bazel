@@ -4,7 +4,6 @@ gos_java_robot(
     name = "Watson2012",
     srcs = glob(["src/**/*.java"]),
     disable_checkstyle = True,
-    disable_pmd = True,
     main_class = "girlsofsteel.Main",
     deps = [
         "//old_robots/LegacyLibraries",

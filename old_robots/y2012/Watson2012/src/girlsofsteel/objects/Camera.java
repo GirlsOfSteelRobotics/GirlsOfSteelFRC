@@ -3,6 +3,7 @@ package girlsofsteel.objects;
 import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.UnnecessaryLocalBeforeReturn"})
 public class Camera {
 
     public static double getXDistance(){

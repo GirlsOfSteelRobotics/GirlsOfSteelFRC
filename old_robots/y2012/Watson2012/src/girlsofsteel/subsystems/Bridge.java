@@ -7,40 +7,41 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
 
 public class Bridge extends Subsystem {
-    public Jaguar bridgeArmJag = new Jaguar(RobotMap.BRIDGE_ARM_JAG);
+    private static final double JAG_SPEED = 1.0;
+
+    private final Jaguar m_bridgeArmJag = new Jaguar(RobotMap.BRIDGE_ARM_JAG);
 //    public Relay bridgeArmSpike = new Relay(RobotMap.BRIDGE_ARM_SPIKE);
-    public DigitalInput upLimitSwitch = new DigitalInput(RobotMap.BRIDGE_UP_LIMIT_SWITCH);
-    public DigitalInput downLimitSwitch = new DigitalInput(RobotMap.BRIDGE_DOWN_LIMIT_SWITCH);
-    public boolean goingUp;
-    private final double JAG_SPEED = 1.0;
+    private final DigitalInput m_upLimitSwitch = new DigitalInput(RobotMap.BRIDGE_UP_LIMIT_SWITCH);
+    private final DigitalInput m_downLimitSwitch = new DigitalInput(RobotMap.BRIDGE_DOWN_LIMIT_SWITCH);
+    private boolean m_goingUp;
 
     public boolean isFullyUp() {
-        return upLimitSwitch.get();
+        return m_upLimitSwitch.get();
     }
 
     public boolean hasHitBridge() {
-        return downLimitSwitch.get();
+        return m_downLimitSwitch.get();
     }
 
     public void downBridgeArm(){
-        bridgeArmJag.set(JAG_SPEED);
+        m_bridgeArmJag.set(JAG_SPEED);
 //        bridgeArmSpike.set(Relay.Value.kForward);
-        goingUp = false;
+        m_goingUp = false;
     }
 
     public void upBridgeArm(){
-        bridgeArmJag.set(-JAG_SPEED);
+        m_bridgeArmJag.set(-JAG_SPEED);
 //        bridgeArmSpike.set(Relay.Value.kReverse);
-        goingUp = true;
+        m_goingUp = true;
     }
 
     public void stopBridgeArm(){
-        bridgeArmJag.set(0.0);
+        m_bridgeArmJag.set(0.0);
 //        bridgeArmSpike.set(Relay.Value.kOff);
     }
 
     public Bridge(){
-        new Thread() {
+        new Thread() { // NOPMD
             @Override
             public void run() {
                 while (true) {
@@ -54,14 +55,14 @@ public class Bridge extends Subsystem {
     //the safety check is important -> stops the bridge arm when it is running
     //constantly into the limit switches
     private void safetyCheck() {
-        if(isFullyUp() && goingUp)
+        if(isFullyUp() && m_goingUp)
         {
-            bridgeArmJag.set(0.0);
+            m_bridgeArmJag.set(0.0);
 //            bridgeArmSpike.set(Relay.Value.kOff);
         }
-        if(hasHitBridge() && !goingUp)
+        if(hasHitBridge() && !m_goingUp)
         {
-            bridgeArmJag.set(0.0);
+            m_bridgeArmJag.set(0.0);
 //            bridgeArmSpike.set(Relay.Value.kOff);
         }
     }

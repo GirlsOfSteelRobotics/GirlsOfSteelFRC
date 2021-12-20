@@ -4,14 +4,34 @@ import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import girlsofsteel.RobotMap;
 import girlsofsteel.objects.EncoderGoSPIDController;
 
+@SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods", "PMD.TooManyFields"})
 public class Chassis extends Subsystem {
+
+    private static final double WHEEL_DIAMETER = 0.1524; //in meters
+    private static final double GEAR_RATIO = 15.0 / 24.0;
+    private static final double PULSES_RIGHT = 250.0;
+    private static final double PULSES_LEFT = 360.0;
+    private static final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.065) / PULSES_RIGHT;//m per s
+    private static final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.07) / PULSES_LEFT;
+    private static final double ROBOT_DIAMETER = 0.8128; //the radius*2 of the circle the robot makes while turning in place
+
+    //rate p & i & d values -> same for the left & right -> tuned for PIT comp
+    private static final double rateP = 0.75;
+    private static final double rateI = 0.1;
+    private static final double rateD = 0.0;
+    private static final double positionRightP = 0.48;//0.415;//practice bot:0.48;
+    private static final double positionRightI = 0.0;
+    private static final double positionRightD = 0.1;
+    private static final double positionLeftP = 0.48;//0.4;//practice bot:0.48;
+    private static final double positionLeftI = 0.0;
+    private static final double positionLeftD = 0.1;
 
     public static final double DISTANCE_BACKBOARD_TO_BRIDGE = 7.0104;
     //backboard to where we need to be to push the bridge down
@@ -29,25 +49,23 @@ public class Chassis extends Subsystem {
     //how to: print out the errorSum & see where it levels off, make this a bit higher
     //highest error acculumation amount
     private static final double EPSILON = 0.05;//the ewrror range for PID position control
+
+    //driving -> ALL unnecessary right now, do VERY LAST if everything is working gorgeously
+    private static final double MAX_RATE = 5; //TODO find the max rate of the chassis
+    private static final double MAX_ACCELERATION = 0.5; //TODO find the max acceleration of the chassis
+
     //create Jags
-    private final Jaguar rightJags = new Jaguar(RobotMap.RIGHT_JAGS);
-    private final Jaguar leftJags = new Jaguar(RobotMap.LEFT_JAGS);
+    private final Jaguar m_rightJags = new Jaguar(RobotMap.RIGHT_JAGS);
+    private final Jaguar m_leftJags = new Jaguar(RobotMap.LEFT_JAGS);
     //create gyro
-    private final Gyro gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
+    private final Gyro m_gyro = new AnalogGyro(RobotMap.GYRO_RATE_ANALOG);
     //create stuff for encoders
     //CHANGE FOR REAL WATSON:
-    private final Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
+    private final Encoder m_rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
             RobotMap.ENCODER_RIGHT_CHANNEL_B, false, CounterBase.EncodingType.k4X);
 
-    private final Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
+    private final Encoder m_leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
             RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
-    private static final double WHEEL_DIAMETER = 0.1524; //in meters
-    private static final double GEAR_RATIO = 15.0 / 24.0;
-    private static final double PULSES_RIGHT = 250.0;
-    private static final double PULSES_LEFT = 360.0;
-    private static final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.065) / PULSES_RIGHT;//m per s
-    private static final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.07) / PULSES_LEFT;
-    private static final double ROBOT_DIAMETER = 0.8128; //the radius*2 of the circle the robot makes while turning in place
     //practice:
 //    private Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
 //            RobotMap.ENCODER_RIGHT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
@@ -60,18 +78,8 @@ public class Chassis extends Subsystem {
 
     //create info for PIDs
 
-    //rate p & i & d values -> same for the left & right -> tuned for PIT comp
-    private final static double rateP = 0.75;
-    private final static double rateI = 0.1;
-    private final static double rateD = 0.0;
-    private final static double positionRightP = 0.48;//0.415;//practice bot:0.48;
-    private final static double positionRightI = 0.0;
-    private final static double positionRightD = 0.1;
-    private final static double positionLeftP = 0.48;//0.4;//practice bot:0.48;
-    private final static double positionLeftI = 0.0;
-    private final static double positionLeftD = 0.1;
-    private final EncoderGoSPIDController rightRatePID = new EncoderGoSPIDController(rateP,
-            rateI, rateD, rightEncoder,
+    private final EncoderGoSPIDController m_rightRatePID = new EncoderGoSPIDController(rateP,
+            rateI, rateD, m_rightEncoder,
             //this is an anonymous class, it lets us send values to both jags
             //new output parameter
             new PIDOutput() {
@@ -81,8 +89,8 @@ public class Chassis extends Subsystem {
             setRightJags(output);
             }
         }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
-    private final EncoderGoSPIDController leftRatePID = new EncoderGoSPIDController(rateP,
-            rateI, rateD, leftEncoder,
+    private final EncoderGoSPIDController m_leftRatePID = new EncoderGoSPIDController(rateP,
+            rateI, rateD, m_leftEncoder,
             //this is an anonymous class, it lets us send values to both jags
             //new output parameter
             new PIDOutput() {
@@ -92,8 +100,8 @@ public class Chassis extends Subsystem {
             setLeftJags(output);
             }
         }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
-    private final EncoderGoSPIDController rightPositionPID = new EncoderGoSPIDController(
-            positionRightP, positionRightI, positionRightD, rightEncoder,
+    private final EncoderGoSPIDController m_rightPositionPID = new EncoderGoSPIDController(
+            positionRightP, positionRightI, positionRightD, m_rightEncoder,
             new PIDOutput() {
 
                 @Override
@@ -101,8 +109,8 @@ public class Chassis extends Subsystem {
                     setRightJags(output);
                 }
             }, EncoderGoSPIDController.POSITION);
-    private final EncoderGoSPIDController leftPositionPID = new EncoderGoSPIDController(
-            positionLeftP, positionLeftI, positionLeftD, leftEncoder,
+    private final EncoderGoSPIDController m_leftPositionPID = new EncoderGoSPIDController(
+            positionLeftP, positionLeftI, positionLeftD, m_leftEncoder,
             new PIDOutput() {
 
                 @Override
@@ -110,20 +118,18 @@ public class Chassis extends Subsystem {
                     setLeftJags(output);
                 }
             }, EncoderGoSPIDController.POSITION);
-    //driving -> ALL unnecessary right now, do VERY LAST if everything is working gorgeously
-    private static final double MAX_RATE = 5; //TODO find the max rate of the chassis
-    private final static double MAX_ACCELERATION = 0.5; //TODO find the max acceleration of the chassis
+
     //again, make sure you can find this easily at comp
     //^^max acceleration -> used in the acceleration limiting method on the PID controllers
-    private double previousTime;
-    private double currentTime;
-    private double changeInTime = (currentTime - previousTime);
-    private double setPointVelocityR;
-    private double setPointVelocityL;
-    private double currentVelocityR;
-    private double currentVelocityL;
-    private double desiredChangeInVelocityR;
-    private double desiredChangeInVelocityL;
+    private double m_previousTime;
+    private double m_currentTime;
+    private double m_changeInTime = (m_currentTime - m_previousTime);
+    private double m_setPointVelocityR;
+    private double m_setPointVelocityL;
+    private double m_currentVelocityR;
+    private double m_currentVelocityL;
+    private double m_desiredChangeInVelocityR;
+    private double m_desiredChangeInVelocityL;
 
     public Chassis() {
         resetGyro();
@@ -135,11 +141,11 @@ public class Chassis extends Subsystem {
 
     //jags
     public void setRightJags(double speed) {
-        rightJags.set(speed);
+        m_rightJags.set(speed);
     }
 
     public void setLeftJags(double speed) {
-        leftJags.set(-speed*0.93);//motors need to run the same way as the right
+        m_leftJags.set(-speed*0.93);//motors need to run the same way as the right
     }
 
     public void stopJags() {
@@ -188,17 +194,18 @@ public class Chassis extends Subsystem {
     }
 
     //limits the set point for the rate of the PID controller to the slow max rate
+    @SuppressWarnings("PMD.UnusedAssignment")
     public void driveSlowVelocity(double xAxis, double yAxis) {
         yAxis = mappingJoystickToRate(deadzone(xAxis, DEADZONE_RANGE), SLOW_MAX_RATE);
         xAxis = mappingJoystickToRate(deadzone(xAxis, DEADZONE_RANGE), SLOW_MAX_RATE);
-        rightRatePID.setSetPoint((yAxis - xAxis));
-        leftRatePID.setSetPoint((yAxis + xAxis));
+        m_rightRatePID.setSetPoint((yAxis - xAxis));
+        m_leftRatePID.setSetPoint((yAxis + xAxis));
     }
 
     public void initHoldPosition(){
         setPositionPIDValues(10.0, 0.0, 10.0, 0.0);//righP,rightD,leftP,leftD
-        rightPositionPID.enable();
-        leftPositionPID.enable();
+        m_rightPositionPID.enable();
+        m_leftPositionPID.enable();
     }
 
     public void holdPosition(){
@@ -230,8 +237,8 @@ public class Chassis extends Subsystem {
 
         // sets the SetPoint by limiting the accleration when change in velocity is beyond a range
         //accelerationLimit(xAxis, yAxis);
-        rightRatePID.setSetPoint((yAxis - xAxis));
-        leftRatePID.setSetPoint((yAxis + xAxis));
+        m_rightRatePID.setSetPoint((yAxis - xAxis));
+        m_leftRatePID.setSetPoint((yAxis + xAxis));
     }
 
     public void driveVelocitySqrt(double xAxis, double yAxis, double scale) {
@@ -245,40 +252,40 @@ public class Chassis extends Subsystem {
     }
 
     private void accelerationLimit(double xAxis, double yAxis) {
-        currentTime = System.currentTimeMillis() / 1000; //turns to seconds
+        m_currentTime = System.currentTimeMillis() / 1000; //turns to seconds
         //the current rate needs to accurate with the robot -> gotten from encoders
-        currentVelocityR = getRightEncoderRate();
-        currentVelocityL = getLeftEncoderRate();
+        m_currentVelocityR = getRightEncoderRate();
+        m_currentVelocityL = getLeftEncoderRate();
         //set point velocity from the joystick
-        setPointVelocityL = yAxis + xAxis; //normal set point equation
-        setPointVelocityR = yAxis - xAxis; //normal set point equation
-        changeInTime = currentTime - previousTime;
+        m_setPointVelocityL = yAxis + xAxis; //normal set point equation
+        m_setPointVelocityR = yAxis - xAxis; //normal set point equation
+        m_changeInTime = m_currentTime - m_previousTime;
         //previousTime starts at 0 -> when this runs, changes to last currentTime
-        desiredChangeInVelocityR = setPointVelocityR - currentVelocityR; //prvious starts at 0 -> gets set to current later
-        desiredChangeInVelocityL = setPointVelocityL - currentVelocityL; //same as above
-        if (changeInTime != 0) {
+        m_desiredChangeInVelocityR = m_setPointVelocityR - m_currentVelocityR; //prvious starts at 0 -> gets set to current later
+        m_desiredChangeInVelocityL = m_setPointVelocityL - m_currentVelocityL; //same as above
+        if (m_changeInTime != 0) {
             // checking for right rate PID
-            if ((Math.abs(desiredChangeInVelocityR) / changeInTime) <= MAX_ACCELERATION / changeInTime) {
-                rightRatePID.setSetPoint(setPointVelocityR);
+            if ((Math.abs(m_desiredChangeInVelocityR) / m_changeInTime) <= MAX_ACCELERATION / m_changeInTime) {
+                m_rightRatePID.setSetPoint(m_setPointVelocityR);
                 //^^if the desiredChange is not over the max acceleration -> just
                 //^^set it to what it wants to be
                 //if the desiredChange is over the max (or under the negative max)
                 //it will just add the max (or subtract) acceleration
-            } else if (desiredChangeInVelocityR / changeInTime > MAX_ACCELERATION / changeInTime) {
-                rightRatePID.setSetPoint(currentVelocityR + MAX_ACCELERATION);
-            } else if (desiredChangeInVelocityR / changeInTime < -MAX_ACCELERATION / changeInTime) {
-                rightRatePID.setSetPoint(currentVelocityR - MAX_ACCELERATION);
+            } else if (m_desiredChangeInVelocityR / m_changeInTime > MAX_ACCELERATION / m_changeInTime) {
+                m_rightRatePID.setSetPoint(m_currentVelocityR + MAX_ACCELERATION);
+            } else if (m_desiredChangeInVelocityR / m_changeInTime < -MAX_ACCELERATION / m_changeInTime) {
+                m_rightRatePID.setSetPoint(m_currentVelocityR - MAX_ACCELERATION);
             }
             // now for the left side
-            if ((Math.abs(desiredChangeInVelocityL) / changeInTime) <= MAX_ACCELERATION / changeInTime) {
-                leftRatePID.setSetPoint(setPointVelocityL);
-            } else if (desiredChangeInVelocityL / changeInTime > MAX_ACCELERATION / changeInTime) {
-                leftRatePID.setSetPoint(currentVelocityL + MAX_ACCELERATION);
-            } else if (desiredChangeInVelocityL / changeInTime < -MAX_ACCELERATION / changeInTime) {
-                leftRatePID.setSetPoint(currentVelocityL - MAX_ACCELERATION);
+            if ((Math.abs(m_desiredChangeInVelocityL) / m_changeInTime) <= MAX_ACCELERATION / m_changeInTime) {
+                m_leftRatePID.setSetPoint(m_setPointVelocityL);
+            } else if (m_desiredChangeInVelocityL / m_changeInTime > MAX_ACCELERATION / m_changeInTime) {
+                m_leftRatePID.setSetPoint(m_currentVelocityL + MAX_ACCELERATION);
+            } else if (m_desiredChangeInVelocityL / m_changeInTime < -MAX_ACCELERATION / m_changeInTime) {
+                m_leftRatePID.setSetPoint(m_currentVelocityL - MAX_ACCELERATION);
             }
         }
-        previousTime = currentTime;
+        m_previousTime = m_currentTime;
     }
 
     private double square(double joystickValue, double scale) {
@@ -346,11 +353,11 @@ public class Chassis extends Subsystem {
     public void turn(double degreesToTurn) {
         double setPoint = convertDegreesToPositionChange(degreesToTurn);
         if (setPoint > 0) {
-            rightPositionPID.setSetPoint(-setPoint);
-            leftPositionPID.setSetPoint(setPoint);
+            m_rightPositionPID.setSetPoint(-setPoint);
+            m_leftPositionPID.setSetPoint(setPoint);
         } else if (setPoint < 0) {
-            rightPositionPID.setSetPoint(setPoint);
-            leftPositionPID.setSetPoint(-setPoint);
+            m_rightPositionPID.setSetPoint(setPoint);
+            m_leftPositionPID.setSetPoint(-setPoint);
         }
     }
 
@@ -395,89 +402,89 @@ public class Chassis extends Subsystem {
 
     //PID
     public void initRatePIDs() {
-        rightRatePID.setSetPoint(0.0);
-        leftRatePID.setSetPoint(0.0);
-        rightRatePID.enable();
-        leftRatePID.enable();
+        m_rightRatePID.setSetPoint(0.0);
+        m_leftRatePID.setSetPoint(0.0);
+        m_rightRatePID.enable();
+        m_leftRatePID.enable();
     }
 
     public void initPositionPIDs() {
-        rightPositionPID.setSetPoint(0.0);
-        leftPositionPID.setSetPoint(0.0);
-        rightPositionPID.enable();
-        leftPositionPID.enable();
+        m_rightPositionPID.setSetPoint(0.0);
+        m_leftPositionPID.setSetPoint(0.0);
+        m_rightPositionPID.enable();
+        m_leftPositionPID.enable();
     }
 
     public void setRatePIDValues(double p, double i, double d) {
-        rightRatePID.setPID(p, i, d);
-        leftRatePID.setPID(p, i, d);
+        m_rightRatePID.setPID(p, i, d);
+        m_leftRatePID.setPID(p, i, d);
     }
 
     public void setPositionPIDValues(double rightP, double rightD, double leftP,
             double leftD) {
-        rightPositionPID.setPID(rightP,positionRightI,rightD);
-        leftPositionPID.setPID(leftP,positionLeftI,leftD);
+        m_rightPositionPID.setPID(rightP,positionRightI,rightD);
+        m_leftPositionPID.setPID(leftP,positionLeftI,leftD);
     }
 
     public void setPIDsPosition(){
-        rightPositionPID.setPID(positionRightP,positionRightI,positionRightD);
-        leftPositionPID.setPID(positionLeftP, positionLeftI, positionLeftD);
+        m_rightPositionPID.setPID(positionRightP,positionRightI,positionRightD);
+        m_leftPositionPID.setPID(positionLeftP, positionLeftI, positionLeftD);
     }
 
     public void setPIDsRate(){
-        rightRatePID.setPID(rateP, rateI, rateD);
-        leftRatePID.setPID(rateP, rateI, rateD);
+        m_rightRatePID.setPID(rateP, rateI, rateD);
+        m_leftRatePID.setPID(rateP, rateI, rateD);
     }
 
     public void setRatePIDSetPoint(double setPoint) {
-        rightRatePID.setSetPoint(setPoint);
-        leftRatePID.setSetPoint(setPoint);
+        m_rightRatePID.setSetPoint(setPoint);
+        m_leftRatePID.setSetPoint(setPoint);
     }
 
     public void setPositionPIDSetPoint(double setPoint) {
-        rightPositionPID.setSetPoint(setPoint);
-        leftPositionPID.setSetPoint(setPoint);
+        m_rightPositionPID.setSetPoint(setPoint);
+        m_leftPositionPID.setSetPoint(setPoint);
     }
 
     public void disableRatePIDs() {
-        rightRatePID.disable();
-        leftRatePID.disable();
+        m_rightRatePID.disable();
+        m_leftRatePID.disable();
         stopJags();
     }
 
     public void disablePositionPIDs() {
-        rightPositionPID.disable();
-        leftPositionPID.disable();
+        m_rightPositionPID.disable();
+        m_leftPositionPID.disable();
         stopJags();
     }
 
     //encoder
     public void initEncoders() {
-        rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
-        leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
+        m_rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
+        m_leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
 //        rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
 //        leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
     }
 
     public double getRightEncoderDistance() {
-        return rightEncoder.getDistance();
+        return m_rightEncoder.getDistance();
     }
 
     public double getLeftEncoderDistance() {
-        return leftEncoder.getDistance();
+        return m_leftEncoder.getDistance();
     }
 
     public double getRightEncoderRate() {
-        return rightEncoder.getRate();
+        return m_rightEncoder.getRate();
     }
 
     public double getLeftEncoderRate() {
-        return leftEncoder.getRate();
+        return m_leftEncoder.getRate();
     }
 
     public void resetEncoders() {
-        rightEncoder.reset();
-        leftEncoder.reset();
+        m_rightEncoder.reset();
+        m_leftEncoder.reset();
     }
 
     public void endEncoders() {
@@ -485,16 +492,16 @@ public class Chassis extends Subsystem {
 
     public boolean isMoving() {
         //if the encoder rates are 0 the robot is not moving
-        return rightEncoder.getRate() != 0.0 || leftEncoder.getRate() != 0.0;
+        return m_rightEncoder.getRate() != 0.0 || m_leftEncoder.getRate() != 0.0;
     }
 
-    public void resetGyro() {
-        gyro.reset();
+    public final void resetGyro() {
+        m_gyro.reset();
     }
 
     public double getTheta() {
         double theta;
-        theta = gyro.getAngle();
+        theta = m_gyro.getAngle();
         //the angle returned needs to be between 0 & 360
         theta = theta % 360;
         if (theta < 0) {

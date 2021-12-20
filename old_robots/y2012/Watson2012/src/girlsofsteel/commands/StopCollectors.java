@@ -1,15 +1,20 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Collector;
+
 public class StopCollectors extends CommandBase {
 
-    public StopCollectors(){
-        requires(collector);
+    private final Collector m_collector;
+
+    public StopCollectors(Collector collector){
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
     protected void initialize() {
-        collector.stopBrush();
-        collector.stopMiddleConveyor();
+        m_collector.stopBrush();
+        m_collector.stopMiddleConveyor();
     }
 
     @Override

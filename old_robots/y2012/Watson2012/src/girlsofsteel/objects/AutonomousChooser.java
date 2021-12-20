@@ -3,50 +3,58 @@ package girlsofsteel.objects;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.OI;
 import girlsofsteel.commands.AutonomousCameraKey;
 import girlsofsteel.commands.AutonomousCommandGroup;
 import girlsofsteel.commands.AutonomousKey;
 import girlsofsteel.commands.DelayReverseRollers;
+import girlsofsteel.subsystems.Bridge;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Shooter;
 
 public class AutonomousChooser {
 
-    private final boolean shoot = true;
-    private final boolean moveToBridge = true;
-    private final double yDistance = 2.7;
-    private final boolean shootFromBridge = true;
-    private final boolean goBackToKey = true;
-    private final boolean shootFromKeyAfterBridge = true;
-    private final SendableChooser chooser;
-    private Command autonomousCommand;
+    private static final boolean shoot = true;
+    private static final boolean moveToBridge = true;
+    private static final double yDistance = 2.7;
+    private static final boolean shootFromBridge = true;
+    private static final boolean goBackToKey = true;
+    private static final boolean shootFromKeyAfterBridge = true;
+    private final SendableChooser m_chooser;
+    private Command m_autonomousCommand;
 
-    public AutonomousChooser() {
-        chooser = new SendableChooser();
-        SmartDashboard.putData("Autonomous Chooser", chooser);
+    public AutonomousChooser(OI oi, Shooter shooter, Chassis chassis, Bridge bridge, Collector collector) {
+        m_chooser = new SendableChooser();
+        SmartDashboard.putData("Autonomous Chooser", m_chooser);
 
-        chooser.addDefault("Key", new AutonomousKey());//dead-reckoning
-        chooser.addObject("Camera Key", new AutonomousCameraKey());//uses the
+        m_chooser.addDefault("Key", new AutonomousKey(shooter, oi));//dead-reckoning
+        m_chooser.addObject("Camera Key", new AutonomousCameraKey(oi, shooter));//uses the
         //ShootUsingTable command to shoot w/camera
-        chooser.addObject("Shoot, Bridge", new AutonomousCommandGroup(
+        m_chooser.addObject("Shoot, Bridge", new AutonomousCommandGroup(
+            oi, shooter, chassis, bridge,
                 shoot, moveToBridge, yDistance, !shootFromBridge,
                 !goBackToKey, !shootFromKeyAfterBridge));
-        chooser.addObject("Shoot, Bridge, Shoot", new AutonomousCommandGroup(
+        m_chooser.addObject("Shoot, Bridge, Shoot", new AutonomousCommandGroup(
+            oi, shooter, chassis, bridge,
                 shoot, moveToBridge, yDistance, shootFromBridge,
                 !goBackToKey, !shootFromKeyAfterBridge));
-        chooser.addObject("Bridge, Shoot", new AutonomousCommandGroup(
+        m_chooser.addObject("Bridge, Shoot", new AutonomousCommandGroup(
+            oi, shooter, chassis, bridge,
                 !shoot, moveToBridge, yDistance, shootFromBridge,
                 !goBackToKey, !shootFromKeyAfterBridge));
-        chooser.addObject("Delay, Reverse Rollers", new DelayReverseRollers());
+        m_chooser.addObject("Delay, Reverse Rollers", new DelayReverseRollers(shooter, collector));
     }
 
     public void start() {
-        autonomousCommand = (Command) chooser.getSelected();
-        autonomousCommand.start();
+        m_autonomousCommand = (Command) m_chooser.getSelected();
+        m_autonomousCommand.start();
         System.out.println("initializing");
     }
 
     public void end() {
-        if (autonomousCommand != null) {
-            autonomousCommand.cancel();
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
             System.out.println("done");
         }
     }

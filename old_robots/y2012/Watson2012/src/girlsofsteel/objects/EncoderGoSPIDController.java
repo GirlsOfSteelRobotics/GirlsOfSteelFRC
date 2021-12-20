@@ -5,156 +5,157 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 
+@SuppressWarnings({"PMD.AvoidSynchronizedAtMethodLevel", "PMD.DoNotUseThreads", "PMD.TooManyFields"})
 public class EncoderGoSPIDController implements Runnable {
 
     //constructor
-    private double Kp;
-    private double Ki;
-    private double Kd;
-    private final Encoder encoder;
-    private final PIDOutput jags;
-    private final int type;
+    private double m_kp;
+    private double m_ki;
+    private double m_kd;
+    private final Encoder m_encoder;
+    private final PIDOutput m_jags;
+    private final int m_type;
     //for setSetPoint()
-    private double setPoint;
+    private double m_setPoint;
     //used for calculating error -> for PID (P,I,&D)
-    private double error;
-    private double previousError;
-    private double errorSum;
+    private double m_error;
+    private double m_previousError;
+    private double m_errorSum;
     //boolean to switch the PID controller on/off -> condition for the while loop
-    private boolean PIDEnabled = true;
+    private boolean m_pidEnabled = true;
     //calculate time & position
-    private double previousTime;
-    private double currentTime;
-    private double previousPosition;
-    private double currentPosition;
+    private double m_previousTime;
+    private double m_currentTime;
+    private double m_previousPosition;
+    private double m_currentPosition;
     //thresholds:
-    private double integralThreshold = 999999999; //This is high so that no
+    private double m_integralThreshold = 999999999; //This is high so that no
     //function uses it until it's set using the second constructor used for rate
-    private double outputThreshold = 0.0;
-    private double rate = 0.0;
+    private double m_outputThreshold;
+    private double m_rate;
     //two "int type" that the GoSPIDController can be
     public static final int RATE = 1;
     public static final int POSITION = 2;
 
-    public EncoderGoSPIDController(double Kp,double Ki,double Kd,Encoder encoder,
+    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
             PIDOutput jags, int type){
-        this.Kp = Kp;
-        this.Ki = Ki;
-        this.Kd = Kd;
-        this.encoder = encoder;
-        this.jags = jags;
-        this.type = type;
+        this.m_kp = kp;
+        this.m_ki = ki;
+        this.m_kd = kd;
+        this.m_encoder = encoder;
+        this.m_jags = jags;
+        this.m_type = type;
     }
 
-    public EncoderGoSPIDController(double Kp,double Ki,double Kd,Encoder encoder,
+    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
             PIDOutput jags, int type, double integralThreshold){
-        this.Kp = Kp;
-        this.Ki = Ki;
-        this.Kd = Kd;
-        this.encoder = encoder;
-        this.jags = jags;
-        this.type = type;
-        this.integralThreshold = integralThreshold;
+        this.m_kp = kp;
+        this.m_ki = ki;
+        this.m_kd = kd;
+        this.m_encoder = encoder;
+        this.m_jags = jags;
+        this.m_type = type;
+        this.m_integralThreshold = integralThreshold;
     }
 
     public synchronized void setPID(double p, double i, double d){
-        Kp = p;
-        Ki = i;
-        Kd = d;
-        errorSum = 0;
+        m_kp = p;
+        m_ki = i;
+        m_kd = d;
+        m_errorSum = 0;
     }
 
     public synchronized void setOutputThreshold(double outputThreshold){
-        this.outputThreshold = outputThreshold;
+        this.m_outputThreshold = outputThreshold;
     }
 
     //used to set a new setPoint (desired value) -> must to start up PID
     public synchronized void setSetPoint(double setPoint) {
-        this.setPoint = setPoint;
+        this.m_setPoint = setPoint;
     }
 
     //used to start & run the PID
     public void enable(){
-        currentTime = System.currentTimeMillis()/1000.0; //initialization
-        error = 0.0;
-        previousError = 0.0;
-        errorSum = 0.0;
-        encoder.reset();
-        currentPosition = encoder.getDistance(); //initialization
-        PIDEnabled = true;
+        m_currentTime = System.currentTimeMillis()/1000.0; //initialization
+        m_error = 0.0;
+        m_previousError = 0.0;
+        m_errorSum = 0.0;
+        m_encoder.reset();
+        m_currentPosition = m_encoder.getDistance(); //initialization
+        m_pidEnabled = true;
         new Thread(this).start(); //doesn't block the normal code & functions
     }
 
     //stops the PID
     public synchronized void disable(){
-        PIDEnabled = false; //changes the while condition for run
+        m_pidEnabled = false; //changes the while condition for run
     }
 
     public void resetError(){
-        error = 0.0;
-        previousError = 0.0;
-        errorSum = 0.0;
+        m_error = 0.0;
+        m_previousError = 0.0;
+        m_errorSum = 0.0;
     }
 
     @Override
     public void run(){
         double output = 0.0;
-        while(PIDEnabled){ //must be set to run -> through setSetPoint
+        while(m_pidEnabled){ //must be set to run -> through setSetPoint
             //conditions to run -> only when the error is more than desire
 
             synchronized (this) {//add for thread safety of variables
-                previousTime = currentTime;
-                previousPosition = currentPosition;
-                currentTime = System.currentTimeMillis() / 1000.0;
-                currentPosition = encoder.getDistance();
+                m_previousTime = m_currentTime;
+                m_previousPosition = m_currentPosition;
+                m_currentTime = System.currentTimeMillis() / 1000.0;
+                m_currentPosition = m_encoder.getDistance();
                 calculateRate();
-                previousError = error;
+                m_previousError = m_error;
                 calculateError();
-                if (errorSum <= integralThreshold) {
-                    errorSum += error;
+                if (m_errorSum <= m_integralThreshold) {
+                    m_errorSum += m_error;
                 } else {
-                    errorSum = integralThreshold;
+                    m_errorSum = m_integralThreshold;
                 }
-                double newOutput = Kp * error + Ki * errorSum * (currentTime - previousTime)
-                        + Kd * (error - previousError) / (currentTime - previousTime);
-                if(newOutput - output < -outputThreshold || newOutput - output > outputThreshold){
+                double newOutput = m_kp * m_error + m_ki * m_errorSum * (m_currentTime - m_previousTime)
+                        + m_kd * (m_error - m_previousError) / (m_currentTime - m_previousTime);
+                if(newOutput - output < -m_outputThreshold || newOutput - output > m_outputThreshold){
                     output = newOutput;
                 }
             }
 
-            jags.pidWrite(output);
+            m_jags.pidWrite(output);
             Timer.delay(0.01); //we don't want to run this faster than the encoder reads values
         }
-        jags.pidWrite(0.0);
+        m_jags.pidWrite(0.0);
     }
 
     private synchronized void calculateRate(){
-        if(currentTime != previousTime){
-            rate = (currentPosition - previousPosition)/(currentTime - previousTime);
+        if(m_currentTime != m_previousTime){
+            m_rate = (m_currentPosition - m_previousPosition)/(m_currentTime - m_previousTime);
         }else{
-            rate = 0;
+            m_rate = 0;
         }
     }
 
     private synchronized void calculateError(){
         double currentValue = 0;
-        if(type == RATE){
-            currentValue = rate;
-        }else if(type == POSITION){
-            currentValue = encoder.getDistance();
+        if(m_type == RATE){
+            currentValue = m_rate;
+        }else if(m_type == POSITION){
+            currentValue = m_encoder.getDistance();
         }else{
             DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6,
                 1, "Error: The encoder is not set to rate (1) or position (2)");
         }
-        error = setPoint - currentValue;
+        m_error = m_setPoint - currentValue;
     }
 
     public double getRate(){
-        return rate;
+        return m_rate;
     }
 
     public double getSetPoint(){
-        return setPoint;
+        return m_setPoint;
     }
 
 }

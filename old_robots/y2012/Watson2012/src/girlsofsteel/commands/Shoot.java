@@ -1,31 +1,37 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Shooter;
 
 public class Shoot extends CommandBase {
 
-    private Joystick operatorJoystick;
+    private final Shooter m_shooter;
+    private final OI m_oi;
+    private final Joystick m_operatorJoystick;
 
-    private final double speed;
+    private final double m_speed;
 
-    public Shoot(double speed){
-        this.speed = speed;
-        requires(shooter);
+    public Shoot(Shooter shooter, OI oi, double speed){
+        this.m_speed = speed;
+        m_shooter = shooter;
+        m_oi = oi;
+        m_operatorJoystick = m_oi.getOperatorJoystick();
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
-        shooter.initPID();
-        operatorJoystick = oi.getOperatorJoystick();
+        m_shooter.initEncoder();
+        m_shooter.initPID();
     }
 
     @Override
     protected void execute() {
-        shooter.shoot(speed);
-        if(Math.abs(operatorJoystick.getThrottle()) >= 0.3 ||
-                Math.abs(operatorJoystick.getTwist()) >= 0.3){
-            shooter.topRollersForward();
+        m_shooter.shoot(m_speed);
+        if(Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
+                Math.abs(m_operatorJoystick.getTwist()) >= 0.3){
+            m_shooter.topRollersForward();
         }
     }
 
@@ -36,11 +42,11 @@ public class Shoot extends CommandBase {
 
     @Override
     protected void end() {
-        if(!oi.areTopRollersOverriden()){
-            shooter.topRollersOff();
+        if(!m_oi.areTopRollersOverriden()){
+            m_shooter.topRollersOff();
         }
-        shooter.disablePID();
-        shooter.stopEncoder();
+        m_shooter.disablePID();
+        m_shooter.stopEncoder();
     }
 
     @Override

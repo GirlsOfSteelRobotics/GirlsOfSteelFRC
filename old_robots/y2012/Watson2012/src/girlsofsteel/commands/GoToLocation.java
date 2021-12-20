@@ -1,39 +1,43 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Chassis;
+
 public class GoToLocation extends CommandBase {
 
-    private final double x;
-    private final double y;
-    private final double degreesToFace; //degree change relative to beginning position of the
+    private final Chassis m_chassis;
+    private final double m_x;
+    private final double m_y;
+    private final double m_degreesToFace; //degree change relative to beginning position of the
     //robot to end facing
 
-    public GoToLocation(double x, double y, double degreesToFace){
-        this.x = x;
-        this.y = y;
-        this.degreesToFace = degreesToFace;
+    public GoToLocation(Chassis chassis, double x, double y, double degreesToFace){
+        m_chassis = chassis;
+        this.m_x = x;
+        this.m_y = y;
+        this.m_degreesToFace = degreesToFace;
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initPositionPIDs();
+        m_chassis.initEncoders();
+        m_chassis.initPositionPIDs();
     }
 
     @Override
     protected void execute() {
-        chassis.goToLocation(x, y, degreesToFace);
+        m_chassis.goToLocation(m_x, m_y, m_degreesToFace);
     }
 
     @Override
     protected boolean isFinished() {
-        return chassis.isGoToLocationFinished(x, y);
+        return m_chassis.isGoToLocationFinished(m_x, m_y);
     }
 
     @Override
     protected void end() {
-        chassis.disableRatePIDs();
-        chassis.endEncoders();
-        chassis.stopJags();
+        m_chassis.disableRatePIDs();
+        m_chassis.endEncoders();
+        m_chassis.stopJags();
     }
 
     @Override

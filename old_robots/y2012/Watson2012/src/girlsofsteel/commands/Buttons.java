@@ -1,152 +1,180 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Shooter;
+import girlsofsteel.subsystems.Turret;
 
 
 public class Buttons extends CommandBase {
 
-    private final Command autoShoot = new ShootUsingTable(true);
-    private final Command incrementShoot = new IncrementShoot();
-    private final Command manualShoot = new ManualShoot();
-    private final Command autoTurret = new TurretTrackTarget();
-    private final Command setPointTurret = new SetPointTurret();
-    private final Command manualTurret = new ManualTurret();
+    private final Chassis m_chassis;
+    private final Shooter m_shooter;
+    private final Collector m_collector;
+    private final Turret m_turret;
+    private final OI m_oi;
+
+    private final Command m_autoShoot;
+    private final Command m_incrementShoot;
+    private final Command m_manualShoot;
+    private final Command m_autoTurret;
+    private final Command m_setPointTurret;
+    private final Command m_manualTurret;
+
+
+    public Buttons(Chassis chassis, Shooter shooter, Collector collector, Turret turret, OI oi) {
+        m_chassis = chassis;
+        m_shooter = shooter;
+        m_collector = collector;
+        m_turret = turret;
+        m_oi = oi;
+
+        m_autoShoot = new ShootUsingTable(shooter, oi, true);
+        m_incrementShoot = new IncrementShoot(shooter, oi);
+        m_manualShoot = new ManualShoot(shooter, oi);
+        m_autoTurret = new TurretTrackTarget(turret, oi.getOperatorJoystick());
+        m_setPointTurret = new SetPointTurret(turret, oi);
+        m_manualTurret = new ManualTurret(turret, oi);
+    }
 
     @Override
     protected void initialize() {
     }
 
+    @SuppressWarnings("PMD")
     @Override
     protected void execute() {
         //rollers
-        if (oi.areTopRollersOverriden()) {
+        if (m_oi.areTopRollersOverriden()) {
             //System.out.println("Top Rollers Override" );
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Overriden" + oi.areTopRollersOverriden());
             //DriverStationLCD.getInstance().updateLCD();
-            if (oi.areTopRollersForward()) {
+            if (m_oi.areTopRollersForward()) {
    //             DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Forward1" + oi.getTopRollersSwitchValue());
      //           DriverStationLCD.getInstance().updateLCD();
        //         System.out.println("Top Rollers Forward" + oi.getTopRollersSwitchValue());
-                shooter.topRollersForward();
-            } else if (oi.areTopRollersReverse()) {
+                m_shooter.topRollersForward();
+            } else if (m_oi.areTopRollersReverse()) {
 //                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Reverse3" + oi.getTopRollersSwitchValue());
 //                DriverStationLCD.getInstance().updateLCD();
 //                System.out.println("Top Rollers Reverse");
-                shooter.topRollersBackward();
-            } else if (oi.areTopRollersOff()) {
+                m_shooter.topRollersBackward();
+            } else if (m_oi.areTopRollersOff()) {
 //                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Off2" + oi.getTopRollersSwitchValue());
 //                DriverStationLCD.getInstance().updateLCD();
 //                 System.out.println("Top Rollers Off");
-                shooter.topRollersOff();
+                m_shooter.topRollersOff();
             }
         }
-        if (oi.isBrushForward()) {
+        if (m_oi.isBrushForward()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Brush Rollers Forward1" + oi.getBrushSwitchValue());
-            collector.forwardBrush();
+            m_collector.forwardBrush();
            //  System.out.println("Brush Rollers Forward" + oi.getBrushSwitchValue());
-        } else if (oi.isBrushReverse()) {
+        } else if (m_oi.isBrushReverse()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Brush Rollers Reverse3" + oi.getBrushSwitchValue());
              //System.out.println("Brush Rollers Reverse" + oi.getBrushSwitchValue());
-            collector.reverseBrush();
-        } else if (oi.isBrushOff()) {
+            m_collector.reverseBrush();
+        } else if (m_oi.isBrushOff()) {
            // DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Brush Rollers Off2" + oi.getBrushSwitchValue());
              //System.out.println("Brush Rollers Off" + oi.getBrushSwitchValue());
-            collector.stopBrush();
+            m_collector.stopBrush();
         }
-        if (oi.isMiddleCollectorForward()) {
+        if (m_oi.isMiddleCollectorForward()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Middle Rollers Forward1" + oi.getMiddleCollectorSwitchValue());
              //System.out.println("Middle Rollers Forward" + oi.getMiddleCollectorSwitchValue());
-            collector.forwardMiddleConveyor();
-        } else if (oi.isMiddleCollectorReverse()) {
+            m_collector.forwardMiddleConveyor();
+        } else if (m_oi.isMiddleCollectorReverse()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Middle Rollers Reverse3" + oi.getMiddleCollectorSwitchValue());
              //System.out.println("Middle Rollers Reverse" + oi.getMiddleCollectorSwitchValue());
-            collector.reverseMiddleConveyor();
-        } else if (oi.isMiddleCollectorOff()) {
+            m_collector.reverseMiddleConveyor();
+        } else if (m_oi.isMiddleCollectorOff()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Middle Rollers Off2" + oi.getMiddleCollectorSwitchValue());
              //System.out.println("Middle Rollers Off" + oi.getMiddleCollectorSwitchValue());
-            collector.stopMiddleConveyor();
+            m_collector.stopMiddleConveyor();
         }
         //shooter
-        if (oi.isShooterAutoOn()) {
+        if (m_oi.isShooterAutoOn()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "AutoShootSwitchOn!");
             ///DriverStationLCD.getInstance().updateLCD();
-            if (oi.isShootRunning()) {
+            if (m_oi.isShootRunning()) {
                // DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Shoot On:" + oi.isShootRunning());
                // System.out.println("AutoShoot On" + oi.isShootRunning());
                // DriverStationLCD.getInstance().updateLCD();
-                autoShoot.start();
+                m_autoShoot.start();
             }
-            if (oi.isStopShooterRunning()) {
+            if (m_oi.isStopShooterRunning()) {
                 //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Shoot Off" + oi.isShootRunning());
        //         System.out.println("AutoShoot Off" + oi.isStopShooterRunning());
          //       DriverStationLCD.getInstance().updateLCD();
-                autoShoot.cancel();
+                m_autoShoot.cancel();
             }
             //Increment is relative
-        } else if (oi.isShooterIncrementOn()) {
+        } else if (m_oi.isShooterIncrementOn()) {
            // DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "ShooterIncrementSwitchOn!");
            // DriverStationLCD.getInstance().updateLCD();
-            if (oi.isShootRunning()) {
+            if (m_oi.isShootRunning()) {
             //    DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Relative On" +  oi.isShootRunning());
               //  System.out.println("Relative On" + oi.isShootRunning() + oi.getShooterSliderValue());
                 //DriverStationLCD.getInstance().updateLCD();
-                incrementShoot.start();
-            } if (oi.isStopShooterRunning()) {
+                m_incrementShoot.start();
+            } if (m_oi.isStopShooterRunning()) {
              //   DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Relative Off" + oi.isShootRunning());
                // System.out.println("Relative On" + oi.isStopShooterRunning() + oi.getShooterSliderValue());
               //  DriverStationLCD.getInstance().updateLCD();
-                 incrementShoot.cancel();
+                 m_incrementShoot.cancel();
             }
-        } else if (oi.isShooterManualOn()) {
+        } else if (m_oi.isShooterManualOn()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "ManualSwitchOn");
             //DriverStationLCD.getInstance().updateLCD();
 
-            if (oi.isShootRunning()) {
+            if (m_oi.isShootRunning()) {
               //  DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Manual On" + oi.isShootRunning());
                 //System.out.println("Manual On" + oi.isShootRunning() + oi.getShooterSliderValue());
                // DriverStationLCD.getInstance().updateLCD();
-                 manualShoot.start();
-            } if (oi.isStopShooterRunning()) {
+                 m_manualShoot.start();
+            } if (m_oi.isStopShooterRunning()) {
               //  DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Manual Off" + oi.isShootRunning());
               //  System.out.println("Manual Off" + oi.isStopShooterRunning() + oi.getShooterSliderValue());
               //  DriverStationLCD.getInstance().updateLCD();
-                  manualShoot.cancel();
+                  m_manualShoot.cancel();
             }
         }
         //turret
-        if (oi.isTurretAutoOn()) {
+        if (m_oi.isTurretAutoOn()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
               //      "Auto Turret On" + oi.getTurretOverrideSwitchValue());
-            autoTurret.start();
+            m_autoTurret.start();
         } else {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
               //      "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
 //            System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
-            autoTurret.cancel();
+            m_autoTurret.cancel();
         }
 
-        if (oi.isTurretSetPositionOn()) {
+        if (m_oi.isTurretSetPositionOn()) {
 //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
 //                  "Turret Set Position On" + oi.getTurretOverrideSwitchValue());
 //            System.out.println("Turret Set Position On" + oi.getTurretOverrideSwitchValue());
-            setPointTurret.start();
+            m_setPointTurret.start();
           //  DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, true);
         } else {//NOTHING IS SET TO HAPPEN IN HERE FOR SOME ODD REASON!!!
 //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
 //             System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
 //            DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, false);
-            setPointTurret.cancel();
+            m_setPointTurret.cancel();
         }
 
-        if (oi.isTurretManualOn()) {
+        if (m_oi.isTurretManualOn()) {
 //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret On" + oi.getTurretOverrideSwitchValue());
 //              System.out.println("Manual Turret On" + oi.getTurretOverrideSwitchValue());
-            manualTurret.start();
+            m_manualTurret.start();
             //DriverStation.getInstance().setDigitalOut(oi.TURRET_MANUAL_LIGHT, true);
         } else{
 //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret Off" + oi.getTurretOverrideSwitchValue());
 //           System.out.println("Manual Turret Off" + oi.getTurretOverrideSwitchValue());
-            manualTurret.cancel();
+            m_manualTurret.cancel();
            //DriverStation.getInstance().setDigitalOut(oi.TURRET_MANUAL_LIGHT, false);
         }
 //        DriverStationLCD.getInstance().updateLCD();
@@ -159,13 +187,13 @@ public class Buttons extends CommandBase {
 
     @Override
     protected void end() {
-        collector.stopBrush();
-        collector.stopMiddleConveyor();
-        shooter.topRollersOff();
-        shooter.stopJags();
-        shooter.stopEncoder();
-        turret.stopJag();
-        chassis.stopJags();
+        m_collector.stopBrush();
+        m_collector.stopMiddleConveyor();
+        m_shooter.topRollersOff();
+        m_shooter.stopJags();
+        m_shooter.stopEncoder();
+        m_turret.stopJag();
+        m_chassis.stopJags();
     }
 
     @Override

@@ -2,26 +2,26 @@ package girlsofsteel.objects;
 
 public class MapDouble {
 
-    private final double velocity;
-    private final double distance;
+    private final double m_velocity;
+    private final double m_distance;
 
     public MapDouble(double distance, double velocity) {
-        this.distance = distance;
-        this.velocity = velocity;
+        this.m_distance = distance;
+        this.m_velocity = velocity;
     }
 
     public double getVelocity(){
-        return velocity;
+        return m_velocity;
     }
 
     public double getDistance(){
-        return distance;
+        return m_distance;
     }
 
     public int compare(MapDouble o2) {
-        if (this.distance < o2.distance) {
+        if (this.m_distance < o2.m_distance) {
             return -1;
-        } else if (this.distance > o2.distance) {
+        } else if (this.m_distance > o2.m_distance) {
             return 1;
         } else {
             System.out.println("Must be of type MapDouble");

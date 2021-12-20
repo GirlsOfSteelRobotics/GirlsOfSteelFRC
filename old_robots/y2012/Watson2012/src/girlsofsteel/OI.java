@@ -21,69 +21,76 @@ import girlsofsteel.commands.Shoot;
 import girlsofsteel.commands.ShootUsingTable;
 import girlsofsteel.commands.StopCollectors;
 import girlsofsteel.commands.TurretTrackTarget;
+import girlsofsteel.subsystems.Bridge;
+import girlsofsteel.subsystems.Chassis;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Shooter;
+import girlsofsteel.subsystems.Turret;
 
+@SuppressWarnings({"PMD.GodClass", "PMD.TooManyFields", "PMD.AvoidPrintStackTrace", "PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class OI {
 
     //driving scales (percentage of max power)
-    private final double NORMAL_DRIVE = 1.0;
-    private final double MEDIUM_DRIVE = 0.75;
-    private final double SLOW_DRIVE = 0.55;
+    private static final double NORMAL_DRIVE = 1.0;
+    private static final double MEDIUM_DRIVE = 0.75;
+    private static final double SLOW_DRIVE = 0.55;
 
-    private final double HALF_TURNING = 0.5;
-    private final double MEDIUM_TURNING = 0.75;
+    private static final double HALF_TURNING = 0.5;
+    private static final double MEDIUM_TURNING = 0.75;
+
+    private static final int DRIVER_JOYSTICK_PORT = 1;
+    private static final int DISABLE_CHASSIS_BUTTON_LEFT = 5; //L1 button on driverJoystick
+    private static final int DISABLE_CHASSIS_BUTTON_RIGHT = 6; //R1 button on driverJoystick
+    private static final int NORMAL_DRIVE_JAGS_BUTTON = 7; //L2 button on driverJoystick
+    private static final int MEDIUM_DRIVE_JAGS_BUTTON = 8; //R2
+    private static final int SLOW_DRIVE_JAGS_BUTTON = 3; //circle
+    private static final int DRIVE_SLOW_VELOCITY_BUTTON = 10; //start
+    private static final int BRIDGE_ARM_UP_BUTTON = 4; //triangle button on driverJoystick
+    private static final int BRIDGE_ARM_DOWN_BUTTON = 2; //x
+    private static final int HOLD_POSITION_BUTTON = 1; //square
 
     //TODO find out what the driver buttons should be
     //driver joystick (PS3)
-    private final int DRIVER_JOYSTICK_PORT = 1;
-    private final Joystick driverJoystick;
-    private static final int DISABLE_CHASSIS_BUTTON_LEFT = 5; //L1 button on driverJoystick
-    private final JoystickButton disableChassisLeft;
-    private static final int DISABLE_CHASSIS_BUTTON_RIGHT = 6; //R1 button on driverJoystick
-    private final JoystickButton disableChassisRight;
-    private static final int NORMAL_DRIVE_JAGS_BUTTON = 7; //L2 button on driverJoystick
-    private final JoystickButton normalDriveJags;
-    private static final int MEDIUM_DRIVE_JAGS_BUTTON = 8; //R2
-    private final JoystickButton mediumDriveJags;
-    private static final int SLOW_DRIVE_JAGS_BUTTON = 3; //circle
-    private final JoystickButton slowDriveJags;
-    private static final int DRIVE_SLOW_VELOCITY_BUTTON = 10; //start
-    private final JoystickButton driveSlowVelocity;
-    private static final int BRIDGE_ARM_UP_BUTTON = 4; //triangle button on driverJoystick
-    private final JoystickButton bridgeArmUp;
-    private static final int BRIDGE_ARM_DOWN_BUTTON = 2; //x
-    private final JoystickButton bridgeArmDown;
-    private static final int HOLD_POSITION_BUTTON = 1; //square
-    private final JoystickButton holdPosition;
+    private final Joystick m_driverJoystick;
+    private final JoystickButton m_disableChassisLeft;
+    private final JoystickButton m_disableChassisRight;
+    private final JoystickButton m_normalDriveJags;
+    private final JoystickButton m_mediumDriveJags;
+    private final JoystickButton m_slowDriveJags;
+    private final JoystickButton m_driveSlowVelocity;
+    private final JoystickButton m_bridgeArmUp;
+    private final JoystickButton m_bridgeArmDown;
+    private final JoystickButton m_holdPosition;
 
     //TODO find out the buttons desired for the operator
     //operator controller (PS3)
     private static final int OPERATOR_JOYSTICK_PORT = 2;
-    private final Joystick operatorJoystick;
     private static final int DISABLE_SHOOTER_BUTTON = 8; //R2 on operatorJoystick
-    private final JoystickButton disableShooter;
     private static final int AUTO_SHOOT_BUTTON = 6; //R1 on operatorJoystick
-    private final JoystickButton autoShoot;
     private static final int TURRET_OVERRIDE_BUTTON = 5; //L1 on operatorJoystick
-    private final JoystickButton turretOverride;
     private static final int DISABLE_TURRET_BUTTON = 7; //L2
-    private final JoystickButton disableTurret;
     private static final int RESTART_TURRET_TRACKING_BUTTON = 10; //start on operatorJoystick
-    private final JoystickButton restartTurretTracking;
     private static final int COLLECT_BALLS_BUTTON = 2; //x button on operatorJoystick
-    private final JoystickButton collectBalls;
     private static final int STOP_COLLECTOR_BUTTON = 3; //circle on operatorJoystick
-    private final JoystickButton stopCollector;
     private static final int COLLECTORS_REVERSE_BUTTON = 4; //triangle
-    private final JoystickButton collectorsReverse;
     private static final int SHOOT_FROM_KEY_BUTTON = 1; //square
-    private final JoystickButton shootFromKey;
     private static final int REVERSE_TOP_MIDDLE_ROLLERS_BUTTON = 9; //select
-    private final JoystickButton reverseTopMiddleRollers;
+
+    private final Joystick m_operatorJoystick;
+    private final JoystickButton m_disableShooter;
+    private final JoystickButton m_autoShoot;
+    private final JoystickButton m_turretOverride;
+    private final JoystickButton m_disableTurret;
+    private final JoystickButton m_restartTurretTracking;
+    private final JoystickButton m_collectBalls;
+    private final JoystickButton m_stopCollector;
+    private final JoystickButton m_collectorsReverse;
+    private final JoystickButton m_shootFromKey;
+    private final JoystickButton m_reverseTopMiddleRollers;
 
     //buttons
     private static final int AUTO_SHOOT_PHYSICAL_BUTTON = 9;
     private static final int STOP_SHOOTER_PHYSICAL_BUTTON = 16;
-    private static final int TOP_ROLLERS_OVERRIDE_SWITCH = 8; //in a commented out method
     //switches
     private static final int TURRET_OVERRIDE_SWITCH_A = 11;
     private static final int TURRET_OVERRIDE_SWITCH_B = 15;
@@ -97,9 +104,6 @@ public class OI {
     private static final int TOP_ROLLERS_SWITCH_B = 3;
     //slider
     private static final int SHOOTER_SLIDER = 6;
-    //knob -> not used currently
-    private static final int TURRET_KNOB_A = 5;
-    private static final int TURRET_KNOB_B = 7;
     //TODO can we read from the knob without the flicking?
     //counter
     private static final int AUTONOMOUS_COUNTER_ONE = 1;
@@ -108,76 +112,74 @@ public class OI {
     private static final int AUTONOMOUS_COUNTER_FIVE = 5;
     private static final int AUTONOMOUS_COUNTER_SEVEN = 7;
     //lights -> TODO figure out lights (digital input numbers & how to use)
-    public static final int SHOOTER_LIGHT_A = 36;
-    public static final int SHOOTER_LIGHT_B = 37;
 
     //buttons
     //shooter
-    private boolean autoShootRunning = false;
-    private boolean stopShooterRunning = false;
-    private final boolean topRollersOverriden = false;
-    private int currValue = 0;
-    private int preValue = 0;
+    private boolean m_autoShootRunning;
+    private boolean m_stopShooterRunning;
+    private int m_currValue;
+    private int m_preValue;
 
     //  Default Constructor
-    public OI() {
-        driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
+    public OI(Chassis chassis, Shooter shooter, Collector collector, Turret turret, Bridge bridge) {
 
-        disableChassisLeft = new JoystickButton(driverJoystick, DISABLE_CHASSIS_BUTTON_LEFT);
-        disableChassisRight = new JoystickButton(driverJoystick, DISABLE_CHASSIS_BUTTON_RIGHT);
-        normalDriveJags = new JoystickButton(driverJoystick, NORMAL_DRIVE_JAGS_BUTTON);
-        slowDriveJags = new JoystickButton(driverJoystick, SLOW_DRIVE_JAGS_BUTTON);
-        mediumDriveJags = new JoystickButton(driverJoystick, MEDIUM_DRIVE_JAGS_BUTTON);
-        driveSlowVelocity = new JoystickButton((driverJoystick), DRIVE_SLOW_VELOCITY_BUTTON);
-        bridgeArmDown = new JoystickButton(driverJoystick, BRIDGE_ARM_DOWN_BUTTON);
-        bridgeArmUp = new JoystickButton(driverJoystick, BRIDGE_ARM_UP_BUTTON);
-        holdPosition = new JoystickButton(driverJoystick, HOLD_POSITION_BUTTON);
+        m_driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
 
-        disableChassisLeft.whenPressed(new DisableChassis());
-        disableChassisRight.whenPressed(new DisableChassis());
-        normalDriveJags.whenPressed(new DriveSlowTurning(NORMAL_DRIVE,HALF_TURNING));
-        slowDriveJags.whenPressed(new DriveSlowTurning(SLOW_DRIVE, HALF_TURNING));
-        mediumDriveJags.whenPressed((new DriveSlowTurning(MEDIUM_DRIVE, MEDIUM_TURNING)));
-        driveSlowVelocity.whenPressed(new DriveSlowVelocity());//at the momement
+        m_disableChassisLeft = new JoystickButton(m_driverJoystick, DISABLE_CHASSIS_BUTTON_LEFT);
+        m_disableChassisRight = new JoystickButton(m_driverJoystick, DISABLE_CHASSIS_BUTTON_RIGHT);
+        m_normalDriveJags = new JoystickButton(m_driverJoystick, NORMAL_DRIVE_JAGS_BUTTON);
+        m_slowDriveJags = new JoystickButton(m_driverJoystick, SLOW_DRIVE_JAGS_BUTTON);
+        m_mediumDriveJags = new JoystickButton(m_driverJoystick, MEDIUM_DRIVE_JAGS_BUTTON);
+        m_driveSlowVelocity = new JoystickButton((m_driverJoystick), DRIVE_SLOW_VELOCITY_BUTTON);
+        m_bridgeArmDown = new JoystickButton(m_driverJoystick, BRIDGE_ARM_DOWN_BUTTON);
+        m_bridgeArmUp = new JoystickButton(m_driverJoystick, BRIDGE_ARM_UP_BUTTON);
+        m_holdPosition = new JoystickButton(m_driverJoystick, HOLD_POSITION_BUTTON);
+
+        m_disableChassisLeft.whenPressed(new DisableChassis(chassis));
+        m_disableChassisRight.whenPressed(new DisableChassis(chassis));
+        m_normalDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, NORMAL_DRIVE,HALF_TURNING));
+        m_slowDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
+        m_mediumDriveJags.whenPressed((new DriveSlowTurning(chassis, m_driverJoystick, MEDIUM_DRIVE, MEDIUM_TURNING)));
+        m_driveSlowVelocity.whenPressed(new DriveSlowVelocity(chassis, m_driverJoystick));//at the momement
         //doesn't work -> not really necessary (not used for bridge really)
-        bridgeArmDown.whenPressed(new BridgeDown());
-        bridgeArmUp.whenPressed(new BridgeUp());
-        holdPosition.whileHeld(new HoldPosition());
-        holdPosition.whenReleased(new DriveSlowTurning(SLOW_DRIVE, HALF_TURNING));
+        m_bridgeArmDown.whenPressed(new BridgeDown(bridge));
+        m_bridgeArmUp.whenPressed(new BridgeUp(bridge));
+        m_holdPosition.whileHeld(new HoldPosition(chassis));
+        m_holdPosition.whenReleased(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
 
-        operatorJoystick = new Joystick(OPERATOR_JOYSTICK_PORT);
+        m_operatorJoystick = new Joystick(OPERATOR_JOYSTICK_PORT);
 
-        collectBalls = new JoystickButton(operatorJoystick, COLLECT_BALLS_BUTTON);
-        collectorsReverse = new JoystickButton(operatorJoystick, COLLECTORS_REVERSE_BUTTON);
-        stopCollector = new JoystickButton(operatorJoystick, STOP_COLLECTOR_BUTTON);
-        turretOverride = new JoystickButton(operatorJoystick, TURRET_OVERRIDE_BUTTON);
-        restartTurretTracking = new JoystickButton(operatorJoystick, RESTART_TURRET_TRACKING_BUTTON);
-        autoShoot = new JoystickButton(operatorJoystick, AUTO_SHOOT_BUTTON);
-        disableShooter = new JoystickButton(operatorJoystick, DISABLE_SHOOTER_BUTTON);
-        disableTurret = new JoystickButton(operatorJoystick,DISABLE_TURRET_BUTTON);
-        shootFromKey = new JoystickButton(operatorJoystick,SHOOT_FROM_KEY_BUTTON);
-        reverseTopMiddleRollers = new JoystickButton(operatorJoystick,REVERSE_TOP_MIDDLE_ROLLERS_BUTTON);
+        m_collectBalls = new JoystickButton(m_operatorJoystick, COLLECT_BALLS_BUTTON);
+        m_collectorsReverse = new JoystickButton(m_operatorJoystick, COLLECTORS_REVERSE_BUTTON);
+        m_stopCollector = new JoystickButton(m_operatorJoystick, STOP_COLLECTOR_BUTTON);
+        m_turretOverride = new JoystickButton(m_operatorJoystick, TURRET_OVERRIDE_BUTTON);
+        m_restartTurretTracking = new JoystickButton(m_operatorJoystick, RESTART_TURRET_TRACKING_BUTTON);
+        m_autoShoot = new JoystickButton(m_operatorJoystick, AUTO_SHOOT_BUTTON);
+        m_disableShooter = new JoystickButton(m_operatorJoystick, DISABLE_SHOOTER_BUTTON);
+        m_disableTurret = new JoystickButton(m_operatorJoystick,DISABLE_TURRET_BUTTON);
+        m_shootFromKey = new JoystickButton(m_operatorJoystick,SHOOT_FROM_KEY_BUTTON);
+        m_reverseTopMiddleRollers = new JoystickButton(m_operatorJoystick,REVERSE_TOP_MIDDLE_ROLLERS_BUTTON);
 
         //TODO ask drive team if they want to switch some of these to "while held" functions
         //maybe shooting?
-        collectBalls.whenPressed(new Collect());
-        collectorsReverse.whenPressed(new ReverseCollectors());
-        stopCollector.whenPressed(new StopCollectors());
-        turretOverride.whenPressed(new PS3ManualTurret());
-        restartTurretTracking.whenPressed(new TurretTrackTarget());
-        autoShoot.whileHeld(new ShootUsingTable(true));
-        disableShooter.whenPressed(new DisableShooter());
-        disableTurret.whenPressed(new DisableTurret());
-        shootFromKey.whileHeld(new Shoot(24.0));//dead-reckoning from key
-        reverseTopMiddleRollers.whileHeld(new ReverseTopMiddleRollers());
+        m_collectBalls.whenPressed(new Collect(collector));
+        m_collectorsReverse.whenPressed(new ReverseCollectors(collector));
+        m_stopCollector.whenPressed(new StopCollectors(collector));
+        m_turretOverride.whenPressed(new PS3ManualTurret(turret, m_operatorJoystick));
+        m_restartTurretTracking.whenPressed(new TurretTrackTarget(turret, m_operatorJoystick));
+        m_autoShoot.whileHeld(new ShootUsingTable(shooter, this, true));
+        m_disableShooter.whenPressed(new DisableShooter(shooter));
+        m_disableTurret.whenPressed(new DisableTurret(turret));
+        m_shootFromKey.whileHeld(new Shoot(shooter, this,24.0));//dead-reckoning from key
+        m_reverseTopMiddleRollers.whileHeld(new ReverseTopMiddleRollers(collector, shooter));
     }
 
     public Joystick getDriverJoystick() {
-        return driverJoystick;
+        return m_driverJoystick;
     }
 
     public Joystick getOperatorJoystick() {
-        return operatorJoystick;
+        return m_operatorJoystick;
     }
 
     public boolean isCollectCameraDataPressed(){
@@ -188,29 +190,29 @@ public class OI {
     public boolean isShootRunning() {
         try {
             if (DriverStationEnhancedIO.getInstance().getDigital(AUTO_SHOOT_PHYSICAL_BUTTON)) {
-                stopShooterRunning = false;
-                autoShootRunning = true;
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + stopShooterRunning);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + autoShootRunning);
+                m_stopShooterRunning = false;
+                m_autoShootRunning = true;
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + m_stopShooterRunning);
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + m_autoShootRunning);
             }
         } catch (EnhancedIOException ex) {
             ex.printStackTrace();
         }
-        return autoShootRunning;
+        return m_autoShootRunning;
     }
 
     public boolean isStopShooterRunning() {
         try {
             if (DriverStationEnhancedIO.getInstance().getDigital(STOP_SHOOTER_PHYSICAL_BUTTON)) {
-                stopShooterRunning = true;
-                autoShootRunning = false;
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + stopShooterRunning);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + autoShootRunning);
+                m_stopShooterRunning = true;
+                m_autoShootRunning = false;
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + m_stopShooterRunning);
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + m_autoShootRunning);
             }
         } catch (EnhancedIOException ex) {
             ex.printStackTrace();
         }
-        return stopShooterRunning;
+        return m_stopShooterRunning;
     }
 
 //This button is an analog(because we ran out of digital) so I changed the following function.
@@ -377,22 +379,22 @@ public class OI {
     public double getTurretKnobValue(double deadzone) {
        double returnVal;
         try {
-            currValue = DriverStationEnhancedIO.getInstance().getEncoder(1);
+            m_currValue = DriverStationEnhancedIO.getInstance().getEncoder(1);
         } catch (EnhancedIOException ex) {
             ex.printStackTrace();
         }
 
-        if(currValue - preValue > deadzone){
+        if(m_currValue - m_preValue > deadzone){
            returnVal = -5.0;
         }
 
-        else if(currValue - preValue < -deadzone){
+        else if(m_currValue - m_preValue < -deadzone){
             returnVal = 5.0;
         }
         else{
             returnVal = 0.0;
         }
-        preValue = currValue;
+        m_preValue = m_currValue;
        return returnVal;
     }
 

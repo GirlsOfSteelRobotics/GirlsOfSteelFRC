@@ -9,12 +9,10 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.RobotMap;
-import girlsofsteel.commands.CommandBase;
 import girlsofsteel.objects.Camera;
 
 public class Turret extends Subsystem implements PIDOutput, PIDSource {
 
-    private double offsetAngle = 0.34;
     //knob stuff doesn't really matter -> below are magical values we don't have
     private static final double MAX_TURRET_KNOB_VALUE = 0.0;
     private static final double MIN_TURRET_KNOB_VALUE = 10.0;
@@ -22,14 +20,21 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     private static final double ENCODER_UNIT = 360.0 / PULSES;
     public static final double TURRET_OVERRIDE_DEADZONE = 0.5;
 
-    private final Jaguar turretJag = new Jaguar(RobotMap.TURRET_JAG);
-    private final Encoder encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
-            RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
     private static final double p = 0.2;//0.45;
     private static final double i = 0.0;
     private static final double d = 0.0;
-    private final PIDController PID = new PIDController(p, i, d, this, this);
-    private static final boolean pressedRightSwitch = false;
+
+    private double m_offsetAngle = 0.34;
+    private final Jaguar m_turretJag = new Jaguar(RobotMap.TURRET_JAG);
+    private final Encoder m_encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
+            RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
+    private final PIDController m_pid = new PIDController(p, i, d, this, this);
+
+    private final Chassis m_chassis;
+
+    public Turret(Chassis chassis) {
+        m_chassis = chassis;
+    }
 
     @Override
     public void initDefaultCommand(){
@@ -38,25 +43,25 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
 
     public void changeTurretOffset(){
         double turretOffset = SmartDashboard.getNumber("Turret Offset", 0.0);
-        offsetAngle = turretOffset;
+        m_offsetAngle = turretOffset;
     }
 
     //sets the unit -> only used in TEST -> degrees or just pulses
     public void setEncoderUnit(double pulses, boolean inDegrees){
         if(inDegrees){
-            encoder.setDistancePerPulse(360.0/pulses);
+            m_encoder.setDistancePerPulse(360.0/pulses);
         }else{
-            encoder.setDistancePerPulse(1.0/pulses);
+            m_encoder.setDistancePerPulse(1.0/pulses);
         }
            }
 
     //initalizes encoder -> sets the unit to degrees
     public void initEncoder(){
-        encoder.setDistancePerPulse(ENCODER_UNIT); //degrees
+        m_encoder.setDistancePerPulse(ENCODER_UNIT); //degrees
            }
 
     public void setJagSpeed(double speed) {
-        turretJag.set(-speed);
+        m_turretJag.set(-speed);
     }
 
     public void stopJag() {
@@ -76,28 +81,29 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     }
 
     public void enablePID() { //for re-enabling the PID when disabled
-        PID.setContinuous(); //lets the PID know it is a circle
-        PID.setInputRange(0.0, 360.0); //and goes between 0 to 360 to 0 to 360, etc
-        PID.enable();
+        m_pid.setContinuous(); //lets the PID know it is a circle
+        m_pid.setInputRange(0.0, 360.0); //and goes between 0 to 360 to 0 to 360, etc
+        m_pid.enable();
     }
 
     //sets the P & D values -> used for testing
     //i is 0.0 because it is a rate PID
     public void setPDs(double pVal, double dVal){
-        PID.setPID(pVal, 0.0, dVal);
+        m_pid.setPID(pVal, 0.0, dVal);
     }
 
     //just in case the PID loop starts freaking out & you need to re-assing the
     //PID values in execute (used in chassis -> don't think it's having a probelem
     //in chassis's PIDs
     public void setPDs(){
-        PID.setPID(p, i, d);
+        m_pid.setPID(p, i, d);
     }
 
     public void disablePID() {
-        PID.disable();
+        m_pid.disable();
     }
 
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public void setPIDSetPoint(double setpoint) {
         setpoint = setpoint % 360;//takes the remainder of 360 -> so the set point
         //cannot be larger than |360|
@@ -105,12 +111,12 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
             setpoint = setpoint + 360;//the negative set point is the same as the
             //positive, but plus 360
         }
-        PID.setSetpoint(setpoint);
+        m_pid.setSetpoint(setpoint);
     }
 
     public double getTurretAngle() {
         double angle;
-        angle = -encoder.getDistance() + CommandBase.chassis.getTheta();
+        angle = -m_encoder.getDistance() + m_chassis.getTheta();
         //the angle is the encoder (turret) angle + the gyro angle
         //the gyro angle -> is what position the chassis is facing
         //so the total angle the turret is facing is the sum of them
@@ -131,10 +137,11 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     }
 
     public double getEncoderDistance() {
-        return encoder.getDistance();
+        return m_encoder.getDistance();
     }
 
     //stuff from the knob -> as of not, not needed
+    @SuppressWarnings("PMD.UnnecessaryLocalBeforeReturn")
     public double getTurretAngleCompensationFromKnob(double knobValue) {
         double minAngleCompensationValue = 0.0; //I would think this would make sense -> make sure
         double maxAngleCompensationValue = 5.0; //FIND THIS!!
@@ -143,6 +150,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         return angleCompensation;
     }
 
+    @SuppressWarnings("PMD.UnnecessaryLocalBeforeReturn")
     public double getTurretManualSpeed(double knobValue) {
         double minSpeedValue = 0.0; //I would think this would make sense -> make sure
         double maxSpeedValue = 5.0; //FIND THIS!!
@@ -157,7 +165,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         //the target -> the real life value is found in the Camera object
         System.out.println("Difference Angle:   " + diffAngle);
         double setPoint;
-        setPoint = diffAngle / 4 + getTurretAngle() + offsetAngle;//degrees
+        setPoint = diffAngle / 4 + getTurretAngle() + m_offsetAngle;//degrees
         //the set point is the difference of the angle plus where the turret is currently
         //subtract the offset angle that the shooter shoots straight from
         setPIDSetPoint(setPoint);

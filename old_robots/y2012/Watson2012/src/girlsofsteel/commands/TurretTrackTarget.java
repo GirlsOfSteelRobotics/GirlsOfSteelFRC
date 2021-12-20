@@ -2,34 +2,37 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Turret;
 
 public class TurretTrackTarget extends CommandBase {
 
-    private Joystick operatorJoystick;
+    private final Turret m_turret;
+    private final Joystick m_operatorJoystick;
 
-    private double difference; //How much the driver wants it to move
+    private double m_difference; //How much the driver wants it to move
 
-    public TurretTrackTarget() {
-        requires(turret);
+    public TurretTrackTarget(Turret turret, Joystick operatorJoystick) {
+        m_turret = turret;
+        this.m_operatorJoystick = operatorJoystick;
+        requires(m_turret);
     }
 
     @Override
     protected void initialize() {
-        turret.initEncoder();
-        turret.enablePID();
-        operatorJoystick = oi.getOperatorJoystick();
+        m_turret.initEncoder();
+        m_turret.enablePID();
     }
 
     @Override
     protected void execute() {
-        turret.changeTurretOffset();
+        m_turret.changeTurretOffset();
         if (Camera.foundTarget()) {
-            turret.autoTrack();
-            System.out.println("Turret Angle:  " + turret.getTurretAngle());
+            m_turret.autoTrack();
+            System.out.println("Turret Angle:  " + m_turret.getTurretAngle());
         }else{
-            difference = operatorJoystick.getX()*5.0;
-            if(difference < -2.0 || difference > 2.0){
-                turret.setPIDSetPoint(turret.getTurretAngle() + difference);
+            m_difference = m_operatorJoystick.getX()*5.0;
+            if(m_difference < -2.0 || m_difference > 2.0){
+                m_turret.setPIDSetPoint(m_turret.getTurretAngle() + m_difference);
             }
         }
     }
@@ -41,7 +44,7 @@ public class TurretTrackTarget extends CommandBase {
 
     @Override
     protected void end() {
-        turret.disablePID();
+        m_turret.disablePID();
     }
 
     @Override

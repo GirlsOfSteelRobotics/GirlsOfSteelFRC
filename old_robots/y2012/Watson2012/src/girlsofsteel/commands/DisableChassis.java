@@ -1,14 +1,18 @@
 package girlsofsteel.commands;
 
-public class DisableChassis extends CommandBase {
+import girlsofsteel.subsystems.Chassis;
 
-    public DisableChassis(){
-        requires(chassis);
+public class DisableChassis extends CommandBase {
+    private final Chassis m_chassis;
+
+    public DisableChassis(Chassis chassis){
+        m_chassis = chassis;
+        requires(m_chassis);
     }
 
     @Override
     protected void initialize() {
-        chassis.stopJags();
+        m_chassis.stopJags();
     }
 
     @Override

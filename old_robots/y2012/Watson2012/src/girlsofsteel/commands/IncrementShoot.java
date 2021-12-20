@@ -1,30 +1,36 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Shooter;
+
 public class IncrementShoot extends CommandBase {
+    private final Shooter m_shooter;
+    private final OI m_oi;
+    private double m_sliderValue;
+    private double m_incrementValue;
+    private double m_speed;
 
-    private double sliderValue;
-    private double incrementValue;
-    private double speed;
-
-    public IncrementShoot() {
-        requires(shooter);
+    public IncrementShoot(Shooter shooter, OI oi) {
+        m_oi = oi;
+        m_shooter = shooter;
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
-        shooter.initPID();
+        m_shooter.initEncoder();
+        m_shooter.initPID();
     }
 
     @Override
     protected void execute() {
-        sliderValue = oi.getShooterSliderValue();
-        incrementValue = shooter.getIncrementValue(sliderValue);
+        m_sliderValue = m_oi.getShooterSliderValue();
+        m_incrementValue = m_shooter.getIncrementValue(m_sliderValue);
 //        speed = shooter.getEncoderRate() + incrementValue;
-        speed = shooter.getPIDSetPoint() + incrementValue;
-        shooter.setPIDSpeed(speed);
-        if (shooter.isWithinSetPoint(speed) && !oi.areTopRollersOverriden()) {
-            shooter.topRollersForward();
+        m_speed = m_shooter.getPIDSetPoint() + m_incrementValue;
+        m_shooter.setPIDSpeed(m_speed);
+        if (m_shooter.isWithinSetPoint(m_speed) && !m_oi.areTopRollersOverriden()) {
+            m_shooter.topRollersForward();
         }
     }
 
@@ -35,8 +41,8 @@ public class IncrementShoot extends CommandBase {
 
     @Override
     protected void end() {
-        shooter.topRollersOff();
-        shooter.disablePID();
+        m_shooter.topRollersOff();
+        m_shooter.disablePID();
     }
 
     @Override

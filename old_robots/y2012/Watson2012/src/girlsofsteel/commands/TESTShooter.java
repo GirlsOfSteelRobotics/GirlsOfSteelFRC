@@ -1,25 +1,28 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Shooter;
 
 public class TESTShooter extends CommandBase {
 
-    private double speed;
+    private final Shooter m_shooter;
+    private double m_speed;
 
-    public TESTShooter(){
+    public TESTShooter(Shooter shooter){
+        m_shooter = shooter;
         SmartDashboard.putNumber("Shooter Jag Speed", 0.0);
     }
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
+        m_shooter.initEncoder();
     }
 
     @Override
     protected void execute() {
-        speed = SmartDashboard.getNumber("Shooter Jag Speed", 0.0);
-        shooter.setJags(speed);
-        SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
+        m_speed = SmartDashboard.getNumber("Shooter Jag Speed", 0.0);
+        m_shooter.setJags(m_speed);
+        SmartDashboard.putNumber("Shooter Encoder", m_shooter.getEncoderRate());
     }
 
     @Override
@@ -29,8 +32,8 @@ public class TESTShooter extends CommandBase {
 
     @Override
     protected void end() {
-        shooter.stopJags();
-        shooter.stopEncoder();
+        m_shooter.stopJags();
+        m_shooter.stopEncoder();
     }
 
     @Override

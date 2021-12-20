@@ -1,9 +1,13 @@
 package girlsofsteel.commands;
 
-public class BrushForward extends CommandBase {
+import girlsofsteel.subsystems.Collector;
 
-    public BrushForward() {
-        requires(collector);
+public class BrushForward extends CommandBase {
+    private final Collector m_collector;
+
+    public BrushForward(Collector collector) {
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
@@ -12,7 +16,7 @@ public class BrushForward extends CommandBase {
 
     @Override
     protected void execute() {
-        collector.forwardBrush();
+        m_collector.forwardBrush();
     }
 
     @Override

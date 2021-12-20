@@ -1,29 +1,36 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Turret;
+
 public class ManualTurret extends CommandBase {
 
-    private double knobValue;
-    private double speed;
+    private final Turret m_turret;
+    private final OI m_oi;
+    private double m_knobValue;
+    private double m_speed;
 
-    public ManualTurret() {
-        requires(turret);
+    public ManualTurret(Turret turret, OI oi) {
+        m_turret = turret;
+        m_oi = oi;
+        requires(m_turret);
     }
 
     @Override
     protected void initialize() {
-        turret.disablePID();
+        m_turret.disablePID();
     }
 
     @Override
     protected void execute() {
-        knobValue = oi.getTurretKnobValue(turret.TURRET_OVERRIDE_DEADZONE);
-        if (knobValue > 0) {
-            speed = 0.2;
+        m_knobValue = m_oi.getTurretKnobValue(Turret.TURRET_OVERRIDE_DEADZONE);
+        if (m_knobValue > 0) {
+            m_speed = 0.2;
         }
         else{
-            speed = -0.2;
+            m_speed = -0.2;
         }
-        turret.setJagSpeed(speed);
+        m_turret.setJagSpeed(m_speed);
     }
 
     @Override
@@ -33,7 +40,7 @@ public class ManualTurret extends CommandBase {
 
     @Override
     protected void end() {
-        turret.stopJag();
+        m_turret.stopJag();
     }
 
     @Override

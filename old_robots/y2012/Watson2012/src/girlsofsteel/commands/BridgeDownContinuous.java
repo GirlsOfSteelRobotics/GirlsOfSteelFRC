@@ -1,6 +1,13 @@
 package girlsofsteel.commands;
 
+import girlsofsteel.subsystems.Bridge;
+
 public class BridgeDownContinuous extends CommandBase {
+    private final Bridge m_bridge;
+
+    public BridgeDownContinuous(Bridge bridge) {
+        m_bridge = bridge;
+    }
 
     @Override
     protected void initialize() {
@@ -8,7 +15,7 @@ public class BridgeDownContinuous extends CommandBase {
 
     @Override
     protected void execute() {
-        bridge.downBridgeArm();
+        m_bridge.downBridgeArm();
     }
 
     @Override
@@ -18,7 +25,7 @@ public class BridgeDownContinuous extends CommandBase {
 
     @Override
     protected void end() {
-        bridge.stopBridgeArm();
+        m_bridge.stopBridgeArm();
     }
 
     @Override

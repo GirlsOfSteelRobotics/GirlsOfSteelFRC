@@ -1,8 +1,12 @@
 package girlsofsteel.commands;
 
-public class AutoBridgeDown extends CommandBase {
+import girlsofsteel.subsystems.Bridge;
 
-    public AutoBridgeDown() {
+public class AutoBridgeDown extends CommandBase {
+    private final Bridge m_bridge;
+
+    public AutoBridgeDown(Bridge bridge) {
+        m_bridge = bridge;
         requires(bridge);
     }
 
@@ -12,7 +16,7 @@ public class AutoBridgeDown extends CommandBase {
 
     @Override
     protected void execute() {
-        bridge.downBridgeArm();
+        m_bridge.downBridgeArm();
     }
 
     @Override

@@ -1,27 +1,33 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Shooter;
 
 public class ShootUsingTable extends CommandBase {
 
-    private Joystick operatorJoystick;
+    private final Shooter m_shooter;
+    private final OI m_oi;
+    private final Joystick m_operatorJoystick;
 
-    private final boolean bank;//bank does not do anything -> tuned for banking
-    private double cameraDistance;
+    private final boolean m_bank;//bank does not do anything -> tuned for banking // NOPMD
+    private double m_cameraDistance;
 
-    public ShootUsingTable(boolean bank) { //bank = false for autonomous
+    public ShootUsingTable(Shooter shooter, OI oi, boolean bank) { //bank = false for autonomous
         //bank = true for everything else (should be fairly straight to the hoop
-        requires(shooter);
-        this.bank = bank;
+        m_shooter = shooter;
+        m_oi = oi;
+        m_operatorJoystick = oi.getOperatorJoystick();
+        requires(m_shooter);
+        this.m_bank = bank;
     }
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
-        shooter.initPID();
-        operatorJoystick = oi.getOperatorJoystick();
-        cameraDistance = Camera.getXDistance()/* - 38*(0.0254/1.0)*/;
+        m_shooter.initEncoder();
+        m_shooter.initPID();
+        m_cameraDistance = Camera.getXDistance()/* - 38*(0.0254/1.0)*/;
         //why subtract the fender? we add the fender into the calculations for
         //shooter data table
     }
@@ -31,13 +37,13 @@ public class ShootUsingTable extends CommandBase {
 //        if(bank){
 //            shooter.autoShootBank(cameraDistance);
 //        }else{
-            shooter.autoShoot(cameraDistance);
+            m_shooter.autoShoot(m_cameraDistance);
 //        }
-        if(Math.abs(operatorJoystick.getThrottle()) >= 0.3 ||
-                Math.abs(operatorJoystick.getTwist()) >= 0.3){
-            shooter.topRollersForward();
+        if(Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
+                Math.abs(m_operatorJoystick.getTwist()) >= 0.3){
+            m_shooter.topRollersForward();
         }
-        System.out.println("Encoder Values:" + shooter.getEncoderRate());
+        System.out.println("Encoder Values:" + m_shooter.getEncoderRate());
     }
 
     @Override
@@ -48,11 +54,11 @@ public class ShootUsingTable extends CommandBase {
 
     @Override
     protected void end() {
-        if(!oi.areTopRollersOverriden()){
-            shooter.topRollersOff();
+        if(!m_oi.areTopRollersOverriden()){
+            m_shooter.topRollersOff();
         }
-        shooter.disablePID();
-        shooter.stopEncoder();
+        m_shooter.disablePID();
+        m_shooter.stopEncoder();
     }
 
     @Override

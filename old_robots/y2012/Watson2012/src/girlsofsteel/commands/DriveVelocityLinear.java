@@ -2,36 +2,39 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.subsystems.Chassis;
 
 public class DriveVelocityLinear extends CommandBase{
+    private final Chassis m_chassis;
+    private final Joystick m_joystick;
 
-    private Joystick joystick;
+    private double m_xAxis;
+    private double m_yAxis;
 
-    private double xAxis;
-    private double yAxis;
+    private final double m_scale;
 
-    private final double scale;
-
-    public DriveVelocityLinear(double scale){
-        requires(chassis);
-        this.scale = scale;
+    public DriveVelocityLinear(Chassis chassis, Joystick driverJoystick, double scale){
+        m_chassis = chassis;
+        m_joystick = driverJoystick;
+        requires(m_chassis);
+        this.m_scale = scale;
     }
 
     @Override
     protected void initialize() {
-        joystick = oi.getDriverJoystick();
-        chassis.initEncoders();
-        chassis.initRatePIDs();
+
+        m_chassis.initEncoders();
+        m_chassis.initRatePIDs();
     }
 
     @Override
     protected void execute() {
-        chassis.setPIDsRate();
-        xAxis = joystick.getX()*scale;
-        yAxis = joystick.getY()*scale;
-        chassis.driveVelocityLinear(xAxis, yAxis);
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "R:" + chassis.getRightEncoderRate());
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "L:" + chassis.getLeftEncoderRate());
+        m_chassis.setPIDsRate();
+        m_xAxis = m_joystick.getX()* m_scale;
+        m_yAxis = m_joystick.getY()* m_scale;
+        m_chassis.driveVelocityLinear(m_xAxis, m_yAxis);
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "R:" + m_chassis.getRightEncoderRate());
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "L:" + m_chassis.getLeftEncoderRate());
         DriverStationLCD.getInstance().updateLCD();
     }
 
@@ -42,9 +45,9 @@ public class DriveVelocityLinear extends CommandBase{
 
     @Override
     protected void end() {
-        chassis.disableRatePIDs();
-        chassis.resetEncoders();
-        chassis.endEncoders();
+        m_chassis.disableRatePIDs();
+        m_chassis.resetEncoders();
+        m_chassis.endEncoders();
     }
 
     @Override

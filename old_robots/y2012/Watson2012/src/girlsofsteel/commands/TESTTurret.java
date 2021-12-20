@@ -1,16 +1,20 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Turret;
 
 public class TESTTurret extends CommandBase {
 
-    private double speed;
+    private final Turret m_turret;
 
-    private double pulses;
-    private boolean inDegrees;
+    private double m_speed;
 
-    public TESTTurret(){
-        requires(turret);
+    private double m_pulses;
+    private boolean m_inDegrees;
+
+    public TESTTurret(Turret turret){
+        m_turret = turret;
+        requires(m_turret);
         SmartDashboard.putNumber("Turret Jags Speed", 0.0);
         SmartDashboard.putNumber("Turret Encoder Pulses", 0.0);
         SmartDashboard.putBoolean("Turret Encoder in Degrees",false);
@@ -18,17 +22,17 @@ public class TESTTurret extends CommandBase {
 
     @Override
     protected void initialize() {
-        turret.disablePID();
+        m_turret.disablePID();
     }
 
     @Override
     protected void execute() {
-        speed = SmartDashboard.getNumber("Turret Jags Speed", 0.0);
-        turret.setJagSpeed(speed);
-        pulses = SmartDashboard.getNumber("Turret Encoder Pulses", 0.0);
-        inDegrees = SmartDashboard.getBoolean("Turret Encoder in Degrees",false);
-        turret.setEncoderUnit(pulses, inDegrees);
-        SmartDashboard.putNumber("Turret Encoder", turret.getEncoderDistance());
+        m_speed = SmartDashboard.getNumber("Turret Jags Speed", 0.0);
+        m_turret.setJagSpeed(m_speed);
+        m_pulses = SmartDashboard.getNumber("Turret Encoder Pulses", 0.0);
+        m_inDegrees = SmartDashboard.getBoolean("Turret Encoder in Degrees",false);
+        m_turret.setEncoderUnit(m_pulses, m_inDegrees);
+        SmartDashboard.putNumber("Turret Encoder", m_turret.getEncoderDistance());
     }
 
     @Override
@@ -38,7 +42,7 @@ public class TESTTurret extends CommandBase {
 
     @Override
     protected void end() {
-        turret.stopJag();
+        m_turret.stopJag();
     }
 
     @Override

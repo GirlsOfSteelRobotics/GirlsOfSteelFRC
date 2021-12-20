@@ -2,31 +2,35 @@ package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import girlsofsteel.objects.Camera;
+import girlsofsteel.subsystems.Shooter;
 
 public class ShootBestFitLine extends CommandBase {
 
-    private Joystick operatorJoystick;
+    private final Joystick m_operatorJoystick;
+    private final Shooter m_shooter;
 
-    private double cameraDistance;
+    private double m_cameraDistance;
 
-    public ShootBestFitLine(){
-        requires(shooter);
+    public ShootBestFitLine(Shooter shooter, Joystick operatorJoystick){
+        m_shooter = shooter;
+        m_operatorJoystick = operatorJoystick;
+
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
-        shooter.initPID();
-        operatorJoystick = oi.getOperatorJoystick();
-        cameraDistance = Camera.getXDistance();
+        m_shooter.initEncoder();
+        m_shooter.initPID();
+        m_cameraDistance = Camera.getXDistance();
     }
 
     @Override
     protected void execute() {
-        shooter.autoShootBestFitLine(cameraDistance);
-        if(Math.abs(operatorJoystick.getThrottle()) >= 0.3 ||
-                Math.abs(operatorJoystick.getTwist()) >= 0.3){
-            shooter.topRollersForward();
+        m_shooter.autoShootBestFitLine(m_cameraDistance);
+        if(Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
+                Math.abs(m_operatorJoystick.getTwist()) >= 0.3){
+            m_shooter.topRollersForward();
         }
     }
 
@@ -37,9 +41,9 @@ public class ShootBestFitLine extends CommandBase {
 
     @Override
     protected void end() {
-        shooter.topRollersOff();
-        shooter.disablePID();
-        shooter.stopEncoder();
+        m_shooter.topRollersOff();
+        m_shooter.disablePID();
+        m_shooter.stopEncoder();
     }
 
     @Override

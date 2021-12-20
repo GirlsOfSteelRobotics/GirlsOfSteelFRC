@@ -1,20 +1,24 @@
 package girlsofsteel.commands;
 
-public class HoldPosition extends CommandBase {
+import girlsofsteel.subsystems.Chassis;
 
-    public HoldPosition(){
-        requires(chassis);
+public class HoldPosition extends CommandBase {
+    private final Chassis m_chassis;
+
+    public HoldPosition(Chassis chassis){
+        m_chassis = chassis;
+        requires(m_chassis);
     }
 
     @Override
     protected void initialize() {
-        chassis.initEncoders();
-        chassis.initHoldPosition();
+        m_chassis.initEncoders();
+        m_chassis.initHoldPosition();
     }
 
     @Override
     protected void execute() {
-        chassis.holdPosition();
+        m_chassis.holdPosition();
     }
 
     @Override
@@ -24,9 +28,9 @@ public class HoldPosition extends CommandBase {
 
     @Override
     protected void end() {
-        chassis.disablePositionPIDs();
-        chassis.endEncoders();
-        chassis.stopJags();
+        m_chassis.disablePositionPIDs();
+        m_chassis.endEncoders();
+        m_chassis.stopJags();
     }
 
     @Override

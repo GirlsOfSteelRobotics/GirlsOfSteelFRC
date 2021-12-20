@@ -1,26 +1,29 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.subsystems.Turret;
 
 public class PS3ManualTurret extends CommandBase {
 
-    private Joystick operatorJoystick;
+    private final Turret m_turret;
+    private final Joystick m_operatorJoystick;
 
-    private double speed;
+    private double m_speed;
 
-    public PS3ManualTurret(){
-        requires(turret);
+    public PS3ManualTurret(Turret turret, Joystick operatorJoystick){
+        m_turret = turret;
+        m_operatorJoystick = operatorJoystick;
+        requires(m_turret);
     }
 
     @Override
     protected void initialize() {
-        operatorJoystick = oi.getOperatorJoystick();
     }
 
     @Override
     protected void execute() {
-        speed = operatorJoystick.getX()*.5;
-        turret.setJagSpeed(speed);
+        m_speed = m_operatorJoystick.getX()*.5;
+        m_turret.setJagSpeed(m_speed);
     }
 
     @Override

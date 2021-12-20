@@ -1,14 +1,19 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import girlsofsteel.subsystems.Collector;
+import girlsofsteel.subsystems.Shooter;
 
 public class CameraShooterTest extends CommandBase {
+    private final Shooter m_shooter;
+    private final Collector m_collector;
+    private double m_speed;
 
-    private double speed;
-
-    public CameraShooterTest() {
-        requires(shooter);
-        requires(collector);
+    public CameraShooterTest(Shooter shooter, Collector collector) {
+        m_shooter = shooter;
+        m_collector = collector;
+        requires(m_shooter);
+        requires(m_collector);
         SmartDashboard.putNumber("CST,speed", 0.0);
         SmartDashboard.putBoolean("shoot", false);
         SmartDashboard.putBoolean("top rollers", false);
@@ -19,33 +24,33 @@ public class CameraShooterTest extends CommandBase {
 
     @Override
     protected void initialize() {
-        shooter.initEncoder();
-        shooter.initPID();
+        m_shooter.initEncoder();
+        m_shooter.initPID();
     }
 
     @Override
     protected void execute() {
-        shooter.setPIDValues(SmartDashboard.getNumber("CST,P",0.0), SmartDashboard.getNumber("CST,I",0.0),0.0);
-        speed = SmartDashboard.getNumber("CST,speed", 0.0);
+        m_shooter.setPIDValues(SmartDashboard.getNumber("CST,P",0.0), SmartDashboard.getNumber("CST,I",0.0),0.0);
+        m_speed = SmartDashboard.getNumber("CST,speed", 0.0);
         if(SmartDashboard.getBoolean("collectors", false)){
-            collector.reverseBrush();
-            collector.reverseMiddleConveyor();
+            m_collector.reverseBrush();
+            m_collector.reverseMiddleConveyor();
         }else{
-            collector.stopBrush();
-            collector.stopMiddleConveyor();
+            m_collector.stopBrush();
+            m_collector.stopMiddleConveyor();
         }
         if (SmartDashboard.getBoolean("top rollers", false)) {
-            shooter.topRollersForward();
+            m_shooter.topRollersForward();
         } else {
-            shooter.topRollersOff();
+            m_shooter.topRollersOff();
         }
         if(SmartDashboard.getBoolean("shoot", false)){
-            shooter.setPIDSpeed(speed);
+            m_shooter.setPIDSpeed(m_speed);
         }else{
-            shooter.setPIDSpeed(0.0);
+            m_shooter.setPIDSpeed(0.0);
         }
-        SmartDashboard.putBoolean("ready to shoot", shooter.isWithinSetPoint(speed));
-        SmartDashboard.putNumber("Enc rate shoot: ", shooter.getEncoderRate());
+        SmartDashboard.putBoolean("ready to shoot", m_shooter.isWithinSetPoint(m_speed));
+        SmartDashboard.putNumber("Enc rate shoot: ", m_shooter.getEncoderRate());
     }
 
     @Override
@@ -55,7 +60,7 @@ public class CameraShooterTest extends CommandBase {
 
     @Override
     protected void end() {
-        shooter.disablePID();
+        m_shooter.disablePID();
     }
 
     @Override

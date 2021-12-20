@@ -1,31 +1,37 @@
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import girlsofsteel.OI;
+import girlsofsteel.subsystems.Shooter;
 
 
 public class PS3ShootUsingJoystick extends CommandBase{
 
-    private Joystick operatorJoystick;
+    private final Shooter m_shooter;
+    private final OI m_oi;
+    private final Joystick m_operatorJoystick;
 
-    private double speed;
+    private double m_speed;
 
-    public PS3ShootUsingJoystick(){
-        requires(shooter);
+    public PS3ShootUsingJoystick(Shooter shooter, OI oi){
+        m_shooter = shooter;
+        m_operatorJoystick = oi.getOperatorJoystick();
+        m_oi = oi;
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        operatorJoystick = oi.getOperatorJoystick();
-        shooter.initEncoder();
-        shooter.initPID();
+        m_shooter.initEncoder();
+        m_shooter.initPID();
     }
 
     @Override
     protected void execute() {
-        speed = Math.abs(operatorJoystick.getZ())*40.0;
-        shooter.shootUsingBallVelocity(speed);
-        if(shooter.isWithinSetPoint(speed) && !oi.areTopRollersOverriden()){
-            shooter.topRollersForward();
+        m_speed = Math.abs(m_operatorJoystick.getZ())*40.0;
+        m_shooter.shootUsingBallVelocity(m_speed);
+        if(m_shooter.isWithinSetPoint(m_speed) && !m_oi.areTopRollersOverriden()){
+            m_shooter.topRollersForward();
         }
     }
 
@@ -36,11 +42,11 @@ public class PS3ShootUsingJoystick extends CommandBase{
 
     @Override
     protected void end() {
-        if(!oi.areTopRollersOverriden()){
-            shooter.topRollersOff();
+        if(!m_oi.areTopRollersOverriden()){
+            m_shooter.topRollersOff();
         }
-        shooter.disablePID();
-        shooter.stopEncoder();
+        m_shooter.disablePID();
+        m_shooter.stopEncoder();
     }
 
     @Override

@@ -1,15 +1,19 @@
 package girlsofsteel.commands;
 
-public class DisableShooter extends CommandBase {
+import girlsofsteel.subsystems.Shooter;
 
-    public DisableShooter(){
-        requires(shooter);
+public class DisableShooter extends CommandBase {
+    private final Shooter m_shooter;
+
+    public DisableShooter(Shooter shooter){
+        m_shooter = shooter;
+        requires(m_shooter);
     }
 
     @Override
     protected void initialize() {
-        shooter.disablePID();
-        shooter.stopJags();
+        m_shooter.disablePID();
+        m_shooter.stopJags();
     }
 
     @Override

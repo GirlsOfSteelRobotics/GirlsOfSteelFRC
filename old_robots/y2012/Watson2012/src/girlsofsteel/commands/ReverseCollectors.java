@@ -1,9 +1,13 @@
 package girlsofsteel.commands;
 
-public class ReverseCollectors extends CommandBase {
+import girlsofsteel.subsystems.Collector;
 
-    public ReverseCollectors(){
-        requires(collector);
+public class ReverseCollectors extends CommandBase {
+    private final Collector m_collector;
+
+    public ReverseCollectors(Collector collector){
+        m_collector = collector;
+        requires(m_collector);
     }
 
     @Override
@@ -12,8 +16,8 @@ public class ReverseCollectors extends CommandBase {
 
     @Override
     protected void execute() {
-        collector.reverseMiddleConveyor();
-        collector.reverseBrush();
+        m_collector.reverseMiddleConveyor();
+        m_collector.reverseBrush();
     }
 
     @Override
@@ -23,8 +27,8 @@ public class ReverseCollectors extends CommandBase {
 
     @Override
     protected void end() {
-        collector.stopBrush();
-        collector.stopMiddleConveyor();
+        m_collector.stopBrush();
+        m_collector.stopMiddleConveyor();
     }
 
     @Override
