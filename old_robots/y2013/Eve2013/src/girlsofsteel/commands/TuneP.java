@@ -1,6 +1,5 @@
 package girlsofsteel.commands;
 
-import com.sun.squawk.util.MathUtils;
 import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.DriveFlag;
 
@@ -46,7 +45,7 @@ public class TuneP extends CommandBase {
         this.m_interval = 0.0001;
         requires(chassis);
         requires(drive);
-        int numPs = (int) MathUtils.round((m_eP - m_bP) / m_interval);
+        int numPs = (int) Math.round((m_eP - m_bP) / m_interval);
         m_counter = 0;
         m_setpointTimes = new double[3][numPs];
         m_numRates = 50;//start number -- change if too long or too short

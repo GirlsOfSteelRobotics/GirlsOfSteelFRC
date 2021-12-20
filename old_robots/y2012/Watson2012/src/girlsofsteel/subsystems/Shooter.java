@@ -1,6 +1,5 @@
 package girlsofsteel.subsystems;
 
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
@@ -297,7 +296,7 @@ public class Shooter extends Subsystem {
     }
 
     private void calculateAngle(double xDistance) {
-        m_angle = MathUtils.atan(yDistance / xDistance);//radians
+        m_angle = Math.atan(yDistance / xDistance);//radians
     }
 
     //the compensation that the speed of the ball has to go based on the

@@ -1,6 +1,5 @@
 package girlsofsteel.commands;
 
-import com.sun.squawk.util.MathUtils;
 import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.DriveFlag;
 
@@ -43,7 +42,7 @@ public class TuneI extends CommandBase {
         requires(chassis);
         requires(drive);
         m_numRates = 50;//start number -- change if too long or too short
-        int numIs = (int) MathUtils.round((m_eI - m_bI)/ m_interval)+1;
+        int numIs = (int) Math.round((m_eI - m_bI)/ m_interval)+1;
         m_rightRates = new double[numIs][m_numRates];
         m_backRates = new double[numIs][m_numRates];
         m_leftRates = new double[numIs][m_numRates];

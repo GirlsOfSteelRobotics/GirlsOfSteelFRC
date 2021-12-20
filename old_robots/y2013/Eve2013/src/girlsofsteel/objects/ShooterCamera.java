@@ -8,7 +8,6 @@ package girlsofsteel.objects;
  *
  * @author Heather
  */
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -88,7 +87,7 @@ public class ShooterCamera {
             //calculating the yDistance from the center of the camera frame to target
             //normally multiplied by the xDistance to Target, but in calculating the angle (below)
             //you need to divide by the xDistance so it is not necessary to multiply then divide
-            double angleToTarget = MathUtils.atan(yDistanceToTarget);//finding the angle difference from the center to the target
+            double angleToTarget = Math.atan(yDistanceToTarget);//finding the angle difference from the center to the target
             return angleToTarget * 180 / Math.PI;//change into degrees
         }
         return 0;
@@ -101,7 +100,7 @@ public class ShooterCamera {
             //calculating the yDistance from the center of the camera frame to target
             //normally multiplied by the xDistance to Target, but in calculating the angle (below)
             //you need to divide by the xDistance so it is not necessary to multiply then divide
-            double angleToTarget = MathUtils.atan(yDistanceToTarget);//finding the angle difference from the center to the target
+            double angleToTarget = Math.atan(yDistanceToTarget);//finding the angle difference from the center to the target
             return angleToTarget * 180 / Math.PI;//change into degrees
         }
         return 0;

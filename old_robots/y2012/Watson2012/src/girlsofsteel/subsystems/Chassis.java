@@ -1,6 +1,5 @@
 package girlsofsteel.subsystems;
 
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
@@ -337,7 +336,7 @@ public class Chassis extends Subsystem {
     }
 
     public void goToLocation(double x, double y, double degreesToFace){
-        double degreesToTurn = MathUtils.atan2(y, x)*180/Math.PI;
+        double degreesToTurn = Math.atan2(y, x)*180/Math.PI;
         double distanceToMove = Math.sqrt((x*x)+(y*y));
         turn(degreesToTurn);
         move(distanceToMove);
@@ -377,7 +376,7 @@ public class Chassis extends Subsystem {
     //checks if go to location is finished
     public boolean isGoToLocationFinished(double xDistance, double yDistance) {
         double distance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
-        double degrees = MathUtils.atan2(yDistance, xDistance)*180/Math.PI;
+        double degrees = Math.atan2(yDistance, xDistance)*180/Math.PI;
         if (isMoveFinished(distance)) {
             return isTurnFinished(degrees);
         } else {
