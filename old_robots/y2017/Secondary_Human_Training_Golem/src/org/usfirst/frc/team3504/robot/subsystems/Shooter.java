@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -41,8 +41,8 @@ public class Shooter extends Subsystem {
         m_lowShooterMotor = new CANTalon(RobotMap.LOW_SHOOTER_MOTOR);
         m_highShooterMotor = new CANTalon(RobotMap.HIGH_SHOOTER_MOTOR);
 
-        m_lowShooterMotor.changeControlMode(TalonControlMode.Speed);
-        m_highShooterMotor.changeControlMode(TalonControlMode.Speed);
+        m_lowShooterMotor.changeControlMode(ControlMode.Velocity);
+        m_highShooterMotor.changeControlMode(ControlMode.Velocity);
 
         m_lowShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_highShooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -54,20 +54,20 @@ public class Shooter extends Subsystem {
         addChild("high", m_highShooterMotor);
 
         // PID Values
-        m_lowShooterMotor.setF(0.04407); // see p 17 of motion profile manual
+        m_lowShooterMotor.config_kF(0, 0.04407); // see p 17 of motion profile manual
                                         // 0.04407
         // lowShooterMotor.setF(0); //see p 17 of motion profile manual
-        m_lowShooterMotor.setP(0.01);
-        m_lowShooterMotor.setI(0.0);
-        m_lowShooterMotor.setD(0.0);
+        m_lowShooterMotor.config_kP(0, 0.01);
+        m_lowShooterMotor.config_kI(0, 0.0);
+        m_lowShooterMotor.config_kD(0, 0.0);
 
         // PID Values
-        m_highShooterMotor.setF(0.02997); // see p 17 of motion profile manual
+        m_highShooterMotor.config_kF(0, 0.02997); // see p 17 of motion profile manual
                                         // 0.02997
         // highShooterMotor.setF(0);
-        m_highShooterMotor.setP(0.01);
-        m_highShooterMotor.setI(0.0);
-        m_highShooterMotor.setD(0.0);
+        m_highShooterMotor.config_kP(0, 0.01);
+        m_highShooterMotor.config_kI(0, 0.0);
+        m_highShooterMotor.config_kD(0, 0.0);
 
         addChild("lowShooterMotor", m_lowShooterMotor);
         addChild("highShooterMotor", m_highShooterMotor);
@@ -128,16 +128,16 @@ public class Shooter extends Subsystem {
 
     public final void setupEncoder(CANTalon talon) { // call on both talons
         // Set Encoder Types
-        talon.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+        talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         talon.reverseSensor(false);
     }
 
-    public int getHighShooterSpeed() {
-        return m_highShooterMotor.getEncVelocity();
+    public double getHighShooterSpeed() {
+        return m_highShooterMotor.getSelectedSensorVelocity();
     }
 
-    public int getLowShooterSpeed() {
-        return m_lowShooterMotor.getEncVelocity();
+    public double getLowShooterSpeed() {
+        return m_lowShooterMotor.getSelectedSensorVelocity();
     }
 
     public boolean isLowShooterMotorRunning() {

@@ -54,17 +54,17 @@ public class DriveByVision extends Command {
     protected void initialize() {
 
         // not calling setupFPID because other PID values override
-        m_leftTalon.setPosition(0);
-        m_rightTalon.setPosition(0);
+        m_leftTalon.setSelectedSensorPosition(0);
+        m_rightTalon.setSelectedSensorPosition(0);
 
         // Change motor control to speed in the -1..+1 range
         m_chassis.setSpeedMode();
 
         // tuned by janet and ziya on 2/20, overrides PID set in chassis method
-        m_leftTalon.setF(0.22); // carpet on practice field
-        m_leftTalon.setP(0.235);
-        m_rightTalon.setF(0.2);
-        m_rightTalon.setP(0.235);
+        m_leftTalon.config_kF(0, 0.22); // carpet on practice field
+        m_leftTalon.config_kP(0, 0.235);
+        m_rightTalon.config_kF(0, 0.2);
+        m_rightTalon.config_kP(0, 0.235);
 
         System.out.println("DriveByVision Initialized");
 
@@ -146,8 +146,8 @@ public class DriveByVision extends Command {
     @Override
     protected boolean isFinished() {
 
-        return ((m_tim.get() > 1 && Math.abs(m_leftTalon.getEncVelocity()) < SLIPPING_VELOCITY
-                && Math.abs(m_rightTalon.getEncVelocity()) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT));
+        return ((m_tim.get() > 1 && Math.abs(m_leftTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY
+                && Math.abs(m_rightTalon.getSelectedSensorVelocity()) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT));
     }
 
     // Called once after isFinished returns true

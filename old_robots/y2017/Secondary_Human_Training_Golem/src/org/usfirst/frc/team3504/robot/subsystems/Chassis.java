@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -37,10 +37,10 @@ public class Chassis extends Subsystem {
         m_driveRightB.setNeutralMode(NeutralMode.Brake);
         m_driveRightC.setNeutralMode(NeutralMode.Brake);
 
-        m_driveLeftB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveLeftC.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveRightB.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveRightC.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveLeftB.changeControlMode(ControlMode.Follower);
+        m_driveLeftC.changeControlMode(ControlMode.Follower);
+        m_driveRightB.changeControlMode(ControlMode.Follower);
+        m_driveRightC.changeControlMode(ControlMode.Follower);
         m_driveLeftB.set(m_driveLeftA.getDeviceID());
         m_driveLeftC.set(m_driveLeftA.getDeviceID());
         m_driveRightB.set(m_driveRightA.getDeviceID());
@@ -91,7 +91,7 @@ public class Chassis extends Subsystem {
     public final void setupEncoder(CANTalon talon) { // only call this on non-follower
                                                 // talons
         // Set Encoder Types
-        talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+        talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
         talon.reverseSensor(false);
     }
@@ -99,11 +99,11 @@ public class Chassis extends Subsystem {
     public void setupFPID(CANTalon talon) { // values work with QuadEncoder for
                                             // drive talons
         // PID Values
-        talon.setPosition(0);
-        talon.setF(0);
-        talon.setP(0.32); // 0.64 good
-        talon.setI(0.0);
-        talon.setD(0.0);
+        talon.setSelectedSensorPosition(0);
+        talon.config_kF(0, 0);
+        talon.config_kP(0, 0.32); // 0.64 good
+        talon.config_kI(0, 0.0);
+        talon.config_kD(0, 0.0);
     }
 
     public void turn(double speed, double curve) {
@@ -116,23 +116,23 @@ public class Chassis extends Subsystem {
     }
 
     public void setPositionMode() {
-        m_driveLeftA.changeControlMode(TalonControlMode.Position);
-        m_driveRightA.changeControlMode(TalonControlMode.Position);
+        m_driveLeftA.changeControlMode(ControlMode.Position);
+        m_driveRightA.changeControlMode(ControlMode.Position);
     }
 
     public void setPercentVbusMode() {
-        m_driveLeftA.changeControlMode(TalonControlMode.PercentVbus);
-        m_driveRightA.changeControlMode(TalonControlMode.PercentVbus);
+        m_driveLeftA.changeControlMode(ControlMode.PercentOutput);
+        m_driveRightA.changeControlMode(ControlMode.PercentOutput);
     }
 
     public void setSpeedMode() {
-        m_driveLeftA.changeControlMode(TalonControlMode.Speed);
-        m_driveRightA.changeControlMode(TalonControlMode.Speed);
+        m_driveLeftA.changeControlMode(ControlMode.Velocity);
+        m_driveRightA.changeControlMode(ControlMode.Velocity);
     }
 
     public void setMotionProfileMode() {
-        m_driveLeftA.changeControlMode(TalonControlMode.MotionProfile);
-        m_driveRightA.changeControlMode(TalonControlMode.MotionProfile);
+        m_driveLeftA.changeControlMode(ControlMode.MotionProfile);
+        m_driveRightA.changeControlMode(ControlMode.MotionProfile);
     }
 
 }

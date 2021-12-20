@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -22,9 +22,9 @@ public class Shooter extends Subsystem {
 
     public Shooter() {
         m_shooterMotor1 = new CANTalon(RobotMap.SHOOTER_MOTOR_A);
-        m_shooterMotor1.changeControlMode(TalonControlMode.PercentVbus);
+        m_shooterMotor1.changeControlMode(ControlMode.PercentOutput);
         m_shooterMotor2 = new CANTalon(RobotMap.SHOOTER_MOTOR_B);
-        m_shooterMotor2.changeControlMode(TalonControlMode.PercentVbus);
+        m_shooterMotor2.changeControlMode(ControlMode.PercentOutput);
         addChild("Talon", m_shooterMotor1);
         addChild("Talon", m_shooterMotor2);
         m_shooterPiston1 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);

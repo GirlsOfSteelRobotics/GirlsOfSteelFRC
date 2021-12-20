@@ -49,30 +49,30 @@ public class TurnByDistance extends Command {
         // Robot.chassis.setupFPID(rightTalon);
 
         if (m_speed == Shifters.Speed.kLow){
-            m_leftTalon.setP(0.17);
-            m_rightTalon.setP(0.17);
+            m_leftTalon.config_kP(0, 0.17);
+            m_rightTalon.config_kP(0, 0.17);
 
-            m_leftTalon.setI(0.0);
-            m_rightTalon.setI(0.0);
+            m_leftTalon.config_kI(0, 0.0);
+            m_rightTalon.config_kI(0, 0.0);
 
-            m_leftTalon.setD(0.02);
-            m_rightTalon.setD(0.02);
+            m_leftTalon.config_kD(0, 0.02);
+            m_rightTalon.config_kD(0, 0.02);
 
-            m_leftTalon.setF(0.0);
-            m_rightTalon.setF(0.0);
+            m_leftTalon.config_kF(0, 0.0);
+            m_rightTalon.config_kF(0, 0.0);
         }
         else if (m_speed == Shifters.Speed.kHigh){
-            m_leftTalon.setP(0.02);
-            m_rightTalon.setP(0.02);
+            m_leftTalon.config_kP(0, 0.02);
+            m_rightTalon.config_kP(0, 0.02);
 
-            m_leftTalon.setI(0.0);
-            m_rightTalon.setI(0.0);
+            m_leftTalon.config_kI(0, 0.0);
+            m_rightTalon.config_kI(0, 0.0);
 
-            m_leftTalon.setD(0.04);
-            m_rightTalon.setD(0.04);
+            m_leftTalon.config_kD(0, 0.04);
+            m_rightTalon.config_kD(0, 0.04);
 
-            m_leftTalon.setF(0.0);
-            m_rightTalon.setF(0.0);
+            m_leftTalon.config_kF(0, 0.0);
+            m_rightTalon.config_kF(0, 0.0);
         }
 
 
@@ -81,8 +81,8 @@ public class TurnByDistance extends Command {
 
         System.out.println("TurnByDistance Started " + m_rotationsRight + m_rotationsLeft);
 
-        m_leftInitial = -m_leftTalon.getPosition();
-        m_rightInitial = m_rightTalon.getPosition();
+        m_leftInitial = -m_leftTalon.getSelectedSensorPosition();
+        m_rightInitial = m_rightTalon.getSelectedSensorPosition();
 
         m_leftTalon.set(-(m_rotationsLeft + m_leftInitial));
         m_rightTalon.set(m_rotationsRight + m_rightInitial);
@@ -98,8 +98,8 @@ public class TurnByDistance extends Command {
         m_rightTalon.set(m_rotationsRight + m_rightInitial);
 
         SmartDashboard.putNumber("Drive Talon Left Goal", -m_rotationsLeft);
-        SmartDashboard.putNumber("Drive Talon Left Position", m_leftTalon.getPosition());
-        SmartDashboard.putNumber("Drive Talon Left Error", m_leftTalon.getError());
+        SmartDashboard.putNumber("Drive Talon Left Position", m_leftTalon.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Drive Talon Left Error", m_leftTalon.getClosedLoopError());
 
         //System.out.println("Left Goal " + (-(rotations + leftInitial)) + " Right Goal " + (rotations + rightInitial));
         //System.out.println("Left Position " + leftTalon.getPosition() + " Right Position " + rightTalon.getPosition());

@@ -1,6 +1,5 @@
 package girlsofsteel.objects;
 
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.UnnecessaryLocalBeforeReturn"})
@@ -36,7 +35,7 @@ public class Camera {
         //calculating the yDistance from the center of the camera frame to target
         //normally multiplied by the xDistance to Target, but in calculating the angle (below)
         //you need to divide by the xDistance so it is not necessary to multiply then divide
-        double angleToTarget = MathUtils.atan(yDistanceToTarget);//finding the angle difference from the center to the target
+        double angleToTarget = Math.atan(yDistanceToTarget);//finding the angle difference from the center to the target
         return angleToTarget * 180 / Math.PI;//change into degrees
         /*
         double xDifference = getHorizontalDifference();
@@ -69,7 +68,7 @@ public class Camera {
     public static double getAngleToTopTarget(){
         double xDistance = getXDistance();
         double distanceToTopTarget = getDistanceToTopTarget();
-        double angleToTopTarget = MathUtils.acos(xDistance) / distanceToTopTarget;
+        double angleToTopTarget = Math.acos(xDistance) / distanceToTopTarget;
         return angleToTopTarget;
     }
 

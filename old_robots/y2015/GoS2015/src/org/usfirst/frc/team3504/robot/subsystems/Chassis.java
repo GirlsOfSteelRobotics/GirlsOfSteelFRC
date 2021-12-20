@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
@@ -68,20 +69,28 @@ public class Chassis extends Subsystem {
         m_rearRightWheel.setNeutralMode(NeutralMode.Brake);
         m_rearLeftWheel.setNeutralMode(NeutralMode.Brake);
 
-        m_frontRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_frontRightWheel.setPID(kP, kI, kD);
+        m_frontRightWheel.changeControlMode(ControlMode.Velocity);
+        m_frontRightWheel.config_kP(0, kP);
+        m_frontRightWheel.config_kI(0, kI);
+        m_frontRightWheel.config_kD(0, kD);
         m_frontRightWheel.reverseSensor(true);
 
-        m_frontLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_frontLeftWheel.setPID(kP, kI, kD);
+        m_frontLeftWheel.changeControlMode(ControlMode.Velocity);
+        m_frontLeftWheel.config_kP(0, kP);
+        m_frontLeftWheel.config_kI(0, kI);
+        m_frontLeftWheel.config_kD(0, kD);
         m_frontLeftWheel.reverseSensor(true);
 
-        m_rearRightWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_rearRightWheel.setPID(kP, kI, kD);
+        m_rearRightWheel.changeControlMode(ControlMode.Velocity);
+        m_rearRightWheel.config_kP(0, kP);
+        m_rearRightWheel.config_kI(0, kI);
+        m_rearRightWheel.config_kD(0, kD);
         m_rearRightWheel.reverseSensor(true);
 
-        m_rearLeftWheel.changeControlMode(CANTalon.TalonControlMode.Speed);
-        m_rearLeftWheel.setPID(kP, kI, kD);
+        m_rearLeftWheel.changeControlMode(ControlMode.Velocity);
+        m_rearLeftWheel.config_kP(0, kP);
+        m_rearLeftWheel.config_kI(0, kI);
+        m_rearLeftWheel.config_kD(0, kD);
         m_rearLeftWheel.reverseSensor(true);
 
         m_getGyro = true;
@@ -113,30 +122,26 @@ public class Chassis extends Subsystem {
         SmartDashboard.putNumber("Bus Voltage", m_frontRightWheel.getBusVoltage());
         SmartDashboard.putNumber("Closed Loop Error", m_frontRightWheel.getClosedLoopError());
 
-        m_frontRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_frontRightWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_frontRightWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_frontRightWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_frontRightWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
         printPositionsToSmartDashboard();
 
-        m_frontLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_frontRightWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_frontRightWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_frontRightWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_frontRightWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
 
-        m_rearRightWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_rearRightWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_rearRightWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_rearRightWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_rearRightWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
 
-        m_rearLeftWheel.setPID(SmartDashboard.getNumber("P value", 0),
-        SmartDashboard.getNumber("I value", 0),
-        SmartDashboard.getNumber("D value", 0),
-        SmartDashboard.getNumber("F val", 0),
-        0, 0, 0);
+        m_rearLeftWheel.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_rearLeftWheel.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_rearLeftWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
+        m_rearLeftWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
 
         m_frontLeftWheel.set((SmartDashboard.getNumber("Front Left", 0)) * 750);
         m_frontRightWheel.set((SmartDashboard.getNumber("Front Right", 0)) * 750);
@@ -231,10 +236,10 @@ public class Chassis extends Subsystem {
                 (beattieTwistDeadBand(stick.getTwist())) * throttleSpeed(stick),
                 m_getGyro ? temp : 0);
 
-        SmartDashboard.putNumber("Sending Val Front Left", m_frontLeftWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Rear Left", m_rearLeftWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Front Right", m_frontRightWheel.getSetpoint());
-        SmartDashboard.putNumber("Sending Val Rear Right", m_rearRightWheel.getSetpoint());
+        SmartDashboard.putNumber("Sending Val Front Left", m_frontLeftWheel.getClosedLoopTarget());
+        SmartDashboard.putNumber("Sending Val Rear Left", m_rearLeftWheel.getClosedLoopTarget());
+        SmartDashboard.putNumber("Sending Val Front Right", m_frontRightWheel.getClosedLoopTarget());
+        SmartDashboard.putNumber("Sending Val Rear Right", m_rearRightWheel.getClosedLoopTarget());
 
     }
 
@@ -329,10 +334,10 @@ public class Chassis extends Subsystem {
     //	SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncPosition());//rearLeftWheel.getSpeed());
     //	SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncPosition());//rearRightWheel.getSpeed());
 
-        SmartDashboard.putNumber("Front Left Velocity", m_frontLeftWheel.getSpeed());
-        SmartDashboard.putNumber("Front Right Velocity", m_frontRightWheel.getSpeed());
-        SmartDashboard.putNumber("Back Left Velocity", m_rearLeftWheel.getSpeed());
-        SmartDashboard.putNumber("Back Right Velocity", m_rearRightWheel.getSpeed());
+        SmartDashboard.putNumber("Front Left Velocity", m_frontLeftWheel.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Front Right Velocity", m_frontRightWheel.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Back Left Velocity", m_rearLeftWheel.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Back Right Velocity", m_rearRightWheel.getSelectedSensorVelocity());
     }
 
     /**
@@ -340,10 +345,10 @@ public class Chassis extends Subsystem {
      * current encoder values for comparison after driving
      */
     public void resetDistance() {
-        m_initialFrontLeftEncoderDistance = m_frontLeftWheel.getEncPosition();
-        m_initialFrontRightEncoderDistance = m_frontRightWheel.getEncPosition();
-        m_initialRearLeftEncoderDistance = m_rearLeftWheel.getEncPosition();
-        m_initialRearRightEncoderDistance = m_rearRightWheel.getEncPosition();
+        m_initialFrontLeftEncoderDistance = m_frontLeftWheel.getSelectedSensorPosition();
+        m_initialFrontRightEncoderDistance = m_frontRightWheel.getSelectedSensorPosition();
+        m_initialRearLeftEncoderDistance = m_rearLeftWheel.getSelectedSensorPosition();
+        m_initialRearRightEncoderDistance = m_rearRightWheel.getSelectedSensorPosition();
     }
 
     /**
@@ -353,19 +358,19 @@ public class Chassis extends Subsystem {
      * right.
      */
     private double rearRightEncoderDistance() {
-        return Math.abs(m_rearRightWheel.getEncPosition() - m_initialRearRightEncoderDistance);
+        return Math.abs(m_rearRightWheel.getSelectedSensorPosition() - m_initialRearRightEncoderDistance);
     }
 
     private double frontRightEncoderDistance() {
-        return Math.abs(m_frontRightWheel.getEncPosition() - m_initialFrontRightEncoderDistance);
+        return Math.abs(m_frontRightWheel.getSelectedSensorPosition() - m_initialFrontRightEncoderDistance);
     }
 
     private double frontLeftEncoderDistance() {
-        return Math.abs(m_frontLeftWheel.getEncPosition() - m_initialFrontLeftEncoderDistance);
+        return Math.abs(m_frontLeftWheel.getSelectedSensorPosition() - m_initialFrontLeftEncoderDistance);
     }
 
     private double rearLeftEncoderDistance() {
-        return Math.abs(m_rearLeftWheel.getEncPosition() - m_initialRearLeftEncoderDistance);
+        return Math.abs(m_rearLeftWheel.getSelectedSensorPosition() - m_initialRearLeftEncoderDistance);
     }
 
     /**

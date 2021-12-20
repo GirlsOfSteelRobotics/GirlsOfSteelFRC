@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,16 +32,18 @@ public class Lifter extends Subsystem {
         SmartDashboard.putNumber("I value", 0);
         SmartDashboard.putNumber("D value", 0);
 
-        m_liftTalon.changeControlMode(CANTalon.TalonControlMode.Position);
-        m_liftTalon.setPID(SmartDashboard.getNumber("P value", 0), SmartDashboard.getNumber("I value", 0),
-                SmartDashboard.getNumber("D value", 0), 0, 0, 0, 0);
+        m_liftTalon.changeControlMode(ControlMode.Position);
+        m_liftTalon.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_liftTalon.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_liftTalon.config_kD(0, SmartDashboard.getNumber("D value", 0));
 
         SmartDashboard.putNumber("Lifter Setpoint", 1700);
     }
 
     public void tunePID() {
-        m_liftTalon.setPID(SmartDashboard.getNumber("P value", 0), SmartDashboard.getNumber("I value", 0),
-                SmartDashboard.getNumber("D value", 0), 0, 0, 0, 0);
+        m_liftTalon.config_kP(0, SmartDashboard.getNumber("P value", 0));
+        m_liftTalon.config_kI(0, SmartDashboard.getNumber("I value", 0));
+        m_liftTalon.config_kD(0, SmartDashboard.getNumber("D value", 0));
 
         m_liftTalon.set(SmartDashboard.getNumber("Lifter Setpoint", 0)); // Number of
                                                                     // encoder
@@ -65,13 +68,13 @@ public class Lifter extends Subsystem {
         SmartDashboard.putNumber("Lifter throttle", (operatorJoystick.getY()));
         if ((Math.abs(operatorJoystick.getY()) < .2)) {
             SmartDashboard.putString("In", "in throttle zero");
-            m_liftTalon.set(m_liftTalon.getSetpoint());
+            m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
         } else {
             if (isAtTop() && operatorJoystick.getY() < .2) {
-                m_liftTalon.set(m_liftTalon.getSetpoint());
+                m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
             }
             else if (isAtBottom() && operatorJoystick.getY() > .2) {
-                m_liftTalon.set(m_liftTalon.getSetpoint());
+                m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
             }
             else {
                 m_liftTalon.set(m_liftTalon.get() - (300 * operatorJoystick.getY()));
@@ -93,11 +96,11 @@ public class Lifter extends Subsystem {
     }
 
     public boolean isAtPosition() {
-        return (Math.abs(m_liftTalon.get() - m_liftTalon.getSetpoint()) <= 100);
+        return (Math.abs(m_liftTalon.get() - m_liftTalon.getClosedLoopTarget()) <= 100);
     }
 
     public void printLifter() {
-        SmartDashboard.putNumber("Lifter encoder", m_liftTalon.getEncPosition());
+        SmartDashboard.putNumber("Lifter encoder", m_liftTalon.getSelectedSensorPosition());
         SmartDashboard.putBoolean("Top Limit Switch", !m_liftTopLimit.get());
         SmartDashboard.putBoolean("Bottom Limit", !m_liftBottomLimit.get());
     }

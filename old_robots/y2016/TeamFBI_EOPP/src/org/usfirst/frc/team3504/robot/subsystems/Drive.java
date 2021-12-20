@@ -2,6 +2,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,10 +32,10 @@ public class Drive extends Subsystem {
 
         // Follower: The m_motor will run at the same throttle as the specified
         // other talon.
-        m_driveSystemDriveLeft1.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveSystemDriveLeft2.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveSystemDriveRight1.changeControlMode(CANTalon.TalonControlMode.Follower);
-        m_driveSystemDriveRight2.changeControlMode(CANTalon.TalonControlMode.Follower);
+        m_driveSystemDriveLeft1.changeControlMode(ControlMode.Follower);
+        m_driveSystemDriveLeft2.changeControlMode(ControlMode.Follower);
+        m_driveSystemDriveRight1.changeControlMode(ControlMode.Follower);
+        m_driveSystemDriveRight2.changeControlMode(ControlMode.Follower);
         //set arguments refer to CANTalon port numbers
         m_driveSystemDriveLeft1.set(0);
         m_driveSystemDriveRight1.set(1);

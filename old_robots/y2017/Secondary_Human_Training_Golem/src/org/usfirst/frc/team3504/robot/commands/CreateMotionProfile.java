@@ -51,8 +51,8 @@ public class CreateMotionProfile extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_leftInitial = m_leftTalon.getPosition();
-        m_rightInitial = m_rightTalon.getPosition();
+        m_leftInitial = m_leftTalon.getSelectedSensorPosition();
+        m_rightInitial = m_rightTalon.getSelectedSensorPosition();
 
         m_leftTrajectory.clear();
         m_rightTrajectory.clear();
@@ -69,11 +69,11 @@ public class CreateMotionProfile extends Command {
         m_leftPoint.clear();
         m_rightPoint.clear();
 
-        double leftPosition = (double) m_leftTalon.getPosition() - m_leftInitial; // in rotations
-        double rightPosition = (double) m_rightTalon.getPosition() - m_rightInitial;
+        double leftPosition = m_leftTalon.getSelectedSensorPosition() - m_leftInitial; // in rotations
+        double rightPosition = m_rightTalon.getSelectedSensorPosition() - m_rightInitial;
 
-        double leftVelocity = (double) m_leftTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
-        double rightVelocity = (double) m_rightTalon.getEncVelocity() / RobotMap.CODES_PER_WHEEL_REV;
+        double leftVelocity = m_leftTalon.getSelectedSensorVelocity() / RobotMap.CODES_PER_WHEEL_REV;
+        double rightVelocity = m_rightTalon.getSelectedSensorVelocity() / RobotMap.CODES_PER_WHEEL_REV;
 
         /* Other way of getting velocity: divide change in position by time
 

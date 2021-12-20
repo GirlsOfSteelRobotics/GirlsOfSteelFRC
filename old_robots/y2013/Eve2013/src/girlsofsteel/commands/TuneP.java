@@ -1,15 +1,14 @@
 package girlsofsteel.commands;
 
-import com.sun.squawk.io.BufferedReader;
-import com.sun.squawk.microedition.io.FileConnection;
-import com.sun.squawk.util.MathUtils;
 import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.DriveFlag;
 
-import javax.microedition.io.Connector;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @SuppressWarnings({"PMD.TooManyFields", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class TuneP extends CommandBase {
@@ -46,7 +45,7 @@ public class TuneP extends CommandBase {
         this.m_interval = 0.0001;
         requires(chassis);
         requires(drive);
-        int numPs = (int) MathUtils.round((m_eP - m_bP) / m_interval);
+        int numPs = (int) Math.round((m_eP - m_bP) / m_interval);
         m_counter = 0;
         m_setpointTimes = new double[3][numPs];
         m_numRates = 50;//start number -- change if too long or too short
@@ -237,24 +236,20 @@ public class TuneP extends CommandBase {
         String url = "file///Tune_P.txt";
 
         String contents = "";
-        try (FileConnection c = Connector.open(url);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                 c.openDataInputStream()))){
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+            Files.newInputStream(Paths.get(url))))){
             String line;
             while((line = reader.readLine()) != null){
                 contents += line + "\n";
             }
-            c.close();
         }catch(IOException ex){
             ex.printStackTrace(); // NOPMD
         }
 
-        try (FileConnection c = Connector.open(url);
-             OutputStreamWriter writer = new OutputStreamWriter(
-                 c.openDataOutputStream())){
+        try (OutputStreamWriter writer = new OutputStreamWriter(
+            Files.newOutputStream(Paths.get(url)))) {
 
             writer.write(contents + message);
-            c.close();
         }catch(IOException ex){
             ex.printStackTrace(); // NOPMD
         }

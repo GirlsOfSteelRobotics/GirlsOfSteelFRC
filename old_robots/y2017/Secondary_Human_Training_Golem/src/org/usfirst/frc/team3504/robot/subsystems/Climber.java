@@ -25,13 +25,13 @@ public class Climber extends Subsystem {
         m_climbMotorA.setNeutralMode(NeutralMode.Brake);
         m_climbMotorB.setNeutralMode(NeutralMode.Brake);
 
-        m_climbMotorA.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+        m_climbMotorA.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         m_climbMotorA.reverseSensor(true);
 
-        m_climbMotorA.setF(0);
-        m_climbMotorA.setP(0.5);
-        m_climbMotorA.setI(0);
-        m_climbMotorA.setD(0);
+        m_climbMotorA.config_kF(0, 0);
+        m_climbMotorA.config_kP(0, 0.5);
+        m_climbMotorA.config_kI(0, 0);
+        m_climbMotorA.config_kD(0, 0);
 
 
         addChild("climbMotorA", m_climbMotorA);
@@ -47,7 +47,7 @@ public class Climber extends Subsystem {
     }
 
     public double getPosition() {
-        return m_climbMotorA.getPosition();
+        return m_climbMotorA.getSelectedSensorPosition();
     }
 
     public void stopClimb() {
