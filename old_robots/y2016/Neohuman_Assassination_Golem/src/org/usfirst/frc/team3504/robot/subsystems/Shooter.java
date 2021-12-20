@@ -22,9 +22,7 @@ public class Shooter extends Subsystem {
 
     public Shooter() {
         m_shooterMotor1 = new CANTalon(RobotMap.SHOOTER_MOTOR_A);
-        m_shooterMotor1.changeControlMode(ControlMode.PercentOutput);
         m_shooterMotor2 = new CANTalon(RobotMap.SHOOTER_MOTOR_B);
-        m_shooterMotor2.changeControlMode(ControlMode.PercentOutput);
         addChild("Talon", m_shooterMotor1);
         addChild("Talon", m_shooterMotor2);
         m_shooterPiston1 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
@@ -53,13 +51,13 @@ public class Shooter extends Subsystem {
 
     public void spinWheels(double speed) {
         //add a wait
-        m_shooterMotor1.set(speed);
-        m_shooterMotor2.set(-speed);
+        m_shooterMotor1.set(ControlMode.PercentOutput, speed);
+        m_shooterMotor2.set(ControlMode.PercentOutput, -speed);
     }
 
     public void stop() {
         //add a wait
-        m_shooterMotor1.set(0.0);
-        m_shooterMotor2.set(0.0);
+        m_shooterMotor1.set(ControlMode.PercentOutput, 0.0);
+        m_shooterMotor2.set(ControlMode.PercentOutput, 0.0);
     }
 }

@@ -32,7 +32,6 @@ public class Lifter extends Subsystem {
         SmartDashboard.putNumber("I value", 0);
         SmartDashboard.putNumber("D value", 0);
 
-        m_liftTalon.changeControlMode(ControlMode.Position);
         m_liftTalon.config_kP(0, SmartDashboard.getNumber("P value", 0));
         m_liftTalon.config_kI(0, SmartDashboard.getNumber("I value", 0));
         m_liftTalon.config_kD(0, SmartDashboard.getNumber("D value", 0));
@@ -45,21 +44,21 @@ public class Lifter extends Subsystem {
         m_liftTalon.config_kI(0, SmartDashboard.getNumber("I value", 0));
         m_liftTalon.config_kD(0, SmartDashboard.getNumber("D value", 0));
 
-        m_liftTalon.set(SmartDashboard.getNumber("Lifter Setpoint", 0)); // Number of
+        m_liftTalon.set(ControlMode.Position, SmartDashboard.getNumber("Lifter Setpoint", 0)); // Number of
                                                                     // encoder
                                                                     // ticks
     }
 
     public void setPosition(double distance) {
-        m_liftTalon.set(distance);
+        m_liftTalon.set(ControlMode.Position, distance);
     }
 
     public boolean isAtTopLevel() {
-        return (m_liftTalon.get() == DISTANCE_FOUR_TOTES);
+        return (m_liftTalon.getSelectedSensorPosition() == DISTANCE_FOUR_TOTES);
     }
 
     public boolean isAtBottomLevel() {
-        return (m_liftTalon.get() == DISTANCE_ZERO_TOTES);
+        return (m_liftTalon.getSelectedSensorPosition() == DISTANCE_ZERO_TOTES);
     }
 
     public void moveByJoystick(Joystick operatorJoystick) {
@@ -68,35 +67,35 @@ public class Lifter extends Subsystem {
         SmartDashboard.putNumber("Lifter throttle", (operatorJoystick.getY()));
         if ((Math.abs(operatorJoystick.getY()) < .2)) {
             SmartDashboard.putString("In", "in throttle zero");
-            m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
+            m_liftTalon.set(ControlMode.Position, m_liftTalon.getClosedLoopTarget());
         } else {
             if (isAtTop() && operatorJoystick.getY() < .2) {
-                m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
+                m_liftTalon.set(ControlMode.Position, m_liftTalon.getClosedLoopTarget());
             }
             else if (isAtBottom() && operatorJoystick.getY() > .2) {
-                m_liftTalon.set(m_liftTalon.getClosedLoopTarget());
+                m_liftTalon.set(ControlMode.Position, m_liftTalon.getClosedLoopTarget());
             }
             else {
-                m_liftTalon.set(m_liftTalon.get() - (300 * operatorJoystick.getY()));
+                m_liftTalon.set(ControlMode.Position, m_liftTalon.getSelectedSensorPosition() - (300 * operatorJoystick.getY()));
             }
             SmartDashboard.putString("In", "not in throttle zero");
         }
     }
 
     public void moveUpVelocityControl() {
-        m_liftTalon.set(.5);
+        m_liftTalon.set(ControlMode.PercentOutput, .5);
     }
 
     public void moveDownVelocityControl() {
-        m_liftTalon.set(-.5);
+        m_liftTalon.set(ControlMode.PercentOutput, -.5);
     }
 
     public void stopMotorsVelocityControl() {
-        m_liftTalon.set(0);
+        m_liftTalon.set(ControlMode.PercentOutput, 0);
     }
 
     public boolean isAtPosition() {
-        return (Math.abs(m_liftTalon.get() - m_liftTalon.getClosedLoopTarget()) <= 100);
+        return (Math.abs(m_liftTalon.getSelectedSensorPosition() - m_liftTalon.getClosedLoopTarget()) <= 100);
     }
 
     public void printLifter() {
@@ -106,7 +105,7 @@ public class Lifter extends Subsystem {
     }
 
     public void stop() {
-        m_liftTalon.set(m_liftTalon.get());
+        m_liftTalon.set(ControlMode.Position, m_liftTalon.getSelectedSensorPosition());
     }
 
     public boolean isAtTop() {

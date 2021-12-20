@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -15,8 +14,6 @@ public class TurnByDistance extends Command {
     private final double m_rotationsRight;
     private final double m_rotationsLeft;
 
-    private final CANTalon m_leftTalon;
-    private final CANTalon m_rightTalon;
     private final Chassis m_chassis;
     private final Shifters m_shifters;
 
@@ -32,8 +29,6 @@ public class TurnByDistance extends Command {
 
         m_shifters = shifters;
         m_chassis = chassis;
-        m_leftTalon = chassis.getLeftTalon();
-        m_rightTalon = chassis.getRightTalon();
 
         requires(chassis);
     }
@@ -41,7 +36,6 @@ public class TurnByDistance extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_chassis.setPositionMode();
 
         m_shifters.shiftGear(m_speed);
 
@@ -49,30 +43,10 @@ public class TurnByDistance extends Command {
         // Robot.chassis.setupFPID(rightTalon);
 
         if (m_speed == Shifters.Speed.kLow){
-            m_leftTalon.config_kP(0, 0.17);
-            m_rightTalon.config_kP(0, 0.17);
-
-            m_leftTalon.config_kI(0, 0.0);
-            m_rightTalon.config_kI(0, 0.0);
-
-            m_leftTalon.config_kD(0, 0.02);
-            m_rightTalon.config_kD(0, 0.02);
-
-            m_leftTalon.config_kF(0, 0.0);
-            m_rightTalon.config_kF(0, 0.0);
+            m_chassis.setPid(0.17, 0.0, 0.02, 0.0);
         }
         else if (m_speed == Shifters.Speed.kHigh){
-            m_leftTalon.config_kP(0, 0.02);
-            m_rightTalon.config_kP(0, 0.02);
-
-            m_leftTalon.config_kI(0, 0.0);
-            m_rightTalon.config_kI(0, 0.0);
-
-            m_leftTalon.config_kD(0, 0.04);
-            m_rightTalon.config_kD(0, 0.04);
-
-            m_leftTalon.config_kF(0, 0.0);
-            m_rightTalon.config_kF(0, 0.0);
+            m_chassis.setPid(0.02, 0.0, 0.04, 0.0);
         }
 
 
@@ -81,11 +55,11 @@ public class TurnByDistance extends Command {
 
         System.out.println("TurnByDistance Started " + m_rotationsRight + m_rotationsLeft);
 
-        m_leftInitial = -m_leftTalon.getSelectedSensorPosition();
-        m_rightInitial = m_rightTalon.getSelectedSensorPosition();
+        m_leftInitial = -m_chassis.getLeftPosition();
+        m_rightInitial = m_chassis.getRightPosition();
 
-        m_leftTalon.set(-(m_rotationsLeft + m_leftInitial));
-        m_rightTalon.set(m_rotationsRight + m_rightInitial);
+
+        m_chassis.setPositionGoal(-(m_rotationsLeft + m_leftInitial), m_rotationsRight + m_rightInitial);
 
         System.out.println("LeftInitial: " + m_leftInitial + " RightInitial: " + m_rightInitial);
 
@@ -94,12 +68,11 @@ public class TurnByDistance extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_leftTalon.set(-(m_rotationsLeft + m_leftInitial));
-        m_rightTalon.set(m_rotationsRight + m_rightInitial);
+        m_chassis.setPositionGoal(-(m_rotationsLeft + m_leftInitial), m_rotationsRight + m_rightInitial);
 
         SmartDashboard.putNumber("Drive Talon Left Goal", -m_rotationsLeft);
-        SmartDashboard.putNumber("Drive Talon Left Position", m_leftTalon.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Drive Talon Left Error", m_leftTalon.getClosedLoopError());
+        SmartDashboard.putNumber("Drive Talon Left Position", m_chassis.getLeftPosition());
+        SmartDashboard.putNumber("Drive Talon Left Error", m_chassis.getClosedLoopError());
 
         //System.out.println("Left Goal " + (-(rotations + leftInitial)) + " Right Goal " + (rotations + rightInitial));
         //System.out.println("Left Position " + leftTalon.getPosition() + " Right Position " + rightTalon.getPosition());

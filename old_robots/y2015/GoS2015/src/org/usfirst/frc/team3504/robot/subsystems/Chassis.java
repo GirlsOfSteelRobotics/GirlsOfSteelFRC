@@ -69,29 +69,25 @@ public class Chassis extends Subsystem {
         m_rearRightWheel.setNeutralMode(NeutralMode.Brake);
         m_rearLeftWheel.setNeutralMode(NeutralMode.Brake);
 
-        m_frontRightWheel.changeControlMode(ControlMode.Velocity);
         m_frontRightWheel.config_kP(0, kP);
         m_frontRightWheel.config_kI(0, kI);
         m_frontRightWheel.config_kD(0, kD);
-        m_frontRightWheel.reverseSensor(true);
+        m_frontRightWheel.setSensorPhase(false);
 
-        m_frontLeftWheel.changeControlMode(ControlMode.Velocity);
         m_frontLeftWheel.config_kP(0, kP);
         m_frontLeftWheel.config_kI(0, kI);
         m_frontLeftWheel.config_kD(0, kD);
-        m_frontLeftWheel.reverseSensor(true);
+        m_frontLeftWheel.setSensorPhase(false);
 
-        m_rearRightWheel.changeControlMode(ControlMode.Velocity);
         m_rearRightWheel.config_kP(0, kP);
         m_rearRightWheel.config_kI(0, kI);
         m_rearRightWheel.config_kD(0, kD);
-        m_rearRightWheel.reverseSensor(true);
+        m_rearRightWheel.setSensorPhase(false);
 
-        m_rearLeftWheel.changeControlMode(ControlMode.Velocity);
         m_rearLeftWheel.config_kP(0, kP);
         m_rearLeftWheel.config_kI(0, kI);
         m_rearLeftWheel.config_kD(0, kD);
-        m_rearLeftWheel.reverseSensor(true);
+        m_rearLeftWheel.setSensorPhase(false);
 
         m_getGyro = true;
 
@@ -143,10 +139,10 @@ public class Chassis extends Subsystem {
         m_rearLeftWheel.config_kD(0, SmartDashboard.getNumber("D value", 0));
         m_rearLeftWheel.config_kF(0, SmartDashboard.getNumber("F val", 0));
 
-        m_frontLeftWheel.set((SmartDashboard.getNumber("Front Left", 0)) * 750);
-        m_frontRightWheel.set((SmartDashboard.getNumber("Front Right", 0)) * 750);
-        m_rearRightWheel.set((SmartDashboard.getNumber("Rear Right", 0)) * 750);
-        m_rearLeftWheel.set(SmartDashboard.getNumber("Rear Left", 0) * 750);
+        m_frontLeftWheel.set(ControlMode.Velocity, (SmartDashboard.getNumber("Front Left", 0)) * 750);
+        m_frontRightWheel.set(ControlMode.Velocity, (SmartDashboard.getNumber("Front Right", 0)) * 750);
+        m_rearRightWheel.set(ControlMode.Velocity, (SmartDashboard.getNumber("Rear Right", 0)) * 750);
+        m_rearLeftWheel.set(ControlMode.Velocity, SmartDashboard.getNumber("Rear Left", 0) * 750);
     }
 
     /**

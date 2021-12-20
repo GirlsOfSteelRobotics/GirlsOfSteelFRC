@@ -22,8 +22,6 @@ public class SwitchToDriveForward extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_chassis.setPercentVbusMode();
-
         m_oi.setDriveDirection(DriveDirection.kFWD);
     }
 

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -21,13 +22,7 @@ public class Pivot extends Subsystem {
         m_pivotMotor = new CANTalon(RobotMap.PIVOT_MOTOR);
         addChild("Talon", m_pivotMotor);
 
-        if(RobotMap.USING_LIMIT_SWITCHES) {
-            m_pivotMotor.configFwdLimitSwitchNormallyOpen(false);
-            m_pivotMotor.configRevLimitSwitchNormallyOpen(false);
-        }
-        else {
-            m_pivotMotor.enableLimitSwitch(false, false);
-        }
+        m_pivotMotor.overrideSoftLimitsEnable(!RobotMap.USING_LIMIT_SWITCHES);
         m_pivotMotor.setNeutralMode(NeutralMode.Brake);
 
     }
@@ -45,7 +40,7 @@ public class Pivot extends Subsystem {
     }
 
     public void tiltUpandDown(double speed) {
-        m_pivotMotor.set(-speed);
+        m_pivotMotor.set(ControlMode.PercentOutput, -speed);
     }
 
     @Override

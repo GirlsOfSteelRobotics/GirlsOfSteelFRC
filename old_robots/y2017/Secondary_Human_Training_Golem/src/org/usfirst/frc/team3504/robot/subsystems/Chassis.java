@@ -37,14 +37,10 @@ public class Chassis extends Subsystem {
         m_driveRightB.setNeutralMode(NeutralMode.Brake);
         m_driveRightC.setNeutralMode(NeutralMode.Brake);
 
-        m_driveLeftB.changeControlMode(ControlMode.Follower);
-        m_driveLeftC.changeControlMode(ControlMode.Follower);
-        m_driveRightB.changeControlMode(ControlMode.Follower);
-        m_driveRightC.changeControlMode(ControlMode.Follower);
-        m_driveLeftB.set(m_driveLeftA.getDeviceID());
-        m_driveLeftC.set(m_driveLeftA.getDeviceID());
-        m_driveRightB.set(m_driveRightA.getDeviceID());
-        m_driveRightC.set(m_driveRightA.getDeviceID());
+        m_driveLeftB.follow(m_driveLeftA);
+        m_driveLeftC.follow(m_driveLeftA);
+        m_driveRightB.follow(m_driveRightA);
+        m_driveRightC.follow(m_driveRightA);
 
         setupEncoder(m_driveLeftA);
         setupEncoder(m_driveRightA);
@@ -58,6 +54,10 @@ public class Chassis extends Subsystem {
 
         m_robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
         m_robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
+
+        // V per sec; 12 = zero to full speed in 1 second
+        m_driveLeftA.configOpenloopRamp(1.0);
+        m_driveRightA.configOpenloopRamp(1.0);
 
         addChild("driveLeftA", m_driveLeftA);
         addChild("driveLeftB", m_driveLeftB);
@@ -92,11 +92,15 @@ public class Chassis extends Subsystem {
                                                 // talons
         // Set Encoder Types
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        talon.configEncoderCodesPerRev((int) RobotMap.CODES_PER_WHEEL_REV);
-        talon.reverseSensor(false);
+        talon.setSensorPhase(true);
     }
 
-    public void setupFPID(CANTalon talon) { // values work with QuadEncoder for
+    public void setupDefaultFPID() { // values work with QuadEncoder for
+        setupDefaultFPID(m_driveLeftA);
+        setupDefaultFPID(m_driveLeftB);
+    }
+
+    private void setupDefaultFPID(CANTalon talon) { // values work with QuadEncoder for
                                             // drive talons
         // PID Values
         talon.setSelectedSensorPosition(0);
@@ -111,28 +115,56 @@ public class Chassis extends Subsystem {
     }
 
     public void stop() {
-        m_driveLeftA.set(0);
-        m_driveRightA.set(0);
+        m_driveLeftA.set(ControlMode.PercentOutput, 0);
+        m_driveRightA.set(ControlMode.PercentOutput, 0);
     }
 
-    public void setPositionMode() {
-        m_driveLeftA.changeControlMode(ControlMode.Position);
-        m_driveRightA.changeControlMode(ControlMode.Position);
+    public double getLeftPosition() {
+        return m_driveLeftA.getSelectedSensorPosition();
     }
 
-    public void setPercentVbusMode() {
-        m_driveLeftA.changeControlMode(ControlMode.PercentOutput);
-        m_driveRightA.changeControlMode(ControlMode.PercentOutput);
+    public double getRightPosition() {
+        return m_driveRightA.getSelectedSensorPosition();
     }
 
-    public void setSpeedMode() {
-        m_driveLeftA.changeControlMode(ControlMode.Velocity);
-        m_driveRightA.changeControlMode(ControlMode.Velocity);
+    public double getLeftVelocity() {
+        return m_driveLeftA.getSelectedSensorVelocity();
     }
 
-    public void setMotionProfileMode() {
-        m_driveLeftA.changeControlMode(ControlMode.MotionProfile);
-        m_driveRightA.changeControlMode(ControlMode.MotionProfile);
+    public double getRightVelocity() {
+        return m_driveRightA.getSelectedSensorVelocity();
     }
 
+    public void setPid(double p, double i, double d, double f) {
+        m_driveLeftA.config_kP(0, p);
+        m_driveRightA.config_kP(0, p);
+
+        m_driveLeftA.config_kI(0,i);
+        m_driveRightA.config_kI(0, i);
+
+        m_driveLeftA.config_kD(0, d);
+        m_driveRightA.config_kD(0, d);
+
+        m_driveLeftA.config_kF(0, f);
+        m_driveRightA.config_kF(0, f);
+    }
+
+    public void setEncoderPositions(double left, double right) {
+        m_driveLeftA.setSelectedSensorPosition(left);
+        m_driveRightA.setSelectedSensorPosition(right);
+    }
+
+    public void setPositionGoal(double leftGoal, double rightGoal) {
+        m_driveLeftA.set(ControlMode.Position, leftGoal);
+        m_driveRightA.set(ControlMode.Position, rightGoal);
+    }
+
+    public void setVelocityGoal(double left, double right) {
+        m_driveLeftA.set(ControlMode.Velocity, left);
+        m_driveRightA.set(ControlMode.Velocity, right);
+    }
+
+    public double getClosedLoopError() {
+        return m_driveLeftA.getClosedLoopError();
+    }
 }

@@ -1,8 +1,5 @@
 package girlsofsteel;
 
-import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
-import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import girlsofsteel.commands.BridgeDown;
@@ -27,7 +24,7 @@ import girlsofsteel.subsystems.Collector;
 import girlsofsteel.subsystems.Shooter;
 import girlsofsteel.subsystems.Turret;
 
-@SuppressWarnings({"PMD.GodClass", "PMD.TooManyFields", "PMD.AvoidPrintStackTrace", "PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
+@SuppressWarnings({"PMD.GodClass", "PMD.TooManyFields", "PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class OI {
 
     //driving scales (percentage of max power)
@@ -120,8 +117,12 @@ public class OI {
     private int m_currValue;
     private int m_preValue;
 
+    private static final int ENHANCED_IO_JOYSTICK_PORT = 3;
+    private final Joystick m_enhancedIoJoystick;
+
     //  Default Constructor
     public OI(Chassis chassis, Shooter shooter, Collector collector, Turret turret, Bridge bridge) {
+        m_enhancedIoJoystick = new Joystick(ENHANCED_IO_JOYSTICK_PORT);
 
         m_driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
 
@@ -188,29 +189,21 @@ public class OI {
     }
 
     public boolean isShootRunning() {
-        try {
-            if (DriverStationEnhancedIO.getInstance().getDigital(AUTO_SHOOT_PHYSICAL_BUTTON)) {
-                m_stopShooterRunning = false;
-                m_autoShootRunning = true;
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + m_stopShooterRunning);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + m_autoShootRunning);
-            }
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
+        if (m_enhancedIoJoystick.getRawButton(AUTO_SHOOT_PHYSICAL_BUTTON)) {
+            m_stopShooterRunning = false;
+            m_autoShootRunning = true;
+            System.out.println("Stop Shoot:" + m_stopShooterRunning);
+            System.out.println("Shoot:" + m_autoShootRunning);
         }
         return m_autoShootRunning;
     }
 
     public boolean isStopShooterRunning() {
-        try {
-            if (DriverStationEnhancedIO.getInstance().getDigital(STOP_SHOOTER_PHYSICAL_BUTTON)) {
-                m_stopShooterRunning = true;
-                m_autoShootRunning = false;
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Stop Shoot:" + m_stopShooterRunning);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Shoot:" + m_autoShootRunning);
-            }
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
+        if (m_enhancedIoJoystick.getRawButton(STOP_SHOOTER_PHYSICAL_BUTTON)) {
+            m_stopShooterRunning = true;
+            m_autoShootRunning = false;
+            System.out.println("Stop Shoot:" + m_stopShooterRunning);
+            System.out.println("Shoot:" + m_autoShootRunning);
         }
         return m_stopShooterRunning;
     }
@@ -219,7 +212,7 @@ public class OI {
     public boolean areTopRollersOverriden() {
 //        double switchValue = 0.0;
 //        try {
-//            switchValue = DriverStationEnhancedIO.getInstance().getAnalogIn(TOP_ROLLERS_OVERRIDE_SWITCH);
+//            switchValue = m_enhancedIoJoystick.getRawAxis(TOP_ROLLERS_OVERRIDE_SWITCH);
 //        } catch (EnhancedIOException ex) {
 //            ex.printStackTrace();
 //        }
@@ -233,13 +226,7 @@ public class OI {
     }
 
     public boolean isButtonPressed(int buttonNumber) {
-        boolean buttonValue = false;
-        try {
-            buttonValue = DriverStationEnhancedIO.getInstance().getDigital(buttonNumber);
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        return buttonValue;
+        return m_enhancedIoJoystick.getRawButton(buttonNumber);
     }
 
     //switches
@@ -279,14 +266,9 @@ public class OI {
     }
 
     private int getSwitchValue(int channelA, int channelB) {
-        boolean digitalInputA = true;
-        boolean digitalInputB = true;
-        try {
-            digitalInputA = DriverStationEnhancedIO.getInstance().getDigital(channelA);
-            digitalInputB = DriverStationEnhancedIO.getInstance().getDigital(channelB);
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
+        boolean digitalInputA = m_enhancedIoJoystick.getRawButton(channelA);
+        boolean digitalInputB = m_enhancedIoJoystick.getRawButton(channelB);
+
         int switchValue;
         if (digitalInputA && !digitalInputB) {
             switchValue = 3;
@@ -296,7 +278,7 @@ public class OI {
             switchValue = 1;
         } else { //THIS SHOULD NEVER HAPPEN.
             switchValue = 4;
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "ERROR WITH THE SWITCH VALUE");
+            System.out.println("ERROR WITH THE SWITCH VALUE");
         }
         return switchValue;
     }
@@ -366,23 +348,13 @@ public class OI {
 
     //slider
     public double getShooterSliderValue() {
-        double sliderValue = 0.0;
-        try {
-            sliderValue = DriverStationEnhancedIO.getInstance().getAnalogIn(SHOOTER_SLIDER);
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        return sliderValue;
+        return m_enhancedIoJoystick.getRawAxis(SHOOTER_SLIDER);
     }
 
     //knob
     public double getTurretKnobValue(double deadzone) {
+        m_currValue = (int) (100 * m_enhancedIoJoystick.getRawAxis(1));
        double returnVal;
-        try {
-            m_currValue = DriverStationEnhancedIO.getInstance().getEncoder(1);
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
 
         if(m_currValue - m_preValue > deadzone){
            returnVal = -5.0;
@@ -419,36 +391,11 @@ public class OI {
      * NOTE: A = analog input
      */
     public int getAutonomousCounterValue() {
-        boolean auto1 = false;
-        try {
-            auto1 = changeAnalogs(DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_ONE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        boolean auto2 = false;
-        try {
-            auto2 = changeAnalogs(DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_TWO));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        boolean auto3 = false;
-        try {
-            auto3 = changeAnalogs(DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_THREE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        boolean auto5 = false;
-        try {
-            auto5 = changeAnalogs(DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_FIVE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        boolean auto7 = false;
-        try {
-            auto7 = changeAnalogs(DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_SEVEN));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
+        boolean auto1 = changeAnalogs(m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_ONE));
+        boolean auto2 = changeAnalogs(m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_TWO));
+        boolean auto3 = changeAnalogs(m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_THREE));
+        boolean auto5 = changeAnalogs(m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_FIVE));
+        boolean auto7 = changeAnalogs(m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_SEVEN));
 
         int autoNumber = 0;
 
@@ -504,39 +451,14 @@ public class OI {
     }
 
     private boolean changeAnalogs(double analogValue) {
-        return analogValue > 3;
+        return analogValue > 0.5;
     }
 //If ever used, change line numbers in the driver station prints
     public void printAnalogAutonomous() {
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Counter 1:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_ONE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Counter 2:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_TWO));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 1, "Counter 3:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_THREE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "Counter 5:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_FIVE));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
-        try {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Counter 7:" + DriverStationEnhancedIO.getInstance().getAnalogIn(AUTONOMOUS_COUNTER_SEVEN));
-        } catch (EnhancedIOException ex) {
-            ex.printStackTrace();
-        }
-        DriverStationLCD.getInstance().updateLCD();
+        System.out.println("Counter 1:" + m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_ONE));
+        System.out.println("Counter 2:" + m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_TWO));
+        System.out.println("Counter 3:" + m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_THREE));
+        System.out.println("Counter 5:" + m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_FIVE));
+        System.out.println("Counter 7:" + m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_SEVEN));
     }
 }

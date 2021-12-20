@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -47,35 +48,35 @@ public class Collector extends Subsystem {
             collectorToteIn();
         }
         else {
-            m_rightCollector.set(0);
-            m_leftCollector.set(0);
+            m_rightCollector.set(ControlMode.PercentOutput, 0);
+            m_leftCollector.set(ControlMode.PercentOutput, 0);
         }
 
     }
 
     // Method suckToteIn which suck a tote inside the robot
     public void collectorToteIn() {
-        m_rightCollector.set(speed);
-        m_leftCollector.set(-speed);
+        m_rightCollector.set(ControlMode.PercentOutput, speed);
+        m_leftCollector.set(ControlMode.PercentOutput, -speed);
         SmartDashboard.putBoolean("Collecter On", true);
     }
 
     // Method suckToteOut which pushes a Tote out
     public void collectorToteOut() {
-        m_rightCollector.set(-speed);
-        m_leftCollector.set(speed);
+        m_rightCollector.set(ControlMode.PercentOutput, -speed);
+        m_leftCollector.set(ControlMode.PercentOutput, speed);
         SmartDashboard.putBoolean("Collecter On", true);
     }
 
     // Method collectorToteRotate which rotates the tote inside the trifold
     public void collectorToteRotateRight() {
-        m_rightCollector.set(speed);
-        m_leftCollector.set(speed);
+        m_rightCollector.set(ControlMode.PercentOutput, speed);
+        m_leftCollector.set(ControlMode.PercentOutput, speed);
     }
 
     public void collectorToteRotateLeft() {
-        m_rightCollector.set(-speed);
-        m_leftCollector.set(-speed);
+        m_rightCollector.set(ControlMode.PercentOutput, -speed);
+        m_leftCollector.set(ControlMode.PercentOutput, -speed);
     }
 
     public void collectorIn() {
@@ -89,8 +90,8 @@ public class Collector extends Subsystem {
     }
 
     public void stopCollecting() {
-        m_rightCollector.set(0.0);
-        m_leftCollector.set(0.0);
+        m_rightCollector.set(ControlMode.PercentOutput, 0.0);
+        m_leftCollector.set(ControlMode.PercentOutput, 0.0);
         SmartDashboard.putBoolean("Collector Off", false);
     }
 
