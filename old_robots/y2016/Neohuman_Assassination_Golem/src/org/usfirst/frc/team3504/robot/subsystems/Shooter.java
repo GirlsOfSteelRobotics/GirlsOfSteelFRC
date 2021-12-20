@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,15 +14,15 @@ public class Shooter extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    private final CANTalon m_shooterMotor1;
-    private final CANTalon m_shooterMotor2;
+    private final WPI_TalonSRX m_shooterMotor1;
+    private final WPI_TalonSRX m_shooterMotor2;
     private final DoubleSolenoid m_shooterPiston1;
     private final DoubleSolenoid m_shooterPiston2;
 
 
     public Shooter() {
-        m_shooterMotor1 = new CANTalon(RobotMap.SHOOTER_MOTOR_A);
-        m_shooterMotor2 = new CANTalon(RobotMap.SHOOTER_MOTOR_B);
+        m_shooterMotor1 = new WPI_TalonSRX(RobotMap.SHOOTER_MOTOR_A);
+        m_shooterMotor2 = new WPI_TalonSRX(RobotMap.SHOOTER_MOTOR_B);
         addChild("Talon", m_shooterMotor1);
         addChild("Talon", m_shooterMotor2);
         m_shooterPiston1 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);

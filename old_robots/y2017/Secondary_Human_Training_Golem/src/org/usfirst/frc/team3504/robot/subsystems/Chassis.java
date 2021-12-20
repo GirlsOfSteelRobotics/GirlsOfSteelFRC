@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -12,23 +12,23 @@ import org.usfirst.frc.team3504.robot.RobotMap;
  *
  */
 public class Chassis extends Subsystem {
-    private final CANTalon m_driveLeftA;
-    private final CANTalon m_driveLeftB;
-    private final CANTalon m_driveLeftC;
+    private final WPI_TalonSRX m_driveLeftA;
+    private final WPI_TalonSRX m_driveLeftB;
+    private final WPI_TalonSRX m_driveLeftC;
 
-    private final CANTalon m_driveRightA;
-    private final CANTalon m_driveRightB;
-    private final CANTalon m_driveRightC;
+    private final WPI_TalonSRX m_driveRightA;
+    private final WPI_TalonSRX m_driveRightB;
+    private final WPI_TalonSRX m_driveRightC;
 
     private final RobotDrive m_robotDrive;
 
     public Chassis() {
-        m_driveLeftA = new CANTalon(RobotMap.DRIVE_LEFT_A);
-        m_driveLeftB = new CANTalon(RobotMap.DRIVE_LEFT_B);
-        m_driveLeftC = new CANTalon(RobotMap.DRIVE_LEFT_C);
-        m_driveRightA = new CANTalon(RobotMap.DRIVE_RIGHT_A);
-        m_driveRightB = new CANTalon(RobotMap.DRIVE_RIGHT_B);
-        m_driveRightC = new CANTalon(RobotMap.DRIVE_RIGHT_C);
+        m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
+        m_driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
+        m_driveLeftC = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_C);
+        m_driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
+        m_driveRightB = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_B);
+        m_driveRightC = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_C);
 
         m_driveLeftA.setNeutralMode(NeutralMode.Brake);
         m_driveLeftB.setNeutralMode(NeutralMode.Brake);
@@ -72,11 +72,11 @@ public class Chassis extends Subsystem {
 
     }
 
-    public CANTalon getLeftTalon() {
+    public WPI_TalonSRX getLeftTalon() {
         return m_driveLeftA;
     }
 
-    public CANTalon getRightTalon() {
+    public WPI_TalonSRX getRightTalon() {
         return m_driveRightA;
     }
 
@@ -88,7 +88,7 @@ public class Chassis extends Subsystem {
         m_robotDrive.tankDrive(left, right);
     }
 
-    public final void setupEncoder(CANTalon talon) { // only call this on non-follower
+    public final void setupEncoder(WPI_TalonSRX talon) { // only call this on non-follower
                                                 // talons
         // Set Encoder Types
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
@@ -100,7 +100,7 @@ public class Chassis extends Subsystem {
         setupDefaultFPID(m_driveLeftB);
     }
 
-    private void setupDefaultFPID(CANTalon talon) { // values work with QuadEncoder for
+    private void setupDefaultFPID(WPI_TalonSRX talon) { // values work with QuadEncoder for
                                             // drive talons
         // PID Values
         talon.setSelectedSensorPosition(0);

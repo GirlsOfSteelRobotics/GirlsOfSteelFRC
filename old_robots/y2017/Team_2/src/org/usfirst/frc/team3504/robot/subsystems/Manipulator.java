@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -10,22 +10,22 @@ import org.usfirst.frc.team3504.robot.RobotMap;
  *
  */
 public class Manipulator extends Subsystem {
-    private final CANTalon m_collectRight;
-    private final CANTalon m_collectLeft;
+    private final WPI_TalonSRX m_collectRight;
+    private final WPI_TalonSRX m_collectLeft;
 
     private final DoubleSolenoid m_pusher;
 
-    private final CANTalon m_pivotA;
-    private final CANTalon m_pivotB;
+    private final WPI_TalonSRX m_pivotA;
+    private final WPI_TalonSRX m_pivotB;
 
     public Manipulator() {
-        m_collectRight = new CANTalon(RobotMap.COLLECT_RIGHT);
-        m_collectLeft = new CANTalon(RobotMap.COLLECT_LEFT);
+        m_collectRight = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT);
+        m_collectLeft = new WPI_TalonSRX(RobotMap.COLLECT_LEFT);
 
         m_pusher = new DoubleSolenoid(0, 1);
 
-        m_pivotA = new CANTalon(RobotMap.PIVOT_RIGHT);
-        m_pivotB = new CANTalon(RobotMap.PIVOT_LEFT);
+        m_pivotA = new WPI_TalonSRX(RobotMap.PIVOT_RIGHT);
+        m_pivotB = new WPI_TalonSRX(RobotMap.PIVOT_LEFT);
     }
 
     @Override

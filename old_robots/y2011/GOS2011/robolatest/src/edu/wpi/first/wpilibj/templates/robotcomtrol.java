@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package edu.wpi.first.wpilibj.templates;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Compressor;
@@ -199,17 +199,17 @@ public class robotcomtrol extends SimpleRobot {
     public void autonomous() {
         double starttime = ((double) System.currentTimeMillis() / 1000.0);
         try {
-            RearLeft.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+            RearLeft.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
             RearLeft.enableControl();
-            RearRight.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+            RearRight.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
             RearRight.enableControl();
-            FrontLeft.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+            FrontLeft.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
             FrontLeft.enableControl();
-            FrontRight.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+            FrontRight.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
             FrontRight.enableControl();
-            Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+            Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
             Shol1.enableControl();
-            Shol2.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+            Shol2.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
             Shol2.enableControl();
         } catch (CANTimeoutException ex) {
 
@@ -322,9 +322,9 @@ public class robotcomtrol extends SimpleRobot {
      */
     public void operatorControl() {
         try {
-             RearLeft.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+             RearLeft.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
              RearLeft.enableControl();
-             RearRight.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+             RearRight.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
              RearRight.enableControl();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
@@ -336,7 +336,7 @@ public class robotcomtrol extends SimpleRobot {
 
         int val = 0;
         try {
-            Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+            Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
             Shol1.enableControl();
 
         } catch (CANTimeoutException ex) {
@@ -500,7 +500,7 @@ public class robotcomtrol extends SimpleRobot {
                 Shol1.setX(voltval);
                 setshol2(voltval);
             } else {
-                Shol1.changeControlMode(CANTalon.TalonControlMode.kVoltage);
+                Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
                 Shol1.enableControl();
             }
         } catch (CANTimeoutException ex) {
@@ -606,7 +606,7 @@ message.updateLCD();
             } else {
 
                 Pdes = 0.0;//reset Pdes anytime encoder resets
-                Shol1.changeControlMode(CANTalon.TalonControlMode.kPosition);
+                Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();
             }

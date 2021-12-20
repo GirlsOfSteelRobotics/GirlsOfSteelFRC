@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,14 +15,14 @@ public class Manipulator extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    private final CANTalon m_pivotMotor;
-    private final CANTalon m_collectorMotor;
+    private final WPI_TalonSRX m_pivotMotor;
+    private final WPI_TalonSRX m_collectorMotor;
     private final DoubleSolenoid m_shooter; //shoots the ball
     private final DoubleSolenoid m_arm; //opens and closes the arm to get the ball in
 
     public Manipulator() {
-        m_pivotMotor = new CANTalon(RobotMap.ARM_PIVOT_CAN_ID);
-        m_collectorMotor = new CANTalon(RobotMap.COLLECTOR_CAN_ID);
+        m_pivotMotor = new WPI_TalonSRX(RobotMap.ARM_PIVOT_CAN_ID);
+        m_collectorMotor = new WPI_TalonSRX(RobotMap.COLLECTOR_CAN_ID);
         m_shooter = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_A, RobotMap.SHOOTER_PISTON_B);
         m_arm = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
     }

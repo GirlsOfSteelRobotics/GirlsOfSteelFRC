@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
@@ -39,11 +39,11 @@ public class Chassis extends Subsystem {
 
     private static final double topSpeed = 400;
 
-    // CANTalons
-    private final CANTalon m_frontRightWheel;
-    private final CANTalon m_frontLeftWheel;
-    private final CANTalon m_rearRightWheel;
-    private final CANTalon m_rearLeftWheel;
+    // WPI_TalonSRXs
+    private final WPI_TalonSRX m_frontRightWheel;
+    private final WPI_TalonSRX m_frontLeftWheel;
+    private final WPI_TalonSRX m_rearRightWheel;
+    private final WPI_TalonSRX m_rearLeftWheel;
 
     // Gyro
     private boolean m_getGyro;
@@ -59,10 +59,10 @@ public class Chassis extends Subsystem {
     private final RobotDrive m_gosDrive;
 
     public Chassis() {
-        m_frontRightWheel = new CANTalon(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
-        m_frontLeftWheel = new CANTalon(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
-        m_rearRightWheel = new CANTalon(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
-        m_rearLeftWheel = new CANTalon(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
+        m_frontRightWheel = new WPI_TalonSRX(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
+        m_frontLeftWheel = new WPI_TalonSRX(RobotMap.FRONT_LEFT_WHEEL_CHANNEL);
+        m_rearRightWheel = new WPI_TalonSRX(RobotMap.REAR_RIGHT_WHEEL_CHANNEL);
+        m_rearLeftWheel = new WPI_TalonSRX(RobotMap.REAR_LEFT_WHEEL_CHANNEL);
 
         m_frontRightWheel.setNeutralMode(NeutralMode.Brake);
         m_frontLeftWheel.setNeutralMode(NeutralMode.Brake);

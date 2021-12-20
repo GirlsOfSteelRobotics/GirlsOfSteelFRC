@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,8 +15,8 @@ public class Collector extends Subsystem {
     private static final double speed = .5;
 
     // Talons
-    private final CANTalon m_rightCollector;
-    private final CANTalon m_leftCollector;
+    private final WPI_TalonSRX m_rightCollector;
+    private final WPI_TalonSRX m_leftCollector;
 
     // Pistons
     private final DoubleSolenoid m_collectorLeftSolenoid;
@@ -27,8 +27,8 @@ public class Collector extends Subsystem {
 
     public Collector() // this is the constructor
     {
-        m_rightCollector = new CANTalon(RobotMap.RIGHT_COLLECTOR_WHEEL);
-        m_leftCollector = new CANTalon(RobotMap.LEFT_COLLECTOR_WHEEL);
+        m_rightCollector = new WPI_TalonSRX(RobotMap.RIGHT_COLLECTOR_WHEEL);
+        m_leftCollector = new WPI_TalonSRX(RobotMap.LEFT_COLLECTOR_WHEEL);
 
         m_collectorLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_COLLECTOR_MODULE, RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
                 RobotMap.LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL);

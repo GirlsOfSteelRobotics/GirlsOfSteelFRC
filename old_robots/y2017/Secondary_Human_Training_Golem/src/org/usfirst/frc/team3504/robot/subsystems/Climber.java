@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -13,12 +13,12 @@ import org.usfirst.frc.team3504.robot.commands.StayClimbed;
  */
 
 public class Climber extends Subsystem {
-    private final CANTalon m_climbMotorA;
-    private final CANTalon m_climbMotorB;
+    private final WPI_TalonSRX m_climbMotorA;
+    private final WPI_TalonSRX m_climbMotorB;
 
     public Climber() {
-        m_climbMotorA = new CANTalon(RobotMap.CLIMB_MOTOR_A);
-        m_climbMotorB = new CANTalon(RobotMap.CLIMB_MOTOR_B);
+        m_climbMotorA = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_A);
+        m_climbMotorB = new WPI_TalonSRX(RobotMap.CLIMB_MOTOR_B);
 
         m_climbMotorB.follow(m_climbMotorA);
 

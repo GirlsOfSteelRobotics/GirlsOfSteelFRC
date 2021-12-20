@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,11 +13,11 @@ public class Flap extends Subsystem {
 
     private static final double maxEncoder = 360; //max encoder val
 
-    private final CANTalon m_flapTalon;
+    private final WPI_TalonSRX m_flapTalon;
     private double m_encOffsetValue;
 
     public Flap(){
-        m_flapTalon = new CANTalon(RobotMap.FLAP_MOTOR);
+        m_flapTalon = new WPI_TalonSRX(RobotMap.FLAP_MOTOR);
         addChild("Talon", m_flapTalon);
 
         m_flapTalon.overrideLimitSwitchesEnable(!RobotMap.USING_LIMIT_SWITCHES);
