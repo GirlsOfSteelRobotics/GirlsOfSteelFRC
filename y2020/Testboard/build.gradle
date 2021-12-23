@@ -58,7 +58,7 @@ dependencies {
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
 
-    compile project(":libraries:GirlsOfSteelLib")
+    implementation project(":libraries:GirlsOfSteelLib")
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

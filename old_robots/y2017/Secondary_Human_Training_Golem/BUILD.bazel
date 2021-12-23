@@ -8,6 +8,7 @@ gos_java_robot(
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/opencv",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
         "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/old_commands",
