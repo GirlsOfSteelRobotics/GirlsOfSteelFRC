@@ -14,7 +14,7 @@ import com.gos.ultimate_ascent.commands.CommandBase;
  */
 public class ShooterPID extends CommandBase {
 
-    private final com.gos.ultimate_ascent.subsystems.Shooter m_shooter;
+    private final Shooter m_shooter;
     private double m_speed;
 
     public ShooterPID(Shooter shooter) {

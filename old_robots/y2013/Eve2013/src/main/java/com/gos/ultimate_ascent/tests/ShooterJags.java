@@ -9,7 +9,7 @@ public class ShooterJags extends CommandBase {
 
     private static final double WAIT_TIME = 1.0;
 
-    private final com.gos.ultimate_ascent.subsystems.Shooter m_shooter;
+    private final Shooter m_shooter;
     private final Feeder m_feeder;
 
     private double m_speed;

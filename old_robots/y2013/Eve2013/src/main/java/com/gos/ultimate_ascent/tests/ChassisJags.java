@@ -6,7 +6,7 @@ import com.gos.ultimate_ascent.commands.CommandBase;
 
 public class ChassisJags extends CommandBase {
 
-    private final com.gos.ultimate_ascent.subsystems.Chassis m_chassis;
+    private final Chassis m_chassis;
     private double m_speed;
 
     public ChassisJags(Chassis chassis) {

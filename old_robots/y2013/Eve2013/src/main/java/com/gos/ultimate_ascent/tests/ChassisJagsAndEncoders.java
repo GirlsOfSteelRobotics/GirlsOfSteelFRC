@@ -14,7 +14,7 @@ import com.gos.ultimate_ascent.subsystems.Chassis;
 public class ChassisJagsAndEncoders extends CommandBase {
     //copied from KiwiDrive code
 
-    private final com.gos.ultimate_ascent.subsystems.Chassis m_chassis;
+    private final Chassis m_chassis;
     private double m_speed;
 
     public ChassisJagsAndEncoders(Chassis chassis) {
