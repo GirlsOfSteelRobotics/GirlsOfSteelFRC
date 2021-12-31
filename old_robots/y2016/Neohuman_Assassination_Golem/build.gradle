@@ -6,7 +6,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
-def ROBOT_MAIN_CLASS = "org.usfirst.frc.team3504.robot.Main"
+def ROBOT_MAIN_CLASS = "com.gos.stronghold.robot.Main"
 
 sourceSets {
     main {
