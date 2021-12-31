@@ -7,7 +7,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Collector;
  *
  */
 public class AutoCollector extends Command {
-    
+
     private final Collector m_collector;
 
     public AutoCollector(Collector collector) {

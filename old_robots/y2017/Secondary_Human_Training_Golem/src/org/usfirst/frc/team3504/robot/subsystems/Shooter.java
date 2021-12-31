@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
@@ -52,7 +52,7 @@ public class Shooter extends Subsystem {
 
         // PID Values
         m_lowShooterMotor.config_kF(0, 0.04407); // see p 17 of motion profile manual
-                                        // 0.04407
+        // 0.04407
         // lowShooterMotor.setF(0); //see p 17 of motion profile manual
         m_lowShooterMotor.config_kP(0, 0.01);
         m_lowShooterMotor.config_kI(0, 0.0);
@@ -60,7 +60,7 @@ public class Shooter extends Subsystem {
 
         // PID Values
         m_highShooterMotor.config_kF(0, 0.02997); // see p 17 of motion profile manual
-                                        // 0.02997
+        // 0.02997
         // highShooterMotor.setF(0);
         m_highShooterMotor.config_kP(0, 0.01);
         m_highShooterMotor.config_kI(0, 0.0);
@@ -89,7 +89,7 @@ public class Shooter extends Subsystem {
     }
 
     public boolean isHighShooterAtSpeed() { // TODO: This is broken, always
-                                            // returning true
+        // returning true
         return (m_highShooterMotor.getClosedLoopError() / (double) m_shooterSpeed) < MAX_SHOOTER_ERROR;
     }
 

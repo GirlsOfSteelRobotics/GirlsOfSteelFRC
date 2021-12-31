@@ -25,14 +25,14 @@ public class AutonomousCommandGroup extends CommandGroup {
         if (Camera.isConnected() && Camera.getXDistance() != 0) {
             //If we are ever going to use this we shouldn't be using this method. Use a command!
             yDistance = Chassis.DISTANCE_BACKBOARD_TO_BRIDGE // NOPMD
-                    - Camera.getXDistance();
+                - Camera.getXDistance();
             //distance from backboard to bridge = half the field
             //(with bridge/2 + space between robot and bridge to push bridge
             //down)
         }
         if (shoot) {
             if (Camera.isConnected() && Camera.getXDistance() != 0) {
-                addSequential(new ShootUsingTable(shooter, oi,  false), 6.0);
+                addSequential(new ShootUsingTable(shooter, oi, false), 6.0);
                 addSequential(new PrintCommand("Shoot With Table"));
             } else {
                 addSequential(new Shoot(shooter, oi, Shooter.KEY_SPEED), 6.0);
@@ -40,14 +40,14 @@ public class AutonomousCommandGroup extends CommandGroup {
             }
         }
         if (moveToBridge) {
-            if(Camera.isConnected() && Camera.getXDistance() != 0){
+            if (Camera.isConnected() && Camera.getXDistance() != 0) {
                 //if the camera has found the target at least once
                 yDistance = Chassis.DISTANCE_BACKBOARD_TO_BRIDGE
-                        - Camera.getXDistance();
+                    - Camera.getXDistance();
             }
             addSequential(new MoveToSetPoint(chassis, yDistance), 2.0);
             addSequential(new PrintCommand("Move To Bridge"));
-            addSequential(new AutoBridgeDown(bridge),2.0);
+            addSequential(new AutoBridgeDown(bridge), 2.0);
             addSequential(new MoveToSetPoint(chassis, -0.5), 3.0);
             addSequential(new BridgeUp(bridge));
             addSequential(new PrintCommand("Bridge Collected"));

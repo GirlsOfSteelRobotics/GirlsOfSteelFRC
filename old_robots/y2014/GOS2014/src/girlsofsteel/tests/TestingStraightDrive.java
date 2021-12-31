@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,16 +10,15 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Chassis;
 
 /**
- *
  * @author sophia, sonia, and abby
  */
-public class TestingStraightDrive extends CommandBase{
+public class TestingStraightDrive extends CommandBase {
 
     private final Chassis m_chassis;
 
-    public TestingStraightDrive(Chassis chassis){
+    public TestingStraightDrive(Chassis chassis) {
         m_chassis = chassis;
-         requires(m_chassis);
+        requires(m_chassis);
     }
 
     @Override

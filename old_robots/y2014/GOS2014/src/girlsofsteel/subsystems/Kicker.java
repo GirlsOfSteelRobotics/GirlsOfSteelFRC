@@ -7,6 +7,7 @@
 
  We have a 4 k4x limit on encoders
  */
+
 package girlsofsteel.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
@@ -20,7 +21,6 @@ import girlsofsteel.objects.EncoderGoSPIDController;
 import girlsofsteel.objects.LSPBPIDPlanner;
 
 /**
- *
  * @author Heather
  */
 public class Kicker extends Subsystem {
@@ -57,7 +57,7 @@ public class Kicker extends Subsystem {
 //            }
 //        }, 2, false, true); //false to reverse encoder, true to MOD the value
 
-       m_kickerLimitSwitch = new DigitalInput(RobotMap.KICKER_LIMIT);
+        m_kickerLimitSwitch = new DigitalInput(RobotMap.KICKER_LIMIT);
     }
 
     public void holdPosition() {
@@ -132,19 +132,16 @@ public class Kicker extends Subsystem {
     }
 
     /**
-     *
      * @param p a double
      * @param i another double
      * @param d a different double
      * @author Arushi, Sylvie, Jisue
-     *
      */
     public void setPIDValues(double p, double i, double d) {
         m_kickerPositionPID.setPID(p, i, d);
     }
 
     /**
-     *
      * @param p a double
      * @param i another double
      * @param d another different double
@@ -167,8 +164,7 @@ public class Kicker extends Subsystem {
         m_kickerEncoder.setReverseDirection(reverseDirection);
     }
 
-    public boolean getLimitSwitch()
-    {
+    public boolean getLimitSwitch() {
         //Is backward!
         return !m_kickerLimitSwitch.get(); //true when the kicker is fully loaded
     }

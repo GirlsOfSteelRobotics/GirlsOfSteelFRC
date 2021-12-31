@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Climber;
 
 /**
- *
  * @author sam
  */
 public class StopClimbMotors extends CommandBase {
@@ -16,7 +16,7 @@ public class StopClimbMotors extends CommandBase {
 
     public StopClimbMotors(Climber climber) {
         m_climber = climber;
-          requires (m_climber);
+        requires(m_climber);
     }
 
     //stops the motors used for climbing

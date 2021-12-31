@@ -17,8 +17,8 @@ public class Chassis extends Subsystem {
     private static final double GEAR_RATIO = 15.0 / 24.0;
     private static final double PULSES_RIGHT = 250.0;
     private static final double PULSES_LEFT = 360.0;
-    private static final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.065) / PULSES_RIGHT;//m per s
-    private static final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO*1.07) / PULSES_LEFT;
+    private static final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1.065) / PULSES_RIGHT;//m per s
+    private static final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1.07) / PULSES_LEFT;
     private static final double ROBOT_DIAMETER = 0.8128; //the radius*2 of the circle the robot makes while turning in place
 
     //rate p & i & d values -> same for the left & right -> tuned for PIT comp
@@ -61,10 +61,10 @@ public class Chassis extends Subsystem {
     //create stuff for encoders
     //CHANGE FOR REAL WATSON:
     private final Encoder m_rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
-            RobotMap.ENCODER_RIGHT_CHANNEL_B, false, CounterBase.EncodingType.k4X);
+        RobotMap.ENCODER_RIGHT_CHANNEL_B, false, CounterBase.EncodingType.k4X);
 
     private final Encoder m_leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
-            RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
+        RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
     //practice:
 //    private Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
 //            RobotMap.ENCODER_RIGHT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
@@ -78,45 +78,45 @@ public class Chassis extends Subsystem {
     //create info for PIDs
 
     private final EncoderGoSPIDController m_rightRatePID = new EncoderGoSPIDController(rateP,
-            rateI, rateD, m_rightEncoder,
-            //this is an anonymous class, it lets us send values to both jags
-            //new output parameter
-            new PIDOutput() {
+        rateI, rateD, m_rightEncoder,
+        //this is an anonymous class, it lets us send values to both jags
+        //new output parameter
+        new PIDOutput() {
 
-        @Override
-        public void pidWrite(double output) {
-            setRightJags(output);
+            @Override
+            public void pidWrite(double output) {
+                setRightJags(output);
             }
-        }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
+        }, EncoderGoSPIDController.RATE, INTEGRAL_THRESHOLD);
     private final EncoderGoSPIDController m_leftRatePID = new EncoderGoSPIDController(rateP,
-            rateI, rateD, m_leftEncoder,
-            //this is an anonymous class, it lets us send values to both jags
-            //new output parameter
-            new PIDOutput() {
+        rateI, rateD, m_leftEncoder,
+        //this is an anonymous class, it lets us send values to both jags
+        //new output parameter
+        new PIDOutput() {
 
-        @Override
-        public void pidWrite(double output) {
-            setLeftJags(output);
+            @Override
+            public void pidWrite(double output) {
+                setLeftJags(output);
             }
-        }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
+        }, EncoderGoSPIDController.RATE, INTEGRAL_THRESHOLD);
     private final EncoderGoSPIDController m_rightPositionPID = new EncoderGoSPIDController(
-            positionRightP, positionRightI, positionRightD, m_rightEncoder,
-            new PIDOutput() {
+        positionRightP, positionRightI, positionRightD, m_rightEncoder,
+        new PIDOutput() {
 
-                @Override
-                public void pidWrite(double output) {
-                    setRightJags(output);
-                }
-            }, EncoderGoSPIDController.POSITION);
+            @Override
+            public void pidWrite(double output) {
+                setRightJags(output);
+            }
+        }, EncoderGoSPIDController.POSITION);
     private final EncoderGoSPIDController m_leftPositionPID = new EncoderGoSPIDController(
-            positionLeftP, positionLeftI, positionLeftD, m_leftEncoder,
-            new PIDOutput() {
+        positionLeftP, positionLeftI, positionLeftD, m_leftEncoder,
+        new PIDOutput() {
 
-                @Override
-                public void pidWrite(double output) {
-                    setLeftJags(output);
-                }
-            }, EncoderGoSPIDController.POSITION);
+            @Override
+            public void pidWrite(double output) {
+                setLeftJags(output);
+            }
+        }, EncoderGoSPIDController.POSITION);
 
     //again, make sure you can find this easily at comp
     //^^max acceleration -> used in the acceleration limiting method on the PID controllers
@@ -144,7 +144,7 @@ public class Chassis extends Subsystem {
     }
 
     public void setLeftJags(double speed) {
-        m_leftJags.set(-speed*0.93);//motors need to run the same way as the right
+        m_leftJags.set(-speed * 0.93);//motors need to run the same way as the right
     }
 
     public void stopJags() {
@@ -154,8 +154,8 @@ public class Chassis extends Subsystem {
 
     //yAxis -> positive jag speed might be backwards
 
-    public void driveJagsLinearSlowTurning(double xAxis,double yAxis, double turningScale){
-        xAxis = deadzone(xAxis, DEADZONE_RANGE)*turningScale;
+    public void driveJagsLinearSlowTurning(double xAxis, double yAxis, double turningScale) {
+        xAxis = deadzone(xAxis, DEADZONE_RANGE) * turningScale;
         yAxis = -deadzone(yAxis, DEADZONE_RANGE);
 
         setRightJags((yAxis - xAxis));
@@ -201,19 +201,19 @@ public class Chassis extends Subsystem {
         m_leftRatePID.setSetPoint((yAxis + xAxis));
     }
 
-    public void initHoldPosition(){
+    public void initHoldPosition() {
         setPositionPIDValues(10.0, 0.0, 10.0, 0.0);//righP,rightD,leftP,leftD
         m_rightPositionPID.enable();
         m_leftPositionPID.enable();
     }
 
-    public void holdPosition(){
+    public void holdPosition() {
         setPositionPIDSetPoint(0.0);
     }
 
-    public void nudge(double xValue){
+    public void nudge(double xValue) {
         double setPoint = 0.0;
-        setPoint = setPoint + xValue*0.0025;
+        setPoint = setPoint + xValue * 0.0025;
         setPositionPIDSetPoint(setPoint);
     }
 
@@ -309,10 +309,12 @@ public class Chassis extends Subsystem {
         return newJoystickValue;
     }
 
-    /**if the joystickValue in the range of the joystick where we want it to not move
+    /**
+     * if the joystickValue in the range of the joystick where we want it to not move
      * then the new joystick value is the scaled by the deadZoneRange slope
-     * @return newJoystickValue
+     *
      * @param double joystickValue, @param double deadZoneRange
+     * @return newJoystickValue
      */
     private double deadzone(double joystickValue, double deadZoneRange) {
         double newJoystickValue;
@@ -335,16 +337,16 @@ public class Chassis extends Subsystem {
         return newJoystickValue;
     }
 
-    public void goToLocation(double x, double y, double degreesToFace){
-        double degreesToTurn = Math.atan2(y, x)*180/Math.PI;
-        double distanceToMove = Math.sqrt((x*x)+(y*y));
+    public void goToLocation(double x, double y, double degreesToFace) {
+        double degreesToTurn = Math.atan2(y, x) * 180 / Math.PI;
+        double distanceToMove = Math.sqrt((x * x) + (y * y));
         turn(degreesToTurn);
         move(distanceToMove);
         turn(degreesToFace - degreesToTurn);
     }
 
     //autonomous move method
-    public void move(double distance){
+    public void move(double distance) {
         setPositionPIDSetPoint(distance);
     }
 
@@ -361,13 +363,13 @@ public class Chassis extends Subsystem {
     }
 
     private double convertDegreesToPositionChange(double degreesToTurn) {
-        if(degreesToTurn > 180){//if the degree change is greater than 180 (farthest
+        if (degreesToTurn > 180) {//if the degree change is greater than 180 (farthest
             //turn to the right) -> it makes the degree change between -180 & 180
-            double n = Math.floor((degreesToTurn+180)/360);
-            degreesToTurn =- (360*n);
+            double n = Math.floor((degreesToTurn + 180) / 360);
+            degreesToTurn = -(360 * n);
         }
         double positionChange;
-        positionChange = degreesToTurn*(ROBOT_DIAMETER*Math.PI/360.0);
+        positionChange = degreesToTurn * (ROBOT_DIAMETER * Math.PI / 360.0);
         //changes the degree change to how much the robot should turn to face
         //the degree change
         return positionChange;
@@ -376,7 +378,7 @@ public class Chassis extends Subsystem {
     //checks if go to location is finished
     public boolean isGoToLocationFinished(double xDistance, double yDistance) {
         double distance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
-        double degrees = Math.atan2(yDistance, xDistance)*180/Math.PI;
+        double degrees = Math.atan2(yDistance, xDistance) * 180 / Math.PI;
         if (isMoveFinished(distance)) {
             return isTurnFinished(degrees);
         } else {
@@ -420,17 +422,17 @@ public class Chassis extends Subsystem {
     }
 
     public void setPositionPIDValues(double rightP, double rightD, double leftP,
-            double leftD) {
-        m_rightPositionPID.setPID(rightP,positionRightI,rightD);
-        m_leftPositionPID.setPID(leftP,positionLeftI,leftD);
+                                     double leftD) {
+        m_rightPositionPID.setPID(rightP, positionRightI, rightD);
+        m_leftPositionPID.setPID(leftP, positionLeftI, leftD);
     }
 
-    public void setPIDsPosition(){
-        m_rightPositionPID.setPID(positionRightP,positionRightI,positionRightD);
+    public void setPIDsPosition() {
+        m_rightPositionPID.setPID(positionRightP, positionRightI, positionRightD);
         m_leftPositionPID.setPID(positionLeftP, positionLeftI, positionLeftD);
     }
 
-    public void setPIDsRate(){
+    public void setPIDsRate() {
         m_rightRatePID.setPID(rateP, rateI, rateD);
         m_leftRatePID.setPID(rateP, rateI, rateD);
     }

@@ -11,10 +11,9 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author user
  */
-public class TestPivotArmPID extends CommandBase{
+public class TestPivotArmPID extends CommandBase {
     private final Manipulator m_manipulator;
     private double m_currentAngle;
 
@@ -25,10 +24,10 @@ public class TestPivotArmPID extends CommandBase{
 
     @Override
     protected void initialize() {
-       // manipulator.initEncoder();
-       // manipulator.resetPIDError();
-       // manipulator.startPID();
-       // SmartDashboard.putNumber("Pivot Angle", 0.0);
+        // manipulator.initEncoder();
+        // manipulator.resetPIDError();
+        // manipulator.startPID();
+        // SmartDashboard.putNumber("Pivot Angle", 0.0);
         SmartDashboard.putNumber("Pivot Arm Encoder Value", 0.0);
     }
 

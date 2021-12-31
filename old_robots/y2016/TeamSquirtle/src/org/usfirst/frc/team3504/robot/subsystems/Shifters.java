@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shifters extends Subsystem {
 
-    private final DoubleSolenoid m_shifterLeft = new DoubleSolenoid(0,1);
-    private final DoubleSolenoid m_shifterRight = new DoubleSolenoid(2,3);
+    private final DoubleSolenoid m_shifterLeft = new DoubleSolenoid(0, 1);
+    private final DoubleSolenoid m_shifterRight = new DoubleSolenoid(2, 3);
 
 
     public void shiftLeft(boolean highgear) {
-        if(highgear) {
+        if (highgear) {
             m_shifterLeft.set(DoubleSolenoid.Value.kForward);
             System.out.println("Shifting left side into high gear (fwd)");
         } else {

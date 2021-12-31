@@ -18,7 +18,7 @@ public class DelayReverseRollers extends CommandBase {
 
     @Override
     protected void execute() {
-        if(timeSinceInitialized() > 4.0){
+        if (timeSinceInitialized() > 4.0) {
             m_collector.reverseBrush();
             m_collector.reverseMiddleConveyor();
             m_shooter.topRollersBackward();

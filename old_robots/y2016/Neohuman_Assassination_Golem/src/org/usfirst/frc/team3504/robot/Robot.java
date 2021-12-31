@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
     private final Claw m_claw;
     private final Pivot m_pivot;
     private final Camera m_camera;
-//	private final LEDLights ledlights;
+    //	private final LEDLights ledlights;
     private final Shooter m_shooter;
 
     private Command m_autonomousCommand;
@@ -58,8 +58,7 @@ public class Robot extends IterativeRobot {
         if (RobotMap.USING_CLAW) {
             m_claw = new Claw();
             m_shooter = null;
-        }
-        else {
+        } else {
             m_claw = null;
             m_shooter = new Shooter();
         }
@@ -74,7 +73,7 @@ public class Robot extends IterativeRobot {
         //drive backwards:
         m_autoChooser.addDefault("Do Nothing", new AutoDoNothing(m_chassis));
         m_autoChooser.addObject("Reach Defense", new AutoDriveBackwards(m_chassis, 101, .4)); //55
-        m_autoChooser.addObject("LowBar", new FlapThenLowBar(m_chassis, m_flap,  156, .4)); //works 110
+        m_autoChooser.addObject("LowBar", new FlapThenLowBar(m_chassis, m_flap, 156, .4)); //works 110
         m_autoChooser.addObject("Moat", new AutoDriveBackwards(m_chassis, 156, 1)); //works 60
         m_autoChooser.addObject("LowBar and Score", new AutoLowBarAndScore(m_chassis, m_flap, m_pivot, m_claw));
         m_autoChooser.addObject("LowBar and Turn", new AutoLowBarAndTurn(m_chassis, m_flap));
@@ -95,7 +94,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         // Default commands
-        m_chassis.setDefaultCommand( new DriveByJoystick(m_oi, m_chassis) );
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
     }
 
     /**
@@ -104,7 +103,7 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     @Override
-    public void disabledInit(){
+    public void disabledInit() {
     }
 
     @Override
@@ -118,7 +117,7 @@ public class Robot extends IterativeRobot {
      * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
      * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
      * below the Gyro
-     *
+     * <p>
      * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
      * or additional comparisons to the switch structure below with additional strings & commands.
      */
@@ -127,9 +126,11 @@ public class Robot extends IterativeRobot {
         m_autonomousCommand = m_autoChooser.getSelected();
 
         // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) { m_autonomousCommand.start(); }
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
+        }
 
- //       Robot.ledlights.autoLights();
+        //       Robot.ledlights.autoLights();
 
         // Start the robot out in low gear when starting autonomous
         m_shifters.shiftLeft(Shifters.Speed.kLow);
@@ -142,7 +143,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-       // Robot.chassis.ahrsToSmartDashboard();
+        // Robot.chassis.ahrsToSmartDashboard();
         SmartDashboard.putNumber("FlapEncoder", m_flap.getFlapEncoderDistance());
         SmartDashboard.putNumber("Pivot Encoder", m_pivot.getEncoderDistance());
     }
@@ -153,7 +154,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
 
         // Start the robot out in low gear when starting teleop
         m_shifters.shiftLeft(Shifters.Speed.kLow);
@@ -167,9 +170,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopPeriodic() {
-      // Robot.chassis.ahrsToSmartDashboard();
-       SmartDashboard.putNumber("FlapEncoder",m_flap.getFlapEncoderDistance());
-       SmartDashboard.putNumber("Pivot Encoder", m_pivot.getEncoderDistance());
+        // Robot.chassis.ahrsToSmartDashboard();
+        SmartDashboard.putNumber("FlapEncoder", m_flap.getFlapEncoderDistance());
+        SmartDashboard.putNumber("Pivot Encoder", m_pivot.getEncoderDistance());
         Scheduler.getInstance().run();
     }
 

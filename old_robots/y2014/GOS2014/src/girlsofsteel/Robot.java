@@ -4,6 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+
 package girlsofsteel;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -73,7 +74,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(new TuneManipulatorPID(m_manipulator));
         SmartDashboard.putData(new ManualPositionPIDTuner(m_chassis, m_driving));
 
-   //     SmartDashboard.putData(new FullTester());
+        //     SmartDashboard.putData(new FullTester());
     }
 
     @Override
@@ -102,7 +103,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
 
         m_autonomousCommand.cancel();
-        if(m_auto != null) {
+        if (m_auto != null) {
             m_auto.cancel();
         }
         new ArcadeDrive(m_oi, m_driving, m_chassis).start(); //Starts arcade drive automatically

@@ -5,7 +5,7 @@ import girlsofsteel.subsystems.Chassis;
 public class DisableChassis extends CommandBase {
     private final Chassis m_chassis;
 
-    public DisableChassis(Chassis chassis){
+    public DisableChassis(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
     }

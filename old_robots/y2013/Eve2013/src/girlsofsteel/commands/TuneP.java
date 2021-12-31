@@ -103,22 +103,22 @@ public class TuneP extends CommandBase {
                 m_chassis.setLeftPIDRate(m_setpoint);
                 while (!m_done) {//check until all 3 pids have equaled the setpoint
                     if ((m_setpoint - 0.001) < m_chassis.getRightEncoderRate()
-                            && m_chassis.getRightEncoderRate() > (m_setpoint + 0.001)
-                            && !m_right) {
+                        && m_chassis.getRightEncoderRate() > (m_setpoint + 0.001)
+                        && !m_right) {
                         double time = System.currentTimeMillis();
                         m_setpointTimes[0][m_counter] = time - m_zeroTime;
                         m_right = true;
                     }
                     if ((m_setpoint - 0.001) < m_chassis.getBackEncoderRate()
-                            && m_chassis.getBackEncoderRate() > (m_setpoint + 0.001)
-                            && !m_back) {
+                        && m_chassis.getBackEncoderRate() > (m_setpoint + 0.001)
+                        && !m_back) {
                         double time = System.currentTimeMillis();
                         m_setpointTimes[1][m_counter] = time - m_zeroTime;
                         m_back = true;
                     }
                     if ((m_setpoint - 0.001) < m_chassis.getLeftEncoderRate()
-                            && m_chassis.getLeftEncoderRate() > (m_setpoint + 0.001)
-                            && !m_left) {
+                        && m_chassis.getLeftEncoderRate() > (m_setpoint + 0.001)
+                        && !m_left) {
                         double time = System.currentTimeMillis();
                         m_setpointTimes[2][m_counter] = time - m_zeroTime;
                         m_left = true;
@@ -156,67 +156,67 @@ public class TuneP extends CommandBase {
         m_chassis.stopJags();
 
         //right Ps & rates
-        for(int p = 0; p< m_rightRates.length; p++){//for every p value
+        for (int p = 0; p < m_rightRates.length; p++) {//for every p value
             double sum = 0;
-            for(int j = 0; j< m_rightRates[p].length; j++){//for every rate
+            for (int j = 0; j < m_rightRates[p].length; j++) {//for every rate
                 //add to sum
                 sum += m_rightRates[p][j];
             }//end rate for -- average
             //calculate mean
-            double mean = sum/ m_rightRates[p].length;
+            double mean = sum / m_rightRates[p].length;
             double sumSquareDeviations = 0;
-            for(int j = 0; j< m_rightRates[p].length; j++){//for every rate
+            for (int j = 0; j < m_rightRates[p].length; j++) {//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((m_rightRates[p][j]-mean) *
-                        (m_rightRates[p][j]-mean));
+                sumSquareDeviations += ((m_rightRates[p][j] - mean) *
+                    (m_rightRates[p][j] - mean));
             }//end rate for -- deviation
             //calculate standard deviation
-            double standardDeviation = Math.sqrt(sumSquareDeviations/
-                    (m_rightRates[p].length-1));
-            m_setpointDeviations[0][p] = mean- m_setpoint;
+            double standardDeviation = Math.sqrt(sumSquareDeviations /
+                (m_rightRates[p].length - 1));
+            m_setpointDeviations[0][p] = mean - m_setpoint;
             m_standardDeviations[0][p] = standardDeviation;
         }//end p for
 
         //back Ps & rates
-        for(int p = 0; p< m_backRates.length; p++){//for every p value
+        for (int p = 0; p < m_backRates.length; p++) {//for every p value
             double sum = 0;
-            for(int j = 0; j< m_backRates[p].length; j++){//for every rate
+            for (int j = 0; j < m_backRates[p].length; j++) {//for every rate
                 //add to sum
                 sum += m_backRates[p][j];
             }//end rate for -- average
             //calculate mean
-            double mean = sum/ m_backRates[p].length;
+            double mean = sum / m_backRates[p].length;
             double sumSquareDeviations = 0;
-            for(int j = 0; j< m_backRates[p].length; j++){//for every rate
+            for (int j = 0; j < m_backRates[p].length; j++) {//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((m_backRates[p][j]-mean) *
-                        (m_backRates[p][j]-mean));
+                sumSquareDeviations += ((m_backRates[p][j] - mean) *
+                    (m_backRates[p][j] - mean));
             }//end rate for -- deviation
             //calculate standard deviation
-            double standardDeviation = Math.sqrt(sumSquareDeviations/
-                    (m_backRates[p].length-1));
+            double standardDeviation = Math.sqrt(sumSquareDeviations /
+                (m_backRates[p].length - 1));
             m_setpointDeviations[1][p] = mean - m_setpoint;
             m_standardDeviations[1][p] = standardDeviation;
         }//end p for
 
         //left Ps & rates
-        for(int p = 0; p< m_leftRates.length; p++){//for every p value
+        for (int p = 0; p < m_leftRates.length; p++) {//for every p value
             double sum = 0;
-            for(int j = 0; j< m_leftRates[p].length; j++){//for every rate
+            for (int j = 0; j < m_leftRates[p].length; j++) {//for every rate
                 //add to sum
                 sum += m_leftRates[p][j];
             }//end rate for -- average
             //calculate mean
-            double mean = sum/ m_leftRates[p].length;
+            double mean = sum / m_leftRates[p].length;
             double sumSquareDeviations = 0;
-            for(int j = 0; j< m_leftRates[p].length; j++){//for every rate
+            for (int j = 0; j < m_leftRates[p].length; j++) {//for every rate
                 //calculate square deviation
-                sumSquareDeviations += ((m_leftRates[p][j]-mean) *
-                        (m_leftRates[p][j]-mean));
+                sumSquareDeviations += ((m_leftRates[p][j] - mean) *
+                    (m_leftRates[p][j] - mean));
             }//end rate for -- deviation
             //calculate standard deviation
-            double standardDeviation = Math.sqrt(sumSquareDeviations/
-                    (m_leftRates[p].length-1));
+            double standardDeviation = Math.sqrt(sumSquareDeviations /
+                (m_leftRates[p].length - 1));
             m_setpointDeviations[2][p] = mean - m_setpoint;
             m_standardDeviations[2][p] = standardDeviation;
         }//end p for
@@ -225,11 +225,11 @@ public class TuneP extends CommandBase {
         String message = "";
         for (int i = 0; i < m_standardDeviations[0].length; i++) {
             message += ((i * m_interval) + m_bP) + " : " +
-                    m_setpointDeviations[0][i] + " " + m_standardDeviations[0][i] +
-                    " " + m_setpointTimes[0][i] + " " + m_setpointDeviations[1][i] +
-                    " " + m_standardDeviations[1][i] + " " + m_setpointTimes[1][i] +
-                    " " + m_setpointDeviations[2][i] + " " +
-                    m_standardDeviations[2][i] + " " + m_setpointTimes[2][i] + "\n";
+                m_setpointDeviations[0][i] + " " + m_standardDeviations[0][i] +
+                " " + m_setpointTimes[0][i] + " " + m_setpointDeviations[1][i] +
+                " " + m_standardDeviations[1][i] + " " + m_setpointTimes[1][i] +
+                " " + m_setpointDeviations[2][i] + " " +
+                m_standardDeviations[2][i] + " " + m_setpointTimes[2][i] + "\n";
         }//end for
 
         //print message to a file
@@ -237,12 +237,12 @@ public class TuneP extends CommandBase {
 
         String contents = "";
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-            Files.newInputStream(Paths.get(url))))){
+            Files.newInputStream(Paths.get(url))))) {
             String line;
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 contents += line + "\n";
             }
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace(); // NOPMD
         }
 
@@ -250,7 +250,7 @@ public class TuneP extends CommandBase {
             Files.newOutputStream(Paths.get(url)))) {
 
             writer.write(contents + message);
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace(); // NOPMD
         }
 

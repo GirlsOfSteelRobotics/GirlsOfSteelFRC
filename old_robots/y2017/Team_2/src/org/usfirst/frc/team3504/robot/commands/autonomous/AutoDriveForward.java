@@ -16,8 +16,7 @@ public class AutoDriveForward extends Command {
     private final Chassis m_chassis;
 
 
-    public AutoDriveForward(Chassis chassis, double inches, double speed)
-    {
+    public AutoDriveForward(Chassis chassis, double inches, double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(chassis);

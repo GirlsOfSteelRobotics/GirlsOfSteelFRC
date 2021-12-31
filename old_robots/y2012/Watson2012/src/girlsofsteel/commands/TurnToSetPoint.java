@@ -7,7 +7,7 @@ public class TurnToSetPoint extends CommandBase {
     private final Chassis m_chassis;
     private final double m_degreesToTurn;
 
-    public TurnToSetPoint(Chassis chassis, double degrees){
+    public TurnToSetPoint(Chassis chassis, double degrees) {
         m_chassis = chassis;
         m_degreesToTurn = degrees;
         requires(m_chassis);

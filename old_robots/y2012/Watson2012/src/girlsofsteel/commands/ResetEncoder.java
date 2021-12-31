@@ -2,7 +2,7 @@ package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Chassis;
 
-public class ResetEncoder extends CommandBase{
+public class ResetEncoder extends CommandBase {
 
     private final Chassis m_chassis;
 

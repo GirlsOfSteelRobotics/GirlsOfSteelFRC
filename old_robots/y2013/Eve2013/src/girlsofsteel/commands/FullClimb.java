@@ -6,14 +6,12 @@ import girlsofsteel.subsystems.Climber;
 import girlsofsteel.subsystems.Gripper;
 
 /**
- *
  * @author sam
  */
 public class FullClimb extends CommandGroup {
 
     @SuppressWarnings("PMD.CloseResource")
-    public FullClimb(Climber climber, Gripper bottomGripper)
-    {
+    public FullClimb(Climber climber, Gripper bottomGripper) {
 
         //Closes all grippers
         addSequential(new CloseBottomGrip(bottomGripper));
@@ -21,13 +19,12 @@ public class FullClimb extends CommandGroup {
         //Starts motors to begin climbing
         addSequential(new StartClimbMotors(climber));
 
-        CommandGroup topGripperSequence=new CommandGroup();
-        CommandGroup middleGripperSequence=new CommandGroup();
-        CommandGroup bottomGripperSequence=new CommandGroup();
+        CommandGroup topGripperSequence = new CommandGroup();
+        CommandGroup middleGripperSequence = new CommandGroup();
+        CommandGroup bottomGripperSequence = new CommandGroup();
 
         //Should the terminating amount be two or three?
-        for(int barCount = 0; barCount < 2; barCount++)
-        {
+        for (int barCount = 0; barCount < 2; barCount++) {
             //This goes through the sequence of opening all of the grips when
             //at the set of bars, and then closes them right after passing by them
 //            topGripperSequence.addSequential(new OpenGripAtBar(CommandBase.topGripper));

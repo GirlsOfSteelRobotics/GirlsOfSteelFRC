@@ -15,7 +15,7 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
 
     private final boolean m_autoTrack;
 
-    public AutonomousKeyShootTwoBalls(Chassis chassis, Collector collector, Shooter shooter, Turret turret, boolean autoTrack){
+    public AutonomousKeyShootTwoBalls(Chassis chassis, Collector collector, Shooter shooter, Turret turret, boolean autoTrack) {
         m_collector = collector;
         m_shooter = shooter;
         m_turret = turret;
@@ -35,12 +35,12 @@ public class AutonomousKeyShootTwoBalls extends CommandBase {
     @Override
     protected void execute() {
         m_shooter.setPIDValues();
-        if(m_autoTrack){
+        if (m_autoTrack) {
             m_turret.autoTrack();
         }
         double velocity = 24.0;
         m_shooter.setPIDSpeed(velocity);
-        if(m_shooter.isWithinSetPoint(velocity)){
+        if (m_shooter.isWithinSetPoint(velocity)) {
             m_shooter.topRollersForward();
             m_collector.forwardBrush();
             m_collector.forwardMiddleConveyor();

@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,41 +16,39 @@ import girlsofsteel.subsystems.Manipulator;
 import girlsofsteel.tests.TestCollector;
 
 /**
- *
  * @author Sylvie Lee
- *
+ * <p>
  * NOTE: KICKER STUFF HAS NOT BEEN ADDED IN HERE YET
- *
+ * <p>
  * The point of this is to test all the functions of the robot quickly in the pit.
- *
+ * <p>
  * 1.) Arcade Drive
- *  - moving forwards, backwards, turning left and right
+ * - moving forwards, backwards, turning left and right
  * 2.) Pivot Arm
- *  - Movement w/ the PS3 controller (R1 + R2)
- *  - Moving with the PID (check to see if the down is negative and up is positive)
- *      - Should also print out encoder values with this to verify it works
+ * - Movement w/ the PS3 controller (R1 + R2)
+ * - Moving with the PID (check to see if the down is negative and up is positive)
+ * - Should also print out encoder values with this to verify it works
  * 3.) Collector Arm
- *  - Movement w/ PS3 (triangle and x)
- *  - Check limit switches
+ * - Movement w/ PS3 (triangle and x)
+ * - Check limit switches
  * 4.) Collector Wheel
- *  - Movement w/ PS3 (circle and square)
+ * - Movement w/ PS3 (circle and square)
  * 5.) Kicker
- *  - Trigger w/ the servo
- *  - Position PID, print out encoder values
- *  - Go through whole kicking motion
+ * - Trigger w/ the servo
+ * - Position PID, print out encoder values
+ * - Go through whole kicking motion
  * 6.) Chassis position PID
- *  - encoders working? (check to see if the signs need to be flipped)
- *  - check if the setpoint should be negative or positive (probably different for right and left sides)
- *  - Re-Tune p, i, and d IF this can be done on the competition carpet (otherwise keep the values we have currently)
+ * - encoders working? (check to see if the signs need to be flipped)
+ * - check if the setpoint should be negative or positive (probably different for right and left sides)
+ * - Re-Tune p, i, and d IF this can be done on the competition carpet (otherwise keep the values we have currently)
  * 7.) Chassis velocity PID
- *  - Assuming the encoders are working (from step 6)
- *  - Tune p, i, and d (once again only if we have a chance to tune on a real carpet)
+ * - Assuming the encoders are working (from step 6)
+ * - Tune p, i, and d (once again only if we have a chance to tune on a real carpet)
  * 8.) Autonomous
- *  - Test first just mobility (this might just be tied in with position chassis PID testing)
- *  - Low goal autonomous
- *  - High goal autonomous (when we get one)
- *  - High goal w/ hot goal (when we get one)
- *
+ * - Test first just mobility (this might just be tied in with position chassis PID testing)
+ * - Low goal autonomous
+ * - High goal autonomous (when we get one)
+ * - High goal w/ hot goal (when we get one)
  */
 public class FullTester extends CommandBase {
 

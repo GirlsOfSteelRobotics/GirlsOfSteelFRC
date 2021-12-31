@@ -40,7 +40,7 @@ public class TESTShootUsingTable extends CommandBase {
 
     @Override
     protected void end() {
-        if(!m_oi.areTopRollersOverriden()){
+        if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
         m_shooter.disablePID();

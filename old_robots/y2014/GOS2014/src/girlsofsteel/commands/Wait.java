@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- *
  * @author Sylvie and Heather
- *
+ * <p>
  * This waits for the given number of SECONDSSSS
  */
 public class Wait extends CommandBase {

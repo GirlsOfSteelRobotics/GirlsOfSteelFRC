@@ -39,10 +39,9 @@ public class DriveByDistance extends Command {
         // Robot.chassis.setupFPID(leftTalon);
         // Robot.chassis.setupFPID(rightTalon);
 
-        if (m_speed == Shifters.Speed.kLow){
+        if (m_speed == Shifters.Speed.kLow) {
             m_chassis.setPid(0.17, 0.0, 0.02, 0.0);
-        }
-        else if (m_speed == Shifters.Speed.kHigh){
+        } else if (m_speed == Shifters.Speed.kHigh) {
             m_chassis.setPid(0.02, 0.0, 0.04, 0.0);
         }
 
@@ -81,10 +80,10 @@ public class DriveByDistance extends Command {
     protected boolean isFinished() {
         if (m_rotations > 0) {
             return ((m_chassis.getRightPosition() > m_rotations + m_rightInitial)
-                    && (-m_chassis.getLeftPosition() > m_rotations + m_leftInitial));
+                && (-m_chassis.getLeftPosition() > m_rotations + m_leftInitial));
         } else if (m_rotations < 0) {
             return ((m_chassis.getRightPosition() < m_rotations + m_rightInitial)
-                    && (-m_chassis.getLeftPosition() < m_rotations + m_leftInitial));
+                && (-m_chassis.getLeftPosition() < m_rotations + m_leftInitial));
         } else {
             return true;
         }

@@ -24,7 +24,7 @@ public class RobotMap {
     public static final int KICKER_ENCODER_B = 6;
     public static final int KICKER_LIMIT = 11;
 
-//public static final int KICKER_LIMIT_SWITCH_CHANNEL = 5; //Magic TODO
+    //public static final int KICKER_LIMIT_SWITCH_CHANNEL = 5; //Magic TODO
     public static final int LIGHTS = 2; //Checked on updated list 2/11/14
 
     // For example to map the left and right motors, you could define the
@@ -45,10 +45,10 @@ public class RobotMap {
      public static final int LEFT_ENCODER_B = 2; //Checked on updated list 2/11/14
      */
 
-     public static final int RIGHT_ENCODER_A = 3; //Checked on updated list 2/11/14
-     public static final int RIGHT_ENCODER_B = 4; //Checked on updated list 2/11/14
-     public static final int LEFT_ENCODER_A = 1; //Checked on updated list 2/11/14
-     public static final int LEFT_ENCODER_B = 2; //Checked on updated list 2/11/14
+    public static final int RIGHT_ENCODER_A = 3; //Checked on updated list 2/11/14
+    public static final int RIGHT_ENCODER_B = 4; //Checked on updated list 2/11/14
+    public static final int LEFT_ENCODER_A = 1; //Checked on updated list 2/11/14
+    public static final int LEFT_ENCODER_B = 2; //Checked on updated list 2/11/14
 
 
     public static final int ULTRASONIC_SENSOR_PORT = 3;

@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.objects;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
- *
  * @author user
  */
 public class MagneticPulseCounter implements Runnable {
@@ -60,7 +60,7 @@ public class MagneticPulseCounter implements Runnable {
             sum += m_pulsesBetweenTime[i];
         }
 
-        rate = (sum / (double) (relevant*timeLength))*1000;
+        rate = (sum / (double) (relevant * timeLength)) * 1000;
         return rate;
     }
 }

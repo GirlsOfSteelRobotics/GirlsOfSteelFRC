@@ -84,7 +84,7 @@ public class AutoTuneCamera extends CommandBase {
                 //chassis.move(Step);
                 if (ratio < 0) {
                     System.out.println("Drop bad data point. If you see me too "
-                            + "often, retune RGB");
+                        + "often, retune RGB");
                     continue;
                 }
 
@@ -94,16 +94,16 @@ public class AutoTuneCamera extends CommandBase {
                 imageTargetRatioData[count] = ratio;
                 distanceData[count] = (m_chassis.getRightEncoderDistance()) + 1.45;
                 SmartDashboard.putNumber("Chassis Encoder",
-                        m_chassis.getRightEncoderDistance());
+                    m_chassis.getRightEncoderDistance());
                 System.out.println(distanceData[count] + ", " + ratio
-                        + " CD=" + distCamera + " Err=" + (distCamera
-                        - distanceData[count]));
+                    + " CD=" + distCamera + " Err=" + (distCamera
+                    - distanceData[count]));
                 count++;
             }
         }
         System.out.println("Data collection is done! count=" + count);
         double[] ab = LinearRegressionAuto.bestFit(imageTargetRatioData,
-                distanceData, count);
+            distanceData, count);
         double a = ab[0];
         double b = ab[1];
 

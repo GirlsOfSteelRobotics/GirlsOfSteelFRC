@@ -4,6 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.CANJaguar;
@@ -85,7 +86,6 @@ public class Arm extends SimpleRobot {
         AxisCamera camera = AxisCamera.getInstance();
 
 
-
         compy.start();
 
         try {
@@ -121,7 +121,6 @@ public class Arm extends SimpleRobot {
         }
 
         Move = new RobotDrive(FrontLeft, RearLeft, FrontRight, RearRight);
-
 
 
         System.err.println("DOWNLOADED!!!");
@@ -179,11 +178,10 @@ public class Arm extends SimpleRobot {
         double bottomrackmiddle = 89.0; //button ten
         double middleracksides = 78.0; //button eleven
         double middlerackmiddle = 39.0;
-        double prevtime = ((double)System.currentTimeMillis()/1000.0);
-        double currenttime =((double) System.currentTimeMillis()/1000.0);
-       double diff = 0.0;
-       boolean flag = true;
-
+        double prevtime = ((double) System.currentTimeMillis() / 1000.0);
+        double currenttime = ((double) System.currentTimeMillis() / 1000.0);
+        double diff = 0.0;
+        boolean flag = true;
 
 
         int val = 0;
@@ -208,14 +206,12 @@ public class Arm extends SimpleRobot {
                 ex.printStackTrace();
             }
 
-            currenttime = ((double)System.currentTimeMillis()/1000.0);
-            if(flag)//only hits on first time
+            currenttime = ((double) System.currentTimeMillis() / 1000.0);
+            if (flag)//only hits on first time
             {
                 //dont change diff the first time
                 flag = false;
-            }
-            else
-            {
+            } else {
                 diff = currenttime - prevtime;
             }
 
@@ -259,7 +255,7 @@ public class Arm extends SimpleRobot {
                 double print = matchmaker(slot);
                 //print is the value it moved it
                 message.println(DriverStationLCD.Line.kUser2, 1, Double.toString(slot));
-                 message.println(DriverStationLCD.Line.kUser3, 1, "Feeder");
+                message.println(DriverStationLCD.Line.kUser3, 1, "Feeder");
 
             } else if (armstick.getRawButton(10)) {
                 double print = matchmaker(bottomracksides);
@@ -285,29 +281,29 @@ public class Arm extends SimpleRobot {
 
                 double print = matchmaker(middlerackmiddle);
                 //print is the value it moved it
-                message.println(DriverStationLCD.Line.kUser2, 1,Double.toString(middlerackmiddle));
+                message.println(DriverStationLCD.Line.kUser2, 1, Double.toString(middlerackmiddle));
                 message.println(DriverStationLCD.Line.kUser3, 1, "Middle Rack Middle");
 
-             } else if (stick.getRawButton(6)) {
-             Sholp += 1.0;
+            } else if (stick.getRawButton(6)) {
+                Sholp += 1.0;
 
 
-             }else if (stick.getRawButton(7)) {
-             Sholp -= 1.0;
+            } else if (stick.getRawButton(7)) {
+                Sholp -= 1.0;
 
-             }else if (stick.getRawButton(8)) {
-             Sholi += .001;
+            } else if (stick.getRawButton(8)) {
+                Sholi += .001;
 
-             }else if (stick.getRawButton(9)) {
-             Sholi -= .001;
+            } else if (stick.getRawButton(9)) {
+                Sholi -= .001;
 
-             }else if (stick.getRawButton(10)) {
-             Shold += .1;
+            } else if (stick.getRawButton(10)) {
+                Shold += .1;
 
-             }else if (stick.getRawButton(11)) {
-             Shold -= .1;
+            } else if (stick.getRawButton(11)) {
+                Shold -= .1;
 
-             }else {
+            } else {
                 ClawO.set(false);
                 ClawC.set(false);
                 MBDeplo.set(false);
@@ -320,8 +316,8 @@ public class Arm extends SimpleRobot {
             try {
                 Shol1.setPID(Sholp, Sholi, Shold);
                 message.println(DriverStationLCD.Line.kUser2, 1, "PR" + Double.toString(Shol1.getP()) + "PK" + Double.toString(Sholp) +
-                "D" + Double.toString(Shold));
-               message.println(DriverStationLCD.Line.kUser3, 1, "I"+ Double.toString(Sholi));
+                    "D" + Double.toString(Shold));
+                message.println(DriverStationLCD.Line.kUser3, 1, "I" + Double.toString(Sholi));
             } catch (CANTimeoutException ex) {
                 ex.printStackTrace();
             }
@@ -334,7 +330,7 @@ public class Arm extends SimpleRobot {
                     message.println(DriverStationLCD.Line.kUser4, 1, "Shol volt");
                 } else if (armstick.getZ() <= -.5) {//shoulder position mode
                     slavelinear(armstick.getY(), diff);
-                   // message.println(DriverStationLCD.Line.kUser4, 1, "Shol pos" + Double.toString());
+                    // message.println(DriverStationLCD.Line.kUser4, 1, "Shol pos" + Double.toString());
                 }
                 Timer.delay(0.01);
                 //multiplier can go up to 24
@@ -373,7 +369,7 @@ public class Arm extends SimpleRobot {
                 ex.printStackTrace();
             }
 
-            prevtime = ((double)System.currentTimeMillis()/1000.0);
+            prevtime = ((double) System.currentTimeMillis() / 1000.0);
         }//end while
     }
 
@@ -429,7 +425,7 @@ public class Arm extends SimpleRobot {
                 setshol2(SholVol);
 
                 returnval = Shol1.getPosition();
-                } else {
+            } else {
                 Pdes = 0.0; //change everytime position resets
                 Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
@@ -502,7 +498,7 @@ public class Arm extends SimpleRobot {
     /**
      * This function sets the shoulder to a certain position
      * using position control that's based on a step function.
-     *
+     * <p>
      * If using the y-axis for example the function will not change
      * the position of the arm if it's in the deadzone. If it is not in
      * the deadzone it will increment the position value or decrement the
@@ -531,22 +527,22 @@ public class Arm extends SimpleRobot {
                 returnval = Shol1.getPosition();
                 if (axisval <= forward2) {
                     //forward top zone
-                    returnval = returnval+endzone;
+                    returnval = returnval + endzone;
                 } else if (axisval > forward2 && axisval <= forward1) {
                     //forward middle zone
-                    returnval = returnval+middlezone;
+                    returnval = returnval + middlezone;
                 } else if (axisval >= backward1 && axisval < backward2) {
                     //backward middle zone
-                    returnval = returnval-middlezone;
+                    returnval = returnval - middlezone;
                 } else if (axisval >= backward2) {
                     //backward bottom zone
-                    returnval = returnval-endzone;
+                    returnval = returnval - endzone;
                 } else {
                     //dead zone
                 }
-                 Shol1.setX(returnval);
-                 setshol2(Shol1.getOutputVoltage());
-                 Timer.delay(0.01);
+                Shol1.setX(returnval);
+                setshol2(Shol1.getOutputVoltage());
+                Timer.delay(0.01);
             } else {
                 Pdes = 0.0;//reset anytime encoder gets reset
                 Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kPosition);
@@ -587,7 +583,7 @@ public class Arm extends SimpleRobot {
         if (joy.getZ() >= .5) {//voltage mode
             try {
                 if (RearLeft.getControlMode().equals(CANJaguar.ControlMode.kVoltage)
-                        && RearRight.getControlMode().equals(CANJaguar.ControlMode.kVoltage)) {
+                    && RearRight.getControlMode().equals(CANJaguar.ControlMode.kVoltage)) {
                 } else {
                     RearLeft.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
                     RearLeft.enableControl();
@@ -610,12 +606,12 @@ public class Arm extends SimpleRobot {
      * the values as necessary.
      *
      * @param yaxis, axis of joystick to scale off of
-     * @param dt, change in time of the while loop that calls this function
+     * @param dt,    change in time of the while loop that calls this function
      * @return the current position think are at
      */
     public double slavelinear(double yaxis, double dt) {
         double maxrpm = 10;
-    double maxrps = maxrpm/60;
+        double maxrps = maxrpm / 60;
         double deadzone = .3;
         double vdes = 0;
         double returnval = 909090909;
@@ -636,21 +632,22 @@ public class Arm extends SimpleRobot {
                 message.println(DriverStationLCD.Line.kUser3, 1, "DT" + Double.toString(dt));
                 setshol2(volt);
 
-                 message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(Pdes));
+                message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(Pdes));
             } else {
 
                 Pdes = 0.0;//reset Pdes anytime encoder resets
                 Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
-                Shol1.enableControl();}
+                Shol1.enableControl();
+            }
 
 
-           returnval = Shol1.getPosition();
+            returnval = Shol1.getPosition();
 
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
-    return returnval;
+        return returnval;
     }
 
 
@@ -661,7 +658,7 @@ public class Arm extends SimpleRobot {
      * in the downward direction. This function stops
      * the slave motor of the shoulder from turning in the downward
      * position of the limit switch has been triggered.
-     *
+     * <p>
      * This is the function that should now be called to change
      * the voltage of Shol2 rather than setting it directly.
      *

@@ -139,7 +139,7 @@ public class CreateMotionProfile extends Command {
 
     private void writeFile(String filePath, List<List<Double>> trajectory) throws IOException {
 
-        try(BufferedWriter fout =  Files.newBufferedWriter(Paths.get(filePath))) {
+        try (BufferedWriter fout = Files.newBufferedWriter(Paths.get(filePath))) {
 
             for (List<Double> trajectoryPoints : trajectory) { // outer loop to go
                 // through the unknown #
@@ -162,7 +162,7 @@ public class CreateMotionProfile extends Command {
         double leftDiff = 0;
         double rightDiff = 0;
 
-        if (leftMP.size() > 1 && rightMP.size() > 1){
+        if (leftMP.size() > 1 && rightMP.size() > 1) {
             leftDiff = Math.abs(leftMP.get(1).get(0) - leftMP.get(0).get(0));
             rightDiff = Math.abs(rightMP.get(1).get(0) - rightMP.get(0).get(0));
         }
@@ -173,7 +173,7 @@ public class CreateMotionProfile extends Command {
         }
 
         // remove repeated final positions at the end
-        if (leftMP.size() > 1 && rightMP.size() > 1){
+        if (leftMP.size() > 1 && rightMP.size() > 1) {
             leftDiff = Math.abs(leftMP.get(leftMP.size() - 2).get(0) - leftMP.get(leftMP.size() - 1).get(0));
             rightDiff = Math.abs(rightMP.get(rightMP.size() - 2).get(0) - rightMP.get(rightMP.size() - 1).get(0));
         }

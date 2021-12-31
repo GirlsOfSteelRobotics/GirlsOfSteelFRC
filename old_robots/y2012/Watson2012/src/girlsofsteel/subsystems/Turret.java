@@ -27,7 +27,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     private double m_offsetAngle = 0.34;
     private final Jaguar m_turretJag = new Jaguar(RobotMap.TURRET_JAG);
     private final Encoder m_encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
-            RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
+        RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
     private final PIDController m_pid = new PIDController(p, i, d, this, this);
 
     private final Chassis m_chassis;
@@ -37,28 +37,28 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     }
 
     @Override
-    public void initDefaultCommand(){
+    public void initDefaultCommand() {
 
     }
 
-    public void changeTurretOffset(){
+    public void changeTurretOffset() {
         double turretOffset = SmartDashboard.getNumber("Turret Offset", 0.0);
         m_offsetAngle = turretOffset;
     }
 
     //sets the unit -> only used in TEST -> degrees or just pulses
-    public void setEncoderUnit(double pulses, boolean inDegrees){
-        if(inDegrees){
-            m_encoder.setDistancePerPulse(360.0/pulses);
-        }else{
-            m_encoder.setDistancePerPulse(1.0/pulses);
+    public void setEncoderUnit(double pulses, boolean inDegrees) {
+        if (inDegrees) {
+            m_encoder.setDistancePerPulse(360.0 / pulses);
+        } else {
+            m_encoder.setDistancePerPulse(1.0 / pulses);
         }
-           }
+    }
 
     //initalizes encoder -> sets the unit to degrees
-    public void initEncoder(){
+    public void initEncoder() {
         m_encoder.setDistancePerPulse(ENCODER_UNIT); //degrees
-           }
+    }
 
     public void setJagSpeed(double speed) {
         m_turretJag.set(-speed);
@@ -88,14 +88,14 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
 
     //sets the P & D values -> used for testing
     //i is 0.0 because it is a rate PID
-    public void setPDs(double pVal, double dVal){
+    public void setPDs(double pVal, double dVal) {
         m_pid.setPID(pVal, 0.0, dVal);
     }
 
     //just in case the PID loop starts freaking out & you need to re-assing the
     //PID values in execute (used in chassis -> don't think it's having a probelem
     //in chassis's PIDs
-    public void setPDs(){
+    public void setPDs() {
         m_pid.setPID(p, i, d);
     }
 

@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -9,7 +10,6 @@ import girlsofsteel.OI;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author appasamysm
  */
 public class MoveManipulatorWithSlider extends CommandBase {
@@ -23,8 +23,7 @@ public class MoveManipulatorWithSlider extends CommandBase {
     private static final double m_maxManipulatorAngle = 110;
     private static final double m_minManipulatorAngle = -3;
 
-    public MoveManipulatorWithSlider(OI oi, Manipulator manipulator)
-    {
+    public MoveManipulatorWithSlider(OI oi, Manipulator manipulator) {
         m_manipulator = manipulator;
         m_driver = oi.getChassisJoystick();
         requires(m_manipulator);
@@ -36,7 +35,7 @@ public class MoveManipulatorWithSlider extends CommandBase {
 
     @Override
     protected void execute() {
-        double angle = ((m_driver.getZ()/ m_fullRangeOnSlider)* m_maxManipulatorAngle)+ m_minManipulatorAngle;
+        double angle = ((m_driver.getZ() / m_fullRangeOnSlider) * m_maxManipulatorAngle) + m_minManipulatorAngle;
         m_manipulator.setSetPoint(angle);
     }
 

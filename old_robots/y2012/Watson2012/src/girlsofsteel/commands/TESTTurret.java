@@ -12,12 +12,12 @@ public class TESTTurret extends CommandBase {
     private double m_pulses;
     private boolean m_inDegrees;
 
-    public TESTTurret(Turret turret){
+    public TESTTurret(Turret turret) {
         m_turret = turret;
         requires(m_turret);
         SmartDashboard.putNumber("Turret Jags Speed", 0.0);
         SmartDashboard.putNumber("Turret Encoder Pulses", 0.0);
-        SmartDashboard.putBoolean("Turret Encoder in Degrees",false);
+        SmartDashboard.putBoolean("Turret Encoder in Degrees", false);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class TESTTurret extends CommandBase {
         m_speed = SmartDashboard.getNumber("Turret Jags Speed", 0.0);
         m_turret.setJagSpeed(m_speed);
         m_pulses = SmartDashboard.getNumber("Turret Encoder Pulses", 0.0);
-        m_inDegrees = SmartDashboard.getBoolean("Turret Encoder in Degrees",false);
+        m_inDegrees = SmartDashboard.getBoolean("Turret Encoder in Degrees", false);
         m_turret.setEncoderUnit(m_pulses, m_inDegrees);
         SmartDashboard.putNumber("Turret Encoder", m_turret.getEncoderDistance());
     }

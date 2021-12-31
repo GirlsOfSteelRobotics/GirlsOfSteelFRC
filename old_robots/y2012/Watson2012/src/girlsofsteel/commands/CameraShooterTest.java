@@ -30,12 +30,12 @@ public class CameraShooterTest extends CommandBase {
 
     @Override
     protected void execute() {
-        m_shooter.setPIDValues(SmartDashboard.getNumber("CST,P",0.0), SmartDashboard.getNumber("CST,I",0.0),0.0);
+        m_shooter.setPIDValues(SmartDashboard.getNumber("CST,P", 0.0), SmartDashboard.getNumber("CST,I", 0.0), 0.0);
         m_speed = SmartDashboard.getNumber("CST,speed", 0.0);
-        if(SmartDashboard.getBoolean("collectors", false)){
+        if (SmartDashboard.getBoolean("collectors", false)) {
             m_collector.reverseBrush();
             m_collector.reverseMiddleConveyor();
-        }else{
+        } else {
             m_collector.stopBrush();
             m_collector.stopMiddleConveyor();
         }
@@ -44,9 +44,9 @@ public class CameraShooterTest extends CommandBase {
         } else {
             m_shooter.topRollersOff();
         }
-        if(SmartDashboard.getBoolean("shoot", false)){
+        if (SmartDashboard.getBoolean("shoot", false)) {
             m_shooter.setPIDSpeed(m_speed);
-        }else{
+        } else {
             m_shooter.setPIDSpeed(0.0);
         }
         SmartDashboard.putBoolean("ready to shoot", m_shooter.isWithinSetPoint(m_speed));

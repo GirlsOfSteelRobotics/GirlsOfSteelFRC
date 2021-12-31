@@ -13,16 +13,15 @@ import girlsofsteel.subsystems.Driving;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author Parent
  */
-public class AutonomousHotHighGoal extends CommandGroup{
+public class AutonomousHotHighGoal extends CommandGroup {
 
     public AutonomousHotHighGoal(Chassis chassis, Driving driving, Manipulator manipulator) {
         addSequential(new MoveToPosition(chassis, driving, 1));
         addParallel(new SetArmAnglePID(manipulator, 30));
-    if (Camera.isGoalHot()) {
-        addSequential(new ShootHigh());
+        if (Camera.isGoalHot()) {
+            addSequential(new ShootHigh());
+        }
     }
-}
 }

@@ -2,22 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Chassis;
 
 /**
- *
  * @author sophia
  */
-    public class ChassisJagsAndEncoders extends CommandBase {
+public class ChassisJagsAndEncoders extends CommandBase {
     //copied from KiwiDrive code
 
     private final Chassis m_chassis;
     private double m_speed;
 
-    public ChassisJagsAndEncoders(Chassis chassis){
+    public ChassisJagsAndEncoders(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
 //        SmartDashboard.putBoolean("Right Jag", false);
@@ -55,11 +55,11 @@ import girlsofsteel.subsystems.Chassis;
         double allowedError = 0.05;
         double desiredSpeed = 0.2;
         m_chassis.setRightJag(desiredSpeed);
-            try {
-                wait(1000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace(); // NOPMD
-            }
+        try {
+            wait(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace(); // NOPMD
+        }
         m_speed = m_chassis.getRightEncoderRate();
         if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
             System.out.println("Passed Right Jag speed test");
@@ -68,11 +68,11 @@ import girlsofsteel.subsystems.Chassis;
         //System.out.println("R Rate: " + chassis.getRightEncoderRate());
         desiredSpeed = 0.3;
         m_chassis.setBackJag(desiredSpeed);
-            try {
-                wait(1000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();// NOPMD
-            }
+        try {
+            wait(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();// NOPMD
+        }
 //        System.out.println("B Distance:" + chassis.getBackEncoderDistance());
         //System.out.println("B Rate: " + chassis.getBackEncoderRate());
         m_speed = m_chassis.getBackEncoderRate();
@@ -82,10 +82,10 @@ import girlsofsteel.subsystems.Chassis;
         desiredSpeed = 0.4;
         m_chassis.setLeftJag(desiredSpeed);
         try {
-                wait(1000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();// NOPMD
-            }
+            wait(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();// NOPMD
+        }
 //        System.out.println("L Distance:" + chassis.getLeftEncoderDistance());
         m_speed = m_chassis.getLeftEncoderRate();
         if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
@@ -93,6 +93,7 @@ import girlsofsteel.subsystems.Chassis;
         }
 
     }
+
     @Override
     protected boolean isFinished() {
         return false;

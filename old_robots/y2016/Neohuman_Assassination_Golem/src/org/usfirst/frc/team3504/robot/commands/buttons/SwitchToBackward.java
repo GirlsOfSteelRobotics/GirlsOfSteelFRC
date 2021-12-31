@@ -11,7 +11,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Camera;
  */
 public class SwitchToBackward extends CommandGroup {
 
-    public  SwitchToBackward(OI oi, Camera camera) {
+    public SwitchToBackward(OI oi, Camera camera) {
         addParallel(new SwitchToCamFlap(camera));
         addParallel(new DriveBackward(oi));
     }

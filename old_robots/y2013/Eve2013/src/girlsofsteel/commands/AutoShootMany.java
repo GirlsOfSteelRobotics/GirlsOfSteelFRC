@@ -17,7 +17,7 @@ public class AutoShootMany extends CommandBase {
     private boolean m_pushed;
     private double m_time;
 
-    public AutoShootMany(Shooter shooter, Feeder feeder, int numShots, double desiredVoltage){
+    public AutoShootMany(Shooter shooter, Feeder feeder, int numShots, double desiredVoltage) {
         m_shooter = shooter;
         m_feeder = feeder;
         requires(m_shooter);
@@ -32,7 +32,7 @@ public class AutoShootMany extends CommandBase {
         m_pushed = false;
         m_shooter.setJags(m_desiredVoltage);
         m_time = timeSinceInitialized();
-        while(timeSinceInitialized() - m_time < 4){ // NOPMD(EmptyWhileStmt)
+        while (timeSinceInitialized() - m_time < 4) { // NOPMD(EmptyWhileStmt)
             //overall wait time is 4 + WAIT_TIME = 5
         }
         m_time = timeSinceInitialized();
@@ -40,11 +40,11 @@ public class AutoShootMany extends CommandBase {
 
     @Override
     protected void execute() {
-        if(timeSinceInitialized() - m_time > WAIT_TIME){
-            if(!m_pushed){
+        if (timeSinceInitialized() - m_time > WAIT_TIME) {
+            if (!m_pushed) {
                 m_feeder.pushShooter();
                 m_pushed = true;
-            }else{
+            } else {
                 m_feeder.pullShooter();
                 m_pushed = false;
 //                counter++;
@@ -56,7 +56,7 @@ public class AutoShootMany extends CommandBase {
     @Override
     protected boolean isFinished() {
         return m_counter >= m_shots;//counter is never changed -> continue to shoot
-            //just in case a frisbee got stuck
+        //just in case a frisbee got stuck
     }
 
     @Override

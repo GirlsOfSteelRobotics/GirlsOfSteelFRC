@@ -51,28 +51,28 @@ public class Shooter extends Subsystem {
     private double m_hangTime;
     private double m_newXDistance;
     private final Jaguar m_jags = new Jaguar(RobotMap.SHOOTER_JAGS);
-//    CHANGE FOR REAL WATSON:
+    //    CHANGE FOR REAL WATSON:
 //    public Encoder encoder = new Encoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
 //            RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
 //            CounterBase.EncodingType.k4X);
 //    private Relay topRollers = new Relay(RobotMap.TOP_ROLLER_SPIKE);
 //    PRACTICE WATSANNE:
     public Encoder m_encoder = new SmoothEncoder(RobotMap.ENCODER_SHOOTER_CHANNEL_A,
-            RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
-            CounterBase.EncodingType.k4X);
+        RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
+        CounterBase.EncodingType.k4X);
     private final Relay m_topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
     private final EncoderGoSPIDController m_pid = new EncoderGoSPIDController(p, i, d, m_encoder,
-            new PIDOutput() {
+        new PIDOutput() {
 
-                @Override
-                public void pidWrite(double output) {
-                    setJags(output);
-                }
-            }, EncoderGoSPIDController.RATE,INTEGRAL_THRESHOLD);
+            @Override
+            public void pidWrite(double output) {
+                setJags(output);
+            }
+        }, EncoderGoSPIDController.RATE, INTEGRAL_THRESHOLD);
 
     private final ShooterLookupTable m_shooterLookupTable;
 
-    public Shooter(){
+    public Shooter() {
         m_shooterLookupTable = new ShooterLookupTable();
     }
 
@@ -102,10 +102,10 @@ public class Shooter extends Subsystem {
 
     public void initEncoder() {
         m_encoder.setDistancePerPulse(ENCODER_UNIT);
-           }
+    }
 
     public void stopEncoder() {
-           }
+    }
 
     public void initPID() {
         m_pid.setOutputThreshold(PID_OUTPUT_THRESHOLD);
@@ -118,35 +118,35 @@ public class Shooter extends Subsystem {
 
     //re-assigns the P & I values -> the D value is always 0.0 because it is a
     //rate PID controller
-    public void setPIDValues(double p, double i, double d){
+    public void setPIDValues(double p, double i, double d) {
         m_pid.setPID(p, i, d);
     }
 
     //this is for the weird bug in having to reassign PID values in execute
     //must be called in execute before anything else if using the shooter PID
-    public void setPIDValues(){
+    public void setPIDValues() {
         m_pid.setPID(p, i, d);
     }
 
-    public double getPIDSetPoint(){
+    public double getPIDSetPoint() {
         return m_pid.getSetPoint();
     }
 
     //if the shooter wheel is within the set point range it will return true
     //used to decide if the top rollers should be run or not
     public boolean isWithinSetPoint(double setPoint) {
-        if(setPoint == 0){//set point will be false if you are not getting a velocity
+        if (setPoint == 0) {//set point will be false if you are not getting a velocity
             return false; //will not run the top rollers if the wheel is not run
-        }else{
+        } else {
             return (m_pid.getRate() > setPoint - VELOCITY_ERROR_RANGE
                 && m_pid.getRate() < setPoint + VELOCITY_ERROR_RANGE);
         }
     }
 
     public boolean isWithinSetPoint(double setPoint, double errorRange) {
-        if(setPoint == 0){//set point will be false if you are not getting a velocity
+        if (setPoint == 0) {//set point will be false if you are not getting a velocity
             return false; //will not run the top rollers if the wheel is not run
-        }else{
+        } else {
             return (m_pid.getRate() > setPoint - errorRange
                 && m_pid.getRate() < setPoint + errorRange);
         }
@@ -156,50 +156,50 @@ public class Shooter extends Subsystem {
         m_pid.disable();
     }
 
-    public void resetPIDError(){
+    public void resetPIDError() {
         m_pid.resetError();
     }
 
-    public double getDistance(){//from the fender to the camera -> in meters
-        return Camera.getXDistance() - 38*(0.0254/1.0);//fender is 38inches
+    public double getDistance() {//from the fender to the camera -> in meters
+        return Camera.getXDistance() - 38 * (0.0254 / 1.0);//fender is 38inches
     }
 
-    public void shoot(double speed){
+    public void shoot(double speed) {
         setPIDValues();
         setPIDSpeed(speed);
-        if(isWithinSetPoint(speed)){
+        if (isWithinSetPoint(speed)) {
             topRollersForward();
-        }else{
-            if(!isWithinSetPoint(speed, SCALE_TOP_ROLLERS_OFF*VELOCITY_ERROR_RANGE)){
+        } else {
+            if (!isWithinSetPoint(speed, SCALE_TOP_ROLLERS_OFF * VELOCITY_ERROR_RANGE)) {
                 topRollersOff();
             }
         }
     }
 
-    public void autoShoot(double cameraDistance){
+    public void autoShoot(double cameraDistance) {
         setPIDValues();
         double velocity;
         velocity = m_shooterLookupTable.getVelocityFrTable(cameraDistance);
         System.out.println(cameraDistance + "       velocity:  " + velocity);
         setPIDSpeed(velocity);
-        if(isWithinSetPoint(velocity)){
+        if (isWithinSetPoint(velocity)) {
             topRollersForward();
-        }else{
-            if(!isWithinSetPoint(velocity, SCALE_TOP_ROLLERS_OFF*VELOCITY_ERROR_RANGE)){
+        } else {
+            if (!isWithinSetPoint(velocity, SCALE_TOP_ROLLERS_OFF * VELOCITY_ERROR_RANGE)) {
                 topRollersOff();
             }
         }
     }
 
-    public void autoShootBestFitLine(double cameraDistance){
+    public void autoShootBestFitLine(double cameraDistance) {
         setPIDValues();
         double velocity;
-        velocity = 2.16*cameraDistance + 14.25;
+        velocity = 2.16 * cameraDistance + 14.25;
         setPIDSpeed(velocity);
-        if(isWithinSetPoint(velocity)){
+        if (isWithinSetPoint(velocity)) {
             topRollersForward();
-        }else{
-            if(!isWithinSetPoint(velocity, SCALE_TOP_ROLLERS_OFF*VELOCITY_ERROR_RANGE)){
+        } else {
+            if (!isWithinSetPoint(velocity, SCALE_TOP_ROLLERS_OFF * VELOCITY_ERROR_RANGE)) {
                 topRollersOff();
             }
         }
@@ -266,7 +266,7 @@ public class Shooter extends Subsystem {
     //if the robot is moving it calculates the velocity it should be set at and
     //accounts for the compensation of the robot's velocity
     public double getMovingBallVelocity(double xDistance, double robotVelocityY,
-            double robotVelocityX) {
+                                        double robotVelocityX) {
         calculateAngle(xDistance);
 
         double initialVelocity;
@@ -294,7 +294,7 @@ public class Shooter extends Subsystem {
     //the compensation that the speed of the ball has to go based on the
     //robot velocity -> new distances of being shot
     private double getSpeedCompensation(double xDistance, double ballVelocity,
-            double robotVelocityY) {
+                                        double robotVelocityY) {
         m_hangTime = xDistance / (ballVelocity * Math.cos(m_angle));//angle in radians (needs to be)
 
         m_newXDistance = xDistance - (robotVelocityY * m_hangTime);
@@ -329,10 +329,10 @@ public class Shooter extends Subsystem {
         return ((maxShooterValue - minShooterValue) * (sliderValue - MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER);
     }
 
-    public double getIncrementValue(double sliderValue){
+    public double getIncrementValue(double sliderValue) {
         double minIncrementValue = -2.0;
         double maxIncrementValue = 2.0;
-        return ((maxIncrementValue - minIncrementValue)*(sliderValue-MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER);
+        return ((maxIncrementValue - minIncrementValue) * (sliderValue - MIN_SLIDER)) / (MAX_SLIDER - MIN_SLIDER);
     }
 
 }

@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
@@ -30,11 +30,9 @@ public class Pivot extends Subsystem {
     public int getPosition() {
         if (getTopLimitSwitch()) {
             return 1;
-        }
-        else if(getBottomLimitSwitch()) {
+        } else if (getBottomLimitSwitch()) {
             return -1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -50,11 +48,11 @@ public class Pivot extends Subsystem {
 
     }
 
-    public boolean getTopLimitSwitch(){
+    public boolean getTopLimitSwitch() {
         return m_pivotMotor.isRevLimitSwitchClosed() == 0;
     }
 
-    public boolean getBottomLimitSwitch(){
+    public boolean getBottomLimitSwitch() {
         return m_pivotMotor.isFwdLimitSwitchClosed() == 0;
     }
 

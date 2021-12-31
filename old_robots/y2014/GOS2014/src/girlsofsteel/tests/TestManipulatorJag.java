@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -9,14 +10,13 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author sam
  */
 public class TestManipulatorJag extends CommandBase {
 
     private final Manipulator m_manipulator;
 
-    public TestManipulatorJag (Manipulator manipulator) {
+    public TestManipulatorJag(Manipulator manipulator) {
         m_manipulator = manipulator;
         requires(m_manipulator);
     }
@@ -31,13 +31,13 @@ public class TestManipulatorJag extends CommandBase {
 //        i++;
 //        while(i == 1)
 //        {
-            System.out.println("Here");
-            m_manipulator.testJagsForward();
-            Timer.delay (5);
-            m_manipulator.stopTestJags();
-            Timer.delay (5);
-            m_manipulator.testJagsBackward();
-            Timer.delay (5);
+        System.out.println("Here");
+        m_manipulator.testJagsForward();
+        Timer.delay(5);
+        m_manipulator.stopTestJags();
+        Timer.delay(5);
+        m_manipulator.testJagsBackward();
+        Timer.delay(5);
 //        }
         //manipulator.moveJags(joystick.getY());
     }
@@ -49,7 +49,7 @@ public class TestManipulatorJag extends CommandBase {
 
     @Override
     protected void end() {
-       m_manipulator.stopTestJags();
+        m_manipulator.stopTestJags();
     }
 
     @Override

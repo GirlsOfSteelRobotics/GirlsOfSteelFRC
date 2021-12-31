@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.subsystems;
 
 import edu.wpi.first.wpilibj.Relay;
@@ -10,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import girlsofsteel.RobotMap;
 
 /**
- *
  * @author Heather
  */
 public class Climber extends Subsystem {
@@ -21,9 +21,9 @@ public class Climber extends Subsystem {
 
 
     private final Solenoid m_extendLifterPistonSolenoid = new Solenoid(
-            RobotMap.LIFTER_MODULE, RobotMap.EXTEND_LIFTER_PISTON_SOLENOID);
+        RobotMap.LIFTER_MODULE, RobotMap.EXTEND_LIFTER_PISTON_SOLENOID);
     private final Solenoid m_retractLifterPistonSolenoid = new Solenoid(
-            RobotMap.LIFTER_MODULE, RobotMap.RETRACT_LIFTER_PISTON_SOLENOID);
+        RobotMap.LIFTER_MODULE, RobotMap.RETRACT_LIFTER_PISTON_SOLENOID);
 
 
     //Piston methods

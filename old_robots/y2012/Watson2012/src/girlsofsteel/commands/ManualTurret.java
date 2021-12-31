@@ -26,8 +26,7 @@ public class ManualTurret extends CommandBase {
         m_knobValue = m_oi.getTurretKnobValue(Turret.TURRET_OVERRIDE_DEADZONE);
         if (m_knobValue > 0) {
             m_speed = 0.2;
-        }
-        else{
+        } else {
             m_speed = -0.2;
         }
         m_turret.setJagSpeed(m_speed);

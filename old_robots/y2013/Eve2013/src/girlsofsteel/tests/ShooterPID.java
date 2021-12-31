@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,15 +10,14 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Shooter;
 
 /**
- *
  * @author Sylvie
  */
-public class ShooterPID extends CommandBase{
+public class ShooterPID extends CommandBase {
 
     private final Shooter m_shooter;
     private double m_speed;
 
-    public ShooterPID(Shooter shooter){
+    public ShooterPID(Shooter shooter) {
         m_shooter = shooter;
         requires(m_shooter);
     }

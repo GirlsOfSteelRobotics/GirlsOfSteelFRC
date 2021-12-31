@@ -1,8 +1,6 @@
-
 package girlsofsteel.commands;
 
 /**
- *
  * @author bradmiller
  */
 public class DoNothing extends CommandBase {

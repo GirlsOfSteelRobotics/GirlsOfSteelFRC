@@ -4,6 +4,7 @@
 
 2nd chassis drives straight without any adjustments
 */
+
 package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,17 +12,16 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Chassis;
 
 /**
- *
  * @author Blank...
  * This needs to be tested by the end of 2/13/14
  */
-public class TestingDrivingStraight extends CommandBase{
+public class TestingDrivingStraight extends CommandBase {
 
     private final Chassis m_chassis;
 
-    public TestingDrivingStraight(Chassis chassis){
+    public TestingDrivingStraight(Chassis chassis) {
         m_chassis = chassis;
-         requires(m_chassis);
+        requires(m_chassis);
     }
 
     @Override

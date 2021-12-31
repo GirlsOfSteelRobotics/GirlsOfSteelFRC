@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 
@@ -23,7 +24,7 @@ public class Shoot extends CommandBase {
         requires(shooter);
     }
 
-    public Shoot(Shooter shooter){
+    public Shoot(Shooter shooter) {
         m_camera = true;
         m_shooter = shooter;
         requires(m_shooter);
@@ -31,7 +32,7 @@ public class Shoot extends CommandBase {
 
     @Override
     protected void initialize() {
-        if(m_camera){
+        if (m_camera) {
 //            speed = PositionInfo.getSpeed(ShooterCamera.getLocation());
             m_speed = 0.73;
         }
@@ -42,7 +43,9 @@ public class Shoot extends CommandBase {
 
     @Override
     protected void execute() {
-        if (timeSinceInitialized() - m_time > 2) { m_shooter.setShootTrue(); }
+        if (timeSinceInitialized() - m_time > 2) {
+            m_shooter.setShootTrue();
+        }
         m_shooter.setJags(m_speed);
     }
 

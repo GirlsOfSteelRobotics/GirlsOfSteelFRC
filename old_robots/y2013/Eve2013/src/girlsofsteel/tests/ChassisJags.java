@@ -9,7 +9,7 @@ public class ChassisJags extends CommandBase {
     private final Chassis m_chassis;
     private double m_speed;
 
-    public ChassisJags(Chassis chassis){
+    public ChassisJags(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
     }
@@ -26,19 +26,19 @@ public class ChassisJags extends CommandBase {
     @Override
     protected void execute() {
         m_speed = SmartDashboard.getNumber("Jag Speed", 0.0);
-        if(SmartDashboard.getBoolean("Right Jag", false)){
+        if (SmartDashboard.getBoolean("Right Jag", false)) {
             m_chassis.setRightJag(m_speed);
-        }else{
+        } else {
             m_chassis.setRightJag(0.0);
         }
-        if(SmartDashboard.getBoolean("Back Jag", false)){
+        if (SmartDashboard.getBoolean("Back Jag", false)) {
             m_chassis.setBackJag(m_speed);
-        }else{
+        } else {
             m_chassis.setBackJag(0.0);
         }
-        if(SmartDashboard.getBoolean("Left Jag", false)){
+        if (SmartDashboard.getBoolean("Left Jag", false)) {
             m_chassis.setLeftJag(m_speed);
-        }else{
+        } else {
             m_chassis.setLeftJag(0.0);
         }
         SmartDashboard.putNumber("Right Rate", m_chassis.getRightEncoderRate());

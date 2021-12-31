@@ -6,7 +6,7 @@ public class StopCollectors extends CommandBase {
 
     private final Collector m_collector;
 
-    public StopCollectors(Collector collector){
+    public StopCollectors(Collector collector) {
         m_collector = collector;
         requires(m_collector);
     }

@@ -6,6 +6,7 @@
  * it will set the jags to a suitable speed from the table. Also be prepared to
  * extrapolate values (see code from last year).
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.RobotController;
@@ -52,9 +53,9 @@ public class ShooterTuning extends CommandBase {
                 m_done = true;
             }
         }
-                System.out.println("Point Voltage: " + m_speed + "\t");
-                System.out.print("Point Shooter Encoder Speed: " + m_shooter.getEncoderRate());
-                System.out.println("Point Battery Voltage: " + m_batteryVoltage);
+        System.out.println("Point Voltage: " + m_speed + "\t");
+        System.out.print("Point Shooter Encoder Speed: " + m_shooter.getEncoderRate());
+        System.out.println("Point Battery Voltage: " + m_batteryVoltage);
 
     }
 

@@ -32,7 +32,7 @@ public class RobotMap {
     //collector
     public static final int MIDDLE_COLLECTOR_SPIKE = 0;
     public static final int BRUSH_JAG = 6;
-//    public static final int BRUSH_SPIKE = 6;
+    //    public static final int BRUSH_SPIKE = 6;
     public static final int COLLECTOR_LIMIT_SWITCH = 9;
 
 }

@@ -9,8 +9,8 @@ import org.usfirst.frc.team3504.robot.subsystems.Chassis;
  */
 public class Portcullis extends CommandGroup {
 
-    public  Portcullis(Chassis chassis) {
+    public Portcullis(Chassis chassis) {
         //addSequential(new FlapUp());
-        addSequential(new Drive(chassis, 5,0)); //FIXME: need real values
+        addSequential(new Drive(chassis, 5, 0)); //FIXME: need real values
     }
 }

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.objects.Camera;
 
 /**
- *
  * @author Sylvie
  */
 public class IsGoalHot extends CommandBase {
@@ -50,11 +50,11 @@ public class IsGoalHot extends CommandBase {
             m_average += hot;
         }
         m_average /= m_hots.length;
-         if(m_average >= 0.5){ //If it's dead even, just say that it's HOT
+        if (m_average >= 0.5) { //If it's dead even, just say that it's HOT
             m_camera.setIsHot(true);
-        }else {
-             m_camera.setIsHot(false);
-         }
+        } else {
+            m_camera.setIsHot(false);
+        }
     }
 
     @Override

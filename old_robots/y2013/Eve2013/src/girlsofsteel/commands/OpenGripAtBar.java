@@ -2,19 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Gripper;
 
 /**
- *
  * @author sam
  */
 public class OpenGripAtBar extends CommandBase {
     private final Gripper m_gripper;
 
     public OpenGripAtBar(Gripper gripper) {
-        requires (gripper);
+        requires(gripper);
         this.m_gripper = gripper;
     }
 

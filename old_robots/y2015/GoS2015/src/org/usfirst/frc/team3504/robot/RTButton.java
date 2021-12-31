@@ -10,13 +10,14 @@ public class RTButton extends Trigger {
      */
     private final Joystick m_operator;
 
-    public RTButton(Joystick operatorJoystick){
+    public RTButton(Joystick operatorJoystick) {
         m_operator = operatorJoystick;
     }
+
     @Override
-    public boolean get(){
+    public boolean get() {
         SmartDashboard.putNumber("Z Right Value", m_operator.getRawAxis(3));
-        return m_operator.getRawAxis(3) > 0.1 ;
+        return m_operator.getRawAxis(3) > 0.1;
 
     }
 

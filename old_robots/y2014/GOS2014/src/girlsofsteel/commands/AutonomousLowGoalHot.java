@@ -8,7 +8,6 @@ import girlsofsteel.subsystems.Driving;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author Heather
  */
 public class AutonomousLowGoalHot extends CommandGroup {

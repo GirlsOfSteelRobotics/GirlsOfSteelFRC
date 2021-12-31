@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Collector;
 
 /**
- *
  * @author appasamysm
  */
 public class TestingCollector extends CommandBase {

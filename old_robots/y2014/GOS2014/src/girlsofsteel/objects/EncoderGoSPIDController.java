@@ -45,17 +45,17 @@ public class EncoderGoSPIDController implements Runnable {
     private boolean m_modEncoder = false;
 
     public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
-            PIDOutput jags, int type) {
+                                   PIDOutput jags, int type) {
         this(kp, ki, kd, encoder, jags, type, 0);
     }
 
     public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
-            PIDOutput jags, int type, int zeroEncoderValue) {
+                                   PIDOutput jags, int type, int zeroEncoderValue) {
         this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, false, false);
     }
 
     public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
-            PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder) {
+                                   PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder) {
         this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, reverseEncoder, modEncoder, 999999999);
     }
 
@@ -65,7 +65,7 @@ public class EncoderGoSPIDController implements Runnable {
     }
 
     public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
-            PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder, double integralThreshold) {
+                                   PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder, double integralThreshold) {
         m_kp = kp;
         m_ki = ki;
         m_kd = kd;
@@ -141,7 +141,7 @@ public class EncoderGoSPIDController implements Runnable {
                     }
                 }
                 double newOutput = m_kp * m_error + m_ki * m_errorSum * (m_currentTime - m_previousTime)
-                        + m_kd * (m_error - m_previousError) / (m_currentTime - m_previousTime);
+                    + m_kd * (m_error - m_previousError) / (m_currentTime - m_previousTime);
                 if (newOutput - m_output < -m_outputThreshold || newOutput - m_output > m_outputThreshold) {
                     m_output = newOutput;
                 }

@@ -39,7 +39,7 @@ public class AutoDriveBackwards extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return m_chassis.getEncoderDistance() >= Math.abs(m_inches);	//for competition bot
+        return m_chassis.getEncoderDistance() >= Math.abs(m_inches);    //for competition bot
         //return m_chassis.getEncoderDistance() >= inches;	//this is what works on practice bot.. don't know if its the same as competition since we switched it on practice
 
     }

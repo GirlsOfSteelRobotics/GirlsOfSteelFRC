@@ -5,7 +5,7 @@ import girlsofsteel.subsystems.Collector;
 public class ReverseCollectors extends CommandBase {
     private final Collector m_collector;
 
-    public ReverseCollectors(Collector collector){
+    public ReverseCollectors(Collector collector) {
         m_collector = collector;
         requires(m_collector);
     }

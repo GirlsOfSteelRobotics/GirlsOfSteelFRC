@@ -12,7 +12,7 @@ public class TESTTurretPID extends CommandBase {
 
     private double m_setpoint;
 
-    public TESTTurretPID(Turret turret){
+    public TESTTurretPID(Turret turret) {
         m_turret = turret;
         requires(m_turret);
         SmartDashboard.putNumber("Turret Setpoint", 0.0);

@@ -1,9 +1,10 @@
 /**
  * A command to tune the chassis position PID.
- *
- *
+ * <p>
+ * <p>
  * DIFFERENT P'S ON THE PRACTICE BOT AND COMPETITION BOT
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -74,17 +75,17 @@ public class ManualPositionPIDTuner extends CommandBase {
         System.out.println("Get right chassis raw: " + m_chassis.getRightRaw());
 
         if (m_pid && m_p != 0 && m_setpoint != 0) {
-                System.out.println("Here ---------------------------------");
-                m_chassis.setLeftPositionPIDValues(m_p, m_i, m_d);
-                m_chassis.setRightPositionPIDValues(m_p, m_i, m_d);
-                m_chassis.setPositionSeparate(m_setpoint, m_setpoint);
+            System.out.println("Here ---------------------------------");
+            m_chassis.setLeftPositionPIDValues(m_p, m_i, m_d);
+            m_chassis.setRightPositionPIDValues(m_p, m_i, m_d);
+            m_chassis.setPositionSeparate(m_setpoint, m_setpoint);
 
         }
     }
 
     @Override
     protected boolean isFinished() {
-        boolean finished =  (Math.abs((m_chassis.getLeftEncoderDistance() - m_setpoint)) < m_offBy || Math.abs((m_chassis.getRightEncoderDistance()- m_setpoint)) < m_offBy) && (m_setpoint != 0);
+        boolean finished = (Math.abs((m_chassis.getLeftEncoderDistance() - m_setpoint)) < m_offBy || Math.abs((m_chassis.getRightEncoderDistance() - m_setpoint)) < m_offBy) && (m_setpoint != 0);
         System.out.println("Position PID is finished: " + finished);
         return finished;
     }

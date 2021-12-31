@@ -11,8 +11,8 @@ import org.usfirst.frc.team3504.robot.subsystems.Flap;
  */
 public class ChevalDeFrise extends CommandGroup {
 
-    public  ChevalDeFrise(Chassis chassis, Flap flap) {
+    public ChevalDeFrise(Chassis chassis, Flap flap) {
         addSequential(new FlapDown(flap));
-        addSequential(new Drive(chassis, 10,0)); //FIXME: correct values
+        addSequential(new Drive(chassis, 10, 0)); //FIXME: correct values
     }
 }

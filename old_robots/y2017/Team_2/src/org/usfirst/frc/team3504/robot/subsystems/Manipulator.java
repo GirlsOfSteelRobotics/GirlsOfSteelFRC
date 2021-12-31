@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -32,26 +32,26 @@ public class Manipulator extends Subsystem {
     public void initDefaultCommand() {
     }
 
-    public void collectIn(double speed){
+    public void collectIn(double speed) {
         m_collectRight.set(ControlMode.PercentOutput, speed);
         m_collectLeft.set(ControlMode.PercentOutput, speed);
     }
 
-    public void pusherOut(){
+    public void pusherOut() {
         m_pusher.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void pusherIn(){
+    public void pusherIn() {
         m_pusher.set(DoubleSolenoid.Value.kReverse);
     }
 
-    public void pivotUp(double speed){
+    public void pivotUp(double speed) {
         System.out.println("Pivot Up Speed" + speed);
         m_pivotA.set(ControlMode.PercentOutput, -speed);
         m_pivotB.set(ControlMode.PercentOutput, -speed);
     }
 
-    public void pivotDown(double speed){
+    public void pivotDown(double speed) {
         System.out.println("Pivot Down Speed" + speed);
         m_pivotA.set(ControlMode.PercentOutput, speed);
         m_pivotB.set(ControlMode.PercentOutput, speed);
@@ -62,7 +62,7 @@ public class Manipulator extends Subsystem {
         m_collectLeft.set(ControlMode.PercentOutput, 0);
     }
 
-    public void stopPivot(){
+    public void stopPivot() {
         m_pivotA.set(ControlMode.PercentOutput, 0);
         m_pivotB.set(ControlMode.PercentOutput, 0);
     }

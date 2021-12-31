@@ -10,6 +10,7 @@ import girlsofsteel.subsystems.Collector;
 
 /**
  * Moves the collector wheel forward.
+ *
  * @author Heather, Sophia, Sonia
  */
 public class CollectorWheelForward extends CommandBase {
@@ -22,6 +23,7 @@ public class CollectorWheelForward extends CommandBase {
 
     /**
      * There is nothing in this method.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -32,15 +34,17 @@ public class CollectorWheelForward extends CommandBase {
     /**
      * This rolls the collector wheel forward.
      * It can be used to bring the ball into the trident.
+     *
      * @author Sophia, Sonia
      */
     @Override
     protected void execute() {
-       m_collector.collectorWheelFoward();
+        m_collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
 
     /**
      * This returns false when we want to move the wheel forward .
+     *
      * @return false always
      * @author Sophia, Sonia
      */
@@ -52,6 +56,7 @@ public class CollectorWheelForward extends CommandBase {
 
     /**
      * This stops the collector wheel.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -62,6 +67,7 @@ public class CollectorWheelForward extends CommandBase {
 
     /**
      * This calls the end() method to stop the collector wheel
+     *
      * @author Sophia, Sonia
      */
     @Override

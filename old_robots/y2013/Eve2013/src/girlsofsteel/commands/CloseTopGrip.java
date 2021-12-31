@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 /**
- *
  * @author sam
  */
-public class CloseTopGrip extends CommandBase{
+public class CloseTopGrip extends CommandBase {
 
     //Command for closing the bottom gripper around the pyramid
 
@@ -26,7 +26,7 @@ public class CloseTopGrip extends CommandBase{
 
     @Override
     protected boolean isFinished() {
-            return true;
+        return true;
 
     }
 

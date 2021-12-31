@@ -10,7 +10,7 @@ public class GoToLocation extends CommandBase {
     private final double m_degreesToFace; //degree change relative to beginning position of the
     //robot to end facing
 
-    public GoToLocation(Chassis chassis, double x, double y, double degreesToFace){
+    public GoToLocation(Chassis chassis, double x, double y, double degreesToFace) {
         m_chassis = chassis;
         this.m_x = x;
         this.m_y = y;

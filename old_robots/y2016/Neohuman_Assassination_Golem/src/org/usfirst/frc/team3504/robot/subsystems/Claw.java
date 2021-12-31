@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -26,10 +26,11 @@ public class Claw extends Subsystem {
 
     }
 
-    public void stopCollecting(){
+    public void stopCollecting() {
         m_clawMotor.set(ControlMode.PercentOutput, 0.0);
         SmartDashboard.putBoolean("Claw Off", false);
     }
+
     @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

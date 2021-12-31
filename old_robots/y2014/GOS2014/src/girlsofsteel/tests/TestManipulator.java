@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,15 +11,14 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author sophia
  */
-public class TestManipulator extends CommandBase{
+public class TestManipulator extends CommandBase {
 
     private final Manipulator m_manipulator;
     private double m_speed;
 
-    public TestManipulator(Manipulator manipulator){
+    public TestManipulator(Manipulator manipulator) {
         m_manipulator = manipulator;
         requires(m_manipulator);
     }
@@ -31,9 +31,9 @@ public class TestManipulator extends CommandBase{
     @Override
     protected void execute() {
         m_speed = SmartDashboard.getNumber(RobotMap.manipulatorSD, 0.0);
-        if(SmartDashboard.getBoolean(RobotMap.manipulatorSD, false)){
+        if (SmartDashboard.getBoolean(RobotMap.manipulatorSD, false)) {
             m_manipulator.setJag(m_speed);
-        }else{
+        } else {
             m_manipulator.setJag(0.0);
         }
     }

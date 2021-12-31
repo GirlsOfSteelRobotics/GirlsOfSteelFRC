@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
 
@@ -16,7 +16,7 @@ public class Flap extends Subsystem {
     private final WPI_TalonSRX m_flapTalon;
     private double m_encOffsetValue;
 
-    public Flap(){
+    public Flap() {
         m_flapTalon = new WPI_TalonSRX(RobotMap.FLAP_MOTOR);
         addChild("Talon", m_flapTalon);
 
@@ -33,11 +33,11 @@ public class Flap extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public void setTalon(double speed){
+    public void setTalon(double speed) {
         m_flapTalon.set(ControlMode.PercentOutput, speed);
     }
 
-    public void stopTalon(){
+    public void stopTalon() {
         m_flapTalon.set(ControlMode.PercentOutput, 0.0);
     }
 
@@ -46,10 +46,11 @@ public class Flap extends Subsystem {
     }
 
     //assuming that going forward will raise the flap and going backwards will lower the flap
-    public boolean getTopLimitSwitch(){
+    public boolean getTopLimitSwitch() {
         return m_flapTalon.isFwdLimitSwitchClosed() == 0;
     }
-    public boolean getBottomLimitSwitch(){
+
+    public boolean getBottomLimitSwitch() {
         return m_flapTalon.isRevLimitSwitchClosed() == 0;
     }
 

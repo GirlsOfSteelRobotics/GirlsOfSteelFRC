@@ -8,20 +8,20 @@ public class TESTMoveToSetPoint extends CommandBase {
     private final Chassis m_chassis;
     private double m_distanceToMove;
 
-    public TESTMoveToSetPoint(Chassis chassis){
+    public TESTMoveToSetPoint(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
         SmartDashboard.putNumber("Move,distance", 0.0);
     }
 
     @Override
-    protected void initialize(){
+    protected void initialize() {
         m_chassis.initEncoders();
         m_chassis.initPositionPIDs();
     }
 
     @Override
-    protected void execute(){
+    protected void execute() {
         m_chassis.setPIDsPosition();
         m_distanceToMove = SmartDashboard.getNumber("Move,distance", 0.0);
         m_chassis.move(m_distanceToMove);
@@ -30,18 +30,18 @@ public class TESTMoveToSetPoint extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished(){
+    protected boolean isFinished() {
         return m_chassis.isMoveFinished(m_distanceToMove);
     }
 
     @Override
-    protected void end(){
+    protected void end() {
         m_chassis.disablePositionPIDs();
         m_chassis.endEncoders();
     }
 
     @Override
-    protected void interrupted(){
+    protected void interrupted() {
         end();
     }
 }

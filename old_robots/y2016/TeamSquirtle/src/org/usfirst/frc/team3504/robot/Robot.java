@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -45,7 +44,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
 
-       m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
     }
 
     @Override
@@ -56,7 +55,9 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) { m_autonomousCommand.start(); }
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
+        }
     }
 
     /**
@@ -73,7 +74,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
     }
 
     /**
@@ -81,7 +84,7 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     @Override
-    public void disabledInit(){
+    public void disabledInit() {
 
     }
 

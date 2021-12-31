@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -10,7 +11,6 @@ import girlsofsteel.Configuration;
 import girlsofsteel.subsystems.Collector;
 
 /**
- *
  * @author The two lees (minus jisue)
  */
 public class CollectorUpALittle extends CommandBase {
@@ -37,15 +37,15 @@ public class CollectorUpALittle extends CommandBase {
     protected void execute() {
 
         m_changeInTime = Timer.getFPGATimestamp() - m_startTime;
-        if(m_changeInTime < m_putDownTime) {
-            m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); }
-        else {
+        if (m_changeInTime < m_putDownTime) {
+            m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed);
+        } else {
             m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);
         }
     }
 
     @Override
-    protected boolean isFinished(){
+    protected boolean isFinished() {
         return m_changeInTime > .3;
     }
 

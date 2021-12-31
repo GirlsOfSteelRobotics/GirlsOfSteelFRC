@@ -15,10 +15,9 @@ public class ReleaseBall extends Command {
         m_claw = claw;
         m_shooter = shooter;
 
-        if(RobotMap.USING_CLAW) {
+        if (RobotMap.USING_CLAW) {
             requires(m_claw);
-        }
-        else {
+        } else {
             requires(m_shooter);
         }
     }
@@ -31,10 +30,9 @@ public class ReleaseBall extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(RobotMap.USING_CLAW) {
+        if (RobotMap.USING_CLAW) {
             m_claw.collectRelease(.8);
-        }
-        else {
+        } else {
             m_shooter.spinWheels(-1);
         }
     }
@@ -48,10 +46,9 @@ public class ReleaseBall extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        if(RobotMap.USING_CLAW) {
+        if (RobotMap.USING_CLAW) {
             m_claw.stopCollecting();
-        }
-        else {
+        } else {
             m_shooter.stop();
         }
     }

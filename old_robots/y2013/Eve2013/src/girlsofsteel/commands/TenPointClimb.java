@@ -5,7 +5,6 @@ import girlsofsteel.subsystems.Climber;
 import girlsofsteel.subsystems.Gripper;
 
 /**
- *
  * @author sam
  */
 public class TenPointClimb extends CommandGroup {

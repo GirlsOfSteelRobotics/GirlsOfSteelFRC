@@ -11,6 +11,7 @@ public class AutoDrive extends Command {
         m_drive = drive;
         requires(m_drive);
     }
+
     @Override
     protected void initialize() {
         setTimeout(3);

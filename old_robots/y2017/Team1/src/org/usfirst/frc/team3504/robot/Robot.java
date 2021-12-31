@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 
         // Default commands
-        m_driveSystem.setDefaultCommand( new DriveByJoystick(m_oi, m_driveSystem) );
+        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi, m_driveSystem));
     }
 
     /**
@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     @Override
-    public void disabledInit(){
+    public void disabledInit() {
 
     }
 
@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
      * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
      * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
      * below the Gyro
-     *
+     * <p>
      * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
      * or additional comparisons to the switch structure below with additional strings & commands.
      */
@@ -86,7 +86,9 @@ public class Robot extends IterativeRobot {
         m_autonomousCommand = m_chooser.getSelected();
 
         // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) { m_autonomousCommand.start(); }
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.start();
+        }
     }
 
     /**
@@ -103,7 +105,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (m_autonomousCommand != null) { m_autonomousCommand.cancel(); }
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
     }
 
     /**

@@ -7,10 +7,10 @@ import girlsofsteel.subsystems.Shooter;
 
 public class AutonomousCameraKey extends CommandGroup {
 
-    public AutonomousCameraKey(OI oi, Shooter shooter){
-        if(Camera.isConnected()){
-            addParallel(new ShootUsingTable(shooter, oi,  false));
-        }else{
+    public AutonomousCameraKey(OI oi, Shooter shooter) {
+        if (Camera.isConnected()) {
+            addParallel(new ShootUsingTable(shooter, oi, false));
+        } else {
             addParallel(new Shoot(shooter, oi, Shooter.KEY_SPEED));
         }
     }

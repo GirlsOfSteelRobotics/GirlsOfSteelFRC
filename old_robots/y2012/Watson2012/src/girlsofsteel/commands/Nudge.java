@@ -10,7 +10,7 @@ public class Nudge extends CommandBase {
 
     private double m_xValue;
 
-    public Nudge(Chassis chassis, Joystick driverJoystick){
+    public Nudge(Chassis chassis, Joystick driverJoystick) {
         m_chassis = chassis;
         this.m_driverJoystick = driverJoystick;
         requires(m_chassis);
@@ -25,7 +25,7 @@ public class Nudge extends CommandBase {
     @Override
     protected void execute() {
         m_xValue = m_driverJoystick.getX();
-        if(-0.2 > m_xValue || m_xValue > 0.2){
+        if (-0.2 > m_xValue || m_xValue > 0.2) {
             m_chassis.nudge(m_xValue);
         }
     }

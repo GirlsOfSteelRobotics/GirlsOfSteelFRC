@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
 import girlsofsteel.subsystems.Collector;
 
 /**
- *
  * @author Heather
  */
 public class MaintainColEngage extends CommandBase {
@@ -28,8 +28,8 @@ public class MaintainColEngage extends CommandBase {
 
     @Override
     protected void execute() {
-       // while (!collector.isCollectorEngaged()) {
-            m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //1 for competition bot, -1 for practice bot
+        // while (!collector.isCollectorEngaged()) {
+        m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //1 for competition bot, -1 for practice bot
         //}
     }
 

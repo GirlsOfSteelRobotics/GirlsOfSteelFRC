@@ -23,8 +23,8 @@ public class PS3SetPointTurret extends CommandBase {
 
     @Override
     protected void execute() {
-        m_angle = m_operatorJoystick.getX()*5.0;
-        if(m_angle < -0.5 || m_angle > 0.5){
+        m_angle = m_operatorJoystick.getX() * 5.0;
+        if (m_angle < -0.5 || m_angle > 0.5) {
             m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_angle);
         }
     }

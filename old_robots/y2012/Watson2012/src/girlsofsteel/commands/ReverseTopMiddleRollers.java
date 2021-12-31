@@ -7,7 +7,7 @@ public class ReverseTopMiddleRollers extends CommandBase {
     private final Collector m_collector;
     private final Shooter m_shooter;
 
-    public ReverseTopMiddleRollers(Collector collector, Shooter shooter){
+    public ReverseTopMiddleRollers(Collector collector, Shooter shooter) {
         m_collector = collector;
         m_shooter = shooter;
         requires(m_collector);

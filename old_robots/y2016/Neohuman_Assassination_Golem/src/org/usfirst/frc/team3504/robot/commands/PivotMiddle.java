@@ -25,13 +25,13 @@ public class PivotMiddle extends Command {
     protected void initialize() {
         if (m_pivot.getPosition() == 1) {
             m_encoderToUse = EncoderValueUp;
-            m_speed = -.1;}
-        else if (m_pivot.getPosition() == 0) {
+            m_speed = -.1;
+        } else if (m_pivot.getPosition() == 0) {
             m_encoderToUse = EncoderValueMiddle;
-        }
-        else {
+        } else {
             m_encoderToUse = EncoderValueDown;
-            m_speed = .1; }
+            m_speed = .1;
+        }
 
         m_pivot.resetDistance();
 
@@ -48,11 +48,9 @@ public class PivotMiddle extends Command {
     protected boolean isFinished() {
         if (m_speed == 1) {
             return m_pivot.getEncoderDistance() <= m_encoderToUse;
-        }
-        else if (m_speed == -1) {
+        } else if (m_speed == -1) {
             return m_pivot.getEncoderDistance() >= m_encoderToUse;
-        }
-        else {
+        } else {
             return true;
         }
     }

@@ -17,7 +17,7 @@ public class AutonomousChooser {
     private final SendableChooser<Command> m_chooser;
     private Command m_autonomousCommand;
 
-    public AutonomousChooser(Driving driving, Chassis chassis, Camera camera, Collector collector, Manipulator manipulator){
+    public AutonomousChooser(Driving driving, Chassis chassis, Camera camera, Collector collector, Manipulator manipulator) {
         m_chooser = new SendableChooser();
         SmartDashboard.putData("Autonomous Chooser", m_chooser);
 
@@ -27,18 +27,18 @@ public class AutonomousChooser {
         m_chooser.addObject("Nothing", new DoNothing(driving));
     }
 
-    public void start(){
+    public void start() {
         m_autonomousCommand = (Command) m_chooser.getSelected();
         m_autonomousCommand.start();
     }
 
-    public void end(){
-        if(m_autonomousCommand != null){
+    public void end() {
+        if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
     }
 
-    public void cancel(){
+    public void cancel() {
         end();
     }
 

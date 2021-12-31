@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
 import girlsofsteel.subsystems.Chassis;
 
 /**
- *
  * @author sophia, sonia
  */
 public class HoldChassisInPlace extends CommandBase {
@@ -16,8 +16,7 @@ public class HoldChassisInPlace extends CommandBase {
     private final Chassis m_chassis;
     private double m_setPoint;
 
-    public HoldChassisInPlace(Chassis chassis)
-    {
+    public HoldChassisInPlace(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
 

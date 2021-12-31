@@ -25,8 +25,7 @@ public class Agitate extends Command {
     protected void execute() {
         if (m_loopCounter % 10 == 0) {
             m_agitator.agitateBackwards();
-        }
-        else if (m_loopCounter % 5 == 0) {
+        } else if (m_loopCounter % 5 == 0) {
             m_agitator.agitateForwards();
         }
 

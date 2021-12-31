@@ -22,7 +22,7 @@ public class OI {
     private final JoystickButton m_rampUp;
     private final JoystickButton m_rampDown;
 
-    public OI(Shifters shifters, Ramp ramp){
+    public OI(Shifters shifters, Ramp ramp) {
 
         m_stick = new Joystick(0);
         m_btnShiftUp = new JoystickButton(m_stick, 5);

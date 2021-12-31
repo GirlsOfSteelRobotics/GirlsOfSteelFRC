@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,7 +10,6 @@ import girlsofsteel.subsystems.Feeder;
 import girlsofsteel.subsystems.Shooter;
 
 /**
- *
  * @author Sylvie
  * If used in a commandgroup, the entire commandgroup will become uninterruptible
  */
@@ -35,7 +35,7 @@ public class PushPullShooterPiston extends CommandBase {
     @Override
     protected void execute() {
         SmartDashboard.putNumber("Encoder Rate", m_shooter.getEncoderRate());
-        if(m_shooter.isTimeToShoot()){
+        if (m_shooter.isTimeToShoot()) {
             m_feeder.pushShooter();
             m_time = timeSinceInitialized();
             m_shot = true;

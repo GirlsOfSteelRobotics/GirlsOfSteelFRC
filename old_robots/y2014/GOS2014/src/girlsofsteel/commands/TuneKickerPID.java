@@ -10,7 +10,6 @@ import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.Kicker;
 
 /**
- *
  * @author Mackenzie
  */
 public class TuneKickerPID extends CommandBase {
@@ -24,13 +23,13 @@ public class TuneKickerPID extends CommandBase {
     private static final double maxSetPoint = 5;  //find max chassis speed
 
     //for one setpoint:
-    private final int m_lengthSetPoint = (int)(maxSetPoint-setPoint); //length of arraay
+    private final int m_lengthSetPoint = (int) (maxSetPoint - setPoint); //length of arraay
     private final double[] m_devSetPoint = new double[m_lengthSetPoint]; //deviation from setpoint
     private final double[] m_meanDiff = new double[m_lengthSetPoint]; //mean of difference between rate & mean rate
-    private final double[] m_devRate = new double [m_lengthSetPoint]; //deviation from mean rate
+    private final double[] m_devRate = new double[m_lengthSetPoint]; //deviation from mean rate
     //means of the individual set point arrays
     //for each p value
-    private final int m_lengthP = (int)( (maxP-startP) / incrementP);
+    private final int m_lengthP = (int) ((maxP - startP) / incrementP);
     private final double[] m_meanDevSetPoint = new double[m_lengthP];
 
 
@@ -40,10 +39,10 @@ public class TuneKickerPID extends CommandBase {
     private final Chassis m_chassis;
     private final Kicker m_kicker;
 
-    public TuneKickerPID (Chassis chassis, Kicker kicker){
+    public TuneKickerPID(Chassis chassis, Kicker kicker) {
         m_chassis = chassis;
         m_kicker = kicker;
-       requires(m_chassis);
+        requires(m_chassis);
     }
 
     @Override
@@ -54,9 +53,9 @@ public class TuneKickerPID extends CommandBase {
 
     @Override
     protected void execute() {
-        for(double a = startP; a < maxP; a += incrementP) {
+        for (double a = startP; a < maxP; a += incrementP) {
             //for(double a = startI; < maxI; a += incrementI)
-            for(double b = setPoint; b < maxSetPoint; b ++) {
+            for (double b = setPoint; b < maxSetPoint; b++) {
                 m_chassis.resetPositionPIDError();
                 m_chassis.setLeftPositionPIDValues(a, 0, 0);
                 //chassis.setLeftPIDValues(p, a, 0);
@@ -70,7 +69,7 @@ public class TuneKickerPID extends CommandBase {
                 deviation from rate as well
                 get mean between difference of rate and mean rate
                 */
-                for(int c = 0; c < m_lengthSetPoint; c++) {
+                for (int c = 0; c < m_lengthSetPoint; c++) {
                     m_devSetPoint[c] = getDeviation(b, m_rates);
                     m_meanDiff[c] = getDifference(getMean(m_rates));
                     m_devRate[c] = getDeviation(0.0, m_rates);
@@ -78,22 +77,22 @@ public class TuneKickerPID extends CommandBase {
                 System.out.println("At the end of one setpoint");
             }
 
-            for(int d = 0; d < m_lengthP; d += incrementP) {
+            for (int d = 0; d < m_lengthP; d += incrementP) {
                 //for(int d = 0; d < lengthI; d += incrementI)
                 //Do it once then break TODO
-                if (m_meanDevSetPoint[d]==0) {
-                m_meanDevSetPoint[d] = getMean(m_devSetPoint);
-                m_meanDiff[d] = getMean(m_meanDiff);
-                //d=lengthP;
-                // d=lengthI
-                break;
+                if (m_meanDevSetPoint[d] == 0) {
+                    m_meanDevSetPoint[d] = getMean(m_devSetPoint);
+                    m_meanDiff[d] = getMean(m_meanDiff);
+                    //d=lengthP;
+                    // d=lengthI
+                    break;
                 }
             }
             emptyArrays();
             System.out.println("Finished one p.");
         }
 
-       m_done = true;
+        m_done = true;
     }
 
     @Override
@@ -121,17 +120,19 @@ public class TuneKickerPID extends CommandBase {
         for (double v : array) {
             m_mean += v;
         }
-       m_mean /= array.length;
-       return m_mean;
+        m_mean /= array.length;
+        return m_mean;
     }
+
     private double getVariance(double center) {
         double[] numbers = new double[100];
-        for(int i = 0; i < numbers.length; i++) {
-            numbers[i]= (m_rates[i]-center)*(m_rates[i]-center);
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = (m_rates[i] - center) * (m_rates[i] - center);
 
         }
         return getMean(numbers);
     }
+
     private double getDeviation(double center, double... array) {
         double average = center;
         if (center == 0) {
@@ -140,19 +141,20 @@ public class TuneKickerPID extends CommandBase {
         double variance = getVariance(average);
         return Math.sqrt(variance);
     }
+
     /*
     mean of the difference between the rate and mean rate
     */
     private double getDifference(double center) {
-        double[] differences = new double [100];
-            for (int i = 0; i < differences.length; i++) {
-                differences [i] = (m_rates[i]-center);
-            }
-            return getMean(differences);
+        double[] differences = new double[100];
+        for (int i = 0; i < differences.length; i++) {
+            differences[i] = (m_rates[i] - center);
+        }
+        return getMean(differences);
     }
 
     public void emptyArrays() {
-        for(int i = 0; i < m_lengthSetPoint; i++) {
+        for (int i = 0; i < m_lengthSetPoint; i++) {
             m_devRate[i] = 0;
             m_devSetPoint[i] = 0;
             m_meanDiff[i] = 0;
@@ -169,7 +171,7 @@ public class TuneKickerPID extends CommandBase {
         double pLowestRateDev = 0;
         double pLowestMeanDiff = 0;
 
-        for(int j = 0; j < m_devSetPoint.length; j++) {
+        for (int j = 0; j < m_devSetPoint.length; j++) {
             if (m_devSetPoint[j] < lowestSetPointDev) {
                 lowestSetPointDev = m_devSetPoint[j];
             }

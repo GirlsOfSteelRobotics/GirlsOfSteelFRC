@@ -3,7 +3,7 @@ package girlsofsteel.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import girlsofsteel.subsystems.Chassis;
 
-public class DriveVelocityLinear extends CommandBase{
+public class DriveVelocityLinear extends CommandBase {
     private final Chassis m_chassis;
     private final Joystick m_joystick;
 
@@ -12,7 +12,7 @@ public class DriveVelocityLinear extends CommandBase{
 
     private final double m_scale;
 
-    public DriveVelocityLinear(Chassis chassis, Joystick driverJoystick, double scale){
+    public DriveVelocityLinear(Chassis chassis, Joystick driverJoystick, double scale) {
         m_chassis = chassis;
         m_joystick = driverJoystick;
         requires(m_chassis);
@@ -29,8 +29,8 @@ public class DriveVelocityLinear extends CommandBase{
     @Override
     protected void execute() {
         m_chassis.setPIDsRate();
-        m_xAxis = m_joystick.getX()* m_scale;
-        m_yAxis = m_joystick.getY()* m_scale;
+        m_xAxis = m_joystick.getX() * m_scale;
+        m_yAxis = m_joystick.getY() * m_scale;
         m_chassis.driveVelocityLinear(m_xAxis, m_yAxis);
         System.out.println("R:" + m_chassis.getRightEncoderRate());
         System.out.println("L:" + m_chassis.getLeftEncoderRate());

@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3504.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -56,10 +55,10 @@ public class Drive extends Subsystem {
     }
 
     public void driveAuto() {
-        m_robotDrive.drive(AUTO_DRIVE_SPEED,0);
+        m_robotDrive.drive(AUTO_DRIVE_SPEED, 0);
     }
 
     public void stop() {
-        m_robotDrive.drive(0,0);
+        m_robotDrive.drive(0, 0);
     }
 }

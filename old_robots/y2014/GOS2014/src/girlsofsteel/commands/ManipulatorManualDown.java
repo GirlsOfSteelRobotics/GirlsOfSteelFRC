@@ -9,16 +9,15 @@ package girlsofsteel.commands;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author Abby
  */
-public class ManipulatorManualDown extends CommandBase{
+public class ManipulatorManualDown extends CommandBase {
 
     private final Manipulator m_manipulator;
 
-    public ManipulatorManualDown(Manipulator manipulator){
+    public ManipulatorManualDown(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires (m_manipulator);
+        requires(m_manipulator);
     }
 
     @Override

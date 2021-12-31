@@ -13,34 +13,34 @@ public class AutoTuneCamera extends CommandBase {
 
     private final Chassis m_chassis;
 
-    public AutoTuneCamera(Chassis chassis){
+    public AutoTuneCamera(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
     }
 
     //returns average of a set of 10 data pouints from the camera if it's stable
-    private double getStableRation(){
+    private double getStableRation() {
         int n = 10;
         double sumOfData = 0;
         double[] values = new double[n];
-        for(int i=0; i<n; i++){ // NOPMD(AvoidArrayLoops)
-            values[i] = 1/Camera.getImageTargetRatio();
+        for (int i = 0; i < n; i++) { // NOPMD(AvoidArrayLoops)
+            values[i] = 1 / Camera.getImageTargetRatio();
             //System.out.println(values[i]);
             sumOfData += values[i];
 
-            try{
+            try {
                 Thread.sleep(50);
-            }catch(InterruptedException ex){
+            } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
         }
-        double dataAverage = sumOfData/n;
+        double dataAverage = sumOfData / n;
         double errorSum = 0;
-        for(int i= 0; i<n; i++){
-            errorSum += (values[i]-dataAverage)*(values[i]*dataAverage);
+        for (int i = 0; i < n; i++) {
+            errorSum += (values[i] - dataAverage) * (values[i] * dataAverage);
         }
-        double averageError = Math.sqrt(errorSum)/n;
-        if(averageError < ERROR_THRESHOLD){
+        double averageError = Math.sqrt(errorSum) / n;
+        if (averageError < ERROR_THRESHOLD) {
             //System.out.println(dataAverage);
             return dataAverage;
         }
@@ -55,13 +55,13 @@ public class AutoTuneCamera extends CommandBase {
         double[] imageTargetRatioData = new double[nSteps];
         double[] distanceData = new double[nSteps];
         int count = 0;
-        while(count < nSteps){
-            try{
+        while (count < nSteps) {
+            try {
                 Thread.sleep(4000); //4 seconds time out
-            }catch(InterruptedException ex){
+            } catch (InterruptedException ex) {
                 ex.printStackTrace(); // NOPMD
             }
-            if(!m_chassis.isMoving()){
+            if (!m_chassis.isMoving()) {
                 /*
                 if((chassis.getRightEncoderDistance())>HALF_COURT -2){
                 break;
@@ -69,19 +69,19 @@ public class AutoTuneCamera extends CommandBase {
                  */
                 double ratio = 0;
                 //try 5 times for an acceptable average
-                for(int i=0;i<5;i++){
+                for (int i = 0; i < 5; i++) {
                     ratio = this.getStableRation();
                     //System.out.println("ratio=" + ratio);
-                    if(ratio>=0){
+                    if (ratio >= 0) {
                         break;
                     }
                 }
                 //start against the bridge -> distance to target is the initial
                 //distance minus the distance traveled
                 //chassis.move(Step);
-                if(ratio<0){
+                if (ratio < 0) {
                     System.out.println("Drop bad data point. If you see me too "
-                            + "often, retune RGB");
+                        + "often, retune RGB");
                     continue;
                 }
 
@@ -89,22 +89,22 @@ public class AutoTuneCamera extends CommandBase {
                 //center of the turret to the backboard when the rollers are
                 //facing the bridge
                 imageTargetRatioData[count] = ratio;
-                distanceData[count] = (m_chassis.getRightEncoderDistance())+1.45;
+                distanceData[count] = (m_chassis.getRightEncoderDistance()) + 1.45;
                 SmartDashboard.putNumber("Chassis Encoder",
-                        m_chassis.getRightEncoderDistance());
+                    m_chassis.getRightEncoderDistance());
                 System.out.println(distanceData[count] + ", " + ratio +
-                        " CD=" + distCamera + " Err=" + (distCamera -
-                        distanceData[count]));
+                    " CD=" + distCamera + " Err=" + (distCamera -
+                    distanceData[count]));
                 count++;
             }
         }
         System.out.println("Data collection is done! count=" + count);
         double[] ab = LinearRegressionAuto.bestFit(imageTargetRatioData,
-                distanceData, count);
+            distanceData, count);
         double a = ab[0];
         double b = ab[1];
 
-        if(!Double.isNaN(a)){
+        if (!Double.isNaN(a)) {
             NetworkTable table = NetworkTable.getTable("camera");
             table.putDouble("slope", a);
             table.putDouble("yInt", b);
@@ -133,33 +133,33 @@ public class AutoTuneCamera extends CommandBase {
 
 }
 
-class LinearRegressionAuto{
-    public static double[] bestFit(double[] x, double[] y, int size){
-        int n=0;
+class LinearRegressionAuto {
+    public static double[] bestFit(double[] x, double[] y, int size) {
+        int n = 0;
         //first pass: read in data, compute xbar and ybar
         double sumX = 0.0;
         double sumY = 0.0;
         double sumX2 = 0.0;
-        for(int i=n; i<size;i++){
+        for (int i = n; i < size; i++) {
             sumX += x[i];
             sumX2 += x[i] * x[i];
             sumY += y[i];
             i++; // NOPMD
         }
-        double xBar = sumX/n;
-        double yBar = sumY/n;
+        double xBar = sumX / n;
+        double yBar = sumY / n;
 
         //second pass: compute summary statistics
         double xXBar = 0.0;
         double yYBar = 0.0;
         double xYBar = 0.0;
-        for(int i=0;i<n;i++){
-            xXBar += (x[i]-xBar)*(x[i]-xBar);
-            yYBar += (y[i]-yBar)*(y[i]-yBar);
-            xYBar += (x[i]-xBar)*(y[i]-yBar);
+        for (int i = 0; i < n; i++) {
+            xXBar += (x[i] - xBar) * (x[i] - xBar);
+            yYBar += (y[i] - yBar) * (y[i] - yBar);
+            xYBar += (x[i] - xBar) * (y[i] - yBar);
         }
-        double beta1 = xYBar/xXBar;
-        double beta0 = yBar - beta1*xBar;
+        double beta1 = xYBar / xXBar;
+        double beta0 = yBar - beta1 * xBar;
 
         double[] ab = new double[2];
         ab[0] = beta1; // a in the equation ax+b

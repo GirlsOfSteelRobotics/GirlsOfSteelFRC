@@ -13,7 +13,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Pivot;
  */
 public class AutoLowBarAndScore extends CommandGroup {
 
-    public  AutoLowBarAndScore(Chassis chassis, Flap flap, Pivot pivot, Claw claw) {
+    public AutoLowBarAndScore(Chassis chassis, Flap flap, Pivot pivot, Claw claw) {
         addSequential(new NudgeFlapDown(flap));
         addSequential(new AutoDriveBackwards(chassis, 186, .6));
         addSequential(new NudgeFlapUp(flap));

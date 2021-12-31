@@ -7,7 +7,7 @@ public class ShiftDown extends Command {
 
     private final Shifters m_shifters;
 
-    public ShiftDown(Shifters shifters){
+    public ShiftDown(Shifters shifters) {
         m_shifters = shifters;
         requires(m_shifters);
     }

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,9 +31,9 @@ public class Collector extends Subsystem {
         m_leftCollector = new WPI_TalonSRX(RobotMap.LEFT_COLLECTOR_WHEEL);
 
         m_collectorLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_COLLECTOR_MODULE, RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
-                RobotMap.LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL);
+            RobotMap.LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL);
         m_collectorRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_COLLECTOR_MODULE,
-                RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL, RobotMap.RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL);
+            RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL, RobotMap.RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL);
 
         m_collectorTrigger = new Joystick(RobotMap.OPERATOR_JOYSTICK);
 
@@ -43,11 +43,9 @@ public class Collector extends Subsystem {
     public void collectReleaseTote() {
         if (m_collectorTrigger.getZ() < -0.5) { // release
             collectorToteOut();
-        }
-        else if (m_collectorTrigger.getZ() > 0.5) { // collect
+        } else if (m_collectorTrigger.getZ() > 0.5) { // collect
             collectorToteIn();
-        }
-        else {
+        } else {
             m_rightCollector.set(ControlMode.PercentOutput, 0);
             m_leftCollector.set(ControlMode.PercentOutput, 0);
         }

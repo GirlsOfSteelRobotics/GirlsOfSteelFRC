@@ -1,9 +1,9 @@
 package girlsofsteel.objects;
 
 /**
- *
  * @author Heather
  */
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -26,11 +26,11 @@ public class Camera {
 
     public static boolean isGoalHot() {
         //System.out.println("CAMERAAA IS HOTTTTTTTTTTTTTTTTTTTTTTTTTTT: " + NetworkTable.getTable("camera").getBoolean("isHot",false));
-        return NetworkTable.getTable("camera").getBoolean("isHot",false);
+        return NetworkTable.getTable("camera").getBoolean("isHot", false);
     }
 
     public static boolean foundTarget() {
-        return isConnected() && (NetworkTable.getTable("camera").getBoolean("isTargetLeft", false)||NetworkTable.getTable("camera").getBoolean("isTargetRight", false));
+        return isConnected() && (NetworkTable.getTable("camera").getBoolean("isTargetLeft", false) || NetworkTable.getTable("camera").getBoolean("isTargetRight", false));
     }
 
     public final double getDistanceToTarget() { // -1 to 1 -> position horizontally of the backboard on the screen
@@ -45,20 +45,20 @@ public class Camera {
         return NetworkTable.getTable("camera").getNumber("targetRatio", 0);
     }
 
-   public double getVerticalAngleOffset() {
+    public double getVerticalAngleOffset() {
         double x = m_distance;
         double y = m_heightOfGoal; //needs to be changed based on initial height of robot
         double g = m_gravity;
         double v = m_initialVelocity;
         //make sure all numbers are in metric units
 //        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
-       //return angle;
-        return Math.atan(square(v)-Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
+        //return angle;
+        return Math.atan(square(v) - Math.sqrt(fourthPower(v) - g * (g * square(x) + 2 * y * square(v))) / g * x);
     }
 
     //mathUtils didn't have a squaring function (had to make our own)
-     private double square(double num1) {
-         return num1 * num1;
+    private double square(double num1) {
+        return num1 * num1;
     }
 
     private double fourthPower(double num1) {

@@ -33,16 +33,16 @@ public class AutonomousChooser {
         //ShootUsingTable command to shoot w/camera
         m_chooser.addObject("Shoot, Bridge", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
-                shoot, moveToBridge, yDistance, !shootFromBridge,
-                !goBackToKey, !shootFromKeyAfterBridge));
+            shoot, moveToBridge, yDistance, !shootFromBridge,
+            !goBackToKey, !shootFromKeyAfterBridge));
         m_chooser.addObject("Shoot, Bridge, Shoot", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
-                shoot, moveToBridge, yDistance, shootFromBridge,
-                !goBackToKey, !shootFromKeyAfterBridge));
+            shoot, moveToBridge, yDistance, shootFromBridge,
+            !goBackToKey, !shootFromKeyAfterBridge));
         m_chooser.addObject("Bridge, Shoot", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
-                !shoot, moveToBridge, yDistance, shootFromBridge,
-                !goBackToKey, !shootFromKeyAfterBridge));
+            !shoot, moveToBridge, yDistance, shootFromBridge,
+            !goBackToKey, !shootFromKeyAfterBridge));
         m_chooser.addObject("Delay, Reverse Rollers", new DelayReverseRollers(shooter, collector));
     }
 

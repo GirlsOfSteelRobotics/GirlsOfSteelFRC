@@ -10,7 +10,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Shooter;
  */
 public class ShootBall extends CommandGroup {
 
-    public  ShootBall(Claw claw, Shooter shooter) {
+    public ShootBall(Claw claw, Shooter shooter) {
         //operator lines up pivot
         addSequential(new ShooterPistonsOut(shooter)); //tilt shooter partially so that ball doesn't fall out
         addSequential(new ReleaseBall(claw, shooter)); //need to test exact seconds for delay

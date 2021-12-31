@@ -53,7 +53,6 @@ public class OI {
     private final Joystick m_roziePad = new Joystick(5);
 
 
-
     //JOYSTICK BUTTONS
     //private JoystickButton shiftUpButton;
     private final JoystickButton m_shiftDownButton;
@@ -127,7 +126,7 @@ public class OI {
 
         //shiftUpButton2 = new JoystickButton (drivingStickBackward, 4);
         //shiftUpButton2.whenPressed (new ShiftUp());
-        m_shiftDownButton2 = new JoystickButton (m_drivingStickBackward, 3);
+        m_shiftDownButton2 = new JoystickButton(m_drivingStickBackward, 3);
         m_shiftDownButton2.whenPressed(new ShiftDown(shifters));
 
         m_switchCam = new JoystickButton(m_drivingStickForward, 10);
@@ -144,25 +143,25 @@ public class OI {
         m_switchToBackward.whenPressed(new SwitchToBackward(this, camera));
 
         // Button board buttons
-        if (m_buttonBoard.getButtonCount() > 0){
-        m_shooterPistonsOut = new JoystickButton(m_buttonBoard, 3);
-        m_shooterPistonsOut.whenPressed(new ShooterPistonsOut(shooter));
-        m_shooterPistonsIn = new JoystickButton(m_buttonBoard, 4);
-        m_shooterPistonsIn.whenPressed(new ShooterPistonsIn(shooter));
-        m_shootBallButtonBoard = new JoystickButton(m_buttonBoard, 6);
-        m_shootBallButtonBoard.whenPressed(new ShootBall(claw, shooter));
-        m_pivotUpButtonBoard = new JoystickButton(m_buttonBoard, 7);
-        m_pivotUpButtonBoard.whileHeld(new PivotUp(pivot));
-        m_collectBallButtonBoard = new JoystickButton(m_buttonBoard, 8);
-        m_collectBallButtonBoard.whileHeld(new CollectBall(claw, shooter));
-        m_releaseBallButtonBoard = new JoystickButton(m_buttonBoard, 9);
-        m_releaseBallButtonBoard.whileHeld(new ReleaseBall(claw, shooter));
-        m_pivotDownButtonBoard = new JoystickButton(m_buttonBoard, 10);
-        m_pivotDownButtonBoard.whileHeld(new PivotDown(pivot));
-        m_flapUpButtonBoard = new JoystickButton(m_buttonBoard, 11);
-        m_flapUpButtonBoard.whileHeld(new FlapUp(flap));
-        m_flapDownButtonBoard = new JoystickButton(m_buttonBoard, 12);
-        m_flapDownButtonBoard.whileHeld(new FlapDown(flap));
+        if (m_buttonBoard.getButtonCount() > 0) {
+            m_shooterPistonsOut = new JoystickButton(m_buttonBoard, 3);
+            m_shooterPistonsOut.whenPressed(new ShooterPistonsOut(shooter));
+            m_shooterPistonsIn = new JoystickButton(m_buttonBoard, 4);
+            m_shooterPistonsIn.whenPressed(new ShooterPistonsIn(shooter));
+            m_shootBallButtonBoard = new JoystickButton(m_buttonBoard, 6);
+            m_shootBallButtonBoard.whenPressed(new ShootBall(claw, shooter));
+            m_pivotUpButtonBoard = new JoystickButton(m_buttonBoard, 7);
+            m_pivotUpButtonBoard.whileHeld(new PivotUp(pivot));
+            m_collectBallButtonBoard = new JoystickButton(m_buttonBoard, 8);
+            m_collectBallButtonBoard.whileHeld(new CollectBall(claw, shooter));
+            m_releaseBallButtonBoard = new JoystickButton(m_buttonBoard, 9);
+            m_releaseBallButtonBoard.whileHeld(new ReleaseBall(claw, shooter));
+            m_pivotDownButtonBoard = new JoystickButton(m_buttonBoard, 10);
+            m_pivotDownButtonBoard.whileHeld(new PivotDown(pivot));
+            m_flapUpButtonBoard = new JoystickButton(m_buttonBoard, 11);
+            m_flapUpButtonBoard.whileHeld(new FlapUp(flap));
+            m_flapDownButtonBoard = new JoystickButton(m_buttonBoard, 12);
+            m_flapDownButtonBoard.whileHeld(new FlapDown(flap));
         }
 
         //GamePad Buttons
@@ -202,7 +201,7 @@ public class OI {
         m_resetEncoders.whenPressed(new ResetEncoderDistance(chassis, flap, pivot));
 
         //ROZIE STUFF!!!!
-        if (rozieDrive){
+        if (rozieDrive) {
             m_rozieShiftDownButton = new JoystickButton(m_roziePad, 3);
             m_rozieShiftDownButton.whenPressed(new ShiftDown(shifters));
             m_rozieFlapUp = new JoystickButton(m_roziePad, 8);//switched 7 & 8 again
@@ -216,31 +215,25 @@ public class OI {
         }
 
 
-
     }
 
 
-
     public double getDrivingJoystickY() {
-        if (rozieDrive){
+        if (rozieDrive) {
             return m_roziePad.getY();
-        }
-        else if (m_driveDirection == DriveDirection.kFWD){
+        } else if (m_driveDirection == DriveDirection.kFWD) {
             return m_drivingStickForward.getY();
-        }
-        else {
+        } else {
             return -m_drivingStickBackward.getY();
         }
     }
 
     public double getDrivingJoystickX() {
-        if (rozieDrive){
+        if (rozieDrive) {
             return m_roziePad.getX();
-        }
-        else if (m_driveDirection == DriveDirection.kFWD){
+        } else if (m_driveDirection == DriveDirection.kFWD) {
             return m_drivingStickForward.getX();
-        }
-        else {
+        } else {
             return m_drivingStickBackward.getX();
         }
     }
@@ -272,18 +265,20 @@ public class OI {
         return (x > 0.5);
     }
 
-    /** Get Autonomous Mode Selector
-     *
+    /**
+     * Get Autonomous Mode Selector
+     * <p>
      * Read a physical pushbutton switch attached to a USB gamepad controller,
      * returning an integer that matches the current readout of the switch.
+     *
      * @return int ranging 0-15
      */
     public int getAutonSelector() {
         // Each of the four "button" inputs corresponds to a bit of a binary number
         // encoding the current selection. To simplify wiring, buttons 2-5 were used.
         return 1 * (m_autonSelector.getRawButton(2) ? 1 : 0) +
-                2 * (m_autonSelector.getRawButton(3) ? 1 : 0) +
-                4 * (m_autonSelector.getRawButton(4) ? 1 : 0) +
-                8 *	(m_autonSelector.getRawButton(5) ? 1 : 0);
+            2 * (m_autonSelector.getRawButton(3) ? 1 : 0) +
+            4 * (m_autonSelector.getRawButton(4) ? 1 : 0) +
+            8 * (m_autonSelector.getRawButton(5) ? 1 : 0);
     }
 }

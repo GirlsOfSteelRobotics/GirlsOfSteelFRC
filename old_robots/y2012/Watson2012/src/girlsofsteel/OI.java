@@ -138,7 +138,7 @@ public class OI {
 
         m_disableChassisLeft.whenPressed(new DisableChassis(chassis));
         m_disableChassisRight.whenPressed(new DisableChassis(chassis));
-        m_normalDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, NORMAL_DRIVE,HALF_TURNING));
+        m_normalDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, NORMAL_DRIVE, HALF_TURNING));
         m_slowDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
         m_mediumDriveJags.whenPressed((new DriveSlowTurning(chassis, m_driverJoystick, MEDIUM_DRIVE, MEDIUM_TURNING)));
         m_driveSlowVelocity.whenPressed(new DriveSlowVelocity(chassis, m_driverJoystick));//at the momement
@@ -157,9 +157,9 @@ public class OI {
         m_restartTurretTracking = new JoystickButton(m_operatorJoystick, RESTART_TURRET_TRACKING_BUTTON);
         m_autoShoot = new JoystickButton(m_operatorJoystick, AUTO_SHOOT_BUTTON);
         m_disableShooter = new JoystickButton(m_operatorJoystick, DISABLE_SHOOTER_BUTTON);
-        m_disableTurret = new JoystickButton(m_operatorJoystick,DISABLE_TURRET_BUTTON);
-        m_shootFromKey = new JoystickButton(m_operatorJoystick,SHOOT_FROM_KEY_BUTTON);
-        m_reverseTopMiddleRollers = new JoystickButton(m_operatorJoystick,REVERSE_TOP_MIDDLE_ROLLERS_BUTTON);
+        m_disableTurret = new JoystickButton(m_operatorJoystick, DISABLE_TURRET_BUTTON);
+        m_shootFromKey = new JoystickButton(m_operatorJoystick, SHOOT_FROM_KEY_BUTTON);
+        m_reverseTopMiddleRollers = new JoystickButton(m_operatorJoystick, REVERSE_TOP_MIDDLE_ROLLERS_BUTTON);
 
         //TODO ask drive team if they want to switch some of these to "while held" functions
         //maybe shooting?
@@ -171,7 +171,7 @@ public class OI {
         m_autoShoot.whileHeld(new ShootUsingTable(shooter, this, true));
         m_disableShooter.whenPressed(new DisableShooter(shooter));
         m_disableTurret.whenPressed(new DisableTurret(turret));
-        m_shootFromKey.whileHeld(new Shoot(shooter, this,24.0));//dead-reckoning from key
+        m_shootFromKey.whileHeld(new Shoot(shooter, this, 24.0));//dead-reckoning from key
         m_reverseTopMiddleRollers.whileHeld(new ReverseTopMiddleRollers(collector, shooter));
     }
 
@@ -183,7 +183,7 @@ public class OI {
         return m_operatorJoystick;
     }
 
-    public boolean isCollectCameraDataPressed(){
+    public boolean isCollectCameraDataPressed() {
 //        if(operatorJoystick.getRawButton(COLLECT_CAMERA_DATA)){
         return true;
     }
@@ -208,7 +208,7 @@ public class OI {
         return m_stopShooterRunning;
     }
 
-//This button is an analog(because we ran out of digital) so I changed the following function.
+    //This button is an analog(because we ran out of digital) so I changed the following function.
     public boolean areTopRollersOverriden() {
 //        double switchValue = 0.0;
 //        try {
@@ -354,20 +354,17 @@ public class OI {
     //knob
     public double getTurretKnobValue(double deadzone) {
         m_currValue = (int) (100 * m_enhancedIoJoystick.getRawAxis(1));
-       double returnVal;
+        double returnVal;
 
-        if(m_currValue - m_preValue > deadzone){
-           returnVal = -5.0;
-        }
-
-        else if(m_currValue - m_preValue < -deadzone){
+        if (m_currValue - m_preValue > deadzone) {
+            returnVal = -5.0;
+        } else if (m_currValue - m_preValue < -deadzone) {
             returnVal = 5.0;
-        }
-        else{
+        } else {
             returnVal = 0.0;
         }
         m_preValue = m_currValue;
-       return returnVal;
+        return returnVal;
     }
 
     /*
@@ -399,49 +396,36 @@ public class OI {
 
         int autoNumber = 0;
 
-        if(auto1 && !auto2 && !auto3 && !auto5 && !auto7){
+        if (auto1 && !auto2 && !auto3 && !auto5 && !auto7) {
             autoNumber = 1;
         }
-        if(!auto1 && !auto2 && auto3 && !auto5 && !auto7){
+        if (!auto1 && !auto2 && auto3 && !auto5 && !auto7) {
             autoNumber = 2;
-        }
-        else if(auto1 && !auto2 && auto3 && !auto5 && !auto7){
+        } else if (auto1 && !auto2 && auto3 && !auto5 && !auto7) {
             autoNumber = 3;
-        }
-        else if(!auto1 && !auto2 && !auto3 && auto5 && !auto7){
+        } else if (!auto1 && !auto2 && !auto3 && auto5 && !auto7) {
             autoNumber = 4;
-        }
-        else if(auto1 && !auto2 && !auto3 && auto5 && !auto7){
+        } else if (auto1 && !auto2 && !auto3 && auto5 && !auto7) {
             autoNumber = 5;
-        }
-        else if(!auto1 && !auto2 && auto3 && auto5 && !auto7){
+        } else if (!auto1 && !auto2 && auto3 && auto5 && !auto7) {
             autoNumber = 6;
-        }
-        else if(auto1 && !auto2 && auto3 && auto5 && !auto7){
+        } else if (auto1 && !auto2 && auto3 && auto5 && !auto7) {
             autoNumber = 7;
-        }
-        else if(!auto1 && !auto2 && !auto3 && !auto5 && auto7){
+        } else if (!auto1 && !auto2 && !auto3 && !auto5 && auto7) {
             autoNumber = 8;
-        }
-        else if(auto1 && !auto2 && !auto3 && !auto5 && auto7){
+        } else if (auto1 && !auto2 && !auto3 && !auto5 && auto7) {
             autoNumber = 9;
-        }
-        else if(!auto1 && auto2 && !auto3 && !auto5 && !auto7){
+        } else if (!auto1 && auto2 && !auto3 && !auto5 && !auto7) {
             autoNumber = 10;
-        }
-        else if(auto1 && auto2 && !auto3 && !auto5 && !auto7){
+        } else if (auto1 && auto2 && !auto3 && !auto5 && !auto7) {
             autoNumber = 11;
-        }
-        else if(!auto1 && auto2 && auto3 && !auto5 && !auto7){
+        } else if (!auto1 && auto2 && auto3 && !auto5 && !auto7) {
             autoNumber = 12;
-        }
-        else if(auto1 && auto2 && auto3 && !auto5 && !auto7){
+        } else if (auto1 && auto2 && auto3 && !auto5 && !auto7) {
             autoNumber = 13;
-        }
-        else if(!auto1 && auto2 && !auto3 && auto5 && !auto7){
+        } else if (!auto1 && auto2 && !auto3 && auto5 && !auto7) {
             autoNumber = 14;
-        }
-        else if(auto1 && auto2 && !auto3 && auto5 && !auto7){
+        } else if (auto1 && auto2 && !auto3 && auto5 && !auto7) {
             autoNumber = 15;
         }
 
@@ -453,7 +437,8 @@ public class OI {
     private boolean changeAnalogs(double analogValue) {
         return analogValue > 0.5;
     }
-//If ever used, change line numbers in the driver station prints
+
+    //If ever used, change line numbers in the driver station prints
     public void printAnalogAutonomous() {
         System.out.println("Counter 1:" + m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_ONE));
         System.out.println("Counter 2:" + m_enhancedIoJoystick.getRawAxis(AUTONOMOUS_COUNTER_TWO));

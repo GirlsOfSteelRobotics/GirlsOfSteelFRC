@@ -13,11 +13,12 @@ public class AutoMove extends CommandBase {
 
     /**
      * Moves in the direction given for a certain amount of time automatically.
-     * @param x the percentage to move in the x direction (-1 to 1)
-     * @param y the percentage to move in the y direction (-1 to 1)
+     *
+     * @param x    the percentage to move in the x direction (-1 to 1)
+     * @param y    the percentage to move in the y direction (-1 to 1)
      * @param time the length of time to move
      */
-    public AutoMove(Chassis chassis, double x, double y, double time){
+    public AutoMove(Chassis chassis, double x, double y, double time) {
         m_chassis = chassis;
         this.m_x = x;
         this.m_y = y;

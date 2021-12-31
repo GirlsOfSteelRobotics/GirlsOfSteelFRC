@@ -2,11 +2,11 @@ package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Collector;
 
-public class PS3ThreeBallsNo extends CommandBase{
+public class PS3ThreeBallsNo extends CommandBase {
 
     private final Collector m_collector;
 
-    public PS3ThreeBallsNo(Collector collector){
+    public PS3ThreeBallsNo(Collector collector) {
         m_collector = collector;
         requires(m_collector);
     }

@@ -2,23 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Climber;
 
 /**
- *
  * @author sam
  */
-public class RetractClimberPiston extends CommandBase{
+public class RetractClimberPiston extends CommandBase {
 
     private final Climber m_climber;
 
     public RetractClimberPiston(Climber climber) {
         m_climber = climber;
-        requires (m_climber);
+        requires(m_climber);
     }
-
 
 
     @Override

@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 
@@ -10,13 +11,12 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Gripper;
 
 /**
- *
  * @author sam
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Climber extends CommandBase {
 
-    private final girlsofsteel.subsystems.Climber  m_climber;
+    private final girlsofsteel.subsystems.Climber m_climber;
     private final Gripper m_gripper;
     public int m_state;
 
@@ -26,7 +26,6 @@ public class Climber extends CommandBase {
         requires(climber);
 
         SmartDashboard.putString("Comand called", "comand called");
-
 
 
         SmartDashboard.putBoolean("Spikes", false);
@@ -48,10 +47,10 @@ public class Climber extends CommandBase {
         if (SmartDashboard.getBoolean("Spikes", false) && SmartDashboard.getBoolean("Spikes Foward Backwards", false)) {
             m_climber.forwardRightClimberSpike();
             m_climber.forwardLeftClimberSpike();
-        } else if(SmartDashboard.getBoolean("Spikes", false) && !SmartDashboard.getBoolean("Spikes Foward Backwards", false)) {
+        } else if (SmartDashboard.getBoolean("Spikes", false) && !SmartDashboard.getBoolean("Spikes Foward Backwards", false)) {
             m_climber.reverseLeftClimberSpike();
             m_climber.reverseRightClimberSpike();
-        } else if (!SmartDashboard.getBoolean("Spikes", false)){
+        } else if (!SmartDashboard.getBoolean("Spikes", false)) {
             m_climber.stopLeftClimberSpike();
             m_climber.stopRightClimberSpike();
         }

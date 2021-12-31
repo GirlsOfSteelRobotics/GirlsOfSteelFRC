@@ -130,25 +130,37 @@ public class RobotTemplate extends IterativeRobot {
         public double getX(Hand hand) {
             double x = super.getX(hand);
 
-            if (Math.abs(x) < 0.10) x = 0;
-            if (x > 0.90) x = 1;
-            else if (x < -0.90) x = -1;
+            if (Math.abs(x) < 0.10) {
+                x = 0;
+            }
+            if (x > 0.90) {
+                x = 1;
+            } else if (x < -0.90) {
+                x = -1;
+            }
             return x;
         }
 
         public double getY(Hand hand) {
             double y = super.getY(hand);
 
-            if (Math.abs(y) < 0.10) y = 0;
-            if (y > 0.90) y = 1;
-            else if (y < -0.90) y = -1;
+            if (Math.abs(y) < 0.10) {
+                y = 0;
+            }
+            if (y > 0.90) {
+                y = 1;
+            } else if (y < -0.90) {
+                y = -1;
+            }
             return y;
         }
 
         public double getTwist() {
             double twist = super.getTwist();
 
-            if (Math.abs(twist) < 0.25) twist = 0;
+            if (Math.abs(twist) < 0.25) {
+                twist = 0;
+            }
             return MathUtils.pow(twist, 3);
         }
     }
@@ -201,7 +213,7 @@ public class RobotTemplate extends IterativeRobot {
     public void autonomousPeriodic() {
         double autonomousTimerValue = autonomousTimer.get() / 1000000;
 
-        if(autonomousTimerValue > 0.4) {
+        if (autonomousTimerValue > 0.4) {
             driveAutonomous = false;
         }
 
@@ -229,7 +241,7 @@ public class RobotTemplate extends IterativeRobot {
         }
 
         if (drivingJoystick.getButton(Joystick.ButtonType.kTrigger)
-         || kickingJoystick.getButton(Joystick.ButtonType.kTrigger)) {
+            || kickingJoystick.getButton(Joystick.ButtonType.kTrigger)) {
             force = kickingJoystick.getThrottle();
             fire = true;
         }

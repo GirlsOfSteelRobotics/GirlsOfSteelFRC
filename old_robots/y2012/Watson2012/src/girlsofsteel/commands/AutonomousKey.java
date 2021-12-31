@@ -6,7 +6,7 @@ import girlsofsteel.subsystems.Shooter;
 
 public class AutonomousKey extends CommandGroup {
 
-    public AutonomousKey(Shooter shooter, OI oi){
+    public AutonomousKey(Shooter shooter, OI oi) {
         addSequential(new Shoot(shooter, oi, Shooter.KEY_SPEED));
     }
 

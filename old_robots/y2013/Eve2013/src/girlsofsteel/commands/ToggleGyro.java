@@ -12,10 +12,9 @@ public class ToggleGyro extends CommandBase {
 
     @Override
     protected void initialize() {
-        if(m_chassis.isGyroEnabled())
-        {
+        if (m_chassis.isGyroEnabled()) {
             m_chassis.stopGyro();
-        }else{
+        } else {
             m_chassis.resetGyro();
         }
     }

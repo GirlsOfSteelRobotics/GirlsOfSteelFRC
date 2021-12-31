@@ -26,12 +26,11 @@ public class Drive extends Command {
     @Override
     protected void execute() {
         if (m_oi.getDriveStyle() == DriveStyle.oneStickArcade
-                || m_oi.getDriveStyle() == DriveStyle.gamePadArcade) {
+            || m_oi.getDriveStyle() == DriveStyle.gamePadArcade) {
             m_chassis.arcadeDrive(m_oi.getDrivingJoystickY(), m_oi.getDrivingJoystickX());
             SmartDashboard.putNumber("Drive by Joystick Y: ", m_oi.getDrivingJoystickY());
             SmartDashboard.putNumber("Drive by Joystick X: ", m_oi.getDrivingJoystickX());
-        }
-        else {
+        } else {
             m_chassis.tankDrive(m_oi.getDrivingJoystickLeft(), m_oi.getDrivingJoystickRight());
             SmartDashboard.putNumber("Drive by Joystick Left:", m_oi.getDrivingJoystickLeft());
             SmartDashboard.putNumber("drive by Joystick Right:", m_oi.getDrivingJoystickRight());

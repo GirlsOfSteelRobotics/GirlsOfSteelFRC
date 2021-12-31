@@ -11,7 +11,6 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Chassis;
 
 /**
- *
  * @author user
  */
 public class TestJags extends CommandBase {
@@ -26,7 +25,7 @@ public class TestJags extends CommandBase {
     @Override
     protected void initialize() {
         m_chassis.initEncoders();
-        }
+    }
 
     @Override
     protected void execute() {
@@ -38,7 +37,7 @@ public class TestJags extends CommandBase {
     @Override
     protected boolean isFinished() {
         return false;
-                }
+    }
 
     @Override
     protected void end() {
