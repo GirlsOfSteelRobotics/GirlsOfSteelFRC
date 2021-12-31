@@ -7,13 +7,12 @@ import girlsofsteel.RobotMap;
 public class EveCompressor extends Subsystem {
 
 
-
     //Changed so that compressor turns on/off automatically
     //Add back to smartdashboard for manual
 //    private Relay compressorSpike;
     private final Compressor m_autoCompressor;
 
-    public EveCompressor(){
+    public EveCompressor() {
 //        compressorSpike = new Relay(RobotMap.COMPRESSOR_RELAY_PORT);
         m_autoCompressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL);
         m_autoCompressor.start();

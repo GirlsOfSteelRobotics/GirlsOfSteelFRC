@@ -1,13 +1,14 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3504.robot.RobotMap;
+
 /**
  *
  */
@@ -21,7 +22,7 @@ public class Chassis extends Subsystem {
     private final RobotDrive m_robotDrive;
 
 
-    public Chassis(){
+    public Chassis() {
         m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
         m_driveLeftB = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_B);
         m_driveRightA = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_A);
@@ -61,19 +62,19 @@ public class Chassis extends Subsystem {
         m_robotDrive.drive(/* speed */0, /* curve */0);
     }
 
-    public double getRightEncoderPosition(){
+    public double getRightEncoderPosition() {
         return m_driveRightA.getSelectedSensorPosition();
     }
 
-    public double getLeftEncoderPosition(){
+    public double getLeftEncoderPosition() {
         return m_driveLeftA.getSelectedSensorPosition();
     }
 
-    public void ahrsToSmartDashboard(){
+    public void ahrsToSmartDashboard() {
         getEncoderDistance();
     }
 
-    public void getEncoderDistance(){ // NOPMD(LinguisticNaming)
+    public void getEncoderDistance() { // NOPMD(LinguisticNaming)
         SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
         SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
     }

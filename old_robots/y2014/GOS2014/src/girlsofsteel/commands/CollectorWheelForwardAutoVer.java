@@ -12,6 +12,7 @@ import girlsofsteel.subsystems.Collector;
 
 /**
  * Moves the collector wheel forward for autonomous and has an is finished case
+ *
  * @author Heather, Jisue
  */
 public class CollectorWheelForwardAutoVer extends CommandBase {
@@ -30,28 +31,31 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
 
     /**
      * There is nothing in this method.
+     *
      * @author Sophia, Sonia
      */
     @Override
     protected void initialize() {
-       m_startTime = Timer.getFPGATimestamp();
-       m_camera.setIsHot(hotAtLeastOnce());//CommandBase.camera.isGoalHot(); //Get is hot here
-       System.out.println("CAMERA IS HOT?::: " + m_camera.isHot());
+        m_startTime = Timer.getFPGATimestamp();
+        m_camera.setIsHot(hotAtLeastOnce());//CommandBase.camera.isGoalHot(); //Get is hot here
+        System.out.println("CAMERA IS HOT?::: " + m_camera.isHot());
 
     }
 
     /**
      * This rolls the collector wheel forward.
      * It can be used to bring the ball into the trident.
+     *
      * @author Sophia, Sonia
      */
     @Override
     protected void execute() {
-       m_collector.collectorWheelFoward();
+        m_collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
 
     /**
      * This returns false when we want to move the wheel forward .
+     *
      * @return false always
      * @author Sophia, Sonia
      */
@@ -63,6 +67,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
 
     /**
      * This stops the collector wheel.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -73,6 +78,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
 
     /**
      * This calls the end() method to stop the collector wheel
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -84,8 +90,8 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
     If the method sees hot at least one time, it will return true
     */
     private boolean hotAtLeastOnce() {
-        for(int i = 0; i < 30; i++) {
-            if(Camera.isGoalHot()) {
+        for (int i = 0; i < 30; i++) {
+            if (Camera.isGoalHot()) {
                 return true;
             }
         }

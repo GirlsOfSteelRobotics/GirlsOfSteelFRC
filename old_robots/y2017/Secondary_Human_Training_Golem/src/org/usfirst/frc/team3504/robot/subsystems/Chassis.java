@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -89,7 +89,7 @@ public class Chassis extends Subsystem {
     }
 
     public final void setupEncoder(WPI_TalonSRX talon) { // only call this on non-follower
-                                                // talons
+        // talons
         // Set Encoder Types
         talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         talon.setSensorPhase(true);
@@ -101,7 +101,7 @@ public class Chassis extends Subsystem {
     }
 
     private void setupDefaultFPID(WPI_TalonSRX talon) { // values work with QuadEncoder for
-                                            // drive talons
+        // drive talons
         // PID Values
         talon.setSelectedSensorPosition(0);
         talon.config_kF(0, 0);
@@ -139,7 +139,7 @@ public class Chassis extends Subsystem {
         m_driveLeftA.config_kP(0, p);
         m_driveRightA.config_kP(0, p);
 
-        m_driveLeftA.config_kI(0,i);
+        m_driveLeftA.config_kI(0, i);
         m_driveRightA.config_kI(0, i);
 
         m_driveLeftA.config_kD(0, d);

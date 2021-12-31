@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -154,11 +154,9 @@ public class Chassis extends Subsystem {
     private double beattieDeadBand(double x) {
         if (x > 0) {
             return Math.pow(x, 1.0 / x);
-        }
-        else if (x < 0) {
+        } else if (x < 0) {
             return -beattieDeadBand(-x);
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -172,11 +170,9 @@ public class Chassis extends Subsystem {
     private double beattieTwistDeadBand(double x) {
         if (x > 0) {
             return Math.pow(x, 4.0 / x);
-        }
-        else if (x < 0) {
+        } else if (x < 0) {
             return -beattieTwistDeadBand(-x);
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -191,9 +187,7 @@ public class Chassis extends Subsystem {
         double temp = (-stick.getThrottle() + 1) / 2;
         if (temp < .1) {
             return .1;
-        }
-
-        else {
+        } else {
             return temp;
         }
     }
@@ -228,9 +222,9 @@ public class Chassis extends Subsystem {
         SmartDashboard.putNumber("Closed Loop Error", m_frontRightWheel.getClosedLoopError());
 
         m_gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
-                beattieDeadBand(stick.getX()) * throttleSpeed(stick),
-                (beattieTwistDeadBand(stick.getTwist())) * throttleSpeed(stick),
-                m_getGyro ? temp : 0);
+            beattieDeadBand(stick.getX()) * throttleSpeed(stick),
+            (beattieTwistDeadBand(stick.getTwist())) * throttleSpeed(stick),
+            m_getGyro ? temp : 0);
 
         SmartDashboard.putNumber("Sending Val Front Left", m_frontLeftWheel.getClosedLoopTarget());
         SmartDashboard.putNumber("Sending Val Rear Left", m_rearLeftWheel.getClosedLoopTarget());
@@ -245,7 +239,7 @@ public class Chassis extends Subsystem {
             speed = (((MAX_SPEED_STRAFING - MIN_SPEED_STRAFING) / RAMP_UP_DISTANCE) * currentDist + MIN_SPEED_STRAFING);
         } else if (goalDist - currentDist < RAMP_DOWN_DISTANCE) {
             speed = (((MIN_SPEED_STRAFING - MAX_SPEED_STRAFING) / RAMP_DOWN_DISTANCE)
-                    * (currentDist - (goalDist - RAMP_DOWN_DISTANCE)) + MAX_SPEED_STRAFING);
+                * (currentDist - (goalDist - RAMP_DOWN_DISTANCE)) + MAX_SPEED_STRAFING);
         } else {
             speed = MAX_SPEED_STRAFING;
         }
@@ -325,10 +319,10 @@ public class Chassis extends Subsystem {
     }
 
     public void printPositionsToSmartDashboard() {
-    //	SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getEncPosition());//frontLeftWheel.getSpeed());
-    //	SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getEncPosition());//frontRightWheel.getSpeed());
-    //	SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncPosition());//rearLeftWheel.getSpeed());
-    //	SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncPosition());//rearRightWheel.getSpeed());
+        //	SmartDashboard.putNumber("Front Left Velocity", frontLeftWheel.getEncPosition());//frontLeftWheel.getSpeed());
+        //	SmartDashboard.putNumber("Front Right Velocity", frontRightWheel.getEncPosition());//frontRightWheel.getSpeed());
+        //	SmartDashboard.putNumber("Back Left Velocity", rearLeftWheel.getEncPosition());//rearLeftWheel.getSpeed());
+        //	SmartDashboard.putNumber("Back Right Velocity", rearRightWheel.getEncPosition());//rearRightWheel.getSpeed());
 
         SmartDashboard.putNumber("Front Left Velocity", m_frontLeftWheel.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Front Right Velocity", m_frontRightWheel.getSelectedSensorVelocity());

@@ -27,7 +27,7 @@ public class ManualShoot extends CommandBase {
         m_sliderValue = m_oi.getShooterSliderValue();
         m_shooterSpeed = m_shooter.manualShooterSpeedConverter(m_sliderValue);
         m_shooter.setPIDSpeed(m_shooterSpeed);
-        if(m_shooter.isWithinSetPoint(m_shooterSpeed) && !m_oi.areTopRollersOverriden()){
+        if (m_shooter.isWithinSetPoint(m_shooterSpeed) && !m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersForward();
         }
     }
@@ -39,7 +39,7 @@ public class ManualShoot extends CommandBase {
 
     @Override
     protected void end() {
-        if(!m_oi.areTopRollersOverriden()){
+        if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
         m_shooter.disablePID();

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.objects.LSPBPIDPlanner;
 import girlsofsteel.subsystems.Kicker;
 
 /**
- *
  * @author Sylvie
  */
 public class MoveKicker extends CommandBase {
@@ -41,17 +41,17 @@ public class MoveKicker extends CommandBase {
 
     @Override
     protected void execute() {
-        if(m_firstTime) {
-            switch(m_pos) {
-                case 0: //loading
-                    m_setpoint = m_loaded;
-                    break;
-                case 1: //kick
-                    m_setpoint = m_shoot;
-                    break;
-                default:
-                    System.out.println("Error! Not a valid input parameter");
-                    break;
+        if (m_firstTime) {
+            switch (m_pos) {
+            case 0: //loading
+                m_setpoint = m_loaded;
+                break;
+            case 1: //kick
+                m_setpoint = m_shoot;
+                break;
+            default:
+                System.out.println("Error! Not a valid input parameter");
+                break;
             }
             m_kickerPlanner.calculateVelocityGraph(m_setpoint);
             m_startTime = System.currentTimeMillis(); //MILLISECONDS

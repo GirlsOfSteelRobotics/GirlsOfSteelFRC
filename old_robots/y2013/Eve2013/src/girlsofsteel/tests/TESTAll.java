@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 
@@ -11,7 +12,6 @@ import girlsofsteel.subsystems.Feeder;
 import girlsofsteel.subsystems.Gripper;
 
 /**
- *
  * @author kateashwood
  */
 public class TESTAll extends CommandGroup {

@@ -5,7 +5,7 @@ import girlsofsteel.subsystems.Turret;
 public class DisableTurret extends CommandBase {
     private final Turret m_turret;
 
-    public DisableTurret(Turret turret){
+    public DisableTurret(Turret turret) {
         m_turret = turret;
         requires(m_turret);
     }

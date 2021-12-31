@@ -5,6 +5,7 @@
 
  move right side slower to match the left
  */
+
 package girlsofsteel.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
@@ -18,7 +19,6 @@ import girlsofsteel.objects.EncoderGoSPIDController;
 import girlsofsteel.objects.LSPBPIDPlanner;
 
 /**
- *
  * @author Heather
  */
 @SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods"})
@@ -57,8 +57,8 @@ public class Chassis extends Subsystem {
 
     //Competition robot, 4/23/14 pushed the robot forward 1 meter
     //Divided the raw values by four because the distances were off by a factor of four
-    private static final double m_leftDistancePerPulsePosition = (1.0 / (4810.4/4.0));
-    private static final double m_rightDistancePerPulsePosition = (1.0 / (4957.5/4));
+    private static final double m_leftDistancePerPulsePosition = (1.0 / (4810.4 / 4.0));
+    private static final double m_rightDistancePerPulsePosition = (1.0 / (4957.5 / 4));
 
     public Chassis() {
         m_leftChassisPlanner = new LSPBPIDPlanner();
@@ -264,7 +264,7 @@ public class Chassis extends Subsystem {
     }
 
     public void arcadeDrive(double x, double y) {
-      //  System.out.println("Untouched values: " + x + ", " + y);
+        //  System.out.println("Untouched values: " + x + ", " + y);
 
         //Flip this if forwards and backwards are flipped
         //y = -smoothDeadZone(y); //probably this on the competition chassis
@@ -334,12 +334,10 @@ public class Chassis extends Subsystem {
     }
 
     /**
-     *
      * @param p a double
      * @param i another double
      * @param d a different double
      * @author Arushi, Sylvie, Jisue
-     *
      */
     public void setRightPositionPIDValues(double p, double i, double d) {
         m_rightPositionPID.setPID(p, i, d);
@@ -364,8 +362,8 @@ public class Chassis extends Subsystem {
     }
 
     /**
-     * @author Arushi, Jisue, Sylvie
      * @return the Error of Left Position PID
+     * @author Arushi, Jisue, Sylvie
      */
     public double getLeftPositionError() {
         return m_leftPositionPID.getError();
@@ -413,7 +411,7 @@ public class Chassis extends Subsystem {
         double currentLeftPosition = m_leftEncoder.getDistance();
 
         return Math.abs(currentRightPosition - startingRightPosition) > movingOffset
-                || Math.abs(currentLeftPosition - startingLeftPosition) > movingOffset;
+            || Math.abs(currentLeftPosition - startingLeftPosition) > movingOffset;
     }
 
     public double getLeftEncoderRate() {

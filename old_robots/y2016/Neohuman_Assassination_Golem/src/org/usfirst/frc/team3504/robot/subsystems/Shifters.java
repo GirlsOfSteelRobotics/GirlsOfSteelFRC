@@ -59,6 +59,7 @@ public class Shifters extends Subsystem {
     public boolean getGearSpeed() {
         return m_inHighGear;
     }
+
     @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

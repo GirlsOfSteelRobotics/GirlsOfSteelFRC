@@ -12,7 +12,7 @@ public class Shoot extends CommandBase {
 
     private final double m_speed;
 
-    public Shoot(Shooter shooter, OI oi, double speed){
+    public Shoot(Shooter shooter, OI oi, double speed) {
         this.m_speed = speed;
         m_shooter = shooter;
         m_oi = oi;
@@ -29,8 +29,8 @@ public class Shoot extends CommandBase {
     @Override
     protected void execute() {
         m_shooter.shoot(m_speed);
-        if(Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
-                Math.abs(m_operatorJoystick.getTwist()) >= 0.3){
+        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
+            Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
             m_shooter.topRollersForward();
         }
     }
@@ -42,7 +42,7 @@ public class Shoot extends CommandBase {
 
     @Override
     protected void end() {
-        if(!m_oi.areTopRollersOverriden()){
+        if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
         m_shooter.disablePID();

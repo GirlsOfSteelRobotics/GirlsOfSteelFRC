@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -10,7 +11,6 @@ import girlsofsteel.OI;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author user
  */
 public class PivotArmToJoystick extends CommandBase {
@@ -40,7 +40,7 @@ public class PivotArmToJoystick extends CommandBase {
             m_manipulator.setSetPoint(m_angle);
             m_angle--; //-= 1.5;
         }
-            m_manipulator.holdAngle();
+        m_manipulator.holdAngle();
 
     }
 

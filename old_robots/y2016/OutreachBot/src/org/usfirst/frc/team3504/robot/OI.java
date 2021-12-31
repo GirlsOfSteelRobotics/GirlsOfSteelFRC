@@ -1,4 +1,4 @@
- package org.usfirst.frc.team3504.robot;
+package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -25,11 +25,11 @@ import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
 import org.usfirst.frc.team3504.robot.subsystems.Shifters;
 
 
- /**
+/**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
- @SuppressWarnings("PMD.DataClass")
+@SuppressWarnings("PMD.DataClass")
 public class OI {
     public final JoystickButton m_joystickButton3;
     public final JoystickButton m_joystickButton2;

@@ -1,4 +1,3 @@
-
 package girlsofsteel.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;

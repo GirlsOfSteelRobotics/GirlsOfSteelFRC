@@ -9,10 +9,9 @@ package girlsofsteel.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
  * @author Sylvie
  */
-public class Driving extends Subsystem{
+public class Driving extends Subsystem {
 
     /*
     This subsystem is supposed to be completely empty (minus the initDefaultCommand()).
@@ -28,6 +27,6 @@ public class Driving extends Subsystem{
 
     @Override
     protected void initDefaultCommand() {
-        }
+    }
 
 }

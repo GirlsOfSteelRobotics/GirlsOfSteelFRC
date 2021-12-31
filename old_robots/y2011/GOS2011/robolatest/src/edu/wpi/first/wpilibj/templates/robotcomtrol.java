@@ -4,6 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+
 package edu.wpi.first.wpilibj.templates;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -19,8 +20,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.cscore.AxisCamera;
-
-
 
 
 /**
@@ -78,7 +77,7 @@ public class robotcomtrol extends SimpleRobot {
         joy = new Joystick(1);
         armstick = new Joystick(2);
         stick = new Joystick(3);
-       compy = new Compressor(4, 6, 4, 7);
+        compy = new Compressor(4, 6, 4, 7);
         ClawO = new Solenoid(8, 1);
         ClawC = new Solenoid(8, 2);
         MBDeplo = new Solenoid(8, 3);
@@ -86,7 +85,7 @@ public class robotcomtrol extends SimpleRobot {
         isforwardlimitok = true;
         Footage = AxisCamera.getInstance();
 
-     compy.start();
+        compy.start();
 
         try {
             Shol1 = new CANJaguar(2, CANJaguar.ControlMode.kVoltage);
@@ -277,8 +276,8 @@ public class robotcomtrol extends SimpleRobot {
                 } catch (CANTimeoutException ex) {
                     ex.printStackTrace();
                 }
-            }else if (nowtime <= starttime + armaddedtime + elbowaddedtime + forwardtime +clawtime + backtime ){
-            try {
+            } else if (nowtime <= starttime + armaddedtime + elbowaddedtime + forwardtime + clawtime + backtime) {
+                try {
                     RearLeft.setX(backvoltage);
                     RearRight.setX(-backvoltage);
                     FrontLeft.setX(backvoltage);
@@ -288,7 +287,7 @@ public class robotcomtrol extends SimpleRobot {
                     ex.printStackTrace();
                 }
 
-            }else {
+            } else {
                 try {
                     Elbow.setX(0);
                     Shol1.setX(0);
@@ -317,15 +316,16 @@ public class robotcomtrol extends SimpleRobot {
      * move backward slowly (one for two feet)
      *
      */
+
     /**
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
         try {
-             RearLeft.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
-             RearLeft.enableControl();
-             RearRight.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
-             RearRight.enableControl();
+            RearLeft.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
+            RearLeft.enableControl();
+            RearRight.changeControlMode(WPI_TalonSRX.TalonControlMode.kVoltage);
+            RearRight.enableControl();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -373,7 +373,7 @@ public class robotcomtrol extends SimpleRobot {
             } else {
 
                 diff = currenttime - prevtime;
-               // message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(diff));
+                // message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(diff));
             }
 
             //this is for arcade drving
@@ -383,7 +383,7 @@ public class robotcomtrol extends SimpleRobot {
             double Xaxis = joy.getAxis(Joystick.AxisType.kX);
             double Yaxis = joy.getAxis(Joystick.AxisType.kY);
 
-           if (joy.getZ() >= .5) {//z is down turning slower
+            if (joy.getZ() >= .5) {//z is down turning slower
                 Xaxis = joy.getAxis(Joystick.AxisType.kX) * 0.5;
                 Yaxis = joy.getAxis(Joystick.AxisType.kY) * 0.5;
             } else if (joy.getZ() <= -.5) { // z is up
@@ -417,15 +417,15 @@ public class robotcomtrol extends SimpleRobot {
 
             slavevoltage(deadzone(armstick.getY()) * 12);
 
-                Timer.delay(0.01);
-                //multiplier can go up to 24
-                double valElbow = -.75 * deadzone(stick.getY());
-                if (valElbow > 0) {
-                    valElbow = valElbow * 12.0;
-                } else {
-                    valElbow = valElbow * 12.0;
+            Timer.delay(0.01);
+            //multiplier can go up to 24
+            double valElbow = -.75 * deadzone(stick.getY());
+            if (valElbow > 0) {
+                valElbow = valElbow * 12.0;
+            } else {
+                valElbow = valElbow * 12.0;
 
-                }
+            }
             try {
                 Elbow.setX(valElbow);
                 //message.println(DriverStationLCD.Line.kUser4, 1, "YShol " + Double.toString(valShol));
@@ -512,6 +512,7 @@ public class robotcomtrol extends SimpleRobot {
 
     /**
      * limit statement to set limits as 1.0 & -1.0
+     *
      * @param num axis values
      * @return
      */
@@ -554,11 +555,11 @@ public class robotcomtrol extends SimpleRobot {
             }
         }
 
-            setMotSpe(yaxis, xaxis, scalevolt);
-message.updateLCD();
+        setMotSpe(yaxis, xaxis, scalevolt);
+        message.updateLCD();
 
 
-}
+    }
 
     /**
      * This function is used for position control of the shoulder.
@@ -569,7 +570,7 @@ message.updateLCD();
      * the values as necessary.
      *
      * @param yaxis, axis of joystick to scale off of
-     * @param dt, change in time of the while loop that calls this function
+     * @param dt,    change in time of the while loop that calls this function
      * @return the current position think are at
      */
     public double slavelinear(double yaxis, double dt) {
@@ -593,7 +594,7 @@ message.updateLCD();
             vdes = 0;
 
         }
-       try {
+        try {
             if (Shol1.getControlMode().equals(CANJaguar.ControlMode.kPosition)) {
                 Pdes += vdes * dt;
                 Shol1.setX(Pdes);
@@ -627,7 +628,7 @@ message.updateLCD();
      * in the downward direction. This function stops
      * the slave motor of the shoulder from turning in the downward
      * position of the limit switch has been triggered.
-     *
+     * <p>
      * This is the function that should now be called to change
      * the voltage of Shol2 rather than setting it directly.
      *
@@ -696,7 +697,7 @@ message.updateLCD();
 
         }
 
-       // message.println(DriverStationLCD.Line.kUser5, 1, "RDS: " + Double.toString(rightMotorSpeed));
+        // message.println(DriverStationLCD.Line.kUser5, 1, "RDS: " + Double.toString(rightMotorSpeed));
         message.updateLCD();
     }
 
@@ -710,13 +711,12 @@ message.updateLCD();
         //this is display clear and claw
         if (armstick.getTrigger()) {
             cleanslate();
-        }if (armstick.getRawButton(2)) {
+        }
+        if (armstick.getRawButton(2)) {
             ClawO.set(true);
             message.println(DriverStationLCD.Line.kUser4, 5, "Claw Open ");
 
-        }
-        else
-        {
+        } else {
             ClawO.set((false));
         }
 
@@ -724,28 +724,22 @@ message.updateLCD();
             ClawC.set(true);
             message.println(DriverStationLCD.Line.kUser4, 5, "Claw Close");
 
-        }
-        else
-        {
+        } else {
             ClawC.set((false));
         }
 
         if (joy.getRawButton(3)) {
             MBDeplo.set(true);
             message.println(DriverStationLCD.Line.kUser4, 5, "Mini Bot Deployed");
-        }
-        else
-        {
+        } else {
             MBDeplo.set(false);
         }
 
         if (joy.getRawButton(5)) {
             MBReverse.set(true);
             message.println(DriverStationLCD.Line.kUser4, 5, "Mini Bot Retracted");
-        }
-        else
-        {
-             MBReverse.set(false);
+        } else {
+            MBReverse.set(false);
         }
 
         if (armstick.getRawButton(9)) {

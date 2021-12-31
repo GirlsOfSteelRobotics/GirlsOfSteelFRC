@@ -13,7 +13,7 @@ public class Shoot extends Command {
 
     private int m_loopCounter; // increment each time execute runs
     private boolean m_isLowMotorRunning; // if we have started the low
-                                                // motor yet
+    // motor yet
     private final int m_shooterSpeed;
     private final Shooter m_shooter;
 

@@ -32,7 +32,7 @@ public class FlapDown extends Command {
         /*if (Robot.flap.getTopLimitSwitch() == true)
             return true;
         else */
-            return false;
+        return false;
     }
 
     // Called once after isFinished returns true

@@ -1,13 +1,13 @@
 /*
  * This is a class we made for the special speed control sensor.
  */
+
 package girlsofsteel.objects;
 
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 /**
- *
  * @author Sylvie
  */
 public class MagneticSpeedSensor implements PIDSource {

@@ -8,14 +8,13 @@ package girlsofsteel.commands;
 import girlsofsteel.subsystems.Feeder;
 
 /**
- *
  * @author GirlsOfSTEEL
  */
-public class RaiseBlocker extends CommandBase{
+public class RaiseBlocker extends CommandBase {
 
     private final Feeder m_feeder;
 
-    public RaiseBlocker(Feeder feeder){
+    public RaiseBlocker(Feeder feeder) {
         m_feeder = feeder;
         requires(m_feeder);
     }

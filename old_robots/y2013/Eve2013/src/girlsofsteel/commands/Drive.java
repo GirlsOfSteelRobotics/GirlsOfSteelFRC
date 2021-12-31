@@ -1,4 +1,3 @@
-
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -37,9 +36,9 @@ public class Drive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_x = m_joystick.getX()* m_scale;
-        m_y = m_joystick.getY()* m_scale;
-        m_th = m_joystick.getZ()* m_turningScale;
+        m_x = m_joystick.getX() * m_scale;
+        m_y = m_joystick.getY() * m_scale;
+        m_th = m_joystick.getZ() * m_turningScale;
         m_chassis.driveVoltage(m_x, m_y, m_th, 1.0, m_gyroOn);
     }
 

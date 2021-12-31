@@ -7,7 +7,7 @@ public class StartGyro extends CommandBase {
     private final Chassis m_chassis;
     private int m_angle;
 
-    public StartGyro(Chassis chassis, int angle){
+    public StartGyro(Chassis chassis, int angle) {
         m_chassis = chassis;
         this.m_angle = angle;
     }

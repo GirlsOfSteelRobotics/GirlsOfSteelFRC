@@ -9,7 +9,7 @@ public class TestShooter extends CommandBase {
     private final Shooter m_shooter;
     private double m_speed;
 
-    public TestShooter(Shooter shooter){
+    public TestShooter(Shooter shooter) {
         m_shooter = shooter;
         SmartDashboard.putNumber("Speed", 0.0);
         SmartDashboard.putBoolean("Shoot", false);
@@ -21,11 +21,10 @@ public class TestShooter extends CommandBase {
 
     @Override
     protected void execute() {
-        m_speed = SmartDashboard.getNumber("Speed",0.0);
-        if(SmartDashboard.getBoolean("Shoot", false)){
+        m_speed = SmartDashboard.getNumber("Speed", 0.0);
+        if (SmartDashboard.getBoolean("Shoot", false)) {
             m_shooter.setJags(m_speed);
-        }
-        else{
+        } else {
             m_shooter.stopJags();
             m_shooter.setShootFalse();
         }

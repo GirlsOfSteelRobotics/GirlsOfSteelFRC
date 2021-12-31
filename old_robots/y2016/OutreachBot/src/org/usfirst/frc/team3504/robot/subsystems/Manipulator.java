@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -27,11 +27,11 @@ public class Manipulator extends Subsystem {
         m_arm = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
     }
 
-    public void openArm(){
+    public void openArm() {
         m_arm.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void closeArm(){
+    public void closeArm() {
         m_arm.set(DoubleSolenoid.Value.kReverse);
     }
 
@@ -73,11 +73,11 @@ public class Manipulator extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 
-    public boolean getTopLimitSwitch(){
+    public boolean getTopLimitSwitch() {
         return m_pivotMotor.isFwdLimitSwitchClosed() == 0;
     }
 
-    public boolean getBottomLimitSwitch(){
+    public boolean getBottomLimitSwitch() {
         return m_collectorMotor.isRevLimitSwitchClosed() == 0;
     }
 }

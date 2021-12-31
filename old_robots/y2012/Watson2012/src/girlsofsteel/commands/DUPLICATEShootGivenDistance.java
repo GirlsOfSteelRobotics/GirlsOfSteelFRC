@@ -28,10 +28,9 @@ public class DUPLICATEShootGivenDistance extends CommandBase {
     @Override
     protected boolean isFinished() {
         //If this is bridge shooting, wait a long time. Otherwise(key shooting) don't wait a long time
-        if(m_speed > 25){
-        return timeSinceInitialized() > 10;
-        }
-        else{
+        if (m_speed > 25) {
+            return timeSinceInitialized() > 10;
+        } else {
             return timeSinceInitialized() > 5;
         }
     }

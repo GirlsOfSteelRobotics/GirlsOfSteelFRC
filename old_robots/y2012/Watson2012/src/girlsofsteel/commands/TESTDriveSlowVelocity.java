@@ -15,7 +15,7 @@ public class TESTDriveSlowVelocity extends CommandBase {
     private double m_p;
     private double m_i;
 
-    public TESTDriveSlowVelocity(Chassis chassis, Joystick operatorJoystick){
+    public TESTDriveSlowVelocity(Chassis chassis, Joystick operatorJoystick) {
         m_chassis = chassis;
         this.m_driverJoystick = operatorJoystick;
         requires(m_chassis);
@@ -33,7 +33,7 @@ public class TESTDriveSlowVelocity extends CommandBase {
     protected void execute() {
         m_p = SmartDashboard.getNumber("Chassis P", 0.0);
         m_i = SmartDashboard.getNumber("Chassis I", 0.0);
-        m_chassis.setRatePIDValues(m_p, m_i,0.0);
+        m_chassis.setRatePIDValues(m_p, m_i, 0.0);
         m_xAxis = m_driverJoystick.getX();
         m_yAxis = m_driverJoystick.getY();
         m_chassis.driveVelocityLinear(m_xAxis, m_yAxis);

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Chassis extends Subsystem{
+public class Chassis extends Subsystem {
 
     private final WPI_TalonSRX m_rightTalon1;
     private final WPI_TalonSRX m_leftTalon1;

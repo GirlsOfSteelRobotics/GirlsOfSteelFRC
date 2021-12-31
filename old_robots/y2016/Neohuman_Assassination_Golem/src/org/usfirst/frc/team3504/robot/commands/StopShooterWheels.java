@@ -16,12 +16,13 @@ public class StopShooterWheels extends Command {
     public StopShooterWheels(Claw claw, Shooter shooter) {
         m_claw = claw;
         m_shooter = shooter;
-        
-        if(RobotMap.USING_CLAW) {
+
+        if (RobotMap.USING_CLAW) {
             requires(m_claw);
+        } else {
+            requires(m_shooter);
         }
-        else {
-            requires(m_shooter);    }}
+    }
 
     // Called just before this Command runs the first time
     @Override
@@ -31,10 +32,9 @@ public class StopShooterWheels extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(RobotMap.USING_CLAW) {
+        if (RobotMap.USING_CLAW) {
             m_claw.stopCollecting();
-        }
-        else {
+        } else {
             m_shooter.stop();
         }
     }

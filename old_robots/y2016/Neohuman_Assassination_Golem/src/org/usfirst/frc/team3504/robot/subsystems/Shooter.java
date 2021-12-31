@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3504.robot.RobotMap;
@@ -29,14 +29,14 @@ public class Shooter extends Subsystem {
         m_shooterPiston2 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
     }
 
-    public void pistonsOut(){
+    public void pistonsOut() {
         m_shooterPiston1.set(DoubleSolenoid.Value.kForward);
         System.out.println("Left Piston out");
         m_shooterPiston2.set(DoubleSolenoid.Value.kForward);
         System.out.println("Right Piston out");
     }
 
-    public void pistonsIn(){
+    public void pistonsIn() {
         m_shooterPiston1.set(DoubleSolenoid.Value.kReverse);
         System.out.println("Left Piston in");
         m_shooterPiston2.set(DoubleSolenoid.Value.kReverse);

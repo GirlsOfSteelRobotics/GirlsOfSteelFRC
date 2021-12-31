@@ -10,7 +10,7 @@ public class Bridge extends Subsystem {
     private static final double JAG_SPEED = 1.0;
 
     private final Jaguar m_bridgeArmJag = new Jaguar(RobotMap.BRIDGE_ARM_JAG);
-//    public Relay bridgeArmSpike = new Relay(RobotMap.BRIDGE_ARM_SPIKE);
+    //    public Relay bridgeArmSpike = new Relay(RobotMap.BRIDGE_ARM_SPIKE);
     private final DigitalInput m_upLimitSwitch = new DigitalInput(RobotMap.BRIDGE_UP_LIMIT_SWITCH);
     private final DigitalInput m_downLimitSwitch = new DigitalInput(RobotMap.BRIDGE_DOWN_LIMIT_SWITCH);
     private boolean m_goingUp;
@@ -23,24 +23,24 @@ public class Bridge extends Subsystem {
         return m_downLimitSwitch.get();
     }
 
-    public void downBridgeArm(){
+    public void downBridgeArm() {
         m_bridgeArmJag.set(JAG_SPEED);
 //        bridgeArmSpike.set(Relay.Value.kForward);
         m_goingUp = false;
     }
 
-    public void upBridgeArm(){
+    public void upBridgeArm() {
         m_bridgeArmJag.set(-JAG_SPEED);
 //        bridgeArmSpike.set(Relay.Value.kReverse);
         m_goingUp = true;
     }
 
-    public void stopBridgeArm(){
+    public void stopBridgeArm() {
         m_bridgeArmJag.set(0.0);
 //        bridgeArmSpike.set(Relay.Value.kOff);
     }
 
-    public Bridge(){
+    public Bridge() {
         new Thread() { // NOPMD
             @Override
             public void run() {
@@ -55,13 +55,11 @@ public class Bridge extends Subsystem {
     //the safety check is important -> stops the bridge arm when it is running
     //constantly into the limit switches
     private void safetyCheck() {
-        if(isFullyUp() && m_goingUp)
-        {
+        if (isFullyUp() && m_goingUp) {
             m_bridgeArmJag.set(0.0);
 //            bridgeArmSpike.set(Relay.Value.kOff);
         }
-        if(hasHitBridge() && !m_goingUp)
-        {
+        if (hasHitBridge() && !m_goingUp) {
             m_bridgeArmJag.set(0.0);
 //            bridgeArmSpike.set(Relay.Value.kOff);
         }

@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3504.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -84,7 +83,7 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     @Override
-    public void disabledInit(){
+    public void disabledInit() {
 
     }
 

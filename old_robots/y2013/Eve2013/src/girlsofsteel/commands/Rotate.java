@@ -15,25 +15,25 @@ public class Rotate extends CommandBase {
         m_chassis = chassis;
         this.m_targetRotate = targetRotate;
         this.m_theta = theta;
-        if(targetRotate){
+        if (targetRotate) {
             m_desiredTheta = theta;
-        }else{
+        } else {
             m_desiredTheta = chassis.getGyroAngle() -
-                    chassis.getFieldAdjustment() + theta;
+                chassis.getFieldAdjustment() + theta;
         }
     }
 
     @Override
     protected void initialize() {
-        if(m_targetRotate){
+        if (m_targetRotate) {
             m_desiredTheta = m_theta;
-        }else{
+        } else {
             m_desiredTheta = m_chassis.getGyroAngle() -
                 m_chassis.getFieldAdjustment() + m_theta;
         }
         m_chassis.startAutoRotation();
         //make desired theta between 0-360
-        while(m_desiredTheta < 0){
+        while (m_desiredTheta < 0) {
             m_desiredTheta += 360;
         }
         m_desiredTheta = m_desiredTheta % 360;
@@ -45,13 +45,13 @@ public class Rotate extends CommandBase {
     protected void execute() {
         getDifference();
         System.out.println("Gyro: " + m_chassis.getGyroAngle() + "\tCurrent: "
-                + m_current + "\tDesired: " + m_desiredTheta + "\tDifference: "
-                + m_difference);
-        if(m_desiredTheta - m_chassis.ROTATION_THRESHOLD > m_current ||
-                m_current > m_desiredTheta + m_chassis.ROTATION_THRESHOLD){
+            + m_current + "\tDesired: " + m_desiredTheta + "\tDifference: "
+            + m_difference);
+        if (m_desiredTheta - m_chassis.ROTATION_THRESHOLD > m_current ||
+            m_current > m_desiredTheta + m_chassis.ROTATION_THRESHOLD) {
             System.out.print("Rotating...");
             m_chassis.autoRotateTestBot(m_difference);
-        }else{
+        } else {
             m_chassis.pauseAutoRotation();
         }
     }
@@ -73,21 +73,21 @@ public class Rotate extends CommandBase {
     }
 
     @SuppressWarnings("PMD.LinguisticNaming")
-    private void getDifference(){
+    private void getDifference() {
         //get current
         m_current = m_chassis.getGyroAngle() - m_chassis.getFieldAdjustment();
         //make it between 0-360
-        while(m_current < 0){
+        while (m_current < 0) {
             m_current += 360;
         }
         m_current = m_current % 360;
         //calculate & set the difference
-        if(m_desiredTheta - m_current < 180 && m_desiredTheta - m_current > - 180){
+        if (m_desiredTheta - m_current < 180 && m_desiredTheta - m_current > -180) {
             m_difference = m_desiredTheta - m_current;
-        }else{
-            if(m_desiredTheta - m_current < 0){
+        } else {
+            if (m_desiredTheta - m_current < 0) {
                 m_difference = 360 + m_desiredTheta - m_current;
-            }else{
+            } else {
                 m_difference = 360 - m_desiredTheta - m_current;
             }
         }

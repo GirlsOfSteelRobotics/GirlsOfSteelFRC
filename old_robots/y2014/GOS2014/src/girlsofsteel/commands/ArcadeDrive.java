@@ -14,7 +14,7 @@ import girlsofsteel.subsystems.Driving;
 /**
  * @author Mackenzie
  */
-public class ArcadeDrive extends CommandBase{
+public class ArcadeDrive extends CommandBase {
 
     private final Chassis m_chassis;
     private final Joystick m_joystick1; //randomly picked right joystick from robot map

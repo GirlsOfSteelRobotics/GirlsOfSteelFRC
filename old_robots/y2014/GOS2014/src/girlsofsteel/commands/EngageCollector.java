@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
@@ -10,6 +11,7 @@ import girlsofsteel.subsystems.Collector;
 /**
  * This command engages the collector arm to the manipulator.  It moves the
  * collector arm downward into its position on the manipulator.
+ *
  * @author Sophia, Abby, Sonia
  */
 //This command moves arm wheel to retrieve ball.
@@ -18,6 +20,7 @@ public class EngageCollector extends CommandBase {
 
     /**
      * This command uses the collector subsystem.
+     *
      * @author Sophia, Sonia
      */
     public EngageCollector(Collector collector) {
@@ -27,6 +30,7 @@ public class EngageCollector extends CommandBase {
 
     /**
      * This method does not have anything in it.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -35,6 +39,7 @@ public class EngageCollector extends CommandBase {
 
     /**
      * This turns on the jag to engage the collector to the pivot arm.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -44,6 +49,7 @@ public class EngageCollector extends CommandBase {
 
     /**
      * This method is constantly called to see if the command is finished.
+     *
      * @return False (Never ends)
      * @author Sophia, Sonia
      */
@@ -51,11 +57,12 @@ public class EngageCollector extends CommandBase {
     protected boolean isFinished() {
         return false;//Only for monday (2/10) testing, with use of hardstop
         //return collector.isCollectorEngaged();//Will be used, but not for monday (2/10) testing because there are not limit switches
-            //Tells drivers/whoever that the ball is in the trident and is being held by the collector arm
+        //Tells drivers/whoever that the ball is in the trident and is being held by the collector arm
     }
 
     /**
      * At the end of the command, the collector arm jag is turned off.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -66,6 +73,7 @@ public class EngageCollector extends CommandBase {
 
     /**
      * If the command is interrupted, it calls the end() method.
+     *
      * @author Sophia, Sonia
      */
     @Override

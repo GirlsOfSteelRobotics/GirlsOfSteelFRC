@@ -82,12 +82,12 @@ public class OI {
         m_driverJoystick = new Joystick(DRIVER_JOYSTICK_PORT);
         m_operatorJoystick = new Joystick(SHOOTER_JOYSTICK_PORT);
 
-             //Defining Driver Buttons - microsoft joytick
+        //Defining Driver Buttons - microsoft joytick
         m_startDrive = new JoystickButton(m_driverJoystick, 9);
         m_startDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, false));
         m_stopChassis = new JoystickButton(m_driverJoystick, 7);
         m_stopChassis.whenPressed(new StopChassis(chassis, drive));
-        m_gyroDrive = new JoystickButton(m_driverJoystick,11);
+        m_gyroDrive = new JoystickButton(m_driverJoystick, 11);
         m_gyroDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, true));
         m_normalDrive = new JoystickButton(m_driverJoystick, 10);
         m_normalDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, false));
@@ -102,7 +102,7 @@ public class OI {
 //        rotateLeft.whenPressed(new Rotate(Chassis.FEEDER_LEFT, true));
         m_rotateShootingBackRight = new JoystickButton(m_driverJoystick, 6);
         m_rotateShootingBackRight.whenPressed(new Rotate(chassis,
-              //  ShooterCamera.getTopDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
+            //  ShooterCamera.getTopDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
             90, false));
         m_rotateShootingBackLeft = new JoystickButton(m_driverJoystick, 5);
         m_rotateShootingBackLeft.whenPressed(new Rotate(chassis,
@@ -113,7 +113,6 @@ public class OI {
 //        raiseBlocker.whenPressed(new RaiseBlocker());
 //        lowerBlocker = new JoystickButton(driverJoystick, 8);
 //        lowerBlocker.whenPressed(new LowerBlocker());
-
 
 
         //Defining Operator Buttons
@@ -145,7 +144,7 @@ public class OI {
         m_toggleBlocker.whenPressed(new Blocking(feeder));
     }
 
-     public Joystick getDrivingJoystick(){
+    public Joystick getDrivingJoystick() {
 
         return m_driverJoystick;
 

@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.subsystems.Kicker;
 
 /**
- *
  * @author the programmers
  */
 public class KickerUsingLimitSwitch extends CommandBase {
@@ -65,9 +65,9 @@ public class KickerUsingLimitSwitch extends CommandBase {
                 }
                 //Comment this out if using smart dashboard
             } else if (m_loadingOrShooting == 1 && m_kicker.getLimitSwitch()) {
-                    //kicker.setJag(1.0);
-                    m_kicker.setTalon(1.0);
-                }
+                //kicker.setJag(1.0);
+                m_kicker.setTalon(1.0);
+            }
 
         }
         if (m_testingMotor) {
@@ -85,7 +85,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
     protected boolean isFinished() {
         System.out.println("Is the limit hit: " + m_kicker.getLimitSwitch());
         if (!m_testingLimit) {
-            if(m_changeInTime > 5000) {
+            if (m_changeInTime > 5000) {
                 return true; //If more than 5 seconds have passed, stop trying! It probably means the battery is burned out... OR motor is burned out...
             }
             if (m_loadingOrShooting == 0) {

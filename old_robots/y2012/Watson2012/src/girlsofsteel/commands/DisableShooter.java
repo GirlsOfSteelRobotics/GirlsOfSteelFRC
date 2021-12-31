@@ -5,7 +5,7 @@ import girlsofsteel.subsystems.Shooter;
 public class DisableShooter extends CommandBase {
     private final Shooter m_shooter;
 
-    public DisableShooter(Shooter shooter){
+    public DisableShooter(Shooter shooter) {
         m_shooter = shooter;
         requires(m_shooter);
     }

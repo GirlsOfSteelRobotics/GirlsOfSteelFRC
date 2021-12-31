@@ -7,7 +7,7 @@ import girlsofsteel.subsystems.Collector;
 import girlsofsteel.subsystems.Shooter;
 import girlsofsteel.subsystems.Turret;
 
-@SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveParameterList" })
+@SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveParameterList"})
 public class AutonomousOptions extends CommandBase {
 
     private static final double KEY_SPEED = Shooter.KEY_SPEED;
@@ -41,7 +41,7 @@ public class AutonomousOptions extends CommandBase {
                              double xDistance,
                              double yDistance, boolean bridgeCollect,
                              boolean autoShootFromBridge, boolean goBackToKey,
-                             boolean shootFromKeyAfterBridge){
+                             boolean shootFromKeyAfterBridge) {
         m_chassis = chassis;
         m_bridge = bridge;
         m_turret = turret;
@@ -78,18 +78,18 @@ public class AutonomousOptions extends CommandBase {
     @Override
     @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.AvoidDeeplyNestedIfStmts", "PMD.CyclomaticComplexity"})
     protected void execute() {
-        if(m_getXDistanceCamera){
+        if (m_getXDistanceCamera) {
             m_xDistance = 5.3939 - Camera.getXDistance();
             //5.3939 = half the field - (bridge/2 + space between robot and bridge
             //to push bridge down + camera to edge of bumpers)
         }
-        if(m_autoTrack){
+        if (m_autoTrack) {
             m_turret.autoTrack();
         }
-        if(m_autoShoot){
+        if (m_autoShoot) {
             m_shooter.autoShoot(m_shooter.getDistance());
         }
-        if(m_shootFromKey){
+        if (m_shootFromKey) {
             m_shooter.shoot(KEY_SPEED);
         }
         if (m_moveToBridge) {
@@ -98,12 +98,12 @@ public class AutonomousOptions extends CommandBase {
                 m_bridge.downBridgeArm();
                 m_collector.forwardBrush();
                 m_collector.forwardMiddleConveyor();
-                if(m_autoShootFromBridge){
+                if (m_autoShootFromBridge) {
                     m_shooter.autoShoot(m_shooter.getDistance());
                 }
-                if(m_goBackToKey){
+                if (m_goBackToKey) {
                     m_chassis.goToLocation(-m_xDistance, -m_yDistance, FACE_START);
-                    if(m_shootFromKeyAfterBridge){
+                    if (m_shootFromKeyAfterBridge) {
                         m_shooter.shoot(KEY_SPEED);
                     }
                 }

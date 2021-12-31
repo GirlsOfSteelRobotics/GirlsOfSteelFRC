@@ -6,9 +6,11 @@
  * | \ |
  * |  \|OTE!!! larger margin for error in shooter than for Watson :)
  */
+
 package girlsofsteel.subsystems;
 
 //import edu.wpi.first.wpilibj.*;
+
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -21,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Sylvie
  */
 public class Shooter extends Subsystem {
@@ -52,18 +53,18 @@ public class Shooter extends Subsystem {
 
         //Makes the PIDController
         m_pid = new PIDController(m_p, m_i, m_d, m_magSpeed,
-                new PIDOutput() {
-                    @Override
-                    public void pidWrite(double output) {
-                        setJags(output);
-                    }
-                });
+            new PIDOutput() {
+                @Override
+                public void pidWrite(double output) {
+                    setJags(output);
+                }
+            });
         for (int i = 0; i < m_speeds.length; i++) {
             m_speeds[i] = null; // NOPMD
         }
     }
 
-//PID methods
+    //PID methods
     public void initPID() {
         m_pid.enable();
     }
@@ -89,7 +90,7 @@ public class Shooter extends Subsystem {
             return false;
         } else {//otherwise look at the encoder
             return (m_magSpeed.get() > setPoint - VELOCITY_ERROR_RANGE
-                    && m_magSpeed.get() < setPoint + VELOCITY_ERROR_RANGE);
+                && m_magSpeed.get() < setPoint + VELOCITY_ERROR_RANGE);
         }
     }
 
@@ -195,15 +196,15 @@ public class Shooter extends Subsystem {
         }
     }
 
-    public void setShootTrue(){
+    public void setShootTrue() {
         m_shoot = true;
     }
 
-    public void setShootFalse(){
+    public void setShootFalse() {
         m_shoot = false;
     }
 
-    public boolean isTimeToShoot(){
+    public boolean isTimeToShoot() {
         return m_shoot;
     }
 

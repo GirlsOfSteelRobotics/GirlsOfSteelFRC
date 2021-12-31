@@ -1,10 +1,10 @@
 package org.usfirst.frc.team3504.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3504.robot.subsystems.Chassis;
@@ -162,10 +162,10 @@ public class DriveByMotionProfile extends Command {
     }
 
     private List<List<Double>> loadMotionProfile(String filename, boolean isLeft)
-            throws IOException {
+        throws IOException {
         List<List<Double>> points = new ArrayList<>();
-        try(InputStream is = Files.newInputStream(Paths.get(filename));
-        Scanner s = new Scanner(is)) {
+        try (InputStream is = Files.newInputStream(Paths.get(filename));
+             Scanner s = new Scanner(is)) {
             while (s.hasNext()) {
                 List<Double> arr = new ArrayList<>();
                 arr.add(s.nextDouble() * (isLeft ? -1.0 : 1.0)); // p
@@ -193,17 +193,17 @@ public class DriveByMotionProfile extends Command {
             point.position = arr.get(0);
 
             point.velocity = arr.get(1) * m_multiplier;
-            point.timeDur = (int)(arr.get(2) / m_multiplier);
+            point.timeDur = (int) (arr.get(2) / m_multiplier);
 
             System.out.println("DriveByMotionProfile: " + point.position + " " + point.velocity + " " + point.timeDur);
             point.profileSlotSelect0 = 0; /*
-                                             * which set of gains would you like to
-                                             * use?
-                                             */
+             * which set of gains would you like to
+             * use?
+             */
             point.zeroPos = i == 0; /* set this to true on the first point */
             point.isLastPoint = (i + 1) == points.size(); /*
-                                         * set this to true on the last point
-                                         */
+             * set this to true on the last point
+             */
 
             talon.pushMotionProfileTrajectory(point);
             i++;

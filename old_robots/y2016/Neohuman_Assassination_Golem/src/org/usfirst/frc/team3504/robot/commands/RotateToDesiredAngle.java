@@ -33,7 +33,7 @@ public class RotateToDesiredAngle extends Command {
             // calculated rotation rate (or joystick Z axis),
             // depending upon whether "rotate to angle" is active.
             m_chassis.drive(m_move, m_chassis.getRotationAngleRate());
-        } catch( RuntimeException ex ) { // NOPMD
+        } catch (RuntimeException ex) { // NOPMD
             DriverStation.reportError("Error communicating with drive system:  " + ex.getMessage(), true);
         }
     }
@@ -42,7 +42,7 @@ public class RotateToDesiredAngle extends Command {
     @Override
     protected boolean isFinished() {
         return false;
-                //Math.abs(Robot.chassis.getGyroAngle()) >= Math.abs(desiredAngle);
+        //Math.abs(Robot.chassis.getGyroAngle()) >= Math.abs(desiredAngle);
     }
 
     // Called once after isFinished returns true

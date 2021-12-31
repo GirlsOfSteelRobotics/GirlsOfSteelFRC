@@ -99,13 +99,11 @@ public class DriveByVision extends Command {
         double goalLinearVelocity;
         if (height < 0 && m_tim.get() < 1) {
             goalLinearVelocity = FAST_LINEAR_VELOCITY;
-        }
-        else if (height < 0) {
+        } else if (height < 0) {
             goalLinearVelocity = SLOW_LINEAR_VELOCITY;
         } else if (height >= 52.0) {
             goalLinearVelocity = SLOW_LINEAR_VELOCITY;
-        }
-        else {
+        } else {
             goalLinearVelocity = FAST_LINEAR_VELOCITY;
         }
 
@@ -119,13 +117,12 @@ public class DriveByVision extends Command {
         // send desired wheel speeds to Talon set to velocity control mode
         m_chassis.setVelocityGoal(angVLeft, -angVRight);
 
-        if (targetX >= 0){
+        if (targetX >= 0) {
             System.out.println("Number of Contours: " + 2/*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-                    + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + m_tim.get());
-        }
-        else {
+                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + m_tim.get());
+        } else {
             System.out.println("Number of Contours: " + "not 2" /*centerX.length*/ + " Goal Linear Velocity: " + goalLinearVelocity
-                    + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + m_tim.get());
+                + " Goal Angular Velocity: " + goalAngularVelocity + " Timer: " + m_tim.get());
         }
     }
 
@@ -134,7 +131,7 @@ public class DriveByVision extends Command {
     protected boolean isFinished() {
 
         return ((m_tim.get() > 1 && Math.abs(m_chassis.getLeftVelocity()) < SLIPPING_VELOCITY
-                && Math.abs(m_chassis.getRightVelocity()) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT));
+            && Math.abs(m_chassis.getRightVelocity()) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT));
     }
 
     // Called once after isFinished returns true

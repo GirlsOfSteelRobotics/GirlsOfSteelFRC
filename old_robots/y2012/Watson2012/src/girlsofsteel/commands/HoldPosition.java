@@ -5,7 +5,7 @@ import girlsofsteel.subsystems.Chassis;
 public class HoldPosition extends CommandBase {
     private final Chassis m_chassis;
 
-    public HoldPosition(Chassis chassis){
+    public HoldPosition(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
     }

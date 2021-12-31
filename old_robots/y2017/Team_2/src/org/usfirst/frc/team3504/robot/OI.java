@@ -32,35 +32,35 @@ public class OI {
 
     // Button button = new JoystickButton(stick, buttonNumber);
 
-    public OI(Manipulator manipulator){
+    public OI(Manipulator manipulator) {
 
-    m_stick = new Joystick(0);
-    m_gamePad = new Joystick(1);
+        m_stick = new Joystick(0);
+        m_gamePad = new Joystick(1);
 
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
+        // There are a few additional built in buttons you can use. Additionally,
+        // by subclassing Button you can create custom triggers and bind those to
+        // commands the same as any other Button.
 
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    m_collectIn = new JoystickButton(m_gamePad, 5);
-    m_collectIn.whileHeld(new CollectIn(manipulator));
+        //// TRIGGERING COMMANDS WITH BUTTONS
+        // Once you have a button, it's trivial to bind it to a button in one of
+        // three ways:
+        m_collectIn = new JoystickButton(m_gamePad, 5);
+        m_collectIn.whileHeld(new CollectIn(manipulator));
 
-    m_release = new JoystickButton(m_gamePad, 6);
-    m_release.whileHeld(new Release(manipulator));
+        m_release = new JoystickButton(m_gamePad, 6);
+        m_release.whileHeld(new Release(manipulator));
 
-    m_shoot = new JoystickButton(m_gamePad, 3);
-    m_shoot.whenPressed(new Shoot(manipulator));
+        m_shoot = new JoystickButton(m_gamePad, 3);
+        m_shoot.whenPressed(new Shoot(manipulator));
 
-    m_pivotUp = new JoystickButton(m_gamePad, 4);
-    m_pivotUp.whileHeld(new PivotUp(manipulator));
+        m_pivotUp = new JoystickButton(m_gamePad, 4);
+        m_pivotUp.whileHeld(new PivotUp(manipulator));
 
-    m_pivotDown = new JoystickButton(m_gamePad, 2);
-    m_pivotDown.whileHeld(new PivotDown(manipulator));
+        m_pivotDown = new JoystickButton(m_gamePad, 2);
+        m_pivotDown.whileHeld(new PivotDown(manipulator));
 
-    m_pusherOut = new JoystickButton(m_gamePad, 9);
-    m_pusherOut.whenPressed(new PusherOut(manipulator));
+        m_pusherOut = new JoystickButton(m_gamePad, 9);
+        m_pusherOut.whenPressed(new PusherOut(manipulator));
     }
 
     public Joystick getStick() {

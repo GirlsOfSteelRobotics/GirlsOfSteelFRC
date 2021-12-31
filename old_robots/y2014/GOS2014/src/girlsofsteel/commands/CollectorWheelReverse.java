@@ -10,9 +10,10 @@ import girlsofsteel.subsystems.Collector;
 
 /**
  * Moves the collector wheel backwards.
+ *
  * @author Abby, Sophia, Sonia
  */
-public class CollectorWheelReverse extends CommandBase{
+public class CollectorWheelReverse extends CommandBase {
 
     private final Collector m_collector;
 
@@ -22,6 +23,7 @@ public class CollectorWheelReverse extends CommandBase{
 
     /**
      * There is nothing in this method.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -32,6 +34,7 @@ public class CollectorWheelReverse extends CommandBase{
     /**
      * This rolls the collector wheel backwards.
      * It can be used to release the ball.
+     *
      * @author Sophia, Sonia
      */
     @Override
@@ -40,31 +43,34 @@ public class CollectorWheelReverse extends CommandBase{
     }
     //The wheel reverses to release the ball. Possibly for both gentle and long passes.
 
-       /**
+    /**
      * This returns false when we want to move the wheel backwards .
+     *
      * @return false always
      * @author Sophia, Sonia
      */
-       @Override
+    @Override
     protected boolean isFinished() {
         return false;
     }
 
-     /**
+    /**
      * This stops the collector wheel.
+     *
      * @author Sophia, Sonia
      */
-     @Override
+    @Override
     protected void end() {
         m_collector.stopCollectorWheel();
         //stops wheel once the command is finished
     }
 
-     /**
+    /**
      * This calls the end() method to stop the collector wheel
+     *
      * @author Sophia, Sonia
      */
-     @Override
+    @Override
     protected void interrupted() {
         end();
     }

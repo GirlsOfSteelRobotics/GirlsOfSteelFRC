@@ -8,7 +8,7 @@ public class TESTGyro extends CommandBase {
     private final Chassis m_chassis;
     private final Turret m_turret;
 
-    public TESTGyro(Chassis chassis, Turret turret){
+    public TESTGyro(Chassis chassis, Turret turret) {
         m_chassis = chassis;
         m_turret = turret;
         requires(m_chassis);

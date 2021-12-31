@@ -11,44 +11,44 @@ public class PositionInfo {
 
     private static final Position[] positions = new Position[4];
 
-    public static void init(){
+    public static void init() {
         //set the should-be 3 positions here
-        positions[NO_POSITION] = new Position(0,0);
+        positions[NO_POSITION] = new Position(0, 0);
         positions[BACK_RIGHT] = new Position(
-                Chassis.BACK_RIGHT_OFFSET,
-                0.735);//78
+            Chassis.BACK_RIGHT_OFFSET,
+            0.735);//78
         positions[BACK_LEFT] = new Position(
             Chassis.BACK_LEFT_OFFSET,
-                0.81);
+            0.81);
     }//end constructor
 
-    public static void set(int position, int angleAdjustment, double shooterSpeed){
+    public static void set(int position, int angleAdjustment, double shooterSpeed) {
         positions[position] = new Position(angleAdjustment, shooterSpeed);
     }//end set
 
-    public static int getAngle(int position){
+    public static int getAngle(int position) {
         return positions[position].getAngle();
     }//end getAngle
 
-    public static double getSpeed(int position){
+    public static double getSpeed(int position) {
         return positions[position].getSpeed();
     }//eng getSpeed
 
-    private static class Position{
+    private static class Position {
 
         private final int m_angle;
         private final double m_speed;
 
-        public Position(int angleAdjustment, double shooterSpeed){
+        public Position(int angleAdjustment, double shooterSpeed) {
             m_angle = angleAdjustment;
             m_speed = shooterSpeed;
         }
 
-        public int getAngle(){
+        public int getAngle() {
             return m_angle;
         }
 
-        public double getSpeed(){
+        public double getSpeed() {
             return m_speed;
         }
 

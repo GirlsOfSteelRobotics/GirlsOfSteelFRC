@@ -8,7 +8,7 @@ public class TESTTurnToSetPoint extends CommandBase {
     private final Chassis m_chassis;
     private double m_degreesToTurn;
 
-    public TESTTurnToSetPoint(Chassis chassis){
+    public TESTTurnToSetPoint(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
         SmartDashboard.putNumber("Turn,degrees", 0.0);

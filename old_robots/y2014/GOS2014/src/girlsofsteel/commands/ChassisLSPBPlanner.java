@@ -2,6 +2,7 @@
 
  Uses the LSPB PID planner to position pid
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,7 +11,6 @@ import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.Driving;
 
 /**
- *
  * @author Sylvie
  */
 public class ChassisLSPBPlanner extends CommandBase {
@@ -54,20 +54,20 @@ public class ChassisLSPBPlanner extends CommandBase {
             SmartDashboard.putNumber("LSPB Left Encoder", m_chassis.getLeftEncoderDistance());
             SmartDashboard.putNumber("LSPB Right Encoder", m_chassis.getRightEncoderDistance());
             System.out.print("\tRight Encoder: " + m_chassis.getRightEncoderDistance());
-           // if ((int)changeInTime % 10 == 0) {
-                m_changeInTime = System.currentTimeMillis() - m_startTime;
-                m_chassis.setPositionSeparate(m_leftChassisPlanner.getDesiredPosition(m_changeInTime), m_rightChassisPlanner.getDesiredPosition(m_changeInTime));
-           // }
+            // if ((int)changeInTime % 10 == 0) {
+            m_changeInTime = System.currentTimeMillis() - m_startTime;
+            m_chassis.setPositionSeparate(m_leftChassisPlanner.getDesiredPosition(m_changeInTime), m_rightChassisPlanner.getDesiredPosition(m_changeInTime));
+            // }
         }
     }
 
     @Override
     protected boolean isFinished() {
-        boolean ret =  (/*Math.abs(chassis.getLeftEncoderDistance() - setPoint) < 0.05) || */
-                ((Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < 0.01 )
+        boolean ret = (/*Math.abs(chassis.getLeftEncoderDistance() - setPoint) < 0.05) || */
+            ((Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < 0.01)
                 || (Math.abs(m_chassis.getRightEncoderDistance()) > Math.abs(m_setPoint)))
                 && m_graphed); //Right encoder/pid is flipped TODO configuration
-        if(ret) {
+        if (ret) {
             System.out.println("finished ");
         }
 

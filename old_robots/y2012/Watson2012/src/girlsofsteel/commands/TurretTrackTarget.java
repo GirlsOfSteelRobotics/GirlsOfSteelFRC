@@ -29,9 +29,9 @@ public class TurretTrackTarget extends CommandBase {
         if (Camera.foundTarget()) {
             m_turret.autoTrack();
             System.out.println("Turret Angle:  " + m_turret.getTurretAngle());
-        }else{
-            m_difference = m_operatorJoystick.getX()*5.0;
-            if(m_difference < -2.0 || m_difference > 2.0){
+        } else {
+            m_difference = m_operatorJoystick.getX() * 5.0;
+            if (m_difference < -2.0 || m_difference > 2.0) {
                 m_turret.setPIDSetPoint(m_turret.getTurretAngle() + m_difference);
             }
         }

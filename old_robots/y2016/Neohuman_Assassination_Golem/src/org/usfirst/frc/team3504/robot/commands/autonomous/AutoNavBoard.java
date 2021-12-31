@@ -33,7 +33,7 @@ public class AutoNavBoard extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-         return m_chassis.getEncoderDistance() >= m_inches;
+        return m_chassis.getEncoderDistance() >= m_inches;
     }
 
     // Called when another command which requires one or more of the same

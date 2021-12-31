@@ -2,7 +2,7 @@ package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Collector;
 
-public class MiddleCollectorsReverse extends CommandBase{
+public class MiddleCollectorsReverse extends CommandBase {
 
     private final Collector m_collector;
 
@@ -30,7 +30,7 @@ public class MiddleCollectorsReverse extends CommandBase{
 
     @Override
     protected void interrupted() {
-    end();
+        end();
     }
 
 }

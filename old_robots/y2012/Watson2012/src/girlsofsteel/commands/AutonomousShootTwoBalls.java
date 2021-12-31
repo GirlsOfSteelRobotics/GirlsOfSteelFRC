@@ -13,7 +13,7 @@ public class AutonomousShootTwoBalls extends CommandBase {
     private final Turret m_turret;
     private double m_cameraDistance;
 
-    public AutonomousShootTwoBalls(Shooter shooter, Collector collector, Turret turret){
+    public AutonomousShootTwoBalls(Shooter shooter, Collector collector, Turret turret) {
         m_shooter = shooter;
         m_collector = collector;
         m_turret = turret;

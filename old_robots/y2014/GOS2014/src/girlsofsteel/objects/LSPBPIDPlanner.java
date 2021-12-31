@@ -10,10 +10,10 @@
  ToDO Prepare for special case when total distance is less than 1.5(?)
 
  */
+
 package girlsofsteel.objects;
 
 /**
- *
  * @author Sylvie
  */
 public class LSPBPIDPlanner {
@@ -41,7 +41,7 @@ public class LSPBPIDPlanner {
         m_acceleration = 6; //The default is the chassis's acceleration
         //System.out.println("Changed Acceleration!: " + acceleration);
         m_velocity = 3;
-        }
+    }
 
     public LSPBPIDPlanner(double acceleration) {
         this.m_acceleration = acceleration;
@@ -152,8 +152,8 @@ public class LSPBPIDPlanner {
 
         if (m_triangle) {
             setpoint = (((-m_acceleration * (time * time)) / 2.0)
-                    + (m_yInterceptOfDecelerating * time)) - (((-m_acceleration
-                    * (m_trianglePoint * m_trianglePoint)) / 2.0) + (m_yInterceptOfDecelerating * m_trianglePoint));
+                + (m_yInterceptOfDecelerating * time)) - (((-m_acceleration
+                * (m_trianglePoint * m_trianglePoint)) / 2.0) + (m_yInterceptOfDecelerating * m_trianglePoint));
             if (time >= m_triangleEndpoint) {
                 setpoint = m_desiredOverallDistance;
             } else {
@@ -161,8 +161,8 @@ public class LSPBPIDPlanner {
             }
         } else {
             setpoint = (((-m_acceleration * (time * time)) / 2.0)
-                    + (m_yInterceptOfDecelerating * time)) - (((-m_acceleration
-                    * (m_pointB * m_pointB)) / 2.0) + (m_yInterceptOfDecelerating * m_pointB));
+                + (m_yInterceptOfDecelerating * time)) - (((-m_acceleration
+                * (m_pointB * m_pointB)) / 2.0) + (m_yInterceptOfDecelerating * m_pointB));
             if (time >= m_pointC) {
                 setpoint = m_desiredOverallDistance;
             } else {

@@ -2,15 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Gripper;
 
 /**
- *
  * @author sam
  */
-public class OpenAllGrippers extends CommandBase{
+public class OpenAllGrippers extends CommandBase {
 
     private final Gripper m_gripper;
 
@@ -38,7 +38,7 @@ public class OpenAllGrippers extends CommandBase{
 
     @Override
     protected boolean isFinished() {
-            return true;
+        return true;
 
     }
 

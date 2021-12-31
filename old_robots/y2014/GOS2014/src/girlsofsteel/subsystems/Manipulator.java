@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
@@ -16,7 +17,6 @@ import girlsofsteel.RobotMap;
 import girlsofsteel.objects.EncoderGoSPIDController;
 
 /**
- *
  * @author Sophia and Sam
  */
 @SuppressWarnings("PMD.TooManyMethods")
@@ -27,8 +27,8 @@ public class Manipulator extends Subsystem {
     private static final double manipulatorJagSpeedStop = 0.0;
     private static final double manipulatorJagSpeedDown = 1.0;
     private static final double manipulatorJagSpeedUp = -1.0;
-    private static final double gearRatio = 13.0/70.0;
-    private static final double distancePerPulse = (pulsePerRotation * gearRatio)/pulsePerRotation; //360 is the number of degrees in a circle
+    private static final double gearRatio = 13.0 / 70.0;
+    private static final double distancePerPulse = (pulsePerRotation * gearRatio) / pulsePerRotation; //360 is the number of degrees in a circle
 
     private double m_angle; //starting angle
     private final Jaguar m_manipulatorJag;
@@ -47,7 +47,8 @@ public class Manipulator extends Subsystem {
     */
 
     //Old p for the practice bot arm
-    private static final double p = Configuration.manipulatorPivotP;; //negative for the competition robot
+    private static final double p = Configuration.manipulatorPivotP;
+    ; //negative for the competition robot
     //private static double p = 0.12; //positive for the 2nd chassis
     private static final double i = 0.0;
     private static final double d = 0.0;
@@ -55,7 +56,8 @@ public class Manipulator extends Subsystem {
     //96 is from the old arm that was on the practice bot
     //private static int ZERO_ENCODER_VALUE = 86; //101 is the max angle, -17 (SHOULD BE CONSTANT) is how off from the horizontal all the way down is
 
-    private static final int ZERO_ENCODER_VALUE = Configuration.pivotEncoderZeroValue;; //Practice bot <- //92; //COMPETITION BOT
+    private static final int ZERO_ENCODER_VALUE = Configuration.pivotEncoderZeroValue;
+    ; //Practice bot <- //92; //COMPETITION BOT
 
     public Manipulator() {
 
@@ -127,10 +129,9 @@ public class Manipulator extends Subsystem {
     }
 
     public void moveAngle() {
-        if(m_angle == m_desiredAngle) {
+        if (m_angle == m_desiredAngle) {
             return;
-        }
-        else if (m_angle < m_desiredAngle) {
+        } else if (m_angle < m_desiredAngle) {
             m_manipulatorJag.set(.1);
             Timer.delay(0.5);
             m_manipulatorJag.set(0.0);
@@ -153,7 +154,7 @@ public class Manipulator extends Subsystem {
 
     private void setAngle() {
         //USE GEAR RATIO
-        double proportionalAngle = (90.0/288.0) * m_bobTheArmEncoder.get();
+        double proportionalAngle = (90.0 / 288.0) * m_bobTheArmEncoder.get();
         System.out.println("Bob says: " + m_bobTheArmEncoder.get());
         this.m_angle = proportionalAngle;
     }
@@ -235,7 +236,7 @@ public class Manipulator extends Subsystem {
     public double getRate() {
         return m_bobTheArmEncoder.getRate();
 
-   }
+    }
 
     /*
     Doesn't take into account the encoder type (k4x)
@@ -272,7 +273,7 @@ public class Manipulator extends Subsystem {
         m_manipulatorPID.disable();
     }
 
-    public void setPID(double p1, double i1,double d1) {
+    public void setPID(double p1, double i1, double d1) {
         m_manipulatorPID.setPID(p1, i1, d1);
     }
 

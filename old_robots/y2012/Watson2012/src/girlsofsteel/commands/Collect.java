@@ -6,7 +6,7 @@ import girlsofsteel.subsystems.Collector;
 public class Collect extends CommandBase {
     private final Collector m_collector;
 
-    public Collect(Collector collector){
+    public Collect(Collector collector) {
         m_collector = collector;
         requires(m_collector);
     }
@@ -23,7 +23,7 @@ public class Collect extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-          return false;
+        return false;
     }
 
     @Override

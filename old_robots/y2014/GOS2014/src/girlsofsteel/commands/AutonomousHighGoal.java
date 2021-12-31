@@ -12,14 +12,13 @@ import girlsofsteel.subsystems.Driving;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author Parent
  */
 public class AutonomousHighGoal extends CommandGroup {
-//Magic numbers need to be added!
+    //Magic numbers need to be added!
     public AutonomousHighGoal(Chassis chassis, Driving driving, Manipulator manipulator) {
-    addSequential(new MoveToPosition(chassis, driving));
-    addParallel(new SetArmAnglePID(manipulator, 85)); //Magic angle, needs to be corrected
-    addSequential(new ShootHigh()); //ShootHigh command is not finished
-}
+        addSequential(new MoveToPosition(chassis, driving));
+        addParallel(new SetArmAnglePID(manipulator, 85)); //Magic angle, needs to be corrected
+        addSequential(new ShootHigh()); //ShootHigh command is not finished
+    }
 }

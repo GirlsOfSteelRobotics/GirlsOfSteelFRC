@@ -8,7 +8,7 @@ public class TESTShooter extends CommandBase {
     private final Shooter m_shooter;
     private double m_speed;
 
-    public TESTShooter(Shooter shooter){
+    public TESTShooter(Shooter shooter) {
         m_shooter = shooter;
         SmartDashboard.putNumber("Shooter Jag Speed", 0.0);
     }

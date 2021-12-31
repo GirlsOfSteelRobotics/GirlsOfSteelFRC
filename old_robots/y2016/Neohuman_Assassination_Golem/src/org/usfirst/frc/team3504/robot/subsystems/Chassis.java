@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -11,7 +11,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 /**
  *
  */
-public class Chassis extends Subsystem implements PIDOutput{
+public class Chassis extends Subsystem implements PIDOutput {
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -63,22 +63,22 @@ public class Chassis extends Subsystem implements PIDOutput{
 
         //for the NavBoards
 /**
-        try {
-<<<<<<< HEAD
-            /* Communicate w/navX MXP via the MXP SPI Bus.
-            /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB
-            /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.
-            ahrs = new AHRS(SPI.Port.kMXP);
-        } catch (RuntimeException ex ) {
-            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-        }
-        //turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
-        /*turnController.setInputRange(-180.0f,  180.0f);
-        turnController.setOutputRange(-1.0, 1.0);
-        turnController.setAbsoluteTolerance(kToleranceDegrees);
-        turnController.setContinuous(true);
-        turnController.enable();
-        **/
+ try {
+ <<<<<<< HEAD
+ /* Communicate w/navX MXP via the MXP SPI Bus.
+ /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB
+ /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.
+ ahrs = new AHRS(SPI.Port.kMXP);
+ } catch (RuntimeException ex ) {
+ DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+ }
+ //turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+ /*turnController.setInputRange(-180.0f,  180.0f);
+ turnController.setOutputRange(-1.0, 1.0);
+ turnController.setAbsoluteTolerance(kToleranceDegrees);
+ turnController.setContinuous(true);
+ turnController.enable();
+ **/
 
     }
 
@@ -92,11 +92,11 @@ public class Chassis extends Subsystem implements PIDOutput{
         m_robotDrive.arcadeDrive(y, x);
     }
 
-    public void drive(double moveValue, double rotateValue){
+    public void drive(double moveValue, double rotateValue) {
         m_robotDrive.arcadeDrive(moveValue, rotateValue);
     }
 
-    public void driveSpeed(double speed){
+    public void driveSpeed(double speed) {
         m_robotDrive.drive(-speed, 0);
     }
 
@@ -122,8 +122,7 @@ public class Chassis extends Subsystem implements PIDOutput{
             SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
             SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - m_encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
             return (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
-        }
-        else {
+        } else {
             SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
             SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - m_encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
             return (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;

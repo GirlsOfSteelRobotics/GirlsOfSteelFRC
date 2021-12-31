@@ -10,7 +10,7 @@ public class DriveSlowVelocity extends CommandBase {
     private double m_xAxis;
     private double m_yAxis;
 
-    public DriveSlowVelocity(Chassis chassis, Joystick driverJoystick){
+    public DriveSlowVelocity(Chassis chassis, Joystick driverJoystick) {
         m_chassis = chassis;
         this.m_driverJoystick = driverJoystick;
         requires(m_chassis);

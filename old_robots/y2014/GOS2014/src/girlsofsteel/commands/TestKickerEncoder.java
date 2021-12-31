@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.subsystems.Kicker;
 
 /**
- *
  * @author Sylvie and Cla
  */
 public class TestKickerEncoder extends CommandBase {
@@ -37,8 +37,7 @@ public class TestKickerEncoder extends CommandBase {
             m_kicker.setTalon(0.5);
         } else if (m_direction == -1) {
             m_kicker.setTalon(-.5);
-        }
-        else {
+        } else {
             m_kicker.stopTalon();
         }
     }

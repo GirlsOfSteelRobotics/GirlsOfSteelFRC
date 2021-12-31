@@ -7,7 +7,7 @@ public class ShiftUp extends Command {
 
     private final Shifters m_shifters;
 
-    public ShiftUp(Shifters shifters){
+    public ShiftUp(Shifters shifters) {
         m_shifters = shifters;
         requires(m_shifters);
     }

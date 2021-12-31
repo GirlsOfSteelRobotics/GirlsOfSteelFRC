@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -13,7 +13,7 @@ import org.usfirst.frc.team3504.robot.RobotMap;
 /**
  *
  */
-public class DriveSystem extends Subsystem implements PIDOutput{
+public class DriveSystem extends Subsystem implements PIDOutput {
 
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
@@ -76,11 +76,11 @@ public class DriveSystem extends Subsystem implements PIDOutput{
         m_robotDrive.arcadeDrive(throttle, steer);
     }
 
-    public void drive(double moveValue, double rotateValue){
+    public void drive(double moveValue, double rotateValue) {
         m_robotDrive.arcadeDrive(moveValue, rotateValue);
     }
 
-    public void driveSpeed(double speed){
+    public void driveSpeed(double speed) {
         m_robotDrive.drive(-speed, 0);
     }
 
@@ -106,8 +106,7 @@ public class DriveSystem extends Subsystem implements PIDOutput{
             SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
             SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - m_encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR);
             return (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_HIGH_GEAR;
-        }
-        else {
+        } else {
             SmartDashboard.putNumber("Chassis Encoders Right", (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
             SmartDashboard.putNumber("Chassis Encoders Left", (getEncoderLeft() - m_encOffsetValueLeft) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR);
             return (getEncoderRight() - m_encOffsetValueRight) * RobotMap.DISTANCE_PER_PULSE_LOW_GEAR;

@@ -6,9 +6,9 @@ import girlsofsteel.subsystems.Chassis;
 
 public class TrackTopTarget extends CommandGroup {
 
-    public TrackTopTarget(Chassis chassis){
+    public TrackTopTarget(Chassis chassis) {
         double turnTheta = ShooterCamera.getTopDiffAngle() +
-                ShooterCamera.getLocationOffsetAngle();
+            ShooterCamera.getLocationOffsetAngle();
         if (ShooterCamera.foundTopTarget()) {
             addSequential(new Rotate(chassis, turnTheta, true));
         }

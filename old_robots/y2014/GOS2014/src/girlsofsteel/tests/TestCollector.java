@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,7 +12,6 @@ import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.Collector;
 
 /**
- *
  * @author Abby
  */
 public class TestCollector extends CommandBase {
@@ -37,8 +37,8 @@ public class TestCollector extends CommandBase {
         if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward, false)) {
             m_collector.collectorWheelFoward();
             // forward
-        } else{
-        m_collector.stopCollectorWheel();
+        } else {
+            m_collector.stopCollectorWheel();
         }
         if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward, false)) {
             m_collector.collectorWheelReverse();

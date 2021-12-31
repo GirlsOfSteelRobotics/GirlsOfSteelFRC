@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.Configuration;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author Sylvie
- *
+ * <p>
  * Angle 0 is considered to be the horizontal
  * -18.3 degrees is the actual bottom
  * Top limit of the arm unknown (probably around 100?)
- *
  */
 public class SetArmAnglePID extends CommandBase {
 
@@ -41,8 +40,7 @@ public class SetArmAnglePID extends CommandBase {
     protected void execute() {
         if (m_angle < -18.2) {
             m_angle = -18.2;
-        }
-        else if(m_angle > 113) {
+        } else if (m_angle > 113) {
             m_angle = 110;
         }
         m_manipulator.setSetPoint(m_angle);

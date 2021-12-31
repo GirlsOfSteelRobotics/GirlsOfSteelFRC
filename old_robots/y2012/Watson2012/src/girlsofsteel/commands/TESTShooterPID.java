@@ -34,9 +34,9 @@ public class TESTShooterPID extends CommandBase {
         double kp = SmartDashboard.getNumber("Shooter,p", 0.0);
         double ki = SmartDashboard.getNumber("Shooter,i", 0.0);
 //            d = SmartDashboard.getNumber("Shooter,d",0.0);
-            m_shooter.setPIDValues(kp, ki, 0.0);
+        m_shooter.setPIDValues(kp, ki, 0.0);
         double setpoint = SmartDashboard.getNumber("Shooter Setpoint", 0.0);
-            m_shooter.setPIDSpeed(setpoint);
+        m_shooter.setPIDSpeed(setpoint);
 //        }else{
 //            if(bank){
 //                shooter.autoShootBank();
@@ -44,7 +44,7 @@ public class TESTShooterPID extends CommandBase {
 //                shooter.autoShoot();
 //            }
 //        }
-            SmartDashboard.putNumber("Shooter Encoder", m_shooter.getEncoderRate());
+        SmartDashboard.putNumber("Shooter Encoder", m_shooter.getEncoderRate());
     }
 
     @Override

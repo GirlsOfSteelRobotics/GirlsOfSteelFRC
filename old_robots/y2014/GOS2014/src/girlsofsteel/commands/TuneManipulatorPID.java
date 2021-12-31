@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author arushibandi This is the Manual Manipulator PID Tuner on
  * SmartDashboard Arushi can use it.
  */

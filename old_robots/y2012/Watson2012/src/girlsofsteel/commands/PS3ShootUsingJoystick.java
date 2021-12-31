@@ -5,7 +5,7 @@ import girlsofsteel.OI;
 import girlsofsteel.subsystems.Shooter;
 
 
-public class PS3ShootUsingJoystick extends CommandBase{
+public class PS3ShootUsingJoystick extends CommandBase {
 
     private final Shooter m_shooter;
     private final OI m_oi;
@@ -13,7 +13,7 @@ public class PS3ShootUsingJoystick extends CommandBase{
 
     private double m_speed;
 
-    public PS3ShootUsingJoystick(Shooter shooter, OI oi){
+    public PS3ShootUsingJoystick(Shooter shooter, OI oi) {
         m_shooter = shooter;
         m_operatorJoystick = oi.getOperatorJoystick();
         m_oi = oi;
@@ -28,9 +28,9 @@ public class PS3ShootUsingJoystick extends CommandBase{
 
     @Override
     protected void execute() {
-        m_speed = Math.abs(m_operatorJoystick.getZ())*40.0;
+        m_speed = Math.abs(m_operatorJoystick.getZ()) * 40.0;
         m_shooter.shootUsingBallVelocity(m_speed);
-        if(m_shooter.isWithinSetPoint(m_speed) && !m_oi.areTopRollersOverriden()){
+        if (m_shooter.isWithinSetPoint(m_speed) && !m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersForward();
         }
     }
@@ -42,7 +42,7 @@ public class PS3ShootUsingJoystick extends CommandBase{
 
     @Override
     protected void end() {
-        if(!m_oi.areTopRollersOverriden()){
+        if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
         m_shooter.disablePID();

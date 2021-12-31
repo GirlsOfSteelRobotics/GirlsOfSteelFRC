@@ -7,7 +7,7 @@ public class HoldChassis extends CommandBase {
 
     private final Chassis m_chassis;
 
-    public HoldChassis(Chassis chassis, DriveFlag drive){
+    public HoldChassis(Chassis chassis, DriveFlag drive) {
         requires(drive);
         m_chassis = chassis;
     }

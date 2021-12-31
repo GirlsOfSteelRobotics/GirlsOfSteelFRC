@@ -11,13 +11,13 @@ import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.Driving;
 
 /**
- *THIS IS IN METERS
- *
+ * THIS IS IN METERS
+ * <p>
  * Requires driving because it should override arcade drive
  *
  * @author Sylvie
  */
-public class MoveToPosition extends CommandBase{
+public class MoveToPosition extends CommandBase {
 
     private static final double m_offBy = 0.03;
 
@@ -36,10 +36,10 @@ public class MoveToPosition extends CommandBase{
 
     @Override
     protected void initialize() {
-       m_chassis.initPositionPIDS();
-       m_chassis.resetPositionPIDError();
-       m_chassis.initEncoders();
-       //SmartDashboard.putNumber("Distance", 0);
+        m_chassis.initPositionPIDS();
+        m_chassis.resetPositionPIDError();
+        m_chassis.initEncoders();
+        //SmartDashboard.putNumber("Distance", 0);
     }
 
     @Override

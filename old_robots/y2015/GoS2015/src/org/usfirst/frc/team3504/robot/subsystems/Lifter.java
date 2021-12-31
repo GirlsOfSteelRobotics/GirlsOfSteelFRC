@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3504.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -45,8 +45,8 @@ public class Lifter extends Subsystem {
         m_liftTalon.config_kD(0, SmartDashboard.getNumber("D value", 0));
 
         m_liftTalon.set(ControlMode.Position, SmartDashboard.getNumber("Lifter Setpoint", 0)); // Number of
-                                                                    // encoder
-                                                                    // ticks
+        // encoder
+        // ticks
     }
 
     public void setPosition(double distance) {
@@ -71,11 +71,9 @@ public class Lifter extends Subsystem {
         } else {
             if (isAtTop() && operatorJoystick.getY() < .2) {
                 m_liftTalon.set(ControlMode.Position, m_liftTalon.getClosedLoopTarget());
-            }
-            else if (isAtBottom() && operatorJoystick.getY() > .2) {
+            } else if (isAtBottom() && operatorJoystick.getY() > .2) {
                 m_liftTalon.set(ControlMode.Position, m_liftTalon.getClosedLoopTarget());
-            }
-            else {
+            } else {
                 m_liftTalon.set(ControlMode.Position, m_liftTalon.getSelectedSensorPosition() - (300 * operatorJoystick.getY()));
             }
             SmartDashboard.putString("In", "not in throttle zero");

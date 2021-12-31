@@ -8,7 +8,7 @@ public class TESTChassis extends CommandBase {
     private final Chassis m_chassis;
     private double m_speed;
 
-    public TESTChassis(Chassis chassis){
+    public TESTChassis(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
         SmartDashboard.putBoolean("Right Jags", false);
@@ -29,12 +29,12 @@ public class TESTChassis extends CommandBase {
         m_speed = SmartDashboard.getNumber("Jag speed", 0.0);
         SmartDashboard.putNumber("Right Encoder:", m_chassis.getRightEncoderDistance());
         SmartDashboard.putNumber("Left Encoder", m_chassis.getLeftEncoderDistance());
-        if(SmartDashboard.getBoolean("Right Jags", false)){
+        if (SmartDashboard.getBoolean("Right Jags", false)) {
             m_chassis.setRightJags(m_speed);
         }
-        if(SmartDashboard.getBoolean("Left Jags", false)){
+        if (SmartDashboard.getBoolean("Left Jags", false)) {
             double leftScale = SmartDashboard.getNumber("Left Scale", 1.0);
-            m_chassis.setLeftJags(m_speed *leftScale);
+            m_chassis.setLeftJags(m_speed * leftScale);
         }
         System.out.println("R:" + m_chassis.getRightEncoderDistance());
         System.out.println("L:" + m_chassis.getLeftEncoderDistance());

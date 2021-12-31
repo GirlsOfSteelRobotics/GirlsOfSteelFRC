@@ -11,7 +11,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Flap;
  */
 public class AutoLowBarAndTurn extends CommandGroup {
 
-    public  AutoLowBarAndTurn(Chassis chassis, Flap flap) {
+    public AutoLowBarAndTurn(Chassis chassis, Flap flap) {
         addSequential(new NudgeFlapDown(flap));
         addSequential(new AutoDriveBackwards(chassis, 156, .6));
         addSequential(new NudgeFlapUp(flap));

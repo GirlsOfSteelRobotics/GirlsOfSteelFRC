@@ -3,16 +3,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.tests;
 
 import girlsofsteel.commands.CommandBase;
 import girlsofsteel.subsystems.UltrasonicSensor;
 
 /**
- *
  * @author
  */
-public class TestingUltrasonicSensor extends CommandBase{
+public class TestingUltrasonicSensor extends CommandBase {
 
     private final UltrasonicSensor m_ultra;
 
@@ -22,7 +22,7 @@ public class TestingUltrasonicSensor extends CommandBase{
 
     @Override
     protected void initialize() {
-       // ultra.enable();
+        // ultra.enable();
     }
 
     @Override

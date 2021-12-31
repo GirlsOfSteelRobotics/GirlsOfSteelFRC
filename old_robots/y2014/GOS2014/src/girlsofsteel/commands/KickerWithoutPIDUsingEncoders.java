@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Kicker;
@@ -29,7 +30,7 @@ public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
     @Override
     protected void execute() {
-        if(m_kicker.getEncoder() % 360 < m_loadingEncoderPosition) {
+        if (m_kicker.getEncoder() % 360 < m_loadingEncoderPosition) {
             m_kicker.setJag(1.0);
         }
     }

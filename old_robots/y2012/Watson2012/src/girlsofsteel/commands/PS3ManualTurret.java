@@ -10,7 +10,7 @@ public class PS3ManualTurret extends CommandBase {
 
     private double m_speed;
 
-    public PS3ManualTurret(Turret turret, Joystick operatorJoystick){
+    public PS3ManualTurret(Turret turret, Joystick operatorJoystick) {
         m_turret = turret;
         m_operatorJoystick = operatorJoystick;
         requires(m_turret);
@@ -22,7 +22,7 @@ public class PS3ManualTurret extends CommandBase {
 
     @Override
     protected void execute() {
-        m_speed = m_operatorJoystick.getX()*.5;
+        m_speed = m_operatorJoystick.getX() * .5;
         m_turret.setJagSpeed(m_speed);
     }
 

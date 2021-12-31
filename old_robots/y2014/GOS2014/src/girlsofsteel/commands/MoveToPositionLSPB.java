@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +13,6 @@ import girlsofsteel.subsystems.Chassis;
 import girlsofsteel.subsystems.Driving;
 
 /**
- *
  * @author Sylvie and Jisue
  */
 public class MoveToPositionLSPB extends CommandBase {
@@ -71,9 +71,9 @@ public class MoveToPositionLSPB extends CommandBase {
             return true;
         }
         boolean ret = ((Math.abs(m_chassis.getLeftEncoderDistance() - m_setPoint) < m_offBy)
-                && (Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < m_offBy))
-                || (m_chassis.getLeftEncoderDistance() > Math.abs(m_setPoint))
-                || (m_chassis.getRightEncoderDistance() > Math.abs(m_setPoint));
+            && (Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < m_offBy))
+            || (m_chassis.getLeftEncoderDistance() > Math.abs(m_setPoint))
+            || (m_chassis.getRightEncoderDistance() > Math.abs(m_setPoint));
 
         System.out.println("First: " + (Math.abs(m_chassis.getLeftEncoderDistance() - m_setPoint) < m_offBy));
         System.out.println("Second: " + (Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < m_offBy));

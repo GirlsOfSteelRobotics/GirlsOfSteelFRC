@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.RobotController;
@@ -11,7 +12,6 @@ import girlsofsteel.subsystems.Feeder;
 import girlsofsteel.subsystems.Shooter;
 
 /**
- *
  * @author user
  */
 public class AutoShoot extends CommandBase {

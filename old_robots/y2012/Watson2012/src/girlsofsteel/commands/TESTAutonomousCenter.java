@@ -15,7 +15,7 @@ public class TESTAutonomousCenter extends CommandGroup {
     private final Collector m_collector;
     private final Shooter m_shooter;
 
-    public TESTAutonomousCenter(Chassis chassis, Collector collector, Shooter shooter, Turret turret){
+    public TESTAutonomousCenter(Chassis chassis, Collector collector, Shooter shooter, Turret turret) {
         m_chassis = chassis;
         m_collector = collector;
         m_shooter = shooter;
@@ -43,7 +43,7 @@ public class TESTAutonomousCenter extends CommandGroup {
     }
 
     @Override
-    public void end(){
+    public void end() {
         new DisableChassis(m_chassis).start();
         new DisableShooter(m_shooter).start();
         new StopCollectors(m_collector).start();

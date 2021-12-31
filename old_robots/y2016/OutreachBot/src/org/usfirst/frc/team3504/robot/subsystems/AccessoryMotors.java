@@ -34,8 +34,7 @@ public class AccessoryMotors extends Subsystem {
     public void startLeft(Direction direction) {
         if (direction == Direction.kFwd) {
             m_accessoryLeft.set(1.0);
-        }
-        else {
+        } else {
             m_accessoryLeft.set(-1.0);
         }
     }
@@ -43,8 +42,7 @@ public class AccessoryMotors extends Subsystem {
     public void startRight(Direction direction) {
         if (direction == Direction.kFwd) {
             m_accessoryRight.set(1.0);
-        }
-        else {
+        } else {
             m_accessoryRight.set(-1.0);
         }
     }

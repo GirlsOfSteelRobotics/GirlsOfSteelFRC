@@ -7,7 +7,7 @@ public class StopChassis extends CommandBase {
 
     private final Chassis m_chassis;
 
-    public StopChassis(Chassis chassis, DriveFlag drive){
+    public StopChassis(Chassis chassis, DriveFlag drive) {
         m_chassis = chassis;
         requires(drive);
         requires(chassis);

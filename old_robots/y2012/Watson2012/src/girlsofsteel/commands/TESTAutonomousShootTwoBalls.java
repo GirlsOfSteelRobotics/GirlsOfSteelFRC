@@ -14,13 +14,13 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
 
     private double m_timeToShootTwoBalls;
 
-    public TESTAutonomousShootTwoBalls(Chassis chassis, Bridge bridge, Shooter shooter, Collector collector, Turret turret){
+    public TESTAutonomousShootTwoBalls(Chassis chassis, Bridge bridge, Shooter shooter, Collector collector, Turret turret) {
 
         m_shooter = shooter;
         m_collector = collector;
 
         SmartDashboard.putNumber("ASTB,speed", 0.0);
-        SmartDashboard.putNumber("ASTB,time",0.0);
+        SmartDashboard.putNumber("ASTB,time", 0.0);
         requires(m_shooter);
         requires(chassis);
         requires(m_collector);
@@ -41,7 +41,7 @@ public class TESTAutonomousShootTwoBalls extends CommandBase {
 //        velocity = shooter.getBallVelocityFrTable(xDistance);
 //        this.ballVelocity = shooter.getImmobileBallVelocity(xDistance);
         m_shooter.setPIDSpeed(velocity);
-        if(/*shooter.isWithinSetPoint(this.ballVelocity,range) &&*/ timeSinceInitialized()>1.0){
+        if (/*shooter.isWithinSetPoint(this.ballVelocity,range) &&*/ timeSinceInitialized() > 1.0) {
             m_shooter.topRollersForward();
 //            collector.forwardBrush();
 //            collector.forwardMiddleConveyor();

@@ -6,24 +6,24 @@ NOTE!!!: The starting configuration of the pivot arm is STRAIGHT UP because
 the pivot arm has to stay within the perimeter restraints
 
  */
+
 package girlsofsteel.commands;
 
 import girlsofsteel.subsystems.Manipulator;
 
 /**
- *
  * @author Sophia, Sam, and Abby
  */
 //BACKUP TO PID SET ANGLE: this code is super out of date and we have to update it
 //multiple definitions of angle need to be updated and changed to the same through all the code
 
-public class SetArmAngle extends CommandBase{
+public class SetArmAngle extends CommandBase {
 
     private final Manipulator m_manipulator;
     private double m_angle;
     private final double m_desired;
 
-    public SetArmAngle (Manipulator manipulator, double desiredAngle){
+    public SetArmAngle(Manipulator manipulator, double desiredAngle) {
         m_manipulator = manipulator;
         requires(m_manipulator);
         m_desired = desiredAngle;

@@ -11,7 +11,7 @@ import org.usfirst.frc.team3504.robot.subsystems.Camera;
  */
 public class SwitchToForward extends CommandGroup {
 
-    public  SwitchToForward(OI oi, Camera camera) {
+    public SwitchToForward(OI oi, Camera camera) {
         addParallel(new SwitchToCamClaw(camera));
         addParallel(new DriveForward(oi));
     }

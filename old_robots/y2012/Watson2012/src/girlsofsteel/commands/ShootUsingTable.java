@@ -37,10 +37,10 @@ public class ShootUsingTable extends CommandBase {
 //        if(bank){
 //            shooter.autoShootBank(cameraDistance);
 //        }else{
-            m_shooter.autoShoot(m_cameraDistance);
+        m_shooter.autoShoot(m_cameraDistance);
 //        }
-        if(Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
-                Math.abs(m_operatorJoystick.getTwist()) >= 0.3){
+        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
+            Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
             m_shooter.topRollersForward();
         }
         System.out.println("Encoder Values:" + m_shooter.getEncoderRate());
@@ -54,7 +54,7 @@ public class ShootUsingTable extends CommandBase {
 
     @Override
     protected void end() {
-        if(!m_oi.areTopRollersOverriden()){
+        if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
         m_shooter.disablePID();

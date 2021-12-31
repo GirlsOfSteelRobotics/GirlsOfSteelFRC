@@ -3,7 +3,7 @@ package girlsofsteel.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import girlsofsteel.subsystems.Chassis;
 
-public class DriveJagsLinear extends CommandBase{
+public class DriveJagsLinear extends CommandBase {
 
     private final Chassis m_chassis;
     private final Joystick m_joystick;
@@ -12,7 +12,7 @@ public class DriveJagsLinear extends CommandBase{
     private double m_xAxis;
     private double m_yAxis;
 
-    public DriveJagsLinear(Chassis chassis, Joystick driverJoystick, double scale){
+    public DriveJagsLinear(Chassis chassis, Joystick driverJoystick, double scale) {
         m_chassis = chassis;
         requires(m_chassis);
         this.m_scale = scale;

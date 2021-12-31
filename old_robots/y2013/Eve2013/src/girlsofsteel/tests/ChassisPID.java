@@ -19,7 +19,7 @@ public class ChassisPID extends CommandBase {
     private double m_leftI;
     private double m_leftD;
 
-    public ChassisPID(Chassis chassis){
+    public ChassisPID(Chassis chassis) {
         m_chassis = chassis;
         requires(chassis);
     }
@@ -71,21 +71,21 @@ public class ChassisPID extends CommandBase {
         m_rate = SmartDashboard.getNumber("PID rate", 0.0);
         //set the rate if enabled
         //right setting
-        if(SmartDashboard.getBoolean("Right PID", false)){
+        if (SmartDashboard.getBoolean("Right PID", false)) {
             m_chassis.setRightPIDRate(m_rate);
-        }else{
+        } else {
             m_chassis.setRightPIDRate(0.0);
         }
         //back setting
-        if(SmartDashboard.getBoolean("Back PID", false)){
+        if (SmartDashboard.getBoolean("Back PID", false)) {
             m_chassis.setBackPIDRate(m_rate);
-        }else{
+        } else {
             m_chassis.setBackPIDRate(0.0);
         }
         //left setting
-        if(SmartDashboard.getBoolean("Left ", false)){
+        if (SmartDashboard.getBoolean("Left ", false)) {
             m_chassis.setLeftPIDRate(m_rate);
-        }else{
+        } else {
             m_chassis.setLeftPIDRate(0.0);
         }
         //print encoder rates

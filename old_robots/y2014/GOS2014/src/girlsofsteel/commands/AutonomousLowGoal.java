@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package girlsofsteel.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -23,7 +24,7 @@ public class AutonomousLowGoal extends CommandGroup {
      * goal.
      *
      * @author Sophia, Sonia
-     *
+     * <p>
      * WORKS DO NOT CHANGE
      */
     public AutonomousLowGoal(Chassis chassis, Driving driving, Camera camera, Manipulator manipulator, Collector collector) {

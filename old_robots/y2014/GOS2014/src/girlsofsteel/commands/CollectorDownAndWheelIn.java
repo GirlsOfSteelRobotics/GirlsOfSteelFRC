@@ -10,11 +10,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import girlsofsteel.subsystems.Collector;
 
 /**
- *
  * @author Sylvie and Heather
  */
-public class CollectorDownAndWheelIn extends CommandGroup{
-    public CollectorDownAndWheelIn (Collector collector) {
+public class CollectorDownAndWheelIn extends CommandGroup {
+    public CollectorDownAndWheelIn(Collector collector) {
         addParallel(new CollectorWheelForward(collector));
         addParallel(new EngageCollector(collector));
     }

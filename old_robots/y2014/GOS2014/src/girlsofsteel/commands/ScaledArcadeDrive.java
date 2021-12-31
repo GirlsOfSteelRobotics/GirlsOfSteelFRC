@@ -5,7 +5,6 @@ import girlsofsteel.OI;
 import girlsofsteel.subsystems.Chassis;
 
 /**
- *
  * @author Jisue
  */
 public class ScaledArcadeDrive extends CommandBase {
