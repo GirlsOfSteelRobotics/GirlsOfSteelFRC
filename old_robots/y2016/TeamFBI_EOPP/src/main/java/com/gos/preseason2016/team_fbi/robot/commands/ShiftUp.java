@@ -1,44 +1,46 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2016.team_fbi.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Drive;
+import com.gos.preseason2016.team_fbi.robot.subsystems.Shifters;
 
-public class AutoDrive extends Command {
+public class ShiftUp extends Command {
 
-    private final Drive m_drive;
+    private final Shifters m_shifters;
 
-    public AutoDrive(Drive drive) {
-        m_drive = drive;
-        requires(m_drive);
+    public ShiftUp(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     @Override
     protected void initialize() {
-        setTimeout(3);
+        m_shifters.shiftLeft(true);
+        m_shifters.shiftRight(true);
     }
 
     @Override
     protected void execute() {
         // TODO Auto-generated method stub
-        m_drive.driveAuto();
+
     }
 
     @Override
     protected boolean isFinished() {
         // TODO Auto-generated method stub
-        return isTimedOut();
+        return true;
     }
 
     @Override
     protected void end() {
         // TODO Auto-generated method stub
-        m_drive.stop();
+
     }
 
     @Override
     protected void interrupted() {
-        // TODO Auto-generated method stub
         end();
+        // TODO Auto-generated method stub
+
     }
 
 }

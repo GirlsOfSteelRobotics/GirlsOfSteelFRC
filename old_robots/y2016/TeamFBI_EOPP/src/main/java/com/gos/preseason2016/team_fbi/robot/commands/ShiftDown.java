@@ -1,7 +1,7 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2016.team_fbi.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import com.gos.preseason2016.team_fbi.robot.subsystems.Shifters;
 
 public class ShiftDown extends Command {
 

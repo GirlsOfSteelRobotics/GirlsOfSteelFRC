@@ -1,8 +1,8 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2016.team_fbi.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.OI;
-import org.usfirst.frc.team3504.robot.subsystems.Drive;
+import com.gos.preseason2016.team_fbi.robot.OI;
+import com.gos.preseason2016.team_fbi.robot.subsystems.Drive;
 
 /**
  *

@@ -1,13 +1,13 @@
-package org.usfirst.frc.team3504.robot;
+package com.gos.preseason2016.team_fbi.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import org.usfirst.frc.team3504.robot.commands.AutoDrive;
-import org.usfirst.frc.team3504.robot.commands.DriveCommand;
-import org.usfirst.frc.team3504.robot.subsystems.Drive;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import com.gos.preseason2016.team_fbi.robot.commands.AutoDrive;
+import com.gos.preseason2016.team_fbi.robot.commands.DriveCommand;
+import com.gos.preseason2016.team_fbi.robot.subsystems.Drive;
+import com.gos.preseason2016.team_fbi.robot.subsystems.Manipulator;
+import com.gos.preseason2016.team_fbi.robot.subsystems.Shifters;
 
 /**
  * The VM is configured to automatically run this class, and to call the
