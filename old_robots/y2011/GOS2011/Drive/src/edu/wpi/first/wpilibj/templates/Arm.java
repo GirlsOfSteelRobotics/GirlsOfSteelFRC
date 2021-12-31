@@ -194,7 +194,7 @@ public class Arm extends SimpleRobot {
             message.updateLCD();
             ex.printStackTrace();
         }
-        while (isOperatorControl()) {//main while loop for teleop control
+        while (isOperatorControl())  //main while loop for teleop control
             getWatchdog().feed();
             Timer.delay(.01);
             val++;
@@ -325,10 +325,10 @@ public class Arm extends SimpleRobot {
             Timer.delay(0.01);
 
             try {
-                if (armstick.getZ() >= .5) {//shoulder voltage mode
+                if (armstick.getZ() >= .5) { //shoulder voltage mode
                     slavevoltage(deadzone(armstick.getY()) * 12);
                     message.println(DriverStationLCD.Line.kUser4, 1, "Shol volt");
-                } else if (armstick.getZ() <= -.5) {//shoulder position mode
+                } else if (armstick.getZ() <= -.5) { //shoulder position mode
                     slavelinear(armstick.getY(), diff);
                     // message.println(DriverStationLCD.Line.kUser4, 1, "Shol pos" + Double.toString());
                 }
@@ -341,7 +341,7 @@ public class Arm extends SimpleRobot {
                     valElbow = valElbow * 7.0;
 
                 }
-                Elbow.setX(valElbow);//need to play with multiplier for neg vs pos values
+                Elbow.setX(valElbow); //need to play with multiplier for neg vs pos values
 
                 //message.println(DriverStationLCD.Line.kUser4, 1, "YShol " + Double.toString(valShol));
                 //message.println(DriverStationLCD.Line.kUser5, 1, "Xelbo " + Double.toString(valElbow));
@@ -370,7 +370,7 @@ public class Arm extends SimpleRobot {
             }
 
             prevtime = ((double) System.currentTimeMillis() / 1000.0);
-        }//end while
+        } //end while
     }
 
     /**
@@ -544,7 +544,7 @@ public class Arm extends SimpleRobot {
                 setshol2(Shol1.getOutputVoltage());
                 Timer.delay(0.01);
             } else {
-                Pdes = 0.0;//reset anytime encoder gets reset
+                Pdes = 0.0; //reset anytime encoder gets reset
                 Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();
@@ -580,7 +580,7 @@ public class Arm extends SimpleRobot {
         }
         xaxis *= 12;
         yaxis *= 12;
-        if (joy.getZ() >= .5) {//voltage mode
+        if (joy.getZ() >= .5) { //voltage mode
             try {
                 if (RearLeft.getControlMode().equals(CANJaguar.ControlMode.kVoltage)
                     && RearRight.getControlMode().equals(CANJaguar.ControlMode.kVoltage)) {
@@ -593,7 +593,7 @@ public class Arm extends SimpleRobot {
             } catch (CANTimeoutException ex) {
                 ex.printStackTrace();
             }
-        } else if (joy.getZ() <= -.5) {//speed mode
+        } else if (joy.getZ() <= -.5) { //speed mode
         }
     }
 
@@ -635,7 +635,7 @@ public class Arm extends SimpleRobot {
                 message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(Pdes));
             } else {
 
-                Pdes = 0.0;//reset Pdes anytime encoder resets
+                Pdes = 0.0; //reset Pdes anytime encoder resets
                 Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();

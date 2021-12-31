@@ -19,7 +19,7 @@ public class AutonomousCommandGroup extends CommandGroup {
         requires(chassis);
         requires(bridge);
 
-//        addParallel(new Collect());
+        //        addParallel(new Collect());
         addSequential(new PrintCommand("reached"));
 
         if (Camera.isConnected() && Camera.getXDistance() != 0) {

@@ -30,17 +30,17 @@ public class Collector extends Subsystem {
 
     public void reverseBrush() {
         m_brushJag.set(1.0);
-//        brushSpike.set(Relay.Value.kForward);
+        //        brushSpike.set(Relay.Value.kForward);
     }
 
     public void forwardBrush() {
         m_brushJag.set(-1.0);
-//        brushSpike.set(Relay.Value.kReverse);
+        //        brushSpike.set(Relay.Value.kReverse);
     }
 
     public void stopBrush() {
         m_brushJag.set(0.0);
-//        brushSpike.set(Relay.Value.kOff);
+        //        brushSpike.set(Relay.Value.kOff);
     }
 
     public void forwardMiddleConveyor() {

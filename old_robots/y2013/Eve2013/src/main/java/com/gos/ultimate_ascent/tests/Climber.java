@@ -61,17 +61,17 @@ public class Climber extends CommandBase {
             m_gripper.closeGrip();
         }
 
-//        if (SmartDashboard.getBoolean("Middle grip Open Close", false)) {
-//            middleGripper.openGrip();
-//        } else {
-//            middleGripper.closeGrip();
-//        }
-//
-//        if (SmartDashboard.getBoolean("Top grip Open Close", true)) {
-//            topGripper.openGrip();
-//        } else {
-//            topGripper.closeGrip();
-//        }
+        //        if (SmartDashboard.getBoolean("Middle grip Open Close", false)) {
+        //            middleGripper.openGrip();
+        //        } else {
+        //            middleGripper.closeGrip();
+        //        }
+        //
+        //        if (SmartDashboard.getBoolean("Top grip Open Close", true)) {
+        //            topGripper.openGrip();
+        //        } else {
+        //            topGripper.closeGrip();
+        //        }
 
     }
 

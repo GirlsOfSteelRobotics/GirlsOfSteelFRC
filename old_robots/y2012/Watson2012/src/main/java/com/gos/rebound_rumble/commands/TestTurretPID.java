@@ -3,15 +3,21 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TESTSetPointTurret extends CommandBase {
+public class TestTurretPID extends CommandBase {
 
     private final Turret m_turret;
-    private double m_angle;
 
-    public TESTSetPointTurret(Turret turret) {
+    private double m_p;
+    private double m_d;
+
+    private double m_setpoint;
+
+    public TestTurretPID(Turret turret) {
         m_turret = turret;
         requires(m_turret);
-        SmartDashboard.putNumber("Turret Relative Angle", 0.0);
+        SmartDashboard.putNumber("Turret Setpoint", 0.0);
+        SmartDashboard.putNumber("Turret P", 0.0);
+        SmartDashboard.putNumber("Turret D", 0.0);
     }
 
     @Override
@@ -22,8 +28,11 @@ public class TESTSetPointTurret extends CommandBase {
 
     @Override
     protected void execute() {
-        m_angle = SmartDashboard.getNumber("Turret Relative Angle", 0.0);
-        m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_angle);
+        m_p = SmartDashboard.getNumber("Turret P", 0.0);
+        m_d = SmartDashboard.getNumber("Turret D", 0.0);
+        m_turret.setPDs(m_p, m_d);
+        m_setpoint = SmartDashboard.getNumber("Turret Setpoint", 0.0);
+        m_turret.setPIDSetPoint(m_setpoint);
     }
 
     @Override
@@ -33,6 +42,7 @@ public class TESTSetPointTurret extends CommandBase {
 
     @Override
     protected void end() {
+        m_turret.disablePID();
         m_turret.stopJag();
     }
 
@@ -40,4 +50,5 @@ public class TESTSetPointTurret extends CommandBase {
     protected void interrupted() {
         end();
     }
+
 }

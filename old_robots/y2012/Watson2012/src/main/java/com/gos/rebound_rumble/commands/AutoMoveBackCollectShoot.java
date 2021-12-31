@@ -10,7 +10,7 @@ import com.gos.rebound_rumble.subsystems.Shooter;
 public class AutoMoveBackCollectShoot extends CommandGroup {
 
     //    public AutoMoveBackCollectShoot(double x, double y, double degreesToFace){
-//        addSequential(new GoToLocation(x,y,degreesToFace));
+    //        addSequential(new GoToLocation(x,y,degreesToFace));
     public AutoMoveBackCollectShoot(OI oi, Chassis chassis, Bridge bridge, Collector collector, Shooter shooter, double distance) {
         addSequential(new MoveToSetPoint(chassis, distance));
         addSequential(new BridgeDown(bridge));

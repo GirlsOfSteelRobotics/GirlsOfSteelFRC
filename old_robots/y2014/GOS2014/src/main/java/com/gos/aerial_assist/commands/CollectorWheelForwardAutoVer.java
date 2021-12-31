@@ -37,7 +37,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
     @Override
     protected void initialize() {
         m_startTime = Timer.getFPGATimestamp();
-        m_camera.setIsHot(hotAtLeastOnce());//CommandBase.camera.isGoalHot(); //Get is hot here
+        m_camera.setIsHot(hotAtLeastOnce()); //CommandBase.camera.isGoalHot(); //Get is hot here
         System.out.println("CAMERA IS HOT?::: " + m_camera.isHot());
 
     }

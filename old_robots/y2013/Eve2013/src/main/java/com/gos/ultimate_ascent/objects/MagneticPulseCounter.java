@@ -48,6 +48,7 @@ public class MagneticPulseCounter implements Runnable {
                 m_pulsesBetweenTime[m_counter % relevant] = m_pulses;
                 m_pulses = 0;
             } catch (InterruptedException ex) {
+                ex.printStackTrace(); // NOPMD
             }
         }
     }

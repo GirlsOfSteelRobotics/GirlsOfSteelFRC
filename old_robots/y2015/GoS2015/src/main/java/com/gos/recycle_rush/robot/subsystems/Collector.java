@@ -25,8 +25,7 @@ public class Collector extends Subsystem {
     // Triggers (Collect/Release Tote Buttons)
     private final Joystick m_collectorTrigger;
 
-    public Collector() // this is the constructor
-    {
+    public Collector() {
         m_rightCollector = new WPI_TalonSRX(RobotMap.RIGHT_COLLECTOR_WHEEL);
         m_leftCollector = new WPI_TalonSRX(RobotMap.LEFT_COLLECTOR_WHEEL);
 

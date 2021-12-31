@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.rebound_rumble.RobotMap;
-import com.gos.rebound_rumble.objects.EncoderGoSPIDController;
+import com.gos.rebound_rumble.objects.EncoderGoSPidController;
 
 @SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods", "PMD.TooManyFields"})
 public class Chassis extends Subsystem {
@@ -17,7 +17,7 @@ public class Chassis extends Subsystem {
     private static final double GEAR_RATIO = 15.0 / 24.0;
     private static final double PULSES_RIGHT = 250.0;
     private static final double PULSES_LEFT = 360.0;
-    private static final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1.065) / PULSES_RIGHT;//m per s
+    private static final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1.065) / PULSES_RIGHT; //m per s
     private static final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1.07) / PULSES_LEFT;
     private static final double ROBOT_DIAMETER = 0.8128; //the radius*2 of the circle the robot makes while turning in place
 
@@ -25,10 +25,10 @@ public class Chassis extends Subsystem {
     private static final double rateP = 0.75;
     private static final double rateI = 0.1;
     private static final double rateD = 0.0;
-    private static final double positionRightP = 0.48;//0.415;//practice bot:0.48;
+    private static final double positionRightP = 0.48; //0.415; //practice bot:0.48;
     private static final double positionRightI = 0.0;
     private static final double positionRightD = 0.1;
-    private static final double positionLeftP = 0.48;//0.4;//practice bot:0.48;
+    private static final double positionLeftP = 0.48; //0.4; //practice bot:0.48;
     private static final double positionLeftI = 0.0;
     private static final double positionLeftD = 0.1;
 
@@ -38,7 +38,7 @@ public class Chassis extends Subsystem {
     //set place in the key (where we have dead-reckoning) to where we need to be
     //to push the bridge down
 
-    private static final double SLOW_MAX_RATE = 0.5;//the slowest rate in m/s
+    private static final double SLOW_MAX_RATE = 0.5; //the slowest rate in m/s
     //used for the bridge velocity PID control
 
     public static final double DEADZONE_RANGE = 0.3;
@@ -47,7 +47,7 @@ public class Chassis extends Subsystem {
     private static final double INTEGRAL_THRESHOLD = 999999999;
     //how to: print out the errorSum & see where it levels off, make this a bit higher
     //highest error acculumation amount
-    private static final double EPSILON = 0.05;//the ewrror range for PID position control
+    private static final double EPSILON = 0.05; //the ewrror range for PID position control
 
     //driving -> ALL unnecessary right now, do VERY LAST if everything is working gorgeously
     private static final double MAX_RATE = 5; //TODO find the max rate of the chassis
@@ -66,18 +66,18 @@ public class Chassis extends Subsystem {
     private final Encoder m_leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
         RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
     //practice:
-//    private Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
-//            RobotMap.ENCODER_RIGHT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
-//
-//    private Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
-//            RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
-//    private final double PRACTICE_GEAR_RATIO = 12.0 / 22.0;
-//    private final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * PRACTICE_GEAR_RATIO) / 360.0;
-//    private final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * PRACTICE_GEAR_RATIO) / 250.0;
+    //    private Encoder rightEncoder = new Encoder(RobotMap.ENCODER_RIGHT_CHANNEL_A,
+    //            RobotMap.ENCODER_RIGHT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
+    //
+    //    private Encoder leftEncoder = new Encoder(RobotMap.ENCODER_LEFT_CHANNEL_A,
+    //            RobotMap.ENCODER_LEFT_CHANNEL_B, true, CounterBase.EncodingType.k4X);
+    //    private final double PRACTICE_GEAR_RATIO = 12.0 / 22.0;
+    //    private final double ENCODER_UNIT_RIGHT = (WHEEL_DIAMETER * Math.PI * PRACTICE_GEAR_RATIO) / 360.0;
+    //    private final double ENCODER_UNIT_LEFT = (WHEEL_DIAMETER * Math.PI * PRACTICE_GEAR_RATIO) / 250.0;
 
     //create info for PIDs
 
-    private final EncoderGoSPIDController m_rightRatePID = new EncoderGoSPIDController(rateP,
+    private final EncoderGoSPidController m_rightRatePID = new EncoderGoSPidController(rateP,
         rateI, rateD, m_rightEncoder,
         //this is an anonymous class, it lets us send values to both jags
         //new output parameter
@@ -87,8 +87,8 @@ public class Chassis extends Subsystem {
             public void pidWrite(double output) {
                 setRightJags(output);
             }
-        }, EncoderGoSPIDController.RATE, INTEGRAL_THRESHOLD);
-    private final EncoderGoSPIDController m_leftRatePID = new EncoderGoSPIDController(rateP,
+        }, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
+    private final EncoderGoSPidController m_leftRatePID = new EncoderGoSPidController(rateP,
         rateI, rateD, m_leftEncoder,
         //this is an anonymous class, it lets us send values to both jags
         //new output parameter
@@ -98,8 +98,8 @@ public class Chassis extends Subsystem {
             public void pidWrite(double output) {
                 setLeftJags(output);
             }
-        }, EncoderGoSPIDController.RATE, INTEGRAL_THRESHOLD);
-    private final EncoderGoSPIDController m_rightPositionPID = new EncoderGoSPIDController(
+        }, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
+    private final EncoderGoSPidController m_rightPositionPID = new EncoderGoSPidController(
         positionRightP, positionRightI, positionRightD, m_rightEncoder,
         new PIDOutput() {
 
@@ -107,8 +107,8 @@ public class Chassis extends Subsystem {
             public void pidWrite(double output) {
                 setRightJags(output);
             }
-        }, EncoderGoSPIDController.POSITION);
-    private final EncoderGoSPIDController m_leftPositionPID = new EncoderGoSPIDController(
+        }, EncoderGoSPidController.POSITION);
+    private final EncoderGoSPidController m_leftPositionPID = new EncoderGoSPidController(
         positionLeftP, positionLeftI, positionLeftD, m_leftEncoder,
         new PIDOutput() {
 
@@ -116,7 +116,7 @@ public class Chassis extends Subsystem {
             public void pidWrite(double output) {
                 setLeftJags(output);
             }
-        }, EncoderGoSPIDController.POSITION);
+        }, EncoderGoSPidController.POSITION);
 
     //again, make sure you can find this easily at comp
     //^^max acceleration -> used in the acceleration limiting method on the PID controllers
@@ -144,7 +144,7 @@ public class Chassis extends Subsystem {
     }
 
     public void setLeftJags(double speed) {
-        m_leftJags.set(-speed * 0.93);//motors need to run the same way as the right
+        m_leftJags.set(-speed * 0.93); //motors need to run the same way as the right
     }
 
     public void stopJags() {
@@ -202,7 +202,7 @@ public class Chassis extends Subsystem {
     }
 
     public void initHoldPosition() {
-        setPositionPIDValues(10.0, 0.0, 10.0, 0.0);//righP,rightD,leftP,leftD
+        setPositionPIDValues(10.0, 0.0, 10.0, 0.0); //righP,rightD,leftP,leftD
         m_rightPositionPID.enable();
         m_leftPositionPID.enable();
     }
@@ -363,7 +363,7 @@ public class Chassis extends Subsystem {
     }
 
     private double convertDegreesToPositionChange(double degreesToTurn) {
-        if (degreesToTurn > 180) {//if the degree change is greater than 180 (farthest
+        if (degreesToTurn > 180) { //if the degree change is greater than 180 (farthest
             //turn to the right) -> it makes the degree change between -180 & 180
             double n = Math.floor((degreesToTurn + 180) / 360);
             degreesToTurn = -(360 * n);
@@ -463,8 +463,8 @@ public class Chassis extends Subsystem {
     public void initEncoders() {
         m_rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
         m_leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
-//        rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
-//        leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
+        //        rightEncoder.setDistancePerPulse(ENCODER_UNIT_RIGHT);
+        //        leftEncoder.setDistancePerPulse(ENCODER_UNIT_LEFT);
     }
 
     public double getRightEncoderDistance() {
@@ -520,7 +520,7 @@ public class Chassis extends Subsystem {
 
     public double getRobotVelocityY(double theta) {
         double robotVelocityY;
-        robotVelocityY = Math.cos(theta);//needs to be in radians
+        robotVelocityY = Math.cos(theta); //needs to be in radians
         return robotVelocityY;
     }
 }

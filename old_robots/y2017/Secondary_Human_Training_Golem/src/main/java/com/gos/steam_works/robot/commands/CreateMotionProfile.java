@@ -145,9 +145,10 @@ public class CreateMotionProfile extends Command {
                 // through the unknown #
                 // of elements in
                 // ArrayList<ArrayList<Double>>
-                for (int y = 0; y < 3; y++) // inner loop to go through the three
+
+                // inner loop to go through the three
                 // elements of ArrayList<Double>
-                {
+                for (int y = 0; y < 3; y++) {
                     fout.write(trajectoryPoints.get(y) + " ");
                 }
                 fout.newLine();

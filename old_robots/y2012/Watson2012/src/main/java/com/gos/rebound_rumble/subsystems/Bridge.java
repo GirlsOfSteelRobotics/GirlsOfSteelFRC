@@ -25,19 +25,19 @@ public class Bridge extends Subsystem {
 
     public void downBridgeArm() {
         m_bridgeArmJag.set(JAG_SPEED);
-//        bridgeArmSpike.set(Relay.Value.kForward);
+        //        bridgeArmSpike.set(Relay.Value.kForward);
         m_goingUp = false;
     }
 
     public void upBridgeArm() {
         m_bridgeArmJag.set(-JAG_SPEED);
-//        bridgeArmSpike.set(Relay.Value.kReverse);
+        //        bridgeArmSpike.set(Relay.Value.kReverse);
         m_goingUp = true;
     }
 
     public void stopBridgeArm() {
         m_bridgeArmJag.set(0.0);
-//        bridgeArmSpike.set(Relay.Value.kOff);
+        //        bridgeArmSpike.set(Relay.Value.kOff);
     }
 
     public Bridge() {
@@ -57,11 +57,11 @@ public class Bridge extends Subsystem {
     private void safetyCheck() {
         if (isFullyUp() && m_goingUp) {
             m_bridgeArmJag.set(0.0);
-//            bridgeArmSpike.set(Relay.Value.kOff);
+            //            bridgeArmSpike.set(Relay.Value.kOff);
         }
         if (hasHitBridge() && !m_goingUp) {
             m_bridgeArmJag.set(0.0);
-//            bridgeArmSpike.set(Relay.Value.kOff);
+            //            bridgeArmSpike.set(Relay.Value.kOff);
         }
     }
 

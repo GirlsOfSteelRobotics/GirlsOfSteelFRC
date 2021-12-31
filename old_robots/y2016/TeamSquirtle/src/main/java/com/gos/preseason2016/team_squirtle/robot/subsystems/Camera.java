@@ -51,7 +51,7 @@ public class Camera extends Subsystem {
     }
 
     public void sendToDashboard() {
-//        server.startAutomaticCapture(cam);
+        //        server.startAutomaticCapture(cam);
     }
 
     // Put methods for controlling this subsystem

@@ -7,7 +7,7 @@ import com.gos.rebound_rumble.subsystems.Collector;
 import com.gos.rebound_rumble.subsystems.Shooter;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TESTAutonomousCenter extends CommandGroup {
+public class TestAutonomousCenter extends CommandGroup {
 
     private final boolean m_autoTrack;
 
@@ -15,7 +15,7 @@ public class TESTAutonomousCenter extends CommandGroup {
     private final Collector m_collector;
     private final Shooter m_shooter;
 
-    public TESTAutonomousCenter(Chassis chassis, Collector collector, Shooter shooter, Turret turret) {
+    public TestAutonomousCenter(Chassis chassis, Collector collector, Shooter shooter, Turret turret) {
         m_chassis = chassis;
         m_collector = collector;
         m_shooter = shooter;
@@ -32,13 +32,13 @@ public class TESTAutonomousCenter extends CommandGroup {
          * ends after the magical value of shooting 2 balls (right now, set to 8)
          * stops the PID, rop rollers, brush, & middle conveyor
          */
-//        addSequential(new MoveToSetPoint(distance));
-////        //move 2.0meters towards the bridges
-//        addParallel(new BridgeDownContinuous());
-////        //push the bridge down
-//        addParallel(new Collect());
-////        //start collecting balls (turn on bottom 2 collectors)
-//        addSequential(new ShootUsingTable());
+        //        addSequential(new MoveToSetPoint(distance));
+        ////        //move 2.0meters towards the bridges
+        //        addParallel(new BridgeDownContinuous());
+        ////        //push the bridge down
+        //        addParallel(new Collect());
+        ////        //start collecting balls (turn on bottom 2 collectors)
+        //        addSequential(new ShootUsingTable());
         //shoot again -> using camera distance & the table
     }
 

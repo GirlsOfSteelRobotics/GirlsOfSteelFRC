@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TESTGoToLocation extends CommandGroup {
+public class TestGoToLocation extends CommandGroup {
 
-    public TESTGoToLocation(Chassis chassis) {
+    public TestGoToLocation(Chassis chassis) {
         //degree change relative to beginning position of the robot to end facing
         //runs the TurnToSetPoint and MoveToSetPoint commands in sequence to go to location.
         double x = SmartDashboard.getNumber("GTL,x", 0.0);

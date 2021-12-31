@@ -88,7 +88,7 @@ public class Shooter extends Subsystem {
         //set point will be false if you are not getting a velocity
         if (setPoint == 0) {
             return false;
-        } else {//otherwise look at the encoder
+        } else { //otherwise look at the encoder
             return (m_magSpeed.get() > setPoint - VELOCITY_ERROR_RANGE
                 && m_magSpeed.get() < setPoint + VELOCITY_ERROR_RANGE);
         }

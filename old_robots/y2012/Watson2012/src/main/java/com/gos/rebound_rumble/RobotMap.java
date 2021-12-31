@@ -27,7 +27,7 @@ public class RobotMap {
     public static final int BRIDGE_UP_LIMIT_SWITCH = 14;
     public static final int BRIDGE_DOWN_LIMIT_SWITCH = 13;
     public static final int BRIDGE_ARM_JAG = 5;
-//    public static final int BRIDGE_ARM_SPIKE = 5;
+    //    public static final int BRIDGE_ARM_SPIKE = 5;
 
     //collector
     public static final int MIDDLE_COLLECTOR_SPIKE = 0;

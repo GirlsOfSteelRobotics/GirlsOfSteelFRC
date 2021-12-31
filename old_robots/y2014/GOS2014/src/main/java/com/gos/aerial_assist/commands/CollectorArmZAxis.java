@@ -30,7 +30,7 @@
 //        else if(jagSpeed > 0 && collector.isCollectorDisengaged())
 //            jagSpeed = 0;
 //        collector.moveCollectorToZJoystick(jagSpeed);
-//        //collector.moveCollectorToZJoystick(-operator.getThrottle());//check
+//        //collector.moveCollectorToZJoystick(-operator.getThrottle()); //check
 //    }
 //
 //    protected boolean isFinished() {

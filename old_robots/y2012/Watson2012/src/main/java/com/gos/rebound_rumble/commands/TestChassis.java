@@ -3,12 +3,12 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TESTChassis extends CommandBase {
+public class TestChassis extends CommandBase {
 
     private final Chassis m_chassis;
     private double m_speed;
 
-    public TESTChassis(Chassis chassis) {
+    public TestChassis(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
         SmartDashboard.putBoolean("Right Jags", false);

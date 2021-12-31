@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 
 @SuppressWarnings("PMD")
-public class EncoderGoSPIDController implements Runnable {
+public class EncoderGoSPidController implements Runnable {
 
     //two "int type" that the GoSPIDController can be
     public static final int RATE = 1;
@@ -44,27 +44,27 @@ public class EncoderGoSPIDController implements Runnable {
     private boolean m_reverseEncoder = false;
     private boolean m_modEncoder = false;
 
-    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
+    public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
                                    PIDOutput jags, int type) {
         this(kp, ki, kd, encoder, jags, type, 0);
     }
 
-    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
+    public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
                                    PIDOutput jags, int type, int zeroEncoderValue) {
         this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, false, false);
     }
 
-    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
+    public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
                                    PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder) {
         this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, reverseEncoder, modEncoder, 999999999);
     }
 
-    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
+    public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
                                    PIDOutput jags, int type, boolean reverseEncoder, boolean modEncoder) {
         this(kp, ki, kd, encoder, jags, type, 0, reverseEncoder, modEncoder);
     }
 
-    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
+    public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
                                    PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder, double integralThreshold) {
         m_kp = kp;
         m_ki = ki;
@@ -101,7 +101,7 @@ public class EncoderGoSPIDController implements Runnable {
         m_previousError = 0.0;
         m_errorSum = 0.0;
         m_encoder.reset();
-        m_currentPosition = getSignedDistance();//encoder.getDistance(); //initialization TODO
+        m_currentPosition = getSignedDistance(); //encoder.getDistance(); //initialization TODO
         m_pidEnabled = true;
         new Thread(this).start(); //doesn't block the normal code & functions
     }
@@ -123,11 +123,11 @@ public class EncoderGoSPIDController implements Runnable {
         while (m_pidEnabled) { //must be set to run -> through setSetPoint
             //conditions to run -> only when the error is more than desire
 
-            synchronized (this) {//add for thread safety of variables
+            synchronized (this) { //add for thread safety of variables
                 m_previousTime = m_currentTime;
                 m_previousPosition = m_currentPosition;
                 m_currentTime = System.currentTimeMillis() / 1000.0;
-                m_currentPosition = getSignedDistance();//encoder.getDistance();
+                m_currentPosition = getSignedDistance(); //encoder.getDistance();
                 calculateRate();
                 m_previousError = m_error;
                 calculateError();
@@ -167,7 +167,7 @@ public class EncoderGoSPIDController implements Runnable {
         if (m_type == RATE) {
             currentValue = m_rate; //TODO
         } else if (m_type == POSITION) {
-            currentValue = getSignedDistance();//encoder.getDistance();
+            currentValue = getSignedDistance(); //encoder.getDistance();
         } else {
             /* The DriverStationLCD call was removed in 2015 WPIlib because the
              * LCD area of the driver station interface was removed.

@@ -187,7 +187,7 @@ public class OI {
         } else if (m_driveStyle == DriveStyle.droperation) {
             m_shifterDown = new JoystickButton(m_operatingGamePad, 4); //Y
             m_shifterUp = new JoystickButton(m_operatingGamePad, 2); // B
-            m_climb = new JoystickButton(m_operatingGamePad, 8);//START
+            m_climb = new JoystickButton(m_operatingGamePad, 8); //START
             m_unClimb = new JoystickButton(m_operatingGamePad, 7);  // BACK
             m_shoot = new JoystickButton(m_operatingGamePad, 3); // X
         }

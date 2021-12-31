@@ -3,7 +3,7 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TESTTurret extends CommandBase {
+public class TestTurret extends CommandBase {
 
     private final Turret m_turret;
 
@@ -12,7 +12,7 @@ public class TESTTurret extends CommandBase {
     private double m_pulses;
     private boolean m_inDegrees;
 
-    public TESTTurret(Turret turret) {
+    public TestTurret(Turret turret) {
         m_turret = turret;
         requires(m_turret);
         SmartDashboard.putNumber("Turret Jags Speed", 0.0);

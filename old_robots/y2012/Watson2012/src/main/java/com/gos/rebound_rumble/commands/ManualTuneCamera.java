@@ -55,13 +55,13 @@ public class ManualTuneCamera extends CommandBase {
             // System.out.println(dataAverage);
             return dataAverage;
         }
-        return -1;//-1 means that it can't use the data.
+        return -1; //-1 means that it can't use the data.
     }
 
     @Override
     protected void initialize() {
         m_chassis.initEncoders();
-//        chassis.initPositionPIDs();
+        //        chassis.initPositionPIDs();
     }
 
     @SuppressWarnings("PMD")
@@ -70,14 +70,15 @@ public class ManualTuneCamera extends CommandBase {
         //xAxis = driverJoystick.getX() * 0.5;
         //yAxis = driverJoystick.getY() * 0.5;
         //chassis.driveJagsLinear(xAxis, yAxis);
-//        if (oi.isCollectCameraDataPressed()) {
+        //        if (oi.isCollectCameraDataPressed()) {
         if (SmartDashboard.getBoolean("collect data", false)) {
             //for (int n = 0; n < 5; n++) {
             if (!m_chassis.isMoving()) {
 
                 try {
-                    Thread.sleep(2000);//3 seconds time out.
+                    Thread.sleep(2000); //3 seconds time out.
                 } catch (Exception ex) {
+                    ex.printStackTrace(); // NOPMD
                 }
 
                 double ratio = 0;
@@ -94,10 +95,9 @@ public class ManualTuneCamera extends CommandBase {
                 m_distanceData[m_count] = (m_chassis.getRightEncoderDistance());
                 System.out.println("collected one data point " + m_distanceData[m_count] + ", " + ratio);
                 //Start against the bridge. distance to target is he initial distance minus the distance travled.
-//                chassis.move(Step);
+                //                chassis.move(Step);
 
                 if (ratio >= 0) {
-//                }
                     m_imageTargetRatioData[m_count] = ratio;
                     m_distanceData[m_count] = (m_chassis.getRightEncoderDistance());
                     System.out.println("collected one data point " + m_distanceData[m_count] + ", " + ratio);
@@ -143,43 +143,45 @@ public class ManualTuneCamera extends CommandBase {
     protected void interrupted() {
         end();
     }
-}
 
-class LineReg {
 
-    public static double[] bestFit(double[] x, double[] y, int size) {
-        int n = 0;
+    private static class LineReg {
 
-        // first pass: read in data, compute xbar and ybar
-        double sumx = 0.0;
-        double sumy = 0.0;
-        double sumx2 = 0.0;
-        for (; n < size; ++n) {
-            sumx += x[n];
-            sumx2 += x[n] * x[n];
-            sumy += y[n];
-            n++;
+        public static double[] bestFit(double[] x, double[] y, int size) {
+            int n = 0;
+
+            // first pass: read in data, compute xbar and ybar
+            double sumx = 0.0;
+            double sumy = 0.0;
+            double sumx2 = 0.0;
+            for (; n < size; ++n) {
+                sumx += x[n];
+                sumx2 += x[n] * x[n];
+                sumy += y[n];
+                n++;
+            }
+            double xbar = sumx / n;
+            double ybar = sumy / n;
+
+            // second pass: compute summary statistics
+            double xxbar = 0.0;
+            double yybar = 0.0;
+            double xybar = 0.0;
+            for (int i = 0; i < n; i++) {
+                xxbar += (x[i] - xbar) * (x[i] - xbar);
+                yybar += (y[i] - ybar) * (y[i] - ybar);
+                xybar += (x[i] - xbar) * (y[i] - ybar);
+            }
+            double beta1 = xybar / xxbar;
+            double beta0 = ybar - beta1 * xbar;
+
+            // print results
+            // System.out.println("y   = " + beta1 + " * x + " + beta0);
+            double[] aAndB = new double[2];
+            aAndB[0] = beta1; // a in: aX + b
+            aAndB[1] = beta0; // b in: aX + b
+            return aAndB;
         }
-        double xbar = sumx / n;
-        double ybar = sumy / n;
-
-        // second pass: compute summary statistics
-        double xxbar = 0.0;
-        double yybar = 0.0;
-        double xybar = 0.0;
-        for (int i = 0; i < n; i++) {
-            xxbar += (x[i] - xbar) * (x[i] - xbar);
-            yybar += (y[i] - ybar) * (y[i] - ybar);
-            xybar += (x[i] - xbar) * (y[i] - ybar);
-        }
-        double beta1 = xybar / xxbar;
-        double beta0 = ybar - beta1 * xbar;
-
-        // print results
-        // System.out.println("y   = " + beta1 + " * x + " + beta0);
-        double[] aAndB = new double[2];
-        aAndB[0] = beta1; // a in: aX + b
-        aAndB[1] = beta0; // b in: aX + b
-        return aAndB;
     }
 }
+

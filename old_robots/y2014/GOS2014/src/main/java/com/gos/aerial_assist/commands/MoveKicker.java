@@ -6,7 +6,7 @@
 
 package com.gos.aerial_assist.commands;
 
-import com.gos.aerial_assist.objects.LSPBPIDPlanner;
+import com.gos.aerial_assist.objects.LspbPidPlanner;
 import com.gos.aerial_assist.subsystems.Kicker;
 
 /**
@@ -18,7 +18,7 @@ public class MoveKicker extends CommandBase {
     private static final double m_shoot = 0.111111; //The angle degree needed to kick
 
     private final Kicker m_kicker;
-    private final LSPBPIDPlanner m_kickerPlanner;
+    private final LspbPidPlanner m_kickerPlanner;
     private double m_encoderValue350Modded;
     private double m_setpoint;
     //This is one tooth away from kicking

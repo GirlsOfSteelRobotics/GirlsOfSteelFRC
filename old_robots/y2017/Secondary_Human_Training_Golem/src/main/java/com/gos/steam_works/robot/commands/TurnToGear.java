@@ -43,10 +43,10 @@ public class TurnToGear extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-/*		table = NetworkTable.getTable("GRIP/myContoursReport");
+        /*        table = NetworkTable.getTable("GRIP/myContoursReport");
 
-        centerX = table.getNumberArray("centerX", defaultValue);
-*/
+                centerX = table.getNumberArray("centerX", defaultValue);
+        */
         m_targetX = m_pipelineListener.getTargetX();
 
         if (m_direction == Direction.kRight) {

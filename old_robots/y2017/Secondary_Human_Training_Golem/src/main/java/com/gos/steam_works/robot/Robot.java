@@ -52,17 +52,17 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-/*
-        try {
-            @SuppressWarnings("unused")
-            Process p;
-            p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO")
-                    .start();
-            p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "20",
-                    "-e", "8").start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        /*
+                try {
+                    @SuppressWarnings("unused")
+                    Process p;
+                    p = new ProcessBuilder("chmod", "+x", "/home/lvuser/GRIPonRoboRIO")
+                            .start();
+                    p = new ProcessBuilder("/home/lvuser/GRIPonRoboRIO", "-f", "20",
+                            "-e", "8").start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
 
 
     }

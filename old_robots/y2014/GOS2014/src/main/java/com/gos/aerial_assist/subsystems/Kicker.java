@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.aerial_assist.RobotMap;
-import com.gos.aerial_assist.objects.EncoderGoSPIDController;
-import com.gos.aerial_assist.objects.LSPBPIDPlanner;
+import com.gos.aerial_assist.objects.EncoderGoSPidController;
+import com.gos.aerial_assist.objects.LspbPidPlanner;
 
 /**
  * @author Heather
@@ -35,8 +35,8 @@ public class Kicker extends Subsystem {
 
     private final DigitalInput m_kickerLimitSwitch;
 
-    private EncoderGoSPIDController m_kickerPositionPID;
-    private final LSPBPIDPlanner m_kickerPlanner;
+    private EncoderGoSPidController m_kickerPositionPID;
+    private final LspbPidPlanner m_kickerPlanner;
 
     public Kicker() {
         // Pright = Configuration.rightPositionP; //TODO
@@ -47,15 +47,15 @@ public class Kicker extends Subsystem {
 
         m_kickerEncoder = new Encoder(RobotMap.KICKER_ENCODER_A, RobotMap.KICKER_ENCODER_B, true, CounterBase.EncodingType.k2X);
 
-        m_kickerPlanner = new LSPBPIDPlanner(0.025);
+        m_kickerPlanner = new LspbPidPlanner(0.025);
 
 
-//        kickerPositionPID = new EncoderGoSPIDController(p, i, d, kickerEncoder, new PIDOutput() {
-//
-//            public void pidWrite(double output) {
-//                kickerSpike.set(output);
-//            }
-//        }, 2, false, true); //false to reverse encoder, true to MOD the value
+        //        kickerPositionPID = new EncoderGoSPIDController(p, i, d, kickerEncoder, new PIDOutput() {
+        //
+        //            public void pidWrite(double output) {
+        //                kickerSpike.set(output);
+        //            }
+        //        }, 2, false, true); //false to reverse encoder, true to MOD the value
 
         m_kickerLimitSwitch = new DigitalInput(RobotMap.KICKER_LIMIT);
     }
@@ -169,7 +169,7 @@ public class Kicker extends Subsystem {
         return !m_kickerLimitSwitch.get(); //true when the kicker is fully loaded
     }
 
-    public LSPBPIDPlanner getKickerPlanner() {
+    public LspbPidPlanner getKickerPlanner() {
         return m_kickerPlanner;
     }
 }

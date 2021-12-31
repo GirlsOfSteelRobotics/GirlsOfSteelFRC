@@ -41,7 +41,7 @@ public class MaintainColDisengage extends CommandBase {
     @Override
     protected void end() {
         m_collector.stopCollector();
-    }//the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
+    } //the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
 
     @Override
     protected void interrupted() {

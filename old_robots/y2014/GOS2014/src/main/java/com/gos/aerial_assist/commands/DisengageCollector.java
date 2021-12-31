@@ -59,8 +59,8 @@ public class DisengageCollector extends CommandBase {
     @Override
     protected boolean isFinished() {
         //System.out.println(collector.isCollectorDisengaged());
-        return false;////Only for monday (2/10) testing, with use of hardstop
-        //return collector.isCollectorDisengaged();//Will be used, but not for monday (2/10) testing because there are not limit switches
+        return false; ////Only for monday (2/10) testing, with use of hardstop
+        //return collector.isCollectorDisengaged(); //Will be used, but not for monday (2/10) testing because there are not limit switches
         //Tells drivers/whoever that the arm is no longer in contant with the ball
     }
 
@@ -72,7 +72,7 @@ public class DisengageCollector extends CommandBase {
     @Override
     protected void end() {
         m_collector.stopCollector();
-    }//the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
+    } //the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
 
     /**
      * If the command is interrupted, it calls the end() method.

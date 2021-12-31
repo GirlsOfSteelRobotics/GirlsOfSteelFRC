@@ -3,12 +3,12 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TESTMoveToSetPoint extends CommandBase {
+public class TestMoveToSetPoint extends CommandBase {
 
     private final Chassis m_chassis;
     private double m_distanceToMove;
 
-    public TESTMoveToSetPoint(Chassis chassis) {
+    public TestMoveToSetPoint(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
         SmartDashboard.putNumber("Move,distance", 0.0);

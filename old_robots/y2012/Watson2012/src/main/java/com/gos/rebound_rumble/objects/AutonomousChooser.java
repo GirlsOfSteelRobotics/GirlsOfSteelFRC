@@ -28,8 +28,8 @@ public class AutonomousChooser {
         m_chooser = new SendableChooser();
         SmartDashboard.putData("Autonomous Chooser", m_chooser);
 
-        m_chooser.addDefault("Key", new AutonomousKey(shooter, oi));//dead-reckoning
-        m_chooser.addObject("Camera Key", new AutonomousCameraKey(oi, shooter));//uses the
+        m_chooser.addDefault("Key", new AutonomousKey(shooter, oi)); //dead-reckoning
+        m_chooser.addObject("Camera Key", new AutonomousCameraKey(oi, shooter)); //uses the
         //ShootUsingTable command to shoot w/camera
         m_chooser.addObject("Shoot, Bridge", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 
 @SuppressWarnings({"PMD.AvoidSynchronizedAtMethodLevel", "PMD.DoNotUseThreads", "PMD.TooManyFields"})
-public class EncoderGoSPIDController implements Runnable {
+public class EncoderGoSPidController implements Runnable {
 
     //constructor
     private double m_kp;
@@ -36,7 +36,7 @@ public class EncoderGoSPIDController implements Runnable {
     public static final int RATE = 1;
     public static final int POSITION = 2;
 
-    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
+    public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
                                    PIDOutput jags, int type) {
         this.m_kp = kp;
         this.m_ki = ki;
@@ -46,7 +46,7 @@ public class EncoderGoSPIDController implements Runnable {
         this.m_type = type;
     }
 
-    public EncoderGoSPIDController(double kp, double ki, double kd, Encoder encoder,
+    public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
                                    PIDOutput jags, int type, double integralThreshold) {
         this.m_kp = kp;
         this.m_ki = ki;
@@ -102,7 +102,7 @@ public class EncoderGoSPIDController implements Runnable {
         while (m_pidEnabled) { //must be set to run -> through setSetPoint
             //conditions to run -> only when the error is more than desire
 
-            synchronized (this) {//add for thread safety of variables
+            synchronized (this) { //add for thread safety of variables
                 m_previousTime = m_currentTime;
                 m_previousPosition = m_currentPosition;
                 m_currentTime = System.currentTimeMillis() / 1000.0;

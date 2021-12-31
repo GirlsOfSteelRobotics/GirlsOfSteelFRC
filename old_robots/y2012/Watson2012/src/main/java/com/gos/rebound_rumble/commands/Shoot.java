@@ -29,8 +29,8 @@ public class Shoot extends CommandBase {
     @Override
     protected void execute() {
         m_shooter.shoot(m_speed);
-        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
-            Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
+        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3
+            || Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
             m_shooter.topRollersForward();
         }
     }

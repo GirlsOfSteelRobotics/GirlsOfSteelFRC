@@ -20,7 +20,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     private static final double ENCODER_UNIT = 360.0 / PULSES;
     public static final double TURRET_OVERRIDE_DEADZONE = 0.5;
 
-    private static final double p = 0.2;//0.45;
+    private static final double p = 0.2; //0.45;
     private static final double i = 0.0;
     private static final double d = 0.0;
 
@@ -105,10 +105,10 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
 
     @SuppressWarnings("PMD.AvoidReassigningParameters")
     public void setPIDSetPoint(double setpoint) {
-        setpoint = setpoint % 360;//takes the remainder of 360 -> so the set point
+        setpoint = setpoint % 360; //takes the remainder of 360 -> so the set point
         //cannot be larger than |360|
         if (setpoint < 0) { //if the setpoint is less than 0 -> set to a positive value
-            setpoint = setpoint + 360;//the negative set point is the same as the
+            setpoint = setpoint + 360; //the negative set point is the same as the
             //positive, but plus 360
         }
         m_pid.setSetpoint(setpoint);
@@ -120,8 +120,8 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         //the angle is the encoder (turret) angle + the gyro angle
         //the gyro angle -> is what position the chassis is facing
         //so the total angle the turret is facing is the sum of them
-        angle = angle % 360;//same as above -> must be a positive number
-        if (angle < 0) {//between 0 and 360
+        angle = angle % 360; //same as above -> must be a positive number
+        if (angle < 0) { //between 0 and 360
             angle = angle + 360;
         }
         return angle;
@@ -161,11 +161,11 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
 
     public void autoTrack() { //only works when the camera has the target (a boolean
         //in the Camera object)
-        double diffAngle = Camera.getDiffAngle();//get the angle you are off from
+        double diffAngle = Camera.getDiffAngle(); //get the angle you are off from
         //the target -> the real life value is found in the Camera object
         System.out.println("Difference Angle:   " + diffAngle);
         double setPoint;
-        setPoint = diffAngle / 4 + getTurretAngle() + m_offsetAngle;//degrees
+        setPoint = diffAngle / 4 + getTurretAngle() + m_offsetAngle; //degrees
         //the set point is the difference of the angle plus where the turret is currently
         //subtract the offset angle that the shooter shoots straight from
         setPIDSetPoint(setPoint);

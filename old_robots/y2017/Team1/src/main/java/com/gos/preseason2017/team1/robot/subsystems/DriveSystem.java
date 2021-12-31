@@ -3,8 +3,6 @@ package com.gos.preseason2017.team1.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,7 +11,7 @@ import com.gos.preseason2017.team1.robot.RobotMap;
 /**
  *
  */
-public class DriveSystem extends Subsystem implements PIDOutput {
+public class DriveSystem extends Subsystem {
 
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
@@ -27,9 +25,6 @@ public class DriveSystem extends Subsystem implements PIDOutput {
 
     private double m_encOffsetValueRight;
     private double m_encOffsetValueLeft;
-
-    //using the Nav board
-    public PIDController m_turnController;
 
     private final Shifters m_shifters;
 
@@ -118,11 +113,4 @@ public class DriveSystem extends Subsystem implements PIDOutput {
         m_encOffsetValueLeft = getEncoderLeft();
         getEncoderDistance();
     }
-
-    @Override
-    public void pidWrite(double output) {
-        // TODO Auto-generated method stub
-
-    }
-
 }

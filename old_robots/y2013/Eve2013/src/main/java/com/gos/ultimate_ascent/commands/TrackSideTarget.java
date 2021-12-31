@@ -7,8 +7,7 @@ import com.gos.ultimate_ascent.subsystems.Chassis;
 public class TrackSideTarget extends CommandGroup {
 
     public TrackSideTarget(Chassis chassis) {
-        double turnTheta = ShooterCamera.getSideDiffAngle() +
-            ShooterCamera.getLocationOffsetAngle();
+        double turnTheta = ShooterCamera.getSideDiffAngle() + ShooterCamera.getLocationOffsetAngle();
         if (ShooterCamera.foundSideTarget()) {
             addSequential(new Rotate(chassis, turnTheta, true));
         }

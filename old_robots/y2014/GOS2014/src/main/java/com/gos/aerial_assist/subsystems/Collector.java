@@ -63,7 +63,7 @@ public class Collector extends Subsystem {
      */
     public void collectorWheelReverse() {
         m_collectorWheelSpike.set(Configuration.collectorWheelBackwardSpeed);
-    }//set the wheel spike to the reverse setting
+    } //set the wheel spike to the reverse setting
 
     /**
      * This method stops the wheel from spinning
@@ -76,11 +76,11 @@ public class Collector extends Subsystem {
 
     public void moveCollectorUpOrDown(double collectorJagSpeed) {
         m_collectorJag.set(collectorJagSpeed);
-    }//Sets/returns the speed of the collector jag as it moves to engage the ball
+    } //Sets/returns the speed of the collector jag as it moves to engage the ball
 
     public void stopCollector() {
         m_collectorJag.set(0.0);
-    }//Stops the collector jag
+    } //Stops the collector jag
 
     public double getCollectorSpeed() {
         return m_collectorJag.getSpeed();

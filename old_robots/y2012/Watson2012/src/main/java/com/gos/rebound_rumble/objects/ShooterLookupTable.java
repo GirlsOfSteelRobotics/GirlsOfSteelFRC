@@ -24,36 +24,10 @@ public class ShooterLookupTable {
         m_list.put(6.223, 27.7);
         m_list.put(6.68, 28.8);
         m_list.put(24.1, 193.5);
-
-        //old data:
-//        list.addElement(new MapDouble(0.0, 0.0));
-//        list.addElement(new MapDouble(2.2733, 20.15));
-//        list.addElement(new MapDouble(2.4257,20.5));
-//        list.addElement(new MapDouble(2.5781,21.25));
-//        list.addElement(new MapDouble(2.7305,21.75));
-//        list.addElement(new MapDouble(2.8829,22.0));
-//        list.addElement(new MapDouble(3.0353,22.5));
-//        list.addElement(new MapDouble(3.1877,23.15));
-//        list.addElement(new MapDouble(3.3401,23.25));
-//        list.addElement(new MapDouble(3.4925,23.4));
-//        list.addElement(new MapDouble(3.6449,24.1));
-//        list.addElement(new MapDouble(3.7973,24.525));
-//        list.addElement(new MapDouble(3.9497,24.9));
-//        list.addElement(new MapDouble(4.1021,25.14));
-//        list.addElement(new MapDouble(4.2161,25.3));
-//        list.addElement(new MapDouble(4.4101,25.6));
-//        list.addElement(new MapDouble(4.5593,26.25));
-//        list.addElement(new MapDouble(4.7117,26.8));
-//        list.addElement(new MapDouble(4.8641,27.2));
-//        list.addElement(new MapDouble(5.0165,27.6));
-//        list.addElement(new MapDouble(5.1689,27.8));
-//        list.addElement(new MapDouble(5.3213,28.1));
-//        list.addElement(new MapDouble(5.4637,28.4));
     }
 
     /**
-     * @param distance, needs to get here from the camera*-
-     * @return
+     * @param distance  needs to get here from the camera
      */
     public double getVelocityFrTable(double distance) {
 

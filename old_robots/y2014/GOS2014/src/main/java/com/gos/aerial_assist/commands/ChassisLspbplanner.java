@@ -6,24 +6,24 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.aerial_assist.objects.LSPBPIDPlanner;
+import com.gos.aerial_assist.objects.LspbPidPlanner;
 import com.gos.aerial_assist.subsystems.Chassis;
 import com.gos.aerial_assist.subsystems.Driving;
 
 /**
  * @author Sylvie
  */
-public class ChassisLSPBPlanner extends CommandBase {
+public class ChassisLspbplanner extends CommandBase {
 
     private final Chassis m_chassis;
-    private final LSPBPIDPlanner m_leftChassisPlanner;
-    private final LSPBPIDPlanner m_rightChassisPlanner;
+    private final LspbPidPlanner m_leftChassisPlanner;
+    private final LspbPidPlanner m_rightChassisPlanner;
     private double m_startTime; //milliseconds
     private double m_changeInTime;
     private double m_setPoint;
     private boolean m_graphed;
 
-    public ChassisLSPBPlanner(Chassis chassis, Driving driving) {
+    public ChassisLspbplanner(Chassis chassis, Driving driving) {
         m_chassis = chassis;
         m_leftChassisPlanner = m_chassis.getLeftChassisPlanner();
         m_rightChassisPlanner = m_chassis.getRightChassisPlanner();

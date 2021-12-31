@@ -57,7 +57,7 @@ public class Watson2012 extends IterativeRobot {
 
         SmartDashboard.putData(Scheduler.getInstance());
 
-//        buttons = new Buttons();//runs different commands based on the physical buttons/switches
+        //        buttons = new Buttons(); //runs different commands based on the physical buttons/switches
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Watson2012 extends IterativeRobot {
         m_collect.cancel();
         m_auto.cancel();
         m_driveJagsLinear.start();
-//        buttons.start();
+        //        buttons.start();
     }
 
     @Override

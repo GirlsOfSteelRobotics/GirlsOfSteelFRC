@@ -11,7 +11,7 @@ public class Shifters extends Subsystem {
     private final DoubleSolenoid m_shifterLeft;
     private final DoubleSolenoid m_shifterRight;
 
-    public enum Speed {kHigh, kLow}
+    public enum Speed { kHigh, kLow }
 
     public Shifters() {
         m_shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);

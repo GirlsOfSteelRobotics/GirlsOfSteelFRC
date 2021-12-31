@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
-import com.gos.aerial_assist.objects.EncoderGoSPIDController;
-import com.gos.aerial_assist.objects.LSPBPIDPlanner;
+import com.gos.aerial_assist.objects.EncoderGoSPidController;
+import com.gos.aerial_assist.objects.LspbPidPlanner;
 
 /**
  * @author Heather
@@ -33,10 +33,10 @@ public class Chassis extends Subsystem {
     private final Encoder m_rightEncoder;
     private final Encoder m_leftEncoder;
 
-    private final EncoderGoSPIDController m_leftPositionPID;
-    private final EncoderGoSPIDController m_rightPositionPID;
-    private final LSPBPIDPlanner m_leftChassisPlanner;
-    private final LSPBPIDPlanner m_rightChassisPlanner;
+    private final EncoderGoSPidController m_leftPositionPID;
+    private final EncoderGoSPidController m_rightPositionPID;
+    private final LspbPidPlanner m_leftChassisPlanner;
+    private final LspbPidPlanner m_rightChassisPlanner;
 
     //need the p for 2nd robot
     private final double m_kPRight; //Competition chassis gains 0.2
@@ -46,13 +46,13 @@ public class Chassis extends Subsystem {
     private static final double m_kPileft = 0;
     private static final double m_kPdleft = 0;
 
-//    private double leftDistancePerPulsePosition = (wheelCircumference) / (leftPulsePerRevolution * gearRatio);//(leftPulsePerRevolution * gearRatio) / (wheelCircumference);
-//    private double rightDistancePerPulsePosition = (wheelCircumference) / (rightPulsePerRevolution * gearRatio);//(rightPulsePerRevolution * gearRatio) / (wheelCircumference);
-//
+    //    private double leftDistancePerPulsePosition = (wheelCircumference) / (leftPulsePerRevolution * gearRatio); //(leftPulsePerRevolution * gearRatio) / (wheelCircumference);
+    //    private double rightDistancePerPulsePosition = (wheelCircumference) / (rightPulsePerRevolution * gearRatio); //(rightPulsePerRevolution * gearRatio) / (wheelCircumference);
+    //
     //Practice bot, 4/19/14 based on raw values after pushing robot forward 5.68 meters
     //Divided the raw values by four because the distances were off by a factor of four
-//    private double leftDistancePerPulsePosition = (5.68 / (24163.5/4.0));
-//    private double rightDistancePerPulsePosition = (5.68 / (25416/4));
+    //    private double leftDistancePerPulsePosition = (5.68 / (24163.5/4.0));
+    //    private double rightDistancePerPulsePosition = (5.68 / (25416/4));
 
 
     //Competition robot, 4/23/14 pushed the robot forward 1 meter
@@ -61,8 +61,8 @@ public class Chassis extends Subsystem {
     private static final double m_rightDistancePerPulsePosition = (1.0 / (4957.5 / 4));
 
     public Chassis() {
-        m_leftChassisPlanner = new LSPBPIDPlanner();
-        m_rightChassisPlanner = new LSPBPIDPlanner();
+        m_leftChassisPlanner = new LspbPidPlanner();
+        m_rightChassisPlanner = new LspbPidPlanner();
 
         m_kPRight = Configuration.rightPositionP;
         m_kPpLeft = Configuration.leftPositionP;
@@ -90,7 +90,7 @@ public class Chassis extends Subsystem {
          }, 2, false);
 
          */
-        m_rightPositionPID = new EncoderGoSPIDController(m_kPRight, Piright, Pdright, m_rightEncoder, new PIDOutput() {
+        m_rightPositionPID = new EncoderGoSPidController(m_kPRight, Piright, Pdright, m_rightEncoder, new PIDOutput() {
 
             @Override
             public void pidWrite(double output) {
@@ -98,7 +98,7 @@ public class Chassis extends Subsystem {
             }
         }, 2, Configuration.rightPIDReverseEncoder, false); //For the competition bot (practice bot is true, false)
 
-        m_leftPositionPID = new EncoderGoSPIDController(m_kPpLeft, m_kPileft, m_kPdleft, m_leftEncoder, new PIDOutput() {
+        m_leftPositionPID = new EncoderGoSPidController(m_kPpLeft, m_kPileft, m_kPdleft, m_leftEncoder, new PIDOutput() {
 
             @Override
             public void pidWrite(double output) {
@@ -274,7 +274,7 @@ public class Chassis extends Subsystem {
         // y = -jerkyDeadZone(y); //for the 2nd chassis and competition chassis
         // x = jerkyDeadZone(x);
 
-//drive.arcadeDrive(x, y); USE THIS IF CODE DOESN'T WORK
+        //drive.arcadeDrive(x, y); USE THIS IF CODE DOESN'T WORK
         //   System.out.println("x value: " + x + "\n y value: " + y);
         //  System.out.println("right jag output" + rightJag.get() + "left jag output" + leftJag.get());
         //COMPETITION BOT AND PRACTICE BOT
@@ -431,11 +431,11 @@ public class Chassis extends Subsystem {
         m_leftEncoder.setReverseDirection(reverseDirection);
     }
 
-    public LSPBPIDPlanner getLeftChassisPlanner() {
+    public LspbPidPlanner getLeftChassisPlanner() {
         return m_leftChassisPlanner;
     }
 
-    public LSPBPIDPlanner getRightChassisPlanner() {
+    public LspbPidPlanner getRightChassisPlanner() {
         return m_rightChassisPlanner;
     }
 }

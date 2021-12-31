@@ -57,14 +57,14 @@ public class Buttons extends CommandBase {
                 //         System.out.println("Top Rollers Forward" + oi.getTopRollersSwitchValue());
                 m_shooter.topRollersForward();
             } else if (m_oi.areTopRollersReverse()) {
-//                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Reverse3" + oi.getTopRollersSwitchValue());
-//                DriverStationLCD.getInstance().updateLCD();
-//                System.out.println("Top Rollers Reverse");
+                //                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Reverse3" + oi.getTopRollersSwitchValue());
+                //                DriverStationLCD.getInstance().updateLCD();
+                //                System.out.println("Top Rollers Reverse");
                 m_shooter.topRollersBackward();
             } else if (m_oi.areTopRollersOff()) {
-//                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Off2" + oi.getTopRollersSwitchValue());
-//                DriverStationLCD.getInstance().updateLCD();
-//                 System.out.println("Top Rollers Off");
+                //                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Top Rollers Off2" + oi.getTopRollersSwitchValue());
+                //                DriverStationLCD.getInstance().updateLCD();
+                //                 System.out.println("Top Rollers Off");
                 m_shooter.topRollersOff();
             }
         }
@@ -151,35 +151,35 @@ public class Buttons extends CommandBase {
         } else {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
             //      "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
-//            System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
+            //            System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
             m_autoTurret.cancel();
         }
 
         if (m_oi.isTurretSetPositionOn()) {
-//            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
-//                  "Turret Set Position On" + oi.getTurretOverrideSwitchValue());
-//            System.out.println("Turret Set Position On" + oi.getTurretOverrideSwitchValue());
+            //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
+            //                  "Turret Set Position On" + oi.getTurretOverrideSwitchValue());
+            //            System.out.println("Turret Set Position On" + oi.getTurretOverrideSwitchValue());
             m_setPointTurret.start();
             //  DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, true);
-        } else {//NOTHING IS SET TO HAPPEN IN HERE FOR SOME ODD REASON!!!
-//            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
-//             System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
-//            DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, false);
+        } else { //NOTHING IS SET TO HAPPEN IN HERE FOR SOME ODD REASON!!!
+            //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
+            //             System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
+            //            DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, false);
             m_setPointTurret.cancel();
         }
 
         if (m_oi.isTurretManualOn()) {
-//            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret On" + oi.getTurretOverrideSwitchValue());
-//              System.out.println("Manual Turret On" + oi.getTurretOverrideSwitchValue());
+            //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret On" + oi.getTurretOverrideSwitchValue());
+            //              System.out.println("Manual Turret On" + oi.getTurretOverrideSwitchValue());
             m_manualTurret.start();
             //DriverStation.getInstance().setDigitalOut(oi.TURRET_MANUAL_LIGHT, true);
         } else {
-//            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret Off" + oi.getTurretOverrideSwitchValue());
-//           System.out.println("Manual Turret Off" + oi.getTurretOverrideSwitchValue());
+            //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret Off" + oi.getTurretOverrideSwitchValue());
+            //           System.out.println("Manual Turret Off" + oi.getTurretOverrideSwitchValue());
             m_manualTurret.cancel();
             //DriverStation.getInstance().setDigitalOut(oi.TURRET_MANUAL_LIGHT, false);
         }
-//        DriverStationLCD.getInstance().updateLCD();
+        //        DriverStationLCD.getInstance().updateLCD();
     }
 
     @Override

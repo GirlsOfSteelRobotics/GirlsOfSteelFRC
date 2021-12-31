@@ -96,23 +96,23 @@ public class OI {
         //disables driver rotation
         m_disableRotation = new JoystickButton(m_driverJoystick, 2);
         m_disableRotation.whileHeld(new DisableRotation(chassis));
-//        rotateRight = new JoystickButton(driverJoystick, 4);
-//        rotateRight.whenPressed(new Rotate(Chassis.FEEDER_RIGHT, true));
-//        rotateLeft = new JoystickButton(driverJoystick, 3);
-//        rotateLeft.whenPressed(new Rotate(Chassis.FEEDER_LEFT, true));
+        //        rotateRight = new JoystickButton(driverJoystick, 4);
+        //        rotateRight.whenPressed(new Rotate(Chassis.FEEDER_RIGHT, true));
+        //        rotateLeft = new JoystickButton(driverJoystick, 3);
+        //        rotateLeft.whenPressed(new Rotate(Chassis.FEEDER_LEFT, true));
         m_rotateShootingBackRight = new JoystickButton(m_driverJoystick, 6);
         m_rotateShootingBackRight.whenPressed(new Rotate(chassis,
             //  ShooterCamera.getTopDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
             90, false));
         m_rotateShootingBackLeft = new JoystickButton(m_driverJoystick, 5);
         m_rotateShootingBackLeft.whenPressed(new Rotate(chassis,
-//                ShooterCamera.getSideDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
+            //                ShooterCamera.getSideDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
             -90, false));
-//        Working blocker raising code
-//        raiseBlocker = new JoystickButton(driverJoystick, 12);
-//        raiseBlocker.whenPressed(new RaiseBlocker());
-//        lowerBlocker = new JoystickButton(driverJoystick, 8);
-//        lowerBlocker.whenPressed(new LowerBlocker());
+        //        Working blocker raising code
+        //        raiseBlocker = new JoystickButton(driverJoystick, 12);
+        //        raiseBlocker.whenPressed(new RaiseBlocker());
+        //        lowerBlocker = new JoystickButton(driverJoystick, 8);
+        //        lowerBlocker.whenPressed(new LowerBlocker());
 
 
         //Defining Operator Buttons
@@ -148,5 +148,5 @@ public class OI {
 
         return m_driverJoystick;
 
-    }//end getDriverJoystick
+    } //end getDriverJoystick
 }

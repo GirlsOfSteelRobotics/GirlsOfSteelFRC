@@ -83,26 +83,26 @@ public class ShooterCamera {
 
     public static double getTopDiffAngle() {
         if (foundTopTarget()) {
-            double angle = (47.0 / 2.0) * (Math.PI / 180.0);//maximum angle for the camera view (in one direction) -> changed to radians
+            double angle = (47.0 / 2.0) * (Math.PI / 180.0); //maximum angle for the camera view (in one direction) -> changed to radians
             double yDistanceToTarget = getTopHorizontalDifference() * Math.tan(angle);
             //calculating the yDistance from the center of the camera frame to target
             //normally multiplied by the xDistance to Target, but in calculating the angle (below)
             //you need to divide by the xDistance so it is not necessary to multiply then divide
-            double angleToTarget = Math.atan(yDistanceToTarget);//finding the angle difference from the center to the target
-            return angleToTarget * 180 / Math.PI;//change into degrees
+            double angleToTarget = Math.atan(yDistanceToTarget); //finding the angle difference from the center to the target
+            return angleToTarget * 180 / Math.PI; //change into degrees
         }
         return 0;
     }
 
     public static double getSideDiffAngle() {
         if (foundSideTarget()) {
-            double angle = (47.0 / 2.0) * (Math.PI / 180.0);//maximum angle for the camera view (in one direction) -> changed to radians
+            double angle = (47.0 / 2.0) * (Math.PI / 180.0); //maximum angle for the camera view (in one direction) -> changed to radians
             double yDistanceToTarget = getSideHorizontalDifference() * Math.tan(angle);
             //calculating the yDistance from the center of the camera frame to target
             //normally multiplied by the xDistance to Target, but in calculating the angle (below)
             //you need to divide by the xDistance so it is not necessary to multiply then divide
-            double angleToTarget = Math.atan(yDistanceToTarget);//finding the angle difference from the center to the target
-            return angleToTarget * 180 / Math.PI;//change into degrees
+            double angleToTarget = Math.atan(yDistanceToTarget); //finding the angle difference from the center to the target
+            return angleToTarget * 180 / Math.PI; //change into degrees
         }
         return 0;
     }
@@ -110,8 +110,6 @@ public class ShooterCamera {
     /**
      * Returns the angle between where the camera is facing and the target (in
      * degrees)
-     *
-     * @return
      */
     public static double getXDifferenceTopTarget() {
         double xDifference;

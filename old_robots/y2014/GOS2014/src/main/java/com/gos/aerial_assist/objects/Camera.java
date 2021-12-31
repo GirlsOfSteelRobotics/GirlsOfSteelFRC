@@ -51,7 +51,7 @@ public class Camera {
         double g = m_gravity;
         double v = m_initialVelocity;
         //make sure all numbers are in metric units
-//        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
+        //        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
         //return angle;
         return Math.atan(square(v) - Math.sqrt(fourthPower(v) - g * (g * square(x) + 2 * y * square(v))) / g * x);
     }

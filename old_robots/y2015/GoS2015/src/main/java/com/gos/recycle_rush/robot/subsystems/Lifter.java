@@ -12,11 +12,11 @@ import com.gos.recycle_rush.robot.RobotMap;
 public class Lifter extends Subsystem {
 
     // 170 is one rotation
-    public static final double DISTANCE_ZERO_TOTES = -3600;// -250;//-3000;//-100;
-    public static final double DISTANCE_ONE_TOTE = -3000;// -10453;
-    public static final double DISTANCE_TWO_TOTES = -3000;// -20906;
-    public static final double DISTANCE_THREE_TOTES = -3000;// -31359;
-    public static final double DISTANCE_FOUR_TOTES = -15000;// -41812;
+    public static final double DISTANCE_ZERO_TOTES = -3600; // -250; //-3000; //-100;
+    public static final double DISTANCE_ONE_TOTE = -3000; // -10453;
+    public static final double DISTANCE_TWO_TOTES = -3000; // -20906;
+    public static final double DISTANCE_THREE_TOTES = -3000; // -31359;
+    public static final double DISTANCE_FOUR_TOTES = -15000; // -41812;
 
     private final WPI_TalonSRX m_liftTalon;
 
