@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     testImplementation 'junit:junit:4.12'
-    testRuntime("org.junit.vintage:junit-vintage-engine:5.2.0")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.2.0")
 }
 
 test {

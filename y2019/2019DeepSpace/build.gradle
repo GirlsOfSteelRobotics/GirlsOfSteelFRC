@@ -63,7 +63,7 @@ dependencies {
     // simulation wpi.deps.sim.ws_server(wpi.platforms.desktop, false)
     // simulation wpi.deps.sim.ws_client(wpi.platforms.desktop, false)
 
-    compile project(":libraries:GirlsOfSteelLib")
+    implementation project(":libraries:GirlsOfSteelLib")
 }
 
 // Simulation configuration (e.g. environment variables).

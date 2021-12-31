@@ -49,13 +49,13 @@ compileJava.dependsOn generate_version
 
 dependencies {
 
-    compile "org.openjfx:javafx-base:11:win"
-    compile "org.openjfx:javafx-graphics:11:win"
-    compile "org.openjfx:javafx-controls:11:win"
-    compile "org.openjfx:javafx-fxml:11:win"
+    implementation "org.openjfx:javafx-base:11:win"
+    implementation "org.openjfx:javafx-graphics:11:win"
+    implementation "org.openjfx:javafx-controls:11:win"
+    implementation "org.openjfx:javafx-fxml:11:win"
 
 
-    compile 'edu.wpi.first.shuffleboard:shuffleboard:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
-    compile 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
+    implementation 'edu.wpi.first.shuffleboard:shuffleboard:' + shuffleboard_version
+    implementation 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
+    implementation 'edu.wpi.first.shuffleboard:api:' + shuffleboard_version
 }

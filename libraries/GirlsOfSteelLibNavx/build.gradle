@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation wpi.deps.wpilib()
     implementation wpi.deps.vendor.java()
-    compile project(":libraries:GirlsOfSteelLib")
+    implementation project(":libraries:GirlsOfSteelLib")
 }
 
 test {
