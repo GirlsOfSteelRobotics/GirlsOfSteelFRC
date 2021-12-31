@@ -4,7 +4,7 @@ gos_java_robot(
     name = "Watson2012",
     srcs = glob(["src/**/*.java"]),
     disable_checkstyle = True,
-    main_class = "girlsofsteel.Main",
+    main_class = "com.gos.girlsofsteel.Main",
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/ntcore",
