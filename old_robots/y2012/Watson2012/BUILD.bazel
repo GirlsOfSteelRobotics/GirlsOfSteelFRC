@@ -2,9 +2,9 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot", "gos_junit4_test"
 
 gos_java_robot(
     name = "Watson2012",
-    srcs = glob(["src/**/*.java"]),
+    srcs = glob(["src/main/java/**/*.java"]),
     disable_checkstyle = True,
-    main_class = "girlsofsteel.Main",
+    main_class = "com.gos.rebound_rumble.Main",
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/ntcore",
@@ -15,6 +15,6 @@ gos_java_robot(
 
 gos_junit4_test(
     name = "test",
-    srcs = glob(["test/**/*.java"]),
+    srcs = glob(["src/test/java/**/*.java"]),
     deps = ["Watson2012"],
 )

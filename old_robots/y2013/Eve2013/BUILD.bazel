@@ -2,9 +2,9 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
 
 gos_java_robot(
     name = "Eve2013",
-    srcs = glob(["src/**/*.java"]),
+    srcs = glob(["src/main/java/**/*.java"]),
     disable_checkstyle = True,
-    main_class = "girlsofsteel.Main",
+    main_class = "com.gos.ultimate_ascent.Main",
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/ntcore",
