@@ -1,14 +1,14 @@
-package org.usfirst.frc.team3504.robot;
+package com.gos.preseason2016.team_squirtle.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDrive;
-import org.usfirst.frc.team3504.robot.subsystems.Camera;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Ramp;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import com.gos.preseason2016.team_squirtle.robot.commands.DriveByJoystick;
+import com.gos.preseason2016.team_squirtle.robot.commands.autonomous.AutoDrive;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Camera;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Chassis;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Ramp;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Shifters;
 
 /**
  * The VM is configured to automatically run this class, and to call the

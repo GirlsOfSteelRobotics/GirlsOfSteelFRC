@@ -1,16 +1,16 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2016.team_squirtle.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Ramp;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Ramp;
 
 /**
  *
  */
-public class RampUp extends Command {
+public class RampDown extends Command {
 
     private final Ramp m_ramp;
 
-    public RampUp(Ramp ramp) {
+    public RampDown(Ramp ramp) {
         m_ramp = ramp;
         requires(m_ramp);
     }
@@ -23,7 +23,7 @@ public class RampUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_ramp.up();
+        m_ramp.down();
     }
 
     // Make this return true when this Command no longer needs to run execute()

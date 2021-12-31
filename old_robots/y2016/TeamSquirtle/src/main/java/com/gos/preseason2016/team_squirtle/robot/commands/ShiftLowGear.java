@@ -1,35 +1,30 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2016.team_squirtle.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.OI;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Shifters;
 
 /**
  *
  */
-public class DriveByJoystick extends Command {
+public class ShiftLowGear extends Command {
 
-    private final Joystick m_stick;
-    private final Chassis m_chassis;
+    private final Shifters m_shifters;
 
-    public DriveByJoystick(OI oi, Chassis chassis) {
-        m_stick = oi.getJoystick();
-        m_chassis = chassis;
-        requires(m_chassis);
-
+    public ShiftLowGear(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-
+        m_shifters.shiftLeft(false);
+        m_shifters.shiftRight(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_chassis.driveByJoystick(m_stick);
     }
 
     // Make this return true when this Command no longer needs to run execute()

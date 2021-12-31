@@ -1,36 +1,35 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2016.team_squirtle.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Ramp;
 
 /**
  *
  */
-public class ShiftLowGear extends Command {
+public class RampUp extends Command {
 
-    private final Shifters m_shifters;
+    private final Ramp m_ramp;
 
-    public ShiftLowGear(Shifters shifters) {
-        m_shifters = shifters;
-        requires(m_shifters);
+    public RampUp(Ramp ramp) {
+        m_ramp = ramp;
+        requires(m_ramp);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_shifters.shiftLeft(false);
-        m_shifters.shiftRight(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        m_ramp.up();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

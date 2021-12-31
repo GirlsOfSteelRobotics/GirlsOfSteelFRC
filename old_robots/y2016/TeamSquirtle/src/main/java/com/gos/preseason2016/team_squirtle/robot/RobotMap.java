@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot;
+package com.gos.preseason2016.team_squirtle.robot;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

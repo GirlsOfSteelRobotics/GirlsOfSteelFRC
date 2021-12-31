@@ -1,52 +1,47 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous;
+package com.gos.preseason2016.team_squirtle.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
+import com.gos.preseason2016.team_squirtle.robot.subsystems.Shifters;
 
 /**
  *
  */
-public class AutoDrive extends Command {
+public class ShiftHighGear extends Command {
 
-    private final Chassis m_chassis;
-    public double m_distance;
-    public Timer m_tim;
+    private final Shifters m_shifters;
 
-    public AutoDrive(Chassis chassis) {
-        m_chassis = chassis;
-        requires(m_chassis);
+    public ShiftHighGear(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_chassis.resetDistance(); //need to create resetDistance method
-        m_tim.start();
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_chassis.driveForward(); //need to created driveForward method
+        m_shifters.shiftLeft(true);
+        m_shifters.shiftRight(true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return (m_tim.get() > 3);
+        return true;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_chassis.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
-        end();
     }
 }
