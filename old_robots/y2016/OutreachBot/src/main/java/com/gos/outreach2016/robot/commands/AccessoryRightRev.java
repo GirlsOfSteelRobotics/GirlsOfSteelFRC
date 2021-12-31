@@ -1,18 +1,19 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors.Direction;
 
 /**
  *
  */
-public class PivotDown extends Command {
+public class AccessoryRightRev extends Command {
 
-    private final Manipulator m_manipulator;
+    private final AccessoryMotors m_accessoryMotors;
 
-    public PivotDown(Manipulator manipulator) {
-        m_manipulator = manipulator;
-        requires(m_manipulator);
+    public AccessoryRightRev(AccessoryMotors accessoryMotors) {
+        m_accessoryMotors = accessoryMotors;
+        requires(m_accessoryMotors);
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +24,7 @@ public class PivotDown extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_manipulator.pivotDown();
+        m_accessoryMotors.startRight(Direction.kRev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +36,7 @@ public class PivotDown extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_manipulator.stopPivot();
+        m_accessoryMotors.stopRight();
     }
 
     // Called when another command which requires one or more of the same

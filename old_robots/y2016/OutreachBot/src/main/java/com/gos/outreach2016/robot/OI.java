@@ -1,28 +1,28 @@
-package org.usfirst.frc.team3504.robot;
+package com.gos.outreach2016.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3504.robot.commands.AccessoryLeftFwd;
-import org.usfirst.frc.team3504.robot.commands.AccessoryLeftRev;
-import org.usfirst.frc.team3504.robot.commands.AccessoryRightFwd;
-import org.usfirst.frc.team3504.robot.commands.AccessoryRightRev;
-import org.usfirst.frc.team3504.robot.commands.AutonomousCommand;
-import org.usfirst.frc.team3504.robot.commands.CloseArm;
-import org.usfirst.frc.team3504.robot.commands.CollectBall;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.commands.OpenArm;
-import org.usfirst.frc.team3504.robot.commands.PivotDown;
-import org.usfirst.frc.team3504.robot.commands.PivotUp;
-import org.usfirst.frc.team3504.robot.commands.ReleaseBall;
-import org.usfirst.frc.team3504.robot.commands.ShiftDown;
-import org.usfirst.frc.team3504.robot.commands.ShiftUp;
-import org.usfirst.frc.team3504.robot.commands.ShootBall;
-import org.usfirst.frc.team3504.robot.commands.ShooterIn;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors;
-import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import com.gos.outreach2016.robot.commands.AccessoryLeftFwd;
+import com.gos.outreach2016.robot.commands.AccessoryLeftRev;
+import com.gos.outreach2016.robot.commands.AccessoryRightFwd;
+import com.gos.outreach2016.robot.commands.AccessoryRightRev;
+import com.gos.outreach2016.robot.commands.AutonomousCommand;
+import com.gos.outreach2016.robot.commands.CloseArm;
+import com.gos.outreach2016.robot.commands.CollectBall;
+import com.gos.outreach2016.robot.commands.DriveByJoystick;
+import com.gos.outreach2016.robot.commands.OpenArm;
+import com.gos.outreach2016.robot.commands.PivotDown;
+import com.gos.outreach2016.robot.commands.PivotUp;
+import com.gos.outreach2016.robot.commands.ReleaseBall;
+import com.gos.outreach2016.robot.commands.ShiftDown;
+import com.gos.outreach2016.robot.commands.ShiftUp;
+import com.gos.outreach2016.robot.commands.ShootBall;
+import com.gos.outreach2016.robot.commands.ShooterIn;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
+import com.gos.outreach2016.robot.subsystems.DriveSystem;
+import com.gos.outreach2016.robot.subsystems.Manipulator;
+import com.gos.outreach2016.robot.subsystems.Shifters;
 
 
 /**

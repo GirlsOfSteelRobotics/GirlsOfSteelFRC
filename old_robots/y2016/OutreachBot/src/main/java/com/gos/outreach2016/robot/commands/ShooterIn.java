@@ -1,16 +1,16 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.outreach2016.robot.subsystems.Manipulator;
 
 /**
  *
  */
-public class ReleaseBall extends Command {
+public class ShooterIn extends Command {
 
     private final Manipulator m_manipulator;
 
-    public ReleaseBall(Manipulator manipulator) {
+    public ShooterIn(Manipulator manipulator) {
         m_manipulator = manipulator;
         requires(m_manipulator);
     }
@@ -18,30 +18,29 @@ public class ReleaseBall extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        m_manipulator.shooterIn();
+        System.out.println("shooter in");
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_manipulator.releaseBall();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_manipulator.stopCollecting();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
-        end();
     }
 }

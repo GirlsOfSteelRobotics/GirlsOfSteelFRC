@@ -1,10 +1,10 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors.Direction;
-import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors.Direction;
+import com.gos.outreach2016.robot.subsystems.DriveSystem;
 
 /**
  *

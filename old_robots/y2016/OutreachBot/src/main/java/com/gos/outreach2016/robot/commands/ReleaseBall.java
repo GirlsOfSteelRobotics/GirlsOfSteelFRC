@@ -1,16 +1,16 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.outreach2016.robot.subsystems.Manipulator;
 
 /**
  *
  */
-public class CollectBall extends Command {
+public class ReleaseBall extends Command {
 
     private final Manipulator m_manipulator;
 
-    public CollectBall(Manipulator manipulator) {
+    public ReleaseBall(Manipulator manipulator) {
         m_manipulator = manipulator;
         requires(m_manipulator);
     }
@@ -23,7 +23,7 @@ public class CollectBall extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_manipulator.collectBall();
+        m_manipulator.releaseBall();
     }
 
     // Make this return true when this Command no longer needs to run execute()

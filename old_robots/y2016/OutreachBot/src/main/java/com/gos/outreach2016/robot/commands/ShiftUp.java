@@ -1,24 +1,26 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.outreach2016.robot.subsystems.Shifters;
+import com.gos.outreach2016.robot.subsystems.Shifters.Speed;
 
 /**
  *
  */
-public class OpenArm extends Command {
+public class ShiftUp extends Command {
 
-    private final Manipulator m_manipulator;
+    private final Shifters m_shifters;
 
-    public OpenArm(Manipulator manipulator) {
-        m_manipulator = manipulator;
-        requires(m_manipulator);
+    public ShiftUp(Shifters shifters) {
+        m_shifters = shifters;
+        requires(m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_manipulator.openArm();
+        m_shifters.shiftLeft(Speed.kHigh);
+        m_shifters.shiftRight(Speed.kHigh);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,6 +31,7 @@ public class OpenArm extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
+        // The solenoid setting commands should complete immediately
         return true;
     }
 
@@ -41,5 +44,6 @@ public class OpenArm extends Command {
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+        end();
     }
 }

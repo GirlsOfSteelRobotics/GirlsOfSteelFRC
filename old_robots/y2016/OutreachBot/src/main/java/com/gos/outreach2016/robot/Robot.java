@@ -1,16 +1,16 @@
-package org.usfirst.frc.team3504.robot;
+package com.gos.outreach2016.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3504.robot.commands.AutonomousCommand;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors;
-import org.usfirst.frc.team3504.robot.subsystems.DriveSystem;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
+import com.gos.outreach2016.robot.commands.AutonomousCommand;
+import com.gos.outreach2016.robot.commands.DriveByJoystick;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
+import com.gos.outreach2016.robot.subsystems.DriveSystem;
+import com.gos.outreach2016.robot.subsystems.Manipulator;
+import com.gos.outreach2016.robot.subsystems.Shifters;
 
 /**
  * The VM is configured to automatically run this class, and to call the

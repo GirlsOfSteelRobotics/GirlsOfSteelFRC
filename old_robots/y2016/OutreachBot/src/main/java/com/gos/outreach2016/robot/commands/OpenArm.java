@@ -1,48 +1,45 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors.Direction;
+import com.gos.outreach2016.robot.subsystems.Manipulator;
 
 /**
  *
  */
-public class AccessoryRightRev extends Command {
+public class OpenArm extends Command {
 
-    private final AccessoryMotors m_accessoryMotors;
+    private final Manipulator m_manipulator;
 
-    public AccessoryRightRev(AccessoryMotors accessoryMotors) {
-        m_accessoryMotors = accessoryMotors;
-        requires(m_accessoryMotors);
+    public OpenArm(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        m_manipulator.openArm();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_accessoryMotors.startRight(Direction.kRev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_accessoryMotors.stopRight();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
-        end();
     }
 }

@@ -1,8 +1,8 @@
-package org.usfirst.frc.team3504.robot.subsystems;
+package com.gos.outreach2016.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team3504.robot.RobotMap;
+import com.gos.outreach2016.robot.RobotMap;
 
 /**
  *

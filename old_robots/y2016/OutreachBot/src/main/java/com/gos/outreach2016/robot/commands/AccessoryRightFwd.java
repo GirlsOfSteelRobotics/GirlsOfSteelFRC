@@ -1,17 +1,17 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors;
-import org.usfirst.frc.team3504.robot.subsystems.AccessoryMotors.Direction;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors.Direction;
 
 /**
  *
  */
-public class AccessoryLeftRev extends Command {
+public class AccessoryRightFwd extends Command {
 
     private final AccessoryMotors m_accessoryMotors;
 
-    public AccessoryLeftRev(AccessoryMotors accessoryMotors) {
+    public AccessoryRightFwd(AccessoryMotors accessoryMotors) {
         m_accessoryMotors = accessoryMotors;
         requires(m_accessoryMotors);
     }
@@ -24,7 +24,7 @@ public class AccessoryLeftRev extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_accessoryMotors.startLeft(Direction.kRev);
+        m_accessoryMotors.startRight(Direction.kFwd);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +36,7 @@ public class AccessoryLeftRev extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_accessoryMotors.stopLeft();
+        m_accessoryMotors.stopRight();
     }
 
     // Called when another command which requires one or more of the same

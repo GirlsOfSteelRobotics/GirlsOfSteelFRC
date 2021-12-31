@@ -1,43 +1,41 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
+import com.gos.outreach2016.robot.subsystems.Manipulator;
 
 /**
  *
  */
-public class ShiftUp extends Command {
+public class PivotDown extends Command {
 
-    private final Shifters m_shifters;
+    private final Manipulator m_manipulator;
 
-    public ShiftUp(Shifters shifters) {
-        m_shifters = shifters;
-        requires(m_shifters);
+    public PivotDown(Manipulator manipulator) {
+        m_manipulator = manipulator;
+        requires(m_manipulator);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_shifters.shiftLeft(Speed.kHigh);
-        m_shifters.shiftRight(Speed.kHigh);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        m_manipulator.pivotDown();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        // The solenoid setting commands should complete immediately
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        m_manipulator.stopPivot();
     }
 
     // Called when another command which requires one or more of the same

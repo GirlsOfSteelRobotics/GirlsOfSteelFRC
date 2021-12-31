@@ -1,43 +1,42 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.outreach2016.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters;
-import org.usfirst.frc.team3504.robot.subsystems.Shifters.Speed;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
+import com.gos.outreach2016.robot.subsystems.AccessoryMotors.Direction;
 
 /**
  *
  */
-public class ShiftDown extends Command {
+public class AccessoryLeftRev extends Command {
 
-    private final Shifters m_shifters;
+    private final AccessoryMotors m_accessoryMotors;
 
-    public ShiftDown(Shifters shifters) {
-        m_shifters = shifters;
-        requires(m_shifters);
+    public AccessoryLeftRev(AccessoryMotors accessoryMotors) {
+        m_accessoryMotors = accessoryMotors;
+        requires(m_accessoryMotors);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_shifters.shiftLeft(Speed.kLow);
-        m_shifters.shiftRight(Speed.kLow);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        m_accessoryMotors.startLeft(Direction.kRev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        // The solenoid setting commands should complete immediately
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        m_accessoryMotors.stopLeft();
     }
 
     // Called when another command which requires one or more of the same
