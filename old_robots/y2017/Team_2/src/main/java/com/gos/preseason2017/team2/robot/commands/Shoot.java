@@ -1,7 +1,7 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2017.team2.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.preseason2017.team2.robot.subsystems.Manipulator;
 
 /**
  *

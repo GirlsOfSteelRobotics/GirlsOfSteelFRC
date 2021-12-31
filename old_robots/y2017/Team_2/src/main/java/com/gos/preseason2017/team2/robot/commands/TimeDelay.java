@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2017.team2.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 

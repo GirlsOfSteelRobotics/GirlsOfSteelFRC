@@ -1,14 +1,14 @@
-package org.usfirst.frc.team3504.robot;
+package com.gos.preseason2017.team2.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3504.robot.commands.CollectIn;
-import org.usfirst.frc.team3504.robot.commands.PivotDown;
-import org.usfirst.frc.team3504.robot.commands.PivotUp;
-import org.usfirst.frc.team3504.robot.commands.PusherOut;
-import org.usfirst.frc.team3504.robot.commands.Release;
-import org.usfirst.frc.team3504.robot.commands.Shoot;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.preseason2017.team2.robot.commands.CollectIn;
+import com.gos.preseason2017.team2.robot.commands.PivotDown;
+import com.gos.preseason2017.team2.robot.commands.PivotUp;
+import com.gos.preseason2017.team2.robot.commands.PusherOut;
+import com.gos.preseason2017.team2.robot.commands.Release;
+import com.gos.preseason2017.team2.robot.commands.Shoot;
+import com.gos.preseason2017.team2.robot.subsystems.Manipulator;
 
 /**
  * This class is the glue that binds the controls on the physical operator

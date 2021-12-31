@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.subsystems;
+package com.gos.preseason2017.team2.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3504.robot.RobotMap;
+import com.gos.preseason2017.team2.robot.RobotMap;
 
 /**
  *

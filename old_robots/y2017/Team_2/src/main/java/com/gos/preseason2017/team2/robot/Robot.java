@@ -1,16 +1,16 @@
-package org.usfirst.frc.team3504.robot;
+package com.gos.preseason2017.team2.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3504.robot.commands.DriveByJoystick;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDoNothing;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveBackwards;
-import org.usfirst.frc.team3504.robot.commands.autonomous.AutoDriveForward;
-import org.usfirst.frc.team3504.robot.subsystems.Chassis;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.preseason2017.team2.robot.commands.DriveByJoystick;
+import com.gos.preseason2017.team2.robot.commands.autonomous.AutoDoNothing;
+import com.gos.preseason2017.team2.robot.commands.autonomous.AutoDriveBackwards;
+import com.gos.preseason2017.team2.robot.commands.autonomous.AutoDriveForward;
+import com.gos.preseason2017.team2.robot.subsystems.Chassis;
+import com.gos.preseason2017.team2.robot.subsystems.Manipulator;
 
 /**
  * The VM is configured to automatically run this class, and to call the

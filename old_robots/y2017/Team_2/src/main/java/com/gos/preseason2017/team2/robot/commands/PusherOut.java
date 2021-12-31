@@ -1,41 +1,41 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2017.team2.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.preseason2017.team2.robot.subsystems.Manipulator;
 
 /**
  *
  */
-public class PivotDown extends Command {
+public class PusherOut extends Command {
 
     private final Manipulator m_manipulator;
 
-    public PivotDown(Manipulator manipulator) {
+    public PusherOut(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        setTimeout(.5);
+        m_manipulator.pusherOut();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_manipulator.pivotDown(.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_manipulator.stopPivot();
+        m_manipulator.pusherIn();
     }
 
     // Called when another command which requires one or more of the same

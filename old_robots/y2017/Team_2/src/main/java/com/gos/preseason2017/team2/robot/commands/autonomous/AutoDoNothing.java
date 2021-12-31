@@ -1,47 +1,49 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2017.team2.robot.commands.autonomous;
+
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import com.gos.preseason2017.team2.robot.subsystems.Chassis;
+
 
 /**
  *
  */
-public class CollectIn extends Command {
+public class AutoDoNothing extends Command {
 
-    private final Manipulator m_manipulator;
 
-    public CollectIn(Manipulator manipulator) {
-        m_manipulator = manipulator;
-        requires(m_manipulator);
+    public AutoDoNothing(Chassis chassis) {
+        requires(chassis);
     }
+
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
     }
 
+
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_manipulator.collectIn(-.75); //need to add whileheld button
     }
+
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
+
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_manipulator.stopCollector();
     }
+
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
-        end();
     }
 }

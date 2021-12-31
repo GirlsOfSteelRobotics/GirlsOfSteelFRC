@@ -1,29 +1,35 @@
-package org.usfirst.frc.team3504.robot.commands;
+package com.gos.preseason2017.team2.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3504.robot.subsystems.Manipulator;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.gos.preseason2017.team2.robot.OI;
+import com.gos.preseason2017.team2.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class Release extends Command {
+public class DriveByJoystick extends Command {
 
+    private final OI m_oi;
+    private final Chassis m_chassis;
 
-    private final Manipulator m_manipulator;
-
-    public Release(Manipulator manipulator) {
-        m_manipulator = manipulator;
+    public DriveByJoystick(OI oi, Chassis chassis) {
+        m_chassis = chassis;
+        m_oi = oi;
+        requires(m_chassis);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        SmartDashboard.putBoolean("Drive by Joystick", true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        m_manipulator.collectIn(.75);
+        m_chassis.driveByJoystick(m_oi.getStick());
+        //Robot.chassis.printEncoderValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +41,7 @@ public class Release extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        m_manipulator.stopCollector();
+        m_chassis.stop();
     }
 
     // Called when another command which requires one or more of the same

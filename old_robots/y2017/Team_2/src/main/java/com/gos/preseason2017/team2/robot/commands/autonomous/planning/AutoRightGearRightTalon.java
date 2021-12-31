@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3504.robot.commands.autonomous.planning;
+package com.gos.preseason2017.team2.robot.commands.autonomous.planning;
 
 public class AutoRightGearRightTalon {
     public static final int kNumPoints = 185;
