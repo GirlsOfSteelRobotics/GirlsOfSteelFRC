@@ -2,9 +2,9 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
 
 gos_java_robot(
     name = "Gos2015",
-    srcs = glob(["src/**/*.java"]),
+    srcs = glob(["src/main/java/**/*.java"]),
     disable_checkstyle = True,
-    main_class = "org.usfirst.frc.team3504.robot.Main",
+    main_class = "com.gos.recycle_rush.robot.Main",
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/kauailabs/navx",
