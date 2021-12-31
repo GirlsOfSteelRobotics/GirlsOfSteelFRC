@@ -11,8 +11,8 @@ public class RobotMap {
     public static final int OPERATOR_JOYSTICK = 2;
     public static final int CHASSIS_JOYSTICK = 1;
     public static final int MANIPULATOR_JAG = 5; //Checked on updated list 2/11/14
-    public static final int MANIPULATOR_ENCODER_A = 9;//13; for practice robot //usually 9 and 10Checked on updated list 2/11/14
-    public static final int MANIPULATOR_ENCODER_B = 10;//14; for practice robot //9; //Checked on updated list 2/11/14
+    public static final int MANIPULATOR_ENCODER_A = 9; //13; for practice robot //usually 9 and 10Checked on updated list 2/11/14
+    public static final int MANIPULATOR_ENCODER_B = 10; //14; for practice robot //9; //Checked on updated list 2/11/14
 
     //TestBoard: public static final int RIGHT_JAG_PORT = 4;
     //TestBoard: public static final int LEFT_JAG_PORT = 6;

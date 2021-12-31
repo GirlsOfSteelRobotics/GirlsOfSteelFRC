@@ -26,7 +26,7 @@ public class IncrementShoot extends CommandBase {
     protected void execute() {
         m_sliderValue = m_oi.getShooterSliderValue();
         m_incrementValue = m_shooter.getIncrementValue(m_sliderValue);
-//        speed = shooter.getEncoderRate() + incrementValue;
+        //        speed = shooter.getEncoderRate() + incrementValue;
         m_speed = m_shooter.getPIDSetPoint() + m_incrementValue;
         m_shooter.setPIDSpeed(m_speed);
         if (m_shooter.isWithinSetPoint(m_speed) && !m_oi.areTopRollersOverriden()) {

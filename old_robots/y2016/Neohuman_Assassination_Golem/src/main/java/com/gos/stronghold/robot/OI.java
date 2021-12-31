@@ -33,7 +33,7 @@ import com.gos.stronghold.robot.subsystems.Shooter;
  */
 @SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.NcssCount"})
 public class OI {
-    public enum DriveDirection {kFWD, kREV}
+    public enum DriveDirection { kFWD, kREV }
 
     /**
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
@@ -90,7 +90,7 @@ public class OI {
     //private JoystickButton shooterPistonsOutButtonBoard;
     //private JoystickButton shooterPistonsInButtonBoard;
     //private JoystickButton rollersInButtonBoard;
-    //private	JoystickButton rollersOutButtonBoard;
+    //private    JoystickButton rollersOutButtonBoard;
 
     //game pad
     private final JoystickButton m_collectBallButton;
@@ -176,14 +176,14 @@ public class OI {
 
         //flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 
-        m_flapUp = new JoystickButton(m_gamePad, 8);//switched 7 & 8 again
+        m_flapUp = new JoystickButton(m_gamePad, 8); //switched 7 & 8 again
         m_flapUp.whileHeld(new FlapUp(flap)); //false because it is not rocker button
         m_flapDown = new JoystickButton(m_gamePad, 7);
         m_flapDown.whileHeld(new FlapDown(flap));
         //flapUpRocker = new JoystickButton(buttonBoard, 5);
         //flapUpRocker.whileHeld(new FlapUp(true); //true because using rocker
         //flapDownRocker = new JoystickButton(buttonBoard, 6);
-        //flapDownRocker.whileHeld(new FlapUp(true));//^^
+        //flapDownRocker.whileHeld(new FlapUp(true)); //^^
 
         //pivot
         m_pivotUp = new JoystickButton(m_gamePad, 3); //switched 2 & 3 again
@@ -204,7 +204,7 @@ public class OI {
         if (rozieDrive) {
             m_rozieShiftDownButton = new JoystickButton(m_roziePad, 3);
             m_rozieShiftDownButton.whenPressed(new ShiftDown(shifters));
-            m_rozieFlapUp = new JoystickButton(m_roziePad, 8);//switched 7 & 8 again
+            m_rozieFlapUp = new JoystickButton(m_roziePad, 8); //switched 7 & 8 again
             m_rozieFlapUp.whileHeld(new FlapUp(flap)); //false because it is not rocker button
             m_rozieFlapDown = new JoystickButton(m_roziePad, 7);
             m_rozieFlapDown.whileHeld(new FlapDown(flap));
@@ -276,9 +276,9 @@ public class OI {
     public int getAutonSelector() {
         // Each of the four "button" inputs corresponds to a bit of a binary number
         // encoding the current selection. To simplify wiring, buttons 2-5 were used.
-        return 1 * (m_autonSelector.getRawButton(2) ? 1 : 0) +
-            2 * (m_autonSelector.getRawButton(3) ? 1 : 0) +
-            4 * (m_autonSelector.getRawButton(4) ? 1 : 0) +
-            8 * (m_autonSelector.getRawButton(5) ? 1 : 0);
+        return 1 * (m_autonSelector.getRawButton(2) ? 1 : 0)
+            + 2 * (m_autonSelector.getRawButton(3) ? 1 : 0)
+            + 4 * (m_autonSelector.getRawButton(4) ? 1 : 0)
+            + 8 * (m_autonSelector.getRawButton(5) ? 1 : 0);
     }
 }

@@ -11,9 +11,9 @@ public class TuningShooterPID extends CommandBase {
     private static final double step = 0.025;
     private static final double max = 0.3;
 
-//    //for tuning the i value -> using the p value that we like
-//    double step = 0.002;
-//    double max = 0.1;
+    //    //for tuning the i value -> using the p value that we like
+    //    double step = 0.002;
+    //    double max = 0.1;
 
     private static final int meanLength = (int) ((max - step) / step);
 
@@ -27,7 +27,7 @@ public class TuningShooterPID extends CommandBase {
     private int m_number;
     private double[] m_deviations = new double[dataLength];
     private double[] m_differences = new double[dataLength];
-    private double[] m_devSetPoints = new double[dataLength];//deviation from set point
+    private double[] m_devSetPoints = new double[dataLength]; //deviation from set point
     //setPoint 5 = index 0
     //setPoint 6 = index 1
     //setPoint 30 = index 25
@@ -70,22 +70,22 @@ public class TuningShooterPID extends CommandBase {
     @SuppressWarnings("PMD")
     @Override
     protected void execute() {
-        for (double n = step; n < max; n += step) {//starts at step, goes to max - step
+        for (double n = step; n < max; n += step) { //starts at step, goes to max - step
             for (int setPoint = startSetPoint; setPoint <= maxSetPoint; setPoint++) {
                 //starts at startSetPoint, goes to maxSetPoint
                 m_shooter.resetPIDError();
-//                shooter.setPIDValues(n, 0.0, 0.0); //for tuning the p
+                //                shooter.setPIDValues(n, 0.0, 0.0); //for tuning the p
                 m_shooter.setPIDValues(0.025, n, 0.0); //for tuning the i
                 m_shooter.setPIDSpeed(setPoint);
                 try {
-                    wait(1500);//wait 1.5 seconds so the speed catches on
+                    wait(1500); //wait 1.5 seconds so the speed catches on
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
                 //collect and store the data into the deviations and differences
                 //arrays for a single set point
                 for (int i = 0; i < dataLength; i++) {
-                    if (m_deviations[i] == 0) {//find the next empty slot in the array
+                    if (m_deviations[i] == 0) { //find the next empty slot in the array
                         m_deviations[i] = calculateDeviationData(setPoint);
                         //collect 100 data points (rate from encoder)
                         //and it returns the calculated deviation of the 100 points
@@ -96,48 +96,48 @@ public class TuningShooterPID extends CommandBase {
                         m_devSetPoints[i] = deviationFromSetPoint(setPoint);
                         //deviation equation, but instead of the mean it is
                         //the set point
-                        m_count++;//adds 1 to the counter -> so you know how many
+                        m_count++; //adds 1 to the counter -> so you know how many
                         //total data points are in the array (if it doesn't fill
                         //it all for some reason
                         //not the index number! (1+index number)
-                        break;//once you add the data to the empty slot -> stop
+                        break; //once you add the data to the empty slot -> stop
                         //finding empty slots
                     }
                 }
                 System.out.println("P=" + n + " & Set Point=" + setPoint
                     + " : Diff=" + m_differences[m_count - 1] + " Dev:"
                     + m_deviations[m_count - 1]);
-//                System.out.println("I=" + n + " & Set Point=" + setPoint
-//                        + " : Diff=" + differences[count-1] + " Dev:"
-//                        + deviations[count-1]);
+                //                System.out.println("I=" + n + " & Set Point=" + setPoint
+                //                        + " : Diff=" + differences[count-1] + " Dev:"
+                //                        + deviations[count-1]);
             }
-            m_deviationMean = calculateMean(m_deviations);//calculates the mean for
+            m_deviationMean = calculateMean(m_deviations); //calculates the mean for
             //all deviations for the set points for a given p value
-            m_differencesMean = calculateMean(m_differences);//same, but for the
+            m_differencesMean = calculateMean(m_differences); //same, but for the
             //differences between the set point and the mean rate
             m_devSetPointMean = calculateMean(m_devSetPoints);
             for (int i = 0; i < meanLength; i++) {
-                if (m_deviationMeans[i] == 0) {//find the next empty slot in the means
+                if (m_deviationMeans[i] == 0) { //find the next empty slot in the means
                     //arrays
                     m_deviationMeans[i] = m_deviationMean; //store the deviation for
                     //1 p value in a slot
-                    m_differencesMeans[i] = m_differencesMean;//same, but for the
+                    m_differencesMeans[i] = m_differencesMean; //same, but for the
                     //differences between the set point and mean rate
-                    m_devSetPointMeans[i] = m_devSetPointMean;//same, but for the
+                    m_devSetPointMeans[i] = m_devSetPointMean; //same, but for the
                     //deviation from the set point
                     m_number = i;
                     System.out.println("P=" + n + "Dev Mean:" + m_deviationMean + "="
                         + m_deviationMeans[m_number] + " Diff Mean:" + m_differencesMean + "="
                         + m_differencesMeans[m_number] + " Dev Set Point:" + m_devSetPointMean
                         + "=" + m_devSetPointMeans[m_number]);
-//                    System.out.println("I=" + n + "Dev Mean:" + deviationMean + "="
-//                            + deviationMeans[number] + " Diff Mean:" + differencesMean + "="
-//                            + differencesMeans[number] + " Dev Set Point:" + devSetPointMean
-//                            + "=" + devSetPointMeans[number]);
+                    //                    System.out.println("I=" + n + "Dev Mean:" + deviationMean + "="
+                    //                            + deviationMeans[number] + " Diff Mean:" + differencesMean + "="
+                    //                            + differencesMeans[number] + " Dev Set Point:" + devSetPointMean
+                    //                            + "=" + devSetPointMeans[number]);
                     break;
                 }
             }
-            refreshData();//empty all arrays and numbers that have to do with a
+            refreshData(); //empty all arrays and numbers that have to do with a
             //single p value and lots of set points
         }
         m_run = true;
@@ -155,21 +155,21 @@ public class TuningShooterPID extends CommandBase {
         m_shooter.stopJags();
         int indexDevLow = getIndexofLowest(m_deviationMeans);
         int indexDiffLow = getIndexofLowest(m_differencesMeans);
-        System.out.println("At val=" + ((indexDevLow * step) + step) + "Lowest Deviation Mean:" +
-            m_deviationMeans[indexDevLow] + " Difference Mean:"
-            + m_differencesMeans[indexDevLow] + " Deviation Set Point:" +
-            m_devSetPointMeans[indexDevLow]);
+        System.out.println("At val=" + ((indexDevLow * step) + step) + "Lowest Deviation Mean:"
+            + m_deviationMeans[indexDevLow] + " Difference Mean:"
+            + m_differencesMeans[indexDevLow] + " Deviation Set Point:"
+            + m_devSetPointMeans[indexDevLow]);
         System.out.println("At val=" + ((indexDiffLow * step) + step) + "Lowest Difference Mean:"
-            + m_differencesMeans[indexDiffLow] + " Deviation Mean:" +
-            m_deviationMeans[indexDiffLow] + " Deviation Set Point:" +
-            m_devSetPointMeans[indexDiffLow]);
+            + m_differencesMeans[indexDiffLow] + " Deviation Mean:"
+            + m_deviationMeans[indexDiffLow] + " Deviation Set Point:"
+            + m_devSetPointMeans[indexDiffLow]);
         double bestVal = getBestVal();
         System.out.println("'Best val' (within range & lowest deviation):" + bestVal);
         int indexDevSetPointLow = getIndexofLowest(m_devSetPointMeans);
         System.out.println("At val=" + ((indexDevSetPointLow * step) + step) + "Lowest "
             + "Deviation Set Point:" + m_devSetPointMeans[indexDevSetPointLow]
-            + " Difference Mean:" + m_differencesMeans[indexDevSetPointLow] +
-            " Deviation Mean:" + m_deviationMeans[indexDevSetPointLow]);
+            + " Difference Mean:" + m_differencesMeans[indexDevSetPointLow]
+            + " Deviation Mean:" + m_deviationMeans[indexDevSetPointLow]);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class TuningShooterPID extends CommandBase {
         for (double rate : m_rates) {
             if (rate != 0) {
                 m_rateSum += rate;
-                m_totalRates++;//counter to see how many of spots in the array
+                m_totalRates++; //counter to see how many of spots in the array
                 //have information in them -> if not, it is not used in any
                 //calculations
             }
@@ -220,7 +220,7 @@ public class TuningShooterPID extends CommandBase {
             //square of the difference between the rate and the rate mean
         }
         for (int j = 0; j < m_totalRates; j++) {
-            m_differenceSum += m_variences[j];//adds all the differences together
+            m_differenceSum += m_variences[j]; //adds all the differences together
         }
         m_standardDeviation = Math.sqrt(m_differenceSum) / m_totalRates;
         return m_standardDeviation;

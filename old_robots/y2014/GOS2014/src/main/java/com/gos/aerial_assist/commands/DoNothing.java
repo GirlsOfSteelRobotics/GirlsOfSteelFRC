@@ -25,9 +25,9 @@ public class DoNothing extends CommandBase {
     @Override
     protected void execute() {
         //manipulator.stopJag();
-//        chassis.stopJags();
-//        collector.stopCollector();
-//        collector.stopCollectorWheel();
+        //        chassis.stopJags();
+        //        collector.stopCollector();
+        //        collector.stopCollectorWheel();
     }
 
     @Override
@@ -38,9 +38,9 @@ public class DoNothing extends CommandBase {
     @Override
     protected void end() {
         //manipulator.stopJag();
-//        chassis.stopJags();
-//        collector.stopCollector();
-//        collector.stopCollectorWheel();
+        //        chassis.stopJags();
+        //        collector.stopCollector();
+        //        collector.stopCollectorWheel();
         //manipulator.startPID();
     }
 

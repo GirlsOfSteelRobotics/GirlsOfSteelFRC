@@ -50,9 +50,9 @@ public class AutoShoot extends CommandBase {
             m_shot = true;
         }
         //if the battery lost voltage and is not going up to speed, it increases the speed
-//        if (timeSinceInitialized() > 4 && batteryVoltage < 11.0 && oi.JAG_SPEED <= 0.95) {
-//            oi.JAG_SPEED += 0.05;
-//        }
+        //        if (timeSinceInitialized() > 4 && batteryVoltage < 11.0 && oi.JAG_SPEED <= 0.95) {
+        //            oi.JAG_SPEED += 0.05;
+        //        }
     }
 
     @Override

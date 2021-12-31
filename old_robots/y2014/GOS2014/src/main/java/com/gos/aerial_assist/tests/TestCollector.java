@@ -46,9 +46,9 @@ public class TestCollector extends CommandBase {
         } else {
             m_collector.stopCollectorWheel();
         }
-//        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeStop, false) == true) {
-//            collector.stopCollectorWheel();
-//        }
+        //        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeStop, false) == true) {
+        //            collector.stopCollectorWheel();
+        //        }
         double collectorEncoderValue = m_collector.getCollectorSpeed();
         SmartDashboard.putNumber(RobotMap.CollectorEncoderReader, collectorEncoderValue);
         //This should print out the encoder vlaue on screen. Maybe.

@@ -66,11 +66,11 @@ public class FullTester extends CommandBase {
         //SmartDashboard.putData(new TestPivotArmPID()); //Tests the pivot arm w/ smartdashboard inputs for setpoint
         SmartDashboard.putData(new TuneManipulatorPID(manipulator)); //To tune the pivot arm PID if necessary
         SmartDashboard.putData(new TestCollector(collector)); //to test collector arm + wheel
-//        SmartDashboard.putData(new CollectorWheelForward()); //probably uneccessary since we have testcollector()
-//        SmartDashboard.putData(new CollectorWheelReverse()); //^
-//        SmartDashboard.putData(new CollectorWheelStop()); //^
+        //        SmartDashboard.putData(new CollectorWheelForward()); //probably uneccessary since we have testcollector()
+        //        SmartDashboard.putData(new CollectorWheelReverse()); //^
+        //        SmartDashboard.putData(new CollectorWheelStop()); //^
         SmartDashboard.putData(new ManualPositionPIDTuner(chassis, driving)); //To tune the position chassis PID
-        SmartDashboard.putData(new ChassisLSPBPlanner(chassis, driving));
+        SmartDashboard.putData(new ChassisLspbplanner(chassis, driving));
         SmartDashboard.putData(new MoveToPositionLSPB(chassis, driving, 0.0));
         //SmartDashboard.putData(new VelocityPIDTuner()); //To tune the velocity chassis PID
         SmartDashboard.putData(new AutonomousLowGoal(chassis, driving, camera, manipulator, collector)); //The low goal autonomous

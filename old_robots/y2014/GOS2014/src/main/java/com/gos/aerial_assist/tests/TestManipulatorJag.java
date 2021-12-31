@@ -28,9 +28,9 @@ public class TestManipulatorJag extends CommandBase {
 
     @Override
     protected void execute() {
-//        i++;
-//        while(i == 1)
-//        {
+        //        i++;
+        //        while(i == 1)
+        //        {
         System.out.println("Here");
         m_manipulator.testJagsForward();
         Timer.delay(5);
@@ -38,7 +38,7 @@ public class TestManipulatorJag extends CommandBase {
         Timer.delay(5);
         m_manipulator.testJagsBackward();
         Timer.delay(5);
-//        }
+        //        }
         //manipulator.moveJags(joystick.getY());
     }
 

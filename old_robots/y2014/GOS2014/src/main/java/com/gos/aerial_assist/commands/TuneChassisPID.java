@@ -32,7 +32,7 @@ public class TuneChassisPID extends CommandBase {
     private final double[] m_meanDevSetPoint = new double[lengthP];
 
 
-    private final double[] m_rates = new double[100];//rate of wheel spins
+    private final double[] m_rates = new double[100]; //rate of wheel spins
     private double m_mean; //the average.
     private final Chassis m_chassis;
 

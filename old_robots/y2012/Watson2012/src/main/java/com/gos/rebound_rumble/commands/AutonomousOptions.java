@@ -13,21 +13,21 @@ public class AutonomousOptions extends CommandBase {
     private static final double KEY_SPEED = Shooter.KEY_SPEED;
     private static final double FACE_START = 0.0;
 
-    private final boolean m_autoTrack;//auto track the target using the camera & turret PID
-    private final boolean m_autoShoot;//shoot using the camera
-    private final boolean m_shootFromKey;//dead reckoning shooting from the key
-    private final boolean m_moveToBridge;//do you want to move towards the bridge?
-    private final boolean m_getXDistanceCamera;//get the distance from the target from the camera
+    private final boolean m_autoTrack; //auto track the target using the camera & turret PID
+    private final boolean m_autoShoot; //shoot using the camera
+    private final boolean m_shootFromKey; //dead reckoning shooting from the key
+    private final boolean m_moveToBridge; //do you want to move towards the bridge?
+    private final boolean m_getXDistanceCamera; //get the distance from the target from the camera
     //and calculate how much you need to move to get a certain distance from the
     //bridge -> TODO write method that calculates our position on the field so
     //we can get the yDistance too
-    private double m_xDistance;//distances to get to the bridge
-    private final double m_yDistance;//only work when moveToBridge is true
-    private final boolean m_bridgeCollect;//true -> push down bridge & start collectors
-    private final boolean m_autoShootFromBridge;//use camera to shoot from the position you are
+    private double m_xDistance; //distances to get to the bridge
+    private final double m_yDistance; //only work when moveToBridge is true
+    private final boolean m_bridgeCollect; //true -> push down bridge & start collectors
+    private final boolean m_autoShootFromBridge; //use camera to shoot from the position you are
     //in after moving to the bridge
-    private final boolean m_goBackToKey;//move back to the key (starting place)
-    private final boolean m_shootFromKeyAfterBridge;//after moving back to the key, you shoot
+    private final boolean m_goBackToKey; //move back to the key (starting place)
+    private final boolean m_shootFromKeyAfterBridge; //after moving back to the key, you shoot
 
 
     private final Chassis m_chassis;

@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
     private final Claw m_claw;
     private final Pivot m_pivot;
     private final Camera m_camera;
-    //	private final LEDLights ledlights;
+    //    private final LEDLights ledlights;
     private final Shooter m_shooter;
 
     private Command m_autonomousCommand;

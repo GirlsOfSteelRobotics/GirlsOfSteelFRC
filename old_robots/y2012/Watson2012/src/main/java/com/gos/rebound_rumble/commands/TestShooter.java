@@ -3,12 +3,12 @@ package com.gos.rebound_rumble.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class TESTShooter extends CommandBase {
+public class TestShooter extends CommandBase {
 
     private final Shooter m_shooter;
     private double m_speed;
 
-    public TESTShooter(Shooter shooter) {
+    public TestShooter(Shooter shooter) {
         m_shooter = shooter;
         SmartDashboard.putNumber("Shooter Jag Speed", 0.0);
     }

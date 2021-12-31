@@ -45,7 +45,7 @@ public class EngageCollector extends CommandBase {
     @Override
     protected void execute() {
         m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //-1 for competition robot, 1 for practice robot
-    }//Collector arm moves down to collect and hold ball in trident
+    } //Collector arm moves down to collect and hold ball in trident
 
     /**
      * This method is constantly called to see if the command is finished.
@@ -55,8 +55,8 @@ public class EngageCollector extends CommandBase {
      */
     @Override
     protected boolean isFinished() {
-        return false;//Only for monday (2/10) testing, with use of hardstop
-        //return collector.isCollectorEngaged();//Will be used, but not for monday (2/10) testing because there are not limit switches
+        return false; //Only for monday (2/10) testing, with use of hardstop
+        //return collector.isCollectorEngaged(); //Will be used, but not for monday (2/10) testing because there are not limit switches
         //Tells drivers/whoever that the ball is in the trident and is being held by the collector arm
     }
 

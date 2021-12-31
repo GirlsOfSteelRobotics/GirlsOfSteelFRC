@@ -20,13 +20,13 @@ public class ChassisJagsAndEncoders extends CommandBase {
     public ChassisJagsAndEncoders(Chassis chassis) {
         m_chassis = chassis;
         requires(m_chassis);
-//        SmartDashboard.putBoolean("Right Jag", false);
-//        SmartDashboard.putBoolean("Back Jag", false);
-//        SmartDashboard.putBoolean("Left Jag", false);
-//        SmartDashboard.putNumber("Jag speed", 0.0);
-//        SmartDashboard.putNumber("Right Encoder:", chassis.getRightEncoderDistance());
-//        SmartDashboard.putNumber("Back Encoder:", chassis.getBackEncoderDistance());
-//        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
+        //        SmartDashboard.putBoolean("Right Jag", false);
+        //        SmartDashboard.putBoolean("Back Jag", false);
+        //        SmartDashboard.putBoolean("Left Jag", false);
+        //        SmartDashboard.putNumber("Jag speed", 0.0);
+        //        SmartDashboard.putNumber("Right Encoder:", chassis.getRightEncoderDistance());
+        //        SmartDashboard.putNumber("Back Encoder:", chassis.getBackEncoderDistance());
+        //        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
     }
 
     @Override
@@ -37,19 +37,19 @@ public class ChassisJagsAndEncoders extends CommandBase {
     @Override
     @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
     protected void execute() {
-//        speed = SmartDashboard.getNumber("Jag speed", 0.0);
-//        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoderDistance());
-//        SmartDashboard.putNumber("Back Encoder:", chassis.getBackEncoderDistance());
-//        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
-//        if(SmartDashboard.getBoolean("Right Jag", false)){
-//            chassis.setRightJag(speed);
-//        }
-//        if(SmartDashboard.getBoolean("Back Jag", false)){
-//            chassis.setBackJag(speed);
-//        }
-//        if(SmartDashboard.getBoolean("Left Jag", false)){
-//            chassis.setLeftJag(speed);
-//        }
+        //        speed = SmartDashboard.getNumber("Jag speed", 0.0);
+        //        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoderDistance());
+        //        SmartDashboard.putNumber("Back Encoder:", chassis.getBackEncoderDistance());
+        //        SmartDashboard.putNumber("Left Encoder", chassis.getLeftEncoderDistance());
+        //        if(SmartDashboard.getBoolean("Right Jag", false)){
+        //            chassis.setRightJag(speed);
+        //        }
+        //        if(SmartDashboard.getBoolean("Back Jag", false)){
+        //            chassis.setBackJag(speed);
+        //        }
+        //        if(SmartDashboard.getBoolean("Left Jag", false)){
+        //            chassis.setLeftJag(speed);
+        //        }
 
         //tests to see if Jags goes to set speed
         double allowedError = 0.05;
@@ -64,16 +64,14 @@ public class ChassisJagsAndEncoders extends CommandBase {
         if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
             System.out.println("Passed Right Jag speed test");
         }
-//        System.out.println("R Distance:" + chassis.getRightEncoderDistance());
         //System.out.println("R Rate: " + chassis.getRightEncoderRate());
         desiredSpeed = 0.3;
         m_chassis.setBackJag(desiredSpeed);
         try {
             wait(1000);
         } catch (InterruptedException ex) {
-            ex.printStackTrace();// NOPMD
+            ex.printStackTrace(); // NOPMD
         }
-//        System.out.println("B Distance:" + chassis.getBackEncoderDistance());
         //System.out.println("B Rate: " + chassis.getBackEncoderRate());
         m_speed = m_chassis.getBackEncoderRate();
         if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
@@ -84,9 +82,8 @@ public class ChassisJagsAndEncoders extends CommandBase {
         try {
             wait(1000);
         } catch (InterruptedException ex) {
-            ex.printStackTrace();// NOPMD
+            ex.printStackTrace(); // NOPMD
         }
-//        System.out.println("L Distance:" + chassis.getLeftEncoderDistance());
         m_speed = m_chassis.getLeftEncoderRate();
         if (m_speed > desiredSpeed - allowedError && m_speed < desiredSpeed + allowedError) {
             System.out.println("Passed Left Jag speed test");

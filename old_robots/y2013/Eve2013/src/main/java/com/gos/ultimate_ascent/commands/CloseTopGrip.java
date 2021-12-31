@@ -21,7 +21,7 @@ public class CloseTopGrip extends CommandBase {
     @Override
     protected void execute() {
 
-//        topGripper.closeGrip();
+        //        topGripper.closeGrip();
     }
 
     @Override

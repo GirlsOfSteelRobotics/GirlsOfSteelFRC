@@ -97,7 +97,6 @@ public class Eve2013 extends IterativeRobot {
     @Override
     public void autonomousInit() {
         //Testing
-//        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
@@ -119,7 +118,7 @@ public class Eve2013 extends IterativeRobot {
     @Override
     public void autonomousPeriodic() {
         //Testing
-//        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
+        //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
@@ -132,16 +131,16 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
         Scheduler.getInstance().run();
-//        SmartDashboard.putBoolean("Camera is connected?", ShooterCamera.isConnected());
+        //        SmartDashboard.putBoolean("Camera is connected?", ShooterCamera.isConnected());
         //SmartDashboard.putBoolean("Camera is connected?", ClimberCamera.isConnected());
-//        SmartDashboard.putBoolean("Target is found?", ShooterCamera.foundTarget());
+        //        SmartDashboard.putBoolean("Target is found?", ShooterCamera.foundTarget());
         //     SmartDashboard.putBoolean("Right position to shoot?", ShooterCamera.atShootPosition());
     }
 
     @Override
     public void teleopInit() {
         //Testing
-//        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
+        //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
         //  System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
 
         //Drivers
@@ -171,7 +170,7 @@ public class Eve2013 extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         //Testing
-//        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
+        //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
         //    System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
 
         //Drivers
@@ -197,7 +196,7 @@ public class Eve2013 extends IterativeRobot {
     @Override
     public void testPeriodic() {
         //Testing
-//        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
+        //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
@@ -214,7 +213,7 @@ public class Eve2013 extends IterativeRobot {
     @Override
     public void disabledPeriodic() {
         //Testing
-//        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
+        //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
         //       System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
 
         //Drivers
@@ -227,13 +226,13 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-    }//from KiwiDrive code
+    } //from KiwiDrive code
 
     @Override
     public void disabledInit() {
         //Testing
-//        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
-//        System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
+        //        SmartDashboard.putNumber("camera angle offset", ShooterCamera.getDiffAngle());
+        //        System.out.println("Gryo: " + CommandBase.chassis.getGyroAngle());
 
         //Drivers
         SmartDashboard.putBoolean("Press Shoot?", false);
@@ -245,5 +244,5 @@ public class Eve2013 extends IterativeRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-    }//from KiwiDrive code
+    } //from KiwiDrive code
 }

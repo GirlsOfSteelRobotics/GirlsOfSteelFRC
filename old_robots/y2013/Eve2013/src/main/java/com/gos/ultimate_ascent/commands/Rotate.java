@@ -18,8 +18,7 @@ public class Rotate extends CommandBase {
         if (targetRotate) {
             m_desiredTheta = theta;
         } else {
-            m_desiredTheta = chassis.getGyroAngle() -
-                chassis.getFieldAdjustment() + theta;
+            m_desiredTheta = chassis.getGyroAngle() - chassis.getFieldAdjustment() + theta;
         }
     }
 
@@ -28,8 +27,7 @@ public class Rotate extends CommandBase {
         if (m_targetRotate) {
             m_desiredTheta = m_theta;
         } else {
-            m_desiredTheta = m_chassis.getGyroAngle() -
-                m_chassis.getFieldAdjustment() + m_theta;
+            m_desiredTheta = m_chassis.getGyroAngle() - m_chassis.getFieldAdjustment() + m_theta;
         }
         m_chassis.startAutoRotation();
         //make desired theta between 0-360
@@ -47,8 +45,7 @@ public class Rotate extends CommandBase {
         System.out.println("Gyro: " + m_chassis.getGyroAngle() + "\tCurrent: "
             + m_current + "\tDesired: " + m_desiredTheta + "\tDifference: "
             + m_difference);
-        if (m_desiredTheta - m_chassis.ROTATION_THRESHOLD > m_current ||
-            m_current > m_desiredTheta + m_chassis.ROTATION_THRESHOLD) {
+        if (m_desiredTheta - m_chassis.ROTATION_THRESHOLD > m_current || m_current > m_desiredTheta + m_chassis.ROTATION_THRESHOLD) {
             System.out.print("Rotating...");
             m_chassis.autoRotateTestBot(m_difference);
         } else {

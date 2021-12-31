@@ -2,36 +2,39 @@ package com.gos.rebound_rumble.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
-import com.gos.rebound_rumble.subsystems.Turret;
 
-public class TESTGyro extends CommandBase {
+public class TestTurnToSetPoint extends CommandBase {
+
     private final Chassis m_chassis;
-    private final Turret m_turret;
+    private double m_degreesToTurn;
 
-    public TESTGyro(Chassis chassis, Turret turret) {
+    public TestTurnToSetPoint(Chassis chassis) {
         m_chassis = chassis;
-        m_turret = turret;
         requires(m_chassis);
+        SmartDashboard.putNumber("Turn,degrees", 0.0);
     }
 
     @Override
     protected void initialize() {
+        m_chassis.initEncoders();
+        m_chassis.initPositionPIDs();
     }
 
     @Override
     protected void execute() {
-        SmartDashboard.putNumber("Gyro Angle", m_chassis.getTheta());
-        SmartDashboard.putNumber("Turret Encoder Angle", m_turret.getEncoderDistance());
-        SmartDashboard.putNumber("Turret Angle (Summation)", m_turret.getTurretAngle());
+        m_degreesToTurn = SmartDashboard.getNumber("Turn,degrees", 0.0);
+        m_chassis.turn(m_degreesToTurn);
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return m_chassis.isTurnFinished(m_degreesToTurn);
     }
 
     @Override
     protected void end() {
+        m_chassis.disablePositionPIDs();
+        m_chassis.endEncoders();
     }
 
     @Override

@@ -22,8 +22,8 @@ public class KickerUsingLimitSwitch extends CommandBase {
     private double m_startTime;
     private double m_changeInTime;
 
-    public KickerUsingLimitSwitch(Kicker kicker, int position, boolean usingSD) //0 = loading; 1 = shooting
-    {
+    //0 = loading; 1 = shooting
+    public KickerUsingLimitSwitch(Kicker kicker, int position, boolean usingSD) {
         m_kicker = kicker;
         requires(m_kicker);
         m_loadingOrShooting = position;
@@ -36,8 +36,8 @@ public class KickerUsingLimitSwitch extends CommandBase {
             if (m_smartDashboard) {
                 SmartDashboard.putNumber("Position", -1);
             }
-            if (m_loadingOrShooting == 1 && m_kicker.getLimitSwitch()) //the shooter is already loaded
-            {
+            //the shooter is already loaded
+            if (m_loadingOrShooting == 1 && m_kicker.getLimitSwitch()) {
                 m_isLoaded = true;
             }
             m_startTime = System.currentTimeMillis();
@@ -54,8 +54,8 @@ public class KickerUsingLimitSwitch extends CommandBase {
             if (m_smartDashboard) {
                 m_loadingOrShooting = (int) SmartDashboard.getNumber("Position", 0);
             }
-            if (m_loadingOrShooting == 0) //loading
-            {
+            //loading
+            if (m_loadingOrShooting == 0) {
                 if (!m_kicker.getLimitSwitch()) {
                     //kicker.setJag(1.0);
                     m_kicker.setTalon(1.0);
@@ -93,8 +93,8 @@ public class KickerUsingLimitSwitch extends CommandBase {
             } else if (m_loadingOrShooting == 1) {
                 System.out.println("IS loaded " + m_isLoaded);
                 //comment this out if using SmartDashboard
-                if (!m_isLoaded && !m_smartDashboard) //trying to shoot but the shooter is not loaded
-                {
+                //trying to shoot but the shooter is not loaded
+                if (!m_isLoaded && !m_smartDashboard)  {
                     return true;
                 }
                 return !m_kicker.getLimitSwitch();

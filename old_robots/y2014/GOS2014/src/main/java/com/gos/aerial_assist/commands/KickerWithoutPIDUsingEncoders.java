@@ -16,9 +16,9 @@ public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
     private final Kicker m_kicker;
 
+    //0 = loading; 1 = shooting
     @SuppressWarnings("PMD.UnusedFormalParameter")
-    public KickerWithoutPIDUsingEncoders(Kicker kicker, int loadingOrShooting) //0 = loading; 1 = shooting
-    {
+    public KickerWithoutPIDUsingEncoders(Kicker kicker, int loadingOrShooting) {
         m_kicker = kicker;
         requires(m_kicker);
     }

@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShootHigh extends CommandGroup {
 
     public ShootHigh() {
-//        addParallel(new setArmAnglePID(angle));
-//        addParallel(new LoadKicker());
-//        addSequential(new KickSequential());
+        //        addParallel(new setArmAnglePID(angle));
+        //        addParallel(new LoadKicker());
+        //        addSequential(new KickSequential());
     }
 }

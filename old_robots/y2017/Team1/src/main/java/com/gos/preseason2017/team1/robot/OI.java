@@ -48,20 +48,20 @@ public class OI {
         m_driveStick = new Joystick(0);
         m_gamePad = new Joystick(1);
 
-    /*	shootPrep = new JoystickButton(gamePad, 2);
-        shootPrep.whenPressed(new ShootPrep());
-        shoot = new JoystickButton(gamePad, 3);
-        shoot.whenPressed(new Shoot());
+        /*    shootPrep = new JoystickButton(gamePad, 2);
+            shootPrep.whenPressed(new ShootPrep());
+            shoot = new JoystickButton(gamePad, 3);
+            shoot.whenPressed(new Shoot());
 
-        //collect = new JoystickButton(gamePad, 7);
-        //collect.whileHeld(new Collect());
+            //collect = new JoystickButton(gamePad, 7);
+            //collect.whileHeld(new Collect());
 
-        /*
-        armUp = new JoystickButton(gamePad, 10);
-        armUp.whenPressed(new ArmUp());
-        armDown = new JoystickButton(gamePad, 9);
-        armDown.whenPressed(new ArmDown());
-        */
+            /*
+            armUp = new JoystickButton(gamePad, 10);
+            armUp.whenPressed(new ArmUp());
+            armDown = new JoystickButton(gamePad, 9);
+            armDown.whenPressed(new ArmDown());
+            */
 
         m_shiftUp = new JoystickButton(m_gamePad, 10);
         m_shiftUp.whenPressed(new ShiftUp(shifters));

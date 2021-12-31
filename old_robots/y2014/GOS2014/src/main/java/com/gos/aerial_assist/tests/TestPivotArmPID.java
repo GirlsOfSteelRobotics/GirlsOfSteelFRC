@@ -41,7 +41,7 @@ public class TestPivotArmPID extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-        return false;//Math.abs(desiredAngle-currentAngle) < allowedAngleError;
+        return false; //Math.abs(desiredAngle-currentAngle) < allowedAngleError;
     }
 
     @Override

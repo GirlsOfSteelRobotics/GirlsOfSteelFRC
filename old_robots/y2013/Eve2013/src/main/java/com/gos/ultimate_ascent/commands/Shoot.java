@@ -33,12 +33,12 @@ public class Shoot extends CommandBase {
     @Override
     protected void initialize() {
         if (m_camera) {
-//            speed = PositionInfo.getSpeed(ShooterCamera.getLocation());
+            //            speed = PositionInfo.getSpeed(ShooterCamera.getLocation());
             m_speed = 0.73;
         }
         m_shooter.initEncoder();
         m_time = timeSinceInitialized();
-//        shooter.initPID();
+        //        shooter.initPID();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Shoot extends CommandBase {
 
     @Override
     protected void end() {
-//        shooter.disablePID();
+        //        shooter.disablePID();
         m_shooter.stopJags();
         m_shooter.stopEncoder();
         m_shooter.setShootFalse();

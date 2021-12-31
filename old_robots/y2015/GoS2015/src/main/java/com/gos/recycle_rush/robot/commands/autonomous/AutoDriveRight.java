@@ -15,7 +15,7 @@ public class AutoDriveRight extends Command {
         m_chassis = chassis;
         requires(m_chassis);
         //this.distance = distance;
-        // distance = 50;//107
+        // distance = 50; //107
         this.m_distance = distance;
     }
 

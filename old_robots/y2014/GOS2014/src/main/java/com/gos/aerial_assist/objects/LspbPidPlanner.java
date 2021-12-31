@@ -16,7 +16,7 @@ package com.gos.aerial_assist.objects;
 /**
  * @author Sylvie
  */
-public class LSPBPIDPlanner {
+public class LspbPidPlanner {
 
     private double m_velocity;
     private final double m_acceleration;
@@ -35,7 +35,7 @@ public class LSPBPIDPlanner {
     /*
      This constructor defaults the velocity and acceleration
      */
-    public LSPBPIDPlanner() {
+    public LspbPidPlanner() {
         //To use the LSPB You must first 1.) call calculateVelocityGraph()
         //2.) Call getDesiredPosition() in some loop getting updated times
         m_acceleration = 6; //The default is the chassis's acceleration
@@ -43,7 +43,7 @@ public class LSPBPIDPlanner {
         m_velocity = 3;
     }
 
-    public LSPBPIDPlanner(double acceleration) {
+    public LspbPidPlanner(double acceleration) {
         this.m_acceleration = acceleration;
     }
 
@@ -64,9 +64,9 @@ public class LSPBPIDPlanner {
      */
     @SuppressWarnings("PMD.AvoidReassigningParameters")
     public void calculateVelocityGraph(double desiredDistance) {
-//        pointA = (velocity/acceleration);
-//        pointB = (desiredDistance/velocity);
-//        pointC = pointA + pointB;
+        //        pointA = (velocity/acceleration);
+        //        pointB = (desiredDistance/velocity);
+        //        pointC = pointA + pointB;
         if (desiredDistance < 0) {
             m_negativeSetpoint = true;
             desiredDistance *= -1;
@@ -166,7 +166,7 @@ public class LSPBPIDPlanner {
             if (time >= m_pointC) {
                 setpoint = m_desiredOverallDistance;
             } else {
-                setpoint += m_lastConstant;//Adds on the cumulative sum from the acceleration and constant sections
+                setpoint += m_lastConstant; //Adds on the cumulative sum from the acceleration and constant sections
             }
         }
         //System.out.println("In the decelerating zone! Sent this setpoint: " + setpoint);

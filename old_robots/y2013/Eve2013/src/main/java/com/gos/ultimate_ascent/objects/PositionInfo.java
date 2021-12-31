@@ -16,23 +16,23 @@ public class PositionInfo {
         positions[NO_POSITION] = new Position(0, 0);
         positions[BACK_RIGHT] = new Position(
             Chassis.BACK_RIGHT_OFFSET,
-            0.735);//78
+            0.735); //78
         positions[BACK_LEFT] = new Position(
             Chassis.BACK_LEFT_OFFSET,
             0.81);
-    }//end constructor
+    } //end constructor
 
     public static void set(int position, int angleAdjustment, double shooterSpeed) {
         positions[position] = new Position(angleAdjustment, shooterSpeed);
-    }//end set
+    } //end set
 
     public static int getAngle(int position) {
         return positions[position].getAngle();
-    }//end getAngle
+    } //end getAngle
 
     public static double getSpeed(int position) {
         return positions[position].getSpeed();
-    }//eng getSpeed
+    } //eng getSpeed
 
     private static class Position {
 
@@ -52,6 +52,6 @@ public class PositionInfo {
             return m_speed;
         }
 
-    }//end inner class
+    } //end inner class
 
-}//end class
+} //end class

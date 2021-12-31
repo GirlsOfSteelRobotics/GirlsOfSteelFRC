@@ -2,7 +2,6 @@ package com.gos.stronghold.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,7 +10,7 @@ import com.gos.stronghold.robot.RobotMap;
 /**
  *
  */
-public class Chassis extends Subsystem implements PIDOutput {
+public class Chassis extends Subsystem {
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -62,23 +61,23 @@ public class Chassis extends Subsystem implements PIDOutput {
         addChild("driveRightA", m_driveRightA);
 
         //for the NavBoards
-/**
- try {
- <<<<<<< HEAD
- /* Communicate w/navX MXP via the MXP SPI Bus.
- /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB
- /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.
- ahrs = new AHRS(SPI.Port.kMXP);
- } catch (RuntimeException ex ) {
- DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
- }
- //turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
- /*turnController.setInputRange(-180.0f,  180.0f);
- turnController.setOutputRange(-1.0, 1.0);
- turnController.setAbsoluteTolerance(kToleranceDegrees);
- turnController.setContinuous(true);
- turnController.enable();
- **/
+        /*
+         try {
+         <<<<<<< HEAD
+         /* Communicate w/navX MXP via the MXP SPI Bus.
+         /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB
+         /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details.
+         ahrs = new AHRS(SPI.Port.kMXP);
+         } catch (RuntimeException ex ) {
+         DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+         }
+         //turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+         /*turnController.setInputRange(-180.0f,  180.0f);
+         turnController.setOutputRange(-1.0, 1.0);
+         turnController.setAbsoluteTolerance(kToleranceDegrees);
+         turnController.setContinuous(true);
+         turnController.enable();
+         **/
 
     }
 
@@ -148,22 +147,17 @@ public class Chassis extends Subsystem implements PIDOutput {
         ahrs.zeroYaw();
     }*/
 
-    @Override
-    public void pidWrite(double output) {
-        m_rotateToAngleRate = output;
-    }
-
 
     public void ahrsToSmartDashboard() {
-    /*	SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
-        SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
-        SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
-        SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
-        SmartDashboard.putNumber(	"IMU_RotateToAngleRate",	rotateToAngleRate);
-        SmartDashboard.putNumber("IMU_X_Displacement", ahrs.getDisplacementX());
-        SmartDashboard.putNumber("IMU_Y_Displacement", ahrs.getDisplacementY());
-        SmartDashboard.putNumber("IMU_Z_Displacement", ahrs.getDisplacementZ());
-*/
+        /*    SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
+            SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
+            SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
+            SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+            SmartDashboard.putNumber(    "IMU_RotateToAngleRate",    rotateToAngleRate);
+            SmartDashboard.putNumber("IMU_X_Displacement", ahrs.getDisplacementX());
+            SmartDashboard.putNumber("IMU_Y_Displacement", ahrs.getDisplacementY());
+            SmartDashboard.putNumber("IMU_Z_Displacement", ahrs.getDisplacementZ());
+    */
         getEncoderDistance();
     }
 }

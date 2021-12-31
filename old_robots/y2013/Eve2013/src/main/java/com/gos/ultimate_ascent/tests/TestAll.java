@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * @author kateashwood
  */
-public class TESTAll extends CommandGroup {
+public class TestAll extends CommandGroup {
 
     // Called just before this Command runs the first time
-    public TESTAll(Feeder feeder, com.gos.ultimate_ascent.subsystems.Chassis chassis, com.gos.ultimate_ascent.subsystems.Shooter shooter, com.gos.ultimate_ascent.subsystems.Climber climber, Gripper gripper) {
+    public TestAll(Feeder feeder, com.gos.ultimate_ascent.subsystems.Chassis chassis, com.gos.ultimate_ascent.subsystems.Shooter shooter, com.gos.ultimate_ascent.subsystems.Climber climber, Gripper gripper) {
         //add all test commands to smartdashboard
         SmartDashboard.putData(new Chassis(chassis));
         SmartDashboard.putData(new Shooter(feeder, shooter));

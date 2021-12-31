@@ -344,7 +344,7 @@ public class robotcomtrol extends SimpleRobot {
             message.updateLCD();
             ex.printStackTrace();
         }
-        while (isOperatorControl()) {//main while loop for teleop control
+        while (isOperatorControl()) { //main while loop for teleop control
             getWatchdog().feed();
             Timer.delay(.01);
             val++;
@@ -383,7 +383,7 @@ public class robotcomtrol extends SimpleRobot {
             double Xaxis = joy.getAxis(Joystick.AxisType.kX);
             double Yaxis = joy.getAxis(Joystick.AxisType.kY);
 
-            if (joy.getZ() >= .5) {//z is down turning slower
+            if (joy.getZ() >= .5) { //z is down turning slower
                 Xaxis = joy.getAxis(Joystick.AxisType.kX) * 0.5;
                 Yaxis = joy.getAxis(Joystick.AxisType.kY) * 0.5;
             } else if (joy.getZ() <= -.5) { // z is up
@@ -434,7 +434,7 @@ public class robotcomtrol extends SimpleRobot {
                 ex.printStackTrace();
             }
             prevtime = ((double) System.currentTimeMillis() / 1000.0);
-        }//end while
+        } //end while
     }
 
     /**
@@ -606,7 +606,7 @@ public class robotcomtrol extends SimpleRobot {
                 message.println(DriverStationLCD.Line.kUser6, 1, Double.toString(Pdes));
             } else {
 
-                Pdes = 0.0;//reset Pdes anytime encoder resets
+                Pdes = 0.0; //reset Pdes anytime encoder resets
                 Shol1.changeControlMode(WPI_TalonSRX.TalonControlMode.kPosition);
                 Shol1.setPID(Sholp, Sholi, Shold);
                 Shol1.enableControl();

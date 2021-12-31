@@ -5,6 +5,7 @@
  */
 
 package com.gos.aerial_assist.tests;
+
 /**
  * @author Resetar
  */

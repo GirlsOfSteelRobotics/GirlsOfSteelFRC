@@ -134,40 +134,41 @@ public class AutoTuneCamera extends CommandBase {
         end();
     }
 
-}
+    private static class LinearRegressionAuto {
 
-class LinearRegressionAuto {
+        public static double[] bestFit(double[] x, double[] y, int size) {
+            int n = 0;
+            //first pass: read in data, compute xbar and ybar
+            double sumX = 0.0;
+            double sumY = 0.0;
+            double sumX2 = 0.0;
+            for (int i = n; i < size; i++) {
+                sumX += x[i];
+                sumX2 += x[i] * x[i];
+                sumY += y[i];
+                i++; // NOPMD(AvoidReassigningLoopVariables)
+            }
+            double xBar = sumX / n;
+            double yBar = sumY / n;
 
-    public static double[] bestFit(double[] x, double[] y, int size) {
-        int n = 0;
-        //first pass: read in data, compute xbar and ybar
-        double sumX = 0.0;
-        double sumY = 0.0;
-        double sumX2 = 0.0;
-        for (int i = n; i < size; i++) {
-            sumX += x[i];
-            sumX2 += x[i] * x[i];
-            sumY += y[i];
-            i++; // NOPMD(AvoidReassigningLoopVariables)
+            //second pass: compute summary statistics
+            double xXBar = 0.0;
+            double yYBar = 0.0;
+            double xYBar = 0.0;
+            for (int i = 0; i < n; i++) {
+                xXBar += (x[i] - xBar) * (x[i] - xBar);
+                yYBar += (y[i] - yBar) * (y[i] - yBar);
+                xYBar += (x[i] - xBar) * (y[i] - yBar);
+            }
+            double beta1 = xYBar / xXBar;
+            double beta0 = yBar - beta1 * xBar;
+
+            double[] ab = new double[2];
+            ab[0] = beta1; // a in the equation ax+b
+            ab[1] = beta0; //b in the equation ax+b
+            return ab; //return the array so you can print it up in init
         }
-        double xBar = sumX / n;
-        double yBar = sumY / n;
-
-        //second pass: compute summary statistics
-        double xXBar = 0.0;
-        double yYBar = 0.0;
-        double xYBar = 0.0;
-        for (int i = 0; i < n; i++) {
-            xXBar += (x[i] - xBar) * (x[i] - xBar);
-            yYBar += (y[i] - yBar) * (y[i] - yBar);
-            xYBar += (x[i] - xBar) * (y[i] - yBar);
-        }
-        double beta1 = xYBar / xXBar;
-        double beta0 = yBar - beta1 * xBar;
-
-        double[] ab = new double[2];
-        ab[0] = beta1; // a in the equation ax+b
-        ab[1] = beta0; //b in the equation ax+b
-        return ab; //return the array so you can print it up in init
     }
+
 }
+

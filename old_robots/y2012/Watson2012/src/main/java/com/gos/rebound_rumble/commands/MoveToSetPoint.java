@@ -28,10 +28,10 @@ public class MoveToSetPoint extends CommandBase {
         if (m_timeFinished == -1 && m_chassis.isMoveFinished(m_distanceToMove)) {
             m_timeFinished = timeSinceInitialized();
         }
-//        if(timeSinceInitialized() > 3){
-//            System.out.println("Move to Set Point Timed Out");
-//            end();
-//        }
+        //        if(timeSinceInitialized() > 3){
+        //            System.out.println("Move to Set Point Timed Out");
+        //            end();
+        //        }
     }
 
     @Override

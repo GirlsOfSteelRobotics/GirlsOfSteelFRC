@@ -11,7 +11,7 @@ public class ShootUsingTable extends CommandBase {
     private final OI m_oi;
     private final Joystick m_operatorJoystick;
 
-    private final boolean m_bank;//bank does not do anything -> tuned for banking // NOPMD
+    private final boolean m_bank; //bank does not do anything -> tuned for banking // NOPMD
     private double m_cameraDistance;
 
     public ShootUsingTable(Shooter shooter, OI oi, boolean bank) { //bank = false for autonomous
@@ -34,13 +34,13 @@ public class ShootUsingTable extends CommandBase {
 
     @Override
     protected void execute() {
-//        if(bank){
-//            shooter.autoShootBank(cameraDistance);
-//        }else{
+        //        if(bank){
+        //            shooter.autoShootBank(cameraDistance);
+        //        }else{
         m_shooter.autoShoot(m_cameraDistance);
-//        }
-        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
-            Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
+        //        }
+        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3
+            || Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
             m_shooter.topRollersForward();
         }
         System.out.println("Encoder Values:" + m_shooter.getEncoderRate());

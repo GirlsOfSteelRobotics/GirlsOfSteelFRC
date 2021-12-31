@@ -33,7 +33,7 @@ public class ShooterJags extends CommandBase {
         m_time = timeSinceInitialized();
         while (timeSinceInitialized() - m_time < 4) { // NOPMD(EmptyWhileStmt)
             // Wait for init
-        }//overall wait time is 4 + WAIT_TIME = 5
+        } //overall wait time is 4 + WAIT_TIME = 5
         m_time = timeSinceInitialized();
     }
 
@@ -41,11 +41,11 @@ public class ShooterJags extends CommandBase {
     @SuppressWarnings("PMD.CollapsibleIfStatements")
     protected void execute() {
         if (SmartDashboard.getBoolean("Shooter Jags", false)) {
-//            shooter.setJags(speed);
-//            shooter.setShootTrue();
-//        }else{
-//            shooter.setJags(0.0);
-//        }
+            //            shooter.setJags(speed);
+            //            shooter.setShootTrue();
+            //        }else{
+            //            shooter.setJags(0.0);
+            //        }
             if (timeSinceInitialized() - m_time > WAIT_TIME) {
                 if (!m_pushed) {
                     m_feeder.pushShooter();
@@ -53,7 +53,7 @@ public class ShooterJags extends CommandBase {
                 } else {
                     m_feeder.pullShooter();
                     m_pushed = false;
-//                counter++;
+                    //                counter++;
                 }
                 m_time = timeSinceInitialized();
             }

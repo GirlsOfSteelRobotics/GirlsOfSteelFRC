@@ -141,7 +141,7 @@ public class OI {
         m_normalDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, NORMAL_DRIVE, HALF_TURNING));
         m_slowDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
         m_mediumDriveJags.whenPressed((new DriveSlowTurning(chassis, m_driverJoystick, MEDIUM_DRIVE, MEDIUM_TURNING)));
-        m_driveSlowVelocity.whenPressed(new DriveSlowVelocity(chassis, m_driverJoystick));//at the momement
+        m_driveSlowVelocity.whenPressed(new DriveSlowVelocity(chassis, m_driverJoystick)); //at the momement
         //doesn't work -> not really necessary (not used for bridge really)
         m_bridgeArmDown.whenPressed(new BridgeDown(bridge));
         m_bridgeArmUp.whenPressed(new BridgeUp(bridge));
@@ -171,7 +171,7 @@ public class OI {
         m_autoShoot.whileHeld(new ShootUsingTable(shooter, this, true));
         m_disableShooter.whenPressed(new DisableShooter(shooter));
         m_disableTurret.whenPressed(new DisableTurret(turret));
-        m_shootFromKey.whileHeld(new Shoot(shooter, this, 24.0));//dead-reckoning from key
+        m_shootFromKey.whileHeld(new Shoot(shooter, this, 24.0)); //dead-reckoning from key
         m_reverseTopMiddleRollers.whileHeld(new ReverseTopMiddleRollers(collector, shooter));
     }
 
@@ -184,7 +184,7 @@ public class OI {
     }
 
     public boolean isCollectCameraDataPressed() {
-//        if(operatorJoystick.getRawButton(COLLECT_CAMERA_DATA)){
+        //        if(operatorJoystick.getRawButton(COLLECT_CAMERA_DATA)){
         return true;
     }
 
@@ -210,18 +210,18 @@ public class OI {
 
     //This button is an analog(because we ran out of digital) so I changed the following function.
     public boolean areTopRollersOverriden() {
-//        double switchValue = 0.0;
-//        try {
-//            switchValue = m_enhancedIoJoystick.getRawAxis(TOP_ROLLERS_OVERRIDE_SWITCH);
-//        } catch (EnhancedIOException ex) {
-//            ex.printStackTrace();
-//        }
-//        //System.out.println("Top Rollers switch:" + switchValue);
-//        if (switchValue < 0) {
-//            return true;
-//        } else {
-//            return false;
-//        }
+        //        double switchValue = 0.0;
+        //        try {
+        //            switchValue = m_enhancedIoJoystick.getRawAxis(TOP_ROLLERS_OVERRIDE_SWITCH);
+        //        } catch (EnhancedIOException ex) {
+        //            ex.printStackTrace();
+        //        }
+        //        //System.out.println("Top Rollers switch:" + switchValue);
+        //        if (switchValue < 0) {
+        //            return true;
+        //        } else {
+        //            return false;
+        //        }
         return false;
     }
 

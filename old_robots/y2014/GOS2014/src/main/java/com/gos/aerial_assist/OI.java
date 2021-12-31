@@ -79,12 +79,12 @@ public class OI {
         m_operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
         m_chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 
-//        leftKick = new JoystickButton(chassisJoystick, TRIANGLE);
-//        leftKick.whileHeld(new MoveKickerSide(1));
-//        rightKick = new JoystickButton(chassisJoystick, SQUARE);
-//        rightKick.whileHeld(new MoveKickerSide(0));
-//        bothKicks = new JoystickButton(chassisJoystick, X);
-//        bothKicks.whileHeld(new MoveKickerSide(2));
+        //        leftKick = new JoystickButton(chassisJoystick, TRIANGLE);
+        //        leftKick.whileHeld(new MoveKickerSide(1));
+        //        rightKick = new JoystickButton(chassisJoystick, SQUARE);
+        //        rightKick.whileHeld(new MoveKickerSide(0));
+        //        bothKicks = new JoystickButton(chassisJoystick, X);
+        //        bothKicks.whileHeld(new MoveKickerSide(2));
         m_manipulatorUp = new JoystickButton(m_operatorJoystick, R1);
         m_manipulatorUp.whileHeld(new ManipulatorArmUpPID(manipulator));
         //manipulatorUp.whileHeld(new ManipulatorManualUp());
@@ -108,8 +108,8 @@ public class OI {
         /*
          Not actually down (its just in) as per driver request
          */
-//        collectorWheelOut = new JoystickButton(operatorJoystick, L1);
-//        collectorWheelOut.whileHeld(new CollectorWheelReverse());
+        //        collectorWheelOut = new JoystickButton(operatorJoystick, L1);
+        //        collectorWheelOut.whileHeld(new CollectorWheelReverse());
         //collectorArmDownAndIn.whileHeld(new CollectorDownAndWheelIn());
         m_collectorWheelIn = new JoystickButton(m_operatorJoystick, X);
         m_collectorWheelIn.whileHeld(new CollectorWheelForward(collector));
@@ -125,7 +125,7 @@ public class OI {
         m_holdChassis2 = new JoystickButton(m_chassisJoystick, L2);
         m_holdChassis2.whileHeld(new HoldChassisInPlace(chassis));
 
-        //  lowGoalShoot = new JoystickButton(operatorJoystick, HOME);//Should be changed for driver preference
+        //  lowGoalShoot = new JoystickButton(operatorJoystick, HOME); //Should be changed for driver preference
         //  lowGoalShoot.whenPressed(new ShootLowGoal());
         // scaledArcadeDrive = new JoystickButton(chassisJoystick, L2);
         // scaledArcadeDrive.whenPressed(new ScaledArcadeDrive(slowpokescale));
@@ -134,11 +134,11 @@ public class OI {
         //  manipulatorDown = new JoystickButton(operatorJoystick, R2);
         //  manipulatorDown.whileHeld(new ManipulatorManualDown());
         //        kickingButton.whenPressed(new Kick(0, 0)); //Angle and force would need to be changed
-//        retractKickerButton.whenPressed(new RetractKicker());
-//        testLimitSwitchButton.whenPressed(new TestLimitSwitch());
+        //        retractKickerButton.whenPressed(new RetractKicker());
+        //        testLimitSwitchButton.whenPressed(new TestLimitSwitch());
         //  testing.whenPressed(new CollectBallWithWheel());
-//        testKickerJag = new JoystickButton(leftJoystick, CIRCLE);
-//        testKickerJag.whenPressed(new TestKicker());
+        //        testKickerJag = new JoystickButton(leftJoystick, CIRCLE);
+        //        testKickerJag.whenPressed(new TestKicker());
         // testLimitSwitchButton = new JoystickButton(operatorJoystick, 4); //TODO: Change
         // testing = new JoystickButton(operatorJoystick, 8);
         /*  collectorArmUp = new JoystickButton(operatorJoystick, 5);

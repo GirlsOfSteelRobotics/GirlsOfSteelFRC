@@ -47,7 +47,7 @@ public class AutoShootMany extends CommandBase {
             } else {
                 m_feeder.pullShooter();
                 m_pushed = false;
-//                counter++;
+                //                counter++;
             }
             m_time = timeSinceInitialized();
         }
@@ -55,7 +55,7 @@ public class AutoShootMany extends CommandBase {
 
     @Override
     protected boolean isFinished() {
-        return m_counter >= m_shots;//counter is never changed -> continue to shoot
+        return m_counter >= m_shots; //counter is never changed -> continue to shoot
         //just in case a frisbee got stuck
     }
 

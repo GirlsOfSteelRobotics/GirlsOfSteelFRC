@@ -15,8 +15,8 @@ public class OpenAllGrippers extends CommandBase {
     private final Gripper m_gripper;
 
     public OpenAllGrippers(Gripper bottomGripper) {
-//        requires(topGripper);
-//        requires(middleGripper);
+        //        requires(topGripper);
+        //        requires(middleGripper);
         m_gripper = bottomGripper;
         requires(m_gripper);
     }
@@ -31,8 +31,8 @@ public class OpenAllGrippers extends CommandBase {
 
     @Override
     protected void execute() {
-//        topGripper.openGrip();
-//        middleGripper.openGrip();
+        //        topGripper.openGrip();
+        //        middleGripper.openGrip();
         m_gripper.openGrip();
     }
 

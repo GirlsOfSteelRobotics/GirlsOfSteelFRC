@@ -8,7 +8,7 @@ package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.Configuration;
-import com.gos.aerial_assist.objects.LSPBPIDPlanner;
+import com.gos.aerial_assist.objects.LspbPidPlanner;
 import com.gos.aerial_assist.subsystems.Chassis;
 import com.gos.aerial_assist.subsystems.Driving;
 
@@ -19,8 +19,8 @@ public class MoveToPositionLSPB extends CommandBase {
     private static final double m_offBy = 0.05;
 
     private final Chassis m_chassis;
-    private final LSPBPIDPlanner m_leftChassisPlanner;
-    private final LSPBPIDPlanner m_rightChassisPlanner;
+    private final LspbPidPlanner m_leftChassisPlanner;
+    private final LspbPidPlanner m_rightChassisPlanner;
     private double m_setPoint;
     private double m_startTime;
     private double m_changeInTime;
@@ -32,8 +32,8 @@ public class MoveToPositionLSPB extends CommandBase {
         requires(driving);
         m_setPoint = setPoint;
         System.out.println("Moving Made!");
-//         chassis.initEncoders();
-//        chassis.resetEncoders();
+        //         chassis.initEncoders();
+        //        chassis.resetEncoders();
     }
 
     @Override

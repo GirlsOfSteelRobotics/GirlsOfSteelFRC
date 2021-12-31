@@ -27,10 +27,10 @@ public class FullClimb extends CommandGroup {
         for (int barCount = 0; barCount < 2; barCount++) {
             //This goes through the sequence of opening all of the grips when
             //at the set of bars, and then closes them right after passing by them
-//            topGripperSequence.addSequential(new OpenGripAtBar(CommandBase.topGripper));
-//            topGripperSequence.addSequential(new CloseGripPastBar(CommandBase.topGripper));
-//            middleGripperSequence.addSequential(new OpenGripAtBar(CommandBase.middleGripper));
-//            middleGripperSequence.addSequential(new CloseGripPastBar(CommandBase.middleGripper));
+            //            topGripperSequence.addSequential(new OpenGripAtBar(CommandBase.topGripper));
+            //            topGripperSequence.addSequential(new CloseGripPastBar(CommandBase.topGripper));
+            //            middleGripperSequence.addSequential(new OpenGripAtBar(CommandBase.middleGripper));
+            //            middleGripperSequence.addSequential(new CloseGripPastBar(CommandBase.middleGripper));
             bottomGripperSequence.addSequential(new OpenGripAtBar(bottomGripper));
             bottomGripperSequence.addSequential(new CloseGripPastBar(bottomGripper));
         }
@@ -40,7 +40,7 @@ public class FullClimb extends CommandGroup {
 
         addSequential(new WaitForChildren()); //waiting for the parallel little command groups to finish off(they will) and then continues with the main thread.
         //This is so that we can move up the vertical part of the pyramid.
-//        addSequential(new OpenGripAtBar(CommandBase.topGripper));
+        //        addSequential(new OpenGripAtBar(CommandBase.topGripper));
         //Stops the climbing movement
         addSequential(new StopClimbMotors(climber));
     }

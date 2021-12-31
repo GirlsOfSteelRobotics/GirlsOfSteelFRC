@@ -28,8 +28,8 @@ public class ShootBestFitLine extends CommandBase {
     @Override
     protected void execute() {
         m_shooter.autoShootBestFitLine(m_cameraDistance);
-        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3 ||
-            Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
+        if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3
+            || Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
             m_shooter.topRollersForward();
         }
     }

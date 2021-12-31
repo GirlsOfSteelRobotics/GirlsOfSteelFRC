@@ -27,7 +27,7 @@ public class HoldChassisInPlace extends CommandBase {
         m_chassis.initEncoders();
         m_chassis.initPositionPIDS();
         m_chassis.resetPositionPIDError();
-        m_setPoint = m_chassis.getLeftEncoderDistance();//The current position, which must be maintained
+        m_setPoint = m_chassis.getLeftEncoderDistance(); //The current position, which must be maintained
         m_chassis.setLeftPositionPIDValues(5, 0, 0);
         m_chassis.setRightPositionPIDValues(5, 0, 0);
     }

@@ -37,8 +37,8 @@ public class ManipulatorManualUp extends CommandBase {
     @Override
     protected void end() {
         m_manipulator.stopManipulator();
-//        manipulator.resetPIDError();
-//        manipulator.startPID();
+        //        manipulator.resetPIDError();
+        //        manipulator.startPID();
         m_manipulator.initEncoder();
     }
 

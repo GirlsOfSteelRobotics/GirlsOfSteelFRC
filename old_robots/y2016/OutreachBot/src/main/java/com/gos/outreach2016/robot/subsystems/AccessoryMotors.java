@@ -11,7 +11,7 @@ public class AccessoryMotors extends Subsystem {
     private final Victor m_accessoryLeft;
     private final Victor m_accessoryRight;
 
-    public enum Direction {kFwd, kRev}
+    public enum Direction { kFwd, kRev }
 
     public AccessoryMotors() {
         m_accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);

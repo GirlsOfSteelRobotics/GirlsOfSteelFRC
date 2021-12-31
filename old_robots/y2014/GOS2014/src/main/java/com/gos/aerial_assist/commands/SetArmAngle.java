@@ -38,10 +38,10 @@ public class SetArmAngle extends CommandBase {
     protected void execute() {
         //manipulator.getCurrentAngle(angle);
         System.out.println("Setting the angle! :D");
-//        manipulator.moveAngle();
+        //        manipulator.moveAngle();
         System.out.println(m_angle);
         m_manipulator.moveJag(m_desired);
-        m_angle = m_manipulator.getAbsoluteDistance();//TODO check logic
+        m_angle = m_manipulator.getAbsoluteDistance(); //TODO check logic
 
         // Calls SetArmAngle function. Passes angle from constructor.
 
@@ -49,9 +49,9 @@ public class SetArmAngle extends CommandBase {
         //joystickPostion = oi.getRightJoystick().getRawAxis(3);
         //System.out.println ("joystickPostition");
 
-//        double m=90;
-//        double x = joystickPosition;
-//        joystickPosition = m*x/2 + m/2;
+        //        double m=90;
+        //        double x = joystickPosition;
+        //        joystickPosition = m*x/2 + m/2;
 
         //SetArmAngle isn't a method yet....setArmAngle(joystickPosition);
         /* create a varable thats a double
