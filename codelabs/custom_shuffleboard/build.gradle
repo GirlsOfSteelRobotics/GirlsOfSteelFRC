@@ -14,4 +14,4 @@ application {
     mainClassName = 'com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureStandaloneMain'
 }
 
-apply from: "${rootDir}/libraries/build_scripts/custom_dashboard_helper.gradle"
+apply from: "${rootDir}/build_scripts/gradle/custom_dashboard_helper.gradle"

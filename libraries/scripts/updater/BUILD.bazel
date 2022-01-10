@@ -1,0 +1,44 @@
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary", "gos_py_library")
+
+gos_py_library(
+    name = "utils",
+    srcs = ["utils.py"],
+)
+
+gos_py_binary(
+    name = "replace_gradlerio_files",
+    srcs = ["replace_gradlerio_files.py"],
+    deps = [
+        ":utils",
+        "//libraries/scripts/git:git_python_wrappers",
+    ],
+)
+
+gos_py_binary(
+    name = "replace_old_names",
+    srcs = ["replace_old_names.py"],
+    deps = [
+        ":utils",
+        "//libraries/scripts/git:git_python_wrappers",
+    ],
+)
+
+gos_py_binary(
+    name = "update_vendor_deps",
+    srcs = ["update_vendor_deps.py"],
+    deps = [
+        "//libraries/scripts/git:git_python_wrappers",
+        "//libraries/scripts/updater:utils",
+    ],
+)
+
+gos_py_binary(
+    name = "update_everything",
+    srcs = ["update_everything.py"],
+    deps = [
+        ":replace_gradlerio_files",
+        ":replace_old_names",
+        ":update_vendor_deps",
+        "//libraries/scripts/gradle:run_spotless",
+    ],
+)
