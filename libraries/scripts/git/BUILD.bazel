@@ -1,0 +1,17 @@
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary", "gos_py_library")
+
+gos_py_binary(
+    name = "cleanup_gone_branches",
+    srcs = ["cleanup_gone_branches.py"],
+)
+
+gos_py_binary(
+    name = "install_gitconfig",
+    srcs = ["install_gitconfig.py"],
+)
+
+gos_py_library(
+    name = "git_python_wrappers",
+    srcs = ["git_python_wrappers.py"],
+    visibility = ["//libraries/scripts:__subpackages__"],
+)

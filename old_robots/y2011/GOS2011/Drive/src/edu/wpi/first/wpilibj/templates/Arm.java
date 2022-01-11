@@ -194,7 +194,7 @@ public class Arm extends SimpleRobot {
             message.updateLCD();
             ex.printStackTrace();
         }
-        while (isOperatorControl())  //main while loop for teleop control
+        while (isOperatorControl()) { //main while loop for teleop control
             getWatchdog().feed();
             Timer.delay(.01);
             val++;

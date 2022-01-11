@@ -1,0 +1,17 @@
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary", "gos_py_library")
+
+gos_py_library(
+    name = "gradlew_python_wrapper",
+    srcs = ["gradlew_python_wrapper.py"],
+    visibility = ["//libraries/scripts:__subpackages__"],
+)
+
+gos_py_binary(
+    name = "run_spotless",
+    srcs = ["run_spotless.py"],
+    visibility = ["//libraries/scripts:__subpackages__"],
+    deps = [
+        ":gradlew_python_wrapper",
+        "//libraries/scripts/git:git_python_wrappers",
+    ],
+)
