@@ -98,8 +98,8 @@ public class Shooter extends SubsystemBase {
     public void setRPM(final double rpm) {
         m_goalRPM = rpm;
         m_pidController.setReference(rpm, ControlType.kVelocity);
-        // double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
-        // m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
+        //double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
+        //m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
         m_limelight.turnLimelightOn();
     }
 
