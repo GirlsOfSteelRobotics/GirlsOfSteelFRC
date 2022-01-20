@@ -51,9 +51,7 @@ public class Chassis extends Subsystem {
         m_robotDrive.setExpiration(0.2);
         m_robotDrive.setSensitivity(0.5);
         m_robotDrive.setMaxOutput(1.0);
-
-        m_robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kRearLeft, false);
-        m_robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kRearRight, false);
+
 
         // V per sec; 12 = zero to full speed in 1 second
         m_driveLeftA.configOpenloopRamp(1.0);
@@ -111,7 +109,7 @@ public class Chassis extends Subsystem {
     }
 
     public void turn(double speed, double curve) {
-        m_robotDrive.drive(speed, curve);
+        m_robotDrive.arcadeDrive(speed, curve);
     }
 
     public void stop() {

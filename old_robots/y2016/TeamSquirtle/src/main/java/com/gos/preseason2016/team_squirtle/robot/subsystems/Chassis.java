@@ -43,7 +43,7 @@ public class Chassis extends Subsystem {
     }
 
     public void driveForward() {
-        m_driveSystem.drive(.5, 0);
+        m_driveSystem.arcadeDrive(.5, 0);
     }
 
     public double resetDistance() {

@@ -99,9 +99,7 @@ public class Chassis extends Subsystem {
 
         m_gosDrive.setMaxOutput(topSpeed);
 
-        // Invert the left side motors
-        m_gosDrive.setInvertedMotor(MotorType.kRearRight, true);
-        m_gosDrive.setInvertedMotor(MotorType.kFrontRight, true);
+        // Invert the left side motors
         m_gosDrive.setExpiration(0.1);
         m_gosDrive.setSafetyEnabled(false);
         SmartDashboard.putNumber("Front Left", 0.0);
@@ -221,7 +219,7 @@ public class Chassis extends Subsystem {
         SmartDashboard.putNumber("FUSED HEADING!!!!!", m_gyro.getFusedHeading());
         SmartDashboard.putNumber("Closed Loop Error", m_frontRightWheel.getClosedLoopError());
 
-        m_gosDrive.mecanumDrive_Cartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
+        m_gosDrive.driveCartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
             beattieDeadBand(stick.getX()) * throttleSpeed(stick),
             (beattieTwistDeadBand(stick.getTwist())) * throttleSpeed(stick),
             m_getGyro ? temp : 0);
@@ -274,44 +272,44 @@ public class Chassis extends Subsystem {
 
     public void autoDriveRight(double goalDist) {
         // figure out what the angle should be
-        m_gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);
+        m_gosDrive.drivePolar(calculateSpeed(goalDist, getDistanceRight()), 180, 0);
     }
 
     public void autoDriveLeft(double goalDist) {
-        m_gosDrive.mecanumDrive_Polar(calculateSpeed(goalDist, getDistanceLeft()), 0, 0);
+        m_gosDrive.drivePolar(calculateSpeed(goalDist, getDistanceLeft()), 0, 0);
     }
 
     public void autoDriveBackward(double goalDist) {
         // check to make sure this angle is correct
-        m_gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), 270, 0);
+        m_gosDrive.drivePolar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), 270, 0);
     }
 
     public void autoDriveForward(double goalDist) {
-        m_gosDrive.mecanumDrive_Polar(calculateSpeedStrafing(goalDist, getDistanceForward()), 90, 0);
+        m_gosDrive.drivePolar(calculateSpeedStrafing(goalDist, getDistanceForward()), 90, 0);
     }
 
     public void autoTurnClockwise() {
-        m_gosDrive.mecanumDrive_Cartesian(0, 0, autoSpeed, 0);
+        m_gosDrive.driveCartesian(0, 0, autoSpeed, 0);
     }
 
     public void autoTurnCounterclockwise() {
-        m_gosDrive.mecanumDrive_Cartesian(0, 0, -autoSpeed, 0);
+        m_gosDrive.driveCartesian(0, 0, -autoSpeed, 0);
     }
 
     public void driveForward() {
-        m_gosDrive.mecanumDrive_Polar(1, 90, 0);
+        m_gosDrive.drivePolar(1, 90, 0);
     }
 
     public void driveBackward(Joystick chassisJoystick) {
-        m_gosDrive.mecanumDrive_Cartesian(0, -throttleSpeed(chassisJoystick), 0, 0);
+        m_gosDrive.driveCartesian(0, -throttleSpeed(chassisJoystick), 0, 0);
     }
 
     public void driveRight(Joystick chassisJoystick) {
-        m_gosDrive.mecanumDrive_Cartesian(-throttleSpeed(chassisJoystick), 0, 0, 0);
+        m_gosDrive.driveCartesian(-throttleSpeed(chassisJoystick), 0, 0, 0);
     }
 
     public void driveLeft(Joystick chassisJoystick) {
-        m_gosDrive.mecanumDrive_Cartesian(throttleSpeed(chassisJoystick), 0, 0, 0);
+        m_gosDrive.driveCartesian(throttleSpeed(chassisJoystick), 0, 0, 0);
     }
 
     public void stop() {

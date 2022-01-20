@@ -1,6 +1,6 @@
 package com.gos.aerial_assist.commands;
-
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.objects.Camera;
 import com.gos.aerial_assist.subsystems.Chassis;
@@ -108,9 +108,9 @@ public class AutoTuneCamera extends CommandBase {
         double b = ab[1];
 
         if (!Double.isNaN(a)) {
-            NetworkTable table = NetworkTable.getTable("camera");
-            table.putNumber("slope", a);
-            table.putNumber("yInt", b);
+            NetworkTable table = NetworkTableInstance.getDefault().getTable("camera");
+            table.getEntry("slope").setNumber(a);
+            table.getEntry("yInt").setNumber(b);
             //print results
             System.out.println("y=" + a + "*x+" + b);
         }

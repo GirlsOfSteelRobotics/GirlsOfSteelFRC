@@ -1,6 +1,6 @@
 package com.gos.rebound_rumble.commands;
-
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.objects.Camera;
 import com.gos.rebound_rumble.subsystems.Chassis;
@@ -128,9 +128,9 @@ public class ManualTuneCamera extends CommandBase {
         double b = ab[1];
 
         if (!Double.isNaN(a)) {
-            NetworkTable table = NetworkTable.getTable("camera");
-            table.putDouble("Slope", a);
-            table.putDouble("yInt", b);
+            NetworkTable table = NetworkTableInstance.getDefault().getTable("camera");
+            table.getEntry("Slope").setNumber(a);
+            table.getEntry("yInt").setNumber(b);
             // print results
             System.out.println("y   = " + a + " * x + " + b);
         }

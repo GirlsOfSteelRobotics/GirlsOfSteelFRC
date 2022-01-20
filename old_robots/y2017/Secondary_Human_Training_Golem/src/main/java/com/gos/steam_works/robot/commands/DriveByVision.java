@@ -63,7 +63,7 @@ public class DriveByVision extends Command {
     @Override
     protected void execute() {
 
-        /*table = NetworkTable.getTable("GRIP/myContoursReport");
+        /*table = NetworkTableInstance.getDefault().getTable("GRIP/myContoursReport");
 
         double[] centerX = new double[2];
         centerX = table.getNumberArray("centerX", defaultValue);*/

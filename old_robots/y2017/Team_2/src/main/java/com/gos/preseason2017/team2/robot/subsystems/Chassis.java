@@ -37,9 +37,7 @@ public class Chassis extends Subsystem {
         m_driveRightB.follow(m_driveRightA);
 
 
-        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
-        m_robotDrive.setInvertedMotor(MotorType.kRearLeft, true);
-        m_robotDrive.setInvertedMotor(MotorType.kRearRight, true);
+        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
     }
 
     // Put methods for controlling this subsystem
@@ -54,12 +52,12 @@ public class Chassis extends Subsystem {
     }
 
     public void driveSpeed(double speed) {
-        m_robotDrive.drive(-speed, 0);
+        m_robotDrive.arcadeDrive(-speed, 0);
     }
 
     public void stop() {
         // TODO Auto-generated method stub
-        m_robotDrive.drive(/* speed */0, /* curve */0);
+        m_robotDrive.arcadeDrive(/* speed */0, /* curve */0);
     }
 
     public double getRightEncoderPosition() {

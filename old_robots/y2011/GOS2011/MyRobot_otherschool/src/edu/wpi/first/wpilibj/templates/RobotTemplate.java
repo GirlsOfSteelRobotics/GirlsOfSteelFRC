@@ -185,9 +185,7 @@ public class RobotTemplate extends TimedRobot {
         possesL.setNeutralMode(NeutralMode.kBrake);
         possesR.setNeutralMode(NeutralMode.kBrake);
         kicker.setNeutralMode(NeutralMode.kBrake);
-
-        myDrive.setInvertedMotor(DifferentialDrive.MotorType.kFrontRight, true);
-        myDrive.setInvertedMotor(DifferentialDrive.MotorType.kRearRight, true);
+
 
         drivingJoystick.setAxisChannel(Joystick.AxisType.kTwist, 4);
         drivingJoystick.setAxisChannel(Joystick.AxisType.kThrottle, 5);

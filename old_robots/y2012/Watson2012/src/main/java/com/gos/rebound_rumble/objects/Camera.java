@@ -1,6 +1,6 @@
 package com.gos.rebound_rumble.objects;
-
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.UnnecessaryLocalBeforeReturn"})
 public class Camera {
@@ -8,25 +8,25 @@ public class Camera {
     public static double getXDistance() {
         //distance from the center of the turret to the backboard.
         double xDistance;
-        xDistance = NetworkTable.getTable("camera").getDouble("distanceToBottomTarget", 0);
+        xDistance = NetworkTableInstance.getDefault().getTable("camera").getEntry("distanceToBottomTarget").getDouble(0);
         return xDistance;
     }
 
     public static double getImageTargetRatio() {
-        return NetworkTable.getTable("camera").getDouble("imageTargetRatio", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("imageTargetRatio").getDouble(0);
     }
 
     public static boolean isConnected() {
-        return NetworkTable.getTable("camera").isConnected();
+        return NetworkTableInstance.getDefault().getTable("camera").isConnected();
     }
 
     public static boolean foundTarget() {
         return isConnected()
-            && NetworkTable.getTable("camera").getBoolean("foundTarget", false);
+            && NetworkTableInstance.getDefault().getTable("camera").getEntry("foundTarget").getBoolean(false);
     }
 
     public static double getHorizontalDifference() { // -1 to 1 -> position horizontally of the backboard on the screen
-        return NetworkTable.getTable("camera").getDouble("xDifference", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("xDifference").getDouble(0);
     }
 
     public static double getDiffAngle() {
@@ -39,7 +39,7 @@ public class Camera {
         return angleToTarget * 180 / Math.PI; //change into degrees
         /*
         double xDifference = getHorizontalDifference();
-        double xDistance = NetworkTable.getTable("camera").getDouble("distanceToBottomTarget", 0)*(0.0254/1.0);
+        double xDistance = NetworkTableInstance.getDefault().getTable("camera").getEntry("distanceToBottomTarget").getDouble(0)*(0.0254/1.0);
         return MathUtils.atan(xDifference/xDistance) * 180 / Math.PI;
          */
     }

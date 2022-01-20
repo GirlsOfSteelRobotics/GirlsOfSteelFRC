@@ -139,12 +139,10 @@ public class robotcomtrol extends SimpleRobot {
             ex.printStackTrace();
         }
 
-        /*SholEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
-         *SholEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        /*SholEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
          *SholPID = new PIDController (Sholp, Sholi, Shold, SholEncoder, insertjaghere);
          *SholEncoder.setDistancePerPulse(distancepulse);
-         *ElbEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
-         *ElbEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+         *ElbEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
          *ElbPID = new PIDController (Elbp, Elbi, Elbd, ElbEncoder, insertjaghere);
          *ElbEncoder.setDistancePerPulse(distancepulse);
          */

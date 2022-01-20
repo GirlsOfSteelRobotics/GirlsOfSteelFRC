@@ -76,11 +76,11 @@ public class DriveSystem extends Subsystem {
     }
 
     public void driveSpeed(double speed) {
-        m_robotDrive.drive(-speed, 0);
+        m_robotDrive.arcadeDrive(-speed, 0);
     }
 
     public void stop() {
-        m_robotDrive.drive(0, 0);
+        m_robotDrive.arcadeDrive(0, 0);
     }
 
 

@@ -53,11 +53,7 @@ public class DriveSystem extends Subsystem {
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.1);
         m_robotDrive.setSensitivity(0.5);
-        m_robotDrive.setMaxOutput(1.0);
-        //robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kRearLeft, true);
-        //robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kRearRight, true);
-        //robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kFrontLeft, true);
-        //robotDrive.setInvertedMotor(DifferentialDrive.MotorType.kFrontRight, true);
+        m_robotDrive.setMaxOutput(1.0);
     }
 
     @Override
@@ -72,11 +68,11 @@ public class DriveSystem extends Subsystem {
     }
 
     public void forward() {
-        m_robotDrive.drive(1.0, 0);
+        m_robotDrive.arcadeDrive(1.0, 0);
     }
 
     public void stop() {
-        m_robotDrive.drive(/* speed */0, /* curve */0);
+        m_robotDrive.arcadeDrive(/* speed */0, /* curve */0);
     }
 
     public double getEncoderRight() {

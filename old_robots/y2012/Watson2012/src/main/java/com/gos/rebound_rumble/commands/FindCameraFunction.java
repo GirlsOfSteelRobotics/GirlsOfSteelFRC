@@ -14,9 +14,9 @@
 //
 //        if (!Double.isNaN(a)) {
 //
-//            NetworkTable table = NetworkTable.getTable("camera");
-//            table.putDouble("Slope", a);
-//            table.putDouble("yInt", b);
+//            NetworkTable table = NetworkTableInstance.getDefault().getTable("camera");
+//            table.getEntry("Slope").setNumber(a);
+//            table.getEntry("yInt").setNumber(b);
 //            // print results
 //            System.out.println("y   = " + a + " * x + " + b);
 //        }

@@ -3,8 +3,8 @@ package com.gos.aerial_assist.objects;
 /**
  * @author Heather
  */
-
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Camera {
@@ -21,28 +21,28 @@ public class Camera {
     }
 
     public static boolean isConnected() {
-        return NetworkTable.getTable("camera").isConnected();
+        return NetworkTableInstance.getDefault().getTable("camera").isConnected();
     }
 
     public static boolean isGoalHot() {
-        //System.out.println("CAMERAAA IS HOTTTTTTTTTTTTTTTTTTTTTTTTTTT: " + NetworkTable.getTable("camera").getBoolean("isHot",false));
-        return NetworkTable.getTable("camera").getBoolean("isHot", false);
+        //System.out.println("CAMERAAA IS HOTTTTTTTTTTTTTTTTTTTTTTTTTTT: " + NetworkTableInstance.getDefault().getTable("camera").getEntry("isHot").getBoolean(false));
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("isHot").getBoolean(false);
     }
 
     public static boolean foundTarget() {
-        return isConnected() && (NetworkTable.getTable("camera").getBoolean("isTargetLeft", false) || NetworkTable.getTable("camera").getBoolean("isTargetRight", false));
+        return isConnected() && (NetworkTableInstance.getDefault().getTable("camera").getEntry("isTargetLeft").getBoolean(false) || NetworkTableInstance.getDefault().getTable("camera").getEntry("isTargetRight").getBoolean(false));
     }
 
     public final double getDistanceToTarget() { // -1 to 1 -> position horizontally of the backboard on the screen
         //Need to change this into metrics
-        //return NetworkTable.getTable("camera").getNumber("distance", 0);
-        return NetworkTable.getTable("camera").getNumber("distance", 0);
+        //return NetworkTableInstance.getDefault().getTable("camera").getEntry("distance").getDouble(0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("distance").getDouble(0);
     }
 
     public double getImageTargetRatio() { // -1 to 1 -> position horizontally of the backboard on the screen
         //Need to change this into metrics
-        //return NetworkTable.getTable("camera").getNumber("distance", 0);
-        return NetworkTable.getTable("camera").getNumber("targetRatio", 0);
+        //return NetworkTableInstance.getDefault().getTable("camera").getEntry("distance").getDouble(0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("targetRatio").getDouble(0);
     }
 
     public double getVerticalAngleOffset() {
