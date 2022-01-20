@@ -26,10 +26,10 @@ public final class PropertyManager {
 
 
     public static void purgeExtraKeys() {
-        Collection<String> keys = Preferences.getInstance().getKeys();
+        Collection<String> keys = Preferences.getKeys();
         for (String key : keys) {
             if (!REGISTERED_KEYS.contains(key) && !".type".equals(key)) {
-                Preferences.getInstance().remove(key);
+                Preferences.remove(key);
             }
         }
     }
@@ -48,7 +48,7 @@ public final class PropertyManager {
             m_value = value;
             m_name = key;
 
-            Preferences.getInstance().remove(key);
+            Preferences.remove(key);
         }
 
         @Override
@@ -82,7 +82,7 @@ public final class PropertyManager {
 
         @Override
         public final TypeT getValue() {
-            if (Preferences.getInstance().containsKey(m_key)) {
+            if (Preferences.containsKey(m_key)) {
                 return m_getter.apply(m_key, m_default);
             }
 

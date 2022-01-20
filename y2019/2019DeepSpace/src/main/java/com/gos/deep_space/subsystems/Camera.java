@@ -1,8 +1,8 @@
 package com.gos.deep_space.subsystems;
 
 import com.gos.deep_space.RobotMap;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.opencv.core.Mat;
@@ -29,13 +29,13 @@ public class Camera extends Subsystem {
 
     public Camera() {
         // Start a stream for the camera viewed by the driver/operator
-        m_driveCam = CameraServer.getInstance().startAutomaticCapture("Driver Camera", RobotMap.DRIVER_CAMERA);
+        m_driveCam = CameraServer.startAutomaticCapture("Driver Camera", RobotMap.DRIVER_CAMERA);
         m_driveCam.setResolution(WIDTH, HEIGHT);
         m_driveCam.setFPS(20);
         m_driveCam.setBrightness(0);
 
         // // Create a Camera Server video stream of the given name using the logical camera number
-        // visionCam = CameraServer.getInstance().startAutomaticCapture("Vision Camera", RobotMap.VISION_CAMERA);
+        // visionCam = CameraServer.startAutomaticCapture("Vision Camera", RobotMap.VISION_CAMERA);
 
         // // Adjust the camera settings; most important is to reduce the exposure very low
         // visionCam.setResolution(WIDTH, HEIGHT);
@@ -43,7 +43,7 @@ public class Camera extends Subsystem {
         // visionCam.setExposureManual(24);
 
         // // Create a Camera Server stream that we'll fill with processed frames in GripPipelineListener
-        // processedStream = CameraServer.getInstance().putVideo("Processed", 320, 240);
+        // processedStream = CameraServer.putVideo("Processed", 320, 240);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class Camera extends Subsystem {
     }
 
     public Mat getVisionFrame() {
-        CameraServer.getInstance().getVideo(m_visionCam).grabFrame(m_frame);
+        CameraServer.getVideo(m_visionCam).grabFrame(m_frame);
         return m_frame;
     }
 

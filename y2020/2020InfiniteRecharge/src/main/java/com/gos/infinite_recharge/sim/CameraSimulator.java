@@ -1,6 +1,6 @@
 package com.gos.infinite_recharge.sim;
 
-import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose2d;
 import org.snobotv2.camera.LimelightSimulator;
 import org.snobotv2.camera.TargetLocation;
 import org.snobotv2.camera.games.InfiniteRechargeTargets;

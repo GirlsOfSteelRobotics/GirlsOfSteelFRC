@@ -51,9 +51,9 @@ public class OI {
         //new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));
         new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getTriggerAxis(Hand.kLeft) > .8).whileHeld(new IntakeCells(shooterIntake, false));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getLeftTriggerAxis() > .8).whileHeld(new IntakeCells(shooterIntake, false));
         new JoystickButton(m_operatingPad, Button.kBumperRight.value).whileHeld(new ConveyorWhileHeld(shooterConveyor, true));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getTriggerAxis(Hand.kRight) > .8).whileHeld(new ConveyorWhileHeld(shooterConveyor, false));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getRightTriggerAxis() > .8).whileHeld(new ConveyorWhileHeld(shooterConveyor, false));
         //new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld();
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));
         new JoystickButton(m_operatingPad, Button.kY.value).whenPressed(new MovePiston(shooterIntake, false));
@@ -67,8 +67,8 @@ public class OI {
         new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new HangerLift(lift, false));
         //new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
         //new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getTriggerAxis(Hand.kLeft) > .8).whileHeld(new WinchWind(winch, false));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getTriggerAxis(Hand.kRight) > .8).whileHeld(new WinchWind(winch, true));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getLeftTriggerAxis() > .8).whileHeld(new WinchWind(winch, false));
+        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getRightTriggerAxis() > .8).whileHeld(new WinchWind(winch, true));
         new JoystickButton(m_drivingPad, Button.kY.value).whenPressed(new ControlPanelRotationControl(controlPanel));
         new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(camera));
         new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(camera));
@@ -84,11 +84,11 @@ public class OI {
 
     // Y is negated so that pushing the joystick forward results in positive values
     public double getJoystickSpeed() {
-        return -m_drivingPad.getY(Hand.kLeft);
+        return -m_drivingPad.getLeftY();
     }
 
     public double getJoystickSpin() {
-        return m_drivingPad.getX(Hand.kRight);
+        return m_drivingPad.getRightX();
     }
 
 }

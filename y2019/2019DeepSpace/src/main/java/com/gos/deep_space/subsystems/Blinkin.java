@@ -1,7 +1,7 @@
 package com.gos.deep_space.subsystems;
 
 import com.gos.deep_space.RobotMap;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Blinkin extends Subsystem {

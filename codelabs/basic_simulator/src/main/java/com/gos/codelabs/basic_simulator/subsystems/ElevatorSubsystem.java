@@ -5,7 +5,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.codelabs.basic_simulator.Constants;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;

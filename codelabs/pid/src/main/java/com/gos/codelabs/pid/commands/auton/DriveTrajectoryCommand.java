@@ -2,8 +2,8 @@ package com.gos.codelabs.pid.commands.auton;
 
 import com.gos.codelabs.pid.Constants;
 import com.gos.codelabs.pid.auton_modes.TrajectoryFactory;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;

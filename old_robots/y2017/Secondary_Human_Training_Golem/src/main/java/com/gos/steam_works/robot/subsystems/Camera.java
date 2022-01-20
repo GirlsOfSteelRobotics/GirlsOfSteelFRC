@@ -1,7 +1,7 @@
 package com.gos.steam_works.robot.subsystems;
 
-import edu.wpi.cscore.MjpegServer;
-import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -43,10 +43,10 @@ public class Camera extends Subsystem {
             m_visionCam.setFPS(10);
         }
 
-        CameraServer.getInstance().addCamera(m_camGear);
-        CameraServer.getInstance().addCamera(m_camClimb);
-        CameraServer.getInstance().addCamera(m_visionCam);
-        m_server = CameraServer.getInstance().addServer("CameraServer", 1181);
+        CameraServer.addCamera(m_camGear);
+        CameraServer.addCamera(m_camClimb);
+        CameraServer.addCamera(m_visionCam);
+        m_server = CameraServer.addServer("CameraServer", 1181);
         m_server.setSource(m_camGear);
 
         // For stream in smartdashboard add a mjpg stream viewer,

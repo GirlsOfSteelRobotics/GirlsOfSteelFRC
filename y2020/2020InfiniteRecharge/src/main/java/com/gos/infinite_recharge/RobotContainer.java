@@ -8,7 +8,7 @@
 package com.gos.infinite_recharge;
 
 import com.gos.lib.sensors.LidarLite;
-import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.infinite_recharge.auto_modes.AutoModeFactory;
 import com.gos.infinite_recharge.commands.DriveByJoystick;

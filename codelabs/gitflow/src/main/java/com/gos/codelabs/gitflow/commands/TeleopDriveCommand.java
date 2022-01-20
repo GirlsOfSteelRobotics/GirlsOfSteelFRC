@@ -24,7 +24,7 @@ public class TeleopDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassisSubsystem.setSpeedAndSteer(m_joystick.getY(GenericHID.Hand.kLeft), m_joystick.getX(GenericHID.Hand.kRight));
+        m_chassisSubsystem.setSpeedAndSteer(m_joystick.getLeftY(), m_joystick.getRightX());
     }
 
     @Override

@@ -11,7 +11,7 @@ package com.gos.ultimate_ascent.subsystems;
 
 //import edu.wpi.first.wpilibj.*;
 
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;

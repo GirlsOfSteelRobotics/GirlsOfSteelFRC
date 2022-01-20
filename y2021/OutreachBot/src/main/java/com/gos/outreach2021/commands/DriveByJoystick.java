@@ -56,7 +56,7 @@ public class DriveByJoystick extends CommandBase {
     @Override
     public void execute() {
         //inverting y because negative moves it forward
-        m_chassis.driveByJoystick(-m_joystick.getY(Hand.kLeft), m_joystick.getX(Hand.kRight));
+        m_chassis.driveByJoystick(-m_joystick.getLeftY(), m_joystick.getRightX());
     }
 
     // Called once the command ends or is interrupted.

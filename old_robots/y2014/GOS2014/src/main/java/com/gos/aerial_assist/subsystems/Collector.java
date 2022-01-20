@@ -4,7 +4,7 @@
 
 package com.gos.aerial_assist.subsystems;
 
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.aerial_assist.Configuration;
