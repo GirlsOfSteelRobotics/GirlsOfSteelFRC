@@ -1,6 +1,7 @@
 package com.gos.outreach2016.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.outreach2016.robot.RobotMap;
 
@@ -14,10 +15,10 @@ public class Shifters extends Subsystem {
     public enum Speed { kHigh, kLow }
 
     public Shifters() {
-        m_shifterLeft = new DoubleSolenoid(RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
+        m_shifterLeft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
         addChild("Shifter Left", m_shifterLeft);
 
-        m_shifterRight = new DoubleSolenoid(RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
+        m_shifterRight = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
         addChild("Shifter Right", m_shifterRight);
     }
 

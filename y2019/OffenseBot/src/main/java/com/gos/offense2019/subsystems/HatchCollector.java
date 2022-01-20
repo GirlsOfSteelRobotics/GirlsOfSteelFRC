@@ -2,6 +2,7 @@ package com.gos.offense2019.subsystems;
 
 import com.gos.offense2019.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -18,7 +19,7 @@ public class HatchCollector extends Subsystem {
     private HatchState m_state;
 
     public HatchCollector() {
-        m_piston = new DoubleSolenoid(RobotMap.PISTON_A, RobotMap.PISTON_B);
+        m_piston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PISTON_A, RobotMap.PISTON_B);
         m_state = HatchState.kRelease;
 
         addChild("piston", m_piston);

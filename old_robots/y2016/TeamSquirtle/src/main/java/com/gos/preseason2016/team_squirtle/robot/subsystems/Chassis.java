@@ -2,7 +2,7 @@ package com.gos.preseason2016.team_squirtle.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Chassis extends Subsystem {
@@ -13,7 +13,7 @@ public class Chassis extends Subsystem {
     private final WPI_TalonSRX m_leftTalon2;
     private final WPI_TalonSRX m_rightTalon3;
     private final WPI_TalonSRX m_leftTalon3;
-    private final RobotDrive m_driveSystem;
+    private final DifferentialDrive m_driveSystem;
 
 
     public Chassis() {
@@ -30,7 +30,7 @@ public class Chassis extends Subsystem {
         m_leftTalon2.follow(m_leftTalon1);
         m_leftTalon3.follow(m_leftTalon1);
 
-        m_driveSystem = new RobotDrive(m_rightTalon1, m_leftTalon1);
+        m_driveSystem = new DifferentialDrive(m_rightTalon1, m_leftTalon1);
 
     }
 

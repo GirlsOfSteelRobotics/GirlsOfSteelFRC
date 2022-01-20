@@ -1,8 +1,8 @@
 package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -22,8 +22,8 @@ public class ShooterConveyor extends SubsystemBase {
     private double m_goalPosition;
 
     private final CANSparkMax m_master;
-    private final CANEncoder m_encoder;
-    private final CANPIDController m_pidController;
+    private final RelativeEncoder m_encoder;
+    private final SparkMaxPIDController m_pidController;
     private final CANSparkMax m_follower;
 
     private final DigitalInput m_breakSensorHandoff;
@@ -73,7 +73,7 @@ public class ShooterConveyor extends SubsystemBase {
 
     public void advanceBall() {
         m_goalPosition = m_encoder.getPosition() + UNIT_HEIGHT;
-        m_pidController.setReference(m_encoder.getPosition() + UNIT_HEIGHT, ControlType.kPosition);
+        m_pidController.setReference(m_encoder.getPosition() + UNIT_HEIGHT, CANSparkMax.ControlType.kPosition);
     }
 
     public boolean isAdvanced() {

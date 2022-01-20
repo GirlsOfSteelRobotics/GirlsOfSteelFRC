@@ -53,8 +53,8 @@ public final class Chassis extends Subsystem {
         m_driveRightA.setInverted(false);
 
         m_drive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
-        //drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
-        //drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
+        //drive.setInvertedMotor(DifferentialDrive.MotorType.kRearLeft, false);
+        //drive.setInvertedMotor(DifferentialDrive.MotorType.kRearRight, false);
 
         //      addChild("driveLeftA", driveLeftA);
         //      addChild("driveLeftB", driveLeftB);

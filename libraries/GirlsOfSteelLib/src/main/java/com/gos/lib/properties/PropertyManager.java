@@ -98,25 +98,25 @@ public final class PropertyManager {
 
     public static class IntProperty extends BaseProperty<Integer> {
         public IntProperty(String key, int defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putInt, Preferences.getInstance()::getInt);
+            super(key, defaultValue, Preferences::setInt, Preferences::getInt);
         }
     }
 
     public static class DoubleProperty extends BaseProperty<Double> {
         public DoubleProperty(String key, double defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putDouble, Preferences.getInstance()::getDouble);
+            super(key, defaultValue, Preferences::setDouble, Preferences::getDouble);
         }
     }
 
     public static class StringProperty extends BaseProperty<String> {
         public StringProperty(String key, String defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putString, Preferences.getInstance()::getString);
+            super(key, defaultValue, Preferences::setString, Preferences::getString);
         }
     }
 
     public static class BooleanProperty extends BaseProperty<Boolean> {
         public BooleanProperty(String key, boolean defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putBoolean, Preferences.getInstance()::getBoolean);
+            super(key, defaultValue, Preferences::setBoolean, Preferences::getBoolean);
         }
     }
 }

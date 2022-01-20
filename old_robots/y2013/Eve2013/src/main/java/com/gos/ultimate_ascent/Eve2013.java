@@ -15,7 +15,7 @@ import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Gripper;
 import com.gos.ultimate_ascent.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,13 +30,13 @@ import com.gos.ultimate_ascent.tests.ShooterJags;
 
 /**
  * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
+ * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class Eve2013 extends IterativeRobot {
+public class Eve2013 extends TimedRobot {
 
     private AutonomousChooser m_autonomous;
 

@@ -2,7 +2,7 @@ package com.gos.stronghold.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.stronghold.robot.RobotMap;
@@ -19,7 +19,7 @@ public class Chassis extends Subsystem {
     private final WPI_TalonSRX m_driveRightB;
     private final WPI_TalonSRX m_driveRightC;
 
-    private final RobotDrive m_robotDrive;
+    private final DifferentialDrive m_robotDrive;
 
     private double m_encOffsetValueRight;
     private double m_encOffsetValueLeft;
@@ -43,7 +43,7 @@ public class Chassis extends Subsystem {
         m_driveRightB.setNeutralMode(NeutralMode.Brake);
         m_driveRightC.setNeutralMode(NeutralMode.Brake);
 
-        m_robotDrive = new RobotDrive(m_driveLeftA, m_driveRightA);
+        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
 
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);

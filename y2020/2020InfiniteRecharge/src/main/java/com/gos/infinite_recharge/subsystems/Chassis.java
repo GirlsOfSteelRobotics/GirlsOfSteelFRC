@@ -2,8 +2,9 @@ package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.sim.CameraSimulator;
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -36,7 +37,7 @@ import com.gos.infinite_recharge.commands.autonomous.FollowTrajectory.DriveConst
 import com.gos.lib.sensors.IGyroWrapper;
 import com.gos.lib.navx.NavXWrapper;
 
-import com.revrobotics.CANPIDController;
+import com.revrobotics.SparkMaxPIDController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +56,11 @@ public class Chassis extends SubsystemBase {
     private final SimableCANSparkMax m_masterRight;
     private final SimableCANSparkMax m_followerRight; // NOPMD
 
-    private final CANEncoder m_rightEncoder;
-    private final CANEncoder m_leftEncoder;
+    private final RelativeEncoder m_rightEncoder;
+    private final RelativeEncoder m_leftEncoder;
 
-    private final CANPIDController m_leftPidController;
-    private final CANPIDController m_rightPidController;
+    private final SparkMaxPIDController m_leftPidController;
+    private final SparkMaxPIDController m_rightPidController;
 
     private final IGyroWrapper m_gyro;
 
@@ -333,15 +334,15 @@ public class Chassis extends SubsystemBase {
     }
 
     public void driveDistance(double leftPosition, double rightPosition) {
-        m_leftPidController.setReference(leftPosition, ControlType.kSmartMotion);
-        m_rightPidController.setReference(rightPosition, ControlType.kSmartMotion);
+        m_leftPidController.setReference(leftPosition, CANSparkMax.ControlType.kSmartMotion);
+        m_rightPidController.setReference(rightPosition, CANSparkMax.ControlType.kSmartMotion);
         m_drive.feed();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftVelocity, ControlType.kVelocity);
-        m_rightPidController.setReference(rightVelocity, ControlType.kVelocity);
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
         m_drive.feed();
 
         //System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);

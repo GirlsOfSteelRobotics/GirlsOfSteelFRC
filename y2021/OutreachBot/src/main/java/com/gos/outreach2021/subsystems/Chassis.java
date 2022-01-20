@@ -12,8 +12,9 @@
 package com.gos.outreach2021.subsystems;
 
 
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -50,8 +51,8 @@ public class Chassis extends SubsystemBase {
     private final SimableCANSparkMax m_leftBack;
     private final MecanumDrive m_mecanumDrive;
 
-    private final CANEncoder m_rightEncoder;
-    private final CANEncoder m_leftEncoder;
+    private final RelativeEncoder m_rightEncoder;
+    private final RelativeEncoder m_leftEncoder;
 
     private final ADXRS450_Gyro m_gyroscope;
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d());

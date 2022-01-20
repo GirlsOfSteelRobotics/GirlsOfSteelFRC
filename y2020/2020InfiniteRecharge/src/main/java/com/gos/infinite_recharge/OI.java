@@ -48,11 +48,11 @@ public class OI {
 
         new JoystickButton(m_operatingPad, Button.kA.value).whileHeld(new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
         new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, Constants.DEFAULT_RPM));
-        //new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
+        //new JoystickButton(m_operatingPad, Button.kLeftBumper.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));
-        new JoystickButton(m_operatingPad, Button.kBumperLeft.value).whileHeld(new IntakeCells(shooterIntake, true));
+        new JoystickButton(m_operatingPad, Button.kLeftBumper.value).whileHeld(new IntakeCells(shooterIntake, true));
         new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getLeftTriggerAxis() > .8).whileHeld(new IntakeCells(shooterIntake, false));
-        new JoystickButton(m_operatingPad, Button.kBumperRight.value).whileHeld(new ConveyorWhileHeld(shooterConveyor, true));
+        new JoystickButton(m_operatingPad, Button.kRightBumper.value).whileHeld(new ConveyorWhileHeld(shooterConveyor, true));
         new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getRightTriggerAxis() > .8).whileHeld(new ConveyorWhileHeld(shooterConveyor, false));
         //new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld();
         new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));
@@ -76,7 +76,7 @@ public class OI {
         new POVButton(m_drivingPad, 270).whenHeld(new AlignLeftRight(chassis, limelight));
         //new POVButton(m_drivingPad, 90).whenHeld(new AlignForwardBackward(chassis, limelight));
 
-        new JoystickButton(m_drivingPad, Button.kBumperLeft.value).whileHeld(new DriveLessByJoystickWhenPressed(chassis, this));
+        new JoystickButton(m_drivingPad, Button.kLeftBumper.value).whileHeld(new DriveLessByJoystickWhenPressed(chassis, this));
         //new JoystickButton(m_drivingPad, Button.kB.value).whenPressed(new DriveByJoystick(chassis, this));
 
 

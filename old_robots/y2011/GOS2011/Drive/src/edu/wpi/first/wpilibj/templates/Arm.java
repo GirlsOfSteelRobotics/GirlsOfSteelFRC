@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
@@ -48,7 +49,7 @@ public class Arm extends SimpleRobot {
     CANJaguar RearLeft;
     CANJaguar RearRight;
 
-    RobotDrive Move;
+    DifferentialDrive Move;
     boolean isforwardlimitok;
     double Sholval;
     double Elbowval;
@@ -120,7 +121,7 @@ public class Arm extends SimpleRobot {
 
         }
 
-        Move = new RobotDrive(FrontLeft, RearLeft, FrontRight, RearRight);
+        Move = new DifferentialDrive(FrontLeft, RearLeft, FrontRight, RearRight);
 
 
         System.err.println("DOWNLOADED!!!");

@@ -1,11 +1,12 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -35,10 +36,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final SimableCANSparkMax m_leftDriveA;
     private final SimableCANSparkMax m_rightDriveA;
-    private final CANEncoder m_leftEncoder;
-    private final CANEncoder m_rightEncoder;
-    private final CANPIDController m_leftPid;
-    private final CANPIDController m_rightPid;
+    private final RelativeEncoder m_leftEncoder;
+    private final RelativeEncoder m_rightEncoder;
+    private final SparkMaxPIDController m_leftPid;
+    private final SparkMaxPIDController m_rightPid;
     private final PidProperty m_leftVelocityPidProperty;
     private final PidProperty m_rightVelocityPidProperty;
     private final PidProperty m_leftSmartMotionPidProperty;
@@ -98,21 +99,21 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    private PidProperty setupVelocityPidConstants(CANPIDController pidController) {
+    private PidProperty setupVelocityPidConstants(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis.vel", false, pidController, PID_SLOT_VELOCITY)
                 .addP(0)
                 .addFF(0)
                 .build();
     }
 
-    private PidProperty setupPositionPidConstants(CANPIDController pidController) {
+    private PidProperty setupPositionPidConstants(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis.pos", false, pidController, PID_SLOT_POSITION)
                 .addP(0)
                 .addD(0)
                 .build();
     }
 
-    private PidProperty setupSmartMotionPidConstants(CANPIDController pidController) {
+    private PidProperty setupSmartMotionPidConstants(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis.sm", false, pidController, PID_SLOT_SMART_MOTION)
                 .addP(0)
                 .addFF(0)
@@ -196,8 +197,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistancePositionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, ControlType.kPosition, PID_SLOT_POSITION);
-        m_rightPid.setReference(rightDistance, ControlType.kPosition, PID_SLOT_POSITION);
+        m_leftPid.setReference(leftDistance, CANSparkMax.ControlType.kPosition, PID_SLOT_POSITION);
+        m_rightPid.setReference(rightDistance, CANSparkMax.ControlType.kPosition, PID_SLOT_POSITION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Position Goal", leftDistance);
@@ -205,8 +206,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveDistanceSmartMotionControl(double leftDistance, double rightDistance) {
-        m_leftPid.setReference(leftDistance, ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
-        m_rightPid.setReference(rightDistance, ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
+        m_leftPid.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
+        m_rightPid.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, PID_SLOT_SMART_MOTION);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left SM Goal", leftDistance);
@@ -214,8 +215,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveWithVelocity(double leftVelocity, double rightVelocity) {
-        m_leftPid.setReference(leftVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY);
-        m_rightPid.setReference(rightVelocity, ControlType.kVelocity, PID_SLOT_VELOCITY);
+        m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY);
+        m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Velocity Goal", leftVelocity);

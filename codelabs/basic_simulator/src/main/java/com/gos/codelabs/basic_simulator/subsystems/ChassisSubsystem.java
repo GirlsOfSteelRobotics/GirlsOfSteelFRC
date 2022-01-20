@@ -1,8 +1,9 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -23,8 +24,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_leftDriveA;
     private final SimableCANSparkMax m_rightDriveA;
 
-    private final CANEncoder m_leftEncoder;
-    private final CANEncoder m_rightEncoder;
+    private final RelativeEncoder m_leftEncoder;
+    private final RelativeEncoder m_rightEncoder;
 
     private final DifferentialDrive m_differentialDrive;
     private final DifferentialDriveOdometry m_odometry;

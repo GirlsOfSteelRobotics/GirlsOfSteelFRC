@@ -3,6 +3,7 @@ package com.gos.stronghold.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.stronghold.robot.RobotMap;
 
@@ -25,8 +26,8 @@ public class Shooter extends Subsystem {
         m_shooterMotor2 = new WPI_TalonSRX(RobotMap.SHOOTER_MOTOR_B);
         addChild("Talon", m_shooterMotor1);
         addChild("Talon", m_shooterMotor2);
-        m_shooterPiston1 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
-        m_shooterPiston2 = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
+        m_shooterPiston1 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
+        m_shooterPiston2 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
     }
 
     public void pistonsOut() {

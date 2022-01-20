@@ -3,6 +3,7 @@ package com.gos.preseason2017.team2.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.preseason2017.team2.robot.RobotMap;
 
@@ -22,7 +23,7 @@ public class Manipulator extends Subsystem {
         m_collectRight = new WPI_TalonSRX(RobotMap.COLLECT_RIGHT);
         m_collectLeft = new WPI_TalonSRX(RobotMap.COLLECT_LEFT);
 
-        m_pusher = new DoubleSolenoid(0, 1);
+        m_pusher = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
 
         m_pivotA = new WPI_TalonSRX(RobotMap.PIVOT_RIGHT);
         m_pivotB = new WPI_TalonSRX(RobotMap.PIVOT_LEFT);

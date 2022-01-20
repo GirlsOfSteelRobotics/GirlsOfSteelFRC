@@ -1,6 +1,7 @@
 package com.gos.preseason2017.team1.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.preseason2017.team1.robot.RobotMap;
 
@@ -16,8 +17,8 @@ public class Shifters extends Subsystem {
     public boolean m_inHighGear;
 
     public Shifters() {
-        m_shifterLeft = new DoubleSolenoid(RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
-        m_shifterRight = new DoubleSolenoid(RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
+        m_shifterLeft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
+        m_shifterRight = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
 
     }
     // Put methods for controlling this subsystem

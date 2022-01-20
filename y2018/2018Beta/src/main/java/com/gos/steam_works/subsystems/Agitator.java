@@ -2,6 +2,7 @@ package com.gos.steam_works.subsystems;
 
 import com.gos.steam_works.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,7 +13,7 @@ public class Agitator extends Subsystem {
     private final DoubleSolenoid m_agitator;
 
     public Agitator() {
-        m_agitator = new DoubleSolenoid(RobotMap.AGITATOR_A, RobotMap.AGITATOR_B);
+        m_agitator = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.AGITATOR_A, RobotMap.AGITATOR_B);
 
         addChild("agitator", m_agitator);
     }

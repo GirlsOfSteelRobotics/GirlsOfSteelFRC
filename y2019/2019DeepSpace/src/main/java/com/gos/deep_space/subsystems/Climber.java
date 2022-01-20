@@ -43,7 +43,7 @@ public class Climber extends Subsystem {
     }
 
     // DigitalInput limitSwitch = new DigitalInput(1);
-    // SpeedController armMotor = new Victor(1);
+    // MotorController armMotor = new Victor(1);
     // Counter counter = new Counter(limitSwitch);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

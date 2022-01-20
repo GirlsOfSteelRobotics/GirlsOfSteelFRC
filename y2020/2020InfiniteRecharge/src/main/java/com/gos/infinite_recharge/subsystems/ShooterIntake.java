@@ -7,6 +7,7 @@ import com.gos.infinite_recharge.Constants;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -23,7 +24,7 @@ public class ShooterIntake extends SubsystemBase {
         m_motor = new WPI_TalonSRX(Constants.SHOOTER_INTAKE_TALON);
         m_motor.configFactoryDefault();
         m_motor.setInverted(true);
-        m_piston = new DoubleSolenoid(Constants.DOUBLE_SOLENOID_SHOOTER_INTAKE_FORWARD,
+        m_piston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.DOUBLE_SOLENOID_SHOOTER_INTAKE_FORWARD,
                 Constants.DOUBLE_SOLENOID_SHOOTER_INTAKE_BACKWARD);
 
         m_customNetworkTable = NetworkTableInstance.getDefault().getTable("SuperStructure/ShooterIntake");

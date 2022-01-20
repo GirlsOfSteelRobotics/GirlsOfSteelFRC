@@ -1,12 +1,13 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.CANPIDController.ArbFFUnits;
+import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -37,10 +38,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
 
     private final SimableCANSparkMax m_liftMotor;
-    private final CANEncoder m_liftEncoder;
+    private final RelativeEncoder m_liftEncoder;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
-    private final CANPIDController m_pidController;
+    private final SparkMaxPIDController m_pidController;
     private final PidProperty m_pidProperty;
     private double m_desiredHeight;
 
@@ -79,7 +80,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean goToPosition(double position) {
         m_desiredHeight = position;
-        m_pidController.setReference(position, ControlType.kSmartMotion, 0, FindElevatorGravityCompensationCommand.ELEVATOR_SPEED.getValue(), ArbFFUnits.kPercentOut);
+        m_pidController.setReference(position, CANSparkMax.ControlType.kSmartMotion, 0, FindElevatorGravityCompensationCommand.ELEVATOR_SPEED.getValue(), ArbFFUnits.kPercentOut);
         return false;
     }
 

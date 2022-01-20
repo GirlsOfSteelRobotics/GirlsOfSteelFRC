@@ -8,7 +8,7 @@ public class JaniseCodelab2021Pt1Subsystem extends SubsystemBase {
         // TODO: Set the default command, if any, for this subsystem by calling setDefaultCommand(command)
         //       in the constructor or in the robot coordination class, such as RobotContainer.
         //       Also, you can call addChild(name, sendableChild) to associate sendables with the subsystem
-        //       such as SpeedControllers, Encoders, DigitalInputs, etc.
+        //       such as MotorControllers, Encoders, DigitalInputs, etc.
         System.out.println("Hello my name is Janise");
     }
 }
