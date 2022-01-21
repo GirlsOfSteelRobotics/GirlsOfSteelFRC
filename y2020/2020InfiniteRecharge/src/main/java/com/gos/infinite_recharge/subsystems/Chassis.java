@@ -3,7 +3,6 @@ package com.gos.infinite_recharge.subsystems;
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.sim.CameraSimulator;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -129,7 +128,6 @@ public class Chassis extends SubsystemBase {
         // m_masterRight.setOpenLoopRampRate(FULL_THROTTLE_SECONDS);
 
         m_drive = new DifferentialDrive(m_masterLeft, m_masterRight);
-        m_drive.setRightSideInverted(false);
         m_drive.setSafetyEnabled(true);
         m_drive.setExpiration(0.1);
         m_drive.setMaxOutput(0.8);

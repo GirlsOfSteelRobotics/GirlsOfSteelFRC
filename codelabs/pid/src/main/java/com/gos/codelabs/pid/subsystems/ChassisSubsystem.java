@@ -5,8 +5,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -81,7 +79,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyro = new ADXRS450_Gyro();
 
         m_differentialDrive = new DifferentialDrive(m_leftDriveA, m_rightDriveA);
-        m_differentialDrive.setRightSideInverted(false);
 
         m_odometry = new DifferentialDriveOdometry(new Rotation2d());
         m_field = new Field2d();
