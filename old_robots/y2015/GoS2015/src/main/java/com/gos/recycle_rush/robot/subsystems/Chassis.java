@@ -5,10 +5,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.DifferentialDrive.MotorType;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.recycle_rush.robot.RobotMap;
 
@@ -56,7 +55,7 @@ public class Chassis extends Subsystem {
     private double m_initialRearLeftEncoderDistance;
     private double m_initialRearRightEncoderDistance;
 
-    private final DifferentialDrive m_gosDrive;
+    private final MecanumDrive m_gosDrive;
 
     public Chassis() {
         m_frontRightWheel = new WPI_TalonSRX(RobotMap.FRONT_RIGHT_WHEEL_CHANNEL);
@@ -95,11 +94,13 @@ public class Chassis extends Subsystem {
 
         m_gyro.zeroYaw();
 
-        m_gosDrive = new DifferentialDrive(m_rearLeftWheel, m_rearRightWheel, m_frontLeftWheel, m_frontRightWheel);
+        m_gosDrive = new MecanumDrive(m_rearLeftWheel, m_rearRightWheel, m_frontLeftWheel, m_frontRightWheel);
 
         m_gosDrive.setMaxOutput(topSpeed);
 
-        // Invert the left side motors
+        // Invert the left side motors
+
+
         m_gosDrive.setExpiration(0.1);
         m_gosDrive.setSafetyEnabled(false);
         SmartDashboard.putNumber("Front Left", 0.0);

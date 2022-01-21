@@ -10,7 +10,7 @@ public class Shack extends Subsystem {
     private final DoubleSolenoid m_shack;
 
     public Shack() {
-        m_shack = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_SHACK_MODULE, RobotMap.LEFT_SHACK_CHANNEL_A, RobotMap.LEFT_SHACK_CHANNEL_B);
+        m_shack = new DoubleSolenoid(RobotMap.LEFT_SHACK_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.LEFT_SHACK_CHANNEL_A, RobotMap.LEFT_SHACK_CHANNEL_B);
     }
 
     public void shackIn() {

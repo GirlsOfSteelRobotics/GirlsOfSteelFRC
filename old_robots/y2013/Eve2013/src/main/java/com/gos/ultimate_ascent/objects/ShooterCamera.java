@@ -8,7 +8,7 @@ package com.gos.ultimate_ascent.objects;
 /**
  * @author Heather
  */
-import edu.wpi.first.networktables.NetworkTable;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -62,7 +62,7 @@ public class ShooterCamera {
     }
 
     public static boolean isConnected() {
-        return NetworkTableInstance.getDefault().getTable("camera").isConnected();
+        return NetworkTableInstance.getDefault().isConnected();
     }
 
     public static boolean foundTopTarget() {

@@ -1,5 +1,5 @@
 package com.gos.rebound_rumble.objects;
-import edu.wpi.first.networktables.NetworkTable;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.UnnecessaryLocalBeforeReturn"})
@@ -17,7 +17,7 @@ public class Camera {
     }
 
     public static boolean isConnected() {
-        return NetworkTableInstance.getDefault().getTable("camera").isConnected();
+        return NetworkTableInstance.getDefault().isConnected();
     }
 
     public static boolean foundTarget() {

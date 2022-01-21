@@ -49,9 +49,10 @@ public class Chassis extends Subsystem {
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.2);
-        m_robotDrive.setSensitivity(0.5);
         m_robotDrive.setMaxOutput(1.0);
-
+
+
+
 
         // V per sec; 12 = zero to full speed in 1 second
         m_driveLeftA.configOpenloopRamp(1.0);

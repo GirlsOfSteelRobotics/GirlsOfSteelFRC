@@ -25,8 +25,8 @@ public class Gripper extends Subsystem {
         this.m_openGripperSwitch = openGripperSwitch;
         this.m_closeGripperSwitch = closeGripperSwitch;
 
-        m_openSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE, openSolenoidPort);
-        m_closeSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE, closeSolenoidPort);
+        m_openSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE, PneumaticsModuleType.CTREPCM, openSolenoidPort);
+        m_closeSolenoid = new Solenoid(RobotMap.CLIMBER_MODULE, PneumaticsModuleType.CTREPCM, closeSolenoidPort);
     }
 
     //Moves the pneumatic piston slider out

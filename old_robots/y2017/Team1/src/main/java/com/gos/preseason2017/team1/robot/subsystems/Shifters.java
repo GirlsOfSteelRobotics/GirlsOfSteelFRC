@@ -17,8 +17,8 @@ public class Shifters extends Subsystem {
     public boolean m_inHighGear;
 
     public Shifters() {
-        m_shifterLeft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
-        m_shifterRight = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PCM_SHIFTER, RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
+        m_shifterLeft = new DoubleSolenoid(RobotMap.PCM_SHIFTER, PneumaticsModuleType.CTREPCM, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
+        m_shifterRight = new DoubleSolenoid(RobotMap.PCM_SHIFTER, PneumaticsModuleType.CTREPCM, RobotMap.SHIFTER_RIGHT_A, RobotMap.SHIFTER_RIGHT_B);
 
     }
     // Put methods for controlling this subsystem

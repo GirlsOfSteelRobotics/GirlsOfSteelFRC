@@ -35,7 +35,7 @@ public class Chassis extends Subsystem {
     }
 
     public void driveByJoystick(Joystick stick) {
-        m_driveSystem.arcadeDrive(stick);
+        m_driveSystem.arcadeDrive(stick.getY(), stick.getX());
     }
 
     @Override

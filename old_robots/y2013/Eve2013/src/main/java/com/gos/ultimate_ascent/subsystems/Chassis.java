@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.ultimate_ascent.RobotMap;
@@ -308,7 +307,10 @@ public class Chassis extends Subsystem {
         backEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
         leftEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
         */
-        //for GoS PID
+        //for GoS PID
+
+
+
         m_rightPIDRate.enable();
         m_backPIDRate.enable();
         m_leftPIDRate.enable();
@@ -355,7 +357,10 @@ public class Chassis extends Subsystem {
         m_leftPIDRate.disable();
     }
 
-    public void initHoldPosition() {
+    public void initHoldPosition() {
+
+
+
         m_rightPIDPosition.setPID(rightPositionP, rightPositionI, rightPositionD);
         m_backPIDPosition.setPID(backPositionP, backPositionI, backPositionD);
         m_leftPIDPosition.setPID(leftPositionP, leftPositionI, leftPositionD);

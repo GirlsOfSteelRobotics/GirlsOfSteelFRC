@@ -11,7 +11,7 @@ import com.gos.preseason2017.team1.robot.RobotMap;
 public class JawPiston extends Subsystem {
 
 
-    private final DoubleSolenoid m_jawPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PCM_ARM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
+    private final DoubleSolenoid m_jawPiston = new DoubleSolenoid(RobotMap.PCM_ARM, PneumaticsModuleType.CTREPCM, RobotMap.JAW_PISTON_A, RobotMap.JAW_PISTON_B);
 
     public void pistonsOut() {
         m_jawPiston.set(DoubleSolenoid.Value.kForward);

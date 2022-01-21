@@ -52,8 +52,11 @@ public class DriveSystem extends Subsystem {
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.1);
-        m_robotDrive.setSensitivity(0.5);
-        m_robotDrive.setMaxOutput(1.0);
+        m_robotDrive.setMaxOutput(1.0);
+
+
+
+
     }
 
     @Override
@@ -64,7 +67,7 @@ public class DriveSystem extends Subsystem {
     // here. Call these from Commands.
 
     public void takeJoystickInputs(Joystick joystk) {
-        m_robotDrive.arcadeDrive(joystk);
+        m_robotDrive.arcadeDrive(joystk.getY(), joystk.getX());
     }
 
     public void forward() {

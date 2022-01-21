@@ -30,9 +30,9 @@ public class Collector extends Subsystem {
         m_rightCollector = new WPI_TalonSRX(RobotMap.RIGHT_COLLECTOR_WHEEL);
         m_leftCollector = new WPI_TalonSRX(RobotMap.LEFT_COLLECTOR_WHEEL);
 
-        m_collectorLeftSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.LEFT_COLLECTOR_MODULE, RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
+        m_collectorLeftSolenoid = new DoubleSolenoid(RobotMap.LEFT_COLLECTOR_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.LEFT_COLLECTOR_SOLENOID_FORWARDCHANNEL,
             RobotMap.LEFT_COLLECTOR_SOLENOID_REVERSECHANNEL);
-        m_collectorRightSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.RIGHT_COLLECTOR_MODULE,
+        m_collectorRightSolenoid = new DoubleSolenoid(RobotMap.RIGHT_COLLECTOR_MODULE, PneumaticsModuleType.CTREPCM,
             RobotMap.RIGHT_COLLECTOR_SOLENOID_FORWARDCHANNEL, RobotMap.RIGHT_COLLECTOR_SOLENOID_REVERSECHANNEL);
 
         m_collectorTrigger = new Joystick(RobotMap.OPERATOR_JOYSTICK);

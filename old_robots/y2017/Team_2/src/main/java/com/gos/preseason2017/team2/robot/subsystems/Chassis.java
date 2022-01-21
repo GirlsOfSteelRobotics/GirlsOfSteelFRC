@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.DifferentialDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.preseason2017.team2.robot.RobotMap;
@@ -37,7 +36,9 @@ public class Chassis extends Subsystem {
         m_driveRightB.follow(m_driveRightA);
 
 
-        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
+        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
+
+
     }
 
     // Put methods for controlling this subsystem
@@ -48,7 +49,7 @@ public class Chassis extends Subsystem {
     }
 
     public void driveByJoystick(Joystick joystick) {
-        m_robotDrive.arcadeDrive(joystick);
+        m_robotDrive.arcadeDrive(joystick.getY(), joystick.getX());
     }
 
     public void driveSpeed(double speed) {

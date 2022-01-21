@@ -6,7 +6,7 @@ gos_java_robot(
     disable_pmd = True,
     main_class = "com.gos.codelabs.basic_simulator.Main",
     deps = [
-        "@bazelrio//libraries/java/rev/sparkmax",
+        "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
