@@ -2,7 +2,7 @@ package com.gos.infinite_recharge.commands.autonomous;
 
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.subsystems.Chassis;
-import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.lib.DeadbandHelper;
 import com.gos.lib.properties.PropertyManager;

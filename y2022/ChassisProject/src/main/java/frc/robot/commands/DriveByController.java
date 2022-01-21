@@ -11,7 +11,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
@@ -57,7 +56,7 @@ public class DriveByController extends CommandBase {
     @Override
     public void execute() {
         //inverting y because negative moves it forward
-        m_driveTrain.driveByController(-m_controller.getY(GenericHID.Hand.kLeft), m_controller.getX(GenericHID.Hand.kRight));
+        m_driveTrain.driveByController(-m_controller.getLeftY(), m_controller.getRightX());
     }
 
     // Called once the command ends or is interrupted.

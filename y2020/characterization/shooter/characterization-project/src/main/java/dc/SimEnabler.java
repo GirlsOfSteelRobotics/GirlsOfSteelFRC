@@ -2,8 +2,8 @@ package dc;
 
 import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 
 public class SimEnabler implements Sendable {
   DriverStationSim sim = new DriverStationSim();
@@ -15,8 +15,8 @@ public class SimEnabler implements Sendable {
   public void setEnabled(boolean enabled) {
     sim.setEnabled(enabled);
     sim.notifyNewData();
-    DriverStation.getInstance().isNewControlData();
-    while (DriverStation.getInstance().isEnabled() != enabled) {
+    DriverStation.isNewControlData();
+    while (DriverStation.isEnabled() != enabled) {
       try {
         Thread.sleep(1);
       } catch (InterruptedException exception) {
@@ -44,7 +44,7 @@ public class SimEnabler implements Sendable {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.addBooleanProperty("Enabled",
-                               () -> DriverStation.getInstance().isEnabled(),
+                               () -> DriverStation.isEnabled(),
                                enabled -> setEnabled(enabled));
   }
 }

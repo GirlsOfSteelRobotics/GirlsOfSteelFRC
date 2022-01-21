@@ -2,13 +2,13 @@ package com.gos.lib.rev;
 
 import com.gos.lib.properties.IPidPropertyBuilder;
 import com.gos.lib.properties.PidProperty;
-import com.revrobotics.CANPIDController;
+import com.revrobotics.SparkMaxPIDController;
 
 public final class RevPidPropertyBuilder extends PidProperty.Builder implements IPidPropertyBuilder {
-    private final CANPIDController m_pidController;
+    private final SparkMaxPIDController m_pidController;
     private final int m_slot;
 
-    public RevPidPropertyBuilder(String baseName, boolean isConstant, CANPIDController pidController, int slot) {
+    public RevPidPropertyBuilder(String baseName, boolean isConstant, SparkMaxPIDController pidController, int slot) {
         super(baseName, isConstant);
         m_pidController = pidController;
         m_slot = slot;

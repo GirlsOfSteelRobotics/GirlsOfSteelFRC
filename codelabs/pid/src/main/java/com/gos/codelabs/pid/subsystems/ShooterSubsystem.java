@@ -8,10 +8,10 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,8 +25,8 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 public class ShooterSubsystem extends SubsystemBase {
 
     private final SimableCANSparkMax m_wheelMotor;
-    private final CANEncoder m_encoder;
-    private final CANPIDController m_pidController;
+    private final RelativeEncoder m_encoder;
+    private final SparkMaxPIDController m_pidController;
     private final PidProperty m_pidProperty;
     private double m_desiredRpm;
     private ISimWrapper m_simulator;
@@ -54,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void spinAtRpm(double rpm) {
         m_desiredRpm = rpm;
-        m_pidController.setReference(rpm, ControlType.kVelocity);
+        m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
     public double getRpm() {

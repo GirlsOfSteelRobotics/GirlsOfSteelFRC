@@ -3,7 +3,7 @@ package com.gos.preseason2017.team1.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.preseason2017.team1.robot.RobotMap;
@@ -21,7 +21,7 @@ public class DriveSystem extends Subsystem {
     private final WPI_TalonSRX m_driveRightB;
     private final WPI_TalonSRX m_driveRightC;
 
-    private final RobotDrive m_robotDrive;
+    private final DifferentialDrive m_robotDrive;
 
     private double m_encOffsetValueRight;
     private double m_encOffsetValueLeft;
@@ -44,7 +44,7 @@ public class DriveSystem extends Subsystem {
         m_driveRightB.setNeutralMode(NeutralMode.Brake);
         m_driveRightC.setNeutralMode(NeutralMode.Brake);
 
-        m_robotDrive = new RobotDrive(m_driveLeftA, m_driveRightA);
+        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
 
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);
@@ -76,11 +76,11 @@ public class DriveSystem extends Subsystem {
     }
 
     public void driveSpeed(double speed) {
-        m_robotDrive.drive(-speed, 0);
+        m_robotDrive.arcadeDrive(-speed, 0);
     }
 
     public void stop() {
-        m_robotDrive.drive(0, 0);
+        m_robotDrive.arcadeDrive(0, 0);
     }
 
 

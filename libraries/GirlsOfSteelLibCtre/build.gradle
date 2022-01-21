@@ -1,11 +1,11 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2021.3.1"
+    id "edu.wpi.first.GradleRIO" version "2022.2.1"
 }
 
 dependencies {
-    implementation wpi.deps.wpilib()
-    implementation wpi.deps.vendor.java()
+    implementation wpi.java.deps.wpilib()
+    implementation wpi.java.vendor.java()
     implementation project(":libraries:GirlsOfSteelLib")
 }
 

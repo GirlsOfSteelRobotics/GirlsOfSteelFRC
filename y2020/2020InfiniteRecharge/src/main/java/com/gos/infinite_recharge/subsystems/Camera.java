@@ -1,8 +1,8 @@
 package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -30,7 +30,7 @@ public class Camera extends SubsystemBase {
             m_camClimb = new UsbCamera("camClimb", Constants.CAMERA_CLIMB);
             m_camClimb.setResolution(320, 240);
             m_camClimb.setFPS(20);
-            m_server = CameraServer.getInstance().addSwitchedCamera("Driver Cameras");
+            m_server = CameraServer.addSwitchedCamera("Driver Cameras");
             m_server.setSource(m_camIntake);
 
             driverDisplayTab.add("Camera Intake", m_camIntake)

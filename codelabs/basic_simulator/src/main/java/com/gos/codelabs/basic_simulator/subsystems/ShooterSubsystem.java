@@ -7,7 +7,7 @@
 
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.revrobotics.CANPIDController;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.networktables.NetworkTable;
@@ -24,7 +24,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 public class ShooterSubsystem extends SubsystemBase {
 
     private final SimableCANSparkMax m_wheelMotor;
-    private final CANPIDController m_pidController;
+    private final SparkMaxPIDController m_pidController;
     private ISimWrapper m_simulator;
 
     public ShooterSubsystem() {

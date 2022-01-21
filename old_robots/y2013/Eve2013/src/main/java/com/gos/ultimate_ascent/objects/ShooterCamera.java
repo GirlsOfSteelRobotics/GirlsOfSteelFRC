@@ -8,8 +8,8 @@ package com.gos.ultimate_ascent.objects;
 /**
  * @author Heather
  */
-
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -46,39 +46,39 @@ public class ShooterCamera {
     }
 
     private static double getTopTargetPixelHeight() {
-        return NetworkTable.getTable("camera").getNumber("topTargetPixelHeight", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("topTargetPixelHeight").getDouble(0);
     }
 
     private static double getTopTargetPixelWidth() {
-        return NetworkTable.getTable("camera").getNumber("topTargetPixelWidth", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("topTargetPixelWidth").getDouble(0);
     }
 
     private static double getSideTargetPixelHeight() {
-        return NetworkTable.getTable("camera").getNumber("sideTargetPixelHeight", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("sideTargetPixelHeight").getDouble(0);
     }
 
     private static double getSideTargetPixelWidth() {
-        return NetworkTable.getTable("camera").getNumber("sideTargetPixelWidth", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("sideTargetPixelWidth").getDouble(0);
     }
 
     public static boolean isConnected() {
-        return NetworkTable.getTable("camera").isConnected();
+        return NetworkTableInstance.getDefault().getTable("camera").isConnected();
     }
 
     public static boolean foundTopTarget() {
-        return isConnected() && NetworkTable.getTable("camera").getBoolean("foundTopTarget", false);
+        return isConnected() && NetworkTableInstance.getDefault().getTable("camera").getEntry("foundTopTarget").getBoolean(false);
     }
 
     public static boolean foundSideTarget() {
-        return isConnected() && NetworkTable.getTable("camera").getBoolean("foundSideTarget", false);
+        return isConnected() && NetworkTableInstance.getDefault().getTable("camera").getEntry("foundSideTarget").getBoolean(false);
     }
 
     private static double getTopHorizontalDifference() { // -1 to 1 -> position horizontally of the backboard on the screen
-        return NetworkTable.getTable("camera").getNumber("topXDifference", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("topXDifference").getDouble(0);
     }
 
     private static double getSideHorizontalDifference() { // -1 to 1 -> position horizontally of the backboard on the screen
-        return NetworkTable.getTable("camera").getNumber("sideXDifference", 0);
+        return NetworkTableInstance.getDefault().getTable("camera").getEntry("sideXDifference").getDouble(0);
     }
 
     public static double getTopDiffAngle() {

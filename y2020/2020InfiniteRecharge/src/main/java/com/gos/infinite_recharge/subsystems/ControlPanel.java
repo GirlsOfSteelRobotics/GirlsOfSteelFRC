@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class ControlPanel extends SubsystemBase {
-    private static final Color BLUE_TARGET_COLOR = ColorMatch.makeColor(0.143, 0.427, 0.429);
-    private static final Color GREEN_TARGET_COLOR = ColorMatch.makeColor(0.197, 0.561, 0.240);
-    private static final Color RED_TARGET_COLOR = ColorMatch.makeColor(0.561, 0.232, 0.114);
-    private static final Color YELLOW_TARGET_COLOR = ColorMatch.makeColor(0.361, 0.524, 0.113);
+    private static final Color BLUE_TARGET_COLOR = new Color(0.143, 0.427, 0.429);
+    private static final Color GREEN_TARGET_COLOR = new Color(0.197, 0.561, 0.240);
+    private static final Color RED_TARGET_COLOR = new Color(0.561, 0.232, 0.114);
+    private static final Color YELLOW_TARGET_COLOR = new Color(0.361, 0.524, 0.113);
 
     private final NetworkTable m_customNetworkTable;
     /**
@@ -30,7 +30,7 @@ public class ControlPanel extends SubsystemBase {
     }
 
     private final WPI_TalonSRX m_controlPanel; // NOPMD
-    // private final CANEncoder m_controlPanelEncoder;
+    // private final RelativeEncoder m_controlPanelEncoder;
 
     private final ColorSensorV3 m_colorSensor;
     private final ColorMatch m_colorMatcher;

@@ -3,8 +3,8 @@ package com.gos.preseason2017.team2.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.DifferentialDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.preseason2017.team2.robot.RobotMap;
@@ -19,7 +19,7 @@ public class Chassis extends Subsystem {
     private final WPI_TalonSRX m_driveRightA;
     private final WPI_TalonSRX m_driveRightB;
 
-    private final RobotDrive m_robotDrive;
+    private final DifferentialDrive m_robotDrive;
 
 
     public Chassis() {
@@ -37,9 +37,7 @@ public class Chassis extends Subsystem {
         m_driveRightB.follow(m_driveRightA);
 
 
-        m_robotDrive = new RobotDrive(m_driveLeftA, m_driveRightA);
-        m_robotDrive.setInvertedMotor(MotorType.kRearLeft, true);
-        m_robotDrive.setInvertedMotor(MotorType.kRearRight, true);
+        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
     }
 
     // Put methods for controlling this subsystem
@@ -54,12 +52,12 @@ public class Chassis extends Subsystem {
     }
 
     public void driveSpeed(double speed) {
-        m_robotDrive.drive(-speed, 0);
+        m_robotDrive.arcadeDrive(-speed, 0);
     }
 
     public void stop() {
         // TODO Auto-generated method stub
-        m_robotDrive.drive(/* speed */0, /* curve */0);
+        m_robotDrive.arcadeDrive(/* speed */0, /* curve */0);
     }
 
     public double getRightEncoderPosition() {

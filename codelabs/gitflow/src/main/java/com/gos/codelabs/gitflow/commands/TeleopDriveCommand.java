@@ -1,6 +1,5 @@
 package com.gos.codelabs.gitflow.commands;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.codelabs.gitflow.subsystems.ChassisSubsystem;
@@ -24,7 +23,7 @@ public class TeleopDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassisSubsystem.setSpeedAndSteer(m_joystick.getY(GenericHID.Hand.kLeft), m_joystick.getX(GenericHID.Hand.kRight));
+        m_chassisSubsystem.setSpeedAndSteer(m_joystick.getLeftY(), m_joystick.getRightX());
     }
 
     @Override

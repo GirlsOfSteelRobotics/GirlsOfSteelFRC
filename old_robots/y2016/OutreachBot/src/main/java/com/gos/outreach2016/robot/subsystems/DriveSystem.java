@@ -2,7 +2,7 @@ package com.gos.outreach2016.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.outreach2016.robot.RobotMap;
 
@@ -18,7 +18,7 @@ public class DriveSystem extends Subsystem {
     private final WPI_TalonSRX m_driveRightB;
     private final WPI_TalonSRX m_driveRightC;
 
-    private final RobotDrive m_robotDrive;
+    private final DifferentialDrive m_robotDrive;
 
     private double m_encOffsetValue;
 
@@ -47,17 +47,13 @@ public class DriveSystem extends Subsystem {
 
         // Define a robot drive object in terms of only the A motors.
         // The B and C motors will play along at the same speed (see above.)
-        m_robotDrive = new RobotDrive(m_driveLeftA, m_driveRightA);
+        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
 
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.1);
         m_robotDrive.setSensitivity(0.5);
-        m_robotDrive.setMaxOutput(1.0);
-        //robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
-        //robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-        //robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-        //robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        m_robotDrive.setMaxOutput(1.0);
     }
 
     @Override
@@ -72,11 +68,11 @@ public class DriveSystem extends Subsystem {
     }
 
     public void forward() {
-        m_robotDrive.drive(1.0, 0);
+        m_robotDrive.arcadeDrive(1.0, 0);
     }
 
     public void stop() {
-        m_robotDrive.drive(/* speed */0, /* curve */0);
+        m_robotDrive.arcadeDrive(/* speed */0, /* curve */0);
     }
 
     public double getEncoderRight() {

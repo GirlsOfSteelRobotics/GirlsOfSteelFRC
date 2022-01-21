@@ -26,10 +26,10 @@ public final class PropertyManager {
 
 
     public static void purgeExtraKeys() {
-        Collection<String> keys = Preferences.getInstance().getKeys();
+        Collection<String> keys = Preferences.getKeys();
         for (String key : keys) {
             if (!REGISTERED_KEYS.contains(key) && !".type".equals(key)) {
-                Preferences.getInstance().remove(key);
+                Preferences.remove(key);
             }
         }
     }
@@ -48,7 +48,7 @@ public final class PropertyManager {
             m_value = value;
             m_name = key;
 
-            Preferences.getInstance().remove(key);
+            Preferences.remove(key);
         }
 
         @Override
@@ -82,7 +82,7 @@ public final class PropertyManager {
 
         @Override
         public final TypeT getValue() {
-            if (Preferences.getInstance().containsKey(m_key)) {
+            if (Preferences.containsKey(m_key)) {
                 return m_getter.apply(m_key, m_default);
             }
 
@@ -98,25 +98,25 @@ public final class PropertyManager {
 
     public static class IntProperty extends BaseProperty<Integer> {
         public IntProperty(String key, int defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putInt, Preferences.getInstance()::getInt);
+            super(key, defaultValue, Preferences::setInt, Preferences::getInt);
         }
     }
 
     public static class DoubleProperty extends BaseProperty<Double> {
         public DoubleProperty(String key, double defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putDouble, Preferences.getInstance()::getDouble);
+            super(key, defaultValue, Preferences::setDouble, Preferences::getDouble);
         }
     }
 
     public static class StringProperty extends BaseProperty<String> {
         public StringProperty(String key, String defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putString, Preferences.getInstance()::getString);
+            super(key, defaultValue, Preferences::setString, Preferences::getString);
         }
     }
 
     public static class BooleanProperty extends BaseProperty<Boolean> {
         public BooleanProperty(String key, boolean defaultValue) {
-            super(key, defaultValue, Preferences.getInstance()::putBoolean, Preferences.getInstance()::getBoolean);
+            super(key, defaultValue, Preferences::setBoolean, Preferences::getBoolean);
         }
     }
 }

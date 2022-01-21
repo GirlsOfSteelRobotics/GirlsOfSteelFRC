@@ -9,7 +9,7 @@ package dc;
 
 import java.util.function.Supplier;
 
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -39,8 +39,8 @@ public class Robot extends TimedRobot {
   CANSparkMax leftMaster;
   CANSparkMax rightMaster;
 
-  CANEncoder leftEncoder;
-  CANEncoder rightEncoder;
+  RelativeEncoder leftEncoder;
+  RelativeEncoder rightEncoder;
 
   Supplier<Double> leftEncoderPosition;
   Supplier<Double> leftEncoderRate;

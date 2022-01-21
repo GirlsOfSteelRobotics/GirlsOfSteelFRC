@@ -36,7 +36,7 @@ public class LEDLights extends Subsystem {
      * }
      * <p>
      * public void initLights(){
-     * switch (DriverStation.getInstance().getAlliance()) {
+     * switch (DriverStation.getAlliance()) {
      * case Red:
      * Robot.ledlights.redLight();
      * break;

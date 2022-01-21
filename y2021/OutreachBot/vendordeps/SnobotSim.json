@@ -1,15 +1,15 @@
 {
     "fileName": "SnobotSim.json",
     "name": "SnobotSim",
-    "version": "2021.0.3.0",
-    "uuid": "46c80e86-a08b-4978-a56c-f23f7505b1cb",
-    "mavenUrls": ["http://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+    "version": "2022.1.0.0",
+    "uuid": "2534b1f6-cbe7-49c2-8450-c3a7dec6eab1",
+    "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
     "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json",
     "javaDependencies": [
         {
             "groupId": "org.snobotv2",
             "artifactId": "snobot_sim_java",
-            "version": "2021.0.3.0"
+            "version": "2022.1.0.0"
         }
     ],
     "jniDependencies": [],

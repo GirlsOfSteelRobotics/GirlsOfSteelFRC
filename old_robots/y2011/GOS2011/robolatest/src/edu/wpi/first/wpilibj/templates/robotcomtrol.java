@@ -8,18 +8,19 @@
 package edu.wpi.first.wpilibj.templates;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
-import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.cscore.AxisCamera;
 
 
 /**
@@ -46,7 +47,7 @@ public class robotcomtrol extends SimpleRobot {
     CANJaguar FrontRight;
     CANJaguar RearLeft;
     CANJaguar RearRight;
-    RobotDrive Move;
+    DifferentialDrive Move;
     boolean isforwardlimitok;
     double Sholval;
     double Elbowval;
@@ -138,12 +139,10 @@ public class robotcomtrol extends SimpleRobot {
             ex.printStackTrace();
         }
 
-        /*SholEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
-         *SholEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        /*SholEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
          *SholPID = new PIDController (Sholp, Sholi, Shold, SholEncoder, insertjaghere);
          *SholEncoder.setDistancePerPulse(distancepulse);
-         *ElbEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
-         *ElbEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+         *ElbEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
          *ElbPID = new PIDController (Elbp, Elbi, Elbd, ElbEncoder, insertjaghere);
          *ElbEncoder.setDistancePerPulse(distancepulse);
          */
@@ -167,7 +166,7 @@ public class robotcomtrol extends SimpleRobot {
             ex.printStackTrace();
         }*/
 
-        //Move = new RobotDrive(FrontLeft, RearLeft, FrontRight, RearRight);
+        //Move = new DifferentialDrive(FrontLeft, RearLeft, FrontRight, RearRight);
 
         System.err.println("DOWNLOADED!!!");
         System.out.println("Did the birdie attack you?");

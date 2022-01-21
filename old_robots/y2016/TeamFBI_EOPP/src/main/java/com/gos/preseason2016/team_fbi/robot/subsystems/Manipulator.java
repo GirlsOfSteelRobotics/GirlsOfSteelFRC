@@ -2,15 +2,15 @@ package com.gos.preseason2016.team_fbi.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class Manipulator extends Subsystem {
-    private final SpeedController m_conveyorBeltMotorRight;
-    private final SpeedController m_conveyorBeltMotorLeft;
+    private final MotorController m_conveyorBeltMotorRight;
+    private final MotorController m_conveyorBeltMotorLeft;
 
     public Manipulator() {
 

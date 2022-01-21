@@ -3,6 +3,7 @@ package com.gos.outreach2016.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.outreach2016.robot.RobotMap;
 
@@ -23,8 +24,8 @@ public class Manipulator extends Subsystem {
     public Manipulator() {
         m_pivotMotor = new WPI_TalonSRX(RobotMap.ARM_PIVOT_CAN_ID);
         m_collectorMotor = new WPI_TalonSRX(RobotMap.COLLECTOR_CAN_ID);
-        m_shooter = new DoubleSolenoid(RobotMap.SHOOTER_PISTON_A, RobotMap.SHOOTER_PISTON_B);
-        m_arm = new DoubleSolenoid(RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
+        m_shooter = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SHOOTER_PISTON_A, RobotMap.SHOOTER_PISTON_B);
+        m_arm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ARM_PISTON_A, RobotMap.ARM_PISTON_B);
     }
 
     public void openArm() {

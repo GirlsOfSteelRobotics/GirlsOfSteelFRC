@@ -1,10 +1,10 @@
 package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
-import com.revrobotics.ControlType;
-import com.revrobotics.EncoderType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkMaxRelativeEncoder;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -20,7 +20,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.lib.properties.PropertyManager;
 
@@ -35,8 +35,8 @@ public class Shooter extends SubsystemBase {
 
     private final SimableCANSparkMax m_master;
     private final SimableCANSparkMax m_follower;
-    private final CANEncoder m_encoder;
-    private final CANPIDController m_pidController;
+    private final RelativeEncoder m_encoder;
+    private final SparkMaxPIDController m_pidController;
 
     private final Limelight m_limelight;
 
@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase {
     public Shooter(ShuffleboardTab driveDisplayTab, Limelight limelight) {
         m_master = new SimableCANSparkMax(Constants.SHOOTER_SPARK_A, MotorType.kBrushed);
         m_follower = new SimableCANSparkMax(Constants.SHOOTER_SPARK_B, MotorType.kBrushed);
-        m_encoder  = m_master.getEncoder(EncoderType.kQuadrature, 8192);
+        m_encoder  = m_master.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 8192);
         m_pidController = m_master.getPIDController();
 
         m_dashboardKp = new PropertyManager.DoubleProperty("shooter_kp", SHOOTER_KP);
@@ -97,9 +97,9 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(final double rpm) {
         m_goalRPM = rpm;
-        m_pidController.setReference(rpm, ControlType.kVelocity);
-        // double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
-        // m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
+        m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
+        //double targetVelocityUnitsPer100ms = rpm * 4096 / 600;
+        //m_master.set(1.00 /*targetVelocityUnitsPer100ms*/);
         m_limelight.turnLimelightOn();
     }
 
@@ -131,7 +131,7 @@ public class Shooter extends SubsystemBase {
     public void stop() {
         m_master.set(0);
         m_limelight.turnLimelightOff();
-        //m_pidController.setReference(0, ControlType.kVelocity);
+        //m_pidController.setReference(0, CANSparkMax.ControlType.kVelocity);
     }
 
     @Override

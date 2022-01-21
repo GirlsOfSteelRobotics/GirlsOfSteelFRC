@@ -6,6 +6,7 @@
 package com.gos.ultimate_ascent.subsystems;
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.ultimate_ascent.RobotMap;

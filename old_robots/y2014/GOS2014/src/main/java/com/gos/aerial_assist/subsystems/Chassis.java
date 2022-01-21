@@ -10,7 +10,7 @@ package com.gos.aerial_assist.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.aerial_assist.Configuration;
@@ -27,7 +27,7 @@ public class Chassis extends Subsystem {
     private final Jaguar m_rightJag;
     private final Jaguar m_leftJag;
 
-    //RobotDrive drive = new RobotDrive(rightJag, leftJag); USE THIS IF DRIVING CODE DOESN'T WORK
+    //DifferentialDrive drive = new DifferentialDrive(rightJag, leftJag); USE THIS IF DRIVING CODE DOESN'T WORK
     private static final double m_deadZoneScale = 0.3;
 
     private final Encoder m_rightEncoder;

@@ -2,7 +2,7 @@ package com.gos.preseason2016.team_fbi.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -18,7 +18,7 @@ public class Drive extends Subsystem {
     private final WPI_TalonSRX m_driveSystemDriveLeft2;
     private final WPI_TalonSRX m_driveSystemDriveRight2;
 
-    private final RobotDrive m_robotDrive;
+    private final DifferentialDrive m_robotDrive;
 
     public Drive() {
         m_driveSystemDriveLeft0 = new WPI_TalonSRX(0);
@@ -36,13 +36,12 @@ public class Drive extends Subsystem {
         m_driveSystemDriveLeft2.follow(m_driveSystemDriveLeft0);
         m_driveSystemDriveRight2.follow(m_driveSystemDriveRight0);
 
-        m_robotDrive = new RobotDrive(m_driveSystemDriveLeft0, m_driveSystemDriveRight0);
+        m_robotDrive = new DifferentialDrive(m_driveSystemDriveLeft0, m_driveSystemDriveRight0);
 
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.1);
         m_robotDrive.setSensitivity(0.5);
-        m_robotDrive.setMaxOutput(1.0);
-        //driveSystemRobotDrive2.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        m_robotDrive.setMaxOutput(1.0);
 
     }
 
@@ -55,10 +54,10 @@ public class Drive extends Subsystem {
     }
 
     public void driveAuto() {
-        m_robotDrive.drive(AUTO_DRIVE_SPEED, 0);
+        m_robotDrive.arcadeDrive(AUTO_DRIVE_SPEED, 0);
     }
 
     public void stop() {
-        m_robotDrive.drive(0, 0);
+        m_robotDrive.arcadeDrive(0, 0);
     }
 }

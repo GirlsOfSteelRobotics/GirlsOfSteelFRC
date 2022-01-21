@@ -10,24 +10,25 @@ package edu.wpi.first.wpilibj.templates;
 import com.sun.squawk.util.MathUtils;
 
 import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 //  import edu.wpi.first.wpilibj.DriverStation;
 //  import edu.wpi.first.wpilibj.Dashboard;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.Joystick;
 //  import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
+ * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class RobotTemplate extends IterativeRobot {
+public class RobotTemplate extends TimedRobot {
 //    DriverStation myDS = DriverStation.getInstance();
 //    Dashboard myDash = myDS.getDashboardPackerLow();
 
@@ -44,7 +45,7 @@ public class RobotTemplate extends IterativeRobot {
     // the kicker
     CANJaguar kicker = new CANJaguar(9, CANJaguar.TalonControlMode.kPercentVoltage);
 
-    RobotDrive myDrive = new RobotDrive(driveFL, driveRL, driveFR, driveRR);
+    DifferentialDrive myDrive = new DifferentialDrive(driveFL, driveRL, driveFR, driveRR);
 
     // trigger control
     Solenoid resetTrigger = new Solenoid(8, 1);
@@ -184,9 +185,7 @@ public class RobotTemplate extends IterativeRobot {
         possesL.setNeutralMode(NeutralMode.kBrake);
         possesR.setNeutralMode(NeutralMode.kBrake);
         kicker.setNeutralMode(NeutralMode.kBrake);
-
-        myDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        myDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+
 
         drivingJoystick.setAxisChannel(Joystick.AxisType.kTwist, 4);
         drivingJoystick.setAxisChannel(Joystick.AxisType.kThrottle, 5);

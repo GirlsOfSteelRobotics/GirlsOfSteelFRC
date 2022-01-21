@@ -1,7 +1,7 @@
 package com.gos.testboard2020.subsystems;
 
 import com.gos.testboard2020.Constants;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Blinkin extends SubsystemBase {

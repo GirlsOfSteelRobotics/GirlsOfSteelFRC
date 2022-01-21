@@ -1,6 +1,5 @@
 package com.gos.codelabs.pid;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.codelabs.pid.commands.DriveChassisHaloDrive;
@@ -38,23 +37,23 @@ public class OI {
         new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new ElevatorToPositionCommand(lift, ElevatorSubsystem.Positions.HIGH));
 
         // Shooter
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kBumperLeft.value).whileHeld(new ShooterRpmCommand(shooter, 3200));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kBumperRight.value).whileHeld(new ShooterRpmCommand(shooter, 2500));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value).whileHeld(new ShooterRpmCommand(shooter, 3200));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value).whileHeld(new ShooterRpmCommand(shooter, 2500));
 
     }
 
     public double getDriverThrottle() {
         // Y is negated so that pushing the joystick forward results in positive values
-        return -m_driverJoystick.getY(GenericHID.Hand.kLeft);
+        return -m_driverJoystick.getLeftY();
     }
 
     public double getDriverSpin() {
-        return m_driverJoystick.getX(GenericHID.Hand.kRight);
+        return m_driverJoystick.getRightX();
     }
 
     public double getElevatorJoystick() {
         // Y is negated so that pushing the joystick forward results in positive values
-        double output = -m_operatorJoystick.getY(GenericHID.Hand.kRight);
+        double output = -m_operatorJoystick.getRightY();
 
         // Ignore the noise that can happen when the joystick is neutral, but not perfectly 0.0
         if (Math.abs(output) < ELEVATOR_JOYSTICK_DEADBAND) {

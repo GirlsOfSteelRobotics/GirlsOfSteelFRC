@@ -142,10 +142,10 @@ public class GameData {
      */
     private String getGameData() {
         int tim = 0;
-        m_gameData = DriverStation.getInstance().getGameSpecificMessage();
+        m_gameData = DriverStation.getGameSpecificMessage();
 
         while (tim <= 5 && (m_gameData == null || "".equals(m_gameData))) {
-            m_gameData = DriverStation.getInstance().getGameSpecificMessage();
+            m_gameData = DriverStation.getGameSpecificMessage();
             Timer.delay(0.2);
             tim++;
         }

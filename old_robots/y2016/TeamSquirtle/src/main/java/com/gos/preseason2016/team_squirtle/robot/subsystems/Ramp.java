@@ -1,6 +1,7 @@
 package com.gos.preseason2016.team_squirtle.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -10,7 +11,7 @@ public class Ramp extends Subsystem {
     private final DoubleSolenoid m_rampPiston;
 
     public Ramp() {
-        m_rampPiston = new DoubleSolenoid(6, 7);
+        m_rampPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 6, 7);
     }
 
     // Put methods for controlling this subsystem

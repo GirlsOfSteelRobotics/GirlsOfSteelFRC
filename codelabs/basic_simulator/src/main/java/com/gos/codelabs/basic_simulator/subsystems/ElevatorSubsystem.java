@@ -1,11 +1,11 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.codelabs.basic_simulator.Constants;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -30,7 +30,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
 
     private final SimableCANSparkMax m_liftMotor;
-    private final CANEncoder m_liftEncoder;
+    private final RelativeEncoder m_liftEncoder;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 

@@ -1,6 +1,6 @@
 package com.gos.outreach2016.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.outreach2016.robot.RobotMap;
 

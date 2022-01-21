@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.steam_works.robot.RobotMap;
 
@@ -20,7 +20,7 @@ public class Chassis extends Subsystem {
     private final WPI_TalonSRX m_driveRightB;
     private final WPI_TalonSRX m_driveRightC;
 
-    private final RobotDrive m_robotDrive;
+    private final DifferentialDrive m_robotDrive;
 
     public Chassis() {
         m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
@@ -45,15 +45,13 @@ public class Chassis extends Subsystem {
         setupEncoder(m_driveLeftA);
         setupEncoder(m_driveRightA);
 
-        m_robotDrive = new RobotDrive(m_driveLeftA, m_driveRightA);
+        m_robotDrive = new DifferentialDrive(m_driveLeftA, m_driveRightA);
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.2);
         m_robotDrive.setSensitivity(0.5);
         m_robotDrive.setMaxOutput(1.0);
-
-        m_robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
-        m_robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
+
 
         // V per sec; 12 = zero to full speed in 1 second
         m_driveLeftA.configOpenloopRamp(1.0);
@@ -111,7 +109,7 @@ public class Chassis extends Subsystem {
     }
 
     public void turn(double speed, double curve) {
-        m_robotDrive.drive(speed, curve);
+        m_robotDrive.arcadeDrive(speed, curve);
     }
 
     public void stop() {

@@ -160,11 +160,11 @@ public class Buttons extends CommandBase {
             //                  "Turret Set Position On" + oi.getTurretOverrideSwitchValue());
             //            System.out.println("Turret Set Position On" + oi.getTurretOverrideSwitchValue());
             m_setPointTurret.start();
-            //  DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, true);
+            //  DriverStation.setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, true);
         } else { //NOTHING IS SET TO HAPPEN IN HERE FOR SOME ODD REASON!!!
             //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
             //             System.out.println("Auto Turret Off" + oi.getTurretOverrideSwitchValue());
-            //            DriverStation.getInstance().setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, false);
+            //            DriverStation.setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, false);
             m_setPointTurret.cancel();
         }
 
@@ -172,12 +172,12 @@ public class Buttons extends CommandBase {
             //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret On" + oi.getTurretOverrideSwitchValue());
             //              System.out.println("Manual Turret On" + oi.getTurretOverrideSwitchValue());
             m_manualTurret.start();
-            //DriverStation.getInstance().setDigitalOut(oi.TURRET_MANUAL_LIGHT, true);
+            //DriverStation.setDigitalOut(oi.TURRET_MANUAL_LIGHT, true);
         } else {
             //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret Off" + oi.getTurretOverrideSwitchValue());
             //           System.out.println("Manual Turret Off" + oi.getTurretOverrideSwitchValue());
             m_manualTurret.cancel();
-            //DriverStation.getInstance().setDigitalOut(oi.TURRET_MANUAL_LIGHT, false);
+            //DriverStation.setDigitalOut(oi.TURRET_MANUAL_LIGHT, false);
         }
         //        DriverStationLCD.getInstance().updateLCD();
     }

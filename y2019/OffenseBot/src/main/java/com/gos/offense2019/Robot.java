@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
         // to avoid the code crashing when enabled!!!
         new OI(m_chassis, m_shifters, m_hatchCollector);
 
-        CameraServer.getInstance().startAutomaticCapture("Camera", 0);
+        CameraServer.startAutomaticCapture("Camera", 0);
     }
 
     /**
