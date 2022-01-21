@@ -4,7 +4,7 @@
  */
 
 package com.gos.ultimate_ascent.objects;
-import edu.wpi.first.networktables.NetworkTable;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
@@ -12,6 +12,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class ClimberCamera {
     public static boolean isConnected() {
-        return NetworkTableInstance.getDefault().getTable("camera").isConnected();
+        return NetworkTableInstance.getDefault().isConnected();
     }
 }

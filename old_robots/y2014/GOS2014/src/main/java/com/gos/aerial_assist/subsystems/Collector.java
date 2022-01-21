@@ -83,7 +83,7 @@ public class Collector extends Subsystem {
     } //Stops the collector jag
 
     public double getCollectorSpeed() {
-        return m_collectorJag.getSpeed();
+        return m_collectorJag.get();
     }
 
     /**

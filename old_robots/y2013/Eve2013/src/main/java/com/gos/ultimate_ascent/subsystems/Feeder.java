@@ -23,10 +23,10 @@ public class Feeder extends Subsystem {
 
     public Feeder() {
         //Shooter piston
-        m_frontPiston = new Solenoid(RobotMap.SHOOTER_MODULE, RobotMap.SHOOTER_PISTON_FRONT);
-        m_backPiston = new Solenoid(RobotMap.SHOOTER_MODULE, RobotMap.SHOOTER_PISTON_BACK);
-        m_frontBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, RobotMap.OPEN_BLOCKER_SOLENOID);
-        m_backBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, RobotMap.CLOSE_BLOCKER_SOLENOID);
+        m_frontPiston = new Solenoid(RobotMap.SHOOTER_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.SHOOTER_PISTON_FRONT);
+        m_backPiston = new Solenoid(RobotMap.SHOOTER_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.SHOOTER_PISTON_BACK);
+        m_frontBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.OPEN_BLOCKER_SOLENOID);
+        m_backBlocker = new Solenoid(RobotMap.BLOCKER_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.CLOSE_BLOCKER_SOLENOID);
         m_isRaised = false;
     }
 

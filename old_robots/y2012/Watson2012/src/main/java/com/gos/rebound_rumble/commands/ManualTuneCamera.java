@@ -1,5 +1,6 @@
 package com.gos.rebound_rumble.commands;
-import edu.wpi.first.networktables.NetworkTable;
+
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.objects.Camera;
@@ -184,4 +185,3 @@ public class ManualTuneCamera extends CommandBase {
         }
     }
 }
-

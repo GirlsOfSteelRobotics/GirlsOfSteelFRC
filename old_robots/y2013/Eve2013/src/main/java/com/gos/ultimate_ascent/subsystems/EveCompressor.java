@@ -1,6 +1,7 @@
 package com.gos.ultimate_ascent.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.gos.ultimate_ascent.RobotMap;
 
@@ -14,7 +15,7 @@ public class EveCompressor extends Subsystem {
 
     public EveCompressor() {
         //        compressorSpike = new Relay(RobotMap.COMPRESSOR_RELAY_PORT);
-        m_autoCompressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL);
+        m_autoCompressor = new Compressor(RobotMap.PRESSURE_SWITCH_CHANNEL, PneumaticsModuleType.CTREPCM);
         m_autoCompressor.start();
     }
 

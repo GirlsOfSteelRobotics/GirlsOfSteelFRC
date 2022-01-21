@@ -22,9 +22,9 @@ public class Climber extends Subsystem {
 
 
     private final Solenoid m_extendLifterPistonSolenoid = new Solenoid(
-        RobotMap.LIFTER_MODULE, RobotMap.EXTEND_LIFTER_PISTON_SOLENOID);
+        RobotMap.LIFTER_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.EXTEND_LIFTER_PISTON_SOLENOID);
     private final Solenoid m_retractLifterPistonSolenoid = new Solenoid(
-        RobotMap.LIFTER_MODULE, RobotMap.RETRACT_LIFTER_PISTON_SOLENOID);
+        RobotMap.LIFTER_MODULE, PneumaticsModuleType.CTREPCM, RobotMap.RETRACT_LIFTER_PISTON_SOLENOID);
 
 
     //Piston methods

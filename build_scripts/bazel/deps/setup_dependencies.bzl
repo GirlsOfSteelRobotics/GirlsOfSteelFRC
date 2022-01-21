@@ -5,12 +5,12 @@ load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
 def setup_dependencies():
     rules_pmd_dependencies()
     setup_bazelrio_dependencies(
-        toolchain_versions = "2021",
-        wpilib_version = "2021.3.1",
-        ni_version = "2020.9.2",
-        opencv_version = "3.4.7-5",
-        sparkmax_version = "1.5.4",
-        phoenix_version = "5.19.4",
-        navx_version = "4.0.425",
+        toolchain_versions = "2022-1",
+        wpilib_version = "2022.1.1",
+        ni_version = "2022.2.3",
+        opencv_version = "4.5.2-1",
+        revlib_version = "2022.1.0",
+        phoenix_version = "5.20.2",
+        navx_version = "4.0.442",
     )
     setup_bazelrio()

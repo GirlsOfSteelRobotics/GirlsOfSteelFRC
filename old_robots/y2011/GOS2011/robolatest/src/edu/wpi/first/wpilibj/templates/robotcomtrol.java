@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.cscore.AxisCamera;
@@ -139,10 +138,10 @@ public class robotcomtrol extends SimpleRobot {
             ex.printStackTrace();
         }
 
-        /*SholEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
+        /*SholEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
          *SholPID = new PIDController (Sholp, Sholi, Shold, SholEncoder, insertjaghere);
          *SholEncoder.setDistancePerPulse(distancepulse);
-         *ElbEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
+         *ElbEncoder = new Encoder (slotA, channelA, slotB, channelB, true, CounterBase.EncodingType.k4X);
          *ElbPID = new PIDController (Elbp, Elbi, Elbd, ElbEncoder, insertjaghere);
          *ElbEncoder.setDistancePerPulse(distancepulse);
          */

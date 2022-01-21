@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.Joystick;
 //  import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -185,7 +184,7 @@ public class RobotTemplate extends TimedRobot {
         possesL.setNeutralMode(NeutralMode.kBrake);
         possesR.setNeutralMode(NeutralMode.kBrake);
         kicker.setNeutralMode(NeutralMode.kBrake);
-
+
 
         drivingJoystick.setAxisChannel(Joystick.AxisType.kTwist, 4);
         drivingJoystick.setAxisChannel(Joystick.AxisType.kThrottle, 5);

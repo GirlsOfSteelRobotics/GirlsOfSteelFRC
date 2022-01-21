@@ -48,7 +48,6 @@ public class Chassis extends Subsystem {
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.1);
-        m_robotDrive.setSensitivity(0.5);
         m_robotDrive.setMaxOutput(1.0);
 
         m_driveLeftB.follow(m_driveLeftA);

@@ -40,8 +40,8 @@ public class Drive extends Subsystem {
 
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.1);
-        m_robotDrive.setSensitivity(0.5);
-        m_robotDrive.setMaxOutput(1.0);
+        m_robotDrive.setMaxOutput(1.0);
+
 
     }
 
@@ -50,7 +50,7 @@ public class Drive extends Subsystem {
     }
 
     public void moveByJoystick(Joystick joystick) {
-        m_robotDrive.arcadeDrive(joystick);
+        m_robotDrive.arcadeDrive(joystick.getY(), joystick.getX());
     }
 
     public void driveAuto() {

@@ -1,5 +1,6 @@
 package com.gos.aerial_assist.commands;
-import edu.wpi.first.networktables.NetworkTable;
+
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.objects.Camera;
@@ -171,4 +172,3 @@ public class AutoTuneCamera extends CommandBase {
     }
 
 }
-

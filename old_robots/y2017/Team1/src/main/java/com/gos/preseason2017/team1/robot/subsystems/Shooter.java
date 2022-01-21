@@ -16,8 +16,8 @@ public class Shooter extends Subsystem {
     // here. Call these from Commands.
 
     public Shooter() {
-        m_shooterPistonLeft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
-        m_shooterPistonRight = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PCM_ARM, RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
+        m_shooterPistonLeft = new DoubleSolenoid(RobotMap.PCM_ARM, PneumaticsModuleType.CTREPCM, RobotMap.SHOOTER_PISTON_LEFT_A, RobotMap.SHOOTER_PISTON_LEFT_B);
+        m_shooterPistonRight = new DoubleSolenoid(RobotMap.PCM_ARM, PneumaticsModuleType.CTREPCM, RobotMap.SHOOTER_PISTON_RIGHT_A, RobotMap.SHOOTER_PISTON_RIGHT_B);
 
     }
 

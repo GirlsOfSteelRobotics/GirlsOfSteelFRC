@@ -49,7 +49,6 @@ public class DriveSystem extends Subsystem {
         // Set some safety controls for the drive system
         m_robotDrive.setSafetyEnabled(true);
         m_robotDrive.setExpiration(0.1);
-        m_robotDrive.setSensitivity(0.5);
         m_robotDrive.setMaxOutput(1.0);
 
         m_driveLeftB.follow(m_driveLeftA);
@@ -63,7 +62,7 @@ public class DriveSystem extends Subsystem {
     }
 
     public void takeJoystickInputs(Joystick joystk) {
-        m_robotDrive.arcadeDrive(joystk);
+        m_robotDrive.arcadeDrive(joystk.getY(), joystk.getX());
     }
 
     public void driveByJoystick(double throttle, double steer) {

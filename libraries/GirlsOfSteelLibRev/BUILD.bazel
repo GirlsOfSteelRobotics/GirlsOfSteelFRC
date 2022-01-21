@@ -6,6 +6,6 @@ gos_java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//libraries/GirlsOfSteelLib",
-        "@bazelrio//libraries/java/rev/sparkmax",
+        "@bazelrio//libraries/java/rev/revlib",
     ],
 )

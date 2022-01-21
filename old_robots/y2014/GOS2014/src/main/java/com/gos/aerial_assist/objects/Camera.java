@@ -3,7 +3,7 @@ package com.gos.aerial_assist.objects;
 /**
  * @author Heather
  */
-import edu.wpi.first.networktables.NetworkTable;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -21,7 +21,7 @@ public class Camera {
     }
 
     public static boolean isConnected() {
-        return NetworkTableInstance.getDefault().getTable("camera").isConnected();
+        return NetworkTableInstance.getDefault().isConnected();
     }
 
     public static boolean isGoalHot() {
