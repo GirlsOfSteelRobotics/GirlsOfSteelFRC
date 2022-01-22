@@ -49,3 +49,5 @@ include 'y2021:OutreachBotDashboard'
 
 include 'y2022:CallistoRewrite'
 include 'y2022:ChassisProject'
+
+include 'y2022:RapidReact'
