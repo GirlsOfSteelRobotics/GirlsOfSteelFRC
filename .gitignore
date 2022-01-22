@@ -374,4 +374,21 @@ user.bazelrc
 !.ijwb/.idea/externalDependencies.xml
 .idea/checkstyleidea-libs/*
 
+# Keep only the top level idea folder and gradlerio files
+!/.vscode
+!/.wpilib
+!/gradle
+!/gradlew
+!/gradlew.bat
+!/WPILib-License.md
+!/settings.gradle
+.vscode
+.wpilib
+gradle
+gradlew
+gradlew.bat
+WPILib-License.md
+settings.gradle
+
+# HALSIM Gui
 imgui.ini
