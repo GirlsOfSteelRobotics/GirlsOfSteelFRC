@@ -5,10 +5,10 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
+import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import com.gos.rapidreact.commands.ExampleCommand;
-import com.gos.rapidreact.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -20,10 +20,10 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-    private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+    private final ChassisSubsystem m_chassis = new ChassisSubsystem();
 
+    private final XboxController m_driverJoystick = new XboxController(1);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -41,6 +41,7 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
     }
@@ -53,6 +54,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return m_autoCommand;
+        return null;
     }
 }
