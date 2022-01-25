@@ -25,6 +25,8 @@ public class RobotContainer {
 
     private final XboxController m_driverJoystick = new XboxController(1);
 
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis);
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
