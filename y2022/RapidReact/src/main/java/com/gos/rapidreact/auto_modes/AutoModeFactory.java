@@ -1,8 +1,12 @@
 package com.gos.rapidreact.auto_modes;
 
 
-import com.gos.rapidreact.subsystems.Chassis;
-
+import com.gos.rapidreact.subsystems.ChassisSubsystem;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.gos.rapidreact.commands.autonomous.DriveOffTarmacCommand;
 
 
 public class AutoModeFactory extends SequentialCommandGroup {
@@ -19,13 +23,13 @@ public class AutoModeFactory extends SequentialCommandGroup {
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public AutoModeFactory(Chassis chassis, Shooter shooter, ShooterConveyor shooterConveyor, ShooterIntake shooterIntake, Limelight limelight) {
+    public AutoModeFactory(ChassisSubsystem chassis) {
 
         m_sendableChooser = new SendableChooser<>();
-        TrajectoryModeFactory trajectoryModeFactory = new TrajectoryModeFactory();
+        //TrajectoryModeFactory trajectoryModeFactory = new TrajectoryModeFactory();
 
         if (TEST_MODE) {
-            m_sendableChooser.addOption("Limelight", new AlignLeftRight(chassis, limelight));
+        //    m_sendableChooser.addOption("Limelight", new AlignLeftRight(chassis, limelight));
         }
 
 
@@ -34,15 +38,12 @@ public class AutoModeFactory extends SequentialCommandGroup {
         }
 
 
-        m_defaultCommand = new ShootToDriveForwardsNoSensor(chassis, shooter, shooterConveyor, shooterIntake, true, Constants.DEFAULT_RPM);
+        m_defaultCommand = new DriveOffTarmacCommand();
 
 
 
     }
 
-    private Command createDrivePointCommand(Chassis chassis, double x, double y, double allowableError) {
-        return new SetStartingPosition(chassis, 27 * 12, -13.5 * 12, 0).andThen(new GoToPosition(chassis, x, y, allowableError));
-    }
 
     public Command getAutonomousMode() {
         if (ENABLE_AUTO_SELECTION) {
