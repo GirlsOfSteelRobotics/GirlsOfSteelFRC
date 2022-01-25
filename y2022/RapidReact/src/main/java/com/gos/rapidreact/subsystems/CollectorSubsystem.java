@@ -1,12 +1,10 @@
 package com.gos.rapidreact.subsystems;
 
-
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CollectorSubsystem extends SubsystemBase {
@@ -25,11 +23,16 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotEncoder = m_pivot.getEncoder();
     }
 
-    public void collectorDown () {
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Pivot Encoder", m_pivotEncoder.getPosition());
+    }
+
+    public void collectorDown() {
         m_pivot.set(PIVOT_SPEED);
     }
 
-    public void collectorUp () {
+    public void collectorUp() {
         m_pivot.set(-PIVOT_SPEED);
     }
 
