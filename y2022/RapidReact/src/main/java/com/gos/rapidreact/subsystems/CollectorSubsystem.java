@@ -25,7 +25,6 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotEncoder = m_pivot.getEncoder();
     }
 
-
     public void collectorDown () {
         m_pivot.set(PIVOT_SPEED);
     }
@@ -40,6 +39,14 @@ public class CollectorSubsystem extends SubsystemBase {
 
     public void rollerOut() {
         m_roller.set(-ROLLER_SPEED);
+    }
+
+    public void rollerStop() {
+        m_roller.set(0);
+    }
+
+    public void pivotStop() {
+        m_pivot.set(0);
     }
 }
 

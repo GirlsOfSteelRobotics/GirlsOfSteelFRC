@@ -10,8 +10,6 @@ public class CollectorDownCommand extends CommandBase {
 
     public CollectorDownCommand(CollectorSubsystem collectorSubsystem) {
         this.m_collector = collectorSubsystem;
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_collector);
     }
 
@@ -32,6 +30,6 @@ public class CollectorDownCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        m_collector.pivotStop();
     }
 }
