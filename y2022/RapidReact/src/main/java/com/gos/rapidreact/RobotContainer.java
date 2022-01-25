@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import com.gos.rapidreact.auto_modes.AutoModeFactory;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,6 +31,8 @@ public class RobotContainer {
     private final CollectorSubsystem m_collector = new CollectorSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
+
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
