@@ -20,4 +20,7 @@ public final class Constants {
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
 
     public static final int PIGEON_PORT = 5;
+
+    public static final int COLLECTOR_ROLLER = 6;
+    public static final int COLLECTOR_PIVOT = 7;
 }
