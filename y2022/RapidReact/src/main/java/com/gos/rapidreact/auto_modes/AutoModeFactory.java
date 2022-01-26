@@ -12,7 +12,6 @@ import com.gos.rapidreact.commands.autonomous.DriveOffTarmacCommand;
 public class AutoModeFactory extends SequentialCommandGroup {
 
     private final SendableChooser<Command> m_sendableChooser;
-    private static final boolean TEST_MODE = true;
 
     private static final boolean ENABLE_AUTO_SELECTION = true;
 
@@ -24,14 +23,15 @@ public class AutoModeFactory extends SequentialCommandGroup {
      * Creates a new AutomatedConveyorIntake.
      */
     public AutoModeFactory(ChassisSubsystem chassis) {
-
+        // -- currently not using chassis
         m_sendableChooser = new SendableChooser<>();
         //TrajectoryModeFactory trajectoryModeFactory = new TrajectoryModeFactory();
 
+        /*
         if (TEST_MODE) {
-        //    m_sendableChooser.addOption("Limelight", new AlignLeftRight(chassis, limelight));
+            m_sendableChooser.addOption("Limelight", new AlignLeftRight(chassis, limelight));
         }
-
+        */
 
         if (ENABLE_AUTO_SELECTION) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);
