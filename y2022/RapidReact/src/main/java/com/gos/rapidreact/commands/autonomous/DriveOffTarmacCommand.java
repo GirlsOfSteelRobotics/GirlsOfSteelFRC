@@ -1,14 +1,19 @@
 package com.gos.rapidreact.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
 
 public class DriveOffTarmacCommand extends CommandBase {
 
-    public DriveOffTarmacCommand() {
+    private final ChassisSubsystem m_chassis;
+
+
+    public DriveOffTarmacCommand(ChassisSubsystem chassis) {
+        m_chassis = chassis;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(chassis);
     }
 
     @Override
@@ -18,6 +23,7 @@ public class DriveOffTarmacCommand extends CommandBase {
 
     @Override
     public void execute() {
+        m_chassis.setArcadeDrive(10, 10);
 
     }
 

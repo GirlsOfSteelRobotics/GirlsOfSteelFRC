@@ -38,7 +38,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         }
 
 
-        m_defaultCommand = new DriveOffTarmacCommand();
+        m_defaultCommand = new DriveOffTarmacCommand(chassis);
 
 
 
