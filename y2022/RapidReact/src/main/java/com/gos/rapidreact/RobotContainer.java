@@ -25,7 +25,7 @@ public class RobotContainer {
 
     private final XboxController m_driverJoystick = new XboxController(1);
 
-    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis);
+    private final AutoModeFactory m_autoModeFactory;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -33,6 +33,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
+        m_autoModeFactory = new AutoModeFactory(m_chassis);
     }
 
 
@@ -56,6 +57,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return null;
+        return m_autoModeFactory.getAutonomousMode();
     }
 }
