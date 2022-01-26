@@ -1,15 +1,14 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [1]": {
-        "header": {
-          "open": true
-        }
+      "SPARK MAX [6]": {
+        "name": "SPARK MAX [ROLLER]"
       },
       "SPARK MAX [7]": {
         "header": {
           "open": true
-        }
+        },
+        "name": "SPART MAX [PIVOT]"
       }
     }
   },
@@ -44,16 +43,6 @@
         }
       },
       "/SmartDashboard/Field": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/RollerInCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/RollerOutCommand": {
         "window": {
           "visible": true
         }
