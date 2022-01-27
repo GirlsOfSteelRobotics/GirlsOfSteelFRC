@@ -101,11 +101,23 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void collectorDownPID() {
-        m_pidController.setReference(0, CANSparkMax.ControlType.kPosition);
+        collectorToAngle(0);
     }
 
     public void collectorUpPID() {
-        m_pidController.setReference(Math.PI / 2, CANSparkMax.ControlType.kPosition);
+        collectorToAngle(Math.toRadians(90));
+    }
+
+    /**
+     * gets pivot point of collector to given angle using pid
+     * @param pivotAngleRadians *IN RADIANS*
+     */
+    public void collectorToAngle(double pivotAngleRadians) {
+        m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition);
+    }
+
+    public double getEncoder() {
+        return m_pivotEncoder.getPosition();
     }
 
     @Override
