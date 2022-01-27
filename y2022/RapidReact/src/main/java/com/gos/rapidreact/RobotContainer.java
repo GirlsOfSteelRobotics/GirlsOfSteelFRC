@@ -5,10 +5,16 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.commands.CollectorDownCommand;
+import com.gos.rapidreact.commands.CollectorUpCommand;
+import com.gos.rapidreact.commands.RollerInCommand;
+import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
+import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
 
@@ -22,8 +28,9 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     private final ChassisSubsystem m_chassis = new ChassisSubsystem();
+    private final CollectorSubsystem m_collector = new CollectorSubsystem();
 
-    private final XboxController m_driverJoystick = new XboxController(1);
+    private final XboxController m_driverJoystick = new XboxController(0);
 
     private final AutoModeFactory m_autoModeFactory;
 
@@ -34,6 +41,12 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
         m_autoModeFactory = new AutoModeFactory(m_chassis);
+
+        SmartDashboard.putData("CollectorDownCommand", new CollectorDownCommand(m_collector));
+        SmartDashboard.putData("CollectorUpCommand", new CollectorUpCommand(m_collector));
+        SmartDashboard.putData("RollerInCommand", new RollerInCommand(m_collector));
+        SmartDashboard.putData("RollerOutCommand", new RollerOutCommand(m_collector));
+
     }
 
 
