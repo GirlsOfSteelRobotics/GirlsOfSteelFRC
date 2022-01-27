@@ -40,13 +40,13 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
+        m_autoModeFactory = new AutoModeFactory(m_chassis);
 
         SmartDashboard.putData("CollectorDownCommand", new CollectorDownCommand(m_collector));
         SmartDashboard.putData("CollectorUpCommand", new CollectorUpCommand(m_collector));
         SmartDashboard.putData("RollerInCommand", new RollerInCommand(m_collector));
         SmartDashboard.putData("RollerOutCommand", new RollerOutCommand(m_collector));
 
-        m_autoModeFactory = new AutoModeFactory(m_chassis);
     }
 
 
