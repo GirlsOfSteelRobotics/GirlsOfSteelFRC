@@ -25,6 +25,11 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
 
+    //TODO: change constants to match this year's robot
+    private static final double WHEEL_DIAMETER = 4.0;
+    private static final double GEAR_RATIO = 40.0 / 10.0 * 34.0 / 20.0;
+    private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
+
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
 
@@ -51,6 +56,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
+
+        m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+        m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+
+        m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
 
@@ -99,6 +110,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightEncoder.setPosition(0);
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getYawAngle()));
         m_simulator.resetOdometry(pose);
+    }
+
+    //TODO: convert this to odometry
+    public double getAverageEncoderDistance() {
+        return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
     }
 
     public double getYawAngle() {

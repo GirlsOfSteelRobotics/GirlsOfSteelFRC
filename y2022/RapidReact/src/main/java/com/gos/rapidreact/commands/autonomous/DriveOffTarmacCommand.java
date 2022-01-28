@@ -7,10 +7,17 @@ import com.gos.rapidreact.subsystems.ChassisSubsystem;
 public class DriveOffTarmacCommand extends CommandBase {
 
     private final ChassisSubsystem m_chassis;
-
+    private final double m_distance;
+    private final double m_allowableError;
+    private double m_initialPosition;
+    private double m_error;
 
     public DriveOffTarmacCommand(ChassisSubsystem chassis) {
         m_chassis = chassis;
+
+        m_distance = distance;
+        m_allowableError = allowableError;
+
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(chassis);
@@ -18,12 +25,17 @@ public class DriveOffTarmacCommand extends CommandBase {
 
     @Override
     public void initialize() {
-
+        m_initialPosition = m_chassis.getAverageEncoderDistance();
     }
 
     @Override
     public void execute() {
-        m_chassis.setArcadeDrive(10, 10);
+        double currentPosition = m_chassis.getAverageEncoderDistance();
+        m_error = m_distance - (currentPosition - m_initialPosition);
+
+        double speed = m_error * AUTO_KP.getValue();
+        double steer = 0;
+        m_chassis.setArcadeDrive(speed, steer);
 
     }
 
