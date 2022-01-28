@@ -80,11 +80,11 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void collectorDown() {
-        m_pivot.set(PIVOT_SPEED);
+        m_pivot.set(-PIVOT_SPEED);
     }
 
     public void collectorUp() {
-        m_pivot.set(-PIVOT_SPEED);
+        m_pivot.set(PIVOT_SPEED);
     }
 
     public void rollerIn() {
