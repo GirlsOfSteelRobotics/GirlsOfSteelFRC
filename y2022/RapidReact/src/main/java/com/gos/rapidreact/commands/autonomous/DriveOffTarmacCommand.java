@@ -15,6 +15,7 @@ public class DriveOffTarmacCommand extends CommandBase {
     public DriveOffTarmacCommand(ChassisSubsystem chassis) {
         m_chassis = chassis;
 
+        //TODO: distance and allowable error as variables in DriveOffTarmac and AutoModeFactory?
         m_distance = distance;
         m_allowableError = allowableError;
 
