@@ -1,17 +1,16 @@
-package com.gos.rapidreact.commands;
+package com.gos.rapidreact.commands.tuning;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 
 
-public class CollectorPivotPIDCommand extends CommandBase {
+public class TuneCollectorPivotPIDGravityOffsetCommand extends CommandBase {
     private final CollectorSubsystem m_collector;
-    private final double m_pivotAngle;
 
-    public CollectorPivotPIDCommand(CollectorSubsystem collectorSubsystem, double pivotAngleRadians) {
+    public TuneCollectorPivotPIDGravityOffsetCommand(CollectorSubsystem collectorSubsystem) {
         this.m_collector = collectorSubsystem;
-        m_pivotAngle = pivotAngleRadians;
-
+        // each subsystem used by the command must be passed into the
+        // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_collector);
     }
 
@@ -22,15 +21,12 @@ public class CollectorPivotPIDCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_collector.collectorToAngle(m_pivotAngle);
-
+        m_collector.tuneGravityOffset();
     }
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(m_pivotAngle - m_collector.getEncoder());
-        System.out.println(error);
-        return error < CollectorSubsystem.ALLOWABLE_ERROR;
+        return false;
     }
 
     @Override

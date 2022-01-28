@@ -1,6 +1,7 @@
 package com.gos.rapidreact.subsystems;
 
 import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
@@ -8,7 +9,6 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -19,6 +19,7 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
+@SuppressWarnings("PMD.TooManyMethods")
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
     private static final double PIVOT_SPEED = 0.5;
@@ -38,9 +39,11 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private SingleJointedArmSimWrapper m_simulator;
 
-    private PidProperty m_pivotPID;
+    private final PidProperty m_pivotPID;
+    private final SparkMaxPIDController m_pidController;
+    public static final double ALLOWABLE_ERROR = Math.toRadians(2);
 
-    private SparkMaxPIDController m_pidController;
+    public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -113,11 +116,19 @@ public class CollectorSubsystem extends SubsystemBase {
      * @param pivotAngleRadians *IN RADIANS*
      */
     public void collectorToAngle(double pivotAngleRadians) {
-        m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition);
+        double arbFeedforward = Math.cos(m_pivotEncoder.getPosition()) * GRAVITY_OFFSET.getValue();
+        System.out.println("arbFeedforward        " + arbFeedforward);
+        m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
     public double getEncoder() {
         return m_pivotEncoder.getPosition();
+    }
+
+    public void tuneGravityOffset() {
+        m_pivot.setVoltage(GRAVITY_OFFSET.getValue());
+
+
     }
 
     @Override
