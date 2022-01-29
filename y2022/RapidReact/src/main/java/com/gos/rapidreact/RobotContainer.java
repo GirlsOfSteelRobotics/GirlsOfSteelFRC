@@ -6,10 +6,12 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.CollectorDownCommand;
+import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
 import com.gos.rapidreact.commands.CollectorUpCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
+import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -43,6 +45,10 @@ public class RobotContainer {
         SmartDashboard.putData("CollectorUpCommand", new CollectorUpCommand(m_collector));
         SmartDashboard.putData("RollerInCommand", new RollerInCommand(m_collector));
         SmartDashboard.putData("RollerOutCommand", new RollerOutCommand(m_collector));
+        SmartDashboard.putData("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
+        SmartDashboard.putData("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(45)));
+        SmartDashboard.putData("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)));
+        SmartDashboard.putData("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
 
     }
 
