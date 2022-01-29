@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.rapidreact.commands.autonomous.DriveOffTarmacCommand;
+import com.gos.rapidreact.commands.DriveDistanceCommand;
 import com.gos.rapidreact.Constants;
 
 public class AutoModeFactory extends SequentialCommandGroup {
@@ -27,22 +27,14 @@ public class AutoModeFactory extends SequentialCommandGroup {
      */
     public AutoModeFactory(ChassisSubsystem chassis) {
         //need to have distance
-        // -- currently not using chassis
         m_sendableChooser = new SendableChooser<>();
-        //TrajectoryModeFactory trajectoryModeFactory = new TrajectoryModeFactory();
-
-        /*
-        if (TEST_MODE) {
-            m_sendableChooser.addOption("Limelight", new AlignLeftRight(chassis, limelight));
-        }
-        */
 
         if (ENABLE_AUTO_SELECTION) {
             SmartDashboard.putData("Auto Mode", m_sendableChooser);
         }
 
 
-        m_defaultCommand = new DriveOffTarmacCommand(chassis, DRIVE_OFF_TARMAC_DISTANCE, ALLOWABLE_ERROR);
+        m_defaultCommand = new DriveDistanceCommand(chassis, DRIVE_OFF_TARMAC_DISTANCE, ALLOWABLE_ERROR);
         //need to have distance, allowableError
         m_sendableChooser.setDefaultOption("DriveOffTarmac (Default)", m_defaultCommand);
 
