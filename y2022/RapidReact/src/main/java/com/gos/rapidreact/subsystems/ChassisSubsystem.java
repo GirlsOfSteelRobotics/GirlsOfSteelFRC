@@ -94,6 +94,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderLeft),
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
+            m_simulator.setRightInverted(false);
         }
 
         SmartDashboard.putData(m_field);

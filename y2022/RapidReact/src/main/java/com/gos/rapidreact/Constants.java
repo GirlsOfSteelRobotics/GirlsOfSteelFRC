@@ -5,6 +5,8 @@
 
 package com.gos.rapidreact;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -23,4 +25,9 @@ public final class Constants {
 
     public static final int COLLECTOR_ROLLER = 6;
     public static final int COLLECTOR_PIVOT = 7;
+
+    public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);
+    //from FRC game manual page 24
+    public static final double ROBOT_LENGTH = Units.inchesToMeters(30);
+    //TODO: update this to have correct robot size based on CAD
 }

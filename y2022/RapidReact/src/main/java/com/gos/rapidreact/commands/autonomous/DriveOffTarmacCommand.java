@@ -2,9 +2,12 @@ package com.gos.rapidreact.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
+import com.gos.lib.properties.PropertyManager;
 
 
 public class DriveOffTarmacCommand extends CommandBase {
+
+    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("DriveOffTarmacKP", 0.5);
 
     private final ChassisSubsystem m_chassis;
     private final double m_distance;
@@ -12,7 +15,9 @@ public class DriveOffTarmacCommand extends CommandBase {
     private double m_initialPosition;
     private double m_error;
 
-    public DriveOffTarmacCommand(ChassisSubsystem chassis) {
+
+    public DriveOffTarmacCommand(ChassisSubsystem chassis, double distance, double allowableError) {
+
         m_chassis = chassis;
 
         //TODO: distance and allowable error as variables in DriveOffTarmac and AutoModeFactory?
@@ -42,8 +47,14 @@ public class DriveOffTarmacCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-        return false;
+        if (Math.abs(m_error) < m_allowableError) {
+            System.out.println("Done!");
+            return true;
+        }
+        else {
+            System.out.println("drive to distance" + "error:" + m_error + "allowableError" + m_allowableError);
+            return false;
+        }
     }
 
     @Override
