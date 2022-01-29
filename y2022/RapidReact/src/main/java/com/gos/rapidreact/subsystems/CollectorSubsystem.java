@@ -127,8 +127,6 @@ public class CollectorSubsystem extends SubsystemBase {
 
     public void tuneGravityOffset() {
         m_pivot.setVoltage(GRAVITY_OFFSET.getValue());
-
-
     }
 
     @Override

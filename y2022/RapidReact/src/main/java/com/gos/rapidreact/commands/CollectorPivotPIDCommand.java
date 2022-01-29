@@ -35,6 +35,6 @@ public class CollectorPivotPIDCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_collector.pivotStop();
+        //hold position when ended
     }
 }
