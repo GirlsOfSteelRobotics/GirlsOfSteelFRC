@@ -23,7 +23,8 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
     private static final double PIVOT_SPEED = 0.5;
-
+    public static final double ALLOWABLE_ERROR = Math.toRadians(2);
+    public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
     private static final double GEARING = 350;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
@@ -37,13 +38,10 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private final RelativeEncoder m_pivotEncoder;
 
-    private SingleJointedArmSimWrapper m_simulator;
-
     private final PidProperty m_pivotPID;
     private final SparkMaxPIDController m_pidController;
-    public static final double ALLOWABLE_ERROR = Math.toRadians(2);
 
-    public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
+    private SingleJointedArmSimWrapper m_simulator;
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -117,7 +115,7 @@ public class CollectorSubsystem extends SubsystemBase {
      */
     public void collectorToAngle(double pivotAngleRadians) {
         double arbFeedforward = Math.cos(m_pivotEncoder.getPosition()) * GRAVITY_OFFSET.getValue();
-        System.out.println("arbFeedforward        " + arbFeedforward);
+        //System.out.println("arbFeedforward        " + arbFeedforward);
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
