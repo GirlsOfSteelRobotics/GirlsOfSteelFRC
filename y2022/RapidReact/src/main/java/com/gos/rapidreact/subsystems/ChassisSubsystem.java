@@ -2,6 +2,7 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.PropertyManager;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -10,6 +11,7 @@ import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -22,6 +24,9 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
+
+    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
 
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
@@ -81,6 +86,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderLeft),
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
+            m_simulator.setRightInverted(false);
         }
 
         SmartDashboard.putData(m_field);
@@ -105,6 +111,43 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void setArcadeDrive(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
+    }
+
+    public boolean goToCargo(double xCoordinate, double yCoordinate) {
+
+        double xError = 0;
+        double yError = 0; //gets distance to the coordinate
+        double xCurrent = m_odometry.getPoseMeters().getX();
+        double yCurrent = m_odometry.getPoseMeters().getY();
+
+        double hDistance; //gets distance of the hypotenuse
+        double angle;
+        double speed;
+        double steer;
+
+        double allowableError = Units.inchesToMeters(3.0);
+
+        xError = xCoordinate - xCurrent;
+        yError = yCoordinate - yError;
+
+        System.out.println("xError   " + xError);
+        System.out.println("yError   " + yError);
+
+        hDistance = Math.sqrt((xError * xError) + (yError * yError));
+        angle = Math.acos(xError / hDistance);
+
+        speed = TO_XY_DISTANCE_PID.getValue() * hDistance; //p * error pid
+        steer = TO_XY_TURN_PID.getValue() * angle;
+
+        System.out.println("speed   " + speed);
+        System.out.println("steer   " + steer);
+        System.out.println("hDistance   " + hDistance);
+        System.out.print("allowableError   " + allowableError);
+        System.out.println();
+
+        setArcadeDrive(speed, steer);
+
+        return Math.abs(hDistance) < allowableError;
     }
 
     @Override
