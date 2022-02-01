@@ -14,13 +14,13 @@ package com.gos.rapidreact;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int DRIVE_LEFT_LEADER_SPARK = 1;
-    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 2;
-    public static final int DRIVE_RIGHT_LEADER_SPARK = 3;
-    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
+    public static final int DRIVE_LEFT_LEADER_SPARK = 13;
+    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
+    public static final int DRIVE_RIGHT_LEADER_SPARK = 7;
+    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
 
     public static final int PIGEON_PORT = 5;
 
     public static final int COLLECTOR_ROLLER = 6;
-    public static final int COLLECTOR_PIVOT = 7;
+    public static final int COLLECTOR_PIVOT = 4;
 }
