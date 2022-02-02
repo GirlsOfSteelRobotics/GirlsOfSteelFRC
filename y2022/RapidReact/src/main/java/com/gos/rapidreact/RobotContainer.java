@@ -11,10 +11,12 @@ import com.gos.rapidreact.commands.CollectorUpCommand;
 import com.gos.rapidreact.commands.GoToCargoCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
+import com.gos.rapidreact.commands.SetInitialOdometryCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,9 +52,11 @@ public class RobotContainer {
         SmartDashboard.putData("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(45)));
         SmartDashboard.putData("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)));
         SmartDashboard.putData("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
-        SmartDashboard.putData("GoToCargoCommand - 10 forward", new GoToCargoCommand(m_chassis, 10, 0));
-        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, 10, -10));
-        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, 10, 10));
+        SmartDashboard.putData("GoToCargoCommand - 10 forward", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), 0));
+        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(-10)));
+        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
+        SmartDashboard.putData("SetInitialOdometry - 0, 0, 0", new SetInitialOdometryCommand(m_chassis, 0, 0, 0));
+        SmartDashboard.putData("SetInitialOdometry - 0, 0, 45", new SetInitialOdometryCommand(m_chassis, 0, 0, 45));
     }
 
 

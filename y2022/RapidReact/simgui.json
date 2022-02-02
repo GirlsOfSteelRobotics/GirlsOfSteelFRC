@@ -5,10 +5,7 @@
         "name": "SPARK MAX [ROLLER]"
       },
       "SPARK MAX [7]": {
-        "header": {
-          "open": true
-        },
-        "name": "SPART MAX [PIVOT]"
+        "name": "SPARK MAX [PIVOT]"
       }
     }
   },
@@ -33,6 +30,8 @@
       "/SmartDashboard/GoToCargoCommand - 10 forward, 10 right": "Command",
       "/SmartDashboard/RollerInCommand": "Command",
       "/SmartDashboard/RollerOutCommand": "Command",
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 0": "Command",
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 45": "Command",
       "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command"
     },
     "windows": {
@@ -57,6 +56,16 @@
         }
       },
       "/SmartDashboard/GoToCargoCommand - 10 forward, 10 right": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 45": {
         "window": {
           "visible": true
         }

@@ -115,39 +115,42 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean goToCargo(double xCoordinate, double yCoordinate) {
 
-        double xError = 0;
-        double yError = 0; //gets distance to the coordinate
+        double xError;
+        double yError; //gets distance to the coordinate
+        double angleError;
         double xCurrent = m_odometry.getPoseMeters().getX();
         double yCurrent = m_odometry.getPoseMeters().getY();
+        double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
 
         double hDistance; //gets distance of the hypotenuse
         double angle;
         double speed;
         double steer;
 
-        double allowableError = Units.inchesToMeters(3.0);
+        double allowableDistanceError = Units.inchesToMeters(12.0);
+        double allowableAngleError = Units.degreesToRadians(5.0);
 
         xError = xCoordinate - xCurrent;
-        yError = yCoordinate - yError;
+        yError = yCoordinate - yCurrent;
+        hDistance = Math.sqrt((xError * xError) + (yError * yError));
+        angle = Math.atan2(yError, xError);
+        angleError = angle - angleCurrent;
 
         System.out.println("xError   " + xError);
         System.out.println("yError   " + yError);
 
-        hDistance = Math.sqrt((xError * xError) + (yError * yError));
-        angle = Math.acos(xError / hDistance);
-
         speed = TO_XY_DISTANCE_PID.getValue() * hDistance; //p * error pid
-        steer = TO_XY_TURN_PID.getValue() * angle;
+        steer = TO_XY_TURN_PID.getValue() * angleError;
 
         System.out.println("speed   " + speed);
         System.out.println("steer   " + steer);
         System.out.println("hDistance   " + hDistance);
-        System.out.print("allowableError   " + allowableError);
+        System.out.println("angle   " + Math.toDegrees(angleError));
         System.out.println();
 
         setArcadeDrive(speed, steer);
 
-        return Math.abs(hDistance) < allowableError;
+        return Math.abs(hDistance) < allowableDistanceError && Math.abs(angleError) < allowableAngleError;
     }
 
     @Override
