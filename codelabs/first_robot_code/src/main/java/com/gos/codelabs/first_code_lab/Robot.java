@@ -64,11 +64,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double speed = m_stick.getX();
         boolean trigger = m_stick.getTrigger(); // NOPMD
-        if (trigger) {
-            m_motor.set(speed);
-        } else {
-            m_motor.stopMotor();
-        }
+        m_motor.set(speed);
     }
 
     /**

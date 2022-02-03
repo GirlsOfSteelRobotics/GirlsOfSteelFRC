@@ -10,6 +10,7 @@ import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -26,7 +27,7 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 public class ChassisSubsystem extends SubsystemBase {
 
     //TODO: change constants to match this year's robot
-    private static final double WHEEL_DIAMETER = 4.0;
+    private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
     private static final double GEAR_RATIO = 40.0 / 10.0 * 34.0 / 20.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
@@ -113,7 +114,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_simulator.resetOdometry(pose);
     }
 
-    //TODO: convert this to odometry
     public double getAverageEncoderDistance() {
         return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
     }
