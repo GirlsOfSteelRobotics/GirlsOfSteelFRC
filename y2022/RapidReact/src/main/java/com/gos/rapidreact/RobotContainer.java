@@ -12,7 +12,7 @@ import com.gos.rapidreact.commands.DisengageRatchetCommand;
 import com.gos.rapidreact.commands.EngageRatchetCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
-import com.gos.rapidreact.commands.SetHangerSpeedCommand;
+import com.gos.rapidreact.commands.SetHangerJoystickCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
@@ -71,7 +71,7 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-        m_hanger.setDefaultCommand(new SetHangerSpeedCommand(m_hanger, m_operatorJoystick));
+        m_hanger.setDefaultCommand(new SetHangerJoystickCommand(m_hanger, m_operatorJoystick));
     }
 
 

@@ -1,6 +1,7 @@
 package com.gos.rapidreact.subsystems;
 
 
+import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.Servo;
@@ -9,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HangerSubsystem extends SubsystemBase {
     //these constants are all not correct
-    public static final int HANGER_LEADER_SPARK = 11;
-    public static final int HANGER_FOLLOWER_SPARK = 5;
     public static final int ENGAGED_RATCHET_ANGLE = 90;
     public static final int DISENGAGED_RATCHET_ANGLE = 0;
 
@@ -20,12 +19,11 @@ public class HangerSubsystem extends SubsystemBase {
 
 
     public HangerSubsystem() {
-        m_servo = new Servo(0); //channel is fill in, not correct
-        m_leader = new SimableCANSparkMax(HANGER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_follower = new SimableCANSparkMax(HANGER_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_servo = new Servo(Constants.SERVO_CHANNEL);
+        m_leader = new SimableCANSparkMax(Constants.HANGER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_follower = new SimableCANSparkMax(Constants.HANGER_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         m_follower.follow(m_leader, false);
-
 
     }
 
