@@ -18,6 +18,12 @@ public final class Constants {
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 7;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
+    public static final int HANGER_LEADER_SPARK = 11;
+    public static final int HANGER_FOLLOWER_SPARK = 5;
+    public static final int SERVO_CHANNEL = 0;
+
+
+
 
     public static final int PIGEON_PORT = 5;
 
