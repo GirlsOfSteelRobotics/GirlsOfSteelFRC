@@ -16,15 +16,21 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int DRIVE_LEFT_LEADER_SPARK = 1;
-    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 2;
-    public static final int DRIVE_RIGHT_LEADER_SPARK = 3;
-    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
+    public static final int DRIVE_LEFT_LEADER_SPARK = 13;
+    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
+    public static final int DRIVE_RIGHT_LEADER_SPARK = 7;
+    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
+    public static final int HANGER_LEADER_SPARK = 11;
+    public static final int HANGER_FOLLOWER_SPARK = 5;
+    public static final int SERVO_CHANNEL = 0;
+
+
+
 
     public static final int PIGEON_PORT = 5;
 
     public static final int COLLECTOR_ROLLER = 6;
-    public static final int COLLECTOR_PIVOT = 7;
+    public static final int COLLECTOR_PIVOT = 4;
 
     public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);
     //from FRC game manual page 24

@@ -1,13 +1,16 @@
-package com.gos.rapidreact.commands;
+package com.gos.rapidreact.commands.tuning;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 
+/**
+ * figure out extra voltage to overcome the force of gravity to get collector pivot to move
+ */
 
-public class CollectorUpCommand extends CommandBase {
+public class TuneCollectorPivotPIDGravityOffsetCommand extends CommandBase {
     private final CollectorSubsystem m_collector;
 
-    public CollectorUpCommand(CollectorSubsystem collectorSubsystem) {
+    public TuneCollectorPivotPIDGravityOffsetCommand(CollectorSubsystem collectorSubsystem) {
         this.m_collector = collectorSubsystem;
         addRequirements(this.m_collector);
     }
@@ -19,7 +22,7 @@ public class CollectorUpCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_collector.collectorUp();
+        m_collector.tuneGravityOffset();
     }
 
     @Override

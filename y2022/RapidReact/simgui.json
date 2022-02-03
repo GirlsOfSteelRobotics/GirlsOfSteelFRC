@@ -1,15 +1,14 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [1]": {
-        "header": {
-          "open": true
-        }
+      "SPARK MAX [6]": {
+        "name": "SPARK MAX [ROLLER]"
       },
       "SPARK MAX [7]": {
         "header": {
           "open": true
-        }
+        },
+        "name": "SPART MAX [PIVOT]"
       }
     }
   },
@@ -20,12 +19,18 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/ExampleSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/CollectorDownCommand": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 45 Degrees": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 90 Degrees": "Command",
       "/SmartDashboard/CollectorUpCommand": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/RollerInCommand": "Command",
-      "/SmartDashboard/RollerOutCommand": "Command"
+      "/SmartDashboard/RollerOutCommand": "Command",
+      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command"
     },
     "windows": {
       "/LiveWindow/ChassisSubsystem": {
@@ -34,6 +39,21 @@
         }
       },
       "/SmartDashboard/CollectorDownCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/CollectorPivotPIDCommand - 45 Degrees": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/CollectorPivotPIDCommand - 90 Degrees": {
         "window": {
           "visible": true
         }
@@ -48,16 +68,16 @@
           "visible": true
         }
       },
-      "/SmartDashboard/RollerInCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/RollerOutCommand": {
+      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": {
         "window": {
           "visible": true
         }
       }
+    }
+  },
+  "NetworkTables": {
+    "Preferences": {
+      "open": true
     }
   }
 }

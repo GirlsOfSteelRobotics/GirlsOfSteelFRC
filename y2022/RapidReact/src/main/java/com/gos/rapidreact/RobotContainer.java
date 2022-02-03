@@ -6,12 +6,18 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.CollectorDownCommand;
+import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
 import com.gos.rapidreact.commands.CollectorUpCommand;
+import com.gos.rapidreact.commands.DisengageRatchetCommand;
+import com.gos.rapidreact.commands.EngageRatchetCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
+import com.gos.rapidreact.commands.SetHangerJoystickCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
+import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
+import com.gos.rapidreact.subsystems.HangerSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,8 +35,10 @@ public class RobotContainer {
 
     private final ChassisSubsystem m_chassis = new ChassisSubsystem();
     private final CollectorSubsystem m_collector = new CollectorSubsystem();
+    private final HangerSubsystem m_hanger = new HangerSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
+    private final XboxController m_operatorJoystick = new XboxController(1);
 
     private final AutoModeFactory m_autoModeFactory;
 
@@ -46,6 +54,12 @@ public class RobotContainer {
         SmartDashboard.putData("CollectorUpCommand", new CollectorUpCommand(m_collector));
         SmartDashboard.putData("RollerInCommand", new RollerInCommand(m_collector));
         SmartDashboard.putData("RollerOutCommand", new RollerOutCommand(m_collector));
+        SmartDashboard.putData("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
+        SmartDashboard.putData("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(45)));
+        SmartDashboard.putData("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)));
+        SmartDashboard.putData("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
+        SmartDashboard.putData("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
+        SmartDashboard.putData("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
 
     }
 
@@ -60,6 +74,7 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+        m_hanger.setDefaultCommand(new SetHangerJoystickCommand(m_hanger, m_operatorJoystick));
     }
 
 
