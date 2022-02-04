@@ -15,9 +15,11 @@ import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.SetHangerJoystickCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
+import com.gos.rapidreact.commands.tuning.TuneShooterMotorSpeedCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
+import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,6 +38,7 @@ public class RobotContainer {
     private final ChassisSubsystem m_chassis = new ChassisSubsystem();
     private final CollectorSubsystem m_collector = new CollectorSubsystem();
     private final HangerSubsystem m_hanger = new HangerSubsystem();
+    private final ShooterSubsystem m_shooter = new ShooterSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
@@ -57,6 +60,7 @@ public class RobotContainer {
         SmartDashboard.putData("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
         SmartDashboard.putData("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         SmartDashboard.putData("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
+        SmartDashboard.putData("ShooterSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
 
     }
 

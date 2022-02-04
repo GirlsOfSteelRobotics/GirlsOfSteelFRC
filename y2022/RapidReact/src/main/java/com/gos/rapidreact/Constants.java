@@ -21,6 +21,8 @@ public final class Constants {
     public static final int HANGER_LEADER_SPARK = 11;
     public static final int HANGER_FOLLOWER_SPARK = 5;
     public static final int SERVO_CHANNEL = 0;
+    public static final int SHOOTER_LEADER_SPARK = 9;
+    public static final int SHOOTER_FOLLOWER_SPARK = 10;
 
 
 

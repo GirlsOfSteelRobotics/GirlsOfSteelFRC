@@ -5,10 +5,12 @@
         "name": "SPARK MAX [ROLLER]"
       },
       "SPARK MAX [7]": {
+        "name": "SPART MAX [PIVOT]"
+      },
+      "SPARK MAX [9]": {
         "header": {
           "open": true
-        },
-        "name": "SPART MAX [PIVOT]"
+        }
       }
     }
   },
@@ -18,6 +20,8 @@
       "/LiveWindow/ChassisSubsystem": "Subsystem",
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/ExampleSubsystem": "Subsystem",
+      "/LiveWindow/HangerSubsystem": "Subsystem",
+      "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
@@ -27,9 +31,12 @@
       "/SmartDashboard/CollectorPivotPIDCommand - 45 Degrees": "Command",
       "/SmartDashboard/CollectorPivotPIDCommand - 90 Degrees": "Command",
       "/SmartDashboard/CollectorUpCommand": "Command",
+      "/SmartDashboard/DisengageRatchetCommand": "Command",
+      "/SmartDashboard/EngageRatchetCommand": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/RollerInCommand": "Command",
       "/SmartDashboard/RollerOutCommand": "Command",
+      "/SmartDashboard/ShooterSpeed": "Command",
       "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command"
     },
     "windows": {
@@ -64,6 +71,11 @@
         }
       },
       "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/ShooterSpeed": {
         "window": {
           "visible": true
         }
