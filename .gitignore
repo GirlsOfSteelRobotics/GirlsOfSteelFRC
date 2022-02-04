@@ -390,5 +390,6 @@ gradlew.bat
 WPILib-License.md
 settings.gradle
 
-# HALSIM Gui
+# Simulation GUI and other tools window save file
+*-window.json
 imgui.ini
