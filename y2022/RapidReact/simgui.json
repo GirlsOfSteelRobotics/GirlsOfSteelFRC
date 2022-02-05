@@ -1,15 +1,11 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [1]": {
-        "header": {
-          "open": true
-        }
+      "SPARK MAX [6]": {
+        "name": "SPARK MAX [ROLLER]"
       },
       "SPARK MAX [7]": {
-        "header": {
-          "open": true
-        }
+        "name": "SPARK MAX [PIVOT]"
       }
     }
   },
@@ -19,26 +15,37 @@
       "/LiveWindow/ChassisSubsystem": "Subsystem",
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/ExampleSubsystem": "Subsystem",
+      "/LiveWindow/HangerSubsystem": "Subsystem",
+      "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
       "/SmartDashboard/CollectorDownCommand": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 45 Degrees": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 90 Degrees": "Command",
       "/SmartDashboard/CollectorUpCommand": "Command",
+      "/SmartDashboard/DisengageRatchetCommand": "Command",
+      "/SmartDashboard/EngageRatchetCommand": "Command",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/HorizontalConveyorBackwardCommand": "Command",
+      "/SmartDashboard/HorizontalConveyorForwardCommand": "Command",
+      "/SmartDashboard/GoToCargoCommand - 10 forward": "Command",
+      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 left": "Command",
+      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 right": "Command",
       "/SmartDashboard/RollerInCommand": "Command",
-      "/SmartDashboard/RollerOutCommand": "Command"
+      "/SmartDashboard/RollerOutCommand": "Command",
+      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command",
+      "/SmartDashboard/VerticalConveyorDownCommand": "Command",
+      "/SmartDashboard/VerticalConveyorUpCommand": "Command"
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 0": "Command",
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 45": "Command",
+      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command"
     },
     "windows": {
       "/LiveWindow/ChassisSubsystem": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/CollectorDownCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/CollectorUpCommand": {
         "window": {
           "visible": true
         }
@@ -48,16 +55,44 @@
           "visible": true
         }
       },
-      "/SmartDashboard/RollerInCommand": {
+      "/SmartDashboard/GoToCargoCommand - 10 forward": {
+      "/SmartDashboard/HorizontalConveyorBackwardCommand": {
         "window": {
           "visible": true
         }
       },
-      "/SmartDashboard/RollerOutCommand": {
+      "/SmartDashboard/HorizontalConveyorForwardCommand": {
+      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 left": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 right": {
+      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/VerticalConveyorDownCommand": {
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 45": {
+      "/SmartDashboard/VerticalConveyorUpCommand": {
         "window": {
           "visible": true
         }
       }
     }
+  },
+  "NetworkTables": {
+    "Preferences": {
+      "open": true
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

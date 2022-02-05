@@ -1,7 +1,7 @@
 {
-  "Keyboard 0 Settings": {
+  "Joysticks": {
     "window": {
-      "visible": true
+      "visible": false
     }
   },
   "keyboardJoysticks": [
@@ -20,8 +20,8 @@
         },
         {},
         {
-          "decKey": 65,
-          "incKey": 68
+          "decKey": 68,
+          "incKey": 65
         }
       ],
       "axisCount": 5,
@@ -99,6 +99,9 @@
   "robotJoysticks": [
     {
       "guid": "Keyboard0"
+    },
+    {
+      "guid": "Keyboard1"
     }
   ]
 }

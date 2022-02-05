@@ -1,19 +1,18 @@
 package com.gos.rapidreact.commands;
 
-import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.gos.rapidreact.subsystems.HangerSubsystem;
 
 
-public class TeleopArcadeChassisCommand extends CommandBase {
-    private final ChassisSubsystem m_chassis;
+public class SetHangerJoystickCommand extends CommandBase {
+    private final HangerSubsystem m_hanger;
     private final XboxController m_joystick;
 
-    public TeleopArcadeChassisCommand(ChassisSubsystem chassis, XboxController joystick) {
-        m_chassis = chassis;
+    public SetHangerJoystickCommand(HangerSubsystem hangerSubsystem, XboxController joystick) {
+        this.m_hanger = hangerSubsystem;
         m_joystick = joystick;
-        addRequirements(m_chassis);
-
+        addRequirements(this.m_hanger);
     }
 
     @Override
@@ -23,7 +22,8 @@ public class TeleopArcadeChassisCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassis.setArcadeDrive(-m_joystick.getLeftY(), m_joystick.getRightX());
+        m_hanger.setHangerSpeed(m_joystick.getLeftY());
+
     }
 
     @Override
@@ -33,6 +33,7 @@ public class TeleopArcadeChassisCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        m_hanger.setHangerSpeed(0);
 
     }
 }

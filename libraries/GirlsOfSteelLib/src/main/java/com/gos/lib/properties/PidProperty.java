@@ -11,16 +11,18 @@ import java.util.function.DoubleConsumer;
 public class PidProperty {
     private final List<HeavyDoubleProperty> m_properties;
 
+
     /* default */ PidProperty(List<HeavyDoubleProperty> properties) {
         m_properties = properties;
+        updateIfChanged(true);
     }
 
-    public void updateIfChanged() {
+    public final void updateIfChanged() {
         updateIfChanged(false);
     }
 
 
-    public void updateIfChanged(boolean forceUpdate) {
+    public final void updateIfChanged(boolean forceUpdate) {
         for (HeavyDoubleProperty property : m_properties) {
             property.updateIfChanged(forceUpdate);
         }
