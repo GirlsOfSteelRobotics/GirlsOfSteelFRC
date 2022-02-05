@@ -5,19 +5,25 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
+import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
 import com.gos.rapidreact.commands.CollectorUpCommand;
 import com.gos.rapidreact.commands.DisengageRatchetCommand;
 import com.gos.rapidreact.commands.EngageRatchetCommand;
+import com.gos.rapidreact.commands.HorizontalConveyorForwardCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.SetHangerJoystickCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
+import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
+import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
+import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,6 +42,8 @@ public class RobotContainer {
     private final ChassisSubsystem m_chassis = new ChassisSubsystem();
     private final CollectorSubsystem m_collector = new CollectorSubsystem();
     private final HangerSubsystem m_hanger = new HangerSubsystem();
+    private final HorizontalConveyorSubsystem m_horizontalConveyor = new HorizontalConveyorSubsystem();
+    private final VerticalConveyorSubsystem m_verticalConveyor = new VerticalConveyorSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
@@ -57,6 +65,10 @@ public class RobotContainer {
         SmartDashboard.putData("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
         SmartDashboard.putData("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         SmartDashboard.putData("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
+        SmartDashboard.putData("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
+        SmartDashboard.putData("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
+        SmartDashboard.putData("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
+        SmartDashboard.putData("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
 
     }
 
