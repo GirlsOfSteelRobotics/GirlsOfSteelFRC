@@ -8,6 +8,7 @@ def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
             name = name + "-pmd_analysis",
             srcs = srcs,
             rulesets = ["//styleguide:pmd_rules"],
+            tags = ["java-styleguide"],
         )
     else:
         print("PMD Disabled for " + name)
