@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VerticalConveyorSubsystem extends SubsystemBase {
 
+    public static final int VERTICAL_CONVEYOR_MOTOR_SPEED = 1;
+
     private final SimableCANSparkMax m_motor;
 
     public VerticalConveyorSubsystem() {
@@ -15,11 +17,11 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     }
 
     public void forwardVerticalConveyorMotor() {
-        m_motor.set(Constants.VERTICAL_CONVEYOR_MOTOR_SPEED);
+        m_motor.set(VERTICAL_CONVEYOR_MOTOR_SPEED);
     }
 
     public void backwardVerticalConveyorMotor() {
-        m_motor.set(-Constants.VERTICAL_CONVEYOR_MOTOR_SPEED);
+        m_motor.set(-VERTICAL_CONVEYOR_MOTOR_SPEED);
     }
 
 

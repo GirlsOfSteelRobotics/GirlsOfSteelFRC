@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 
 
-public class ForwardVerticalConveyorCommand extends CommandBase {
+public class VerticalConveyorDownCommand extends CommandBase {
     private final VerticalConveyorSubsystem m_verticalConveyor;
 
-    public ForwardVerticalConveyorCommand(VerticalConveyorSubsystem verticalConveyorSubsystem) {
+    public VerticalConveyorDownCommand(VerticalConveyorSubsystem verticalConveyorSubsystem) {
         this.m_verticalConveyor = verticalConveyorSubsystem;
         addRequirements(this.m_verticalConveyor);
     }
@@ -19,7 +19,7 @@ public class ForwardVerticalConveyorCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_verticalConveyor.forwardVerticalConveyorMotor();
+        m_verticalConveyor.backwardVerticalConveyorMotor();
 
     }
 

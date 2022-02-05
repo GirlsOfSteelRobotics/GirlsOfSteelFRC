@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HorizontalConveyorSubsystem extends SubsystemBase {
 
+    public static final int HORIZONTAL_CONVEYOR_MOTOR_SPEED = 1;
+
     private final SimableCANSparkMax m_leader;
     private final SimableCANSparkMax m_follower;
 
@@ -20,11 +22,11 @@ public class HorizontalConveyorSubsystem extends SubsystemBase {
     }
 
     public void forwardHorizontalConveyorMotor() {
-        m_leader.set(Constants.HORIZONTAL_CONVEYOR_MOTOR_SPEED);
+        m_leader.set(HORIZONTAL_CONVEYOR_MOTOR_SPEED);
     }
 
     public void backwardHorizontalConveyorMotor() {
-        m_leader.set(-Constants.HORIZONTAL_CONVEYOR_MOTOR_SPEED);
+        m_leader.set(-HORIZONTAL_CONVEYOR_MOTOR_SPEED);
     }
 
     public void stopHorizontalConveyorMotor() {

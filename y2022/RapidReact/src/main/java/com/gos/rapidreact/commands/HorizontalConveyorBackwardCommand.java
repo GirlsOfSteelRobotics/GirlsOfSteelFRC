@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 
 
-public class BackwardHorizontalConveyorCommand extends CommandBase {
+public class HorizontalConveyorBackwardCommand extends CommandBase {
     private final HorizontalConveyorSubsystem m_horizontalConveyor;
 
-    public BackwardHorizontalConveyorCommand(HorizontalConveyorSubsystem horizontalConveyorSubsystem) {
+    public HorizontalConveyorBackwardCommand(HorizontalConveyorSubsystem horizontalConveyorSubsystem) {
         this.m_horizontalConveyor = horizontalConveyorSubsystem;
         addRequirements(this.m_horizontalConveyor);
     }

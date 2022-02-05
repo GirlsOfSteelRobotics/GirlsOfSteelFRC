@@ -20,15 +20,13 @@ public final class Constants {
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
     //hanger constants aren't correct
     public static final int HANGER_LEADER_SPARK = 11;
-    public static final int HANGER_FOLLOWER_SPARK = 5;
+    public static final int HANGER_FOLLOWER_SPARK = 9;
     public static final int SERVO_CHANNEL = 0;
     //horizontal conveyor constants aren't correct
     public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 3;
     public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 2;
-    public static final int HORIZONTAL_CONVEYOR_MOTOR_SPEED = 600;
 
-    public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 4;
-    public static final int VERTICAL_CONVEYOR_MOTOR_SPEED = 600;
+    public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 10;
 
     public static final int PIGEON_PORT = 5;
 
