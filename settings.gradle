@@ -51,3 +51,6 @@ include 'y2022:CallistoRewrite'
 include 'y2022:ChassisProject'
 
 include 'y2022:RapidReact'
+include 'y2022:RapidReactDashboard'
+findProject(':y2022:RapidReactDashboard')?.name = 'RapidReactDashboard'
+
