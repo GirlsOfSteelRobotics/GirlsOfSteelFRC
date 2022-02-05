@@ -9,6 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # TODO(PJ) Mac seems flakey on github. Turning it off for now
+        # platform: [ubuntu-latest, macos-latest, windows-latest]
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
