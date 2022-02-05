@@ -17,7 +17,6 @@ import com.gos.rapidreact.commands.HorizontalConveyorForwardCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.SetInitialOdometryCommand;
-import com.gos.rapidreact.commands.SetHangerJoystickCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
@@ -49,11 +48,11 @@ public class RobotContainer {
     private final VerticalConveyorSubsystem m_verticalConveyor = new VerticalConveyorSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
-    private final XboxController m_operatorJoystick = new XboxController(1);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
+
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
