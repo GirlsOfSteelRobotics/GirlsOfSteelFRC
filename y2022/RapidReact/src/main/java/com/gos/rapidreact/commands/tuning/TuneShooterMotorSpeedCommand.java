@@ -6,14 +6,13 @@ import com.gos.lib.properties.PropertyManager;
 
 
 public class TuneShooterMotorSpeedCommand extends CommandBase {
-    private final ShooterSubsystem m_shooterSubsystem;
+    private final ShooterSubsystem m_shooter;
 
     public static final PropertyManager.IProperty<Double> SHOOTER_SPEED = new PropertyManager.DoubleProperty("Motor Speed", 0);
 
     public TuneShooterMotorSpeedCommand(ShooterSubsystem shooterSubsystem) {
-        this.m_shooterSubsystem = shooterSubsystem;
-        // each subsystem used by the command must be passed into the addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements(this.m_shooterSubsystem);
+        this.m_shooter = shooterSubsystem;
+        addRequirements(this.m_shooter);
     }
 
     @Override
@@ -23,7 +22,7 @@ public class TuneShooterMotorSpeedCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.setShooterSpeed(SHOOTER_SPEED.getValue());
+        m_shooter.setShooterSpeed(SHOOTER_SPEED.getValue());
     }
 
     @Override
@@ -33,6 +32,6 @@ public class TuneShooterMotorSpeedCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_shooterSubsystem.setShooterSpeed(0);
+        m_shooter.setShooterSpeed(0);
     }
 }

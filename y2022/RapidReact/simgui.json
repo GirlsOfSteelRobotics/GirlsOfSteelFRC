@@ -1,17 +1,10 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [6]": {
-        "name": "SPARK MAX [ROLLER]"
-      },
-      "SPARK MAX [7]": {
-        "name": "SPART MAX [PIVOT]"
-      },
       "SPARK MAX [9]": {
         "header": {
           "open": true
         }
-        "name": "SPARK MAX [PIVOT]"
       }
     }
   },
@@ -20,11 +13,9 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/ChassisSubsystem": "Subsystem",
       "/LiveWindow/CollectorSubsystem": "Subsystem",
-      "/LiveWindow/ExampleSubsystem": "Subsystem",
-      "/LiveWindow/HangerSubsystem": "Subsystem",
-      "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
+      "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
@@ -38,59 +29,25 @@
       "/SmartDashboard/DisengageRatchetCommand": "Command",
       "/SmartDashboard/EngageRatchetCommand": "Command",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/HorizontalConveyorBackwardCommand": "Command",
-      "/SmartDashboard/HorizontalConveyorForwardCommand": "Command",
       "/SmartDashboard/GoToCargoCommand - 10 forward": "Command",
       "/SmartDashboard/GoToCargoCommand - 10 forward, 10 left": "Command",
       "/SmartDashboard/GoToCargoCommand - 10 forward, 10 right": "Command",
+      "/SmartDashboard/HorizontalConveyorBackwardCommand": "Command",
+      "/SmartDashboard/HorizontalConveyorForwardCommand": "Command",
       "/SmartDashboard/RollerInCommand": "Command",
       "/SmartDashboard/RollerOutCommand": "Command",
-      "/SmartDashboard/ShooterSpeed": "Command",
-      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command",
-      "/SmartDashboard/VerticalConveyorDownCommand": "Command",
-      "/SmartDashboard/VerticalConveyorUpCommand": "Command"
       "/SmartDashboard/SetInitialOdometry - 0, 0, 0": "Command",
       "/SmartDashboard/SetInitialOdometry - 0, 0, 45": "Command",
-      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command"
+      "/SmartDashboard/ShooterPIDCommand - 3000": "Command",
+      "/SmartDashboard/ShooterPIDCommand - 5000": "Command",
+      "/SmartDashboard/ShooterSpeed": "Command",
+      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command",
+      "/SmartDashboard/TuneShooterGoalRPMCommand": "Command",
+      "/SmartDashboard/VerticalConveyorDownCommand": "Command",
+      "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
-      "/LiveWindow/ChassisSubsystem": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Field": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/GoToCargoCommand - 10 forward": {
-      "/SmartDashboard/HorizontalConveyorBackwardCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/HorizontalConveyorForwardCommand": {
-      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 left": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 right": {
-      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/VerticalConveyorDownCommand": {
-      "/SmartDashboard/SetInitialOdometry - 0, 0, 0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/SetInitialOdometry - 0, 0, 45": {
-      "/SmartDashboard/VerticalConveyorUpCommand": {
-      "/SmartDashboard/Field": {
+      "/SmartDashboard/ShooterPIDCommand - 3000": {
         "window": {
           "visible": true
         }
@@ -100,7 +57,7 @@
           "visible": true
         }
       },
-      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": {
+      "/SmartDashboard/TuneShooterGoalRPMCommand": {
         "window": {
           "visible": true
         }
@@ -111,8 +68,5 @@
     "Preferences": {
       "open": true
     }
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }

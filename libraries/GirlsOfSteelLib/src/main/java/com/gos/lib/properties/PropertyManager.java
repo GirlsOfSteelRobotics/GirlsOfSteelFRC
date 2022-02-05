@@ -81,7 +81,7 @@ public final class PropertyManager {
         }
 
         @Override
-        public final TypeT getValue() {
+        public TypeT getValue() {
             if (Preferences.containsKey(m_key)) {
                 return m_getter.apply(m_key, m_default);
             }
