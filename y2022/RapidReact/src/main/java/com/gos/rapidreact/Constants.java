@@ -18,11 +18,11 @@ public final class Constants {
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 7;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
-    //hanger constants aren't correct
+
     public static final int HANGER_LEADER_SPARK = 11;
     public static final int HANGER_FOLLOWER_SPARK = 9;
     public static final int SERVO_CHANNEL = 0;
-    //horizontal conveyor constants aren't correct
+
     public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 3;
     public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 2;
 
