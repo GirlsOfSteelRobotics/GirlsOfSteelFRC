@@ -23,7 +23,7 @@ public class TeleopArcadeChassisCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassis.setArcadeDrive(m_joystick.getLeftY(), m_joystick.getRightX());
+        m_chassis.setArcadeDrive(-m_joystick.getLeftY(), m_joystick.getRightX());
     }
 
     @Override
