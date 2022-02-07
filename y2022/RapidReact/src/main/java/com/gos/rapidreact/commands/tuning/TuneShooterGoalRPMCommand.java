@@ -33,6 +33,6 @@ public class TuneShooterGoalRPMCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        m_shooter.setShooterSpeed(0);
     }
 }
