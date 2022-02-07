@@ -6,7 +6,7 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
-import com.gos.rapidreact.commands.ShooterPIDCommand;
+import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
@@ -82,8 +82,8 @@ public class RobotContainer {
         SmartDashboard.putData("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
         SmartDashboard.putData("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
         SmartDashboard.putData("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
-        SmartDashboard.putData("ShooterPIDCommand - 3000", new ShooterPIDCommand(m_shooter, 3000));
-        SmartDashboard.putData("ShooterPIDCommand - 5000", new ShooterPIDCommand(m_shooter, 5000));
+        SmartDashboard.putData("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
+        SmartDashboard.putData("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
         SmartDashboard.putData("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
 
     }

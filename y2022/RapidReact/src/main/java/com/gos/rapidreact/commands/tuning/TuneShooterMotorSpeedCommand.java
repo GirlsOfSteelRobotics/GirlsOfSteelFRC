@@ -8,7 +8,7 @@ import com.gos.lib.properties.PropertyManager;
 public class TuneShooterMotorSpeedCommand extends CommandBase {
     private final ShooterSubsystem m_shooter;
 
-    public static final PropertyManager.IProperty<Double> SHOOTER_SPEED = new PropertyManager.DoubleProperty("Motor Speed", 0);
+    public static final PropertyManager.IProperty<Double> SHOOTER_SPEED = new PropertyManager.DoubleProperty("Tune Shooter Motor Speed", 0);
 
     public TuneShooterMotorSpeedCommand(ShooterSubsystem shooterSubsystem) {
         this.m_shooter = shooterSubsystem;

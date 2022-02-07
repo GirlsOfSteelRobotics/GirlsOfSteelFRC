@@ -7,7 +7,7 @@ import com.gos.rapidreact.subsystems.ShooterSubsystem;
 
 public class TuneShooterGoalRPMCommand extends CommandBase {
     private final ShooterSubsystem m_shooter;
-    private static final PropertyManager.IProperty<Double> SHOOTER_GOAL = new PropertyManager.DoubleProperty("Shooter Goal", 0);
+    private static final PropertyManager.IProperty<Double> SHOOTER_GOAL = new PropertyManager.DoubleProperty("Tune Shooter RPM Goal", 0);
 
     public TuneShooterGoalRPMCommand(ShooterSubsystem shooterSubsystem) {
         this.m_shooter = shooterSubsystem;
@@ -22,12 +22,12 @@ public class TuneShooterGoalRPMCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_shooter.setShooterPIDSpeed(SHOOTER_GOAL.getValue());
+        m_shooter.setShooterRpmPIDSpeed(SHOOTER_GOAL.getValue());
     }
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(SHOOTER_GOAL.getValue() - m_shooter.getEncoder());
+        double error = Math.abs(SHOOTER_GOAL.getValue() - m_shooter.getEncoderVelocity());
         return error < ShooterSubsystem.ALLOWABLE_ERROR;
     }
 

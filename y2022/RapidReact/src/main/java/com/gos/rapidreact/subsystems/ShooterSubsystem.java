@@ -2,7 +2,6 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.lib.properties.PidProperty;
-import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
@@ -44,8 +43,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pid = new RevPidPropertyBuilder("Shooter PID", false, m_pidController, 0)
             .addP(0)
             .addD(0)
-            .addMaxAcceleration(0)
-            .addMaxVelocity(0)
             .addFF(0)
             .build();
 
@@ -65,7 +62,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_pid.updateIfChanged();
     }
 
-    public void setShooterPIDSpeed(double rpm) {
+    public void setShooterRpmPIDSpeed(double rpm) {
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
@@ -73,8 +70,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leader.set(speed);
     }
 
-    public double getEncoder() {
-        return m_encoder.getPosition();
+    public double getEncoderVelocity() {
+        return m_encoder.getVelocity();
     }
 
     @Override

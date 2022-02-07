@@ -14,6 +14,8 @@ package com.gos.rapidreact;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    //CAN
     public static final int DRIVE_LEFT_LEADER_SPARK = 13;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 7;
@@ -34,7 +36,7 @@ public final class Constants {
     public static final int COLLECTOR_ROLLER = 6;
     public static final int COLLECTOR_PIVOT = 4;
 
-    // not can
+    // PWM
     public static final int SERVO_CHANNEL = 0;
 
 }
