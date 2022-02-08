@@ -1,13 +1,10 @@
-import edu.wpi.first.gradlerio.deploy.roborio.RoboRIO
-
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2022.2.1"
+    id "edu.wpi.first.GradleRIO" version "2022.3.1"
 }
 
-def javaVersion = JavaVersion.VERSION_11
-sourceCompatibility = javaVersion
-targetCompatibility = javaVersion
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 def ROBOT_MAIN_CLASS = "com.gos.rapidreact.Main"
 
@@ -48,19 +45,11 @@ wpi.java.debugJni = false
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
-
-test {
-    useJUnitPlatform()
-}
-
+// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+// Also defines JUnit 4.
 dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
-
-    implementation project(":libraries:GirlsOfSteelLib")
-    implementation project(":libraries:GirlsOfSteelLibCtre")
-    implementation project(":libraries:GirlsOfSteelLibNavx")
-    implementation project(":libraries:GirlsOfSteelLibRev")
 
     roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
     roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
@@ -76,11 +65,13 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
+    testImplementation 'junit:junit:4.13.1'
 
-    implementation platform("org.junit:junit-bom:5.8.2")
-    testImplementation "org.junit.jupiter:junit-jupiter-api"
-    testImplementation "org.junit.jupiter:junit-jupiter-params"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+
+    implementation project(":libraries:GirlsOfSteelLib")
+    implementation project(":libraries:GirlsOfSteelLibCtre")
+    implementation project(":libraries:GirlsOfSteelLibNavx")
+    implementation project(":libraries:GirlsOfSteelLibRev")
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -100,3 +91,4 @@ jar {
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
+
