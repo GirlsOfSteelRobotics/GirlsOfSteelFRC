@@ -6,6 +6,7 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
+import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
@@ -20,10 +21,13 @@ import com.gos.rapidreact.commands.SetInitialOdometryCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
+import com.gos.rapidreact.commands.tuning.TuneShooterGoalRPMCommand;
+import com.gos.rapidreact.commands.tuning.TuneShooterMotorSpeedCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import edu.wpi.first.math.util.Units;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
+import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -46,6 +50,7 @@ public class RobotContainer {
     private final HangerSubsystem m_hanger = new HangerSubsystem();
     private final HorizontalConveyorSubsystem m_horizontalConveyor = new HorizontalConveyorSubsystem();
     private final VerticalConveyorSubsystem m_verticalConveyor = new VerticalConveyorSubsystem();
+    private final ShooterSubsystem m_shooter = new ShooterSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
 
@@ -74,10 +79,14 @@ public class RobotContainer {
         SmartDashboard.putData("SetInitialOdometry - 0, 0, 45", new SetInitialOdometryCommand(m_chassis, 0, 0, 45));
         SmartDashboard.putData("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         SmartDashboard.putData("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
+        SmartDashboard.putData("ShooterSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
         SmartDashboard.putData("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
         SmartDashboard.putData("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
         SmartDashboard.putData("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
         SmartDashboard.putData("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
+        SmartDashboard.putData("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
+        SmartDashboard.putData("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
+        SmartDashboard.putData("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
 
     }
 

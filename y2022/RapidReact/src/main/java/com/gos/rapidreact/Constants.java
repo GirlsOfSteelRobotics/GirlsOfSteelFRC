@@ -14,22 +14,29 @@ package com.gos.rapidreact;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    //CAN
     public static final int DRIVE_LEFT_LEADER_SPARK = 13;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 1;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 7;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 8;
 
     public static final int HANGER_LEADER_SPARK = 11;
-    public static final int HANGER_FOLLOWER_SPARK = 9;
-    public static final int SERVO_CHANNEL = 0;
+    public static final int HANGER_FOLLOWER_SPARK = 14;
+    public static final int SHOOTER_LEADER_SPARK = 9;
+    public static final int SHOOTER_FOLLOWER_SPARK = 10;
 
     public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 3;
     public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 2;
 
-    public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 10;
+    public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 15;
 
     public static final int PIGEON_PORT = 5;
 
     public static final int COLLECTOR_ROLLER = 6;
     public static final int COLLECTOR_PIVOT = 4;
+
+    // PWM
+    public static final int SERVO_CHANNEL = 0;
+
 }
