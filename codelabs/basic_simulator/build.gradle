@@ -89,3 +89,7 @@ wpi.java.configureTestTasks(test)
 test {
     ignoreFailures = true
 }
+
+pmd {
+    ignoreFailures = true
+}
