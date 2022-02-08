@@ -24,7 +24,6 @@ public class ShooterSubsystem extends SubsystemBase {
     //variables for the two NEO Brushless Motors
     public static final double ALLOWABLE_ERROR = 100.0;
     private final SimableCANSparkMax m_leader;
-    private final SimableCANSparkMax m_follower;
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
@@ -33,10 +32,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_follower = new SimableCANSparkMax(Constants.SHOOTER_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         //true because the motors are facing each other and in order to do the same thing, they would have to spin in opposite directions
-        m_follower.follow(m_leader, true);
         m_encoder  = m_leader.getEncoder();
 
         m_pidController = m_leader.getPIDController();
