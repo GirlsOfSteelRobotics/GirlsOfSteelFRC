@@ -33,7 +33,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_angleToCargo.getDouble(0) + MOUNTING_ANGLE;
+        return m_angleToCargo.getDouble(0);
     }
 
     public boolean isVisible() {
@@ -44,7 +44,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
         if (m_alliance == DriverStation.Alliance.Blue) {
             m_pipeline.setNumber(BLUE_CARGO);
         }
-        if (m_alliance == DriverStation.Alliance.Blue) {
+        if (m_alliance == DriverStation.Alliance.Red) {
             m_pipeline.setNumber(RED_CARGO);
         }
     }

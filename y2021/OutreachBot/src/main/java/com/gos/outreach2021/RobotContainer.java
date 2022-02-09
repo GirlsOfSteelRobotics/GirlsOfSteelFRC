@@ -25,7 +25,6 @@ import com.gos.outreach2021.commands.SetHoodAngleCommand;
 import com.gos.outreach2021.commands.StopShooter;
 import com.gos.outreach2021.subsystems.Chassis;
 import com.gos.outreach2021.subsystems.Collector;
-import com.gos.outreach2021.subsystems.LEDSubsystem;
 import com.gos.outreach2021.subsystems.LimelightSubsystem;
 import com.gos.outreach2021.subsystems.Shooter;
 import edu.wpi.first.wpilibj.XboxController;
