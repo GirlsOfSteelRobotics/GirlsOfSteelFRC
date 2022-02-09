@@ -24,7 +24,9 @@ public class LimelightGoToCargoCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_atPosition = m_chassis.driveAndTurnPID(m_limelight.distanceToCargo(), m_limelight.getAngle());
+        if (m_limelight.isVisible()) {
+            m_atPosition = m_chassis.driveAndTurnPID(m_limelight.distanceToCargo(), m_limelight.getAngle());
+        }
     }
 
     @Override
