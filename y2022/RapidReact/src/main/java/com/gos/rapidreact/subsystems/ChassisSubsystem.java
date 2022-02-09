@@ -124,11 +124,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         double hDistance; //gets distance of the hypotenuse
         double angle;
-        double speed;
-        double steer;
-
-        double allowableDistanceError = Units.inchesToMeters(12.0);
-        double allowableAngleError = Units.degreesToRadians(5.0);
 
         xError = xCoordinate - xCurrent;
         yError = yCoordinate - yCurrent;
@@ -138,19 +133,24 @@ public class ChassisSubsystem extends SubsystemBase {
 
         System.out.println("xError   " + xError);
         System.out.println("yError   " + yError);
+        return driveAndTurnPID(hDistance, angleError);
+    }
 
-        speed = TO_XY_DISTANCE_PID.getValue() * hDistance; //p * error pid
-        steer = TO_XY_TURN_PID.getValue() * angleError;
+    public boolean driveAndTurnPID(double distance, double angle) {
+        double allowableDistanceError = Units.inchesToMeters(12.0);
+        double allowableAngleError = Units.degreesToRadians(5.0);
 
-        System.out.println("speed   " + speed);
-        System.out.println("steer   " + steer);
-        System.out.println("hDistance   " + hDistance);
-        System.out.println("angle   " + Math.toDegrees(angleError));
-        System.out.println();
+        double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
+        double steer = TO_XY_TURN_PID.getValue() * angle;
+
+        // System.out.println("speed   " + speed);
+        // System.out.println("steer   " + steer);
+        // System.out.println("hDistance   " + hDistance);
+        // System.out.println("angle   " + Math.toDegrees(angleError));
+        // System.out.println();
 
         setArcadeDrive(speed, steer);
-
-        return Math.abs(hDistance) < allowableDistanceError && Math.abs(angleError) < allowableAngleError;
+        return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
     }
 
     @Override
