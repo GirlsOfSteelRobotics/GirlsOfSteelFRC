@@ -2,8 +2,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def download_external_archives():
     # Download Extra java rules
-    RULES_JVM_EXTERNAL_TAG = "4.1"
-    RULES_JVM_EXTERNAL_SHA = "f36441aa876c4f6427bfb2d1f2d723b48e9d930b62662bf723ddfb8fc80f0140"
+    RULES_JVM_EXTERNAL_TAG = "4.2"
+    RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
     http_archive(
         name = "rules_jvm_external",
         sha256 = RULES_JVM_EXTERNAL_SHA,
@@ -22,16 +22,18 @@ def download_external_archives():
     # Download Setup python
     http_archive(
         name = "rules_python",
-        url = "https://github.com/bazelbuild/rules_python/releases/download/0.5.0/rules_python-0.5.0.tar.gz",
-        sha256 = "cd6730ed53a002c56ce4e2f396ba3b3be262fd7cb68339f0377a45e8227fe332",
+        sha256 = "a30abdfc7126d497a7698c29c46ea9901c6392d6ed315171a6df5ce433aa4502",
+        strip_prefix = "rules_python-0.6.0",
+        url = "https://github.com/bazelbuild/rules_python/archive/0.6.0.tar.gz",
     )
 
     # Junit helper
+    GERRIT_JUNIT_COMMITISH = "608fc3c457cf239bfad615efaeb014b504ca6c04"
     http_archive(
         name = "rule_junit",
-        url = "https://github.com/GerritCodeReview/bazlets/archive/refs/heads/stable-3.3.zip",
-        sha256 = "882846bd960ec54145234deea3e4625c4ad807d30e0eb2ff555d5201bdd97815",
-        strip_prefix = "bazlets-stable-3.3",
+        url = "https://github.com/GerritCodeReview/bazlets/archive/{}.tar.gz".format(GERRIT_JUNIT_COMMITISH),
+        sha256 = "12bd3d30796335984cf317550bd22a9fa3ffb35b00a5ef56074fb2b2b16eec88",
+        strip_prefix = "bazlets-{}".format(GERRIT_JUNIT_COMMITISH),
     )
 
     # Download PMD

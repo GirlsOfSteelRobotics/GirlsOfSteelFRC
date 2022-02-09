@@ -2,6 +2,7 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.PropertyManager;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -30,6 +31,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
     private static final double GEAR_RATIO = 40.0 / 10.0 * 34.0 / 20.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
+
+    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
 
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
@@ -124,6 +128,46 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void setArcadeDrive(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
+    }
+
+    public boolean goToCargo(double xCoordinate, double yCoordinate) {
+
+        double xError;
+        double yError; //gets distance to the coordinate
+        double angleError;
+        double xCurrent = m_odometry.getPoseMeters().getX();
+        double yCurrent = m_odometry.getPoseMeters().getY();
+        double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
+
+        double hDistance; //gets distance of the hypotenuse
+        double angle;
+        double speed;
+        double steer;
+
+        double allowableDistanceError = Units.inchesToMeters(12.0);
+        double allowableAngleError = Units.degreesToRadians(5.0);
+
+        xError = xCoordinate - xCurrent;
+        yError = yCoordinate - yCurrent;
+        hDistance = Math.sqrt((xError * xError) + (yError * yError));
+        angle = Math.atan2(yError, xError);
+        angleError = angle - angleCurrent;
+
+        System.out.println("xError   " + xError);
+        System.out.println("yError   " + yError);
+
+        speed = TO_XY_DISTANCE_PID.getValue() * hDistance; //p * error pid
+        steer = TO_XY_TURN_PID.getValue() * angleError;
+
+        System.out.println("speed   " + speed);
+        System.out.println("steer   " + steer);
+        System.out.println("hDistance   " + hDistance);
+        System.out.println("angle   " + Math.toDegrees(angleError));
+        System.out.println();
+
+        setArcadeDrive(speed, steer);
+
+        return Math.abs(hDistance) < allowableDistanceError && Math.abs(angleError) < allowableAngleError;
     }
 
     @Override
