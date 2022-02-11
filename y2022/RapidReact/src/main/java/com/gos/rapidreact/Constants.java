@@ -39,7 +39,8 @@ public final class Constants {
     public static final int COLLECTOR_PIVOT = 8;
 
     // PWM
-    public static final int SERVO_CHANNEL = 0;
+    public static final int LED = 0;
+    public static final int SERVO_CHANNEL = 1;
 
     //from FRC game manual page 24
     public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);

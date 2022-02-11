@@ -1,5 +1,13 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "0": {
+        "serpentine": true
+      },
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [9]": {
         "header": {
@@ -15,6 +23,7 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
+      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
@@ -22,6 +31,7 @@
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
+      "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/CollectorDownCommand": "Command",
       "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": "Command",
       "/SmartDashboard/CollectorPivotPIDCommand - 45 Degrees": "Command",
@@ -48,6 +58,11 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
+      "/LiveWindow/LEDManagerSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/ShooterPIDCommand - 3000": {
         "window": {
           "visible": true

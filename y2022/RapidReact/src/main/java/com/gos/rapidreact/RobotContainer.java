@@ -5,6 +5,7 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.LED.LEDFlash;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
@@ -25,6 +26,7 @@ import com.gos.rapidreact.commands.tuning.TuneShooterGoalRPMCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterMotorSpeedCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
+import com.gos.rapidreact.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.util.Units;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
@@ -51,6 +53,7 @@ public class RobotContainer {
     private final HorizontalConveyorSubsystem m_horizontalConveyor = new HorizontalConveyorSubsystem();
     private final VerticalConveyorSubsystem m_verticalConveyor = new VerticalConveyorSubsystem();
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
 
@@ -88,7 +91,6 @@ public class RobotContainer {
         SmartDashboard.putData("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
         SmartDashboard.putData("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
         SmartDashboard.putData("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
-
     }
 
 
