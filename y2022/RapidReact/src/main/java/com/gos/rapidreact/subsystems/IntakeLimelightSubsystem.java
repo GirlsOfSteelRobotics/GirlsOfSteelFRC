@@ -2,6 +2,7 @@ package com.gos.rapidreact.subsystems;
 
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -16,14 +17,14 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_verticalAngle;
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_pipeline; //which camera (color or cargo) to use
-    private final DriverStation.Alliance m_alliance;
 
     public IntakeLimelightSubsystem() {
-        m_horizontalAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx");
-        m_verticalAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty");
-        m_isVisible = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv");
-        m_pipeline = NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline");
-        m_alliance = DriverStation.getAlliance();
+        NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+
+        m_horizontalAngle = limelightTable.getEntry("tx");
+        m_verticalAngle = limelightTable.getEntry("ty");
+        m_isVisible = limelightTable.getEntry("tv");
+        m_pipeline = limelightTable.getEntry("pipeline");
     }
 
     public double distanceToCargo() {
@@ -40,11 +41,13 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
         return m_isVisible.getDouble(0) != 0;
     }
 
+    @Override
     public void periodic() {
-        if (m_alliance == DriverStation.Alliance.Blue) {
+        DriverStation.getAlliance();
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
             m_pipeline.setNumber(BLUE_CARGO);
         }
-        if (m_alliance == DriverStation.Alliance.Red) {
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
             m_pipeline.setNumber(RED_CARGO);
         }
     }
