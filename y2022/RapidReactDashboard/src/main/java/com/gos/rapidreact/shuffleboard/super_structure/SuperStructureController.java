@@ -18,7 +18,6 @@ public class SuperStructureController {
     private static final double CHASSIS_WIDTH = 36;
     private static final double INTAKE_WIDTH = 10;
     private static final double INTAKE_HEIGHT = 16;
-    private static final double INTAKE_START_ANGLE = 0;
     private static final double INTAKE_WHEEL_WIDTH = 10;
     private static final double INTAKE_WHEEL_HEIGHT = 4;
     private static final double HORI_CONVEYOR_WIDTH = 36;
@@ -94,8 +93,7 @@ public class SuperStructureController {
         m_pane.setMinWidth(MAX_WIDTH * minWidthMultiplier);
 
         DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> {
-            double output = Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
-            return output;
+            return Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
         }, m_pane.widthProperty(), m_pane.heightProperty());
 
         Scale scale = new Scale();
