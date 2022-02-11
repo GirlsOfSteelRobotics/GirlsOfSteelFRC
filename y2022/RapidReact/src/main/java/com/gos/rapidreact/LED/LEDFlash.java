@@ -8,28 +8,27 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 public class LEDFlash extends LEDBase {
     private double m_brightness;
     private double m_increment;
+    private int m_startLED;
+    private int m_endLED;
     private Color8Bit m_color;
 
-    public LEDFlash(int maxIndex, int port, AddressableLED led, AddressableLEDBuffer buffer, double secondsOneDirection, Color color) {
+    public LEDFlash(int maxIndex, int port, AddressableLED led, AddressableLEDBuffer buffer, double secondsOneDirection, Color color, int startLED, int endLED) {
         super(maxIndex, port, led, buffer);
         m_color = new Color8Bit(color);
         m_increment = secondsOneDirection / (50 * secondsOneDirection);
+        m_startLED = startLED;
+        m_endLED = endLED;
     }
 
     public void flash() {
-        setLED(0, m_maxIndex,(int) (m_color.red * m_brightness) , (int) (m_color.green * m_brightness), (int) (m_color.blue * m_brightness));
+        setLED(m_startLED, m_endLED,(int) (m_color.red * m_brightness) , (int) (m_color.green * m_brightness), (int) (m_color.blue * m_brightness));
         m_brightness += m_increment;
-        System.out.println("poaisjdpfoijaoseijf" + m_brightness);
         if (m_brightness >= 1) {
             m_increment *= -1.0;
-            System.out.println("weeeeeee              " + m_brightness);
         }
         if (m_brightness <= 0) {
             m_increment *= -1.0;
-            System.out.println("hiiiiii              " + m_brightness);
         }
-        System.out.println("brightness              " + m_brightness);
-        System.out.println("direction               " + m_increment);
-        System.out.println();
+
     }
 }

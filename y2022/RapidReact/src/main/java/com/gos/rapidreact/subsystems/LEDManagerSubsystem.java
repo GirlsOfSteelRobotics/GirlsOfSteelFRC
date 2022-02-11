@@ -13,11 +13,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
     private LEDFlash m_ledFlash;
+    private LEDFlash m_ledFlashSecond;
     
     public LEDManagerSubsystem() {
         m_led = new AddressableLED(PORT);
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
-        m_ledFlash = new LEDFlash(MAX_INDEX_LED, PORT, m_led, m_buffer, 2, Color.kPapayaWhip);
+        m_ledFlash = new LEDFlash(MAX_INDEX_LED, PORT, m_led, m_buffer, 2, Color.kPapayaWhip, 0, MAX_INDEX_LED / 2);
+        m_ledFlashSecond = new LEDFlash(MAX_INDEX_LED, PORT, m_led, m_buffer, 1, Color.kAquamarine, MAX_INDEX_LED / 2, MAX_INDEX_LED);
+
 
         m_led.setLength(m_buffer.getLength());
 
@@ -29,6 +32,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_ledFlash.flash();
+        m_ledFlashSecond.flash();
         m_led.setData(m_buffer);
     }
 
