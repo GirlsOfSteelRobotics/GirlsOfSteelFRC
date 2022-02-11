@@ -16,7 +16,7 @@ public class SuperStructureStandaloneMain {
     private double m_superStructureIntakeAngle;
     private double m_superStructureIntakeSpeed;
     private double m_superStructureHangerSpeed;
-    private double m_superStructureHangerHeight;
+    private double m_superStructureHangerHeight = 30;
     private double m_superStructureHorizontalConveyorSpeed;
     private double m_superStructureVerticalConveyorSpeed;
     private double m_superStructureShooterSpeed;
