@@ -5,6 +5,8 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
@@ -33,7 +35,6 @@ import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
@@ -120,6 +121,10 @@ public class RobotContainer {
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
         limelightGoToCargo.whenPressed(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight));
+        final JoystickButton hangerUp = new JoystickButton(m_driverJoystick, XboxController.Axis.kLeftTrigger.value);
+        hangerUp.whileHeld(new HangerUpCommand(m_hanger), true);
+        final JoystickButton hangerDown = new JoystickButton(m_driverJoystick, XboxController.Axis.kRightTrigger.value);
+        hangerDown.whileHeld(new HangerDownCommand(m_hanger), true);
 
         //operator
         final JoystickButton collectorDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value); //left bumper
