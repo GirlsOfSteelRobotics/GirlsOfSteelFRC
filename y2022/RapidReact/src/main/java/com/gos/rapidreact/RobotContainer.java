@@ -135,6 +135,10 @@ public class RobotContainer {
             m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
         final Button verticalConveyorUp = new edu.wpi.first.wpilibj2.command.button.Button(() ->
             m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
+        final Button horizontalConveyorForward = new edu.wpi.first.wpilibj2.command.button.Button(() ->
+            m_operatorJoystick.getRightY() > -0.8).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
+        final Button horizontalConveyorBackward = new edu.wpi.first.wpilibj2.command.button.Button(() ->
+            m_operatorJoystick.getRightY() < 0.8).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
         final JoystickButton shooterRpmPID = new JoystickButton(m_operatorJoystick, XboxController.Axis.kRightTrigger.value); //joystick right
         shooterRpmPID.whileHeld(new ShooterRpmPIDCommand(m_shooter, 3000));
 
