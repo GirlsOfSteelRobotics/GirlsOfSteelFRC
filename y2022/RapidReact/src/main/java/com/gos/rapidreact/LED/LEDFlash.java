@@ -12,8 +12,8 @@ public class LEDFlash extends LEDBase {
     private int m_endLED;
     private Color8Bit m_color;
 
-    public LEDFlash(int maxIndex, int port, AddressableLED led, AddressableLEDBuffer buffer, double secondsOneDirection, Color color, int startLED, int endLED) {
-        super(maxIndex, port, led, buffer);
+    public LEDFlash(AddressableLEDBuffer buffer, double secondsOneDirection, Color color, int startLED, int endLED) {
+        super(buffer);
         m_color = new Color8Bit(color);
         m_increment = secondsOneDirection / (50 * secondsOneDirection);
         m_startLED = startLED;
