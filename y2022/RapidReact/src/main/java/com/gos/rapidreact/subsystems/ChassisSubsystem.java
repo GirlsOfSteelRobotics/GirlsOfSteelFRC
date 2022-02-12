@@ -53,9 +53,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_followerLeft.restoreFactoryDefaults();
         m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leaderRight.restoreFactoryDefaults();
         m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_followerRight.restoreFactoryDefaults();
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 

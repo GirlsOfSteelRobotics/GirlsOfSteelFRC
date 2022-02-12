@@ -45,7 +45,10 @@ public class CollectorSubsystem extends SubsystemBase {
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_roller.restoreFactoryDefaults();
+
         m_pivot = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivot.restoreFactoryDefaults();
 
         m_pivotEncoder = m_pivot.getEncoder();
 
