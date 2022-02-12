@@ -114,7 +114,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
         SmartDashboard.putData(m_field);
-
+        SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
+        SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
     }
 
     public void resetInitialOdometry(Pose2d pose) {

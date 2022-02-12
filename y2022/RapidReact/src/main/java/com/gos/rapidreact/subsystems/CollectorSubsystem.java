@@ -76,7 +76,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Encoder", m_pivotEncoder.getPosition());
+        SmartDashboard.putNumber("Pivot Encoder (rad)", m_pivotEncoder.getPosition());
         m_pivotPID.updateIfChanged();
     }
 
