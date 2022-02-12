@@ -32,7 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-
+        m_leader.restoreFactoryDefaults();
         //true because the motors are facing each other and in order to do the same thing, they would have to spin in opposite directions
         m_encoder  = m_leader.getEncoder();
 

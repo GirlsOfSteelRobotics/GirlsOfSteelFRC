@@ -1,7 +1,7 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [9]": {
+      "SPARK MAX [11]": {
         "header": {
           "open": true
         }
@@ -15,6 +15,7 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
+      "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
@@ -22,6 +23,7 @@
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
+      "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/CollectorDownCommand": "Command",
       "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": "Command",
       "/SmartDashboard/CollectorPivotPIDCommand - 45 Degrees": "Command",
@@ -48,6 +50,11 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
+      "/SmartDashboard/GoToCargoCommand - 10 forward": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/ShooterPIDCommand - 3000": {
         "window": {
           "visible": true
@@ -63,11 +70,6 @@
           "visible": true
         }
       }
-    }
-  },
-  "NetworkTables": {
-    "Preferences": {
-      "open": true
     }
   }
 }
