@@ -121,24 +121,18 @@ public class RobotContainer {
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
         limelightGoToCargo.whenPressed(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight));
-        final Button hangerUp = new edu.wpi.first.wpilibj2.command.button.Button(() ->
-            m_driverJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new HangerUpCommand(m_hanger)); //left trigger
-        final Button hangerDown = new edu.wpi.first.wpilibj2.command.button.Button(() ->
-            m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new HangerDownCommand(m_hanger)); //right trigger
+        new Button(() -> m_driverJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new HangerUpCommand(m_hanger)); //left trigger
+        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new HangerDownCommand(m_hanger)); //right trigger
 
         //operator
         final JoystickButton collectorDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value); //left bumper
         collectorDown.whileHeld(new CollectorDownCommand(m_collector), true);
         final JoystickButton collectorUp = new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value); //right bumper
         collectorUp.whileHeld(new CollectorUpCommand(m_collector), true);
-        final Button verticalConveyorDown = new edu.wpi.first.wpilibj2.command.button.Button(() ->
-            m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
-        final Button verticalConveyorUp = new edu.wpi.first.wpilibj2.command.button.Button(() ->
-            m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
-        final Button horizontalConveyorForward = new edu.wpi.first.wpilibj2.command.button.Button(() ->
-            m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
-        final Button horizontalConveyorBackward = new edu.wpi.first.wpilibj2.command.button.Button(() ->
-            m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
+        new Button(() -> m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
+        new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
+        new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
+        new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
         final JoystickButton shooterRpmPID = new JoystickButton(m_operatorJoystick, XboxController.Axis.kRightTrigger.value); //joystick right
         shooterRpmPID.whileHeld(new ShooterRpmPIDCommand(m_shooter, 3000));
 

@@ -30,8 +30,8 @@ public final class Constants {
 
     public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 6;
     public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 7;
-// no current spark for vertical conveyor
-   public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 13;
+
+    public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 13;
 
     public static final int PIGEON_PORT = 20;
 
