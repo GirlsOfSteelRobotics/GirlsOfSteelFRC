@@ -1,13 +1,13 @@
-package com.gos.rapidreact.LED;
+package com.gos.rapidreact.led;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
-public class LEDRainbow extends LEDBase{
-    private int m_indexLength;
+public class LEDRainbow extends LEDBase {
+    private final int m_indexLength;
+    private final int m_minIndex;
+    private final int m_maxIndex;
     private int m_rainbowFirstPixelHue;
-    private int m_minIndex;
-    private int m_maxIndex;
+
 
     public LEDRainbow(int maxIndex, AddressableLEDBuffer buffer, int minIndex) {
         super(buffer);

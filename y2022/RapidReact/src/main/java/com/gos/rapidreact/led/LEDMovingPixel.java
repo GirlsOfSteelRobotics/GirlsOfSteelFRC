@@ -1,15 +1,15 @@
-package com.gos.rapidreact.LED;
+package com.gos.rapidreact.led;
 
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
-public class LEDMovingPixel extends LEDBase{
-    private int m_minIndex;
-    private int m_maxIndex;
+public class LEDMovingPixel extends LEDBase {
+    private final int m_minIndex;
+    private final int m_maxIndex;
+    private final Color8Bit m_color;
     private int m_pixelCounter;
-    private int m_loopCounter = 0;
-    private Color8Bit m_color;
+    private int m_loopCounter;
 
     public LEDMovingPixel(AddressableLEDBuffer buffer, int minIndex, int maxIndex, Color color) {
         super(buffer);

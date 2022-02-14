@@ -1,10 +1,10 @@
-package com.gos.rapidreact.LED;
+package com.gos.rapidreact.led;
 
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
-public class LEDPolkaDots extends LEDBase{
-    private int m_minIndex;
-    private int m_maxIndex;
+public class LEDPolkaDots extends LEDBase {
+    private final int m_minIndex;
+    private final int m_maxIndex;
 
     public LEDPolkaDots(AddressableLEDBuffer buffer, int minIndex, int maxIndex) {
         super(buffer);

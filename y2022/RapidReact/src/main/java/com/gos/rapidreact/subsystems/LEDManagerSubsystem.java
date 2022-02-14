@@ -1,16 +1,17 @@
 package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.LED.LEDFlash;
-import com.gos.rapidreact.LED.LEDMovingPixel;
-import com.gos.rapidreact.LED.LEDPolkaDots;
-import com.gos.rapidreact.LED.LEDRainbow;
-import com.gos.rapidreact.LED.LEDBoolean;
+import com.gos.rapidreact.led.LEDFlash;
+import com.gos.rapidreact.led.LEDMovingPixel;
+import com.gos.rapidreact.led.LEDPolkaDots;
+import com.gos.rapidreact.led.LEDRainbow;
+import com.gos.rapidreact.led.LEDBoolean;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+@SuppressWarnings("PMD") // TODO(ashley) - Hook up for real
 public class LEDManagerSubsystem extends SubsystemBase {
     private static final int MAX_INDEX_LED = 30;
     private static final int PORT = Constants.LED;
