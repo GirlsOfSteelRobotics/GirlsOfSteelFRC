@@ -9,7 +9,7 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [9]": {
+      "SPARK MAX [11]": {
         "header": {
           "open": true
         }
@@ -24,6 +24,7 @@
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
       "/LiveWindow/LEDManagerSubsystem": "Subsystem",
+      "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
@@ -58,6 +59,11 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
+      "/SmartDashboard/GoToCargoCommand - 10 forward": {
+        "window": {
+          "visible": true
+        }
+      },
       "/LiveWindow/LEDManagerSubsystem": {
         "window": {
           "visible": true
@@ -78,11 +84,6 @@
           "visible": true
         }
       }
-    }
-  },
-  "NetworkTables": {
-    "Preferences": {
-      "open": true
     }
   }
 }
