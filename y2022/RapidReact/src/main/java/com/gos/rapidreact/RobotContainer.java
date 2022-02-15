@@ -172,6 +172,8 @@ public class RobotContainer {
                 SmartDashboardNames.VERTICAL_CONVEYOR_SPEED, m_verticalConveyor::getVerticalConveyorSpeed, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.SHOOTER_SPEED, m_shooter::getShooterSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ROLLER_SPEED, m_collector::getRollerSpeed, null);
         }
     }
 }

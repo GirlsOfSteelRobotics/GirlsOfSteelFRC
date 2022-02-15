@@ -130,6 +130,10 @@ public class CollectorSubsystem extends SubsystemBase {
         return m_pivot.get();
     }
 
+    public double getRollerSpeed() {
+        return m_roller.get();
+    }
+
     public void tuneGravityOffset() {
         m_pivot.setVoltage(GRAVITY_OFFSET.getValue());
     }
