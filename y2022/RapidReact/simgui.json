@@ -1,5 +1,13 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "0": {
+        "serpentine": true
+      },
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [11]": {
         "header": {
@@ -15,6 +23,7 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
+      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
@@ -51,6 +60,11 @@
     },
     "windows": {
       "/SmartDashboard/GoToCargoCommand - 10 forward": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/LEDManagerSubsystem": {
         "window": {
           "visible": true
         }
