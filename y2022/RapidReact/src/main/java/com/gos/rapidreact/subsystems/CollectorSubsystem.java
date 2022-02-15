@@ -123,7 +123,7 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public double getEncoder() {
-        return m_pivotEncoder.getPosition();
+        return Math.toDegrees(m_pivotEncoder.getPosition());
     }
 
     public double getPivotSpeed() {

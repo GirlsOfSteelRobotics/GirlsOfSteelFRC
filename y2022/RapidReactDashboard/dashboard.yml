@@ -20,6 +20,9 @@ widgets:
             name: intakeSpeed
             dasboard_constant: INTAKE_SPEED
           - type: double
+            name: rollerSpeed
+            dasboard_constant: ROLLER_SPEED
+          - type: double
             name: hangerSpeed
             dasboard_constant: HANGER_SPEED
           - type: double

@@ -63,7 +63,7 @@ public class SuperStructureController {
     private Rectangle m_intake;
 
     @FXML
-    private Circle m_intakeWheel;
+    private Rectangle m_intakeWheel;
 
     @FXML
     private Rotate m_intakeRotation;
@@ -155,7 +155,7 @@ public class SuperStructureController {
     public void updateSuperStructure(SuperStructureData superStructureData) {
 
         m_intake.setFill(Utils.getMotorColor(superStructureData.getIntakeSpeed()));
-        m_intakeWheel.setFill(Utils.getMotorColor(superStructureData.getIntakeSpeed()));
+        m_intakeWheel.setFill(Utils.getMotorColor(superStructureData.getRollerSpeed()));
         m_intakeRotation.setAngle(superStructureData.getIntakeAngle());
         m_intakeWheelRotation.setAngle(m_intakeRotation.getAngle());
         m_hanger.setFill(Utils.getMotorColor(superStructureData.getHangerSpeed()));

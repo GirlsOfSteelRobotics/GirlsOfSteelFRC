@@ -85,6 +85,11 @@
           "visible": true
         }
       },
+      "/SmartDashboard/RollerOutCommand": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/ShooterPIDCommand - 3000": {
         "window": {
           "visible": true

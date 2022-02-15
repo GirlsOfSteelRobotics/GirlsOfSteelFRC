@@ -15,8 +15,9 @@ public class SuperStructureStandaloneMain {
 
     private double m_superStructureIntakeAngle;
     private double m_superStructureIntakeSpeed;
+    private double m_superStructureRollerSpeed;
     private double m_superStructureHangerSpeed;
-    private double m_superStructureHangerHeight = 30;
+    private double m_superStructureHangerHeight;
     private double m_superStructureHorizontalConveyorSpeed;
     private double m_superStructureVerticalConveyorSpeed;
     private double m_superStructureShooterSpeed;
@@ -42,33 +43,39 @@ public class SuperStructureStandaloneMain {
                 m_superStructureIntakeSpeed = -0.25;
                 break;
             case E:
-                m_superStructureHangerSpeed = 0.25;
+                m_superStructureRollerSpeed = 0.25;
                 break;
             case D:
-                m_superStructureHangerSpeed = -0.25;
+                m_superStructureRollerSpeed = -0.25;
                 break;
             case R:
-                m_superStructureHangerHeight -= 2;
+                m_superStructureHangerSpeed = 0.25;
                 break;
             case F:
-                m_superStructureHangerHeight += 2;
+                m_superStructureHangerSpeed = -0.25;
                 break;
             case T:
-                m_superStructureHorizontalConveyorSpeed = 0.25;
+                m_superStructureHangerHeight -= 2;
                 break;
             case G:
-                m_superStructureHorizontalConveyorSpeed = -0.25;
+                m_superStructureHangerHeight += 2;
                 break;
             case Y:
-                m_superStructureVerticalConveyorSpeed = 0.25;
+                m_superStructureHorizontalConveyorSpeed = 0.25;
                 break;
             case H:
-                m_superStructureVerticalConveyorSpeed = -0.25;
+                m_superStructureHorizontalConveyorSpeed = -0.25;
                 break;
             case U:
-                m_superStructureShooterSpeed = 0.25;
+                m_superStructureVerticalConveyorSpeed = 0.25;
                 break;
             case J:
+                m_superStructureVerticalConveyorSpeed = -0.25;
+                break;
+            case I:
+                m_superStructureShooterSpeed = 0.25;
+                break;
+            case K:
                 m_superStructureShooterSpeed = -0.25;
                 break;
 
@@ -91,19 +98,23 @@ public class SuperStructureStandaloneMain {
                 break;
             case E:
             case D:
+                m_superStructureRollerSpeed = 0;
+                break;
+            case R:
+            case F:
                 m_superStructureHangerSpeed = 0;
                 break;
 
-            case T:
-            case G:
-                m_superStructureHorizontalConveyorSpeed = 0;
-                break;
             case Y:
             case H:
-                m_superStructureVerticalConveyorSpeed = 0;
+                m_superStructureHorizontalConveyorSpeed = 0;
                 break;
             case U:
             case J:
+                m_superStructureVerticalConveyorSpeed = 0;
+                break;
+            case I:
+            case K:
                 m_superStructureShooterSpeed = 0;
                 break;
             default:
@@ -120,6 +131,7 @@ public class SuperStructureStandaloneMain {
             SuperStructureData data = new SuperStructureData(
                 m_superStructureIntakeAngle,
                 m_superStructureIntakeSpeed,
+                m_superStructureRollerSpeed,
                 m_superStructureHangerSpeed,
                 m_superStructureHangerHeight,
                 m_superStructureHorizontalConveyorSpeed,
