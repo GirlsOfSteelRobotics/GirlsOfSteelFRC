@@ -12,7 +12,7 @@
         <!-- Examples. -->
         <Rectangle fx:id="m_intake" fill="#b4b0dd"/>
         <Rectangle fx:id="m_chassis" fill="#96e3d9"/>
-        <Rectangle fx:id="m_intakeWheel" fill="#e8b1f5"/>
+        <Circle fx:id="m_intakeWheel" fill="#e8b1f5"/>
         <Rectangle fx:id="m_horizontalConveyor" fill="#c4f087"/>
         <Rectangle fx:id="m_verticalConveyor" fill="#f6c789"/>
         <Rectangle fx:id="m_hanger" fill="#efea98"/>

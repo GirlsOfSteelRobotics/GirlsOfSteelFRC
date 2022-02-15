@@ -126,6 +126,10 @@ public class CollectorSubsystem extends SubsystemBase {
         return m_pivotEncoder.getPosition();
     }
 
+    public double getPivotSpeed() {
+        return m_pivot.get();
+    }
+
     public void tuneGravityOffset() {
         m_pivot.setVoltage(GRAVITY_OFFSET.getValue());
     }

@@ -34,6 +34,8 @@ import com.gos.rapidreact.subsystems.HangerSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
@@ -99,6 +101,8 @@ public class RobotContainer {
         SmartDashboard.putData("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
         SmartDashboard.putData("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
 
+        SmartDashboard.putData("SuperstructureSendable", new SuperstructureSendable());
+
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
         }
@@ -147,5 +151,27 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return m_autoModeFactory.getAutonomousMode();
+    }
+
+    private class SuperstructureSendable implements Sendable {
+
+        @Override
+        public void initSendable(SendableBuilder builder) {
+            builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
+            builder.addDoubleProperty(
+                SmartDashboardNames.INTAKE_ANGLE, m_collector::getEncoder, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.INTAKE_SPEED, m_collector::getPivotSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.HANGER_SPEED, m_hanger::getHangerSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.HANGER_HEIGHT, m_hanger::getHangerHeight, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.HORIZONTAL_CONVEYOR_SPEED, m_horizontalConveyor::getHorizontalConveyorSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.VERTICAL_CONVEYOR_SPEED, m_verticalConveyor::getVerticalConveyorSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.SHOOTER_SPEED, m_shooter::getShooterSpeed, null);
+        }
     }
 }

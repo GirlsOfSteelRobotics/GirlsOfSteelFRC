@@ -6,6 +6,7 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
@@ -62,7 +63,7 @@ public class SuperStructureController {
     private Rectangle m_intake;
 
     @FXML
-    private Rectangle m_intakeWheel;
+    private Circle m_intakeWheel;
 
     @FXML
     private Rotate m_intakeRotation;
@@ -153,6 +154,7 @@ public class SuperStructureController {
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
 
+        m_intake.setFill(Utils.getMotorColor(superStructureData.getIntakeSpeed()));
         m_intakeWheel.setFill(Utils.getMotorColor(superStructureData.getIntakeSpeed()));
         m_intakeRotation.setAngle(superStructureData.getIntakeAngle());
         m_intakeWheelRotation.setAngle(m_intakeRotation.getAngle());
