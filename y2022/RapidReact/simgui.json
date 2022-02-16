@@ -23,8 +23,8 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
-      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
+      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
@@ -59,12 +59,12 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
-      "/SmartDashboard/GoToCargoCommand - 10 forward": {
+      "/LiveWindow/LEDManagerSubsystem": {
         "window": {
           "visible": true
         }
       },
-      "/LiveWindow/LEDManagerSubsystem": {
+      "/SmartDashboard/GoToCargoCommand - 10 forward": {
         "window": {
           "visible": true
         }
