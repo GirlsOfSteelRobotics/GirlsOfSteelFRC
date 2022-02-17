@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.*?>
+
+<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gos.rapidreact.shuffleboard.super_structure.SuperStructureController">
+
+    <Group fx:id="m_group">
+        <!-- Put your shapes in here. -->
+        <!-- Examples. -->
+        <Rectangle fx:id="m_intake" fill="#b4b0dd"/>
+        <Rectangle fx:id="m_chassis" fill="#96e3d9"/>
+        <Rectangle fx:id="m_intakeWheel" fill="#e8b1f5"/>
+        <Rectangle fx:id="m_horizontalConveyor" fill="#c4f087"/>
+        <Rectangle fx:id="m_verticalConveyor" fill="#f6c789"/>
+        <Rectangle fx:id="m_hanger" fill="#efea98"/>
+        <Rectangle fx:id="m_shooter" fill="#fdc9c1"/>
+
+
+    </Group>
+</Pane>
