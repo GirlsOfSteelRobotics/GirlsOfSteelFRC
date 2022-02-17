@@ -10,13 +10,14 @@
     <Group fx:id="m_group">
         <!-- Put your shapes in here. -->
         <!-- Examples. -->
-        <Rectangle fx:id="m_intake" fill="#b4b0dd"/>
+        <Rectangle fx:id="m_intake" fill="TRANSPARENT" stroke="#b4b0dd"/>
         <Rectangle fx:id="m_chassis" fill="#96e3d9"/>
-        <Rectangle fx:id="m_intakeWheel" fill="#e8b1f5"/>
+        <Circle    fx:id="m_intakeWheel" fill="#e8b1f5"/>
         <Rectangle fx:id="m_horizontalConveyor" fill="#c4f087"/>
-        <Rectangle fx:id="m_verticalConveyor" fill="#f6c789"/>
+        <Rectangle fx:id="m_verticalConveyor" fill="TRANSPARENT" stroke="#f6c789"/>
         <Rectangle fx:id="m_hanger" fill="#efea98"/>
-        <Rectangle fx:id="m_shooter" fill="#fdc9c1"/>
+        <Arc fx:id="m_shooter" fill="#fdc9c1" stroke="#fdc9c1"
+             length="90.0" type="ROUND" />
 
 
     </Group>

@@ -128,8 +128,16 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
-    public double getEncoder() {
-        return m_pivotEncoder.getPosition();
+    public double getIntakeAngleDegrees() {
+        return Math.toDegrees(m_pivotEncoder.getPosition());
+    }
+
+    public double getPivotSpeed() {
+        return m_pivot.get();
+    }
+
+    public double getRollerSpeed() {
+        return m_roller.get();
     }
 
     public void tuneGravityOffset() {

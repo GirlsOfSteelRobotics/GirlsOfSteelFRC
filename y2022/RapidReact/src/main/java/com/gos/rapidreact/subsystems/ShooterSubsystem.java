@@ -71,6 +71,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_encoder.getVelocity();
     }
 
+    public double getShooterSpeed() {
+        return m_leader.getAppliedOutput();
+    }
+
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
