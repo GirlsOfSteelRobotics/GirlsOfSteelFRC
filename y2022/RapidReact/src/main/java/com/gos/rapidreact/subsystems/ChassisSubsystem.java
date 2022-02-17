@@ -29,7 +29,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //TODO: change constants to match this year's robot
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
-    private static final double GEAR_RATIO = 40.0 / 10.0 * 34.0 / 20.0;
+    private static final double GEAR_RATIO = 5;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);

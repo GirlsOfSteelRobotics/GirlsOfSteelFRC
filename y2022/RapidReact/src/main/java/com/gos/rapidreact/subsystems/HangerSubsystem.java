@@ -16,6 +16,7 @@ public class HangerSubsystem extends SubsystemBase {
     public static final int DISENGAGED_RATCHET_ANGLE = 0;
     public static final double HANGER_UP_SPEED = 0.3;
     public static final double HANGER_DOWN_SPEED = -0.3;
+    private static final double GEAR = 80;
 
     private final Servo m_servo;
     private final SimableCANSparkMax m_leader;
@@ -32,6 +33,9 @@ public class HangerSubsystem extends SubsystemBase {
         m_follower.restoreFactoryDefaults();
         m_follower.follow(m_leader, false);
         m_encoder = m_leader.getEncoder();
+
+        m_encoder.setPositionConversionFactor(GEAR);
+
     }
 
     @Override
