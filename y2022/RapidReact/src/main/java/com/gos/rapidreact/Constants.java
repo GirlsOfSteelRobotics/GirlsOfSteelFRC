@@ -23,9 +23,9 @@ public final class Constants {
     public static final int HANGER_LEADER_SPARK = 3;
     public static final int DRIVE_LEFT_LEADER_SPARK = 4;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
-    public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 7;
     //6=VERTICAL_FOLLOWER
-    public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 6;
+    public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 6;
+    public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 7;
     public static final int HANGER_FOLLOWER_SPARK = 8;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
@@ -35,7 +35,8 @@ public final class Constants {
 
 
     // PWM
-    public static final int SERVO_CHANNEL = 0;
+    public static final int LED = 0;
+    public static final int SERVO_CHANNEL = 1;
 
     //from FRC game manual page 24
     public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);
