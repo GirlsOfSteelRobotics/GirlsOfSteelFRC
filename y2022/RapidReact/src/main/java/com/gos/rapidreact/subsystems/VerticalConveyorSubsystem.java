@@ -14,6 +14,7 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
 
     public VerticalConveyorSubsystem() {
         m_motor = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_motor.restoreFactoryDefaults();
     }
 
     public void forwardVerticalConveyorMotor() {
