@@ -122,7 +122,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
-    public double getEncoder() {
+    public double getIntakeAngleDegrees() {
         return Math.toDegrees(m_pivotEncoder.getPosition());
     }
 
