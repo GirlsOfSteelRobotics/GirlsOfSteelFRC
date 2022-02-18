@@ -23,8 +23,8 @@ public final class Constants {
     public static final int HANGER_LEADER_SPARK = 3;
     public static final int DRIVE_LEFT_LEADER_SPARK = 4;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
-    public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 6;
-    public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 7;
+    public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 6;
+    public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 7;
     public static final int HANGER_FOLLOWER_SPARK = 8;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
