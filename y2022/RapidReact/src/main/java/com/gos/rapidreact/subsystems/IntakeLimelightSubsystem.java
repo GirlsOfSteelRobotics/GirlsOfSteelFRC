@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLimelightSubsystem extends SubsystemBase {
-    public static final double MOUNTING_ANGLE = 0;
+    public static final double MOUNTING_ANGLE = -5; //in degrees
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35);
     public static final double BLUE_CARGO = 0;
     public static final double RED_CARGO = 1;
@@ -30,7 +30,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
 
     public double distanceToCargo() {
         double distance;
-        distance = (LIMELIGHT_HEIGHT) / Math.tan(MOUNTING_ANGLE + m_verticalAngle.getDouble(0));
+        distance = (LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(MOUNTING_ANGLE + m_verticalAngle.getDouble(0)));
         return distance;
     }
 
