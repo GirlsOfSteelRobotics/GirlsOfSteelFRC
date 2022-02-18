@@ -30,7 +30,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
 
     public double distanceToCargo() {
         double distance;
-        distance = (LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(MOUNTING_ANGLE + m_verticalAngle.getDouble(0)));
+        distance = (LIMELIGHT_HEIGHT) / (Math.tan(Math.toRadians(MOUNTING_ANGLE + m_verticalAngle.getDouble(0)) * -1));
         return distance;
     }
 
