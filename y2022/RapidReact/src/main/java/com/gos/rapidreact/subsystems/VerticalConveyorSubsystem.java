@@ -25,6 +25,9 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         m_motor.set(-VERTICAL_CONVEYOR_MOTOR_SPEED);
     }
 
+    public double getVerticalConveyorSpeed() {
+        return m_motor.get();
+    }
 
     public void stopVerticalConveyorMotor() {
         m_motor.set(0);

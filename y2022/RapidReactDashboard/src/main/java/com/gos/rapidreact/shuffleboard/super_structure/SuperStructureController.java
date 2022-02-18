@@ -6,6 +6,8 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
@@ -18,11 +20,10 @@ public class SuperStructureController {
     private static final double CHASSIS_WIDTH = 36;
     private static final double INTAKE_WIDTH = 10;
     private static final double INTAKE_HEIGHT = 16;
-    private static final double INTAKE_WHEEL_WIDTH = 10;
-    private static final double INTAKE_WHEEL_HEIGHT = 4;
+    private static final double INTAKE_WHEEL_RADIUS = 3;
     private static final double HORI_CONVEYOR_WIDTH = 36;
     private static final double HORI_CONVEYOR_HEIGHT = 4;
-    private static final double VERT_CONVEYOR_WIDTH = 2;
+    private static final double VERT_CONVEYOR_WIDTH = 8;
     private static final double VERT_CONVEYOR_HEIGHT = 30;
     private static final double HANGER_WIDTH = 2;
     private static final double HANGER_HEIGHT = 32;
@@ -37,14 +38,12 @@ public class SuperStructureController {
     private static final double INTAKE_WHEEL_Y = INTAKE_Y;
     private static final double HORI_CONVEYOR_X = MAX_WIDTH - HORI_CONVEYOR_WIDTH;
     private static final double HORI_CONVEYOR_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT;
-    private static final double VERT_CONVEYOR_X = MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - VERT_CONVEYOR_WIDTH - 20;
+    private static final double VERT_CONVEYOR_X = MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - VERT_CONVEYOR_WIDTH - 14;
     private static final double VERT_CONVEYOR_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - VERT_CONVEYOR_HEIGHT;
-    private static final double HANGER_DOWN_X = MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - 14;
-    private static final double HANGER_DOWN_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - HANGER_HEIGHT;
-    //private static final double HANGER_UP_X = HANGER_DOWN_X;
-    //private static final double HANGAR_UP_Y = HANGER_DOWN_Y - 18;
-    private static final double SHOOTER_X = MAX_WIDTH - INTAKE_WIDTH - VERT_CONVEYOR_WIDTH - SHOOTER_WIDTH - 14;
-    private static final double SHOOTER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - VERT_CONVEYOR_HEIGHT - 4;
+    private static final double HANGER_X = MAX_WIDTH - INTAKE_WIDTH - HANGER_WIDTH - 10;
+    private static final double HANGER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - HANGER_HEIGHT;
+    private static final double SHOOTER_X = MAX_WIDTH - INTAKE_WIDTH - VERT_CONVEYOR_WIDTH - SHOOTER_WIDTH - 8;
+    private static final double SHOOTER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - VERT_CONVEYOR_HEIGHT;
 
 
 
@@ -62,7 +61,7 @@ public class SuperStructureController {
     private Rectangle m_intake;
 
     @FXML
-    private Rectangle m_intakeWheel;
+    private Circle m_intakeWheel;
 
     @FXML
     private Rotate m_intakeRotation;
@@ -80,7 +79,7 @@ public class SuperStructureController {
     private Rectangle m_hanger;
 
     @FXML
-    private Rectangle m_shooter;
+    private Arc m_shooter;
 
 
     @FXML
@@ -123,10 +122,9 @@ public class SuperStructureController {
         m_intakeWheelRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
         m_intakeWheel.getTransforms().add(m_intakeWheelRotation);
 
-        m_intakeWheel.setX(INTAKE_WHEEL_X);
-        m_intakeWheel.setY(INTAKE_WHEEL_Y);
-        m_intakeWheel.setHeight(INTAKE_WHEEL_HEIGHT);
-        m_intakeWheel.setWidth(INTAKE_WHEEL_WIDTH);
+        m_intakeWheel.setCenterX(INTAKE_WHEEL_X);
+        m_intakeWheel.setCenterY(INTAKE_WHEEL_Y);
+        m_intakeWheel.setRadius(INTAKE_WHEEL_RADIUS);
 
         m_horizontalConveyor.setX(HORI_CONVEYOR_X);
         m_horizontalConveyor.setY(HORI_CONVEYOR_Y);
@@ -138,30 +136,31 @@ public class SuperStructureController {
         m_verticalConveyor.setHeight(VERT_CONVEYOR_HEIGHT);
         m_verticalConveyor.setWidth(VERT_CONVEYOR_WIDTH);
 
-        m_hanger.setX(HANGER_DOWN_X);
-        m_hanger.setY(HANGER_DOWN_Y);
+        m_hanger.setX(HANGER_X);
+        m_hanger.setY(HANGER_Y);
         m_hanger.setHeight(HANGER_HEIGHT);
         m_hanger.setWidth(HANGER_WIDTH);
 
-        m_shooter.setX(SHOOTER_X);
-        m_shooter.setY(SHOOTER_Y);
-        m_shooter.setHeight(SHOOTER_HEIGHT);
-        m_shooter.setWidth(SHOOTER_WIDTH);
+        m_shooter.setCenterX(SHOOTER_X);
+        m_shooter.setCenterY(SHOOTER_Y);
+        m_shooter.setRadiusY(SHOOTER_HEIGHT);
+        m_shooter.setRadiusX(SHOOTER_WIDTH);
 
     }
 
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
 
-        m_intakeWheel.setFill(Utils.getMotorColor(superStructureData.getIntakeSpeed()));
+        m_intake.setStroke(Utils.getMotorColor(superStructureData.getIntakeSpeed()));
+        m_intakeWheel.setFill(Utils.getMotorColor(superStructureData.getRollerSpeed()));
         m_intakeRotation.setAngle(superStructureData.getIntakeAngle());
         m_intakeWheelRotation.setAngle(m_intakeRotation.getAngle());
         m_hanger.setFill(Utils.getMotorColor(superStructureData.getHangerSpeed()));
         m_shooter.setFill(Utils.getMotorColor(superStructureData.getShooterSpeed()));
         m_horizontalConveyor.setFill(Utils.getMotorColor(superStructureData.getHorizontalConveyorSpeed()));
-        m_verticalConveyor.setFill(Utils.getMotorColor(superStructureData.getVerticalConveyorSpeed()));
+        m_verticalConveyor.setStroke(Utils.getMotorColor(superStructureData.getVerticalConveyorSpeed()));
         m_hanger.setHeight(superStructureData.getHangerHeight());
-        m_hanger.setY(HANGER_DOWN_Y + HANGER_HEIGHT - m_hanger.getHeight());
+        m_hanger.setY(HANGER_Y + HANGER_HEIGHT - m_hanger.getHeight());
 
     }
 

@@ -12,6 +12,7 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
 
     private final double m_intakeAngle;
     private final double m_intakeSpeed;
+    private final double m_rollerSpeed;
     private final double m_hangerSpeed;
     private final double m_hangerHeight;
     private final double m_horizontalConveyorSpeed;
@@ -20,12 +21,13 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
 
 
     public SuperStructureData() {
-        this(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        this(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
-    public SuperStructureData(double intakeAngle, double intakeSpeed, double hangerSpeed, double hangerHeight, double horizontalConveyorSpeed, double verticalConveyorSpeed, double shooterSpeed) {
+    public SuperStructureData(double intakeAngle, double intakeSpeed, double rollerSpeed, double hangerSpeed, double hangerHeight, double horizontalConveyorSpeed, double verticalConveyorSpeed, double shooterSpeed) {
         m_intakeAngle = intakeAngle;
         m_intakeSpeed = intakeSpeed;
+        m_rollerSpeed = rollerSpeed;
         m_hangerSpeed = hangerSpeed;
         m_hangerHeight = hangerHeight;
         m_horizontalConveyorSpeed = horizontalConveyorSpeed;
@@ -37,6 +39,7 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         this(
             Maps.getOrDefault(map, SmartDashboardNames.INTAKE_ANGLE, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.INTAKE_SPEED, 0.0),
+            Maps.getOrDefault(map, SmartDashboardNames.ROLLER_SPEED, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.HANGER_SPEED, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.HANGER_HEIGHT, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.HORIZONTAL_CONVEYOR_SPEED, 0.0),
@@ -49,6 +52,7 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         Map<String, Object> output = new HashMap<>();
         output.put(SmartDashboardNames.INTAKE_ANGLE, m_intakeAngle);
         output.put(SmartDashboardNames.INTAKE_SPEED, m_intakeSpeed);
+        output.put(SmartDashboardNames.ROLLER_SPEED, m_rollerSpeed);
         output.put(SmartDashboardNames.HANGER_SPEED, m_hangerSpeed);
         output.put(SmartDashboardNames.HANGER_HEIGHT, m_hangerHeight);
         output.put(SmartDashboardNames.HORIZONTAL_CONVEYOR_SPEED, m_horizontalConveyorSpeed);
@@ -63,6 +67,10 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
 
     public double getIntakeSpeed() {
         return m_intakeSpeed;
+    }
+
+    public double getRollerSpeed() {
+        return m_rollerSpeed;
     }
 
     public double getHangerSpeed() {
@@ -91,6 +99,7 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         return new StringJoiner(", ", "SuperStructureData [", "]")
                     .add("intakeAngle=" + m_intakeAngle)
                     .add("intakeSpeed=" + m_intakeSpeed)
+                    .add("rollerSpeed=" + m_rollerSpeed)
                     .add("hangerSpeed=" + m_hangerSpeed)
                     .add("hangerHeight=" + m_hangerHeight)
                     .add("horizontalConveyorSpeed=" + m_horizontalConveyorSpeed)

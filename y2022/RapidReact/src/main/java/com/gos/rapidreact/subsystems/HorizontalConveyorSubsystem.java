@@ -22,6 +22,10 @@ public class HorizontalConveyorSubsystem extends SubsystemBase {
         m_follower.follow(m_leader, false);
     }
 
+    public double getHorizontalConveyorSpeed() {
+        return m_leader.get();
+    }
+
     public void forwardHorizontalConveyorMotor() {
         m_leader.set(HORIZONTAL_CONVEYOR_MOTOR_SPEED);
     }
