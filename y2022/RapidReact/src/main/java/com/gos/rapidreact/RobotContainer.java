@@ -77,7 +77,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        m_autoModeFactory = new AutoModeFactory(m_chassis);
+        m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor);
 
         ShuffleboardTab testCommands = Shuffleboard.getTab("test commands");
         ShuffleboardTab widget = Shuffleboard.getTab("superstructure widgets");

@@ -2,6 +2,8 @@ package com.gos.rapidreact.auto_modes;
 
 
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
+import com.gos.rapidreact.subsystems.ShooterSubsystem;
+import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,12 +22,13 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private static final double DRIVE_OFF_TARMAC_DISTANCE = .5 * (Constants.ROBOT_LENGTH + Constants.TARMAC_DEPTH);
     private static final double ALLOWABLE_ERROR = Units.inchesToMeters(6);
+    private static final double VERTICAL_CONVEYOR_TIMEOUT = 10;
 
 
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public AutoModeFactory(ChassisSubsystem chassis) {
+    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor) {
         //need to have distance
         m_sendableChooser = new SendableChooser<>();
 
@@ -37,6 +40,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_defaultCommand = new DriveDistanceCommand(chassis, DRIVE_OFF_TARMAC_DISTANCE, ALLOWABLE_ERROR);
         //need to have distance, allowableError
         m_sendableChooser.setDefaultOption("DriveOffTarmac (Default)", m_defaultCommand);
+        m_sendableChooser.addOption("One Ball Auto", new OneBallAuto(chassis, shooter, verticalConveyor, VERTICAL_CONVEYOR_TIMEOUT));
 
 
 
