@@ -2,6 +2,7 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.rapidreact.Constants;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,6 +16,8 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     public VerticalConveyorSubsystem() {
         m_motor = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_motor.restoreFactoryDefaults();
+        m_motor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
     }
 
     public void forwardVerticalConveyorMotor() {

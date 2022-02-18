@@ -2,6 +2,7 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.gos.rapidreact.Constants;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
@@ -28,8 +29,15 @@ public class HangerSubsystem extends SubsystemBase {
         m_servo = new Servo(Constants.SERVO_CHANNEL);
         m_leader = new SimableCANSparkMax(Constants.HANGER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leader.restoreFactoryDefaults();
+        m_leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leader.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
         m_follower = new SimableCANSparkMax(Constants.HANGER_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_follower.restoreFactoryDefaults();
+        m_follower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_follower.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+
         m_follower.follow(m_leader, false);
         m_encoder = m_leader.getEncoder();
     }
