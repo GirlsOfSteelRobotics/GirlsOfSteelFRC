@@ -21,9 +21,8 @@ public class OneBallAuto extends SequentialCommandGroup {
 
     public OneBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, double seconds) {
         super(new DriveDistanceCommand(chassis, DRIVE_DISTANCE, ALLOWABLE_ERROR),
-            new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM));
-
-        super.addCommands(new VerticalConveyorUpCommand(verticalConveyor).withTimeout(seconds));
+            new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
+            new VerticalConveyorUpCommand(verticalConveyor).withTimeout(seconds));
 
     }
 }
