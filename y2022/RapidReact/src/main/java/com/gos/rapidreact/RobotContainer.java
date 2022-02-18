@@ -121,7 +121,6 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        //driver
         m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
 
         final JoystickButton rollerIn = new JoystickButton(m_driverJoystick, XboxController.Button.kRightBumper.value); //right bumper
