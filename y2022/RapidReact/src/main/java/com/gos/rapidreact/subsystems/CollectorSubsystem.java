@@ -51,7 +51,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
         m_pivot = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivot.restoreFactoryDefaults();
-        m_pivot.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_pivot.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
 
         m_pivotEncoder = m_pivot.getEncoder();
