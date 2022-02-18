@@ -5,7 +5,10 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
+import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
@@ -34,12 +37,15 @@ import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -60,6 +66,7 @@ public class RobotContainer {
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
+    private final XboxController m_operatorJoystick = new XboxController(1);
 
     private final AutoModeFactory m_autoModeFactory;
 
@@ -101,6 +108,9 @@ public class RobotContainer {
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 
+        if (RobotBase.isSimulation()) {
+            DriverStationSim.setEnabled(true);
+        }
     }
 
 
@@ -112,8 +122,28 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
-        // Add button to command mappings here.
-        // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+
+        final JoystickButton rollerIn = new JoystickButton(m_driverJoystick, XboxController.Button.kRightBumper.value); //right bumper
+        rollerIn.whileHeld(new RollerInCommand(m_collector), true);
+        final JoystickButton rollerOut = new JoystickButton(m_driverJoystick, XboxController.Button.kLeftBumper.value); //left bumper
+        rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
+        final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
+        limelightGoToCargo.whenPressed(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight));
+        new Button(() -> m_driverJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new HangerUpCommand(m_hanger)); //left trigger
+        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new HangerDownCommand(m_hanger)); //right trigger
+
+        //operator
+        final JoystickButton collectorDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value); //left bumper
+        collectorDown.whileHeld(new CollectorDownCommand(m_collector), true);
+        final JoystickButton collectorUp = new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value); //right bumper
+        collectorUp.whileHeld(new CollectorUpCommand(m_collector), true);
+        new Button(() -> m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
+        new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
+        new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
+        new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
+        final JoystickButton shooterRpmPID = new JoystickButton(m_operatorJoystick, XboxController.Axis.kRightTrigger.value); //joystick right
+        shooterRpmPID.whileHeld(new ShooterRpmPIDCommand(m_shooter, 3000));
+
     }
 
 

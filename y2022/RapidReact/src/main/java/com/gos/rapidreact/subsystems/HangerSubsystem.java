@@ -14,8 +14,8 @@ public class HangerSubsystem extends SubsystemBase {
     //these constants are all not correct
     public static final int ENGAGED_RATCHET_ANGLE = 90;
     public static final int DISENGAGED_RATCHET_ANGLE = 0;
-    public static final double HANGER_UP_SPEED = 0.3;
-    public static final double HANGER_DOWN_SPEED = -0.3;
+    public static final double HANGER_UP_SPEED = 0.8;
+    public static final double HANGER_DOWN_SPEED = -HANGER_UP_SPEED;
 
     private final Servo m_servo;
     private final SimableCANSparkMax m_leader;
