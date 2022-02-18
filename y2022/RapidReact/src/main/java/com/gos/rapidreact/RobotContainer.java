@@ -74,7 +74,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        m_autoModeFactory = new AutoModeFactory(m_chassis);
+        m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor);
 
         SmartDashboard.putData("CollectorDownCommand", new CollectorDownCommand(m_collector));
         SmartDashboard.putData("CollectorUpCommand", new CollectorUpCommand(m_collector));
