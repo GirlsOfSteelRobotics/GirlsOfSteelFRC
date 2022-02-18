@@ -33,6 +33,8 @@ public class HangerSubsystem extends SubsystemBase {
         m_follower.restoreFactoryDefaults();
         m_follower.follow(m_leader, false);
         m_encoder = m_leader.getEncoder();
+
+        m_encoder.setPositionConversionFactor(GEAR);
     }
 
     @Override
