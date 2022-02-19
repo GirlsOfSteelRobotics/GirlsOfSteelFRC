@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeLimelightSubsystem extends SubsystemBase {
     public static final double MOUNTING_ANGLE = -5; //in degrees
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35);
-    public static final double BLUE_CARGO = 0;
+    public static final double BLUE_CARGO = 5;
     public static final double RED_CARGO = 1;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;

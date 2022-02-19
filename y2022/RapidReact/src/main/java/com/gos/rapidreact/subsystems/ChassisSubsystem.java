@@ -2,8 +2,10 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.navx.NavXWrapper;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.rapidreact.Constants;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -45,7 +47,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //odometry
     private final DifferentialDriveOdometry m_odometry;
-    private final WPI_PigeonIMU m_gyro;
+    private final AHRS m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
     private DifferentialDrivetrainSimWrapper m_simulator;
@@ -72,7 +74,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
-        m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
+        m_gyro = new AHRS();
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
@@ -97,14 +99,14 @@ public class ChassisSubsystem extends SubsystemBase {
                 DifferentialDrivetrainSim.KitbotGearing.k5p95,
                 DifferentialDrivetrainSim.KitbotWheelSize.kSixInch,
                 null);
-            m_simulator = new DifferentialDrivetrainSimWrapper(
-                drivetrainSim,
-                new RevMotorControllerSimWrapper(m_leaderLeft),
-                new RevMotorControllerSimWrapper(m_leaderRight),
-                RevEncoderSimWrapper.create(m_leaderLeft),
-                RevEncoderSimWrapper.create(m_leaderRight),
-                new CtrePigeonImuWrapper(m_gyro));
-            m_simulator.setRightInverted(false);
+//            m_simulator = new DifferentialDrivetrainSimWrapper(
+//                drivetrainSim,
+//                new RevMotorControllerSimWrapper(m_leaderLeft),
+//                new RevMotorControllerSimWrapper(m_leaderRight),
+//                RevEncoderSimWrapper.create(m_leaderLeft),
+//                RevEncoderSimWrapper.create(m_leaderRight),
+//                //new CtrePigeonImuWrapper(m_gyro));
+//            m_simulator.setRightInverted(false);
         }
 
         SmartDashboard.putData(m_field);

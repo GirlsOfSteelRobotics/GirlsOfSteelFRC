@@ -53,7 +53,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
-//    private final ChassisSubsystem m_chassis = new ChassisSubsystem();
+    private final ChassisSubsystem m_chassis = new ChassisSubsystem();
 //    private final CollectorSubsystem m_collector = new CollectorSubsystem();
 //    private final HangerSubsystem m_hanger = new HangerSubsystem();
 //    private final HorizontalConveyorSubsystem m_horizontalConveyor = new HorizontalConveyorSubsystem();
@@ -82,11 +82,11 @@ public class RobotContainer {
 //        SmartDashboard.putData("RollerOutCommand", new RollerOutCommand(m_collector));
 //        SmartDashboard.putData("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
 //        SmartDashboard.putData("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(45)));
-//        SmartDashboard.putData("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)));
+//        SmartDashboard.putData("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)))
 //        SmartDashboard.putData("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
-//        SmartDashboard.putData("GoToCargoCommand - 10 forward", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), 0));
-//        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(-10)));
-//        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
+        SmartDashboard.putData("GoToCargoCommand - 10 forward", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), 0));
+        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(-10)));
+        SmartDashboard.putData("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
 //        SmartDashboard.putData("SetInitialOdometry - 0, 0, 0", new SetInitialOdometryCommand(m_chassis, 0, 0, 0));
 //        SmartDashboard.putData("SetInitialOdometry - 0, 0, 45", new SetInitialOdometryCommand(m_chassis, 0, 0, 45));
 //        SmartDashboard.putData("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));

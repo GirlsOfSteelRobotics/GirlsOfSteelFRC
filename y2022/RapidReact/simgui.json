@@ -28,7 +28,6 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
-      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
       "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
@@ -88,11 +87,6 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
-      "/SmartDashboard/GoToCargoCommand - 10 forward": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/GoToCargoCommand - 10 forward": {
         "window": {
           "visible": true
