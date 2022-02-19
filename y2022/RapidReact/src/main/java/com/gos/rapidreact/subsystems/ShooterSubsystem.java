@@ -63,11 +63,13 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
+        System.out.println("Setting rpm " + rpm);
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
     public void setShooterSpeed(double speed) {
         m_leader.set(speed);
+        System.out.println("speed     " + speed);
     }
 
     public double getEncoderVelocity() {
