@@ -5,6 +5,8 @@
 
 package com.gos.rapidreact;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -14,13 +16,29 @@ package com.gos.rapidreact;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int DRIVE_LEFT_LEADER_SPARK = 1;
-    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 2;
-    public static final int DRIVE_RIGHT_LEADER_SPARK = 3;
-    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
 
-    public static final int PIGEON_PORT = 5;
+    //CAN
+    public static final int SHOOTER_LEADER_SPARK = 1;
+    public static final int COLLECTOR_ROLLER = 2;
+    public static final int HANGER_LEADER_SPARK = 3;
+    public static final int DRIVE_LEFT_LEADER_SPARK = 4;
+    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
+    public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 6;
+    public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 7;
+    public static final int HANGER_FOLLOWER_SPARK = 8;
+    public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
+    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
+    public static final int COLLECTOR_PIVOT = 11;
+    public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 13;
+    public static final int PIGEON_PORT = 20;
 
-    public static final int COLLECTOR_ROLLER = 6;
-    public static final int COLLECTOR_PIVOT = 7;
+
+    // PWM
+    public static final int LED = 0;
+    public static final int SERVO_CHANNEL = 1;
+
+    //from FRC game manual page 24
+    public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);
+    //TODO: update this to have correct robot size based on CAD
+    public static final double ROBOT_LENGTH = Units.inchesToMeters(30);
 }

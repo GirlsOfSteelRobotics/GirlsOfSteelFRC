@@ -1,12 +1,20 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "0": {
+        "serpentine": true
+      },
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
-      "SPARK MAX [1]": {
+      "SPARK MAX [11]": {
         "header": {
           "open": true
         }
       },
-      "SPARK MAX [7]": {
+      "SPARK MAX [1]": {
         "header": {
           "open": true
         }
@@ -18,21 +26,67 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/ChassisSubsystem": "Subsystem",
       "/LiveWindow/CollectorSubsystem": "Subsystem",
-      "/LiveWindow/ExampleSubsystem": "Subsystem",
+      "/LiveWindow/HangerSubsystem": "Subsystem",
+      "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
+      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
+      "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
+      "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
+      "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
+      "/Shuffleboard/test commands/CollectorDownCommand": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 45 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 90 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorUpCommand": "Command",
+      "/Shuffleboard/test commands/DisengageRatchetCommand": "Command",
+      "/Shuffleboard/test commands/EngageRatchetCommand": "Command",
+      "/Shuffleboard/test commands/GoToCargoCommand - 10 forward": "Command",
+      "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 left": "Command",
+      "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 right": "Command",
+      "/Shuffleboard/test commands/HorizontalConveyorBackwardCommand": "Command",
+      "/Shuffleboard/test commands/HorizontalConveyorForwardCommand": "Command",
+      "/Shuffleboard/test commands/RollerInCommand": "Command",
+      "/Shuffleboard/test commands/RollerOutCommand": "Command",
+      "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
+      "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 45": "Command",
+      "/Shuffleboard/test commands/ShooterPIDCommand - 3000": "Command",
+      "/Shuffleboard/test commands/ShooterPIDCommand - 5000": "Command",
+      "/Shuffleboard/test commands/ShooterSpeed": "Command",
+      "/Shuffleboard/test commands/TuneCollectorPivotPIDGravityOffset": "Command",
+      "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": "Command",
+      "/Shuffleboard/test commands/VerticalConveyorDownCommand": "Command",
+      "/Shuffleboard/test commands/VerticalConveyorUpCommand": "Command",
+      "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/CollectorDownCommand": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 45 Degrees": "Command",
+      "/SmartDashboard/CollectorPivotPIDCommand - 90 Degrees": "Command",
       "/SmartDashboard/CollectorUpCommand": "Command",
+      "/SmartDashboard/DisengageRatchetCommand": "Command",
+      "/SmartDashboard/EngageRatchetCommand": "Command",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/GoToCargoCommand - 10 forward": "Command",
+      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 left": "Command",
+      "/SmartDashboard/GoToCargoCommand - 10 forward, 10 right": "Command",
+      "/SmartDashboard/HorizontalConveyorBackwardCommand": "Command",
+      "/SmartDashboard/HorizontalConveyorForwardCommand": "Command",
       "/SmartDashboard/RollerInCommand": "Command",
-      "/SmartDashboard/RollerOutCommand": "Command"
+      "/SmartDashboard/RollerOutCommand": "Command",
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 0": "Command",
+      "/SmartDashboard/SetInitialOdometry - 0, 0, 45": "Command",
+      "/SmartDashboard/ShooterPIDCommand - 3000": "Command",
+      "/SmartDashboard/ShooterPIDCommand - 5000": "Command",
+      "/SmartDashboard/ShooterSpeed": "Command",
+      "/SmartDashboard/TuneCollectorPivotPIDGravityOffset": "Command",
+      "/SmartDashboard/TuneShooterGoalRPMCommand": "Command",
+      "/SmartDashboard/VerticalConveyorDownCommand": "Command",
+      "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
-      "/LiveWindow/ChassisSubsystem": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/CollectorDownCommand": {
         "window": {
           "visible": true
@@ -43,7 +97,22 @@
           "visible": true
         }
       },
-      "/SmartDashboard/Field": {
+      "/SmartDashboard/GoToCargoCommand - 10 forward": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/LEDManagerSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/HorizontalConveyorBackwardCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/HorizontalConveyorForwardCommand": {
         "window": {
           "visible": true
         }
@@ -54,6 +123,21 @@
         }
       },
       "/SmartDashboard/RollerOutCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/ShooterPIDCommand - 3000": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/VerticalConveyorDownCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/VerticalConveyorUpCommand": {
         "window": {
           "visible": true
         }

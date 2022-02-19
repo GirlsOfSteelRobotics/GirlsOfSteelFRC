@@ -29,6 +29,6 @@ public class CollectorUpCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_collector.collectorUp();
+        m_collector.pivotStop();
     }
 }
