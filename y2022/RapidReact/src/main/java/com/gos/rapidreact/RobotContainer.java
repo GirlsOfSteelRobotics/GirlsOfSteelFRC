@@ -68,7 +68,12 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return null;
+        // SequentialCommandGroup group = new SequentialCommandGroup();
+        // group.addCommands(new SetStartingPosition(m_chassis, 27 * 12, -13.5 * 12, 0));
+        // if (m_sendableChooser.getSelected() != null) {
+        //     group.addCommands(m_sendableChooser.getSelected());
+        // }
+        // return group;
+        return m_autoModeFactory.getAutonomousMode();
     }
 }
