@@ -13,6 +13,11 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK MAX [1]": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -23,6 +28,7 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
+      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
       "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
@@ -32,6 +38,29 @@
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
+      "/Shuffleboard/test commands/CollectorDownCommand": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 45 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 90 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorUpCommand": "Command",
+      "/Shuffleboard/test commands/DisengageRatchetCommand": "Command",
+      "/Shuffleboard/test commands/EngageRatchetCommand": "Command",
+      "/Shuffleboard/test commands/GoToCargoCommand - 10 forward": "Command",
+      "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 left": "Command",
+      "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 right": "Command",
+      "/Shuffleboard/test commands/HorizontalConveyorBackwardCommand": "Command",
+      "/Shuffleboard/test commands/HorizontalConveyorForwardCommand": "Command",
+      "/Shuffleboard/test commands/RollerInCommand": "Command",
+      "/Shuffleboard/test commands/RollerOutCommand": "Command",
+      "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
+      "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 45": "Command",
+      "/Shuffleboard/test commands/ShooterPIDCommand - 3000": "Command",
+      "/Shuffleboard/test commands/ShooterPIDCommand - 5000": "Command",
+      "/Shuffleboard/test commands/ShooterSpeed": "Command",
+      "/Shuffleboard/test commands/TuneCollectorPivotPIDGravityOffset": "Command",
+      "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": "Command",
+      "/Shuffleboard/test commands/VerticalConveyorDownCommand": "Command",
+      "/Shuffleboard/test commands/VerticalConveyorUpCommand": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/CollectorDownCommand": "Command",
       "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": "Command",
@@ -59,7 +88,7 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
-      "/LiveWindow/LEDManagerSubsystem": {
+      "/SmartDashboard/GoToCargoCommand - 10 forward": {
         "window": {
           "visible": true
         }
@@ -69,17 +98,37 @@
           "visible": true
         }
       },
+      "/SmartDashboard/HorizontalConveyorBackwardCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/HorizontalConveyorForwardCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/RollerInCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/RollerOutCommand": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/ShooterPIDCommand - 3000": {
         "window": {
           "visible": true
         }
       },
-      "/SmartDashboard/ShooterSpeed": {
+      "/SmartDashboard/VerticalConveyorDownCommand": {
         "window": {
           "visible": true
         }
       },
-      "/SmartDashboard/TuneShooterGoalRPMCommand": {
+      "/SmartDashboard/VerticalConveyorUpCommand": {
         "window": {
           "visible": true
         }

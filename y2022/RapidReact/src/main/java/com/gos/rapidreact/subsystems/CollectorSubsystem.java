@@ -46,9 +46,13 @@ public class CollectorSubsystem extends SubsystemBase {
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
+        m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
 
         m_pivot = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivot.restoreFactoryDefaults();
+        m_pivot.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
 
         m_pivotEncoder = m_pivot.getEncoder();
 
@@ -122,8 +126,16 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
-    public double getEncoder() {
-        return m_pivotEncoder.getPosition();
+    public double getIntakeAngleDegrees() {
+        return Math.toDegrees(m_pivotEncoder.getPosition());
+    }
+
+    public double getPivotSpeed() {
+        return m_pivot.get();
+    }
+
+    public double getRollerSpeed() {
+        return m_roller.get();
     }
 
     public void tuneGravityOffset() {
