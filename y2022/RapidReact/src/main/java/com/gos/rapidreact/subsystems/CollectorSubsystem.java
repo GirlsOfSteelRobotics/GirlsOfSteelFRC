@@ -57,9 +57,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
 
         m_pivotEncoder = m_pivot.getEncoder();
-
-        m_pivotEncoder.setPositionConversionFactor(GEAR_PULLEY * GEARING);
-
+        m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
 
         m_pidController = m_pivot.getPIDController();
 
@@ -67,7 +65,6 @@ public class CollectorSubsystem extends SubsystemBase {
         CANSparkMax.IdleMode idleModeCoast = CANSparkMax.IdleMode.kCoast;
         m_pivot.setIdleMode(idleModeBreak);
         m_roller.setIdleMode(idleModeCoast);
-
 
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
             .addP(0)
@@ -86,7 +83,8 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Encoder (rad)", m_pivotEncoder.getPosition());
+        SmartDashboard.putNumber("Pivot Encoder (rad)", getIntakeAngleRadians());
+        SmartDashboard.putNumber("Pivot Encoder (deg)", getIntakeAngleDegrees());
         m_pivotPID.updateIfChanged();
     }
 
@@ -127,21 +125,25 @@ public class CollectorSubsystem extends SubsystemBase {
      * @param pivotAngleRadians *IN RADIANS*
      */
     public void collectorToAngle(double pivotAngleRadians) {
-        double arbFeedforward = Math.cos(m_pivotEncoder.getPosition()) * GRAVITY_OFFSET.getValue();
+        double arbFeedforward = Math.cos(getIntakeAngleRadians()) * GRAVITY_OFFSET.getValue();
         //System.out.println("arbFeedforward        " + arbFeedforward);
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
+    public double getIntakeAngleRadians() {
+        return m_pivotEncoder.getPosition();
+    }
+
     public double getIntakeAngleDegrees() {
-        return Math.toDegrees(m_pivotEncoder.getPosition());
+        return Math.toDegrees(getIntakeAngleRadians());
     }
 
     public double getPivotSpeed() {
-        return m_pivot.get();
+        return m_pivot.getAppliedOutput();
     }
 
     public double getRollerSpeed() {
-        return m_roller.get();
+        return m_roller.getAppliedOutput();
     }
 
     public void tuneGravityOffset() {

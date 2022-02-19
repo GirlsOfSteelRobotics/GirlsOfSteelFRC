@@ -56,9 +56,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double rpm = m_encoder.getVelocity();
-        SmartDashboard.putNumber("RPM", rpm);
-        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
+        SmartDashboard.putNumber("RPM", getEncoderVelocity());
+        //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_pid.updateIfChanged();
     }
 

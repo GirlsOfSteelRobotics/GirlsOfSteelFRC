@@ -37,7 +37,7 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     }
 
     public double getVerticalConveyorSpeed() {
-        return m_conveyor.get();
+        return m_conveyor.getAppliedOutput();
     }
 
     public void stopVerticalConveyorMotor() {
