@@ -26,6 +26,7 @@ public class CollectorSubsystem extends SubsystemBase {
     public static final double ALLOWABLE_ERROR = Math.toRadians(2);
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
     private static final double GEARING = 350;
+    private static final double GEAR_PULLEY = 5;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
@@ -37,6 +38,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_pivot;
 
     private final RelativeEncoder m_pivotEncoder;
+
 
     private final PidProperty m_pivotPID;
     private final SparkMaxPIDController m_pidController;
@@ -56,12 +58,16 @@ public class CollectorSubsystem extends SubsystemBase {
 
         m_pivotEncoder = m_pivot.getEncoder();
 
+        m_pivotEncoder.setPositionConversionFactor(GEAR_PULLEY * GEARING);
+
+
         m_pidController = m_pivot.getPIDController();
 
         CANSparkMax.IdleMode idleModeBreak = CANSparkMax.IdleMode.kBrake;
         CANSparkMax.IdleMode idleModeCoast = CANSparkMax.IdleMode.kCoast;
         m_pivot.setIdleMode(idleModeBreak);
         m_roller.setIdleMode(idleModeCoast);
+
 
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
             .addP(0)
