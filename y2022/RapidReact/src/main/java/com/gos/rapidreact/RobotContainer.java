@@ -44,7 +44,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
-import com.gos.rapidreact.auto_modes.AutoModeFactory;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -69,9 +68,7 @@ public class RobotContainer {
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
 
-    private final AutoModeFactory m_autoModeFactory;
-
-    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis);
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -80,7 +77,6 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor);
 
         ShuffleboardTab testCommands = Shuffleboard.getTab("test commands");
         ShuffleboardTab widget = Shuffleboard.getTab("superstructure widgets");
