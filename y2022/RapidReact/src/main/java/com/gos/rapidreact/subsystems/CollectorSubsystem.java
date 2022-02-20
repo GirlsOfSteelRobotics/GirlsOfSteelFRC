@@ -57,7 +57,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
 
         m_pivotEncoder = m_pivot.getEncoder();
-        m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
+//        m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
 
         m_pidController = m_pivot.getPIDController();
 
@@ -153,6 +153,10 @@ public class CollectorSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+    }
+
+    public void resetPivotEncoder() {
+        m_pivotEncoder.setPosition(0);
     }
 }
 

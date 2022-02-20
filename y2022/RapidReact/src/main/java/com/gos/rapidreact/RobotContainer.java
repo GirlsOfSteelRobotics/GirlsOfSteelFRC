@@ -25,6 +25,7 @@ import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.SetInitialOdometryCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
+import com.gos.rapidreact.commands.tuning.ResetCollectorPivotEncoderCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterGoalRPMCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterMotorSpeedCommand;
@@ -84,29 +85,32 @@ public class RobotContainer {
         ShuffleboardTab testCommands = Shuffleboard.getTab("test commands");
         ShuffleboardTab widget = Shuffleboard.getTab("superstructure widgets");
 
-        testCommands.add("CollectorDownCommand", new CollectorDownCommand(m_collector));
-        testCommands.add("CollectorUpCommand", new CollectorUpCommand(m_collector));
-        testCommands.add("RollerInCommand", new RollerInCommand(m_collector));
-        testCommands.add("RollerOutCommand", new RollerOutCommand(m_collector));
+        testCommands.add("TuneShooterMotorSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
+        testCommands.add("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
+        testCommands.add("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
+        testCommands.add("SetInitialOdometry - 0, 0, 0", new SetInitialOdometryCommand(m_chassis, 0, 0, 0));
+        testCommands.add("SetInitialOdometry - 0, 0, 45", new SetInitialOdometryCommand(m_chassis, 0, 0, 45));
+        testCommands.add("Reset Pivot Encoder", new ResetCollectorPivotEncoderCommand(m_collector));
+
+        // testCommands.add("CollectorDownCommand", new CollectorDownCommand(m_collector));
+        // testCommands.add("CollectorUpCommand", new CollectorUpCommand(m_collector));
+        // testCommands.add("RollerInCommand", new RollerInCommand(m_collector));
+        // testCommands.add("RollerOutCommand", new RollerOutCommand(m_collector));
         testCommands.add("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
         testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(45)));
         testCommands.add("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)));
-        testCommands.add("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
+
         testCommands.add("GoToCargoCommand - 10 forward", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), 0));
         testCommands.add("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(-10)));
         testCommands.add("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
-        testCommands.add("SetInitialOdometry - 0, 0, 0", new SetInitialOdometryCommand(m_chassis, 0, 0, 0));
-        testCommands.add("SetInitialOdometry - 0, 0, 45", new SetInitialOdometryCommand(m_chassis, 0, 0, 45));
         testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
-        testCommands.add("ShooterSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
-        testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
-        testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
-        testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
-        testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
-        testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
-        testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
-        testCommands.add("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
+        // testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
+        // testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
+        // testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
+        // testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
+        // testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
+        // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 
@@ -143,7 +147,7 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
-        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, 3000));
+        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new FeederVerticalConveyorBackwardCommand(m_verticalConveyor));
 
