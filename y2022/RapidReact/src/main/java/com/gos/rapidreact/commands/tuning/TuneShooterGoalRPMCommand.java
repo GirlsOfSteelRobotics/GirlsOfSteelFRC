@@ -27,8 +27,8 @@ public class TuneShooterGoalRPMCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(SHOOTER_GOAL.getValue() - m_shooter.getEncoderVelocity());
-        return error < ShooterSubsystem.ALLOWABLE_ERROR;
+        // Run it forever, for tuning
+        return false;
     }
 
     @Override

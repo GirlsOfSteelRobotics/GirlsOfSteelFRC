@@ -39,11 +39,11 @@ public class HangerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Hanger Height Encoder", m_encoder.getPosition());
+        SmartDashboard.putNumber("Hanger Height Encoder", getHangerHeight());
     }
 
     public double getHangerSpeed() {
-        return m_leader.get();
+        return m_leader.getAppliedOutput();
     }
 
     public double getHangerHeight() {
