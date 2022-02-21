@@ -26,7 +26,6 @@ public class CollectorSubsystem extends SubsystemBase {
     public static final double ALLOWABLE_ERROR = Math.toRadians(2);
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
     private static final double GEARING = 350;
-    private static final double GEAR_PULLEY = 5;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
@@ -57,9 +56,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
 
         m_pivotEncoder = m_pivot.getEncoder();
-
-        m_pivotEncoder.setPositionConversionFactor(GEAR_PULLEY * GEARING);
-
+        //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
 
         m_pidController = m_pivot.getPIDController();
 
@@ -67,7 +64,6 @@ public class CollectorSubsystem extends SubsystemBase {
         CANSparkMax.IdleMode idleModeCoast = CANSparkMax.IdleMode.kCoast;
         m_pivot.setIdleMode(idleModeBreak);
         m_roller.setIdleMode(idleModeCoast);
-
 
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
             .addP(0)
@@ -86,7 +82,8 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Encoder (rad)", m_pivotEncoder.getPosition());
+        SmartDashboard.putNumber("Pivot Encoder (rad)", getIntakeAngleRadians());
+        SmartDashboard.putNumber("Pivot Encoder (deg)", getIntakeAngleDegrees());
         m_pivotPID.updateIfChanged();
     }
 
@@ -127,21 +124,25 @@ public class CollectorSubsystem extends SubsystemBase {
      * @param pivotAngleRadians *IN RADIANS*
      */
     public void collectorToAngle(double pivotAngleRadians) {
-        double arbFeedforward = Math.cos(m_pivotEncoder.getPosition()) * GRAVITY_OFFSET.getValue();
+        double arbFeedforward = Math.cos(getIntakeAngleRadians()) * GRAVITY_OFFSET.getValue();
         //System.out.println("arbFeedforward        " + arbFeedforward);
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
+    public double getIntakeAngleRadians() {
+        return m_pivotEncoder.getPosition();
+    }
+
     public double getIntakeAngleDegrees() {
-        return Math.toDegrees(m_pivotEncoder.getPosition());
+        return Math.toDegrees(getIntakeAngleRadians());
     }
 
     public double getPivotSpeed() {
-        return m_pivot.get();
+        return m_pivot.getAppliedOutput();
     }
 
     public double getRollerSpeed() {
-        return m_roller.get();
+        return m_roller.getAppliedOutput();
     }
 
     public void tuneGravityOffset() {
@@ -151,6 +152,10 @@ public class CollectorSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+    }
+
+    public void resetPivotEncoder() {
+        m_pivotEncoder.setPosition(0);
     }
 }
 

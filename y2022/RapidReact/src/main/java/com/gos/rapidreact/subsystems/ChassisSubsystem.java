@@ -53,13 +53,25 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerLeft.restoreFactoryDefaults();
         m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leaderRight.restoreFactoryDefaults();
         m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        m_leaderLeft.restoreFactoryDefaults();
+        m_followerLeft.restoreFactoryDefaults();
+        m_leaderRight.restoreFactoryDefaults();
         m_followerRight.restoreFactoryDefaults();
+
+        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+        m_leaderLeft.setInverted(false);
+        m_leaderRight.setInverted(true);
+
+        m_followerLeft.follow(m_leaderLeft, false);
+        m_followerRight.follow(m_leaderRight, false);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
@@ -78,18 +90,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
 
-        CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
-        m_leaderLeft.setIdleMode(idleMode);
-        m_followerLeft.setIdleMode(idleMode);
-        m_leaderRight.setIdleMode(idleMode);
-        m_followerRight.setIdleMode(idleMode);
-
-
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
-
-        m_followerLeft.follow(m_leaderLeft, false);
-        m_followerRight.follow(m_leaderRight, false);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -114,16 +114,19 @@ public class ChassisSubsystem extends SubsystemBase {
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
-        SmartDashboard.putData(m_field);
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
+        SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
     }
 
     public void resetInitialOdometry(Pose2d pose) {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getYawAngle()));
-        m_simulator.resetOdometry(pose);
+
+        if (RobotBase.isSimulation()) {
+            m_simulator.resetOdometry(pose);
+        }
     }
 
     public double getAverageEncoderDistance() {

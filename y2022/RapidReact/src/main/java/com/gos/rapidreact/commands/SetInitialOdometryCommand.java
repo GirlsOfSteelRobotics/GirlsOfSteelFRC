@@ -42,4 +42,9 @@ public class SetInitialOdometryCommand extends CommandBase {
     public void end(boolean interrupted) {
 
     }
+
+    @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
 }

@@ -23,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
     public static final double ALLOWABLE_ERROR = 100.0;
-    public static final double DEFAULT_SHOOTER_RPM = 2500;
+    public static final double DEFAULT_SHOOTER_RPM = 1800;
     private final SimableCANSparkMax m_leader;
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
@@ -56,13 +56,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double rpm = m_encoder.getVelocity();
-        SmartDashboard.putNumber("RPM", rpm);
-        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
+        SmartDashboard.putNumber("RPM", getEncoderVelocity());
+        //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_pid.updateIfChanged();
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
+        System.out.println("Setting rpm " + rpm);
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
