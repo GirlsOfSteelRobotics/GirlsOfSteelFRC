@@ -5,6 +5,7 @@ import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VerticalConveyorSubsystem extends SubsystemBase {
@@ -15,6 +16,9 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_conveyor; //multiple sets of wheels to move the cargo up
     private final SimableCANSparkMax m_feeder; //needs to move for the cargo to shoot
 
+    private final DigitalInput m_beamBreakUpper;
+    private final DigitalInput m_beamBreakLower;
+
     public VerticalConveyorSubsystem() {
         m_conveyor = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_conveyor.restoreFactoryDefaults();
@@ -24,6 +28,10 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         m_feeder = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_FEEDER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_feeder.restoreFactoryDefaults();
         m_feeder.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+        m_beamBreakUpper = new DigitalInput(Constants.BEAM_BREAK_UPPER_VERTICAL_CONVEYOR);
+        m_beamBreakLower = new DigitalInput(Constants.BEAM_BREAK_LOWER_VERTICAL_CONVEYOR);
+
 
     }
 
@@ -53,6 +61,15 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
 
     public void stopFeedMotor() {
         m_feeder.set(0);
+    }
+
+    public boolean getUpperBeamBreak() {
+        return !m_beamBreakUpper.get();
+
+    }
+
+    public boolean getLowerBeamBreak() {
+        return !m_beamBreakLower.get();
     }
 
 }

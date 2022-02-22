@@ -39,6 +39,11 @@ public final class Constants {
     public static final int LED = 0;
     public static final int SERVO_CHANNEL = 1;
 
+    //DIO ports
+    public static final int BEAM_BREAK_UPPER_VERTICAL_CONVEYOR = 0;
+    public static final int BEAM_BREAK_LOWER_VERTICAL_CONVEYOR = 1;
+
+
     //from FRC game manual page 24
     public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);
     //TODO: update this to have correct robot size based on CAD
