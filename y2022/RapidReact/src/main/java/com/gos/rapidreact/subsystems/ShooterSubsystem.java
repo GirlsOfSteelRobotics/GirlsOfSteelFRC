@@ -23,8 +23,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
     public static final double ALLOWABLE_ERROR = 100.0;
+    public static final double DEFAULT_SHOOTER_RPM = 1800;
     private final SimableCANSparkMax m_leader;
-    private final SimableCANSparkMax m_follower;
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
@@ -33,10 +33,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem() {
         m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_follower = new SimableCANSparkMax(Constants.SHOOTER_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leader.restoreFactoryDefaults();
+        m_leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
         //true because the motors are facing each other and in order to do the same thing, they would have to spin in opposite directions
-        m_follower.follow(m_leader, true);
         m_encoder  = m_leader.getEncoder();
 
         m_pidController = m_leader.getPIDController();
@@ -56,13 +56,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double rpm = m_encoder.getVelocity();
-        SmartDashboard.putNumber("RPM", rpm);
-        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
+        SmartDashboard.putNumber("RPM", getEncoderVelocity());
+        //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_pid.updateIfChanged();
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
+        System.out.println("Setting rpm " + rpm);
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
@@ -72,6 +72,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getEncoderVelocity() {
         return m_encoder.getVelocity();
+    }
+
+    public double getShooterSpeed() {
+        return m_leader.getAppliedOutput();
     }
 
     @Override

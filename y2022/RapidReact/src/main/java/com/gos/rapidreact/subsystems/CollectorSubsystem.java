@@ -38,6 +38,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private final RelativeEncoder m_pivotEncoder;
 
+
     private final PidProperty m_pivotPID;
     private final SparkMaxPIDController m_pidController;
 
@@ -45,9 +46,17 @@ public class CollectorSubsystem extends SubsystemBase {
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_roller.restoreFactoryDefaults();
+        m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+
         m_pivot = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivot.restoreFactoryDefaults();
+        m_pivot.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
 
         m_pivotEncoder = m_pivot.getEncoder();
+        //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
 
         m_pidController = m_pivot.getPIDController();
 
@@ -73,7 +82,8 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Encoder", m_pivotEncoder.getPosition());
+        SmartDashboard.putNumber("Pivot Encoder (rad)", getIntakeAngleRadians());
+        SmartDashboard.putNumber("Pivot Encoder (deg)", getIntakeAngleDegrees());
         m_pivotPID.updateIfChanged();
     }
 
@@ -114,13 +124,25 @@ public class CollectorSubsystem extends SubsystemBase {
      * @param pivotAngleRadians *IN RADIANS*
      */
     public void collectorToAngle(double pivotAngleRadians) {
-        double arbFeedforward = Math.cos(m_pivotEncoder.getPosition()) * GRAVITY_OFFSET.getValue();
+        double arbFeedforward = Math.cos(getIntakeAngleRadians()) * GRAVITY_OFFSET.getValue();
         //System.out.println("arbFeedforward        " + arbFeedforward);
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
-    public double getEncoder() {
+    public double getIntakeAngleRadians() {
         return m_pivotEncoder.getPosition();
+    }
+
+    public double getIntakeAngleDegrees() {
+        return Math.toDegrees(getIntakeAngleRadians());
+    }
+
+    public double getPivotSpeed() {
+        return m_pivot.getAppliedOutput();
+    }
+
+    public double getRollerSpeed() {
+        return m_roller.getAppliedOutput();
     }
 
     public void tuneGravityOffset() {
@@ -130,6 +152,10 @@ public class CollectorSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+    }
+
+    public void resetPivotEncoder() {
+        m_pivotEncoder.setPosition(0);
     }
 }
 

@@ -27,6 +27,11 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
 
+    //TODO: change constants to match this year's robot
+    private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
+    private static final double GEAR_RATIO = 5;
+    private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
+
     private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
 
@@ -52,10 +57,32 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
 
+        m_leaderLeft.restoreFactoryDefaults();
+        m_followerLeft.restoreFactoryDefaults();
+        m_leaderRight.restoreFactoryDefaults();
+        m_followerRight.restoreFactoryDefaults();
+
+        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+        m_leaderLeft.setInverted(false);
+        m_leaderRight.setInverted(true);
+
+        m_followerLeft.follow(m_leaderLeft, false);
+        m_followerRight.follow(m_leaderRight, false);
+
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
+
+        m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+        m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+
+        m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
 
@@ -63,17 +90,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
 
-        CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
-        m_leaderLeft.setIdleMode(idleMode);
-        m_followerLeft.setIdleMode(idleMode);
-        m_leaderRight.setIdleMode(idleMode);
-        m_followerRight.setIdleMode(idleMode);
-
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
-
-        m_followerLeft.follow(m_leaderLeft, false);
-        m_followerRight.follow(m_leaderRight, false);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -98,13 +114,23 @@ public class ChassisSubsystem extends SubsystemBase {
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
+        SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
+        SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
+        SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
     }
 
     public void resetInitialOdometry(Pose2d pose) {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getYawAngle()));
-        m_simulator.resetOdometry(pose);
+
+        if (RobotBase.isSimulation()) {
+            m_simulator.resetOdometry(pose);
+        }
+    }
+
+    public double getAverageEncoderDistance() {
+        return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
     }
 
     public double getYawAngle() {
@@ -126,11 +152,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         double hDistance; //gets distance of the hypotenuse
         double angle;
-        double speed;
-        double steer;
-
-        double allowableDistanceError = Units.inchesToMeters(12.0);
-        double allowableAngleError = Units.degreesToRadians(5.0);
 
         xError = xCoordinate - xCurrent;
         yError = yCoordinate - yCurrent;
@@ -140,19 +161,24 @@ public class ChassisSubsystem extends SubsystemBase {
 
         System.out.println("xError   " + xError);
         System.out.println("yError   " + yError);
+        return driveAndTurnPID(hDistance, angleError);
+    }
 
-        speed = TO_XY_DISTANCE_PID.getValue() * hDistance; //p * error pid
-        steer = TO_XY_TURN_PID.getValue() * angleError;
+    public boolean driveAndTurnPID(double distance, double angle) {
+        double allowableDistanceError = Units.inchesToMeters(12.0);
+        double allowableAngleError = Units.degreesToRadians(5.0);
 
-        System.out.println("speed   " + speed);
-        System.out.println("steer   " + steer);
-        System.out.println("hDistance   " + hDistance);
-        System.out.println("angle   " + Math.toDegrees(angleError));
-        System.out.println();
+        double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
+        double steer = TO_XY_TURN_PID.getValue() * angle;
+
+        // System.out.println("speed   " + speed);
+        // System.out.println("steer   " + steer);
+        // System.out.println("hDistance   " + hDistance);
+        // System.out.println("angle   " + Math.toDegrees(angleError));
+        // System.out.println();
 
         setArcadeDrive(speed, steer);
-
-        return Math.abs(hDistance) < allowableDistanceError && Math.abs(angleError) < allowableAngleError;
+        return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
     }
 
     @Override

@@ -1,17 +1,14 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
 
 
-public class SetHangerJoystickCommand extends CommandBase {
+public class HangerUpCommand extends CommandBase {
     private final HangerSubsystem m_hanger;
-    private final XboxController m_joystick;
 
-    public SetHangerJoystickCommand(HangerSubsystem hangerSubsystem, XboxController joystick) {
+    public HangerUpCommand(HangerSubsystem hangerSubsystem) {
         this.m_hanger = hangerSubsystem;
-        m_joystick = joystick;
         addRequirements(this.m_hanger);
     }
 
@@ -22,7 +19,7 @@ public class SetHangerJoystickCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_hanger.setHangerSpeed(m_joystick.getLeftY());
+        m_hanger.setHangerSpeed(HangerSubsystem.HANGER_UP_SPEED);
 
     }
 
