@@ -13,7 +13,7 @@ public class AutomatedVerticalConveyorCommand extends CommandBase {
         this.m_verticalConveyor = verticalConveyorSubsystem;
         this.m_horizontalConveyor = horizontalConveyorSubsystem;
 
-        addRequirements(this.m_verticalConveyor);
+        addRequirements(this.m_verticalConveyor, this.m_horizontalConveyor);
     }
 
     @Override

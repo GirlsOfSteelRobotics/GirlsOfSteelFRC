@@ -151,7 +151,7 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new FeederVerticalConveyorBackwardCommand(m_verticalConveyor));
-        final JoystickButton automatedVerticalConveyor = new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value);
+        final JoystickButton automatedVerticalConveyor = new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value);
         automatedVerticalConveyor.whileHeld(new AutomatedVerticalConveyorCommand(m_verticalConveyor, m_horizontalConveyor));
 
     }
