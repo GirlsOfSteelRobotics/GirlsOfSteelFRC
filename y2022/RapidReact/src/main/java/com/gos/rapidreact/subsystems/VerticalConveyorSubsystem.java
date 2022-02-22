@@ -64,12 +64,12 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     }
 
     public boolean getUpperBeamBreak() {
-        return !m_beamBreakUpper.get();
+        return m_beamBreakUpper.get();
 
     }
 
     public boolean getLowerBeamBreak() {
-        return !m_beamBreakLower.get();
+        return m_beamBreakLower.get();
     }
 
 }
