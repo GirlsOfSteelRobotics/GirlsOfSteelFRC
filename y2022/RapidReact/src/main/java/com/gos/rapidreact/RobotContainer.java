@@ -11,6 +11,7 @@ import com.gos.rapidreact.commands.HangerDownCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
+import com.gos.rapidreact.commands.ShooterFeederCommandGroup;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
@@ -112,6 +113,8 @@ public class RobotContainer {
         // testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
         // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
 
+        testCommands.add("ShooterFeederCommand", new ShooterFeederCommandGroup(m_verticalConveyor, m_shooter, 10));
+
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 
         if (RobotBase.isSimulation()) {
@@ -150,6 +153,7 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new FeederVerticalConveyorBackwardCommand(m_verticalConveyor));
+        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterFeederCommandGroup(m_verticalConveyor, m_shooter, 10));
 
     }
 
