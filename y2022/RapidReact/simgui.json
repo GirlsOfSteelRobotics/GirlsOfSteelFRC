@@ -20,6 +20,12 @@
         }
       },
       "SPARK MAX [1]": {
+      "SPARK MAX [12]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [6]": {
         "header": {
           "open": true
         }
@@ -61,6 +67,7 @@
       "/Shuffleboard/test commands/RollerOutCommand": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 45": "Command",
+      "/Shuffleboard/test commands/ShooterFeederCommand": "Command",
       "/Shuffleboard/test commands/ShooterPIDCommand - 3000": "Command",
       "/Shuffleboard/test commands/ShooterPIDCommand - 5000": "Command",
       "/Shuffleboard/test commands/ShooterSpeed": "Command",
@@ -97,6 +104,16 @@
     },
     "windows": {
       "/LiveWindow/LEDManagerSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/LiveWindow/LEDManagerSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/ShooterFeederCommand": {
         "window": {
           "visible": true
         }
