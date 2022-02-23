@@ -15,7 +15,9 @@ public final class SmartDashboardNames {
     public static final String HORIZONTAL_CONVEYOR_SPEED        = "HorizontalConveyorSpeed";
     public static final String VERTICAL_CONVEYOR_SPEED          = "VerticalConveyorSpeed";
     public static final String SHOOTER_SPEED                    = "ShooterSpeed";
-
+    public static final String INTAKE_INDEXING_SENSOR           = "IntakeIndexingSensor";
+    public static final String LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR = "LowerVConveyorIndexingSensor";
+    public static final String UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR = "UpperVConveyorIndexingSensor";
 
     private SmartDashboardNames() {
 
