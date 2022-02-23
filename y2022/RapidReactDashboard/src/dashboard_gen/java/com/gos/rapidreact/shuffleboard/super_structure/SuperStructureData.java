@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-@SuppressWarnings("PMD.DataClass")
+@SuppressWarnings("PMD")
 public class SuperStructureData extends ComplexData<SuperStructureData> {
 
     private final double m_intakeAngle;

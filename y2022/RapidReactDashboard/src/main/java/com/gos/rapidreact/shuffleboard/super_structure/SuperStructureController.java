@@ -196,10 +196,10 @@ public class SuperStructureController {
         m_verticalConveyor.setStroke(Utils.getMotorColor(superStructureData.getVerticalConveyorSpeed()));
         m_hanger.setHeight(superStructureData.getHangerHeight());
         m_hanger.setY(HANGER_Y + HANGER_HEIGHT - m_hanger.getHeight());
-        m_intakeIndexingSensor.setFill(Utils.setSensorColor(superStructureData.isIntakeIndexingSensor()));
+        m_intakeIndexingSensor.setFill(Utils.getSensorColor(superStructureData.isIntakeIndexingSensor()));
         m_intakeIndexingSensorRotation.setAngle(m_intakeRotation.getAngle());
-        m_lowerVConveyorSensor.setFill(Utils.setSensorColor(superStructureData.isLowerVerticalConveyorIndexingSensor()));
-        m_upperVConveyorSensor.setFill(Utils.setSensorColor(superStructureData.isUpperVerticalConveyorIndexingSensor()));
+        m_lowerVConveyorSensor.setFill(Utils.getSensorColor(superStructureData.isLowerVerticalConveyorIndexingSensor()));
+        m_upperVConveyorSensor.setFill(Utils.getSensorColor(superStructureData.isUpperVerticalConveyorIndexingSensor()));
 
 
     }

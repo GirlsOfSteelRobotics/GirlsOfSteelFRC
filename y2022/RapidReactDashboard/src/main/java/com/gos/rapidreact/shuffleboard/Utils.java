@@ -51,7 +51,7 @@ public final class Utils {
         return Color.hsb(hue, saturation, brightness);
     }
 
-    public static Color setSensorColor(boolean booleanValue) {
+    public static Color getSensorColor(boolean booleanValue) {
         if (booleanValue) {
             return Color.color(0.25, 1, 0.25);
         }
