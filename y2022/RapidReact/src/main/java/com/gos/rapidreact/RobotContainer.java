@@ -5,6 +5,7 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.commands.AutomatedVerticalConveyorCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
 import com.gos.rapidreact.commands.HangerDownCommand;
@@ -190,8 +191,9 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ROLLER_SPEED, m_collector::getRollerSpeed, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::
-            );
+                SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getUpperBeamBreak, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getLowerBeamBreak, null);
         }
     }
 }
