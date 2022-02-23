@@ -34,7 +34,9 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final boolean SIMULATE_GRAVITY = true;
 
     private final SimableCANSparkMax m_roller;
-    private final SimableCANSparkMax m_pivot;
+    private final SimableCANSparkMax m_pivotLeader;
+    private final SimableCANSparkMax m_pivotFollower;
+
 
     private final RelativeEncoder m_pivotEncoder;
 
@@ -50,19 +52,24 @@ public class CollectorSubsystem extends SubsystemBase {
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 
-        m_pivot = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_pivot.restoreFactoryDefaults();
-        m_pivot.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_pivotLeader = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotLeader.restoreFactoryDefaults();
+        m_pivotLeader.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
+        m_pivotFollower = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotFollower.restoreFactoryDefaults();
+        m_pivotFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        m_pivotEncoder = m_pivot.getEncoder();
+        m_pivotFollower.follow(m_pivotLeader);
+
+        m_pivotEncoder = m_pivotLeader.getEncoder();
         //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
 
-        m_pidController = m_pivot.getPIDController();
+        m_pidController = m_pivotLeader.getPIDController();
 
         CANSparkMax.IdleMode idleModeBreak = CANSparkMax.IdleMode.kBrake;
         CANSparkMax.IdleMode idleModeCoast = CANSparkMax.IdleMode.kCoast;
-        m_pivot.setIdleMode(idleModeBreak);
+        m_pivotLeader.setIdleMode(idleModeBreak);
         m_roller.setIdleMode(idleModeCoast);
 
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
@@ -75,8 +82,8 @@ public class CollectorSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
                 ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
-            m_simulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivot),
-                RevEncoderSimWrapper.create(m_pivot));
+            m_simulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotLeader),
+                RevEncoderSimWrapper.create(m_pivotLeader));
         }
     }
 
@@ -88,11 +95,11 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void collectorDown() {
-        m_pivot.set(-PIVOT_SPEED);
+        m_pivotLeader.set(-PIVOT_SPEED);
     }
 
     public void collectorUp() {
-        m_pivot.set(PIVOT_SPEED);
+        m_pivotLeader.set(PIVOT_SPEED);
     }
 
     public void rollerIn() {
@@ -108,7 +115,7 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void pivotStop() {
-        m_pivot.set(0);
+        m_pivotLeader.set(0);
     }
 
     public void collectorDownPID() {
@@ -138,7 +145,7 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public double getPivotSpeed() {
-        return m_pivot.getAppliedOutput();
+        return m_pivotLeader.getAppliedOutput();
     }
 
     public double getRollerSpeed() {
@@ -146,7 +153,7 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void tuneGravityOffset() {
-        m_pivot.setVoltage(GRAVITY_OFFSET.getValue());
+        m_pivotLeader.setVoltage(GRAVITY_OFFSET.getValue());
     }
 
     @Override
