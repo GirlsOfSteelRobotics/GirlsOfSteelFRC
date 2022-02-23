@@ -11,6 +11,8 @@ public class SetInitialOdometryCommand extends CommandBase {
     private final double m_xPosition;
     private final double m_yPosition;
     private final double m_anglePositionDegrees;
+    private final int m_loopsToLock;
+    private int m_loopsRun;
 
     //position parameters are for starting position at the beginning of autonomous
     public SetInitialOdometryCommand(ChassisSubsystem chassisSubsystem, double xPosition, double yPosition, double anglePositionDegrees) {
@@ -18,8 +20,13 @@ public class SetInitialOdometryCommand extends CommandBase {
         m_xPosition = xPosition;
         m_yPosition = yPosition;
         m_anglePositionDegrees = anglePositionDegrees;
+        m_loopsToLock = 10;
 
         addRequirements(this.m_chassis);
+    }
+
+    public SetInitialOdometryCommand(ChassisSubsystem chassis, Pose2d initialPose) {
+        this(chassis, initialPose.getX(), initialPose.getY(), initialPose.getRotation().getDegrees());
     }
 
     @Override
@@ -31,11 +38,12 @@ public class SetInitialOdometryCommand extends CommandBase {
     public void execute() {
         Pose2d pose2d = new Pose2d(m_xPosition, m_yPosition, Rotation2d.fromDegrees(m_anglePositionDegrees));
         m_chassis.resetInitialOdometry(pose2d);
+        ++m_loopsRun;
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return m_loopsRun > m_loopsToLock;
     }
 
     @Override

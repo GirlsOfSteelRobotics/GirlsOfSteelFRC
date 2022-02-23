@@ -26,6 +26,7 @@ import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterGoalRPMCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterMotorSpeedCommand;
+import com.gos.rapidreact.commands.tuning.VelocityControlDrivingTuningCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
@@ -104,6 +105,7 @@ public class RobotContainer {
         testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
         testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
         testCommands.add("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
+        testCommands.add("VelocityControlDrivingTuningCommand", new VelocityControlDrivingTuningCommand(m_chassis));
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 

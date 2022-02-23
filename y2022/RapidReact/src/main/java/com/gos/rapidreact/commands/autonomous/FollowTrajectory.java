@@ -68,11 +68,8 @@ public class FollowTrajectory extends SequentialCommandGroup {
     }
 
     private void setVelocityGoal(double leftVelocityMeters, double rightVelocityMeters) {
-
-        double leftVelocityInchesPerSecond = Units.metersToInches(leftVelocityMeters);
-        double rightVelocityInchesPerSecond = Units.metersToInches(rightVelocityMeters);
-        m_goalVelocityLeft = leftVelocityInchesPerSecond;
-        m_goalVelocityRight = rightVelocityInchesPerSecond;
+        m_goalVelocityLeft = leftVelocityMeters;
+        m_goalVelocityRight = rightVelocityMeters;
         //System.out.println("Setting goal velocity: " + m_goalVelocityLeft + ", " + m_goalVelocityRight);
         m_chassis.smartVelocityControl(m_goalVelocityLeft, m_goalVelocityRight);
     }

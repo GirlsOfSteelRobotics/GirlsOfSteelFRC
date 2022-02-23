@@ -1,5 +1,6 @@
 package com.gos.rapidreact.trajectory;
 
+import com.gos.rapidreact.commands.SetInitialOdometryCommand;
 import com.gos.rapidreact.commands.autonomous.FollowTrajectory;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -11,7 +12,6 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.rapidreact.commands.autonomous.SetStartingPosition;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class TrajectoryUtils {
             while ((line = reader.readLine()) != null) {
                 StringTokenizer tokenizer = new StringTokenizer(line, ",");
                 double xPath = Double.parseDouble(tokenizer.nextToken());
-                double yPath = Double.parseDouble(tokenizer.nextToken()) + Units.feetToMeters(15.0);
+                double yPath = Double.parseDouble(tokenizer.nextToken()) + Units.feetToMeters(27);
                 double xTangent = Double.parseDouble(tokenizer.nextToken());
                 double yTangent = Double.parseDouble(tokenizer.nextToken());
                 list.add(new Spline.ControlVector(
@@ -50,7 +50,7 @@ public class TrajectoryUtils {
     public static Command startTrajectory(String fileName, TrajectoryConfig trajectoryConfig, ChassisSubsystem chassis) {
         Trajectory trajectory = loadingTrajectory(fileName, trajectoryConfig);
         FollowTrajectory followTrajectory = new FollowTrajectory(trajectory, chassis);
-        SetStartingPosition setPosition = new SetStartingPosition(chassis, trajectory.getInitialPose());
+        SetInitialOdometryCommand setPosition = new SetInitialOdometryCommand(chassis, trajectory.getInitialPose());
         return setPosition.andThen(followTrajectory);
     }
 
@@ -77,7 +77,6 @@ public class TrajectoryUtils {
     }
 
     public static TrajectoryConfig getTrajectoryConfig() {
-        return  getTrajectoryConfig(ChassisSubsystem.normalSpeedMetersPerSecond, ChassisSubsystem.normalAccelerationMetersPerSecondSquared);
-
+        return  getTrajectoryConfig(ChassisSubsystem.DEFAULT_VELOCITY, ChassisSubsystem.DEFAULT_ACCELERATION);
     }
 }

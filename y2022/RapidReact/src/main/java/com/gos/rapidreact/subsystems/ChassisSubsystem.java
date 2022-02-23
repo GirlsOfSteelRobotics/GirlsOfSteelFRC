@@ -2,7 +2,9 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -46,6 +48,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxPIDController m_leftPidController;
     private final SparkMaxPIDController m_rightPidController;
 
+    private final PidProperty m_leftProperties;
+    private final PidProperty m_rightProperties;
+
     private final DifferentialDrive m_drive;
 
     //odometry
@@ -68,15 +73,9 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
 
-    public static final double slowSpeedMetersPerSecond = Units.inchesToMeters(48);
-    public static final double slowAccelerationMetersPerSecondSquared = Units.inchesToMeters(96);
-    public static final double normalSpeedMetersPerSecond = Units.inchesToMeters(72);
-    public static final double normalAccelerationMetersPerSecondSquared = Units.inchesToMeters(60);
-    public static final double fastSpeedMetersPerSecond = Units.inchesToMeters(120);
-    public static final double fastAccelerationMetersPerSecondSquared = Units.inchesToMeters(120);
 
-    public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
+    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(72);
+    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(60);
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -121,6 +120,40 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeft.follow(m_leaderLeft, false);
         m_followerRight.follow(m_leaderRight, false);
 
+        // Smart Motion stuff
+        double kp = 0.01000;
+        double ki = 0;
+        double kd = 0;
+        double kff = 0.005800;
+        boolean lockConstants = false;
+        double minVel = 0; // m/sec
+        double maxVel = Units.inchesToMeters(72); // m/sec
+        double maxAcc = Units.inchesToMeters(144); // m/sec/sec
+        double allowedErr = 0;
+        double kMaxOutput = 1;
+        double kMinOutput = -1;
+        int smartMotionSlot = 0;
+
+        m_leftProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_leftPidController, 0)
+            .addP(kp)
+            .addI(ki)
+            .addD(kd)
+            .addFF(kff)
+            .addMaxVelocity(maxVel)
+            .addMaxAcceleration(maxAcc)
+            .build();
+        m_rightProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_rightPidController, 0)
+            .addP(kp)
+            .addI(ki)
+            .addD(kd)
+            .addFF(kff)
+            .addMaxVelocity(maxVel)
+            .addMaxAcceleration(maxAcc)
+            .build();
+
+        m_leftProperties.updateIfChanged(true);
+        m_rightProperties.updateIfChanged(true);
+
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
                 DifferentialDrivetrainSim.KitbotMotor.kDualCIMPerSide,
@@ -147,6 +180,11 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putData(m_field);
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
+        SmartDashboard.putNumber("Left Velocity (inches)", Units.metersToInches(m_leftEncoder.getVelocity()));
+        SmartDashboard.putNumber("Right Velocity (inches)", Units.metersToInches(m_rightEncoder.getVelocity()));
+
+        m_leftProperties.updateIfChanged();
+        m_rightProperties.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -175,7 +213,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
         m_drive.feed();
 
-        //System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
+        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
     }
 
     public double getLeftEncoderSpeed() {

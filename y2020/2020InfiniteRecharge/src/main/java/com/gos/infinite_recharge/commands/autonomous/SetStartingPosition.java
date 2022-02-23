@@ -20,6 +20,7 @@ public class SetStartingPosition extends CommandBase {
         m_yValue = y;
         m_angle = angle;
         m_loopsToLock = 10;
+
         addRequirements(chassis);
     }
 

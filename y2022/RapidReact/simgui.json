@@ -33,6 +33,7 @@
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
@@ -58,6 +59,7 @@
       "/Shuffleboard/test commands/ShooterSpeed": "Command",
       "/Shuffleboard/test commands/TuneCollectorPivotPIDGravityOffset": "Command",
       "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": "Command",
+      "/Shuffleboard/test commands/VelocityControlDrivingTuningCommand": "Command",
       "/Shuffleboard/test commands/VerticalConveyorDownCommand": "Command",
       "/Shuffleboard/test commands/VerticalConveyorUpCommand": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
@@ -87,7 +89,12 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
-      "/LiveWindow/LEDManagerSubsystem": {
+      "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/VelocityControlDrivingTuningCommand": {
         "window": {
           "visible": true
         }
@@ -97,61 +104,53 @@
           "visible": true
         }
       },
-      "/SmartDashboard/CollectorDownCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/CollectorUpCommand": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "window": {
           "visible": true
         }
-      },
-      "/SmartDashboard/GoToCargoCommand - 10 forward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/HorizontalConveyorBackwardCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/HorizontalConveyorForwardCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/RollerInCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/RollerOutCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/ShooterPIDCommand - 3000": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/VerticalConveyorDownCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/VerticalConveyorUpCommand": {
-        "window": {
-          "visible": true
-        }
       }
+    }
+  },
+  "NetworkTables": {
+    "Preferences": {
+      "open": true
+    },
+    "SmartDashboard": {
+      "open": true
+    }
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 258,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Left Velocity (inches)"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Right Velocity (inches)"
+            }
+          ]
+        }
+      ]
     }
   }
 }
