@@ -92,6 +92,9 @@ public class SuperStructureController {
     private Circle m_intakeIndexingSensor;
 
     @FXML
+    private Rotate m_intakeIndexingSensorRotation;
+
+    @FXML
     private Circle m_upperVConveyorSensor;
 
     @FXML
@@ -165,6 +168,11 @@ public class SuperStructureController {
         m_intakeIndexingSensor.setCenterY(INTAKE_BREAK_SENSOR_Y);
         m_intakeIndexingSensor.setRadius(INTAKE_BREAK_SENSOR_RADIUS);
 
+        m_intakeIndexingSensorRotation = new Rotate();
+        m_intakeIndexingSensorRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX() + m_intake.getWidth(), m_intake.xProperty()));
+        m_intakeIndexingSensorRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
+        m_intakeIndexingSensor.getTransforms().add(m_intakeWheelRotation);
+
         m_upperVConveyorSensor.setCenterX(UPPER_VERT_BREAK_SENSOR_X);
         m_upperVConveyorSensor.setCenterY(UPPER_VERT_BREAK_SENSOR_Y);
         m_upperVConveyorSensor.setRadius(UPPER_VERT_BREAK_SENSOR_RADIUS);
@@ -189,6 +197,7 @@ public class SuperStructureController {
         m_hanger.setHeight(superStructureData.getHangerHeight());
         m_hanger.setY(HANGER_Y + HANGER_HEIGHT - m_hanger.getHeight());
         m_intakeIndexingSensor.setFill(Utils.setSensorColor(superStructureData.isIntakeIndexingSensor()));
+        m_intakeIndexingSensorRotation.setAngle(m_intakeRotation.getAngle());
         m_lowerVConveyorSensor.setFill(Utils.setSensorColor(superStructureData.isLowerVerticalConveyorIndexingSensor()));
         m_upperVConveyorSensor.setFill(Utils.setSensorColor(superStructureData.isUpperVerticalConveyorIndexingSensor()));
 

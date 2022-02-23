@@ -8,6 +8,11 @@
         "visible": true
       }
     },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [11]": {
         "header": {
@@ -28,10 +33,12 @@
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
-      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
+      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
@@ -49,6 +56,7 @@
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 right": "Command",
       "/Shuffleboard/test commands/HorizontalConveyorBackwardCommand": "Command",
       "/Shuffleboard/test commands/HorizontalConveyorForwardCommand": "Command",
+      "/Shuffleboard/test commands/Reset Pivot Encoder": "Command",
       "/Shuffleboard/test commands/RollerInCommand": "Command",
       "/Shuffleboard/test commands/RollerOutCommand": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
@@ -58,6 +66,7 @@
       "/Shuffleboard/test commands/ShooterSpeed": "Command",
       "/Shuffleboard/test commands/TuneCollectorPivotPIDGravityOffset": "Command",
       "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": "Command",
+      "/Shuffleboard/test commands/TuneShooterMotorSpeed": "Command",
       "/Shuffleboard/test commands/VerticalConveyorDownCommand": "Command",
       "/Shuffleboard/test commands/VerticalConveyorUpCommand": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
@@ -87,6 +96,11 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
+      "/LiveWindow/LEDManagerSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/CollectorDownCommand": {
         "window": {
           "visible": true
@@ -98,11 +112,6 @@
         }
       },
       "/SmartDashboard/GoToCargoCommand - 10 forward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/LiveWindow/LEDManagerSubsystem": {
         "window": {
           "visible": true
         }
