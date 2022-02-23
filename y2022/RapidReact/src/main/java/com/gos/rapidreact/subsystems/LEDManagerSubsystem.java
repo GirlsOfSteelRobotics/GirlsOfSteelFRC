@@ -24,7 +24,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDMovingPixel m_movingPixel;
     private LEDBoolean m_boolean;
 
-
     public LEDManagerSubsystem() {
         m_led = new AddressableLED(PORT);
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);

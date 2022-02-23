@@ -8,7 +8,13 @@
         "visible": true
       }
     },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
+      "SPARK MAX [1]": {
       "SPARK MAX [12]": {
         "header": {
           "open": true
@@ -32,6 +38,8 @@
       "/LiveWindow/LEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
@@ -95,6 +103,11 @@
           "visible": true
         }
       },
+      "/LiveWindow/LEDManagerSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/ShooterFeederCommand": {
         "window": {
           "visible": true
@@ -151,5 +164,9 @@
         }
       }
     }
+  },
+  "sourceNames": {
+    "DIO[0]": "upper",
+    "DIO[1]": "lower"
   }
 }
