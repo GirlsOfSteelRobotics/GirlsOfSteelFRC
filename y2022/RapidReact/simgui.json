@@ -14,6 +14,11 @@
       }
     },
     "Other Devices": {
+      "SPARK MAX [11]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [1]": {
       "SPARK MAX [12]": {
         "header": {
@@ -164,9 +169,5 @@
         }
       }
     }
-  },
-  "sourceNames": {
-    "DIO[0]": "upper",
-    "DIO[1]": "lower"
   }
 }

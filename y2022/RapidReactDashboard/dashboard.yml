@@ -38,3 +38,12 @@ widgets:
           - type: double
             name: shooterSpeed
             dasboard_constant: SHOOTER_SPEED
+          - type: boolean
+            name: intakeIndexingSensor
+            dasboard_constant: INTAKE_INDEXING_SENSOR
+          - type: boolean
+            name: lowerVerticalConveyorIndexingSensor
+            dasboard_constant: LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR
+          - type: boolean
+            name: upperVerticalConveyorIndexingSensor
+            dasboard_constant: UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR
