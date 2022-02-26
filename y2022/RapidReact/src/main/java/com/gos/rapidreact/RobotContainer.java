@@ -107,12 +107,12 @@ public class RobotContainer {
         testCommands.add("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
         testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
-        // testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
-        // testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
-        // testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
-        // testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
-        // testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
-        // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
+        testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
+        testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
+        testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
+        testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
+        testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
+        testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 
