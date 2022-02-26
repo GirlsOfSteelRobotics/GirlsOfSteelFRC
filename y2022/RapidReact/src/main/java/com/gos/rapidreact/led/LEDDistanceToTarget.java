@@ -4,12 +4,11 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
-public class LEDDistanceToTarget extends LEDBase{
+public class LEDDistanceToTarget extends LEDBase {
     private final Color8Bit m_color;
 
     private final int m_minIndex;
     private final int m_maxIndex;
-    private final int m_middleLED;
     private final int m_maxDistance;
 
     public LEDDistanceToTarget(AddressableLEDBuffer buffer, Color color, int minIndex, int maxIndex, int maxDistance) {
@@ -17,7 +16,6 @@ public class LEDDistanceToTarget extends LEDBase{
         m_color = new Color8Bit(color);
         m_minIndex = minIndex;
         m_maxIndex = maxIndex;
-        m_middleLED = (m_maxIndex - m_minIndex) / 2 + m_minIndex;
         m_maxDistance = maxDistance;
     }
 

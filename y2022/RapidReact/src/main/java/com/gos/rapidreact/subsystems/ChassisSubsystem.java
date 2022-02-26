@@ -204,15 +204,6 @@ public class ChassisSubsystem extends SubsystemBase {
         double steer = 0;
         setArcadeDrive(speed, steer);
         return Math.abs(error) < allowableDistanceError;
-//        double allowableDistanceError = Units.inchesToMeters(12.0);
-//        double steer = 0; //should not be moving angle
-//        double distanceCurrent = m_odometry.getPoseMeters().getX();
-//        double distanceError = distanceGoal - distanceCurrent;
-//
-//        double speed = TO_HUB_DISTANCE_PID.getValue() * distanceError;
-//        setArcadeDrive(speed, steer);
-//
-//        return Math.abs(distanceError) < allowableDistanceError;
 
     }
 

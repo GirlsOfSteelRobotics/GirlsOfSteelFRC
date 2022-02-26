@@ -12,7 +12,7 @@ public class GoToHubDistanceCommand extends CommandBase {
 
     public GoToHubDistanceCommand(ChassisSubsystem chassisSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, double distanceGoal) {
         this.m_chassis = chassisSubsystem;
-        this.m_limelight = new ShooterLimelightSubsystem();
+        this.m_limelight = shooterLimelightSubsystem;
         m_distanceGoal = distanceGoal;
 
         addRequirements(this.m_chassis, this.m_limelight);
