@@ -1,6 +1,5 @@
 package com.gos.rapidreact.auto_modes;
 
-
 import com.gos.rapidreact.commands.DriveDistanceCommand;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
