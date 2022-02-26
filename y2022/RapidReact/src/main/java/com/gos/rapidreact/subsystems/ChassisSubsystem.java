@@ -29,6 +29,7 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 
 
+
 public class ChassisSubsystem extends SubsystemBase {
 
     //TODO: change constants to match this year's robot
@@ -121,35 +122,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerRight.follow(m_leaderRight, false);
 
         // Smart Motion stuff
-        double kp = 0.01000;
-        double ki = 0;
-        double kd = 0;
-        double kff = 0.005800;
-        boolean lockConstants = false;
-        double minVel = 0; // m/sec
-        double maxVel = Units.inchesToMeters(72); // m/sec
-        double maxAcc = Units.inchesToMeters(144); // m/sec/sec
-        double allowedErr = 0;
-        double kMaxOutput = 1;
-        double kMinOutput = -1;
-        int smartMotionSlot = 0;
-
-        m_leftProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_leftPidController, 0)
-            .addP(kp)
-            .addI(ki)
-            .addD(kd)
-            .addFF(kff)
-            .addMaxVelocity(maxVel)
-            .addMaxAcceleration(maxAcc)
-            .build();
-        m_rightProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_rightPidController, 0)
-            .addP(kp)
-            .addI(ki)
-            .addD(kd)
-            .addFF(kff)
-            .addMaxVelocity(maxVel)
-            .addMaxAcceleration(maxAcc)
-            .build();
+        m_leftProperties = setupPidValues(m_leftPidController);
+        m_rightProperties = setupPidValues(m_rightPidController);
 
         m_leftProperties.updateIfChanged(true);
         m_rightProperties.updateIfChanged(true);
@@ -173,6 +147,17 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putData(m_field);
     }
 
+    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            .addP(0)
+            .addI(0)
+            .addD(0)
+            .addFF(0)
+            .addMaxVelocity(Units.inchesToMeters(72))
+            .addMaxAcceleration(Units.inchesToMeters(144))
+            .build();
+    }
+
     @Override
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
@@ -180,8 +165,8 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putData(m_field);
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
-        SmartDashboard.putNumber("Left Velocity (inches)", Units.metersToInches(m_leftEncoder.getVelocity()));
-        SmartDashboard.putNumber("Right Velocity (inches)", Units.metersToInches(m_rightEncoder.getVelocity()));
+        SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
+        SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
@@ -222,22 +207,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public double getRightEncoderSpeed() {
         return m_rightEncoder.getVelocity();
-    }
-
-    public double getHeading() {
-        return -m_gyro.getYaw();
-        // return 0;
-    }
-
-    public void resetOdometry(Pose2d pose) {
-        m_leftEncoder.setPosition(0);
-        m_rightEncoder.setPosition(0);
-        m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
-        m_simulator.resetOdometry(pose);
-    }
-
-    public void setPositionMeters(double x, double y, double angle) {
-        resetOdometry(new Pose2d(x, y, Rotation2d.fromDegrees(angle)));
     }
 
     public double getYawAngle() {

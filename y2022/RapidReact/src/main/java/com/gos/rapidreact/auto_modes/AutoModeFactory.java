@@ -4,10 +4,6 @@ package com.gos.rapidreact.auto_modes;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
-import com.gos.rapidreact.trajectory.TrajectoryB5;
-import com.gos.rapidreact.trajectory.TrajectoryB54;
-import com.gos.rapidreact.trajectory.TrajectoryCurve;
-import com.gos.rapidreact.trajectory.TrajectorySCurve;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -46,10 +42,6 @@ public class AutoModeFactory extends SequentialCommandGroup {
         //need to have distance, allowableError
         m_sendableChooser.setDefaultOption("DriveOffTarmac (Default)", m_defaultCommand);
         m_sendableChooser.addOption("One Ball Auto", new OneBallAuto(chassis, shooter, verticalConveyor, VERTICAL_CONVEYOR_TIMEOUT));
-        m_sendableChooser.addOption("B54", TrajectoryB54.fromBto5to4(chassis));
-        m_sendableChooser.addOption("B5 (straight)", TrajectoryB5.fromBto5(chassis));
-        m_sendableChooser.addOption("TestCurve", TrajectoryCurve.curve(chassis));
-        m_sendableChooser.addOption("TestSCurve", TrajectorySCurve.scurve(chassis));
     }
 
 
