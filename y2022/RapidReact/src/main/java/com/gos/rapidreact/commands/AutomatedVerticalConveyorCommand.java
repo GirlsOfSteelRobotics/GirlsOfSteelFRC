@@ -25,22 +25,22 @@ public class AutomatedVerticalConveyorCommand extends CommandBase {
     public void execute() {
         // at sensor 1, run conveyor
         m_horizontalConveyor.forwardHorizontalConveyorMotor();
-        if (m_verticalConveyor.getUpperBeamBreak() && !m_verticalConveyor.getLowerBeamBreak()) {
+        if (m_verticalConveyor.getUpperIndexSensor() && !m_verticalConveyor.getLowerIndexSensor()) {
             m_verticalConveyor.forwardVerticalConveyorMotor();
             System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
 
-        if (m_verticalConveyor.getLowerBeamBreak() && !m_verticalConveyor.getUpperBeamBreak()) {
+        if (m_verticalConveyor.getLowerIndexSensor() && !m_verticalConveyor.getUpperIndexSensor()) {
             m_verticalConveyor.forwardVerticalConveyorMotor();
             System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
 
-        if (m_verticalConveyor.getUpperBeamBreak() && m_verticalConveyor.getLowerBeamBreak()) {
+        if (m_verticalConveyor.getUpperIndexSensor() && m_verticalConveyor.getLowerIndexSensor()) {
             m_verticalConveyor.stopVerticalConveyorMotor();
             System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
 
-        if (!(m_verticalConveyor.getLowerBeamBreak() && m_verticalConveyor.getUpperBeamBreak())) {
+        if (!(m_verticalConveyor.getLowerIndexSensor() && m_verticalConveyor.getUpperIndexSensor())) {
             m_verticalConveyor.forwardVerticalConveyorMotor();
             System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
