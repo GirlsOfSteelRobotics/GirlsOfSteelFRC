@@ -63,7 +63,7 @@ public class HangerSubsystem extends SubsystemBase {
             .build();
 
         if (RobotBase.isSimulation()) {
-            ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), 1, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
+            ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
             m_simulator = new ElevatorSimWrapper(elevatorSim,
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));
