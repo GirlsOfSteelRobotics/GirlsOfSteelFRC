@@ -1,5 +1,11 @@
 {
   "HALProvider": {
+    "Other Devices": {
+      "SPARK MAX [3]": {
+        "header": {
+          "open": true
+        }
+      }
     "Addressable LEDs": {
       "0": {
         "columns": 15
@@ -43,6 +49,8 @@
       "/Shuffleboard/test commands/GoToHubAngle - 45": "Command",
       "/Shuffleboard/test commands/GoToHubDist - 10": "Command",
       "/Shuffleboard/test commands/GoToHubDist - 15": "Command",
+      "/Shuffleboard/test commands/HngerPIDCommand - 0": "Command",
+      "/Shuffleboard/test commands/HngerPIDCommand - 4": "Command",
       "/Shuffleboard/test commands/Reset Pivot Encoder": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 45": "Command",
@@ -50,6 +58,7 @@
       "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": "Command",
       "/Shuffleboard/test commands/TuneShooterMotorSpeed": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
+      "/SmartDashboard/Field": "Field2d"
       "/SmartDashboard/Field": "Field2d"
       "/SmartDashboard/Field": "Field2d"
     },
@@ -96,6 +105,16 @@
     },
     "limelight": {
       "open": true
+      "/Shuffleboard/test commands/HngerPIDCommand - 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/HngerPIDCommand - 4": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }

@@ -79,8 +79,6 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
             .addP(0)
             .addD(0)
-            .addMaxAcceleration(0)
-            .addMaxVelocity(0)
             .build();
 
         if (RobotBase.isSimulation()) {
