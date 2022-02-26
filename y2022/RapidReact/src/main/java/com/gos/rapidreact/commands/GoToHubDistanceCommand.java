@@ -1,19 +1,21 @@
 package com.gos.rapidreact.commands;
 
+import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
-//I IMAGINE THIS SOLELY BEING USED TO JUST TEST THAT OUR LOGIC WORKS, NOTHING ELSE
 public class GoToHubDistanceCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
+    private final ShooterLimelightSubsystem m_limelight;
     private final double m_distanceGoal;
     private boolean m_atPosition;
 
-    public GoToHubDistanceCommand(ChassisSubsystem chassisSubsystem, double distanceGoal) {
+    public GoToHubDistanceCommand(ChassisSubsystem chassisSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, double distanceGoal) {
         this.m_chassis = chassisSubsystem;
+        this.m_limelight = new ShooterLimelightSubsystem();
         m_distanceGoal = distanceGoal;
 
-        addRequirements(this.m_chassis);
+        addRequirements(this.m_chassis, this.m_limelight);
     }
 
     @Override
@@ -23,7 +25,7 @@ public class GoToHubDistanceCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_atPosition = m_chassis.distancePID(m_distanceGoal);
+        m_atPosition = m_chassis.distancePID(m_limelight.getDistanceToHub(), m_distanceGoal);
     }
 
     @Override

@@ -8,7 +8,7 @@ package com.gos.rapidreact;
 import com.gos.rapidreact.commands.AutomatedVerticalConveyorCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
-import com.gos.rapidreact.commands.GoToHubAngleCommand;
+import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.GoToHubDistanceCommand;
 import com.gos.rapidreact.commands.HangerDownCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
@@ -37,6 +37,7 @@ import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 import com.gos.rapidreact.subsystems.LEDManagerSubsystem;
+import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import edu.wpi.first.math.util.Units;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
@@ -72,7 +73,8 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final LEDManagerSubsystem m_led = new LEDManagerSubsystem();
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
-    // private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
+    private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
+
 
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
@@ -118,11 +120,11 @@ public class RobotContainer {
         // testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
         // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
 
-        testCommands.add("GoToHubAngle - 45", new GoToHubAngleCommand(m_chassis, Math.toRadians(45)));
-        testCommands.add("GoToHubAngle - 20", new GoToHubAngleCommand(m_chassis, Math.toRadians(20)));
+        testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, Math.toRadians(45)));
+        testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, Math.toRadians(20)));
 
-        testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, Units.feetToMeters(10)));
-        testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, Units.feetToMeters(15)));
+        testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(10)));
+        testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(15)));
 
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());

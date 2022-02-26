@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
 
-public class GoToHubAngleCommand extends CommandBase {
+public class TurnToAngleCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
     private final double m_angle;
     private boolean m_atPosition;
 
-    public GoToHubAngleCommand(ChassisSubsystem chassisSubsystem, double angle) {
+    public TurnToAngleCommand(ChassisSubsystem chassisSubsystem, double angle) {
         this.m_chassis = chassisSubsystem;
         m_angle = angle;
 
