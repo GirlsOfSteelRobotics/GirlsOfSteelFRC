@@ -63,6 +63,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         m_pivotFollower.follow(m_pivotLeader);
+        m_pivotFollower.setInverted(true);
 
         m_pivotEncoder = m_pivotLeader.getEncoder();
         //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
