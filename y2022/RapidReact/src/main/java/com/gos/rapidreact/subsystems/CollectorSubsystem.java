@@ -11,6 +11,7 @@ import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,6 +38,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_pivotLeader;
     private final SimableCANSparkMax m_pivotFollower;
 
+    private final DigitalInput m_indexSensor;
 
     private final RelativeEncoder m_pivotEncoder;
 
@@ -64,6 +66,8 @@ public class CollectorSubsystem extends SubsystemBase {
 
         m_pivotEncoder = m_pivotLeader.getEncoder();
         //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
+
+        m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
         m_pidController = m_pivotLeader.getPIDController();
 
@@ -163,6 +167,10 @@ public class CollectorSubsystem extends SubsystemBase {
 
     public void resetPivotEncoder() {
         m_pivotEncoder.setPosition(0);
+    }
+
+    public boolean getIndexSensor() {
+        return m_indexSensor.get();
     }
 }
 

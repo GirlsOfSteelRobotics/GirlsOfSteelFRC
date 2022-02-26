@@ -206,9 +206,9 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ROLLER_SPEED, m_collector::getRollerSpeed, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getUpperBeamBreak, null);
+                SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getUpperIndexSensor, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getLowerBeamBreak, null);
+                SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getLowerIndexSensor, null);
         }
     }
 }
