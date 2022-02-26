@@ -1,8 +1,9 @@
 package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.led.LEDDistanceToTarget;
 import com.gos.rapidreact.led.LEDFlash;
-import com.gos.rapidreact.led.LEDLimelightAngleToHub;
+import com.gos.rapidreact.led.LEDAngleToTarget;
 import com.gos.rapidreact.led.LEDMovingPixel;
 import com.gos.rapidreact.led.LEDPolkaDots;
 import com.gos.rapidreact.led.LEDRainbow;
@@ -24,7 +25,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDPolkaDots m_ledPolkaDots;
     private LEDMovingPixel m_movingPixel;
     private LEDBoolean m_boolean;
-    private LEDLimelightAngleToHub m_limelightAngleToHub;
+    private LEDAngleToTarget m_angleToTarget;
+    private LEDDistanceToTarget m_distanceToTarget;
 
     public LEDManagerSubsystem() {
         m_led = new AddressableLED(PORT);
@@ -35,7 +37,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_ledPolkaDots = new LEDPolkaDots(m_buffer, 0, MAX_INDEX_LED);
         m_movingPixel = new LEDMovingPixel(m_buffer, 0, MAX_INDEX_LED, Color.kPurple);
         m_boolean = new LEDBoolean(m_buffer, 0, MAX_INDEX_LED / 6, Color.kDarkGreen, Color.kBlack);
-        m_limelightAngleToHub = new LEDLimelightAngleToHub(m_buffer, Color.kDarkRed, Color.kDarkGreen, 0, MAX_INDEX_LED);
+        m_angleToTarget = new LEDAngleToTarget(m_buffer, Color.kDarkRed, Color.kDarkGreen, 0, MAX_INDEX_LED, 10);
+        m_distanceToTarget = new LEDDistanceToTarget(m_buffer, Color.kDarkRed, 0, MAX_INDEX_LED, 10);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -60,7 +63,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // m_ledRainbow.rainbow();
         //m_movingPixel.movingPixel();
         //m_boolean.checkBoolean(false);
-        //m_limelightAngleToHub.limelightAngleToHub(10);
+        //m_angleToTarget.angleToTarget(5);
+        m_distanceToTarget.distanceToTarget(5);
 
         m_led.setData(m_buffer);
     }

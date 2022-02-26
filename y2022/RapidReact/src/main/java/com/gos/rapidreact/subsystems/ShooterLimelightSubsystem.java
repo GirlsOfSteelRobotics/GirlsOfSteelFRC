@@ -24,7 +24,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
 
     }
 
-    public double distanceToHub() {
+    public double getDistanceToHub() {
         double distance;
         distance = (LIMELIGHT_HEIGHT) / Math.tan(MOUNTING_ANGLE + m_verticalAngle.getDouble(0));
         return distance;
