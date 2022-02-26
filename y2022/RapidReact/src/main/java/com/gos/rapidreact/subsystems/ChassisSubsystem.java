@@ -35,6 +35,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
 
+    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = new PropertyManager.DoubleProperty("To Hub Angle Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = new PropertyManager.DoubleProperty("To Hub Distance PID", 0);
+
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
 
@@ -150,6 +153,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double yCurrent = m_odometry.getPoseMeters().getY();
         double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
 
+        System.out.println(yCurrent);
         double hDistance; //gets distance of the hypotenuse
         double angle;
 
@@ -165,7 +169,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean driveAndTurnPID(double distance, double angle) {
-        double allowableDistanceError = Units.inchesToMeters(12.0);
+        double allowableDistanceError = Units.inchesToMeters(12.0); //for go to cargo
         double allowableAngleError = Units.degreesToRadians(5.0);
 
         double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
@@ -179,6 +183,28 @@ public class ChassisSubsystem extends SubsystemBase {
 
         setArcadeDrive(speed, steer);
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
+    }
+
+    public boolean turnPID(double angleGoal) { //for shooter limelight
+        double allowableAngleError = Units.degreesToRadians(10.0);
+        double speed = 0; //should not be moving distance
+        double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
+        double angleError = angleGoal - angleCurrent;
+
+        double steer = TO_HUB_ANGLE_TURN_PID.getValue() * angleError;
+        setArcadeDrive(speed, steer);
+        return Math.abs(angleError) < allowableAngleError;
+    }
+
+    public boolean distancePID(double currentPosition, double distanceGoal) {
+        double allowableDistanceError = Units.inchesToMeters(10.0);
+        double error = distanceGoal - currentPosition;
+
+        double speed = error * TO_HUB_DISTANCE_PID.getValue();
+        double steer = 0;
+        setArcadeDrive(speed, steer);
+        return Math.abs(error) < allowableDistanceError;
+
     }
 
     @Override

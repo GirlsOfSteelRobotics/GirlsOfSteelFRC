@@ -1,5 +1,12 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "0": {
+        "columns": 15
+      },
+      "window": {
+        "visible": true
+      }
     "DIO": {
       "window": {
         "visible": true
@@ -14,6 +21,8 @@
       "/LiveWindow/HangerSubsystem": "Subsystem",
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
+      "/LiveWindow/LEDManagerSubsystem": "Subsystem",
+      "/LiveWindow/ShooterLimelightSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
@@ -30,6 +39,10 @@
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward": "Command",
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 left": "Command",
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 right": "Command",
+      "/Shuffleboard/test commands/GoToHubAngle - 20": "Command",
+      "/Shuffleboard/test commands/GoToHubAngle - 45": "Command",
+      "/Shuffleboard/test commands/GoToHubDist - 10": "Command",
+      "/Shuffleboard/test commands/GoToHubDist - 15": "Command",
       "/Shuffleboard/test commands/Reset Pivot Encoder": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 45": "Command",
@@ -38,6 +51,51 @@
       "/Shuffleboard/test commands/TuneShooterMotorSpeed": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
+      "/SmartDashboard/Field": "Field2d"
+    },
+    "windows": {
+      "/LiveWindow/LEDManagerSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/GoToCargoCommand - 10 forward": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/GoToHubAngle - 45": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/GoToHubDist - 10": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "FMSInfo": {
+      "open": true
+    },
+    "LiveWindow": {
+      "ShooterLimelightSubsystem": {
+        "open": true
+      },
+      "open": true
+    },
+    "Preferences": {
+      "open": true
+    },
+    "limelight": {
+      "open": true
     }
   }
 }
