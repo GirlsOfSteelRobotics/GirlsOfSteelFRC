@@ -10,11 +10,21 @@ import com.gos.rapidreact.led.LEDRainbow;
 import com.gos.rapidreact.led.LEDBoolean;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-@SuppressWarnings("PMD") // TODO(ashley) - Hook up for real
+@SuppressWarnings("PMD")
 public class LEDManagerSubsystem extends SubsystemBase {
+    private final IntakeLimelightSubsystem = m_intakeLimelight;
+    private final ShooterLimelightSubsystem = m_shooterLimelight;
+    private final ShooterSubsystem = m_shooter;
+    private final HorizontalConveyorSubsystem = m_horizonalConveyor;
+    private final VerticalConveyorSubsystem = m_verticalConveyor;
+    private final DigitalInput = m_intakeIndexSensor;
+    private final DigitalInput = m_lowerVertConveyorIndexSensor;
+    private final DigitalInput = m_upperVertConveyorIndexSensor;
+
     private static final int MAX_INDEX_LED = 30;
     private static final int PORT = Constants.LED;
     protected final AddressableLEDBuffer m_buffer;
@@ -28,7 +38,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDAngleToTarget m_angleToTarget;
     private LEDDistanceToTarget m_distanceToTarget;
 
-    public LEDManagerSubsystem() {
+    public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, ShooterSubsystem shooterSubsystem, HorizontalConveyorSubsystem horizontalConveyorSubsystem, DigitalInput intakeIndexSensor, DigitalInput lowerVertConveyorIndexSensor, DigitalInput upperVertConveyorIndexSensor) {
         m_led = new AddressableLED(PORT);
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_ledFlash = new LEDFlash(m_buffer, 2, Color.kPapayaWhip, 0, MAX_INDEX_LED / 2);
