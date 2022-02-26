@@ -5,7 +5,7 @@
   "gearing denominator": 1.0,
   "gearing numerator": 10.71,
   "gyro": "Pigeon",
-  "gyro ctor": "14",
+  "gyro ctor": "20",
   "is drivetrain": true,
   "motor controllers": [
     "SPARK MAX (Brushless)",
