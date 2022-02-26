@@ -9,6 +9,7 @@ import com.gos.rapidreact.commands.AutomatedVerticalConveyorCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
 import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.HangerPIDCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
@@ -113,6 +114,9 @@ public class RobotContainer {
         // testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
         // testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
         // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
+        testCommands.add("HngerPIDCommand - 4", new HangerPIDCommand(m_hanger, Units.feetToMeters(4)));
+        testCommands.add("HngerPIDCommand - 0", new HangerPIDCommand(m_hanger, Units.feetToMeters(0)));
+
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 
