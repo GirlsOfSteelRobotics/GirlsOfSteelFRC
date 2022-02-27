@@ -32,7 +32,8 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         m_indexSensorUpper = new DigitalInput(Constants.INDEX_SENSOR_UPPER_VERTICAL_CONVEYOR);
         m_indexSensorLower = new DigitalInput(Constants.INDEX_SENSOR_LOWER_VERTICAL_CONVEYOR);
 
-
+        m_conveyor.burnFlash();
+        m_feeder.burnFlash();
     }
 
     public void forwardVerticalConveyorMotor() {

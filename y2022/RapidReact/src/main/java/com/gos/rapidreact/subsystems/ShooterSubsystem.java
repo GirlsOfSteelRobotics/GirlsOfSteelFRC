@@ -41,10 +41,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_pidController = m_leader.getPIDController();
         m_pid = new RevPidPropertyBuilder("Shooter PID", false, m_pidController, 0)
-            .addP(0)
-            .addD(0)
-            .addFF(0)
+            .addP(0.003)
+            .addD(0.000055)
+            .addFF(0.000176)
             .build();
+
+        m_leader.burnFlash();
 
         if (RobotBase.isSimulation()) {
             FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.1);
@@ -62,7 +64,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
-        System.out.println("Setting rpm " + rpm);
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 

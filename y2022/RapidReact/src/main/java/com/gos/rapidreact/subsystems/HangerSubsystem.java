@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -42,6 +43,11 @@ public class HangerSubsystem extends SubsystemBase {
 
     private ISimWrapper m_simulator;
 
+    private final SparkMaxLimitSwitch m_topLeftLimit;
+    private final SparkMaxLimitSwitch m_bottomLeftLimit;
+    private final SparkMaxLimitSwitch m_topRightLimit;
+    private final SparkMaxLimitSwitch m_bottomRightLimit;
+
     public HangerSubsystem() {
         m_servo = new Servo(Constants.SERVO_CHANNEL);
         m_leader = new SimableCANSparkMax(Constants.HANGER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -60,6 +66,19 @@ public class HangerSubsystem extends SubsystemBase {
             .addD(0)
             .build();
 
+        m_leader.burnFlash();
+        m_follower.burnFlash();
+
+        m_bottomLeftLimit = m_leader.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+        m_topLeftLimit = m_leader.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+        m_bottomRightLimit = m_follower.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+        m_topRightLimit = m_follower.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+
+        m_topRightLimit.enableLimitSwitch(false); // TODO turn back on
+        m_topLeftLimit.enableLimitSwitch(false);
+        m_bottomLeftLimit.enableLimitSwitch(false);
+        m_bottomRightLimit.enableLimitSwitch(false);
+
         if (RobotBase.isSimulation()) {
             ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
             m_simulator = new ElevatorSimWrapper(elevatorSim,
@@ -72,6 +91,11 @@ public class HangerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Hanger Height Encoder", getHangerHeight());
+        SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
+        SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
+        SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
+        SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
+
         m_pid.updateIfChanged();
     }
 

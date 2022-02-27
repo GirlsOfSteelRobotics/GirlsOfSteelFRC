@@ -18,6 +18,7 @@ public class HorizontalConveyorSubsystem extends SubsystemBase {
         m_leader = new SimableCANSparkMax(Constants.HORIZONTAL_CONVEYOR_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leader.restoreFactoryDefaults();
         m_leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leader.burnFlash();
     }
 
     public double getHorizontalConveyorSpeed() {
