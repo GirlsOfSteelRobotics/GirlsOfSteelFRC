@@ -4,6 +4,7 @@ package com.gos.rapidreact.subsystems;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.ShooterLookupTable;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -23,11 +24,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
     public static final double ALLOWABLE_ERROR = 100.0;
-    public static final double DEFAULT_SHOOTER_RPM = 2500;
+    public static final double DEFAULT_SHOOTER_RPM = 1800;
     private final SimableCANSparkMax m_leader;
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
+    private final ShooterLookupTable m_shooterTable;
 
     private ISimWrapper m_simulator;
 
@@ -46,8 +48,10 @@ public class ShooterSubsystem extends SubsystemBase {
             .addFF(0)
             .build();
 
+        m_shooterTable = new ShooterLookupTable();
+
         if (RobotBase.isSimulation()) {
-            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.66, 1.0);
+            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.1);
             m_simulator = new FlywheelSimWrapper(flywheelSim,
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));
@@ -56,13 +60,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double rpm = m_encoder.getVelocity();
-        SmartDashboard.putNumber("RPM", rpm);
-        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
+        SmartDashboard.putNumber("RPM", getEncoderVelocity());
+        //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_pid.updateIfChanged();
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
+        System.out.println("Setting rpm " + rpm);
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
@@ -76,6 +80,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getShooterSpeed() {
         return m_leader.getAppliedOutput();
+    }
+
+    public void rpmForDistance(double distance) {
+        setShooterRpmPIDSpeed(m_shooterTable.getVelocityTable(distance));
     }
 
     @Override

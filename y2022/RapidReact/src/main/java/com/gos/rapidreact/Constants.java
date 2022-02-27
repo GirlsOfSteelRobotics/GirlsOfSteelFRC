@@ -18,24 +18,34 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
 
     //CAN
-    public static final int SHOOTER_LEADER_SPARK = 1;
+    public static final int VERTICAL_CONVEYOR_SPARK = 1;
     public static final int COLLECTOR_ROLLER = 2;
     public static final int HANGER_LEADER_SPARK = 3;
     public static final int DRIVE_LEFT_LEADER_SPARK = 4;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
-    public static final int HORIZONTAL_CONVEYOR_FOLLOWER_SPARK = 6;
+    public static final int SHOOTER_LEADER_SPARK = 6;
     public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 7;
     public static final int HANGER_FOLLOWER_SPARK = 8;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
-    public static final int COLLECTOR_PIVOT = 11;
-    public static final int VERTICAL_CONVEYOR_LEADER_SPARK = 13;
+    public static final int COLLECTOR_PIVOT_LEADER = 11;
+    public static final int COLLECTOR_PIVOT_FOLLOWER = 13;
+    public static final int VERTICAL_CONVEYOR_FEEDER_SPARK = 12;
+
+    // Bigger to avoid future conflicts
     public static final int PIGEON_PORT = 20;
 
 
     // PWM
     public static final int LED = 0;
     public static final int SERVO_CHANNEL = 1;
+
+    //DIO ports
+    public static final int INDEX_SENSOR_UPPER_VERTICAL_CONVEYOR = 0;
+    public static final int INDEX_SENSOR_LOWER_VERTICAL_CONVEYOR = 1;
+    public static final int INTAKE_INDEX_SENSOR = 2;
+
+
 
     //from FRC game manual page 24
     public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);

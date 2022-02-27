@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-@SuppressWarnings("PMD.DataClass")
+@SuppressWarnings("PMD")
 public class SuperStructureData extends ComplexData<SuperStructureData> {
 
     private final double m_intakeAngle;
@@ -18,13 +18,16 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
     private final double m_horizontalConveyorSpeed;
     private final double m_verticalConveyorSpeed;
     private final double m_shooterSpeed;
+    private final boolean m_intakeIndexingSensor;
+    private final boolean m_lowerVerticalConveyorIndexingSensor;
+    private final boolean m_upperVerticalConveyorIndexingSensor;
 
 
     public SuperStructureData() {
-        this(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        this(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, false);
     }
 
-    public SuperStructureData(double intakeAngle, double intakeSpeed, double rollerSpeed, double hangerSpeed, double hangerHeight, double horizontalConveyorSpeed, double verticalConveyorSpeed, double shooterSpeed) {
+    public SuperStructureData(double intakeAngle, double intakeSpeed, double rollerSpeed, double hangerSpeed, double hangerHeight, double horizontalConveyorSpeed, double verticalConveyorSpeed, double shooterSpeed, boolean intakeIndexingSensor, boolean lowerVerticalConveyorIndexingSensor, boolean upperVerticalConveyorIndexingSensor) {
         m_intakeAngle = intakeAngle;
         m_intakeSpeed = intakeSpeed;
         m_rollerSpeed = rollerSpeed;
@@ -33,6 +36,9 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         m_horizontalConveyorSpeed = horizontalConveyorSpeed;
         m_verticalConveyorSpeed = verticalConveyorSpeed;
         m_shooterSpeed = shooterSpeed;
+        m_intakeIndexingSensor = intakeIndexingSensor;
+        m_lowerVerticalConveyorIndexingSensor = lowerVerticalConveyorIndexingSensor;
+        m_upperVerticalConveyorIndexingSensor = upperVerticalConveyorIndexingSensor;
     }
 
     public SuperStructureData(Map<String, Object> map) {
@@ -44,7 +50,10 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
             Maps.getOrDefault(map, SmartDashboardNames.HANGER_HEIGHT, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.HORIZONTAL_CONVEYOR_SPEED, 0.0),
             Maps.getOrDefault(map, SmartDashboardNames.VERTICAL_CONVEYOR_SPEED, 0.0),
-            Maps.getOrDefault(map, SmartDashboardNames.SHOOTER_SPEED, 0.0));
+            Maps.getOrDefault(map, SmartDashboardNames.SHOOTER_SPEED, 0.0),
+            Maps.getOrDefault(map, SmartDashboardNames.INTAKE_INDEXING_SENSOR, false),
+            Maps.getOrDefault(map, SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, false),
+            Maps.getOrDefault(map, SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, false));
     }
 
     @Override
@@ -58,6 +67,9 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         output.put(SmartDashboardNames.HORIZONTAL_CONVEYOR_SPEED, m_horizontalConveyorSpeed);
         output.put(SmartDashboardNames.VERTICAL_CONVEYOR_SPEED, m_verticalConveyorSpeed);
         output.put(SmartDashboardNames.SHOOTER_SPEED, m_shooterSpeed);
+        output.put(SmartDashboardNames.INTAKE_INDEXING_SENSOR, m_intakeIndexingSensor);
+        output.put(SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_lowerVerticalConveyorIndexingSensor);
+        output.put(SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_upperVerticalConveyorIndexingSensor);
         return output;
     }
 
@@ -93,6 +105,18 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
         return m_shooterSpeed;
     }
 
+    public boolean isIntakeIndexingSensor() {
+        return m_intakeIndexingSensor;
+    }
+
+    public boolean isLowerVerticalConveyorIndexingSensor() {
+        return m_lowerVerticalConveyorIndexingSensor;
+    }
+
+    public boolean isUpperVerticalConveyorIndexingSensor() {
+        return m_upperVerticalConveyorIndexingSensor;
+    }
+
 
     @Override
     public String toString() {
@@ -105,6 +129,9 @@ public class SuperStructureData extends ComplexData<SuperStructureData> {
                     .add("horizontalConveyorSpeed=" + m_horizontalConveyorSpeed)
                     .add("verticalConveyorSpeed=" + m_verticalConveyorSpeed)
                     .add("shooterSpeed=" + m_shooterSpeed)
+                    .add("intakeIndexingSensor=" + m_intakeIndexingSensor)
+                    .add("lowerVerticalConveyorIndexingSensor=" + m_lowerVerticalConveyorIndexingSensor)
+                    .add("upperVerticalConveyorIndexingSensor=" + m_upperVerticalConveyorIndexingSensor)
                     .toString();
     }
 }

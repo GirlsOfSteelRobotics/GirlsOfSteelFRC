@@ -40,6 +40,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
 
+    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = new PropertyManager.DoubleProperty("To Hub Angle Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = new PropertyManager.DoubleProperty("To Hub Distance PID", 0);
+
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
 
@@ -76,13 +79,25 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leaderLeft.restoreFactoryDefaults();
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_followerLeft.restoreFactoryDefaults();
         m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leaderRight.restoreFactoryDefaults();
         m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        m_leaderLeft.restoreFactoryDefaults();
+        m_followerLeft.restoreFactoryDefaults();
+        m_leaderRight.restoreFactoryDefaults();
         m_followerRight.restoreFactoryDefaults();
+
+        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+        m_leaderLeft.setInverted(false);
+        m_leaderRight.setInverted(true);
+
+        m_followerLeft.follow(m_leaderLeft, false);
+        m_followerRight.follow(m_leaderRight, false);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
@@ -104,18 +119,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
 
-        CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
-        m_leaderLeft.setIdleMode(idleMode);
-        m_followerLeft.setIdleMode(idleMode);
-        m_leaderRight.setIdleMode(idleMode);
-        m_followerRight.setIdleMode(idleMode);
-
-
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
-
-        m_followerLeft.follow(m_leaderLeft, false);
-        m_followerRight.follow(m_leaderRight, false);
 
         // Smart Motion stuff
         m_leftProperties = setupPidValues(m_leftPidController);
@@ -158,9 +161,9 @@ public class ChassisSubsystem extends SubsystemBase {
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
-        SmartDashboard.putData(m_field);
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
+        SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
         SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
         SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
 
@@ -172,7 +175,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getYawAngle()));
-        m_simulator.resetOdometry(pose);
+
+        if (RobotBase.isSimulation()) {
+            m_simulator.resetOdometry(pose);
+        }
     }
 
     public double getAverageEncoderDistance() {
@@ -222,6 +228,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double yCurrent = m_odometry.getPoseMeters().getY();
         double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
 
+        System.out.println(yCurrent);
         double hDistance; //gets distance of the hypotenuse
         double angle;
 
@@ -237,7 +244,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean driveAndTurnPID(double distance, double angle) {
-        double allowableDistanceError = Units.inchesToMeters(12.0);
+        double allowableDistanceError = Units.inchesToMeters(12.0); //for go to cargo
         double allowableAngleError = Units.degreesToRadians(5.0);
 
         double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
@@ -251,6 +258,28 @@ public class ChassisSubsystem extends SubsystemBase {
 
         setArcadeDrive(speed, steer);
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
+    }
+
+    public boolean turnPID(double angleGoal) { //for shooter limelight
+        double allowableAngleError = Units.degreesToRadians(10.0);
+        double speed = 0; //should not be moving distance
+        double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
+        double angleError = angleGoal - angleCurrent;
+
+        double steer = TO_HUB_ANGLE_TURN_PID.getValue() * angleError;
+        setArcadeDrive(speed, steer);
+        return Math.abs(angleError) < allowableAngleError;
+    }
+
+    public boolean distancePID(double currentPosition, double distanceGoal) {
+        double allowableDistanceError = Units.inchesToMeters(10.0);
+        double error = distanceGoal - currentPosition;
+
+        double speed = error * TO_HUB_DISTANCE_PID.getValue();
+        double steer = 0;
+        setArcadeDrive(speed, steer);
+        return Math.abs(error) < allowableDistanceError;
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,7 +27,6 @@ public class CollectorSubsystem extends SubsystemBase {
     public static final double ALLOWABLE_ERROR = Math.toRadians(2);
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
     private static final double GEARING = 350;
-    private static final double GEAR_PULLEY = 5;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
@@ -35,7 +35,10 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final boolean SIMULATE_GRAVITY = true;
 
     private final SimableCANSparkMax m_roller;
-    private final SimableCANSparkMax m_pivot;
+    private final SimableCANSparkMax m_pivotLeader;
+    private final SimableCANSparkMax m_pivotFollower;
+
+    private final DigitalInput m_indexSensor;
 
     private final RelativeEncoder m_pivotEncoder;
 
@@ -51,51 +54,55 @@ public class CollectorSubsystem extends SubsystemBase {
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 
-        m_pivot = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_pivot.restoreFactoryDefaults();
-        m_pivot.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_pivotLeader = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotLeader.restoreFactoryDefaults();
+        m_pivotLeader.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
+        m_pivotFollower = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotFollower.restoreFactoryDefaults();
+        m_pivotFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        m_pivotEncoder = m_pivot.getEncoder();
+        m_pivotFollower.follow(m_pivotLeader);
+        m_pivotFollower.setInverted(true);
 
-        m_pivotEncoder.setPositionConversionFactor(GEAR_PULLEY * GEARING);
+        m_pivotEncoder = m_pivotLeader.getEncoder();
+        //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
 
+        m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
-        m_pidController = m_pivot.getPIDController();
+        m_pidController = m_pivotLeader.getPIDController();
 
         CANSparkMax.IdleMode idleModeBreak = CANSparkMax.IdleMode.kBrake;
         CANSparkMax.IdleMode idleModeCoast = CANSparkMax.IdleMode.kCoast;
-        m_pivot.setIdleMode(idleModeBreak);
+        m_pivotLeader.setIdleMode(idleModeBreak);
         m_roller.setIdleMode(idleModeCoast);
-
 
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
             .addP(0)
             .addD(0)
-            .addMaxAcceleration(0)
-            .addMaxVelocity(0)
             .build();
 
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
                 ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
-            m_simulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivot),
-                RevEncoderSimWrapper.create(m_pivot));
+            m_simulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotLeader),
+                RevEncoderSimWrapper.create(m_pivotLeader));
         }
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Encoder (rad)", m_pivotEncoder.getPosition());
+        SmartDashboard.putNumber("Pivot Encoder (rad)", getIntakeAngleRadians());
+        SmartDashboard.putNumber("Pivot Encoder (deg)", getIntakeAngleDegrees());
         m_pivotPID.updateIfChanged();
     }
 
     public void collectorDown() {
-        m_pivot.set(-PIVOT_SPEED);
+        m_pivotLeader.set(-PIVOT_SPEED);
     }
 
     public void collectorUp() {
-        m_pivot.set(PIVOT_SPEED);
+        m_pivotLeader.set(PIVOT_SPEED);
     }
 
     public void rollerIn() {
@@ -111,7 +118,7 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void pivotStop() {
-        m_pivot.set(0);
+        m_pivotLeader.set(0);
     }
 
     public void collectorDownPID() {
@@ -127,30 +134,42 @@ public class CollectorSubsystem extends SubsystemBase {
      * @param pivotAngleRadians *IN RADIANS*
      */
     public void collectorToAngle(double pivotAngleRadians) {
-        double arbFeedforward = Math.cos(m_pivotEncoder.getPosition()) * GRAVITY_OFFSET.getValue();
+        double arbFeedforward = Math.cos(getIntakeAngleRadians()) * GRAVITY_OFFSET.getValue();
         //System.out.println("arbFeedforward        " + arbFeedforward);
         m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
     }
 
+    public double getIntakeAngleRadians() {
+        return m_pivotEncoder.getPosition();
+    }
+
     public double getIntakeAngleDegrees() {
-        return Math.toDegrees(m_pivotEncoder.getPosition());
+        return Math.toDegrees(getIntakeAngleRadians());
     }
 
     public double getPivotSpeed() {
-        return m_pivot.get();
+        return m_pivotLeader.getAppliedOutput();
     }
 
     public double getRollerSpeed() {
-        return m_roller.get();
+        return m_roller.getAppliedOutput();
     }
 
     public void tuneGravityOffset() {
-        m_pivot.setVoltage(GRAVITY_OFFSET.getValue());
+        m_pivotLeader.setVoltage(GRAVITY_OFFSET.getValue());
     }
 
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+    }
+
+    public void resetPivotEncoder() {
+        m_pivotEncoder.setPosition(0);
+    }
+
+    public boolean getIndexSensor() {
+        return m_indexSensor.get();
     }
 }
 

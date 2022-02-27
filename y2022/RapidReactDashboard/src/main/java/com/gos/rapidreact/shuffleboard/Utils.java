@@ -8,7 +8,7 @@ public final class Utils {
 
     }
 
-    public static void setColor(Shape shape, Color defaultColor, double speed) {
+    public static void setMotorColor(Shape shape, Color defaultColor, double speed) {
         if (defaultColor != null && Math.abs(speed) < .005) {
             shape.setFill(defaultColor);
         } else {
@@ -50,4 +50,15 @@ public final class Utils {
 
         return Color.hsb(hue, saturation, brightness);
     }
+
+    public static Color getSensorColor(boolean booleanValue) {
+        if (booleanValue) {
+            return Color.color(0.25, 1, 0.25);
+        }
+        if (!booleanValue) {
+            return Color.color(1, 0.5, 0.5);
+        }
+        return Color.color(0, 0, 0);
+    }
 }
+

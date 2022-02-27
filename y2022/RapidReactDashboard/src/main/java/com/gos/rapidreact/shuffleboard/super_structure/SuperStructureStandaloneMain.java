@@ -17,10 +17,13 @@ public class SuperStructureStandaloneMain {
     private double m_superStructureIntakeSpeed;
     private double m_superStructureRollerSpeed;
     private double m_superStructureHangerSpeed;
-    private double m_superStructureHangerHeight = 30;
+    private double m_superStructureHangerHeight;
     private double m_superStructureHorizontalConveyorSpeed;
     private double m_superStructureVerticalConveyorSpeed;
     private double m_superStructureShooterSpeed;
+    private boolean m_superStructureIntakeIndexingSensor;
+    private boolean m_superStructureLowerVerticalConveyorIndexingSensor;
+    private boolean m_superStructureUpperVerticalConveyorIndexingSensor;
 
     public SuperStructureStandaloneMain(Scene scene, SuperStructureWidget robotController) {
         m_controller = robotController;
@@ -79,6 +82,18 @@ public class SuperStructureStandaloneMain {
                 m_superStructureShooterSpeed = -0.25;
                 break;
 
+            case DIGIT0:
+                m_superStructureIntakeIndexingSensor = true;
+                break;
+
+            case DIGIT1:
+                m_superStructureLowerVerticalConveyorIndexingSensor = true;
+                break;
+
+            case DIGIT2:
+                m_superStructureUpperVerticalConveyorIndexingSensor = true;
+                break;
+
             default:
                 // ignored
             }
@@ -117,6 +132,18 @@ public class SuperStructureStandaloneMain {
             case K:
                 m_superStructureShooterSpeed = 0;
                 break;
+
+            case DIGIT0:
+                m_superStructureIntakeIndexingSensor = false;
+                break;
+
+            case DIGIT1:
+                m_superStructureLowerVerticalConveyorIndexingSensor = false;
+                break;
+
+            case DIGIT2:
+                m_superStructureUpperVerticalConveyorIndexingSensor = false;
+                break;
             default:
                 break;
             }
@@ -136,7 +163,10 @@ public class SuperStructureStandaloneMain {
                 m_superStructureHangerHeight,
                 m_superStructureHorizontalConveyorSpeed,
                 m_superStructureVerticalConveyorSpeed,
-                m_superStructureShooterSpeed
+                m_superStructureShooterSpeed,
+                m_superStructureIntakeIndexingSensor,
+                m_superStructureLowerVerticalConveyorIndexingSensor,
+                m_superStructureUpperVerticalConveyorIndexingSensor
             );
             m_controller.dataProperty().setValue(data);
         } catch (ClassCastException ignored) {
