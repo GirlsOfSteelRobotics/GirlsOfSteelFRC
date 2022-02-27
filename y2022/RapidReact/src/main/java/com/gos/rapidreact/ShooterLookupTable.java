@@ -1,6 +1,7 @@
 package com.gos.rapidreact;
 
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
@@ -11,7 +12,7 @@ public class ShooterLookupTable {
     private static final double MAX_SHOOTER_VELOCITY = 41.0;
 
     //Sorted array sorts greatest to least
-    private final TreeMap<Double, Double> m_list = new TreeMap<>();
+    private final NavigableMap<Double, Double> m_list = new TreeMap<>();
 
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
