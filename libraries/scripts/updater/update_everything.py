@@ -23,7 +23,7 @@ def update_everything():
     update_vendor_deps()
     replace_gradlerio_files_in_parts()
     run_all_replacements()
-    run_smart_spotless()
+    # run_smart_spotless()
 
 
 if __name__ == "__main__":
