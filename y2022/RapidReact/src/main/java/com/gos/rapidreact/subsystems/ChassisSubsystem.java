@@ -2,14 +2,18 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -22,6 +26,7 @@ import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
+
 
 
 
@@ -44,6 +49,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_leaderRight;
     private final SimableCANSparkMax m_followerRight;
 
+    private final SparkMaxPIDController m_leftPidController;
+    private final SparkMaxPIDController m_rightPidController;
+
+    private final PidProperty m_leftProperties;
+    private final PidProperty m_rightProperties;
+
     private final DifferentialDrive m_drive;
 
     //odometry
@@ -53,6 +64,18 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RelativeEncoder m_leftEncoder;
     private DifferentialDrivetrainSimWrapper m_simulator;
     private final Field2d m_field;
+
+    //constants for trajectory
+    public static final double KS_VOLTS = 0.179;
+    public static final double KV_VOLT_SECONDS_PER_METER = 0.0653;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.00754;
+    public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
+    public static final double MAX_VOLTAGE = 10;
+
+    public static final double K_TRACKWIDTH_METERS = 1.1554881713809029;
+    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
+        new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -81,6 +104,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
+        m_leftPidController = m_leaderLeft.getPIDController();
+        m_rightPidController = m_leaderRight.getPIDController();
+
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
 
@@ -93,6 +119,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
 
+
+        // Smart Motion stuff
+        m_leftProperties = setupPidValues(m_leftPidController);
+        m_rightProperties = setupPidValues(m_rightPidController);
+
+        m_leftProperties.updateIfChanged(true);
+        m_rightProperties.updateIfChanged(true);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -113,6 +146,17 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putData(m_field);
     }
 
+    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            .addP(0)
+            .addI(0)
+            .addD(0)
+            .addFF(0)
+            .addMaxVelocity(Units.inchesToMeters(72))
+            .addMaxAcceleration(Units.inchesToMeters(144))
+            .build();
+    }
+
     @Override
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
@@ -120,6 +164,11 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
         SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
+        SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
+        SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
+
+        m_leftProperties.updateIfChanged();
+        m_rightProperties.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -134,6 +183,32 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public double getAverageEncoderDistance() {
         return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
+    }
+
+    public Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
+
+    public void stop() {
+        m_drive.stopMotor();
+        System.out.println("Stopping motors");
+    }
+
+    public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+        // System.out.println("Driving velocity");
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
+        m_drive.feed();
+
+        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
+    }
+
+    public double getLeftEncoderSpeed() {
+        return m_leftEncoder.getVelocity();
+    }
+
+    public double getRightEncoderSpeed() {
+        return m_rightEncoder.getVelocity();
     }
 
     public double getYawAngle() {
@@ -212,4 +287,3 @@ public class ChassisSubsystem extends SubsystemBase {
         m_simulator.update();
     }
 }
-
