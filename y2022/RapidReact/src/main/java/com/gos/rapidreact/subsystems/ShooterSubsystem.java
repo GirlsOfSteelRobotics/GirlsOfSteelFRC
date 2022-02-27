@@ -4,6 +4,7 @@ package com.gos.rapidreact.subsystems;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.ShooterLookupTable;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -28,6 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
+    private final ShooterLookupTable m_shooterTable;
 
     private ISimWrapper m_simulator;
 
@@ -45,6 +47,8 @@ public class ShooterSubsystem extends SubsystemBase {
             .addD(0.000055)
             .addFF(0.000176)
             .build();
+
+        m_shooterTable = new ShooterLookupTable();
 
         m_leader.burnFlash();
 
@@ -77,6 +81,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getShooterSpeed() {
         return m_leader.getAppliedOutput();
+    }
+
+    public void rpmForDistance(double distance) {
+        setShooterRpmPIDSpeed(m_shooterTable.getVelocityTable(distance));
     }
 
     @Override

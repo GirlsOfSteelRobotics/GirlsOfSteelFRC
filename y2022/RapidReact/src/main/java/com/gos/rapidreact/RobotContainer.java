@@ -8,6 +8,7 @@ package com.gos.rapidreact;
 import com.gos.rapidreact.commands.AutomatedVerticalConveyorCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
+import com.gos.rapidreact.commands.ShootFromTableCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.GoToHubDistanceCommand;
 import com.gos.rapidreact.commands.HangerDownCommand;
@@ -34,11 +35,16 @@ import com.gos.rapidreact.commands.tuning.ResetCollectorPivotEncoderCommand;
 import com.gos.rapidreact.commands.tuning.TuneCollectorPivotPIDGravityOffsetCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterGoalRPMCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterMotorSpeedCommand;
+import com.gos.rapidreact.commands.tuning.VelocityControlDrivingTuningCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 import com.gos.rapidreact.subsystems.LEDManagerSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
+import com.gos.rapidreact.trajectory.TrajectoryB5;
+import com.gos.rapidreact.trajectory.TrajectoryB54;
+import com.gos.rapidreact.trajectory.TrajectoryCurve;
+import com.gos.rapidreact.trajectory.TrajectorySCurve;
 import edu.wpi.first.math.util.Units;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
@@ -80,7 +86,7 @@ public class RobotContainer {
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
 
-    private final AutoModeFactory m_autoModeFactory;
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -89,9 +95,9 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor);
 
         ShuffleboardTab testCommands = Shuffleboard.getTab("test commands");
+        ShuffleboardTab trajecCommands = Shuffleboard.getTab("trajectory commands");
         ShuffleboardTab widget = Shuffleboard.getTab("superstructure widgets");
 
         testCommands.add("TuneShooterMotorSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
@@ -114,6 +120,20 @@ public class RobotContainer {
         testCommands.add("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
         testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
+        testCommands.add("ShooterSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
+        testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
+        testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
+        testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
+        testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
+        testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
+        testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
+        testCommands.add("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
+        testCommands.add("VelocityControlDrivingTuningCommand", new VelocityControlDrivingTuningCommand(m_chassis));
+
+        trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
+        trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
+        trajecCommands.add("TestCurve", TrajectoryCurve.curve(m_chassis));
+        trajecCommands.add("TestSCurve", TrajectorySCurve.scurve(m_chassis));
         // testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
         // testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
         // testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
@@ -122,7 +142,7 @@ public class RobotContainer {
         // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
         testCommands.add("HngerPIDCommand - 4", new HangerPIDCommand(m_hanger, Units.feetToMeters(4)));
         testCommands.add("HngerPIDCommand - 0", new HangerPIDCommand(m_hanger, Units.feetToMeters(0)));
-
+        testCommands.add("ShooterTableRPMCommand", new ShootFromTableCommand(m_shooter, m_shooterLimelight));
 
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, Math.toRadians(45)));
         testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, Math.toRadians(20)));
