@@ -10,20 +10,16 @@ import com.gos.rapidreact.led.LEDRainbow;
 import com.gos.rapidreact.led.LEDBoolean;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 @SuppressWarnings("PMD")
 public class LEDManagerSubsystem extends SubsystemBase {
-    private final IntakeLimelightSubsystem = m_intakeLimelight;
-    private final ShooterLimelightSubsystem = m_shooterLimelight;
-    private final ShooterSubsystem = m_shooter;
-    private final HorizontalConveyorSubsystem = m_horizonalConveyor;
-    private final VerticalConveyorSubsystem = m_verticalConveyor;
-    private final DigitalInput = m_intakeIndexSensor;
-    private final DigitalInput = m_lowerVertConveyorIndexSensor;
-    private final DigitalInput = m_upperVertConveyorIndexSensor;
+    private final IntakeLimelightSubsystem m_intakeLimelight;
+    private final ShooterLimelightSubsystem m_shooterLimelight;
+    private final ShooterSubsystem m_shooter;
+    private final HorizontalConveyorSubsystem m_horizonalConveyor;
+    private final VerticalConveyorSubsystem m_verticalConveyor;
 
     private static final int MAX_INDEX_LED = 30;
     private static final int PORT = Constants.LED;
@@ -38,7 +34,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDAngleToTarget m_angleToTarget;
     private LEDDistanceToTarget m_distanceToTarget;
 
-    public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, ShooterSubsystem shooterSubsystem, HorizontalConveyorSubsystem horizontalConveyorSubsystem, DigitalInput intakeIndexSensor, DigitalInput lowerVertConveyorIndexSensor, DigitalInput upperVertConveyorIndexSensor) {
+    public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, ShooterSubsystem shooterSubsystem, HorizontalConveyorSubsystem horizontalConveyorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem) {
+        m_intakeLimelight = intakeLimelightSubsystem;
+        m_shooterLimelight = shooterLimelightSubsystem;
+        m_shooter = shooterSubsystem;
+        m_horizonalConveyor = horizontalConveyorSubsystem;
+        m_verticalConveyor = verticalConveyorSubsystem;
+
         m_led = new AddressableLED(PORT);
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_ledFlash = new LEDFlash(m_buffer, 2, Color.kPapayaWhip, 0, MAX_INDEX_LED / 2);
@@ -73,8 +75,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // m_ledRainbow.rainbow();
         //m_movingPixel.movingPixel();
         //m_boolean.checkBoolean(false);
-        //m_angleToTarget.angleToTarget(5);
-        m_distanceToTarget.distanceToTarget(5);
+        m_angleToTarget.angleToTarget(m_shooterLimelight.angleError());
+        m_distanceToTarget.distanceToTarget(m_shooterLimelight.getDistanceToHub());
 
         m_led.setData(m_buffer);
     }
