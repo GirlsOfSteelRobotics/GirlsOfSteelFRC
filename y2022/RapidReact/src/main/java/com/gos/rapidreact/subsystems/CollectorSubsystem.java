@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -48,6 +49,8 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private SingleJointedArmSimWrapper m_simulator;
 
+    private final SparkMaxLimitSwitch m_limitSwitch;
+
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
@@ -62,8 +65,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotFollower.restoreFactoryDefaults();
         m_pivotFollower.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        m_pivotFollower.follow(m_pivotLeader);
-        m_pivotFollower.setInverted(true);
+        m_pivotFollower.follow(m_pivotLeader, true);
 
         m_pivotEncoder = m_pivotLeader.getEncoder();
         //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
@@ -77,10 +79,17 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotLeader.setIdleMode(idleModeBreak);
         m_roller.setIdleMode(idleModeCoast);
 
+        m_limitSwitch = m_pivotLeader.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+        m_limitSwitch.enableLimitSwitch(false);
+
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
             .addP(0)
             .addD(0)
             .build();
+
+        m_roller.burnFlash();
+        m_pivotLeader.burnFlash();
+        m_pivotFollower.burnFlash();
 
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
@@ -94,6 +103,7 @@ public class CollectorSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Pivot Encoder (rad)", getIntakeAngleRadians());
         SmartDashboard.putNumber("Pivot Encoder (deg)", getIntakeAngleDegrees());
+        SmartDashboard.putBoolean("Intake LS", m_limitSwitch.isPressed());
         m_pivotPID.updateIfChanged();
     }
 

@@ -34,7 +34,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //TODO: change constants to match this year's robot
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
-    private static final double GEAR_RATIO = 5;
+    private static final double GEAR_RATIO = 14.0 / 2;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
@@ -119,6 +119,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
 
+        m_leaderLeft.setOpenLoopRampRate(0.5);
+        m_leaderRight.setOpenLoopRampRate(0.5);
+
 
         // Smart Motion stuff
         m_leftProperties = setupPidValues(m_leftPidController);
@@ -144,6 +147,11 @@ public class ChassisSubsystem extends SubsystemBase {
         }
 
         SmartDashboard.putData(m_field);
+
+        m_leaderLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_leaderRight.burnFlash();
+        m_followerRight.burnFlash();
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -212,7 +220,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getYawAngle() {
-        return -m_gyro.getYaw();
+        return m_gyro.getYaw();
     }
 
     public void setArcadeDrive(double speed, double steer) {

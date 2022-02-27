@@ -186,12 +186,12 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
-        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM));
+        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM));
+        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterFeederCommandGroup(m_verticalConveyor, m_shooter, 10));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new FeederVerticalConveyorBackwardCommand(m_verticalConveyor));
         final JoystickButton automatedVerticalConveyor = new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value);
         automatedVerticalConveyor.whileHeld(new AutomatedVerticalConveyorCommand(m_verticalConveyor, m_horizontalConveyor));
-        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterFeederCommandGroup(m_verticalConveyor, m_shooter, 10));
 
     }
 

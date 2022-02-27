@@ -56,5 +56,6 @@ public class AutomatedVerticalConveyorCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_verticalConveyor.stopVerticalConveyorMotor();
+        m_horizontalConveyor.stopHorizontalConveyorMotor();
     }
 }
