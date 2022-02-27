@@ -1,9 +1,19 @@
 {
   "HALProvider": {
+    "Other Devices": {
+      "SPARK MAX [3]": {
+        "header": {
+          "open": true
+        }
+      }
     "Addressable LEDs": {
       "0": {
         "columns": 15
       },
+      "window": {
+        "visible": true
+      }
+    "DIO": {
       "window": {
         "visible": true
       }
@@ -23,6 +33,7 @@
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[2]": "Digital Input",
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
@@ -38,6 +49,8 @@
       "/Shuffleboard/test commands/GoToHubAngle - 45": "Command",
       "/Shuffleboard/test commands/GoToHubDist - 10": "Command",
       "/Shuffleboard/test commands/GoToHubDist - 15": "Command",
+      "/Shuffleboard/test commands/HngerPIDCommand - 0": "Command",
+      "/Shuffleboard/test commands/HngerPIDCommand - 4": "Command",
       "/Shuffleboard/test commands/Reset Pivot Encoder": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 45": "Command",
@@ -45,6 +58,8 @@
       "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": "Command",
       "/Shuffleboard/test commands/TuneShooterMotorSpeed": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
+      "/SmartDashboard/Field": "Field2d"
+      "/SmartDashboard/Field": "Field2d"
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
@@ -90,6 +105,16 @@
     },
     "limelight": {
       "open": true
+      "/Shuffleboard/test commands/HngerPIDCommand - 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/HngerPIDCommand - 4": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }

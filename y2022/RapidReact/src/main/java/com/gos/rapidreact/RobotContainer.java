@@ -12,6 +12,7 @@ import com.gos.rapidreact.commands.ShootFromTableCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.GoToHubDistanceCommand;
 import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.HangerPIDCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
@@ -114,12 +115,14 @@ public class RobotContainer {
         testCommands.add("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
         testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
-        testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
-        testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
-        testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
-        testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
-        testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
-        testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
+        // testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
+        // testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
+        // testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
+        // testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
+        // testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
+        // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
+        testCommands.add("HngerPIDCommand - 4", new HangerPIDCommand(m_hanger, Units.feetToMeters(4)));
+        testCommands.add("HngerPIDCommand - 0", new HangerPIDCommand(m_hanger, Units.feetToMeters(0)));
         testCommands.add("ShooterTableRPMCommand", new ShootFromTableCommand(m_shooter, m_shooterLimelight));
 
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, Math.toRadians(45)));
@@ -208,9 +211,9 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ROLLER_SPEED, m_collector::getRollerSpeed, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getUpperBeamBreak, null);
+                SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getUpperIndexSensor, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getLowerBeamBreak, null);
+                SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getLowerIndexSensor, null);
         }
     }
 }
