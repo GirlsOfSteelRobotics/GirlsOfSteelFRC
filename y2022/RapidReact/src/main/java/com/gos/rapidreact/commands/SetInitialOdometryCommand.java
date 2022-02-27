@@ -31,6 +31,7 @@ public class SetInitialOdometryCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        m_loopsRun = 0;
 
     }
 

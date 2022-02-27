@@ -4,7 +4,6 @@ import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -35,7 +34,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
             trajectory,
             m_chassis::getPose,
             new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-            ChassisSubsystem.kDriveKinematics,
+            ChassisSubsystem.K_DRIVE_KINEMATICS,
             this::setVelocityGoal,
             m_chassis
         );
@@ -62,8 +61,8 @@ public class FollowTrajectory extends SequentialCommandGroup {
         super.execute();
 
         m_ramsetePublisher.addMeasurement(m_chassis.getPose(),
-            new DifferentialDriveWheelSpeeds(Units.inchesToMeters(m_goalVelocityLeft), Units.inchesToMeters(m_goalVelocityRight)),
-            new DifferentialDriveWheelSpeeds(Units.inchesToMeters(m_chassis.getLeftEncoderSpeed()), Units.inchesToMeters(m_chassis.getRightEncoderSpeed())));
+            new DifferentialDriveWheelSpeeds(m_goalVelocityLeft, m_goalVelocityRight),
+            new DifferentialDriveWheelSpeeds(m_chassis.getLeftEncoderSpeed(), m_chassis.getRightEncoderSpeed()));
     }
 
     @Override

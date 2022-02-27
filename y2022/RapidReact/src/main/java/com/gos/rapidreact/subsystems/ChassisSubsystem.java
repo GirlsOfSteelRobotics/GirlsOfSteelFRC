@@ -63,20 +63,16 @@ public class ChassisSubsystem extends SubsystemBase {
     private final Field2d m_field;
 
     //constants for trajectory
-    public static final double ksVolts = 0.179;
-    public static final double kvVoltSecondsPerMeter = 0.0653;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.00754;
-    public static final double kvVoltSecondsPerRadian = 2.5;
-    public static final double kaVoltSecondsSquaredPerRadian = 0.3;
-    public static final double maxVoltage = 10;
+    public static final double KS_VOLTS = 0.179;
+    public static final double KV_VOLT_SECONDS_PER_METER = 0.0653;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.00754;
+    public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
+    public static final double MAX_VOLTAGE = 10;
 
-    public static final double kTrackwidthMeters = 1.1554881713809029;
-    public static final DifferentialDriveKinematics kDriveKinematics =
-        new DifferentialDriveKinematics(kTrackwidthMeters);
-
-
-    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(72);
-    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(60);
+    public static final double K_TRACKWIDTH_METERS = 1.1554881713809029;
+    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
+        new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);

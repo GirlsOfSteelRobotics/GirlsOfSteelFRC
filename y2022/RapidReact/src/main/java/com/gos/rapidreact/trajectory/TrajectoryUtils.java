@@ -20,6 +20,10 @@ import java.nio.file.Path;
 import java.util.StringTokenizer;
 
 public class TrajectoryUtils {
+
+    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(60);
+    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(72);
+
     //reads file & spits out trajectory
     public static Trajectory loadingTrajectory(String fileName, TrajectoryConfig trajectoryConfig) {
         TrajectoryGenerator.ControlVectorList list = new TrajectoryGenerator.ControlVectorList();
@@ -62,21 +66,21 @@ public class TrajectoryUtils {
     public static TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
             new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(ChassisSubsystem.ksVolts,
-                    ChassisSubsystem.kvVoltSecondsPerMeter,
-                    ChassisSubsystem.kaVoltSecondsSquaredPerMeter),
-                ChassisSubsystem.kDriveKinematics,
-                ChassisSubsystem.maxVoltage);
+                new SimpleMotorFeedforward(ChassisSubsystem.KS_VOLTS,
+                    ChassisSubsystem.KV_VOLT_SECONDS_PER_METER,
+                    ChassisSubsystem.KA_VOLT_SECONDS_SQUARED_PER_METER),
+                ChassisSubsystem.K_DRIVE_KINEMATICS,
+                ChassisSubsystem.MAX_VOLTAGE);
 
         return new TrajectoryConfig(maxSpeedMetersPerSecond,
             maxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(ChassisSubsystem.kDriveKinematics)
+            .setKinematics(ChassisSubsystem.K_DRIVE_KINEMATICS)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
     }
 
     public static TrajectoryConfig getTrajectoryConfig() {
-        return  getTrajectoryConfig(ChassisSubsystem.DEFAULT_VELOCITY, ChassisSubsystem.DEFAULT_ACCELERATION);
+        return  getTrajectoryConfig(DEFAULT_VELOCITY, DEFAULT_ACCELERATION);
     }
 }
