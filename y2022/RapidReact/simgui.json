@@ -62,6 +62,10 @@
       "/Shuffleboard/test commands/VelocityControlDrivingTuningCommand": "Command",
       "/Shuffleboard/test commands/VerticalConveyorDownCommand": "Command",
       "/Shuffleboard/test commands/VerticalConveyorUpCommand": "Command",
+      "/Shuffleboard/trajectory commands/B5 (straight)": "Command",
+      "/Shuffleboard/trajectory commands/B54": "Command",
+      "/Shuffleboard/trajectory commands/TestCurve": "Command",
+      "/Shuffleboard/trajectory commands/TestSCurve": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/CollectorDownCommand": "Command",
       "/SmartDashboard/CollectorPivotPIDCommand - 0 Degrees": "Command",
@@ -99,6 +103,26 @@
           "visible": true
         }
       },
+      "/Shuffleboard/trajectory commands/B5 (straight)": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/trajectory commands/B54": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/trajectory commands/TestCurve": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/trajectory commands/TestSCurve": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Auto Mode": {
         "window": {
           "visible": true
@@ -128,7 +152,7 @@
               "autoFit": true
             }
           ],
-          "height": 258,
+          "height": -6,
           "series": [
             {
               "color": [
