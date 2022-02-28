@@ -27,7 +27,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double PIVOT_SPEED = 0.5;
     public static final double ALLOWABLE_ERROR = Math.toRadians(2);
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
-    private static final double GEARING = 350;
+    private static final double GEARING =  1.0 / 756.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
@@ -68,7 +68,9 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotFollower.follow(m_pivotLeader, true);
 
         m_pivotEncoder = m_pivotLeader.getEncoder();
-        //  m_pivotEncoder.setPositionConversionFactor(1 / (GEAR_PULLEY * GEARING));
+        m_pivotEncoder.setPositionConversionFactor(GEARING);
+
+        m_pivotEncoder.setInverted(true);
 
         m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
