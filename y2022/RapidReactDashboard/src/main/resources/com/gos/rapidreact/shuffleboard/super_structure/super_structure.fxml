@@ -18,6 +18,9 @@
         <Rectangle fx:id="m_hanger" fill="#efea98"/>
         <Arc fx:id="m_shooter" fill="#fdc9c1" stroke="#fdc9c1"
              length="90.0" type="ROUND" />
+        <Circle fx:id="m_intakeIndexingSensor" fill="#ef91d6"/>
+        <Circle fx:id="m_upperVConveyorSensor" fill="#ef91d6"/>
+        <Circle fx:id="m_lowerVConveyorSensor" fill="#ef91d6"/>
 
 
     </Group>

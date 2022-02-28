@@ -4,6 +4,7 @@ package com.gos.rapidreact.subsystems;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.ShooterLookupTable;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -28,6 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
+    private final ShooterLookupTable m_shooterTable;
 
     private ISimWrapper m_simulator;
 
@@ -41,13 +43,17 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_pidController = m_leader.getPIDController();
         m_pid = new RevPidPropertyBuilder("Shooter PID", false, m_pidController, 0)
-            .addP(0)
-            .addD(0)
-            .addFF(0)
+            .addP(0.003)
+            .addD(0.000055)
+            .addFF(0.000176)
             .build();
 
+        m_shooterTable = new ShooterLookupTable();
+
+        m_leader.burnFlash();
+
         if (RobotBase.isSimulation()) {
-            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.66, 1.0);
+            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.1);
             m_simulator = new FlywheelSimWrapper(flywheelSim,
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));
@@ -62,7 +68,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
-        System.out.println("Setting rpm " + rpm);
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
@@ -76,6 +81,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getShooterSpeed() {
         return m_leader.getAppliedOutput();
+    }
+
+    public void rpmForDistance(double distance) {
+        setShooterRpmPIDSpeed(m_shooterTable.getVelocityTable(distance));
     }
 
     @Override

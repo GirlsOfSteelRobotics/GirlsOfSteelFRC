@@ -29,6 +29,10 @@ public class SuperStructureController {
     private static final double HANGER_HEIGHT = 32;
     private static final double SHOOTER_WIDTH = 8;
     private static final double SHOOTER_HEIGHT = 6;
+    private static final double INTAKE_BREAK_SENSOR_RADIUS = 1.5;
+    private static final double LOWER_VERT_BREAK_SENSOR_RADIUS = 1.5;
+    private static final double UPPER_VERT_BREAK_SENSOR_RADIUS = 1.5;
+
 
     private static final double CHASSIS_X = MAX_WIDTH - CHASSIS_WIDTH;
     private static final double CHASSIS_Y = MAX_HEIGHT - CHASSIS_HEIGHT;
@@ -44,9 +48,12 @@ public class SuperStructureController {
     private static final double HANGER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - HANGER_HEIGHT;
     private static final double SHOOTER_X = MAX_WIDTH - INTAKE_WIDTH - VERT_CONVEYOR_WIDTH - SHOOTER_WIDTH - 8;
     private static final double SHOOTER_Y = MAX_HEIGHT - CHASSIS_HEIGHT - HORI_CONVEYOR_HEIGHT - VERT_CONVEYOR_HEIGHT;
-
-
-
+    private static final double INTAKE_BREAK_SENSOR_X = INTAKE_X + INTAKE_WIDTH;
+    private static final double INTAKE_BREAK_SENSOR_Y = INTAKE_Y;
+    private static final double LOWER_VERT_BREAK_SENSOR_X = VERT_CONVEYOR_X + SHOOTER_WIDTH;
+    private static final double LOWER_VERT_BREAK_SENSOR_Y = VERT_CONVEYOR_Y + (VERT_CONVEYOR_HEIGHT / 2);
+    private static final double UPPER_VERT_BREAK_SENSOR_X = VERT_CONVEYOR_X + SHOOTER_WIDTH;
+    private static final double UPPER_VERT_BREAK_SENSOR_Y = VERT_CONVEYOR_Y;
 
     @FXML
     private Group m_group;
@@ -81,6 +88,17 @@ public class SuperStructureController {
     @FXML
     private Arc m_shooter;
 
+    @FXML
+    private Circle m_intakeIndexingSensor;
+
+    @FXML
+    private Rotate m_intakeIndexingSensorRotation;
+
+    @FXML
+    private Circle m_upperVConveyorSensor;
+
+    @FXML
+    private Circle m_lowerVConveyorSensor;
 
     @FXML
     public void initialize() {
@@ -146,6 +164,23 @@ public class SuperStructureController {
         m_shooter.setRadiusY(SHOOTER_HEIGHT);
         m_shooter.setRadiusX(SHOOTER_WIDTH);
 
+        m_intakeIndexingSensor.setCenterX(INTAKE_BREAK_SENSOR_X);
+        m_intakeIndexingSensor.setCenterY(INTAKE_BREAK_SENSOR_Y);
+        m_intakeIndexingSensor.setRadius(INTAKE_BREAK_SENSOR_RADIUS);
+
+        m_intakeIndexingSensorRotation = new Rotate();
+        m_intakeIndexingSensorRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX() + m_intake.getWidth(), m_intake.xProperty()));
+        m_intakeIndexingSensorRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
+        m_intakeIndexingSensor.getTransforms().add(m_intakeWheelRotation);
+
+        m_upperVConveyorSensor.setCenterX(UPPER_VERT_BREAK_SENSOR_X);
+        m_upperVConveyorSensor.setCenterY(UPPER_VERT_BREAK_SENSOR_Y);
+        m_upperVConveyorSensor.setRadius(UPPER_VERT_BREAK_SENSOR_RADIUS);
+
+        m_lowerVConveyorSensor.setCenterX(LOWER_VERT_BREAK_SENSOR_X);
+        m_lowerVConveyorSensor.setCenterY(LOWER_VERT_BREAK_SENSOR_Y);
+        m_lowerVConveyorSensor.setRadius(LOWER_VERT_BREAK_SENSOR_RADIUS);
+
     }
 
 
@@ -161,6 +196,11 @@ public class SuperStructureController {
         m_verticalConveyor.setStroke(Utils.getMotorColor(superStructureData.getVerticalConveyorSpeed()));
         m_hanger.setHeight(superStructureData.getHangerHeight());
         m_hanger.setY(HANGER_Y + HANGER_HEIGHT - m_hanger.getHeight());
+        m_intakeIndexingSensor.setFill(Utils.getSensorColor(superStructureData.isIntakeIndexingSensor()));
+        m_intakeIndexingSensorRotation.setAngle(m_intakeRotation.getAngle());
+        m_lowerVConveyorSensor.setFill(Utils.getSensorColor(superStructureData.isLowerVerticalConveyorIndexingSensor()));
+        m_upperVConveyorSensor.setFill(Utils.getSensorColor(superStructureData.isUpperVerticalConveyorIndexingSensor()));
+
 
     }
 
