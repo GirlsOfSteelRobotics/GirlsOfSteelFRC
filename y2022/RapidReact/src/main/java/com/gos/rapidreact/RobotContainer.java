@@ -100,9 +100,14 @@ public class RobotContainer {
         ShuffleboardTab trajecCommands = Shuffleboard.getTab("trajectory commands");
         ShuffleboardTab widget = Shuffleboard.getTab("superstructure widgets");
 
+        // Tuning
         testCommands.add("TuneShooterMotorSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
         testCommands.add("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
         testCommands.add("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
+        testCommands.add("VelocityControlDrivingTuningCommand", new VelocityControlDrivingTuningCommand(m_chassis));
+        testCommands.add("ShooterSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
+
+        // Sensor Reset
         testCommands.add("SetInitialOdometry - 0, 0, 0", new SetInitialOdometryCommand(m_chassis, 0, 0, 0));
         testCommands.add("SetInitialOdometry - 0, 0, 45", new SetInitialOdometryCommand(m_chassis, 0, 0, 45));
         testCommands.add("Reset Pivot Encoder", new ResetCollectorPivotEncoderCommand(m_collector));
@@ -115,34 +120,23 @@ public class RobotContainer {
         testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(45)));
         testCommands.add("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)));
 
-        testCommands.add("GoToCargoCommand - 10 forward", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), 0));
-        testCommands.add("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(-10)));
-        testCommands.add("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
         testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
-        testCommands.add("ShooterSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
-        testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
-        testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
-        testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
-        testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
-        testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
-        testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
-        testCommands.add("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
-        testCommands.add("VelocityControlDrivingTuningCommand", new VelocityControlDrivingTuningCommand(m_chassis));
 
-        trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
-        trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
-        trajecCommands.add("TestCurve", TrajectoryCurve.curve(m_chassis));
-        trajecCommands.add("TestSCurve", TrajectorySCurve.scurve(m_chassis));
         // testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
         // testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
         // testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
         // testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
         // testCommands.add("ShooterPIDCommand - 3000", new ShooterRpmPIDCommand(m_shooter, 3000));
         // testCommands.add("ShooterPIDCommand - 5000", new ShooterRpmPIDCommand(m_shooter, 5000));
-        testCommands.add("HngerPIDCommand - 4", new HangerPIDCommand(m_hanger, Units.feetToMeters(4)));
-        testCommands.add("HngerPIDCommand - 0", new HangerPIDCommand(m_hanger, Units.feetToMeters(0)));
+        testCommands.add("HangerPIDCommand - 4", new HangerPIDCommand(m_hanger, Units.feetToMeters(4)));
+        testCommands.add("HangerPIDCommand - 0", new HangerPIDCommand(m_hanger, Units.feetToMeters(0)));
         testCommands.add("ShooterTableRPMCommand", new ShootFromTableCommand(m_shooter, m_shooterLimelight));
+
+        // Auton Sub-Commands
+        testCommands.add("GoToCargoCommand - 10 forward", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), 0));
+        testCommands.add("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(-10)));
+        testCommands.add("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
 
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, Math.toRadians(45)));
         testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, Math.toRadians(20)));
@@ -150,6 +144,10 @@ public class RobotContainer {
         testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(10)));
         testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(15)));
 
+        trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
+        trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
+        trajecCommands.add("TestCurve", TrajectoryCurve.curve(m_chassis));
+        trajecCommands.add("TestSCurve", TrajectorySCurve.scurve(m_chassis));
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 
