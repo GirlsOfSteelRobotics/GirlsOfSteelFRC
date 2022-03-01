@@ -24,7 +24,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 @SuppressWarnings("PMD.TooManyMethods")
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
-    private static final double PIVOT_SPEED = 0.5;
+    private static final double PIVOT_SPEED = 1;
     public static final double ALLOWABLE_ERROR_DEG = 2;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
     private static final double GEARING =  756.0;
@@ -91,9 +91,9 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
             .addP(0.6)
             .addD(0)
-            .addFF(0.0)
-            .addMaxVelocity(0.0)
-            .addMaxAcceleration(0.0)
+            .addFF(0.0115)
+            .addMaxVelocity(75)
+            .addMaxAcceleration(120)
             .build();
 
         m_roller.burnFlash();
