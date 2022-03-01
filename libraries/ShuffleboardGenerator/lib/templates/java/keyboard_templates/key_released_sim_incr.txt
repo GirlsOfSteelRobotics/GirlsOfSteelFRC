@@ -1,5 +1,4 @@
-
-            case {{entry.sim_keys}}:
-                m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}} = false;
+            case {{entry.sim_keys[0]}}:
+            case {{entry.sim_keys[1]}}:
                 m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label.setTextFill(Color.BLACK);
                 break;

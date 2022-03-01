@@ -3,17 +3,26 @@ package {{widget_package_name}};
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 {%- if widget.children_tables|length != 1 %}
 import java.util.HashMap;
-import java.util.Map;
 {%- endif %}
+import java.util.Map;
 
-@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NPathComplexity"})
+@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NPathComplexity", "PMD.TooManyFields"})
 public class {{widget.table}}StandaloneMain {
     private final {{widget.table}}Widget m_controller;
 {% for child in widget.children_tables %}
@@ -28,8 +37,36 @@ public class {{widget.table}}StandaloneMain {
   {%- endfor %}
 {%- endfor %}
 
+{% for child in widget.children_tables %}
+  {%- for entry in child.entries %}
+    {%- if is_array(entry) %}
+      {%- for i in range(5) %}
+    private final Label m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{{i}}Label = new Label("{{get_keys(child, entry, i)}} -> {{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}");
+      {%- endfor %}
+    {%- else %}
+    private final Label m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label = new Label("{{get_keys(child, entry)}} -> {{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}");
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+
     public {{widget.table}}StandaloneMain(Scene scene, {{widget.table}}Widget robotController) {
         m_controller = robotController;
+
+        VBox labelPane = new VBox();
+        labelPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+{% for child in widget.children_tables %}
+  {%- for entry in child.entries %}
+    {%- if is_array(entry) %}
+      {%- for i in range(5) %}
+        labelPane.getChildren().add(m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}{{i}}Label);
+      {%- endfor %}
+    {%- else %}
+        labelPane.getChildren().add(m_{{lower_first_char(child.table)}}{{cap_first_char(entry.name)}}Label);
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+        ((BorderPane) scene.getRoot()).setBottom(labelPane);
 
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
@@ -89,6 +126,11 @@ public class {{widget.table}}StandaloneMain {
               {%- endif %}
             {%- endfor %}
             );
+
+            final SuperStructureData oldData =  m_controller.dataProperty().getValue();
+            Map<String, Object> changes = data.changesFrom(oldData);
+            System.out.println(changes);
+
             m_controller.dataProperty().setValue(data);
 {%- else %}
             Map<String, Object> map = new HashMap<>();
@@ -99,6 +141,11 @@ public class {{widget.table}}StandaloneMain {
   {%- endfor %}
                 ).asMap(SmartDashboardNames.{{child.table_name}} + "/"));
 {% endfor %}
+
+            final SuperStructureData oldData =  m_controller.dataProperty().getValue();
+            Map<String, Object> changes = data.changesFrom(oldData);
+            System.out.println(changes);
+
             m_controller.dataProperty().setValue(new {{widget.table}}Data(map));
 {% endif %}
         } catch (ClassCastException ignored) {

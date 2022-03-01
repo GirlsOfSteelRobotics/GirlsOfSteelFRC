@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-@SuppressWarnings("PMD.DataClass")
+@SuppressWarnings({"PMD.DataClass", "PMD.ExcessiveParameterList"})
 public class {{child.table}}Data extends ComplexData<{{child.table}}Data> {
 {%- for variable in child.entries %}
 {%- if is_array(variable) %}
