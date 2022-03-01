@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
 
-    public static final double MOUNTING_ANGLE = 0;
-    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35);
+    public static final String LIMELIGHT_NAME = "limelight"; // TODO disambiguate with intake limelight
+    public static final double MOUNTING_ANGLE = 0; // TODO verify angle
+    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
 
     public ShooterLimelightSubsystem() {
-        NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+        NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
 
         m_horizontalAngle = limelightTable.getEntry("tx");
         m_verticalAngle = limelightTable.getEntry("ty");

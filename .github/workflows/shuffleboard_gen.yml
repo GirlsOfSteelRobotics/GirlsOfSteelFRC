@@ -30,9 +30,23 @@ jobs:
         run: python generate_dashboard.py --config_file=../../y2021/OutreachBotDashboard/dashboard.yml
         working-directory: libraries/ShuffleboardGenerator
 
+      - name: Re-gen 2022
+        run: python generate_dashboard.py --config_file=../../y2022/RapidReactDashboard/dashboard.yml
+        working-directory: libraries/ShuffleboardGenerator
+
       - name: Check output
         run: git --no-pager diff --exit-code HEAD
       - name: Print Debug Message
         if: ${{ failure() }}
         run: |
           echo "::error:: The automatic generation script for the shuffleboard plugin is producing different code than what has been comitted"
+
+      - name: Generate diff
+        run: git diff HEAD > shuffleboard-fixes.patch
+        if: ${{ failure() }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.platform }}-shuffleboard-fixes
+          path: shuffleboard-fixes.patch
+        if: ${{ failure() }}

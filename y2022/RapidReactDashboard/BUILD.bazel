@@ -1,0 +1,14 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_binary")
+load("//build_scripts/bazel/shuffleboard:shuffleboard_widget.bzl", "shuffleboard_widget")
+
+shuffleboard_widget(
+    name = "RapidReactDashboard",
+    generation_config_file = ":dashboard.yml",
+    package = "com.gos.rapidreact.shuffleboard",
+)
+
+gos_java_binary(
+    name = "SuperStructureMain",
+    main_class = "com.gos.rapidreact.shuffleboard.super_structure.SuperStructureStandaloneMain",
+    runtime_deps = [":RapidReactDashboard"],
+)

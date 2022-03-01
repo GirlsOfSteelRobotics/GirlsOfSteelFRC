@@ -4,7 +4,6 @@ import os
 import sys
 
 
-
 def get_this_directory():
 
     try:
@@ -15,6 +14,7 @@ def get_this_directory():
 
     except ModuleNotFoundError:
         return os.path.dirname(os.path.realpath(__file__))
+
 
 def main(argv):
     import argparse
@@ -33,14 +33,6 @@ def main(argv):
     parser.add_argument('--force_standard', action="store_true", help='Force overwriting all of the non-autogenerted files')
 
     args = parser.parse_args(argv)
-    this_dir = get_this_directory()
-
-    template_dir = os.path.join(this_dir, "lib", "templates")
-    print(template_dir)
-
-    if not args.project_dir:
-        print("Output directory not specified, using config file location")
-        args.project_dir = os.path.dirname(args.config_file)
 
     if args.force_all:
         args.force_nt_names = True
@@ -49,29 +41,61 @@ def main(argv):
         args.force_standalone_main = True
         args.force_controller = True
 
-    if not os.path.exists(args.project_dir):
-        raise Exception(f"The output directory '{args.project_dir}' must exist")
+    generate_dashboard(
+            args.config_file,
+            args.project_dir,
+            args.force_nt_names,
+            args.force_utils,
+            args.force_fxml,
+            args.force_standalone_main,
+            args.force_controller,
+        )
 
-    config = yaml.load(open(args.config_file, 'r'), Loader=yaml.SafeLoader)
+
+def generate_dashboard(
+    config_file,
+    project_dir,
+    force_nt_names,
+    force_utils,
+    force_fxml,
+    force_standalone_main,
+    force_controller,
+):
+    this_dir = get_this_directory()
+    template_dir = os.path.join(this_dir, "lib", "templates")
+
+    if not project_dir:
+        print("Output directory not specified, using config file location")
+        project_dir = os.path.dirname(config_file)
+
+    if not os.path.exists(project_dir):
+        raise Exception(f"The output directory '{project_dir}' must exist")
+
+    if not os.path.exists(project_dir):
+        raise Exception(f"The output directory '{project_dir}' must exist")
+
+    config = yaml.load(open(config_file, 'r'), Loader=yaml.SafeLoader)
+
+    print(f"Generating dashboard config in '{os.path.abspath(project_dir)}'")
 
     for widget in config['widgets']:
         print(f"Running generation for widget \"{widget['widget_name']}\"")
         maybe_add_standalone_buttons(widget)
-        gen = WidgetGenerator(template_dir, args.project_dir, config['base_package'], widget)
+        gen = WidgetGenerator(template_dir, project_dir, config['base_package'], widget)
         gen.verify_config()
 
         gen.dump_single_components()
         gen.dump_widget()
         gen.dump_widget_top_level_data()
 
-        gen.maybe_dump_fxml(args.force_fxml)
-        gen.maybe_dump_standalone_main(args.force_standalone_main)
-        gen.maybe_dump_controller(args.force_controller)
-        gen.maybe_dump_shuffleboard_names(args.force_nt_names)
+        gen.maybe_dump_fxml(force_fxml)
+        gen.maybe_dump_standalone_main(force_standalone_main)
+        gen.maybe_dump_controller(force_controller)
+        gen.maybe_dump_shuffleboard_names(force_nt_names)
 
-    top_level_gen = TopLevelGenerator(template_dir, args.project_dir, config)
+    top_level_gen = TopLevelGenerator(template_dir, project_dir, config)
     top_level_gen.dump_plugin()
-    top_level_gen.maybe_dump_utils(args.force_utils)
+    top_level_gen.maybe_dump_utils(force_utils)
 
 
 if __name__ == "__main__":
