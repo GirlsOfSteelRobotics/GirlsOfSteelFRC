@@ -21,8 +21,8 @@ def activate_dependencies():
 
     jvm_maven_import_external(
         name = "snobot_sim",
-        artifact = "org.snobotv2:snobot_sim_java:2022.1.0.0",
-        artifact_sha256 = "76292acb2d42c1343f105064dcb00eb3a044d3ea03e5af16a9448c1d8c11a81e",
+        artifact = "org.snobotv2:snobot_sim_java:2022.2.0.0",
+        artifact_sha256 = "1d3524a9c78b45bf36f8604e1574da28be19b4f5589f8e93f263031c3b3bb68a",
         server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
     )
 
