@@ -6,6 +6,7 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.AutomatedVerticalConveyorCommand;
+import com.gos.rapidreact.commands.DriveDistanceCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
 import com.gos.rapidreact.commands.ShootFromTableCommand;
@@ -105,7 +106,6 @@ public class RobotContainer {
         testCommands.add("TuneShooterGoalRPMCommand", new TuneShooterGoalRPMCommand(m_shooter));
         testCommands.add("TuneCollectorPivotPIDGravityOffset", new TuneCollectorPivotPIDGravityOffsetCommand(m_collector));
         testCommands.add("VelocityControlDrivingTuningCommand", new VelocityControlDrivingTuningCommand(m_chassis));
-        testCommands.add("ShooterSpeed", new TuneShooterMotorSpeedCommand(m_shooter));
 
         // Sensor Reset
         testCommands.add("SetInitialOdometry - 0, 0, 0", new SetInitialOdometryCommand(m_chassis, 0, 0, 0));
@@ -117,8 +117,8 @@ public class RobotContainer {
         // testCommands.add("RollerInCommand", new RollerInCommand(m_collector));
         // testCommands.add("RollerOutCommand", new RollerOutCommand(m_collector));
         testCommands.add("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
-        testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(45)));
-        testCommands.add("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, Math.toRadians(90)));
+        testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, 45));
+        testCommands.add("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, 90));
 
         testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
@@ -144,6 +144,10 @@ public class RobotContainer {
         testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(10)));
         testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(15)));
 
+        testCommands.add("Drive Dist 60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(60), Units.inchesToMeters(2)));
+        testCommands.add("Drive Dist -60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(-60), Units.inchesToMeters(2)));
+
+        // Trajectories
         trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
         trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
         trajecCommands.add("TestCurve", TrajectoryCurve.curve(m_chassis));
@@ -231,6 +235,8 @@ public class RobotContainer {
                 SmartDashboardNames.UPPER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getUpperIndexSensor, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.LOWER_VERTICAL_CONVEYOR_INDEXING_SENSOR, m_verticalConveyor::getLowerIndexSensor, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.INTAKE_INDEXING_SENSOR, m_collector::getIndexSensor, null);
         }
     }
 }
