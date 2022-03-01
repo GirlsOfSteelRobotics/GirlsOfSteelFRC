@@ -2,6 +2,8 @@ package com.gos.rapidreact.auto_modes;
 
 
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
+import com.gos.rapidreact.subsystems.CollectorSubsystem;
+import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.math.util.Units;
@@ -29,7 +31,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor) {
+    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         //need to have distance
         m_sendableChooser = new SendableChooser<>();
 
@@ -42,6 +44,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         //need to have distance, allowableError
         m_sendableChooser.setDefaultOption("DriveOffTarmac (Default)", m_defaultCommand);
         m_sendableChooser.addOption("One Ball Auto", new OneBallAuto(chassis, shooter, verticalConveyor, VERTICAL_CONVEYOR_TIMEOUT));
+        m_sendableChooser.addOption("Three Ball Auto", new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector, VERTICAL_CONVEYOR_TIMEOUT));
     }
 
 
