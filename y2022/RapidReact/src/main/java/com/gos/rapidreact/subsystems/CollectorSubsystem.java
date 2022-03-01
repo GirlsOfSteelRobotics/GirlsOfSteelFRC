@@ -10,6 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -27,13 +28,17 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double PIVOT_SPEED = 0.5;
     public static final double ALLOWABLE_ERROR = Math.toRadians(2);
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = new PropertyManager.DoubleProperty("Gravity Offset", 0);
-    private static final double GEARING =  1.0 / 756.0;
+    private static final double GEARING =  756.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
     private static final double MAX_ANGLE_RADS = Math.PI / 2;
     private static final double ARM_MASS_KG = Units.lbsToKilograms(5);
     private static final boolean SIMULATE_GRAVITY = true;
+
+    private static final double PIVOT_KS = 0.1831;
+    private static final double PIVOT_KV = 0.12391;
+    private static final double PIVOT_KA = 0.0063637;
 
     private final SimableCANSparkMax m_roller;
     private final SimableCANSparkMax m_pivotLeader;
@@ -46,6 +51,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private final PidProperty m_pivotPID;
     private final SparkMaxPIDController m_pidController;
+    private final SimpleMotorFeedforward m_pidFeedFoward;
 
     private SingleJointedArmSimWrapper m_simulator;
 
@@ -55,6 +61,8 @@ public class CollectorSubsystem extends SubsystemBase {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+        m_pidFeedFoward = new SimpleMotorFeedforward(PIVOT_KS, PIVOT_KV, PIVOT_KA);
 
 
         m_pivotLeader = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -68,9 +76,8 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotFollower.follow(m_pivotLeader, true);
 
         m_pivotEncoder = m_pivotLeader.getEncoder();
-        m_pivotEncoder.setPositionConversionFactor(GEARING);
-
-        m_pivotEncoder.setInverted(true);
+        m_pivotEncoder.setPositionConversionFactor(360 / GEARING);
+        m_pivotEncoder.setVelocityConversionFactor(360 / GEARING / 60.0);
 
         m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
@@ -85,8 +92,11 @@ public class CollectorSubsystem extends SubsystemBase {
         m_limitSwitch.enableLimitSwitch(false);
 
         m_pivotPID = new RevPidPropertyBuilder("Pivot PID", false, m_pidController, 0)
-            .addP(0)
+            .addP(0.6)
             .addD(0)
+            .addFF(0.0)
+            .addMaxVelocity(0.0)
+            .addMaxAcceleration(0.0)
             .build();
 
         m_roller.burnFlash();
@@ -105,6 +115,7 @@ public class CollectorSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Pivot Encoder (rad)", getIntakeAngleRadians());
         SmartDashboard.putNumber("Pivot Encoder (deg)", getIntakeAngleDegrees());
+        SmartDashboard.putNumber("Pivot Encoder (deg/sec)", m_pivotEncoder.getVelocity());
         SmartDashboard.putBoolean("Intake LS", m_limitSwitch.isPressed());
         m_pivotPID.updateIfChanged();
     }
@@ -146,17 +157,22 @@ public class CollectorSubsystem extends SubsystemBase {
      * @param pivotAngleRadians *IN RADIANS*
      */
     public void collectorToAngle(double pivotAngleRadians) {
-        double arbFeedforward = Math.cos(getIntakeAngleRadians()) * GRAVITY_OFFSET.getValue();
+
+        double error = pivotAngleRadians - getIntakeAngleRadians();
+        double gravityOffset = Math.cos(getIntakeAngleRadians()) * GRAVITY_OFFSET.getValue();
+        double staticFriction = PIVOT_KS * Math.signum(error);
+        double arbFeedforward = gravityOffset + staticFriction;
+        System.out.println(staticFriction);
         //System.out.println("arbFeedforward        " + arbFeedforward);
-        m_pidController.setReference(pivotAngleRadians, CANSparkMax.ControlType.kPosition, 0, arbFeedforward);
+        m_pidController.setReference(Math.toDegrees(pivotAngleRadians), CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforward);
     }
 
     public double getIntakeAngleRadians() {
-        return m_pivotEncoder.getPosition();
+        return Math.toRadians(getIntakeAngleDegrees());
     }
 
     public double getIntakeAngleDegrees() {
-        return Math.toDegrees(getIntakeAngleRadians());
+        return m_pivotEncoder.getPosition();
     }
 
     public double getPivotSpeed() {
