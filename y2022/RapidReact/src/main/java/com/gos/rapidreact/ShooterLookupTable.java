@@ -1,5 +1,7 @@
 package com.gos.rapidreact;
 
+import edu.wpi.first.math.util.Units;
+
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -17,16 +19,11 @@ public class ShooterLookupTable {
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
     public ShooterLookupTable() {
-        //old data (2012):
-        m_list.put(2.87, 20.75);
-        m_list.put(3.175, 21.3);
-        m_list.put(3.785, 21.9);
-        m_list.put(4.394, 23.7);
-        m_list.put(5.004, 24.82);
-        m_list.put(5.613, 26.7);
-        m_list.put(6.223, 27.7);
-        m_list.put(6.68, 28.8);
-        m_list.put(24.1, 193.5);
+        //2022 data but units???? meters, rpm??
+        m_list.put(0.0, 1800.0);
+        m_list.put(Units.inchesToMeters(48), 2200.0);
+        m_list.put(Units.inchesToMeters(84), 2600.0);
+        m_list.put(Units.inchesToMeters(120), 3000.0);
     }
 
     /**
