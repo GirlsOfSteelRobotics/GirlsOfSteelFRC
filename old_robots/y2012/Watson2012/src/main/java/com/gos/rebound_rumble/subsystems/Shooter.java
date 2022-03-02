@@ -3,7 +3,6 @@ package com.gos.rebound_rumble.subsystems;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
@@ -62,13 +61,7 @@ public class Shooter extends SubsystemBase {
         CounterBase.EncodingType.k4X);
     private final Relay m_topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
     private final EncoderGoSPidController m_pid = new EncoderGoSPidController(p, i, d, m_encoder,
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setJags(output);
-            }
-        }, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
+        this::setJags, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
 
     private final ShooterLookupTable m_shooterLookupTable;
 

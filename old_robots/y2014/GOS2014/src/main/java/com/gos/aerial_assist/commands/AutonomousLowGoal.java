@@ -5,6 +5,7 @@
 
 package com.gos.aerial_assist.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.aerial_assist.objects.Camera;
 import com.gos.aerial_assist.subsystems.Chassis;
@@ -28,10 +29,13 @@ public class AutonomousLowGoal extends SequentialCommandGroup {
      * WORKS DO NOT CHANGE
      */
     public AutonomousLowGoal(Chassis chassis, Driving driving, Camera camera, Manipulator manipulator, Collector collector) {
-        addCommands(new SetArmAnglePID(manipulator, 0));
-        addParallel(new CollectorWheelForwardAutoVer(collector, camera));
-        addCommands(new MoveToPositionLSPB(chassis, driving, 4.6)); //SET UP: At the tape of the red/white zone
-        addParallel(new SetArmAnglePID(manipulator, -20));
+        addCommands(new ParallelCommandGroup(
+                new SetArmAnglePID(manipulator, 0),
+                new CollectorWheelForwardAutoVer(collector, camera)
+            ));
+        addCommands(new ParallelCommandGroup(
+            new MoveToPositionLSPB(chassis, driving, 4.6)), //SET UP: At the tape of the red/white zone
+            new SetArmAnglePID(manipulator, -20));
         addCommands(new CollectorWheelReverse(collector));
     }
 }

@@ -8,13 +8,13 @@ import com.gos.power_up.commands.DriveByMotionMagic;
 import com.gos.power_up.commands.LiftHold;
 import com.gos.power_up.commands.LiftToSwitch;
 import com.gos.power_up.commands.ReleaseSlow;
-import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
 import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -40,9 +40,10 @@ public class AutoMiddleSwitchTwoCubeS extends SequentialCommandGroup {
 
         //Raise lift, lower wrist to get ready to spit cube out
         addCommands(new WristToCollect(wrist));
-        addCommands(new LiftToSwitch(lift));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new LiftToSwitch(lift),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
         //Drive to the switch plate
         if (switchSide == GameData.FieldSide.right) {
@@ -56,24 +57,24 @@ public class AutoMiddleSwitchTwoCubeS extends SequentialCommandGroup {
         }
 
         //Release and back up
-        addParallel(new ReleaseSlow(collector));
-        addCommands(new TimeDelay(0.5));
+        addCommands(new ReleaseSlow(collector).withTimeout(0.5));
         addCommands(new DriveByMotionMagic(chassis, LONG_BACK_UP, 0));
 
         //Put lift down and start collecting
-        addCommands(new CollectPosition(lift, wrist));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
-        addParallel(new Collect(collector));
+        addCommands(new ParallelCommandGroup(
+            new CollectPosition(lift, wrist),
+            new WristHold(wrist),
+            new LiftHold(lift),
+            new Collect(collector)));
 
         //Grab second cube and come back
         if (switchSide == GameData.FieldSide.right) {
-            addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, TURN_DEGREES_2));
-            addParallel(new CollectorHold(collector));
+            addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, TURN_DEGREES_2)
+                .alongWith(new CollectorHold(collector)));
             addCommands(new DriveByMotionMagic(chassis, -TURN_RADIUS_2 / 2, -20, false));
         } else if (switchSide == GameData.FieldSide.left) {
-            addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, -TURN_DEGREES_2));
-            addParallel(new CollectorHold(collector));
+            addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, -TURN_DEGREES_2)
+                .alongWith(new CollectorHold(collector)));
             addCommands(new DriveByMotionMagic(chassis, -TURN_RADIUS_2 / 2, 20, false));
         } else {
             System.out.println("AutoMiddleSwitch: invalid switch side");
@@ -81,16 +82,16 @@ public class AutoMiddleSwitchTwoCubeS extends SequentialCommandGroup {
 
         //lift up to shoot out
         addCommands(new WristToCollect(wrist));
-        addCommands(new LiftToSwitch(lift));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new LiftToSwitch(lift),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
         //Approach switch plate
         addCommands(new DriveByMotionMagic(chassis, -LONG_BACK_UP, 0));
 
         //Release and back up
-        addParallel(new ReleaseSlow(collector));
-        addCommands(new TimeDelay(0.5));
+        addCommands(new ReleaseSlow(collector).withTimeout(0.5));
         addCommands(new DriveByMotionMagic(chassis, SHORT_BACK_UP, 0));
     }
 }

@@ -1,7 +1,7 @@
 package com.gos.preseason2016.team_fbi.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import com.gos.preseason2016.team_fbi.robot.commands.AutoDrive;
 import com.gos.preseason2016.team_fbi.robot.commands.DriveCommand;

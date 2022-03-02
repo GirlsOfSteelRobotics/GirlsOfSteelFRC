@@ -1,5 +1,7 @@
 package com.gos.deep_space;
 
+import com.gos.deep_space.commands.ClimberHold;
+import com.gos.deep_space.commands.PivotHold;
 import com.gos.deep_space.subsystems.BabyDrive;
 import com.gos.deep_space.subsystems.Blinkin;
 import com.gos.deep_space.subsystems.Camera;
@@ -46,6 +48,9 @@ public class Robot extends TimedRobot {
         //visionThread.start();
 
         System.out.println("Robot Init finished");
+
+        m_climber.setDefaultCommand(new ClimberHold(m_climber));
+        m_pivot.setDefaultCommand(new PivotHold(m_pivot));
     }
 
     /**

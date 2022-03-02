@@ -1,5 +1,6 @@
 package com.gos.rebound_rumble.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Chassis;
@@ -102,7 +103,7 @@ public class Buttons extends CommandBase {
                 // DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Shoot On:" + oi.isShootRunning());
                 // System.out.println("AutoShoot On" + oi.isShootRunning());
                 // DriverStationLCD.getInstance().updateLCD();
-                m_autoShoot.start();
+                m_autoShoot.schedule();
             }
             if (m_oi.isStopShooterRunning()) {
                 //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Shoot Off" + oi.isShootRunning());
@@ -118,7 +119,7 @@ public class Buttons extends CommandBase {
                 //    DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Relative On" +  oi.isShootRunning());
                 //  System.out.println("Relative On" + oi.isShootRunning() + oi.getShooterSliderValue());
                 //DriverStationLCD.getInstance().updateLCD();
-                m_incrementShoot.start();
+                m_incrementShoot.schedule();
             }
             if (m_oi.isStopShooterRunning()) {
                 //   DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Relative Off" + oi.isShootRunning());
@@ -134,7 +135,7 @@ public class Buttons extends CommandBase {
                 //  DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Manual On" + oi.isShootRunning());
                 //System.out.println("Manual On" + oi.isShootRunning() + oi.getShooterSliderValue());
                 // DriverStationLCD.getInstance().updateLCD();
-                m_manualShoot.start();
+                m_manualShoot.schedule();
             }
             if (m_oi.isStopShooterRunning()) {
                 //  DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Manual Off" + oi.isShootRunning());
@@ -147,7 +148,7 @@ public class Buttons extends CommandBase {
         if (m_oi.isTurretAutoOn()) {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
             //      "Auto Turret On" + oi.getTurretOverrideSwitchValue());
-            m_autoTurret.start();
+            m_autoTurret.schedule();
         } else {
             //DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
             //      "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
@@ -159,7 +160,7 @@ public class Buttons extends CommandBase {
             //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1,
             //                  "Turret Set Position On" + oi.getTurretOverrideSwitchValue());
             //            System.out.println("Turret Set Position On" + oi.getTurretOverrideSwitchValue());
-            m_setPointTurret.start();
+            m_setPointTurret.schedule();
             //  DriverStation.setDigitalOut(oi.TURRET_SET_POSITION_LIGHT, true);
         } else { //NOTHING IS SET TO HAPPEN IN HERE FOR SOME ODD REASON!!!
             //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Auto Turret Off" + oi.getTurretOverrideSwitchValue());
@@ -171,7 +172,7 @@ public class Buttons extends CommandBase {
         if (m_oi.isTurretManualOn()) {
             //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret On" + oi.getTurretOverrideSwitchValue());
             //              System.out.println("Manual Turret On" + oi.getTurretOverrideSwitchValue());
-            m_manualTurret.start();
+            m_manualTurret.schedule();
             //DriverStation.setDigitalOut(oi.TURRET_MANUAL_LIGHT, true);
         } else {
             //            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, "Manual Turret Off" + oi.getTurretOverrideSwitchValue());

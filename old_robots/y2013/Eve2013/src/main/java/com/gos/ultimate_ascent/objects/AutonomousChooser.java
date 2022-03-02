@@ -3,7 +3,7 @@ package com.gos.ultimate_ascent.objects;
 import com.gos.ultimate_ascent.subsystems.Chassis;
 import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.ultimate_ascent.commands.Autonomous;

@@ -43,10 +43,10 @@ public class TestAutonomousCenter extends SequentialCommandGroup {
     }
 
     @Override
-    public void end() {
-        new DisableChassis(m_chassis).start();
-        new DisableShooter(m_shooter).start();
-        new StopCollectors(m_collector).start();
+    public void end(boolean interrupted) {
+        new DisableChassis(m_chassis).schedule();
+        new DisableShooter(m_shooter).schedule();
+        new StopCollectors(m_collector).schedule();
     }
 
 

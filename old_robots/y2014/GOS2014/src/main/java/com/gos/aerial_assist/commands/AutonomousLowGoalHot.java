@@ -1,5 +1,6 @@
 package com.gos.aerial_assist.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.aerial_assist.objects.Camera;
 import com.gos.aerial_assist.subsystems.Chassis;
@@ -21,10 +22,10 @@ public class AutonomousLowGoalHot extends SequentialCommandGroup {
 
         addCommands(new Wait(0.01));
         //addCommands(new IsGoalHot());
-        addParallel(new CollectorWheelForwardAutoVer(collector, camera));
-        addCommands(new Wait(0.01));
-        addParallel(new SetArmAnglePID(manipulator, -18));
-        addCommands(new MoveToPositionLSPB(chassis, driving, 4.6)); //4.6 //SET UP: At the tape of the red/white zone
+        addCommands(new CollectorWheelForwardAutoVer(collector, camera).withTimeout(0.01));
+        addCommands(new ParallelCommandGroup(
+            new SetArmAnglePID(manipulator, -18),
+            new MoveToPositionLSPB(chassis, driving, 4.6))); //4.6 //SET UP: At the tape of the red/white zone
 
         addCommands(new CollectorWheelReverseAutoVer(collector, camera));
         addCommands(new CollectorUpALittle(collector));

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.recycle_rush.robot.RobotMap;
-import com.gos.recycle_rush.robot.commands.collector.CollectReleaseTote;
 
 
 public class Collector extends SubsystemBase {
@@ -91,13 +90,6 @@ public class Collector extends SubsystemBase {
         m_rightCollector.set(ControlMode.PercentOutput, 0.0);
         m_leftCollector.set(ControlMode.PercentOutput, 0.0);
         SmartDashboard.putBoolean("Collector Off", false);
-    }
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-        new CollectReleaseTote(this);
     }
 
 }

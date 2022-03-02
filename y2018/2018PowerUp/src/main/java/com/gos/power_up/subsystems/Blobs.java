@@ -62,12 +62,6 @@ public class Blobs extends SubsystemBase {
         */
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new DriveByVision());
-    }
-
     public List<Blob> makeBlobs(int size) {
         List<Blob> randomBlobs = new ArrayList<>();
 

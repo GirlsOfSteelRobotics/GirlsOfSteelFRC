@@ -6,6 +6,7 @@
 
 package com.gos.aerial_assist.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.aerial_assist.subsystems.Chassis;
 import com.gos.aerial_assist.subsystems.Driving;
@@ -18,7 +19,9 @@ public class AutonomousHighGoal extends SequentialCommandGroup {
     //Magic numbers need to be added!
     public AutonomousHighGoal(Chassis chassis, Driving driving, Manipulator manipulator) {
         addCommands(new MoveToPosition(chassis, driving));
-        addParallel(new SetArmAnglePID(manipulator, 85)); //Magic angle, needs to be corrected
-        addCommands(new ShootHigh()); //ShootHigh command is not finished
+        addCommands(new ParallelCommandGroup(
+            new SetArmAnglePID(manipulator, 85)), //Magic angle, needs to be corrected
+            new ShootHigh()
+        );
     }
 }

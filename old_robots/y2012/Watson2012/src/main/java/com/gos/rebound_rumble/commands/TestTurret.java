@@ -22,7 +22,6 @@ public class TestTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        m_turret.disablePID();
     }
 
     @Override

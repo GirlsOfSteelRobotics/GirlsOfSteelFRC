@@ -16,10 +16,10 @@ public class TestAutonomousMoveToBridgeCamera extends SequentialCommandGroup {
         //                0.0) - Camera.getXDistance();
         //            addCommands(new MoveToSetPoint(distance),2.0);
         //        }else{
-        addCommands(new MoveToSetPoint(chassis, 2.7), 2.0);
+        addCommands(new MoveToSetPoint(chassis, 2.7).withTimeout(2.0));
         //        }
-        addCommands(new AutoBridgeDown(bridge), 2.0);
-        addCommands(new MoveToSetPoint(chassis, -0.5), 3.0);
+        addCommands(new AutoBridgeDown(bridge).withTimeout(2.0));
+        addCommands(new MoveToSetPoint(chassis, -0.5).withTimeout(3.0));
         addCommands(new BridgeUp(bridge));
     }
 

@@ -86,11 +86,4 @@ public class TurnByMotionMagic extends CommandBase {
         m_chassis.stop();
         m_chassis.setInverted(false);
     }
-
-
-    @Override
-    protected void interrupted() {
-        System.out.println("TurnByMotionMagic: interrupted");
-        end();
-    }
 }

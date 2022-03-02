@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
-import com.gos.power_up.commands.LiftHold;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -39,18 +38,10 @@ public final class Lift extends SubsystemBase {
         setupLiftFPID();
         m_goalLiftPosition = 0;
         m_inRecoveryMode = false;
-        //System.out.println("Lift Constructed");
-        addChild(m_lift);
     }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new LiftHold(this));
-    }
 
     public void setupLiftFPID() {
         //talon.setPosition(0); //TODO figure out new syntax

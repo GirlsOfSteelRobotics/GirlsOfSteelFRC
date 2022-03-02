@@ -44,7 +44,6 @@ public class TurretTrackTarget extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_turret.disablePID();
     }
 
 

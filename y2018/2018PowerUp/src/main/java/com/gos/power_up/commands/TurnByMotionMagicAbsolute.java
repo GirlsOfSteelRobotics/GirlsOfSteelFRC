@@ -79,11 +79,4 @@ public class TurnByMotionMagicAbsolute extends CommandBase {
         m_shifters.shiftGear(Shifters.Speed.kHigh);
         m_chassis.setInverted(false);
     }
-
-
-    @Override
-    protected void interrupted() {
-        System.out.println("TurnByMotionMagicAbsolute: interrupted");
-        end();
-    }
 }

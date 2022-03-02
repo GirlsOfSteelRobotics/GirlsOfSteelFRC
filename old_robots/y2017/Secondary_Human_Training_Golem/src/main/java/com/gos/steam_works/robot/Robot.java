@@ -1,8 +1,9 @@
 package com.gos.steam_works.robot;
 
 
+import com.gos.steam_works.robot.commands.StayClimbed;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import com.gos.steam_works.robot.subsystems.Agitator;
 import com.gos.steam_works.robot.subsystems.Camera;
@@ -52,6 +53,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        m_climber.setDefaultCommand(new StayClimbed(m_climber));
         /*
                 try {
                     @SuppressWarnings("unused")

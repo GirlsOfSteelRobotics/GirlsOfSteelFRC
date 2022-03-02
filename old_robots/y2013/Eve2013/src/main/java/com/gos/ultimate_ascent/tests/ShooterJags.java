@@ -39,7 +39,7 @@ public class ShooterJags extends CommandBase {
 
     @Override
     @SuppressWarnings("PMD.CollapsibleIfStatements")
-    protected void execute() {
+    public void execute() {
         if (SmartDashboard.getBoolean("Shooter Jags", false)) {
             //            shooter.setJags(speed);
             //            shooter.setShootTrue();

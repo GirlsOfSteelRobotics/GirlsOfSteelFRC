@@ -7,7 +7,6 @@ import com.gos.power_up.commands.DriveByMotionMagic;
 import com.gos.power_up.commands.LiftHold;
 import com.gos.power_up.commands.LiftToSwitch;
 import com.gos.power_up.commands.ReleaseFast;
-import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
 import com.gos.power_up.subsystems.Chassis;
@@ -15,6 +14,7 @@ import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -33,9 +33,10 @@ public class AutoNearSwitch extends SequentialCommandGroup {
         shifter.shiftGear(Shifters.Speed.kLow);
 
         addCommands(new WristToCollect(wrist));
-        addCommands(new LiftToSwitch(lift));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new LiftToSwitch(lift),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
         //Move Robot into position
         addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD, 0));
@@ -47,14 +48,14 @@ public class AutoNearSwitch extends SequentialCommandGroup {
         addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, 0));
 
         //Release and back up
-        addParallel(new ReleaseFast(collector));
-        addCommands(new TimeDelay(1.0));
+        addCommands(new ReleaseFast(collector).withTimeout(1.0));
         addCommands(new DriveByMotionMagic(chassis, BACK_UP, 0));
 
         //Put lift down and stop collector
         addCommands(new CollectPosition(lift, wrist));
-        addCommands(new CollectorStop(collector));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new CollectorStop(collector),
+            new WristHold(wrist),
+            new LiftHold(lift)));
     }
 }

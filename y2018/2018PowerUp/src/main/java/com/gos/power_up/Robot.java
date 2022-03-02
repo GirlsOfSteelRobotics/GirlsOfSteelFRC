@@ -7,6 +7,9 @@
 
 package com.gos.power_up;
 
+import com.gos.power_up.commands.CollectorHold;
+import com.gos.power_up.commands.LiftHold;
+import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.autonomous.AutoDriveToBaseline;
 import com.gos.power_up.commands.autonomous.AutoFarScaleAbsolute;
 import com.gos.power_up.commands.autonomous.AutoMiddleSwitch;
@@ -19,7 +22,7 @@ import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
@@ -50,6 +53,10 @@ public class Robot extends TimedRobot {
         m_climber = new Climber();
         m_gameData = new GameData();
         new OI(m_chassis, m_shifters, m_lift, m_wrist, m_climber, m_collector);
+
+        m_lift.setDefaultCommand(new LiftHold(m_lift));
+        m_wrist.setDefaultCommand(new WristHold(m_wrist));
+        m_collector.setDefaultCommand(new CollectorHold(m_collector));
     }
 
     /**

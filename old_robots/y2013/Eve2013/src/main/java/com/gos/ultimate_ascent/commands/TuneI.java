@@ -97,7 +97,7 @@ public class TuneI extends CommandBase {
     // Called once after isFinished returns true
     @Override
     @SuppressWarnings("PMD.UseStringBufferForStringAppends")
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopRatePIDs();
         m_chassis.stopEncoders();
         m_chassis.stopJags();

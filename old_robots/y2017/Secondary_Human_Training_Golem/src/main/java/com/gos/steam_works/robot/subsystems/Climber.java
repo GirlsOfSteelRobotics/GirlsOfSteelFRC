@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.steam_works.robot.RobotMap;
-import com.gos.steam_works.robot.commands.StayClimbed;
 
 /**
  *
@@ -53,10 +52,5 @@ public class Climber extends SubsystemBase {
     public void stopClimb() {
         m_climbMotorA.set(ControlMode.PercentOutput, 0.0);
         m_climbMotorB.set(ControlMode.PercentOutput, 0.0);
-    }
-
-    @Override
-    public void initDefaultCommand() {
-        setDefaultCommand(new StayClimbed(this));
     }
 }

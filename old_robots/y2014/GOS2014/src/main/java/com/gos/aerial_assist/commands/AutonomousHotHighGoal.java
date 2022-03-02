@@ -6,6 +6,7 @@
 
 package com.gos.aerial_assist.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.aerial_assist.objects.Camera;
 import com.gos.aerial_assist.subsystems.Chassis;
@@ -18,8 +19,10 @@ import com.gos.aerial_assist.subsystems.Manipulator;
 public class AutonomousHotHighGoal extends SequentialCommandGroup {
 
     public AutonomousHotHighGoal(Chassis chassis, Driving driving, Manipulator manipulator) {
-        addCommands(new MoveToPosition(chassis, driving, 1));
-        addParallel(new SetArmAnglePID(manipulator, 30));
+        addCommands(new ParallelCommandGroup(
+            new MoveToPosition(chassis, driving, 1),
+            new SetArmAnglePID(manipulator, 30)
+        ));
         if (Camera.isGoalHot()) {
             addCommands(new ShootHigh());
         }

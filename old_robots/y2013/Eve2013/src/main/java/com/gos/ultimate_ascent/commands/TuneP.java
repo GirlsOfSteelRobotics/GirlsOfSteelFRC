@@ -150,7 +150,7 @@ public class TuneP extends CommandBase {
     // Called once after isFinished returns true
     @Override
     @SuppressWarnings({"PMD.UseStringBufferForStringAppends", "PMD.ExcessiveMethodLength", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity"})
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopRatePIDs();
         m_chassis.stopEncoders();
         m_chassis.stopJags();

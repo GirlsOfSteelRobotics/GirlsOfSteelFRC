@@ -8,7 +8,6 @@ package com.gos.aerial_assist.subsystems;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -69,13 +68,7 @@ public class Manipulator extends SubsystemBase {
         m_angle = maxAngle;
 
 
-        m_manipulatorPID = new EncoderGoSPidController(p, i, d, m_bobTheArmEncoder, new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                m_manipulatorJag.set(output);
-            }
-        }, EncoderGoSPidController.POSITION, ZERO_ENCODER_VALUE);
+        m_manipulatorPID = new EncoderGoSPidController(p, i, d, m_bobTheArmEncoder, m_manipulatorJag::set, EncoderGoSPidController.POSITION, ZERO_ENCODER_VALUE);
 
         System.out.println("Encoder Value ------------ " + m_manipulatorPID.getSignedDistance());
 

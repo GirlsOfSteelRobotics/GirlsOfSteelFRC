@@ -36,7 +36,6 @@ public class PS3SetPointTurret extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_turret.disablePID();
         m_turret.stopJag();
     }
 

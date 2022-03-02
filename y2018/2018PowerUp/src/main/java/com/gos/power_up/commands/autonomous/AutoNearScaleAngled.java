@@ -14,6 +14,7 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -32,14 +33,14 @@ public class AutoNearScaleAngled extends SequentialCommandGroup {
         System.out.println("AutoFarScale starting");
 
         //moves robot forward
-        addParallel(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
-        addCommands(new TimeDelay(2.0));
+        addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0).withTimeout(2.0));
 
         //gets lift & wrist into position
         addCommands(new WristToShoot(wrist));
-        addCommands(new LiftToScale(lift));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new LiftToScale(lift),
+            new WristHold(wrist),
+            new LiftHold(lift)));
         addCommands(new TimeDelay(3.0));
 
         //turn
@@ -50,14 +51,14 @@ public class AutoNearScaleAngled extends SequentialCommandGroup {
         }
 
         //release cube and back up
-        addParallel(new ReleaseFast(collector, 0.5));
-        addCommands(new TimeDelay(1.0));
+        addCommands(new ReleaseFast(collector, 0.5).withTimeout(1.0));
         addCommands(new DriveByMotionMagic(chassis, BACK_UP, 0));
 
         //puts lift down and stops collector
         addCommands(new CollectPosition(lift, wrist));
-        addCommands(new CollectorStop(collector));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new CollectorStop(collector),
+            new WristHold(wrist),
+            new LiftHold(lift)));
     }
 }

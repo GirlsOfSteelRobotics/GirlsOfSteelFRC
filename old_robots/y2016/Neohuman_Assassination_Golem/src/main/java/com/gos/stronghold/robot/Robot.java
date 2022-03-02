@@ -1,7 +1,8 @@
 package com.gos.stronghold.robot;
 
+import com.gos.stronghold.robot.commands.camera.UpdateCam;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -85,6 +86,8 @@ public class Robot extends TimedRobot {
         //autoChooser.addObject("Slow Drive", new AutoDriveSlowly(100));
 
         SmartDashboard.putData("Autochooser: ", m_autoChooser);
+
+        m_camera.setDefaultCommand(new UpdateCam(m_camera));
     }
 
     /**

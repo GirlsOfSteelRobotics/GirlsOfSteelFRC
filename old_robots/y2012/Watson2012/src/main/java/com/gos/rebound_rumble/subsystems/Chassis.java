@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.rebound_rumble.RobotMap;
@@ -81,42 +80,18 @@ public class Chassis extends SubsystemBase {
         rateI, rateD, m_rightEncoder,
         //this is an anonymous class, it lets us send values to both jags
         //new output parameter
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setRightJags(output);
-            }
-        }, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
+        this::setRightJags, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
     private final EncoderGoSPidController m_leftRatePID = new EncoderGoSPidController(rateP,
         rateI, rateD, m_leftEncoder,
         //this is an anonymous class, it lets us send values to both jags
         //new output parameter
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setLeftJags(output);
-            }
-        }, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
+        this::setLeftJags, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
     private final EncoderGoSPidController m_rightPositionPID = new EncoderGoSPidController(
         positionRightP, positionRightI, positionRightD, m_rightEncoder,
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setRightJags(output);
-            }
-        }, EncoderGoSPidController.POSITION);
+        this::setRightJags, EncoderGoSPidController.POSITION);
     private final EncoderGoSPidController m_leftPositionPID = new EncoderGoSPidController(
         positionLeftP, positionLeftI, positionLeftD, m_leftEncoder,
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setLeftJags(output);
-            }
-        }, EncoderGoSPidController.POSITION);
+        this::setLeftJags, EncoderGoSPidController.POSITION);
 
     //again, make sure you can find this easily at comp
     //^^max acceleration -> used in the acceleration limiting method on the PID controllers

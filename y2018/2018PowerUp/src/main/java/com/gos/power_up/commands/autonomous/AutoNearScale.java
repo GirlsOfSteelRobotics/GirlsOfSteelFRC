@@ -16,6 +16,7 @@ import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -36,29 +37,31 @@ public class AutoNearScale extends SequentialCommandGroup {
             addCommands(new TurnByMotionMagic(chassis, -90.0));
             addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, -90, false));
             addCommands(new WristToShoot(wrist));
-            addCommands(new LiftToScale(lift));
-            addParallel(new WristHold(wrist));
-            addParallel(new LiftHold(lift));
+            addCommands(new ParallelCommandGroup(
+                new LiftToScale(lift),
+                new WristHold(wrist),
+                new LiftHold(lift)));
         } else {
             addCommands(new TurnByMotionMagic(chassis, 90.0));
             addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, 90, false));
             addCommands(new WristToShoot(wrist));
-            addCommands(new LiftToScale(lift));
-            addParallel(new WristHold(wrist));
-            addParallel(new LiftHold(lift));
+            addCommands(new ParallelCommandGroup(
+                new LiftToScale(lift),
+                new WristHold(wrist),
+                new LiftHold(lift)));
 
         }
 
         //Wait for lift and wrist to get into position then shoot
-        addCommands(new TimeDelay(2.5));
-        addParallel(new ReleaseFast(collector, 0.75));
+        addCommands(new ReleaseFast(collector, 0.75).withTimeout(2.5));
         addCommands(new TimeDelay(1.5));
 
         //Put lift down and stop collector
         addCommands(new CollectPosition(lift, wrist));
-        addCommands(new CollectorStop(collector));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new CollectorStop(collector),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
     }
 }

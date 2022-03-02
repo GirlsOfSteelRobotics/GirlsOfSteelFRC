@@ -48,8 +48,6 @@ public class Chassis extends SubsystemBase {
         m_drive.setMaxOutput(0.8);
     }
 
-
-
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

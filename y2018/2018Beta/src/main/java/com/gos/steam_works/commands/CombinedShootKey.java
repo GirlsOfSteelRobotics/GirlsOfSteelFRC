@@ -11,9 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class CombinedShootKey extends SequentialCommandGroup {
 
     public CombinedShootKey(Loader loader, Shooter shooter, Agitator agitator) {
-        addParallel(new Shoot(shooter, Shooter.AUTO_SHOOTER_SPEED_KEY));
-        addCommands(new TimeDelay(0.75));
-        addParallel(new Agitate(agitator));
-        addCommands(new LoadBall(loader));
+        addCommands(new Shoot(shooter, Shooter.AUTO_SHOOTER_SPEED_KEY).withTimeout(0.75));
+        addCommands(new Agitate(agitator).alongWith(new LoadBall(loader)));
     }
 }

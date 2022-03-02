@@ -1,17 +1,14 @@
 package com.gos.rebound_rumble.subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.RobotMap;
 import com.gos.rebound_rumble.objects.Camera;
 
-public class Turret extends Subsystem implements PIDOutput, PIDSource {
+public class Turret extends SubsystemBase {
 
     //knob stuff doesn't really matter -> below are magical values we don't have
     private static final double MAX_TURRET_KNOB_VALUE = 0.0;
@@ -28,7 +25,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     private final Jaguar m_turretJag = new Jaguar(RobotMap.TURRET_JAG);
     private final Encoder m_encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
         RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
-    private final PIDController m_pid = new PIDController(p, i, d, this, this);
+    private final PIDController m_pid = new PIDController(p, i, d);
 
     private final Chassis m_chassis;
 
@@ -65,22 +62,9 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         setJagSpeed(0.0);
     }
 
-    //stuff for the PID
-    @Override
-    public void pidWrite(double output) {
-        setJagSpeed(output);
-    }
-
-    //more stuff for the PID
-    @Override
-    public double pidGet() {
-        return getTurretAngle();
-    }
-
     public void enablePID() { //for re-enabling the PID when disabled
-        m_pid.setContinuous(); //lets the PID know it is a circle
-        m_pid.setInputRange(0.0, 360.0); //and goes between 0 to 360 to 0 to 360, etc
-        m_pid.enable();
+        m_pid.enableContinuousInput(0, 360); //lets the PID know it is a circle
+        m_pid.reset();
     }
 
     //sets the P & D values -> used for testing
@@ -94,10 +78,6 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
     //in chassis's PIDs
     public void setPDs() {
         m_pid.setPID(p, i, d);
-    }
-
-    public void disablePID() {
-        m_pid.disable();
     }
 
     @SuppressWarnings("PMD.AvoidReassigningParameters")
@@ -167,16 +147,4 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         //subtract the offset angle that the shooter shoots straight from
         setPIDSetPoint(setPoint);
     }
-
-
-    @Override
-    public void setPIDSourceType(PIDSourceType pidSource) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public PIDSourceType getPIDSourceType() {
-        throw new UnsupportedOperationException();
-    }
-
 }

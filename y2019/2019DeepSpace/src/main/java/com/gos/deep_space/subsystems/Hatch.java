@@ -25,8 +25,6 @@ public class Hatch extends SubsystemBase {
         addChild("Collector", m_hatchCollector);
     }
 
-
-
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public void stop() {

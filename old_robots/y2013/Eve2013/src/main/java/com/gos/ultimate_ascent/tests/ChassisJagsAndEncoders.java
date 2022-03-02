@@ -36,7 +36,7 @@ public class ChassisJagsAndEncoders extends CommandBase {
 
     @Override
     @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-    protected void execute() {
+    public void execute() {
         //        speed = SmartDashboard.getNumber("Jag speed", 0.0);
         //        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoderDistance());
         //        SmartDashboard.putNumber("Back Encoder:", chassis.getBackEncoderDistance());

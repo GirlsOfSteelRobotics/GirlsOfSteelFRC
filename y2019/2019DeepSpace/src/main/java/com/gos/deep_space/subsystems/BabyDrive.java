@@ -24,8 +24,6 @@ public class BabyDrive extends SubsystemBase {
         m_babyDriveTalon.setInverted(true);
     }
 
-
-
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

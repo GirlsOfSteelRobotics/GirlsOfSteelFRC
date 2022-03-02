@@ -7,7 +7,6 @@ import com.gos.power_up.commands.DriveByMotionMagic;
 import com.gos.power_up.commands.LiftHold;
 import com.gos.power_up.commands.LiftToScale;
 import com.gos.power_up.commands.ReleaseFast;
-import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.TurnByMotionMagic;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToShoot;
@@ -15,6 +14,7 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -42,9 +42,10 @@ public class AutoFarScale extends SequentialCommandGroup {
 
         //Get lift and wrist into position
         addCommands(new LiftToScale(lift));
-        addCommands(new WristToShoot(wrist));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new WristToShoot(wrist),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
         //Driving across the field behind the switch
         if (scaleSide == GameData.FieldSide.right) {
@@ -63,14 +64,14 @@ public class AutoFarScale extends SequentialCommandGroup {
         }
 
         //Release cube
-        addParallel(new ReleaseFast(collector, 0.5));
-        addCommands(new TimeDelay(1.0));
+        addCommands(new ReleaseFast(collector, 0.5).withTimeout(1.0));
 
         //Put lift down and stop collector motors
         addCommands(new CollectPosition(lift, wrist));
-        addCommands(new CollectorStop(collector));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new CollectorStop(collector),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
     }
 }

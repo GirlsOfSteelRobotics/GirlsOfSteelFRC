@@ -21,7 +21,7 @@ public class LiftByVision extends CommandBase {
     public void initialize() {
         if (m_blobs.distanceBetweenBlobs() == -1) {
             System.out.print("LiftByVision initialize: line not in sight!!");
-            end();
+            end(true);
         }
     }
 

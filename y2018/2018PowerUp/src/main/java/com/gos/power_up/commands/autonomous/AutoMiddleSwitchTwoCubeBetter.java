@@ -8,7 +8,6 @@ import com.gos.power_up.commands.DriveByMotionMagicAbsolute;
 import com.gos.power_up.commands.LiftHold;
 import com.gos.power_up.commands.LiftToSwitch;
 import com.gos.power_up.commands.ReleaseFast;
-import com.gos.power_up.commands.TimeDelay;
 import com.gos.power_up.commands.TurnByMotionMagicAbsolute;
 import com.gos.power_up.commands.WristHold;
 import com.gos.power_up.commands.WristToCollect;
@@ -17,6 +16,7 @@ import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -40,9 +40,10 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
 
         //Lift to switch position, ready to release
         addCommands(new WristToCollect(wrist));
-        addCommands(new LiftToSwitch(lift));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new LiftToSwitch(lift),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
         //Drive forward and turn in place and drive forward to switch
         addCommands(new DriveByMotionMagicAbsolute(chassis, STRAIGHT_1, 0, false));
@@ -52,8 +53,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
             addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, -TURN_DEGREES_1, false));
 
             //Spit cube out
-            addParallel(new ReleaseFast(collector, 0.8));
-            addCommands(new TimeDelay(0.1));
+            addCommands(new ReleaseFast(collector, 0.8).withTimeout(0.1));
 
             //Drive back
             addCommands(new DriveByMotionMagicAbsolute(chassis, -(APPROACH_SWITCH + 5), -TURN_DEGREES_1, false));
@@ -62,8 +62,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
             addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, TURN_DEGREES_2 - 20, false));
 
             //Spit cube out
-            addParallel(new ReleaseFast(collector, 0.8));
-            addCommands(new TimeDelay(0.1));
+            addCommands(new ReleaseFast(collector, 0.8).withTimeout(0.1));
 
             //Drive back
             addCommands(new DriveByMotionMagicAbsolute(chassis, -(APPROACH_SWITCH + 5), TURN_DEGREES_1 + 10, false));
@@ -72,23 +71,24 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
 
         //Put lift down and start collector
         addCommands(new CollectPosition(lift, wrist));
-        addCommands(new CollectorStop(collector));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
-        addParallel(new Collect(collector));
+        addCommands(new ParallelCommandGroup(
+            new CollectorStop(collector),
+            new WristHold(wrist),
+            new LiftHold(lift),
+            new Collect(collector)));
 
         //Turn back to straight
         addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, 0));
 
         //Drive into cube then back up into place
-        addParallel(new DriveByMotionMagicAbsolute(chassis, APPROACH_CUBE, 0, false));
-        addCommands(new TimeDelay(2.0));
+        addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_CUBE, 0, false).withTimeout(2.0));
 
         //Lift to switch position, ready to release
         addCommands(new WristToCollect(wrist));
-        addCommands(new LiftToSwitch(lift));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new LiftToSwitch(lift),
+            new WristHold(wrist),
+            new LiftHold(lift)));
 
         //Turn in place and drive forward
         if (switchSide == GameData.FieldSide.right) {
@@ -100,14 +100,14 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
         }
 
         //Spit cube out
-        addParallel(new ReleaseFast(collector));
-        addCommands(new TimeDelay(1.0));
+        addCommands(new ReleaseFast(collector).withTimeout(1.0));
         addCommands(new DriveByMotionMagicAbsolute(chassis, BACK_UP, 0, false));
 
         //Put lift down and stop collector
         addCommands(new CollectPosition(lift, wrist));
-        addCommands(new CollectorStop(collector));
-        addParallel(new WristHold(wrist));
-        addParallel(new LiftHold(lift));
+        addCommands(new ParallelCommandGroup(
+            new CollectorStop(collector),
+            new WristHold(wrist),
+            new LiftHold(lift)));
     }
 }

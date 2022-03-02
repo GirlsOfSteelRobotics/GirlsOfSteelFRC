@@ -24,7 +24,6 @@ public class PushPullShooterPiston extends CommandBase {
         m_feeder = feeder;
         m_shooter = shooter;
         addRequirements(m_feeder);
-        setInterruptible(false);
     }
 
     @Override

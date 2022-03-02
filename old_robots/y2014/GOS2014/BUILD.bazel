@@ -8,7 +8,7 @@ gos_java_robot(
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/ntcore",
-        "@bazelrio//libraries/java/wpilib/old_commands",
+        "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
     ],
 )

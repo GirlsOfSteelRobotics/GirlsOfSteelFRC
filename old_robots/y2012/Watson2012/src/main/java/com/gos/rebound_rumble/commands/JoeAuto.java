@@ -19,17 +19,17 @@ public class JoeAuto extends SequentialCommandGroup {
                    boolean autoShootFromBridge, boolean goBackToKey,
                    boolean shootFromKeyAfterBridge) {
 
-        addParallel(new Collect(collector));
+        addCommands(new Collect(collector));
         addCommands(new PrintCommand("reached"));
 
         if (autoTrack) {
-            addParallel(new TurretTrackTarget(turret, oi.getOperatorJoystick()));
+            addCommands(new TurretTrackTarget(turret, oi.getOperatorJoystick()));
         }
 
         if (autoShoot) {
-            addCommands(new ShootUsingTable(shooter, oi, false), 10);
+            addCommands(new ShootUsingTable(shooter, oi, false).withTimeout(10));
         } else if (shootFromKey) {
-            addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED), 10);
+            addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED).withTimeout(10));
             addCommands(new PrintCommand("Shoot From Key"));
         }
 
@@ -38,13 +38,13 @@ public class JoeAuto extends SequentialCommandGroup {
             addCommands(new PrintCommand("Move to Bridge"));
 
             if (bridgeCollect) {
-                addCommands(new BridgeDown(bridge), 3);
+                addCommands(new BridgeDown(bridge).withTimeout(3));
                 addCommands(new BridgeUp(bridge));
-                addCommands(new MoveToSetPoint(chassis, -0.5), 3);
+                addCommands(new MoveToSetPoint(chassis, -0.5).withTimeout(3));
             }
 
             if (autoShootFromBridge) {
-                addCommands(new Shoot(shooter, oi, Shooter.BRIDGE_SPEED), 10);
+                addCommands(new Shoot(shooter, oi, Shooter.BRIDGE_SPEED).withTimeout(10));
             }
 
             if (goBackToKey) {

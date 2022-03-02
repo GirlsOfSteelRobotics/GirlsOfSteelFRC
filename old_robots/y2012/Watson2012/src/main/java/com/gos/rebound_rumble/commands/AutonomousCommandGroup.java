@@ -32,10 +32,10 @@ public class AutonomousCommandGroup extends SequentialCommandGroup {
         }
         if (shoot) {
             if (Camera.isConnected() && Camera.getXDistance() != 0) {
-                addCommands(new ShootUsingTable(shooter, oi, false), 6.0);
+                addCommands(new ShootUsingTable(shooter, oi, false).withTimeout(6.0));
                 addCommands(new PrintCommand("Shoot With Table"));
             } else {
-                addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED), 6.0);
+                addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED).withTimeout(6.0));
                 addCommands(new PrintCommand("Shoot two from key"));
             }
         }
@@ -45,18 +45,18 @@ public class AutonomousCommandGroup extends SequentialCommandGroup {
                 yDistance = Chassis.DISTANCE_BACKBOARD_TO_BRIDGE
                     - Camera.getXDistance();
             }
-            addCommands(new MoveToSetPoint(chassis, yDistance), 2.0);
+            addCommands(new MoveToSetPoint(chassis, yDistance).withTimeout(2.0));
             addCommands(new PrintCommand("Move To Bridge"));
-            addCommands(new AutoBridgeDown(bridge), 2.0);
-            addCommands(new MoveToSetPoint(chassis, -0.5), 3.0);
+            addCommands(new AutoBridgeDown(bridge).withTimeout(2.0));
+            addCommands(new MoveToSetPoint(chassis, -0.5).withTimeout(3.0));
             addCommands(new BridgeUp(bridge));
             addCommands(new PrintCommand("Bridge Collected"));
             if (shootFromBridge) {
                 if (Camera.isConnected() && Camera.getXDistance() != 0) {
-                    addCommands(new ShootUsingTable(shooter, oi, false), 2.5);
+                    addCommands(new ShootUsingTable(shooter, oi, false).withTimeout(2.5));
                     addCommands(new PrintCommand("Shoot With Table"));
                 } else {
-                    addCommands(new Shoot(shooter, oi, Shooter.BRIDGE_SPEED), 2.5);
+                    addCommands(new Shoot(shooter, oi, Shooter.BRIDGE_SPEED).withTimeout(2.5));
                 }
                 addCommands(new PrintCommand("Shoot from Bridge"));
             }
@@ -64,7 +64,7 @@ public class AutonomousCommandGroup extends SequentialCommandGroup {
                 addCommands(new MoveToSetPoint(chassis, -yDistance));
                 addCommands(new PrintCommand("Back to Key"));
                 if (shootFromKeyAfterBridge) {
-                    addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED), 5);
+                    addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED).withTimeout(5));
                     addCommands(new PrintCommand("Shoot From Key Again"));
                 }
             }

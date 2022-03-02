@@ -3,7 +3,6 @@ package com.gos.power_up.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
-import com.gos.power_up.commands.WristHold;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -27,14 +26,6 @@ public final class Wrist extends SubsystemBase {
     public Wrist() {
         m_wrist = new WPI_TalonSRX(RobotMap.WRIST);
         setupWristFPID();
-        addChild(m_wrist);
-    }
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new WristHold(this));
-
     }
 
     public void setupWristFPID() {

@@ -14,7 +14,6 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.deep_space.RobotMap;
-import com.gos.deep_space.commands.ClimberHold;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -107,13 +106,6 @@ public class Climber extends SubsystemBase {
         addChild("climberFollowerFront", m_followerClimberFront);
         addChild("climberFollowerBack", m_followerClimberBack);
 
-    }
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new ClimberHold(this));
     }
 
     // the value in set expiration is in SECONDS not milliseconds

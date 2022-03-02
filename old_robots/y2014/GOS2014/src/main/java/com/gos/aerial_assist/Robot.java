@@ -8,7 +8,7 @@
 package com.gos.aerial_assist;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.commands.ArcadeDrive;
@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
         if (m_auto != null) {
             m_auto.cancel();
         }
-        new ArcadeDrive(m_oi, m_driving, m_chassis).start(); //Starts arcade drive automatically
+        new ArcadeDrive(m_oi, m_driving, m_chassis).schedule(); //Starts arcade drive automatically
     }
 
     /**

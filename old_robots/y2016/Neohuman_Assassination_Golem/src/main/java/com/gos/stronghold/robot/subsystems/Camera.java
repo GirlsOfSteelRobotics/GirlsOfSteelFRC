@@ -1,7 +1,6 @@
 package com.gos.stronghold.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.stronghold.robot.commands.camera.UpdateCam;
 
 /**
  *
@@ -99,11 +98,5 @@ public class Camera extends SubsystemBase {
         //            NIVision.IMAQdxGrab(curCam, frame, 1);
         //            server.setImage(frame);
         //        }
-    }
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new UpdateCam(this));
     }
 }

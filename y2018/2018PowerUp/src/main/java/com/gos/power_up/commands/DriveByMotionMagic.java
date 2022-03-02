@@ -142,11 +142,4 @@ public class DriveByMotionMagic extends CommandBase {
         m_chassis.stop();
         m_chassis.setInverted(false);
     }
-
-
-    @Override
-    protected void interrupted() {
-        System.out.println("DriveByMotionMagic: interrupted");
-        end();
-    }
 }

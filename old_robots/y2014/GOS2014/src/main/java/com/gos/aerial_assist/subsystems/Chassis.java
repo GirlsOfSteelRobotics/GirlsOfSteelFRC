@@ -11,7 +11,6 @@ package com.gos.aerial_assist.subsystems;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
@@ -90,21 +89,9 @@ public class Chassis extends SubsystemBase {
          }, 2, false);
 
          */
-        m_rightPositionPID = new EncoderGoSPidController(m_kPRight, Piright, Pdright, m_rightEncoder, new PIDOutput() {
+        m_rightPositionPID = new EncoderGoSPidController(m_kPRight, Piright, Pdright, m_rightEncoder, m_rightJag::set, 2, Configuration.rightPIDReverseEncoder, false); //For the competition bot (practice bot is true, false)
 
-            @Override
-            public void pidWrite(double output) {
-                m_rightJag.set(output);
-            }
-        }, 2, Configuration.rightPIDReverseEncoder, false); //For the competition bot (practice bot is true, false)
-
-        m_leftPositionPID = new EncoderGoSPidController(m_kPpLeft, m_kPileft, m_kPdleft, m_leftEncoder, new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                m_leftJag.set(output);
-            }
-        }, 2, Configuration.leftPIDReverseEncoder, false);
+        m_leftPositionPID = new EncoderGoSPidController(m_kPpLeft, m_kPileft, m_kPdleft, m_leftEncoder, m_leftJag::set, 2, Configuration.leftPIDReverseEncoder, false);
     }
 
     public double square(double joystickValue, double scale) {

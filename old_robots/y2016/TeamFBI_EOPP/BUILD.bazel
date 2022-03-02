@@ -7,7 +7,7 @@ gos_java_robot(
     main_class = "com.gos.preseason2016.team_fbi.robot.Main",
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/old_commands",
+        "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
     ],
 )

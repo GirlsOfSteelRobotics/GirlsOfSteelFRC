@@ -46,9 +46,9 @@ public class OI {
 
         //Collectors: collect/release tote on z-axis
         m_collectTote = new LTButton(m_operatorJoystick);
-        m_collectTote.whileActive(new CollectTote(collector));
+        m_collectTote.whenActive(new CollectTote(collector));
         m_releaseTote = new RTButton(m_operatorJoystick);
-        m_releaseTote.whileActive(new ReleaseTote(collector));
+        m_releaseTote.whenActive(new ReleaseTote(collector));
         m_angleIn = new JoystickButton(m_operatorJoystick, 5); //hello sonia i am so interested in ur life please tell me everything
         m_angleIn.whenPressed(new AngleCollectorIn(collector)); //omg sonia u dont even exist in real life am i just dreaming i think im loopy
         m_angleOut = new JoystickButton(m_operatorJoystick, 6); //what is going on i am so confused what does this even mean

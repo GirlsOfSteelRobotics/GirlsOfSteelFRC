@@ -1,7 +1,7 @@
 package com.gos.rebound_rumble;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.commands.AutoTuneCamera;
@@ -55,15 +55,15 @@ public class Watson2012 extends TimedRobot {
         SmartDashboard.putBoolean("Reset Netbook", true);
         SmartDashboard.putData(new AutoTuneCamera(m_chassis));
 
-        SmartDashboard.putData(Scheduler.getInstance());
+        SmartDashboard.putData(CommandScheduler.getInstance());
 
         //        buttons = new Buttons(); //runs different commands based on the physical buttons/switches
     }
 
     @Override
     public void autonomousInit() {
-        m_turretTracking.start();
-        m_collect.start();
+        m_turretTracking.schedule();
+        m_collect.schedule();
         m_auto.start();
     }
 
@@ -80,7 +80,7 @@ public class Watson2012 extends TimedRobot {
         //start if you just start with teleop (like to test)
         m_collect.cancel();
         m_auto.cancel();
-        m_driveJagsLinear.start();
+        m_driveJagsLinear.schedule();
         //        buttons.start();
     }
 

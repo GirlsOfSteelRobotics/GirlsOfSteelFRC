@@ -2,8 +2,8 @@ package com.gos.ultimate_ascent.commands;
 
 import com.gos.ultimate_ascent.subsystems.Climber;
 import com.gos.ultimate_ascent.subsystems.Gripper;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj.command.WaitForChildren;
 
 /**
  * @author sam
@@ -14,14 +14,14 @@ public class FullClimb extends SequentialCommandGroup {
     public FullClimb(Climber climber, Gripper bottomGripper) {
 
         //Closes all grippers
-        addCommands(new CloseBottomGrip(bottomGripper));
-        addParallel(new RetractClimberPiston(climber));
+        addCommands(new CloseBottomGrip(bottomGripper)
+            .alongWith(new RetractClimberPiston(climber)));
         //Starts motors to begin climbing
         addCommands(new StartClimbMotors(climber));
 
-        CommandGroup topGripperSequence = new CommandGroup();
-        CommandGroup middleGripperSequence = new CommandGroup();
-        CommandGroup bottomGripperSequence = new CommandGroup();
+        SequentialCommandGroup topGripperSequence = new SequentialCommandGroup();
+        SequentialCommandGroup middleGripperSequence = new SequentialCommandGroup();
+        SequentialCommandGroup bottomGripperSequence = new SequentialCommandGroup();
 
         //Should the terminating amount be two or three?
         for (int barCount = 0; barCount < 2; barCount++) {
@@ -34,11 +34,11 @@ public class FullClimb extends SequentialCommandGroup {
             bottomGripperSequence.addCommands(new OpenGripAtBar(bottomGripper));
             bottomGripperSequence.addCommands(new CloseGripPastBar(bottomGripper));
         }
-        addParallel(middleGripperSequence);
-        addParallel(bottomGripperSequence);
-        addParallel(topGripperSequence);
+        addCommands(new ParallelCommandGroup(
+            middleGripperSequence,
+            bottomGripperSequence,
+            topGripperSequence));
 
-        addCommands(new WaitForChildren()); //waiting for the parallel little command groups to finish off(they will) and then continues with the main thread.
         //This is so that we can move up the vertical part of the pyramid.
         //        addCommands(new OpenGripAtBar(CommandBase.topGripper));
         //Stops the climbing movement

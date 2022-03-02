@@ -93,11 +93,4 @@ public class TurnInPlace extends CommandBase {
         System.out.println("TurnInPlace Finished");
         m_chassis.stop();
     }
-
-
-    @Override
-    protected void interrupted() {
-        System.out.println("TurnInPlace Interrupted");
-        end();
-    }
 }

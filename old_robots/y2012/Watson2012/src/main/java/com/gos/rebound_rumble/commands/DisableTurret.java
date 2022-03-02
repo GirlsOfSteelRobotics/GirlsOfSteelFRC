@@ -12,7 +12,6 @@ public class DisableTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        m_turret.disablePID();
         m_turret.stopJag();
     }
 

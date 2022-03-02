@@ -10,7 +10,6 @@ package com.gos.deep_space.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.deep_space.RobotMap;
-import com.gos.deep_space.commands.PivotHold;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public final class Pivot extends SubsystemBase {
@@ -33,14 +32,6 @@ public final class Pivot extends SubsystemBase {
         m_pivot = new WPI_TalonSRX(RobotMap.PIVOT_TALON);
         m_pivot.setSensorPhase(true);
         setupPivotFPID();
-        addChild(m_pivot);
-    }
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new PivotHold(this));
     }
 
     // Put methods for controlling this subsystem

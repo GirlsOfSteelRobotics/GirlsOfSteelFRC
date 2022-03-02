@@ -2,7 +2,6 @@ package com.gos.power_up.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
-import com.gos.power_up.commands.CollectorHold;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -25,12 +24,6 @@ public class Collector extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new CollectorHold(this));
-    }
 
 
     public void stop() {

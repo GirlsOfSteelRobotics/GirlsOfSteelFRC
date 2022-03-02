@@ -1,13 +1,15 @@
 package com.gos.steam_works;
 
+import com.gos.steam_works.commands.StayClimbed;
 import com.gos.steam_works.subsystems.Agitator;
 import com.gos.steam_works.subsystems.Camera;
 import com.gos.steam_works.subsystems.Chassis;
+import com.gos.steam_works.subsystems.Climber;
 import com.gos.steam_works.subsystems.Loader;
 import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.subsystems.Shooter;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.vision.VisionThread;
@@ -29,6 +31,7 @@ public class Robot extends TimedRobot {
     private final Shooter m_shooter;
     private final Camera m_camera;
     private final Loader m_loader;
+    private final Climber m_climber;
     private final GripPipelineListener m_listener;
 
     private Command m_autonomousCommand;
@@ -46,6 +49,7 @@ public class Robot extends TimedRobot {
         m_shooter = new Shooter();
         m_camera = new Camera();
         m_loader = new Loader();
+        m_climber = new Climber();
         m_listener = new GripPipelineListener();
 
         // Initialize all subsystems before creating the OI
@@ -63,6 +67,8 @@ public class Robot extends TimedRobot {
             e.printStackTrace();
         }
         */
+
+        m_climber.setDefaultCommand(new StayClimbed(m_climber));
 
         m_visionThread = new VisionThread(m_camera.getVisionCamera(), new GripPipeline(), m_listener); // NOPMD
         m_visionThread.start();

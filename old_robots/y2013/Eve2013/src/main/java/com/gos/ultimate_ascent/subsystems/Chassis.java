@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.ultimate_ascent.RobotMap;
@@ -187,52 +186,22 @@ public class Chassis extends SubsystemBase {
 
         //GoSPID
         m_rightPIDRate = new GosPidController(rightP, rightI, rightD,
-            m_rightEncoder, new PIDOutput() {
-                @Override
-                public void pidWrite(double output) {
-                    setRightJag(output);
-                }
-            }, GosPidController.RATE); //ADD integral constant
+            m_rightEncoder, this::setRightJag, GosPidController.RATE); //ADD integral constant
         m_backPIDRate = new GosPidController(backP, backI, backD, m_backEncoder,
-            new PIDOutput() {
-                @Override
-                public void pidWrite(double output) {
-                    setBackJag(output);
-                }
-            }, GosPidController.RATE); //ADD integral constant
+            this::setBackJag, GosPidController.RATE); //ADD integral constant
         m_leftPIDRate = new GosPidController(leftP, leftI, leftD, m_leftEncoder,
-            new PIDOutput() {
-                @Override
-                public void pidWrite(double output) {
-                    setLeftJag(output);
-                }
-            }, GosPidController.RATE); //ADD integral constant
+            this::setLeftJag, GosPidController.RATE); //ADD integral constant
 
 
         m_rightPIDPosition = new GosPidController(rightPositionP, rightPositionI,
             rightPositionD, m_rightEncoder,
-            new PIDOutput() {
-                @Override
-                public void pidWrite(double output) {
-                    setRightJag(output);
-                }
-            }, GosPidController.POSITION);
+            this::setRightJag, GosPidController.POSITION);
         m_backPIDPosition = new GosPidController(backPositionP, backPositionI,
             backPositionD, m_backEncoder,
-            new PIDOutput() {
-                @Override
-                public void pidWrite(double output) {
-                    setBackJag(output);
-                }
-            }, GosPidController.POSITION);
+            this::setBackJag, GosPidController.POSITION);
         m_leftPIDPosition = new GosPidController(leftPositionP, leftPositionI,
             leftPositionD, m_leftEncoder,
-            new PIDOutput() {
-                @Override
-                public void pidWrite(double output) {
-                    setLeftJag(output);
-                }
-            }, GosPidController.POSITION);
+            this::setLeftJag, GosPidController.POSITION);
 
         m_gyro = new AnalogGyro(RobotMap.GYRO_PORT);
 
@@ -595,5 +564,4 @@ public class Chassis extends SubsystemBase {
         }
     }
 
- //end initDefaultCommand
 } //end Chassis subsystem

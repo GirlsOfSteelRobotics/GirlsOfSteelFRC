@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.ultimate_ascent.commands.Drive;
-import com.gos.ultimate_ascent.commands.OpenAllGrippers;
 import com.gos.ultimate_ascent.objects.AutonomousChooser;
 import com.gos.ultimate_ascent.objects.PositionInfo;
 import com.gos.ultimate_ascent.objects.ShooterCamera;
@@ -108,7 +107,6 @@ public class Eve2013 extends TimedRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-        new OpenAllGrippers(m_gripper).start();
         m_autonomous.start();
     }
 
@@ -161,7 +159,7 @@ public class Eve2013 extends TimedRobot {
         if (m_autonomous != null) {
             m_autonomous.cancel();
         }
-        new Drive(m_oi, m_chassis, m_drive, 1.0, 0.5, true).start();
+        new Drive(m_oi, m_chassis, m_drive, 1.0, 0.5, true).schedule();
     }
 
     /**

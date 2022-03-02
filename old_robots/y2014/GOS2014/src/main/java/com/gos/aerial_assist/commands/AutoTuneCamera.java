@@ -52,7 +52,7 @@ public class AutoTuneCamera extends CommandBase {
 
     @Override
     @SuppressWarnings("PMD.CognitiveComplexity")
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         int nSteps = 10; //(int)(HALF_COURT/STEP);
         double[] imageTargetRatioData = new double[nSteps];

@@ -34,7 +34,7 @@ public class DriveByVision extends CommandBase {
         m_dist = m_blobs.distanceBetweenBlobs();
         if (m_blobs.distanceBetweenBlobs() == -1) {
             System.out.println("DriveByVision initialize: line not in sight!!");
-            end();
+            end(true);
         }
     }
 

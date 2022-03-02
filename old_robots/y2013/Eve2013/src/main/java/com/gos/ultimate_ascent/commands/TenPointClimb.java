@@ -12,8 +12,7 @@ public class TenPointClimb extends SequentialCommandGroup {
     public TenPointClimb(Climber climber, Gripper gripper) {
 
         //Closes all grippers
-        addCommands(new CloseBottomGrip(gripper));
-        addParallel(new RetractClimberPiston(climber));
+        addCommands(new CloseBottomGrip(gripper).alongWith(new RetractClimberPiston(climber)));
         //Starts motors to begin climbing
         addCommands(new StartClimbMotors(climber));
 

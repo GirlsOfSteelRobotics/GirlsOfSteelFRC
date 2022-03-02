@@ -47,8 +47,6 @@ public class Camera extends SubsystemBase {
     }
 
 
-
-
     public void openMovieFile() {
         // Create a filename based on the current date and time.
         // Avoid colons because they're illegal filename characters on some computers.

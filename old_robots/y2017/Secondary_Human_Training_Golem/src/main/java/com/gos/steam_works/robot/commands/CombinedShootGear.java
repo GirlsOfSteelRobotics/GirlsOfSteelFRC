@@ -11,9 +11,7 @@ import com.gos.steam_works.robot.subsystems.Shooter;
 public class CombinedShootGear extends SequentialCommandGroup {
 
     public CombinedShootGear(Agitator agitator, Shooter shooter, Loader loader) {
-        addParallel(new Shoot(shooter, Shooter.SHOOTER_SPEED_GEAR));
-        addCommands(new TimeDelay(0.75));
-        addParallel(new Agitate(agitator));
-        addCommands(new LoadBall(loader));
+        addCommands(new Shoot(shooter, Shooter.SHOOTER_SPEED_GEAR).withTimeout(0.75));
+        addCommands(new Agitate(agitator).alongWith(new LoadBall(loader)));
     }
 }

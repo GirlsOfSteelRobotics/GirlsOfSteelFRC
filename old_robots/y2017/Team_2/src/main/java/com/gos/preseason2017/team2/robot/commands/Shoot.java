@@ -9,8 +9,7 @@ import com.gos.preseason2017.team2.robot.subsystems.Manipulator;
 public class Shoot extends SequentialCommandGroup {
 
     public Shoot(Manipulator manipulator) {
-        addParallel(new Release(manipulator));
-        addCommands(new TimeDelay(1.0));
+        addCommands(new Release(manipulator).withTimeout(1.0));
         addCommands(new PusherOut(manipulator));
         addCommands(new StopShooter(manipulator));
     }

@@ -77,7 +77,7 @@ public class AutonomousOptions extends CommandBase {
 
     @Override
     @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.AvoidDeeplyNestedIfStmts", "PMD.CyclomaticComplexity"})
-    protected void execute() {
+    public void execute() {
         if (m_getXDistanceCamera) {
             m_xDistance = 5.3939 - Camera.getXDistance();
             //5.3939 = half the field - (bridge/2 + space between robot and bridge
@@ -118,7 +118,6 @@ public class AutonomousOptions extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_turret.disablePID();
         m_turret.stopJag();
         m_shooter.disablePID();
         m_shooter.stopJags();
