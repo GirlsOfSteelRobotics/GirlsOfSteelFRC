@@ -33,6 +33,8 @@ public class ShooterRpmPIDCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_shooter.setShooterSpeed(0);
+        if (interrupted) {
+            m_shooter.setShooterSpeed(0);
+        }
     }
 }
