@@ -13,6 +13,7 @@ public class ShooterRpmPIDCommand extends CommandBase {
         m_goalRPM = goalRPM;
 
         addRequirements(this.m_shooter);
+
     }
 
     @Override

@@ -29,6 +29,9 @@ public class FeederVerticalConveyorForwardCommand extends CommandBase {
     public void execute() {
         m_verticalConveyor.forwardFeedMotor();
         m_verticalConveyor.forwardVerticalConveyorMotor();
+
+        System.out.println("Feeder code works!");
+
     }
 
     /**
