@@ -1,4 +1,4 @@
-package com.gos.outreach2021.sim;
+package com.gos.outreach2021.subsystems.sim;
 
 import com.gos.outreach2021.subsystems.LimelightSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;

@@ -1,6 +1,7 @@
 package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
+import com.gos.infinite_recharge.Constants.DriveConstants;
 import com.gos.infinite_recharge.sim.CameraSimulator;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
@@ -32,7 +33,6 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.numbers.N2;
-import com.gos.infinite_recharge.commands.autonomous.FollowTrajectory.DriveConstants;
 import com.gos.lib.sensors.IGyroWrapper;
 import com.gos.lib.navx.NavXWrapper;
 

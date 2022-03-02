@@ -1,0 +1,29 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//y2020/2020InfiniteRecharge:__subpackages__"],
+    deps = [
+        "@bazelrio//libraries/java/wpilib/wpimath",
+    ],
+)
+
+gos_java_robot(
+    name = "infinite_recharge",
+    srcs = glob(["*.java"]),
+    main_class = "com.gos.infinite_recharge.Main",
+    visibility = ["//y2020/2020InfiniteRecharge:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/auto_modes",
+        "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands",
+        "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands/autonomous",
+        "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/subsystems",
+        "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/trajectory_modes",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@bazelrio//libraries/java/wpilib/wpiutil",
+    ],
+)

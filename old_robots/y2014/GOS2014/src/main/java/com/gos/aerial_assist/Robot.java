@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
         if (m_auto != null) {
             m_auto.cancel();
         }
-        new ArcadeDrive(m_oi, m_driving, m_chassis).schedule(); //Starts arcade drive automatically
+        new ArcadeDrive(m_oi.getChassisJoystick(), m_driving, m_chassis).schedule(); //Starts arcade drive automatically
     }
 
     /**

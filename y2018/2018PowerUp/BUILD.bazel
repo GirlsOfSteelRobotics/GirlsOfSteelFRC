@@ -1,16 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
-
-gos_java_robot(
+alias(
     name = "2018PowerUp",
-    srcs = glob(["src/main/java/**/*.java"]),
-    main_class = "com.gos.power_up.Main",
-    deps = [
-        "//libraries/GirlsOfSteelLib",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/opencv",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-    ],
+    actual = "//y2018/2018PowerUp/src/main/java/com/gos/power_up",
 )

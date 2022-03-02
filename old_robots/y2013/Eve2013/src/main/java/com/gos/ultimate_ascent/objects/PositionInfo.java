@@ -1,6 +1,6 @@
 package com.gos.ultimate_ascent.objects;
 
-import com.gos.ultimate_ascent.subsystems.Chassis;
+import com.gos.ultimate_ascent.Constants;
 
 public class PositionInfo {
 
@@ -15,10 +15,10 @@ public class PositionInfo {
         //set the should-be 3 positions here
         positions[NO_POSITION] = new Position(0, 0);
         positions[BACK_RIGHT] = new Position(
-            Chassis.BACK_RIGHT_OFFSET,
+            Constants.BACK_RIGHT_OFFSET,
             0.735); //78
         positions[BACK_LEFT] = new Position(
-            Chassis.BACK_LEFT_OFFSET,
+            Constants.BACK_LEFT_OFFSET,
             0.81);
     } //end constructor
 

@@ -1,0 +1,20 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//y2022/CallistoRewrite:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "v2",
+    srcs = glob(["*.java"]),
+    main_class = "com.gos.calisto.v2.Main",
+    visibility = ["//y2022/CallistoRewrite:__subpackages__"],
+    deps = [
+        "//y2022/CallistoRewrite/src/main/java/com/gos/calisto/v2/commands",
+        "//y2022/CallistoRewrite/src/main/java/com/gos/calisto/v2/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

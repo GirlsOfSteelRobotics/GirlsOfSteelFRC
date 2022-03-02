@@ -1,6 +1,5 @@
 package com.gos.power_up;
 
-import com.gos.power_up.subsystems.Blobs;
 import edu.wpi.first.vision.VisionRunner;
 import org.opencv.core.KeyPoint;
 import org.opencv.core.MatOfKeyPoint;

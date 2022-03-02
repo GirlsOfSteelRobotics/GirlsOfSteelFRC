@@ -94,8 +94,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Release", new Release(m_shack, m_collector));
 
         // Default commands
-        m_lifter.setDefaultCommand(new LiftByJoystick(m_oi, m_lifter));
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_lifter.setDefaultCommand(new LiftByJoystick(m_oi.getOperatorJoystick(), m_lifter));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi.getChassisJoystick(), m_chassis));
 
     }
 

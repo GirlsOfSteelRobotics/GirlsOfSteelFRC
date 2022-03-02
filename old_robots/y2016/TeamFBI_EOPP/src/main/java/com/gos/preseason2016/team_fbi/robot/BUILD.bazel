@@ -1,0 +1,20 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "RobotMap",
+    srcs = ["RobotMap.java"],
+    visibility = ["//old_robots/y2016/TeamFBI_EOPP:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "robot",
+    srcs = glob(["*.java"]),
+    main_class = "com.gos.preseason2016.team_fbi.robot.Main",
+    visibility = ["//old_robots/y2016/TeamFBI_EOPP:__subpackages__"],
+    deps = [
+        "//old_robots/y2016/TeamFBI_EOPP/src/main/java/com/gos/preseason2016/team_fbi/robot/commands",
+        "//old_robots/y2016/TeamFBI_EOPP/src/main/java/com/gos/preseason2016/team_fbi/robot/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

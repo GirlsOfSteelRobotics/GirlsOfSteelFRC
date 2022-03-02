@@ -75,19 +75,10 @@ public class OI {
         new POVButton(m_drivingPad, 270).whenHeld(new AlignLeftRight(chassis, limelight));
         //new POVButton(m_drivingPad, 90).whenHeld(new AlignForwardBackward(chassis, limelight));
 
-        new JoystickButton(m_drivingPad, Button.kLeftBumper.value).whileHeld(new DriveLessByJoystickWhenPressed(chassis, this));
+        new JoystickButton(m_drivingPad, Button.kLeftBumper.value).whileHeld(new DriveLessByJoystickWhenPressed(chassis, m_drivingPad));
         //new JoystickButton(m_drivingPad, Button.kB.value).whenPressed(new DriveByJoystick(chassis, this));
 
 
-    }
-
-    // Y is negated so that pushing the joystick forward results in positive values
-    public double getJoystickSpeed() {
-        return -m_drivingPad.getLeftY();
-    }
-
-    public double getJoystickSpin() {
-        return m_drivingPad.getRightX();
     }
 
 }

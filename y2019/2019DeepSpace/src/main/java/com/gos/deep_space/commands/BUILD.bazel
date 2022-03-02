@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "commands",
+    srcs = glob(["*.java"]),
+    visibility = ["//y2019/2019DeepSpace:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

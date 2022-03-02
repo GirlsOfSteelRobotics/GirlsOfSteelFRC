@@ -1,17 +1,17 @@
 package com.gos.deep_space.commands;
 
-import com.gos.deep_space.OI;
 import com.gos.deep_space.subsystems.Chassis;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveByJoystick extends CommandBase {
 
     private final Chassis m_chassis;
-    private final OI m_oi;
+    private final Joystick m_drivingPad;
 
-    public DriveByJoystick(Chassis chassis, OI oi) {
+    public DriveByJoystick(Chassis chassis, Joystick drivingPad) {
         m_chassis = chassis;
-        m_oi = oi;
+        m_drivingPad = drivingPad;
         addRequirements(m_chassis);
     }
 
@@ -25,7 +25,7 @@ public class DriveByJoystick extends CommandBase {
     @Override
     public void execute() {
         // 4 is the axis number right x on the gamepad
-        m_chassis.driveByJoystick(m_oi.getLeftUpAndDown(), m_oi.getRightSideToSide());
+        m_chassis.driveByJoystick(-m_drivingPad.getY(), m_drivingPad.getRawAxis(4));
     }
 
 

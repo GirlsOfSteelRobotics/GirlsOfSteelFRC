@@ -109,7 +109,7 @@ public class OI {
         motionMagic.whenPressed(new DriveByMotionMagic(chassis, 25.0, -90.0));
 
 
-        chassis.setDefaultCommand(new DriveByJoystick(chassis, this));
+        chassis.setDefaultCommand(new DriveByJoystick(chassis, m_amazonGamePad));
     }
 
     //    public double getGamePadLeftUpAndDown() {
@@ -152,35 +152,10 @@ public class OI {
     //        return drivingJoystickTwo.getX();
     //    }
     //
-    public void setDriveStyle() {
-        //        if (!RobotMap.dio1.get()) {
-        //            driveStyle = DriveStyle.joystickArcade;
-        //        } else if (!RobotMap.dio2.get()) {
-        //            driveStyle = DriveStyle.gamePadArcade;
-        //        } else if (!RobotMap.dio3.get()) {
-        //            driveStyle = DriveStyle.joystickTank;
-        //        } else if (!RobotMap.dio4.get()) {
-        //            driveStyle = DriveStyle.gamePadTank;
-        //        } else if (!RobotMap.dio5.get()) {
-        //            driveStyle = DriveStyle.amazonDrive;
-        //        } else {
-        //            System.out.println("NO DRIVE MODE SELECTED. \nDefaulting to Joystick Arcade...");
-        //            driveStyle = DriveStyle.joystickArcade;
-        //        }
 
-        m_driveStyle = DriveStyle.amazonDrive;
-        System.out.println("Drive Mode: " + m_driveStyle);
-    }
 
     public DriveStyle getDriveStyle() {
         return m_driveStyle;
     }
 
-    public boolean isThrottle() {
-        return m_amazonGamePad.getRawAxis(3) > .5;
-    }
-
-    public boolean isSpeedy() {
-        return m_amazonGamePad.getRawAxis(2) > .5;
-    }
 }

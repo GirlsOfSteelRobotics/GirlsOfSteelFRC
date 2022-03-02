@@ -7,7 +7,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Chassis;
 import com.gos.aerial_assist.subsystems.Driving;
 
@@ -22,9 +21,9 @@ public class ArcadeDrive extends CommandBase {
     private double m_xCoord;
     private double m_yCoord;
 
-    public ArcadeDrive(OI oi, Driving driving, Chassis chassis) {
+    public ArcadeDrive(Joystick joystick, Driving driving, Chassis chassis) {
         m_chassis = chassis;
-        m_joystick1 = oi.getChassisJoystick();
+        m_joystick1 = joystick;
         addRequirements(driving);
     }
 

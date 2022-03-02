@@ -31,8 +31,6 @@ import com.gos.ultimate_ascent.commands.PushPullShooterPiston;
 @SuppressWarnings({"PMD.TooManyFields"})
 public class OI {
 
-    public static final double JAG_SPEED = 1.0;
-    public static final double ENCODER_SPEED = 50;
     public static final double VOLTAGE_SPEED = 12.0;
 
     //PS3 button numbers
@@ -84,15 +82,15 @@ public class OI {
 
         //Defining Driver Buttons - microsoft joytick
         m_startDrive = new JoystickButton(m_driverJoystick, 9);
-        m_startDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, false));
+        m_startDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, false));
         m_stopChassis = new JoystickButton(m_driverJoystick, 7);
         m_stopChassis.whenPressed(new StopChassis(chassis, drive));
         m_gyroDrive = new JoystickButton(m_driverJoystick, 11);
-        m_gyroDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, true));
+        m_gyroDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, true));
         m_normalDrive = new JoystickButton(m_driverJoystick, 10);
-        m_normalDrive.whenPressed(new Drive(this, chassis, drive, 1.0, 0.5, false));
+        m_normalDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, false));
         m_liningDrive = new JoystickButton(m_driverJoystick, 12);
-        m_liningDrive.whenPressed(new Drive(this, chassis, drive, 0.5, 0.25, true));
+        m_liningDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 0.5, 0.25, true));
         //disables driver rotation
         m_disableRotation = new JoystickButton(m_driverJoystick, 2);
         m_disableRotation.whileHeld(new DisableRotation(chassis));

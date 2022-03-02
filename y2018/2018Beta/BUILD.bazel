@@ -5,7 +5,6 @@ gos_java_robot(
     srcs = glob(["src/main/java/**/*.java"]),
     main_class = "com.gos.steam_works.Main",
     deps = [
-        "//libraries/GirlsOfSteelLib",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/opencv",
         "@bazelrio//libraries/java/wpilib/cameraserver",

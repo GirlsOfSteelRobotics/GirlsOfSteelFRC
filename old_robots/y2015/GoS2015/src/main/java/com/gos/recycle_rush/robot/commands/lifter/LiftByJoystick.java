@@ -2,7 +2,6 @@ package com.gos.recycle_rush.robot.commands.lifter;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.recycle_rush.robot.OI;
 import com.gos.recycle_rush.robot.subsystems.Lifter;
 
 /**
@@ -13,9 +12,9 @@ public class LiftByJoystick extends CommandBase {
     private final Lifter m_lifter;
     private final Joystick m_operatorJoystick;
 
-    public LiftByJoystick(OI oi, Lifter lifter) {
+    public LiftByJoystick(Joystick operatorJoystick, Lifter lifter) {
         m_lifter = lifter;
-        m_operatorJoystick = oi.getOperatorJoystick();
+        m_operatorJoystick = operatorJoystick;
         addRequirements(m_lifter);
     }
 

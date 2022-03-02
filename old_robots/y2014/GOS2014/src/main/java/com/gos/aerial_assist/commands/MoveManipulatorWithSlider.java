@@ -6,7 +6,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
@@ -23,9 +22,9 @@ public class MoveManipulatorWithSlider extends CommandBase {
     private static final double m_maxManipulatorAngle = 110;
     private static final double m_minManipulatorAngle = -3;
 
-    public MoveManipulatorWithSlider(OI oi, Manipulator manipulator) {
+    public MoveManipulatorWithSlider(Joystick joystick, Manipulator manipulator) {
         m_manipulator = manipulator;
-        m_driver = oi.getChassisJoystick();
+        m_driver = joystick;
         addRequirements(m_manipulator);
     }
 

@@ -21,8 +21,6 @@ public class Chassis extends SubsystemBase {
     public static final double ROTATION_THRESHOLD = 10;
     public static final int FEEDER_RIGHT = -88;
     public static final int FEEDER_LEFT = 6;
-    public static final int BACK_RIGHT_OFFSET = 49;
-    public static final int BACK_LEFT_OFFSET = 46;
 
     //scale for rotation
     public static final double SLOW_ROTATE = 0.3;

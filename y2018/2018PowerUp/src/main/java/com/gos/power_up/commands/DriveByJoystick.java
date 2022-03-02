@@ -1,7 +1,7 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.OI;
 import com.gos.power_up.subsystems.Chassis;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -10,18 +10,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DriveByJoystick extends CommandBase {
 
     private final Chassis m_chassis;
-    private final OI m_oi;
+    private final Joystick m_amazonGamePad;
 
-    public DriveByJoystick(Chassis chassis, OI oi) {
+    public DriveByJoystick(Chassis chassis, Joystick amazonGamePad) {
         m_chassis = chassis;
-        m_oi = oi;
+        m_amazonGamePad = amazonGamePad;
         addRequirements(m_chassis);
     }
 
 
     @Override
     public void initialize() {
-        m_oi.setDriveStyle();
     }
 
 
@@ -40,11 +39,11 @@ public class DriveByJoystick extends CommandBase {
         //regular is 90% speed
 
         if (highGear) {
-            if (m_oi.isThrottle()) {
+            if (isThrottle()) {
                 m_chassis.getLeftTalon().configOpenloopRamp(0.37, 10); //blinky numbers
                 m_chassis.getRightTalon().configOpenloopRamp(0.37, 10);
                 throttleFactor = .2;
-            } else if (m_oi.isSpeedy()) {
+            } else if (isSpeedy()) {
                 m_chassis.getLeftTalon().configOpenloopRamp(0.7, 10); //blinky numbers
                 m_chassis.getRightTalon().configOpenloopRamp(0.7, 10);
                 throttleFactor = 1;
@@ -52,9 +51,9 @@ public class DriveByJoystick extends CommandBase {
                 throttleFactor = .65;
             }
         } else {
-            if (m_oi.isThrottle()) {
+            if (isThrottle()) {
                 throttleFactor = .225;
-            } else if (m_oi.isSpeedy()) {
+            } else if (isSpeedy()) {
                 throttleFactor = 1;
             } else {
                 throttleFactor = .9;
@@ -62,8 +61,8 @@ public class DriveByJoystick extends CommandBase {
         }
 
 
-        m_chassis.curvatureDrive(m_oi.getAmazonLeftUpAndDown() * throttleFactor,
-            m_oi.getAmazonRightSideToSide() * throttleFactor, true);
+        m_chassis.curvatureDrive(-m_amazonGamePad.getY() * throttleFactor,
+            m_amazonGamePad.getTwist() * throttleFactor, true);
 
 
     }
@@ -80,5 +79,12 @@ public class DriveByJoystick extends CommandBase {
         m_chassis.stop();
     }
 
+    private boolean isThrottle() {
+        return m_amazonGamePad.getRawAxis(3) > .5;
+    }
+
+    private boolean isSpeedy() {
+        return m_amazonGamePad.getRawAxis(2) > .5;
+    }
 
 }

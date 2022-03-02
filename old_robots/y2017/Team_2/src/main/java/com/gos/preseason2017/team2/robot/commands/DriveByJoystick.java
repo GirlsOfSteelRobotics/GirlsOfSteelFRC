@@ -1,21 +1,20 @@
 package com.gos.preseason2017.team2.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.preseason2017.team2.robot.OI;
 import com.gos.preseason2017.team2.robot.subsystems.Chassis;
 
 /**
  *
  */
 public class DriveByJoystick extends CommandBase {
-
-    private final OI m_oi;
     private final Chassis m_chassis;
+    private final Joystick m_stick;
 
-    public DriveByJoystick(OI oi, Chassis chassis) {
+    public DriveByJoystick(Joystick stick, Chassis chassis) {
         m_chassis = chassis;
-        m_oi = oi;
+        m_stick = stick;
         addRequirements(m_chassis);
     }
 
@@ -28,7 +27,7 @@ public class DriveByJoystick extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_chassis.driveByJoystick(m_oi.getStick());
+        m_chassis.driveByJoystick(m_stick);
         //Robot.chassis.printEncoderValues();
     }
 

@@ -6,9 +6,8 @@ gos_java_robot(
     disable_checkstyle = True,
     main_class = "com.gos.rebound_rumble.Main",
     deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
         "@bazelrio//libraries/java/wpilib/wpimath",
     ],

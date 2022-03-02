@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
 
         // Default commands
-        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi, m_driveSystem));
+        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi.getDriveStick(), m_driveSystem));
     }
 
     /**

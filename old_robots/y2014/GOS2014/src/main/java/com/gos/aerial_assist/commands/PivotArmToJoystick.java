@@ -7,7 +7,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
@@ -19,10 +18,10 @@ public class PivotArmToJoystick extends CommandBase {
     private final Manipulator m_manipulator;
     private double m_angle;
 
-    public PivotArmToJoystick(OI oi, Manipulator manipulator) {
+    public PivotArmToJoystick(Joystick joystick, Manipulator manipulator) {
         m_manipulator = manipulator;
         addRequirements(m_manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
-        m_operator = oi.getOperatorJoystick();
+        m_operator = joystick;
     }
 
     @Override

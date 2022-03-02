@@ -50,7 +50,7 @@ public class OI {
         m_drivingPad = new Joystick(0);
         m_operatingPad = new Joystick(1);
 
-        chassis.setDefaultCommand(new DriveByJoystick(chassis, this));
+        chassis.setDefaultCommand(new DriveByJoystick(chassis, m_drivingPad));
 
         // Climber buttons
         POVButton frontToZero = new POVButton(m_drivingPad, 90);
@@ -140,13 +140,4 @@ public class OI {
         // driveByVision = new JoystickButton (operatingPad, 9);
         // driveByVision.whenPressed(new DriveByVision());
     }
-
-    public double getLeftUpAndDown() {
-        return -m_drivingPad.getY();
-    }
-
-    public double getRightSideToSide() {
-        return m_drivingPad.getRawAxis(4);
-    }
-
 }

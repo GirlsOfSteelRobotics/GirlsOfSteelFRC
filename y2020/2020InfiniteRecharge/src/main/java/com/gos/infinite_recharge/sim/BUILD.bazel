@@ -1,0 +1,11 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "sim",
+    srcs = glob(["*.java"]),
+    visibility = ["//y2020/2020InfiniteRecharge:__subpackages__"],
+    deps = [
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)

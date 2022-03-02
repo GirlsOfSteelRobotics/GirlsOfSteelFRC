@@ -10,6 +10,7 @@ package com.gos.infinite_recharge.trajectory_modes;
 import java.util.List;
 
 import com.gos.infinite_recharge.Constants;
+import com.gos.infinite_recharge.Constants.DriveConstants;
 import com.gos.infinite_recharge.subsystems.Chassis;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -23,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.infinite_recharge.commands.autonomous.FollowTrajectory;
 import com.gos.infinite_recharge.commands.autonomous.FollowTrajectory.AutoConstants;
-import com.gos.infinite_recharge.commands.autonomous.FollowTrajectory.DriveConstants;
 
 
 public class TrajectoryModeFactory extends SequentialCommandGroup {

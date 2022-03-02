@@ -74,7 +74,7 @@ public class OI {
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand(driveSystem, accessoryMotors));
-        SmartDashboard.putData("DriveByJoystick", new DriveByJoystick(this, driveSystem));
+        SmartDashboard.putData("DriveByJoystick", new DriveByJoystick(m_driveStick, driveSystem));
         SmartDashboard.putData("Shift Up", new ShiftUp(shifters));
         SmartDashboard.putData("Shift Down", new ShiftDown(shifters));
         SmartDashboard.putData("Accessory Left Fwd", new AccessoryLeftFwd(accessoryMotors));

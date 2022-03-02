@@ -7,13 +7,9 @@ gos_java_robot(
     main_class = "com.gos.rapidreact.Main",
     deps = [
         "//libraries/GirlsOfSteelLib",
-        "//libraries/GirlsOfSteelLibCtre",
-        "//libraries/GirlsOfSteelLibNavx",
         "//libraries/GirlsOfSteelLibRev",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/rev/revlib",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",

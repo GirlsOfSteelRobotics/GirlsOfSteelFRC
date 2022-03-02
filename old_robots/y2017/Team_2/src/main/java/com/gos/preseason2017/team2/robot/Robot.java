@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
 
         // Set the default command for a subsystem here.
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi.getStick(), m_chassis));
     }
 
     /**

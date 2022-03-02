@@ -5,7 +5,7 @@
 
 package com.gos.ultimate_ascent.commands;
 
-import com.gos.ultimate_ascent.OI;
+import com.gos.ultimate_ascent.Constants;
 import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Shooter;
 import edu.wpi.first.wpilibj.RobotController;
@@ -33,14 +33,14 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void initialize() {
-        m_desiredSpeed = OI.ENCODER_SPEED;
+        m_desiredSpeed = Constants.ENCODER_SPEED;
         m_shot = false;
 
     }
 
     @Override
     public void execute() {
-        m_shooter.setJags(OI.JAG_SPEED);
+        m_shooter.setJags(Constants.JAG_SPEED);
         m_batteryVoltage = RobotController.getBatteryVoltage();
         SmartDashboard.putNumber("Encoder Rate", m_shooter.getEncoderRate());
         SmartDashboard.putNumber("Battery Voltage", m_batteryVoltage);

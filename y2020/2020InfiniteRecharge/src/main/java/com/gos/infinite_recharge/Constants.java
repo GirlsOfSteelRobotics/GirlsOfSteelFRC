@@ -7,6 +7,8 @@
 
 package com.gos.infinite_recharge;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -84,6 +86,19 @@ public final class Constants {
 
     public static final double AUTO_LINE_LEFT_SHOOT_ANGLE = Math.toRadians(-45);
 
+
+    public static class DriveConstants {
+        public static final double ksVolts = 0.179;
+        public static final double kvVoltSecondsPerMeter = 0.0653;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.00754;
+        public static final double kvVoltSecondsPerRadian = 2.5;
+        public static final double kaVoltSecondsSquaredPerRadian = 0.3;
+        public static final double maxVoltage = 10;
+
+        public static final double kTrackwidthMeters = 1.1554881713809029;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+            new DifferentialDriveKinematics(kTrackwidthMeters);
+    }
 
 
 

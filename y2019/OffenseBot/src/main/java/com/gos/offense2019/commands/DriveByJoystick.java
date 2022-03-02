@@ -7,8 +7,8 @@
 
 package com.gos.offense2019.commands;
 
-import com.gos.offense2019.OI;
 import com.gos.offense2019.subsystems.Chassis;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -16,12 +16,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class DriveByJoystick extends CommandBase {
     private final Chassis m_chassis;
-    private final OI m_oi;
+    private final Joystick m_drivingPad;
 
-    public DriveByJoystick(Chassis chassis, OI oi) {
+    private final int m_slowSpeedButton;
+    private final double m_speedHigh;
+    private final double m_speedLow;
+
+    public DriveByJoystick(Chassis chassis, Joystick drivingPad) {
         m_chassis = chassis;
-        m_oi = oi;
+        m_drivingPad = drivingPad;
         addRequirements(m_chassis);
+
+        m_slowSpeedButton = 3;
+        m_speedHigh = 1.0;
+        m_speedLow = 0.77;
     }
 
 
@@ -34,7 +42,7 @@ public class DriveByJoystick extends CommandBase {
     @Override
     public void execute() {
         // 4 is the axis number right x on the gamepad
-        m_chassis.driveByJoystick(m_oi.getLeftUpAndDown(), m_oi.getRightSideToSide());
+        m_chassis.driveByJoystick(getLeftUpAndDown(), getRightSideToSide());
     }
 
 
@@ -47,5 +55,23 @@ public class DriveByJoystick extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         System.out.println("DriveByJoystick end");
+    }
+
+    private double getLeftUpAndDown() {
+        return squaredInput(m_drivingPad.getY()) * drivingSpeed();
+    }
+
+    private double getRightSideToSide() {
+        return squaredInput(-m_drivingPad.getRawAxis(4)) * drivingSpeed();
+    }
+
+    private double drivingSpeed() {
+        return m_drivingPad.getRawAxis(m_slowSpeedButton) < 0.1 ? m_speedHigh : m_speedLow;
+    }
+
+    private double squaredInput(double inSpeed) {
+        double sign = inSpeed / Math.abs(inSpeed);
+
+        return inSpeed * inSpeed * sign;
     }
 }

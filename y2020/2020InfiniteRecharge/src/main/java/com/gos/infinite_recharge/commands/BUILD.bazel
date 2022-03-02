@@ -1,0 +1,14 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "commands",
+    srcs = glob(["*.java"]),
+    visibility = ["//y2020/2020InfiniteRecharge:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge:Constants",
+        "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

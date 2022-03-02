@@ -83,7 +83,7 @@ public class RobotContainer {
         m_oi = new OI(m_chassis, m_controlPanel, m_limelight, m_camera, m_shooter, m_shooterIntake, m_shooterConveyor, m_lift, m_winch);
 
         // Default command for the chassis is to drive using the joysticks on the driver's gamepad
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, m_oi));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis, m_oi.m_drivingPad));
 
         // Add some testing options to the Autonomous Chooser on the dashboard
 

@@ -1,0 +1,21 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "RobotMap",
+    srcs = ["RobotMap.java"],
+    visibility = ["//old_robots/y2017/Team_2:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "robot",
+    srcs = glob(["*.java"]),
+    main_class = "com.gos.preseason2017.team2.robot.Main",
+    visibility = ["//old_robots/y2017/Team_2:__subpackages__"],
+    deps = [
+        "//old_robots/y2017/Team_2/src/main/java/com/gos/preseason2017/team2/robot/commands",
+        "//old_robots/y2017/Team_2/src/main/java/com/gos/preseason2017/team2/robot/commands/autonomous",
+        "//old_robots/y2017/Team_2/src/main/java/com/gos/preseason2017/team2/robot/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

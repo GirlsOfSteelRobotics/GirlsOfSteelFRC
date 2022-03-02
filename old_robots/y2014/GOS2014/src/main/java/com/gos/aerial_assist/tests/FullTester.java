@@ -4,16 +4,23 @@
  * and open the template in the editor.
  */
 
-package com.gos.aerial_assist.commands;
+package com.gos.aerial_assist.tests;
 
+import com.gos.aerial_assist.commands.ArcadeDrive;
+import com.gos.aerial_assist.commands.AutonomousLowGoal;
+import com.gos.aerial_assist.commands.AutonomousMobility;
+import com.gos.aerial_assist.commands.ChassisLspbplanner;
+import com.gos.aerial_assist.commands.CommandBase;
+import com.gos.aerial_assist.commands.ManualPositionPIDTuner;
+import com.gos.aerial_assist.commands.MoveToPositionLSPB;
+import com.gos.aerial_assist.commands.TuneManipulatorPID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.objects.Camera;
 import com.gos.aerial_assist.subsystems.Chassis;
 import com.gos.aerial_assist.subsystems.Collector;
 import com.gos.aerial_assist.subsystems.Driving;
 import com.gos.aerial_assist.subsystems.Manipulator;
-import com.gos.aerial_assist.tests.TestCollector;
 
 /**
  * @author Sylvie Lee
@@ -56,12 +63,12 @@ public class FullTester extends CommandBase {
     private final Manipulator m_manipulator;
     private final Collector m_collector;
 
-    public FullTester(OI oi, Chassis chassis, Driving driving, Camera camera, Manipulator manipulator, Collector collector) {
+    public FullTester(Joystick joystick, Chassis chassis, Driving driving, Camera camera, Manipulator manipulator, Collector collector) {
         m_chassis = chassis;
         m_manipulator = manipulator;
         m_collector = collector;
 
-        SmartDashboard.putData(new ArcadeDrive(oi, driving, m_chassis)); //to test arcade drive
+        SmartDashboard.putData(new ArcadeDrive(joystick, driving, m_chassis)); //to test arcade drive
         //SmartDashboard.putData(new setArmAnglePID(90)); //to test pivot arm PID
         //SmartDashboard.putData(new TestPivotArmPID()); //Tests the pivot arm w/ smartdashboard inputs for setpoint
         SmartDashboard.putData(new TuneManipulatorPID(manipulator)); //To tune the pivot arm PID if necessary

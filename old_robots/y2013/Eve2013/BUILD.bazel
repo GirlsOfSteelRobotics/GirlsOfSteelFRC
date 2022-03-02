@@ -1,15 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
-
-gos_java_robot(
+alias(
     name = "Eve2013",
-    srcs = glob(["src/main/java/**/*.java"]),
-    disable_checkstyle = True,
-    main_class = "com.gos.ultimate_ascent.Main",
-    deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/ntcore",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
-    ],
+    actual = "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent",
 )

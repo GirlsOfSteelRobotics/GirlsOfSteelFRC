@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.outreach2021.sim.CameraSimulator;
+import com.gos.outreach2021.subsystems.sim.CameraSimulator;
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;

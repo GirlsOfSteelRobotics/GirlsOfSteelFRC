@@ -1,8 +1,8 @@
 package com.gos.preseason2017.team1.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.preseason2017.team1.robot.OI;
 import com.gos.preseason2017.team1.robot.subsystems.DriveSystem;
 
 /**
@@ -10,11 +10,11 @@ import com.gos.preseason2017.team1.robot.subsystems.DriveSystem;
  */
 public class DriveByJoystick extends CommandBase {
 
-    private final OI m_oi;
+    public Joystick m_driveStick;
     private final DriveSystem m_driveSystem;
 
-    public DriveByJoystick(OI oi, DriveSystem driveSystem) {
-        m_oi = oi;
+    public DriveByJoystick(Joystick driveStick, DriveSystem driveSystem) {
+        m_driveStick = driveStick;
         m_driveSystem = driveSystem;
         addRequirements(m_driveSystem);
     }
@@ -28,7 +28,7 @@ public class DriveByJoystick extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_driveSystem.takeJoystickInputs(m_oi.getDriveStick());
+        m_driveSystem.takeJoystickInputs(m_driveStick);
 
         SmartDashboard.putNumber("Drive Left Encoder ", m_driveSystem.getEncoderLeft());
         SmartDashboard.putNumber("Drive Right Encoder ", m_driveSystem.getEncoderRight());

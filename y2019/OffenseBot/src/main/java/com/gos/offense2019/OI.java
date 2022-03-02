@@ -25,16 +25,12 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class OI {
     private final Joystick m_drivingPad;
 
-    private final int m_slowSpeedButton;
-    private final double m_speedHigh;
-    private final double m_speedLow;
-
     public OI(Chassis chassis, Shifters shifters, HatchCollector hatch) {
         m_drivingPad = new Joystick(0);
         //operatingPad = new Joystick(1);
 
 
-        chassis.setDefaultCommand(new DriveByJoystick(chassis, this));
+        chassis.setDefaultCommand(new DriveByJoystick(chassis, m_drivingPad));
 
         POVButton shiftUp = new POVButton(m_drivingPad, 0);
         POVButton shiftDown = new POVButton(m_drivingPad, 180);
@@ -42,32 +38,11 @@ public class OI {
         Button hatchRelease = new JoystickButton(m_drivingPad, 5);
         Button hatchGrab = new JoystickButton(m_drivingPad, 6);
 
-        m_slowSpeedButton = 3;
-        m_speedHigh = 1.0;
-        m_speedLow = 0.77;
 
         shiftUp.whenPressed(new Shift(shifters, Shifters.Speed.kHigh));
         shiftDown.whenPressed(new Shift(shifters, Shifters.Speed.kLow));
 
         hatchRelease.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kRelease));
         hatchGrab.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kGrab));
-    }
-
-    public double getLeftUpAndDown() {
-        return squaredInput(m_drivingPad.getY()) * drivingSpeed();
-    }
-
-    public double getRightSideToSide() {
-        return squaredInput(-m_drivingPad.getRawAxis(4)) * drivingSpeed();
-    }
-
-    private double drivingSpeed() {
-        return m_drivingPad.getRawAxis(m_slowSpeedButton) < 0.1 ? m_speedHigh : m_speedLow;
-    }
-
-    private double squaredInput(double inSpeed) {
-        double sign = inSpeed / Math.abs(inSpeed);
-
-        return inSpeed * inSpeed * sign;
     }
 }

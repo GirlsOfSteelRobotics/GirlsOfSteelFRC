@@ -1,7 +1,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Chassis;
 
 /**
@@ -15,9 +14,9 @@ public class ScaledArcadeDrive extends CommandBase {
     private double m_x;
     private double m_y;
 
-    public ScaledArcadeDrive(OI oi, Chassis chassis, double scale) {
+    public ScaledArcadeDrive(Joystick joystick, Chassis chassis, double scale) {
         m_chassis = chassis;
-        m_joystick = oi.getChassisJoystick();
+        m_joystick = joystick;
         addRequirements(m_chassis);
         this.m_scale = scale;
     }

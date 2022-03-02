@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
         m_chooser.addDefault("Default Auto", new AutonomousCommand(m_driveSystem, m_accessoryMotors));
         // chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
-        SmartDashboard.putData(new DriveByJoystick(m_oi, m_driveSystem));
+        SmartDashboard.putData(new DriveByJoystick(m_oi.getDriveStick(), m_driveSystem));
     }
 
     /**
@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi, m_driveSystem));
+        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi.getDriveStick(), m_driveSystem));
     }
 
     /**

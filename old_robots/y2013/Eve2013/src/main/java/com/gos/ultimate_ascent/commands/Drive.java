@@ -1,6 +1,5 @@
 package com.gos.ultimate_ascent.commands;
 
-import com.gos.ultimate_ascent.OI;
 import com.gos.ultimate_ascent.subsystems.Chassis;
 import com.gos.ultimate_ascent.subsystems.DriveFlag;
 import edu.wpi.first.wpilibj.Joystick;
@@ -17,13 +16,13 @@ public class Drive extends CommandBase {
     private double m_th;
     private final boolean m_gyroOn;
 
-    public Drive(OI oi, Chassis chassis, DriveFlag drive, double scale, double turningScale, boolean gyroOn) {
+    public Drive(Joystick joystick, Chassis chassis, DriveFlag drive, double scale, double turningScale, boolean gyroOn) {
         addRequirements(drive);
         m_chassis = chassis;
         this.m_scale = scale;
         this.m_turningScale = turningScale;
         this.m_gyroOn = gyroOn;
-        m_joystick = oi.getDrivingJoystick();
+        m_joystick = joystick;
     }
 
     // Called just before this Command runs the first time

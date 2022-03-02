@@ -1,24 +1,24 @@
 package com.gos.infinite_recharge.commands;
 
-import com.gos.infinite_recharge.OI;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.infinite_recharge.subsystems.Chassis;
 
 public class DriveByJoystick extends CommandBase {
 
     private final Chassis m_chassis;
-    private final OI m_oi;
+    public XboxController m_drivingPad;
 
-    public DriveByJoystick(Chassis chassis, OI oi) {
+    public DriveByJoystick(Chassis chassis, XboxController drivingPad) {
         this.m_chassis = chassis;
-        this.m_oi = oi;
+        this.m_drivingPad = drivingPad;
 
         super.addRequirements(chassis);
     }
 
     @Override
     public void execute() {
-        m_chassis.setSpeedAndSteer(m_oi.getJoystickSpeed(), m_oi.getJoystickSpin());
+        m_chassis.setSpeedAndSteer(-m_drivingPad.getLeftY(), m_drivingPad.getRightX());
     }
 
     @Override

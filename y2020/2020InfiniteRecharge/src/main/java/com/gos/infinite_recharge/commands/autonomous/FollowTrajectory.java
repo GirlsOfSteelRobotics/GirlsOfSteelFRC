@@ -1,8 +1,8 @@
 package com.gos.infinite_recharge.commands.autonomous;
 
+import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.subsystems.Chassis;
 import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
@@ -33,20 +33,6 @@ public class FollowTrajectory extends SequentialCommandGroup {
 
     }
 
-    public static class DriveConstants {
-        public static final double ksVolts = 0.179;
-        public static final double kvVoltSecondsPerMeter = 0.0653;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.00754;
-        public static final double kvVoltSecondsPerRadian = 2.5;
-        public static final double kaVoltSecondsSquaredPerRadian = 0.3;
-        public static final double maxVoltage = 10;
-
-        public static final double kTrackwidthMeters = 1.1554881713809029;
-        public static final DifferentialDriveKinematics kDriveKinematics =
-            new DifferentialDriveKinematics(kTrackwidthMeters);
-    }
-
-
     public FollowTrajectory(Trajectory trajectory, Chassis chassis) {
 
         this.m_chassis = chassis;
@@ -58,7 +44,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
             trajectory,
             m_chassis::getPose,
             new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-            DriveConstants.kDriveKinematics,
+            Constants.DriveConstants.kDriveKinematics,
             this::setVelocityGoal,
             m_chassis
         );

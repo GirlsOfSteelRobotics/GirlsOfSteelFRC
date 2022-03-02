@@ -159,7 +159,7 @@ public class Eve2013 extends TimedRobot {
         if (m_autonomous != null) {
             m_autonomous.cancel();
         }
-        new Drive(m_oi, m_chassis, m_drive, 1.0, 0.5, true).schedule();
+        new Drive(m_oi.getDrivingJoystick(), m_chassis, m_drive, 1.0, 0.5, true).schedule();
     }
 
     /**

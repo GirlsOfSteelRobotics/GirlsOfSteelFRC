@@ -1,6 +1,6 @@
 package com.gos.power_up.commands;
 
-import com.gos.power_up.subsystems.Blobs;
+import com.gos.power_up.Blobs;
 import com.gos.power_up.subsystems.Lift;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 

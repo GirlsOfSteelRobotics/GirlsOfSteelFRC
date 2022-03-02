@@ -2,7 +2,6 @@ package com.gos.recycle_rush.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.recycle_rush.robot.OI;
 import com.gos.recycle_rush.robot.subsystems.Chassis;
 
 /**
@@ -13,9 +12,9 @@ public class DriveByJoystick extends CommandBase {
     private final Chassis m_chassis;
     private final Joystick m_chassisJoystick;
 
-    public DriveByJoystick(OI oi, Chassis chassis) {
+    public DriveByJoystick(Joystick joystick, Chassis chassis) {
         m_chassis = chassis;
-        m_chassisJoystick = oi.getChassisJoystick();
+        m_chassisJoystick = joystick;
         addRequirements(m_chassis);
     }
 

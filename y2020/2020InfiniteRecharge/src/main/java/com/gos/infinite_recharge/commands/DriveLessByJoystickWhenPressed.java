@@ -1,17 +1,17 @@
 package com.gos.infinite_recharge.commands;
 
-import com.gos.infinite_recharge.OI;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.infinite_recharge.subsystems.Chassis;
 
 public class DriveLessByJoystickWhenPressed extends CommandBase {
     private final Chassis m_chassis;
-    private final OI m_oi;
+    public XboxController m_drivingPad;
     private final double m_speedReduction;
 
-    public DriveLessByJoystickWhenPressed(Chassis chassis, OI oi) {
+    public DriveLessByJoystickWhenPressed(Chassis chassis, XboxController drivingPad) {
         this.m_chassis = chassis;
-        this.m_oi = oi;
+        this.m_drivingPad = drivingPad;
         super.addRequirements(chassis);
 
         m_speedReduction = 0.5;
@@ -19,8 +19,7 @@ public class DriveLessByJoystickWhenPressed extends CommandBase {
 
     @Override
     public void execute() {
-        System.out.println(m_chassis + " , " + m_oi);
-        m_chassis.setSpeedAndSteer(m_oi.getJoystickSpeed() * m_speedReduction, m_oi.getJoystickSpin() * m_speedReduction);
+        m_chassis.setSpeedAndSteer(-m_drivingPad.getLeftY() * m_speedReduction, m_drivingPad.getRightX() * m_speedReduction);
     }
 
 

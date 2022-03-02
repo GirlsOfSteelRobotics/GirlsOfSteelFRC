@@ -2,7 +2,7 @@ package com.gos.power_up.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.gos.power_up.subsystems.Blobs;
+import com.gos.power_up.Blobs;
 import com.gos.power_up.subsystems.Chassis;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -25,7 +25,6 @@ public class DriveByVision extends CommandBase {
         m_blobs = blobs;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        addRequirements(m_blobs);
     }
 
 
