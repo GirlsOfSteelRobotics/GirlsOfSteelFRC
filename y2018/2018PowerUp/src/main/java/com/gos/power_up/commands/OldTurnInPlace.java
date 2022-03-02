@@ -3,12 +3,12 @@ package com.gos.power_up.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class OldTurnInPlace extends Command {
+public class OldTurnInPlace extends CommandBase {
 
     private static final double ERROR = 3.0;
 
@@ -24,14 +24,14 @@ public class OldTurnInPlace extends Command {
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
 
-        requires(m_chassis);
+        addRequirements(m_chassis);
         m_headingTarget = degrees;
         m_speed = 0.2;
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.setInverted(true);
         m_chassis.zeroSensors();
         System.out.println("OldTurnInPlace: intitialized");
@@ -39,7 +39,7 @@ public class OldTurnInPlace extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_headingTarget > 0) {
             m_leftTalon.set(ControlMode.PercentOutput, -m_speed);
             m_rightTalon.set(ControlMode.PercentOutput, m_speed);
@@ -51,20 +51,18 @@ public class OldTurnInPlace extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return Math.abs(m_chassis.getYaw() - m_headingTarget) < ERROR;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stop();
         m_chassis.setInverted(false);
         System.out.println("OldTurnInPlace: finished");
     }
 
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

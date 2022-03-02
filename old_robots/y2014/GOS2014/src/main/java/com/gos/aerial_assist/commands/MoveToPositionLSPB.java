@@ -29,7 +29,7 @@ public class MoveToPositionLSPB extends CommandBase {
         m_chassis = chassis;
         m_leftChassisPlanner = m_chassis.getLeftChassisPlanner();
         m_rightChassisPlanner = m_chassis.getRightChassisPlanner();
-        requires(driving);
+        addRequirements(driving);
         m_setPoint = setPoint;
         System.out.println("Moving Made!");
         //         chassis.initEncoders();
@@ -37,7 +37,7 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         SmartDashboard.putNumber("Setpoint Before", m_setPoint);
         m_setPoint *= Configuration.signOfChassisPositionPIDSetpoint;
 
@@ -52,7 +52,7 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //System.out.println("Left Encoder: " + chassis.getLeftEncoderDistance() + "Right Encoder" + chassis.getRightEncoderDistance());
         m_changeInTime = System.currentTimeMillis() - m_startTime;
         m_chassis.setPositionSeparate(m_leftChassisPlanner.getDesiredPosition(m_changeInTime), m_rightChassisPlanner.getDesiredPosition(m_changeInTime));
@@ -65,7 +65,7 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         if (m_changeInTime > 3000) {
             System.out.println("Time Exit Out of Chassis");
             return true;
@@ -85,16 +85,13 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
         m_chassis.disablePositionPID();
         m_chassis.stopJags();
         m_setPoint *= Configuration.signOfChassisPositionPIDSetpoint; //To undo what we did before
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

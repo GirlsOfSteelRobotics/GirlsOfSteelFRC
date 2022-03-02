@@ -7,8 +7,8 @@ import com.gos.steam_works.subsystems.Loader;
 import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.subsystems.Shooter;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.vision.VisionThread;
 
@@ -82,7 +82,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**
@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
     }
 
@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -136,7 +136,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         synchronized (GripPipelineListener.cameraLock) {
             SmartDashboard.putNumber("TargetX", m_listener.targetX);
             SmartDashboard.putNumber("Height", m_listener.height);

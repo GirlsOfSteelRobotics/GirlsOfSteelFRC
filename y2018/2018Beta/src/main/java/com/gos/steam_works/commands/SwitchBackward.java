@@ -3,15 +3,15 @@ package com.gos.steam_works.commands;
 import com.gos.steam_works.OI;
 import com.gos.steam_works.subsystems.Camera;
 import com.gos.steam_works.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class SwitchBackward extends CommandGroup {
+public class SwitchBackward extends SequentialCommandGroup {
 
     public SwitchBackward(Chassis chassis, Camera camera, OI oi) {
-        addSequential(new SwitchToDriveBackward(chassis, oi));
-        addSequential(new SwitchToCamClimb(camera));
+        addCommands(new SwitchToDriveBackward(chassis, oi));
+        addCommands(new SwitchToCamClimb(camera));
     }
 }

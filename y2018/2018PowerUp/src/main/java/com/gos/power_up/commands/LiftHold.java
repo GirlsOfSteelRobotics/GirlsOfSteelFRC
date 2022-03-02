@@ -1,41 +1,41 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Lift;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class LiftHold extends Command {
+public class LiftHold extends CommandBase {
     private final Lift m_lift;
 
     public LiftHold(Lift lift) {
         m_lift = lift;
-        requires(m_lift);
+        addRequirements(m_lift);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_lift.holdLiftPosition();
 
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
 

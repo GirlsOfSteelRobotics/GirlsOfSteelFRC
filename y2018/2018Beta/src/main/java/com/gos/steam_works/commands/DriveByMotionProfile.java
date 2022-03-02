@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ import java.util.Scanner;
  *
  */
 @SuppressWarnings("PMD.DataClass")
-public class DriveByMotionProfile extends Command {
+public class DriveByMotionProfile extends CommandBase {
     private static final int kMinPointsInTalon = 5;
 
     private List<List<Double>> m_leftPoints;
@@ -41,7 +41,7 @@ public class DriveByMotionProfile extends Command {
         m_chassis = chassis;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
 
         this.m_multiplier = multiplier;
 
@@ -61,7 +61,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
         m_chassis.setupFPID(m_leftTalon);
         m_chassis.setupFPID(m_rightTalon);
@@ -90,7 +90,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         // get MP status from each talon
         m_leftTalon.getMotionProfileStatus(m_leftStatus);
         m_rightTalon.getMotionProfileStatus(m_rightStatus);
@@ -115,7 +115,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         // get MP status from each talon
         m_leftTalon.getMotionProfileStatus(m_leftStatus);
         m_rightTalon.getMotionProfileStatus(m_rightStatus);
@@ -136,7 +136,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_notifier.stop();
 
         m_leftTalon.clearMotionProfileTrajectories();

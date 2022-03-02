@@ -7,29 +7,27 @@ public class DisableChassis extends CommandBase {
 
     public DisableChassis(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.stopJags();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 
 }

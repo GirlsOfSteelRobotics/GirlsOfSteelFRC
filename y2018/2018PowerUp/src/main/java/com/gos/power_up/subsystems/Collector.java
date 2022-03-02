@@ -3,12 +3,12 @@ package com.gos.power_up.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.commands.CollectorHold;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Collector extends Subsystem {
+public class Collector extends SubsystemBase {
 
     private final WPI_TalonSRX m_collectLeft;
     private final WPI_TalonSRX m_collectRight;

@@ -14,7 +14,7 @@ import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Gripper;
 import com.gos.ultimate_ascent.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.ultimate_ascent.commands.Blocking;
 import com.gos.ultimate_ascent.commands.CloseBottomGrip;
 import com.gos.ultimate_ascent.commands.CloseTopGrip;

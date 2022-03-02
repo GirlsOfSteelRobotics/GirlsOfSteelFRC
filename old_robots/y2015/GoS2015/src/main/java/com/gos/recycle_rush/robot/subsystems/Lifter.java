@@ -4,12 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.recycle_rush.robot.RobotMap;
 
 
-public class Lifter extends Subsystem {
+public class Lifter extends SubsystemBase {
 
     // 170 is one rotation
     public static final double DISTANCE_ZERO_TOTES = -3600; // -250; //-3000; //-100;
@@ -114,7 +114,5 @@ public class Lifter extends Subsystem {
         return !m_liftBottomLimit.get();
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

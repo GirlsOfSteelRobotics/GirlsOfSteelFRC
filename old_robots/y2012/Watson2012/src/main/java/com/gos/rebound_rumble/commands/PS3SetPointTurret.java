@@ -12,17 +12,17 @@ public class PS3SetPointTurret extends CommandBase {
     public PS3SetPointTurret(Turret turret, Joystick operatorJoystick) {
         m_turret = turret;
         this.m_operatorJoystick = operatorJoystick;
-        requires(m_turret);
+        addRequirements(m_turret);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_turret.initEncoder();
         m_turret.enablePID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_angle = m_operatorJoystick.getX() * 5.0;
         if (m_angle < -0.5 || m_angle > 0.5) {
             m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_angle);
@@ -30,18 +30,15 @@ public class PS3SetPointTurret extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_turret.disablePID();
         m_turret.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

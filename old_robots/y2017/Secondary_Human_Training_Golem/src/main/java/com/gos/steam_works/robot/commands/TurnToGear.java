@@ -1,13 +1,13 @@
 package com.gos.steam_works.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.steam_works.robot.GripPipelineListener;
 import com.gos.steam_works.robot.subsystems.Chassis;
 
 /**
  *
  */
-public class TurnToGear extends Command {
+public class TurnToGear extends CommandBase {
 
     private final GripPipelineListener m_pipelineListener;
     private final Chassis m_chassis;
@@ -30,19 +30,19 @@ public class TurnToGear extends Command {
         // eg. requires(chassis);
         m_chassis = chassis;
         m_pipelineListener = pipelineListener;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         this.m_direction = direction;
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("TurnToGear Initialized with direction " + m_direction);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         /*        table = NetworkTableInstance.getDefault().getTable("GRIP/myContoursReport");
 
                 centerX = table.getNumberArray("centerX", defaultValue);
@@ -67,7 +67,7 @@ public class TurnToGear extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         System.out.println("targetX: " + m_targetX /*+ " CenterX Length: " + centerX.length*/);
 
         //return centerX.length == 2;
@@ -76,15 +76,10 @@ public class TurnToGear extends Command {
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stop();
         System.out.println("TurnToGear Finished.");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

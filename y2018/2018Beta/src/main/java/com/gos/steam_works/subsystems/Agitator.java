@@ -3,12 +3,12 @@ package com.gos.steam_works.subsystems;
 import com.gos.steam_works.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Agitator extends Subsystem {
+public class Agitator extends SubsystemBase {
 
     private final DoubleSolenoid m_agitator;
 
@@ -26,7 +26,5 @@ public class Agitator extends Subsystem {
         m_agitator.set(DoubleSolenoid.Value.kReverse);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 }

@@ -15,7 +15,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.deep_space.RobotMap;
 import com.gos.deep_space.commands.ClimberHold;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 // commented out screwback for testing purposes
-public class Climber extends Subsystem {
+public class Climber extends SubsystemBase {
 
     public static final double CLIMBER_EXTEND = 2000;
 

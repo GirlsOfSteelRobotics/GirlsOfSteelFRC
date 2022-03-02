@@ -6,12 +6,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.commands.LiftHold;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public final class Lift extends Subsystem {
+public final class Lift extends SubsystemBase {
     public static final double LIFT_MAX = 32500; //TODO tune
     public static final double LIFT_MIN = 0; //TODO tune
     public static final double LIFT_SWITCH = 12500; //TODO tune

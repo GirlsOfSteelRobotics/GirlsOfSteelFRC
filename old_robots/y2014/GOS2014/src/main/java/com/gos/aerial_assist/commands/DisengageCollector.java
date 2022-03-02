@@ -26,7 +26,7 @@ public class DisengageCollector extends CommandBase {
      */
     public DisengageCollector(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     /**
@@ -35,7 +35,7 @@ public class DisengageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     /**
@@ -44,7 +44,7 @@ public class DisengageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void execute() {
+    public void execute() {
         //System.out.println("execute---------------------");
         m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); //1 for competition bot, -1 for practice bot
         //collector arm moves up to release ball and return to "ready" position to collect the ball again
@@ -57,7 +57,7 @@ public class DisengageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         //System.out.println(collector.isCollectorDisengaged());
         return false; ////Only for monday (2/10) testing, with use of hardstop
         //return collector.isCollectorDisengaged(); //Will be used, but not for monday (2/10) testing because there are not limit switches
@@ -70,7 +70,7 @@ public class DisengageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollector();
     } //the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
 
@@ -79,10 +79,7 @@ public class DisengageCollector extends CommandBase {
      *
      * @author Sophia, Sonia
      */
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 
 }

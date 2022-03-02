@@ -10,9 +10,9 @@ package com.gos.deep_space.commands;
 import com.gos.deep_space.subsystems.BabyDrive;
 import com.gos.deep_space.subsystems.Chassis;
 import com.gos.lib.sensors.LidarLite;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class LidarDriveForward extends Command {
+public class LidarDriveForward extends CommandBase {
 
     private static final double LIDAR_TOLERANCE = 1.0;
     private static final double DRIVE_SPEED = 0.4;
@@ -28,7 +28,7 @@ public class LidarDriveForward extends Command {
         this.m_babyDrive = null; // NOPMD
         this.m_goalLidar = goalLidar;
 
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     public LidarDriveForward(BabyDrive babyDrive, LidarLite lidar, double goalLidar) {
@@ -37,18 +37,18 @@ public class LidarDriveForward extends Command {
         this.m_babyDrive = babyDrive;
         this.m_goalLidar = goalLidar;
 
-        requires(m_babyDrive);
+        addRequirements(m_babyDrive);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("LidarDriveForward init, goal lidar: " + m_goalLidar + ", chassis bool: " + m_chassis);
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_chassis != null) {
             m_chassis.setSpeed(DRIVE_SPEED);
         } else {
@@ -59,7 +59,7 @@ public class LidarDriveForward extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         double error = m_lidar.getDistance() - m_goalLidar;
         System.out.println("LidarDriveForward error: " + error);
         return error <= LIDAR_TOLERANCE;
@@ -67,7 +67,7 @@ public class LidarDriveForward extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         if (m_chassis != null) {
             m_chassis.stop();
         } else {

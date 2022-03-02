@@ -42,17 +42,17 @@ public class TuneKickerPID extends CommandBase {
     public TuneKickerPID(Chassis chassis, Kicker kicker) {
         m_chassis = chassis;
         m_kicker = kicker;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_kicker.initPIDS();
         m_kicker.initEncoders();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         for (double a = startP; a < maxP; a += incrementP) {
             //for(double a = startI; < maxI; a += incrementI)
             for (double b = setPoint; b < maxSetPoint; b++) {
@@ -96,13 +96,13 @@ public class TuneKickerPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_done;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         getBest();
         m_chassis.stopJags();
         m_chassis.disablePositionPID();
@@ -110,10 +110,7 @@ public class TuneKickerPID extends CommandBase {
 
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private double getMean(double... array) {
 

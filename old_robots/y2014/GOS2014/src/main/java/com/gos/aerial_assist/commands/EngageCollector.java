@@ -25,7 +25,7 @@ public class EngageCollector extends CommandBase {
      */
     public EngageCollector(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     /**
@@ -34,7 +34,7 @@ public class EngageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     /**
@@ -43,7 +43,7 @@ public class EngageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //-1 for competition robot, 1 for practice robot
     } //Collector arm moves down to collect and hold ball in trident
 
@@ -54,7 +54,7 @@ public class EngageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false; //Only for monday (2/10) testing, with use of hardstop
         //return collector.isCollectorEngaged(); //Will be used, but not for monday (2/10) testing because there are not limit switches
         //Tells drivers/whoever that the ball is in the trident and is being held by the collector arm
@@ -66,7 +66,7 @@ public class EngageCollector extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollector();
         System.out.println("End of Engage Collector Command.");
     }
@@ -76,9 +76,6 @@ public class EngageCollector extends CommandBase {
      *
      * @author Sophia, Sonia
      */
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

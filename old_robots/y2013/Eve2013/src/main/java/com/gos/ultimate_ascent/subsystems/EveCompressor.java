@@ -2,10 +2,10 @@ package com.gos.ultimate_ascent.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
 
-public class EveCompressor extends Subsystem {
+public class EveCompressor extends SubsystemBase {
 
 
     //Changed so that compressor turns on/off automatically
@@ -27,8 +27,6 @@ public class EveCompressor extends Subsystem {
     //        compressorSpike.set(Relay.Value.kOff);
     //    }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
 }

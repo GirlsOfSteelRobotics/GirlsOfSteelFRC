@@ -23,7 +23,7 @@ public class Rotate extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         if (m_targetRotate) {
             m_desiredTheta = m_theta;
         } else {
@@ -40,7 +40,7 @@ public class Rotate extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         getDifference();
         System.out.println("Gyro: " + m_chassis.getGyroAngle() + "\tCurrent: "
             + m_current + "\tDesired: " + m_desiredTheta + "\tDifference: "
@@ -54,20 +54,17 @@ public class Rotate extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return !m_chassis.isAutoRotating();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("Stopped rotation");
         m_chassis.stopAutoRotation();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     @SuppressWarnings("PMD.LinguisticNaming")
     private void getDifference() {

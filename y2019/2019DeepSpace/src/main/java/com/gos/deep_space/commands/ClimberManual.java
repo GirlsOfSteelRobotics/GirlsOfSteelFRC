@@ -8,9 +8,9 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Climber;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ClimberManual extends Command {
+public class ClimberManual extends CommandBase {
     private final Climber m_climber;
 
     private final boolean m_directionExtend;
@@ -21,17 +21,17 @@ public class ClimberManual extends Command {
         m_type = climberType;
         m_climber = climber;
 
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.holdClimberPosition(m_type);
         m_climber.extendClimber(m_directionExtend, m_type);
 
@@ -39,13 +39,13 @@ public class ClimberManual extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_climber.climberStop();
     }
 

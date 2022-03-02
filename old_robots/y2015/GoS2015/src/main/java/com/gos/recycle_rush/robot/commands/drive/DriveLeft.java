@@ -1,45 +1,42 @@
 package com.gos.recycle_rush.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.recycle_rush.robot.OI;
 import com.gos.recycle_rush.robot.subsystems.Chassis;
 
 /*
  *
  */
-public class DriveLeft extends Command {
+public class DriveLeft extends CommandBase {
     private final Joystick m_joystick;
     private final Chassis m_chassis;
 
     public DriveLeft(OI oi, Chassis chassis) {
         m_chassis = chassis;
         m_joystick = oi.getChassisJoystick();
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.driveLeft(m_joystick);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stop();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

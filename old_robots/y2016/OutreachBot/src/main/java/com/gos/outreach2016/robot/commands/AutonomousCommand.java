@@ -1,6 +1,6 @@
 package com.gos.outreach2016.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.outreach2016.robot.subsystems.AccessoryMotors;
 import com.gos.outreach2016.robot.subsystems.AccessoryMotors.Direction;
@@ -9,7 +9,7 @@ import com.gos.outreach2016.robot.subsystems.DriveSystem;
 /**
  *
  */
-public class AutonomousCommand extends Command {
+public class AutonomousCommand extends CommandBase {
 
     private final DriveSystem m_driveSystem;
     private final AccessoryMotors m_accessoryMotors;
@@ -17,20 +17,20 @@ public class AutonomousCommand extends Command {
     public AutonomousCommand(DriveSystem driveSystem, AccessoryMotors accessoryMotors) {
         m_driveSystem = driveSystem;
         m_accessoryMotors = accessoryMotors;
-        requires(accessoryMotors);
-        requires(driveSystem);
+        addRequirements(accessoryMotors);
+        addRequirements(driveSystem);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_driveSystem.resetDistance();
         setTimeout(1.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_accessoryMotors.startLeft(Direction.kFwd);
         m_accessoryMotors.startRight(Direction.kRev);
         m_driveSystem.forward();
@@ -39,22 +39,17 @@ public class AutonomousCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return isTimedOut();
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_accessoryMotors.stopLeft();
         m_accessoryMotors.stopRight();
         m_driveSystem.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

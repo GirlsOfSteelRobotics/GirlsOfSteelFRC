@@ -1,32 +1,32 @@
 package com.gos.steam_works.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class AutoDoNothing extends Command {
+public class AutoDoNothing extends CommandBase {
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("AutoDoNothing Initialized");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("AutoDoNothing Finished.");
     }
 

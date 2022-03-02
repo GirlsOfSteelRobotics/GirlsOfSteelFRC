@@ -27,19 +27,19 @@ public class AutoShoot extends CommandBase {
     public AutoShoot(Feeder feeder, Shooter shooter) {
         m_feeder = feeder;
         m_shooter = shooter;
-        requires(m_feeder);
-        requires(m_shooter);
+        addRequirements(m_feeder);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_desiredSpeed = OI.ENCODER_SPEED;
         m_shot = false;
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_shooter.setJags(OI.JAG_SPEED);
         m_batteryVoltage = RobotController.getBatteryVoltage();
         SmartDashboard.putNumber("Encoder Rate", m_shooter.getEncoderRate());
@@ -56,18 +56,15 @@ public class AutoShoot extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_shot && timeSinceInitialized() - m_time > 0.2;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_feeder.pullShooter();
         m_shooter.setJags(0.0);
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

@@ -5,11 +5,11 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.deep_space.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     private final WPI_TalonSRX m_masterLeft;
     private final WPI_TalonSRX m_followerLeft;
@@ -48,11 +48,7 @@ public class Chassis extends Subsystem {
         m_drive.setMaxOutput(0.8);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

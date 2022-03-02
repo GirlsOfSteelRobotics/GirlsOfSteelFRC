@@ -4,7 +4,7 @@ import com.gos.deep_space.RobotMap;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.videoio.VideoWriter;
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Camera extends Subsystem {
+public class Camera extends SubsystemBase {
 
     public static final int FPS = 10;
     public static final int WIDTH = 320;
@@ -46,11 +46,7 @@ public class Camera extends Subsystem {
         // processedStream = CameraServer.putVideo("Processed", 320, 240);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 
 
     public void openMovieFile() {

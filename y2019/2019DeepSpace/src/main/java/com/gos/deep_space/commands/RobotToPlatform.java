@@ -8,9 +8,9 @@
 // package frc.robot.commands;
 
 // import edu.wpi.first.wpilibj.command.TimedCommand;
-// import edu.wpi.first.wpilibj.command.CommandGroup;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-// public class RobotToPlatform extends CommandGroup {
+// public class RobotToPlatform extends SequentialCommandGroup {
 
 //   private final double BABYDRIVE_FRONT_TO_PLATFORM = 117.3;
 //   private final double BABYDRIVE_BACK_TO_PLATFORM = 62.25;
@@ -19,17 +19,17 @@
 //   public RobotToPlatform(int platform) {
 
 //     if (platform == 3)
-//       addSequential(new ClimberToThirdUp());
+//       addCommands(new ClimberToThirdUp());
 //     else
-//       addSequential(new ClimberToSecondUp());
+//       addCommands(new ClimberToSecondUp());
 
-//     addSequential(new LidarDriveForward(BABYDRIVE_FRONT_TO_PLATFORM, false)); // make this into a constant
-//     addSequential(new ClimberFrontToZero());
-//     addSequential(new LidarDriveForward(BABYDRIVE_BACK_TO_PLATFORM, true));
-//     addSequential(new ClimberBackToZero());
-//     addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM, true));
+//     addCommands(new LidarDriveForward(BABYDRIVE_FRONT_TO_PLATFORM, false)); // make this into a constant
+//     addCommands(new ClimberFrontToZero());
+//     addCommands(new LidarDriveForward(BABYDRIVE_BACK_TO_PLATFORM, true));
+//     addCommands(new ClimberBackToZero());
+//     addCommands(new LidarDriveForward(ROBOT_ON_PLATFORM, true));
 
-//     // addSequential(new LidarDriveForward(ROBOT_ON_PLATFORM));
+//     // addCommands(new LidarDriveForward(ROBOT_ON_PLATFORM));
 //   }
 
 // }

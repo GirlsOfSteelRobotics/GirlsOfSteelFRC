@@ -1,39 +1,39 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.subsystems.Camera;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class SwitchToCamClimb extends Command {
+public class SwitchToCamClimb extends CommandBase {
     private final Camera m_camera;
 
     public SwitchToCamClimb(Camera camera) {
         m_camera = camera;
-        requires(m_camera);
+        addRequirements(m_camera);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_camera.switchToCamClimb();
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
 

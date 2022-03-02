@@ -1,12 +1,12 @@
 package com.gos.steam_works.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.steam_works.robot.subsystems.Climber;
 
 /**
  *
  */
-public class StayClimbed extends Command {
+public class StayClimbed extends CommandBase {
 
     private final Climber m_climber;
     private double m_encPosition;
@@ -14,12 +14,12 @@ public class StayClimbed extends Command {
 
     public StayClimbed(Climber climber) {
         m_climber = climber;
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         // m_climber.climbMotorA.setPosition(0);
         m_encPosition = m_climber.getPosition();
         System.out.println("Climber Encoder Position: " + m_encPosition);
@@ -27,25 +27,20 @@ public class StayClimbed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.goToPosition(m_encPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

@@ -11,7 +11,7 @@ import com.gos.deep_space.subsystems.Pivot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
     private final Chassis m_chassis;
@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         m_blinkin.setLightPattern(Blinkin.LightPattern.TELEOP_DEFAULT);
         double timeRemaining = DriverStation.getMatchTime();
         //System.out.println("Robot match time: " + DriverStation.getMatchTime());
@@ -136,6 +136,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 }

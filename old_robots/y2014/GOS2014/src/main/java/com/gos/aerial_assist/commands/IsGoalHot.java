@@ -24,12 +24,12 @@ public class IsGoalHot extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_i = 0;
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_camera.isGoalHot()) {
             m_bool = 1;
         } else {
@@ -40,12 +40,12 @@ public class IsGoalHot extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_i > m_hots.length;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         for (double hot : m_hots) {
             m_average += hot;
         }
@@ -57,8 +57,5 @@ public class IsGoalHot extends CommandBase {
         }
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

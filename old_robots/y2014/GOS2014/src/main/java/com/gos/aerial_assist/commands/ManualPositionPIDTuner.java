@@ -24,12 +24,12 @@ public class ManualPositionPIDTuner extends CommandBase {
 
     public ManualPositionPIDTuner(Chassis chassis, Driving driving) {
         m_chassis = chassis;
-        requires(driving);
+        addRequirements(driving);
 
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.resetEncoders();
         if (m_pid) {
@@ -44,7 +44,7 @@ public class ManualPositionPIDTuner extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_pid) {
             m_setpoint = SmartDashboard.getNumber("Chassis Position setpoint", 0);
             m_p = SmartDashboard.getNumber("Position P: ", 0);
@@ -84,21 +84,18 @@ public class ManualPositionPIDTuner extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         boolean finished = (Math.abs((m_chassis.getLeftEncoderDistance() - m_setpoint)) < m_offBy || Math.abs((m_chassis.getRightEncoderDistance() - m_setpoint)) < m_offBy) && (m_setpoint != 0);
         System.out.println("Position PID is finished: " + finished);
         return finished;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         if (m_pid) {
             m_chassis.disablePositionPID();
         }
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

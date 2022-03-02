@@ -35,12 +35,12 @@ public class MoveKicker extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_firstTime = true;
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_firstTime) {
             switch (m_pos) {
             case 0: //loading
@@ -64,7 +64,7 @@ public class MoveKicker extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         m_encoderValue350Modded = m_kicker.getEncoderDistance() % 360;
         boolean thereYet = Math.abs(m_encoderValue350Modded - m_setpoint) < m_allowedOffBy;
         boolean over = Math.abs(m_encoderValue350Modded) > Math.abs(m_setpoint);
@@ -72,13 +72,10 @@ public class MoveKicker extends CommandBase {
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_kicker.holdPosition();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

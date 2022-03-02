@@ -6,7 +6,7 @@ import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.steam_works.robot.subsystems.Chassis;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.Scanner;
 /**
  *
  */
-public class DriveByMotionProfile extends Command {
+public class DriveByMotionProfile extends CommandBase {
 
     private static final int kMinPointsInTalon = 5;
 
@@ -40,7 +40,7 @@ public class DriveByMotionProfile extends Command {
         m_chassis = chassis;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
 
         this.m_multiplier = multiplier;
 
@@ -69,7 +69,7 @@ public class DriveByMotionProfile extends Command {
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
 
         m_chassis.setupDefaultFPID();
 
@@ -97,7 +97,7 @@ public class DriveByMotionProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         // get MP status from each talon
         m_leftTalon.getMotionProfileStatus(m_leftStatus);
         m_rightTalon.getMotionProfileStatus(m_rightStatus);
@@ -122,7 +122,7 @@ public class DriveByMotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         // get MP status from each talon
         m_leftTalon.getMotionProfileStatus(m_leftStatus);
         m_rightTalon.getMotionProfileStatus(m_rightStatus);
@@ -143,7 +143,7 @@ public class DriveByMotionProfile extends Command {
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_notifier.stop();
 
         m_leftTalon.clearMotionProfileTrajectories();
@@ -154,12 +154,7 @@ public class DriveByMotionProfile extends Command {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private List<List<Double>> loadMotionProfile(String filename, boolean isLeft)
         throws IOException {

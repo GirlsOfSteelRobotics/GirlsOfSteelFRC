@@ -9,38 +9,38 @@ package com.gos.offense2019.commands;
 
 import com.gos.offense2019.subsystems.Shifters;
 import com.gos.offense2019.subsystems.Shifters.Speed;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Shift extends Command {
+public class Shift extends CommandBase {
     private final Speed m_speed;
     private final Shifters m_shifters;
 
     public Shift(Shifters shifters, Speed speed) {
         m_shifters = shifters;
-        requires(m_shifters);
+        addRequirements(m_shifters);
         this.m_speed = speed;
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("Shift(" + m_speed + ") init");
         m_shifters.shiftGear(m_speed);
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 }

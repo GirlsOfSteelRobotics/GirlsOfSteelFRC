@@ -6,7 +6,7 @@ package com.gos.aerial_assist.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
 
@@ -15,7 +15,7 @@ import com.gos.aerial_assist.RobotMap;
  *
  * @author Heather, Sonia, Sophia
  */
-public class Collector extends Subsystem {
+public class Collector extends SubsystemBase {
 
     /**
      * This spike moves the wheel on the collector arm.
@@ -91,7 +91,5 @@ public class Collector extends Subsystem {
      *
      * @author Sonia, Sophia
      */
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

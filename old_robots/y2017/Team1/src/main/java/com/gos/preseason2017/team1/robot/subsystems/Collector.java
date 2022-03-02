@@ -2,14 +2,14 @@ package com.gos.preseason2017.team1.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.preseason2017.team1.robot.RobotMap;
 
 
 /**
  *
  */
-public class Collector extends Subsystem {
+public class Collector extends SubsystemBase {
 
     private final WPI_TalonSRX m_collectorMotor;
 
@@ -25,7 +25,5 @@ public class Collector extends Subsystem {
         m_collectorMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 }

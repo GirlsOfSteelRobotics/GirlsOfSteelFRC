@@ -1,24 +1,24 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.subsystems.Climber;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class StayClimbed extends Command {
+public class StayClimbed extends CommandBase {
 
     private final Climber m_climber;
     private double m_encPosition;
 
     public StayClimbed(Climber climber) {
         m_climber = climber;
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
         // Robot.climber.climbMotorA.setPosition(0);
         m_encPosition = m_climber.getPosition();
@@ -27,19 +27,19 @@ public class StayClimbed extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.goToPosition(m_encPosition);
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
 

@@ -38,17 +38,17 @@ public class TuneChassisPID extends CommandBase {
 
     public TuneChassisPID(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initPositionPIDS();
         m_chassis.initEncoders();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         for (double a = startP; a < maxP; a += incrementP) {
             //for(double a = startI; < maxI; a += incrementI)
             for (double b = setPoint; b < maxSetPoint; b++) {
@@ -93,13 +93,13 @@ public class TuneChassisPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_done;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         printBest();
         m_chassis.stopJags();
         m_chassis.disablePositionPID();
@@ -107,10 +107,7 @@ public class TuneChassisPID extends CommandBase {
 
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private double getMean(double... array) {
 

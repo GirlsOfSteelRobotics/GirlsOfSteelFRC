@@ -16,34 +16,32 @@ public class StopClimbMotors extends CommandBase {
 
     public StopClimbMotors(Climber climber) {
         m_climber = climber;
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
     //stops the motors used for climbing
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.stopLeftClimberSpike();
         m_climber.stopRightClimberSpike();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 
 }

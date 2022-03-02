@@ -1,12 +1,12 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Collector;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class ReleaseFast extends Command {
+public class ReleaseFast extends CommandBase {
     private final Collector m_collector;
 
     private final double m_speed;
@@ -18,30 +18,30 @@ public class ReleaseFast extends Command {
     public ReleaseFast(Collector collector, double s) {
         m_speed = s;
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("Release");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.release(m_speed);
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stop();
     }
 

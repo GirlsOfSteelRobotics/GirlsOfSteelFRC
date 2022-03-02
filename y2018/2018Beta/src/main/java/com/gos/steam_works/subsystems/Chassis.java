@@ -5,13 +5,13 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  *
  */
-public final class Chassis extends Subsystem {
+public final class Chassis extends SubsystemBase {
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -64,9 +64,7 @@ public final class Chassis extends Subsystem {
         //      addChild("driveRightC", driveRightC);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 
     // TODO(pj) Remove
     public WPI_TalonSRX getLeftTalon() {

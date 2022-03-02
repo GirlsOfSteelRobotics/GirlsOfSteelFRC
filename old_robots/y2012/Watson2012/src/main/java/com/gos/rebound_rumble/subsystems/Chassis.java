@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.rebound_rumble.RobotMap;
 import com.gos.rebound_rumble.objects.EncoderGoSPidController;
 
 @SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods", "PMD.TooManyFields"})
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     private static final double WHEEL_DIAMETER = 0.1524; //in meters
     private static final double GEAR_RATIO = 15.0 / 24.0;
@@ -134,9 +134,7 @@ public class Chassis extends Subsystem {
         resetGyro();
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
     //jags
     public void setRightJags(double speed) {

@@ -1,44 +1,42 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class WristToSwitch extends Command {
+public class WristToSwitch extends CommandBase {
     private final Wrist m_wrist;
 
     public WristToSwitch(Wrist wrist) {
         m_wrist = wrist;
-        requires(m_wrist);
+        addRequirements(m_wrist);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_wrist.setGoalWristPosition(Wrist.WRIST_IN_BOUND);
         System.out.println("WristToSwitch initialized");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

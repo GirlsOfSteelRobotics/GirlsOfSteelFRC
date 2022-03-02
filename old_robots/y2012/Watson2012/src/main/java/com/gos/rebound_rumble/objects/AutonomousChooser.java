@@ -1,6 +1,6 @@
 package com.gos.rebound_rumble.objects;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.OI;
@@ -48,7 +48,7 @@ public class AutonomousChooser {
 
     public void start() {
         m_autonomousCommand = (Command) m_chooser.getSelected();
-        m_autonomousCommand.start();
+        m_autonomousCommand.schedule();
         System.out.println("initializing");
     }
 

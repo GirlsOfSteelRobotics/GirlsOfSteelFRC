@@ -1,41 +1,41 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Lift;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class LiftToGround extends Command {
+public class LiftToGround extends CommandBase {
     private final Lift m_lift;
 
 
     public LiftToGround(Lift lift) {
         m_lift = lift;
-        requires(m_lift);
+        addRequirements(m_lift);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_lift.setLiftToGround();
         System.out.println("LiftToGround");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         //Robot.lift.setSelectedSensorPosition(0,0,0);
     }
 

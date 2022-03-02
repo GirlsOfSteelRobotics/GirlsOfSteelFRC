@@ -6,12 +6,12 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class DriveByMotionMagic extends Command {
+public class DriveByMotionMagic extends CommandBase {
 
     private static final double DISTANCE_FINISH_THRESHOLD = 4000; //TODO tune (in encoder ticks)
     private static final double TURNING_FINISH_THRESHOLD = 1.5; //TODO tune (in degrees)
@@ -44,13 +44,13 @@ public class DriveByMotionMagic extends Command {
         m_chassis = chassis;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
         //System.out.println("DriveByMotionMagic: constructed");
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_time = 0;
         m_chassis.setInverted(true);
         //System.out.println("DriveByMotionMagic: motors inverted");
@@ -78,7 +78,7 @@ public class DriveByMotionMagic extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_time += 0.02;
         if (!m_resetPigeon || m_targetHeading == 0) { //if trying to drive straight
 
@@ -99,7 +99,7 @@ public class DriveByMotionMagic extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
 
         if (m_timeoutCtr > (TIMER_THRESHOLD * 50)) {
             System.out.println("DriveByMotionMagic: timeout reached");
@@ -130,7 +130,7 @@ public class DriveByMotionMagic extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
         double currentTicks = m_rightTalon.getSensorCollection().getQuadraturePosition();
         double ticksError = Math.abs(m_encoderTicks - currentTicks);

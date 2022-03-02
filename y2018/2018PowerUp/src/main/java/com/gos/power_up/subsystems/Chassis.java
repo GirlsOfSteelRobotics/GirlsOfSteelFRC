@@ -17,13 +17,13 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.gos.power_up.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public final class Chassis extends Subsystem {
+public final class Chassis extends SubsystemBase {
 
     //Motion Magic constants
     private static final int REMOTE_ENCODER = 0;
@@ -108,9 +108,7 @@ public final class Chassis extends Subsystem {
         m_drive.setDeadband(0.02);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 
     public void setupFPID(WPI_TalonSRX talon) { //PID values from DriveByDistance
         //Motion Magic

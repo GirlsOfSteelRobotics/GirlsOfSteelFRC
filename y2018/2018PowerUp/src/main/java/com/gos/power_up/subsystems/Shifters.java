@@ -3,12 +3,12 @@ package com.gos.power_up.subsystems;
 import com.gos.power_up.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Shifters extends Subsystem {
+public class Shifters extends SubsystemBase {
     //TODO find correct shifting value
     private static final double SHIFTING_THRESHOLD = 0;
 
@@ -50,11 +50,7 @@ public class Shifters extends Subsystem {
         return m_speed;
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 
     public double getShiftingThreshold() {
         return SHIFTING_THRESHOLD;

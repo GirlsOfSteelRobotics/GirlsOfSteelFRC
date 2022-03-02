@@ -1,13 +1,13 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.subsystems.Shooter;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Shoot extends Command {
+public class Shoot extends CommandBase {
 
     private static final int LOOP_TIMEOUT = 50; // ~1sec of time
 
@@ -19,13 +19,13 @@ public class Shoot extends Command {
 
     public Shoot(Shooter shooter, int speed) {
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
         m_shooterSpeed = speed;
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_loopCounter = 0;
         m_isLowMotorRunning = false;
         m_shooter.setShooterSpeed(m_shooterSpeed);
@@ -35,7 +35,7 @@ public class Shoot extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         SmartDashboard.putNumber("High Shooter Speed", m_shooter.getHighShooterSpeed());
         SmartDashboard.putNumber("Low Shooter Speed", m_shooter.getLowShooterSpeed());
         if (!m_isLowMotorRunning && (m_shooter.isHighShooterAtSpeed() || m_loopCounter > LOOP_TIMEOUT)) {
@@ -51,13 +51,13 @@ public class Shoot extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.stopLowShooterMotor();
         m_shooter.stopShooterMotors();
         System.out.println("Shoot Finished");

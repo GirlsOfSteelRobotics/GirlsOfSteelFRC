@@ -15,13 +15,13 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
 @SuppressWarnings("PMD.DataClass")
-public class AutoMiddleSwitchTwoCube extends CommandGroup {
+public class AutoMiddleSwitchTwoCube extends SequentialCommandGroup {
     //Parameters for first cube
     public static final double RIGHT_ANGLE = 50.0;
     public static final double RIGHT_DISTANCE = 63.0;
@@ -39,34 +39,34 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
     public AutoMiddleSwitchTwoCube(Chassis chassis, Lift lift, Wrist wrist, Collector collector, GameData.FieldSide switchSide) {
 
         //Raise lift, lower wrist to get ready to spit cube out
-        addSequential(new WristToCollect(wrist));
-        addSequential(new LiftToSwitch(lift));
+        addCommands(new WristToCollect(wrist));
+        addCommands(new LiftToSwitch(lift));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 
         //Drive to the switch plate
         if (switchSide == GameData.FieldSide.right) {
             addParallel(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, -RIGHT_ANGLE));
-            addSequential(new TimeDelay(2.5));
+            addCommands(new TimeDelay(2.5));
             addParallel(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, RIGHT_ANGLE));
-            addSequential(new TimeDelay(2.0));
+            addCommands(new TimeDelay(2.0));
         } else if (switchSide == GameData.FieldSide.left) {
             addParallel(new DriveByMotionMagic(chassis, LEFT_DISTANCE, LEFT_ANGLE));
-            addSequential(new TimeDelay(2.5));
+            addCommands(new TimeDelay(2.5));
             addParallel(new DriveByMotionMagic(chassis, LEFT_DISTANCE, -LEFT_ANGLE));
-            addSequential(new TimeDelay(2.0));
+            addCommands(new TimeDelay(2.0));
         } else {
             System.out.println("AutoMiddleSwitch: invalid switch side");
         }
 
         //Release and back up
         addParallel(new ReleaseSlow(collector));
-        addSequential(new TimeDelay(0.5));
+        addCommands(new TimeDelay(0.5));
         addParallel(new DriveByMotionMagic(chassis, LONG_BACK_UP, 0));
-        addSequential(new TimeDelay(2.5));
+        addCommands(new TimeDelay(2.5));
 
         //Put lift down and start collecting
-        addSequential(new CollectPosition(lift, wrist));
+        addCommands(new CollectPosition(lift, wrist));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
         addParallel(new Collect(collector));
@@ -74,12 +74,12 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
         //Grab second cube and come back
         if (switchSide == GameData.FieldSide.right) {
             addParallel(new DriveByMotionMagic(chassis, TURN_RADIUS_2, TURN_DEGREES_2));
-            addSequential(new TimeDelay(2.5));
+            addCommands(new TimeDelay(2.5));
             addParallel(new CollectorHold(collector));
             addParallel(new DriveByMotionMagic(chassis, -TURN_RADIUS_2 / 2, -20, false));
         } else if (switchSide == GameData.FieldSide.left) {
             addParallel(new DriveByMotionMagic(chassis, TURN_RADIUS_2, -TURN_DEGREES_2));
-            addSequential(new TimeDelay(2.5));
+            addCommands(new TimeDelay(2.5));
             addParallel(new CollectorHold(collector));
             addParallel(new DriveByMotionMagic(chassis, -TURN_RADIUS_2 / 2, 20, false));
         } else {
@@ -87,19 +87,19 @@ public class AutoMiddleSwitchTwoCube extends CommandGroup {
         }
 
         //lift up to shoot out
-        addSequential(new WristToCollect(wrist));
-        addSequential(new LiftToSwitch(lift));
+        addCommands(new WristToCollect(wrist));
+        addCommands(new LiftToSwitch(lift));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 
         //Approach switch plate
-        addSequential(new TimeDelay(2.0));
+        addCommands(new TimeDelay(2.0));
         addParallel(new DriveByMotionMagic(chassis, -LONG_BACK_UP, 0));
-        addSequential(new TimeDelay(2.0));
+        addCommands(new TimeDelay(2.0));
 
         //Release and back up
         addParallel(new ReleaseSlow(collector));
-        addSequential(new TimeDelay(0.5));
-        addSequential(new DriveByMotionMagic(chassis, SHORT_BACK_UP, 0));
+        addCommands(new TimeDelay(0.5));
+        addCommands(new DriveByMotionMagic(chassis, SHORT_BACK_UP, 0));
     }
 }

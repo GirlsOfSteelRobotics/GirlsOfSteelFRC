@@ -8,38 +8,38 @@
 package com.gos.offense2019.commands;
 
 import com.gos.offense2019.subsystems.HatchCollector;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class HatchCollect extends Command {
+public class HatchCollect extends CommandBase {
     private final HatchCollector m_hatchCollector;
     private final HatchCollector.HatchState m_hatchState;
 
     public HatchCollect(HatchCollector hatch, HatchCollector.HatchState hatchState) {
         m_hatchCollector = hatch;
-        requires(m_hatchCollector);
+        addRequirements(m_hatchCollector);
         this.m_hatchState = hatchState;
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("Shift(" + m_hatchState + ") init");
         m_hatchCollector.driveHatch(m_hatchState);
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 }

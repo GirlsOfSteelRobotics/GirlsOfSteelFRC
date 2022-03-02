@@ -1,6 +1,6 @@
 package com.gos.steam_works.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.steam_works.robot.RobotMap;
 import com.gos.steam_works.robot.subsystems.Chassis;
@@ -9,7 +9,7 @@ import com.gos.steam_works.robot.subsystems.Shifters;
 /**
  *
  */
-public class DriveByDistance extends Command {
+public class DriveByDistance extends CommandBase {
 
     private final double m_rotations;
 
@@ -28,12 +28,12 @@ public class DriveByDistance extends Command {
         m_speed = speed;
 
         // Use requires() here to declare subsystem dependencies
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shifters.shiftGear(m_speed);
 
         // Robot.chassis.setupFPID(leftTalon);
@@ -62,7 +62,7 @@ public class DriveByDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.setPositionGoal(-(m_rotations + m_leftInitial), m_rotations + m_rightInitial);
 
         SmartDashboard.putNumber("Drive Talon Left Goal", -m_rotations);
@@ -77,7 +77,7 @@ public class DriveByDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         if (m_rotations > 0) {
             return ((m_chassis.getRightPosition() > m_rotations + m_rightInitial)
                 && (-m_chassis.getLeftPosition() > m_rotations + m_leftInitial));
@@ -91,15 +91,10 @@ public class DriveByDistance extends Command {
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shifters.shiftGear(Shifters.Speed.kLow);
         System.out.println("DriveByDistance Finished");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

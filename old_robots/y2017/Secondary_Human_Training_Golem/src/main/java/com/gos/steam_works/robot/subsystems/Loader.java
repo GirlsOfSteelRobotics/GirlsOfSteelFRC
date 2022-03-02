@@ -2,13 +2,13 @@ package com.gos.steam_works.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.steam_works.robot.RobotMap;
 
 /**
  *
  */
-public class Loader extends Subsystem {
+public class Loader extends SubsystemBase {
 
     private final WPI_TalonSRX m_loaderMotor;
 
@@ -29,7 +29,5 @@ public class Loader extends Subsystem {
         m_loaderMotor.set(ControlMode.PercentOutput, 0.0);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 }

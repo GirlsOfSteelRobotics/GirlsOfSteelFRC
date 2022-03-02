@@ -14,12 +14,12 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class AutoFarSwitch extends CommandGroup {
+public class AutoFarSwitch extends SequentialCommandGroup {
     private static final double DISTANCE_FORWARD_1 = 30.0;
     private static final double DISTANCE_SIDE = 130.0;
     private static final double DISTANCE_FORWARD_2 = 30.0;
@@ -29,34 +29,34 @@ public class AutoFarSwitch extends CommandGroup {
         System.out.println("AutoFarSwitch starting");
 
         //Get lift & wrist into position
-        addSequential(new WristToCollect(wrist));
-        addSequential(new LiftToSwitch(lift));
+        addCommands(new WristToCollect(wrist));
+        addCommands(new LiftToSwitch(lift));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 
         //Move Robot into position
-        addSequential(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
+        addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
         if (robotPosition == GameData.FieldSide.left) {
-            addSequential(new AutoTurnRight(chassis, 25.0));
+            addCommands(new AutoTurnRight(chassis, 25.0));
         } else {
-            addSequential(new AutoTurnLeft(chassis, 25.0));
+            addCommands(new AutoTurnLeft(chassis, 25.0));
         }
-        addSequential(new DriveByMotionMagic(chassis, DISTANCE_SIDE, 0));
+        addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, 0));
         if (robotPosition == GameData.FieldSide.left) {
-            addSequential(new AutoTurnLeft(chassis, 25.0));
+            addCommands(new AutoTurnLeft(chassis, 25.0));
         } else {
-            addSequential(new AutoTurnRight(chassis, 25.0));
+            addCommands(new AutoTurnRight(chassis, 25.0));
         }
-        addSequential(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_2, 0));
+        addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_2, 0));
 
         //Release and back up
         addParallel(new ReleaseFast(collector));
-        addSequential(new TimeDelay(1.0));
-        addSequential(new DriveByMotionMagic(chassis, BACK_UP, 0));
+        addCommands(new TimeDelay(1.0));
+        addCommands(new DriveByMotionMagic(chassis, BACK_UP, 0));
 
         //Put lift down and stop collector
-        addSequential(new CollectPosition(lift, wrist));
-        addSequential(new CollectorStop(collector));
+        addCommands(new CollectPosition(lift, wrist));
+        addCommands(new CollectorStop(collector));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
     }

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
 import com.gos.aerial_assist.objects.EncoderGoSPidController;
@@ -22,7 +22,7 @@ import com.gos.aerial_assist.objects.LspbPidPlanner;
  * @author Heather
  */
 @SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods"})
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     private final Jaguar m_rightJag;
     private final Jaguar m_leftJag;
@@ -304,9 +304,7 @@ public class Chassis extends Subsystem {
         //System.out.println("right: " + (-(x-y)) +"\n left: " + (x+y));
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
     public double getErrorSum() {
         return m_leftPositionPID.getErrorSum();

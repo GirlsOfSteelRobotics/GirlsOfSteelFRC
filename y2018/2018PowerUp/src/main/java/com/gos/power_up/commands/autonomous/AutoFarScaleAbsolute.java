@@ -15,12 +15,12 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class AutoFarScaleAbsolute extends CommandGroup {
+public class AutoFarScaleAbsolute extends SequentialCommandGroup {
     private static final double DISTANCE_FORWARD_1 = 160.0;
     private static final double TURN_RADIUS_1 = 110.0;
     private static final double TURN_HEADING_1 = 90.0; //absolute value
@@ -32,49 +32,49 @@ public class AutoFarScaleAbsolute extends CommandGroup {
     public AutoFarScaleAbsolute(Chassis chassis, Lift lift, Wrist wrist, Collector collector, GameData.FieldSide scaleSide) {
         System.out.println("AutoFarScaleAbsolute starting: scaleSide=" + scaleSide);
 
-        addSequential(new WristToShoot(wrist));
+        addCommands(new WristToShoot(wrist));
         addParallel(new WristHold(wrist));
 
         //Initial forward distance past switch
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, DISTANCE_FORWARD_1 + 10.0, 0, false));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_FORWARD_1 + 10.0, 0, false));
         } else {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, DISTANCE_FORWARD_1, 0, false));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_FORWARD_1, 0, false));
         }
 
         //First turn behind the switch
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_1, -TURN_HEADING_1, true));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_1, -TURN_HEADING_1, true));
         } else {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_1, TURN_HEADING_1, true));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_1, TURN_HEADING_1, true));
         }
 
         //Get lift and wrist into position
-        addSequential(new LiftToScale(lift));
+        addCommands(new LiftToScale(lift));
         addParallel(new LiftHold(lift));
 
         //Driving across the field behind the switch
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, DISTANCE_SIDE_1 - 7.0, -TURN_HEADING_1, false));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_SIDE_1 - 7.0, -TURN_HEADING_1, false));
         } else {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, DISTANCE_SIDE_1, TURN_HEADING_1, false));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_SIDE_1, TURN_HEADING_1, false));
         }
 
         //Turning towards the scale
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_2, TURN_HEADING_2, true));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_2, TURN_HEADING_2, true));
         } else {
-            addSequential(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_2, -TURN_HEADING_2, true));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_2, -TURN_HEADING_2, true));
         }
 
         //Release cube
         addParallel(new ReleaseFast(collector, 0.3));
-        addSequential(new TimeDelay(1.0));
-        addSequential(new DriveByMotionMagic(chassis, -BACK_UP, 0));
+        addCommands(new TimeDelay(1.0));
+        addCommands(new DriveByMotionMagic(chassis, -BACK_UP, 0));
 
         //Put lift down and stop collector motors
-        addSequential(new CollectPosition(lift, wrist));
-        addSequential(new CollectorStop(collector));
+        addCommands(new CollectPosition(lift, wrist));
+        addCommands(new CollectorStop(collector));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 

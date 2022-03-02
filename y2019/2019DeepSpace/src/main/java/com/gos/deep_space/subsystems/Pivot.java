@@ -11,9 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.deep_space.RobotMap;
 import com.gos.deep_space.commands.PivotHold;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public final class Pivot extends Subsystem {
+public final class Pivot extends SubsystemBase {
 
     public static final double PIVOT_DOWN_INCREMENT = 125;
     public static final double PIVOT_UP_INCREMENT = 200;

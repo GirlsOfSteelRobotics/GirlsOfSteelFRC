@@ -2,13 +2,13 @@ package com.gos.outreach2016.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.outreach2016.robot.RobotMap;
 
 /**
  *
  */
-public class Shifters extends Subsystem {
+public class Shifters extends SubsystemBase {
     private final DoubleSolenoid m_shifterLeft;
     private final DoubleSolenoid m_shifterRight;
 
@@ -22,12 +22,7 @@ public class Shifters extends Subsystem {
         addChild("Shifter Right", m_shifterRight);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-        //There's no default command for this subsystem
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

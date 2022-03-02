@@ -2,24 +2,24 @@ package com.gos.steam_works.commands;
 
 import com.gos.steam_works.OI;
 import com.gos.steam_works.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class Drive extends Command {
+public class Drive extends CommandBase {
     private final Chassis m_chassis;
     private final OI m_oi;
 
     public Drive(OI oi, Chassis chassis) {
         m_chassis = chassis;
         m_oi = oi;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         // Change mode to Percent Vbus
         // V per sec; 12 = zero to full speed in 1 second
         //leftTalon.configVoltageCompSaturation(24.0, 0);
@@ -32,7 +32,7 @@ public class Drive extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_oi.getDriveStyle() == OI.DriveStyle.joystickArcade || m_oi.getDriveStyle() == OI.DriveStyle.gamePadArcade) {
             m_chassis.arcadeDrive(m_oi.getDrivingJoystickY(), m_oi.getDrivingJoystickX(), m_oi.isSquared());
         } else if (m_oi.getDriveStyle() == OI.DriveStyle.gamePadTank || m_oi.getDriveStyle() == OI.DriveStyle.joystickTank) {
@@ -42,7 +42,7 @@ public class Drive extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
@@ -52,7 +52,7 @@ public class Drive extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         stop();
     }
 

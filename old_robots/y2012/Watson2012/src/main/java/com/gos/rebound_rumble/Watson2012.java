@@ -1,8 +1,8 @@
 package com.gos.rebound_rumble;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.commands.AutoTuneCamera;
 import com.gos.rebound_rumble.commands.Collect;
@@ -69,7 +69,7 @@ public class Watson2012 extends TimedRobot {
 
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         SmartDashboard.putBoolean("Camera is connected?", Camera.isConnected());
         SmartDashboard.putBoolean("Target is found?", Camera.foundTarget());
     }
@@ -86,7 +86,7 @@ public class Watson2012 extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         SmartDashboard.putBoolean("Camera is connected?", Camera.isConnected());
         SmartDashboard.putBoolean("Target is found?", Camera.foundTarget());
         SmartDashboard.putNumber("Camera Distance", Camera.getXDistance());

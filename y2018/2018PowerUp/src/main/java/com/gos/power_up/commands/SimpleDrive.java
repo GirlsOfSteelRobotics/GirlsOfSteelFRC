@@ -3,12 +3,12 @@ package com.gos.power_up.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class SimpleDrive extends Command {
+public class SimpleDrive extends CommandBase {
     private final Chassis m_chassis;
 
     private final WPI_TalonSRX m_leftTalon;
@@ -19,12 +19,12 @@ public class SimpleDrive extends Command {
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
 
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_leftTalon.set(ControlMode.PercentOutput, 0.5);
         m_rightTalon.set(ControlMode.PercentOutput, 0.5);
         System.out.println("SimpleDrive: leftA " + m_leftTalon.getInverted());
@@ -33,24 +33,22 @@ public class SimpleDrive extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_leftTalon.set(ControlMode.PercentOutput, 0.5);
         m_rightTalon.set(ControlMode.PercentOutput, 0.5);
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

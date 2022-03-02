@@ -11,32 +11,29 @@ public class TestGyro extends CommandBase {
     public TestGyro(Chassis chassis, Turret turret) {
         m_chassis = chassis;
         m_turret = turret;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         SmartDashboard.putNumber("Gyro Angle", m_chassis.getTheta());
         SmartDashboard.putNumber("Turret Encoder Angle", m_turret.getEncoderDistance());
         SmartDashboard.putNumber("Turret Angle (Summation)", m_turret.getTurretAngle());
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

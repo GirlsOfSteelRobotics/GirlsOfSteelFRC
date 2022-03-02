@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +22,7 @@ import java.util.Scanner;
  *
  */
 @SuppressWarnings("PMD.DataClass")
-public class DriveByMotionProfile extends Command {
+public class DriveByMotionProfile extends CommandBase {
 
     private static final int kMinPointsInTalon = 5;
 
@@ -41,7 +41,7 @@ public class DriveByMotionProfile extends Command {
         m_chassis = chassis;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
 
 
         // Load trajectory from file into array
@@ -60,7 +60,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.setVelocityPIDSlot();
 
         // Set Talon to MP mode
@@ -87,7 +87,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         // get MP status from each talon
         m_leftTalon.getMotionProfileStatus(m_leftStatus);
         m_rightTalon.getMotionProfileStatus(m_rightStatus);
@@ -112,7 +112,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         // get MP status from each talon
         m_leftTalon.getMotionProfileStatus(m_leftStatus);
         m_rightTalon.getMotionProfileStatus(m_rightStatus);
@@ -133,7 +133,7 @@ public class DriveByMotionProfile extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_notifier.stop();
 
         m_leftTalon.clearMotionProfileTrajectories();

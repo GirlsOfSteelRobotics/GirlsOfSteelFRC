@@ -1,6 +1,6 @@
 package com.gos.rebound_rumble.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Chassis;
 import com.gos.rebound_rumble.subsystems.Collector;
@@ -40,12 +40,12 @@ public class Buttons extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @SuppressWarnings("PMD")
     @Override
-    protected void execute() {
+    public void execute() {
         //rollers
         if (m_oi.areTopRollersOverriden()) {
             //System.out.println("Top Rollers Override" );
@@ -183,12 +183,12 @@ public class Buttons extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopBrush();
         m_collector.stopMiddleConveyor();
         m_shooter.topRollersOff();
@@ -198,8 +198,5 @@ public class Buttons extends CommandBase {
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

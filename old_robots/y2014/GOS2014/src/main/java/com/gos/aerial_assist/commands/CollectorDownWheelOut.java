@@ -6,13 +6,13 @@
 
 package com.gos.aerial_assist.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.aerial_assist.subsystems.Collector;
 
 /**
  * @author Sylvie and Jisue
  */
-public class CollectorDownWheelOut extends CommandGroup {
+public class CollectorDownWheelOut extends SequentialCommandGroup {
 
     public CollectorDownWheelOut(Collector collector) {
         addParallel(new EngageCollector(collector));

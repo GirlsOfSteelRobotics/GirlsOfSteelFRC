@@ -1,7 +1,7 @@
 package com.gos.stronghold.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.stronghold.robot.commands.CollectBall;
 import com.gos.stronghold.robot.commands.FlapDown;
 import com.gos.stronghold.robot.commands.FlapUp;

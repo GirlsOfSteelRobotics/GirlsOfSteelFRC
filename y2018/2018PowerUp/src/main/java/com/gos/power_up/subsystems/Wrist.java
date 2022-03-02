@@ -4,12 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.commands.WristHold;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public final class Wrist extends Subsystem {
+public final class Wrist extends SubsystemBase {
     public static final double WRIST_IN_BOUND = -60; //TODO tune
     public static final double WRIST_OUT_BOUND = -1000; //TODO tune
     public static final double WRIST_COLLECT = -930; //TODO tune

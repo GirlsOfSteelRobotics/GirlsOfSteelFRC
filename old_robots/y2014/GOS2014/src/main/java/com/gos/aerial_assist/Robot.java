@@ -8,8 +8,8 @@
 package com.gos.aerial_assist;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.commands.ArcadeDrive;
 import com.gos.aerial_assist.commands.DoNothing;
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
         //new AutonomousMobility().start();
         // new AutonomousLowGoalHot().start();
         //auto.start();
-        m_autonomousCommand.start();
+        m_autonomousCommand.schedule();
     }
 
     /**
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         //Configuration.configureForRobot((int) SmartDashboard.getNumber("Robot Configuration", 0));
         //        SmartDashboard.putNumber("robotCameraAngle",(double)CommandBase.camera.getVerticalAngleOffset());
         //        System.out.println("Camera Angle: " + (double)CommandBase.camera.getVerticalAngleOffset());

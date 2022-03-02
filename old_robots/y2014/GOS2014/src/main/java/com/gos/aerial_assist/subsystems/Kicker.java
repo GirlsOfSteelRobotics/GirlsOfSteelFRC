@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.RobotMap;
 import com.gos.aerial_assist.objects.EncoderGoSPidController;
 import com.gos.aerial_assist.objects.LspbPidPlanner;
@@ -23,7 +23,7 @@ import com.gos.aerial_assist.objects.LspbPidPlanner;
 /**
  * @author Heather
  */
-public class Kicker extends Subsystem {
+public class Kicker extends SubsystemBase {
 
     private static final double m_pulsePerRevolution = 360;  //correct
     private static final double m_distancePerPulse = 1.0 / m_pulsePerRevolution; //No gear ratio.
@@ -110,9 +110,7 @@ public class Kicker extends Subsystem {
         m_kickerTalon.set(0.0);
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
     public void resetEncoders() {
         m_kickerEncoder.reset();

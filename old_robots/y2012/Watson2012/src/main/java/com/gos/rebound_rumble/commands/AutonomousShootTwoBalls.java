@@ -17,12 +17,12 @@ public class AutonomousShootTwoBalls extends CommandBase {
         m_shooter = shooter;
         m_collector = collector;
         m_turret = turret;
-        requires(m_shooter);
-        requires(m_collector);
+        addRequirements(m_shooter);
+        addRequirements(m_collector);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
         m_turret.initEncoder();
@@ -31,27 +31,24 @@ public class AutonomousShootTwoBalls extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_turret.autoTrack();
         m_shooter.autoShoot(m_cameraDistance);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return timeSinceInitialized() > timeToShootTwoBalls;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.disablePID();
         m_shooter.topRollersOff();
         m_collector.stopBrush();
         m_collector.stopMiddleConveyor();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -1,42 +1,39 @@
 package com.gos.recycle_rush.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.recycle_rush.robot.subsystems.Lifter;
 
 /*
  *
  */
-public class AutoLifterUpToTop extends Command {
+public class AutoLifterUpToTop extends CommandBase {
 
     private final Lifter m_lifter;
 
     public AutoLifterUpToTop(Lifter lifter) {
         m_lifter = lifter;
-        requires(m_lifter);
+        addRequirements(m_lifter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_lifter.setPosition(Lifter.DISTANCE_FOUR_TOTES);
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return (m_lifter.isAtPosition() || m_lifter.isAtTop());
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_lifter.stop();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

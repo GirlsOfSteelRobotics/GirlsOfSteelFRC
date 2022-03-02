@@ -1,6 +1,6 @@
 package com.gos.ultimate_ascent.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * @author Author
  */
 @SuppressWarnings({"PMD.GodClass", "PMD.DataClass"})
-public abstract class CommandBase extends Command {
+public abstract class CommandBase extends CommandBase {
 
     public CommandBase(String name) {
         super(name);

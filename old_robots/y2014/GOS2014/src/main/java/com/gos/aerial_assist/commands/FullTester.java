@@ -80,20 +80,20 @@ public class FullTester extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
         m_chassis.disablePositionPID();
         m_manipulator.stopJag();
@@ -102,9 +102,6 @@ public class FullTester extends CommandBase {
         m_collector.stopCollectorWheel();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

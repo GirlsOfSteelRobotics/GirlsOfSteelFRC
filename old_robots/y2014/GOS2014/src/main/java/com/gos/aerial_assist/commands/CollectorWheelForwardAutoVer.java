@@ -35,7 +35,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_startTime = Timer.getFPGATimestamp();
         m_camera.setIsHot(hotAtLeastOnce()); //CommandBase.camera.isGoalHot(); //Get is hot here
         System.out.println("CAMERA IS HOT?::: " + m_camera.isHot());
@@ -49,7 +49,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.collectorWheelFoward();
     } //This rolls the wheel forward to bring the ball into the trident
 
@@ -60,7 +60,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return Timer.getFPGATimestamp() - m_startTime > m_time;
         //return CommandBase.collector.isCollectorEngaged();
     }
@@ -71,7 +71,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollectorWheel();
         //The wheel stops moving once the collector is engaged and has the ball in its grip
     }
@@ -81,10 +81,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      *
      * @author Sophia, Sonia
      */
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     /*
     If the method sees hot at least one time, it will return true

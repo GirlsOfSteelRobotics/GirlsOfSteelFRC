@@ -3,14 +3,14 @@ package com.gos.stronghold.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.stronghold.robot.RobotMap;
 
 /**
  *
  */
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -80,10 +80,7 @@ public class Chassis extends Subsystem {
 
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-    }
+
 
     public void driveByJoystick(double y, double x) {
         SmartDashboard.putString("driveByJoystick?", y + "," + x);

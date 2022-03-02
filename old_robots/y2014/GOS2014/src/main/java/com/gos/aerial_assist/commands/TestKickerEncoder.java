@@ -19,11 +19,11 @@ public class TestKickerEncoder extends CommandBase {
 
     public TestKickerEncoder(Kicker kicker) {
         m_kicker = kicker;
-        requires(m_kicker);
+        addRequirements(m_kicker);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_kicker.stopJag();
         m_kicker.initEncoders();
         m_kicker.resetEncoders();
@@ -31,7 +31,7 @@ public class TestKickerEncoder extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_direction = SmartDashboard.getNumber("Direction", 0);
         if (m_direction == 1) {
             m_kicker.setTalon(0.5);
@@ -43,18 +43,15 @@ public class TestKickerEncoder extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false; //changeTime > 5;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_kicker.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

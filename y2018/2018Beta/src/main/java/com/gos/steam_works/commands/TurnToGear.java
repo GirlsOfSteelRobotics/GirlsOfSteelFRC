@@ -2,12 +2,12 @@ package com.gos.steam_works.commands;
 
 import com.gos.steam_works.GripPipelineListener;
 import com.gos.steam_works.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class TurnToGear extends Command {
+public class TurnToGear extends CommandBase {
     //double[] defaultValue = new double[0];
     // private static final double IMAGE_CENTER = IMAGE_WIDTH/2.0;
     // private static final double TOLERANCE = 5; //TODO: test this (in pixels)
@@ -28,19 +28,19 @@ public class TurnToGear extends Command {
     public TurnToGear(Chassis chassis, GripPipelineListener listener, Direction direction) {
         m_chassis = chassis;
         m_listener = listener;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         this.m_direction = direction;
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("TurnToGear Initialized with direction " + m_direction);
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_targetX = m_listener.targetX;
 
         if (m_direction == Direction.kRight) {
@@ -61,7 +61,7 @@ public class TurnToGear extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         System.out.println("targetX: " + m_targetX /*+ " CenterX Length: " + centerX.length*/);
 
         //return centerX.length == 2;
@@ -70,7 +70,7 @@ public class TurnToGear extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stop();
         System.out.println("TurnToGear Finished.");
     }

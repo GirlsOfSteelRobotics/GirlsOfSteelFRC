@@ -5,13 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.recycle_rush.robot.RobotMap;
 import com.gos.recycle_rush.robot.commands.collector.CollectReleaseTote;
 
 
-public class Collector extends Subsystem {
+public class Collector extends SubsystemBase {
 
     private static final double speed = .5;
 

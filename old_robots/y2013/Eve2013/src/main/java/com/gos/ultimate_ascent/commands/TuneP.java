@@ -43,8 +43,8 @@ public class TuneP extends CommandBase {
         m_bP = beginningP;
         m_eP = endingP;
         this.m_interval = 0.0001;
-        requires(chassis);
-        requires(drive);
+        addRequirements(chassis);
+        addRequirements(drive);
         int numPs = (int) Math.round((m_eP - m_bP) / m_interval);
         m_counter = 0;
         m_setpointTimes = new double[3][numPs];
@@ -58,14 +58,14 @@ public class TuneP extends CommandBase {
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initRatePIDs();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
 
         for (double p = m_bP; p < m_eP; p += m_interval) {
             if (m_counter < m_setpointTimes[0].length || m_counter < m_rightRates[0].length) {
@@ -143,7 +143,7 @@ public class TuneP extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
@@ -250,10 +250,5 @@ public class TuneP extends CommandBase {
 
     } //end end()
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

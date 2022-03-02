@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
 import com.gos.aerial_assist.objects.EncoderGoSPidController;
@@ -20,7 +20,7 @@ import com.gos.aerial_assist.objects.EncoderGoSPidController;
  * @author Sophia and Sam
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public class Manipulator extends Subsystem {
+public class Manipulator extends SubsystemBase {
     private static final double minAngle = 0; //needs to be changed, not correct
     private static final double maxAngle = 113; //110 for comp bot//also needs to be changed
     private static final double pulsePerRotation = 360; //THIS IS CORRECT FOR THE COMPETITION ROBOT
@@ -245,9 +245,7 @@ public class Manipulator extends Subsystem {
         return m_bobTheArmEncoder.getRaw();
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
 
     public final void resetPIDError() {

@@ -6,14 +6,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.recycle_rush.robot.RobotMap;
 
 
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     // PID Constants
     private static final double kP = 1.0;
@@ -396,7 +396,5 @@ public class Chassis extends Subsystem {
         return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance()) / 4 * inchesPerTick);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 }

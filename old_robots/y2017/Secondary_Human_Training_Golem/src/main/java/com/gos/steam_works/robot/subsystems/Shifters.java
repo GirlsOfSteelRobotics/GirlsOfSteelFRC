@@ -2,13 +2,13 @@ package com.gos.steam_works.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.steam_works.robot.RobotMap;
 
 /**
  *
  */
-public class Shifters extends Subsystem {
+public class Shifters extends SubsystemBase {
     private final DoubleSolenoid m_shifterLeft;
     private final DoubleSolenoid m_shifterRight;
 
@@ -46,9 +46,5 @@ public class Shifters extends Subsystem {
         return m_speed;
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 }

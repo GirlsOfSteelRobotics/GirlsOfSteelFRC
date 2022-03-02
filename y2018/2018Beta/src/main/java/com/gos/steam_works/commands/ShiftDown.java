@@ -1,40 +1,40 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.subsystems.Shifters;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class ShiftDown extends Command {
+public class ShiftDown extends CommandBase {
 
     private final Shifters m_shifters;
 
     public ShiftDown(Shifters shifters) {
         m_shifters = shifters;
-        requires(m_shifters);
+        addRequirements(m_shifters);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shifters.shiftGear(Shifters.Speed.kLow);
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
 

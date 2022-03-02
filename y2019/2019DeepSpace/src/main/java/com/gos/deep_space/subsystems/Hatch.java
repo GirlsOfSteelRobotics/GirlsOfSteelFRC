@@ -9,9 +9,9 @@ package com.gos.deep_space.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.deep_space.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Hatch extends Subsystem {
+public class Hatch extends SubsystemBase {
     private static final double SLOW_COLLECTOR_SPEED = 0.25;
     private static final double COLLECTOR_INTAKE_SPEED = 0.4;
     private static final double COLLECTOR_RELEASE_SPEED = 0.4;
@@ -25,11 +25,7 @@ public class Hatch extends Subsystem {
         addChild("Collector", m_hatchCollector);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

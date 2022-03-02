@@ -1,41 +1,38 @@
 package com.gos.recycle_rush.robot.commands.shack;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.recycle_rush.robot.subsystems.Shack;
 
 /**
  *
  */
-public class ShackIn extends Command {
+public class ShackIn extends CommandBase {
 
     private final Shack m_shack;
 
     public ShackIn(Shack shack) {
         m_shack = shack;
-        requires(m_shack);
+        addRequirements(m_shack);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shack.shackIn();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

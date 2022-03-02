@@ -2,9 +2,9 @@ package com.gos.deep_space.subsystems;
 
 import com.gos.deep_space.RobotMap;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Blinkin extends Subsystem {
+public class Blinkin extends SubsystemBase {
     private static final double CONFETTI = -0.87;
     private static final double RAINBOW_WITH_GLITTER = -0.89;
     private static final double GREEN = .77;
@@ -45,11 +45,7 @@ public class Blinkin extends Subsystem {
         }
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

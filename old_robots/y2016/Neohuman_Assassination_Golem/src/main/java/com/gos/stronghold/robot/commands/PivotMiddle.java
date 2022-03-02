@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.stronghold.robot.subsystems.Pivot;
 
 /**
  *
  */
-public class PivotMiddle extends Command {
+public class PivotMiddle extends CommandBase {
 
     private static final double EncoderValueUp = -30; //based on initial position
     private static final double EncoderValueMiddle = 0; //TODO: fix these depending on which way is positive for motor
@@ -17,12 +17,12 @@ public class PivotMiddle extends Command {
 
     public PivotMiddle(Pivot pivot) {
         m_pivot = pivot;
-        requires(m_pivot);
+        addRequirements(m_pivot);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         if (m_pivot.getPosition() == 1) {
             m_encoderToUse = EncoderValueUp;
             m_speed = -.1;
@@ -39,13 +39,13 @@ public class PivotMiddle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_pivot.tiltUpandDown(m_speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         if (m_speed == 1) {
             return m_pivot.getEncoderDistance() <= m_encoderToUse;
         } else if (m_speed == -1) {
@@ -57,14 +57,9 @@ public class PivotMiddle extends Command {
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_pivot.tiltUpandDown(0);
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

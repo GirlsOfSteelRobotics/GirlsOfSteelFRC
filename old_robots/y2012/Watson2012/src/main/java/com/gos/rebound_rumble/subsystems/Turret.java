@@ -2,11 +2,11 @@ package com.gos.rebound_rumble.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.RobotMap;
 import com.gos.rebound_rumble.objects.Camera;
@@ -36,10 +36,7 @@ public class Turret extends Subsystem implements PIDOutput, PIDSource {
         m_chassis = chassis;
     }
 
-    @Override
-    public void initDefaultCommand() {
 
-    }
 
     public void changeTurretOffset() {
         double turretOffset = SmartDashboard.getNumber("Turret Offset", 0.0);

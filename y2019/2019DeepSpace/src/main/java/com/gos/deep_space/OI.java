@@ -34,8 +34,8 @@ import com.gos.deep_space.subsystems.Collector;
 import com.gos.deep_space.subsystems.Hatch;
 import com.gos.deep_space.subsystems.Pivot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.POVButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator

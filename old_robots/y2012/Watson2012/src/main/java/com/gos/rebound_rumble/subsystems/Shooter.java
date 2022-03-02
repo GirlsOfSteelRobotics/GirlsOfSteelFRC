@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
 import com.gos.rebound_rumble.objects.Camera;
 import com.gos.rebound_rumble.objects.EncoderGoSPidController;
@@ -13,7 +13,7 @@ import com.gos.rebound_rumble.objects.ShooterLookupTable;
 import com.gos.rebound_rumble.objects.SmoothEncoder;
 
 @SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods"})
-public class Shooter extends Subsystem {
+public class Shooter extends SubsystemBase {
 
     public static final double KEY_SPEED = 24.0; //dead-reckoning speed to use for
     //shooting with the key
@@ -76,9 +76,7 @@ public class Shooter extends Subsystem {
         m_shooterLookupTable = new ShooterLookupTable();
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
     public void setJags(double speed) {
         m_jags.set(-speed);

@@ -1,13 +1,13 @@
 package com.gos.outreach2016.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.outreach2016.robot.RobotMap;
 
 /**
  *
  */
-public class AccessoryMotors extends Subsystem {
+public class AccessoryMotors extends SubsystemBase {
     private final Victor m_accessoryLeft;
     private final Victor m_accessoryRight;
 
@@ -21,12 +21,7 @@ public class AccessoryMotors extends Subsystem {
         addChild("Accessory Right", m_accessoryRight);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-        //There's no default command for this subsystem
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

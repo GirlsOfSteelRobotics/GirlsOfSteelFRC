@@ -3,12 +3,12 @@ package com.gos.power_up.commands.autonomous;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class AutoBaseLine extends Command {
+public class AutoBaseLine extends CommandBase {
 
     private int m_time;
 
@@ -20,12 +20,12 @@ public class AutoBaseLine extends Command {
         m_chassis = chassis;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_time = 0;
         m_leftTalon.set(ControlMode.PercentOutput, 0.5);
         m_rightTalon.set(ControlMode.PercentOutput, 0.5);
@@ -33,7 +33,7 @@ public class AutoBaseLine extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_time++;
         m_leftTalon.set(ControlMode.PercentOutput, 0.5);
         m_rightTalon.set(ControlMode.PercentOutput, 0.5);
@@ -41,17 +41,15 @@ public class AutoBaseLine extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_time >= 500;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

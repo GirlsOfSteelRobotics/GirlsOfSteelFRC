@@ -8,40 +8,40 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Pivot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class PivotToShip extends Command {
+public class PivotToShip extends CommandBase {
     private final Pivot m_pivot;
 
     public PivotToShip(Pivot pivot) {
         m_pivot = pivot;
-        requires(m_pivot);
+        addRequirements(m_pivot);
 
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("init PivotToShip");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_pivot.setGoalPivotPosition(Pivot.PIVOT_CARGO);
         m_pivot.holdPivotPosition();
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_pivot.checkCurrentPivotPosition(Pivot.PIVOT_CARGO);
 
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_pivot.pivotStop();
         System.out.println("end PivotToShip");
 

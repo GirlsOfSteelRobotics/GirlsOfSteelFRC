@@ -11,26 +11,23 @@ public class ResetEncoder extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
 
-    }
 
 }

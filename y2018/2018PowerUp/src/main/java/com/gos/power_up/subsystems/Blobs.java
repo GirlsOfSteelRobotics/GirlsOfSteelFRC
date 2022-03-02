@@ -2,7 +2,7 @@ package com.gos.power_up.subsystems;
 
 import com.gos.power_up.Blob;
 import com.gos.power_up.PipelineListener;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 
-public class Blobs extends Subsystem {
+public class Blobs extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

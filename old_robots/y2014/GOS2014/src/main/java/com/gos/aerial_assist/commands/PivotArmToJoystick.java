@@ -21,17 +21,17 @@ public class PivotArmToJoystick extends CommandBase {
 
     public PivotArmToJoystick(OI oi, Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
+        addRequirements(m_manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
         m_operator = oi.getOperatorJoystick();
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_angle = m_manipulator.getAbsoluteDistance();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         System.out.println("Operator Y: " + m_operator.getY());
         if (m_operator.getY() > 0.5) {
             m_manipulator.setSetPoint(m_angle);
@@ -45,17 +45,14 @@ public class PivotArmToJoystick extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.holdAngle();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

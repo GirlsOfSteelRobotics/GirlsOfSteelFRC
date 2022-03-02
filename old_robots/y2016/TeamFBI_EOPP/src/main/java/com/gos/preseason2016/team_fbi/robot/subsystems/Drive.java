@@ -3,12 +3,12 @@ package com.gos.preseason2016.team_fbi.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Drive extends Subsystem {
+public class Drive extends SubsystemBase {
     public static final double AUTO_DRIVE_SPEED = -0.1;
 
     private final WPI_TalonSRX m_driveSystemDriveLeft0;
@@ -45,9 +45,7 @@ public class Drive extends Subsystem {
 
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 
     public void moveByJoystick(Joystick joystick) {
         m_robotDrive.arcadeDrive(joystick.getY(), joystick.getX());

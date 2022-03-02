@@ -17,35 +17,33 @@ public class TipRobotOver extends CommandBase {
 
     public TipRobotOver(Climber climber) {
         m_climber = climber;
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
     //will extend the piston to tip the robot over onto the pyramid
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.extendLifterPiston();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_climber.isPistonExtended();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 
 }

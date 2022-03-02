@@ -1,8 +1,8 @@
 package com.gos.preseason2017.team2.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.preseason2017.team2.robot.commands.DriveByJoystick;
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
     }
 
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         m_chassis.ahrsToSmartDashboard();
 
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**

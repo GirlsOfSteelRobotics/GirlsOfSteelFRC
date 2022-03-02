@@ -26,31 +26,28 @@ public class MoveManipulatorWithSlider extends CommandBase {
     public MoveManipulatorWithSlider(OI oi, Manipulator manipulator) {
         m_manipulator = manipulator;
         m_driver = oi.getChassisJoystick();
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         double angle = ((m_driver.getZ() / m_fullRangeOnSlider) * m_maxManipulatorAngle) + m_minManipulatorAngle;
         m_manipulator.setSetPoint(angle);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

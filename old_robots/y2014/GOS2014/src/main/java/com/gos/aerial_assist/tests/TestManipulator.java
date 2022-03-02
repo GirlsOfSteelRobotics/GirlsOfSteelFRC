@@ -20,16 +20,16 @@ public class TestManipulator extends CommandBase {
 
     public TestManipulator(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         SmartDashboard.putBoolean(RobotMap.manipulatorSD, true);
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = SmartDashboard.getNumber(RobotMap.manipulatorSD, 0.0);
         if (SmartDashboard.getBoolean(RobotMap.manipulatorSD, false)) {
             m_manipulator.setJag(m_speed);
@@ -39,19 +39,16 @@ public class TestManipulator extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false; //TODO: im not sure what this should be
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 
 }

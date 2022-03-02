@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.ultimate_ascent.RobotMap;
 import com.gos.ultimate_ascent.objects.GosPidController;
@@ -16,7 +16,7 @@ import com.gos.ultimate_ascent.objects.SmoothEncoder;
  * function. UNIT: inches
  */
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.GodClass", "PMD.TooManyFields", "PMD.TooManyMethods"})
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     //tentative angles from 0 being straight forward
     public static final double ROTATION_THRESHOLD = 10;
@@ -595,7 +595,5 @@ public class Chassis extends Subsystem {
         }
     }
 
-    @Override
-    public void initDefaultCommand() {
-    } //end initDefaultCommand
+ //end initDefaultCommand
 } //end Chassis subsystem

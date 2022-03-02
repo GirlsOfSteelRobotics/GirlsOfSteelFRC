@@ -7,13 +7,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
 import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Shifters;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveByDistance extends Command {
+public class DriveByDistance extends CommandBase {
     private static final int ERROR_THRESHOLD = 1000;
     private static final int BIG_ERROR_THRESHOLD = 5000;
 
@@ -40,12 +40,12 @@ public class DriveByDistance extends Command {
         m_shifters = shifters;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         ErrorCode err;
         m_shifters.shiftGear(m_speed);
 
@@ -74,7 +74,7 @@ public class DriveByDistance extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         if ((Math.abs(m_leftTalon.getSelectedSensorPosition(0) - m_encoderTicks) < BIG_ERROR_THRESHOLD)
             && (Math.abs(m_rightTalon.getSelectedSensorPosition(0) + m_encoderTicks) < BIG_ERROR_THRESHOLD)) {
@@ -96,7 +96,7 @@ public class DriveByDistance extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         //return false;
 
         if (Math.abs(m_leftTalon.getSelectedSensorPosition(0) - m_encoderTicks) < ERROR_THRESHOLD) {
@@ -137,7 +137,7 @@ public class DriveByDistance extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("DriveByDistance Finished");
         m_chassis.stop();
 

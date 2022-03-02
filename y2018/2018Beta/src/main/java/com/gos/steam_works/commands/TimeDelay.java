@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class TimeDelay extends Command {
+public class TimeDelay extends CommandBase {
 
     private final double m_seconds;
     private final Timer m_tim;
@@ -19,25 +19,25 @@ public class TimeDelay extends Command {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_tim.start();
         System.out.println("TimeDelay Initialzed with " + m_seconds + " seconds as parameter");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_tim.get() > m_seconds;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_tim.stop();
         System.out.println("TimeDelay Finished");
     }

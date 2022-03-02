@@ -1,7 +1,7 @@
 package com.gos.steam_works.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.steam_works.robot.subsystems.Camera;
 import com.gos.steam_works.robot.subsystems.Chassis;
@@ -9,7 +9,7 @@ import com.gos.steam_works.robot.subsystems.Chassis;
 /**
  *
  */
-public class DriveByVision extends Command {
+public class DriveByVision extends CommandBase {
 
 
     private static final double MAX_ANGULAR_VELOCITY = 1.0; // TODO: adjust
@@ -40,13 +40,13 @@ public class DriveByVision extends Command {
         // eg. requires(chassis);
         m_chassis = chassis;
         m_camera = camera;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         m_tim = new Timer();
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
 
         // not calling setupFPID because other PID values override
         m_chassis.setEncoderPositions(0, 0);
@@ -61,7 +61,7 @@ public class DriveByVision extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
 
         /*table = NetworkTableInstance.getDefault().getTable("GRIP/myContoursReport");
 
@@ -128,7 +128,7 @@ public class DriveByVision extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
 
         return ((m_tim.get() > 1 && Math.abs(m_chassis.getLeftVelocity()) < SLIPPING_VELOCITY
             && Math.abs(m_chassis.getRightVelocity()) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT));
@@ -136,15 +136,10 @@ public class DriveByVision extends Command {
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("DriveByVision Finished");
         m_tim.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

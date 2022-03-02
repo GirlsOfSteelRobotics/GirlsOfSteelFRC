@@ -1,6 +1,6 @@
 package com.gos.steam_works.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.steam_works.robot.RobotMap;
 import com.gos.steam_works.robot.subsystems.Chassis;
 
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  *
  */
-public class CreateMotionProfile extends Command {
+public class CreateMotionProfile extends CommandBase {
     private static final double DURATION = 20.0;
     private static final double ERROR = 0; // TODO: change
 
@@ -30,7 +30,7 @@ public class CreateMotionProfile extends Command {
 
     public CreateMotionProfile(Chassis chassis, String leftFileName, String rightFileName) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         // maybe get file names from smart dashboard input instead?
         m_leftFile = leftFileName;
         m_rightFile = rightFileName;
@@ -44,7 +44,7 @@ public class CreateMotionProfile extends Command {
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_leftInitial = m_chassis.getLeftPosition();
         m_rightInitial = m_chassis.getRightPosition();
 
@@ -59,7 +59,7 @@ public class CreateMotionProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_leftPoint.clear();
         m_rightPoint.clear();
 
@@ -100,13 +100,13 @@ public class CreateMotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("CreateMotionProfile: Done Recording MP");
 
         // remove same positions at beginning and end
@@ -130,12 +130,7 @@ public class CreateMotionProfile extends Command {
         System.out.println("CreateMotionProfile: Finished");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private void writeFile(String filePath, List<List<Double>> trajectory) throws IOException {
 

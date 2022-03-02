@@ -23,7 +23,7 @@ public class TestCollector extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         SmartDashboard.putNumber(RobotMap.CollectorJagSpeed, 0.0);
         SmartDashboard.putBoolean(RobotMap.CollectorWheelSpikeForward, false);
         SmartDashboard.putBoolean(RobotMap.CollectorWheelSpikeBackward, false);
@@ -32,7 +32,7 @@ public class TestCollector extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed, 0));
         if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward, false)) {
             m_collector.collectorWheelFoward();
@@ -56,19 +56,16 @@ public class TestCollector extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
 
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
     }
 
-    @Override
-    protected void interrupted() {
 
-    }
 
 }

@@ -9,43 +9,43 @@ package com.gos.offense2019.commands;
 
 import com.gos.offense2019.OI;
 import com.gos.offense2019.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class DriveByJoystick extends Command {
+public class DriveByJoystick extends CommandBase {
     private final Chassis m_chassis;
     private final OI m_oi;
 
     public DriveByJoystick(Chassis chassis, OI oi) {
         m_chassis = chassis;
         m_oi = oi;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("DriveByJoystick init");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         // 4 is the axis number right x on the gamepad
         m_chassis.driveByJoystick(m_oi.getLeftUpAndDown(), m_oi.getRightSideToSide());
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("DriveByJoystick end");
     }
 }

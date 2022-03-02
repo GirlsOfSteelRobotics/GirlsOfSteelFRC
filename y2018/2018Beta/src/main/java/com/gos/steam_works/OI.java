@@ -17,8 +17,8 @@ import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * This class is the glue that binds the controls on the physical operator

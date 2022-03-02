@@ -3,12 +3,12 @@ package com.gos.power_up.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class TurnByMotionMagic extends Command {
+public class TurnByMotionMagic extends CommandBase {
     private static final double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
     private final double m_targetHeading; // in degrees
@@ -29,13 +29,13 @@ public class TurnByMotionMagic extends Command {
         m_chassis = chassis;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
         // System.out.println("TurnByMotionMagic: constructed");
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.setInverted(false);
 
         m_chassis.configForTurnByMotionMagic();
@@ -55,13 +55,13 @@ public class TurnByMotionMagic extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
 
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
 
         double currentHeading = m_chassis.getYaw();
         double error = Math.abs(m_targetHeading - currentHeading);
@@ -77,7 +77,7 @@ public class TurnByMotionMagic extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
         double currentHeading = m_chassis.getYaw();
         double degreesError = m_targetHeading - currentHeading;

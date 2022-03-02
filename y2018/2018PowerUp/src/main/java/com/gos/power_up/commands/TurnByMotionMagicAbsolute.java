@@ -4,12 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Shifters;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class TurnByMotionMagicAbsolute extends Command {
+public class TurnByMotionMagicAbsolute extends CommandBase {
     private static final double TURNING_FINISH_THRESHOLD = 7.0; // TODO tune (in degrees)
 
     private final double m_targetHeading; // in degrees
@@ -25,13 +25,13 @@ public class TurnByMotionMagicAbsolute extends Command {
         m_targetHeading = degrees;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
         // System.out.println("TurnByMotionMagic: constructed");
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shifters.shiftGear(Shifters.Speed.kLow);
         m_chassis.setInverted(false);
 
@@ -47,13 +47,13 @@ public class TurnByMotionMagicAbsolute extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
 
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
 
         double currentHeading = m_chassis.getYaw();
         double error = Math.abs(m_targetHeading - currentHeading);
@@ -69,7 +69,7 @@ public class TurnByMotionMagicAbsolute extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
         double currentHeading = m_chassis.getYaw();
         double degreesError = m_targetHeading - currentHeading;

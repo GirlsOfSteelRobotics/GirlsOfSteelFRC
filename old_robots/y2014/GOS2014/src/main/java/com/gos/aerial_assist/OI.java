@@ -1,7 +1,7 @@
 package com.gos.aerial_assist;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.aerial_assist.commands.CollectorDownAndWheelIn;
 import com.gos.aerial_assist.commands.CollectorDownWheelOut;
 import com.gos.aerial_assist.commands.CollectorWheelForward;

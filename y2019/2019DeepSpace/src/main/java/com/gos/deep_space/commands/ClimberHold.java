@@ -10,39 +10,39 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Climber;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ClimberHold extends Command {
+public class ClimberHold extends CommandBase {
 
     private final Climber m_climber;
 
     public ClimberHold(Climber climber) {
         m_climber = climber;
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("ClimberHold init");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.holdClimberPosition(Climber.ClimberType.All);
         //System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_climber.climberStop();
         System.out.println("ClimberHold end");
     }

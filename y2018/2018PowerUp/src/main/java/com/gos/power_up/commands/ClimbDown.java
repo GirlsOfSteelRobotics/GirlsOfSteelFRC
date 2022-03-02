@@ -1,39 +1,39 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Climber;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class ClimbDown extends Command {
+public class ClimbDown extends CommandBase {
     private final Climber m_climber;
 
     public ClimbDown(Climber climber) {
         m_climber = climber;
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.climb(-1.0);
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_climber.stopClimb();
     }
 

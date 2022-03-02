@@ -6,17 +6,17 @@
 
 package com.gos.aerial_assist.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.aerial_assist.objects.Camera;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
  * @author
  */
-public class AutoShoot extends CommandGroup {
+public class AutoShoot extends SequentialCommandGroup {
 
     public AutoShoot(Camera camera, Manipulator manipulator) {
         double angle = camera.getVerticalAngleOffset();
-        addSequential(new SetArmAnglePID(manipulator, angle));
+        addCommands(new SetArmAnglePID(manipulator, angle));
     }
 }

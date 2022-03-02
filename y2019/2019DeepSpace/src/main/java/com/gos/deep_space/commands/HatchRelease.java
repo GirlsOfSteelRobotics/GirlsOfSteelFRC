@@ -8,37 +8,37 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.Hatch;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class HatchRelease extends Command {
+public class HatchRelease extends CommandBase {
     private final Hatch m_hatch;
 
     public HatchRelease(Hatch hatch) {
         m_hatch = hatch;
-        requires(m_hatch);
+        addRequirements(m_hatch);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("init hatch release");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_hatch.release();
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_hatch.stop();
         System.out.println("end hatch release");
     }

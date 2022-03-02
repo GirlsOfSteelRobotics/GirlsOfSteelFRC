@@ -12,9 +12,9 @@ package com.gos.ultimate_ascent.subsystems;
 //import edu.wpi.first.wpilibj.*;
 
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
 import com.gos.ultimate_ascent.objects.MagneticSpeedSensor;
 import com.gos.ultimate_ascent.objects.ShooterPoint;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Sylvie
  */
-public class Shooter extends Subsystem {
+public class Shooter extends SubsystemBase {
 
     private final Jaguar m_shooterJag;
     //Makes the special speed control sensor
@@ -208,7 +208,5 @@ public class Shooter extends Subsystem {
         return m_shoot;
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

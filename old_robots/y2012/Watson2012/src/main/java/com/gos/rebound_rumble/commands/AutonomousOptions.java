@@ -48,11 +48,11 @@ public class AutonomousOptions extends CommandBase {
         m_shooter = shooter;
         m_collector = collector;
 
-        requires(m_turret);
-        requires(m_shooter);
-        requires(m_chassis);
-        requires(m_bridge);
-        requires(m_collector);
+        addRequirements(m_turret);
+        addRequirements(m_shooter);
+        addRequirements(m_chassis);
+        addRequirements(m_bridge);
+        addRequirements(m_collector);
         this.m_autoTrack = autoTrack;
         this.m_autoShoot = autoShoot;
         this.m_shootFromKey = shootFromKey;
@@ -67,7 +67,7 @@ public class AutonomousOptions extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_turret.initEncoder();
         m_turret.enablePID();
         m_shooter.initEncoder();
@@ -112,12 +112,12 @@ public class AutonomousOptions extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_turret.disablePID();
         m_turret.stopJag();
         m_shooter.disablePID();
@@ -131,9 +131,6 @@ public class AutonomousOptions extends CommandBase {
         m_collector.stopMiddleConveyor();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

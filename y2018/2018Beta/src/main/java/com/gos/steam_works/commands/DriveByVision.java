@@ -5,13 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.GripPipelineListener;
 import com.gos.steam_works.subsystems.Chassis;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveByVision extends Command {
+public class DriveByVision extends CommandBase {
 
 
     private static final int TIMEOUT = 8;
@@ -45,13 +45,13 @@ public class DriveByVision extends Command {
         m_listener = listener;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_chassis);
+        addRequirements(m_chassis);
         m_tim = new Timer();
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
         // not calling setupFPID because other PID values override
         m_leftTalon.setSelectedSensorPosition(0, 0, 0);
@@ -70,7 +70,7 @@ public class DriveByVision extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         /*table = NetworkTable.getTable("GRIP/myContoursReport");
 
@@ -140,14 +140,14 @@ public class DriveByVision extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return (m_tim.get() > 1 && Math.abs(m_leftTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY
             && Math.abs(m_rightTalon.getSelectedSensorVelocity(0)) < SLIPPING_VELOCITY) || (m_tim.get() > TIMEOUT);
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("DriveByVision Finished");
         m_tim.stop();
     }

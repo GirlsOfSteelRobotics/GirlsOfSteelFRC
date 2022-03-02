@@ -11,28 +11,25 @@ public class DisableRotation extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.startAutoRotation();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return !m_chassis.isAutoRotating();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopAutoRotation();
         m_chassis.startManualRotation();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

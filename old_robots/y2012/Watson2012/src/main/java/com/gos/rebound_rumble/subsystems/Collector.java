@@ -3,11 +3,11 @@ package com.gos.rebound_rumble.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
 
 
-public class Collector extends Subsystem {
+public class Collector extends SubsystemBase {
 
     private final DigitalInput m_collectorLimitSwitch = new DigitalInput(RobotMap.COLLECTOR_LIMIT_SWITCH);
 
@@ -24,9 +24,7 @@ public class Collector extends Subsystem {
         return !m_collectorLimitSwitch.get();
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
     public void reverseBrush() {
         m_brushJag.set(1.0);

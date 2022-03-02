@@ -11,12 +11,12 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class AutoSwitchSimple extends CommandGroup {
+public class AutoSwitchSimple extends SequentialCommandGroup {
 
     private static final double DISTANCE_FORWARD = 105;
     private static final double BACK_UP = -30;
@@ -25,33 +25,33 @@ public class AutoSwitchSimple extends CommandGroup {
         System.out.println("AutoSimpleSwitch starting");
 
         //Get lift & wrist into position
-        addSequential(new WristToCollect(wrist));
-        addSequential(new LiftToSwitch(lift));
+        addCommands(new WristToCollect(wrist));
+        addCommands(new LiftToSwitch(lift));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 
         //Move Robot into position
-        addSequential(new DriveByMotionMagic(chassis, DISTANCE_FORWARD, 0));
+        addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD, 0));
 
         //Release and back up
         addParallel(new ReleaseFast(collector));
-        addSequential(new TimeDelay(1.0));
-        addSequential(new DriveByMotionMagic(chassis, BACK_UP, 0));
+        addCommands(new TimeDelay(1.0));
+        addCommands(new DriveByMotionMagic(chassis, BACK_UP, 0));
 
         /* Position Control
         //Get lift & wrist into position
-        addSequential(new WristToCollect());
-        addSequential(new LiftToSwitch());
+        addCommands(new WristToCollect());
+        addCommands(new LiftToSwitch());
         addParallel(new WristHold());
         addParallel(new LiftHold());
 
         //Move Robot into position
-        addSequential(new DriveByDistance(DISTANCE_FORWARD, Shifters.Speed.kLow));
+        addCommands(new DriveByDistance(DISTANCE_FORWARD, Shifters.Speed.kLow));
 
         //Release and back up
         addParallel(new Release());
-        addSequential(new TimeDelay(1.0));
-        addSequential(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
+        addCommands(new TimeDelay(1.0));
+        addCommands(new DriveByDistance(BACK_UP, Shifters.Speed.kLow));
         */
     }
 }

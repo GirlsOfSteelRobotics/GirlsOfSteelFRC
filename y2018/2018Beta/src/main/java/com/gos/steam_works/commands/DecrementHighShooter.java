@@ -1,12 +1,12 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.subsystems.Shooter;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class DecrementHighShooter extends Command {
+public class DecrementHighShooter extends CommandBase {
 
     private final Shooter m_shooter;
 
@@ -17,23 +17,23 @@ public class DecrementHighShooter extends Command {
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.decrementHighShooterSpeed();
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 }

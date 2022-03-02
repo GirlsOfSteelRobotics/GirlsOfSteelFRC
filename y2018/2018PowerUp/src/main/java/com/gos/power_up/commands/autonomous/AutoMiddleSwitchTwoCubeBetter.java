@@ -17,13 +17,13 @@ import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
 @SuppressWarnings("PMD.DataClass")
-public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
+public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
     public static final double STRAIGHT_1 = 40.0;
     public static final double TURN_DEGREES_1 = 30.0;
     public static final double TURN_DEGREES_2 = 50.0;
@@ -39,74 +39,74 @@ public class AutoMiddleSwitchTwoCubeBetter extends CommandGroup {
         System.out.println("AutoMiddleSwitchTwoCubeBetter - side = " + switchSide);
 
         //Lift to switch position, ready to release
-        addSequential(new WristToCollect(wrist));
-        addSequential(new LiftToSwitch(lift));
+        addCommands(new WristToCollect(wrist));
+        addCommands(new LiftToSwitch(lift));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 
         //Drive forward and turn in place and drive forward to switch
-        addSequential(new DriveByMotionMagicAbsolute(chassis, STRAIGHT_1, 0, false));
+        addCommands(new DriveByMotionMagicAbsolute(chassis, STRAIGHT_1, 0, false));
 
         if (switchSide == GameData.FieldSide.right) {
-            addSequential(new TurnByMotionMagicAbsolute(chassis, shifters, -TURN_DEGREES_1));
-            addSequential(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, -TURN_DEGREES_1, false));
+            addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, -TURN_DEGREES_1));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, -TURN_DEGREES_1, false));
 
             //Spit cube out
             addParallel(new ReleaseFast(collector, 0.8));
-            addSequential(new TimeDelay(0.1));
+            addCommands(new TimeDelay(0.1));
 
             //Drive back
-            addSequential(new DriveByMotionMagicAbsolute(chassis, -(APPROACH_SWITCH + 5), -TURN_DEGREES_1, false));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, -(APPROACH_SWITCH + 5), -TURN_DEGREES_1, false));
         } else if (switchSide == GameData.FieldSide.left) {
-            addSequential(new TurnByMotionMagicAbsolute(chassis, shifters, TURN_DEGREES_2));
-            addSequential(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, TURN_DEGREES_2 - 20, false));
+            addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, TURN_DEGREES_2));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, TURN_DEGREES_2 - 20, false));
 
             //Spit cube out
             addParallel(new ReleaseFast(collector, 0.8));
-            addSequential(new TimeDelay(0.1));
+            addCommands(new TimeDelay(0.1));
 
             //Drive back
-            addSequential(new DriveByMotionMagicAbsolute(chassis, -(APPROACH_SWITCH + 5), TURN_DEGREES_1 + 10, false));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, -(APPROACH_SWITCH + 5), TURN_DEGREES_1 + 10, false));
         }
 
 
         //Put lift down and start collector
-        addSequential(new CollectPosition(lift, wrist));
-        addSequential(new CollectorStop(collector));
+        addCommands(new CollectPosition(lift, wrist));
+        addCommands(new CollectorStop(collector));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
         addParallel(new Collect(collector));
 
         //Turn back to straight
-        addSequential(new TurnByMotionMagicAbsolute(chassis, shifters, 0));
+        addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, 0));
 
         //Drive into cube then back up into place
         addParallel(new DriveByMotionMagicAbsolute(chassis, APPROACH_CUBE, 0, false));
-        addSequential(new TimeDelay(2.0));
+        addCommands(new TimeDelay(2.0));
 
         //Lift to switch position, ready to release
-        addSequential(new WristToCollect(wrist));
-        addSequential(new LiftToSwitch(lift));
+        addCommands(new WristToCollect(wrist));
+        addCommands(new LiftToSwitch(lift));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 
         //Turn in place and drive forward
         if (switchSide == GameData.FieldSide.right) {
-            addSequential(new TurnByMotionMagicAbsolute(chassis, shifters, -TURN_AFTER_STACK));
-            addSequential(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH + 10, -END_HEADING, false));
+            addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, -TURN_AFTER_STACK));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH + 10, -END_HEADING, false));
         } else if (switchSide == GameData.FieldSide.left) {
-            addSequential(new TurnByMotionMagicAbsolute(chassis, shifters, 90));
-            addSequential(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH + 10, 85, false)); //10 was 50 before
+            addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, 90));
+            addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH + 10, 85, false)); //10 was 50 before
         }
 
         //Spit cube out
         addParallel(new ReleaseFast(collector));
-        addSequential(new TimeDelay(1.0));
-        addSequential(new DriveByMotionMagicAbsolute(chassis, BACK_UP, 0, false));
+        addCommands(new TimeDelay(1.0));
+        addCommands(new DriveByMotionMagicAbsolute(chassis, BACK_UP, 0, false));
 
         //Put lift down and stop collector
-        addSequential(new CollectPosition(lift, wrist));
-        addSequential(new CollectorStop(collector));
+        addCommands(new CollectPosition(lift, wrist));
+        addCommands(new CollectorStop(collector));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
     }

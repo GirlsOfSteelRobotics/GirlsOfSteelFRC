@@ -1,7 +1,7 @@
 package com.gos.preseason2016.team_fbi.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.preseason2016.team_fbi.robot.commands.ConveyorDown;
 import com.gos.preseason2016.team_fbi.robot.commands.ConveyorUp;
 import com.gos.preseason2016.team_fbi.robot.commands.ShiftDown;

@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.steam_works.robot.RobotMap;
 import com.gos.steam_works.robot.commands.StayClimbed;
 
@@ -12,7 +12,7 @@ import com.gos.steam_works.robot.commands.StayClimbed;
  *
  */
 
-public class Climber extends Subsystem {
+public class Climber extends SubsystemBase {
     private final WPI_TalonSRX m_climbMotorA;
     private final WPI_TalonSRX m_climbMotorB;
 

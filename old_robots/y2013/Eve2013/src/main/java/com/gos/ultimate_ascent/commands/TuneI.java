@@ -39,8 +39,8 @@ public class TuneI extends CommandBase {
         m_bI = beginningI;
         m_eI = endingI;
         this.m_interval = 0.00001;
-        requires(chassis);
-        requires(drive);
+        addRequirements(chassis);
+        addRequirements(drive);
         m_numRates = 50; //start number -- change if too long or too short
         int numIs = (int) Math.round((m_eI - m_bI) / m_interval) + 1;
         m_rightRates = new double[numIs][m_numRates];
@@ -53,14 +53,14 @@ public class TuneI extends CommandBase {
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initRatePIDs();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
 
         //set setpoint -- all 3 wheels at the same time
         m_chassis.setRightPIDRate(m_setpoint);
@@ -90,7 +90,7 @@ public class TuneI extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
@@ -195,12 +195,7 @@ public class TuneI extends CommandBase {
         }
     } //end end()
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private boolean isWithinSetpoint() {
         if ((m_setpoint - 1.0) < m_chassis.getRightEncoderRate() && m_chassis.getRightEncoderRate() > (m_setpoint + 1.0)) {

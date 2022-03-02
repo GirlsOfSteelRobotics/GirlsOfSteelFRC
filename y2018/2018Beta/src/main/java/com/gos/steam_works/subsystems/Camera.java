@@ -6,12 +6,12 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Camera extends Subsystem {
+public class Camera extends SubsystemBase {
 
     private final UsbCamera m_camGear;
     private final UsbCamera m_camClimb;
@@ -56,11 +56,7 @@ public class Camera extends Subsystem {
         System.out.println("Cam Gear!");
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 
 
     public VideoCamera getVisionCamera() {

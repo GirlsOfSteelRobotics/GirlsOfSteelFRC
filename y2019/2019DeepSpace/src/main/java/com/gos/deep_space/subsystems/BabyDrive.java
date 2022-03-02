@@ -9,12 +9,12 @@ package com.gos.deep_space.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.deep_space.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * Add your docs here.
  */
-public class BabyDrive extends Subsystem {
+public class BabyDrive extends SubsystemBase {
 
     private final WPI_TalonSRX m_babyDriveTalon;
 
@@ -24,11 +24,7 @@ public class BabyDrive extends Subsystem {
         m_babyDriveTalon.setInverted(true);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

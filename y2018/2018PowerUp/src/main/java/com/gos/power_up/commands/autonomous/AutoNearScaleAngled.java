@@ -14,12 +14,12 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class AutoNearScaleAngled extends CommandGroup {
+public class AutoNearScaleAngled extends SequentialCommandGroup {
 
 
     //distance constants
@@ -33,30 +33,30 @@ public class AutoNearScaleAngled extends CommandGroup {
 
         //moves robot forward
         addParallel(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
-        addSequential(new TimeDelay(2.0));
+        addCommands(new TimeDelay(2.0));
 
         //gets lift & wrist into position
-        addSequential(new WristToShoot(wrist));
-        addSequential(new LiftToScale(lift));
+        addCommands(new WristToShoot(wrist));
+        addCommands(new LiftToScale(lift));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
-        addSequential(new TimeDelay(3.0));
+        addCommands(new TimeDelay(3.0));
 
         //turn
         if (robotPosition == GameData.FieldSide.left) {
-            addSequential(new DriveByMotionMagic(chassis, DISTANCE_TURN_1, -30));
+            addCommands(new DriveByMotionMagic(chassis, DISTANCE_TURN_1, -30));
         } else {
-            addSequential(new DriveByMotionMagic(chassis, DISTANCE_TURN_1, 30));
+            addCommands(new DriveByMotionMagic(chassis, DISTANCE_TURN_1, 30));
         }
 
         //release cube and back up
         addParallel(new ReleaseFast(collector, 0.5));
-        addSequential(new TimeDelay(1.0));
-        addSequential(new DriveByMotionMagic(chassis, BACK_UP, 0));
+        addCommands(new TimeDelay(1.0));
+        addCommands(new DriveByMotionMagic(chassis, BACK_UP, 0));
 
         //puts lift down and stops collector
-        addSequential(new CollectPosition(lift, wrist));
-        addSequential(new CollectorStop(collector));
+        addCommands(new CollectPosition(lift, wrist));
+        addCommands(new CollectorStop(collector));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
     }

@@ -5,13 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.RobotMap;
 import com.gos.steam_works.subsystems.Chassis;
 import com.gos.steam_works.subsystems.Shifters;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveByDistance extends Command {
+public class DriveByDistance extends CommandBase {
 
     private final double m_rotations;
 
@@ -34,12 +34,12 @@ public class DriveByDistance extends Command {
         this.m_speed = speed;
 
         // Use requires() here to declare subsystem dependencies
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shifters.shiftGear(m_speed);
 
         // Robot.chassis.setupFPID(leftTalon);
@@ -85,7 +85,7 @@ public class DriveByDistance extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_leftTalon.set(ControlMode.Position, -(m_rotations + m_leftInitial));
         m_rightTalon.set(ControlMode.Position, m_rotations + m_rightInitial);
 
@@ -101,7 +101,7 @@ public class DriveByDistance extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         if (m_rotations > 0) {
             return (m_rightTalon.getSelectedSensorPosition(0) > m_rotations + m_rightInitial)
                 && (-m_leftTalon.getSelectedSensorPosition(0) > m_rotations + m_leftInitial);
@@ -115,7 +115,7 @@ public class DriveByDistance extends Command {
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shifters.shiftGear(Shifters.Speed.kLow);
         System.out.println("DriveByDistance Finished");
     }

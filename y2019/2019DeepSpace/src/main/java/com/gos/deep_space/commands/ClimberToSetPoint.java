@@ -10,9 +10,9 @@ package com.gos.deep_space.commands;
 import com.gos.deep_space.subsystems.Blinkin;
 import com.gos.deep_space.subsystems.Climber;
 import com.gos.deep_space.subsystems.Climber.ClimberType;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ClimberToSetPoint extends Command {
+public class ClimberToSetPoint extends CommandBase {
     private final Climber m_climber;
     private final Blinkin m_blinkin;
 
@@ -25,20 +25,20 @@ public class ClimberToSetPoint extends Command {
         m_blinkin = blinkin;
         m_climber = climber;
 
-        requires(m_climber);
-        requires(m_blinkin);
+        addRequirements(m_climber);
+        addRequirements(m_blinkin);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_climber.setGoalClimberPosition(m_setPoint, m_type);
         System.out.println("init Climber To " + m_setPoint);
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         System.out.println("goal front position: " + m_climber.m_goalFrontPosition + "actual front position: "
             + m_climber.getFrontPosition());
         System.out.println("goal back position" + m_climber.m_goalBackPosition + "actual back position: "
@@ -50,14 +50,14 @@ public class ClimberToSetPoint extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_climber.checkCurrentPosition(m_setPoint, m_type);
 
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_climber.climberStop();
         System.out.println("end Climber To " + m_setPoint);
 

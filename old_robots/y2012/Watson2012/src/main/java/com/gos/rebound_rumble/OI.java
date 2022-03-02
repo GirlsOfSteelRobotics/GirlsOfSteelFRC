@@ -1,7 +1,7 @@
 package com.gos.rebound_rumble;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.rebound_rumble.commands.BridgeDown;
 import com.gos.rebound_rumble.commands.BridgeUp;
 import com.gos.rebound_rumble.commands.Collect;

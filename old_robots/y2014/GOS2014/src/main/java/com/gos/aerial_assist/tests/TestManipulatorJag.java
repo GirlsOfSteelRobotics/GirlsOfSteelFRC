@@ -18,16 +18,16 @@ public class TestManipulatorJag extends CommandBase {
 
     public TestManipulatorJag(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("Test Manipulator Jag is running");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //        i++;
         //        while(i == 1)
         //        {
@@ -43,18 +43,15 @@ public class TestManipulatorJag extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.stopTestJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

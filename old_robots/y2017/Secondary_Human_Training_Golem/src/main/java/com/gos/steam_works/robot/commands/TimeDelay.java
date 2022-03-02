@@ -1,12 +1,12 @@
 package com.gos.steam_works.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class TimeDelay extends Command {
+public class TimeDelay extends CommandBase {
 
     private final double m_seconds;
     private final Timer m_tim;
@@ -20,33 +20,28 @@ public class TimeDelay extends Command {
 
     // Called just before this Command runs the first times
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_tim.start();
         System.out.println("TimeDelay Initialzed with " + m_seconds + " seconds as parameter");
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return (m_tim.get() > m_seconds);
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_tim.stop();
         System.out.println("TimeDelay Finished");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

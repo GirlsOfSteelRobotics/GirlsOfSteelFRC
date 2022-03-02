@@ -18,7 +18,7 @@ public class AutoTuneCamera extends CommandBase {
     public AutoTuneCamera(Chassis chassis, Camera camera) {
         m_chassis = chassis;
         m_camera = camera;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     //returns average of a set of 10 data pouints from the camera if it's stable
@@ -118,22 +118,19 @@ public class AutoTuneCamera extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
     private static class LinearRegressionAuto {
 

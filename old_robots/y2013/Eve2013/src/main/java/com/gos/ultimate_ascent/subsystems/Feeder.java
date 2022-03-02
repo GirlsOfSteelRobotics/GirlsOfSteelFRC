@@ -7,13 +7,13 @@ package com.gos.ultimate_ascent.subsystems;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
 
 /**
  * @author Sonia and Alex
  */
-public class Feeder extends Subsystem {
+public class Feeder extends SubsystemBase {
     //Shooter piston
     private final Solenoid m_frontPiston;
     private final Solenoid m_backPiston;
@@ -59,7 +59,5 @@ public class Feeder extends Subsystem {
         m_backBlocker.set(false);
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

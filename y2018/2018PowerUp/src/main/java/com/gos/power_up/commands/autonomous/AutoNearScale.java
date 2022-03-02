@@ -16,12 +16,12 @@ import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Shifters;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class AutoNearScale extends CommandGroup {
+public class AutoNearScale extends SequentialCommandGroup {
 
     private static final double DISTANCE_FORWARD = 295.0;
     private static final double DISTANCE_SIDE = -30.0;
@@ -30,33 +30,33 @@ public class AutoNearScale extends CommandGroup {
         System.out.println("AutoNearScale starting");
 
         //Move Robot, lift, wrist into position
-        addSequential(new DriveByMotionMagic(chassis, DISTANCE_FORWARD, 0));
+        addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD, 0));
         shifters.shiftGear(Shifters.Speed.kLow);
         if (robotPosition == GameData.FieldSide.left) {
-            addSequential(new TurnByMotionMagic(chassis, -90.0));
-            addSequential(new DriveByMotionMagic(chassis, DISTANCE_SIDE, -90, false));
-            addSequential(new WristToShoot(wrist));
-            addSequential(new LiftToScale(lift));
+            addCommands(new TurnByMotionMagic(chassis, -90.0));
+            addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, -90, false));
+            addCommands(new WristToShoot(wrist));
+            addCommands(new LiftToScale(lift));
             addParallel(new WristHold(wrist));
             addParallel(new LiftHold(lift));
         } else {
-            addSequential(new TurnByMotionMagic(chassis, 90.0));
-            addSequential(new DriveByMotionMagic(chassis, DISTANCE_SIDE, 90, false));
-            addSequential(new WristToShoot(wrist));
-            addSequential(new LiftToScale(lift));
+            addCommands(new TurnByMotionMagic(chassis, 90.0));
+            addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, 90, false));
+            addCommands(new WristToShoot(wrist));
+            addCommands(new LiftToScale(lift));
             addParallel(new WristHold(wrist));
             addParallel(new LiftHold(lift));
 
         }
 
         //Wait for lift and wrist to get into position then shoot
-        addSequential(new TimeDelay(2.5));
+        addCommands(new TimeDelay(2.5));
         addParallel(new ReleaseFast(collector, 0.75));
-        addSequential(new TimeDelay(1.5));
+        addCommands(new TimeDelay(1.5));
 
         //Put lift down and stop collector
-        addSequential(new CollectPosition(lift, wrist));
-        addSequential(new CollectorStop(collector));
+        addCommands(new CollectPosition(lift, wrist));
+        addCommands(new CollectorStop(collector));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 

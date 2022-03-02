@@ -8,39 +8,39 @@
 package com.gos.deep_space.commands;
 
 import com.gos.deep_space.subsystems.BabyDrive;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class BabyDriveForward extends Command {
+public class BabyDriveForward extends CommandBase {
     private static final double BABYDRIVE_SPEED = -0.4;
     private final BabyDrive m_babyDrive;
 
     public BabyDriveForward(BabyDrive babyDrive) {
         m_babyDrive = babyDrive;
-        requires(m_babyDrive);
+        addRequirements(m_babyDrive);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("init BabyDriveForward");
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_babyDrive.babyDriveSetSpeed(BABYDRIVE_SPEED);
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("end BabyDriveForward");
         m_babyDrive.babyDriveStop();
     }

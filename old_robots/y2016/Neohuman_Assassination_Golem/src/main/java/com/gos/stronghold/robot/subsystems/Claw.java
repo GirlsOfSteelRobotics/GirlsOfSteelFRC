@@ -2,14 +2,14 @@ package com.gos.stronghold.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.stronghold.robot.RobotMap;
 
 /**
  *
  */
-public class Claw extends Subsystem {
+public class Claw extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -31,9 +31,5 @@ public class Claw extends Subsystem {
         SmartDashboard.putBoolean("Claw Off", false);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
 }

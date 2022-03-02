@@ -3,12 +3,12 @@ package com.gos.offense2019.subsystems;
 import com.gos.offense2019.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class HatchCollector extends Subsystem {
+public class HatchCollector extends SubsystemBase {
 
     public enum HatchState {
         kGrab, kRelease
@@ -41,9 +41,5 @@ public class HatchCollector extends Subsystem {
         return m_state;
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 }

@@ -1,26 +1,26 @@
 package com.gos.steam_works.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
 @SuppressWarnings("PMD")
-public class AutoRedHopper extends CommandGroup {
+public class AutoRedHopper extends SequentialCommandGroup {
 
     public AutoRedHopper() {
-        // addSequential(new AutoDriveForward(156, .6)); //TODO: change //cross
+        // addCommands(new AutoDriveForward(156, .6)); //TODO: change //cross
         // baseline
-        //// addSequential(new AutoTurn(21, 0.1)); //TODO: change
-        // addSequential(new AutoDriveForward(156, .6)); //TODO: change //hit
+        //// addCommands(new AutoTurn(21, 0.1)); //TODO: change
+        // addCommands(new AutoDriveForward(156, .6)); //TODO: change //hit
         // hopper 1
-        // addSequential(new AutoDriveBackward(156, .6)); //TODO: change
-        //// addSequential(new AutoTurn(156, .6)); //TODO: change
-        // addSequential(new AutoDriveForward(156, .6)); //TODO: change
-        // // addSequential(new AutoTurn(156, .6)); //TODO: change
-        // addSequential(new AutoDriveForward(156, .6)); //TODO: change //hit
+        // addCommands(new AutoDriveBackward(156, .6)); //TODO: change
+        //// addCommands(new AutoTurn(156, .6)); //TODO: change
+        // addCommands(new AutoDriveForward(156, .6)); //TODO: change
+        // // addCommands(new AutoTurn(156, .6)); //TODO: change
+        // addCommands(new AutoDriveForward(156, .6)); //TODO: change //hit
         // hopper 2
-        // addSequential(new AutoDriveBackward(156, .6)); //TODO: change //hit
+        // addCommands(new AutoDriveBackward(156, .6)); //TODO: change //hit
         // hopper 2
     }
 }

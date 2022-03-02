@@ -1,11 +1,11 @@
 package com.gos.rebound_rumble.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.objects.Camera;
 import com.gos.rebound_rumble.subsystems.Shooter;
 
-public class AutonomousCameraKey extends CommandGroup {
+public class AutonomousCameraKey extends SequentialCommandGroup {
 
     public AutonomousCameraKey(OI oi, Shooter shooter) {
         if (Camera.isConnected()) {

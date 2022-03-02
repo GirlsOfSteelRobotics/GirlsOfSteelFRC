@@ -1,8 +1,8 @@
 package com.gos.steam_works.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.steam_works.robot.commands.Climb;
 import com.gos.steam_works.robot.commands.CombinedShoot;
 import com.gos.steam_works.robot.commands.CombinedShootGear;

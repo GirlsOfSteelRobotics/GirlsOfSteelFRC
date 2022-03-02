@@ -3,12 +3,12 @@ package com.gos.power_up.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class TurnInPlace extends Command {
+public class TurnInPlace extends CommandBase {
 
     private static final double kP = .005;
     private static final double kI = 0;
@@ -29,12 +29,12 @@ public class TurnInPlace extends Command {
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
         m_headingTarget = degrees;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("Trying to initialize");
         m_chassis.setInverted(false);
         m_chassis.zeroSensors();
@@ -45,7 +45,7 @@ public class TurnInPlace extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         double currentPos = m_chassis.getYaw();
         double error = m_headingTarget - currentPos;
@@ -82,14 +82,14 @@ public class TurnInPlace extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_targetReached;
     }
 
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("TurnInPlace Finished");
         m_chassis.stop();
     }

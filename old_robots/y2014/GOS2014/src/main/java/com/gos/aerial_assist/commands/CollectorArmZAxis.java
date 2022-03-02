@@ -16,7 +16,7 @@
 //    Joystick operator;
 //
 //    public CollectorArmZAxis() {
-//        requires(collector);
+//        addRequirements(collector);
 //        operator = oi.getOperatorJoystick();
 //    }
 //

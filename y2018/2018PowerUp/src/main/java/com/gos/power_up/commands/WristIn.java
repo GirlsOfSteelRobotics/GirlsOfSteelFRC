@@ -1,40 +1,40 @@
 package com.gos.power_up.commands;
 
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class WristIn extends Command {
+public class WristIn extends CommandBase {
     private final Wrist m_wrist;
 
     public WristIn(Wrist wrist) {
         m_wrist = wrist;
-        requires(m_wrist);
+        addRequirements(m_wrist);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_wrist.holdWristPosition();
         m_wrist.wristIn();
     }
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
     }
 

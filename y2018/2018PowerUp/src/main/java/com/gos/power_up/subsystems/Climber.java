@@ -3,12 +3,12 @@ package com.gos.power_up.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Climber extends Subsystem {
+public class Climber extends SubsystemBase {
 
     private final WPI_TalonSRX m_climbMotor;
 
@@ -32,9 +32,5 @@ public class Climber extends Subsystem {
         m_climbMotor.set(0.0);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
 }

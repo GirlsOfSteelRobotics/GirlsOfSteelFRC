@@ -2,12 +2,12 @@ package com.gos.power_up.commands;
 
 import com.gos.power_up.OI;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class DriveByJoystick extends Command {
+public class DriveByJoystick extends CommandBase {
 
     private final Chassis m_chassis;
     private final OI m_oi;
@@ -15,18 +15,18 @@ public class DriveByJoystick extends Command {
     public DriveByJoystick(Chassis chassis, OI oi) {
         m_chassis = chassis;
         m_oi = oi;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_oi.setDriveStyle();
     }
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         boolean highGear = true;
 
         //  if (Robot.shifters.getGearSpeed().equals("kHigh")){
@@ -70,13 +70,13 @@ public class DriveByJoystick extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stop();
     }
 

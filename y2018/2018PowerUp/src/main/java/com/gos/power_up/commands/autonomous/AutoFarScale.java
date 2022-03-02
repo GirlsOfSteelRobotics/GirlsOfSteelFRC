@@ -15,12 +15,12 @@ import com.gos.power_up.subsystems.Chassis;
 import com.gos.power_up.subsystems.Collector;
 import com.gos.power_up.subsystems.Lift;
 import com.gos.power_up.subsystems.Wrist;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class AutoFarScale extends CommandGroup {
+public class AutoFarScale extends SequentialCommandGroup {
     private static final double DISTANCE_FORWARD_1 = 175.0;
     private static final double TURN_RADIUS_1 = 100.0;
     private static final double DISTANCE_SIDE_1 = 80.0;
@@ -31,44 +31,44 @@ public class AutoFarScale extends CommandGroup {
         System.out.println("AutoFarScale starting: scaleSide=" + scaleSide);
 
         //Initial forward distance past switch
-        addSequential(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
+        addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
 
         //First turn behind the switch
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new AutoTurnRight(chassis, TURN_RADIUS_1));
+            addCommands(new AutoTurnRight(chassis, TURN_RADIUS_1));
         } else {
-            addSequential(new AutoTurnLeft(chassis, TURN_RADIUS_1));
+            addCommands(new AutoTurnLeft(chassis, TURN_RADIUS_1));
         }
 
         //Get lift and wrist into position
-        addSequential(new LiftToScale(lift));
-        addSequential(new WristToShoot(wrist));
+        addCommands(new LiftToScale(lift));
+        addCommands(new WristToShoot(wrist));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 
         //Driving across the field behind the switch
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagic(chassis, DISTANCE_SIDE_1, -90, false));
+            addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE_1, -90, false));
         } else {
-            addSequential(new DriveByMotionMagic(chassis, DISTANCE_SIDE_1, 90, false));
+            addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE_1, 90, false));
         }
 
         //Turning towards the scale
         if (scaleSide == GameData.FieldSide.right) {
-            addSequential(new DriveByMotionMagic(chassis, TURN_RADIUS_2, DEGREES_2));
-            addSequential(new TurnByMotionMagic(chassis, 90));
+            addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, DEGREES_2));
+            addCommands(new TurnByMotionMagic(chassis, 90));
         } else {
-            addSequential(new DriveByMotionMagic(chassis, TURN_RADIUS_2, -DEGREES_2));
-            addSequential(new TurnByMotionMagic(chassis, -90));
+            addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, -DEGREES_2));
+            addCommands(new TurnByMotionMagic(chassis, -90));
         }
 
         //Release cube
         addParallel(new ReleaseFast(collector, 0.5));
-        addSequential(new TimeDelay(1.0));
+        addCommands(new TimeDelay(1.0));
 
         //Put lift down and stop collector motors
-        addSequential(new CollectPosition(lift, wrist));
-        addSequential(new CollectorStop(collector));
+        addCommands(new CollectPosition(lift, wrist));
+        addCommands(new CollectorStop(collector));
         addParallel(new WristHold(wrist));
         addParallel(new LiftHold(lift));
 

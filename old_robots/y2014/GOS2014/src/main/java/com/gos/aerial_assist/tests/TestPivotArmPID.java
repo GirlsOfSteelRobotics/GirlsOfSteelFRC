@@ -19,11 +19,11 @@ public class TestPivotArmPID extends CommandBase {
 
     public TestPivotArmPID(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         // manipulator.initEncoder();
         // manipulator.resetPIDError();
         // manipulator.startPID();
@@ -32,7 +32,7 @@ public class TestPivotArmPID extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //desiredAngle = SmartDashboard.getNumber("Pivot Angle", 0);
         //manipulator.setSetPoint(desiredAngle);
         m_currentAngle = m_manipulator.getAbsoluteDistance();
@@ -40,19 +40,16 @@ public class TestPivotArmPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false; //Math.abs(desiredAngle-currentAngle) < allowedAngleError;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.stopManipulator();
         m_manipulator.disablePID();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

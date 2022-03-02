@@ -25,13 +25,13 @@ public class KickerUsingLimitSwitch extends CommandBase {
     //0 = loading; 1 = shooting
     public KickerUsingLimitSwitch(Kicker kicker, int position, boolean usingSD) {
         m_kicker = kicker;
-        requires(m_kicker);
+        addRequirements(m_kicker);
         m_loadingOrShooting = position;
         m_smartDashboard = usingSD;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         if (!m_testingLimit) {
             if (m_smartDashboard) {
                 SmartDashboard.putNumber("Position", -1);
@@ -48,7 +48,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (!m_testingLimit) {
             m_changeInTime = System.currentTimeMillis() - m_startTime;
             if (m_smartDashboard) {
@@ -82,7 +82,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         System.out.println("Is the limit hit: " + m_kicker.getLimitSwitch());
         if (!m_testingLimit) {
             if (m_changeInTime > 5000) {
@@ -104,14 +104,11 @@ public class KickerUsingLimitSwitch extends CommandBase {
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         //kicker.stopJag();
         m_kicker.stopTalon();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

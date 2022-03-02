@@ -1,7 +1,7 @@
 package com.gos.outreach2016.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.outreach2016.robot.commands.AccessoryLeftFwd;
 import com.gos.outreach2016.robot.commands.AccessoryLeftRev;

@@ -17,7 +17,7 @@ import com.gos.ultimate_ascent.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.ultimate_ascent.commands.Drive;
 import com.gos.ultimate_ascent.commands.OpenAllGrippers;
@@ -130,7 +130,7 @@ public class Eve2013 extends TimedRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         //        SmartDashboard.putBoolean("Camera is connected?", ShooterCamera.isConnected());
         //SmartDashboard.putBoolean("Camera is connected?", ClimberCamera.isConnected());
         //        SmartDashboard.putBoolean("Target is found?", ShooterCamera.foundTarget());
@@ -183,7 +183,7 @@ public class Eve2013 extends TimedRobot {
         SmartDashboard.putString("START", "opens grips");
         SmartDashboard.putString("R2 and L2", "stop climbing");
         SmartDashboard.putString("L1", "toggle blocker");
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         SmartDashboard.putBoolean("Robot Found Side Target", ShooterCamera.foundSideTarget());
         SmartDashboard.putBoolean("Robot Found Top Target", ShooterCamera.foundTopTarget());
         SmartDashboard.putNumber("Side Target Diff Angle", ShooterCamera.getSideDiffAngle());

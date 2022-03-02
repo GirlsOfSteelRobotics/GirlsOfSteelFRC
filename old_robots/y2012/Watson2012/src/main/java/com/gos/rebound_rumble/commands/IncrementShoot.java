@@ -13,17 +13,17 @@ public class IncrementShoot extends CommandBase {
     public IncrementShoot(Shooter shooter, OI oi) {
         m_oi = oi;
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_sliderValue = m_oi.getShooterSliderValue();
         m_incrementValue = m_shooter.getIncrementValue(m_sliderValue);
         //        speed = shooter.getEncoderRate() + incrementValue;
@@ -35,18 +35,15 @@ public class IncrementShoot extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.topRollersOff();
         m_shooter.disablePID();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

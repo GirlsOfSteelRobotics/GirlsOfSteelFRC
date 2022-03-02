@@ -3,12 +3,12 @@ package com.gos.steam_works.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Loader extends Subsystem {
+public class Loader extends SubsystemBase {
 
     private final WPI_TalonSRX m_loaderMotor;
 
@@ -29,9 +29,5 @@ public class Loader extends Subsystem {
         m_loaderMotor.set(0.0);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 }

@@ -1,6 +1,6 @@
 package com.gos.steam_works.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.steam_works.robot.OI;
 import com.gos.steam_works.robot.OI.DriveStyle;
@@ -9,7 +9,7 @@ import com.gos.steam_works.robot.subsystems.Chassis;
 /**
  *
  */
-public class Drive extends Command {
+public class Drive extends CommandBase {
 
     private final Chassis m_chassis;
     private final OI m_oi;
@@ -19,12 +19,12 @@ public class Drive extends Command {
         // eg. requires(chassis);
         m_chassis = chassis;
         m_oi = oi;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_oi.getDriveStyle() == DriveStyle.oneStickArcade
             || m_oi.getDriveStyle() == DriveStyle.gamePadArcade) {
             m_chassis.arcadeDrive(m_oi.getDrivingJoystickY(), m_oi.getDrivingJoystickX());
@@ -40,7 +40,7 @@ public class Drive extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
@@ -50,14 +50,9 @@ public class Drive extends Command {
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

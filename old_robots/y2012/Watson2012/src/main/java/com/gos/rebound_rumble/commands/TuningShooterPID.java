@@ -62,14 +62,14 @@ public class TuningShooterPID extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @SuppressWarnings("PMD")
     @Override
-    protected void execute() {
+    public void execute() {
         for (double n = step; n < max; n += step) { //starts at step, goes to max - step
             for (int setPoint = startSetPoint; setPoint <= maxSetPoint; setPoint++) {
                 //starts at startSetPoint, goes to maxSetPoint
@@ -144,12 +144,12 @@ public class TuningShooterPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_run;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.disablePID();
         m_shooter.stopEncoder();
         m_shooter.stopJags();
@@ -172,10 +172,7 @@ public class TuningShooterPID extends CommandBase {
             + " Deviation Mean:" + m_deviationMeans[indexDevSetPointLow]);
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 
     //adds the encoder rates of the shooter wheel to an array -> it only has 100

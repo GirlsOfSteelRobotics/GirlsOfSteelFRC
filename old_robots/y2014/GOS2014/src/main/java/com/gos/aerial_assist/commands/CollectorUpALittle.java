@@ -26,7 +26,7 @@ public class CollectorUpALittle extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_startTime = Timer.getFPGATimestamp();
         System.out.println("Collector up a little!!!!!!!!!!!");
 
@@ -34,7 +34,7 @@ public class CollectorUpALittle extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         m_changeInTime = Timer.getFPGATimestamp() - m_startTime;
         if (m_changeInTime < m_putDownTime) {
@@ -45,19 +45,16 @@ public class CollectorUpALittle extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_changeInTime > .3;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollector();
         m_collector.stopCollectorWheel();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -4,12 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.power_up.subsystems.Blobs;
 import com.gos.power_up.subsystems.Chassis;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class DriveByVision extends Command {
+public class DriveByVision extends CommandBase {
     private static final double SPEED_PERCENT = 0.2;
 
     private final Chassis m_chassis;
@@ -25,12 +25,12 @@ public class DriveByVision extends Command {
         m_blobs = blobs;
         m_leftTalon = m_chassis.getLeftTalon();
         m_rightTalon = m_chassis.getRightTalon();
-        requires(m_blobs);
+        addRequirements(m_blobs);
     }
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_dist = m_blobs.distanceBetweenBlobs();
         if (m_blobs.distanceBetweenBlobs() == -1) {
             System.out.println("DriveByVision initialize: line not in sight!!");
@@ -40,7 +40,7 @@ public class DriveByVision extends Command {
 
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_dist = m_blobs.distanceBetweenBlobs();
         System.out.print("Distance = " + m_dist + " ");
         if (m_dist == -1) {
@@ -58,13 +58,13 @@ public class DriveByVision extends Command {
 
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_dist == -1 || Math.abs(m_dist - Blobs.GOAL_DISTANCE) < Blobs.ERROR_THRESHOLD;
     }
 
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stop();
     }
 

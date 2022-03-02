@@ -16,36 +16,33 @@ public class RunClimberBackwards extends CommandBase {
 
     public RunClimberBackwards(Climber climber) {
         m_climber = climber;
-        requires(m_climber);
+        addRequirements(m_climber);
     }
 
     //Command for starting the motors to begin climbing
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_climber.reverseLeftClimberSpike();
         m_climber.reverseRightClimberSpike();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_climber.stopLeftClimberSpike();
         m_climber.stopRightClimberSpike();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -9,17 +9,17 @@ import com.gos.steam_works.subsystems.Chassis;
 import com.gos.steam_works.subsystems.Loader;
 import com.gos.steam_works.subsystems.Shifters;
 import com.gos.steam_works.subsystems.Shooter;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  *
  */
-public class AutoShooterAndCrossLine extends CommandGroup {
+public class AutoShooterAndCrossLine extends SequentialCommandGroup {
 
     public AutoShooterAndCrossLine(Chassis chassis, Shifters shifters, Shooter shooter, Loader loader, Agitator agitator) {
         addParallel(new CombinedShootKey(loader, shooter, agitator));
-        addSequential(new TimeDelay(10.0));
-        addSequential(new TurnByDistance(chassis, shifters, -10.0, -60.0, Shifters.Speed.kLow));
-        addSequential(new DriveByDistance(chassis, shifters, -48.0, Shifters.Speed.kLow));
+        addCommands(new TimeDelay(10.0));
+        addCommands(new TurnByDistance(chassis, shifters, -10.0, -60.0, Shifters.Speed.kLow));
+        addCommands(new DriveByDistance(chassis, shifters, -48.0, Shifters.Speed.kLow));
     }
 }

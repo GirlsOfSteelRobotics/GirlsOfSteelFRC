@@ -5,9 +5,9 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.gos.steam_works.RobotMap;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public final class Shooter extends Subsystem {
+public final class Shooter extends SubsystemBase {
     private final WPI_TalonSRX m_lowShooterMotor;
     private final WPI_TalonSRX m_highShooterMotor;
 
@@ -95,11 +95,7 @@ public final class Shooter extends Subsystem {
         m_highShooterMotor.set(ControlMode.Velocity, 0);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 
     public void incrementHighShooterSpeed() {
         if ((m_shooterSpeed + SHOOTER_SPEED_STEP) <= SHOOTER_MAX_SPEED) {

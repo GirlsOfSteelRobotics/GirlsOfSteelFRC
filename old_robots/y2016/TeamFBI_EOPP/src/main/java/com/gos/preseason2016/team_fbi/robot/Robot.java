@@ -1,8 +1,8 @@
 package com.gos.preseason2016.team_fbi.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import com.gos.preseason2016.team_fbi.robot.commands.AutoDrive;
 import com.gos.preseason2016.team_fbi.robot.commands.DriveCommand;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Drive;
@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
         // schedule the autonomous command (example)
         //autonomousCommand = (Command) autoChooser.getSelected();
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
     }
 
@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**
