@@ -1,7 +1,6 @@
 package com.gos.rapidreact.auto_modes;
 
 import com.gos.rapidreact.commands.CollectorDownCommand;
-import com.gos.rapidreact.commands.CollectorUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorForwardCommand;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.autonomous.VertConveyAndShootCommandGroup;
@@ -22,10 +21,10 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
             new VertConveyAndShootCommandGroup(verticalConveyor, shooter, seconds).alongWith(new CollectorDownCommand(collector)),
             TrajectoryB5.fromBto5(chassis),
-            new HorizontalConveyorForwardCommand(horizontalConveyor),
-            Trajectory54.from5to4(chassis),
-            new HorizontalConveyorForwardCommand(horizontalConveyor),
-            new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
-            new VertConveyAndShootCommandGroup(verticalConveyor, shooter, seconds));
+            //new HorizontalConveyorForwardCommand(horizontalConveyor),
+            Trajectory54.from5to4(chassis));
+            //new HorizontalConveyorForwardCommand(horizontalConveyor),
+            //new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
+            //new VertConveyAndShootCommandGroup(verticalConveyor, shooter, seconds));
     }
 }
