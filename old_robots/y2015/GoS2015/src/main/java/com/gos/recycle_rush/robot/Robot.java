@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     private final Lifter m_lifter;
     private final OI m_oi;
     private final Shack m_shack;
-    private final SendableChooser m_autoChooser;
+    private final SendableChooser<Command> m_autoChooser;
     private Command m_autonomousCommand;
 
     public Robot() {
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
         m_lifter = new Lifter();
         m_shack = new Shack();
         m_oi = new OI(m_chassis, m_collector, m_shack);
-        m_autoChooser = new SendableChooser();
+        m_autoChooser = new SendableChooser<>();
     }
 
     /**
@@ -107,7 +107,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        m_autonomousCommand = (Command) m_autoChooser.getSelected();
+        m_autonomousCommand = m_autoChooser.getSelected();
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }

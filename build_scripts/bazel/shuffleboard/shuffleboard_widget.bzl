@@ -68,5 +68,6 @@ def shuffleboard_widget(name, package, generation_config_file, srcs = None, **kw
             ],
             "//conditions:default": [],
         }),
+        javacopts = ["-Xlint:-rawtypes"],
         **kwargs
     )

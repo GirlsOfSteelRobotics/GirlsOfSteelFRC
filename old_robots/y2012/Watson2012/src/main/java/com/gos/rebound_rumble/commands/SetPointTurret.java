@@ -23,7 +23,7 @@ public class SetPointTurret extends CommandBase {
 
     @Override
     public void execute() {
-        m_knobValue = m_oi.getTurretKnobValue(m_turret.TURRET_OVERRIDE_DEADZONE);
+        m_knobValue = m_oi.getTurretKnobValue(Turret.TURRET_OVERRIDE_DEADZONE);
         m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_knobValue);
     }
 

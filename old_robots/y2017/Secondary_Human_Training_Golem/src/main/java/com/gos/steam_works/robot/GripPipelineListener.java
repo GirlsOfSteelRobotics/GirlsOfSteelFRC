@@ -1,6 +1,6 @@
 package com.gos.steam_works.robot;
 
-import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.vision.VisionRunner;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;

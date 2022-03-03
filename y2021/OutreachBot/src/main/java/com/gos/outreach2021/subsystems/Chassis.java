@@ -96,7 +96,7 @@ public class Chassis extends SubsystemBase {
         m_gyroscope = new ADXRS450_Gyro();
 
         if (RobotBase.isSimulation()) {
-            DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(DifferentialDrivetrainSim.KitbotMotor.kDualCIMPerSide, DifferentialDrivetrainSim.KitbotGearing.k5p95, DifferentialDrivetrainSim.KitbotWheelSize.SixInch, null);
+            DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(DifferentialDrivetrainSim.KitbotMotor.kDualCIMPerSide, DifferentialDrivetrainSim.KitbotGearing.k5p95, DifferentialDrivetrainSim.KitbotWheelSize.kSixInch, null);
 
             m_simulator = new DifferentialDrivetrainSimWrapper(
                     drivetrainSim,

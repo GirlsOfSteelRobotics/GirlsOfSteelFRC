@@ -41,8 +41,8 @@ public class Robot extends TimedRobot {
         m_oi = new OI(m_shifters, m_jaw, m_shooter);
 
         m_chooser = new SendableChooser<>();
-        m_chooser.addDefault("Default: Do Nothing", new AutoDoNothing(m_driveSystem));
-        m_chooser.addObject("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(m_driveSystem, 10.0, 0.5));
+        m_chooser.setDefaultOption("Default: Do Nothing", new AutoDoNothing(m_driveSystem));
+        m_chooser.addOption("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(m_driveSystem, 10.0, 0.5));
         SmartDashboard.putData("Auto mode", m_chooser);
     }
 

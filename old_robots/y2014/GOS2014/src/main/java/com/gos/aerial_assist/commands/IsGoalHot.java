@@ -30,7 +30,7 @@ public class IsGoalHot extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_camera.isGoalHot()) {
+        if (Camera.isGoalHot()) {
             m_bool = 1;
         } else {
             m_bool = 0;

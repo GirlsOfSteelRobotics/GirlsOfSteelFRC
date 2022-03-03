@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
     private final OI m_oi;
 
     private Command m_autonomousCommand;
-    private final SendableChooser m_chooser;
+    private final SendableChooser<Command> m_chooser;
 
     public Robot() {
         m_driveSystem = new DriveSystem();
@@ -40,8 +40,8 @@ public class Robot extends TimedRobot {
         m_oi = new OI(m_shifters, m_driveSystem, m_manipulator, m_accessoryMotors);
 
         // Allow the driver to choose the autonomous command from a SmartDashboard menu
-        m_chooser = new SendableChooser();
-        m_chooser.addDefault("Default Auto", new AutonomousCommand(m_driveSystem, m_accessoryMotors));
+        m_chooser = new SendableChooser<>();
+        m_chooser.setDefaultOption("Default Auto", new AutonomousCommand(m_driveSystem, m_accessoryMotors));
         // chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
         SmartDashboard.putData(new DriveByJoystick(m_oi.getDriveStick(), m_driveSystem));
@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = (Command) m_chooser.getSelected();
+        m_autonomousCommand = m_chooser.getSelected();
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {

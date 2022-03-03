@@ -13,10 +13,14 @@ def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
     else:
         print("PMD Disabled for " + name)
 
-def gos_java_library(name, srcs, disable_pmd = False, disable_checkstyle = False, **kwargs):
+def get_default_javac_opts():
+    return ["-Werror", "-Xlint:all"]
+
+def gos_java_library(name, srcs, disable_pmd = False, disable_checkstyle = False, javacopts = [], **kwargs):
     native.java_library(
         name = name,
         srcs = srcs,
+        javacopts = get_default_javac_opts() + javacopts,
         **kwargs
     )
 
@@ -37,6 +41,7 @@ def gos_java_binary(
         deps = deps,
         runtime_deps = runtime_deps,
         main_class = main_class,
+        javacopts = get_default_javac_opts(),
         **kwargs
     )
 
@@ -47,6 +52,7 @@ def gos_junit4_test(name, srcs, deps = [], disable_pmd = False, disable_checksty
     junit4_tests(
         name = name,
         srcs = srcs,
+        javacopts = get_default_javac_opts(),
         deps = deps + ["@maven//:junit_junit"],
         **kwargs
     )
@@ -74,6 +80,7 @@ def gos_java_robot(
         runtime_deps = runtime_deps + [
             "@maven//:org_ejml_ejml_simple",
         ],
+        javacopts = get_default_javac_opts(),
         **kwargs
     )
 

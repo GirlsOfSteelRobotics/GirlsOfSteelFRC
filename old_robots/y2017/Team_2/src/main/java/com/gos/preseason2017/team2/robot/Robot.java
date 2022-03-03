@@ -36,9 +36,9 @@ public class Robot extends TimedRobot {
         m_oi = new OI(m_manipulator);
 
         m_chooser = new SendableChooser<>();
-        m_chooser.addDefault("Default: Do Nothing", new AutoDoNothing(m_chassis));
-        m_chooser.addObject("Drive Forwards(10 in, 0.5 speed)", new AutoDriveForward(m_chassis, 10.0, 0.5));
-        m_chooser.addObject("Drive Backwards(10 in, 0.5 speed)", new AutoDriveBackwards(m_chassis, 10.0, 0.5));
+        m_chooser.setDefaultOption("Default: Do Nothing", new AutoDoNothing(m_chassis));
+        m_chooser.addOption("Drive Forwards(10 in, 0.5 speed)", new AutoDriveForward(m_chassis, 10.0, 0.5));
+        m_chooser.addOption("Drive Backwards(10 in, 0.5 speed)", new AutoDriveBackwards(m_chassis, 10.0, 0.5));
         SmartDashboard.putData("Auto mode", m_chooser);
     }
 

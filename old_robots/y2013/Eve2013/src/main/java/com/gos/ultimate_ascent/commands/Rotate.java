@@ -45,7 +45,7 @@ public class Rotate extends CommandBase {
         System.out.println("Gyro: " + m_chassis.getGyroAngle() + "\tCurrent: "
             + m_current + "\tDesired: " + m_desiredTheta + "\tDifference: "
             + m_difference);
-        if (m_desiredTheta - m_chassis.ROTATION_THRESHOLD > m_current || m_current > m_desiredTheta + m_chassis.ROTATION_THRESHOLD) {
+        if (m_desiredTheta - Chassis.ROTATION_THRESHOLD > m_current || m_current > m_desiredTheta + Chassis.ROTATION_THRESHOLD) {
             System.out.print("Rotating...");
             m_chassis.autoRotateTestBot(m_difference);
         } else {

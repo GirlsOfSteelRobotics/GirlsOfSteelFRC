@@ -21,33 +21,33 @@ public class AutonomousChooser {
     private static final boolean shootFromBridge = true;
     private static final boolean goBackToKey = true;
     private static final boolean shootFromKeyAfterBridge = true;
-    private final SendableChooser m_chooser;
+    private final SendableChooser<Command> m_chooser;
     private Command m_autonomousCommand;
 
     public AutonomousChooser(OI oi, Shooter shooter, Chassis chassis, Bridge bridge, Collector collector) {
-        m_chooser = new SendableChooser();
+        m_chooser = new SendableChooser<>();
         SmartDashboard.putData("Autonomous Chooser", m_chooser);
 
-        m_chooser.addDefault("Key", new AutonomousKey(shooter, oi)); //dead-reckoning
-        m_chooser.addObject("Camera Key", new AutonomousCameraKey(oi, shooter)); //uses the
+        m_chooser.setDefaultOption("Key", new AutonomousKey(shooter, oi)); //dead-reckoning
+        m_chooser.addOption("Camera Key", new AutonomousCameraKey(oi, shooter)); //uses the
         //ShootUsingTable command to shoot w/camera
-        m_chooser.addObject("Shoot, Bridge", new AutonomousCommandGroup(
+        m_chooser.addOption("Shoot, Bridge", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
             shoot, moveToBridge, yDistance, !shootFromBridge,
             !goBackToKey, !shootFromKeyAfterBridge));
-        m_chooser.addObject("Shoot, Bridge, Shoot", new AutonomousCommandGroup(
+        m_chooser.addOption("Shoot, Bridge, Shoot", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
             shoot, moveToBridge, yDistance, shootFromBridge,
             !goBackToKey, !shootFromKeyAfterBridge));
-        m_chooser.addObject("Bridge, Shoot", new AutonomousCommandGroup(
+        m_chooser.addOption("Bridge, Shoot", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
             !shoot, moveToBridge, yDistance, shootFromBridge,
             !goBackToKey, !shootFromKeyAfterBridge));
-        m_chooser.addObject("Delay, Reverse Rollers", new DelayReverseRollers(shooter, collector));
+        m_chooser.addOption("Delay, Reverse Rollers", new DelayReverseRollers(shooter, collector));
     }
 
     public void start() {
-        m_autonomousCommand = (Command) m_chooser.getSelected();
+        m_autonomousCommand = m_chooser.getSelected();
         m_autonomousCommand.schedule();
         System.out.println("initializing");
     }

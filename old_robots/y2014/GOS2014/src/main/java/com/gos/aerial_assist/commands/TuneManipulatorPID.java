@@ -52,7 +52,7 @@ public class TuneManipulatorPID extends CommandBase {
             m_setpoint = SmartDashboard.getNumber("Pivot setpoint", 0);
 
             if (m_setpoint != 0) {
-                m_manipulator.setSetPoint((double) m_setpoint);
+                m_manipulator.setSetPoint(m_setpoint);
                 m_manipulator.setPID(m_p, m_i, m_d);
             }
             SmartDashboard.putNumber("Pivot Error: ", m_manipulator.getError());

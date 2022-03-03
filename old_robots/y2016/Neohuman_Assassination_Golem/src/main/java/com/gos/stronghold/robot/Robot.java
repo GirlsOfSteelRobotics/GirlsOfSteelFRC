@@ -72,16 +72,16 @@ public class Robot extends TimedRobot {
         // Populate the SmartDashboard menu for choosing the autonomous command to run
         m_autoChooser = new SendableChooser<>();
         //drive backwards:
-        m_autoChooser.addDefault("Do Nothing", new AutoDoNothing(m_chassis));
-        m_autoChooser.addObject("Reach Defense", new AutoDriveBackwards(m_chassis, 101, .4)); //55
-        m_autoChooser.addObject("LowBar", new FlapThenLowBar(m_chassis, m_flap, 156, .4)); //works 110
-        m_autoChooser.addObject("Moat", new AutoDriveBackwards(m_chassis, 156, 1)); //works 60
-        m_autoChooser.addObject("LowBar and Score", new AutoLowBarAndScore(m_chassis, m_flap, m_pivot, m_claw));
-        m_autoChooser.addObject("LowBar and Turn", new AutoLowBarAndTurn(m_chassis, m_flap));
+        m_autoChooser.setDefaultOption("Do Nothing", new AutoDoNothing(m_chassis));
+        m_autoChooser.addOption("Reach Defense", new AutoDriveBackwards(m_chassis, 101, .4)); //55
+        m_autoChooser.addOption("LowBar", new FlapThenLowBar(m_chassis, m_flap, 156, .4)); //works 110
+        m_autoChooser.addOption("Moat", new AutoDriveBackwards(m_chassis, 156, 1)); //works 60
+        m_autoChooser.addOption("LowBar and Score", new AutoLowBarAndScore(m_chassis, m_flap, m_pivot, m_claw));
+        m_autoChooser.addOption("LowBar and Turn", new AutoLowBarAndTurn(m_chassis, m_flap));
         //drive forwards:
-        m_autoChooser.addObject("Rough Terrain", new AutoDriveBackwards(m_chassis, 156, .4)); //works 110
-        m_autoChooser.addObject("Ramparts", new AutoDriveBackwards(m_chassis, 186, .4)); //140
-        m_autoChooser.addObject("RockWall", new AutoDriveBackwards(m_chassis, 196, .6)); //works //150
+        m_autoChooser.addOption("Rough Terrain", new AutoDriveBackwards(m_chassis, 156, .4)); //works 110
+        m_autoChooser.addOption("Ramparts", new AutoDriveBackwards(m_chassis, 186, .4)); //140
+        m_autoChooser.addOption("RockWall", new AutoDriveBackwards(m_chassis, 196, .6)); //works //150
 
         //autoChooser.addObject("Slow Drive", new AutoDriveSlowly(100));
 
