@@ -1,0 +1,35 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "RobotMap",
+    srcs = ["RobotMap.java"],
+    visibility = ["//old_robots/y2017/Secondary_Human_Training_Golem:__subpackages__"],
+)
+
+gos_java_library(
+    name = "Vision",
+    srcs = [
+        "GripPipeline.java",
+        "GripPipelineListener.java",
+    ],
+    visibility = ["//old_robots/y2017/Secondary_Human_Training_Golem:__subpackages__"],
+    deps = [
+        "@bazelrio//libraries/java/opencv",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+    ],
+)
+
+gos_java_robot(
+    name = "steam_works",
+    srcs = glob(["**/*.java"]),
+    main_class = "com.gos.steam_works.Main",
+    visibility = ["//old_robots/y2017/Secondary_Human_Training_Golem:__subpackages__"],
+    deps = [
+        "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works/subsystems",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/opencv",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

@@ -33,8 +33,6 @@ include 'old_robots:y2017:Secondary_Human_Training_Golem'
 include 'old_robots:y2017:Team1'
 include 'old_robots:y2017:Team_2'
 
-
-include 'y2018:2018Beta'
 include 'y2018:2018PowerUp'
 
 include 'y2019:2019DeepSpace'
