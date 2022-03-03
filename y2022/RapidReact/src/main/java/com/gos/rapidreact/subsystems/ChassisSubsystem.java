@@ -204,8 +204,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kSmartMotion);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kSmartMotion);
         m_drive.feed();
 
         System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
