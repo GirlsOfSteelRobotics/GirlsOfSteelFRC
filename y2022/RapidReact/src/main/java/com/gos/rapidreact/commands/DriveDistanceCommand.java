@@ -12,8 +12,9 @@ public class DriveDistanceCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
     private final double m_distance;
     private final double m_allowableError;
-    private double m_initialPosition;
     private double m_error;
+    private double m_leftDistance;
+    private double m_rightDistance;
 
 
     public DriveDistanceCommand(ChassisSubsystem chassis, double distance, double allowableError) {
@@ -30,17 +31,15 @@ public class DriveDistanceCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        m_initialPosition = m_chassis.getAverageEncoderDistance();
+        m_leftDistance = m_chassis.getLeftEncoderDistance() + m_distance;
+        m_rightDistance = m_chassis.getRightEncoderDistance() + m_distance;
     }
 
     @Override
     public void execute() {
-        double currentPosition = m_chassis.getAverageEncoderDistance();
-        m_error = m_distance - (currentPosition - m_initialPosition);
-
-        double speed = m_error * AUTO_KP.getValue();
-        double steer = 0;
-        m_chassis.setArcadeDrive(speed, steer);
+        double currentLeftPosition = m_chassis.getLeftEncoderDistance();
+        m_error = m_leftDistance - currentLeftPosition;
+        m_chassis.trapezoidMotionControl(m_leftDistance, m_rightDistance);
 
     }
 

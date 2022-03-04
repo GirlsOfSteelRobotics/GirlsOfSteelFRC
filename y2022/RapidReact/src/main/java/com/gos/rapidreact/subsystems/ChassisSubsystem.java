@@ -204,11 +204,20 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kSmartMotion);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kSmartMotion);
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
         m_drive.feed();
 
         System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
+    }
+
+    public void trapezoidMotionControl(double leftDistance, double rightDistance) {
+        // System.out.println("Driving velocity");
+        m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion);
+        m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion);
+        m_drive.feed();
+
+        System.out.println("Left Velocity" + leftDistance + ", Right Velocity" + rightDistance);
     }
 
     public double getLeftEncoderSpeed() {
@@ -217,6 +226,14 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public double getRightEncoderSpeed() {
         return m_rightEncoder.getVelocity();
+    }
+
+    public double getLeftEncoderDistance() {
+        return m_leftEncoder.getPosition();
+    }
+
+    public double getRightEncoderDistance() {
+        return m_rightEncoder.getPosition();
     }
 
     public double getYawAngle() {
