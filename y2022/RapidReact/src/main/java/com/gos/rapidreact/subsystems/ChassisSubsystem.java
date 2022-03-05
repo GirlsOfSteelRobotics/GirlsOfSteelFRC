@@ -221,12 +221,29 @@ public class ChassisSubsystem extends SubsystemBase {
         System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
     }
 
+    public void trapezoidMotionControl(double leftDistance, double rightDistance) {
+        // System.out.println("Driving velocity");
+        m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion);
+        m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion);
+        m_drive.feed();
+
+        System.out.println("Left Velocity" + leftDistance + ", Right Velocity" + rightDistance);
+    }
+
     public double getLeftEncoderSpeed() {
         return m_leftEncoder.getVelocity();
     }
 
     public double getRightEncoderSpeed() {
         return m_rightEncoder.getVelocity();
+    }
+
+    public double getLeftEncoderDistance() {
+        return m_leftEncoder.getPosition();
+    }
+
+    public double getRightEncoderDistance() {
+        return m_rightEncoder.getPosition();
     }
 
     public double getYawAngle() {
