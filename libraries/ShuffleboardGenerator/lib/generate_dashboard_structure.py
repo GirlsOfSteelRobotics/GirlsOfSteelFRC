@@ -134,8 +134,6 @@ class WidgetGenerator:
     def verify_config(self):
         if len(self.widget_config['children_tables']) == 1:
             child = self.widget_config['children_tables'][0]
-            print(self.widget_config)
-            print(child)
             if self.widget_config['table'] != child['table']:
                 raise Exception(f"If you only have one child, some short circuits will be used. Because of that, the widget table ('{self.widget_config['table']}') must matach the child table ('{child['table']}')")
 
@@ -170,7 +168,9 @@ class TopLevelGenerator:
         template_output = self._load_template('java/Utils.java.txt').render(overall_config=self.overall_config)
 
         output_file = os.path.join(self.plugin_dump_main_dir, "Utils.java")
-        open(output_file, 'w').write(template_output)
+
+        if force or not os.path.exists(output_file):
+            open(output_file, 'w').write(template_output)
 
 
 def maybe_add_standalone_buttons(widget_config):

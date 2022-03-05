@@ -2,14 +2,19 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.sim.LimelightSim;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -18,6 +23,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.coordinate_gui.RobotPositionPublisher;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -25,11 +31,12 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 
 
+@SuppressWarnings("PMD.TooManyFields")
 public class ChassisSubsystem extends SubsystemBase {
 
     //TODO: change constants to match this year's robot
-    private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
-    private static final double GEAR_RATIO = 5;
+    private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
+    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
@@ -44,6 +51,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_leaderRight;
     private final SimableCANSparkMax m_followerRight;
 
+    private final SparkMaxPIDController m_leftPidController;
+    private final SparkMaxPIDController m_rightPidController;
+
+    private final PidProperty m_leftProperties;
+    private final PidProperty m_rightProperties;
+
     private final DifferentialDrive m_drive;
 
     //odometry
@@ -51,8 +64,24 @@ public class ChassisSubsystem extends SubsystemBase {
     private final WPI_PigeonIMU m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
-    private DifferentialDrivetrainSimWrapper m_simulator;
+    private final RobotPositionPublisher m_coordinateGuiPublisher;
     private final Field2d m_field;
+
+    //constants for trajectory
+    public static final double KS_VOLTS = 0.179;
+    public static final double KV_VOLT_SECONDS_PER_METER = 0.0653;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.00754;
+    public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
+    public static final double MAX_VOLTAGE = 10;
+
+    public static final double K_TRACKWIDTH_METERS = 1.1554881713809029;
+    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
+        new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
+
+    // Sim
+    private DifferentialDrivetrainSimWrapper m_simulator;
+    private LimelightSim m_limelightSim;
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -81,6 +110,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
+        m_leftPidController = m_leaderLeft.getPIDController();
+        m_rightPidController = m_leaderRight.getPIDController();
+
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
 
@@ -90,9 +122,20 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        m_coordinateGuiPublisher = new RobotPositionPublisher();
 
         m_field = new Field2d();
 
+        m_leaderLeft.setOpenLoopRampRate(0.5);
+        m_leaderRight.setOpenLoopRampRate(0.5);
+
+
+        // Smart Motion stuff
+        m_leftProperties = setupPidValues(m_leftPidController);
+        m_rightProperties = setupPidValues(m_rightPidController);
+
+        m_leftProperties.updateIfChanged(true);
+        m_rightProperties.updateIfChanged(true);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -108,18 +151,42 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
+
+            m_limelightSim = new LimelightSim();
         }
 
         SmartDashboard.putData(m_field);
+
+        m_leaderLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_leaderRight.burnFlash();
+        m_followerRight.burnFlash();
+    }
+
+    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            .addP(0)
+            .addI(0)
+            .addD(0)
+            .addFF(0)
+            .addMaxVelocity(Units.inchesToMeters(72))
+            .addMaxAcceleration(Units.inchesToMeters(144))
+            .build();
     }
 
     @Override
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
+        m_coordinateGuiPublisher.publish(m_odometry.getPoseMeters());
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
         SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
+        SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
+        SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
+
+        m_leftProperties.updateIfChanged();
+        m_rightProperties.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -136,8 +203,34 @@ public class ChassisSubsystem extends SubsystemBase {
         return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
     }
 
+    public Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
+
+    public void stop() {
+        m_drive.stopMotor();
+        System.out.println("Stopping motors");
+    }
+
+    public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+        // System.out.println("Driving velocity");
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
+        m_drive.feed();
+
+        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
+    }
+
+    public double getLeftEncoderSpeed() {
+        return m_leftEncoder.getVelocity();
+    }
+
+    public double getRightEncoderSpeed() {
+        return m_rightEncoder.getVelocity();
+    }
+
     public double getYawAngle() {
-        return -m_gyro.getYaw();
+        return m_gyro.getYaw();
     }
 
     public void setArcadeDrive(double speed, double steer) {
@@ -210,6 +303,6 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+        m_limelightSim.update(m_odometry.getPoseMeters());
     }
 }
-

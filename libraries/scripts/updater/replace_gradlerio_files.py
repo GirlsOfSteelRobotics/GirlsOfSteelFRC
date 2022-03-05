@@ -32,6 +32,7 @@ def standard_update_robot_build_file(contents, build_file):
 
 def custom_update_robot_build_file(remote_build_file_data, build_file, latest_version):
     IGNORE_TEST_FAILURES_TEXT = "test {\n    ignoreFailures = true\n}"
+    IGNORE_PMD_FAILURES_TEXT = "pmd {\n    ignoreFailures = true\n}"
 
     with open(build_file, "r") as f:
         original_contents = f.read()
@@ -48,6 +49,7 @@ def custom_update_robot_build_file(remote_build_file_data, build_file, latest_ve
         ) + re.findall(r"implementation project(.*)", original_contents)
 
         ignore_test_failures = re.findall(IGNORE_TEST_FAILURES_TEXT, original_contents)
+        ignore_pmd_failures = re.findall(IGNORE_PMD_FAILURES_TEXT, original_contents)
 
     new_build_contents = ""
     lines_iter = iter(raw_build_contents.split("\n"))
@@ -67,6 +69,9 @@ def custom_update_robot_build_file(remote_build_file_data, build_file, latest_ve
 
     if ignore_test_failures:
         new_build_contents += IGNORE_TEST_FAILURES_TEXT + "\n"
+
+    if ignore_pmd_failures:
+        new_build_contents += IGNORE_PMD_FAILURES_TEXT + "\n"
 
     with open(build_file, "wb") as f:
         f.write(new_build_contents.encode("utf-8"))

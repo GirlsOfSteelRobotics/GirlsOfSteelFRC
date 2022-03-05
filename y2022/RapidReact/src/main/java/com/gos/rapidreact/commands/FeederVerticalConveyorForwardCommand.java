@@ -28,6 +28,7 @@ public class FeederVerticalConveyorForwardCommand extends CommandBase {
     @Override
     public void execute() {
         m_verticalConveyor.forwardFeedMotor();
+        m_verticalConveyor.forwardVerticalConveyorMotor();
     }
 
     /**
@@ -60,5 +61,6 @@ public class FeederVerticalConveyorForwardCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_verticalConveyor.stopFeedMotor();
+        m_verticalConveyor.stopVerticalConveyorMotor();
     }
 }
