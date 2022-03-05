@@ -18,7 +18,7 @@ import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM
 
 public class ThreeBallAuto extends SequentialCommandGroup {
 
-    public ThreeBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector, double seconds) {
+    public ThreeBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor).alongWith(
                 new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM)).alongWith(

@@ -2,12 +2,9 @@ package com.gos.rapidreact.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
-import com.gos.lib.properties.PropertyManager;
 
 
 public class DriveDistanceCommand extends CommandBase {
-
-    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty("DriveOffTarmacKP", 0.5);
 
     private final ChassisSubsystem m_chassis;
     private final double m_distance;

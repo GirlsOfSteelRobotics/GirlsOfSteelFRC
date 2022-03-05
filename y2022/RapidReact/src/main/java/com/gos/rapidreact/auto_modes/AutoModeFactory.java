@@ -44,7 +44,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         //need to have distance, allowableError
         m_sendableChooser.setDefaultOption("DriveOffTarmac (Default)", m_defaultCommand);
         m_sendableChooser.addOption("One Ball Auto", new OneBallAuto(chassis, shooter, verticalConveyor, VERTICAL_CONVEYOR_TIMEOUT));
-        m_sendableChooser.addOption("Three Ball Auto", new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector, VERTICAL_CONVEYOR_TIMEOUT));
+        m_sendableChooser.addOption("Three Ball Auto", new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector));
     }
 
 
