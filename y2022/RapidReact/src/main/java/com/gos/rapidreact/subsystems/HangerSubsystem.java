@@ -57,6 +57,9 @@ public class HangerSubsystem extends SubsystemBase {
         m_follower.follow(m_leader, false);
         m_encoder = m_leader.getEncoder();
 
+        m_leader.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_follower.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
         m_encoder.setPositionConversionFactor(GEAR);
 
         m_pidController = m_leader.getPIDController();

@@ -1,7 +1,7 @@
 
 repositories {
     mavenLocal()
-    maven { url "https://raw.githubusercontent.com/pjreiniger/maven_repo/master" }
+    maven { url "https://raw.githubusercontent.com/snobotsim/maven_repo/master/release" }
 }
 
 configurations {
@@ -10,7 +10,7 @@ configurations {
 
 dependencies {
     // Helper for getting the coordinate gui from maven into the shuffleboard area
-    custom_widgets 'org.snobot.coordinate_gui:CoordinateGuiWidget2021:2021.0.0'
+    custom_widgets 'org.snobot.coordinate_gui:CoordinateGuiShuffleboard2022:2022.1.0'
 }
 
 task deleteOldWidgets(type: Delete) {

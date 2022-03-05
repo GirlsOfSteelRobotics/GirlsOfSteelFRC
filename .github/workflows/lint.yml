@@ -25,6 +25,6 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: lint-version-fixes
+          name: ${{ matrix.platform }}-lint-version-fixes
           path: lint-version-fixes.patch
         if: ${{ failure() }}

@@ -6,6 +6,7 @@ import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.sim.LimelightSim;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.coordinate_gui.RobotPositionPublisher;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -29,12 +31,12 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 
 
-
+@SuppressWarnings("PMD.TooManyFields")
 public class ChassisSubsystem extends SubsystemBase {
 
     //TODO: change constants to match this year's robot
-    private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
-    private static final double GEAR_RATIO = 14.0 / 2;
+    private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
+    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
@@ -62,7 +64,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final WPI_PigeonIMU m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
-    private DifferentialDrivetrainSimWrapper m_simulator;
+    private final RobotPositionPublisher m_coordinateGuiPublisher;
     private final Field2d m_field;
 
     //constants for trajectory
@@ -76,6 +78,10 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double K_TRACKWIDTH_METERS = 1.1554881713809029;
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
+
+    // Sim
+    private DifferentialDrivetrainSimWrapper m_simulator;
+    private LimelightSim m_limelightSim;
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -116,6 +122,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        m_coordinateGuiPublisher = new RobotPositionPublisher();
 
         m_field = new Field2d();
 
@@ -144,6 +151,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
+
+            m_limelightSim = new LimelightSim();
         }
 
         SmartDashboard.putData(m_field);
@@ -169,6 +178,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
+        m_coordinateGuiPublisher.publish(m_odometry.getPoseMeters());
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
         SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
@@ -310,5 +320,6 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+        m_limelightSim.update(m_odometry.getPoseMeters());
     }
 }

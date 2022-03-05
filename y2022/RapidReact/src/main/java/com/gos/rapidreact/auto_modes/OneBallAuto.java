@@ -2,8 +2,8 @@ package com.gos.rapidreact.auto_modes;
 
 
 import com.gos.rapidreact.commands.DriveDistanceCommand;
+import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
-import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
@@ -20,9 +20,9 @@ public class OneBallAuto extends SequentialCommandGroup {
     private static final double ALLOWABLE_ERROR = 0.05;
 
     public OneBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, double seconds) {
-        super(new DriveDistanceCommand(chassis, DRIVE_DISTANCE, ALLOWABLE_ERROR),
-            new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
-            new VerticalConveyorUpCommand(verticalConveyor).withTimeout(seconds));
+        super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
+            new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(seconds),
+            new DriveDistanceCommand(chassis, DRIVE_DISTANCE, ALLOWABLE_ERROR));
 
     }
 }
