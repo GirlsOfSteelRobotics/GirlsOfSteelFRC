@@ -30,6 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
     private final ShooterLookupTable m_shooterTable;
+    private double m_goalRpm;
 
     private ISimWrapper m_simulator;
 
@@ -69,6 +70,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setShooterRpmPIDSpeed(double rpm) {
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
+        m_goalRpm = rpm;
+    }
+
+    public boolean isShooterAtSpeed() {
+        double error = Math.abs(m_goalRpm - getEncoderVelocity());
+        return error < ALLOWABLE_ERROR;
     }
 
     public void setShooterSpeed(double speed) {

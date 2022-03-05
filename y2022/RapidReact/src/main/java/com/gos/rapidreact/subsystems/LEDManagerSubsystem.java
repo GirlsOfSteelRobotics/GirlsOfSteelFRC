@@ -1,15 +1,12 @@
 package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.led.LEDDistanceToTarget;
-import com.gos.rapidreact.led.LEDFlash;
 import com.gos.rapidreact.led.LEDAngleToTarget;
-import com.gos.rapidreact.led.LEDMovingPixel;
-import com.gos.rapidreact.led.LEDPolkaDots;
-import com.gos.rapidreact.led.LEDRainbow;
 import com.gos.rapidreact.led.LEDBoolean;
+import com.gos.rapidreact.led.LEDFlash;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,27 +19,27 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final HorizontalConveyorSubsystem m_horizonalConveyor;
     private final VerticalConveyorSubsystem m_verticalConveyor;
 
-    private static final int MAX_INDEX_LED = 30;
+    private static final int MAX_INDEX_LED = 60;
+    private static final int MIDDLE_INDEX_LED = MAX_INDEX_LED / 2;
     private static final int PORT = Constants.LED;
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
-    private LEDBoolean m_intakeIndex;
-    private LEDBoolean m_lowerConveyorIndex;
-    private LEDBoolean m_upperConveyorIndex;
-    private LEDBoolean m_goToCargo;
-    private LEDBoolean m_allowableDistancetoHub;
-    private LEDBoolean m_shooterAtSpeed;
-    private LEDBoolean m_readyToShoot;
-    private LEDAngleToTarget m_angleToHub;
-
-//    private LEDFlash m_ledFlash;
-//    private LEDFlash m_ledFlashSecond;
-//    private LEDRainbow m_ledRainbow;
-//    private LEDPolkaDots m_ledPolkaDots;
-//    private LEDMovingPixel m_movingPixel;
-//    private LEDBoolean m_boolean;
-//    private LEDAngleToTarget m_angleToTarget;
-//    private LEDDistanceToTarget m_distanceToTarget;
+    private LEDBoolean m_intakeIndexLeft;
+    private LEDBoolean m_lowerConveyorIndexLeft;
+    private LEDBoolean m_upperConveyorIndexLeft;
+    private LEDFlash m_goToCargoLeft;
+    private LEDBoolean m_allowableDistancetoHubLeft;
+    private LEDBoolean m_shooterAtSpeedLeft;
+    private LEDFlash m_readyToShootLeft;
+    private LEDAngleToTarget m_angleToHubLeft;
+    private LEDBoolean m_intakeIndexRight;
+    private LEDBoolean m_lowerConveyorIndexRight;
+    private LEDBoolean m_upperConveyorIndexRight;
+    private LEDFlash m_goToCargoRight;
+    private LEDBoolean m_allowableDistancetoHubRight;
+    private LEDBoolean m_shooterAtSpeedRight;
+    private LEDFlash m_readyToShootRight;
+    private LEDAngleToTarget m_angleToHubRight;
 
     public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, CollectorSubsystem collector, ShooterSubsystem shooterSubsystem, HorizontalConveyorSubsystem horizontalConveyorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem) {
         m_intakeLimelight = intakeLimelightSubsystem;
@@ -54,24 +51,23 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_led = new AddressableLED(PORT);
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
-        m_intakeIndex = new LEDBoolean(m_buffer, 0, 2, Color.kGreen, Color.kBlack);
-        m_lowerConveyorIndex = new LEDBoolean(m_buffer, 3, 5, Color.kGreen, Color.kBlack);
-        m_upperConveyorIndex = new LEDBoolean(m_buffer, 6, 8, Color.kGreen, Color.kBlack);
-        m_goToCargo = new LEDBoolean(m_buffer, 10, 12, Color.kGreen, Color.kBlack);
-        m_allowableDistancetoHub = new LEDBoolean(m_buffer, 14, 16, Color.kGreen, Color.kBlack);
-        m_shooterAtSpeed = new LEDBoolean(m_buffer, 18, 20, Color.kGreen, Color.kBlack);
-        m_readyToShoot = new LEDBoolean(m_buffer, 22, 24, Color.kGreen, Color.kBlack);
-        m_angleToHub = new LEDAngleToTarget(m_buffer, Color.kGreen, Color.kGreen, 25, 29, 10);
-        //ASK PJ FOR HELP
+        m_intakeIndexLeft = new LEDBoolean(m_buffer, 0, 2, Color.kOrange, Color.kBlack);
+        m_lowerConveyorIndexLeft = new LEDBoolean(m_buffer, 3, 5, Color.kBlue, Color.kBlack);
+        m_upperConveyorIndexLeft = new LEDBoolean(m_buffer, 6, 8, Color.kPurple, Color.kBlack);
+        m_goToCargoLeft = new LEDFlash(m_buffer, 1, Color.kPurple, 10, 12);
+        m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
+        m_shooterAtSpeedLeft = new LEDBoolean(m_buffer, 18, 20, Color.kCoral, Color.kBlack);
+        m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
+        m_angleToHubLeft = new LEDAngleToTarget(m_buffer, Color.kRed, Color.kRed, 25, 29, 10);
 
-//        m_ledFlash = new LEDFlash(m_buffer, 2, Color.kPapayaWhip, 0, MAX_INDEX_LED / 2);
-//        m_ledFlashSecond = new LEDFlash(m_buffer, 1, Color.kAquamarine, MAX_INDEX_LED / 2, MAX_INDEX_LED);
-//        m_ledRainbow = new LEDRainbow(MAX_INDEX_LED - 2, m_buffer, 3);
-//        m_ledPolkaDots = new LEDPolkaDots(m_buffer, 0, MAX_INDEX_LED);
-//        m_movingPixel = new LEDMovingPixel(m_buffer, 0, MAX_INDEX_LED, Color.kPurple);
-//        m_boolean = new LEDBoolean(m_buffer, 0, MAX_INDEX_LED / 6, Color.kDarkGreen, Color.kBlack);
-//        m_angleToTarget = new LEDAngleToTarget(m_buffer, Color.kDarkRed, Color.kDarkGreen, 0, MAX_INDEX_LED, 10);
-//        m_distanceToTarget = new LEDDistanceToTarget(m_buffer, Color.kDarkRed, 0, MAX_INDEX_LED, 10);
+        m_intakeIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 2, Color.kOrange, Color.kBlack);
+        m_lowerConveyorIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 3,  MIDDLE_INDEX_LED + 5, Color.kBlue, Color.kBlack);
+        m_upperConveyorIndexRight = new LEDBoolean(m_buffer,  MIDDLE_INDEX_LED + 6, MIDDLE_INDEX_LED + 8, Color.kPurple, Color.kBlack);
+        m_goToCargoRight = new LEDFlash(m_buffer, 1, Color.kPurple, MIDDLE_INDEX_LED + 10, MIDDLE_INDEX_LED + 12);
+        m_allowableDistancetoHubRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 14, MIDDLE_INDEX_LED + 16, Color.kWhite, Color.kBlack);
+        m_shooterAtSpeedRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 18, MIDDLE_INDEX_LED + 20, Color.kCoral, Color.kBlack);
+        m_readyToShootRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 21, MIDDLE_INDEX_LED + 23);
+        m_angleToHubRight = new LEDAngleToTarget(m_buffer, Color.kRed, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -89,14 +85,38 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        boolean seeLimelight = false;
         clear();
-        m_intakeIndex.checkBoolean(m_collector.getIndexSensor());
-        m_lowerConveyorIndex.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
-        m_upperConveyorIndex.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
-        m_goToCargo.checkBoolean(m_intakeLimelight.distanceToCargo() < 3); //3 meters
-        m_allowableDistancetoHub.checkBoolean(m_shooterLimelight.getDistanceToHub() < 5); //5 meters, change to max ability to shoot
-        m_shooterAtSpeed.checkBoolean(m_shooter.);
+        if (DriverStation.isEnabled()) {
+            m_intakeIndexLeft.checkBoolean(m_collector.getIndexSensor()); //TODO: make this longer than the time that it's turned on
+            m_lowerConveyorIndexLeft.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
+            m_upperConveyorIndexLeft.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
+            if (m_intakeLimelight.distanceToCargo() < 3) { //3 meters
+                m_goToCargoLeft.flash(); }
+            m_allowableDistancetoHubLeft.checkBoolean(m_shooterLimelight.getDistanceToHub() < 5); //5 meters, change to max ability to shoot
+            m_shooterAtSpeedLeft.checkBoolean(m_shooter.isShooterAtSpeed());
+            if (m_shooterLimelight.getDistanceToHub() < 5 && m_shooter.isShooterAtSpeed() && m_shooterLimelight.angleError() < 4) {
+                m_readyToShootLeft.flash();
+            }
+            if (m_shooterLimelight.angleError() > 0) {
+                m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
+            }
+
+            m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
+            m_lowerConveyorIndexRight.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
+            m_upperConveyorIndexRight.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
+            if (m_intakeLimelight.distanceToCargo() < 3) {
+                m_goToCargoRight.flash(); }
+            m_allowableDistancetoHubRight.checkBoolean(m_shooterLimelight.getDistanceToHub() < 5); //5 meters, change to max ability to shoot
+            m_shooterAtSpeedRight.checkBoolean(m_shooter.isShooterAtSpeed());
+            if (m_shooterLimelight.angleError() < 0) {
+                m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
+            }
+            if (m_shooterLimelight.getDistanceToHub() < 5 && m_shooter.isShooterAtSpeed() && m_shooterLimelight.angleError() < 4) {
+                m_readyToShootRight.flash();
+            }
+        }
+//        if (DriverStation.isAutonomous()) {
+//        }
         m_led.setData(m_buffer);
     }
 
