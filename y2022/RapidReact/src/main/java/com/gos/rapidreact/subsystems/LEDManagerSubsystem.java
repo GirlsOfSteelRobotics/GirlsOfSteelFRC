@@ -58,7 +58,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
         m_shooterAtSpeedLeft = new LEDBoolean(m_buffer, 18, 20, Color.kCoral, Color.kBlack);
         m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
-        m_angleToHubLeft = new LEDAngleToTarget(m_buffer, Color.kRed, Color.kRed, 25, 29, 10);
+        m_angleToHubLeft = new LEDAngleToTarget(m_buffer, Color.kRed, 25, 29, 10);
 
         m_intakeIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 2, Color.kOrange, Color.kBlack);
         m_lowerConveyorIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 3,  MIDDLE_INDEX_LED + 5, Color.kBlue, Color.kBlack);
@@ -67,7 +67,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_allowableDistancetoHubRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 14, MIDDLE_INDEX_LED + 16, Color.kWhite, Color.kBlack);
         m_shooterAtSpeedRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 18, MIDDLE_INDEX_LED + 20, Color.kCoral, Color.kBlack);
         m_readyToShootRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 21, MIDDLE_INDEX_LED + 23);
-        m_angleToHubRight = new LEDAngleToTarget(m_buffer, Color.kRed, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
+        m_angleToHubRight = new LEDAngleToTarget(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -115,8 +115,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
                 m_readyToShootRight.flash();
             }
         }
-//        if (DriverStation.isAutonomous()) {
-//        }
         m_led.setData(m_buffer);
     }
 
