@@ -25,9 +25,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private static final double DRIVE_OFF_TARMAC_DISTANCE = .5 * (Constants.ROBOT_LENGTH + Constants.TARMAC_DEPTH);
     private static final double ALLOWABLE_ERROR = Units.inchesToMeters(6);
-    private static final double VERTICAL_CONVEYOR_TIMEOUT = 10;
+    private static final double VERTICAL_CONVEYOR_TIMEOUT = 3;
 
-
+    //Robot flat on wall and rolled back until the corners of the bumper are on the edge of the tape lines
+    //Three Ariella Feet from the wall
     /**
      * Creates a new AutomatedConveyorIntake.
      */
@@ -44,6 +45,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         //need to have distance, allowableError
         m_sendableChooser.setDefaultOption("DriveOffTarmac (Default)", m_defaultCommand);
         m_sendableChooser.addOption("One Ball Auto", new OneBallAuto(chassis, shooter, verticalConveyor, VERTICAL_CONVEYOR_TIMEOUT));
+        m_sendableChooser.addOption("Two Ball Auto", new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector, VERTICAL_CONVEYOR_TIMEOUT));
         m_sendableChooser.addOption("Three Ball Auto", new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector));
     }
 

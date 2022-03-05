@@ -164,11 +164,12 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        //m_leftPidController.setSmartMotionAccelStrategy();
         return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(0) //0.0012776
+            .addP(0.00003) //0.0012776
             .addI(0)
             .addD(0)
-            .addFF(0.23)
+            .addFF(0.215)
             .addMaxVelocity(Units.inchesToMeters(72))
             .addMaxAcceleration(Units.inchesToMeters(144))
             .build();
@@ -225,8 +226,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void trapezoidMotionControl(double leftDistance, double rightDistance) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion);
-        m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion);
+        double leftError = leftDistance - getLeftEncoderDistance();
+        double rightError = rightDistance - getRightEncoderDistance();
+        double staticFrictionLeft = KS_VOLTS * Math.signum(leftError); //arbFeedforward
+        double staticFrictionRight = KS_VOLTS * Math.signum(rightError);
+        m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionLeft);
+        m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionRight);
         m_drive.feed();
 
         System.out.println("Left Velocity" + leftDistance + ", Right Velocity" + rightDistance);

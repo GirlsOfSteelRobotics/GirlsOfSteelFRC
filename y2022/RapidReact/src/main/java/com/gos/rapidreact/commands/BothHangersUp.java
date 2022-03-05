@@ -1,17 +1,14 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class HangerPIDCommand extends CommandBase {
+public class BothHangersUp extends CommandBase {
     private final HangerSubsystem m_hanger;
-    private final double m_hangerHeight;
 
-    public HangerPIDCommand(HangerSubsystem hangerSubsystem, double hangerHeight) {
+    public BothHangersUp(HangerSubsystem hangerSubsystem) {
         this.m_hanger = hangerSubsystem;
-        m_hangerHeight = hangerHeight;
-
         addRequirements(this.m_hanger);
     }
 
@@ -22,17 +19,20 @@ public class HangerPIDCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_hanger.hangerToHeight(m_hangerHeight);
+        m_hanger.setLeftHangerSpeed(HangerSubsystem.HANGER_UP_SPEED);
+        m_hanger.setRightHangerSpeed(HangerSubsystem.HANGER_UP_SPEED);
+
     }
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(m_hangerHeight - m_hanger.getLeftHangerHeight());
-        return error < HangerSubsystem.ALLOWABLE_ERROR;
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         m_hanger.setLeftHangerSpeed(0);
+        m_hanger.setRightHangerSpeed(0);
+
     }
 }

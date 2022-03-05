@@ -18,6 +18,16 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK MAX [3]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [8]": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -63,7 +73,11 @@
       "/Shuffleboard/test commands/HangerPIDCommand - 4": "Command",
       "/Shuffleboard/test commands/HorizontalConveyorBackwardCommand": "Command",
       "/Shuffleboard/test commands/HorizontalConveyorForwardCommand": "Command",
+      "/Shuffleboard/test commands/Left Hang Down": "Command",
+      "/Shuffleboard/test commands/Left Hang Up": "Command",
       "/Shuffleboard/test commands/Reset Pivot Encoder": "Command",
+      "/Shuffleboard/test commands/Right Hang Down": "Command",
+      "/Shuffleboard/test commands/Right Hang Up": "Command",
       "/Shuffleboard/test commands/RollerInCommand": "Command",
       "/Shuffleboard/test commands/RollerOutCommand": "Command",
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": "Command",
@@ -109,6 +123,31 @@
       "/SmartDashboard/VerticalConveyorUpCommand": "Command"
     },
     "windows": {
+      "/Shuffleboard/test commands/GoToHubAngle - 45": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Left Hang Down": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Left Hang Up": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Right Hang Down": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Right Hang Up": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/SetInitialOdometry - 0, 0, 0": {
         "window": {
           "visible": true
@@ -147,7 +186,6 @@
       "/SmartDashboard/Field": {
         "bottom": 900,
         "height": 8.229599952697754,
-        "image": "C:\\Users\\ktai\\Downloads\\2022-field.png",
         "left": 74,
         "right": 1774,
         "top": 50,
