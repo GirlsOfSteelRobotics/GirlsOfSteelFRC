@@ -68,9 +68,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private final Field2d m_field;
 
     //constants for trajectory
-    public static final double KS_VOLTS = 0.179;
-    public static final double KV_VOLT_SECONDS_PER_METER = 0.0653;
-    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.00754;
+    public static final double KS_VOLTS = 0.1946;
+    public static final double KV_VOLT_SECONDS_PER_METER = 2.6079;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
     public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
     public static final double MAX_VOLTAGE = 10;
@@ -165,10 +165,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(0)
+            .addP(0) //0.0012776
             .addI(0)
             .addD(0)
-            .addFF(0)
+            .addFF(0.23)
             .addMaxVelocity(Units.inchesToMeters(72))
             .addMaxAcceleration(Units.inchesToMeters(144))
             .build();
@@ -214,8 +214,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
+        double staticFrictionLeft = KS_VOLTS * Math.signum(leftVelocity); //arbFeedforward
+        double staticFrictionRight = KS_VOLTS * Math.signum(rightVelocity);
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight);
         m_drive.feed();
 
         System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);

@@ -27,7 +27,7 @@ public class HangerSubsystem extends SubsystemBase {
     //these constants are all not correct
     public static final int ENGAGED_RATCHET_ANGLE = 90;
     public static final int DISENGAGED_RATCHET_ANGLE = 0;
-    public static final double HANGER_UP_SPEED = 0.8;
+    public static final double HANGER_UP_SPEED = 0.5;
     public static final double HANGER_DOWN_SPEED = -HANGER_UP_SPEED;
     private static final double GEAR = 80;
     public static final double ALLOWABLE_ERROR = Units.inchesToMeters(5);
@@ -43,10 +43,10 @@ public class HangerSubsystem extends SubsystemBase {
 
     private ISimWrapper m_simulator;
 
-    private final SparkMaxLimitSwitch m_topLeftLimit;
     private final SparkMaxLimitSwitch m_bottomLeftLimit;
-    private final SparkMaxLimitSwitch m_topRightLimit;
     private final SparkMaxLimitSwitch m_bottomRightLimit;
+    private final SparkMaxLimitSwitch m_topLeftLimit;
+    private final SparkMaxLimitSwitch m_topRightLimit;
 
     public HangerSubsystem() {
         m_servo = new Servo(Constants.SERVO_CHANNEL);
@@ -72,15 +72,13 @@ public class HangerSubsystem extends SubsystemBase {
         m_leader.burnFlash();
         m_follower.burnFlash();
 
-        m_bottomLeftLimit = m_leader.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_topLeftLimit = m_leader.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_bottomRightLimit = m_follower.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_topRightLimit = m_follower.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+        m_bottomLeftLimit = m_leader.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+        m_bottomRightLimit = m_follower.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+        m_topLeftLimit = m_leader.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+        m_topRightLimit = m_follower.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
-        m_topRightLimit.enableLimitSwitch(false); // TODO turn back on
-        m_topLeftLimit.enableLimitSwitch(false);
-        m_bottomLeftLimit.enableLimitSwitch(false);
-        m_bottomRightLimit.enableLimitSwitch(false);
+        m_bottomLeftLimit.enableLimitSwitch(true);
+        m_bottomRightLimit.enableLimitSwitch(true);
 
         if (RobotBase.isSimulation()) {
             ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
@@ -94,10 +92,10 @@ public class HangerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Hanger Height Encoder", getHangerHeight());
-        SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
         SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
         SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
+        SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
+        SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
 
         m_pid.updateIfChanged();
     }
