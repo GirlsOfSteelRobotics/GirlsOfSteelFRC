@@ -79,10 +79,10 @@ public class HangerSubsystem extends SubsystemBase {
         m_topLeftLimit = m_leftHanger.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
         m_topRightLimit = m_rightHanger.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
+        m_topRightLimit.enableLimitSwitch(false); // TODO turn back on
+        m_topLeftLimit.enableLimitSwitch(false);
         m_bottomLeftLimit.enableLimitSwitch(false);
         m_bottomRightLimit.enableLimitSwitch(false);
-        m_topRightLimit.enableLimitSwitch(false);
-        m_topLeftLimit.enableLimitSwitch(false);
 
         if (RobotBase.isSimulation()) {
             ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
@@ -155,6 +155,11 @@ public class HangerSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+    }
+
+    public void stop() {
+        m_leftHanger.set(0);
+        m_rightHanger.set(0);
     }
 }
 

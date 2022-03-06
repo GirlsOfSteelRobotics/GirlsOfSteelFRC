@@ -17,17 +17,20 @@ import com.gos.rapidreact.trajectory.TrajectoryB5;
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
 
 public class ThreeBallAuto extends SequentialCommandGroup {
+    private static final double FIRST_SHOT_RPM = DEFAULT_SHOOTER_RPM;
+    private static final double SECOND_SHOT_RPM = DEFAULT_SHOOTER_RPM;
 
     public ThreeBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
-        super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
-            new FeederVerticalConveyorForwardCommand(verticalConveyor).alongWith(
-                new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM)).alongWith(
-                    new CollectorDownCommand(collector)).withTimeout(1),
+        super(
+            new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM),
+            new FeederVerticalConveyorForwardCommand(verticalConveyor)
+                .alongWith(new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM))
+                .alongWith(new CollectorDownCommand(collector)).withTimeout(1),
             TrajectoryB5.fromBto5(chassis).alongWith(new RollerInCommand(collector).withTimeout(2)),
             Trajectory54.from5to4(chassis).alongWith(new RollerInCommand(collector).withTimeout(2)),
             new HorizontalConveyorForwardCommand(horizontalConveyor),
-            new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
-            new FeederVerticalConveyorForwardCommand(verticalConveyor).alongWith(
-                new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM)));
+            new ShooterRpmPIDCommand(shooter, SECOND_SHOT_RPM),
+            new FeederVerticalConveyorForwardCommand(verticalConveyor)
+                .alongWith(new ShooterRpmPIDCommand(shooter, SECOND_SHOT_RPM)));
     }
 }

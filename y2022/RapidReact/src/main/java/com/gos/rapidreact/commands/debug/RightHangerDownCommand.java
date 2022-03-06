@@ -1,4 +1,4 @@
-package com.gos.rapidreact.commands;
+package com.gos.rapidreact.commands.debug;
 
 import com.gos.rapidreact.subsystems.HangerSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;

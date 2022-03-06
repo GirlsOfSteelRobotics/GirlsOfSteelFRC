@@ -33,6 +33,6 @@ public class HangerPIDCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_hanger.setLeftHangerSpeed(0);
+        m_hanger.stop();
     }
 }
