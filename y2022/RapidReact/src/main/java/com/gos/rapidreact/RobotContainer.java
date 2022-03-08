@@ -6,15 +6,19 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.AutomatedVerticalConveyorCommand;
+import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.DriveDistanceCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
+import com.gos.rapidreact.commands.debug.RightHangerDownCommand;
+import com.gos.rapidreact.commands.debug.RightHangerUpCommand;
 import com.gos.rapidreact.commands.ShootFromTableCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.GoToHubDistanceCommand;
-import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerDownCommand;
 import com.gos.rapidreact.commands.HangerPIDCommand;
-import com.gos.rapidreact.commands.HangerUpCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.ShooterFeederCommandGroup;
@@ -147,6 +151,11 @@ public class RobotContainer {
         testCommands.add("Drive Dist 60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(60), Units.inchesToMeters(2)));
         testCommands.add("Drive Dist -60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(-60), Units.inchesToMeters(2)));
 
+        testCommands.add("Right Hang Up", new RightHangerUpCommand(m_hanger));
+        testCommands.add("Right Hang Down", new RightHangerDownCommand(m_hanger));
+        testCommands.add("Left Hang Up", new LeftHangerUpCommand(m_hanger));
+        testCommands.add("Left Hang Down", new LeftHangerDownCommand(m_hanger));
+
         // Trajectories
         trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
         trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
@@ -176,8 +185,9 @@ public class RobotContainer {
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
         limelightGoToCargo.whenPressed(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight));
-        new Button(() -> m_driverJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new HangerUpCommand(m_hanger)); //left trigger
-        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new HangerDownCommand(m_hanger)); //right trigger
+        new Button(() -> m_driverJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new HangerDownCommand(m_hanger)); //left trigger
+        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new HangerUpCommand(m_hanger)); //right trigger
+
 
         //operator
         final JoystickButton collectorDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value); //left bumper
@@ -220,9 +230,9 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.INTAKE_SPEED, m_collector::getPivotSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.HANGER_SPEED, m_hanger::getHangerSpeed, null);
+                SmartDashboardNames.HANGER_SPEED, m_hanger::getLeftHangerSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.HANGER_HEIGHT, m_hanger::getHangerHeight, null);
+                SmartDashboardNames.HANGER_HEIGHT, m_hanger::getLeftHangerHeight, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.HORIZONTAL_CONVEYOR_SPEED, m_horizontalConveyor::getHorizontalConveyorSpeed, null);
             builder.addDoubleProperty(

@@ -27,55 +27,57 @@ public class HangerSubsystem extends SubsystemBase {
     //these constants are all not correct
     public static final int ENGAGED_RATCHET_ANGLE = 90;
     public static final int DISENGAGED_RATCHET_ANGLE = 0;
-    public static final double HANGER_UP_SPEED = 0.8;
+    public static final double HANGER_UP_SPEED = 0.5;
     public static final double HANGER_DOWN_SPEED = -HANGER_UP_SPEED;
     private static final double GEAR = 80;
     public static final double ALLOWABLE_ERROR = Units.inchesToMeters(5);
 
     private final Servo m_servo;
-    private final SimableCANSparkMax m_leader;
-    private final SimableCANSparkMax m_follower;
+    private final SimableCANSparkMax m_leftHanger;
+    private final SimableCANSparkMax m_rightHanger;
 
-    private final RelativeEncoder m_encoder;
+    private final RelativeEncoder m_leftEncoder;
+    private final RelativeEncoder m_rightEncoder;
 
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
 
     private ISimWrapper m_simulator;
 
-    private final SparkMaxLimitSwitch m_topLeftLimit;
     private final SparkMaxLimitSwitch m_bottomLeftLimit;
-    private final SparkMaxLimitSwitch m_topRightLimit;
     private final SparkMaxLimitSwitch m_bottomRightLimit;
+    private final SparkMaxLimitSwitch m_topLeftLimit;
+    private final SparkMaxLimitSwitch m_topRightLimit;
 
     public HangerSubsystem() {
         m_servo = new Servo(Constants.SERVO_CHANNEL);
-        m_leader = new SimableCANSparkMax(Constants.HANGER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leader.restoreFactoryDefaults();
-        m_follower = new SimableCANSparkMax(Constants.HANGER_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_follower.restoreFactoryDefaults();
-        m_follower.follow(m_leader, false);
-        m_encoder = m_leader.getEncoder();
+        m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leftHanger.restoreFactoryDefaults();
+        m_rightHanger = new SimableCANSparkMax(Constants.HANGER_RIGHT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_rightHanger.restoreFactoryDefaults();
+        m_leftEncoder = m_leftHanger.getEncoder();
+        m_rightEncoder = m_rightHanger.getEncoder();
 
-        m_leader.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_follower.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_leftHanger.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_rightHanger.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        m_encoder.setPositionConversionFactor(GEAR);
+        m_leftEncoder.setPositionConversionFactor(GEAR);
+        m_rightEncoder.setPositionConversionFactor(GEAR);
 
-        m_pidController = m_leader.getPIDController();
+        m_pidController = m_leftHanger.getPIDController();
 
         m_pid = new RevPidPropertyBuilder("Hanger PID", false, m_pidController, 0)
             .addP(0)
             .addD(0)
             .build();
 
-        m_leader.burnFlash();
-        m_follower.burnFlash();
+        m_leftHanger.burnFlash();
+        m_rightHanger.burnFlash();
 
-        m_bottomLeftLimit = m_leader.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_topLeftLimit = m_leader.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_bottomRightLimit = m_follower.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_topRightLimit = m_follower.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+        m_bottomLeftLimit = m_leftHanger.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+        m_bottomRightLimit = m_rightHanger.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+        m_topLeftLimit = m_leftHanger.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+        m_topRightLimit = m_rightHanger.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
         m_topRightLimit.enableLimitSwitch(false); // TODO turn back on
         m_topLeftLimit.enableLimitSwitch(false);
@@ -85,33 +87,45 @@ public class HangerSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
             m_simulator = new ElevatorSimWrapper(elevatorSim,
-                new RevMotorControllerSimWrapper(m_leader),
-                RevEncoderSimWrapper.create(m_leader));
+                new RevMotorControllerSimWrapper(m_leftHanger),
+                RevEncoderSimWrapper.create(m_leftHanger));
         }
     }
 
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Hanger Height Encoder", getHangerHeight());
-        SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
+        SmartDashboard.putNumber("Hanger Height Encoder", getLeftHangerHeight());
         SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
         SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
+        SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
+        SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
 
         m_pid.updateIfChanged();
     }
 
-    public double getHangerSpeed() {
-        return m_leader.getAppliedOutput();
+    public double getLeftHangerSpeed() {
+        return m_leftHanger.getAppliedOutput();
     }
 
-    public double getHangerHeight() {
-        return m_encoder.getPosition();
+    public double getLeftHangerHeight() {
+        return m_leftEncoder.getPosition();
     }
 
-    public void setHangerSpeed(double speed) {
-        m_leader.set(speed);
+    public void setLeftHangerSpeed(double speed) {
+        m_leftHanger.set(speed);
+    }
+
+    public double getRightHangerSpeed() {
+        return m_rightHanger.getAppliedOutput();
+    }
+
+    public double getRightHangerHeight() {
+        return m_rightEncoder.getPosition();
+    }
+
+    public void setRightHangerSpeed(double speed) {
+        m_rightHanger.set(speed);
     }
 
     public void engageRatchet() {
@@ -141,6 +155,11 @@ public class HangerSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+    }
+
+    public void stop() {
+        m_leftHanger.set(0);
+        m_rightHanger.set(0);
     }
 }
 

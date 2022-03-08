@@ -3,7 +3,7 @@
   "encoder type": "Encoder Port",
   "encoding": false,
   "gearing denominator": 1.0,
-  "gearing numerator": 10.71,
+  "gearing numerator": 9.524,
   "gyro": "Pigeon",
   "gyro ctor": "20",
   "is drivetrain": true,
@@ -19,11 +19,11 @@
   ],
   "primary motor ports": [
     4,
-    9
+    5
   ],
   "primary motors inverted": [
     false,
-    true
+    false
   ],
   "secondary encoder inverted": false,
   "secondary encoder ports": [
@@ -31,12 +31,12 @@
     3
   ],
   "secondary motor ports": [
-    5,
+    9,
     10
   ],
   "secondary motors inverted": [
-    false,
-    false
+    true,
+    true
   ],
   "velocity measurement period": 100
 }
