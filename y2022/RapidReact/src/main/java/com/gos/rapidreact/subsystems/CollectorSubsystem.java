@@ -193,7 +193,7 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public boolean getIndexSensor() {
-        return m_indexSensor.get();
+        return !m_indexSensor.get();
     }
 }
 
