@@ -85,9 +85,10 @@ public class RobotContainer {
     private final HorizontalConveyorSubsystem m_horizontalConveyor = new HorizontalConveyorSubsystem();
     private final VerticalConveyorSubsystem m_verticalConveyor = new VerticalConveyorSubsystem();
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(); // NOPMD
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
+    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooterLimelight, m_collector, m_shooter, m_verticalConveyor); // NOPMD
+
 
 
     private final XboxController m_driverJoystick = new XboxController(0);
