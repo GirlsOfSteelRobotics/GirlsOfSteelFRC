@@ -31,6 +31,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDBoolean m_shooterAtSpeedLeft;
     private LEDFlash m_readyToShootLeft;
     private LEDAngleToTargetOverOrUnder m_angleToHubLeft;
+    private LEDFlash m_readyToHangLeft;
+
     private LEDBoolean m_intakeIndexRight;
     private LEDBoolean m_lowerConveyorIndexRight;
     private LEDBoolean m_upperConveyorIndexRight;
@@ -39,6 +41,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDBoolean m_shooterAtSpeedRight;
     private LEDFlash m_readyToShootRight;
     private LEDAngleToTargetOverOrUnder m_angleToHubRight;
+    private LEDFlash m_readyToHangRight;
 
     public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, CollectorSubsystem collector, ShooterSubsystem shooterSubsystem, HorizontalConveyorSubsystem horizontalConveyorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem) {
         m_intakeLimelight = intakeLimelightSubsystem;
@@ -58,6 +61,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_shooterAtSpeedLeft = new LEDBoolean(m_buffer, 18, 20, Color.kCoral, Color.kBlack);
         m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
         m_angleToHubLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 29, 10);
+        m_readyToHangLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 0, 29);
 
         m_intakeIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 2, Color.kOrange, Color.kBlack);
         m_lowerConveyorIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 3,  MIDDLE_INDEX_LED + 5, Color.kBlue, Color.kBlack);
@@ -67,6 +71,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_shooterAtSpeedRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 18, MIDDLE_INDEX_LED + 20, Color.kCoral, Color.kBlack);
         m_readyToShootRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 21, MIDDLE_INDEX_LED + 23);
         m_angleToHubRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
+        m_readyToHangRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 29);
+
 
         m_led.setLength(m_buffer.getLength());
 
@@ -117,6 +123,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
             if (m_shooterLimelight.angleError() < 0) {
                 m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
+            }
+
+            if (DriverStation.getMatchTime() > 135) {
+                m_readyToHangLeft.flash();
+                m_readyToHangRight.flash();
             }
         }
 
