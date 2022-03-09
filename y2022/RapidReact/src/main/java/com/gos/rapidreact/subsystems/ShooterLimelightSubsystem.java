@@ -12,6 +12,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final String LIMELIGHT_NAME = "limelight-terry"; // Dr Richardson is too long
     public static final double MOUNTING_ANGLE = 0; // TODO verify angle
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
+    public static final double MAX_SHOOTING_DISTANCE = 5; //meters
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;

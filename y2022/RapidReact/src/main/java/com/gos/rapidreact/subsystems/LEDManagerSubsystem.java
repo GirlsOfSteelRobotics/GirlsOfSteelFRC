@@ -87,33 +87,39 @@ public class LEDManagerSubsystem extends SubsystemBase {
         clear();
         if (DriverStation.isEnabled()) {
             m_intakeIndexLeft.checkBoolean(m_collector.getIndexSensor()); //TODO: make this longer than the time that it's turned on
+            m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
+
             m_lowerConveyorIndexLeft.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
+            m_lowerConveyorIndexRight.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
+
             m_upperConveyorIndexLeft.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
+            m_upperConveyorIndexRight.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
+
             if (m_intakeLimelight.distanceToCargo() < 3) { //3 meters
-                m_goToCargoLeft.flash(); }
-            m_allowableDistancetoHubLeft.checkBoolean(m_shooterLimelight.getDistanceToHub() < 5); //5 meters, change to max ability to shoot
+                m_goToCargoLeft.flash();
+                m_goToCargoRight.flash();
+            }
+
+            m_allowableDistancetoHubLeft.checkBoolean(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
+            m_allowableDistancetoHubRight.checkBoolean(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
+
             m_shooterAtSpeedLeft.checkBoolean(m_shooter.isShooterAtSpeed());
+            m_shooterAtSpeedRight.checkBoolean(m_shooter.isShooterAtSpeed());
+
             if (m_shooterLimelight.getDistanceToHub() < 5 && m_shooter.isShooterAtSpeed() && m_shooterLimelight.angleError() < 4) {
                 m_readyToShootLeft.flash();
+                m_readyToShootRight.flash();
             }
+
             if (m_shooterLimelight.angleError() > 0) {
                 m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
             }
 
-            m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
-            m_lowerConveyorIndexRight.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
-            m_upperConveyorIndexRight.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
-            if (m_intakeLimelight.distanceToCargo() < 3) {
-                m_goToCargoRight.flash(); }
-            m_allowableDistancetoHubRight.checkBoolean(m_shooterLimelight.getDistanceToHub() < 5); //5 meters, change to max ability to shoot
-            m_shooterAtSpeedRight.checkBoolean(m_shooter.isShooterAtSpeed());
             if (m_shooterLimelight.angleError() < 0) {
                 m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
             }
-            if (m_shooterLimelight.getDistanceToHub() < 5 && m_shooter.isShooterAtSpeed() && m_shooterLimelight.angleError() < 4) {
-                m_readyToShootRight.flash();
-            }
         }
+
         m_led.setData(m_buffer);
     }
 
