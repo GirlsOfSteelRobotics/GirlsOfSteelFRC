@@ -22,12 +22,12 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_pipeline; //which camera (color or cargo) to use
 
     public IntakeLimelightSubsystem() {
-        NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
+        NetworkTable georgeLimelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
 
-        m_horizontalAngle = limelightTable.getEntry("tx");
-        m_verticalAngle = limelightTable.getEntry("ty");
-        m_isVisible = limelightTable.getEntry("tv");
-        m_pipeline = limelightTable.getEntry("pipeline");
+        m_horizontalAngle = georgeLimelightTable.getEntry("tx");
+        m_verticalAngle = georgeLimelightTable.getEntry("ty");
+        m_isVisible = georgeLimelightTable.getEntry("tv");
+        m_pipeline = georgeLimelightTable.getEntry("pipeline");
     }
 
     public double distanceToCargo() {
