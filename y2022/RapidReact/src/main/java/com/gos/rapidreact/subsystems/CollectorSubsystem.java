@@ -35,6 +35,9 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double ARM_MASS_KG = Units.lbsToKilograms(5);
     private static final boolean SIMULATE_GRAVITY = true;
 
+    public static final double UP_ANGLE = 86;
+    public static final double DOWN_ANGLE = 4;
+
     // From SysId
     private static final double PIVOT_KS = 0.1831;
     //private static final double PIVOT_KV = 0.12391;
