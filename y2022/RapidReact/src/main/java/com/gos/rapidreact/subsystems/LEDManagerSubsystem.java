@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+@SuppressWarnings("PMD.TooManyFields")
 public class LEDManagerSubsystem extends SubsystemBase {
     private final IntakeLimelightSubsystem m_intakeLimelight;
     private final ShooterLimelightSubsystem m_shooterLimelight;
     private final CollectorSubsystem m_collector;
     private final ShooterSubsystem m_shooter;
-    private final HorizontalConveyorSubsystem m_horizonalConveyor;
     private final VerticalConveyorSubsystem m_verticalConveyor;
 
     private static final int MAX_INDEX_LED = 60;
@@ -23,32 +23,31 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private static final int PORT = Constants.LED;
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
-    private LEDBoolean m_intakeIndexLeft;
-    private LEDBoolean m_lowerConveyorIndexLeft;
-    private LEDBoolean m_upperConveyorIndexLeft;
-    private LEDFlash m_goToCargoLeft;
-    private LEDBoolean m_allowableDistancetoHubLeft;
-    private LEDBoolean m_shooterAtSpeedLeft;
-    private LEDFlash m_readyToShootLeft;
-    private LEDAngleToTargetOverOrUnder m_angleToHubLeft;
-    private LEDFlash m_readyToHangLeft;
+    private final LEDBoolean m_intakeIndexLeft;
+    private final LEDBoolean m_lowerConveyorIndexLeft;
+    private final LEDBoolean m_upperConveyorIndexLeft;
+    private final LEDFlash m_goToCargoLeft;
+    private final LEDBoolean m_allowableDistancetoHubLeft;
+    private final LEDBoolean m_shooterAtSpeedLeft;
+    private final LEDFlash m_readyToShootLeft;
+    private final LEDAngleToTargetOverOrUnder m_angleToHubLeft;
+    private final LEDFlash m_readyToHangLeft;
 
-    private LEDBoolean m_intakeIndexRight;
-    private LEDBoolean m_lowerConveyorIndexRight;
-    private LEDBoolean m_upperConveyorIndexRight;
-    private LEDFlash m_goToCargoRight;
-    private LEDBoolean m_allowableDistancetoHubRight;
-    private LEDBoolean m_shooterAtSpeedRight;
-    private LEDFlash m_readyToShootRight;
-    private LEDAngleToTargetOverOrUnder m_angleToHubRight;
-    private LEDFlash m_readyToHangRight;
+    private final LEDBoolean m_intakeIndexRight;
+    private final LEDBoolean m_lowerConveyorIndexRight;
+    private final LEDBoolean m_upperConveyorIndexRight;
+    private final LEDFlash m_goToCargoRight;
+    private final LEDBoolean m_allowableDistancetoHubRight;
+    private final LEDBoolean m_shooterAtSpeedRight;
+    private final LEDFlash m_readyToShootRight;
+    private final LEDAngleToTargetOverOrUnder m_angleToHubRight;
+    private final LEDFlash m_readyToHangRight;
 
-    public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, CollectorSubsystem collector, ShooterSubsystem shooterSubsystem, HorizontalConveyorSubsystem horizontalConveyorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem) {
+    public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, CollectorSubsystem collector, ShooterSubsystem shooterSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem) {
         m_intakeLimelight = intakeLimelightSubsystem;
         m_shooterLimelight = shooterLimelightSubsystem;
         m_collector = collector;
         m_shooter = shooterSubsystem;
-        m_horizonalConveyor = horizontalConveyorSubsystem;
         m_verticalConveyor = verticalConveyorSubsystem;
 
         m_led = new AddressableLED(PORT);
@@ -119,6 +118,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
             if (m_shooterLimelight.angleError() > 0) {
                 m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
+                m_angleToHubLeft.angleToTarget(m_shooterLimelight.angleError());
             }
 
             if (m_shooterLimelight.angleError() < 0) {

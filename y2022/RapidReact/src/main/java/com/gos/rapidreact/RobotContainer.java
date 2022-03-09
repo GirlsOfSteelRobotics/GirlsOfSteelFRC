@@ -85,7 +85,7 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
-    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooterLimelight, m_collector, m_shooter, m_horizontalConveyor, m_verticalConveyor); // NOPMD
+    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooterLimelight, m_collector, m_shooter, m_verticalConveyor); // NOPMD
 
 
 
