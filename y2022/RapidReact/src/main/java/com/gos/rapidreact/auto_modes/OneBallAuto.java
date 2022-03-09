@@ -16,12 +16,16 @@ import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM
 
 public class OneBallAuto extends SequentialCommandGroup {
 
+    private static final double VERTICAL_CONVEYOR_TIMEOUT = 3;
     private static final double DRIVE_DISTANCE = Units.inchesToMeters(30);
     private static final double ALLOWABLE_ERROR = 0.05;
 
-    public OneBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, double seconds) {
-        super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
-            new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(seconds),
+    //Robot flat on wall and rolled back until the corners of the bumper are on the edge of the tape lines
+    //Three Ariella Feet from the wall
+    public OneBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor) {
+        super(
+            new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
+            new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(VERTICAL_CONVEYOR_TIMEOUT),
             new DriveDistanceCommand(chassis, DRIVE_DISTANCE, ALLOWABLE_ERROR));
 
     }

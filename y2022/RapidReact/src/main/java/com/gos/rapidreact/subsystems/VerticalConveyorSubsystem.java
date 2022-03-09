@@ -65,12 +65,11 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     }
 
     public boolean getUpperIndexSensor() {
-        return m_indexSensorUpper.get();
-
+        return !m_indexSensorUpper.get();
     }
 
     public boolean getLowerIndexSensor() {
-        return m_indexSensorLower.get();
+        return !m_indexSensorLower.get();
     }
 
 }
