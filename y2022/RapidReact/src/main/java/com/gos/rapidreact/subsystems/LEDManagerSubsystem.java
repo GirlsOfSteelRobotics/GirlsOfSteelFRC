@@ -1,7 +1,7 @@
 package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.led.LEDAngleToTarget;
+import com.gos.rapidreact.led.LEDAngleToTargetOverOrUnder;
 import com.gos.rapidreact.led.LEDBoolean;
 import com.gos.rapidreact.led.LEDFlash;
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-@SuppressWarnings("PMD")
 public class LEDManagerSubsystem extends SubsystemBase {
     private final IntakeLimelightSubsystem m_intakeLimelight;
     private final ShooterLimelightSubsystem m_shooterLimelight;
@@ -31,7 +30,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDBoolean m_allowableDistancetoHubLeft;
     private LEDBoolean m_shooterAtSpeedLeft;
     private LEDFlash m_readyToShootLeft;
-    private LEDAngleToTarget m_angleToHubLeft;
+    private LEDAngleToTargetOverOrUnder m_angleToHubLeft;
     private LEDBoolean m_intakeIndexRight;
     private LEDBoolean m_lowerConveyorIndexRight;
     private LEDBoolean m_upperConveyorIndexRight;
@@ -39,7 +38,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private LEDBoolean m_allowableDistancetoHubRight;
     private LEDBoolean m_shooterAtSpeedRight;
     private LEDFlash m_readyToShootRight;
-    private LEDAngleToTarget m_angleToHubRight;
+    private LEDAngleToTargetOverOrUnder m_angleToHubRight;
 
     public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, CollectorSubsystem collector, ShooterSubsystem shooterSubsystem, HorizontalConveyorSubsystem horizontalConveyorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem) {
         m_intakeLimelight = intakeLimelightSubsystem;
@@ -58,7 +57,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
         m_shooterAtSpeedLeft = new LEDBoolean(m_buffer, 18, 20, Color.kCoral, Color.kBlack);
         m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
-        m_angleToHubLeft = new LEDAngleToTarget(m_buffer, Color.kRed, 25, 29, 10);
+        m_angleToHubLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 29, 10);
 
         m_intakeIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 2, Color.kOrange, Color.kBlack);
         m_lowerConveyorIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 3,  MIDDLE_INDEX_LED + 5, Color.kBlue, Color.kBlack);
@@ -67,7 +66,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_allowableDistancetoHubRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 14, MIDDLE_INDEX_LED + 16, Color.kWhite, Color.kBlack);
         m_shooterAtSpeedRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 18, MIDDLE_INDEX_LED + 20, Color.kCoral, Color.kBlack);
         m_readyToShootRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 21, MIDDLE_INDEX_LED + 23);
-        m_angleToHubRight = new LEDAngleToTarget(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
+        m_angleToHubRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
 
         m_led.setLength(m_buffer.getLength());
 
