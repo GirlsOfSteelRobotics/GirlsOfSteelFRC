@@ -54,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leader.burnFlash();
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.1);
+            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
             m_simulator = new FlywheelSimWrapper(flywheelSim,
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));

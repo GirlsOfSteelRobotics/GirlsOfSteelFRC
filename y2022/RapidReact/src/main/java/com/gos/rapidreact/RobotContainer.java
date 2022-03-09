@@ -6,15 +6,19 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.AutomatedVerticalConveyorCommand;
+import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.DriveDistanceCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
+import com.gos.rapidreact.commands.debug.RightHangerDownCommand;
+import com.gos.rapidreact.commands.debug.RightHangerUpCommand;
 import com.gos.rapidreact.commands.ShootFromTableCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.GoToHubDistanceCommand;
-import com.gos.rapidreact.commands.HangerDownCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerDownCommand;
 import com.gos.rapidreact.commands.HangerPIDCommand;
-import com.gos.rapidreact.commands.HangerUpCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerUpCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.ShooterFeederCommandGroup;
@@ -88,7 +92,7 @@ public class RobotContainer {
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
 
-    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor);
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -148,6 +152,11 @@ public class RobotContainer {
         testCommands.add("Drive Dist 60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(60), Units.inchesToMeters(2)));
         testCommands.add("Drive Dist -60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(-60), Units.inchesToMeters(2)));
 
+        testCommands.add("Right Hang Up", new RightHangerUpCommand(m_hanger));
+        testCommands.add("Right Hang Down", new RightHangerDownCommand(m_hanger));
+        testCommands.add("Left Hang Up", new LeftHangerUpCommand(m_hanger));
+        testCommands.add("Left Hang Down", new LeftHangerDownCommand(m_hanger));
+
         // Trajectories
         trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
         trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
@@ -177,8 +186,6 @@ public class RobotContainer {
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
         limelightGoToCargo.whenPressed(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight));
-        new Button(() -> m_driverJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new HangerUpCommand(m_hanger)); //left trigger
-        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new HangerDownCommand(m_hanger)); //right trigger
 
         //operator
         final JoystickButton collectorDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value); //left bumper
@@ -189,8 +196,10 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
-        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM));
+        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM)).whenReleased(() -> m_shooter.setShooterSpeed(0));
         new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterFeederCommandGroup(m_verticalConveyor, m_shooter, 10));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new HangerUpCommand(m_hanger));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new HangerDownCommand(m_hanger));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new FeederVerticalConveyorBackwardCommand(m_verticalConveyor));
         final JoystickButton automatedVerticalConveyor = new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value);
@@ -221,9 +230,9 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.INTAKE_SPEED, m_collector::getPivotSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.HANGER_SPEED, m_hanger::getHangerSpeed, null);
+                SmartDashboardNames.HANGER_SPEED, m_hanger::getLeftHangerSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.HANGER_HEIGHT, m_hanger::getHangerHeight, null);
+                SmartDashboardNames.HANGER_HEIGHT, m_hanger::getLeftHangerHeight, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.HORIZONTAL_CONVEYOR_SPEED, m_horizontalConveyor::getHorizontalConveyorSpeed, null);
             builder.addDoubleProperty(

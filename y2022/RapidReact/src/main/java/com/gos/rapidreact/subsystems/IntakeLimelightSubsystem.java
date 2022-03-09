@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLimelightSubsystem extends SubsystemBase {
 
-    public static final String LIMELIGHT_NAME = "george"; // TODO disambiguate with shooter limelight
+    public static final String LIMELIGHT_NAME = "limelight-george";
 
     public static final double MOUNTING_ANGLE = 0; // TODO verify angle
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height

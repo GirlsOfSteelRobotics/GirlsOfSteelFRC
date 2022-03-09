@@ -27,12 +27,12 @@ public class HangerPIDCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(m_hangerHeight - m_hanger.getHangerHeight());
+        double error = Math.abs(m_hangerHeight - m_hanger.getLeftHangerHeight());
         return error < HangerSubsystem.ALLOWABLE_ERROR;
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_hanger.setHangerSpeed(0);
+        m_hanger.stop();
     }
 }
