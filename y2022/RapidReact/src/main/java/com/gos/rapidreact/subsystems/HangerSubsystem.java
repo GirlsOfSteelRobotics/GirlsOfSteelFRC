@@ -27,7 +27,7 @@ public class HangerSubsystem extends SubsystemBase {
     //these constants are all not correct
     public static final int ENGAGED_RATCHET_ANGLE = 90;
     public static final int DISENGAGED_RATCHET_ANGLE = 0;
-    public static final double HANGER_UP_SPEED = 0.5;
+    public static final double HANGER_UP_SPEED = 1.0;
     public static final double HANGER_DOWN_SPEED = -HANGER_UP_SPEED;
     private static final double GEAR = 80;
     public static final double ALLOWABLE_ERROR = Units.inchesToMeters(5);
