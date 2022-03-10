@@ -2,6 +2,7 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -44,6 +45,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = new PropertyManager.DoubleProperty("To Hub Angle Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = new PropertyManager.DoubleProperty("To Hub Distance PID", 0);
+
+    private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = new PropertyManager.DoubleProperty("OpenLoopRampRate", 0.5);
+
+    private final HeavyDoubleProperty m_openLoopRampRateProperty;
 
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
@@ -126,8 +131,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
 
-        m_leaderLeft.setOpenLoopRampRate(0.5);
-        m_leaderRight.setOpenLoopRampRate(0.5);
+        m_openLoopRampRateProperty = new HeavyDoubleProperty((double val) -> {
+            m_leaderLeft.setOpenLoopRampRate(val);
+            m_leaderRight.setOpenLoopRampRate(val);
+        }, DRIVER_OL_RAMP_RATE);
 
 
         // Smart Motion stuff
@@ -187,6 +194,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
+        m_openLoopRampRateProperty.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {

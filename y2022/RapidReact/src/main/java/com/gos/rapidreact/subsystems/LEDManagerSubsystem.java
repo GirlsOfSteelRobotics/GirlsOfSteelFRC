@@ -4,6 +4,7 @@ import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.led.LEDAngleToTargetOverOrUnder;
 import com.gos.rapidreact.led.LEDBoolean;
 import com.gos.rapidreact.led.LEDFlash;
+import com.gos.rapidreact.led.LEDRainbow;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -23,6 +24,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private static final int PORT = Constants.LED;
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
+    private final LEDRainbow m_rainbow;
     private final LEDBoolean m_intakeIndexLeft;
     private final LEDBoolean m_lowerConveyorIndexLeft;
     private final LEDBoolean m_upperConveyorIndexLeft;
@@ -72,6 +74,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_angleToHubRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
         m_readyToHangRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 29);
 
+        m_rainbow = new LEDRainbow(29, m_buffer, 0);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -87,10 +90,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     public void periodic() {
         clear();
-        if (DriverStation.isEnabled()) {
+        if (DriverStation.isDisabled()) {
+            m_rainbow.rainbow();
+        }
+        else {
             m_intakeIndexLeft.checkBoolean(m_collector.getIndexSensor()); //TODO: make this longer than the time that it's turned on
             m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
 
