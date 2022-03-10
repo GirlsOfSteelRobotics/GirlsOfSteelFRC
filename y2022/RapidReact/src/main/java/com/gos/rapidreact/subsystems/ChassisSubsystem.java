@@ -88,8 +88,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private DifferentialDrivetrainSimWrapper m_simulator;
     private LimelightSim m_limelightSim;
 
-
-
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);

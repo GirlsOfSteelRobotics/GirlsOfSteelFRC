@@ -35,6 +35,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double ARM_MASS_KG = Units.lbsToKilograms(5);
     private static final boolean SIMULATE_GRAVITY = true;
 
+    // TODO play with these numbers for optimal ball pickup
     public static final double UP_ANGLE = 86;
     public static final double DOWN_ANGLE = 4;
 

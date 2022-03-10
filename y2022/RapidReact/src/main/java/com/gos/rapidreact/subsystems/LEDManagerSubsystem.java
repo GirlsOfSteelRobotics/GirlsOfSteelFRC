@@ -90,12 +90,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     public void periodic() {
         clear();
         if (DriverStation.isDisabled()) {
-            m_rainbow.rainbow(); }
-        if (DriverStation.isEnabled()) {
+            m_rainbow.rainbow();
+        }
+        else {
             m_intakeIndexLeft.checkBoolean(m_collector.getIndexSensor()); //TODO: make this longer than the time that it's turned on
             m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
 
