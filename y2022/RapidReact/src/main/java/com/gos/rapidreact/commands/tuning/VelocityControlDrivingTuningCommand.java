@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class VelocityControlDrivingTuningCommand extends CommandBase {
 
     private final ChassisSubsystem m_chassis;
-    private static final PropertyManager.IProperty<Double> GOAL_VELOCITY_FPS = new PropertyManager.DoubleProperty("Chassis Tune Velocity (ft/s)", 0);
+    private static final PropertyManager.IProperty<Double> GOAL_VELOCITY_FPS = PropertyManager.createDoubleProperty(false, "Chassis Tune Velocity (ft/s)", 0);
 
     public VelocityControlDrivingTuningCommand(ChassisSubsystem chassis) {
         this.m_chassis = chassis;
