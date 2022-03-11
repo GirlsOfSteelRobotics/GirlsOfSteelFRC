@@ -7,7 +7,7 @@ import com.gos.rapidreact.subsystems.ShooterSubsystem;
 
 public class TuneShooterGoalRPMCommand extends CommandBase {
     private final ShooterSubsystem m_shooter;
-    private static final PropertyManager.IProperty<Double> SHOOTER_GOAL = new PropertyManager.DoubleProperty("Tune Shooter RPM Goal", 0);
+    private static final PropertyManager.IProperty<Double> SHOOTER_GOAL = PropertyManager.createDoubleProperty(false, "Tune Shooter RPM Goal", 0);
 
     public TuneShooterGoalRPMCommand(ShooterSubsystem shooterSubsystem) {
         this.m_shooter = shooterSubsystem;

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class TeleopArcadeChassisCommand extends CommandBase {
-    private static final PropertyManager.DoubleProperty SLOW_MULTIPLIER = new PropertyManager.DoubleProperty("TeleDriveSlowMult", 0.5);
+    private static final PropertyManager.IProperty<Double> SLOW_MULTIPLIER = PropertyManager.createDoubleProperty(false, "TeleDriveSlowMult", 0.5);
     private final ChassisSubsystem m_chassis;
     private final XboxController m_joystick;
 
