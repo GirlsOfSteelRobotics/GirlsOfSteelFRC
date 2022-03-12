@@ -196,9 +196,9 @@ public class RobotContainer {
         new POVButton(m_operatorJoystick, 0).whileHeld(new CollectorUpCommand(m_collector)); //left bumper
         new POVButton(m_operatorJoystick, 180).whileHeld(new CollectorDownCommand(m_collector));
         final JoystickButton pivotPIDUp = new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value);
-        pivotPIDUp.whenPressed(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.UP_ANGLE));
+        pivotPIDUp.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.UP_ANGLE));
         final JoystickButton pivotPIDDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value);
-        pivotPIDDown.whenPressed(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE));
+        pivotPIDDown.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE));
         new Button(() -> m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
@@ -233,7 +233,7 @@ public class RobotContainer {
         public void initSendable(SendableBuilder builder) {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
             builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_ANGLE, m_collector::getIntakeAngleDegrees, null);
+                SmartDashboardNames.INTAKE_ANGLE, m_collector::getIntakeLeftAngleDegrees, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.INTAKE_SPEED, m_collector::getPivotSpeed, null);
             builder.addDoubleProperty(
