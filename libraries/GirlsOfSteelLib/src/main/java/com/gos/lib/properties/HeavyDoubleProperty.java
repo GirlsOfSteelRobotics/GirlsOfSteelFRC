@@ -19,13 +19,15 @@ public class HeavyDoubleProperty {
         m_setter = setter;
         m_property = property;
         m_lastValue = property.getValue();
+
+        updateIfChanged(true);
     }
 
-    public void updateIfChanged() {
+    public final void updateIfChanged() {
         updateIfChanged(false);
     }
 
-    public void updateIfChanged(boolean forceUpdate) {
+    public final void updateIfChanged(boolean forceUpdate) {
         double newValue = m_property.getValue();
         if (newValue != m_lastValue || forceUpdate) {
             System.out.println("Value for " + m_property.getName() + " changed from " + m_lastValue + " to " + newValue);

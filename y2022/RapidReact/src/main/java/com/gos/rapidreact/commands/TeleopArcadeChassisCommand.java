@@ -1,11 +1,13 @@
 package com.gos.rapidreact.commands;
 
+import com.gos.lib.properties.PropertyManager;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class TeleopArcadeChassisCommand extends CommandBase {
+    private static final PropertyManager.IProperty<Double> SLOW_MULTIPLIER = PropertyManager.createDoubleProperty(false, "TeleDriveSlowMult", 0.5);
     private final ChassisSubsystem m_chassis;
     private final XboxController m_joystick;
 
@@ -23,7 +25,13 @@ public class TeleopArcadeChassisCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassis.setArcadeDrive(-m_joystick.getLeftY(), m_joystick.getRightX());
+        double throttle = -m_joystick.getLeftY();
+        double steer = m_joystick.getRightX();
+        if (m_joystick.getRightTriggerAxis() > 0.5) {
+            throttle *= SLOW_MULTIPLIER.getValue();
+            steer *= SLOW_MULTIPLIER.getValue();
+        }
+        m_chassis.setArcadeDrive(throttle, steer);
     }
 
     @Override

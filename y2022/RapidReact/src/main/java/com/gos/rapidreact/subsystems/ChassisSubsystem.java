@@ -2,10 +2,12 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
+import com.gos.rapidreact.sim.LimelightSim;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.coordinate_gui.RobotPositionPublisher;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -29,19 +32,23 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 
 
-
+@SuppressWarnings("PMD.TooManyFields")
 public class ChassisSubsystem extends SubsystemBase {
 
     //TODO: change constants to match this year's robot
-    private static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
-    private static final double GEAR_RATIO = 14.0 / 2;
+    private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
+    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
-    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = PropertyManager.createDoubleProperty(false, "To XY Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
 
-    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = new PropertyManager.DoubleProperty("To Hub Angle Turn PID", 0);
-    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = new PropertyManager.DoubleProperty("To Hub Distance PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = PropertyManager.createDoubleProperty(false, "To Hub Angle Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To Hub Distance PID", 0);
+
+    private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = PropertyManager.createDoubleProperty(false, "OpenLoopRampRate", 0.5);
+
+    private final HeavyDoubleProperty m_openLoopRampRateProperty;
 
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
@@ -62,13 +69,13 @@ public class ChassisSubsystem extends SubsystemBase {
     private final WPI_PigeonIMU m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
-    private DifferentialDrivetrainSimWrapper m_simulator;
+    private final RobotPositionPublisher m_coordinateGuiPublisher;
     private final Field2d m_field;
 
     //constants for trajectory
-    public static final double KS_VOLTS = 0.179;
-    public static final double KV_VOLT_SECONDS_PER_METER = 0.0653;
-    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.00754;
+    public static final double KS_VOLTS = 0.1946;
+    public static final double KV_VOLT_SECONDS_PER_METER = 2.6079;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
     public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
     public static final double MAX_VOLTAGE = 10;
@@ -76,6 +83,10 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double K_TRACKWIDTH_METERS = 1.1554881713809029;
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
+
+    // Sim
+    private DifferentialDrivetrainSimWrapper m_simulator;
+    private LimelightSim m_limelightSim;
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -116,19 +127,19 @@ public class ChassisSubsystem extends SubsystemBase {
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        m_coordinateGuiPublisher = new RobotPositionPublisher();
 
         m_field = new Field2d();
 
-        m_leaderLeft.setOpenLoopRampRate(0.5);
-        m_leaderRight.setOpenLoopRampRate(0.5);
+        m_openLoopRampRateProperty = new HeavyDoubleProperty((double val) -> {
+            m_leaderLeft.setOpenLoopRampRate(val);
+            m_leaderRight.setOpenLoopRampRate(val);
+        }, DRIVER_OL_RAMP_RATE);
 
 
         // Smart Motion stuff
         m_leftProperties = setupPidValues(m_leftPidController);
         m_rightProperties = setupPidValues(m_rightPidController);
-
-        m_leftProperties.updateIfChanged(true);
-        m_rightProperties.updateIfChanged(true);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -144,6 +155,8 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
+
+            m_limelightSim = new LimelightSim();
         }
 
         SmartDashboard.putData(m_field);
@@ -156,10 +169,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(0)
+            .addP(0.00003) //0.0012776
             .addI(0)
             .addD(0)
-            .addFF(0)
+            .addFF(0.215)
             .addMaxVelocity(Units.inchesToMeters(72))
             .addMaxAcceleration(Units.inchesToMeters(144))
             .build();
@@ -169,6 +182,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
+        m_coordinateGuiPublisher.publish(m_odometry.getPoseMeters());
         SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
         SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
@@ -177,6 +191,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
+        m_openLoopRampRateProperty.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -204,11 +219,26 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity);
+        double staticFrictionLeft = KS_VOLTS * Math.signum(leftVelocity); //arbFeedforward
+        double staticFrictionRight = KS_VOLTS * Math.signum(rightVelocity);
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight);
         m_drive.feed();
 
-        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity);
+        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
+    }
+
+    public void trapezoidMotionControl(double leftDistance, double rightDistance) {
+        // System.out.println("Driving velocity");
+        double leftError = leftDistance - getLeftEncoderDistance();
+        double rightError = rightDistance - getRightEncoderDistance();
+        double staticFrictionLeft = KS_VOLTS * Math.signum(leftError);
+        double staticFrictionRight = KS_VOLTS * Math.signum(rightError);
+        m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionLeft);
+        m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionRight);
+        m_drive.feed();
+
+        System.out.println("Left Position Goal" + leftDistance + ", Right Position Goal" + rightDistance + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
     }
 
     public double getLeftEncoderSpeed() {
@@ -217,6 +247,14 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public double getRightEncoderSpeed() {
         return m_rightEncoder.getVelocity();
+    }
+
+    public double getLeftEncoderDistance() {
+        return m_leftEncoder.getPosition();
+    }
+
+    public double getRightEncoderDistance() {
+        return m_rightEncoder.getPosition();
     }
 
     public double getYawAngle() {
@@ -293,5 +331,6 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
+        m_limelightSim.update(m_odometry.getPoseMeters());
     }
 }

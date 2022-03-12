@@ -3,10 +3,10 @@
   "encoder type": "Encoder Port",
   "encoding": false,
   "gearing denominator": 1.0,
-  "gearing numerator": 10.71,
-  "gyro": "Pigeon",
-  "gyro ctor": "20",
-  "is drivetrain": true,
+  "gearing numerator": 756.0,
+  "gyro": "Analog Gyro",
+  "gyro ctor": "0",
+  "is drivetrain": false,
   "motor controllers": [
     "SPARK MAX (Brushless)",
     "SPARK MAX (Brushless)"
@@ -18,8 +18,8 @@
     1
   ],
   "primary motor ports": [
-    4,
-    9
+    13,
+    11
   ],
   "primary motors inverted": [
     false,
@@ -31,8 +31,8 @@
     3
   ],
   "secondary motor ports": [
-    5,
-    10
+    2,
+    3
   ],
   "secondary motors inverted": [
     false,

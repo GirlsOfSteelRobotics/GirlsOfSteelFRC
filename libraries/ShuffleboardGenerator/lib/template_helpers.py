@@ -5,6 +5,8 @@ import os
 
 
 def _lower_first_char(input_str):
+    if len(input_str) == 0:
+        raise Exception("Cannot use an empty string for a field name!")
     return input_str[0].lower() + input_str[1:]
 
 
@@ -15,6 +17,9 @@ def camel_to_snake(input_str):
 
 def _upper_snake_to_camel(input_str):
     components = input_str.lower().split('_')
+    if len(components) == 0:
+        raise Exception("Cannot use an empty string!")
+
     output = components[0] + ''.join(x.title() for x in components[1:])
     output = output[0].upper() + output[1:]
     return output
@@ -73,7 +78,9 @@ def _on_key_released(child, entry, array_index = None):
 
     if entry['type'] == "double":
         if 'sim_value' in entry:
-            template_file = "java/keyboard_templates/key_released_sim.txt"
+            template_file = "java/keyboard_templates/key_released_sim_value.txt"
+        elif "sim_incr" in entry:
+            template_file = "java/keyboard_templates/key_released_sim_incr.txt"
 
     elif entry['type'] == "boolean":
         template_file = "java/keyboard_templates/key_released_boolean.txt"
@@ -95,6 +102,20 @@ def _on_key_released(child, entry, array_index = None):
     output = template.render(child=child, entry=entry)
 
     return output
+
+
+def _get_keys(child, entry, array_index=None):
+    if entry["type"] == "double":
+        return f"{entry['sim_keys'][0]}/{entry['sim_keys'][1]}"
+    elif entry["type"] == "boolean":
+        return f"{entry['sim_keys']}"
+    elif _is_array(entry):
+        un_arrayed = entry.copy()
+        un_arrayed["type"] = un_arrayed["type"][:-2]
+        un_arrayed["name"] += str(array_index)
+        return _get_keys(child, un_arrayed)
+    else:
+        return "UNKNOWN"
 
 
 def _on_key_pressed(child, entry, array_index=None):
@@ -135,7 +156,8 @@ def _add_template_functions(template):
     template.globals['package_to_dir'] = package_to_dir
     template.globals['cap_first_char'] = _cap_first_char
     template.globals['on_key_pressed'] = _on_key_pressed
-    template.globals['on_key_released'] = _on_key_released
+    template.globals["get_keys"] = _get_keys
+    template.globals["on_key_released"] = _on_key_released
     template.globals['getter_name'] = _getter_name
     template.globals['default_value_lookup'] = _default_value_lookup
     template.globals['is_array'] = _is_array
