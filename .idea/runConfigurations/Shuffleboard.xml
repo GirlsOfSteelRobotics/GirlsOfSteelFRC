@@ -2,14 +2,16 @@
   <configuration default="false" name="Shuffleboard" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/y2021/OutreachBot" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/libraries/GirlsOfSteelLib" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="ShuffleBoard" />
+      <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
         <list />
       </option>
       <option name="taskNames">
-        <list />
+        <list>
+          <option value="ShuffleBoard" />
+        </list>
       </option>
       <option name="vmOptions" />
     </ExternalSystemSettings>

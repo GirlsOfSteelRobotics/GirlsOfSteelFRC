@@ -12,6 +12,7 @@ public class LimelightGoToCargoCommand extends CommandBase {
     private final CollectorSubsystem m_collector;
     private boolean m_atPosition;
 
+
     public LimelightGoToCargoCommand(ChassisSubsystem chassisSubsystem, IntakeLimelightSubsystem intakeLimelightSubsystem, CollectorSubsystem collectorSubsystem) {
         this.m_chassis = chassisSubsystem;
         this.m_limelight = intakeLimelightSubsystem;
@@ -27,7 +28,7 @@ public class LimelightGoToCargoCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_limelight.isVisible()) {
+        if (m_limelight.isVisible() && m_limelight.distanceToCargo() < ChassisSubsystem.TO_XY_MAX_DISTANCE.getValue()) {
             m_atPosition = m_chassis.driveAndTurnPID(m_limelight.distanceToCargo(), m_limelight.getAngle());
             m_collector.rollerIn();
         }

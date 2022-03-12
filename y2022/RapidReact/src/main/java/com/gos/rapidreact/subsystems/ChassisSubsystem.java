@@ -42,10 +42,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
+    // private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
 
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
-
+    public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
 
     private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = PropertyManager.createDoubleProperty(false, "To Hub Angle Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To Hub Distance PID", 0);
@@ -308,7 +308,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double allowableDistanceError = Units.inchesToMeters(12.0); //for go to cargo
         double allowableAngleError = Units.degreesToRadians(5.0);
 
-        double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
+        // double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
         double steer = m_toCargoPID.calculate(0, angle);
 
         // System.out.println("speed   " + speed);
@@ -317,7 +317,8 @@ public class ChassisSubsystem extends SubsystemBase {
         // System.out.println("angle   " + Math.toDegrees(angleError));
         // System.out.println();
 
-        speed = TO_XY_DISTANCE_SPEED.getValue();
+        // HACK - Always use the same speed
+        double speed = TO_XY_DISTANCE_SPEED.getValue();
 
         SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
 
