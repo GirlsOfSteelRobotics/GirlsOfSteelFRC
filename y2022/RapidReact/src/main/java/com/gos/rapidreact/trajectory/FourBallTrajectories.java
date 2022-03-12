@@ -3,7 +3,7 @@ package com.gos.rapidreact.trajectory;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class FourBallTrajectory {
+public class FourBallTrajectories {
 
     public static Command fourBallPart1(ChassisSubsystem chassis) {
         return TrajectoryUtils.startTrajectory("PathWeaver/Paths/4Ball_Part1", TrajectoryUtils.getTrajectoryConfig(), chassis);
