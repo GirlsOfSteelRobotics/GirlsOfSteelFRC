@@ -29,23 +29,21 @@ public class FourBallAutoCommandGroup extends SequentialCommandGroup {
                 .alongWith(new CollectorDownCommand(collector)).withTimeout(1),
             FourBallTrajectory.fourBallPart1(chassis)
                 .alongWith(new RollerInCommand(collector).withTimeout(2)),
-            new HorizontalConveyorForwardCommand(horizontalConveyor),
+            new HorizontalConveyorForwardCommand(horizontalConveyor).withTimeout(2),
             FourBallTrajectory.fourBallPart2(chassis),
-            new HorizontalConveyorForwardCommand(horizontalConveyor),
+            new HorizontalConveyorForwardCommand(horizontalConveyor).withTimeout(2),
             new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor)
-                .alongWith(new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM)),
+                .alongWith(new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM)).withTimeout(1),
             FourBallTrajectory.fourBallPart3(chassis)
                 .alongWith(new RollerInCommand(collector).withTimeout(2)),
-            new HorizontalConveyorForwardCommand(horizontalConveyor),
+            new HorizontalConveyorForwardCommand(horizontalConveyor).withTimeout(2),
             FourBallTrajectory.fourBallPart4(chassis),
-            new HorizontalConveyorForwardCommand(horizontalConveyor),
-            new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM)
-//            new FeederVerticalConveyorForwardCommand(verticalConveyor)
-//                .alongWith(new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM)
-                );
-
-
+            new HorizontalConveyorForwardCommand(horizontalConveyor).withTimeout(2),
+            new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM),
+            new FeederVerticalConveyorForwardCommand(verticalConveyor)
+                .alongWith(new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM)
+                ));
 
     }
 }
