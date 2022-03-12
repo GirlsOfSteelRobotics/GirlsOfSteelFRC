@@ -21,8 +21,8 @@ import java.util.StringTokenizer;
 
 public class TrajectoryUtils {
 
-    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(48); //per second
-    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(48);
+    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(84); //per second
+    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(72);
 
     //reads file & spits out trajectory
     public static Trajectory loadingTrajectory(String fileName, TrajectoryConfig trajectoryConfig) {

@@ -44,7 +44,6 @@ import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import com.gos.rapidreact.trajectory.TestTrajectoryStraight;
-import com.gos.rapidreact.trajectory.TrajectoryB5;
 import com.gos.rapidreact.trajectory.TrajectoryB54;
 import com.gos.rapidreact.trajectory.TestTrajectoryCurve;
 import com.gos.rapidreact.trajectory.TestTrajectorySCurve;
@@ -160,9 +159,9 @@ public class RobotContainer {
 
         // Trajectories
         trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
-        trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
-        trajecCommands.add("TestCurve", TrajectoryCurve.curve(m_chassis));
-        trajecCommands.add("TestSCurve", TrajectorySCurve.scurve(m_chassis));
+        // trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
+        trajecCommands.add("TestCurve", TestTrajectoryCurve.curve(m_chassis));
+        trajecCommands.add("TestSCurve", TestTrajectorySCurve.scurve(m_chassis));
         trajecCommands.add("TestStraight", TestTrajectoryStraight.backFrom7(m_chassis));
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
