@@ -37,6 +37,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser.addOption("One Ball Auto", new OneBallAuto(chassis, shooter, verticalConveyor));
         m_sendableChooser.addOption("Two Ball Auto", new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector));
         m_sendableChooser.addOption("Three Ball Auto", new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector));
+        m_sendableChooser.addOption("Four Ball Auto", new FourBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector));
+        m_sendableChooser.addOption("Five Ball Auto", new FiveBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector));
     }
 
 
