@@ -17,7 +17,7 @@ import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM
 
 public class FourBallAutoCommandGroup extends SequentialCommandGroup {
     private static final double FIRST_SHOT_RPM = DEFAULT_SHOOTER_RPM;
-    private static final double SECOND_SHOT_RPM = DEFAULT_SHOOTER_RPM;
+    // private static final double SECOND_SHOT_RPM = DEFAULT_SHOOTER_RPM;
 
     public FourBallAutoCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         super(
