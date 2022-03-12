@@ -42,7 +42,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = PropertyManager.createDoubleProperty(false, "To XY Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
 
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
@@ -319,6 +318,8 @@ public class ChassisSubsystem extends SubsystemBase {
         // System.out.println();
 
         speed = TO_XY_DISTANCE_SPEED.getValue();
+
+        SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
 
         setArcadeDrive(speed, steer);
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
