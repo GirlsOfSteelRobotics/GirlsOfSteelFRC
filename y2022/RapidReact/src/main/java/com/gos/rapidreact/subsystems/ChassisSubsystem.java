@@ -42,16 +42,16 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
-    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = PropertyManager.createDoubleProperty(false, "To XY Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
 
-    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = new PropertyManager.DoubleProperty("To XY Dist Speed", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
 
 
-    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = new PropertyManager.DoubleProperty("To Hub Angle Turn PID", 0);
-    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = new PropertyManager.DoubleProperty("To Hub Distance PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = PropertyManager.createDoubleProperty(false, "To Hub Angle Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To Hub Distance PID", 0);
 
-    private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = new PropertyManager.DoubleProperty("OpenLoopRampRate", 0.5);
+    private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = PropertyManager.createDoubleProperty(false, "OpenLoopRampRate", 0.5);
 
     private final HeavyDoubleProperty m_openLoopRampRateProperty;
 
@@ -155,9 +155,6 @@ public class ChassisSubsystem extends SubsystemBase {
         // Smart Motion stuff
         m_leftProperties = setupPidValues(m_leftPidController);
         m_rightProperties = setupPidValues(m_rightPidController);
-
-        m_leftProperties.updateIfChanged(true);
-        m_rightProperties.updateIfChanged(true);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(

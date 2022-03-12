@@ -9,15 +9,15 @@ import com.gos.lib.properties.PropertyManager;
 
 public class TurnToAngleProfiled extends ProfiledPIDCommand {
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false,
             "TurnToAngleProfiledKp", 0.05);
-    private static final PropertyManager.IProperty<Double> AUTO_KI = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> AUTO_KI = PropertyManager.createDoubleProperty(false,
             "TurnToAngleProfiledKi", 0.05);
-    private static final PropertyManager.IProperty<Double> AUTO_KD = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> AUTO_KD = PropertyManager.createDoubleProperty(false,
             "TurnToAngleProfiledKd", 0.05);
-    private static final PropertyManager.IProperty<Double> MAX_TURN_RATE_DEG_PER_SEC = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> MAX_TURN_RATE_DEG_PER_SEC = PropertyManager.createDoubleProperty(false,
             "MaxTurnRateDegPerSec", Constants.kMaxTurnRateDegPerS);
-    private static final PropertyManager.IProperty<Double> MAX_TURN_ACCELERATION_DEG_PER_SEC_SQUARED = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> MAX_TURN_ACCELERATION_DEG_PER_SEC_SQUARED = PropertyManager.createDoubleProperty(false,
             "MaxTurnAccelerationDegPerSecSquared", Constants.kMaxTurnAccelerationDegPerSSquared);
 
     // private final Chassis m_chassis;

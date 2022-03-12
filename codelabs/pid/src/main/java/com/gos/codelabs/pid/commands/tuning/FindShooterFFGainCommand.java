@@ -6,7 +6,7 @@ import com.gos.lib.properties.PropertyManager;
 
 public class FindShooterFFGainCommand extends CommandBase {
 
-    private static final PropertyManager.DoubleProperty SHOOTER_SPEED = new PropertyManager.DoubleProperty("Tuning.Shooter.FFSpeed", 0);
+    private static final PropertyManager.IProperty<Double> SHOOTER_SPEED = PropertyManager.createDoubleProperty(false,"Tuning.Shooter.FFSpeed", 0);
     private final ShooterSubsystem m_shooter;
 
     public FindShooterFFGainCommand(ShooterSubsystem shooter) {

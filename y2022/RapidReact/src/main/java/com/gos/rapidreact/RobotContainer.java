@@ -171,6 +171,8 @@ public class RobotContainer {
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
         }
+
+        // PropertyManager.printDynamicProperties();
     }
 
 
