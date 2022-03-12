@@ -21,8 +21,8 @@ import java.util.StringTokenizer;
 
 public class TrajectoryUtils {
 
-    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(60);
-    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(72);
+    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(48); //per second
+    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(48);
 
     //reads file & spits out trajectory
     public static Trajectory loadingTrajectory(String fileName, TrajectoryConfig trajectoryConfig) {
@@ -66,7 +66,7 @@ public class TrajectoryUtils {
     public static TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
             new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(ChassisSubsystem.KS_VOLTS,
+                new SimpleMotorFeedforward(ChassisSubsystem.KS_VOLTS_FORWARD,
                     ChassisSubsystem.KV_VOLT_SECONDS_PER_METER,
                     ChassisSubsystem.KA_VOLT_SECONDS_SQUARED_PER_METER),
                 ChassisSubsystem.K_DRIVE_KINEMATICS,

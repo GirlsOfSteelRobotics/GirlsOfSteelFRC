@@ -44,6 +44,7 @@ import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 import com.gos.rapidreact.subsystems.LEDManagerSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
+import com.gos.rapidreact.trajectory.TestTrajectoryStraight;
 import com.gos.rapidreact.trajectory.TrajectoryB5;
 import com.gos.rapidreact.trajectory.TrajectoryB54;
 import com.gos.rapidreact.trajectory.TrajectoryCurve;
@@ -84,7 +85,7 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
-    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooterLimelight, m_collector, m_shooter, m_verticalConveyor); // NOPMD
+//    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooterLimelight, m_collector, m_shooter, m_verticalConveyor); // NOPMD
 
 
 
@@ -142,6 +143,8 @@ public class RobotContainer {
         testCommands.add("GoToCargoCommand - 10 forward, 10 left", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(-10)));
         testCommands.add("GoToCargoCommand - 10 forward, 10 right", new GoToCargoCommand(m_chassis, Units.feetToMeters(10), Units.feetToMeters(10)));
 
+        testCommands.add("LimelightGoToCargo", new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
+
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, Math.toRadians(45)));
         testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, Math.toRadians(20)));
 
@@ -161,6 +164,7 @@ public class RobotContainer {
         trajecCommands.add("B5 (straight)", TrajectoryB5.fromBto5(m_chassis));
         trajecCommands.add("TestCurve", TrajectoryCurve.curve(m_chassis));
         trajecCommands.add("TestSCurve", TrajectorySCurve.scurve(m_chassis));
+        trajecCommands.add("TestStraight", TestTrajectoryStraight.backFrom7(m_chassis));
 
         widget.add("SuperstructureSendable", new SuperstructureSendable());
 
@@ -184,7 +188,7 @@ public class RobotContainer {
         final JoystickButton rollerOut = new JoystickButton(m_driverJoystick, XboxController.Button.kLeftBumper.value); //left bumper
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
-        limelightGoToCargo.whenPressed(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight));
+        limelightGoToCargo.whileHeld(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
 
         //operator
         new POVButton(m_operatorJoystick, 0).whileHeld(new CollectorUpCommand(m_collector)); //left bumper

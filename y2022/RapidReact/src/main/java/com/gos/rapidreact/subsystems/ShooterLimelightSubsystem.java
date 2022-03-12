@@ -16,6 +16,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
+    private final NetworkTableEntry m_ledOff;
 
     public ShooterLimelightSubsystem() {
         NetworkTable richardsLimelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
@@ -23,6 +24,9 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_horizontalAngle = richardsLimelightTable.getEntry("tx");
         m_verticalAngle = richardsLimelightTable.getEntry("ty");
         m_isVisible = richardsLimelightTable.getEntry("tv");
+
+        m_ledOff = richardsLimelightTable.getEntry("ledMode");
+        m_ledOff.setDouble(1);
 
     }
 
