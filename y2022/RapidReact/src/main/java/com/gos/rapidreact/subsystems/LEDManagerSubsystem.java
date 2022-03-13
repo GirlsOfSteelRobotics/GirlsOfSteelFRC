@@ -1,12 +1,10 @@
 package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.led.LEDAngleToTargetOverOrUnder;
-import com.gos.rapidreact.led.LEDBoolean;
 import com.gos.rapidreact.led.LEDDistanceToTarget;
 import com.gos.rapidreact.led.LEDFlash;
 import com.gos.rapidreact.led.LEDRainbow;
-import edu.wpi.first.math.util.Units;
+import com.gos.rapidreact.led.LEDBoolean;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -119,6 +117,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     public void periodic() {
         clear();

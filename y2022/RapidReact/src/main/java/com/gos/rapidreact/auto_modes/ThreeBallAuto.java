@@ -10,9 +10,8 @@ import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
-import com.gos.rapidreact.trajectory.Trajectory54;
+import com.gos.rapidreact.trajectory.ThreeBallTrajectories;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import com.gos.rapidreact.trajectory.TrajectoryB5;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
 
@@ -23,12 +22,15 @@ public class ThreeBallAuto extends SequentialCommandGroup {
     public ThreeBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         super(
             new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM),
-            new FeederVerticalConveyorForwardCommand(verticalConveyor)
+            new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(1)
                 .alongWith(new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM))
                 .alongWith(new CollectorDownCommand(collector)).withTimeout(1),
-            TrajectoryB5.fromBto5(chassis).alongWith(new RollerInCommand(collector).withTimeout(2)),
-            Trajectory54.from5to4(chassis).alongWith(new RollerInCommand(collector).withTimeout(2)),
-            new HorizontalConveyorForwardCommand(horizontalConveyor),
+            ThreeBallTrajectories.tarmacToFirstBall(chassis)
+                .alongWith(new RollerInCommand(collector).withTimeout(2)),
+            new HorizontalConveyorForwardCommand(horizontalConveyor).withTimeout(2),
+            ThreeBallTrajectories.firstBallToSecondBall(chassis)
+                .alongWith(new RollerInCommand(collector).withTimeout(2)),
+            new HorizontalConveyorForwardCommand(horizontalConveyor).withTimeout(2),
             new ShooterRpmPIDCommand(shooter, SECOND_SHOT_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor)
                 .alongWith(new ShooterRpmPIDCommand(shooter, SECOND_SHOT_RPM)));

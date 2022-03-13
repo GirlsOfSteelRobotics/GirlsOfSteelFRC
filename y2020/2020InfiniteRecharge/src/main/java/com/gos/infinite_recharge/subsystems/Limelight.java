@@ -20,31 +20,31 @@ import com.gos.lib.properties.PropertyManager;
 public class Limelight extends SubsystemBase {
 
     /// how hard to turn toward the target
-    private static final PropertyManager.IProperty<Double> STEER_KP_PROPERTY = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> STEER_KP_PROPERTY = PropertyManager.createDoubleProperty(false,
             "LimelightSteerK", 0.05);
 
-    private static final PropertyManager.IProperty<Double> STEER_KI_PROPERTY = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> STEER_KI_PROPERTY = PropertyManager.createDoubleProperty(false,
             "LimelightSteerKI", 0.0);
 
-    private static final PropertyManager.IProperty<Double> STEER_KD_PROPERTY = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> STEER_KD_PROPERTY = PropertyManager.createDoubleProperty(false,
             "LimelightSteerKD", 0.0);
 
     // how hard to drive fwd toward the target
-    private static final PropertyManager.IProperty<Double> DRIVE_K = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> DRIVE_K = PropertyManager.createDoubleProperty(false,
             "LimelightDriveK", 0.3);
 
     // Area of the target when the robot reaches the wall
-    private static final PropertyManager.IProperty<Double> DESIRED_TARGET_AREA = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> DESIRED_TARGET_AREA = PropertyManager.createDoubleProperty(false,
             "LimelightTargetArea", 13.0);
 
     // Simple speed limit so we don't drive too fast
-    private static final PropertyManager.IProperty<Double> MAX_DRIVE = new PropertyManager.DoubleProperty(
+    private static final PropertyManager.IProperty<Double> MAX_DRIVE = PropertyManager.createDoubleProperty(false,
             "LimelihtMaxDrive", 0.3);
 
     // Measured from middle of Limelight to middle of high target
-    private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = new PropertyManager.ConstantProperty<>(
+    private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = PropertyManager.createDoubleProperty(true,
             "LimelightHeightOffset", 60.0);
-    private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = new PropertyManager.ConstantProperty<>(
+    private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = PropertyManager.createDoubleProperty(true,
             "LimelightAngleOffset", 20.0);
 
     private static final double ALLOWABLE_ERROR = 2;

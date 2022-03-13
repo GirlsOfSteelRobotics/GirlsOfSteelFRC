@@ -2,8 +2,10 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.properties.WpiPidPropertyBuilder;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.sim.LimelightSim;
@@ -12,6 +14,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -39,11 +42,17 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    private static final PropertyManager.IProperty<Double> TO_XY_TURN_PID = new PropertyManager.DoubleProperty("To XY Turn PID", 0);
-    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = new PropertyManager.DoubleProperty("To XY Distance PID", 0);
+    // private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
 
-    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = new PropertyManager.DoubleProperty("To Hub Angle Turn PID", 0);
-    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = new PropertyManager.DoubleProperty("To Hub Distance PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
+    public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
+
+    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = PropertyManager.createDoubleProperty(false, "To Hub Angle Turn PID", 0);
+    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To Hub Distance PID", 0);
+
+    private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = PropertyManager.createDoubleProperty(false, "OpenLoopRampRate", 0.5);
+
+    private final HeavyDoubleProperty m_openLoopRampRateProperty;
 
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
@@ -57,6 +66,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_leftProperties;
     private final PidProperty m_rightProperties;
 
+    private final PIDController m_toCargoPID;
+    private final PidProperty m_toCargoPIDProperties;
+
     private final DifferentialDrive m_drive;
 
     //odometry
@@ -68,14 +80,15 @@ public class ChassisSubsystem extends SubsystemBase {
     private final Field2d m_field;
 
     //constants for trajectory
-    public static final double KS_VOLTS = 0.1946;
+    public static final double KS_VOLTS_FORWARD = 0.1946;
     public static final double KV_VOLT_SECONDS_PER_METER = 2.6079;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
-    public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
-    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
+    public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.3882;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.071334;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0.96462;
     public static final double MAX_VOLTAGE = 10;
 
-    public static final double K_TRACKWIDTH_METERS = 1.1554881713809029;
+    public static final double K_TRACKWIDTH_METERS = 1.722;
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
 
@@ -113,6 +126,12 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftPidController = m_leaderLeft.getPIDController();
         m_rightPidController = m_leaderRight.getPIDController();
 
+        m_toCargoPID = new PIDController(0, 0, 0);
+        m_toCargoPIDProperties = new WpiPidPropertyBuilder("Chassis to cargo", false, m_toCargoPID)
+            .addP(0)
+            .addD(0)
+            .build();
+
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
 
@@ -126,16 +145,15 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field = new Field2d();
 
-        m_leaderLeft.setOpenLoopRampRate(0.5);
-        m_leaderRight.setOpenLoopRampRate(0.5);
+        m_openLoopRampRateProperty = new HeavyDoubleProperty((double val) -> {
+            m_leaderLeft.setOpenLoopRampRate(val);
+            m_leaderRight.setOpenLoopRampRate(val);
+        }, DRIVER_OL_RAMP_RATE);
 
 
         // Smart Motion stuff
         m_leftProperties = setupPidValues(m_leftPidController);
         m_rightProperties = setupPidValues(m_rightPidController);
-
-        m_leftProperties.updateIfChanged(true);
-        m_rightProperties.updateIfChanged(true);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -187,6 +205,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
+        m_toCargoPIDProperties.updateIfChanged();
+        m_openLoopRampRateProperty.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -214,8 +234,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         // System.out.println("Driving velocity");
-        double staticFrictionLeft = KS_VOLTS * Math.signum(leftVelocity); //arbFeedforward
-        double staticFrictionRight = KS_VOLTS * Math.signum(rightVelocity);
+        double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftVelocity); //arbFeedforward
+        double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
         m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft);
         m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight);
         m_drive.feed();
@@ -227,8 +247,8 @@ public class ChassisSubsystem extends SubsystemBase {
         // System.out.println("Driving velocity");
         double leftError = leftDistance - getLeftEncoderDistance();
         double rightError = rightDistance - getRightEncoderDistance();
-        double staticFrictionLeft = KS_VOLTS * Math.signum(leftError);
-        double staticFrictionRight = KS_VOLTS * Math.signum(rightError);
+        double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftError);
+        double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightError);
         m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionLeft);
         m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionRight);
         m_drive.feed();
@@ -288,14 +308,19 @@ public class ChassisSubsystem extends SubsystemBase {
         double allowableDistanceError = Units.inchesToMeters(12.0); //for go to cargo
         double allowableAngleError = Units.degreesToRadians(5.0);
 
-        double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
-        double steer = TO_XY_TURN_PID.getValue() * angle;
+        // double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
+        double steer = m_toCargoPID.calculate(0, angle);
 
         // System.out.println("speed   " + speed);
         // System.out.println("steer   " + steer);
         // System.out.println("hDistance   " + hDistance);
         // System.out.println("angle   " + Math.toDegrees(angleError));
         // System.out.println();
+
+        // HACK - Always use the same speed
+        double speed = TO_XY_DISTANCE_SPEED.getValue();
+
+        SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
 
         setArcadeDrive(speed, steer);
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
