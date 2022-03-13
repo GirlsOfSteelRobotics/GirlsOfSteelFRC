@@ -24,7 +24,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 @SuppressWarnings("PMD.TooManyMethods")
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
-    private static final double PIVOT_SPEED = 1;
+    private static final double PIVOT_SPEED = .75;
     public static final double ALLOWABLE_ERROR_DEG = 2;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
     private static final double GEARING =  756.0;
@@ -113,7 +113,7 @@ public class CollectorSubsystem extends SubsystemBase {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
                 ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
             m_simulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotLeft),
-                RevEncoderSimWrapper.create(m_pivotLeft));
+                RevEncoderSimWrapper.create(m_pivotLeft), true);
         }
     }
 
@@ -223,7 +223,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_simulator.update();
     }
 
-    public void resetPivotEncoder() {
+    public final void resetPivotEncoder() {
         m_pivotEncoderLeft.setPosition(90);
         m_pivotEncoderRight.setPosition(90);
     }

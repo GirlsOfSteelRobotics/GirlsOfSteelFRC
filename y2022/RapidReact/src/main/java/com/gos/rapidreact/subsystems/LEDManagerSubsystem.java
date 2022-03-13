@@ -123,14 +123,15 @@ public class LEDManagerSubsystem extends SubsystemBase {
                 m_readyToShootRight.flash();
             }
 
-            if (m_shooterLimelight.angleError() > 0) {
-                m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
-                m_angleToHubLeft.angleToTarget(m_shooterLimelight.angleError());
-            }
+            // TODO(ashely) Fix this pattern
+            // if (m_shooterLimelight.angleError() > 0) {
+            //     m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
+            //     m_angleToHubLeft.angleToTarget(m_shooterLimelight.angleError());
+            // }
 
-            if (m_shooterLimelight.angleError() < 0) {
-                m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
-            }
+            // if (m_shooterLimelight.angleError() < 0) {
+            //     m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
+            // }
 
             if (DriverStation.getMatchTime() > 135) {
                 m_readyToHangLeft.flash();
