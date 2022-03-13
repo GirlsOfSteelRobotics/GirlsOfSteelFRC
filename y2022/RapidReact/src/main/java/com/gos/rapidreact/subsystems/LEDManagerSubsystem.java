@@ -32,7 +32,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDBoolean m_allowableDistancetoHubLeft;
     private final LEDBoolean m_shooterAtSpeedLeft;
     private final LEDFlash m_readyToShootLeft;
-    private final LEDAngleToTargetOverOrUnder m_angleToHubLeft;
+    // private final LEDAngleToTargetOverOrUnder m_angleToHubLeft;
     private final LEDFlash m_readyToHangLeft;
 
     private final LEDBoolean m_intakeIndexRight;
@@ -42,7 +42,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDBoolean m_allowableDistancetoHubRight;
     private final LEDBoolean m_shooterAtSpeedRight;
     private final LEDFlash m_readyToShootRight;
-    private final LEDAngleToTargetOverOrUnder m_angleToHubRight;
+    // private final LEDAngleToTargetOverOrUnder m_angleToHubRight;
     private final LEDFlash m_readyToHangRight;
 
     public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, CollectorSubsystem collector, ShooterSubsystem shooterSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem) {
@@ -61,7 +61,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
         m_shooterAtSpeedLeft = new LEDBoolean(m_buffer, 18, 20, Color.kCoral, Color.kBlack);
         m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
-        m_angleToHubLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 29, 10);
+        // m_angleToHubLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 29, 10);
         m_readyToHangLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 0, 29);
 
         m_intakeIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 2, Color.kOrange, Color.kBlack);
@@ -71,7 +71,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_allowableDistancetoHubRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 14, MIDDLE_INDEX_LED + 16, Color.kWhite, Color.kBlack);
         m_shooterAtSpeedRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 18, MIDDLE_INDEX_LED + 20, Color.kCoral, Color.kBlack);
         m_readyToShootRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 21, MIDDLE_INDEX_LED + 23);
-        m_angleToHubRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
+        // m_angleToHubRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 10);
         m_readyToHangRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 29);
 
         m_rainbow = new LEDRainbow(29, m_buffer, 0);
