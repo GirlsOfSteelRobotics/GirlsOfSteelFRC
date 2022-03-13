@@ -34,14 +34,16 @@ public class ShooterConveyor extends SubsystemBase {
 
     public ShooterConveyor() {
         m_master = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_A, MotorType.kBrushless);
+        m_master.restoreFactoryDefaults();
+
         m_encoder = m_master.getEncoder();
         m_pidController = m_master.getPIDController();
 
         m_follower = new CANSparkMax(Constants.SHOOTER_CONVEYOR_SPARK_B, MotorType.kBrushless);
+        m_follower.restoreFactoryDefaults();
 
         m_follower.follow(m_master, true);
 
-        m_master.restoreFactoryDefaults();
         m_master.setSmartCurrentLimit(Constants.SPARK_MAX_CURRENT_LIMIT);
         m_master.setInverted(false);
 

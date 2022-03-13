@@ -48,6 +48,7 @@ public class ControlPanel extends SubsystemBase {
         m_colorMatcher = new ColorMatch();
 
         m_controlPanel = new WPI_TalonSRX(Constants.CONTROL_PANEL_TALON);
+        m_controlPanel.configFactoryDefault();
         // m_controlPanelEncoder = m_controlPanel.getEncoder();
 
         m_colorCounter = 0;
