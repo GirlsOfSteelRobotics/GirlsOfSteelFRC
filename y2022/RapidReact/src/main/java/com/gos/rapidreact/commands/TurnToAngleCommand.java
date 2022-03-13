@@ -6,12 +6,12 @@ import com.gos.rapidreact.subsystems.ChassisSubsystem;
 
 public class TurnToAngleCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
-    private final double m_angle;
+    private final double m_angleDeg;
     private boolean m_atPosition;
 
     public TurnToAngleCommand(ChassisSubsystem chassisSubsystem, double angle) {
         this.m_chassis = chassisSubsystem;
-        m_angle = angle;
+        m_angleDeg = angle;
 
         addRequirements(this.m_chassis);
     }
@@ -22,7 +22,7 @@ public class TurnToAngleCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_atPosition = m_chassis.turnPID(m_angle);
+        m_atPosition = m_chassis.turnPID(m_angleDeg);
     }
 
     @Override

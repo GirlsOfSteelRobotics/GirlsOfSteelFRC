@@ -69,6 +69,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PIDController m_toCargoPID;
     private final PidProperty m_toCargoPIDProperties;
 
+    private final PIDController m_turnAnglePID;
+    private final PidProperty m_turnAnglePIDProperties;
+
     private final DifferentialDrive m_drive;
 
     //odometry
@@ -129,6 +132,15 @@ public class ChassisSubsystem extends SubsystemBase {
         m_toCargoPID = new PIDController(0, 0, 0);
         m_toCargoPIDProperties = new WpiPidPropertyBuilder("Chassis to cargo", false, m_toCargoPID)
             .addP(0)
+            .addD(0)
+            .build();
+
+        m_turnAnglePID = new PIDController(0, 0, 0);
+        m_turnAnglePID.setTolerance(3, 1);
+        m_turnAnglePID.enableContinuousInput(-180, 180);
+        m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+            .addP(0)
+            .addI(0)
             .addD(0)
             .build();
 
@@ -207,6 +219,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightProperties.updateIfChanged();
         m_toCargoPIDProperties.updateIfChanged();
         m_openLoopRampRateProperty.updateIfChanged();
+        m_turnAnglePIDProperties.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -232,12 +245,14 @@ public class ChassisSubsystem extends SubsystemBase {
         System.out.println("Stopping motors");
     }
 
-    public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+    public void smartVelocityControl(double leftVelocity, double rightVelocity, double leftAcceleration, double rightAcceleration) {
         // System.out.println("Driving velocity");
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftVelocity); //arbFeedforward
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight);
+        double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAcceleration);
+        double accelerationRight = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(rightAcceleration);
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft + accelerationLeft);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight + accelerationRight);
         m_drive.feed();
 
         System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
@@ -326,15 +341,31 @@ public class ChassisSubsystem extends SubsystemBase {
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
     }
 
+    /**
+     *
+     * @param angleGoal In degrees
+     * @return
+     */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        double allowableAngleError = Units.degreesToRadians(10.0);
-        double speed = 0; //should not be moving distance
-        double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
-        double angleError = angleGoal - angleCurrent;
+        System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
+        double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+        steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
+        System.out.println("steer voltage  " + steerVoltage);
 
-        double steer = TO_HUB_ANGLE_TURN_PID.getValue() * angleError;
-        setArcadeDrive(speed, steer);
-        return Math.abs(angleError) < allowableAngleError;
+        m_leaderRight.setVoltage(steerVoltage);
+        m_leaderLeft.setVoltage(-steerVoltage);
+//        setArcadeDrive(speed, steer);
+//        double staticFrictionLeft = KS_VOLTS_STATIC_FRICTION_TURNING * Math.signum(leftVelocity); //arbFeedforward
+//        double staticFrictionRight = KS_VOLTS_STATIC_FRICTION_TURNING * Math.signum(rightVelocity); //arbFeedforward
+//        double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_RADIAN * Math.signum(leftAcceleration);
+//        double accelerationRight = KA_VOLT_SECONDS_SQUARED_PER_RADIAN * Math.signum(rightAcceleration);
+
+//        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft + accelerationLeft);
+//        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight + accelerationRight);
+        m_drive.feed();
+
+        return m_turnAnglePID.atSetpoint();
+
     }
 
     public boolean distancePID(double currentPosition, double distanceGoal) {

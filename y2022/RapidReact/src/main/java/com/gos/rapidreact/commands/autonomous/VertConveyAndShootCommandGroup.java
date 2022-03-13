@@ -10,7 +10,7 @@ import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM
 
 public class VertConveyAndShootCommandGroup extends ParallelCommandGroup {
     public VertConveyAndShootCommandGroup(VerticalConveyorSubsystem verticalConveyor, ShooterSubsystem shooter, double seconds) {
-        super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM).withTimeout(1),
+        super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(seconds));
     }
 }
