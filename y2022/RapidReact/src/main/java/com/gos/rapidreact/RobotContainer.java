@@ -84,14 +84,13 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
-    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooterLimelight, m_collector, m_shooter, m_verticalConveyor); // NOPMD
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector);
+    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooter, m_verticalConveyor, m_autoModeFactory); // NOPMD
 
 
 
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
-
-    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
