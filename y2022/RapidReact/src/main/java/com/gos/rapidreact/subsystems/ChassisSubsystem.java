@@ -86,12 +86,12 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double KS_VOLTS_FORWARD = 0.1946;
     public static final double KV_VOLT_SECONDS_PER_METER = 2.6079;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
-    public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.3882;
-    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.071334;
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0.96462;
+    public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5066;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.08475;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.5107;
     public static final double MAX_VOLTAGE = 10;
 
-    public static final double K_TRACKWIDTH_METERS = 1.722;
+    public static final double K_TRACKWIDTH_METERS = 1.8603;
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
 

@@ -14,10 +14,13 @@
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[8]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[9]": "Digital Input",
+      "/LiveWindow/Ungrouped/PIDController[10]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[12]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[8]": "PIDController",
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
@@ -60,6 +63,11 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 45 Degrees": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/GoToHubAngle - 20": {
         "window": {
           "visible": true
@@ -83,7 +91,16 @@
     }
   },
   "NetworkTables": {
-    "Preferences": {
+    "Shuffleboard": {
+      "open": true,
+      "superstructure widgets": {
+        "SuperstructureSendable": {
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "SmartDashboard": {
       "open": true
     }
   }
