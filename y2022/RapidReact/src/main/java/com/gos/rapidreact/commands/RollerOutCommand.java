@@ -9,7 +9,8 @@ public class RollerOutCommand extends CommandBase {
 
     public RollerOutCommand(CollectorSubsystem collectorSubsystem) {
         this.m_collector = collectorSubsystem;
-        addRequirements(this.m_collector);
+        // Don't force the rollers to stop an up / down command
+        // addRequirements(this.m_collector);
     }
 
     @Override
