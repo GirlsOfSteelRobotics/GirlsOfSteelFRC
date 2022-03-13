@@ -36,8 +36,7 @@ public class FourBallAutoCommandGroup extends SequentialCommandGroup {
             new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, FIRST_SHOT_RPM, 2)
                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)),
             FourBallTrajectories.fourBallPart3(chassis)
-                .alongWith(new WaitCommand(1))
-                .andThen(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN)),
+                .alongWith(new WaitCommand(1).andThen(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))),
             new IntakeWithHorizontal(collector, horizontalConveyor, 1),
             FourBallTrajectories.fourBallPart4(chassis)
                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)),
