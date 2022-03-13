@@ -1,7 +1,6 @@
 package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.led.LEDAngleToTargetOverOrUnder;
 import com.gos.rapidreact.led.LEDBoolean;
 import com.gos.rapidreact.led.LEDFlash;
 import com.gos.rapidreact.led.LEDRainbow;
