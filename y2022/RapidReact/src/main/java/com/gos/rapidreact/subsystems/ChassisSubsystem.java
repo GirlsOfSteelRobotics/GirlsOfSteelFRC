@@ -47,7 +47,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
     public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
 
-    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = PropertyManager.createDoubleProperty(false, "To Hub Angle Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To Hub Distance PID", 0);
 
     private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = PropertyManager.createDoubleProperty(false, "OpenLoopRampRate", 0.5);
@@ -344,7 +343,7 @@ public class ChassisSubsystem extends SubsystemBase {
     /**
      *
      * @param angleGoal In degrees
-     * @return
+     * @return if at allowable angle
      */
     public boolean turnPID(double angleGoal) { //for shooter limelight
         System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
@@ -354,14 +353,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leaderRight.setVoltage(steerVoltage);
         m_leaderLeft.setVoltage(-steerVoltage);
-//        setArcadeDrive(speed, steer);
-//        double staticFrictionLeft = KS_VOLTS_STATIC_FRICTION_TURNING * Math.signum(leftVelocity); //arbFeedforward
-//        double staticFrictionRight = KS_VOLTS_STATIC_FRICTION_TURNING * Math.signum(rightVelocity); //arbFeedforward
-//        double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_RADIAN * Math.signum(leftAcceleration);
-//        double accelerationRight = KA_VOLT_SECONDS_SQUARED_PER_RADIAN * Math.signum(rightAcceleration);
 
-//        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft + accelerationLeft);
-//        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight + accelerationRight);
         m_drive.feed();
 
         return m_turnAnglePID.atSetpoint();

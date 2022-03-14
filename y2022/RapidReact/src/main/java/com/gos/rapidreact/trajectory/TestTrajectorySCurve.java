@@ -5,6 +5,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TestTrajectorySCurve {
     public static CommandBase scurve(ChassisSubsystem chassis) {
-        return TrajectoryUtils.startTrajectory("PathWeaver/Paths/scurve", TrajectoryUtils.getTrajectoryConfig(), chassis);
+        return TrajectoryUtils.startTrajectory("PathWeaver/Paths/scurve", TrajectoryUtils.getDefaultTrajectoryConfig(), chassis);
     }
 }
