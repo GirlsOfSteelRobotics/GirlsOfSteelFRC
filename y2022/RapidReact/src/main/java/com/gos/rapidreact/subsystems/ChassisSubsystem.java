@@ -229,22 +229,17 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void stop() {
         m_drive.stopMotor();
-        System.out.println("Stopping motors");
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
-        // System.out.println("Driving velocity");
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftVelocity); //arbFeedforward
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
         m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft);
         m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight);
         m_drive.feed();
-
-        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
     }
 
     public void trapezoidMotionControl(double leftDistance, double rightDistance) {
-        // System.out.println("Driving velocity");
         double leftError = leftDistance - getLeftEncoderDistance();
         double rightError = rightDistance - getRightEncoderDistance();
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftError);
@@ -252,8 +247,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionLeft);
         m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionRight);
         m_drive.feed();
-
-        System.out.println("Left Position Goal" + leftDistance + ", Right Position Goal" + rightDistance + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
     }
 
     public double getLeftEncoderSpeed() {
@@ -289,7 +282,6 @@ public class ChassisSubsystem extends SubsystemBase {
         double yCurrent = m_odometry.getPoseMeters().getY();
         double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
 
-        System.out.println(yCurrent);
         double hDistance; //gets distance of the hypotenuse
         double angle;
 
@@ -299,8 +291,6 @@ public class ChassisSubsystem extends SubsystemBase {
         angle = Math.atan2(yError, xError);
         angleError = angle - angleCurrent;
 
-        System.out.println("xError   " + xError);
-        System.out.println("yError   " + yError);
         return driveAndTurnPID(hDistance, angleError);
     }
 
@@ -310,12 +300,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         // double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
         double steer = m_toCargoPID.calculate(0, angle);
-
-        // System.out.println("speed   " + speed);
-        // System.out.println("steer   " + steer);
-        // System.out.println("hDistance   " + hDistance);
-        // System.out.println("angle   " + Math.toDegrees(angleError));
-        // System.out.println();
 
         // HACK - Always use the same speed
         double speed = TO_XY_DISTANCE_SPEED.getValue();

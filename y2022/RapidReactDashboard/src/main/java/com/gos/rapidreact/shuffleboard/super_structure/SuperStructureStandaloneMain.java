@@ -245,7 +245,6 @@ public class SuperStructureStandaloneMain {
 
             final SuperStructureData oldData =  m_controller.dataProperty().getValue();
             Map<String, Object> changes = data.changesFrom(oldData);
-            System.out.println(changes);
 
             m_controller.dataProperty().setValue(data);
         } catch (ClassCastException ignored) {

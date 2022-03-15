@@ -9,8 +9,7 @@ public class RollerInCommand extends CommandBase {
 
     public RollerInCommand(CollectorSubsystem collectorSubsystem) {
         this.m_collector = collectorSubsystem;
-        // Don't force the rollers to stop an up / down command
-        // addRequirements(this.m_collector);
+
     }
 
     @Override

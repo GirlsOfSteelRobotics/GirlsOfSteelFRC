@@ -22,20 +22,14 @@ public class LEDAngleToTargetOverOrUnder extends LEDBase {
     }
 
     public void angleToTarget(double angleError) {
-        System.out.println("Angle error " + angleError);
-        System.out.println("Max angle  " + m_maxAngle);
         if (angleError >= m_maxAngle || angleError <= (m_maxAngle * -1)) {
             setLEDs(m_minIndex, m_maxIndex, m_color.red, m_color.green, m_color.blue);
-            System.out.println("maxIndex  " + m_maxIndex);
         }
 
         else {
             double ledProportion = Math.abs(angleError / m_maxAngle);
             int ledOn = (int) (ledProportion * m_numIndex);
-            System.out.println("ledOn  " + ledOn);
-            System.out.println("ledProportion  " + ledProportion);
             setLEDs(m_minIndex, m_minIndex + ledOn, m_color.red, m_color.green, m_color.blue);
-
         }
 
     }
