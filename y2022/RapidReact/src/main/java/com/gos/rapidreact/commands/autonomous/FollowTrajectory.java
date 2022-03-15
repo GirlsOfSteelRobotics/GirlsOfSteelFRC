@@ -39,7 +39,7 @@ public class FollowTrajectory extends BaseRamseteCoordinateGuiCommand {
 
     @Override
     protected void setVelocity(double leftVelocityMps, double rightVelocityMps, double leftAccelMpss, double rightAccelMpss) {
-        m_chassis.smartVelocityControl(m_goalVelocityLeft, m_goalVelocityRight);
+        m_chassis.smartVelocityControl(m_goalVelocityLeft, m_goalVelocityRight, leftAccelMpss, rightAccelMpss);
     }
 
     @Override
