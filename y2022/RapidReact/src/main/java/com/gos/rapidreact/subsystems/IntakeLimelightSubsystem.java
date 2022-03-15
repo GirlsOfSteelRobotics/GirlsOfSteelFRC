@@ -54,8 +54,8 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
         if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
             m_pipeline.setNumber(RED_CARGO);
         }
-        SmartDashboard.putNumber("distance to cargo", distanceToCargo());
-        SmartDashboard.putNumber("angle to cargo", m_horizontalAngle.getDouble(0));
+        //SmartDashboard.putNumber("distance to cargo", distanceToCargo());
+        //SmartDashboard.putNumber("angle to cargo", m_horizontalAngle.getDouble(0));
     }
 }
 

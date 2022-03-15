@@ -184,7 +184,7 @@ public class ChassisSubsystem extends SubsystemBase {
             m_limelightSim = new LimelightSim();
         }
 
-        SmartDashboard.putData(m_field);
+        // SmartDashboard.putData(m_field);
 
         m_leaderLeft.burnFlash();
         m_followerLeft.burnFlash();
@@ -208,11 +208,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
         m_coordinateGuiPublisher.publish(m_odometry.getPoseMeters());
-        SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
-        SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
-        SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
-        SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
-        SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
+        // SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
+        // SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
+        // SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
+        // SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
+        // SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
@@ -334,7 +334,7 @@ public class ChassisSubsystem extends SubsystemBase {
         // HACK - Always use the same speed
         double speed = TO_XY_DISTANCE_SPEED.getValue();
 
-        SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
+        //SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
 
         setArcadeDrive(speed, steer);
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;

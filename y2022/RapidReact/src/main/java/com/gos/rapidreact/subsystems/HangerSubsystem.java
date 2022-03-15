@@ -95,11 +95,11 @@ public class HangerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Hanger Height Encoder", getLeftHangerHeight());
-        SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
+        // SmartDashboard.putNumber("Hanger Height Encoder", getLeftHangerHeight());
+        // SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
+        // SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
+        // SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
+        // SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
 
         m_pid.updateIfChanged();
     }
