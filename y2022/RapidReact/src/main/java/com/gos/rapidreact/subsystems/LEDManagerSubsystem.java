@@ -208,8 +208,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
             //m_intakeIndexLeft.checkBoolean(m_collector.getIndexSensor());
             //m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
 
-            m_intakeLimitSwitchLeft.checkBoolean(m_collector.getIndexSensor());
-            m_intakeLimitSwitchRight.checkBoolean(m_collector.getIndexSensor());
+            m_intakeLimitSwitchLeft.checkBoolean(m_collector.limitSwitchPressed());
+            m_intakeLimitSwitchRight.checkBoolean(m_collector.limitSwitchPressed());
 
             m_lowerConveyorIndexLeft.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
             m_lowerConveyorIndexRight.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
