@@ -30,6 +30,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
     // private final LEDBoolean m_intakeIndexLeft;
+    private final LEDBoolean m_intakeLimitSwitchLeft;
     private final LEDBoolean m_lowerConveyorIndexLeft;
     private final LEDBoolean m_upperConveyorIndexLeft;
     private final LEDFlash m_goToCargoLeft;
@@ -39,6 +40,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDAngleToTargetOverOrUnder m_angleToCargoLeft;
 
     // private final LEDBoolean m_intakeIndexRight;
+    private final LEDBoolean m_intakeLimitSwitchRight;
     private final LEDBoolean m_lowerConveyorIndexRight;
     private final LEDBoolean m_upperConveyorIndexRight;
     private final LEDFlash m_goToCargoRight;
