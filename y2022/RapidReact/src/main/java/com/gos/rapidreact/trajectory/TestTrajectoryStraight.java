@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TestTrajectoryStraight {
     public static CommandBase backFrom7(ChassisSubsystem chassis) {
-        return TrajectoryUtils.startTrajectory("PathWeaver/Paths/straight", TrajectoryUtils.getTrajectoryConfig(), chassis);
+        return TrajectoryUtils.startTrajectory("PathWeaver/Paths/straight", TrajectoryUtils.getDefaultTrajectoryConfig(), chassis);
     }
 
 }

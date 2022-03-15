@@ -47,7 +47,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
     public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
 
-    private static final PropertyManager.IProperty<Double> TO_HUB_ANGLE_TURN_PID = PropertyManager.createDoubleProperty(false, "To Hub Angle Turn PID", 0);
     private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To Hub Distance PID", 0);
 
     private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = PropertyManager.createDoubleProperty(false, "OpenLoopRampRate", 0.5);
@@ -69,6 +68,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PIDController m_toCargoPID;
     private final PidProperty m_toCargoPIDProperties;
 
+    private final PIDController m_turnAnglePID;
+    private final PidProperty m_turnAnglePIDProperties;
+
     private final DifferentialDrive m_drive;
 
     //odometry
@@ -83,12 +85,12 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double KS_VOLTS_FORWARD = 0.1946;
     public static final double KV_VOLT_SECONDS_PER_METER = 2.6079;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
-    public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.3882;
-    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.071334;
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 0.96462;
+    public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5066;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.08475;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.5107;
     public static final double MAX_VOLTAGE = 10;
 
-    public static final double K_TRACKWIDTH_METERS = 1.722;
+    public static final double K_TRACKWIDTH_METERS = 1.8603;
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(K_TRACKWIDTH_METERS);
 
@@ -129,6 +131,15 @@ public class ChassisSubsystem extends SubsystemBase {
         m_toCargoPID = new PIDController(0, 0, 0);
         m_toCargoPIDProperties = new WpiPidPropertyBuilder("Chassis to cargo", false, m_toCargoPID)
             .addP(0)
+            .addD(0)
+            .build();
+
+        m_turnAnglePID = new PIDController(0, 0, 0);
+        m_turnAnglePID.setTolerance(3, 1);
+        m_turnAnglePID.enableContinuousInput(-180, 180);
+        m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+            .addP(0)
+            .addI(0)
             .addD(0)
             .build();
 
@@ -207,6 +218,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightProperties.updateIfChanged();
         m_toCargoPIDProperties.updateIfChanged();
         m_openLoopRampRateProperty.updateIfChanged();
+        m_turnAnglePIDProperties.updateIfChanged();
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -232,12 +244,14 @@ public class ChassisSubsystem extends SubsystemBase {
         System.out.println("Stopping motors");
     }
 
-    public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+    public void smartVelocityControl(double leftVelocity, double rightVelocity, double leftAcceleration, double rightAcceleration) {
         // System.out.println("Driving velocity");
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftVelocity); //arbFeedforward
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
-        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft);
-        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight);
+        double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAcceleration);
+        double accelerationRight = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(rightAcceleration);
+        m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft + accelerationLeft);
+        m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight + accelerationRight);
         m_drive.feed();
 
         System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
@@ -326,15 +340,24 @@ public class ChassisSubsystem extends SubsystemBase {
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
     }
 
+    /**
+     *
+     * @param angleGoal In degrees
+     * @return if at allowable angle
+     */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        double allowableAngleError = Units.degreesToRadians(10.0);
-        double speed = 0; //should not be moving distance
-        double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
-        double angleError = angleGoal - angleCurrent;
+        System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
+        double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+        steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
+        System.out.println("steer voltage  " + steerVoltage);
 
-        double steer = TO_HUB_ANGLE_TURN_PID.getValue() * angleError;
-        setArcadeDrive(speed, steer);
-        return Math.abs(angleError) < allowableAngleError;
+        m_leaderRight.setVoltage(steerVoltage);
+        m_leaderLeft.setVoltage(-steerVoltage);
+
+        m_drive.feed();
+
+        return m_turnAnglePID.atSetpoint();
+
     }
 
     public boolean distancePID(double currentPosition, double distanceGoal) {
