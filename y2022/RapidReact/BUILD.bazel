@@ -1,0 +1,24 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
+
+gos_java_robot(
+    name = "RapidReact",
+    srcs = glob(["src/main/java/**/*.java"]),
+    data = glob(["src/main/deploy/**"]),
+    main_class = "com.gos.rapidreact.Main",
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLibCtre",
+        "//libraries/GirlsOfSteelLibNavx",
+        "//libraries/GirlsOfSteelLibRev",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/rev/revlib",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/cscore",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@bazelrio//libraries/java/wpilib/wpiutil",
+        "@snobot_sim//jar",
+    ],
+)

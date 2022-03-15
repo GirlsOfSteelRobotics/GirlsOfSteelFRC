@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
-public class LEDAngleToTarget extends LEDBase {
+public class LEDAngleToTargetOverAndUnder extends LEDBase {
     private final Color8Bit m_underAngleColor;
     private final Color8Bit m_aboveAngleColor;
 
@@ -13,7 +13,7 @@ public class LEDAngleToTarget extends LEDBase {
     private final int m_middleLED;
     private final int m_maxAngle;
 
-    public LEDAngleToTarget(AddressableLEDBuffer buffer, Color underAngleColor, Color aboveAngleColor, int minIndex, int maxIndex, int maxAngle) {
+    public LEDAngleToTargetOverAndUnder(AddressableLEDBuffer buffer, Color underAngleColor, Color aboveAngleColor, int minIndex, int maxIndex, int maxAngle) {
         super(buffer);
         m_underAngleColor = new Color8Bit(underAngleColor);
         m_aboveAngleColor = new Color8Bit(aboveAngleColor);

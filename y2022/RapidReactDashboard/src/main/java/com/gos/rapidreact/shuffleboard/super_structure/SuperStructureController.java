@@ -186,9 +186,11 @@ public class SuperStructureController {
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
 
+        double javafxAngle = 90 - superStructureData.getIntakeAngle();
+
         m_intake.setStroke(Utils.getMotorColor(superStructureData.getIntakeSpeed()));
         m_intakeWheel.setFill(Utils.getMotorColor(superStructureData.getRollerSpeed()));
-        m_intakeRotation.setAngle(superStructureData.getIntakeAngle());
+        m_intakeRotation.setAngle(javafxAngle);
         m_intakeWheelRotation.setAngle(m_intakeRotation.getAngle());
         m_hanger.setFill(Utils.getMotorColor(superStructureData.getHangerSpeed()));
         m_shooter.setFill(Utils.getMotorColor(superStructureData.getShooterSpeed()));

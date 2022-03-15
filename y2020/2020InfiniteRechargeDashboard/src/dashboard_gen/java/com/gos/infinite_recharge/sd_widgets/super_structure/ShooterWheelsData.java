@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-@SuppressWarnings("PMD.DataClass")
+@SuppressWarnings({"PMD.DataClass", "PMD.ExcessiveParameterList"})
 public class ShooterWheelsData extends ComplexData<ShooterWheelsData> {
 
     private final double m_currentRpm;

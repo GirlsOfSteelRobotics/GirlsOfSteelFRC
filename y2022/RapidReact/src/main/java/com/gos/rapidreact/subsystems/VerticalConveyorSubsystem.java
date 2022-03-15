@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VerticalConveyorSubsystem extends SubsystemBase {
 
-    public static final double VERTICAL_CONVEYOR_MOTOR_SPEED = 0.5;
+    public static final double VERTICAL_CONVEYOR_MOTOR_SPEED = 1;
     public static final double FEEDER_MOTOR_SPEED = 0.5;
 
     private final SimableCANSparkMax m_conveyor; //multiple sets of wheels to move the cargo up
@@ -65,12 +65,11 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     }
 
     public boolean getUpperIndexSensor() {
-        return m_indexSensorUpper.get();
-
+        return !m_indexSensorUpper.get();
     }
 
     public boolean getLowerIndexSensor() {
-        return m_indexSensorLower.get();
+        return !m_indexSensorLower.get();
     }
 
 }

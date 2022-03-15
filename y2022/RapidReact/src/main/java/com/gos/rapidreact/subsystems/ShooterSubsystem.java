@@ -24,12 +24,15 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
     public static final double ALLOWABLE_ERROR = 100.0;
-    public static final double DEFAULT_SHOOTER_RPM = 1800;
+    public static final double FENDER_RPM = 1500;
+    public static final double TARMAC_EDGE_RPM = 2000;
+    public static final double DEFAULT_SHOOTER_RPM = FENDER_RPM;
     private final SimableCANSparkMax m_leader;
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
     private final ShooterLookupTable m_shooterTable;
+    private double m_goalRpm;
 
     private ISimWrapper m_simulator;
 
@@ -53,7 +56,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leader.burnFlash();
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.1);
+            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
             m_simulator = new FlywheelSimWrapper(flywheelSim,
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));
@@ -69,6 +72,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setShooterRpmPIDSpeed(double rpm) {
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
+        m_goalRpm = rpm;
+    }
+
+    public boolean isShooterAtSpeed() {
+        double error = Math.abs(m_goalRpm - getEncoderVelocity());
+        return error < ALLOWABLE_ERROR;
     }
 
     public void setShooterSpeed(double speed) {

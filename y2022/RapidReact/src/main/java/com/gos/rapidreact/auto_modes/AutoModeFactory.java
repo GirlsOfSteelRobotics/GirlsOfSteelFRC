@@ -2,16 +2,15 @@ package com.gos.rapidreact.auto_modes;
 
 
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
+import com.gos.rapidreact.subsystems.CollectorSubsystem;
+import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
-import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import com.gos.rapidreact.commands.DriveDistanceCommand;
-import com.gos.rapidreact.Constants;
 
 public class AutoModeFactory extends SequentialCommandGroup {
 
@@ -19,17 +18,22 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private static final boolean ENABLE_AUTO_SELECTION = true;
 
-    private final Command m_defaultCommand;
 
-    private static final double DRIVE_OFF_TARMAC_DISTANCE = .5 * (Constants.ROBOT_LENGTH + Constants.TARMAC_DEPTH);
-    private static final double ALLOWABLE_ERROR = Units.inchesToMeters(6);
-    private static final double VERTICAL_CONVEYOR_TIMEOUT = 10;
+    private final CommandBase m_offTarmacAuto;
+    private final CommandBase m_oneBallAuto;
+    private final CommandBase m_twoBallAuto;
+    private final CommandBase m_threeBallAuto;
+    private final CommandBase m_fourBallAuto;
+    private final CommandBase m_fiveBallAuto;
+
+
+
 
 
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor) {
+    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         //need to have distance
         m_sendableChooser = new SendableChooser<>();
 
@@ -38,10 +42,53 @@ public class AutoModeFactory extends SequentialCommandGroup {
         }
 
 
-        m_defaultCommand = new DriveDistanceCommand(chassis, DRIVE_OFF_TARMAC_DISTANCE, ALLOWABLE_ERROR);
-        //need to have distance, allowableError
-        m_sendableChooser.setDefaultOption("DriveOffTarmac (Default)", m_defaultCommand);
-        m_sendableChooser.addOption("One Ball Auto", new OneBallAuto(chassis, shooter, verticalConveyor, VERTICAL_CONVEYOR_TIMEOUT));
+        m_offTarmacAuto = new DriveOffTarmac(chassis);
+        m_sendableChooser.addOption("Drive Off Tarmac (Default)", m_offTarmacAuto);
+
+        m_oneBallAuto = new OneBallAuto(chassis, shooter, verticalConveyor);
+        m_sendableChooser.addOption("One Ball Auto", m_oneBallAuto);
+
+        m_twoBallAuto = new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Two Ball Auto", m_twoBallAuto);
+
+        m_threeBallAuto = new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Three Ball Auto", m_threeBallAuto);
+
+        m_fourBallAuto = new FourBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Four Ball Auto", m_fourBallAuto);
+
+        m_fiveBallAuto = new FiveBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Five Ball Auto", m_fiveBallAuto);
+
+    }
+
+    @SuppressWarnings("PMD.CompareObjectsWithEquals")
+    public int autoModeLightSignal() {
+        int autoMode = -1;
+        if (m_sendableChooser.getSelected() == m_offTarmacAuto) {
+            autoMode = 0;
+        }
+
+        if (m_sendableChooser.getSelected() == m_oneBallAuto) {
+            autoMode = 1;
+        }
+
+        if (m_sendableChooser.getSelected() == m_twoBallAuto) {
+            autoMode = 2;
+        }
+
+        if (m_sendableChooser.getSelected() == m_threeBallAuto) {
+            autoMode = 3;
+        }
+
+        if (m_sendableChooser.getSelected() == m_fourBallAuto) {
+            autoMode = 4;
+        }
+
+        if (m_sendableChooser.getSelected() == m_fiveBallAuto) {
+            autoMode = 5;
+        }
+        return autoMode;
     }
 
 
@@ -50,7 +97,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             return m_sendableChooser.getSelected();
         }
         else {
-            return m_defaultCommand;
+            return m_offTarmacAuto;
         }
     }
 }

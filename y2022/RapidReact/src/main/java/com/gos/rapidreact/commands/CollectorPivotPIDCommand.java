@@ -8,9 +8,9 @@ public class CollectorPivotPIDCommand extends CommandBase {
     private final CollectorSubsystem m_collector;
     private final double m_pivotAngle;
 
-    public CollectorPivotPIDCommand(CollectorSubsystem collectorSubsystem, double pivotAngleRadians) {
+    public CollectorPivotPIDCommand(CollectorSubsystem collectorSubsystem, double pivotAngleDegrees) {
         this.m_collector = collectorSubsystem;
-        m_pivotAngle = pivotAngleRadians;
+        m_pivotAngle = pivotAngleDegrees;
 
         addRequirements(this.m_collector);
     }
@@ -28,13 +28,13 @@ public class CollectorPivotPIDCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(m_pivotAngle - m_collector.getIntakeAngleDegrees());
+        double error = Math.abs(m_pivotAngle - m_collector.getIntakeLeftAngleDegrees());
         //System.out.println(error);
-        return error < CollectorSubsystem.ALLOWABLE_ERROR;
+        return error < CollectorSubsystem.ALLOWABLE_ERROR_DEG;
     }
 
     @Override
     public void end(boolean interrupted) {
-        //hold position when ended
+        m_collector.pivotStop();
     }
 }

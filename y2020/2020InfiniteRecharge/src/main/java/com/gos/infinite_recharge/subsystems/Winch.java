@@ -21,6 +21,7 @@ public class Winch extends SubsystemBase {
 
     public Winch(boolean isBrushed) {
         m_motorA = new CANSparkMax(Constants.WINCH_A_SPARK, isBrushed ? MotorType.kBrushed : MotorType.kBrushless);
+        m_motorA.restoreFactoryDefaults();
         m_motorA.setIdleMode(IdleMode.kBrake);
         m_motorA.setInverted(false);
         if (isBrushed) {
@@ -30,6 +31,7 @@ public class Winch extends SubsystemBase {
         }
 
         m_motorB = new CANSparkMax(Constants.WINCH_B_SPARK, isBrushed ? MotorType.kBrushed : MotorType.kBrushless);
+        m_motorB.restoreFactoryDefaults();
         m_motorB.setIdleMode(IdleMode.kBrake);
         m_motorB.setInverted(false);
 

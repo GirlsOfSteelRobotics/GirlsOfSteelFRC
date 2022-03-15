@@ -9,18 +9,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
 
-    public static final double MOUNTING_ANGLE = 0;
-    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35);
+    public static final String LIMELIGHT_NAME = "limelight-terry"; // Dr Richardson is too long
+    public static final double MOUNTING_ANGLE = 0; // TODO verify angle
+    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
+    public static final double MAX_SHOOTING_DISTANCE = 5; //meters
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
+    private final NetworkTableEntry m_ledOff;
 
     public ShooterLimelightSubsystem() {
-        NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+        NetworkTable richardsLimelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
 
-        m_horizontalAngle = limelightTable.getEntry("tx");
-        m_verticalAngle = limelightTable.getEntry("ty");
-        m_isVisible = limelightTable.getEntry("tv");
+        m_horizontalAngle = richardsLimelightTable.getEntry("tx");
+        m_verticalAngle = richardsLimelightTable.getEntry("ty");
+        m_isVisible = richardsLimelightTable.getEntry("tv");
+
+        m_ledOff = richardsLimelightTable.getEntry("ledMode");
+        m_ledOff.setDouble(1);
 
     }
 

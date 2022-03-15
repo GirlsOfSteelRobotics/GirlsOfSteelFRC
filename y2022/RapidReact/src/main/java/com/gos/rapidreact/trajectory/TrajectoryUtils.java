@@ -21,8 +21,11 @@ import java.util.StringTokenizer;
 
 public class TrajectoryUtils {
 
-    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(60);
-    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(72);
+    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(144); // meters / sec / sec
+    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(114); // meters / sec
+
+    public static final double SLOWER_ACCELERATION = Units.inchesToMeters(108);
+    public static final double SLOWER_VELOCITY = Units.inchesToMeters(96);
 
     //reads file & spits out trajectory
     public static Trajectory loadingTrajectory(String fileName, TrajectoryConfig trajectoryConfig) {
@@ -63,10 +66,10 @@ public class TrajectoryUtils {
         return new FollowTrajectory(trajectory, chassis);
     }
 
-    public static TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
+    public static TrajectoryConfig getDefaultTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
             new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(ChassisSubsystem.KS_VOLTS,
+                new SimpleMotorFeedforward(ChassisSubsystem.KS_VOLTS_FORWARD,
                     ChassisSubsystem.KV_VOLT_SECONDS_PER_METER,
                     ChassisSubsystem.KA_VOLT_SECONDS_SQUARED_PER_METER),
                 ChassisSubsystem.K_DRIVE_KINEMATICS,
@@ -80,7 +83,11 @@ public class TrajectoryUtils {
             .addConstraint(autoVoltageConstraint);
     }
 
-    public static TrajectoryConfig getTrajectoryConfig() {
-        return  getTrajectoryConfig(DEFAULT_VELOCITY, DEFAULT_ACCELERATION);
+    public static TrajectoryConfig getDefaultTrajectoryConfig() {
+        return getDefaultTrajectoryConfig(DEFAULT_VELOCITY, DEFAULT_ACCELERATION);
+    }
+
+    public static TrajectoryConfig getSlowerTrajectoryConfig() {
+        return getDefaultTrajectoryConfig(SLOWER_VELOCITY, SLOWER_ACCELERATION);
     }
 }
