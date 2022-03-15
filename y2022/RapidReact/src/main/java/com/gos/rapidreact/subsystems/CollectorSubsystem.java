@@ -37,7 +37,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     // TODO play with these numbers for optimal ball pickup
     public static final double UP_ANGLE = 80;
-    public static final double DOWN_ANGLE = 10;
+    public static final double DOWN_ANGLE = RobotBase.isReal() ? 10 : 0;
 
     // From SysId
     private static final double PIVOT_KS = 0.1831;
@@ -98,7 +98,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_roller.setIdleMode(idleModeCoast);
 
         m_limitSwitch = m_pivotLeft.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_limitSwitch.enableLimitSwitch(false);
+        m_limitSwitch.enableLimitSwitch(true);
 
         m_pivotPIDLeft = setupPidValues(m_pidControllerLeft);
         m_pivotPIDRight = setupPidValues(m_pidControllerRight);
@@ -137,6 +137,11 @@ public class CollectorSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Intake LS", m_limitSwitch.isPressed());
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();
+
+        if (limitSwitchPressed()) {
+            m_pivotEncoderLeft.setPosition(90);
+            m_pivotEncoderRight.setPosition(90);
+        }
     }
 
     public void collectorDown() {
@@ -145,8 +150,18 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void collectorUp() {
-        m_pivotLeft.set(PIVOT_SPEED);
-        m_pivotRight.set(PIVOT_SPEED);
+        if (limitSwitchPressed()) {
+            m_pivotLeft.set(0);
+            m_pivotRight.set(0);
+        }
+        else {
+            m_pivotLeft.set(PIVOT_SPEED);
+            m_pivotRight.set(PIVOT_SPEED);
+        }
+    }
+
+    public boolean limitSwitchPressed() {
+        return m_limitSwitch.isPressed();
     }
 
     public void rollerIn() {
@@ -180,8 +195,13 @@ public class CollectorSubsystem extends SubsystemBase {
      */
     public void collectorToAngle(double pivotAngleDegrees) {
 
-        double errorLeft = pivotAngleDegrees - getIntakeLeftAngleDegrees();
-        double errorRight = pivotAngleDegrees - getIntakeRightAngleDegrees();
+        if (limitSwitchPressed()) {
+            pivotStop();
+        }
+
+        else {
+            double errorLeft = pivotAngleDegrees - getIntakeLeftAngleDegrees();
+            double errorRight = pivotAngleDegrees - getIntakeRightAngleDegrees();
 
         double gravityOffset = Math.cos(getIntakeLeftAngleRadians()) * GRAVITY_OFFSET.getValue();
         double staticFrictionLeft = PIVOT_KS * Math.signum(errorLeft);

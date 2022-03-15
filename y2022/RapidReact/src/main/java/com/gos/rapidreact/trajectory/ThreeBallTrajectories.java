@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ThreeBallTrajectories {
 
     public static CommandBase tarmacToFirstBall(ChassisSubsystem chassis) {
-        return TrajectoryUtils.startTrajectory("PathWeaver/Paths/B5", TrajectoryUtils.getTrajectoryConfig(), chassis);
+        return TrajectoryUtils.startTrajectory("PathWeaver/Paths/B5", TrajectoryUtils.getDefaultTrajectoryConfig(), chassis);
     }
 
     public static Command firstBallToSecondBall(ChassisSubsystem chassis) {
-        return TrajectoryUtils.createTrajectory("PathWeaver/Paths/54", TrajectoryUtils.getTrajectoryConfig(), chassis);
+        return TrajectoryUtils.createTrajectory("PathWeaver/Paths/54", TrajectoryUtils.getDefaultTrajectoryConfig(), chassis);
     }
 }

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HorizontalConveyorSubsystem extends SubsystemBase {
 
-    public static final double HORIZONTAL_CONVEYOR_MOTOR_SPEED = 0.5;
+    public static final double HORIZONTAL_CONVEYOR_MOTOR_SPEED = 1;
 
     private final SimableCANSparkMax m_leader;
     
