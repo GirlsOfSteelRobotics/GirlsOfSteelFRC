@@ -242,7 +242,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.stopMotor();
     }
 
-    public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+    public void smartVelocityControl(double leftVelocity, double rightVelocity, double leftAcceleration, double rightAcceleration) {
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftVelocity); //arbFeedforward
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
         double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAcceleration);

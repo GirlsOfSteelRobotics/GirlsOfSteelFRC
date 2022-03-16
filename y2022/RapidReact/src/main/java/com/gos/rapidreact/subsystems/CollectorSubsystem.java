@@ -203,13 +203,14 @@ public class CollectorSubsystem extends SubsystemBase {
             double errorLeft = pivotAngleDegrees - getIntakeLeftAngleDegrees();
             double errorRight = pivotAngleDegrees - getIntakeRightAngleDegrees();
 
-        double gravityOffset = Math.cos(getIntakeLeftAngleRadians()) * GRAVITY_OFFSET.getValue();
-        double staticFrictionLeft = PIVOT_KS * Math.signum(errorLeft);
-        double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
-        double arbFeedforwardLeft = gravityOffset + staticFrictionLeft;
-        double arbFeedforwardRight = gravityOffset + staticFrictionRight;
-        m_pidControllerLeft.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
-        m_pidControllerRight.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
+            double gravityOffset = Math.cos(getIntakeLeftAngleRadians()) * GRAVITY_OFFSET.getValue();
+            double staticFrictionLeft = PIVOT_KS * Math.signum(errorLeft);
+            double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
+            double arbFeedforwardLeft = gravityOffset + staticFrictionLeft;
+            double arbFeedforwardRight = gravityOffset + staticFrictionRight;
+            m_pidControllerLeft.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
+            m_pidControllerRight.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
+        }
 
     }
 
