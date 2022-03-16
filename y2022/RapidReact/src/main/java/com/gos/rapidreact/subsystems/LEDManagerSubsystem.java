@@ -23,6 +23,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     //private final CollectorSubsystem m_collector;
     private final ShooterSubsystem m_shooter;
     private final VerticalConveyorSubsystem m_verticalConveyor;
+    private final CollectorSubsystem m_collector;
 
     private static final int MAX_INDEX_LED = 60;
     private static final int MIDDLE_INDEX_LED = MAX_INDEX_LED / 2;
@@ -30,6 +31,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
     // private final LEDBoolean m_intakeIndexLeft;
+    private final LEDBoolean m_intakeLimitSwitchLeft;
     private final LEDBoolean m_lowerConveyorIndexLeft;
     private final LEDBoolean m_upperConveyorIndexLeft;
     private final LEDFlash m_goToCargoLeft;
@@ -39,6 +41,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDAngleToTargetOverOrUnder m_angleToCargoLeft;
 
     // private final LEDBoolean m_intakeIndexRight;
+    private final LEDBoolean m_intakeLimitSwitchRight;
     private final LEDBoolean m_lowerConveyorIndexRight;
     private final LEDBoolean m_upperConveyorIndexRight;
     private final LEDFlash m_goToCargoRight;
@@ -64,34 +67,37 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final AutoModeFactory m_autoModeFactory;
 
-    public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterSubsystem shooterSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem, AutoModeFactory autoModeFactory) {
+    public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterSubsystem shooterSubsystem, CollectorSubsystem collectorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem, AutoModeFactory autoModeFactory) {
         m_intakeLimelight = intakeLimelightSubsystem;
         //m_shooterLimelight = shooterLimelightSubsystem;
         //m_collector = collector;
         m_shooter = shooterSubsystem;
         m_verticalConveyor = verticalConveyorSubsystem;
+        m_collector = collectorSubsystem;
 
         m_autoModeFactory = autoModeFactory;
 
         m_led = new AddressableLED(PORT);
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         // m_intakeIndexLeft = new LEDBoolean(m_buffer, 0, 2, Color.kOrange, Color.kBlack);
-        m_lowerConveyorIndexLeft = new LEDBoolean(m_buffer, 0, 3, Color.kBlue, Color.kBlack);
-        m_upperConveyorIndexLeft = new LEDBoolean(m_buffer, 5, 8, Color.kPurple, Color.kBlack);
-        m_shooterAtSpeedLeft = new LEDBoolean(m_buffer, 10, 13, Color.kCoral, Color.kBlack);
-        m_goToCargoLeft = new LEDFlash(m_buffer, 1, Color.kPurple, 15, 18);
+        m_intakeLimitSwitchLeft = new LEDBoolean(m_buffer, 0, 4, Color.kOrange, Color.kBlack);
+        m_lowerConveyorIndexLeft = new LEDBoolean(m_buffer, 5, 9, Color.kBlue, Color.kBlack);
+        m_upperConveyorIndexLeft = new LEDBoolean(m_buffer, 10, 14, Color.kPurple, Color.kBlack);
+        m_shooterAtSpeedLeft = new LEDBoolean(m_buffer, 15, 19, Color.kCoral, Color.kBlack);
+        m_goToCargoLeft = new LEDFlash(m_buffer, 1, Color.kPurple, 20, 24);
         // m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
         // m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
-        m_angleToCargoLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 20, 29, 15);
+        m_angleToCargoLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 29, 15);
 
         // m_intakeIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 2, Color.kOrange, Color.kBlack);
-        m_lowerConveyorIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0,  MIDDLE_INDEX_LED + 3, Color.kBlue, Color.kBlack);
-        m_upperConveyorIndexRight = new LEDBoolean(m_buffer,  MIDDLE_INDEX_LED + 5, MIDDLE_INDEX_LED + 8, Color.kPurple, Color.kBlack);
-        m_shooterAtSpeedRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 10, MIDDLE_INDEX_LED + 13, Color.kCoral, Color.kBlack);
-        m_goToCargoRight = new LEDFlash(m_buffer, 1, Color.kPurple, MIDDLE_INDEX_LED + 15, MIDDLE_INDEX_LED + 18);
+        m_intakeLimitSwitchRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 4, Color.kOrange, Color.kBlack);
+        m_lowerConveyorIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 5,  MIDDLE_INDEX_LED + 9, Color.kBlue, Color.kBlack);
+        m_upperConveyorIndexRight = new LEDBoolean(m_buffer,  MIDDLE_INDEX_LED + 10, MIDDLE_INDEX_LED + 14, Color.kPurple, Color.kBlack);
+        m_shooterAtSpeedRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 15, MIDDLE_INDEX_LED + 19, Color.kCoral, Color.kBlack);
+        m_goToCargoRight = new LEDFlash(m_buffer, 1, Color.kPurple, MIDDLE_INDEX_LED + 20, MIDDLE_INDEX_LED + 24);
         // m_allowableDistancetoHubRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 14, MIDDLE_INDEX_LED + 16, Color.kWhite, Color.kBlack);
         // m_readyToShootRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 21, MIDDLE_INDEX_LED + 23);
-        m_angleToCargoRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 20, MIDDLE_INDEX_LED + 29, 15);
+        m_angleToCargoRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 15);
 
         m_readyToHang = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 0, MAX_INDEX_LED);
         m_rainbow = new LEDRainbow(MAX_INDEX_LED, m_buffer, 0);
@@ -201,6 +207,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
         if (DriverStation.isEnabled()) {
             //m_intakeIndexLeft.checkBoolean(m_collector.getIndexSensor());
             //m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
+
+            m_intakeLimitSwitchLeft.checkBoolean(m_collector.limitSwitchPressed());
+            m_intakeLimitSwitchRight.checkBoolean(m_collector.limitSwitchPressed());
 
             m_lowerConveyorIndexLeft.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
             m_lowerConveyorIndexRight.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
