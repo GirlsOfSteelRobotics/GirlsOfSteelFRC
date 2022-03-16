@@ -21,8 +21,6 @@ public class DriveDistanceCommand extends CommandBase {
         m_distance = distance;
         m_allowableError = allowableError;
 
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(chassis);
     }
 

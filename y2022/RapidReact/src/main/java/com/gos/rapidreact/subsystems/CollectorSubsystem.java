@@ -208,7 +208,6 @@ public class CollectorSubsystem extends SubsystemBase {
             double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
             double arbFeedforwardLeft = gravityOffset + staticFrictionLeft;
             double arbFeedforwardRight = gravityOffset + staticFrictionRight;
-            System.out.println("Arm pid goal: " + pivotAngleDegrees + " sf: " + staticFrictionLeft + " g: " + gravityOffset + " -> " + arbFeedforwardLeft);
             m_pidControllerLeft.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
             m_pidControllerRight.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
         }

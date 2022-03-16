@@ -27,22 +27,18 @@ public class AutomatedVerticalConveyorCommand extends CommandBase {
         m_horizontalConveyor.forwardHorizontalConveyorMotor();
         if (m_verticalConveyor.getUpperIndexSensor() && !m_verticalConveyor.getLowerIndexSensor()) {
             m_verticalConveyor.forwardVerticalConveyorMotor();
-            System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
 
         if (m_verticalConveyor.getLowerIndexSensor() && !m_verticalConveyor.getUpperIndexSensor()) {
             m_verticalConveyor.forwardVerticalConveyorMotor();
-            System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
 
         if (m_verticalConveyor.getUpperIndexSensor() && m_verticalConveyor.getLowerIndexSensor()) {
             m_verticalConveyor.stopVerticalConveyorMotor();
-            System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
 
         if (!(m_verticalConveyor.getLowerIndexSensor() && m_verticalConveyor.getUpperIndexSensor())) {
             m_verticalConveyor.forwardVerticalConveyorMotor();
-            System.out.println(m_verticalConveyor.getVerticalConveyorSpeed());
         }
         // between sensors 1 and 2, stop conveyor
         // at sensor 2, run conveyor feeder
