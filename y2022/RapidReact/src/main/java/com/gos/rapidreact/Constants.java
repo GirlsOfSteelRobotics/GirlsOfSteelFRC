@@ -28,8 +28,8 @@ public final class Constants {
     public static final int HANGER_RIGHT_SPARK = 8;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
-    public static final int COLLECTOR_PIVOT_LEADER = 13;
-    public static final int COLLECTOR_PIVOT_FOLLOWER = 11;
+    public static final int COLLECTOR_PIVOT_LEFT = 13;
+    public static final int COLLECTOR_PIVOT_RIGHT = 11;
     public static final int VERTICAL_CONVEYOR_FEEDER_SPARK = 12;
 
     // Bigger to avoid future conflicts
