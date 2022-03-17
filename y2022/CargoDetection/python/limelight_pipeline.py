@@ -10,7 +10,7 @@ class Params:
     def __init__(self):
         self.blue_hsv = ((82, 131, 64), (131, 255, 255))
         self.red_hsv = ((0, 127, 199), (164, 209, 255))
-        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.5, 'max_aspect_ratio': 1.5}
+        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0, 'max_aspect_ratio': 1000}
         self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 47
 
 

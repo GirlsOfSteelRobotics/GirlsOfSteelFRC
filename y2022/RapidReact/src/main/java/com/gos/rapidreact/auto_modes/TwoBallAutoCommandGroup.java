@@ -34,7 +34,8 @@ public class TwoBallAutoCommandGroup extends SequentialCommandGroup {
             new DriveDistanceCommand(chassis, DRIVE_DISTANCE, ALLOWABLE_ERROR)
                 .alongWith(new RollerInCommand(collector).withTimeout(2))
                 .alongWith(new HorizontalConveyorForwardCommand(horizConveyor).withTimeout(2)),
-            new ShooterRpmPIDCommand(shooter, SECOND_SHOT_RPM),
+            new DriveDistanceCommand(chassis, -DRIVE_DISTANCE, ALLOWABLE_ERROR),
+            new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor)
                 .withTimeout(SECOND_SHOT_VERT_CONV_TIME));
     }

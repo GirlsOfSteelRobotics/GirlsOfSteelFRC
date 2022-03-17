@@ -12,6 +12,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -134,6 +135,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     @SuppressWarnings({"PMD"})
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Clock Time", DriverStation.getMatchTime());
         clear();
         double distanceToCargoAuto;
         double angleToCargoAuto;
@@ -241,11 +243,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
                 m_angleToCargoRight.angleToTarget(m_intakeLimelight.getAngle());
             }
 
-            if (DriverStation.getMatchTime() > 130) {
+            if (DriverStation.getMatchTime() < 20) {
                 m_readyToHang.flash();
             }
 
-            if (DriverStation.getMatchTime() > 120) {
+            if (DriverStation.getMatchTime() < 30) {
                 m_rainbow.rainbow();
             }
         }
