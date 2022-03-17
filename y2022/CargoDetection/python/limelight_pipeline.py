@@ -8,13 +8,21 @@ class Params:
     BLUE_NUM = 1
 
     def __init__(self):
-        self.blue_hsv = ((82, 131, 64), (131, 255, 255))
-        self.red_hsv = ((0, 127, 199), (164, 209, 255))
-        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0, 'max_aspect_ratio': 1000}
-        self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 47
 
+        #blue
+        self.blue_hsv = ((82, 104, 64), (112, 255, 255))
+        self.red_hsv = ((0, 138, 144), (176, 255, 255))
+        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.25, 'max_aspect_ratio': 2.5}
+        self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 48, 'max_canny_thresh': 35, 'accuracy': 10, 'matching_threshold': 17}
+        self.crop_filter = [{'min_y': 160, 'max_y': 320}]
 
-            , 'max_canny_thresh': 50, 'accuracy': 12, 'matching_threshold': 17}
+        #red
+        self.blue_hsv = ((82, 104, 64), (112, 255, 255))
+        self.red_hsv = ((17, 94, 236), (172, 245, 255))
+        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.25, 'max_aspect_ratio': 2.5}
+        self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 26, 'max_canny_thresh': 29, 'accuracy': 10, 'matching_threshold': 19}
+        self.crop_filter = [{'min_y': 160, 'max_y': 320}]
+
 
     def set_hsv(self, color_threshold_num, hsv_min, hsv_max):
         if color_threshold_num == self.RED_NUM:
@@ -38,6 +46,7 @@ class Params:
         print(f"        self.red_hsv = {self.red_hsv}")
         print(f"        self.contour_filtering = {self.contour_filtering}")
         print(f"        self.circle = {self.circle}")
+        print(f"        self.crop_filter = {self.crop_filter}")
 
 
 
@@ -139,6 +148,11 @@ def run_hsv_threshold(active_threshold_num, image):
     else:
         raise Exception(f"Unknown threshold number {active_threshold_num}")
 
+
+    #print(image.shape)
+    for crop_filter in __PARAMS.crop_filter:
+        cv2.rectangle(img_threshold, (0, crop_filter["min_y"]), (image.shape[1], crop_filter["max_y"]), 0, -1)
+
     global __THRESHOLD_IMAGE
     __THRESHOLD_IMAGE = cv2.bitwise_and(image, image, mask=img_threshold)
 
@@ -201,7 +215,10 @@ def annotate_image(image, filtering_results, best_contour):
 def runPipeline(image, llrobot):
     start_time = time.time()
 
-    active_threshold_num, = llrobot
+    if len(llrobot) == 1:
+        active_threshold_num, = llrobot
+    else:
+        active_threshold_num = Params.BLUE_NUM
 
     img_threshold = run_hsv_threshold(active_threshold_num, image)
     post_hsv = time.time()

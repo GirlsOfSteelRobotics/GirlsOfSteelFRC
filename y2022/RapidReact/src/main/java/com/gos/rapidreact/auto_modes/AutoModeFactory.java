@@ -49,7 +49,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser.addOption("One Ball Auto", m_oneBallAuto);
 
         m_twoBallAuto = new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Two Ball Auto", m_twoBallAuto);
+        m_sendableChooser.setDefaultOption("Two Ball Auto", m_twoBallAuto);
 
         m_threeBallAuto = new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Three Ball Auto", m_threeBallAuto);

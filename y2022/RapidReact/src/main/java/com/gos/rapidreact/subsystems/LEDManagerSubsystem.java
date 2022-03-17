@@ -12,6 +12,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
@@ -66,6 +67,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDSolidColor m_autoModeLeft;
     private final LEDSolidColor m_autoModeRight;
 
+    private final LEDBoolean m_autoPivotAtAngleLeft; //should be at 90
+    private final LEDBoolean m_autoPivotAtAngleRight;
+
+    private final LEDBoolean m_autoUpperIndexSensorLeft;
+    private final LEDBoolean m_autoUpperIndexSensorRight;
+
+
     private final AutoModeFactory m_autoModeFactory;
 
     public LEDManagerSubsystem(IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterSubsystem shooterSubsystem, CollectorSubsystem collectorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem, AutoModeFactory autoModeFactory) {
@@ -88,7 +96,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_goToCargoLeft = new LEDFlash(m_buffer, 1, Color.kPurple, 20, 24);
         // m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
         // m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
-        m_angleToCargoLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 29, 15);
+        m_angleToCargoLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 30, 15);
 
         // m_intakeIndexRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 2, Color.kOrange, Color.kBlack);
         m_intakeLimitSwitchRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 4, Color.kOrange, Color.kBlack);
@@ -98,25 +106,30 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_goToCargoRight = new LEDFlash(m_buffer, 1, Color.kPurple, MIDDLE_INDEX_LED + 20, MIDDLE_INDEX_LED + 24);
         // m_allowableDistancetoHubRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 14, MIDDLE_INDEX_LED + 16, Color.kWhite, Color.kBlack);
         // m_readyToShootRight = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 21, MIDDLE_INDEX_LED + 23);
-        m_angleToCargoRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 15);
+        m_angleToCargoRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 30, 15);
 
-        m_readyToHang = new LEDFlash(m_buffer, 1, Color.kGreen, MIDDLE_INDEX_LED + 0, MAX_INDEX_LED);
+        m_readyToHang = new LEDFlash(m_buffer, 0.25, Color.kGreen, MIDDLE_INDEX_LED + 0, MAX_INDEX_LED);
         m_rainbow = new LEDRainbow(MAX_INDEX_LED, m_buffer, 0);
 
-        m_autoCheckAngleLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 29, 5);
-        m_autoCheckAngleRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 29, 5);
-        m_autoCorrectAngleLeft = new LEDRainbow(29, m_buffer, 25);
-        m_autoCorrectAngleRight = new LEDRainbow(MIDDLE_INDEX_LED + 29, m_buffer, MIDDLE_INDEX_LED + 25);
+        m_autoCheckAngleLeft = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, 25, 30, 5);
+        m_autoCheckAngleRight = new LEDAngleToTargetOverOrUnder(m_buffer, Color.kRed, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 30, 5);
+        m_autoCorrectAngleLeft = new LEDRainbow(30, m_buffer, 25);
+        m_autoCorrectAngleRight = new LEDRainbow(MIDDLE_INDEX_LED + 30, m_buffer, MIDDLE_INDEX_LED + 25);
 
         m_autoCheckDistanceLeft = new LEDDistanceToTarget(m_buffer, Color.kWhite, 20, 24, Units.feetToMeters(1));
         m_autoCheckDistanceRight = new LEDDistanceToTarget(m_buffer, Color.kWhite, MIDDLE_INDEX_LED + 20, MIDDLE_INDEX_LED + 24, Units.feetToMeters(1));
         m_autoCorrectDistanceLeft = new LEDRainbow(20, m_buffer, 24);
         m_autoCorrectDistanceRight = new LEDRainbow(MIDDLE_INDEX_LED + 20, m_buffer, MIDDLE_INDEX_LED + 24);
 
+        m_autoPivotAtAngleLeft = new LEDBoolean(m_buffer, 25, 30, Color.kPapayaWhip, Color.kBlack);
+        m_autoPivotAtAngleRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 25, MIDDLE_INDEX_LED + 30, Color.kPapayaWhip, Color.kBlack);
 
         //if (autoMode >= 1 && autoMode <= 5)
         m_autoModeLeft = new LEDSolidColor(m_buffer, 0, 20, Color.kAquamarine);
-        m_autoModeRight = new LEDSolidColor(m_buffer, 0, MIDDLE_INDEX_LED + 20, Color.kAquamarine);
+        m_autoModeRight = new LEDSolidColor(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 20, Color.kAquamarine);
+
+        m_autoUpperIndexSensorLeft = new LEDBoolean(m_buffer, 20, 25, Color.kFuchsia, Color.kBlack);
+        m_autoUpperIndexSensorRight = new LEDBoolean(m_buffer, MIDDLE_INDEX_LED + 20, MIDDLE_INDEX_LED + 25, Color.kFuchsia, Color.kBlack);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -137,73 +150,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Clock Time", DriverStation.getMatchTime());
         clear();
-        double distanceToCargoAuto;
-        double angleToCargoAuto;
-
-        double distAllowableError = Units.inchesToMeters(3);
-        double angleAllowableError = Units.degreesToRadians(2);
 
         if (DriverStation.isDisabled()) {
-            if (m_intakeLimelight.isVisible()) {
-                distanceToCargoAuto = m_intakeLimelight.distanceToCargo();
-                angleToCargoAuto = m_intakeLimelight.getAngle();
+            autoMode();
+            m_autoPivotAtAngleRight.checkBoolean(m_collector.getIntakeLeftAngleDegrees() == 90);
+            m_autoPivotAtAngleLeft.checkBoolean(m_collector.getIntakeRightAngleDegrees() == 90);
 
-                if (!(distAllowableError > Math.abs(distanceToCargoAuto))) {
-                    m_autoCheckDistanceLeft.distanceToTarget(distanceToCargoAuto); //TODO: fix this because it's not supposed to have no distance to cargo
-                    m_autoCheckDistanceRight.distanceToTarget(distanceToCargoAuto);
-                }
-
-                if (!(angleAllowableError > Math.abs(angleToCargoAuto))) { //TODO: fix this!!!
-                    m_autoCheckAngleLeft.angleToTarget(angleToCargoAuto);
-                    m_autoCheckAngleRight.angleToTarget(angleToCargoAuto);
-                }
-
-                if (distAllowableError > Math.abs(distanceToCargoAuto)) {
-                    m_autoCorrectDistanceLeft.rainbow();
-                    m_autoCorrectDistanceRight.rainbow();
-                }
-
-                if (angleAllowableError > Math.abs(angleToCargoAuto)) {
-                    m_autoCorrectAngleLeft.rainbow();
-                    m_autoCorrectAngleRight.rainbow();
-                }
-            }
-
-            int autoMode = m_autoModeFactory.autoModeLightSignal();
-            Color autoColor;
-            switch (autoMode) {
-            case 0:
-                autoColor = Color.kRed;
-                break;
-            case 1:
-                autoColor = Color.kOrangeRed;
-                break;
-            case 2:
-                autoColor = Color.kYellow;
-                break;
-            case 3:
-                autoColor = Color.kGreen;
-                break;
-            case 4:
-                autoColor = Color.kBlue;
-                break;
-            case 5:
-                autoColor = Color.kPurple;
-                break;
-            default:
-                autoColor = null;
-                break;
-            }
-
-            if (autoColor == null) {
-                m_rainbow.rainbow();
-            }
-            else {
-                m_autoModeRight.setColor(new Color8Bit(autoColor));
-                m_autoModeLeft.setColor(new Color8Bit(autoColor));
-                m_autoModeRight.solidColor();
-                m_autoModeLeft.solidColor();
-            }
+            m_autoUpperIndexSensorLeft.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
+            m_autoUpperIndexSensorRight.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
         }
 
         if (DriverStation.isEnabled()) {
@@ -219,7 +173,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_upperConveyorIndexLeft.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
             m_upperConveyorIndexRight.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
 
-            if (m_intakeLimelight.distanceToCargo() < 3) { //3 meters
+            if (true) {//m_intakeLimelight.distanceToCargo() < 3) { //3 meters
                 m_goToCargoLeft.flash();
                 m_goToCargoRight.flash();
             }
@@ -243,16 +197,89 @@ public class LEDManagerSubsystem extends SubsystemBase {
                 m_angleToCargoRight.angleToTarget(m_intakeLimelight.getAngle());
             }
 
-            if (DriverStation.getMatchTime() < 20) {
-                m_readyToHang.flash();
-            }
+            if (RobotBase.isReal()) {
+                if (DriverStation.getMatchTime() < 25) {
+                    m_readyToHang.flash();
+                }
 
-            if (DriverStation.getMatchTime() < 30) {
-                m_rainbow.rainbow();
+                if (DriverStation.getMatchTime() < 10) {
+                    m_rainbow.rainbow();
+                }
             }
         }
 
         m_led.setData(m_buffer);
+    }
+
+    public void autoMode() {
+        int autoMode = m_autoModeFactory.autoModeLightSignal();
+        Color autoColor;
+        switch (autoMode) {
+        case 0:
+            autoColor = Color.kRed;
+            break;
+        case 1:
+            autoColor = Color.kOrangeRed;
+            break;
+        case 2:
+            autoColor = Color.kYellow;
+            break;
+        case 3:
+            autoColor = Color.kGreen;
+            break;
+        case 4:
+            autoColor = Color.kBlue;
+            break;
+        case 5:
+            autoColor = Color.kPurple;
+            break;
+        default:
+            autoColor = null;
+            break;
+        }
+
+        if (autoColor == null) {
+            m_rainbow.rainbow();
+        }
+        else {
+            m_autoModeRight.setColor(new Color8Bit(autoColor));
+            m_autoModeLeft.setColor(new Color8Bit(autoColor));
+            m_autoModeRight.solidColor();
+            m_autoModeLeft.solidColor();
+        }
+    }
+
+    public void autoCorrectAngleAndDistance() {
+        if (m_intakeLimelight.isVisible()) {
+            double distanceToCargoAuto;
+            double angleToCargoAuto;
+
+            double distAllowableError = Units.inchesToMeters(3);
+            double angleAllowableError = Units.degreesToRadians(2);
+
+            distanceToCargoAuto = m_intakeLimelight.distanceToCargo();
+            angleToCargoAuto = m_intakeLimelight.getAngle();
+
+            if (!(distAllowableError > Math.abs(distanceToCargoAuto))) {
+                m_autoCheckDistanceLeft.distanceToTarget(distanceToCargoAuto);
+                m_autoCheckDistanceRight.distanceToTarget(distanceToCargoAuto);
+            }
+
+            if (!(angleAllowableError > Math.abs(angleToCargoAuto))) {
+                m_autoCheckAngleLeft.angleToTarget(angleToCargoAuto);
+                m_autoCheckAngleRight.angleToTarget(angleToCargoAuto);
+            }
+
+            if (distAllowableError > Math.abs(distanceToCargoAuto)) {
+                m_autoCorrectDistanceLeft.rainbow();
+                m_autoCorrectDistanceRight.rainbow();
+            }
+
+            if (angleAllowableError > Math.abs(angleToCargoAuto)) {
+                m_autoCorrectAngleLeft.rainbow();
+                m_autoCorrectAngleRight.rainbow();
+            }
+        }
     }
 
 }
