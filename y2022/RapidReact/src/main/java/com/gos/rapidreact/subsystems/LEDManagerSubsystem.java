@@ -174,7 +174,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
                 autoColor = Color.kRed;
                 break;
             case 1:
-                autoColor = Color.kOrange;
+                autoColor = Color.kOrangeRed;
                 break;
             case 2:
                 autoColor = Color.kYellow;

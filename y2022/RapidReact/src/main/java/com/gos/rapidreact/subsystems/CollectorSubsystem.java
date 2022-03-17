@@ -98,7 +98,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_roller.setIdleMode(idleModeCoast);
 
         m_limitSwitch = m_pivotLeft.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_limitSwitch.enableLimitSwitch(true);
+        m_limitSwitch.enableLimitSwitch(false);
 
         m_pivotPIDLeft = setupPidValues(m_pidControllerLeft);
         m_pivotPIDRight = setupPidValues(m_pidControllerRight);
@@ -161,7 +161,8 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public boolean limitSwitchPressed() {
-        return m_limitSwitch.isPressed();
+        // return m_limitSwitch.isPressed();
+        return false;
     }
 
     public void rollerIn() {
