@@ -3,42 +3,20 @@ import numpy as np
 import time
 
 
-class Params:
-    RED_NUM = 0
-    BLUE_NUM = 1
+RED_NUM = 0
+BLUE_NUM = 1
 
+PRINT_CTR = 0
+
+
+class BlueParams:
     def __init__(self):
 
         #blue
-        self.blue_hsv = ((82, 104, 64), (112, 255, 255))
-        self.red_hsv = ((0, 138, 144), (176, 255, 255))
+        self.hsv = ((82, 104, 64), (112, 255, 255))
         self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.25, 'max_aspect_ratio': 2.5}
         self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 48, 'max_canny_thresh': 35, 'accuracy': 10, 'matching_threshold': 17}
         self.crop_filter = [{'min_y': 160, 'max_y': 320}]
-
-        #red
-        self.blue_hsv = ((82, 104, 64), (112, 255, 255))
-        self.red_hsv = ((17, 94, 236), (172, 245, 255))
-        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.25, 'max_aspect_ratio': 2.5}
-        self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 26, 'max_canny_thresh': 29, 'accuracy': 10, 'matching_threshold': 19}
-        self.crop_filter = [{'min_y': 160, 'max_y': 320}]
-
-
-    def set_hsv(self, color_threshold_num, hsv_min, hsv_max):
-        if color_threshold_num == self.RED_NUM:
-            self.red_hsv = hsv_min, hsv_max
-        elif color_threshold_num == self.BLUE_NUM:
-            self.blue_hsv = hsv_min, hsv_max
-        else:
-            raise Exception("Invalid color threshold")
-
-    def get_hsv(self, color_threshold_num):
-        if color_threshold_num == self.RED_NUM:
-            return self.red_hsv
-        elif color_threshold_num == self.BLUE_NUM:
-            return self.blue_hsv
-        else:
-            raise Exception("Invalid color threshold")
 
     def print_settings(self):
         print("Pipeline Settings:\n")
@@ -49,8 +27,19 @@ class Params:
         print(f"        self.crop_filter = {self.crop_filter}")
 
 
+class RedParams:
 
-__PARAMS = Params()
+    def __init__(self):
+        #red
+        self.hsv = ((17, 94, 236), (172, 245, 255))
+        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.25, 'max_aspect_ratio': 2.5}
+        self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 26, 'max_canny_thresh': 29, 'accuracy': 10, 'matching_threshold': 19}
+        self.crop_filter = [{'min_y': 160, 'max_y': 320}]
+
+
+
+__RED_PARAMS = RedParams()
+__BLUE_PARAMS = BlueParams()
 __THRESHOLD_IMAGE = None
 
 
@@ -58,14 +47,25 @@ def get_threshold_image():
     return __THRESHOLD_IMAGE
 
 
-def set_params(params):
-    global __PARAMS
-    __PARAMS = params
+def set_params(active_pipeline, params):
     params.print_settings()
+    if active_pipeline == RED_NUM:
+        global __RED_PARAMS
+        __RED_PARAMS = params
+    elif active_pipeline == BLUE_NUM:
+        global __BLUE_PARAMS
+        __BLUE_PARAMS = params
+    else:
+        raise Exception("AHHH")
 
 
-def get_params():
-    return __PARAMS
+def get_params(active_pipeline):
+    if active_pipeline == RED_NUM:
+        return __RED_PARAMS
+    elif active_pipeline == BLUE_NUM:
+        return __BLUE_PARAMS
+    else:
+        raise Exception("AHHH")
 
 
 class FilteringResults:
@@ -78,8 +78,8 @@ class FilteringResults:
         self.surviving_circles = []
 
 
-def get_matching_contours(contours, circles, filtering_results):
-    threshold = __PARAMS.circle["matching_threshold"]
+def get_matching_contours(params, contours, circles, filtering_results):
+    threshold = params.circle["matching_threshold"]
 
     unmatched_contours = contours
 
@@ -129,28 +129,28 @@ def get_matching_contours(contours, circles, filtering_results):
     return matched_contours, good_circles
 
 
-def run_hsv_threshold(active_threshold_num, image):
+def run_hsv_threshold(params, active_threshold_num, image):
     # convert the input image to the HSV color space
     img_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # convert the hsv to a binary image by removing any pixels
     # that do not fall within the following HSV Min/Max values
-    if active_threshold_num == Params.RED_NUM:
-        hsv_min, hsv_max = __PARAMS.red_hsv
+    if active_threshold_num == RED_NUM:
+        hsv_min, hsv_max = params.hsv
         lower_threshold = (0, hsv_min[1], hsv_min[2]), (hsv_min[0], hsv_max[1], hsv_max[2])
         upper_threshold = (hsv_max[0], hsv_min[1], hsv_min[2]), (255, hsv_max[1], hsv_max[2])
         img_threshold_lower = cv2.inRange(img_hsv, *lower_threshold)
         img_threshold_upper = cv2.inRange(img_hsv, *upper_threshold)
         img_threshold = img_threshold_lower | img_threshold_upper
-    elif active_threshold_num == Params.BLUE_NUM:
-        hsv_min, hsv_max = __PARAMS.blue_hsv
+    elif active_threshold_num == BLUE_NUM:
+        hsv_min, hsv_max = params.hsv
         img_threshold = cv2.inRange(img_hsv, hsv_min, hsv_max)
     else:
         raise Exception(f"Unknown threshold number {active_threshold_num}")
 
 
     #print(image.shape)
-    for crop_filter in __PARAMS.crop_filter:
+    for crop_filter in params.crop_filter:
         cv2.rectangle(img_threshold, (0, crop_filter["min_y"]), (image.shape[1], crop_filter["max_y"]), 0, -1)
 
     global __THRESHOLD_IMAGE
@@ -159,8 +159,8 @@ def run_hsv_threshold(active_threshold_num, image):
     return img_threshold
 
 
-def find_and_filter_contours(img_threshold, filter_results):
-    filters = __PARAMS.contour_filtering
+def find_and_filter_contours(params, img_threshold, filter_results):
+    filters = params.contour_filtering
 
     contours, _ = cv2.findContours(img_threshold,
                                    cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -220,26 +220,34 @@ def runPipeline(image, llrobot):
     else:
         active_threshold_num = Params.BLUE_NUM
 
-    img_threshold = run_hsv_threshold(active_threshold_num, image)
+    if active_threshold_num == RED_NUM:
+        params = __RED_PARAMS
+    elif active_threshold_num == BLUE_NUM:
+        params =  __BLUE_PARAMS
+    else:
+        raise Exception("AHH")
+
+    img_threshold = run_hsv_threshold(params, active_threshold_num, image)
     post_hsv = time.time()
 
     filter_results = FilteringResults()
 
     # find contours in the new binary image
-    contours = find_and_filter_contours(img_threshold, filter_results)
+    contours = find_and_filter_contours(params, img_threshold, filter_results)
     post_contours = time.time()
 
     circles = cv2.HoughCircles(img_threshold, cv2.HOUGH_GRADIENT, 1,
-                               minDist=__PARAMS.circle["min_dist"],
-                               param1=__PARAMS.circle["max_canny_thresh"],
-                               param2=__PARAMS.circle["accuracy"],
-                               minRadius=__PARAMS.circle["min_radius"],
-                               maxRadius=__PARAMS.circle["max_radius"])
+                               minDist=params.circle["min_dist"],
+                               param1=params.circle["max_canny_thresh"],
+                               param2=params.circle["accuracy"],
+                               minRadius=params.circle["min_radius"],
+                               maxRadius=params.circle["max_radius"])
     post_circles = time.time()
 
     largest_contour = np.array([[]])
 
-    filter_results.surviving_contours, filter_results.surviving_circles = get_matching_contours(contours, circles, filter_results)
+    filter_results.surviving_contours, filter_results.surviving_circles = get_matching_contours(params,
+                                                                                                contours, circles, filter_results)
     post_contour_matching = time.time()
 
     if len(filter_results.surviving_contours) > 0:
@@ -254,7 +262,11 @@ def runPipeline(image, llrobot):
     contour_matching_time = post_contour_matching - post_circles
     annotation_time = post_annotation - post_contour_matching
     total_time = post_annotation - start_time
-    print(f"Total: {total_time} - Timing: HSV={hsv_time}, Contour={contours_time}, Circles={circles_time}, Contour Matching={contour_matching_time}, Annotation={annotation_time}")
+
+    global PRINT_CTR
+    if PRINT_CTR % 100 == 0:
+        print(f"Total: {total_time} - Timing: HSV={hsv_time}, Contour={contours_time}, Circles={circles_time}, Contour Matching={contour_matching_time}, Annotation={annotation_time}")
+    PRINT_CTR += 1
 
     llpython = []
 

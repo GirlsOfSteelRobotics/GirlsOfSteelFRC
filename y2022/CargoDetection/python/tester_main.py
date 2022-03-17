@@ -13,40 +13,32 @@ import traceback
 
 from ui.subpanels import DEFAULT_FILE_DIR
 
-from limelight_pipeline import runPipeline, get_threshold_image, Params, get_params, set_params
+from limelight_pipeline import runPipeline, get_threshold_image, get_params, set_params, RED_NUM, BLUE_NUM
 
 
 class Window(QMainWindow):
 
-    def __init__(self, active_threshold_num=Params.RED_NUM, parent=None):
-        print("Loading")
+    def __init__(self, active_threshold_num=RED_NUM, parent=None):
         super().__init__(parent)
-        print("Loading")
         loadUi("ui/tester_window.ui", self)
-        print("Loading")
-
-        print("Loading")
 
         self.active_threshold_num = None
         self.original_img = None
 
         # self.directory_image_provider = DirectoryImageProvider()
         self.set_active_threshold_num(active_threshold_num)
-        print("Loading")
 
         self.hsv_params.connect_signals(self.update_settings)
         self.circle_params.connect_signals(self.update_settings)
-        print("Loading")
 
         self.tabWidget.widget(0).connect_image_callback(self.handle_image)
         self.tabWidget.widget(1).set_image_callback = self.handle_image
-        print("Loading")
 
     def set_active_threshold_num(self, threshold_num):
         self.active_threshold_num = threshold_num
 
-        params = get_params()
-        self.hsv_params.set_params(params.get_hsv(self.active_threshold_num))
+        params = get_params(self.active_threshold_num)
+        self.hsv_params.set_params(params.hsv)
         self.circle_params.set_params(params.circle)
 
     def update_settings(self):
@@ -93,8 +85,8 @@ def main():
     if not os.path.exists(DEFAULT_FILE_DIR):
         os.mkdir(DEFAULT_FILE_DIR)
 
-    # win = Window(active_threshold_num=Params.BLUE_NUM)
-    win = Window(active_threshold_num=Params.RED_NUM)
+    win = Window(active_threshold_num=BLUE_NUM)
+    # win = Window(active_threshold_num=RED_NUM)
 
     win.show()
     sys.exit(app.exec())
