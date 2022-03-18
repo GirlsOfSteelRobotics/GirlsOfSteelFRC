@@ -153,8 +153,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         if (DriverStation.isDisabled()) {
             autoMode();
-            m_autoPivotAtAngleRight.checkBoolean(m_collector.getIntakeLeftAngleDegrees() == 90);
-            m_autoPivotAtAngleLeft.checkBoolean(m_collector.getIntakeRightAngleDegrees() == 90);
+            m_autoPivotAtAngleRight.checkBoolean(m_collector.getIntakeLeftAngleDegrees() > 89);
+            m_autoPivotAtAngleLeft.checkBoolean(m_collector.getIntakeRightAngleDegrees() > 89);
 
             m_autoUpperIndexSensorLeft.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
             m_autoUpperIndexSensorRight.checkBoolean(m_verticalConveyor.getUpperIndexSensor());

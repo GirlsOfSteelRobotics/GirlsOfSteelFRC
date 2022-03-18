@@ -13,10 +13,10 @@ class BlueParams:
     def __init__(self):
 
         #blue
-        self.hsv = ((82, 104, 64), (112, 255, 255))
-        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.25, 'max_aspect_ratio': 2.5}
+        self.hsv = ((82, 104, 64), (131, 255, 255))
+        self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': .25, 'max_aspect_ratio': 2.5}
         self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 48, 'max_canny_thresh': 35, 'accuracy': 10, 'matching_threshold': 17}
-        self.crop_filter = [{'min_y': 160, 'max_y': 320}]
+        self.crop_filter = [{'min_y': 160, "max_y": 320}]
 
     def print_settings(self):
         print("Pipeline Settings:\n")
