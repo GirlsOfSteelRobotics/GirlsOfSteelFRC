@@ -65,6 +65,9 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private double m_counter = 0; //TODO: take this out
 
+
+    private double m_pivotChangingSetpoint = DOWN_ANGLE;
+
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
@@ -157,6 +160,7 @@ public class CollectorSubsystem extends SubsystemBase {
     public void collectorDown() {
         m_pivotLeft.set(-PIVOT_SPEED);
         m_pivotRight.set(-PIVOT_SPEED);
+        m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
     }
 
     public void collectorUp() {
@@ -168,6 +172,13 @@ public class CollectorSubsystem extends SubsystemBase {
             m_pivotLeft.set(PIVOT_SPEED);
             m_pivotRight.set(PIVOT_SPEED);
         }
+
+        m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
+    }
+
+    public void pivotToMagicAngle() {
+        SmartDashboard.putNumber("AHHHH", m_pivotChangingSetpoint);
+        collectorToAngle(m_pivotChangingSetpoint);
     }
 
     public boolean limitSwitchPressed() {
