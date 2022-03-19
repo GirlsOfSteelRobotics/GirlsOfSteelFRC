@@ -182,8 +182,8 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public boolean limitSwitchPressed() {
-        // return m_limitSwitch.isPressed();
         return false;
+        // return !m_limitSwitch.isPressed();
     }
 
     public void rollerIn() {
