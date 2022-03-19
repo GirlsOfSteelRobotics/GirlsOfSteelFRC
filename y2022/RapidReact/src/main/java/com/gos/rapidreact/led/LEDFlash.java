@@ -25,7 +25,7 @@ public class LEDFlash extends LEDBase {
     public void flash() {
         setLEDs(m_minIndex, m_maxIndex, (int) (m_color.red * m_brightness), (int) (m_color.green * m_brightness), (int) (m_color.blue * m_brightness));
         m_brightness += m_increment;
-        System.out.println("FLASH INCR: " + m_increment + ", " + m_brightness);
+        //        System.out.println("FLASH INCR: " + m_increment + ", " + m_brightness);
 
         if (m_brightness >= 1) {
             m_increment *= -1.0;

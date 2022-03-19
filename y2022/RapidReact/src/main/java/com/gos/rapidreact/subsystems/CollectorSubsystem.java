@@ -25,7 +25,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
     private static final double PIVOT_SPEED = .75;
-    public static final double ALLOWABLE_ERROR_DEG = 2;
+    public static final double ALLOWABLE_ERROR_DEG = 1;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
     private static final double GEARING =  756.0;
     private static final double J_KG_METERS_SQUARED = 1;
@@ -62,6 +62,8 @@ public class CollectorSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_simulator;
 
     private final SparkMaxLimitSwitch m_limitSwitch;
+
+    private double m_counter = 0; //TODO: take this out
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -141,6 +143,14 @@ public class CollectorSubsystem extends SubsystemBase {
         if (limitSwitchPressed()) {
             m_pivotEncoderLeft.setPosition(90);
             m_pivotEncoderRight.setPosition(90);
+        }
+
+        m_counter++;
+        if (m_counter == 5) {
+            m_counter = 0;
+            System.out.println("left:  " + getIntakeLeftAngleDegrees());
+            System.out.println("right:  " + getIntakeRightAngleDegrees());
+            System.out.println();
         }
     }
 

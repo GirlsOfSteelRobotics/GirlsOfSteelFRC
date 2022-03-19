@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TeleopArcadeChassisCommand extends CommandBase {
     private static final PropertyManager.IProperty<Double> SLOW_MULTIPLIER = PropertyManager.createDoubleProperty(false, "TeleDriveSlowMult", 0.5);
+    private static final PropertyManager.IProperty<Double> TURN_SCALING_MULTIPLIER = PropertyManager.createDoubleProperty(false, "TeleTurnScaling", 0.8);
     private final ChassisSubsystem m_chassis;
     private final XboxController m_joystick;
 
@@ -31,6 +32,7 @@ public class TeleopArcadeChassisCommand extends CommandBase {
             throttle *= SLOW_MULTIPLIER.getValue();
             steer *= SLOW_MULTIPLIER.getValue();
         }
+        steer *= TURN_SCALING_MULTIPLIER.getValue();
         m_chassis.setArcadeDrive(throttle, steer);
     }
 

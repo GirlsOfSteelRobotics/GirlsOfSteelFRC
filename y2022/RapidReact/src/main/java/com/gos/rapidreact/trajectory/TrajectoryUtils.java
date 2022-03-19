@@ -22,12 +22,13 @@ import java.util.StringTokenizer;
 public class TrajectoryUtils {
 
     //acc: 144, vel: 114
-    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(48); // meters / sec / sec
-    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(48); // meters / sec
+    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(144); // meters / sec / sec
+    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(114); // meters / sec
 
     //acc: 108, vel: 96
-    public static final double SLOWER_ACCELERATION = Units.inchesToMeters(48);
-    public static final double SLOWER_VELOCITY = Units.inchesToMeters(48);
+    public static final double SLOWER_ACCELERATION = Units.inchesToMeters(108);
+    public static final double SLOWER_VELOCITY = Units.inchesToMeters(96
+    );
 
     //reads file & spits out trajectory
     public static Trajectory loadingTrajectory(String fileName, TrajectoryConfig trajectoryConfig) {

@@ -28,7 +28,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final CollectorSubsystem m_collector;
 
     private static final int MAX_INDEX_LED = 60;
-    private static final int MIDDLE_INDEX_LED = MAX_INDEX_LED / 2;
+    private static final int MIDDLE_INDEX_LED = MAX_INDEX_LED / 2 - 1;
     private static final int PORT = Constants.LED;
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
