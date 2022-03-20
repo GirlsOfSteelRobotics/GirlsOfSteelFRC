@@ -14,7 +14,6 @@ public class MirroredLEDDistanceToTarget {
 
         int invertedMin = buffer.getLength() - numLights - minIndex;
         int invertedMax = buffer.getLength() - minIndex;
-        System.out.println(minIndex + ", " + (minIndex + numLights) + ", " + invertedMin + ", " + invertedMax);
         m_invertedStrip = new LEDDistanceToTarget(buffer, invertedMin, invertedMax, color, maxDistance);
     }
 

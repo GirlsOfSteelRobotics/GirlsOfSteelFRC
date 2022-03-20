@@ -13,11 +13,8 @@ public class MirroredLEDBoolean {
                               Color trueColor, Color falseColor) {
         m_normalStrip = new LEDBoolean(buffer, minIndex, minIndex + numLights, trueColor, falseColor);
 
-        // 5 -> 9, 55 -> 51
-        // 10 -> 14, 50, 54
         int invertedMin = buffer.getLength() - numLights - minIndex;
         int invertedMax = buffer.getLength() - minIndex;
-        System.out.println(minIndex + ", " + (minIndex + numLights) + ", " + invertedMin + ", " + invertedMax);
         m_invertedStrip = new LEDBoolean(buffer, invertedMin, invertedMax, trueColor, falseColor);
     }
 

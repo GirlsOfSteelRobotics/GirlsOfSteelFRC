@@ -13,7 +13,6 @@ public class MirroredLEDRainbow {
 
         int invertedMin = buffer.getLength() - numLights - minIndex;
         int invertedMax = buffer.getLength() - minIndex;
-        System.out.println(minIndex + ", " + (minIndex + numLights) + ", " + invertedMin + ", " + invertedMax);
         m_invertedStrip = new LEDRainbow(buffer, invertedMin, invertedMax);
     }
 
