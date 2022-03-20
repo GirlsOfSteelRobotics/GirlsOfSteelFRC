@@ -41,7 +41,7 @@ public final class Constants {
     public static final int SERVO_CHANNEL = 1;
 
     //DIO ports
-    public static final int INDEX_SENSOR_LOWER_VERTICAL_CONVEYOR = 5;
+    public static final int INDEX_SENSOR_LOWER_VERTICAL_CONVEYOR = 2;
     // 6 is used to power half of upper sensor
     // 7 is used for hanger???
     public static final int INTAKE_INDEX_SENSOR = 8;

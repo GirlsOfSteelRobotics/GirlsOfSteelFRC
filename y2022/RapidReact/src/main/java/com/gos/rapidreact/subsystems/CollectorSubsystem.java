@@ -25,7 +25,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
     private static final double PIVOT_SPEED = .75;
-    public static final double ALLOWABLE_ERROR_DEG = 2;
+    public static final double ALLOWABLE_ERROR_DEG = 1;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
     private static final double GEARING =  756.0;
     private static final double J_KG_METERS_SQUARED = 1;
@@ -37,7 +37,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     // TODO play with these numbers for optimal ball pickup
     public static final double UP_ANGLE = 80;
-    public static final double DOWN_ANGLE = RobotBase.isReal() ? 10 : 0;
+    public static final double DOWN_ANGLE = RobotBase.isReal() ? 2 : 0;
 
     // From SysId
     private static final double PIVOT_KS = 0.1831;
@@ -62,6 +62,11 @@ public class CollectorSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_simulator;
 
     private final SparkMaxLimitSwitch m_limitSwitch;
+
+    private double m_counter; //TODO: take this out
+
+
+    private double m_pivotChangingSetpoint = DOWN_ANGLE;
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -142,22 +147,39 @@ public class CollectorSubsystem extends SubsystemBase {
             m_pivotEncoderLeft.setPosition(90);
             m_pivotEncoderRight.setPosition(90);
         }
+
+        m_counter++;
+        if (m_counter == 5) {
+            m_counter = 0;
+            System.out.println("left:  " + getIntakeLeftAngleDegrees());
+            System.out.println("right:  " + getIntakeRightAngleDegrees());
+            System.out.println();
+        }
     }
 
     public void collectorDown() {
-        m_pivotLeft.set(-PIVOT_SPEED);
-        m_pivotRight.set(-PIVOT_SPEED);
-    }
-
-    public void collectorUp() {
         if (limitSwitchPressed()) {
             m_pivotLeft.set(0);
             m_pivotRight.set(0);
         }
+
         else {
-            m_pivotLeft.set(PIVOT_SPEED);
-            m_pivotRight.set(PIVOT_SPEED);
+            m_pivotLeft.set(-PIVOT_SPEED);
+            m_pivotRight.set(-PIVOT_SPEED);
+            m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
         }
+    }
+
+    public void collectorUp() {
+        m_pivotLeft.set(PIVOT_SPEED);
+        m_pivotRight.set(PIVOT_SPEED);
+
+        m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
+    }
+
+    public void pivotToMagicAngle() {
+        SmartDashboard.putNumber("AHHHH", m_pivotChangingSetpoint);
+        collectorToAngle(m_pivotChangingSetpoint);
     }
 
     public boolean limitSwitchPressed() {

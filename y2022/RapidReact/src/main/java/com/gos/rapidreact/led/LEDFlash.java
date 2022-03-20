@@ -13,15 +13,20 @@ public class LEDFlash extends LEDBase {
 
     public LEDFlash(AddressableLEDBuffer buffer, double secondsOneDirection, Color color, int minIndex, int maxIndex) {
         super(buffer);
+        double flashesPerSecond = 1 / secondsOneDirection;
+
         m_color = new Color8Bit(color);
-        m_increment = secondsOneDirection / (50 * secondsOneDirection);
+        m_increment = flashesPerSecond / 50;
         m_minIndex = minIndex;
         m_maxIndex = maxIndex;
+        System.out.println("FLASH INCR: " + m_increment);
     }
 
     public void flash() {
         setLEDs(m_minIndex, m_maxIndex, (int) (m_color.red * m_brightness), (int) (m_color.green * m_brightness), (int) (m_color.blue * m_brightness));
         m_brightness += m_increment;
+        //        System.out.println("FLASH INCR: " + m_increment + ", " + m_brightness);
+
         if (m_brightness >= 1) {
             m_increment *= -1.0;
         }

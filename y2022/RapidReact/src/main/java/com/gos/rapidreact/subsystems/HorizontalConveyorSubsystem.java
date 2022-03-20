@@ -5,11 +5,14 @@ import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HorizontalConveyorSubsystem extends SubsystemBase {
 
-    public static final double HORIZONTAL_CONVEYOR_MOTOR_SPEED = 1;
+    public static final double HORIZONTAL_CONVEYOR_TELEOP_MOTOR_SPEED = 0.5;
+    public static final double HORIZONTAL_CONVEYOR_AUTO_MOTOR_SPEED = 1;
+
 
     private final SimableCANSparkMax m_leader;
     
@@ -26,11 +29,21 @@ public class HorizontalConveyorSubsystem extends SubsystemBase {
     }
 
     public void forwardHorizontalConveyorMotor() {
-        m_leader.set(HORIZONTAL_CONVEYOR_MOTOR_SPEED);
+        if (DriverStation.isTeleop()) {
+            m_leader.set(HORIZONTAL_CONVEYOR_TELEOP_MOTOR_SPEED);
+        }
+        if (DriverStation.isAutonomous()) {
+            m_leader.set(HORIZONTAL_CONVEYOR_AUTO_MOTOR_SPEED);
+        }
     }
 
     public void backwardHorizontalConveyorMotor() {
-        m_leader.set(-HORIZONTAL_CONVEYOR_MOTOR_SPEED);
+        if (DriverStation.isTeleop()) {
+            m_leader.set(-HORIZONTAL_CONVEYOR_TELEOP_MOTOR_SPEED);
+        }
+        if (DriverStation.isAutonomous()) {
+            m_leader.set(-HORIZONTAL_CONVEYOR_AUTO_MOTOR_SPEED);
+        }
     }
 
     public void stopHorizontalConveyorMotor() {

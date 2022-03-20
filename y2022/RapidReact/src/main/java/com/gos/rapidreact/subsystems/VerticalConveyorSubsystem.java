@@ -6,11 +6,14 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VerticalConveyorSubsystem extends SubsystemBase {
 
-    public static final double VERTICAL_CONVEYOR_MOTOR_SPEED = 1;
+    public static final double VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED = 0.5;
+    public static final double VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED = 1;
+
     public static final double FEEDER_MOTOR_SPEED = 0.5;
 
     private final SimableCANSparkMax m_conveyor; //multiple sets of wheels to move the cargo up
@@ -37,11 +40,21 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     }
 
     public void forwardVerticalConveyorMotor() {
-        m_conveyor.set(VERTICAL_CONVEYOR_MOTOR_SPEED);
+        if (DriverStation.isTeleop()) {
+            m_conveyor.set(VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED);
+        }
+        if (DriverStation.isAutonomous()) {
+            m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
+        }
     }
 
     public void backwardVerticalConveyorMotor() {
-        m_conveyor.set(-VERTICAL_CONVEYOR_MOTOR_SPEED);
+        if (DriverStation.isTeleop()) {
+            m_conveyor.set(-VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED);
+        }
+        if (DriverStation.isAutonomous()) {
+            m_conveyor.set(-VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
+        }
     }
 
     public double getVerticalConveyorSpeed() {
