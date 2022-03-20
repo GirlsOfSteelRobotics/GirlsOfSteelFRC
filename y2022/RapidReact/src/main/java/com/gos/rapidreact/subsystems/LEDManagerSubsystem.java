@@ -108,7 +108,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         );
         m_autoMode = new MirroredLEDColorLookup(m_buffer, 0, 20, autonColorMap);
 
-        m_autoUpperIndexSensor = new MirroredLEDBoolean(m_buffer, 20, 25, Color.kFuchsia, Color.kBlack);
+        m_autoUpperIndexSensor = new MirroredLEDBoolean(m_buffer, 20, 4, Color.kFuchsia, Color.kBlack);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -187,7 +187,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_angleToCargoRight.angleToTarget(m_intakeLimelight.getAngle());
         }
 
-        if (RobotBase.isReal()) {
+        if (DriverStation.isFMSAttached()) {
             if (DriverStation.getMatchTime() < 25) {
                 m_readyToHang.flash();
             }
