@@ -11,7 +11,7 @@ public class LEDDistanceToTarget extends LEDBase {
     private final int m_maxIndex;
     private final double m_maxDistance;
 
-    public LEDDistanceToTarget(AddressableLEDBuffer buffer, Color color, int minIndex, int maxIndex, double maxDistance) {
+    public LEDDistanceToTarget(AddressableLEDBuffer buffer, int minIndex, int maxIndex, Color color, double maxDistance) {
         super(buffer);
         m_color = new Color8Bit(color);
         m_minIndex = minIndex;

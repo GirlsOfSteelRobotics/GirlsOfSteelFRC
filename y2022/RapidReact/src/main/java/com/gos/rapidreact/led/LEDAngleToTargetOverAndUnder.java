@@ -13,7 +13,7 @@ public class LEDAngleToTargetOverAndUnder extends LEDBase {
     private final int m_middleLED;
     private final int m_maxAngle;
 
-    public LEDAngleToTargetOverAndUnder(AddressableLEDBuffer buffer, Color underAngleColor, Color aboveAngleColor, int minIndex, int maxIndex, int maxAngle) {
+    public LEDAngleToTargetOverAndUnder(AddressableLEDBuffer buffer, int minIndex, int maxIndex, Color underAngleColor, Color aboveAngleColor, int maxAngle) {
         super(buffer);
         m_underAngleColor = new Color8Bit(underAngleColor);
         m_aboveAngleColor = new Color8Bit(aboveAngleColor);

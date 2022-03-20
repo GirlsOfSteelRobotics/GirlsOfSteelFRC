@@ -9,7 +9,7 @@ public class LEDRainbow extends LEDBase {
     private int m_rainbowFirstPixelHue;
 
 
-    public LEDRainbow(int maxIndex, AddressableLEDBuffer buffer, int minIndex) {
+    public LEDRainbow(AddressableLEDBuffer buffer, int minIndex, int maxIndex) {
         super(buffer);
         m_indexLength = maxIndex - minIndex;
         m_minIndex = minIndex;
