@@ -63,7 +63,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private final SparkMaxLimitSwitch m_limitSwitch;
 
-    private double m_counter = 0; //TODO: take this out
+    private double m_counter; //TODO: take this out
 
 
     private double m_pivotChangingSetpoint = DOWN_ANGLE;

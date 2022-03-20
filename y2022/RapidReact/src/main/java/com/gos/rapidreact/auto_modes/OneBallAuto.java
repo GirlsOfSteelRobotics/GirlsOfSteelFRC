@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.math.util.Units;
 
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
-
-
 public class OneBallAuto extends SequentialCommandGroup {
 
     private static final double VERTICAL_CONVEYOR_TIMEOUT = 3;

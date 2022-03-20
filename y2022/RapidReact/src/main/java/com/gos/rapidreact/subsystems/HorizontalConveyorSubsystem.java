@@ -43,7 +43,8 @@ public class HorizontalConveyorSubsystem extends SubsystemBase {
         }
         if (DriverStation.isAutonomous()) {
             m_leader.set(-HORIZONTAL_CONVEYOR_AUTO_MOTOR_SPEED);
-        }    }
+        }
+    }
 
     public void stopHorizontalConveyorMotor() {
         m_leader.set(0);

@@ -173,7 +173,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_upperConveyorIndexLeft.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
             m_upperConveyorIndexRight.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
 
-            if (true) {//m_intakeLimelight.distanceToCargo() < 3) { //3 meters
+            if (m_intakeLimelight.distanceToCargo() < 3) { //3 meters
                 m_goToCargoLeft.flash();
                 m_goToCargoRight.flash();
             }
@@ -234,7 +234,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             autoColor = Color.kPurple;
             break;
         default:
-            autoColor = null;
+            autoColor = null; // NOPMD
             break;
         }
 
@@ -260,12 +260,12 @@ public class LEDManagerSubsystem extends SubsystemBase {
             distanceToCargoAuto = m_intakeLimelight.distanceToCargo();
             angleToCargoAuto = m_intakeLimelight.getAngle();
 
-            if (!(distAllowableError > Math.abs(distanceToCargoAuto))) {
+            if (distAllowableError < Math.abs(distanceToCargoAuto)) {
                 m_autoCheckDistanceLeft.distanceToTarget(distanceToCargoAuto);
                 m_autoCheckDistanceRight.distanceToTarget(distanceToCargoAuto);
             }
 
-            if (!(angleAllowableError > Math.abs(angleToCargoAuto))) {
+            if (angleAllowableError < Math.abs(angleToCargoAuto)) {
                 m_autoCheckAngleLeft.angleToTarget(angleToCargoAuto);
                 m_autoCheckAngleRight.angleToTarget(angleToCargoAuto);
             }
