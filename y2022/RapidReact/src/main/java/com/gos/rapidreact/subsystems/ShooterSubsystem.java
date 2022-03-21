@@ -27,7 +27,9 @@ public class ShooterSubsystem extends SubsystemBase {
     public static final double FENDER_RPM = 1500;
     public static final double TARMAC_EDGE_RPM = 2000;
     public static final double DEFAULT_SHOOTER_RPM = FENDER_RPM;
+    public static final double ROLLER_SPEED = 0.5;
     private final SimableCANSparkMax m_leader;
+    private final SimableCANSparkMax m_roller;
     private final RelativeEncoder m_encoder;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
@@ -40,6 +42,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leader.restoreFactoryDefaults();
         m_leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+        m_roller = new SimableCANSparkMax(Constants.SHOOTER_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_roller.restoreFactoryDefaults();
+        m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
         //true because the motors are facing each other and in order to do the same thing, they would have to spin in opposite directions
         m_encoder  = m_leader.getEncoder();
@@ -78,6 +84,14 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isShooterAtSpeed() {
         double error = Math.abs(m_goalRpm - getEncoderVelocity());
         return error < ALLOWABLE_ERROR;
+    }
+
+    public void forwardRoller() {
+        m_roller.set(ROLLER_SPEED);
+    }
+
+    public void backwardRoller() {
+        m_roller.set(-ROLLER_SPEED);
     }
 
     public void setShooterSpeed(double speed) {
