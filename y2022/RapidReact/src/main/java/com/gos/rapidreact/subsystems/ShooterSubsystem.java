@@ -94,6 +94,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_roller.set(-ROLLER_SPEED);
     }
 
+    public void stopRoller() {
+        m_roller.set(0);
+    }
+
     public void setShooterSpeed(double speed) {
         m_leader.set(speed);
     }

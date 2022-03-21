@@ -12,6 +12,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final double MOUNTING_ANGLE = 0; // TODO verify angle
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
     public static final double MAX_SHOOTING_DISTANCE = 5; //meters
+    public static final double MIN_SHOOTING_DISTANCE = 2; //meters
+    public static final double ALLOWABLE_ANGLE_ERROR = 2; //degrees
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
@@ -41,6 +43,14 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
 
     public double angleError() {
         return m_horizontalAngle.getDouble(0);
+    }
+
+    public boolean atAcceptableDistance() {
+        return getDistanceToHub() > MIN_SHOOTING_DISTANCE && getDistanceToHub() < MAX_SHOOTING_DISTANCE;
+    }
+
+    public boolean atAcceptableAngle() {
+        return Math.abs(angleError()) < ALLOWABLE_ANGLE_ERROR;
     }
 }
 
