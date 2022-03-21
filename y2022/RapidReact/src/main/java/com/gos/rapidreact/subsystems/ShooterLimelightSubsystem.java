@@ -1,6 +1,7 @@
 package com.gos.rapidreact.subsystems;
 
 
+import com.gos.lib.properties.PropertyManager;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -11,9 +12,12 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final String LIMELIGHT_NAME = "limelight-george";
     public static final double MOUNTING_ANGLE = 0; // TODO verify angle
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
-    public static final double MAX_SHOOTING_DISTANCE = 5; //meters
-    public static final double MIN_SHOOTING_DISTANCE = 2; //meters
-    public static final double ALLOWABLE_ANGLE_ERROR = 2; //degrees
+    public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
+    public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 2); //meters
+    public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 2); //degrees
+
+    public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
+
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
@@ -46,11 +50,11 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public boolean atAcceptableDistance() {
-        return getDistanceToHub() > MIN_SHOOTING_DISTANCE && getDistanceToHub() < MAX_SHOOTING_DISTANCE;
+        return getDistanceToHub() > MIN_SHOOTING_DISTANCE.getValue() && getDistanceToHub() < MAX_SHOOTING_DISTANCE.getValue();
     }
 
     public boolean atAcceptableAngle() {
-        return Math.abs(angleError()) < ALLOWABLE_ANGLE_ERROR;
+        return Math.abs(angleError()) < ALLOWABLE_ANGLE_ERROR.getValue();
     }
 }
 

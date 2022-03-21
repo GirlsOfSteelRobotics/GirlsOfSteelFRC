@@ -16,8 +16,7 @@ public class AutoConveyorAndShooterCommand extends CommandBase {
         this.m_shooter = shooterSubsystem;
         this.m_verticalConveyor = verticalConveyorSubsystem;
 
-        // probably don't want this to override vertical conveyor movement
-        addRequirements(this.m_shooterLimelight, this.m_shooter);
+        addRequirements(this.m_shooterLimelight, this.m_shooter, this.m_verticalConveyor);
     }
 
     @Override
@@ -27,18 +26,30 @@ public class AutoConveyorAndShooterCommand extends CommandBase {
 
     @Override
     public void execute() {
+        m_shooter.rpmForDistance(m_shooterLimelight.getDistanceToHub());
+        m_shooter.forwardRoller();
+
         if (m_shooterLimelight.atAcceptableDistance() && m_shooterLimelight.atAcceptableAngle() && m_shooter.isShooterAtSpeed()) {
-            m_shooter.rpmForDistance(m_shooterLimelight.getDistanceToHub());
-            m_shooter.forwardRoller();
             m_verticalConveyor.forwardFeedMotor();
+            m_verticalConveyor.forwardVerticalConveyorMotor();
         }
 
         else {
+            if (m_verticalConveyor.getUpperIndexSensor() && !m_verticalConveyor.getLowerIndexSensor()) {
+                m_verticalConveyor.forwardVerticalConveyorMotor();
+            }
+
+            if (m_verticalConveyor.getLowerIndexSensor() && !m_verticalConveyor.getUpperIndexSensor()) {
+                m_verticalConveyor.forwardVerticalConveyorMotor();
+            }
+
             if (m_verticalConveyor.getUpperIndexSensor() && m_verticalConveyor.getLowerIndexSensor()) {
                 m_verticalConveyor.stopVerticalConveyorMotor();
             }
-            m_verticalConveyor.stopFeedMotor();
-            m_shooter.stopRoller();
+
+            if (!(m_verticalConveyor.getLowerIndexSensor() && m_verticalConveyor.getUpperIndexSensor())) {
+                m_verticalConveyor.forwardVerticalConveyorMotor();
+            }
         }
     }
 
@@ -49,6 +60,6 @@ public class AutoConveyorAndShooterCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        m_verticalConveyor.stopVerticalConveyorMotor();
     }
 }
