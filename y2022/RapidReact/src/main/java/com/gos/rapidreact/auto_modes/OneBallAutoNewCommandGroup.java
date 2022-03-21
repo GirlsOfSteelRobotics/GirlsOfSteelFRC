@@ -9,10 +9,10 @@ import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import com.gos.rapidreact.trajectory.FourBallTrajectories;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_LOW;
 
 public class OneBallAutoNewCommandGroup extends SequentialCommandGroup {
-    private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM;
+    private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM_LOW;
 
     public OneBallAutoNewCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,
                                       HorizontalConveyorSubsystem horizontalConveyor) {
