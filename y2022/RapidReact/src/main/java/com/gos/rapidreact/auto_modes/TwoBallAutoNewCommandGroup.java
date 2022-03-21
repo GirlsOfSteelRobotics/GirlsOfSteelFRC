@@ -12,10 +12,10 @@ import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import com.gos.rapidreact.trajectory.FourBallTrajectories;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_LOW;
 
 public class TwoBallAutoNewCommandGroup extends SequentialCommandGroup {
-    private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM;
+    private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM_LOW;
     private static final double PIVOT_ANGLE_DOWN = 7;
 
     public TwoBallAutoNewCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,
@@ -26,7 +26,7 @@ public class TwoBallAutoNewCommandGroup extends SequentialCommandGroup {
                 .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
                 // Run the intake the entire time, while we wait for the previous commands to finish
                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
-            FourBallTrajectories.fourBallPart2(chassis),
+            FourBallTrajectories.fourBallLowPart2(chassis),
             new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, FIRST_SHOT_RPM, 5)
                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)));
 
