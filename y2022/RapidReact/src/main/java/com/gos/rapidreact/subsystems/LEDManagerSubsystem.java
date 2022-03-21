@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.Map;
 
-@SuppressWarnings({"PMD.TooManyFields", "PMD.UnusedPrivateMethod"})
+@SuppressWarnings({"PMD.TooManyFields", "PMD.UnusedPrivateMethod", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class LEDManagerSubsystem extends SubsystemBase {
     private final ShooterLimelightSubsystem m_shooterLimelight;
     //private final ShooterLimelightSubsystem m_shooterLimelight;
@@ -32,10 +32,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private static final int PORT = Constants.LED;
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
-//    private final MirroredLEDBoolean m_intakeLimitSwitch;
-//    private final MirroredLEDBoolean m_lowerConveyorIndex;
-//    private final MirroredLEDBoolean m_upperConveyorIndex;
-//    private final MirroredLEDFlash m_goToCargoLeft;
+    // private final MirroredLEDBoolean m_intakeLimitSwitch;
+    // private final MirroredLEDBoolean m_lowerConveyorIndex;
+    // private final MirroredLEDBoolean m_upperConveyorIndex;
+    // private final MirroredLEDFlash m_goToCargoLeft;
 
     private final MirroredLEDFlash m_shooterAtSpeed;
 
