@@ -5,6 +5,7 @@
 
 package com.gos.rapidreact;
 
+import com.gos.rapidreact.commands.AutoConveyorAndShooterCommand;
 import com.gos.rapidreact.commands.CollectorHackPIDDown;
 import com.gos.rapidreact.commands.HangerDownCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
@@ -138,6 +139,8 @@ public class RobotContainer {
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, 45));
         testCommands.add("GoToHubAngle - -45", new TurnToAngleCommand(m_chassis, -45));
         testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, 20));
+
+        testCommands.add("Automated Shooter & Conveyor", new AutoConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor));
 
         //testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(10)));
         //testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(15)));
