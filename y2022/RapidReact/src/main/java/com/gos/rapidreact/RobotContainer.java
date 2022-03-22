@@ -11,6 +11,7 @@ import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
+import com.gos.rapidreact.commands.LimelightGoToHubAngleCommand;
 import com.gos.rapidreact.commands.ShooterFeederCommandGroup;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
@@ -30,6 +31,7 @@ import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 import com.gos.rapidreact.subsystems.LEDManagerSubsystem;
+import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import com.gos.rapidreact.trajectory.TestTrajectoryStraight;
 import com.gos.rapidreact.trajectory.TrajectoryB54;
 import com.gos.rapidreact.trajectory.TestTrajectoryCurve;
@@ -68,6 +70,7 @@ public class RobotContainer {
     private final VerticalConveyorSubsystem m_verticalConveyor = new VerticalConveyorSubsystem();
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
+    private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
     private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector);
     private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_intakeLimelight, m_shooter, m_collector, m_verticalConveyor, m_autoModeFactory); // NOPMD
 
@@ -128,6 +131,8 @@ public class RobotContainer {
         testCommands.add("LimelightGoToCargo", new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
 
         testCommands.add("ChangeCollectorDown", new CollectorHackPIDDown(m_collector));
+
+        testCommands.add("Limelight Go To Hub Angle", new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight));
 
         //testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, 45));
         //testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, 20));
