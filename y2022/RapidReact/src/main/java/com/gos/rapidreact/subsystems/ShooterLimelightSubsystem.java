@@ -12,8 +12,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final String LIMELIGHT_NAME = "limelight-george";
-    public static final double MOUNTING_ANGLE_DEGREES = 0; // TODO verify angle
-    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
+    public static final double MOUNTING_ANGLE_DEGREES = 55;
+    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(29.4);
+    public static final double HUB_HEIGHT = Units.inchesToMeters(104); //8 ft, 8 in
     public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
     public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 2); //meters
     public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 2); //degrees
@@ -38,9 +39,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public double getDistanceToHub() {
-
         double distance;
-        distance = (LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(MOUNTING_ANGLE_DEGREES + m_verticalAngle.getDouble(0)));
+        distance = (HUB_HEIGHT - LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(MOUNTING_ANGLE_DEGREES + m_verticalAngle.getDouble(0)));
         return distance;
     }
 
