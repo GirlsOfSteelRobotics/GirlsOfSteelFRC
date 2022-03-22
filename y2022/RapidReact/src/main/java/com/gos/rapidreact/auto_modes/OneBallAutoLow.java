@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.math.util.Units;
 
 
-public class OneBallAuto extends SequentialCommandGroup {
+public class OneBallAutoLow extends SequentialCommandGroup {
 
     private static final double VERTICAL_CONVEYOR_TIMEOUT = 3;
     private static final double DRIVE_DISTANCE = Units.inchesToMeters(40);
@@ -19,7 +19,7 @@ public class OneBallAuto extends SequentialCommandGroup {
 
     //Robot flat on wall and rolled back until the corners of the bumper are on the edge of the tape lines
     //Three Ariella Feet from the wall
-    public OneBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor) {
+    public OneBallAutoLow(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor) {
         super(
             new ShooterRpmPIDCommand(shooter, 1850),
             new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(VERTICAL_CONVEYOR_TIMEOUT),

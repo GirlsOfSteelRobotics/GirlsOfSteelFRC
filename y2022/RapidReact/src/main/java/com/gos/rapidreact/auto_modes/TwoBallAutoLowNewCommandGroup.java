@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_LOW;
 
-public class TwoBallAutoNewCommandGroup extends SequentialCommandGroup {
+public class TwoBallAutoLowNewCommandGroup extends SequentialCommandGroup {
     private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM_LOW;
     private static final double PIVOT_ANGLE_DOWN = 7;
 
-    public TwoBallAutoNewCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,
-                                      HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
+    public TwoBallAutoLowNewCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,
+                                         HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         // Drive to the second ball, while lowering the shooter.
         super(
             FourBallTrajectories.fourBallPart1(chassis)
