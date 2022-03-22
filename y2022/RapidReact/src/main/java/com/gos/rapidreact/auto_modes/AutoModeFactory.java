@@ -20,15 +20,15 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
 
     private final CommandBase m_offTarmacAuto;
-    private final CommandBase m_oneBallAuto;
+    private final CommandBase m_oneBallAutoLow;
     private final CommandBase m_oneBallAutoHigh;
-    private final CommandBase m_twoBallAuto;
+    private final CommandBase m_twoBallAutoLow;
     private final CommandBase m_twoBallAutoHigh;
-    private final CommandBase m_threeBallAuto;
+    private final CommandBase m_threeBallAutoLow;
     private final CommandBase m_fourBallAutoLow;
     private final CommandBase m_fourBallAutoHalf;
     private final CommandBase m_fourBallAutoHigh;
-    private final CommandBase m_fiveBallAuto;
+    private final CommandBase m_fiveBallAutoLow;
 
 
 
@@ -49,20 +49,20 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_offTarmacAuto = new DriveOffTarmac(chassis);
         m_sendableChooser.addOption("Drive Off Tarmac (Default)", m_offTarmacAuto);
 
-        m_oneBallAuto = new OneBallAutoLow(chassis, shooter, verticalConveyor);
-        m_sendableChooser.addOption("One Ball Auto", m_oneBallAuto);
+        m_oneBallAutoLow = new OneBallAutoLow(chassis, shooter, verticalConveyor);
+        m_sendableChooser.addOption("One Ball Auto Low", m_oneBallAutoLow);
 
         m_oneBallAutoHigh = new OneBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor);
         m_sendableChooser.addOption("One Ball Auto High", m_oneBallAutoHigh);
 
-        m_twoBallAuto = new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.setDefaultOption("Two Ball Auto", m_twoBallAuto);
+        m_twoBallAutoLow = new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.setDefaultOption("Two Ball Auto Low", m_twoBallAutoLow);
 
         m_twoBallAutoHigh = new TwoBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Two Ball Auto High", m_twoBallAutoHigh);
 
-        m_threeBallAuto = new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Three Ball Auto", m_threeBallAuto);
+        m_threeBallAutoLow = new ThreeBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Three Ball Auto Low", m_threeBallAutoLow);
 
         m_fourBallAutoLow = new FourBallAutoLowCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Four Ball Auto Low", m_fourBallAutoLow);
@@ -73,8 +73,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_fourBallAutoHigh = new FourBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Four Ball Auto High", m_fourBallAutoHigh);
 
-        m_fiveBallAuto = new FiveBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Five Ball Auto", m_fiveBallAuto);
+        m_fiveBallAutoLow = new FiveBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Five Ball Auto Low", m_fiveBallAutoLow);
 
     }
 
@@ -85,15 +85,15 @@ public class AutoModeFactory extends SequentialCommandGroup {
             autoMode = 0;
         }
 
-        if (m_sendableChooser.getSelected() == m_oneBallAuto) {
+        if (m_sendableChooser.getSelected() == m_oneBallAutoLow) {
             autoMode = 1;
         }
 
-        if (m_sendableChooser.getSelected() == m_twoBallAuto) {
+        if (m_sendableChooser.getSelected() == m_twoBallAutoLow) {
             autoMode = 2;
         }
 
-        if (m_sendableChooser.getSelected() == m_threeBallAuto) {
+        if (m_sendableChooser.getSelected() == m_threeBallAutoLow) {
             autoMode = 3;
         }
 
@@ -101,7 +101,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             autoMode = 4;
         }
 
-        if (m_sendableChooser.getSelected() == m_fiveBallAuto) {
+        if (m_sendableChooser.getSelected() == m_fiveBallAutoLow) {
             autoMode = 5;
         }
         return autoMode;
