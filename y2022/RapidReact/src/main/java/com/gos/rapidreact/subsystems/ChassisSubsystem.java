@@ -87,7 +87,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
     public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5066;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.08475;
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.5107;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = .8;
     public static final double MAX_VOLTAGE = 10;
 
     public static final double K_TRACKWIDTH_METERS = 1.8603;
@@ -210,7 +210,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_coordinateGuiPublisher.publish(m_odometry.getPoseMeters());
         // SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
         // SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
-        // SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
+        SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
         // SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
         // SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
 
