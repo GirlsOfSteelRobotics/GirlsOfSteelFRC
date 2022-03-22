@@ -3,7 +3,6 @@ package com.gos.rapidreact.subsystems;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
 import com.gos.rapidreact.led.LEDAngleToTargetOverAndUnder;
-import com.gos.rapidreact.led.LEDAngleToTargetOverOrUnder;
 import com.gos.rapidreact.led.LEDFlash;
 import com.gos.rapidreact.led.LEDRainbow;
 import com.gos.rapidreact.led.mirrored.MirroredLEDBoolean;
@@ -44,6 +43,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final MirroredLEDFlash m_readyToShoot;
 
     private final LEDAngleToTargetOverAndUnder m_angleToHub;
+    private final MirroredLEDBoolean m_angleToHubReady;
 
     private final LEDFlash m_readyToHang;
     private final LEDRainbow m_rainbowFullStrip;
@@ -80,9 +80,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_shooterAtSpeed = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kGreen);
 
-        m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kGreen);
+        m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kGreen, Color.kYellow);
 
-        m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kOrange, Color.kBlue, 15.0);
+        m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kYellow, Color.kYellow, 15.0);
+        m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kGreen, Color.kBlack);
 
         m_noLimelight = new MirroredLEDBoolean(m_buffer, 10, 20, new Color(.3f, 0, 0), Color.kBlack);
 
@@ -174,7 +175,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
             if (m_shooter.isShooterAtSpeed() && m_shooterLimelight.isReadyToShoot()) {
                 m_readyToShoot.flash();
             } else {
-                m_angleToHub.angleToTarget(m_shooterLimelight.angleError());
+                // If we are lined up, make the whole section green
+                if (m_shooterLimelight.atAcceptableAngle()) {
+                    m_angleToHubReady.checkBoolean(true);
+                }
+                // If it isn't lined up, show the error
+                else {
+                    m_angleToHub.angleToTarget(m_shooterLimelight.angleError());
+                }
                 m_correctShootingDistance.checkBoolean(m_shooterLimelight.atAcceptableDistance());
             }
         }
