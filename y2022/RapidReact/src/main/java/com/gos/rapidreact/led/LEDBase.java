@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
-public class LEDBase {
+public abstract class LEDBase implements LEDPattern {
     protected final AddressableLEDBuffer m_buffer;
 
     public LEDBase(AddressableLEDBuffer buffer) {

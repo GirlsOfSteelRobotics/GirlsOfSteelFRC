@@ -9,6 +9,7 @@ public class LEDBoolean extends LEDBase {
     private final int m_maxIndex;
     private final Color8Bit m_trueColor;
     private final Color8Bit m_falseColor;
+    private boolean m_state;
 
     public LEDBoolean(AddressableLEDBuffer buffer, int minIndex, int maxIndex,
                       Color trueColor, Color falseColor) {
@@ -19,8 +20,18 @@ public class LEDBoolean extends LEDBase {
         m_falseColor = new Color8Bit(falseColor);
     }
 
-    public void checkBoolean(boolean checkBoolean) {
-        if (checkBoolean) {
+    public void setState(boolean state) {
+        m_state = state;
+    }
+
+    public void setStateAndWrite(boolean state) {
+        setState(state);
+        writeLeds();
+    }
+
+    @Override
+    public void writeLeds() {
+        if (m_state) {
             setLEDs(m_minIndex, m_maxIndex, m_trueColor.red, m_trueColor.green, m_trueColor.blue);
         }
         else {

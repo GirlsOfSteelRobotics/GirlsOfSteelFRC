@@ -19,7 +19,8 @@ public class LEDMovingPixel extends LEDBase {
         m_pixelCounter = minIndex; // start at min index
     }
 
-    public void movingPixel() {
+    @Override
+    public void writeLeds() {
         m_buffer.setRGB(m_pixelCounter, m_color.red, m_color.green, m_color.blue);
         if (m_loopCounter % 5 == 0) {
             m_pixelCounter++;
