@@ -10,6 +10,11 @@ public class MirroredLEDBoolean {
     private final LEDBoolean m_invertedStrip;
 
     public MirroredLEDBoolean(AddressableLEDBuffer buffer, int minIndex, int numLights,
+                              Color trueColor) {
+        this(buffer, minIndex, numLights, trueColor, Color.kBlack);
+    }
+
+    public MirroredLEDBoolean(AddressableLEDBuffer buffer, int minIndex, int numLights,
                               Color trueColor, Color falseColor) {
         m_normalStrip = new LEDBoolean(buffer, minIndex, minIndex + numLights, trueColor, falseColor);
 

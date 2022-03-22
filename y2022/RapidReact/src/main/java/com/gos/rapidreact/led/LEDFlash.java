@@ -19,7 +19,6 @@ public class LEDFlash extends LEDBase {
         m_increment = flashesPerSecond / 50;
         m_minIndex = minIndex;
         m_maxIndex = maxIndex;
-        System.out.println("FLASH INCR: " + m_increment);
     }
 
     public void flash() {

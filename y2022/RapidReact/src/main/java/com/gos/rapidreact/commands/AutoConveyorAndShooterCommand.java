@@ -30,27 +30,20 @@ public class AutoConveyorAndShooterCommand extends CommandBase {
         m_shooter.rpmForDistance(m_shooterLimelight.getDistanceToHub());
         m_shooter.forwardRoller();
 
-        if (m_shooterLimelight.atAcceptableDistance() && m_shooterLimelight.atAcceptableAngle() && m_shooter.isShooterAtSpeed()) {
+        // We are ready to shoot, move the conveyor up
+        if (m_shooterLimelight.isReadyToShoot() && m_shooter.isShooterAtSpeed()) {
             m_verticalConveyor.forwardFeedMotor();
             m_verticalConveyor.forwardVerticalConveyorMotor();
         }
-
+        // We aren't at speed, but we will move the balls up until we trip the top ball sensor
+        else if (!m_verticalConveyor.getUpperIndexSensor()) {
+            m_verticalConveyor.stopFeedMotor();
+            m_verticalConveyor.forwardVerticalConveyorMotor();
+        }
+        // We aren't at speed, but we detect a ball. Wait till we can shoot.
         else {
-            if (m_verticalConveyor.getUpperIndexSensor() && !m_verticalConveyor.getLowerIndexSensor()) {
-                m_verticalConveyor.forwardVerticalConveyorMotor();
-            }
-
-            if (m_verticalConveyor.getLowerIndexSensor() && !m_verticalConveyor.getUpperIndexSensor()) {
-                m_verticalConveyor.forwardVerticalConveyorMotor();
-            }
-
-            if (m_verticalConveyor.getUpperIndexSensor() && m_verticalConveyor.getLowerIndexSensor()) {
-                m_verticalConveyor.stopVerticalConveyorMotor();
-            }
-
-            if (!(m_verticalConveyor.getLowerIndexSensor() && m_verticalConveyor.getUpperIndexSensor())) {
-                m_verticalConveyor.forwardVerticalConveyorMotor();
-            }
+            m_verticalConveyor.stopFeedMotor();
+            m_verticalConveyor.stopVerticalConveyorMotor();
         }
     }
 

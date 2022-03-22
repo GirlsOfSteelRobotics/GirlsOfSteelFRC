@@ -2,7 +2,7 @@ package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
-import com.gos.rapidreact.led.LEDAngleToTargetOverOrUnder;
+import com.gos.rapidreact.led.LEDAngleToTargetOverAndUnder;
 import com.gos.rapidreact.led.LEDFlash;
 import com.gos.rapidreact.led.LEDRainbow;
 import com.gos.rapidreact.led.mirrored.MirroredLEDBoolean;
@@ -20,6 +20,8 @@ import java.util.Map;
 
 @SuppressWarnings({"PMD.TooManyFields", "PMD.UnusedPrivateMethod", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
 public class LEDManagerSubsystem extends SubsystemBase {
+
+    // Subsystems
     private final ShooterLimelightSubsystem m_shooterLimelight;
     //private final ShooterLimelightSubsystem m_shooterLimelight;
     //private final CollectorSubsystem m_collector;
@@ -28,23 +30,20 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final CollectorSubsystem m_collector;
 
     private static final int MAX_INDEX_LED = 60;
-    private static final int MIDDLE_INDEX_LED = MAX_INDEX_LED / 2 - 1;
     private static final int PORT = Constants.LED;
+
+    // Led core
     protected final AddressableLEDBuffer m_buffer;
     protected final AddressableLED m_led;
-    // private final MirroredLEDBoolean m_intakeLimitSwitch;
-    // private final MirroredLEDBoolean m_lowerConveyorIndex;
-    // private final MirroredLEDBoolean m_upperConveyorIndex;
-    // private final MirroredLEDFlash m_goToCargoLeft;
 
-    private final MirroredLEDFlash m_shooterAtSpeed;
-
+    // Patterns
+    private final MirroredLEDBoolean m_shooterAtSpeed;
     private final MirroredLEDBoolean m_noLimelight; //show if don't see limelight
-
     private final MirroredLEDBoolean m_correctShootingDistance;
+    private final MirroredLEDFlash m_readyToShoot;
 
-    private final LEDAngleToTargetOverOrUnder m_angleToHubLeft;
-    private final LEDAngleToTargetOverOrUnder m_angleToHubRight;
+    private final LEDAngleToTargetOverAndUnder m_angleToHub;
+    private final MirroredLEDBoolean m_angleToHubReady;
 
     private final LEDFlash m_readyToHang;
     private final LEDRainbow m_rainbowFullStrip;
@@ -78,14 +77,17 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
         // m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
 
-        m_shooterAtSpeed = new MirroredLEDFlash(m_buffer, 0, 10, 0.5, Color.kGreen);
+
+        m_shooterAtSpeed = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kGreen);
 
         m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kGreen, Color.kYellow);
 
-        m_angleToHubLeft = new LEDAngleToTargetOverOrUnder(m_buffer, 20, 30, Color.kGreen, 15.0);
-        m_angleToHubRight = new LEDAngleToTargetOverOrUnder(m_buffer, MIDDLE_INDEX_LED + 0, MIDDLE_INDEX_LED + 10, Color.kGreen, 15.0);
+        m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kYellow, Color.kYellow, 15.0);
+        m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kGreen, Color.kBlack);
 
-        m_noLimelight = new MirroredLEDBoolean(m_buffer, 10, 20, Color.kBlack, Color.kRed);
+        m_noLimelight = new MirroredLEDBoolean(m_buffer, 10, 20, new Color(.3f, 0, 0), Color.kBlack);
+
+        m_readyToShoot = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
 
         m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
         m_rainbowFullStrip = new LEDRainbow(m_buffer, 0, MAX_INDEX_LED);
@@ -162,32 +164,32 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // m_allowableDistancetoHubLeft.checkBoolean(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
         // m_allowableDistancetoHubRight.checkBoolean(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
 
-        if (m_shooter.isShooterAtSpeed()) {
-            m_shooterAtSpeed.flash();
-        }
+        shooterLights();
+        hangerLights();
+    }
 
-        //if (m_shooterLimelight.getDistanceToHub() < 5 && m_shooter.isShooterAtSpeed() && m_shooterLimelight.angleError() < 4) {
-        // m_readyToShootLeft.flash();
-        //  m_readyToShootRight.flash();
-        //}
-
+    private void shooterLights() {
+        m_shooterAtSpeed.checkBoolean(m_shooter.isShooterAtSpeed());
+        m_noLimelight.checkBoolean(!m_shooterLimelight.isVisible());
         if (m_shooterLimelight.isVisible()) {
-            if (m_shooterLimelight.angleError() > 0 && m_shooterLimelight.isVisible()) {
-                m_angleToHubLeft.angleToTarget(m_shooterLimelight.angleError());
+            if (m_shooter.isShooterAtSpeed() && m_shooterLimelight.isReadyToShoot()) {
+                m_readyToShoot.flash();
+            } else {
+                // If we are lined up, make the whole section green
+                if (m_shooterLimelight.atAcceptableAngle()) {
+                    m_angleToHubReady.checkBoolean(true);
+                }
+                // If it isn't lined up, show the error
+                else {
+                    m_angleToHub.angleToTarget(m_shooterLimelight.angleError());
+                }
+                m_correctShootingDistance.checkBoolean(m_shooterLimelight.atAcceptableDistance());
             }
-
-            if (m_shooterLimelight.angleError() < 0 && m_shooterLimelight.isVisible()) {
-                m_angleToHubRight.angleToTarget(m_shooterLimelight.angleError());
-            }
-
-            m_correctShootingDistance.checkBoolean(m_shooterLimelight.getDistanceToHub() > 2 && m_shooterLimelight.getDistanceToHub() < 5); //meters, change values
-            m_noLimelight.checkBoolean(true);
         }
 
-        if (!m_shooterLimelight.isVisible()) {
-            m_noLimelight.checkBoolean(false);
-        }
+    }
 
+    private void hangerLights() {
         if (DriverStation.isFMSAttached()) {
             if (DriverStation.getMatchTime() < 25) {
                 m_readyToHang.flash();
