@@ -46,6 +46,7 @@ public final class Constants {
     // 7 is used for hanger???
     public static final int INTAKE_INDEX_SENSOR = 8;
     public static final int INDEX_SENSOR_UPPER_VERTICAL_CONVEYOR = 9;
+    public static final int INTAKE_LIMIT_SWITCH = 7;
 
 
 
