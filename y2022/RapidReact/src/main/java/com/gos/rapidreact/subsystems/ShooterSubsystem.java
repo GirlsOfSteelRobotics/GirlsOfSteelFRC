@@ -24,14 +24,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
     public static final double ALLOWABLE_ERROR = 100.0;
-    public static final double FENDER_RPM = 1500;
-    public static final double TARMAC_EDGE_RPM = 2000;
-    public static final double DEFAULT_SHOOTER_RPM = FENDER_RPM;
-    public static final double ROLLER_SPEED = 0.5;
     public static final double FENDER_RPM_LOW = 1500;
+    public static final double TARMAC_EDGE_RPM_LOW = 2000;
+    public static final double TARMAC_EDGE_RPM_HIGH = 3000;
+    public static final double DEFAULT_SHOOTER_RPM = FENDER_RPM_LOW;
+    private static final double ROLLER_SPEED = 0.5;
     private final SimableCANSparkMax m_leader;
-    private final SimableCANSparkMax m_roller;
     private final RelativeEncoder m_encoder;
+    private final SimableCANSparkMax m_roller;
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
     private final ShooterLookupTable m_shooterTable;

@@ -25,6 +25,7 @@ public class AutoConveyorAndShooterCommand extends CommandBase {
     }
 
     @Override
+    @SuppressWarnings({"PMD.TooManyFields", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
     public void execute() {
         m_shooter.rpmForDistance(m_shooterLimelight.getDistanceToHub());
         m_shooter.forwardRoller();
