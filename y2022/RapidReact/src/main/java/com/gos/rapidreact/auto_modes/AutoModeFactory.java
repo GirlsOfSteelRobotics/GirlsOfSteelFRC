@@ -23,7 +23,9 @@ public class AutoModeFactory extends SequentialCommandGroup {
     private final CommandBase m_oneBallAuto;
     private final CommandBase m_twoBallAuto;
     private final CommandBase m_threeBallAuto;
-    private final CommandBase m_fourBallAuto;
+    private final CommandBase m_fourBallAutoLow;
+    private final CommandBase m_fourBallAutoHalf;
+    private final CommandBase m_fourBallAutoHigh;
     private final CommandBase m_fiveBallAuto;
 
 
@@ -54,8 +56,14 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_threeBallAuto = new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Three Ball Auto", m_threeBallAuto);
 
-        m_fourBallAuto = new FourBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Four Ball Auto", m_fourBallAuto);
+        m_fourBallAutoLow = new FourBallAutoLowCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Four Ball Auto Low", m_fourBallAutoLow);
+
+        m_fourBallAutoHalf = new FourBallAutoHalfCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Four Ball Auto Half", m_fourBallAutoHalf);
+
+        m_fourBallAutoHigh = new FourBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Four Ball Auto High", m_fourBallAutoHigh);
 
         m_fiveBallAuto = new FiveBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Five Ball Auto", m_fiveBallAuto);
@@ -81,7 +89,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
             autoMode = 3;
         }
 
-        if (m_sendableChooser.getSelected() == m_fourBallAuto) {
+        if (m_sendableChooser.getSelected() == m_fourBallAutoLow) {
             autoMode = 4;
         }
 
