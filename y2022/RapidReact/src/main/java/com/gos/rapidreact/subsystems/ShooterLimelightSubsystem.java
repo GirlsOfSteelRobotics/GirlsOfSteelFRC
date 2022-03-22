@@ -15,7 +15,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
-    private final NetworkTableEntry m_ledOff;
+    private final NetworkTableEntry m_ledOff; // NOPMD
     private final NetworkTableEntry m_pipeline; //which camera (color or cargo) to use
 
     public ShooterLimelightSubsystem() {
@@ -26,7 +26,6 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_isVisible = richardsLimelightTable.getEntry("tv");
 
         m_ledOff = richardsLimelightTable.getEntry("ledMode");
-//        m_ledOff.setDouble(1);
 
         m_pipeline = richardsLimelightTable.getEntry("pipeline");
         m_pipeline.setDouble(2);
