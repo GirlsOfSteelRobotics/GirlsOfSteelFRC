@@ -169,7 +169,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void shooterLights() {
-        m_shooterAtSpeed.checkBoolean(m_shooter.isShooterAtSpeed());
+        m_shooterAtSpeed.checkBoolean(m_shooter.isShooterAtSpeed() && m_shooter.isRollerAtSpeed());
         m_noLimelight.checkBoolean(!m_shooterLimelight.isVisible());
         if (m_shooterLimelight.isVisible()) {
             if (m_shooter.isShooterAtSpeed() && m_shooterLimelight.isReadyToShoot()) {
