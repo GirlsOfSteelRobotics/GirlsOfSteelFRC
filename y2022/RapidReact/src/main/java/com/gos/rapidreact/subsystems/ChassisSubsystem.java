@@ -330,10 +330,11 @@ public class ChassisSubsystem extends SubsystemBase {
      * @return if at allowable angle
      */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
-        System.out.println("steer voltage  " + steerVoltage);
+        // System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
+        // System.out.println("steer voltage  " + steerVoltage);
 
         m_leaderRight.setVoltage(steerVoltage);
         m_leaderLeft.setVoltage(-steerVoltage);

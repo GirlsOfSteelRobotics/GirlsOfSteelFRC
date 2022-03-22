@@ -28,6 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public static final double TARMAC_EDGE_RPM_LOW = 2000;
     public static final double TARMAC_EDGE_RPM_HIGH = 3000;
     public static final double DEFAULT_SHOOTER_RPM = FENDER_RPM_LOW;
+    public static final double MAX_SHOOTER_RPM = 3200;
     private static final double ROLLER_SPEED = 0.5;
     private final SimableCANSparkMax m_leader;
     private final RelativeEncoder m_encoder;
@@ -35,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final PidProperty m_pid;
     private final SparkMaxPIDController m_pidController;
     private final ShooterLookupTable m_shooterTable;
-    private double m_goalRpm;
+    private double m_goalRpm = Double.MAX_VALUE;
 
     private ISimWrapper m_simulator;
 
@@ -101,6 +102,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setShooterSpeed(double speed) {
         m_leader.set(speed);
+        m_goalRpm = Double.MAX_VALUE;
     }
 
     public double getEncoderVelocity() {

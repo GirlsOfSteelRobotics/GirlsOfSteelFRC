@@ -55,6 +55,7 @@
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
+      "/Shuffleboard/test commands/Automated Shooter & Conveyor": "Command",
       "/Shuffleboard/test commands/ChangeCollectorDown": "Command",
       "/Shuffleboard/test commands/CollectorDownCommand": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": "Command",
@@ -68,6 +69,7 @@
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward": "Command",
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 left": "Command",
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 right": "Command",
+      "/Shuffleboard/test commands/GoToHubAngle - -45": "Command",
       "/Shuffleboard/test commands/GoToHubAngle - 20": "Command",
       "/Shuffleboard/test commands/GoToHubAngle - 45": "Command",
       "/Shuffleboard/test commands/GoToHubDist - 10": "Command",
@@ -76,6 +78,7 @@
       "/Shuffleboard/test commands/HangerPIDCommand - 4": "Command",
       "/Shuffleboard/test commands/Left Hang Down": "Command",
       "/Shuffleboard/test commands/Left Hang Up": "Command",
+      "/Shuffleboard/test commands/Limelight Go To Hub Angle": "Command",
       "/Shuffleboard/test commands/LimelightGoToCargo": "Command",
       "/Shuffleboard/test commands/Reset Pivot Encoder": "Command",
       "/Shuffleboard/test commands/Right Hang Down": "Command",
@@ -96,6 +99,11 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Automated Shooter & Conveyor": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/ChangeCollectorDown": {
         "window": {
           "visible": true
@@ -122,6 +130,11 @@
         }
       },
       "/Shuffleboard/test commands/Reset Pivot Encoder": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": {
         "window": {
           "visible": true
         }

@@ -6,17 +6,17 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final String LIMELIGHT_NAME = "limelight-george";
-    public static final double MOUNTING_ANGLE = 0; // TODO verify angle
+    public static final double MOUNTING_ANGLE_DEGREES = 0; // TODO verify angle
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
     public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
     public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 2); //meters
     public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 2); //degrees
-
-    public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
 
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
@@ -34,13 +34,13 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_ledOff = richardsLimelightTable.getEntry("ledMode");
 
         m_pipeline = richardsLimelightTable.getEntry("pipeline");
-        m_pipeline.setDouble(2);
-
+        m_pipeline.setNumber(2);
     }
 
     public double getDistanceToHub() {
+
         double distance;
-        distance = (LIMELIGHT_HEIGHT) / Math.tan(MOUNTING_ANGLE + m_verticalAngle.getDouble(0));
+        distance = (LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(MOUNTING_ANGLE_DEGREES + m_verticalAngle.getDouble(0)));
         return distance;
     }
 
@@ -53,11 +53,28 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public boolean atAcceptableDistance() {
-        return getDistanceToHub() > MIN_SHOOTING_DISTANCE.getValue() && getDistanceToHub() < MAX_SHOOTING_DISTANCE.getValue();
+        double distance = getDistanceToHub();
+        return distance > MIN_SHOOTING_DISTANCE.getValue() && distance < MAX_SHOOTING_DISTANCE.getValue();
     }
 
     public boolean atAcceptableAngle() {
         return Math.abs(angleError()) < ALLOWABLE_ANGLE_ERROR.getValue();
+    }
+
+    public boolean isReadyToShoot() {
+        return atAcceptableAngle() && atAcceptableDistance();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("ShooterLimelight - Distance", getDistanceToHub());
+        SmartDashboard.putNumber("ShooterLimelight - Angle", angleError());
+
+        if (DriverStation.isEnabled()) {
+            m_ledOff.setDouble(0);
+        } else {
+            m_ledOff.setDouble(1);
+        }
     }
 }
 
