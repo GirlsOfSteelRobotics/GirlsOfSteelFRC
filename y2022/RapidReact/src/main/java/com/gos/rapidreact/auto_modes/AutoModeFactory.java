@@ -21,7 +21,9 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
     private final CommandBase m_offTarmacAuto;
     private final CommandBase m_oneBallAuto;
+    private final CommandBase m_oneBallAutoHigh;
     private final CommandBase m_twoBallAuto;
+    private final CommandBase m_twoBallAutoHigh;
     private final CommandBase m_threeBallAuto;
     private final CommandBase m_fourBallAutoLow;
     private final CommandBase m_fourBallAutoHalf;
@@ -50,8 +52,14 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_oneBallAuto = new OneBallAuto(chassis, shooter, verticalConveyor);
         m_sendableChooser.addOption("One Ball Auto", m_oneBallAuto);
 
+        m_oneBallAutoHigh = new OneBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor);
+        m_sendableChooser.addOption("One Ball Auto High", m_oneBallAutoHigh);
+
         m_twoBallAuto = new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.setDefaultOption("Two Ball Auto", m_twoBallAuto);
+
+        m_twoBallAutoHigh = new TwoBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Two Ball Auto High", m_twoBallAutoHigh);
 
         m_threeBallAuto = new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Three Ball Auto", m_threeBallAuto);
