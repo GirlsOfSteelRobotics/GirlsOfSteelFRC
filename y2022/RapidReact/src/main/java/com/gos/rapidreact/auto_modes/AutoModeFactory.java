@@ -47,13 +47,13 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_offTarmacAuto = new DriveOffTarmac(chassis);
         m_sendableChooser.addOption("Drive Off Tarmac (Default)", m_offTarmacAuto);
 
-        m_oneBallAuto = new OneBallAuto(chassis, shooter, verticalConveyor);
+        m_oneBallAuto = new OneBallAutoLow(chassis, shooter, verticalConveyor);
         m_sendableChooser.addOption("One Ball Auto", m_oneBallAuto);
 
         m_twoBallAuto = new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.setDefaultOption("Two Ball Auto", m_twoBallAuto);
 
-        m_threeBallAuto = new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_threeBallAuto = new ThreeBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Three Ball Auto", m_threeBallAuto);
 
         m_fourBallAutoLow = new FourBallAutoLowCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
@@ -65,7 +65,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_fourBallAutoHigh = new FourBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Four Ball Auto High", m_fourBallAutoHigh);
 
-        m_fiveBallAuto = new FiveBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_fiveBallAuto = new FiveBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Five Ball Auto", m_fiveBallAuto);
 
     }

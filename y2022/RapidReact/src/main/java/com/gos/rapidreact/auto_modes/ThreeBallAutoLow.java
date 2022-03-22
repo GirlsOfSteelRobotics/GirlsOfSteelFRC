@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
 
-public class ThreeBallAuto extends SequentialCommandGroup {
+public class ThreeBallAutoLow extends SequentialCommandGroup {
     private static final double FIRST_SHOT_RPM = DEFAULT_SHOOTER_RPM;
     private static final double SECOND_SHOT_RPM = DEFAULT_SHOOTER_RPM;
 
-    public ThreeBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
+    public ThreeBallAutoLow(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         super(
             new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(1)
