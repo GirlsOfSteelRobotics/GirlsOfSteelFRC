@@ -31,6 +31,7 @@ public final class Constants {
     public static final int COLLECTOR_PIVOT_LEADER = 13;
     public static final int COLLECTOR_PIVOT_FOLLOWER = 11;
     public static final int VERTICAL_CONVEYOR_FEEDER_SPARK = 12;
+    public static final int SHOOTER_ROLLER = 13;
 
     // Bigger to avoid future conflicts
     public static final int PIGEON_PORT = 20;
