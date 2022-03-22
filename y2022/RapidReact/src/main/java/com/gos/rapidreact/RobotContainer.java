@@ -14,6 +14,7 @@ import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.LimelightGoToHubAngleCommand;
 import com.gos.rapidreact.commands.ShooterFeederCommandGroup;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
+import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
@@ -134,8 +135,9 @@ public class RobotContainer {
 
         testCommands.add("Limelight Go To Hub Angle", new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight));
 
-        //testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, 45));
-        //testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, 20));
+        testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, 45));
+        testCommands.add("GoToHubAngle - -45", new TurnToAngleCommand(m_chassis, -45));
+        testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, 20));
 
         //testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(10)));
         //testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(15)));

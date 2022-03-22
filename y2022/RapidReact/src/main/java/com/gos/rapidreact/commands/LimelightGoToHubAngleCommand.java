@@ -25,7 +25,7 @@ public class LimelightGoToHubAngleCommand extends CommandBase {
     @Override
     public void execute() {
         if (m_limelight.isVisible()) {
-            m_atPosition = m_chassis.turnPID(m_limelight.angleError());
+            m_atPosition = m_chassis.turnPID(m_chassis.getYawAngle() - m_limelight.angleError());
         }
     }
 

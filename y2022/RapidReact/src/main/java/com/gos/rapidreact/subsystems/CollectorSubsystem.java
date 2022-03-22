@@ -73,16 +73,16 @@ public class CollectorSubsystem extends SubsystemBase {
         m_roller.restoreFactoryDefaults();
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotLeft.restoreFactoryDefaults();
-        m_pivotLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_pivotLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotLeft.setInverted(true);
 
-        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotRight.restoreFactoryDefaults();
-        m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
-//
-//        m_pivotRight.follow(m_pivotLeft, true);
+        m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+        m_pivotRight.follow(m_pivotLeft, true);
 
         m_pivotEncoderLeft = m_pivotLeft.getEncoder();
         m_pivotEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
@@ -96,6 +96,11 @@ public class CollectorSubsystem extends SubsystemBase {
 
         m_pidControllerLeft = m_pivotLeft.getPIDController();
         m_pidControllerRight = m_pivotRight.getPIDController();
+
+        CANSparkMax.IdleMode idleModeBreak = CANSparkMax.IdleMode.kBrake;
+        CANSparkMax.IdleMode idleModeCoast = CANSparkMax.IdleMode.kCoast;
+        m_pivotLeft.setIdleMode(idleModeBreak);
+        m_roller.setIdleMode(idleModeCoast);
 
         m_limitSwitch = m_pivotLeft.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
         m_limitSwitch.enableLimitSwitch(true);
@@ -130,10 +135,10 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Left Encoder (rad)", getIntakeLeftAngleRadians());
-        SmartDashboard.putNumber("Pivot Left Encoder (deg)", getIntakeLeftAngleDegrees());
-        SmartDashboard.putNumber("Pivot Left Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
-        SmartDashboard.putNumber("Pivot Right Encoder (deg)", getIntakeRightAngleDegrees());
+        SmartDashboard.putNumber("Pivot Lead Encoder (rad)", getIntakeLeftAngleRadians());
+        SmartDashboard.putNumber("Pivot Lead Encoder (deg)", getIntakeLeftAngleDegrees());
+        SmartDashboard.putNumber("Pivot Lead Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
+        SmartDashboard.putNumber("Pivot Follow Encoder (deg)", getIntakeRightAngleDegrees());
         SmartDashboard.putBoolean("Intake LS", m_limitSwitch.isPressed());
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();
@@ -146,9 +151,9 @@ public class CollectorSubsystem extends SubsystemBase {
         m_counter++;
         if (m_counter == 5) {
             m_counter = 0;
-            System.out.println("left:  " + getIntakeLeftAngleDegrees());
-            System.out.println("right:  " + getIntakeRightAngleDegrees());
-            System.out.println();
+            //System.out.println("left:  " + getIntakeLeftAngleDegrees());
+            //System.out.println("right:  " + getIntakeRightAngleDegrees());
+            //System.out.println();
         }
     }
 
