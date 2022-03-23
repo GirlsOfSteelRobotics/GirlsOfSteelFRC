@@ -28,8 +28,7 @@ public class CollectorPivotPIDCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(m_pivotAngle - m_collector.getIntakeAngleDegrees());
-        //System.out.println(error);
+        double error = Math.abs(m_pivotAngle - m_collector.getIntakeLeftAngleDegrees());
         return error < CollectorSubsystem.ALLOWABLE_ERROR_DEG;
     }
 

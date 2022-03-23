@@ -12,7 +12,8 @@ public class LEDPolkaDots extends LEDBase {
         m_minIndex = minIndex;
     }
 
-    public void polkaDots() {
+    @Override
+    public void writeLeds() {
         for (var i = m_minIndex; i < m_maxIndex; i += 2) {
             m_buffer.setRGB(i, 255, 0, 0);
         }

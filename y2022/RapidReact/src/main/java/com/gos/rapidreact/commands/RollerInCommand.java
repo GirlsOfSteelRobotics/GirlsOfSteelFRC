@@ -9,7 +9,7 @@ public class RollerInCommand extends CommandBase {
 
     public RollerInCommand(CollectorSubsystem collectorSubsystem) {
         this.m_collector = collectorSubsystem;
-        addRequirements(this.m_collector);
+
     }
 
     @Override

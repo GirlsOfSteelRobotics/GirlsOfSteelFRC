@@ -6,7 +6,7 @@ import com.gos.lib.properties.PropertyManager;
 
 
 public class TuneShooterRpmCommand extends CommandBase {
-    private static final PropertyManager.DoubleProperty SHOOTER_RPM = new PropertyManager.DoubleProperty("Tuning.Shooter.RPM", 1500);
+    private static final PropertyManager.IProperty<Double> SHOOTER_RPM = PropertyManager.createDoubleProperty(false,"Tuning.Shooter.RPM", 1500);
 
     private final ShooterSubsystem m_spinningWheelSubsystem;
 

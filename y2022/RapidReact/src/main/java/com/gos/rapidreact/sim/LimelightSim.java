@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LimelightSim {
-    private static final PropertyManager.IProperty<Double> CARGO_X = new PropertyManager.DoubleProperty("Sim Limelight Cargo X", 0);
-    private static final PropertyManager.IProperty<Double> CARGO_Y = new PropertyManager.DoubleProperty("Sim Limelight Cargo Y", 0);
+    private static final PropertyManager.IProperty<Double> CARGO_X = PropertyManager.createDoubleProperty(false, "Sim Limelight Cargo X", 0);
+    private static final PropertyManager.IProperty<Double> CARGO_Y = PropertyManager.createDoubleProperty(false, "Sim Limelight Cargo Y", 0);
 
     private static final double INTAKE_MAX_DISTANCE = Double.MAX_VALUE;
     private static final double SHOOTER_MAX_DISTANCE = Double.MAX_VALUE;
@@ -41,8 +41,8 @@ public class LimelightSim {
 
 
     public LimelightSim() {
-        Transform2d intakeTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(180));
-        Transform2d shooterTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(0));
+        Transform2d intakeTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(0));
+        Transform2d shooterTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(180));
 
         m_cargoTarget = new CargoTarget();
         m_intakeSimulator = new LimelightSimulator(List.of(m_cargoTarget), intakeTransform, IntakeLimelightSubsystem.LIMELIGHT_HEIGHT, INTAKE_MAX_DISTANCE, IntakeLimelightSubsystem.LIMELIGHT_NAME);

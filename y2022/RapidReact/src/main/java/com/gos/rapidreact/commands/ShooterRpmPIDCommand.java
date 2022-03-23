@@ -23,18 +23,15 @@ public class ShooterRpmPIDCommand extends CommandBase {
     @Override
     public void execute() {
         m_shooter.setShooterRpmPIDSpeed(m_goalRPM);
+        m_shooter.rollerPID();
     }
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(m_goalRPM - m_shooter.getEncoderVelocity());
-        return error < ShooterSubsystem.ALLOWABLE_ERROR;
+        return m_shooter.isShooterAtSpeed() && m_shooter.isRollerAtSpeed();
     }
 
     @Override
     public void end(boolean interrupted) {
-        if (interrupted) {
-            m_shooter.setShooterSpeed(0);
-        }
     }
 }

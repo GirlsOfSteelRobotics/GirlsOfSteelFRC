@@ -1,8 +1,5 @@
 package com.gos.lib.properties;
 
-import com.gos.lib.properties.PropertyManager.ConstantProperty;
-import com.gos.lib.properties.PropertyManager.DoubleProperty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.DoubleConsumer;
@@ -14,7 +11,6 @@ public class PidProperty {
 
     /* default */ PidProperty(List<HeavyDoubleProperty> properties) {
         m_properties = properties;
-        updateIfChanged(true);
     }
 
     public final void updateIfChanged() {
@@ -42,11 +38,12 @@ public class PidProperty {
 
         private HeavyDoubleProperty createDoubleProperty(String propertyNameSuffix, double defaultValue, DoubleConsumer setter) {
             String propertyName = m_baseName + ".mm." + propertyNameSuffix;
+            PropertyManager.IProperty<Double> prop = PropertyManager.createDoubleProperty(m_isConstant, propertyName, defaultValue);
             if (m_isConstant) {
-                return new HeavyDoubleProperty(setter, new ConstantProperty<>(propertyName, defaultValue));
+                return new HeavyDoubleProperty(setter, prop);
             }
             else {
-                return new HeavyDoubleProperty(setter, new DoubleProperty(propertyName, defaultValue));
+                return new HeavyDoubleProperty(setter, prop);
             }
         }
 

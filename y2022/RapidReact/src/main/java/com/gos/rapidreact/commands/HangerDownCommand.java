@@ -1,7 +1,7 @@
 package com.gos.rapidreact.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.HangerSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class HangerDownCommand extends CommandBase {
@@ -20,7 +20,8 @@ public class HangerDownCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_hanger.setHangerSpeed(HangerSubsystem.HANGER_DOWN_SPEED);
+        m_hanger.setLeftHangerSpeed(HangerSubsystem.HANGER_DOWN_SPEED);
+        m_hanger.setRightHangerSpeed(HangerSubsystem.HANGER_DOWN_SPEED);
     }
 
     @Override
@@ -30,6 +31,6 @@ public class HangerDownCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_hanger.setHangerSpeed(0);
+        m_hanger.stop();
     }
 }
