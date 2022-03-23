@@ -1,10 +1,11 @@
 package com.gos.rapidreact.led.mirrored;
 
 import com.gos.rapidreact.led.LEDFlash;
+import com.gos.rapidreact.led.LEDPattern;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
-public class MirroredLEDFlash {
+public class MirroredLEDFlash implements LEDPattern {
 
     private final LEDFlash m_normalStrip;
     private final LEDFlash m_invertedStrip;
@@ -17,8 +18,9 @@ public class MirroredLEDFlash {
         m_invertedStrip = new LEDFlash(buffer, invertedMin, invertedMax, secondsOneDirection, color);
     }
 
-    public void flash() {
-        m_normalStrip.flash();
-        m_invertedStrip.flash();
+    @Override
+    public void writeLeds() {
+        m_normalStrip.writeLeds();
+        m_invertedStrip.writeLeds();
     }
 }

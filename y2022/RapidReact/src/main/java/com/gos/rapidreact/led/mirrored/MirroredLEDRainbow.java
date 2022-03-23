@@ -1,9 +1,10 @@
 package com.gos.rapidreact.led.mirrored;
 
+import com.gos.rapidreact.led.LEDPattern;
 import com.gos.rapidreact.led.LEDRainbow;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
-public class MirroredLEDRainbow {
+public class MirroredLEDRainbow implements LEDPattern {
 
     private final LEDRainbow m_normalStrip;
     private final LEDRainbow m_invertedStrip;
@@ -16,8 +17,9 @@ public class MirroredLEDRainbow {
         m_invertedStrip = new LEDRainbow(buffer, invertedMin, invertedMax);
     }
 
-    public void rainbow() {
-        m_normalStrip.rainbow();
-        m_invertedStrip.rainbow();
+    @Override
+    public void writeLeds() {
+        m_normalStrip.writeLeds();
+        m_invertedStrip.writeLeds();
     }
 }

@@ -16,7 +16,8 @@ public class LEDSolidColor extends LEDBase {
         m_maxIndex = maxIndex;
     }
 
-    public void solidColor() {
+    @Override
+    public void writeLeds() {
         setLEDs(m_minIndex, m_maxIndex, m_color.red, m_color.green, m_color.blue);
     }
 }

@@ -1,10 +1,11 @@
 package com.gos.rapidreact.led.mirrored;
 
 import com.gos.rapidreact.led.LEDDistanceToTarget;
+import com.gos.rapidreact.led.LEDPattern;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
-public class MirroredLEDDistanceToTarget {
+public class MirroredLEDDistanceToTarget implements LEDPattern {
     private final LEDDistanceToTarget m_normalStrip;
     private final LEDDistanceToTarget m_invertedStrip;
 
@@ -20,5 +21,11 @@ public class MirroredLEDDistanceToTarget {
     public void distanceToTarget(double distance) {
         m_normalStrip.distanceToTarget(distance);
         m_invertedStrip.distanceToTarget(distance);
+    }
+
+    @Override
+    public void writeLeds() {
+        m_normalStrip.writeLeds();
+        m_normalStrip.writeLeds();
     }
 }

@@ -4,16 +4,18 @@ import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
 import com.gos.rapidreact.led.LEDAngleToTargetOverAndUnder;
 import com.gos.rapidreact.led.LEDFlash;
+import com.gos.rapidreact.led.LEDPattern;
 import com.gos.rapidreact.led.LEDRainbow;
 import com.gos.rapidreact.led.mirrored.MirroredLEDBoolean;
-import com.gos.rapidreact.led.mirrored.MirroredLEDColorLookup;
+import com.gos.rapidreact.led.mirrored.MirroredLEDMovingPixel;
+import com.gos.rapidreact.led.mirrored.MirroredLEDPatternLookup;
 import com.gos.rapidreact.led.mirrored.MirroredLEDFlash;
+import com.gos.rapidreact.led.mirrored.MirroredLEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.Map;
@@ -48,7 +50,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDFlash m_readyToHang;
     private final LEDRainbow m_rainbowFullStrip;
 
-    private final MirroredLEDColorLookup m_autoMode;
+    private final MirroredLEDPatternLookup<AutoModeFactory.AutonMode> m_autoMode;
 
     private final MirroredLEDBoolean m_autoPivotAtAngle; //should be at 90
     private final MirroredLEDBoolean m_autoUpperIndexSensor;
@@ -82,7 +84,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kGreen, Color.kYellow);
 
-        m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kYellow, Color.kYellow, 15.0);
+        m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kOrange, Color.kOrange, 15.0);
         m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kGreen, Color.kBlack);
 
         m_noLimelight = new MirroredLEDBoolean(m_buffer, 10, 20, new Color(.3f, 0, 0), Color.kBlack);
@@ -94,15 +96,19 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_autoPivotAtAngle = new MirroredLEDBoolean(m_buffer, 25, 4, Color.kPapayaWhip, Color.kBlack);
 
-        Map<Integer, Color8Bit> autonColorMap = Map.of(
-            0, new Color8Bit(Color.kRed),
-            1, new Color8Bit(Color.kOrange),
-            2, new Color8Bit(Color.kYellow),
-            3, new Color8Bit(Color.kGreen),
-            4, new Color8Bit(Color.kBlue),
-            5, new Color8Bit(Color.kPurple)
+        Map<AutoModeFactory.AutonMode, LEDPattern> autonColorMap = Map.of(
+            AutoModeFactory.AutonMode.DRIVE_OFF_TARMAC, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kRed),
+            AutoModeFactory.AutonMode.ONE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kOrange),
+            AutoModeFactory.AutonMode.ONE_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kOrange),
+            AutoModeFactory.AutonMode.TWO_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kYellow),
+            AutoModeFactory.AutonMode.TWO_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kYellow),
+            AutoModeFactory.AutonMode.THREE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kGreen),
+            AutoModeFactory.AutonMode.FOUR_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kBlue),
+            AutoModeFactory.AutonMode.FOUR_BALL_HALF_HIGH, new MirroredLEDMovingPixel(m_buffer, 0, 20, Color.kBlue),
+            AutoModeFactory.AutonMode.FOUR_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kBlue),
+            AutoModeFactory.AutonMode.FIVE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kPurple)
         );
-        m_autoMode = new MirroredLEDColorLookup(m_buffer, 0, 20, autonColorMap);
+        m_autoMode = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
 
         m_autoUpperIndexSensor = new MirroredLEDBoolean(m_buffer, 20, 4, Color.kFuchsia, Color.kBlack);
 
@@ -137,54 +143,64 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void disabledPatterns() {
-        int autoMode = m_autoModeFactory.autoModeLightSignal();
+        AutoModeFactory.AutonMode autoMode = m_autoModeFactory.autoModeLightSignal();
+        m_autoMode.setKey(autoMode);
 
         if (m_autoMode.hasKey(autoMode)) {
-            m_autoMode.setKey(autoMode);
+            m_autoMode.writeLeds();
         }
         else {
-            m_rainbowFullStrip.rainbow();
+            m_rainbowFullStrip.writeLeds();
         }
 
-        m_autoPivotAtAngle.checkBoolean(m_collector.getIntakeRightAngleDegrees() > 89);
-        m_autoUpperIndexSensor.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
+        m_autoPivotAtAngle.setStateAndWrite(m_collector.getIntakeRightAngleDegrees() > 89);
+        m_autoUpperIndexSensor.setStateAndWrite(m_verticalConveyor.getUpperIndexSensor());
     }
 
     private void enabledPatterns() {
 
-        //m_intakeIndexLeft.checkBoolean(m_collector.getIndexSensor());
-        //m_intakeIndexRight.checkBoolean(m_collector.getIndexSensor());
+        //m_intakeIndexLeft.setStateAndWrite(m_collector.getIndexSensor());
+        //m_intakeIndexRight.setStateAndWrite(m_collector.getIndexSensor());
 
-        //m_intakeLimitSwitch.checkBoolean(m_collector.limitSwitchPressed());
+        //m_intakeLimitSwitch.setStateAndWrite(m_collector.limitSwitchPressed());
 
-        //m_lowerConveyorIndex.checkBoolean(m_verticalConveyor.getLowerIndexSensor());
+        //m_lowerConveyorIndex.setStateAndWrite(m_verticalConveyor.getLowerIndexSensor());
 
-        //m_upperConveyorIndex.checkBoolean(m_verticalConveyor.getUpperIndexSensor());
+        //m_upperConveyorIndex.setStateAndWrite(m_verticalConveyor.getUpperIndexSensor());
 
-        // m_allowableDistancetoHubLeft.checkBoolean(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
-        // m_allowableDistancetoHubRight.checkBoolean(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
+        // m_allowableDistancetoHubLeft.setStateAndWrite(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
+        // m_allowableDistancetoHubRight.setStateAndWrite(m_shooterLimelight.getDistanceToHub() < ShooterLimelightSubsystem.MAX_SHOOTING_DISTANCE); //5 meters, change to max ability to shoot
 
         shooterLights();
         hangerLights();
     }
 
     private void shooterLights() {
-        m_shooterAtSpeed.checkBoolean(m_shooter.isShooterAtSpeed() && m_shooter.isRollerAtSpeed());
-        m_noLimelight.checkBoolean(!m_shooterLimelight.isVisible());
+        // Set, but don't necessarily write to the strip
+        m_angleToHub.angleToTarget(m_shooterLimelight.angleError());
+        m_angleToHubReady.setState(m_shooterLimelight.atAcceptableAngle());
+        m_correctShootingDistance.setState(m_shooterLimelight.atAcceptableDistance());
+        m_noLimelight.setState(!m_shooterLimelight.isVisible());
+
+        // Set and write these to the strip always
+        m_shooterAtSpeed.setStateAndWrite(m_shooter.isShooterAtSpeed() && m_shooter.isRollerAtSpeed());
+
         if (m_shooterLimelight.isVisible()) {
             if (m_shooter.isShooterAtSpeed() && m_shooterLimelight.isReadyToShoot()) {
-                m_readyToShoot.flash();
+                m_readyToShoot.writeLeds();
             } else {
                 // If we are lined up, make the whole section green
                 if (m_shooterLimelight.atAcceptableAngle()) {
-                    m_angleToHubReady.checkBoolean(true);
+                    m_angleToHubReady.writeLeds();
                 }
                 // If it isn't lined up, show the error
                 else {
-                    m_angleToHub.angleToTarget(m_shooterLimelight.angleError());
+                    m_angleToHub.writeLeds();
                 }
-                m_correctShootingDistance.checkBoolean(m_shooterLimelight.atAcceptableDistance());
+                m_correctShootingDistance.writeLeds();
             }
+        } else {
+            m_noLimelight.writeLeds();
         }
 
     }
@@ -192,11 +208,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private void hangerLights() {
         if (DriverStation.isFMSAttached()) {
             if (DriverStation.getMatchTime() < 25) {
-                m_readyToHang.flash();
+                m_readyToHang.writeLeds();
             }
 
             if (DriverStation.getMatchTime() < 10) {
-                m_rainbowFullStrip.rainbow();
+                m_rainbowFullStrip.writeLeds();
             }
         }
     }

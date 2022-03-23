@@ -21,7 +21,8 @@ public class LEDFlash extends LEDBase {
         m_maxIndex = maxIndex;
     }
 
-    public void flash() {
+    @Override
+    public void writeLeds() {
         setLEDs(m_minIndex, m_maxIndex, (int) (m_color.red * m_brightness), (int) (m_color.green * m_brightness), (int) (m_color.blue * m_brightness));
         m_brightness += m_increment;
         //        System.out.println("FLASH INCR: " + m_increment + ", " + m_brightness);

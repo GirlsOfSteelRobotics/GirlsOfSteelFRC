@@ -16,7 +16,8 @@ public class LEDRainbow extends LEDBase {
         m_maxIndex = maxIndex;
     }
 
-    public void rainbow() {
+    @Override
+    public void writeLeds() {
         // For every pixel
         for (var i = m_minIndex; i < m_maxIndex; i++) {
             // Calculate the hue - hue is easier for rainbows because the color

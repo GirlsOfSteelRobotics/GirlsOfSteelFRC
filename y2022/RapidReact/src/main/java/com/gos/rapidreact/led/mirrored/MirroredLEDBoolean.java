@@ -1,10 +1,11 @@
 package com.gos.rapidreact.led.mirrored;
 
 import com.gos.rapidreact.led.LEDBoolean;
+import com.gos.rapidreact.led.LEDPattern;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
-public class MirroredLEDBoolean {
+public class MirroredLEDBoolean implements LEDPattern {
 
     private final LEDBoolean m_normalStrip;
     private final LEDBoolean m_invertedStrip;
@@ -23,8 +24,20 @@ public class MirroredLEDBoolean {
         m_invertedStrip = new LEDBoolean(buffer, invertedMin, invertedMax, trueColor, falseColor);
     }
 
-    public void checkBoolean(boolean checkBoolean) {
-        m_normalStrip.checkBoolean(checkBoolean);
-        m_invertedStrip.checkBoolean(checkBoolean);
+    public void setStateAndWrite(boolean state) {
+        m_normalStrip.setStateAndWrite(state);
+        m_invertedStrip.setStateAndWrite(state);
     }
+
+    public void setState(boolean state) {
+        m_normalStrip.setState(state);
+        m_invertedStrip.setState(state);
+    }
+
+    @Override
+    public void writeLeds() {
+        m_normalStrip.writeLeds();
+        m_invertedStrip.writeLeds();
+    }
+
 }
