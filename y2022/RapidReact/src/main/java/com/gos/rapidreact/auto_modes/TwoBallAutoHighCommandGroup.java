@@ -1,5 +1,6 @@
 package com.gos.rapidreact.auto_modes;
 
+import com.gos.rapidreact.commands.AutoNoLimelightConveyorAndShooterCommand;
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
 import com.gos.rapidreact.commands.DriveDistanceCommand;
 import com.gos.rapidreact.commands.autonomous.IntakeWithHorizontal;
@@ -26,7 +27,8 @@ public class TwoBallAutoHighCommandGroup extends SequentialCommandGroup {
                 // Run the intake the entire time, while we wait for the previous commands to finish
                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
             new WaitCommand(.5),
-            new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SHOT_RPM, 5),
+            new AutoNoLimelightConveyorAndShooterCommand(shooter, verticalConveyor).withTimeout(7),
+            // new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SHOT_RPM, 5),
             new DriveDistanceCommand(chassis, .2, .05));
     }
 }

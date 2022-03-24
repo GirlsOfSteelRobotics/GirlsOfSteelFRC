@@ -22,8 +22,8 @@ import java.util.StringTokenizer;
 public class TrajectoryUtils {
 
     //acc: 144, vel: 114
-    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(60); // meters / sec / sec
-    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(60); // meters / sec
+    public static final double DEFAULT_ACCELERATION = Units.inchesToMeters(96); // meters / sec / sec
+    public static final double DEFAULT_VELOCITY = Units.inchesToMeters(96); // meters / sec
 
     //acc: 108, vel: 96
     public static final double SLOWER_ACCELERATION = Units.inchesToMeters(60);

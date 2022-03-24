@@ -5,7 +5,7 @@
 
 package com.gos.rapidreact;
 
-import com.gos.rapidreact.commands.AutoConveyorAndShooterCommand;
+import com.gos.rapidreact.commands.AutoLimelightConveyorAndShooterCommand;
 import com.gos.rapidreact.commands.CollectorHackPIDDown;
 import com.gos.rapidreact.commands.HangerDownCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
@@ -143,7 +143,7 @@ public class RobotContainer {
         testCommands.add("GoToHubAngle - -45", new TurnToAngleCommand(m_chassis, -45));
         testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, 20));
 
-        testCommands.add("Automated Shooter & Conveyor", new AutoConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor));
+        testCommands.add("Automated Shooter & Conveyor", new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor));
 
         //testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(10)));
         //testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(15)));
@@ -203,7 +203,7 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.FENDER_RPM_LOW)).whenReleased(() -> m_shooter.setShooterSpeed(0));
-        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new AutoConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).whenReleased(() -> {
+        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).whenReleased(() -> {
             m_shooter.setShooterSpeed(0);
             m_verticalConveyor.stopFeedMotor();
         });

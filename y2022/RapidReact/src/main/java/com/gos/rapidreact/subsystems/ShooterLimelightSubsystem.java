@@ -1,7 +1,6 @@
 package com.gos.rapidreact.subsystems;
 
 
-import com.gos.lib.properties.PropertyManager;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -19,7 +18,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final double MAX_SHOOTING_DISTANCE = 3.36;
     // public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
     // public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 0); //meters
-    public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 4); //degrees
+    public static final double ALLOWABLE_ANGLE_ERROR = 4;
+    // public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 4); //degrees
 
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
@@ -59,7 +59,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public boolean atAcceptableAngle() {
-        return Math.abs(angleError()) < ALLOWABLE_ANGLE_ERROR.getValue();
+        return Math.abs(angleError()) < ALLOWABLE_ANGLE_ERROR;
     }
 
     public boolean isReadyToShoot() {
