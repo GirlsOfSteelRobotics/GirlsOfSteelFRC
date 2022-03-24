@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.MAX_SHOOTER_RPM;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_HIGH;
 
 
 public class ShooterLookupTable {
@@ -34,7 +35,7 @@ public class ShooterLookupTable {
         Map.Entry<Double, Double> floor = m_list.floorEntry(distance);
         // Below the min. Just zero it out
         if (floor == null) {
-            return DEFAULT_SHOOTER_RPM;
+            return TARMAC_EDGE_RPM_HIGH;
         }
 
         Map.Entry<Double, Double> ceiling = m_list.ceilingEntry(distance);

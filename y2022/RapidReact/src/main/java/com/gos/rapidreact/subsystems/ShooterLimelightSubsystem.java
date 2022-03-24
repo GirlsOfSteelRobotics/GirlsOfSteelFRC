@@ -15,8 +15,10 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final double MOUNTING_ANGLE_DEGREES = 30;
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(29);
     public static final double HUB_HEIGHT = Units.inchesToMeters(104); //8 ft, 8 in
-    public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
-    public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 0); //meters
+    public static final double MIN_SHOOTING_DISTANCE = 1.46;
+    public static final double MAX_SHOOTING_DISTANCE = 3.36;
+    // public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
+    // public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 0); //meters
     public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 4); //degrees
 
     private final NetworkTableEntry m_isVisible;
@@ -35,7 +37,6 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_ledOff = richardsLimelightTable.getEntry("ledMode");
 
         m_pipeline = richardsLimelightTable.getEntry("pipeline");
-        m_pipeline.setNumber(2);
     }
 
     public double getDistanceToHub() {
@@ -54,7 +55,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
 
     public boolean atAcceptableDistance() {
         double distance = getDistanceToHub();
-        return distance > MIN_SHOOTING_DISTANCE.getValue() && distance < MAX_SHOOTING_DISTANCE.getValue();
+        return distance > MIN_SHOOTING_DISTANCE && distance < MAX_SHOOTING_DISTANCE;
     }
 
     public boolean atAcceptableAngle() {
@@ -75,6 +76,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         } else {
             m_ledOff.setDouble(1);
         }
+
+        m_pipeline.setNumber(2);
     }
 }
 
