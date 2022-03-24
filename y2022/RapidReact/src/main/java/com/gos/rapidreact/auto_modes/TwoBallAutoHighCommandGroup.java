@@ -27,8 +27,10 @@ public class TwoBallAutoHighCommandGroup extends SequentialCommandGroup {
                 // Run the intake the entire time, while we wait for the previous commands to finish
                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
             new WaitCommand(.5),
-            new AutoNoLimelightConveyorAndShooterCommand(shooter, verticalConveyor).withTimeout(7),
+            new AutoNoLimelightConveyorAndShooterCommand(shooter, verticalConveyor).withTimeout(7)
+                .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)),
             // new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SHOT_RPM, 5),
+
             new DriveDistanceCommand(chassis, .2, .05));
     }
 }

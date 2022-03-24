@@ -24,7 +24,7 @@ public class AutoNoLimelightConveyorAndShooterCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_shooter.setShooterSpeed(ShooterSubsystem.TARMAC_EDGE_RPM_HIGH);
+        m_shooter.setShooterRpmPIDSpeed(ShooterSubsystem.TARMAC_EDGE_RPM_HIGH);
 
         m_verticalConveyor.forwardFeedMotor();
 

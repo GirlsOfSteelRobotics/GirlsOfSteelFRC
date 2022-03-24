@@ -23,7 +23,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
-    public static final double SHOOTER_ALLOWABLE_ERROR = 75.0;
+    public static final double SHOOTER_ALLOWABLE_ERROR = 25.0;
     public static final double FENDER_RPM_LOW = 700;
     public static final double TARMAC_EDGE_RPM_LOW = 800;
     public static final double TARMAC_EDGE_RPM_HIGH = 1750;
