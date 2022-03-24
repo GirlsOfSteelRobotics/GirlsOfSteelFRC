@@ -19,10 +19,11 @@ public class ShooterLookupTable {
     //ball should be shot at
     public ShooterLookupTable() {
         //2022 data but units???? meters, rpm??
-        m_list.put(0.0, 1800.0);
-        m_list.put(Units.inchesToMeters(48), 2200.0);
-        m_list.put(Units.inchesToMeters(84), 2600.0);
-        m_list.put(Units.inchesToMeters(120), 3000.0);
+        m_list.put(1.46, 1500.0); //45 inches irl
+        m_list.put(1.99, 1650.0); //66 inches irl
+        m_list.put(2.50, 1750.0); //85 inches irl
+        m_list.put(3.36, 2050.0); //111 inches irl
+
     }
 
     /**

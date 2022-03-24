@@ -14,7 +14,7 @@ public class LimelightGoToHubAngleCommand extends CommandBase {
         this.m_chassis = chassisSubsystem;
         this.m_limelight = shooterLimelightSubsystem;
 
-        addRequirements(this.m_chassis, this.m_limelight);
+        addRequirements(this.m_chassis);
     }
 
     @Override
@@ -26,6 +26,8 @@ public class LimelightGoToHubAngleCommand extends CommandBase {
     public void execute() {
         if (m_limelight.isVisible()) {
             m_atPosition = m_chassis.turnPID(m_chassis.getYawAngle() - m_limelight.angleError());
+            System.out.println("yaw angle: " + m_chassis.getYawAngle());
+            System.out.println("angle error: " + m_limelight.angleError());
         }
     }
 

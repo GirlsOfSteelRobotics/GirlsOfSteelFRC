@@ -23,7 +23,6 @@ public class ShooterRpmPIDCommand extends CommandBase {
     @Override
     public void execute() {
         m_shooter.setShooterRpmPIDSpeed(m_goalRPM);
-        m_shooter.rollerPID();
     }
 
     @Override

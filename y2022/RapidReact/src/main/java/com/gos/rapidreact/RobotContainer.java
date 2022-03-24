@@ -13,7 +13,6 @@ import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.LimelightGoToHubAngleCommand;
-import com.gos.rapidreact.commands.ShooterFeederCommandGroup;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
@@ -26,6 +25,10 @@ import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.SetInitialOdometryCommand;
 import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerDownCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerUpCommand;
+import com.gos.rapidreact.commands.debug.RightHangerDownCommand;
+import com.gos.rapidreact.commands.debug.RightHangerUpCommand;
 import com.gos.rapidreact.commands.tuning.ResetCollectorPivotEncoderCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterGoalRPMCommand;
 import com.gos.rapidreact.commands.tuning.VelocityControlDrivingTuningCommand;
@@ -73,7 +76,7 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
-    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector);
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector, m_shooterLimelight);
     private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_shooterLimelight, m_shooter, m_collector, m_verticalConveyor, m_autoModeFactory); // NOPMD
 
 
@@ -148,10 +151,10 @@ public class RobotContainer {
         //testCommands.add("Drive Dist 60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(60), Units.inchesToMeters(2)));
         //testCommands.add("Drive Dist -60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(-60), Units.inchesToMeters(2)));
 
-        // testCommands.add("Right Hang Up", new RightHangerUpCommand(m_hanger));
-        // testCommands.add("Right Hang Down", new RightHangerDownCommand(m_hanger));
-        // testCommands.add("Left Hang Up", new LeftHangerUpCommand(m_hanger));
-        // testCommands.add("Left Hang Down", new LeftHangerDownCommand(m_hanger));
+        testCommands.add("Right Hang Up", new RightHangerUpCommand(m_hanger));
+        testCommands.add("Right Hang Down", new RightHangerDownCommand(m_hanger));
+        testCommands.add("Left Hang Up", new LeftHangerUpCommand(m_hanger));
+        testCommands.add("Left Hang Down", new LeftHangerDownCommand(m_hanger));
 
         // Trajectories
         trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
@@ -184,6 +187,7 @@ public class RobotContainer {
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
         limelightGoToCargo.whileHeld(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
+        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight));
 
         //operator
         new POVButton(m_operatorJoystick, 0).whileHeld(new CollectorUpCommand(m_collector)); //left bumper
@@ -199,7 +203,10 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM)).whenReleased(() -> m_shooter.setShooterSpeed(0));
-        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterFeederCommandGroup(m_verticalConveyor, m_shooter, 10));
+        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new AutoConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).whenReleased(() -> {
+            m_shooter.setShooterSpeed(0);
+            m_verticalConveyor.stopFeedMotor();
+        });
         new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new HangerUpCommand(m_hanger));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new HangerDownCommand(m_hanger));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));

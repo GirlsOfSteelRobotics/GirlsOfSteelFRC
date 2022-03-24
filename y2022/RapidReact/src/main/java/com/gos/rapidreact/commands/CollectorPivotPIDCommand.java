@@ -7,6 +7,7 @@ import com.gos.rapidreact.subsystems.CollectorSubsystem;
 public class CollectorPivotPIDCommand extends CommandBase {
     private final CollectorSubsystem m_collector;
     private final double m_pivotAngle;
+    private boolean m_isFinished;
 
     public CollectorPivotPIDCommand(CollectorSubsystem collectorSubsystem, double pivotAngleDegrees) {
         this.m_collector = collectorSubsystem;
@@ -22,14 +23,13 @@ public class CollectorPivotPIDCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_collector.collectorToAngle(m_pivotAngle);
+        m_isFinished = m_collector.collectorToAngle(m_pivotAngle);
 
     }
 
     @Override
     public boolean isFinished() {
-        double error = Math.abs(m_pivotAngle - m_collector.getIntakeLeftAngleDegrees());
-        return error < CollectorSubsystem.ALLOWABLE_ERROR_DEG;
+        return m_isFinished;
     }
 
     @Override

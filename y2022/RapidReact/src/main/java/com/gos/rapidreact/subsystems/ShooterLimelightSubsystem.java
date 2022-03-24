@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final String LIMELIGHT_NAME = "limelight-george";
-    public static final double MOUNTING_ANGLE_DEGREES = 55;
-    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(29.4);
+    public static final double MOUNTING_ANGLE_DEGREES = 30;
+    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(29);
     public static final double HUB_HEIGHT = Units.inchesToMeters(104); //8 ft, 8 in
     public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
-    public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 2); //meters
-    public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 2); //degrees
+    public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 0); //meters
+    public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 4); //degrees
 
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
