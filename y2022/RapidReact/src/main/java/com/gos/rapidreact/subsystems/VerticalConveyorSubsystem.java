@@ -48,6 +48,10 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         }
     }
 
+    public void autoShootVerticalConveyorForward() {
+        m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
+    }
+
     public void backwardVerticalConveyorMotor() {
         if (DriverStation.isTeleop()) {
             m_conveyor.set(-VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED);

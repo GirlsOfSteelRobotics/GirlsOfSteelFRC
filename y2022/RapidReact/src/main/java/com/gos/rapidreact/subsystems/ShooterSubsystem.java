@@ -1,6 +1,7 @@
 package com.gos.rapidreact.subsystems;
 
 
+import com.gos.lib.DeadbandHelper;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
@@ -46,6 +47,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private ISimWrapper m_simulator;
 
+    private final DeadbandHelper m_counter;
+
     public ShooterSubsystem() {
         m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leader.restoreFactoryDefaults();
@@ -85,6 +88,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));
         }
+
+        m_counter = new DeadbandHelper(5);
     }
 
     @Override
@@ -95,6 +100,8 @@ public class ShooterSubsystem extends SubsystemBase {
         //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_shooterPid.updateIfChanged();
         m_rollerPid.updateIfChanged();
+        double error = Math.abs(m_goalRpm * 1.3 - getRollerVelocity());
+        m_counter.setIsGood(error < SHOOTER_ALLOWABLE_ERROR);
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
@@ -106,8 +113,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isShooterAtSpeed() {
-        double error = Math.abs(m_goalRpm - getEncoderVelocity());
-        return error < SHOOTER_ALLOWABLE_ERROR;
+        return m_counter.isFinished();
     }
 
     public boolean isRollerAtSpeed() {

@@ -33,7 +33,7 @@ public class AutoLimelightConveyorAndShooterCommand extends CommandBase {
 
         // We are ready to shoot, move the conveyor up
         if (m_shooterLimelight.isReadyToShoot() && m_shooter.isShooterAtSpeed()) {
-            m_verticalConveyor.forwardVerticalConveyorMotor();
+            m_verticalConveyor.autoShootVerticalConveyorForward();
         }
         // We aren't at speed, but we will move the balls up until we trip the top ball sensor
         // else if (!m_verticalConveyor.getUpperIndexSensor()) {

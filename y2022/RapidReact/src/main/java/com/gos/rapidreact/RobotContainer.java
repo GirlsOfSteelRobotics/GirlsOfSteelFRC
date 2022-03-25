@@ -137,7 +137,7 @@ public class RobotContainer {
 
         testCommands.add("ChangeCollectorDown", new CollectorHackPIDDown(m_collector));
 
-        testCommands.add("Limelight Go To Hub Angle", new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight));
+        testCommands.add("Limelight Go To Hub Angle", new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight,m_shooter));
 
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, 45));
         testCommands.add("GoToHubAngle - -45", new TurnToAngleCommand(m_chassis, -45));
@@ -187,7 +187,7 @@ public class RobotContainer {
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
         limelightGoToCargo.whileHeld(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
-        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight));
+        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight, m_shooter));
 
         //operator
         new POVButton(m_operatorJoystick, 0).whileHeld(new CollectorUpCommand(m_collector)); //left bumper

@@ -1,5 +1,6 @@
 package com.gos.rapidreact.commands;
 
+import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
@@ -8,18 +9,20 @@ import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 public class LimelightGoToHubAngleCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
     private final ShooterLimelightSubsystem m_limelight;
+    private final ShooterSubsystem m_shooter;
     private boolean m_atPosition;
 
-    public LimelightGoToHubAngleCommand(ChassisSubsystem chassisSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem) {
+    public LimelightGoToHubAngleCommand(ChassisSubsystem chassisSubsystem, ShooterLimelightSubsystem shooterLimelightSubsystem, ShooterSubsystem shooterSubsystem) {
         this.m_chassis = chassisSubsystem;
         this.m_limelight = shooterLimelightSubsystem;
+        this.m_shooter = shooterSubsystem;
 
         addRequirements(this.m_chassis);
     }
 
     @Override
     public void initialize() {
-
+        m_shooter.setShooterRpmPIDSpeed(ShooterSubsystem.TARMAC_EDGE_RPM_HIGH);
     }
 
     @Override

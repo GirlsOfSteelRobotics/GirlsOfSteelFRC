@@ -29,7 +29,7 @@ public class FourBallAutoHighCommandGroup extends SequentialCommandGroup {
                 .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
                 // Run the intake the entire time, while we wait for the previous commands to finish
                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
-            new LimelightGoToHubAngleCommand(chassis, shooterLimelight),
+            new LimelightGoToHubAngleCommand(chassis, shooterLimelight, shooter),
             new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, FIRST_SHOT_RPM, 1.25)
                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)),
             FourBallTrajectories.fourBallHighPart3(chassis)

@@ -87,7 +87,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
     public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5066;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.08475;
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = .6;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.48;
     public static final double MAX_VOLTAGE = 10;
 
     public static final double K_TRACKWIDTH_METERS = 1.8603;
@@ -142,6 +142,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .addI(0)
             .addD(0)
             .build();
+        //p 0.32, d 0.21
 
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
