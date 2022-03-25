@@ -85,7 +85,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kGreen, Color.kYellow);
 
         m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kOrange, Color.kOrange, 15.0);
-        m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kGreen, Color.kBlack);
+        m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kBlue, Color.kBlack);
 
         m_noLimelight = new MirroredLEDBoolean(m_buffer, 10, 20, new Color(.3f, 0, 0), Color.kBlack);
 
@@ -206,7 +206,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void hangerLights() {
-        if (DriverStation.isFMSAttached()) {
+        if (DriverStation.isFMSAttached() && DriverStation.isTeleop()) {
             if (DriverStation.getMatchTime() < 25) {
                 m_readyToHang.writeLeds();
             }

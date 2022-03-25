@@ -12,6 +12,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -113,7 +114,14 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isShooterAtSpeed() {
-        return m_counter.isFinished();
+        double error = Math.abs(m_goalRpm * 1.3 - getRollerVelocity());
+        if (DriverStation.isTeleop()) {
+            return m_counter.isFinished();
+        }
+        if (DriverStation.isAutonomous()) {
+            return error < SHOOTER_ALLOWABLE_ERROR;
+        }
+        return false;
     }
 
     public boolean isRollerAtSpeed() {
