@@ -231,9 +231,13 @@ public class RobotContainer {
         return m_autoModeFactory.getAutonomousMode();
     }
 
+    public void teleopInit() {
+
+        m_shooter.setShooterSpeed(0);
+        m_verticalConveyor.stopFeedMotor();
+    }
+
     private class SuperstructureSendable implements Sendable {
-
-
 
         @Override
         public void initSendable(SendableBuilder builder) {

@@ -25,7 +25,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
-    public static final double SHOOTER_ALLOWABLE_ERROR = 25.0;
+    public static final double SHOOTER_ALLOWABLE_ERROR = 50.0;
     public static final double FENDER_RPM_LOW = 700;
     public static final double TARMAC_EDGE_RPM_LOW = 800;
     public static final double TARMAC_EDGE_RPM_HIGH = 1750;
@@ -101,8 +101,9 @@ public class ShooterSubsystem extends SubsystemBase {
         //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_shooterPid.updateIfChanged();
         m_rollerPid.updateIfChanged();
-        double error = Math.abs(m_goalRpm * 1.3 - getRollerVelocity());
+        double error = Math.abs(m_goalRpm - getEncoderVelocity());
         m_counter.setIsGood(error < SHOOTER_ALLOWABLE_ERROR);
+        SmartDashboard.putNumber("Roller RPM", getRollerVelocity());
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
@@ -114,14 +115,14 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isShooterAtSpeed() {
-        double error = Math.abs(m_goalRpm * 1.3 - getRollerVelocity());
+        double error = Math.abs(m_goalRpm - getEncoderVelocity());
         if (DriverStation.isTeleop()) {
             return m_counter.isFinished();
         }
         if (DriverStation.isAutonomous()) {
             return error < SHOOTER_ALLOWABLE_ERROR;
         }
-        return false;
+        return error < SHOOTER_ALLOWABLE_ERROR;
     }
 
     public boolean isRollerAtSpeed() {

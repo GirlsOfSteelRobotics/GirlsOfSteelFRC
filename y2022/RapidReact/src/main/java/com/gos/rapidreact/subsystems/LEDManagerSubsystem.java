@@ -85,13 +85,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kGreen, Color.kYellow);
 
         m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kOrange, Color.kOrange, 15.0);
-        m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kBlue, Color.kBlack);
+        m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kGreen, Color.kBlack);
 
         m_noLimelight = new MirroredLEDBoolean(m_buffer, 10, 20, new Color(.3f, 0, 0), Color.kBlack);
 
         m_readyToShoot = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
 
-        m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
+        m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kBlue);
         m_rainbowFullStrip = new LEDRainbow(m_buffer, 0, MAX_INDEX_LED);
 
         m_autoPivotAtAngle = new MirroredLEDBoolean(m_buffer, 25, 4, Color.kPapayaWhip, Color.kBlack);
