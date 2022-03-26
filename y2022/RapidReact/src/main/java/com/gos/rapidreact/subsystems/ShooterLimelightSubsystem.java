@@ -63,7 +63,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToShoot() {
-        return atAcceptableAngle() && atAcceptableDistance();
+        return atAcceptableAngle() && atAcceptableDistance() && isVisible();
     }
 
     @Override

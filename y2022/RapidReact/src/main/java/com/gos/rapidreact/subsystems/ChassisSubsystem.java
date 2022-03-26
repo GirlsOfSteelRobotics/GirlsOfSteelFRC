@@ -135,7 +135,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_turnAnglePID = new PIDController(0, 0, 0);
-        m_turnAnglePID.setTolerance(3, 1);
+        m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_ANGLE_ERROR);
         m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
@@ -334,11 +334,16 @@ public class ChassisSubsystem extends SubsystemBase {
         double steerVoltage = m_turnAnglePID.calculate(getYawAngle(), angleGoal);
 
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
-        System.out.println("Goal: " + angleGoal + " at " + getYawAngle());
-        System.out.println("steer voltage  " + steerVoltage);
-        m_leaderRight.setVoltage(steerVoltage);
-        m_leaderLeft.setVoltage(-steerVoltage);
+        // System.out.println("Goal: " + angleGoal + " at " + getYawAngle());
+        // System.out.println("steer voltage  " + steerVoltage);
+        if (!m_turnAnglePID.atSetpoint()) {
+            m_leaderRight.setVoltage(steerVoltage);
+            m_leaderLeft.setVoltage(-steerVoltage);
+        }
 
+        else {
+            setArcadeDrive(0, 0);
+        }
         m_drive.feed();
 
         return m_turnAnglePID.atSetpoint();
