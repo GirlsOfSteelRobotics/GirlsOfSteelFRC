@@ -16,10 +16,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final double HUB_HEIGHT = Units.inchesToMeters(104); //8 ft, 8 in
     public static final double MIN_SHOOTING_DISTANCE = 1.46;
     public static final double MAX_SHOOTING_DISTANCE = 3.36;
-    // public static final PropertyManager.IProperty<Double> MAX_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Max Shoot Dist", 5); //meters
-    // public static final PropertyManager.IProperty<Double> MIN_SHOOTING_DISTANCE = PropertyManager.createDoubleProperty(false, "Min Shoot Dist", 0); //meters
     public static final double ALLOWABLE_ANGLE_ERROR = 4;
-    // public static final PropertyManager.IProperty<Double> ALLOWABLE_ANGLE_ERROR = PropertyManager.createDoubleProperty(false, "Allowable Shoot Angle Error", 4); //degrees
 
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;

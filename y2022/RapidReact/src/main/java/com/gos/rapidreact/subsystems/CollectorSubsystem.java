@@ -62,9 +62,6 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private final DigitalInput m_limitSwitch;
 
-
-    private double m_pivotChangingSetpoint = DOWN_ANGLE;
-
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
@@ -144,20 +141,12 @@ public class CollectorSubsystem extends SubsystemBase {
         else {
             m_pivotLeft.set(-PIVOT_SPEED);
             m_pivotRight.set(-PIVOT_SPEED);
-            m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
         }
     }
 
     public void collectorUp() {
         m_pivotLeft.set(PIVOT_SPEED);
         m_pivotRight.set(PIVOT_SPEED);
-
-        m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
-    }
-
-    public void pivotToMagicAngle() {
-        SmartDashboard.putNumber("AHHHH", m_pivotChangingSetpoint);
-        collectorToAngle(m_pivotChangingSetpoint);
     }
 
     public boolean limitSwitchPressed() {
@@ -179,14 +168,6 @@ public class CollectorSubsystem extends SubsystemBase {
     public void pivotStop() {
         m_pivotLeft.set(0);
         m_pivotRight.set(0);
-    }
-
-    public void collectorDownPID() {
-        collectorToAngle(DOWN_ANGLE);
-    }
-
-    public void collectorUpPID() {
-        collectorToAngle(Math.toRadians(UP_ANGLE));
     }
 
     /**

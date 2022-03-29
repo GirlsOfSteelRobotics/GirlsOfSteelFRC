@@ -3,6 +3,7 @@ package com.gos.rapidreact.auto_modes;
 import com.gos.rapidreact.commands.AutoNoLimelightConveyorAndShooterCommand;
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
 import com.gos.rapidreact.commands.DriveDistanceCommand;
+import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
 import com.gos.rapidreact.commands.autonomous.IntakeWithHorizontal;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
@@ -21,6 +22,7 @@ public class TwoBallAutoHighCommandGroup extends SequentialCommandGroup {
         super(FourBallTrajectories.fourBallPart1(chassis)
                 .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
                 // Run the intake the entire time, while we wait for the previous commands to finish
+                .alongWith(new ShooterRpmPIDCommand(shooter, ShooterSubsystem.TARMAC_EDGE_RPM_HIGH))
                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
             new WaitCommand(.5),
             new AutoNoLimelightConveyorAndShooterCommand(shooter, verticalConveyor).withTimeout(7)

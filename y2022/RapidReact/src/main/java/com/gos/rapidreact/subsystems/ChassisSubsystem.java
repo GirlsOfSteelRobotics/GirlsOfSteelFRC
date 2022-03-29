@@ -37,12 +37,9 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 @SuppressWarnings("PMD.TooManyFields")
 public class ChassisSubsystem extends SubsystemBase {
 
-    //TODO: change constants to match this year's robot
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
-
-    // private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
 
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
     public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
@@ -232,16 +229,8 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public double getAverageEncoderDistance() {
-        return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
-    }
-
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
-    }
-
-    public void stop() {
-        m_drive.stopMotor();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity, double leftAcceleration, double rightAcceleration) {
@@ -347,17 +336,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.feed();
 
         return m_turnAnglePID.atSetpoint();
-
-    }
-
-    public boolean distancePID(double currentPosition, double distanceGoal) {
-        double allowableDistanceError = Units.inchesToMeters(10.0);
-        double error = distanceGoal - currentPosition;
-
-        double speed = error * TO_HUB_DISTANCE_PID.getValue();
-        double steer = 0;
-        setArcadeDrive(speed, steer);
-        return Math.abs(error) < allowableDistanceError;
 
     }
 

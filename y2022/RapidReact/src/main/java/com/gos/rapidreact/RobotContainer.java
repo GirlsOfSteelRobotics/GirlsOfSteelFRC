@@ -6,7 +6,6 @@
 package com.gos.rapidreact;
 
 import com.gos.rapidreact.commands.AutoLimelightConveyorAndShooterCommand;
-import com.gos.rapidreact.commands.CollectorHackPIDDown;
 import com.gos.rapidreact.commands.HangerDownCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
@@ -135,8 +134,6 @@ public class RobotContainer {
 
         testCommands.add("LimelightGoToCargo", new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
 
-        testCommands.add("ChangeCollectorDown", new CollectorHackPIDDown(m_collector));
-
         testCommands.add("Limelight Go To Hub Angle", new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight, m_shooter));
 
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, 45));
@@ -195,8 +192,6 @@ public class RobotContainer {
         final JoystickButton pivotPIDUp = new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value);
         pivotPIDUp.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.UP_ANGLE));
         final JoystickButton pivotPIDDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value);
-        //        pivotPIDDown.whileHeld(new ChangeCollectorDownAngleCommand(m_collector));
-        //        pivotPIDDown.whileHeld(new ChangeCollectorDownAngleCommand(m_collector));
         pivotPIDDown.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE));
         new Button(() -> m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
@@ -214,10 +209,6 @@ public class RobotContainer {
             m_shooter.setShooterSpeed(0);
             m_verticalConveyor.stopFeedMotor();
         });
-        //        new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new FeederVerticalConveyorBackwardCommand(m_verticalConveyor));
-        // final JoystickButton automatedVerticalConveyor = new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value);
-        //        automatedVerticalConveyor.whileHeld(new AutomatedVerticalConveyorCommand(m_verticalConveyor, m_horizontalConveyor));
-
     }
 
 
