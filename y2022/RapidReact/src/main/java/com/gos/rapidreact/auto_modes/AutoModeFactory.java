@@ -4,6 +4,7 @@ package com.gos.rapidreact.auto_modes;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
+import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -45,7 +46,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
+    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector, ShooterLimelightSubsystem shooterLimelight) {
         //need to have distance
         m_sendableChooser = new SendableChooser<>();
 
@@ -78,7 +79,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_fourBallAutoHalf = new FourBallAutoHalfCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Four Ball Auto Half", AutonMode.FOUR_BALL_HALF_HIGH);
 
-        m_fourBallAutoHigh = new FourBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_fourBallAutoHigh = new FourBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector, shooterLimelight);
         m_sendableChooser.addOption("Four Ball Auto High", AutonMode.FOUR_BALL_HIGH);
 
         m_fiveBallAutoLow = new FiveBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);

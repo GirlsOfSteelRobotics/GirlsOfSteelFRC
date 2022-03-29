@@ -87,7 +87,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
     public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5066;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.08475;
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = .8;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.48;
     public static final double MAX_VOLTAGE = 10;
 
     public static final double K_TRACKWIDTH_METERS = 1.8603;
@@ -135,13 +135,14 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_turnAnglePID = new PIDController(0, 0, 0);
-        m_turnAnglePID.setTolerance(3, 1);
+        m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_ANGLE_ERROR);
         m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
             .addD(0)
             .build();
+        //p 0.32, d 0.21
 
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
@@ -330,15 +331,19 @@ public class ChassisSubsystem extends SubsystemBase {
      * @return if at allowable angle
      */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+        double steerVoltage = m_turnAnglePID.calculate(getYawAngle(), angleGoal);
 
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
-        // System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
+        // System.out.println("Goal: " + angleGoal + " at " + getYawAngle());
         // System.out.println("steer voltage  " + steerVoltage);
+        if (!m_turnAnglePID.atSetpoint()) {
+            m_leaderRight.setVoltage(steerVoltage);
+            m_leaderLeft.setVoltage(-steerVoltage);
+        }
 
-        m_leaderRight.setVoltage(steerVoltage);
-        m_leaderLeft.setVoltage(-steerVoltage);
-
+        else {
+            setArcadeDrive(0, 0);
+        }
         m_drive.feed();
 
         return m_turnAnglePID.atSetpoint();

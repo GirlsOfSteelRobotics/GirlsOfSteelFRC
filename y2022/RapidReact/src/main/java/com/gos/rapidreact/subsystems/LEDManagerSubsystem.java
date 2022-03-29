@@ -91,7 +91,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_readyToShoot = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
 
-        m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
+        m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kBlue);
         m_rainbowFullStrip = new LEDRainbow(m_buffer, 0, MAX_INDEX_LED);
 
         m_autoPivotAtAngle = new MirroredLEDBoolean(m_buffer, 25, 4, Color.kPapayaWhip, Color.kBlack);
@@ -206,7 +206,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void hangerLights() {
-        if (DriverStation.isFMSAttached()) {
+        if (DriverStation.isFMSAttached() && DriverStation.isTeleop()) {
             if (DriverStation.getMatchTime() < 25) {
                 m_readyToHang.writeLeds();
             }

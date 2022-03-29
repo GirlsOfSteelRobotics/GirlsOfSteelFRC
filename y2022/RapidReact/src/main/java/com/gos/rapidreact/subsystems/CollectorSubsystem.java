@@ -193,10 +193,11 @@ public class CollectorSubsystem extends SubsystemBase {
      * gets pivot point of collector to given angle using pid
      * @param pivotAngleDegreesGoal *IN DEGREES*
      */
-    public void collectorToAngle(double pivotAngleDegreesGoal) {
+    public boolean collectorToAngle(double pivotAngleDegreesGoal) {
 
         if (pivotAngleDegreesGoal < getIntakeLeftAngleDegrees() && limitSwitchPressed()) {
             pivotStop();
+            return true;
         }
 
         else {
@@ -210,6 +211,9 @@ public class CollectorSubsystem extends SubsystemBase {
             double arbFeedforwardRight = gravityOffset + staticFrictionRight;
             m_pidControllerLeft.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
             m_pidControllerRight.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
+
+            double error = Math.abs(pivotAngleDegreesGoal - getIntakeLeftAngleDegrees());
+            return error < CollectorSubsystem.ALLOWABLE_ERROR_DEG;
         }
 
     }

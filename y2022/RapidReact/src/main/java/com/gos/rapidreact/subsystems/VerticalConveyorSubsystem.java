@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VerticalConveyorSubsystem extends SubsystemBase {
 
-    public static final double VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED = 0.25;
+    public static final double VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED = 0.5;
     public static final double VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED = 1;
 
     public static final double FEEDER_MOTOR_SPEED = 0.5;
@@ -46,6 +46,10 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         if (DriverStation.isAutonomous()) {
             m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
         }
+    }
+
+    public void autoShootVerticalConveyorForward() {
+        m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
     }
 
     public void backwardVerticalConveyorMotor() {
