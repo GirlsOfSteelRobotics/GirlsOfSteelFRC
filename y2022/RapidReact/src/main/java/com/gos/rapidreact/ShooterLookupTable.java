@@ -1,12 +1,9 @@
 package com.gos.rapidreact;
 
-import edu.wpi.first.math.util.Units;
-
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.MAX_SHOOTER_RPM;
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_HIGH;
 

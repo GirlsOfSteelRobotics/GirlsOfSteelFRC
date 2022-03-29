@@ -4,7 +4,6 @@ import com.gos.rapidreact.commands.AutoNoLimelightConveyorAndShooterCommand;
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
 import com.gos.rapidreact.commands.DriveDistanceCommand;
 import com.gos.rapidreact.commands.autonomous.IntakeWithHorizontal;
-import com.gos.rapidreact.commands.autonomous.ShootWithBothIntakes;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
@@ -14,10 +13,7 @@ import com.gos.rapidreact.trajectory.FourBallTrajectories;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_HIGH;
-
 public class TwoBallAutoHighCommandGroup extends SequentialCommandGroup {
-    private static final double SHOT_RPM = TARMAC_EDGE_RPM_HIGH;
     private static final double PIVOT_ANGLE_DOWN = 7;
 
     public TwoBallAutoHighCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,

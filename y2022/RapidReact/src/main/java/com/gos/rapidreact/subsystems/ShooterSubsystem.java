@@ -115,10 +115,10 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isShooterAtSpeed() {
-        double error = Math.abs(m_goalRpm - getEncoderVelocity());
         if (DriverStation.isTeleop()) {
             return m_counter.isFinished();
         }
+        double error = Math.abs(m_goalRpm - getEncoderVelocity());
         if (DriverStation.isAutonomous()) {
             return error < SHOOTER_ALLOWABLE_ERROR;
         }
