@@ -7,11 +7,10 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.MAX_SHOOTER_RPM;
 
 
 public class ShooterLookupTable {
-
-    private static final double MAX_SHOOTER_VELOCITY = 41.0;
 
     //Sorted array sorts greatest to least
     private final NavigableMap<Double, Double> m_list = new TreeMap<>();
@@ -39,7 +38,7 @@ public class ShooterLookupTable {
 
         Map.Entry<Double, Double> ceiling = m_list.ceilingEntry(distance);
         if (ceiling == null) {
-            return MAX_SHOOTER_VELOCITY;
+            return MAX_SHOOTER_RPM;
         }
 
         if (floor.equals(ceiling)) {

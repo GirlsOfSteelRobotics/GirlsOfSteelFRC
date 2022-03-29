@@ -9,10 +9,11 @@ public class LEDAngleToTargetOverOrUnder extends LEDBase {
 
     private final int m_minIndex;
     private final int m_maxIndex;
-    private final int m_maxAngle;
+    private final double m_maxAngle;
     private final int m_numIndex;
+    private double m_error;
 
-    public LEDAngleToTargetOverOrUnder(AddressableLEDBuffer buffer, Color color, int minIndex, int maxIndex, int maxAngle) {
+    public LEDAngleToTargetOverOrUnder(AddressableLEDBuffer buffer, int minIndex, int maxIndex, Color color, double maxAngle) {
         super(buffer);
         m_color = new Color8Bit(color);
         m_minIndex = minIndex;
@@ -22,20 +23,19 @@ public class LEDAngleToTargetOverOrUnder extends LEDBase {
     }
 
     public void angleToTarget(double angleError) {
-        System.out.println("Angle error " + angleError);
-        System.out.println("Max angle  " + m_maxAngle);
-        if (angleError >= m_maxAngle || angleError <= (m_maxAngle * -1)) {
+        m_error = angleError;
+    }
+
+    @Override
+    public void writeLeds() {
+        if (m_error >= m_maxAngle || m_error <= (m_maxAngle * -1)) {
             setLEDs(m_minIndex, m_maxIndex, m_color.red, m_color.green, m_color.blue);
-            System.out.println("maxIndex  " + m_maxIndex);
         }
 
         else {
-            double ledProportion = Math.abs(angleError / m_maxAngle);
+            double ledProportion = Math.abs(m_error / m_maxAngle);
             int ledOn = (int) (ledProportion * m_numIndex);
-            System.out.println("ledOn  " + ledOn);
-            System.out.println("ledProportion  " + ledProportion);
             setLEDs(m_minIndex, m_minIndex + ledOn, m_color.red, m_color.green, m_color.blue);
-
         }
 
     }

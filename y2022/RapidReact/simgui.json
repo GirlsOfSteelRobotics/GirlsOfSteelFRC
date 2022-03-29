@@ -1,4 +1,32 @@
 {
+  "HALProvider": {
+    "Addressable LEDs": {
+      "0": {
+        "columns": 30,
+        "serpentine": true
+      },
+      "window": {
+        "visible": true
+      }
+    },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
+    "Other Devices": {
+      "SPARK MAX [11]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [13]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
@@ -11,7 +39,9 @@
       "/LiveWindow/ShooterLimelightSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[2]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[8]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[9]": "Digital Input",
       "/LiveWindow/Ungrouped/PIDController[10]": "PIDController",
@@ -25,9 +55,13 @@
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/VerticalConveyorSubsystem": "Subsystem",
+      "/Shuffleboard/test commands/Automated Shooter & Conveyor": "Command",
+      "/Shuffleboard/test commands/ChangeCollectorDown": "Command",
+      "/Shuffleboard/test commands/CollectorDownCommand": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 45 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 90 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorUpCommand": "Command",
       "/Shuffleboard/test commands/DisengageRatchetCommand": "Command",
       "/Shuffleboard/test commands/Drive Dist -60": "Command",
       "/Shuffleboard/test commands/Drive Dist 60": "Command",
@@ -35,6 +69,7 @@
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward": "Command",
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 left": "Command",
       "/Shuffleboard/test commands/GoToCargoCommand - 10 forward, 10 right": "Command",
+      "/Shuffleboard/test commands/GoToHubAngle - -45": "Command",
       "/Shuffleboard/test commands/GoToHubAngle - 20": "Command",
       "/Shuffleboard/test commands/GoToHubAngle - 45": "Command",
       "/Shuffleboard/test commands/GoToHubDist - 10": "Command",
@@ -43,6 +78,7 @@
       "/Shuffleboard/test commands/HangerPIDCommand - 4": "Command",
       "/Shuffleboard/test commands/Left Hang Down": "Command",
       "/Shuffleboard/test commands/Left Hang Up": "Command",
+      "/Shuffleboard/test commands/Limelight Go To Hub Angle": "Command",
       "/Shuffleboard/test commands/LimelightGoToCargo": "Command",
       "/Shuffleboard/test commands/Reset Pivot Encoder": "Command",
       "/Shuffleboard/test commands/Right Hang Down": "Command",
@@ -63,17 +99,42 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 45 Degrees": {
+      "/Shuffleboard/test commands/Automated Shooter & Conveyor": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/GoToHubAngle - 20": {
+      "/Shuffleboard/test commands/ChangeCollectorDown": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/GoToHubAngle - 45": {
+      "/Shuffleboard/test commands/CollectorDownCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 90 Degrees": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/CollectorUpCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Reset Pivot Encoder": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/TuneShooterGoalRPMCommand": {
         "window": {
           "visible": true
         }

@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
 
-public class FiveBallAuto extends SequentialCommandGroup {
+public class FiveBallAutoLow extends SequentialCommandGroup {
     private static final double HORIZ_CONV_TIMEOUT = 2;
     private static final double VERT_CONV_TIMEOUT = 2;
 
-    public FiveBallAuto(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
+    public FiveBallAutoLow(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         super(new ShooterRpmPIDCommand(shooter, DEFAULT_SHOOTER_RPM),
             new VertConveyAndShootCommandGroup(verticalConveyor, shooter, VERT_CONV_TIMEOUT)
                 .alongWith(new CollectorDownCommand(collector)),

@@ -15,7 +15,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -95,11 +94,11 @@ public class HangerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Hanger Height Encoder", getLeftHangerHeight());
-        SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
-        SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
+        // SmartDashboard.putNumber("Hanger Height Encoder", getLeftHangerHeight());
+        // SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
+        // SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
+        // SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
+        // SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
 
         m_pid.updateIfChanged();
     }

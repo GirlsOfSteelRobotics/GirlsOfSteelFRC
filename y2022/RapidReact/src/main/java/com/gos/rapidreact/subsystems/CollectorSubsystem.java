@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -25,7 +24,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
     private static final double PIVOT_SPEED = .75;
-    public static final double ALLOWABLE_ERROR_DEG = 2;
+    public static final double ALLOWABLE_ERROR_DEG = 1;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
     private static final double GEARING =  756.0;
     private static final double J_KG_METERS_SQUARED = 1;
@@ -37,7 +36,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     // TODO play with these numbers for optimal ball pickup
     public static final double UP_ANGLE = 80;
-    public static final double DOWN_ANGLE = RobotBase.isReal() ? 10 : 0;
+    public static final double DOWN_ANGLE = RobotBase.isReal() ? -1 : 0;
 
     // From SysId
     private static final double PIVOT_KS = 0.1831;
@@ -61,7 +60,10 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private SingleJointedArmSimWrapper m_simulator;
 
-    private final SparkMaxLimitSwitch m_limitSwitch;
+    private final DigitalInput m_limitSwitch;
+
+
+    private double m_pivotChangingSetpoint = DOWN_ANGLE;
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -92,13 +94,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pidControllerLeft = m_pivotLeft.getPIDController();
         m_pidControllerRight = m_pivotRight.getPIDController();
 
-        CANSparkMax.IdleMode idleModeBreak = CANSparkMax.IdleMode.kBrake;
-        CANSparkMax.IdleMode idleModeCoast = CANSparkMax.IdleMode.kCoast;
-        m_pivotLeft.setIdleMode(idleModeBreak);
-        m_roller.setIdleMode(idleModeCoast);
-
-        m_limitSwitch = m_pivotLeft.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-        m_limitSwitch.enableLimitSwitch(true);
+        m_limitSwitch = new DigitalInput(Constants.INTAKE_LIMIT_SWITCH);
 
         m_pivotPIDLeft = setupPidValues(m_pidControllerLeft);
         m_pivotPIDRight = setupPidValues(m_pidControllerRight);
@@ -134,34 +130,38 @@ public class CollectorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pivot Lead Encoder (deg)", getIntakeLeftAngleDegrees());
         SmartDashboard.putNumber("Pivot Lead Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
         SmartDashboard.putNumber("Pivot Follow Encoder (deg)", getIntakeRightAngleDegrees());
-        SmartDashboard.putBoolean("Intake LS", m_limitSwitch.isPressed());
+        SmartDashboard.putBoolean("Intake LS", limitSwitchPressed());
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();
-
-        if (limitSwitchPressed()) {
-            m_pivotEncoderLeft.setPosition(90);
-            m_pivotEncoderRight.setPosition(90);
-        }
     }
 
     public void collectorDown() {
-        m_pivotLeft.set(-PIVOT_SPEED);
-        m_pivotRight.set(-PIVOT_SPEED);
-    }
-
-    public void collectorUp() {
         if (limitSwitchPressed()) {
             m_pivotLeft.set(0);
             m_pivotRight.set(0);
         }
+
         else {
-            m_pivotLeft.set(PIVOT_SPEED);
-            m_pivotRight.set(PIVOT_SPEED);
+            m_pivotLeft.set(-PIVOT_SPEED);
+            m_pivotRight.set(-PIVOT_SPEED);
+            m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
         }
     }
 
+    public void collectorUp() {
+        m_pivotLeft.set(PIVOT_SPEED);
+        m_pivotRight.set(PIVOT_SPEED);
+
+        m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
+    }
+
+    public void pivotToMagicAngle() {
+        SmartDashboard.putNumber("AHHHH", m_pivotChangingSetpoint);
+        collectorToAngle(m_pivotChangingSetpoint);
+    }
+
     public boolean limitSwitchPressed() {
-        return m_limitSwitch.isPressed();
+        return !m_limitSwitch.get();
     }
 
     public void rollerIn() {
@@ -191,26 +191,25 @@ public class CollectorSubsystem extends SubsystemBase {
 
     /**
      * gets pivot point of collector to given angle using pid
-     * @param pivotAngleDegrees *IN DEGREES*
+     * @param pivotAngleDegreesGoal *IN DEGREES*
      */
-    public void collectorToAngle(double pivotAngleDegrees) {
+    public void collectorToAngle(double pivotAngleDegreesGoal) {
 
-        if (limitSwitchPressed()) {
+        if (pivotAngleDegreesGoal < getIntakeLeftAngleDegrees() && limitSwitchPressed()) {
             pivotStop();
         }
 
         else {
-            double errorLeft = pivotAngleDegrees - getIntakeLeftAngleDegrees();
-            double errorRight = pivotAngleDegrees - getIntakeRightAngleDegrees();
+            double errorLeft = pivotAngleDegreesGoal - getIntakeLeftAngleDegrees();
+            double errorRight = pivotAngleDegreesGoal - getIntakeRightAngleDegrees();
 
             double gravityOffset = Math.cos(getIntakeLeftAngleRadians()) * GRAVITY_OFFSET.getValue();
             double staticFrictionLeft = PIVOT_KS * Math.signum(errorLeft);
             double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
             double arbFeedforwardLeft = gravityOffset + staticFrictionLeft;
             double arbFeedforwardRight = gravityOffset + staticFrictionRight;
-            System.out.println("Arm pid goal: " + pivotAngleDegrees + " sf: " + staticFrictionLeft + " g: " + gravityOffset + " -> " + arbFeedforwardLeft);
-            m_pidControllerLeft.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
-            m_pidControllerRight.setReference(pivotAngleDegrees, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
+            m_pidControllerLeft.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
+            m_pidControllerRight.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
         }
 
     }

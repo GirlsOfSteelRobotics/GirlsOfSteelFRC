@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLimelightSubsystem extends SubsystemBase {
 
-    public static final String LIMELIGHT_NAME = "limelight-george";
+    public static final String LIMELIGHT_NAME = "limelight-terry"; // Dr Richards is too long
 
     public static final double MOUNTING_ANGLE_DEGREES = -25; //degrees
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(27.25);
@@ -55,7 +55,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
             m_pipeline.setNumber(RED_CARGO);
         }
         SmartDashboard.putNumber("distance to cargo", distanceToCargo());
-        SmartDashboard.putNumber("angle to cargo", m_horizontalAngle.getDouble(0));
+        SmartDashboard.putNumber("angle to cargo", getAngle());
     }
 }
 

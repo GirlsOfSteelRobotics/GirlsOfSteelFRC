@@ -87,7 +87,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
     public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5066;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.08475;
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.5107;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = .8;
     public static final double MAX_VOLTAGE = 10;
 
     public static final double K_TRACKWIDTH_METERS = 1.8603;
@@ -208,11 +208,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
         m_coordinateGuiPublisher.publish(m_odometry.getPoseMeters());
-        SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
-        SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
+        // SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
+        // SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
         SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
-        SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
-        SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
+        // SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
+        // SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
@@ -241,11 +241,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void stop() {
         m_drive.stopMotor();
-        System.out.println("Stopping motors");
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity, double leftAcceleration, double rightAcceleration) {
-        // System.out.println("Driving velocity");
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftVelocity); //arbFeedforward
         double staticFrictionRight = KS_VOLTS_FORWARD * Math.signum(rightVelocity);
         double accelerationLeft = KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAcceleration);
@@ -253,12 +251,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftPidController.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionLeft + accelerationLeft);
         m_rightPidController.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0, staticFrictionRight + accelerationRight);
         m_drive.feed();
-
-        System.out.println("Left Velocity" + leftVelocity + ", Right Velocity" + rightVelocity + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
     }
 
     public void trapezoidMotionControl(double leftDistance, double rightDistance) {
-        // System.out.println("Driving velocity");
         double leftError = leftDistance - getLeftEncoderDistance();
         double rightError = rightDistance - getRightEncoderDistance();
         double staticFrictionLeft = KS_VOLTS_FORWARD * Math.signum(leftError);
@@ -266,8 +261,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftPidController.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionLeft);
         m_rightPidController.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0, staticFrictionRight);
         m_drive.feed();
-
-        System.out.println("Left Position Goal" + leftDistance + ", Right Position Goal" + rightDistance + " SF: [" + staticFrictionLeft + ", " + staticFrictionRight + "]");
     }
 
     public double getLeftEncoderSpeed() {
@@ -303,7 +296,6 @@ public class ChassisSubsystem extends SubsystemBase {
         double yCurrent = m_odometry.getPoseMeters().getY();
         double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
 
-        System.out.println(yCurrent);
         double hDistance; //gets distance of the hypotenuse
         double angle;
 
@@ -313,8 +305,6 @@ public class ChassisSubsystem extends SubsystemBase {
         angle = Math.atan2(yError, xError);
         angleError = angle - angleCurrent;
 
-        System.out.println("xError   " + xError);
-        System.out.println("yError   " + yError);
         return driveAndTurnPID(hDistance, angleError);
     }
 
@@ -325,16 +315,10 @@ public class ChassisSubsystem extends SubsystemBase {
         // double speed = TO_XY_DISTANCE_PID.getValue() * distance; //p * error pid
         double steer = m_toCargoPID.calculate(0, angle);
 
-        // System.out.println("speed   " + speed);
-        // System.out.println("steer   " + steer);
-        // System.out.println("hDistance   " + hDistance);
-        // System.out.println("angle   " + Math.toDegrees(angleError));
-        // System.out.println();
-
         // HACK - Always use the same speed
         double speed = TO_XY_DISTANCE_SPEED.getValue();
 
-        SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
+        //SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
 
         setArcadeDrive(speed, steer);
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
@@ -346,10 +330,11 @@ public class ChassisSubsystem extends SubsystemBase {
      * @return if at allowable angle
      */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
-        System.out.println("steer voltage  " + steerVoltage);
+        // System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
+        // System.out.println("steer voltage  " + steerVoltage);
 
         m_leaderRight.setVoltage(steerVoltage);
         m_leaderLeft.setVoltage(-steerVoltage);
