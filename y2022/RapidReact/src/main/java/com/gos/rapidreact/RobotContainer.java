@@ -78,8 +78,6 @@ public class RobotContainer {
     private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector, m_shooterLimelight);
     private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_shooterLimelight, m_shooter, m_collector, m_verticalConveyor, m_autoModeFactory); // NOPMD
 
-
-
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
 
@@ -112,7 +110,7 @@ public class RobotContainer {
         // testCommands.add("RollerOutCommand", new RollerOutCommand(m_collector));
         testCommands.add("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
         // testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, 45));
-        testCommands.add("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, 90));
+        testCommands.add("CollectorPivotPIDCommand - 80 Degrees", new CollectorPivotPIDCommand(m_collector, 80));
 
         // testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         // testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));

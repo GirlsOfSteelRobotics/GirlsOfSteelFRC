@@ -27,7 +27,7 @@ public class ShooterRpmPIDCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return m_shooter.isShooterAtSpeed() && m_shooter.isRollerAtSpeed();
+        return m_shooter.isShooterAtSpeed();
     }
 
     @Override
