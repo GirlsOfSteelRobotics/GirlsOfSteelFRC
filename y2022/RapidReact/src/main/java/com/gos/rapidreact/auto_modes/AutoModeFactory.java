@@ -28,6 +28,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
         FOUR_BALL_LOW,
         FOUR_BALL_HALF_HIGH,
         FOUR_BALL_HIGH,
+        SABOTAGE_UPPER,
+        SABOTAGE_LOWER,
         FIVE_BALL_LOW,
     }
 
@@ -40,6 +42,8 @@ public class AutoModeFactory extends SequentialCommandGroup {
     private final CommandBase m_fourBallAutoLow;
     private final CommandBase m_fourBallAutoHalf;
     private final CommandBase m_fourBallAutoHigh;
+    private final CommandBase m_sabotageAutoLowerTarmac;
+    private final CommandBase m_sabotageAutoUpperTarmac;
     private final CommandBase m_fiveBallAutoLow;
 
     /**
@@ -80,6 +84,12 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
         m_fourBallAutoHigh = new FourBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Four Ball Auto High", AutonMode.FOUR_BALL_HIGH);
+
+        m_sabotageAutoUpperTarmac = new SabotageAutoUpperCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Sabotage Auto Upper Tarmac", AutonMode.SABOTAGE_UPPER);
+
+        m_sabotageAutoLowerTarmac = new SabotageAutoUpperCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Sabotage Auto Lower Tarmac", AutonMode.SABOTAGE_LOWER);
 
         m_fiveBallAutoLow = new FiveBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Five Ball Auto Low", AutonMode.FIVE_BALL_LOW);
