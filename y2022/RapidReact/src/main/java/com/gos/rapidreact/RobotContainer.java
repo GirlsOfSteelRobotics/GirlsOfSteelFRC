@@ -199,7 +199,7 @@ public class RobotContainer {
         final JoystickButton pivotPIDUp = new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value);
         pivotPIDUp.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.UP_ANGLE));
         final JoystickButton pivotPIDDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value);
-        pivotPIDDown.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE));
+        pivotPIDDown.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE_TELE));
         new Button(() -> m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right

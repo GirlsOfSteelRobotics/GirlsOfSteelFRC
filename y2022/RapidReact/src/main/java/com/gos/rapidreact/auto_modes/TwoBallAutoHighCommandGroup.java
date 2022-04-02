@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class TwoBallAutoHighCommandGroup extends SequentialCommandGroup {
-    private static final double PIVOT_ANGLE_DOWN = 7;
+    private static final double PIVOT_ANGLE_DOWN = CollectorSubsystem.DOWN_ANGLE_AUTO;
 
     public TwoBallAutoHighCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,
                                        HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {

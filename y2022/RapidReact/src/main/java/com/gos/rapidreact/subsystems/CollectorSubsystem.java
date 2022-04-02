@@ -38,7 +38,8 @@ public class CollectorSubsystem extends SubsystemBase {
 
     // TODO play with these numbers for optimal ball pickup
     public static final double UP_ANGLE = 80;
-    public static final double DOWN_ANGLE = RobotBase.isReal() ? -1 : 0;
+    public static final double DOWN_ANGLE_TELE = RobotBase.isReal() ? -1 : 0;
+    public static final double DOWN_ANGLE_AUTO = RobotBase.isReal() ? 7 : 0;
 
     // From SysId
     private static final double PIVOT_KS = 0.18148;

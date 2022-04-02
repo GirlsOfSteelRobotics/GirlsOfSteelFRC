@@ -18,7 +18,7 @@ import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_HIG
 
 public class FourBallAutoHighCommandGroup extends SequentialCommandGroup {
     private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM_HIGH;
-    private static final double PIVOT_ANGLE_DOWN = 7;
+    private static final double PIVOT_ANGLE_DOWN = CollectorSubsystem.DOWN_ANGLE_AUTO;
     // private static final double SECOND_SHOT_RPM = DEFAULT_SHOOTER_RPM;
 
     @SuppressWarnings("PMD") // TODO(ashley) Remove once all the commands are back in
