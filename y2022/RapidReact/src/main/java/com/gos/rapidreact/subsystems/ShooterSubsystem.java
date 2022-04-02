@@ -12,15 +12,18 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 
+@SuppressWarnings("PMD.TooManyFields")
 public class ShooterSubsystem extends SubsystemBase {
 
     //variables for the two NEO Brushless Motors
@@ -39,16 +42,25 @@ public class ShooterSubsystem extends SubsystemBase {
     private final PidProperty m_shooterPid;
     private final SparkMaxPIDController m_shooterPidController;
     private final ShooterLookupTable m_shooterTable;
-    private double m_goalRpm = Double.MAX_VALUE;
+    private double m_shooterGoalRpm = Double.MAX_VALUE;
+    private double m_backspinGoalRpm = Double.MAX_VALUE;
 
     private final SimableCANSparkMax m_roller;
     private final RelativeEncoder m_rollerEncoder;
     private final PidProperty m_rollerPid;
     private final SparkMaxPIDController m_rollerPidController;
 
-    private ISimWrapper m_simulator;
+    private ISimWrapper m_shooterSimulator;
+    private ISimWrapper m_backspinSimulator;
 
     private final DeadbandHelper m_counter;
+
+    // Logging
+    private final NetworkTableEntry m_shooterRpmEntry;
+    private final NetworkTableEntry m_backspinRpmEntry;
+    private final NetworkTableEntry m_shooterGoalRpmEntry;
+    private final NetworkTableEntry m_backspinGoalRpmEntry;
+    private final NetworkTableEntry m_shooterAtSpeedEntry;
 
     public ShooterSubsystem() {
         m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -82,35 +94,49 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_leader.burnFlash();
 
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Shooter");
+        m_shooterRpmEntry = loggingTable.getEntry("Shooter RPM");
+        m_backspinRpmEntry = loggingTable.getEntry("Backspin RPM");
+        m_shooterGoalRpmEntry = loggingTable.getEntry("Shooter Goal");
+        m_backspinGoalRpmEntry = loggingTable.getEntry("Backspin Goal");
+        m_shooterAtSpeedEntry = loggingTable.getEntry("At Speed");
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
-            m_simulator = new FlywheelSimWrapper(flywheelSim,
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
+            m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim,
                 new RevMotorControllerSimWrapper(m_leader),
                 RevEncoderSimWrapper.create(m_leader));
+
+            FlywheelSim backspinFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
+            m_backspinSimulator = new FlywheelSimWrapper(backspinFlywheelSim,
+                new RevMotorControllerSimWrapper(m_roller),
+                RevEncoderSimWrapper.create(m_roller));
         }
 
-        m_counter = new DeadbandHelper(100);
+        m_counter = new DeadbandHelper(10);
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("RPM", getEncoderVelocity());
-        SmartDashboard.putNumber("Backspin RPM", m_rollerEncoder.getVelocity());
-        SmartDashboard.putNumber("Goal RPM", m_goalRpm);
-        //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_shooterPid.updateIfChanged();
         m_rollerPid.updateIfChanged();
-        double shooterError = Math.abs(m_goalRpm - getEncoderVelocity());
-        double rollerError = Math.abs(ROLLER_SHOOTER_RPM_PROPORTION * m_goalRpm - getRollerVelocity());
+        double shooterError = Math.abs(m_shooterGoalRpm - getEncoderVelocity());
+        double rollerError = Math.abs(ROLLER_SHOOTER_RPM_PROPORTION * m_shooterGoalRpm - getRollerVelocity());
         m_counter.setIsGood(shooterError < SHOOTER_ALLOWABLE_ERROR && rollerError < ROLLER_ALLOWABLE_ERROR);
-        SmartDashboard.putNumber("Roller RPM", getRollerVelocity());
+
+
+        m_shooterRpmEntry.setNumber(getEncoderVelocity());
+        m_backspinRpmEntry.setNumber(getRollerVelocity());
+        m_shooterGoalRpmEntry.setNumber(m_shooterGoalRpm);
+        m_backspinGoalRpmEntry.setNumber(m_backspinGoalRpm);
+        m_shooterAtSpeedEntry.setBoolean(m_counter.isFinished());
     }
 
     public void setShooterRpmPIDSpeed(double rpm) {
-        m_shooterPidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
-        m_goalRpm = rpm;
+        m_shooterGoalRpm = rpm;
+        m_backspinGoalRpm = rpm * ROLLER_SHOOTER_RPM_PROPORTION;
 
+        m_shooterPidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
         m_rollerPidController.setReference(ROLLER_SHOOTER_RPM_PROPORTION * rpm, CANSparkMax.ControlType.kVelocity);
 
     }
@@ -125,8 +151,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setShooterSpeed(double speed) {
         m_leader.set(speed);
-        m_goalRpm = Double.MAX_VALUE;
         m_roller.set(speed * ROLLER_SHOOTER_RPM_PROPORTION);
+
+        m_shooterGoalRpm = Double.MAX_VALUE;
+        m_backspinGoalRpm = Double.MAX_VALUE;
     }
 
     public double getEncoderVelocity() {
@@ -143,8 +171,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        m_simulator.update();
-
+        m_shooterSimulator.update();
+        m_backspinSimulator.update();
     }
 
 }

@@ -6,7 +6,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLimelightSubsystem extends SubsystemBase {
@@ -23,6 +22,10 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_pipeline; //which camera (color or cargo) to use
 
+    // Logging
+    private final NetworkTableEntry m_distanceEntry;
+    private final NetworkTableEntry m_angleError;
+
     public IntakeLimelightSubsystem() {
         NetworkTable georgeLimelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
 
@@ -30,6 +33,10 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
         m_verticalAngle = georgeLimelightTable.getEntry("ty");
         m_isVisible = georgeLimelightTable.getEntry("tv");
         m_pipeline = georgeLimelightTable.getEntry("pipeline");
+
+        NetworkTable publishTable = NetworkTableInstance.getDefault().getTable("IntakeLimelight");
+        m_distanceEntry = publishTable.getEntry("Distance");
+        m_angleError = publishTable.getEntry("Angle Error");
     }
 
     public double distanceToCargo() {
@@ -54,8 +61,9 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
         if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
             m_pipeline.setNumber(RED_CARGO);
         }
-        SmartDashboard.putNumber("distance to cargo", distanceToCargo());
-        SmartDashboard.putNumber("angle to cargo", getAngle());
+
+        m_distanceEntry.setNumber(distanceToCargo());
+        m_angleError.setNumber(getAngle());
     }
 }
 

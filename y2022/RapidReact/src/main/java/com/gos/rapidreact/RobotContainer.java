@@ -167,7 +167,11 @@ public class RobotContainer {
 
         // PropertyManager.printDynamicProperties();
 
-        DataLogManager.start();
+        if (RobotBase.isSimulation()) {
+            DataLogManager.start("datalogs");
+        } else {
+            DataLogManager.start();
+        }
         DriverStation.startDataLog(DataLogManager.getLog());
     }
 

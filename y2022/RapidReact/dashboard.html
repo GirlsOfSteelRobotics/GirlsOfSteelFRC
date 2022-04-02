@@ -1,0 +1,221 @@
+<dashboard-tab
+    tab-name="Drivers"
+    slot="tab"
+    source-provider="NetworkTables"
+>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/shuffleboard/testCommands/resetPivotEncoder"
+    ></frc-robot-command>
+    <frc-camera
+        source-provider="NetworkTables"
+        style="--image-width:0px; --image-height:0px; --crosshair-width:2px; --crosshair-color:#ffffff; --image-display:block; transform: translate(410.154px, 0px); width: 1045px; height: 596px;"
+        streams="[]"
+    ></frc-camera>
+</dashboard-tab>
+<dashboard-tab
+    slot="tab"
+    tab-name="Pit"
+    source-provider="NetworkTables"
+>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(3px, 54px);"
+        source-key="/shuffleboard/testCommands/changeCollectorDown"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/shuffleboard/testCommands/limelightGoToCargo"
+    ></frc-robot-command>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Turn To Angle"
+    source-provider="NetworkTables"
+    slot="tab"
+>
+    <frc-line-chart
+        title="Line Chart"
+        source-provider="NetworkTables"
+        style="width: 901px; height: 648px; transform: translate(4px, 10px);"
+    >
+        <frc-chart-axis
+            slot="axes"
+            source-provider="NetworkTables"
+            min="-200"
+            max="200"
+            tick-values="[]"
+        ></frc-chart-axis>
+        <frc-chart-data
+            slot="data"
+            label="Current Angle"
+            color="#00aa00"
+            source-provider="NetworkTables"
+            source-key="/chassis/odometry/angleDeg"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+            source-key="/chassis/turnToAngle/goal"
+        ></frc-chart-data>
+    </frc-line-chart>
+    <frc-gyro
+        source-provider="NetworkTables"
+        style="transform: translate(995.971px, 41.97px);"
+        source-key="/chassis/odometry/angleDeg"
+    ></frc-gyro>
+    <frc-field
+        source-provider="NetworkTables"
+        style="transform: translate(71px, 670.078px); width: 505px; height: 249.922px;"
+        top-left-field-corner-x="74"
+        top-left-field-corner-y="50"
+        bottom-right-field-corner-x="1774"
+        bottom-right-field-corner-y="900"
+    >
+        <frc-field-robot
+            source-key="/SmartDashboard/Field/Robot"
+            source-provider="NetworkTables"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(175.693deg);"
+            pose="[0,0,0]"
+        ></frc-field-robot>
+        <frc-field-trajectory
+            source-key="/SmartDashboard/Field/traj"
+            source-provider="NetworkTables"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(90deg);"
+        ></frc-field-trajectory>
+    </frc-field>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Shooter"
+    source-provider="NetworkTables"
+    slot="tab"
+>
+    <frc-line-chart
+        title="Line Chart"
+        source-provider="NetworkTables"
+        style="width: 834px; height: 650px; transform: translate(0px, 0px);"
+    >
+        <frc-chart-axis
+            slot="axes"
+            source-provider="NetworkTables"
+            tick-values="[]"
+            min="1100"
+            max="2500"
+        ></frc-chart-axis>
+        <frc-chart-data
+            slot="data"
+            label="Shooter RPM"
+            color="#00aa00"
+            source-provider="NetworkTables"
+            source-key="/shooter/shooterRpm"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+            source-key="/shooter/backspinRpm"
+            label="Backspin RPM"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+            source-key="/shooter/shooterGoal"
+            label="Shooter Goal"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+            source-key="/shooter/backspinGoal"
+            label="Backspin Goal"
+        ></frc-chart-data>
+    </frc-line-chart>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Collector"
+    source-provider="NetworkTables"
+    slot="tab"
+    selected=""
+>
+    <frc-line-chart
+        title="Line Chart"
+        source-provider="NetworkTables"
+        style="width: 1179px; height: 660px; transform: translate(0px, 0px);"
+    >
+        <frc-chart-axis
+            slot="axes"
+            source-provider="NetworkTables"
+            min="-5"
+            max="100"
+            tick-values="[]"
+        ></frc-chart-axis>
+        <frc-chart-data
+            slot="data"
+            label="Left Angle (Deg)"
+            color="#00aa00"
+            source-provider="NetworkTables"
+            source-key="/collectorSubsystem/leftIntakeDeg"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+            label="Right Angle (Deg)"
+            source-key="/collectorSubsystem/rightIntakeDeg"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+            label="Angle Goal"
+            source-key="/collectorSubsystem/angleGoal"
+        ></frc-chart-data>
+    </frc-line-chart>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Hanger"
+    source-provider="NetworkTables"
+    slot="tab"
+>
+    <frc-line-chart
+        title="Line Chart"
+        source-provider="NetworkTables"
+    >
+        <frc-chart-axis
+            slot="axes"
+            source-provider="NetworkTables"
+            tick-values="[]"
+        ></frc-chart-axis>
+        <frc-chart-data
+            slot="data"
+            label="Data"
+            color="#00aa00"
+            source-provider="NetworkTables"
+            source-key="/hanger/rightHeight"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+            source-key="/hanger/rightHeight"
+        ></frc-chart-data>
+        <frc-chart-data
+            slot="data"
+            source-provider="NetworkTables"
+        ></frc-chart-data>
+    </frc-line-chart>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(778px, 112px);"
+        source-key="/shuffleboard/testCommands/rightHangDown"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(780px, 47px);"
+        source-key="/shuffleboard/testCommands/rightHangUp"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(528px, 108px);"
+        source-key="/shuffleboard/testCommands/leftHangDown"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(527px, 50px);"
+        source-key="/shuffleboard/testCommands/leftHangUp"
+    ></frc-robot-command>
+</dashboard-tab>
