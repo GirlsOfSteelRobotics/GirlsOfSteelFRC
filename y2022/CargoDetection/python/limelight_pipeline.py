@@ -8,13 +8,11 @@ class Params:
     BLUE_NUM = 1
 
     def __init__(self):
-        self.blue_hsv = ((82, 131, 64), (131, 255, 255))
+
+        self.blue_hsv = ((92, 238, 140), (114, 255, 255))
         self.red_hsv = ((0, 127, 199), (164, 209, 255))
         self.contour_filtering = {'min_area': 5, 'max_area': 10000, 'min_aspect_ratio': 0.5, 'max_aspect_ratio': 1.5}
-        self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 47
-
-
-            , 'max_canny_thresh': 50, 'accuracy': 12, 'matching_threshold': 17}
+        self.circle = {'min_radius': 5, 'max_radius': 500, 'min_dist': 18, 'max_canny_thresh': 25, 'accuracy': 16, 'matching_threshold': 10}
 
     def set_hsv(self, color_threshold_num, hsv_min, hsv_max):
         if color_threshold_num == self.RED_NUM:
