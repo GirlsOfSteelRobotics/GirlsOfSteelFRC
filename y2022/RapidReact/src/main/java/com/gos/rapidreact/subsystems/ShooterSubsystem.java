@@ -90,7 +90,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leader));
         }
 
-        m_counter = new DeadbandHelper(5);
+        m_counter = new DeadbandHelper(100);
     }
 
     @Override

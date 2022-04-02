@@ -77,12 +77,12 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         m_pivotEncoderLeft = m_pivotLeft.getEncoder();
-        // m_pivotEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
-        // m_pivotEncoderLeft.setVelocityConversionFactor(360.0 / GEARING / 60.0);
+        m_pivotEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
+        m_pivotEncoderLeft.setVelocityConversionFactor(360.0 / GEARING / 60.0);
 
         m_pivotEncoderRight = m_pivotRight.getEncoder();
-        // m_pivotEncoderRight.setPositionConversionFactor(360.0 / GEARING);
-        // m_pivotEncoderRight.setVelocityConversionFactor(360.0 / GEARING / 60.0);
+        m_pivotEncoderRight.setPositionConversionFactor(360.0 / GEARING);
+        m_pivotEncoderRight.setVelocityConversionFactor(360.0 / GEARING / 60.0);
 
         m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
@@ -123,7 +123,7 @@ public class CollectorSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Pivot Left Encoder (rad)", getIntakeLeftAngleRadians());
         SmartDashboard.putNumber("Pivot Left Encoder (deg)", getIntakeLeftAngleDegrees());
-        //SmartDashboard.putNumber("Pivot Left Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
+        SmartDashboard.putNumber("Pivot Left Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
         SmartDashboard.putNumber("Pivot Right Encoder (deg)", getIntakeRightAngleDegrees());
         SmartDashboard.putBoolean("Intake LS", limitSwitchPressed());
         m_pivotPIDLeft.updateIfChanged();
