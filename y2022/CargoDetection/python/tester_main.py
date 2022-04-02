@@ -93,8 +93,8 @@ def main():
     if not os.path.exists(DEFAULT_FILE_DIR):
         os.mkdir(DEFAULT_FILE_DIR)
 
-    win = Window(active_threshold_num=Params.BLUE_NUM)
-    # win = Window(active_threshold_num=Params.RED_NUM)
+    # win = Window(active_threshold_num=Params.BLUE_NUM)
+    win = Window(active_threshold_num=Params.RED_NUM)
 
     win.show()
     sys.exit(app.exec())
