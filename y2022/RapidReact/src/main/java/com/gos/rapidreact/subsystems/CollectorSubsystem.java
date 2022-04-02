@@ -39,9 +39,9 @@ public class CollectorSubsystem extends SubsystemBase {
     public static final double DOWN_ANGLE = RobotBase.isReal() ? -1 : 0;
 
     // From SysId
-    private static final double PIVOT_KS = 0.1831;
-    //private static final double PIVOT_KV = 0.12391;
-    //private static final double PIVOT_KA = 0.0063637;
+    private static final double PIVOT_KS = 0.18148;
+    //private static final double PIVOT_KV = 0.12495;
+    //private static final double PIVOT_KA = 0.0051913;
 
     private final SimableCANSparkMax m_roller;
     private final SimableCANSparkMax m_pivotLeft;
@@ -67,24 +67,22 @@ public class CollectorSubsystem extends SubsystemBase {
         m_roller.restoreFactoryDefaults();
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotLeft.restoreFactoryDefaults();
         m_pivotLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotLeft.setInverted(true);
 
-        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotRight.restoreFactoryDefaults();
         m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        m_pivotRight.follow(m_pivotLeft, true);
-
         m_pivotEncoderLeft = m_pivotLeft.getEncoder();
-        m_pivotEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
-        m_pivotEncoderLeft.setVelocityConversionFactor(360.0 / GEARING / 60.0);
+        // m_pivotEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
+        // m_pivotEncoderLeft.setVelocityConversionFactor(360.0 / GEARING / 60.0);
 
         m_pivotEncoderRight = m_pivotRight.getEncoder();
-        m_pivotEncoderRight.setPositionConversionFactor(360.0 / GEARING);
-        m_pivotEncoderRight.setVelocityConversionFactor(360.0 / GEARING / 60.0);
+        // m_pivotEncoderRight.setPositionConversionFactor(360.0 / GEARING);
+        // m_pivotEncoderRight.setVelocityConversionFactor(360.0 / GEARING / 60.0);
 
         m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
@@ -112,7 +110,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Collector", false, pidController, 0)
-            .addP(0)
+            .addP(0) //0.20201
             .addI(0)
             .addD(0)
             .addFF(0)
@@ -123,10 +121,10 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Lead Encoder (rad)", getIntakeLeftAngleRadians());
-        SmartDashboard.putNumber("Pivot Lead Encoder (deg)", getIntakeLeftAngleDegrees());
-        SmartDashboard.putNumber("Pivot Lead Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
-        SmartDashboard.putNumber("Pivot Follow Encoder (deg)", getIntakeRightAngleDegrees());
+        SmartDashboard.putNumber("Pivot Left Encoder (rad)", getIntakeLeftAngleRadians());
+        SmartDashboard.putNumber("Pivot Left Encoder (deg)", getIntakeLeftAngleDegrees());
+        //SmartDashboard.putNumber("Pivot Left Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
+        SmartDashboard.putNumber("Pivot Right Encoder (deg)", getIntakeRightAngleDegrees());
         SmartDashboard.putBoolean("Intake LS", limitSwitchPressed());
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();

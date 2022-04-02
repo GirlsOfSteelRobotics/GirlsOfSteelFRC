@@ -46,6 +46,8 @@ import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
@@ -108,7 +110,7 @@ public class RobotContainer {
         testCommands.add("CollectorUpCommand", new CollectorUpCommand(m_collector));
         // testCommands.add("RollerInCommand", new RollerInCommand(m_collector));
         // testCommands.add("RollerOutCommand", new RollerOutCommand(m_collector));
-        testCommands.add("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
+        testCommands.add("CollectorPivotPIDCommand - 10 Degrees", new CollectorPivotPIDCommand(m_collector, 10));
         // testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, 45));
         testCommands.add("CollectorPivotPIDCommand - 80 Degrees", new CollectorPivotPIDCommand(m_collector, 80));
 
@@ -164,6 +166,9 @@ public class RobotContainer {
         }
 
         // PropertyManager.printDynamicProperties();
+
+        DataLogManager.start();
+        DriverStation.startDataLog(DataLogManager.getLog());
     }
 
 
