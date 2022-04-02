@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VerticalConveyorSubsystem extends SubsystemBase {
@@ -25,7 +26,7 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     public VerticalConveyorSubsystem() {
         m_conveyor = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_conveyor.restoreFactoryDefaults();
-        m_conveyor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_conveyor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_conveyor.setInverted(true);
 
         m_feeder = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_FEEDER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -39,6 +40,13 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         m_feeder.burnFlash();
     }
 
+    @Override
+    public void periodic() {
+        SmartDashboard.putBoolean("Upper vc index", getUpperIndexSensor());
+        SmartDashboard.putBoolean("Lower vc index", getLowerIndexSensor());
+
+    }
+
     public void forwardVerticalConveyorMotor() {
         if (DriverStation.isTeleop()) {
             m_conveyor.set(VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED);
@@ -50,6 +58,12 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
 
     public void autoShootVerticalConveyorForward() {
         m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
+        // if (getLowerIndexSensor() && getUpperIndexSensor()) {
+        //     m_conveyor.set(VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED);
+        // }
+        // else {
+        //    m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
+        // }
     }
 
     public void backwardVerticalConveyorMotor() {
