@@ -53,5 +53,6 @@ public class AutoLimelightConveyorAndShooterCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_verticalConveyor.stopVerticalConveyorMotor();
+        m_verticalConveyor.stopFeedMotor();
     }
 }

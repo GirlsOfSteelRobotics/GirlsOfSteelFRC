@@ -23,10 +23,10 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 @SuppressWarnings("PMD.TooManyMethods")
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
-    private static final double PIVOT_SPEED = .75;
+    private static final double PIVOT_SPEED = .3;
     public static final double ALLOWABLE_ERROR_DEG = 1;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
-    private static final double GEARING =  756.0;
+    private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
@@ -61,9 +61,6 @@ public class CollectorSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_simulator;
 
     private final DigitalInput m_limitSwitch;
-
-
-    private double m_pivotChangingSetpoint = DOWN_ANGLE;
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -144,20 +141,12 @@ public class CollectorSubsystem extends SubsystemBase {
         else {
             m_pivotLeft.set(-PIVOT_SPEED);
             m_pivotRight.set(-PIVOT_SPEED);
-            m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
         }
     }
 
     public void collectorUp() {
         m_pivotLeft.set(PIVOT_SPEED);
         m_pivotRight.set(PIVOT_SPEED);
-
-        m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
-    }
-
-    public void pivotToMagicAngle() {
-        SmartDashboard.putNumber("AHHHH", m_pivotChangingSetpoint);
-        collectorToAngle(m_pivotChangingSetpoint);
     }
 
     public boolean limitSwitchPressed() {
@@ -179,14 +168,6 @@ public class CollectorSubsystem extends SubsystemBase {
     public void pivotStop() {
         m_pivotLeft.set(0);
         m_pivotRight.set(0);
-    }
-
-    public void collectorDownPID() {
-        collectorToAngle(DOWN_ANGLE);
-    }
-
-    public void collectorUpPID() {
-        collectorToAngle(Math.toRadians(UP_ANGLE));
     }
 
     /**

@@ -12,7 +12,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public static final double MAX_SHOOTER_RPM = 3200;
 
     private static final double ROLLER_ALLOWABLE_ERROR = 100.0;
+    private static final double ROLLER_SHOOTER_RPM_PROPORTION = 1.3;
 
     private final SimableCANSparkMax m_leader;
     private final RelativeEncoder m_shooterEncoder;
@@ -101,8 +101,9 @@ public class ShooterSubsystem extends SubsystemBase {
         //        SmartDashboard.putNumber("Shooter Encoder", m_encoder.getPosition());
         m_shooterPid.updateIfChanged();
         m_rollerPid.updateIfChanged();
-        double error = Math.abs(m_goalRpm - getEncoderVelocity());
-        m_counter.setIsGood(error < SHOOTER_ALLOWABLE_ERROR);
+        double shooterError = Math.abs(m_goalRpm - getEncoderVelocity());
+        double rollerError = Math.abs(ROLLER_SHOOTER_RPM_PROPORTION * m_goalRpm - getRollerVelocity());
+        m_counter.setIsGood(shooterError < SHOOTER_ALLOWABLE_ERROR && rollerError < ROLLER_ALLOWABLE_ERROR);
         SmartDashboard.putNumber("Roller RPM", getRollerVelocity());
     }
 
@@ -110,24 +111,12 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterPidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
         m_goalRpm = rpm;
 
-        m_rollerPidController.setReference(1.3 * rpm, CANSparkMax.ControlType.kVelocity);
+        m_rollerPidController.setReference(ROLLER_SHOOTER_RPM_PROPORTION * rpm, CANSparkMax.ControlType.kVelocity);
 
     }
 
     public boolean isShooterAtSpeed() {
-        if (DriverStation.isTeleop()) {
-            return m_counter.isFinished();
-        }
-        double error = Math.abs(m_goalRpm - getEncoderVelocity());
-        if (DriverStation.isAutonomous()) {
-            return error < SHOOTER_ALLOWABLE_ERROR;
-        }
-        return error < SHOOTER_ALLOWABLE_ERROR;
-    }
-
-    public boolean isRollerAtSpeed() {
-        double error = Math.abs(m_goalRpm * 1.3 - getRollerVelocity());
-        return error < ROLLER_ALLOWABLE_ERROR;
+        return m_counter.isFinished();
     }
 
     public double getRollerVelocity() {
@@ -137,7 +126,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setShooterSpeed(double speed) {
         m_leader.set(speed);
         m_goalRpm = Double.MAX_VALUE;
-        m_roller.set(speed * 1.3);
+        m_roller.set(speed * ROLLER_SHOOTER_RPM_PROPORTION);
     }
 
     public double getEncoderVelocity() {

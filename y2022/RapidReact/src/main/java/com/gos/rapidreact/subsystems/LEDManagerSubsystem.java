@@ -183,7 +183,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_noLimelight.setState(!m_shooterLimelight.isVisible());
 
         // Set and write these to the strip always
-        m_shooterAtSpeed.setStateAndWrite(m_shooter.isShooterAtSpeed() && m_shooter.isRollerAtSpeed());
+        m_shooterAtSpeed.setStateAndWrite(m_shooter.isShooterAtSpeed());
 
         if (m_shooterLimelight.isVisible()) {
             if (m_shooter.isShooterAtSpeed() && m_shooterLimelight.isReadyToShoot()) {
