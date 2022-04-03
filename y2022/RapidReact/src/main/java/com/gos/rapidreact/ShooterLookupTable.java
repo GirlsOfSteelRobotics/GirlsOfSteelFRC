@@ -1,17 +1,14 @@
 package com.gos.rapidreact;
 
-import edu.wpi.first.math.util.Units;
-
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.MAX_SHOOTER_RPM;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_HIGH;
 
 
 public class ShooterLookupTable {
-
-    private static final double MAX_SHOOTER_VELOCITY = 41.0;
 
     //Sorted array sorts greatest to least
     private final NavigableMap<Double, Double> m_list = new TreeMap<>();
@@ -20,10 +17,11 @@ public class ShooterLookupTable {
     //ball should be shot at
     public ShooterLookupTable() {
         //2022 data but units???? meters, rpm??
-        m_list.put(0.0, 1800.0);
-        m_list.put(Units.inchesToMeters(48), 2200.0);
-        m_list.put(Units.inchesToMeters(84), 2600.0);
-        m_list.put(Units.inchesToMeters(120), 3000.0);
+        m_list.put(1.46, 1500.0); //45 inches irl
+        m_list.put(1.99, 1650.0); //66 inches irl
+        m_list.put(2.50, 1750.0); //85 inches irl
+        m_list.put(3.36, 2050.0); //111 inches irl
+
     }
 
     /**
@@ -34,12 +32,12 @@ public class ShooterLookupTable {
         Map.Entry<Double, Double> floor = m_list.floorEntry(distance);
         // Below the min. Just zero it out
         if (floor == null) {
-            return DEFAULT_SHOOTER_RPM;
+            return TARMAC_EDGE_RPM_HIGH;
         }
 
         Map.Entry<Double, Double> ceiling = m_list.ceilingEntry(distance);
         if (ceiling == null) {
-            return MAX_SHOOTER_VELOCITY;
+            return MAX_SHOOTER_RPM;
         }
 
         if (floor.equals(ceiling)) {

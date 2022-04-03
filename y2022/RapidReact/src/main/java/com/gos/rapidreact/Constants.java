@@ -28,9 +28,10 @@ public final class Constants {
     public static final int HANGER_RIGHT_SPARK = 8;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
-    public static final int COLLECTOR_PIVOT_LEADER = 13;
-    public static final int COLLECTOR_PIVOT_FOLLOWER = 11;
+    public static final int COLLECTOR_PIVOT_LEFT = 13;
+    public static final int COLLECTOR_PIVOT_RIGHT = 11;
     public static final int VERTICAL_CONVEYOR_FEEDER_SPARK = 12;
+    public static final int SHOOTER_ROLLER = 14;
 
     // Bigger to avoid future conflicts
     public static final int PIGEON_PORT = 20;
@@ -41,11 +42,12 @@ public final class Constants {
     public static final int SERVO_CHANNEL = 1;
 
     //DIO ports
-    public static final int INDEX_SENSOR_LOWER_VERTICAL_CONVEYOR = 5;
+    public static final int INDEX_SENSOR_LOWER_VERTICAL_CONVEYOR = 2;
     // 6 is used to power half of upper sensor
     // 7 is used for hanger???
     public static final int INTAKE_INDEX_SENSOR = 8;
     public static final int INDEX_SENSOR_UPPER_VERTICAL_CONVEYOR = 9;
+    public static final int INTAKE_LIMIT_SWITCH = 7;
 
 
 

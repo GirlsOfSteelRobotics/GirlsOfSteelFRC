@@ -4,6 +4,7 @@ package com.gos.rapidreact.auto_modes;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
+import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -14,26 +15,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoModeFactory extends SequentialCommandGroup {
 
-    private final SendableChooser<Command> m_sendableChooser;
+    private final SendableChooser<AutonMode> m_sendableChooser;
 
     private static final boolean ENABLE_AUTO_SELECTION = true;
 
+    public enum AutonMode {
+        DRIVE_OFF_TARMAC,
+        ONE_BALL_LOW,
+        ONE_BALL_HIGH,
+        TWO_BALL_LOW,
+        TWO_BALL_HIGH,
+        THREE_BALL_LOW,
+        FOUR_BALL_LOW,
+        FOUR_BALL_HALF_HIGH,
+        FOUR_BALL_HIGH,
+        FIVE_BALL_LOW,
+    }
 
     private final CommandBase m_offTarmacAuto;
-    private final CommandBase m_oneBallAuto;
-    private final CommandBase m_twoBallAuto;
-    private final CommandBase m_threeBallAuto;
-    private final CommandBase m_fourBallAuto;
-    private final CommandBase m_fiveBallAuto;
-
-
-
-
+    private final CommandBase m_oneBallAutoLow;
+    private final CommandBase m_oneBallAutoHigh;
+    private final CommandBase m_twoBallAutoLow;
+    private final CommandBase m_twoBallAutoHigh;
+    private final CommandBase m_fourBallAutoLow;
+    private final CommandBase m_fourBallAutoHalf;
+    private final CommandBase m_fourBallAutoHigh;
 
     /**
      * Creates a new AutomatedConveyorIntake.
      */
-    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
+    public AutoModeFactory(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector, ShooterLimelightSubsystem shooterLimelight) {
         //need to have distance
         m_sendableChooser = new SendableChooser<>();
 
@@ -43,58 +54,62 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
 
         m_offTarmacAuto = new DriveOffTarmac(chassis);
-        m_sendableChooser.addOption("Drive Off Tarmac (Default)", m_offTarmacAuto);
+        m_sendableChooser.addOption("Drive Off Tarmac (Default)", AutonMode.DRIVE_OFF_TARMAC);
 
-        m_oneBallAuto = new OneBallAuto(chassis, shooter, verticalConveyor);
-        m_sendableChooser.addOption("One Ball Auto", m_oneBallAuto);
+        m_oneBallAutoLow = new OneBallAutoLowCommandGroup(chassis, shooter, verticalConveyor);
+        m_sendableChooser.addOption("One Ball Auto Low", AutonMode.ONE_BALL_LOW);
 
-        m_twoBallAuto = new TwoBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Two Ball Auto", m_twoBallAuto);
+        m_oneBallAutoHigh = new OneBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor);
+        m_sendableChooser.addOption("One Ball Auto High", AutonMode.ONE_BALL_HIGH);
 
-        m_threeBallAuto = new ThreeBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Three Ball Auto", m_threeBallAuto);
+        m_twoBallAutoLow = new TwoBallAutoLowCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.setDefaultOption("Two Ball Auto Low", AutonMode.TWO_BALL_LOW);
 
-        m_fourBallAuto = new FourBallAutoCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Four Ball Auto", m_fourBallAuto);
+        m_twoBallAutoHigh = new TwoBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Two Ball Auto High", AutonMode.TWO_BALL_HIGH);
 
-        m_fiveBallAuto = new FiveBallAuto(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Five Ball Auto", m_fiveBallAuto);
+        m_fourBallAutoLow = new FourBallAutoLowCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Four Ball Auto Low", AutonMode.FOUR_BALL_LOW);
 
+        m_fourBallAutoHalf = new FourBallAutoHalfCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
+        m_sendableChooser.addOption("Four Ball Auto Half", AutonMode.FOUR_BALL_HALF_HIGH);
+
+        m_fourBallAutoHigh = new FourBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector, shooterLimelight);
+        m_sendableChooser.addOption("Four Ball Auto High", AutonMode.FOUR_BALL_HIGH);
     }
 
     @SuppressWarnings("PMD.CompareObjectsWithEquals")
-    public int autoModeLightSignal() {
-        int autoMode = -1;
-        if (m_sendableChooser.getSelected() == m_offTarmacAuto) {
-            autoMode = 0;
-        }
-
-        if (m_sendableChooser.getSelected() == m_oneBallAuto) {
-            autoMode = 1;
-        }
-
-        if (m_sendableChooser.getSelected() == m_twoBallAuto) {
-            autoMode = 2;
-        }
-
-        if (m_sendableChooser.getSelected() == m_threeBallAuto) {
-            autoMode = 3;
-        }
-
-        if (m_sendableChooser.getSelected() == m_fourBallAuto) {
-            autoMode = 4;
-        }
-
-        if (m_sendableChooser.getSelected() == m_fiveBallAuto) {
-            autoMode = 5;
-        }
-        return autoMode;
+    public AutonMode autoModeLightSignal() {
+        return m_sendableChooser.getSelected();
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
+    private Command getCommandFromChooser(AutonMode mode) {
+        switch (mode) {
+        case DRIVE_OFF_TARMAC:
+            return m_offTarmacAuto;
+        case ONE_BALL_LOW:
+            return m_oneBallAutoLow;
+        case ONE_BALL_HIGH:
+            return m_oneBallAutoHigh;
+        case TWO_BALL_LOW:
+            return m_twoBallAutoLow;
+        case TWO_BALL_HIGH:
+            return m_twoBallAutoHigh;
+        case FOUR_BALL_LOW:
+            return m_fourBallAutoLow;
+        case FOUR_BALL_HALF_HIGH:
+            return m_fourBallAutoHalf;
+        case FOUR_BALL_HIGH:
+            return m_fourBallAutoHigh;
+        default:
+            return null;
+        }
+    }
 
     public Command getAutonomousMode() {
         if (ENABLE_AUTO_SELECTION) {
-            return m_sendableChooser.getSelected();
+            return getCommandFromChooser(m_sendableChooser.getSelected());
         }
         else {
             return m_offTarmacAuto;

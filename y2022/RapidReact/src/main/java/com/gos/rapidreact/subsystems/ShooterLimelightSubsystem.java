@@ -5,18 +5,27 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
+    public static final String LIMELIGHT_NAME = "limelight-george";
+    public static final double MOUNTING_ANGLE_DEGREES = 30;
+    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(29);
+    public static final double HUB_HEIGHT = Units.inchesToMeters(104); //8 ft, 8 in
+    public static final double MIN_SHOOTING_DISTANCE = 1.46;
+    public static final double MAX_SHOOTING_DISTANCE = 3.36;
+    public static final double ALLOWABLE_ANGLE_ERROR = 4;
 
-    public static final String LIMELIGHT_NAME = "limelight-terry"; // Dr Richardson is too long
-    public static final double MOUNTING_ANGLE = 0; // TODO verify angle
-    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(35); // TODO verify height
-    public static final double MAX_SHOOTING_DISTANCE = 5; //meters
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
-    private final NetworkTableEntry m_ledOff;
+    private final NetworkTableEntry m_ledOff; // NOPMD
+    private final NetworkTableEntry m_pipeline; //which camera (color or cargo) to use
+
+    // Logging
+    private final NetworkTableEntry m_distance;
+    private final NetworkTableEntry m_angleError;
 
     public ShooterLimelightSubsystem() {
         NetworkTable richardsLimelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
@@ -26,13 +35,17 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_isVisible = richardsLimelightTable.getEntry("tv");
 
         m_ledOff = richardsLimelightTable.getEntry("ledMode");
-        m_ledOff.setDouble(1);
 
+        m_pipeline = richardsLimelightTable.getEntry("pipeline");
+
+        NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("ShooterLimelight");
+        m_distance = networkTable.getEntry("Distance");
+        m_angleError = networkTable.getEntry("AngleError");
     }
 
     public double getDistanceToHub() {
         double distance;
-        distance = (LIMELIGHT_HEIGHT) / Math.tan(MOUNTING_ANGLE + m_verticalAngle.getDouble(0));
+        distance = (HUB_HEIGHT - LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(MOUNTING_ANGLE_DEGREES + m_verticalAngle.getDouble(0)));
         return distance;
     }
 
@@ -42,6 +55,33 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
 
     public double angleError() {
         return m_horizontalAngle.getDouble(0);
+    }
+
+    public boolean atAcceptableDistance() {
+        double distance = getDistanceToHub();
+        return distance > MIN_SHOOTING_DISTANCE && distance < MAX_SHOOTING_DISTANCE;
+    }
+
+    public boolean atAcceptableAngle() {
+        return Math.abs(angleError()) < ALLOWABLE_ANGLE_ERROR;
+    }
+
+    public boolean isReadyToShoot() {
+        return atAcceptableAngle() && atAcceptableDistance() && isVisible();
+    }
+
+    @Override
+    public void periodic() {
+        m_distance.setNumber(getDistanceToHub());
+        m_angleError.setNumber(angleError());
+
+        if (DriverStation.isEnabled()) {
+            m_ledOff.setDouble(0);
+        } else {
+            m_ledOff.setDouble(1);
+        }
+
+        m_pipeline.setNumber(2);
     }
 }
 

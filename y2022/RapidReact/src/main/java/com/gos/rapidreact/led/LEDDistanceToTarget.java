@@ -10,8 +10,9 @@ public class LEDDistanceToTarget extends LEDBase {
     private final int m_minIndex;
     private final int m_maxIndex;
     private final double m_maxDistance;
+    private double m_distanceError;
 
-    public LEDDistanceToTarget(AddressableLEDBuffer buffer, Color color, int minIndex, int maxIndex, double maxDistance) {
+    public LEDDistanceToTarget(AddressableLEDBuffer buffer, int minIndex, int maxIndex, Color color, double maxDistance) {
         super(buffer);
         m_color = new Color8Bit(color);
         m_minIndex = minIndex;
@@ -20,7 +21,12 @@ public class LEDDistanceToTarget extends LEDBase {
     }
 
     public void distanceToTarget(double distanceError) {
-        double ledProportion = Math.abs(distanceError / m_maxDistance);
+        m_distanceError = distanceError;
+    }
+
+    @Override
+    public void writeLeds() {
+        double ledProportion = Math.abs(m_distanceError / m_maxDistance);
         int ledOn = (int) (ledProportion * m_maxIndex);
         setLEDs(m_minIndex, m_minIndex + ledOn, m_color.red, m_color.green, m_color.blue);
     }

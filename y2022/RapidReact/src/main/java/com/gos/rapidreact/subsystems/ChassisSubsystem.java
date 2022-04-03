@@ -20,10 +20,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.coordinate_gui.RobotPositionPublisher;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
@@ -36,17 +40,12 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 @SuppressWarnings("PMD.TooManyFields")
 public class ChassisSubsystem extends SubsystemBase {
 
-    //TODO: change constants to match this year's robot
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    // private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To XY Distance PID", 0);
-
     private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
     public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
-
-    private static final PropertyManager.IProperty<Double> TO_HUB_DISTANCE_PID = PropertyManager.createDoubleProperty(false, "To Hub Distance PID", 0);
 
     private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = PropertyManager.createDoubleProperty(false, "OpenLoopRampRate", 0.5);
 
@@ -86,7 +85,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5049;
     public static final double KV_VOLT_SECONDS_PER_RADIAN = 1.5066;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.08475;
-    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.5107;
+    public static final double KS_VOLTS_STATIC_FRICTION_TURNING = 1.48;
     public static final double MAX_VOLTAGE = 10;
 
     public static final double K_TRACKWIDTH_METERS = 1.8603;
@@ -97,6 +96,14 @@ public class ChassisSubsystem extends SubsystemBase {
     private DifferentialDrivetrainSimWrapper m_simulator;
     private LimelightSim m_limelightSim;
 
+    // Logging
+    private final NetworkTableEntry m_turnToAngleVoltageEntry;
+    private final NetworkTableEntry m_turnToAngleGoalEntry;
+    private final NetworkTableEntry m_goToCargoTurnSpeedEntry;
+    private final NetworkTableEntry m_goToCargoForwardSpeedEntry;
+    private final NetworkTableEntry m_gyroAngleEntry;
+
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -134,13 +141,14 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_turnAnglePID = new PIDController(0, 0, 0);
-        m_turnAnglePID.setTolerance(3, 1);
+        m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_ANGLE_ERROR);
         m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
             .addD(0)
             .build();
+        //p 0.32, d 0.21
 
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
@@ -183,12 +191,25 @@ public class ChassisSubsystem extends SubsystemBase {
             m_limelightSim = new LimelightSim();
         }
 
-        // SmartDashboard.putData(m_field);
+        SmartDashboard.putData(m_field);
 
         m_leaderLeft.burnFlash();
         m_followerLeft.burnFlash();
         m_leaderRight.burnFlash();
         m_followerRight.burnFlash();
+
+        NetworkTable chassisTable = NetworkTableInstance.getDefault().getTable("Chassis");
+
+        NetworkTable turnToAngleTable = chassisTable.getSubTable("TurnToAngle");
+        m_turnToAngleVoltageEntry = turnToAngleTable.getEntry("Voltage");
+        m_turnToAngleGoalEntry = turnToAngleTable.getEntry("Goal");
+
+        NetworkTable goToCargoTable = chassisTable.getSubTable("GoToCargo");
+        m_goToCargoTurnSpeedEntry = goToCargoTable.getEntry("TurnSpeed");
+        m_goToCargoForwardSpeedEntry = goToCargoTable.getEntry("ForwardSpeed");
+
+        NetworkTable odometryTable = chassisTable.getSubTable("Odometry");
+        m_gyroAngleEntry = odometryTable.getEntry("Angle (deg)");
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -205,13 +226,10 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_odometry.update(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-        m_field.setRobotPose(m_odometry.getPoseMeters());
-        m_coordinateGuiPublisher.publish(m_odometry.getPoseMeters());
-        // SmartDashboard.putNumber("Left Dist (inches)", Units.metersToInches(m_leftEncoder.getPosition()));
-        // SmartDashboard.putNumber("Right Dist (inches)", Units.metersToInches(m_rightEncoder.getPosition()));
-        // SmartDashboard.putNumber("Gyro (deg)", m_odometry.getPoseMeters().getRotation().getDegrees());
-        // SmartDashboard.putNumber("Left Velocity (in/s)", Units.metersToInches(m_leftEncoder.getVelocity()));
-        // SmartDashboard.putNumber("Right Velocity (in/s)", Units.metersToInches(m_rightEncoder.getVelocity()));
+
+        m_field.setRobotPose(getPose());
+        m_coordinateGuiPublisher.publish(getPose());
+        m_gyroAngleEntry.setNumber(getYawAngle());
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
@@ -230,16 +248,8 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public double getAverageEncoderDistance() {
-        return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
-    }
-
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
-    }
-
-    public void stop() {
-        m_drive.stopMotor();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity, double leftAcceleration, double rightAcceleration) {
@@ -288,21 +298,15 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean goToCargo(double xCoordinate, double yCoordinate) {
 
-        double xError;
-        double yError; //gets distance to the coordinate
-        double angleError;
         double xCurrent = m_odometry.getPoseMeters().getX();
         double yCurrent = m_odometry.getPoseMeters().getY();
         double angleCurrent = m_odometry.getPoseMeters().getRotation().getRadians();
 
-        double hDistance; //gets distance of the hypotenuse
-        double angle;
-
-        xError = xCoordinate - xCurrent;
-        yError = yCoordinate - yCurrent;
-        hDistance = Math.sqrt((xError * xError) + (yError * yError));
-        angle = Math.atan2(yError, xError);
-        angleError = angle - angleCurrent;
+        double xError = xCoordinate - xCurrent;
+        double yError = yCoordinate - yCurrent;
+        double hDistance = Math.sqrt((xError * xError) + (yError * yError));
+        double angle = Math.atan2(yError, xError);
+        double angleError = angle - angleCurrent;
 
         return driveAndTurnPID(hDistance, angleError);
     }
@@ -317,7 +321,9 @@ public class ChassisSubsystem extends SubsystemBase {
         // HACK - Always use the same speed
         double speed = TO_XY_DISTANCE_SPEED.getValue();
 
-        //SmartDashboard.putNumber("GoToCargo: Turn Speed", steer);
+
+        m_goToCargoTurnSpeedEntry.setNumber(steer);
+        m_goToCargoForwardSpeedEntry.setNumber(speed);
 
         setArcadeDrive(speed, steer);
         return Math.abs(distance) < allowableDistanceError && Math.abs(angle) < allowableAngleError;
@@ -329,28 +335,21 @@ public class ChassisSubsystem extends SubsystemBase {
      * @return if at allowable angle
      */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        System.out.println("Goal: " + angleGoal + " at " + m_odometry.getPoseMeters().getRotation().getDegrees());
-        double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
+        double steerVoltage = m_turnAnglePID.calculate(getYawAngle(), angleGoal);
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
-        System.out.println("steer voltage  " + steerVoltage);
+
+        if (m_turnAnglePID.atSetpoint()) {
+            steerVoltage = 0;
+        }
 
         m_leaderRight.setVoltage(steerVoltage);
         m_leaderLeft.setVoltage(-steerVoltage);
-
         m_drive.feed();
 
+        m_turnToAngleVoltageEntry.setNumber(steerVoltage);
+        m_turnToAngleGoalEntry.setNumber(angleGoal);
+
         return m_turnAnglePID.atSetpoint();
-
-    }
-
-    public boolean distancePID(double currentPosition, double distanceGoal) {
-        double allowableDistanceError = Units.inchesToMeters(10.0);
-        double error = distanceGoal - currentPosition;
-
-        double speed = error * TO_HUB_DISTANCE_PID.getValue();
-        double steer = 0;
-        setArcadeDrive(speed, steer);
-        return Math.abs(error) < allowableDistanceError;
 
     }
 

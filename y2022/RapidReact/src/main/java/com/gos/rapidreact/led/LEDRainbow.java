@@ -9,14 +9,15 @@ public class LEDRainbow extends LEDBase {
     private int m_rainbowFirstPixelHue;
 
 
-    public LEDRainbow(int maxIndex, AddressableLEDBuffer buffer, int minIndex) {
+    public LEDRainbow(AddressableLEDBuffer buffer, int minIndex, int maxIndex) {
         super(buffer);
         m_indexLength = maxIndex - minIndex;
         m_minIndex = minIndex;
         m_maxIndex = maxIndex;
     }
 
-    public void rainbow() {
+    @Override
+    public void writeLeds() {
         // For every pixel
         for (var i = m_minIndex; i < m_maxIndex; i++) {
             // Calculate the hue - hue is easier for rainbows because the color

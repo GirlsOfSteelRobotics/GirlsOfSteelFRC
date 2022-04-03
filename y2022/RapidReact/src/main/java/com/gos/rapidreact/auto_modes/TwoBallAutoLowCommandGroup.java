@@ -16,24 +16,26 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import static com.gos.rapidreact.subsystems.ShooterSubsystem.DEFAULT_SHOOTER_RPM;
 
-public class TwoBallAutoCommandGroup extends SequentialCommandGroup {
+public class TwoBallAutoLowCommandGroup extends SequentialCommandGroup {
     private static final double FIRST_SHOT_VERT_CONV_TIME = 3;
-    private static final double FIRST_SHOT_RPM = DEFAULT_SHOOTER_RPM;
+    private static final double FIRST_SHOT_RPM = 1900;
+    private static final double SECOND_SHOT_RPM = DEFAULT_SHOOTER_RPM;
+    private static final double PIVOT_ANGLE_DOWN = CollectorSubsystem.DOWN_ANGLE_AUTO;
 
     private static final double SECOND_SHOT_VERT_CONV_TIME = 3;
-    private static final double SECOND_SHOT_RPM = 2500;
 
     private static final double DRIVE_DISTANCE = Units.inchesToMeters(35);
     private static final double ALLOWABLE_ERROR = 0.05;
 
-    public TwoBallAutoCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizConveyor, CollectorSubsystem collector) {
+    public TwoBallAutoLowCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizConveyor, CollectorSubsystem collector) {
         super(
             new ShooterRpmPIDCommand(shooter, FIRST_SHOT_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor).withTimeout(FIRST_SHOT_VERT_CONV_TIME)
-                .alongWith(new CollectorPivotPIDCommand(collector, 0)),
+                .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN)),
             new DriveDistanceCommand(chassis, DRIVE_DISTANCE, ALLOWABLE_ERROR)
                 .alongWith(new RollerInCommand(collector).withTimeout(2))
                 .alongWith(new HorizontalConveyorForwardCommand(horizConveyor).withTimeout(2)),
+            new DriveDistanceCommand(chassis, -DRIVE_DISTANCE, ALLOWABLE_ERROR),
             new ShooterRpmPIDCommand(shooter, SECOND_SHOT_RPM),
             new FeederVerticalConveyorForwardCommand(verticalConveyor)
                 .withTimeout(SECOND_SHOT_VERT_CONV_TIME));

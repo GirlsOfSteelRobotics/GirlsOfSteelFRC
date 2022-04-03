@@ -12,29 +12,31 @@ import com.gos.rapidreact.trajectory.FourBallTrajectories;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_LOW;
+import static com.gos.rapidreact.subsystems.ShooterSubsystem.TARMAC_EDGE_RPM_HIGH;
 
-public class FourBallAutoCommandGroup extends SequentialCommandGroup {
-    private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM;
-    private static final double PIVOT_ANGLE_DOWN = 7;
+public class FourBallAutoHalfCommandGroup extends SequentialCommandGroup {
+    private static final double FIRST_SHOT_RPM = TARMAC_EDGE_RPM_LOW;
+    private static final double SECOND_SHOT_RPM = TARMAC_EDGE_RPM_HIGH;
+    private static final double PIVOT_ANGLE_DOWN = CollectorSubsystem.DOWN_ANGLE_AUTO;
     // private static final double SECOND_SHOT_RPM = DEFAULT_SHOOTER_RPM;
 
     @SuppressWarnings("PMD") // TODO(ashley) Remove once all the commands are back in
-    public FourBallAutoCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
+    public FourBallAutoHalfCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor, HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         super(
             // Drive to the second ball, while lowering the shooter.
             FourBallTrajectories.fourBallPart1(chassis)
                 .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
                 // Run the intake the entire time, while we wait for the previous commands to finish
                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
-            FourBallTrajectories.fourBallPart2(chassis),
+            FourBallTrajectories.fourBallLowPart2(chassis),
             new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, FIRST_SHOT_RPM, 1.25)
                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)),
-            FourBallTrajectories.fourBallPart3(chassis)
+            FourBallTrajectories.fourBallLowPart3(chassis)
                 .alongWith(new WaitCommand(2).andThen(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))),
             new IntakeWithHorizontal(collector, horizontalConveyor, 1),
-            FourBallTrajectories.fourBallPart4(chassis)
+            FourBallTrajectories.fourBallHighPart4(chassis)
                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)),
-            new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, FIRST_SHOT_RPM, 5));
+            new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SECOND_SHOT_RPM, 5));
     }
 }

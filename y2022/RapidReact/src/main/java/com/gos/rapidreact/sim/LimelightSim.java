@@ -41,8 +41,8 @@ public class LimelightSim {
 
 
     public LimelightSim() {
-        Transform2d intakeTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(180));
-        Transform2d shooterTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(0));
+        Transform2d intakeTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(0));
+        Transform2d shooterTransform = new Transform2d(new Translation2d(), Rotation2d.fromDegrees(180));
 
         m_cargoTarget = new CargoTarget();
         m_intakeSimulator = new LimelightSimulator(List.of(m_cargoTarget), intakeTransform, IntakeLimelightSubsystem.LIMELIGHT_HEIGHT, INTAKE_MAX_DISTANCE, IntakeLimelightSubsystem.LIMELIGHT_NAME);

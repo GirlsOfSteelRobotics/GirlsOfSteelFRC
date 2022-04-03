@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 public class LEDSolidColor extends LEDBase {
     private final int m_minIndex;
     private final int m_maxIndex;
-    private Color8Bit m_color;
+    private final Color8Bit m_color;
 
     public LEDSolidColor(AddressableLEDBuffer buffer, int minIndex, int maxIndex, Color color) {
         super(buffer);
@@ -16,11 +16,8 @@ public class LEDSolidColor extends LEDBase {
         m_maxIndex = maxIndex;
     }
 
-    public void solidColor() {
+    @Override
+    public void writeLeds() {
         setLEDs(m_minIndex, m_maxIndex, m_color.red, m_color.green, m_color.blue);
-    }
-
-    public void setColor(Color8Bit color) {
-        m_color = color;
     }
 }
