@@ -109,12 +109,12 @@ def main():
         os.remove(os.path.join(this_dir, "amalgum_pipeline.py"))
 
     default_snapshot_directory = os.path.join(DEFAULT_FILE_DIR, "practiceFieldBlue")
-    # default_snapshot_directory = os.path.join(DEFAULT_FILE_DIR, "practiceFieldRed", "practiceField")
+    default_snapshot_directory = os.path.join(DEFAULT_FILE_DIR, "practiceFieldRed", "practiceField")
 
-    win = Window(active_threshold_num=BLUE_NUM)
-    # win = Window(active_threshold_num=RED_NUM)
+    # win = Window(active_threshold_num=BLUE_NUM)
+    win = Window(active_threshold_num=RED_NUM)
 
-    win.snapshots_tab.load_directory(os.path.abspath(default_snapshot_directory))
+    # win.snapshots_tab.load_directory(os.path.abspath(default_snapshot_directory))
 
     win.show()
     sys.exit(app.exec())

@@ -27,16 +27,16 @@ CargoPipelineParams(
 
 # Shop
 BLUE_PARAMS = CargoPipelineParams(
-    hsv=HsvThresholdParams((92, 114), (238, 255), (140, 255), False),
-    contour_filtering=ContourFilteringParams((5, 4800), (0.5, 2.5)),
-    circle_detection=CircleDetectionParams((5, 1000), 18, 25, 12, 10),
+    hsv=HsvThresholdParams((94, 115), (239, 255), (140, 255), False),
+    contour_filtering=ContourFilteringParams((5, 4800), (0.26360544217687076, 2.5)),
+    circle_detection=CircleDetectionParams((5, 100), 18, 25, 12, 10),
     image_crop=CropImageFilterParams([]),
 )
 
 RED_PARAMS = CargoPipelineParams(
-    hsv=HsvThresholdParams((4, 176), (176, 255), (130, 255), True),
-    contour_filtering=ContourFilteringParams((5, 4800), (0.5, 1.5)),
-    circle_detection=CircleDetectionParams((12, 500), 10, 21, 13, 21),
+    hsv=HsvThresholdParams((4, 174), (100, 255), (130, 255), True),
+    contour_filtering=ContourFilteringParams((5, 4800), (0.8078231292517007, 1.4965986394557822)),
+    circle_detection=CircleDetectionParams((12, 500), 10, 21, 10, 21),
     image_crop=CropImageFilterParams([]),
 )
 
