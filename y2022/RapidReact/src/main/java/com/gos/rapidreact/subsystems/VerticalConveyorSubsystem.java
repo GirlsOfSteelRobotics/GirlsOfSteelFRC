@@ -5,13 +5,16 @@ import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VerticalConveyorSubsystem extends SubsystemBase {
 
-    public static final double VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED = 0.25;
+    public static final double VERTICAL_CONVEYOR_TELEOP_MOTOR_SPEED = 0.5;
     public static final double VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED = 1;
 
     public static final double FEEDER_MOTOR_SPEED = 0.5;
@@ -22,10 +25,14 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
     private final DigitalInput m_indexSensorUpper;
     private final DigitalInput m_indexSensorLower;
 
+    // Logging
+    private final NetworkTableEntry m_lowerIndexSensorEntry;
+    private final NetworkTableEntry m_upperIndexSensorEntry;
+
     public VerticalConveyorSubsystem() {
         m_conveyor = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_conveyor.restoreFactoryDefaults();
-        m_conveyor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_conveyor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_conveyor.setInverted(true);
 
         m_feeder = new SimableCANSparkMax(Constants.VERTICAL_CONVEYOR_FEEDER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -37,6 +44,17 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
 
         m_conveyor.burnFlash();
         m_feeder.burnFlash();
+
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("VerticalConveyor");
+        m_lowerIndexSensorEntry = loggingTable.getEntry("Lower Cargo Sensor");
+        m_upperIndexSensorEntry = loggingTable.getEntry("Upper Cargo Sensor");
+    }
+
+    @Override
+    public void periodic() {
+        m_lowerIndexSensorEntry.setBoolean(getLowerIndexSensor());
+        m_upperIndexSensorEntry.setBoolean(getUpperIndexSensor());
+
     }
 
     public void forwardVerticalConveyorMotor() {
@@ -46,6 +64,10 @@ public class VerticalConveyorSubsystem extends SubsystemBase {
         if (DriverStation.isAutonomous()) {
             m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
         }
+    }
+
+    public void autoShootVerticalConveyorForward() {
+        m_conveyor.set(VERTICAL_CONVEYOR_AUTO_MOTOR_SPEED);
     }
 
     public void backwardVerticalConveyorMotor() {
