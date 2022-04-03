@@ -17,6 +17,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     private static final double BLUE_CARGO = 0;
     private static final double RED_CARGO = 1;
     private static final double EXTRA_DISTANCE = Units.feetToMeters(0.5); //want to go past estimated to ensure it gets to the cargo
+    private static final double MAX_DISTANCE_TO_CARGO = Units.feetToMeters(4);
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
     private final NetworkTableEntry m_isVisible;
