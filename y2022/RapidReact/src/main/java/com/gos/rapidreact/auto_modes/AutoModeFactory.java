@@ -44,7 +44,6 @@ public class AutoModeFactory extends SequentialCommandGroup {
     private final CommandBase m_fourBallAutoHigh;
     private final CommandBase m_sabotageAutoLowerTarmac;
     private final CommandBase m_sabotageAutoUpperTarmac;
-    private final CommandBase m_fiveBallAutoLow;
 
     /**
      * Creates a new AutomatedConveyorIntake.
@@ -87,9 +86,6 @@ public class AutoModeFactory extends SequentialCommandGroup {
 
         m_sabotageAutoLowerTarmac = new SabotageAutoUpperCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Sabotage Auto Lower Tarmac", AutonMode.SABOTAGE_LOWER);
-
-        m_fiveBallAutoLow = new FiveBallAutoLow(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Five Ball Auto Low", AutonMode.FIVE_BALL_LOW);
     }
 
     @SuppressWarnings("PMD.CompareObjectsWithEquals")
@@ -116,6 +112,10 @@ public class AutoModeFactory extends SequentialCommandGroup {
             return m_fourBallAutoHalf;
         case FOUR_BALL_HIGH:
             return m_fourBallAutoHigh;
+        case SABOTAGE_UPPER:
+            return m_sabotageAutoUpperTarmac;
+        case SABOTAGE_LOWER:
+            return m_sabotageAutoLowerTarmac;
         default:
             return null;
         }
