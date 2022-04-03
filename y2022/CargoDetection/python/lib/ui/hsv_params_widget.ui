@@ -20,6 +20,13 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Saturation</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
@@ -37,10 +44,13 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Saturation</string>
+   <item row="2" column="1">
+    <widget class="QLabeledRangeSlider" name="value_slider">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -61,13 +71,17 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QLabeledRangeSlider" name="value_slider">
-     <property name="maximum">
-      <number>255</number>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Invert Hue</string>
      </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    </widget>
+   </item>
+   <item row="3" column="1" alignment="Qt::AlignHCenter">
+    <widget class="QCheckBox" name="invert_hue_btn">
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>

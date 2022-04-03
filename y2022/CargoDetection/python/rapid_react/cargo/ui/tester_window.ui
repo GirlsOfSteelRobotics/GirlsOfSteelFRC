@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>873</width>
-    <height>682</height>
+    <width>1046</width>
+    <height>941</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,27 +21,7 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="1" column="0">
-     <widget class="HsvParamsWidget" name="hsv_params" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>9</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="CircleParamsWidget" name="circle_params" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>9</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
+    <item row="2" column="0">
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -88,37 +68,31 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
-     <widget class="ContourFilterParamsWidget" name="contour_filter_params" native="true">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="StreamImageProviderWidget" name="streaming_tab">
+       <attribute name="title">
+        <string>Streaming</string>
+       </attribute>
+      </widget>
+      <widget class="DirectoryImageProviderWidget" name="snapshots_tab">
+       <attribute name="title">
+        <string>Snapshots</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="ParamsWidget" name="params_settings" native="true">
       <property name="minimumSize">
        <size>
         <width>0</width>
         <height>9</height>
        </size>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>855</width>
-        <height>10</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>1</number>
-      </property>
-      <widget class="StreamImageProviderWidget" name="streaming_tab" native="true">
-       <attribute name="title">
-        <string>Streaming</string>
-       </attribute>
-      </widget>
-      <widget class="DirectoryImageProviderWidget" name="directory_tab" native="true">
-       <attribute name="title">
-        <string>Snapshots</string>
-       </attribute>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -128,7 +102,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>873</width>
+     <width>1046</width>
      <height>21</height>
     </rect>
    </property>
@@ -136,33 +110,21 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>HsvParamsWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/subpanels.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CircleParamsWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/subpanels.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ContourFilterParamsWidget</class>
-   <extends>QWidget</extends>
-   <header>ui/subpanels.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>DirectoryImageProviderWidget</class>
    <extends>QWidget</extends>
-   <header>ui/subpanels.h</header>
+   <header>lib/ui/input_subpanels.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>StreamImageProviderWidget</class>
    <extends>QWidget</extends>
-   <header>ui/subpanels.h</header>
+   <header>lib/ui/input_subpanels.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ParamsWidget</class>
+   <extends>QWidget</extends>
+   <header>rapid_react/cargo/ui/subpanels.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

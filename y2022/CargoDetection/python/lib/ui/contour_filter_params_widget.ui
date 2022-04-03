@@ -24,7 +24,7 @@
    <item row="0" column="1">
     <widget class="QLabeledRangeSlider" name="area_slider">
      <property name="maximum">
-      <number>180</number>
+      <number>4800</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -39,9 +39,9 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLabeledRangeSlider" name="aspect_ratio_slider">
+    <widget class="QLabeledDoubleRangeSlider" name="aspect_ratio_slider">
      <property name="maximum">
-      <number>180</number>
+      <number>5</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -53,6 +53,11 @@
  <customwidgets>
   <customwidget>
    <class>QLabeledRangeSlider</class>
+   <extends>QSlider</extends>
+   <header>superqt.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QLabeledDoubleRangeSlider</class>
    <extends>QSlider</extends>
    <header>superqt.h</header>
   </customwidget>
