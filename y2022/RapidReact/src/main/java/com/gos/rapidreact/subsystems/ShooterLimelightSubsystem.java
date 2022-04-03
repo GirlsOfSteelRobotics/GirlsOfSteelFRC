@@ -6,7 +6,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
@@ -24,6 +23,10 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_ledOff; // NOPMD
     private final NetworkTableEntry m_pipeline; //which camera (color or cargo) to use
 
+    // Logging
+    private final NetworkTableEntry m_distance;
+    private final NetworkTableEntry m_angleError;
+
     public ShooterLimelightSubsystem() {
         NetworkTable richardsLimelightTable = NetworkTableInstance.getDefault().getTable(LIMELIGHT_NAME);
 
@@ -34,6 +37,10 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_ledOff = richardsLimelightTable.getEntry("ledMode");
 
         m_pipeline = richardsLimelightTable.getEntry("pipeline");
+
+        NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("ShooterLimelight");
+        m_distance = networkTable.getEntry("Distance");
+        m_angleError = networkTable.getEntry("AngleError");
     }
 
     public double getDistanceToHub() {
@@ -65,8 +72,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("ShooterLimelight - Distance", getDistanceToHub());
-        SmartDashboard.putNumber("ShooterLimelight - Angle", angleError());
+        m_distance.setNumber(getDistanceToHub());
+        m_angleError.setNumber(angleError());
 
         if (DriverStation.isEnabled()) {
             m_ledOff.setDouble(0);

@@ -8,6 +8,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,7 +31,12 @@ public class HangerSubsystem extends SubsystemBase {
     private final RelativeEncoder m_leftEncoder;
     private final RelativeEncoder m_rightEncoder;
 
-    private ISimWrapper m_simulator;
+    private ISimWrapper m_leftSimulator;
+    private ISimWrapper m_rightSimulator;
+
+    // Logging
+    private final NetworkTableEntry m_leftHangerHeightEntry;
+    private final NetworkTableEntry m_rightHangerHeightEntry;
 
     public HangerSubsystem() {
         m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -47,17 +55,26 @@ public class HangerSubsystem extends SubsystemBase {
         m_leftHanger.burnFlash();
         m_rightHanger.burnFlash();
 
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Hanger");
+        m_leftHangerHeightEntry = loggingTable.getEntry("LeftHeight");
+        m_rightHangerHeightEntry = loggingTable.getEntry("RightHeight");
+
         if (RobotBase.isSimulation()) {
             ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
-            m_simulator = new ElevatorSimWrapper(elevatorSim,
+            m_leftSimulator = new ElevatorSimWrapper(elevatorSim,
                 new RevMotorControllerSimWrapper(m_leftHanger),
                 RevEncoderSimWrapper.create(m_leftHanger));
+            m_rightSimulator = new ElevatorSimWrapper(elevatorSim,
+                new RevMotorControllerSimWrapper(m_rightHanger),
+                RevEncoderSimWrapper.create(m_rightHanger));
         }
     }
 
 
     @Override
     public void periodic() {
+        m_leftHangerHeightEntry.setNumber(getLeftHangerHeight());
+        m_rightHangerHeightEntry.setNumber(getRightHangerHeight());
     }
 
     public double getLeftHangerSpeed() {
@@ -86,7 +103,8 @@ public class HangerSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        m_simulator.update();
+        m_leftSimulator.update();
+        m_rightSimulator.update();
     }
 
     public void stop() {
