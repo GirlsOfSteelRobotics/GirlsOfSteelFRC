@@ -172,7 +172,7 @@ public class RobotContainer {
         } else {
             DataLogManager.start();
         }
-        DriverStation.startDataLog(DataLogManager.getLog());
+        DriverStation.startDataLog(DataLogManager.getLog(), false);
     }
 
 

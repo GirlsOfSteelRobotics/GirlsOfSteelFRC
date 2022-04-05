@@ -5,7 +5,7 @@
 >
     <frc-robot-command
         source-provider="NetworkTables"
-        source-key="/shuffleboard/testCommands/resetPivotEncoder"
+        source-key="/Shuffleboard/test commands/Reset Pivot Encoder"
     ></frc-robot-command>
     <frc-camera
         source-provider="NetworkTables"
@@ -14,29 +14,15 @@
     ></frc-camera>
 </dashboard-tab>
 <dashboard-tab
-    slot="tab"
-    tab-name="Pit"
-    source-provider="NetworkTables"
->
-    <frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(3px, 54px);"
-        source-key="/shuffleboard/testCommands/changeCollectorDown"
-    ></frc-robot-command>
-    <frc-robot-command
-        source-provider="NetworkTables"
-        source-key="/shuffleboard/testCommands/limelightGoToCargo"
-    ></frc-robot-command>
-</dashboard-tab>
-<dashboard-tab
     tab-name="Turn To Angle"
     source-provider="NetworkTables"
     slot="tab"
+    selected=""
 >
     <frc-line-chart
         title="Line Chart"
         source-provider="NetworkTables"
-        style="width: 901px; height: 648px; transform: translate(4px, 10px);"
+        style="width: 901px; height: 648px; transform: translate(0px, 5px);"
     >
         <frc-chart-axis
             slot="axes"
@@ -50,18 +36,18 @@
             label="Current Angle"
             color="#00aa00"
             source-provider="NetworkTables"
-            source-key="/chassis/odometry/angleDeg"
+            source-key="/Chassis/Odometry/Angle (deg)"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
-            source-key="/chassis/turnToAngle/goal"
+            source-key="/Chassis/TurnToAngle/Goal"
         ></frc-chart-data>
     </frc-line-chart>
     <frc-gyro
         source-provider="NetworkTables"
         style="transform: translate(995.971px, 41.97px);"
-        source-key="/chassis/odometry/angleDeg"
+        source-key="/Chassis/Odometry/Angle (deg)"
     ></frc-gyro>
     <frc-field
         source-provider="NetworkTables"
@@ -74,13 +60,13 @@
         <frc-field-robot
             source-key="/SmartDashboard/Field/Robot"
             source-provider="NetworkTables"
-            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(244.704deg);"
+            style="width: 16.3204px; height: 24.4805px; transform: translate(142.376px, 177.3px) rotate(-13.0796deg);"
             pose="[0,0,0]"
         ></frc-field-robot>
         <frc-field-trajectory
             source-key="/SmartDashboard/Field/traj"
             source-provider="NetworkTables"
-            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(90deg);"
+            style="width: 27.2006px; height: 27.2006px; transform: translate(5.88782px, 223.417px) rotate(90deg);"
         ></frc-field-trajectory>
     </frc-field>
 </dashboard-tab>
@@ -88,7 +74,6 @@
     tab-name="Shooter"
     source-provider="NetworkTables"
     slot="tab"
-    selected=""
 >
     <frc-line-chart
         title="Line Chart"
@@ -107,24 +92,24 @@
             label="Shooter RPM"
             color="#00aa00"
             source-provider="NetworkTables"
-            source-key="/shooter/shooterRpm"
+            source-key="/Shooter/Shooter RPM"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
-            source-key="/shooter/backspinRpm"
+            source-key="/Shooter/Backspin RPM"
             label="Backspin RPM"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
-            source-key="/shooter/shooterGoal"
+            source-key="/Shooter/Shooter Goal"
             label="Shooter Goal"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
-            source-key="/shooter/backspinGoal"
+            source-key="/Shooter/Backspin Goal"
             label="Backspin Goal"
         ></frc-chart-data>
     </frc-line-chart>
@@ -151,19 +136,19 @@
             label="Left Angle (Deg)"
             color="#00aa00"
             source-provider="NetworkTables"
-            source-key="/collectorSubsystem/leftIntakeDeg"
+            source-key="/CollectorSubsystem/Left Intake (deg)"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
             label="Right Angle (Deg)"
-            source-key="/collectorSubsystem/rightIntakeDeg"
+            source-key="/CollectorSubsystem/Right Intake (deg)"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
             label="Angle Goal"
-            source-key="/collectorSubsystem/angleGoal"
+            source-key="/CollectorSubsystem/Angle Goal"
         ></frc-chart-data>
     </frc-line-chart>
     <frc-line-chart
@@ -183,15 +168,20 @@
             label="Left Velocity"
             color="#00aa00"
             source-provider="NetworkTables"
-            source-key="/collectorSubsystem/leftIntakeDps"
+            source-key="/CollectorSubsystem/Left Intake (dps)"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
             label="Right Velocity"
-            source-key="/collectorSubsystem/rightIntakeDps"
+            source-key="/CollectorSubsystem/Left Intake (dps)"
         ></frc-chart-data>
     </frc-line-chart>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(786px, 31px);"
+        source-key="/Shuffleboard/test commands/Reset Pivot Encoder"
+    ></frc-robot-command>
 </dashboard-tab>
 <dashboard-tab
     tab-name="Hanger"
@@ -206,42 +196,41 @@
             slot="axes"
             source-provider="NetworkTables"
             tick-values="[]"
+            max="2"
         ></frc-chart-axis>
         <frc-chart-data
             slot="data"
-            label="Data"
+            label="Right Height"
             color="#00aa00"
             source-provider="NetworkTables"
-            source-key="/hanger/rightHeight"
+            source-key="/Hanger/RightHeight"
         ></frc-chart-data>
         <frc-chart-data
             slot="data"
             source-provider="NetworkTables"
-            source-key="/hanger/rightHeight"
-        ></frc-chart-data>
-        <frc-chart-data
-            slot="data"
-            source-provider="NetworkTables"
+            source-key="/Hanger/LeftHeight"
+            label="Left Height"
+            color="#d90808"
         ></frc-chart-data>
     </frc-line-chart>
     <frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(778px, 112px);"
-        source-key="/shuffleboard/testCommands/rightHangDown"
+        source-key="/Shuffleboard/test commands/Right Hang Down"
     ></frc-robot-command>
     <frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(780px, 47px);"
-        source-key="/shuffleboard/testCommands/rightHangUp"
+        source-key="/Shuffleboard/test commands/Right Hang Up"
     ></frc-robot-command>
     <frc-robot-command
         source-provider="NetworkTables"
-        style="transform: translate(528px, 108px);"
-        source-key="/shuffleboard/testCommands/leftHangDown"
+        style="transform: translate(516px, 114px);"
+        source-key="/Shuffleboard/test commands/Left Hang Down"
     ></frc-robot-command>
     <frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(527px, 50px);"
-        source-key="/shuffleboard/testCommands/leftHangUp"
+        source-key="/Shuffleboard/test commands/Left Hang Up"
     ></frc-robot-command>
 </dashboard-tab>

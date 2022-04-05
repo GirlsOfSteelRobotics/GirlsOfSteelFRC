@@ -1,0 +1,7 @@
+
+/images/
+/.idea/
+/venv/
+
+# This should be generated right before putting it on the limelight
+amalgum_pipeline.py

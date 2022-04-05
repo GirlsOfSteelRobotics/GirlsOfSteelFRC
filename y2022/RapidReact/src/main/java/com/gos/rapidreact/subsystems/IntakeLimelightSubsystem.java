@@ -14,13 +14,15 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
 
     public static final double MOUNTING_ANGLE_DEGREES = -25; //degrees
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(27.25);
-    private static final double BLUE_CARGO = 0;
-    private static final double RED_CARGO = 1;
+    private static final Number[] RED_CARGO_PARAMS = {0};
+    private static final Number[] BLUE_CARGO_PARAMS = {1};
+    private static final double FANCY_PIPELINE = 2;
     private static final double EXTRA_DISTANCE = Units.feetToMeters(0.5); //want to go past estimated to ensure it gets to the cargo
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
     private final NetworkTableEntry m_isVisible;
     private final NetworkTableEntry m_pipeline; //which camera (color or cargo) to use
+    private final NetworkTableEntry m_pythonRobot;
 
     // Logging
     private final NetworkTableEntry m_distanceEntry;
@@ -37,6 +39,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
         NetworkTable publishTable = NetworkTableInstance.getDefault().getTable("IntakeLimelight");
         m_distanceEntry = publishTable.getEntry("Distance");
         m_angleError = publishTable.getEntry("Angle Error");
+        m_pythonRobot = georgeLimelightTable.getEntry("llrobot");
     }
 
     public double distanceToCargo() {
@@ -56,11 +59,12 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
-            m_pipeline.setNumber(BLUE_CARGO);
+            m_pythonRobot.setNumberArray(BLUE_CARGO_PARAMS);
         }
         if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-            m_pipeline.setNumber(RED_CARGO);
+            m_pythonRobot.setNumberArray(RED_CARGO_PARAMS);
         }
+        m_pipeline.setNumber(FANCY_PIPELINE);
 
         m_distanceEntry.setNumber(distanceToCargo());
         m_angleError.setNumber(getAngle());
