@@ -17,7 +17,7 @@ public class MirroredLEDBoolean implements LEDPattern {
 
     public MirroredLEDBoolean(AddressableLEDBuffer buffer, int minIndex, int numLights,
                               Color trueColor, Color falseColor) {
-        m_normalStrip = new LEDBoolean(buffer, minIndex, minIndex + numLights + 1, trueColor, falseColor);
+        m_normalStrip = new LEDBoolean(buffer, minIndex, minIndex + numLights, trueColor, falseColor);
 
         int invertedMin = buffer.getLength() - numLights - minIndex;
         int invertedMax = buffer.getLength() - minIndex;

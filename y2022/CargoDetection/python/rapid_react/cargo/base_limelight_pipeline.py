@@ -21,11 +21,11 @@ def runPipeline(image, ll_robot):
 
     ll_python = []
 
-    if len(ll_robot) == 1:
-        (active_threshold_num,) = ll_robot
+    if len(ll_robot) >= 1:
+        active_threshold_num = int(ll_robot[0])
     else:
         active_threshold_num = BLUE_NUM
-        print("Could not determine pipeline from robot table")
+        print(f"Could not determine pipeline from robot table {ll_robot}")
 
     pipeline = get_active_pipeline(active_threshold_num)
     largest_contour = pipeline.run(image)

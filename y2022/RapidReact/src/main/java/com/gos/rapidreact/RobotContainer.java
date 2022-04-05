@@ -78,7 +78,7 @@ public class RobotContainer {
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
     private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector, m_shooterLimelight);
-    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_shooterLimelight, m_intakeLimelight, m_shooter, m_collector, m_verticalConveyor, m_autoModeFactory); // NOPMD
+    private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_shooterLimelight, m_shooter, m_collector, m_verticalConveyor, m_autoModeFactory); // NOPMD
 
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
@@ -172,7 +172,7 @@ public class RobotContainer {
         } else {
             DataLogManager.start();
         }
-        DriverStation.startDataLog(DataLogManager.getLog());
+        DriverStation.startDataLog(DataLogManager.getLog(), false);
     }
 
 

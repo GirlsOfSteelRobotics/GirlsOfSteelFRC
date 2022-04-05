@@ -25,7 +25,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     // Subsystems
     private final ShooterLimelightSubsystem m_shooterLimelight;
-    private final IntakeLimelightSubsystem m_intakeLimelight;
     //private final ShooterLimelightSubsystem m_shooterLimelight;
     //private final CollectorSubsystem m_collector;
     private final ShooterSubsystem m_shooter;
@@ -48,8 +47,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final LEDAngleToTargetOverAndUnder m_angleToHub;
     private final MirroredLEDBoolean m_angleToHubReady;
 
-    private final MirroredLEDBoolean m_goToCargo;
-
     private final LEDFlash m_readyToHang;
     private final LEDRainbow m_rainbowFullStrip;
 
@@ -58,11 +55,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final MirroredLEDBoolean m_autoPivotAtAngle; //should be at 90
     private final MirroredLEDBoolean m_autoUpperIndexSensor;
 
+
     private final AutoModeFactory m_autoModeFactory;
 
-    public LEDManagerSubsystem(ShooterLimelightSubsystem shooterLimelightSubsystem, IntakeLimelightSubsystem intakeLimelightSubsystem, ShooterSubsystem shooterSubsystem, CollectorSubsystem collectorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem, AutoModeFactory autoModeFactory) {
+    public LEDManagerSubsystem(ShooterLimelightSubsystem shooterLimelightSubsystem, ShooterSubsystem shooterSubsystem, CollectorSubsystem collectorSubsystem, VerticalConveyorSubsystem verticalConveyorSubsystem, AutoModeFactory autoModeFactory) {
         m_shooterLimelight = shooterLimelightSubsystem;
-        m_intakeLimelight = intakeLimelightSubsystem;
         //m_shooterLimelight = shooterLimelightSubsystem;
         //m_collector = collector;
         m_shooter = shooterSubsystem;
@@ -73,19 +70,26 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_led = new AddressableLED(PORT);
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
+        // m_intakeIndexLeft = new LEDBoolean(m_buffer, 0, 2, Color.kOrange, Color.kBlack);
+        // m_intakeLimitSwitch = new MirroredLEDBoolean(m_buffer, 0, 4, Color.kOrange, Color.kBlack);
+        // m_lowerConveyorIndex = new MirroredLEDBoolean(m_buffer, 5, 4, Color.kBlue, Color.kBlack);
+        // m_upperConveyorIndex = new MirroredLEDBoolean(m_buffer, 10, 4, Color.kPurple, Color.kBlack);
+        // m_shooterAtSpeed = new MirroredLEDBoolean(m_buffer, 15, 4, Color.kCoral, Color.kBlack);
+        // m_goToCargoLeft = new MirroredLEDFlash(m_buffer, 20, 4, 1.0, Color.kPurple);
+        // m_allowableDistancetoHubLeft = new LEDBoolean(m_buffer, 14, 16, Color.kWhite, Color.kBlack);
+        // m_readyToShootLeft = new LEDFlash(m_buffer, 1, Color.kGreen, 21, 23);
 
-        m_shooterAtSpeed = new MirroredLEDBoolean(m_buffer, 7, 7, Color.kGreen);
 
-        m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 14, 7, Color.kGreen, Color.kYellow);
+        m_shooterAtSpeed = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kGreen);
+
+        m_correctShootingDistance = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kGreen, Color.kYellow);
 
         m_angleToHub = new LEDAngleToTargetOverAndUnder(m_buffer, 20, 40, Color.kOrange, Color.kOrange, 15.0);
         m_angleToHubReady = new MirroredLEDBoolean(m_buffer, 20, 10, Color.kGreen, Color.kBlack);
 
-        m_noLimelight = new MirroredLEDBoolean(m_buffer, 14, 17, new Color(.3f, 0, 0), Color.kBlack);
+        m_noLimelight = new MirroredLEDBoolean(m_buffer, 10, 20, new Color(.3f, 0, 0), Color.kBlack);
 
-        m_readyToShoot = new MirroredLEDFlash(m_buffer, 7, MAX_INDEX_LED, 0.25, Color.kGreen);
-
-        m_goToCargo = new MirroredLEDBoolean(m_buffer, 0, 6, Color.kAquamarine, Color.kBlack);
+        m_readyToShoot = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
 
         m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kBlue);
         m_rainbowFullStrip = new LEDRainbow(m_buffer, 0, MAX_INDEX_LED);
@@ -169,7 +173,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         shooterLights();
         hangerLights();
-        m_goToCargo.setState(m_intakeLimelight.distanceToCargo() < ChassisSubsystem.TO_XY_MAX_DISTANCE.getValue());
     }
 
     private void shooterLights() {

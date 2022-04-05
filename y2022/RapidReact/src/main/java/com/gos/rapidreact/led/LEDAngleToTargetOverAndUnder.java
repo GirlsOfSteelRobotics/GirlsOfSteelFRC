@@ -26,6 +26,11 @@ public class LEDAngleToTargetOverAndUnder extends LEDBase {
         m_error = angleError;
     }
 
+    public void setAngleAndWrite(double angleError) {
+        angleToTarget(angleError);
+        writeLeds();
+    }
+
     @Override
     public void writeLeds() {
         double ledProportion = Math.abs(m_error / m_maxAngle);
