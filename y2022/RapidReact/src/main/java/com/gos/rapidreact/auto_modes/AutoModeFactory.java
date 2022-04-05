@@ -67,7 +67,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser.addOption("One Ball Auto High", AutonMode.ONE_BALL_HIGH);
 
         m_twoBallAutoLow = new TwoBallAutoLowCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.setDefaultOption("Two Ball Auto Low", AutonMode.TWO_BALL_LOW);
+        m_sendableChooser.addOption("Two Ball Auto Low", AutonMode.TWO_BALL_LOW);
 
         m_twoBallAutoHigh = new TwoBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Two Ball Auto High", AutonMode.TWO_BALL_HIGH);
@@ -82,7 +82,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_sendableChooser.addOption("Four Ball Auto High", AutonMode.FOUR_BALL_HIGH);
 
         m_sabotageAutoUpperTarmac = new SabotageAutoUpperCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
-        m_sendableChooser.addOption("Sabotage Auto Upper Tarmac", AutonMode.SABOTAGE_UPPER);
+        m_sendableChooser.setDefaultOption("Sabotage Auto Upper Tarmac", AutonMode.SABOTAGE_UPPER);
 
         m_sabotageAutoLowerTarmac = new SabotageAutoUpperCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);
         m_sendableChooser.addOption("Sabotage Auto Lower Tarmac", AutonMode.SABOTAGE_LOWER);

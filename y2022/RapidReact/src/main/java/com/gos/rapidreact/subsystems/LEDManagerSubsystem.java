@@ -107,7 +107,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
         autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kBlue));
         autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_HALF_HIGH, new MirroredLEDMovingPixel(m_buffer, 0, 20, Color.kBlue));
         autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kBlue));
-        autonColorMap.put(AutoModeFactory.AutonMode.FIVE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kPurple));
+        autonColorMap.put(AutoModeFactory.AutonMode.SABOTAGE_UPPER, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kPurple));
+        autonColorMap.put(AutoModeFactory.AutonMode.SABOTAGE_LOWER, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kPurple));
+
         m_autoMode = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
 
         m_autoUpperIndexSensor = new MirroredLEDBoolean(m_buffer, 20, 4, Color.kFuchsia, Color.kBlack);

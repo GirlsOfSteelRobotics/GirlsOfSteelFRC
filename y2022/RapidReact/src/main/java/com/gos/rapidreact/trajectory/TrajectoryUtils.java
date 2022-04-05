@@ -63,7 +63,7 @@ public class TrajectoryUtils {
         return setPosition.andThen(followTrajectory);
     }
 
-    public static CommandBase createTrajectory(String fileName, TrajectoryConfig trajectoryConfig, ChassisSubsystem chassis) {
+    public static FollowTrajectory createTrajectory(String fileName, TrajectoryConfig trajectoryConfig, ChassisSubsystem chassis) {
         Trajectory trajectory = loadingTrajectory(fileName, trajectoryConfig);
         return new FollowTrajectory(trajectory, chassis);
     }

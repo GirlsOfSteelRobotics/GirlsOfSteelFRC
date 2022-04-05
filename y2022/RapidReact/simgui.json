@@ -124,17 +124,25 @@
     }
   },
   "NetworkTables": {
+    "Chassis": {
+      "Odometry": {
+        "open": true
+      },
+      "TurnToAngle": {
+        "open": true
+      },
+      "open": true
+    },
+    "Preferences": {
+      "open": true
+    },
     "Shuffleboard": {
-      "open": true,
       "superstructure widgets": {
         "SuperstructureSendable": {
           "open": true
         },
         "open": true
       }
-    },
-    "SmartDashboard": {
-      "open": true
     }
   }
 }

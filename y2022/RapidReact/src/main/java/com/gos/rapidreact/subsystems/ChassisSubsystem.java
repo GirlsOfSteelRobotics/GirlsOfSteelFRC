@@ -102,6 +102,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_goToCargoTurnSpeedEntry;
     private final NetworkTableEntry m_goToCargoForwardSpeedEntry;
     private final NetworkTableEntry m_gyroAngleEntry;
+    private final NetworkTableEntry m_gyroAngleRateEntry;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     public ChassisSubsystem() {
@@ -141,7 +142,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_turnAnglePID = new PIDController(0, 0, 0);
-        m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_ANGLE_ERROR);
+        m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_ANGLE_ERROR, 5);
         m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
@@ -210,6 +211,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         NetworkTable odometryTable = chassisTable.getSubTable("Odometry");
         m_gyroAngleEntry = odometryTable.getEntry("Angle (deg)");
+        m_gyroAngleRateEntry = odometryTable.getEntry("Angle (dps)");
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -230,6 +232,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setRobotPose(getPose());
         m_coordinateGuiPublisher.publish(getPose());
         m_gyroAngleEntry.setNumber(getYawAngle());
+        m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
@@ -290,6 +293,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public double getYawAngle() {
         return m_gyro.getYaw();
+    }
+
+    public double getWrappedYawAngle() {
+        return m_odometry.getPoseMeters().getRotation().getDegrees();
     }
 
     public void setArcadeDrive(double speed, double steer) {
