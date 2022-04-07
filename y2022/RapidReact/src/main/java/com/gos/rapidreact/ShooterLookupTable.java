@@ -1,5 +1,7 @@
 package com.gos.rapidreact;
 
+import com.gos.lib.properties.PropertyManager;
+
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -12,6 +14,8 @@ public class ShooterLookupTable {
 
     //Sorted array sorts greatest to least
     private final NavigableMap<Double, Double> m_list = new TreeMap<>();
+    private static final PropertyManager.IProperty<Double> DECREASE_RPM = PropertyManager.createDoubleProperty(false, "Decrease Rpm", 0);
+
 
     //enters shooter data into the function that calculates the velocity the
     //ball should be shot at
@@ -49,7 +53,8 @@ public class ShooterLookupTable {
         double distance2 = ceiling.getKey();
         double velocity2 = ceiling.getValue();
         //finds the velocity needed based on the distance
-        return interpolate(distance, distance1, velocity1, distance2, velocity2);
+        double rpm = interpolate(distance, distance1, velocity1, distance2, velocity2);
+        return rpm - DECREASE_RPM.getValue();
     }
 
     //uses the distance that the camera is at (distance)

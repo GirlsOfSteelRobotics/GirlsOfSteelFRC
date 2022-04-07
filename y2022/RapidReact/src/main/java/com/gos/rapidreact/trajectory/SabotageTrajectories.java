@@ -27,6 +27,6 @@ public class SabotageTrajectories {
     }
 
     public static FollowTrajectory sabotageHighPart3(ChassisSubsystem chassis) {
-        return TrajectoryUtils.createTrajectory("PathWeaver/Paths/sabotagehigh_part3", TrajectoryUtils.getSlowerTrajectoryConfig(), chassis);
+        return TrajectoryUtils.createTrajectory("PathWeaver/Paths/sabotagehigh_part3", TrajectoryUtils.getSlowerTrajectoryConfig().setReversed(true), chassis);
     }
 }

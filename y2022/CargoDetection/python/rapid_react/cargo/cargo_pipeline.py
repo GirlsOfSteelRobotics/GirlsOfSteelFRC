@@ -127,11 +127,12 @@ class CargoPipeline:
         self.surviving_contours, self.surviving_circles, self.contours_failed_circle_matching, self.unmatched_circles = find_valid_circles(good_contours, filtered_hough_circles, self.params.circle_detection)
         self.stopwatch_split("Match Circles")
 
-        # self.threshold_image = cv2.bitwise_and(image, image, mask=img_threshold)
-        self.threshold_image = cv2.bitwise_and(image, image, mask=filtered_threshold_image)
+        self.threshold_image = cv2.bitwise_and(image, image, mask=img_threshold)
+        # self.threshold_image = cv2.bitwise_and(image, image, mask=filtered_threshold_image)
 
         if len(self.surviving_contours) > 0:
-            self.best_contour = max(self.surviving_contours, key=cv2.contourArea)
+            # self.best_contour = max(self.surviving_contours, key=cv2.contourArea)
+            self.best_contour = min(self.surviving_contours, key=self.y_value)
 
         self.annotate_image(image)
         self.stopwatch_split("Annotate")
@@ -139,6 +140,10 @@ class CargoPipeline:
         self.processing_time = time.time() - self.process_start
 
         return np.array([[]]) if self.best_contour is None else self.best_contour
+
+    def y_value(self, contour):
+        x,y,w,h = cv.boundingRect(contour)
+        return y
 
     def print_stopwatch(self, throttle=0):
         if throttle != 0 and self.process_ctr % throttle != 0:

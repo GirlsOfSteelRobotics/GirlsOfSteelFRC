@@ -23,14 +23,14 @@ public class SabotageAutoUpperCommandGroup extends SequentialCommandGroup {
     public SabotageAutoUpperCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,
                                          HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
         super(SabotageTrajectories.sabotageHighPart1(chassis)
-//                .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
+                .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
                 // Run the intake the entire time, while we wait for the previous commands to finish
                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
-            new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SHOT_RPM, 0.5),
+            new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SHOT_RPM, 1.5),
             new TurnToAngleCommand(chassis, SabotageTrajectories.getPartTwoStartAngle(chassis)),
              SabotageTrajectories.sabotageHighPart2(chassis)
                  .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
-            // SabotageTrajectories.sabotageHighPart3(chassis),
+             SabotageTrajectories.sabotageHighPart3(chassis),
             new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, 500, 5));
             //new HorizontalConveyorBackwardCommand(horizontalConveyor).withTimeout(5));
         System.out.println(-SabotageTrajectories.getPartTwoStartAngle(chassis));

@@ -295,6 +295,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_gyro.getYaw();
     }
 
+    public double getOdometryAngle() {
+        return m_odometry.getPoseMeters().getRotation().getDegrees();
+    }
+
     public double getWrappedYawAngle() {
         return m_odometry.getPoseMeters().getRotation().getDegrees();
     }
@@ -342,7 +346,7 @@ public class ChassisSubsystem extends SubsystemBase {
      * @return if at allowable angle
      */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        double steerVoltage = m_turnAnglePID.calculate(getYawAngle(), angleGoal);
+        double steerVoltage = m_turnAnglePID.calculate(getOdometryAngle(), angleGoal);
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
 
         if (m_turnAnglePID.atSetpoint()) {
