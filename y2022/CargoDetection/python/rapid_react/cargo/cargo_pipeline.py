@@ -131,8 +131,8 @@ class CargoPipeline:
         # self.threshold_image = cv2.bitwise_and(image, image, mask=filtered_threshold_image)
 
         if len(self.surviving_contours) > 0:
-            # self.best_contour = max(self.surviving_contours, key=cv2.contourArea)
-            self.best_contour = min(self.surviving_contours, key=self.y_value)
+            self.best_contour = max(self.surviving_contours, key=cv2.contourArea)
+            # self.best_contour = min(self.surviving_contours, key=self.y_value)
 
         self.annotate_image(image)
         self.stopwatch_split("Annotate")

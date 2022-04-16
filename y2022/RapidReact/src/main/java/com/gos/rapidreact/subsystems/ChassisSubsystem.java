@@ -239,6 +239,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_toCargoPIDProperties.updateIfChanged();
         m_openLoopRampRateProperty.updateIfChanged();
         m_turnAnglePIDProperties.updateIfChanged();
+
+        SmartDashboard.putNumber("chassis dist", getLeftEncoderDistance());
     }
 
     public void resetInitialOdometry(Pose2d pose) {
