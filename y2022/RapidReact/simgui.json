@@ -55,7 +55,11 @@
       "/Shuffleboard/test commands/CollectorDownCommand": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 10 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 20 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 30 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 45 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 60 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 70 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 80 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 90 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorUpCommand": "Command",
@@ -96,7 +100,7 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": {
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 30 Degrees": {
         "window": {
           "visible": true
         }
@@ -131,6 +135,9 @@
       "TurnToAngle": {
         "open": true
       },
+      "open": true
+    },
+    "CollectorSubsystem": {
       "open": true
     },
     "Preferences": {
