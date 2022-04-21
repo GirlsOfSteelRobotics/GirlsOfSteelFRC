@@ -2,6 +2,7 @@ package com.gos.rapidreact.auto_modes;
 
 import com.gos.rapidreact.commands.CollectorPivotPIDCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
+import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.autonomous.IntakeWithHorizontal;
 import com.gos.rapidreact.commands.autonomous.ShootWithBothIntakes;
@@ -22,18 +23,22 @@ public class SabotageAutoUpperCommandGroup extends SequentialCommandGroup {
 
     public SabotageAutoUpperCommandGroup(ChassisSubsystem chassis, ShooterSubsystem shooter, VerticalConveyorSubsystem verticalConveyor,
                                          HorizontalConveyorSubsystem horizontalConveyor, CollectorSubsystem collector) {
-        super(SabotageTrajectories.sabotageHighPart1(chassis)
-                .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
+        super(SabotageTrajectories.sabotageHighPart1(chassis),
+                //.alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
+                //.raceWith(new RollerInCommand(collector)), //TODO: TAKE THIS OUT, IT'S ONLY FOR TUNING
                 // Run the intake the entire time, while we wait for the previous commands to finish
-                .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
-            new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SHOT_RPM, 1.5),
-            new TurnToAngleCommand(chassis, SabotageTrajectories.getPartTwoStartAngle(chassis)),
+                // .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
+             // new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SHOT_RPM, 1.5),
+             new TurnToAngleCommand(chassis, SabotageTrajectories.getPartTwoStartAngle(chassis)),
              SabotageTrajectories.sabotageHighPart2(chassis)
-                 .raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
-             SabotageTrajectories.sabotageHighPart3(chassis),
-            new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, 500, 5));
+                 .alongWith(new CollectorPivotPIDCommand(collector, PIVOT_ANGLE_DOWN))
+                 .raceWith(new RollerInCommand(collector)),
+                 //.raceWith(new IntakeWithHorizontal(collector, horizontalConveyor, 999)),
+             SabotageTrajectories.sabotageHighPart3(chassis)
+                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)));
+            // new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, 500, 5));
             //new HorizontalConveyorBackwardCommand(horizontalConveyor).withTimeout(5));
-        System.out.println(-SabotageTrajectories.getPartTwoStartAngle(chassis));
+            //SabotageTrajectories.sabotageHighPart4(chassis));
 
     }
 }

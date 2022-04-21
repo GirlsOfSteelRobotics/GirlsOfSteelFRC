@@ -34,7 +34,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public static final double DEFAULT_SHOOTER_RPM = FENDER_RPM_LOW;
     public static final double MAX_SHOOTER_RPM = 3200;
 
-    private static final double ROLLER_ALLOWABLE_ERROR = 50.0;
+    private static final double ROLLER_ALLOWABLE_ERROR = 100.0;
     private static final double ROLLER_SHOOTER_RPM_PROPORTION = 1.3;
 
     private final SimableCANSparkMax m_leader;

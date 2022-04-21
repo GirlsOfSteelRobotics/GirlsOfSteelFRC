@@ -23,6 +23,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -142,7 +143,12 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_turnAnglePID = new PIDController(0, 0, 0);
-        m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_ANGLE_ERROR, 5);
+        if (DriverStation.isTeleop()) {
+            m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_TELEOP_ANGLE_ERROR, 5);
+        }
+        if (DriverStation.isAutonomous()) {
+            m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_AUTO_ANGLE_ERROR, 5);
+        }
         m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)

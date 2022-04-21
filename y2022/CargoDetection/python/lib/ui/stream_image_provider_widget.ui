@@ -54,7 +54,7 @@
    <item row="0" column="1" colspan="2">
     <widget class="QLineEdit" name="stream_url">
      <property name="text">
-      <string>http://localhost:1181/stream.mjpg</string>
+      <string>http://10.35.4.12:5800/</string>
      </property>
     </widget>
    </item>
