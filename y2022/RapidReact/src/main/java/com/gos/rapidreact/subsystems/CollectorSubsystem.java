@@ -17,7 +17,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -154,8 +153,6 @@ public class CollectorSubsystem extends SubsystemBase {
         m_rightIntakeAngleEntry.setNumber(getIntakeRightAngleDegrees());
         m_rightIntakeVelocityEntry.setNumber(m_pivotEncoderRight.getVelocity());
         m_intakeSwitchPressedEntry.setBoolean(limitSwitchPressed());
-
-        SmartDashboard.putBoolean("Intake LS", limitSwitchPressed());
 
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();
