@@ -105,7 +105,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_gyroAngleEntry;
     private final NetworkTableEntry m_gyroAngleRateEntry;
 
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
+    @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
