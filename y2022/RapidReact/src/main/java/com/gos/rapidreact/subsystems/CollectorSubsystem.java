@@ -74,6 +74,9 @@ public class CollectorSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_intakeSwitchPressedEntry;
     private final NetworkTableEntry m_intakeAngleGoalEntry;
 
+    private final NetworkTableEntry m_leftGravityOffsetVoltage;
+    private final NetworkTableEntry m_rightGravityOffsetVoltage;
+
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
@@ -119,6 +122,8 @@ public class CollectorSubsystem extends SubsystemBase {
         m_rightIntakeVelocityEntry = loggingTable.getEntry("Right Intake (dps)");
         m_intakeSwitchPressedEntry = loggingTable.getEntry("Limit Switch");
         m_intakeAngleGoalEntry = loggingTable.getEntry("Angle Goal");
+        m_leftGravityOffsetVoltage = loggingTable.getEntry("Left Gravity Offset (Voltage)");
+        m_rightGravityOffsetVoltage = loggingTable.getEntry("Right Gravity Offset (Voltage)");
 
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
@@ -206,14 +211,17 @@ public class CollectorSubsystem extends SubsystemBase {
             double errorLeft = pivotAngleDegreesGoal - getIntakeLeftAngleDegrees();
             double errorRight = pivotAngleDegreesGoal - getIntakeRightAngleDegrees();
 
-            double gravityOffset = Math.cos(getIntakeLeftAngleRadians()) * GRAVITY_OFFSET.getValue();
+            double gravityOffsetLeft = Math.cos(getIntakeLeftAngleRadians()) * GRAVITY_OFFSET.getValue();
+            double gravityOffsetRight = Math.cos(getIntakeRightAngleRadians()) * GRAVITY_OFFSET.getValue();
             double staticFrictionLeft = PIVOT_KS * Math.signum(errorLeft);
             double staticFrictionRight = PIVOT_KS * Math.signum(errorRight);
-            double arbFeedforwardLeft = gravityOffset + staticFrictionLeft;
-            double arbFeedforwardRight = gravityOffset + staticFrictionRight;
+            double arbFeedforwardLeft = gravityOffsetLeft + staticFrictionLeft;
+            double arbFeedforwardRight = gravityOffsetRight + staticFrictionRight;
             m_pidControllerLeft.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
             m_pidControllerRight.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
 
+            m_leftGravityOffsetVoltage.setNumber(gravityOffsetLeft);
+            m_rightGravityOffsetVoltage.setNumber(gravityOffsetRight);
             double error = Math.abs(pivotAngleDegreesGoal - getIntakeLeftAngleDegrees());
             return error < CollectorSubsystem.ALLOWABLE_ERROR_DEG;
         }
@@ -222,7 +230,11 @@ public class CollectorSubsystem extends SubsystemBase {
 
     public double getIntakeLeftAngleRadians() {
         return Math.toRadians(getIntakeLeftAngleDegrees());
-    } //for leader
+    }
+
+    public double getIntakeRightAngleRadians() {
+        return Math.toRadians(getIntakeRightAngleDegrees());
+    }
 
     public double getIntakeLeftAngleDegrees() { //for leader
         return m_pivotEncoderLeft.getPosition();

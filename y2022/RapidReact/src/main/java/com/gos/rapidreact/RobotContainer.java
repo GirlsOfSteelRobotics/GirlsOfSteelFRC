@@ -111,7 +111,11 @@ public class RobotContainer {
         // testCommands.add("RollerInCommand", new RollerInCommand(m_collector));
         // testCommands.add("RollerOutCommand", new RollerOutCommand(m_collector));
         testCommands.add("CollectorPivotPIDCommand - 10 Degrees", new CollectorPivotPIDCommand(m_collector, 10));
-        // testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, 45));
+        testCommands.add("CollectorPivotPIDCommand - 20 Degrees", new CollectorPivotPIDCommand(m_collector, 20));
+        testCommands.add("CollectorPivotPIDCommand - 30 Degrees", new CollectorPivotPIDCommand(m_collector, 30));
+        testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, 45));
+        testCommands.add("CollectorPivotPIDCommand - 60 Degrees", new CollectorPivotPIDCommand(m_collector, 60));
+        testCommands.add("CollectorPivotPIDCommand - 70 Degrees", new CollectorPivotPIDCommand(m_collector, 70));
         testCommands.add("CollectorPivotPIDCommand - 80 Degrees", new CollectorPivotPIDCommand(m_collector, 80));
 
         // testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
