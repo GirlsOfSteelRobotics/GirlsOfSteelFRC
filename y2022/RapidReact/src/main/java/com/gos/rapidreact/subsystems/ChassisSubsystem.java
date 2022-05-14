@@ -23,6 +23,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -102,8 +103,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_goToCargoTurnSpeedEntry;
     private final NetworkTableEntry m_goToCargoForwardSpeedEntry;
     private final NetworkTableEntry m_gyroAngleEntry;
+    private final NetworkTableEntry m_gyroAngleRateEntry;
 
-    @SuppressWarnings("PMD.ExcessiveMethodLength")
+    @SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NcssCount"})
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -141,7 +143,12 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_turnAnglePID = new PIDController(0, 0, 0);
-        m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_ANGLE_ERROR);
+        if (DriverStation.isTeleop()) {
+            m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_TELEOP_ANGLE_ERROR, 5);
+        }
+        if (DriverStation.isAutonomous()) {
+            m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_AUTO_ANGLE_ERROR, 5);
+        }
         m_turnAnglePID.enableContinuousInput(-180, 180);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
@@ -210,6 +217,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         NetworkTable odometryTable = chassisTable.getSubTable("Odometry");
         m_gyroAngleEntry = odometryTable.getEntry("Angle (deg)");
+        m_gyroAngleRateEntry = odometryTable.getEntry("Angle (dps)");
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -230,12 +238,15 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setRobotPose(getPose());
         m_coordinateGuiPublisher.publish(getPose());
         m_gyroAngleEntry.setNumber(getYawAngle());
+        m_gyroAngleRateEntry.setNumber(m_gyro.getRate());
 
         m_leftProperties.updateIfChanged();
         m_rightProperties.updateIfChanged();
         m_toCargoPIDProperties.updateIfChanged();
         m_openLoopRampRateProperty.updateIfChanged();
         m_turnAnglePIDProperties.updateIfChanged();
+
+        SmartDashboard.putNumber("chassis dist", getLeftEncoderDistance());
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -292,6 +303,14 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_gyro.getYaw();
     }
 
+    public double getOdometryAngle() {
+        return m_odometry.getPoseMeters().getRotation().getDegrees();
+    }
+
+    public double getWrappedYawAngle() {
+        return m_odometry.getPoseMeters().getRotation().getDegrees();
+    }
+
     public void setArcadeDrive(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
     }
@@ -335,7 +354,7 @@ public class ChassisSubsystem extends SubsystemBase {
      * @return if at allowable angle
      */
     public boolean turnPID(double angleGoal) { //for shooter limelight
-        double steerVoltage = m_turnAnglePID.calculate(getYawAngle(), angleGoal);
+        double steerVoltage = m_turnAnglePID.calculate(getOdometryAngle(), angleGoal);
         steerVoltage += Math.copySign(KS_VOLTS_STATIC_FRICTION_TURNING, steerVoltage);
 
         if (m_turnAnglePID.atSetpoint()) {

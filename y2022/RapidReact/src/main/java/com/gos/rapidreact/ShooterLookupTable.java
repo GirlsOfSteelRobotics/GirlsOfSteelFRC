@@ -48,8 +48,10 @@ public class ShooterLookupTable {
         double velocity1 = floor.getValue();
         double distance2 = ceiling.getKey();
         double velocity2 = ceiling.getValue();
-        //finds the velocity needed based on the distance
         return interpolate(distance, distance1, velocity1, distance2, velocity2);
+        //finds the velocity needed based on the distance
+        //double rpm = interpolate(distance, distance1, velocity1, distance2, velocity2);
+        //return rpm - DECREASE_RPM.getValue();
     }
 
     //uses the distance that the camera is at (distance)
