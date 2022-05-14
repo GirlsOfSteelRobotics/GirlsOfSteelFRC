@@ -15,8 +15,8 @@ public final class DriveTrajectoryCommand {
                 new RamseteCommand(
                         trajectory,
                         drivetrain::getPose,
-                        new RamseteController(TrajectoryFactory.AutoConstants.kRamseteB, TrajectoryFactory.AutoConstants.kRamseteZeta),
-                        Constants.DrivetrainConstants.kDriveKinematics,
+                        new RamseteController(TrajectoryFactory.AutoConstants.RAMSETE_B, TrajectoryFactory.AutoConstants.RAMSETE_ZETA),
+                        Constants.DrivetrainConstants.DRIVE_KINEMATICS,
                         drivetrain::driveWithVelocity,
                         drivetrain);
 

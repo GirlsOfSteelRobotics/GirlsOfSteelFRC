@@ -46,7 +46,7 @@ public class DisengageCollector extends CommandBase {
     @Override
     public void execute() {
         //System.out.println("execute---------------------");
-        m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); //1 for competition bot, -1 for practice bot
+        m_collector.moveCollectorUpOrDown(Configuration.DISENGAGE_COLLECTOR_SPEED); //1 for competition bot, -1 for practice bot
         //collector arm moves up to release ball and return to "ready" position to collect the ball again
     }
 

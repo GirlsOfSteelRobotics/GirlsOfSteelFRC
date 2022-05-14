@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class HatchCollector extends SubsystemBase {
 
     public enum HatchState {
-        kGrab, kRelease
+        GRAB, RELEASE
     }
 
     private final DoubleSolenoid m_piston;
@@ -20,7 +20,7 @@ public class HatchCollector extends SubsystemBase {
 
     public HatchCollector() {
         m_piston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.PISTON_A, RobotMap.PISTON_B);
-        m_state = HatchState.kRelease;
+        m_state = HatchState.RELEASE;
 
         addChild("piston", m_piston);
     }
@@ -30,7 +30,7 @@ public class HatchCollector extends SubsystemBase {
 
     public void driveHatch(HatchState speed) {
         this.m_state = speed;
-        if (speed == HatchState.kRelease) {
+        if (speed == HatchState.RELEASE) {
             m_piston.set(DoubleSolenoid.Value.kForward);
         } else {
             m_piston.set(DoubleSolenoid.Value.kReverse);

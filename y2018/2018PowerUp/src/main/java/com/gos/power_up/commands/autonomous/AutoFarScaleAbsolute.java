@@ -37,14 +37,14 @@ public class AutoFarScaleAbsolute extends SequentialCommandGroup {
         addCommands(new WristToShoot(wrist).alongWith(new WristHold(wrist)));
 
         //Initial forward distance past switch
-        if (scaleSide == GameData.FieldSide.right) {
+        if (scaleSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_FORWARD_1 + 10.0, 0, false));
         } else {
             addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_FORWARD_1, 0, false));
         }
 
         //First turn behind the switch
-        if (scaleSide == GameData.FieldSide.right) {
+        if (scaleSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_1, -TURN_HEADING_1, true));
         } else {
             addCommands(new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_1, TURN_HEADING_1, true));
@@ -54,7 +54,7 @@ public class AutoFarScaleAbsolute extends SequentialCommandGroup {
         addCommands(new LiftToScale(lift).alongWith(new LiftHold(lift)));
 
         //Driving across the field behind the switch
-        if (scaleSide == GameData.FieldSide.right) {
+        if (scaleSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_SIDE_1 - 7.0, -TURN_HEADING_1, false));
         } else {
             addCommands(new DriveByMotionMagicAbsolute(chassis, DISTANCE_SIDE_1, TURN_HEADING_1, false));
@@ -62,7 +62,7 @@ public class AutoFarScaleAbsolute extends SequentialCommandGroup {
 
         Command driveMotionMagic;
         //Turning towards the scale
-        if (scaleSide == GameData.FieldSide.right) {
+        if (scaleSide == GameData.FieldSide.RIGHT) {
             driveMotionMagic = new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_2, TURN_HEADING_2, true);
         } else {
             driveMotionMagic = new DriveByMotionMagicAbsolute(chassis, TURN_RADIUS_2, -TURN_HEADING_2, true);

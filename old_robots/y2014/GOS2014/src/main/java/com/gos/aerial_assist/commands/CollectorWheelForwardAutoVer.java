@@ -18,7 +18,7 @@ import com.gos.aerial_assist.subsystems.Collector;
 public class CollectorWheelForwardAutoVer extends CommandBase {
 
 
-    private static final double m_time = 2.5; //when 3 seconds pass it will drop the ball
+    private static final double TIME = 2.5; //when 3 seconds pass it will drop the ball
 
     private final Collector m_collector;
     private final Camera m_camera;
@@ -61,7 +61,7 @@ public class CollectorWheelForwardAutoVer extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return Timer.getFPGATimestamp() - m_startTime > m_time;
+        return Timer.getFPGATimestamp() - m_startTime > TIME;
         //return CommandBase.collector.isCollectorEngaged();
     }
 

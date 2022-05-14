@@ -21,7 +21,7 @@ public class ShootLowGoal extends SequentialCommandGroup {
      *
      * @author Sonia, Sophia
      */
-    private static final double m_kickAngle = 0;
+    private static final double KICK_ANGLE = 0;
 
     /**
      * This method sets the arm angle to 0 and reverses the collector wheel in order to shoot the ball into the low
@@ -30,7 +30,7 @@ public class ShootLowGoal extends SequentialCommandGroup {
      * @author Sonia, Sophia
      */
     public ShootLowGoal(Manipulator manipulator, Collector collector) {
-        addCommands(new SetArmAngle(manipulator, m_kickAngle));
+        addCommands(new SetArmAngle(manipulator, KICK_ANGLE));
         addCommands(new CollectorWheelReverse(collector));
     }
 }

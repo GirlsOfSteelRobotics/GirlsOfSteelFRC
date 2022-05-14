@@ -14,6 +14,6 @@ public class AutoCenterGear extends SequentialCommandGroup {
 
     public AutoCenterGear(Chassis chassis, Shifters shifters, Camera camera) {
         addCommands(new DriveByVision(chassis, camera));
-        addCommands(new DriveByDistance(chassis, shifters, -3.0, Shifters.Speed.kLow));
+        addCommands(new DriveByDistance(chassis, shifters, -3.0, Shifters.Speed.LOW));
     }
 }

@@ -16,13 +16,13 @@ public class AutoGear extends SequentialCommandGroup {
 
     public AutoGear(Chassis chassis, Shifters shifters, Camera camera, double distance, Direction direction) {
         // Using motion profiles for turns:
-        addCommands(new DriveByDistance(chassis, shifters, distance, Shifters.Speed.kLow));
-        if (direction == Direction.kLeft) {
+        addCommands(new DriveByDistance(chassis, shifters, distance, Shifters.Speed.LOW));
+        if (direction == Direction.LEFT) {
             addCommands(new DriveByMotionProfile(chassis, "/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat", 1.0));
-        } else if (direction == Direction.kRight) {
+        } else if (direction == Direction.RIGHT) {
             addCommands(new DriveByMotionProfile(chassis, "/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
         }
         addCommands(new DriveByVision(chassis, camera));
-        addCommands(new DriveByDistance(chassis, shifters, -3.0, Shifters.Speed.kLow));
+        addCommands(new DriveByDistance(chassis, shifters, -3.0, Shifters.Speed.LOW));
     }
 }

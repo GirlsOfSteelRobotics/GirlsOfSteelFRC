@@ -19,7 +19,7 @@ import com.gos.aerial_assist.subsystems.Driving;
  */
 public class MoveToPosition extends CommandBase {
 
-    private static final double m_offBy = 0.03;
+    private static final double OFF_BY = 0.03;
 
     private final Chassis m_chassis;
     private double m_distance;
@@ -54,7 +54,7 @@ public class MoveToPosition extends CommandBase {
     public boolean isFinished() {
         //Is finished when our position is within the "off by" range of the setpoint
 
-        return (Math.abs((m_chassis.getLeftEncoderDistance() - m_distance)) < m_offBy);
+        return (Math.abs((m_chassis.getLeftEncoderDistance() - m_distance)) < OFF_BY);
     }
 
     @Override

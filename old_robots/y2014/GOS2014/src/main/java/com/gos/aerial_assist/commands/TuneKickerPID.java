@@ -13,23 +13,23 @@ import com.gos.aerial_assist.subsystems.Kicker;
  * @author Mackenzie
  */
 public class TuneKickerPID extends CommandBase {
-    private static final double startP = 0;
-    private static final double maxP = 0.3; //max value of p
-    private static final double incrementP = 0.05; //how much p goes up by
+    private static final double START_P = 0;
+    private static final double MAX_P = 0.3; //max value of p
+    private static final double INCREMENT_P = 0.05; //how much p goes up by
 
     private boolean m_done;
 
-    private static final double setPoint = 0; //starting speed
-    private static final double maxSetPoint = 5;  //find max chassis speed
+    private static final double SET_POINT = 0; //starting speed
+    private static final double MAX_SET_POINT = 5;  //find max chassis speed
 
     //for one setpoint:
-    private final int m_lengthSetPoint = (int) (maxSetPoint - setPoint); //length of arraay
+    private final int m_lengthSetPoint = (int) (MAX_SET_POINT - SET_POINT); //length of arraay
     private final double[] m_devSetPoint = new double[m_lengthSetPoint]; //deviation from setpoint
     private final double[] m_meanDiff = new double[m_lengthSetPoint]; //mean of difference between rate & mean rate
     private final double[] m_devRate = new double[m_lengthSetPoint]; //deviation from mean rate
     //means of the individual set point arrays
     //for each p value
-    private final int m_lengthP = (int) ((maxP - startP) / incrementP);
+    private final int m_lengthP = (int) ((MAX_P - START_P) / INCREMENT_P);
     private final double[] m_meanDevSetPoint = new double[m_lengthP];
 
 
@@ -53,9 +53,9 @@ public class TuneKickerPID extends CommandBase {
 
     @Override
     public void execute() {
-        for (double a = startP; a < maxP; a += incrementP) {
+        for (double a = START_P; a < MAX_P; a += INCREMENT_P) {
             //for(double a = startI; < maxI; a += incrementI)
-            for (double b = setPoint; b < maxSetPoint; b++) {
+            for (double b = SET_POINT; b < MAX_SET_POINT; b++) {
                 m_chassis.resetPositionPIDError();
                 m_chassis.setLeftPositionPIDValues(a, 0, 0);
                 //chassis.setLeftPIDValues(p, a, 0);
@@ -77,7 +77,7 @@ public class TuneKickerPID extends CommandBase {
                 System.out.println("At the end of one setpoint");
             }
 
-            for (int d = 0; d < m_lengthP; d += incrementP) {
+            for (int d = 0; d < m_lengthP; d += INCREMENT_P) {
                 //for(int d = 0; d < lengthI; d += incrementI)
                 //Do it once then break TODO
                 if (m_meanDevSetPoint[d] == 0) {
@@ -172,21 +172,21 @@ public class TuneKickerPID extends CommandBase {
             if (m_devSetPoint[j] < lowestSetPointDev) {
                 lowestSetPointDev = m_devSetPoint[j];
             }
-            pLowestSetPointDev = startP + (j * incrementP);
+            pLowestSetPointDev = START_P + (j * INCREMENT_P);
             // pLowestSetPointDev = startI + (j * incrementI);
         }
         for (int k = 0; k < m_devRate.length; k++) {
             if (m_devRate[k] < lowestRateDev) {
                 lowestRateDev = m_devRate[k];
             }
-            pLowestRateDev = startP + (k * incrementP);
+            pLowestRateDev = START_P + (k * INCREMENT_P);
             // pLowestRateDev = startI + (k * incrementI);
         }
         for (int m = 0; m < m_meanDiff.length; m++) {
             if (m_meanDiff[m] < lowestMeanDiff) {
                 lowestMeanDiff = m_meanDiff[m];
             }
-            pLowestMeanDiff = startP + (m * incrementP);
+            pLowestMeanDiff = START_P + (m * INCREMENT_P);
             // pLowestMeanDiff = startP + (m * incrementP);
         }
 

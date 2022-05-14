@@ -33,7 +33,7 @@ public class SetArmAnglePID extends CommandBase {
 
     @Override
     public void initialize() {
-        m_angle = m_desiredAngle * Configuration.desiredAnglePivotArmSign;
+        m_angle = m_desiredAngle * Configuration.DESIRED_ANGLE_PIVOT_ARM_SIGN;
     }
 
     @Override

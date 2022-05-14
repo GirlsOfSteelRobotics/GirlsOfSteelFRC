@@ -24,7 +24,7 @@ public class AccessoryLeftFwd extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_accessoryMotors.startLeft(Direction.kFwd);
+        m_accessoryMotors.startLeft(Direction.FWD);
     }
 
     // Make this return true when this Command no longer needs to run execute()

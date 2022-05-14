@@ -13,7 +13,7 @@ public class Shifters extends SubsystemBase {
     private final DoubleSolenoid m_shifterRight;
 
     public enum Speed {
-        kHigh, kLow
+        HIGH, LOW
     }
 
     private Speed m_speed;
@@ -31,7 +31,7 @@ public class Shifters extends SubsystemBase {
 
     public void shiftGear(Speed speed) {
         this.m_speed = speed;
-        if (speed == Speed.kHigh) {
+        if (speed == Speed.HIGH) {
             m_shifterLeft.set(DoubleSolenoid.Value.kReverse);
             m_shifterRight.set(DoubleSolenoid.Value.kReverse);
             System.out.println("Shifting left and right side into high gear (rev)");

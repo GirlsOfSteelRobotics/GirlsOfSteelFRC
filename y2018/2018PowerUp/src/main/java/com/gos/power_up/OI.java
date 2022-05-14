@@ -39,7 +39,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class OI {
 
     public enum DriveStyle {
-        joystickArcade, gamePadArcade, joystickTank, gamePadTank, amazonDrive
+        JOYSTICK_ARCADE, GAME_PAD_ARCADE, JOYSTICK_TANK, GAME_PAD_TANK, AMAZON_DRIVE
     }
 
     private DriveStyle m_driveStyle;

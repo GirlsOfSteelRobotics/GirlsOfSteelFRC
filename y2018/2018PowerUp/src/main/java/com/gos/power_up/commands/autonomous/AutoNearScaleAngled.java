@@ -44,7 +44,7 @@ public class AutoNearScaleAngled extends SequentialCommandGroup {
         addCommands(new TimeDelay(3.0));
 
         //turn
-        if (robotPosition == GameData.FieldSide.left) {
+        if (robotPosition == GameData.FieldSide.LEFT) {
             addCommands(new DriveByMotionMagic(chassis, DISTANCE_TURN_1, -30));
         } else {
             addCommands(new DriveByMotionMagic(chassis, DISTANCE_TURN_1, 30));

@@ -47,10 +47,10 @@ public class AutoMiddleSwitchTwoCube extends SequentialCommandGroup {
             new LiftHold(lift)));
 
         //Drive to the switch plate
-        if (switchSide == GameData.FieldSide.right) {
+        if (switchSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, -RIGHT_ANGLE).withTimeout(2.5));
             addCommands(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, RIGHT_ANGLE).withTimeout(2.0));
-        } else if (switchSide == GameData.FieldSide.left) {
+        } else if (switchSide == GameData.FieldSide.LEFT) {
             addCommands(new DriveByMotionMagic(chassis, LEFT_DISTANCE, LEFT_ANGLE).withTimeout(2.5));
             addCommands(new DriveByMotionMagic(chassis, LEFT_DISTANCE, -LEFT_ANGLE).withTimeout(2.0));
         } else {
@@ -69,13 +69,13 @@ public class AutoMiddleSwitchTwoCube extends SequentialCommandGroup {
             new Collect(collector)));
 
         //Grab second cube and come back
-        if (switchSide == GameData.FieldSide.right) {
+        if (switchSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, TURN_DEGREES_2));
             addCommands(new ParallelCommandGroup(
                 new TimeDelay(2.5),
                 new CollectorHold(collector),
                 new DriveByMotionMagic(chassis, -TURN_RADIUS_2 / 2, -20, false)));
-        } else if (switchSide == GameData.FieldSide.left) {
+        } else if (switchSide == GameData.FieldSide.LEFT) {
             addCommands(new ParallelCommandGroup(
                 new DriveByMotionMagic(chassis, TURN_RADIUS_2, -TURN_DEGREES_2),
                 new TimeDelay(2.5),

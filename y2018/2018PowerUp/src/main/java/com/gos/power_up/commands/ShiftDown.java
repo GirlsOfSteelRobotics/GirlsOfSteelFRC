@@ -18,7 +18,7 @@ public class ShiftDown extends CommandBase {
 
     @Override
     public void initialize() {
-        m_shifters.shiftGear(Speed.kLow);
+        m_shifters.shiftGear(Speed.LOW);
     }
 
 

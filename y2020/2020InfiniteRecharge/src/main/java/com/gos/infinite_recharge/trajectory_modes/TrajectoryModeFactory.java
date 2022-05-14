@@ -58,7 +58,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
             new Pose2d(Units.inchesToMeters(FRONT_TRENCH_X), Units.inchesToMeters(FRONT_TRENCH_Y), new Rotation2d(0)),
             List.of(),
             new Pose2d(Units.inchesToMeters(CONTROL_PANEL_X), Units.inchesToMeters(CONTROL_PANEL_Y), new Rotation2d(0)),
-            getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared)
+            getTrajectoryConfig(AutoConstants.SLOW_SPEED_METERS_PER_SECOND, AutoConstants.SLOW_ACCELERATION_METERS_PER_SECOND_SQUARED)
         );
         return new FollowTrajectory(trajectoryFrontOfTrenchToControlPanel, chassis);
     }
@@ -90,7 +90,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryControlPanelToAutoLine(Chassis chassis) {
-        TrajectoryConfig trajectoryConfig = getTrajectoryConfig(AutoConstants.fastSpeedMetersPerSecond, AutoConstants.fastAccelerationMetersPerSecondSquared);
+        TrajectoryConfig trajectoryConfig = getTrajectoryConfig(AutoConstants.FAST_SPEED_METERS_PER_SECOND, AutoConstants.FAST_ACCELERATION_METERS_PER_SECOND_SQUARED);
         trajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
@@ -103,7 +103,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryRightSideToControlPanel(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.SLOW_SPEED_METERS_PER_SECOND, AutoConstants.SLOW_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
@@ -116,7 +116,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryControlPanelToRightSide(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.fastSpeedMetersPerSecond, AutoConstants.fastAccelerationMetersPerSecondSquared);
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.FAST_SPEED_METERS_PER_SECOND, AutoConstants.FAST_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
         getTrajectoryConfig.setReversed(true);
 
@@ -130,7 +130,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryCenterToRendezvous(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.SLOW_SPEED_METERS_PER_SECOND, AutoConstants.SLOW_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(AUTO_LINE_X), Units.inchesToMeters(-127), new Rotation2d(0)),
@@ -142,7 +142,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryRendezvousToCenter(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.SLOW_SPEED_METERS_PER_SECOND, AutoConstants.SLOW_ACCELERATION_METERS_PER_SECOND_SQUARED);
         getTrajectoryConfig.setReversed(true);
 
         Trajectory trajectoryFrontOfTrenchToAutoLine = TrajectoryGenerator.generateTrajectory(
@@ -155,7 +155,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryAutoLineToOpponentsTrench(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.normalSpeedMetersPerSecond, AutoConstants.normalAccelerationMetersPerSecondSquared);
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.NORMAL_SPEED_METERS_PER_SECOND, AutoConstants.NORMAL_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(Constants.AUTO_LINE_LEFT_X), Units.inchesToMeters(Constants.AUTO_LINE_LEFT_Y), new Rotation2d(0)),
@@ -167,7 +167,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryOpponentsTrenchToPickUpCell(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.slowSpeedMetersPerSecond, AutoConstants.slowAccelerationMetersPerSecondSquared);
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.SLOW_SPEED_METERS_PER_SECOND, AutoConstants.SLOW_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(Constants.OPPONENTS_TRENCH_X), Units.inchesToMeters(Constants.OPPONENTS_TRENCH_Y), new Rotation2d(Constants.OPPONENTS_TRENCH_ANGLE)),
@@ -179,7 +179,7 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     }
 
     public Command getTrajectoryOpponentsTrenchToAutoLine(Chassis chassis) {
-        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.fastSpeedMetersPerSecond, AutoConstants.fastAccelerationMetersPerSecondSquared);
+        TrajectoryConfig getTrajectoryConfig = getTrajectoryConfig(AutoConstants.FAST_SPEED_METERS_PER_SECOND, AutoConstants.FAST_ACCELERATION_METERS_PER_SECOND_SQUARED);
         getTrajectoryConfig.setReversed(true);
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(Units.inchesToMeters(Constants.OPPONENTS_TRENCH_CELLS_X), Units.inchesToMeters(Constants.OPPONENTS_TRENCH_CELLS_Y), new Rotation2d(0)),
@@ -193,22 +193,22 @@ public class TrajectoryModeFactory extends SequentialCommandGroup {
     public static TrajectoryConfig getTrajectoryConfig(double maxSpeedMetersPerSecond, double maxAccelerationMetersPerSecondSquared) {
         var autoVoltageConstraint =
             new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                        DriveConstants.kvVoltSecondsPerMeter,
-                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
-                DriveConstants.kDriveKinematics,
-                DriveConstants.maxVoltage);
+                new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+                                        DriveConstants.KV_VOLT_SECONDS_PER_METER,
+                                        DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+                DriveConstants.DRIVE_KINEMATICS,
+                DriveConstants.MAX_VOLTAGE);
 
         return new TrajectoryConfig(maxSpeedMetersPerSecond,
                 maxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics)
+        .setKinematics(DriveConstants.DRIVE_KINEMATICS)
         // Apply the voltage constraint
         .addConstraint(autoVoltageConstraint);
     }
 
     public static TrajectoryConfig getTrajectoryConfig() {
-        return  getTrajectoryConfig(AutoConstants.normalSpeedMetersPerSecond, AutoConstants.normalAccelerationMetersPerSecondSquared);
+        return  getTrajectoryConfig(AutoConstants.NORMAL_SPEED_METERS_PER_SECOND, AutoConstants.NORMAL_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
     }
 }

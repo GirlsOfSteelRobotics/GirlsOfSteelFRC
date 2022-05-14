@@ -30,7 +30,7 @@ public class ClimberHold extends CommandBase {
 
     @Override
     public void execute() {
-        m_climber.holdClimberPosition(Climber.ClimberType.All);
+        m_climber.holdClimberPosition(Climber.ClimberType.ALL);
         //System.out.println("Front Position: " + Robot.climber.getFrontPosition() + " Back Position: " + Robot.climber.getBackPosition());
     }
 

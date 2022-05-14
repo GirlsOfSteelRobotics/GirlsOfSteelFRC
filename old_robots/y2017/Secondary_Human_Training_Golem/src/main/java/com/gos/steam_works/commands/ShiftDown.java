@@ -19,7 +19,7 @@ public class ShiftDown extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
-        m_shifters.shiftGear(Speed.kLow);
+        m_shifters.shiftGear(Speed.LOW);
     }
 
     // Called repeatedly when this Command is scheduled to run

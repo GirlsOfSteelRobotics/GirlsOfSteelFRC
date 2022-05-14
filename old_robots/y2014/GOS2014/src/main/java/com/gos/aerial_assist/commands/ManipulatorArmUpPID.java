@@ -32,7 +32,7 @@ public class ManipulatorArmUpPID extends CommandBase {
         System.out.println("Up Encoder Value: " + m_manipulator.getAbsoluteDistance());
         //        System.out.println("Up Angle Setpoint: " + angle * Configuration.desiredAnglePivotArmSign);
         //        System.out.println("Error: " + manipulator.getError());
-        m_manipulator.setSetPoint(m_angle * Configuration.desiredAnglePivotArmSign);
+        m_manipulator.setSetPoint(m_angle * Configuration.DESIRED_ANGLE_PIVOT_ARM_SIGN);
         if (m_angle < 110) {
             m_angle += 3;
         }

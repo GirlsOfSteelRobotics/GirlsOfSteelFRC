@@ -93,24 +93,24 @@ public class Chassis extends SubsystemBase {
     private final GosPidController m_rightPIDPosition;
     private final GosPidController m_backPIDPosition;
     private final GosPidController m_leftPIDPosition;
-    private static final double rightP = 0.0; //CHANGE for real robot
-    private static final double rightI = 0.0; //CHANGE for real robot
-    private static final double rightD = 0.0; //CHANGE for real robot
-    private static final double backP = 0.0; //CHANGE for real robot
-    private static final double backI = 0.0; //CHANGE for real robot
-    private static final double backD = 0.0; //CHANGE for real robot
-    private static final double leftP = 0.0; //CHANGE for real robot
-    private static final double leftI = 0.0; //CHANGE for real robot
-    private static final double leftD = 0.0; //CHANGE for real robot
-    private static final double rightPositionP = 0.1; //CHANGE for real robot
-    private static final double rightPositionI = 0.0; //CHANGE for real robot
-    private static final double rightPositionD = 0.0; //CHANGE for real robot
-    private static final double backPositionP = 0.1; //CHANGE for real robot
-    private static final double backPositionI = 0.0; //CHANGE for real robot
-    private static final double backPositionD = 0.0; //CHANGE for real robot
-    private static final double leftPositionP = 0.1; //CHANGE for real robot
-    private static final double leftPositionI = 0.0; //CHANGE for real robot
-    private static final double leftPositionD = 0.0; //CHANGE for real robot
+    private static final double RIGHT_P = 0.0; //CHANGE for real robot
+    private static final double RIGHT_I = 0.0; //CHANGE for real robot
+    private static final double RIGHT_D = 0.0; //CHANGE for real robot
+    private static final double BACK_P = 0.0; //CHANGE for real robot
+    private static final double BACK_I = 0.0; //CHANGE for real robot
+    private static final double BACK_D = 0.0; //CHANGE for real robot
+    private static final double LEFT_P = 0.0; //CHANGE for real robot
+    private static final double LEFT_I = 0.0; //CHANGE for real robot
+    private static final double LEFT_D = 0.0; //CHANGE for real robot
+    private static final double RIGHT_POSITION_P = 0.1; //CHANGE for real robot
+    private static final double RIGHT_POSITION_I = 0.0; //CHANGE for real robot
+    private static final double RIGHT_POSITION_D = 0.0; //CHANGE for real robot
+    private static final double BACK_POSITION_P = 0.1; //CHANGE for real robot
+    private static final double BACK_POSITION_I = 0.0; //CHANGE for real robot
+    private static final double BACK_POSITION_D = 0.0; //CHANGE for real robot
+    private static final double LEFT_POSITION_P = 0.1; //CHANGE for real robot
+    private static final double LEFT_POSITION_I = 0.0; //CHANGE for real robot
+    private static final double LEFT_POSITION_D = 0.0; //CHANGE for real robot
     //gryo
     private final Gyro m_gyro;
     private boolean m_gyroOn;
@@ -183,22 +183,22 @@ public class Chassis extends SubsystemBase {
         //                });
 
         //GoSPID
-        m_rightPIDRate = new GosPidController(rightP, rightI, rightD,
+        m_rightPIDRate = new GosPidController(RIGHT_P, RIGHT_I, RIGHT_D,
             m_rightEncoder, this::setRightJag, GosPidController.RATE); //ADD integral constant
-        m_backPIDRate = new GosPidController(backP, backI, backD, m_backEncoder,
+        m_backPIDRate = new GosPidController(BACK_P, BACK_I, BACK_D, m_backEncoder,
             this::setBackJag, GosPidController.RATE); //ADD integral constant
-        m_leftPIDRate = new GosPidController(leftP, leftI, leftD, m_leftEncoder,
+        m_leftPIDRate = new GosPidController(LEFT_P, LEFT_I, LEFT_D, m_leftEncoder,
             this::setLeftJag, GosPidController.RATE); //ADD integral constant
 
 
-        m_rightPIDPosition = new GosPidController(rightPositionP, rightPositionI,
-            rightPositionD, m_rightEncoder,
+        m_rightPIDPosition = new GosPidController(RIGHT_POSITION_P, RIGHT_POSITION_I,
+            RIGHT_POSITION_D, m_rightEncoder,
             this::setRightJag, GosPidController.POSITION);
-        m_backPIDPosition = new GosPidController(backPositionP, backPositionI,
-            backPositionD, m_backEncoder,
+        m_backPIDPosition = new GosPidController(BACK_POSITION_P, BACK_POSITION_I,
+            BACK_POSITION_D, m_backEncoder,
             this::setBackJag, GosPidController.POSITION);
-        m_leftPIDPosition = new GosPidController(leftPositionP, leftPositionI,
-            leftPositionD, m_leftEncoder,
+        m_leftPIDPosition = new GosPidController(LEFT_POSITION_P, LEFT_POSITION_I,
+            LEFT_POSITION_D, m_leftEncoder,
             this::setLeftJag, GosPidController.POSITION);
 
         m_gyro = new AnalogGyro(RobotMap.GYRO_PORT);
@@ -298,9 +298,9 @@ public class Chassis extends SubsystemBase {
 
     //from kiwi code
     public void setPIDValue() {
-        m_rightPIDRate.setPID(rightP, rightI, rightD);
-        m_backPIDRate.setPID(backP, backI, backD);
-        m_leftPIDRate.setPID(leftP, leftI, leftD);
+        m_rightPIDRate.setPID(RIGHT_P, RIGHT_I, RIGHT_D);
+        m_backPIDRate.setPID(BACK_P, BACK_I, BACK_D);
+        m_leftPIDRate.setPID(LEFT_P, LEFT_I, LEFT_D);
     }
 
     public void setRightPIDRate(double rate) {
@@ -328,9 +328,9 @@ public class Chassis extends SubsystemBase {
 
 
 
-        m_rightPIDPosition.setPID(rightPositionP, rightPositionI, rightPositionD);
-        m_backPIDPosition.setPID(backPositionP, backPositionI, backPositionD);
-        m_leftPIDPosition.setPID(leftPositionP, leftPositionI, leftPositionD);
+        m_rightPIDPosition.setPID(RIGHT_POSITION_P, RIGHT_POSITION_I, RIGHT_POSITION_D);
+        m_backPIDPosition.setPID(BACK_POSITION_P, BACK_POSITION_I, BACK_POSITION_D);
+        m_leftPIDPosition.setPID(LEFT_POSITION_P, LEFT_POSITION_I, LEFT_POSITION_D);
         m_rightPIDPosition.enable();
         m_backPIDPosition.enable();
         m_leftPIDPosition.enable();

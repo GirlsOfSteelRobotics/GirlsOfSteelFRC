@@ -101,10 +101,10 @@ public class Robot extends TimedRobot {
 
         if (m_gameData.getNoAuto()) {
             m_autonomousCommand = null; // NOPMD
-        } else if (robotSide == GameData.FieldSide.left || robotSide == GameData.FieldSide.right) { //if robot in the corner
-            m_shifters.shiftGear(Shifters.Speed.kHigh);
+        } else if (robotSide == GameData.FieldSide.LEFT || robotSide == GameData.FieldSide.RIGHT) { //if robot in the corner
+            m_shifters.shiftGear(Shifters.Speed.HIGH);
 
-            if (elementPriority == GameData.FieldElement.Switch) { //switch priority
+            if (elementPriority == GameData.FieldElement.SWITCH) { //switch priority
                 if (switchSide == robotSide) {
                     m_autonomousCommand = new AutoNearSwitch(m_chassis, m_shifters, m_lift, m_wrist, m_collector, switchSide);
                 } else if (scaleSide == robotSide) {
@@ -125,9 +125,9 @@ public class Robot extends TimedRobot {
                     m_autonomousCommand = new AutoDriveToBaseline(m_chassis);
                 }
             }
-        } else if (robotSide == GameData.FieldSide.middle) {
-            m_shifters.shiftGear(Shifters.Speed.kLow);
-            if (switchSide != GameData.FieldSide.bad) {
+        } else if (robotSide == GameData.FieldSide.MIDDLE) {
+            m_shifters.shiftGear(Shifters.Speed.LOW);
+            if (switchSide != GameData.FieldSide.BAD) {
                 m_autonomousCommand = new AutoMiddleSwitch(m_chassis, m_lift, m_wrist, m_collector, switchSide);
             } else {
                 m_autonomousCommand = new AutoDriveToBaseline(m_chassis);

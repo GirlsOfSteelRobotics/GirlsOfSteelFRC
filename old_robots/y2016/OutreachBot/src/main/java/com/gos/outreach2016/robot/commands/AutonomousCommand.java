@@ -35,8 +35,8 @@ public class AutonomousCommand extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_accessoryMotors.startLeft(Direction.kFwd);
-        m_accessoryMotors.startRight(Direction.kRev);
+        m_accessoryMotors.startLeft(Direction.FWD);
+        m_accessoryMotors.startRight(Direction.REV);
         m_driveSystem.forward();
         SmartDashboard.putNumber("Encoder Distance", m_driveSystem.getEncoderDistance());
     }

@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class MagneticPulseCounter implements Runnable {
 
-    private static final long timeLength = 50; //Times checked per second (10)
-    private static final int relevant = 20; //How much data is kept
+    private static final long TIME_LENGTH = 50; //Times checked per second (10)
+    private static final int RELEVANT = 20; //How much data is kept
 
     private final DigitalInput m_digiPut;
     private int m_pulses;
-    private static final boolean m_done = false;
+    private static final boolean DONE = false;
     private int[] m_pulsesBetweenTime;
     private int m_counter = -1;
 
@@ -27,13 +27,13 @@ public class MagneticPulseCounter implements Runnable {
 
     @Override
     public void run() {
-        m_pulsesBetweenTime = new int[relevant];
+        m_pulsesBetweenTime = new int[RELEVANT];
         new Thread() { // NOPMD
             @Override
             public void run() {
-                while (!m_done) {
+                while (!DONE) {
                     //False = received pulse
-                    while (m_digiPut.get() && !m_done) {
+                    while (m_digiPut.get() && !DONE) {
                         Thread.yield();
                     }
                     m_pulses++;
@@ -41,11 +41,11 @@ public class MagneticPulseCounter implements Runnable {
             }
         }.start();
 
-        while (!m_done) {
+        while (!DONE) {
             try {
-                Thread.sleep(timeLength);
+                Thread.sleep(TIME_LENGTH);
                 m_counter++;
-                m_pulsesBetweenTime[m_counter % relevant] = m_pulses;
+                m_pulsesBetweenTime[m_counter % RELEVANT] = m_pulses;
                 m_pulses = 0;
             } catch (InterruptedException ex) {
                 ex.printStackTrace(); // NOPMD
@@ -57,11 +57,11 @@ public class MagneticPulseCounter implements Runnable {
         double rate;
         int sum = 0;
 
-        for (int i = 0; i < relevant; i++) {
+        for (int i = 0; i < RELEVANT; i++) {
             sum += m_pulsesBetweenTime[i];
         }
 
-        rate = (sum / (double) (relevant * timeLength)) * 1000;
+        rate = (sum / (double) (RELEVANT * TIME_LENGTH)) * 1000;
         return rate;
     }
 }

@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
  */
 public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
-    private static final double m_loadingEncoderPosition = .45; // this value is "about"; currentEncoderValue % 360
+    private static final double LOADING_ENCODER_POSITION = .45; // this value is "about"; currentEncoderValue % 360
 
     private final Kicker m_kicker;
 
@@ -30,7 +30,7 @@ public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_kicker.getEncoder() % 360 < m_loadingEncoderPosition) {
+        if (m_kicker.getEncoder() % 360 < LOADING_ENCODER_POSITION) {
             m_kicker.setJag(1.0);
         }
     }

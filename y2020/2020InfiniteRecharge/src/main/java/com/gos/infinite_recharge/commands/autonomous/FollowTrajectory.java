@@ -21,15 +21,15 @@ public class FollowTrajectory extends SequentialCommandGroup {
     private double m_goalVelocityRight;
 
     public static class AutoConstants {
-        public static final double slowSpeedMetersPerSecond = Units.inchesToMeters(48);
-        public static final double slowAccelerationMetersPerSecondSquared = Units.inchesToMeters(96);
-        public static final double normalSpeedMetersPerSecond = Units.inchesToMeters(72);
-        public static final double normalAccelerationMetersPerSecondSquared = Units.inchesToMeters(60);
-        public static final double fastSpeedMetersPerSecond = Units.inchesToMeters(120);
-        public static final double fastAccelerationMetersPerSecondSquared = Units.inchesToMeters(120);
+        public static final double SLOW_SPEED_METERS_PER_SECOND = Units.inchesToMeters(48);
+        public static final double SLOW_ACCELERATION_METERS_PER_SECOND_SQUARED = Units.inchesToMeters(96);
+        public static final double NORMAL_SPEED_METERS_PER_SECOND = Units.inchesToMeters(72);
+        public static final double NORMAL_ACCELERATION_METERS_PER_SECOND_SQUARED = Units.inchesToMeters(60);
+        public static final double FAST_SPEED_METERS_PER_SECOND = Units.inchesToMeters(120);
+        public static final double FAST_ACCELERATION_METERS_PER_SECOND_SQUARED = Units.inchesToMeters(120);
 
-        public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7;
+        public static final double RAMSETE_B = 2;
+        public static final double RAMSETE_ZETA = 0.7;
 
     }
 
@@ -43,8 +43,8 @@ public class FollowTrajectory extends SequentialCommandGroup {
         RamseteCommand ramseteCommand = new RamseteCommand(
             trajectory,
             m_chassis::getPose,
-            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-            Constants.DriveConstants.kDriveKinematics,
+            new RamseteController(AutoConstants.RAMSETE_B, AutoConstants.RAMSETE_ZETA),
+            Constants.DriveConstants.DRIVE_KINEMATICS,
             this::setVelocityGoal,
             m_chassis
         );

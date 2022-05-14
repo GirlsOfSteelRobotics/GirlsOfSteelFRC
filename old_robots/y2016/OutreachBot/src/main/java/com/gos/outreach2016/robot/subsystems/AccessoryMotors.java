@@ -11,7 +11,7 @@ public class AccessoryMotors extends SubsystemBase {
     private final Victor m_accessoryLeft;
     private final Victor m_accessoryRight;
 
-    public enum Direction { kFwd, kRev }
+    public enum Direction { FWD, REV }
 
     public AccessoryMotors() {
         m_accessoryLeft = new Victor(RobotMap.ACCESSORY_LEFT_PORT);
@@ -27,7 +27,7 @@ public class AccessoryMotors extends SubsystemBase {
     // here. Call these from Commands.
 
     public void startLeft(Direction direction) {
-        if (direction == Direction.kFwd) {
+        if (direction == Direction.FWD) {
             m_accessoryLeft.set(1.0);
         } else {
             m_accessoryLeft.set(-1.0);
@@ -35,7 +35,7 @@ public class AccessoryMotors extends SubsystemBase {
     }
 
     public void startRight(Direction direction) {
-        if (direction == Direction.kFwd) {
+        if (direction == Direction.FWD) {
             m_accessoryRight.set(1.0);
         } else {
             m_accessoryRight.set(-1.0);

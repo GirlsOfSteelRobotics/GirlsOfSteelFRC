@@ -54,34 +54,34 @@ public class OI {
 
         // Climber buttons
         POVButton frontToZero = new POVButton(m_drivingPad, 90);
-        frontToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.Front));
+        frontToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.FRONT));
 
         POVButton backToZero = new POVButton(m_drivingPad, 270);
-        backToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.Back));
+        backToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.BACK));
 
         POVButton toSecondUp = new POVButton(m_drivingPad, 180);
-        toSecondUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.SECOND_GOAL_POS, Climber.ClimberType.All));
+        toSecondUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.SECOND_GOAL_POS, Climber.ClimberType.ALL));
 
         POVButton toThirdUp = new POVButton(m_drivingPad, 0);
-        toThirdUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.THIRD_GOAL_POS, Climber.ClimberType.All));
+        toThirdUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.THIRD_GOAL_POS, Climber.ClimberType.ALL));
 
         JoystickButton frontDown = new JoystickButton(m_drivingPad, 2);
-        frontDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.Front));
+        frontDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.FRONT));
 
         JoystickButton backDown = new JoystickButton(m_drivingPad, 4);
-        backDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.Back));
+        backDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.BACK));
 
         JoystickButton allUp = new JoystickButton(m_drivingPad, 5);
-        allUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.All));
+        allUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.ALL));
 
         JoystickButton allDown = new JoystickButton(m_drivingPad, 6);
-        allDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.All));
+        allDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.ALL));
 
         JoystickButton frontUp = new JoystickButton(m_drivingPad, 1);
-        frontUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.Front));
+        frontUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.FRONT));
 
         JoystickButton backUp = new JoystickButton(m_drivingPad, 3);
-        backUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.Back));
+        backUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.BACK));
 
 
         // allToZero = new POVButton(drivingPad, 180);
@@ -122,10 +122,10 @@ public class OI {
         // negative is down, positive is up
         // must start up
         JoystickButton pivotUp = new JoystickButton(m_operatingPad, 2);
-        pivotUp.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.Up));
+        pivotUp.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.UP));
 
         JoystickButton pivotDown = new JoystickButton(m_operatingPad, 1);
-        pivotDown.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.Down));
+        pivotDown.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.DOWN));
 
         JoystickButton pivotGround = new JoystickButton(m_operatingPad, 3);
         pivotGround.whenPressed(new PivotToGround(pivot));

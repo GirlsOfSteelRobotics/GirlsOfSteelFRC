@@ -48,7 +48,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
         //Drive forward and turn in place and drive forward to switch
         addCommands(new DriveByMotionMagicAbsolute(chassis, STRAIGHT_1, 0, false));
 
-        if (switchSide == GameData.FieldSide.right) {
+        if (switchSide == GameData.FieldSide.RIGHT) {
             addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, -TURN_DEGREES_1));
             addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, -TURN_DEGREES_1, false));
 
@@ -57,7 +57,7 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
 
             //Drive back
             addCommands(new DriveByMotionMagicAbsolute(chassis, -(APPROACH_SWITCH + 5), -TURN_DEGREES_1, false));
-        } else if (switchSide == GameData.FieldSide.left) {
+        } else if (switchSide == GameData.FieldSide.LEFT) {
             addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, TURN_DEGREES_2));
             addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH, TURN_DEGREES_2 - 20, false));
 
@@ -91,10 +91,10 @@ public class AutoMiddleSwitchTwoCubeBetter extends SequentialCommandGroup {
             new LiftHold(lift)));
 
         //Turn in place and drive forward
-        if (switchSide == GameData.FieldSide.right) {
+        if (switchSide == GameData.FieldSide.RIGHT) {
             addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, -TURN_AFTER_STACK));
             addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH + 10, -END_HEADING, false));
-        } else if (switchSide == GameData.FieldSide.left) {
+        } else if (switchSide == GameData.FieldSide.LEFT) {
             addCommands(new TurnByMotionMagicAbsolute(chassis, shifters, 90));
             addCommands(new DriveByMotionMagicAbsolute(chassis, APPROACH_SWITCH + 10, 85, false)); //10 was 50 before
         }

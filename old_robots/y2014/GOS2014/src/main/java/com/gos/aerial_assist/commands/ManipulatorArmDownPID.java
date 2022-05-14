@@ -34,7 +34,7 @@ public class ManipulatorArmDownPID extends CommandBase {
         //System.out.println("Down Angle Setpoint: " + angle);
         //System.out.println("Error: " + manipulator.getError());
 
-        m_manipulator.setSetPoint(m_angle * Configuration.desiredAnglePivotArmSign);
+        m_manipulator.setSetPoint(m_angle * Configuration.DESIRED_ANGLE_PIVOT_ARM_SIGN);
         if (m_angle > -18.2) {
             m_angle -= 3;
         }

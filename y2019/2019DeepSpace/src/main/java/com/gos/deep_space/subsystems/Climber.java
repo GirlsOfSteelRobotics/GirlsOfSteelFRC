@@ -38,7 +38,7 @@ public class Climber extends SubsystemBase {
     public static final int MAX_ACCELERATION = 10000; // Anna and Gracie 4/25
 
     public enum ClimberType {
-        All, Front, Back
+        ALL, FRONT, BACK
     }
 
     // DigitalInput limitSwitch = new DigitalInput(1);
@@ -110,10 +110,10 @@ public class Climber extends SubsystemBase {
 
     // the value in set expiration is in SECONDS not milliseconds
     public void setGoalClimberPosition(double pos, ClimberType type) {
-        if (type == ClimberType.All) {
+        if (type == ClimberType.ALL) {
             m_goalFrontPosition = pos;
             m_goalBackPosition = pos;
-        } else if (type == ClimberType.Front) {
+        } else if (type == ClimberType.FRONT) {
             m_goalFrontPosition = pos;
         } else {
             m_goalBackPosition = pos;
@@ -124,7 +124,7 @@ public class Climber extends SubsystemBase {
     public void climberStop() {
         m_goalFrontPosition = getFrontPosition();
         m_goalBackPosition = getBackPosition();
-        holdClimberPosition(ClimberType.All);
+        holdClimberPosition(ClimberType.ALL);
     }
 
     public double getFrontPosition() {
@@ -155,12 +155,12 @@ public class Climber extends SubsystemBase {
     }
 
     public void holdClimberPosition(ClimberType type) {
-        if (type == ClimberType.All) {
+        if (type == ClimberType.ALL) {
             m_climberFront.set(ControlMode.MotionMagic, m_goalFrontPosition);
             SmartDashboard.putNumber("Climber Front Velocity", m_climberFront.getSelectedSensorVelocity());
             m_climberBack.set(ControlMode.MotionMagic, m_goalBackPosition);
             SmartDashboard.putNumber("Climber Back Velocity", m_climberBack.getSelectedSensorVelocity());
-        } else if (type == ClimberType.Front) {
+        } else if (type == ClimberType.FRONT) {
             m_climberFront.set(ControlMode.MotionMagic, m_goalFrontPosition);
             SmartDashboard.putNumber("Climber Front Velocity", m_climberFront.getSelectedSensorVelocity());
         } else {
@@ -176,14 +176,14 @@ public class Climber extends SubsystemBase {
             m_dir = -1;
         }
 
-        if (type == ClimberType.All) {
+        if (type == ClimberType.ALL) {
 
             m_goalFrontPosition = getFrontPosition();
             m_goalFrontPosition += m_dir * CLIMBER_EXTEND;
             m_goalBackPosition = getBackPosition();
             m_goalBackPosition += m_dir * CLIMBER_EXTEND;
 
-        } else if (type == ClimberType.Front) {
+        } else if (type == ClimberType.FRONT) {
             m_goalFrontPosition = getFrontPosition();
             m_goalFrontPosition += m_dir * CLIMBER_EXTEND;
         } else {

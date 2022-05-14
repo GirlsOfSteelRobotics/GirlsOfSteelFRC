@@ -12,7 +12,7 @@ import com.gos.recycle_rush.robot.RobotMap;
 
 public class Collector extends SubsystemBase {
 
-    private static final double speed = .5;
+    private static final double SPEED = .5;
 
     // Talons
     private final WPI_TalonSRX m_rightCollector;
@@ -53,27 +53,27 @@ public class Collector extends SubsystemBase {
 
     // Method suckToteIn which suck a tote inside the robot
     public void collectorToteIn() {
-        m_rightCollector.set(ControlMode.PercentOutput, speed);
-        m_leftCollector.set(ControlMode.PercentOutput, -speed);
+        m_rightCollector.set(ControlMode.PercentOutput, SPEED);
+        m_leftCollector.set(ControlMode.PercentOutput, -SPEED);
         SmartDashboard.putBoolean("Collecter On", true);
     }
 
     // Method suckToteOut which pushes a Tote out
     public void collectorToteOut() {
-        m_rightCollector.set(ControlMode.PercentOutput, -speed);
-        m_leftCollector.set(ControlMode.PercentOutput, speed);
+        m_rightCollector.set(ControlMode.PercentOutput, -SPEED);
+        m_leftCollector.set(ControlMode.PercentOutput, SPEED);
         SmartDashboard.putBoolean("Collecter On", true);
     }
 
     // Method collectorToteRotate which rotates the tote inside the trifold
     public void collectorToteRotateRight() {
-        m_rightCollector.set(ControlMode.PercentOutput, speed);
-        m_leftCollector.set(ControlMode.PercentOutput, speed);
+        m_rightCollector.set(ControlMode.PercentOutput, SPEED);
+        m_leftCollector.set(ControlMode.PercentOutput, SPEED);
     }
 
     public void collectorToteRotateLeft() {
-        m_rightCollector.set(ControlMode.PercentOutput, -speed);
-        m_leftCollector.set(ControlMode.PercentOutput, -speed);
+        m_rightCollector.set(ControlMode.PercentOutput, -SPEED);
+        m_leftCollector.set(ControlMode.PercentOutput, -SPEED);
     }
 
     public void collectorIn() {

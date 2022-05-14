@@ -32,8 +32,8 @@ public class AutoNearScale extends SequentialCommandGroup {
 
         //Move Robot, lift, wrist into position
         addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD, 0));
-        shifters.shiftGear(Shifters.Speed.kLow);
-        if (robotPosition == GameData.FieldSide.left) {
+        shifters.shiftGear(Shifters.Speed.LOW);
+        if (robotPosition == GameData.FieldSide.LEFT) {
             addCommands(new TurnByMotionMagic(chassis, -90.0));
             addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, -90, false));
             addCommands(new WristToShoot(wrist));

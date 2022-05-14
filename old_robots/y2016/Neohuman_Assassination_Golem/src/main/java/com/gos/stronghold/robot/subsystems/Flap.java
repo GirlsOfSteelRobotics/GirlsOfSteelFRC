@@ -11,7 +11,7 @@ import com.gos.stronghold.robot.RobotMap;
  */
 public class Flap extends SubsystemBase {
 
-    private static final double maxEncoder = 360; //max encoder val
+    private static final double MAX_ENCODER = 360; //max encoder val
 
     private final WPI_TalonSRX m_flapTalon;
     private double m_encOffsetValue;
@@ -38,7 +38,7 @@ public class Flap extends SubsystemBase {
     }
 
     public double getMaxEnc() {
-        return maxEncoder;
+        return MAX_ENCODER;
     }
 
     //assuming that going forward will raise the flap and going backwards will lower the flap

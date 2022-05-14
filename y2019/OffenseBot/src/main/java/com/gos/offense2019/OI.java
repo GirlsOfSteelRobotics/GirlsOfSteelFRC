@@ -39,10 +39,10 @@ public class OI {
         Button hatchGrab = new JoystickButton(m_drivingPad, 6);
 
 
-        shiftUp.whenPressed(new Shift(shifters, Shifters.Speed.kHigh));
-        shiftDown.whenPressed(new Shift(shifters, Shifters.Speed.kLow));
+        shiftUp.whenPressed(new Shift(shifters, Shifters.Speed.HIGH));
+        shiftDown.whenPressed(new Shift(shifters, Shifters.Speed.LOW));
 
-        hatchRelease.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kRelease));
-        hatchGrab.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.kGrab));
+        hatchRelease.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.RELEASE));
+        hatchGrab.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.GRAB));
     }
 }

@@ -17,15 +17,15 @@ public class Turret extends SubsystemBase {
     private static final double ENCODER_UNIT = 360.0 / PULSES;
     public static final double TURRET_OVERRIDE_DEADZONE = 0.5;
 
-    private static final double p = 0.2; //0.45;
-    private static final double i = 0.0;
-    private static final double d = 0.0;
+    private static final double KP = 0.2; //0.45;
+    private static final double KI = 0.0;
+    private static final double KD = 0.0;
 
     private double m_offsetAngle = 0.34;
     private final Jaguar m_turretJag = new Jaguar(RobotMap.TURRET_JAG);
     private final Encoder m_encoder = new Encoder(RobotMap.ENCODER_TURRET_CHANNEL_A,
         RobotMap.ENCODER_TURRET_CHANNEL_B, false, Encoder.EncodingType.k4X);
-    private final PIDController m_pid = new PIDController(p, i, d);
+    private final PIDController m_pid = new PIDController(KP, KI, KD);
 
     private final Chassis m_chassis;
 
@@ -77,7 +77,7 @@ public class Turret extends SubsystemBase {
     //PID values in execute (used in chassis -> don't think it's having a probelem
     //in chassis's PIDs
     public void setPDs() {
-        m_pid.setPID(p, i, d);
+        m_pid.setPID(KP, KI, KD);
     }
 
     @SuppressWarnings("PMD.AvoidReassigningParameters")

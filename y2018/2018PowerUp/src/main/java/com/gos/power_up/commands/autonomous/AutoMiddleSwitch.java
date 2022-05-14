@@ -36,10 +36,10 @@ public class AutoMiddleSwitch extends SequentialCommandGroup {
             new WristHold(wrist),
             new LiftHold(lift)));
 
-        if (switchSide == GameData.FieldSide.right) {
+        if (switchSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, -RIGHT_ANGLE));
             addCommands(new DriveByMotionMagic(chassis, RIGHT_DISTANCE, RIGHT_ANGLE));
-        } else if (switchSide == GameData.FieldSide.left) {
+        } else if (switchSide == GameData.FieldSide.LEFT) {
             addCommands(new DriveByMotionMagic(chassis, LEFT_DISTANCE, LEFT_ANGLE));
             addCommands(new DriveByMotionMagic(chassis, LEFT_DISTANCE, -LEFT_ANGLE));
         } else {

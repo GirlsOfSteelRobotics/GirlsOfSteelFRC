@@ -13,9 +13,9 @@ import com.gos.aerial_assist.subsystems.Kicker;
  * @author Sylvie
  */
 public class MoveKicker extends CommandBase {
-    private static final double m_allowedOffBy = 0.05; //Degrees
-    private static final double m_loaded = 0.0; //Starting position is loaded pos
-    private static final double m_shoot = 0.111111; //The angle degree needed to kick
+    private static final double ALLOWED_OFF_BY = 0.05; //Degrees
+    private static final double LOADED = 0.0; //Starting position is loaded pos
+    private static final double SHOOT = 0.111111; //The angle degree needed to kick
 
     private final Kicker m_kicker;
     private final LspbPidPlanner m_kickerPlanner;
@@ -44,10 +44,10 @@ public class MoveKicker extends CommandBase {
         if (m_firstTime) {
             switch (m_pos) {
             case 0: //loading
-                m_setpoint = m_loaded;
+                m_setpoint = LOADED;
                 break;
             case 1: //kick
-                m_setpoint = m_shoot;
+                m_setpoint = SHOOT;
                 break;
             default:
                 System.out.println("Error! Not a valid input parameter");
@@ -66,7 +66,7 @@ public class MoveKicker extends CommandBase {
     @Override
     public boolean isFinished() {
         m_encoderValue350Modded = m_kicker.getEncoderDistance() % 360;
-        boolean thereYet = Math.abs(m_encoderValue350Modded - m_setpoint) < m_allowedOffBy;
+        boolean thereYet = Math.abs(m_encoderValue350Modded - m_setpoint) < ALLOWED_OFF_BY;
         boolean over = Math.abs(m_encoderValue350Modded) > Math.abs(m_setpoint);
         return thereYet || over;
     }

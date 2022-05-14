@@ -53,7 +53,7 @@ public class Collector extends SubsystemBase {
      * @author Sonia, Sophia
      */
     public void collectorWheelFoward() {
-        m_collectorWheelSpike.set(Configuration.collectorWheelForwardSpeed);
+        m_collectorWheelSpike.set(Configuration.COLLECTOR_WHEEL_FORWARD_SPEED);
     } //Set the wheel spike to the forward setting
 
     /**
@@ -62,7 +62,7 @@ public class Collector extends SubsystemBase {
      * @author Sonia, Sophia
      */
     public void collectorWheelReverse() {
-        m_collectorWheelSpike.set(Configuration.collectorWheelBackwardSpeed);
+        m_collectorWheelSpike.set(Configuration.COLLECTOR_WHEEL_BACKWARD_SPEED);
     } //set the wheel spike to the reverse setting
 
     /**

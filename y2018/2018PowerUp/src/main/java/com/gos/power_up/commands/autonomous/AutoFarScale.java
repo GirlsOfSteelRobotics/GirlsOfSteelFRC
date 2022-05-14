@@ -34,7 +34,7 @@ public class AutoFarScale extends SequentialCommandGroup {
         addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
 
         //First turn behind the switch
-        if (scaleSide == GameData.FieldSide.right) {
+        if (scaleSide == GameData.FieldSide.RIGHT) {
             addCommands(new AutoTurnRight(chassis, TURN_RADIUS_1));
         } else {
             addCommands(new AutoTurnLeft(chassis, TURN_RADIUS_1));
@@ -48,14 +48,14 @@ public class AutoFarScale extends SequentialCommandGroup {
             new LiftHold(lift)));
 
         //Driving across the field behind the switch
-        if (scaleSide == GameData.FieldSide.right) {
+        if (scaleSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE_1, -90, false));
         } else {
             addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE_1, 90, false));
         }
 
         //Turning towards the scale
-        if (scaleSide == GameData.FieldSide.right) {
+        if (scaleSide == GameData.FieldSide.RIGHT) {
             addCommands(new DriveByMotionMagic(chassis, TURN_RADIUS_2, DEGREES_2));
             addCommands(new TurnByMotionMagic(chassis, 90));
         } else {

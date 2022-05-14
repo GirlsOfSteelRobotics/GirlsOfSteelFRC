@@ -20,12 +20,12 @@ jacoco {
 
 
 checkstyle {
-    toolVersion = "9.0"
+    toolVersion = "10.0"
     configDirectory.set(file("${project.rootDir}/styleguide"))
 }
 
 pmd {
-    toolVersion = '6.39.0'
+    toolVersion = '6.43.0'
     consoleOutput  = true
     reportsDir = file("${project.buildDir}/reports/pmd")
     ruleSetFiles = files(file("$rootDir/styleguide/pmd-ruleset.xml"))

@@ -25,8 +25,8 @@ public class Drive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        if (m_oi.getDriveStyle() == DriveStyle.oneStickArcade
-            || m_oi.getDriveStyle() == DriveStyle.gamePadArcade) {
+        if (m_oi.getDriveStyle() == DriveStyle.ONE_STICK_ARCADE
+            || m_oi.getDriveStyle() == DriveStyle.GAME_PAD_ARCADE) {
             m_chassis.arcadeDrive(m_oi.getDrivingJoystickY(), m_oi.getDrivingJoystickX());
             SmartDashboard.putNumber("Drive by Joystick Y: ", m_oi.getDrivingJoystickY());
             SmartDashboard.putNumber("Drive by Joystick X: ", m_oi.getDrivingJoystickX());

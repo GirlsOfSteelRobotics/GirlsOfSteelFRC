@@ -18,8 +18,8 @@ public class ShiftUp extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
-        m_shifters.shiftLeft(Speed.kHigh);
-        m_shifters.shiftRight(Speed.kHigh);
+        m_shifters.shiftLeft(Speed.HIGH);
+        m_shifters.shiftRight(Speed.HIGH);
         //Robot.ledlights.greenLight();
     }
 

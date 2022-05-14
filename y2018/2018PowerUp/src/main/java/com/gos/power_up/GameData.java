@@ -17,14 +17,14 @@ public class GameData {
      * switch and scale information from the game data API.
      */
     public enum FieldSide {
-        left, right, middle, bad
+        LEFT, RIGHT, MIDDLE, BAD
     }
 
     /**
      * Choice of scoring priorities when selecting an autonomous routine.
      */
     public enum FieldElement {
-        Switch, Scale
+        SWITCH, SCALE
     }
 
     // DIO ports used to select autonomous behaviors
@@ -55,9 +55,9 @@ public class GameData {
      */
     public FieldElement getElementPriority() {
         if (!m_dioPriority.get()) {
-            return FieldElement.Scale;
+            return FieldElement.SCALE;
         } else {
-            return FieldElement.Switch;
+            return FieldElement.SWITCH;
         }
     }
 
@@ -68,13 +68,13 @@ public class GameData {
      */
     public FieldSide getRobotSide() {
         if (!m_dioLeft.get()) {
-            return FieldSide.left;
+            return FieldSide.LEFT;
         } else if (!m_dioMiddle.get()) {
-            return FieldSide.middle;
+            return FieldSide.MIDDLE;
         } else if (!m_dioRight.get()) {
-            return FieldSide.right;
+            return FieldSide.RIGHT;
         } else {
-            return FieldSide.bad;
+            return FieldSide.BAD;
         }
     }
 
@@ -104,12 +104,12 @@ public class GameData {
 
         if (m_gameData != null && m_gameData.length() >= 2) {
             if (m_gameData.charAt(1) == 'L') {
-                return FieldSide.left;
+                return FieldSide.LEFT;
             } else if (m_gameData.charAt(1) == 'R') {
-                return FieldSide.right;
+                return FieldSide.RIGHT;
             }
         }
-        return FieldSide.bad;
+        return FieldSide.BAD;
     }
 
     /**
@@ -125,12 +125,12 @@ public class GameData {
         // Parse the string and return the enumerator
         if (m_gameData != null && m_gameData.length() >= 1) {
             if (m_gameData.charAt(0) == 'L') {
-                return FieldSide.left;
+                return FieldSide.LEFT;
             } else if (m_gameData.charAt(0) == 'R') {
-                return FieldSide.right;
+                return FieldSide.RIGHT;
             }
         }
-        return FieldSide.bad;
+        return FieldSide.BAD;
     }
 
 
@@ -162,19 +162,19 @@ public class GameData {
     public String toString() {
         StringBuilder output = new StringBuilder(30);
 
-        if (getSwitchSide() == GameData.FieldSide.left) {
+        if (getSwitchSide() == GameData.FieldSide.LEFT) {
             output.append("Switch is on the left");
-        } else if (getSwitchSide() == GameData.FieldSide.right) {
+        } else if (getSwitchSide() == GameData.FieldSide.RIGHT) {
             output.append("Switch is on the right");
-        } else if (getSwitchSide() == GameData.FieldSide.bad) {
+        } else if (getSwitchSide() == GameData.FieldSide.BAD) {
             output.append("Switch is BAD");
         }
 
-        if (getScaleSide() == GameData.FieldSide.left) {
+        if (getScaleSide() == GameData.FieldSide.LEFT) {
             output.append("Scale is on the left");
-        } else if (getScaleSide() == GameData.FieldSide.right) {
+        } else if (getScaleSide() == GameData.FieldSide.RIGHT) {
             output.append("Scale is on the right");
-        } else if (getScaleSide() == GameData.FieldSide.bad) {
+        } else if (getScaleSide() == GameData.FieldSide.BAD) {
             output.append("Scale is BAD");
         }
 

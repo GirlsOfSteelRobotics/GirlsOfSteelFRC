@@ -17,7 +17,7 @@ public class AutoShooterAndCrossLine extends SequentialCommandGroup {
 
     public AutoShooterAndCrossLine(Chassis chassis, Shifters shifters, Agitator agitator, Shooter shooter, Loader loader) {
         addCommands(new CombinedShootKey(agitator, shooter, loader).withTimeout(10.0));
-        addCommands(new TurnByDistance(chassis, shifters, -10.0, -60.0, Shifters.Speed.kLow));
-        addCommands(new DriveByDistance(chassis, shifters, -48.0, Shifters.Speed.kLow));
+        addCommands(new TurnByDistance(chassis, shifters, -10.0, -60.0, Shifters.Speed.LOW));
+        addCommands(new DriveByDistance(chassis, shifters, -48.0, Shifters.Speed.LOW));
     }
 }

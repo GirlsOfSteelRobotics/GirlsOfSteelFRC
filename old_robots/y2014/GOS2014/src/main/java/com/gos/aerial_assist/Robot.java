@@ -60,14 +60,14 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
 
-        m_chassis.setRightEncoderReverseDirection(Configuration.rightEncoderReverse);
-        m_chassis.setLeftEncoderReverseDirection(Configuration.leftEncoderReverse);
-        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0.0, 0.0);
-        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0.0, 0.0);
-        m_manipulator.setPID(Configuration.manipulatorPivotP, 0.0, 0.0);
-        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0.0, 0.0);
-        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0.0, 0.0);
-        m_manipulator.setPID(Configuration.manipulatorPivotP, 0.0, 0.0);
+        m_chassis.setRightEncoderReverseDirection(Configuration.RIGHT_ENCODER_REVERSE);
+        m_chassis.setLeftEncoderReverseDirection(Configuration.LEFT_ENCODER_REVERSE);
+        m_chassis.setLeftPositionPIDValues(Configuration.LEFT_POSITION_P, 0.0, 0.0);
+        m_chassis.setRightPositionPIDValues(Configuration.RIGHT_POSITION_P, 0.0, 0.0);
+        m_manipulator.setPID(Configuration.MANIPULATOR_PIVOT_P, 0.0, 0.0);
+        m_chassis.setLeftPositionPIDValues(Configuration.LEFT_POSITION_P, 0.0, 0.0);
+        m_chassis.setRightPositionPIDValues(Configuration.RIGHT_POSITION_P, 0.0, 0.0);
+        m_manipulator.setPID(Configuration.MANIPULATOR_PIVOT_P, 0.0, 0.0);
 
         SmartDashboard.putData(new KickerUsingLimitSwitch(m_kicker, -1, true));
         SmartDashboard.putData(new TestKickerEncoder(m_kicker));

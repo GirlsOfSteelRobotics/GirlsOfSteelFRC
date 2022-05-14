@@ -22,7 +22,7 @@ import java.util.Scanner;
  */
 public class DriveByMotionProfile extends CommandBase {
 
-    private static final int kMinPointsInTalon = 5;
+    private static final int MIN_POINTS_IN_TALON = 5;
 
     private final Chassis m_chassis;
     private final WPI_TalonSRX m_leftTalon;
@@ -103,7 +103,7 @@ public class DriveByMotionProfile extends CommandBase {
         m_rightTalon.getMotionProfileStatus(m_rightStatus);
 
         // Enable MP if not already enabled
-        if ((m_leftStatus.btmBufferCnt > kMinPointsInTalon) && (m_rightStatus.btmBufferCnt > kMinPointsInTalon)) {
+        if ((m_leftStatus.btmBufferCnt > MIN_POINTS_IN_TALON) && (m_rightStatus.btmBufferCnt > MIN_POINTS_IN_TALON)) {
             m_state = SetValueMotionProfile.Enable;
         }
         m_leftTalon.set(ControlMode.MotionProfile, m_state.value);

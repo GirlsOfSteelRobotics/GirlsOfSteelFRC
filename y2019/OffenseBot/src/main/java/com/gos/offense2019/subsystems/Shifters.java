@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Shifters extends SubsystemBase {
     public enum Speed {
-        kHigh, kLow
+        HIGH, LOW
     }
 
     private final DoubleSolenoid m_shifterLeft;
@@ -31,7 +31,7 @@ public class Shifters extends SubsystemBase {
 
     public void shiftGear(Speed speed) {
         this.m_speed = speed;
-        if (speed == Speed.kLow) {
+        if (speed == Speed.LOW) {
             m_shifterLeft.set(DoubleSolenoid.Value.kForward);
             m_shifterRight.set(DoubleSolenoid.Value.kForward);
         } else {

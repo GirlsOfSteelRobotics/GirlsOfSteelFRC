@@ -30,7 +30,7 @@ public class AutoNearSwitch extends SequentialCommandGroup {
         System.out.println("AutoNearSwitch starting");
 
         //Get lift & wrist into position
-        shifter.shiftGear(Shifters.Speed.kLow);
+        shifter.shiftGear(Shifters.Speed.LOW);
 
         addCommands(new WristToCollect(wrist));
         addCommands(new ParallelCommandGroup(
@@ -40,7 +40,7 @@ public class AutoNearSwitch extends SequentialCommandGroup {
 
         //Move Robot into position
         addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD, 0));
-        if (robotPosition == GameData.FieldSide.left) {
+        if (robotPosition == GameData.FieldSide.LEFT) {
             addCommands(new AutoTurnRight(chassis, 25.0));
         } else {
             addCommands(new AutoTurnLeft(chassis, 25.0));

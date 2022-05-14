@@ -29,7 +29,7 @@ public class MaintainColEngage extends CommandBase {
     @Override
     public void execute() {
         // while (!collector.isCollectorEngaged()) {
-        m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //1 for competition bot, -1 for practice bot
+        m_collector.moveCollectorUpOrDown(Configuration.ENGAGE_COLLECTOR_SPEED); //1 for competition bot, -1 for practice bot
         //}
     }
 

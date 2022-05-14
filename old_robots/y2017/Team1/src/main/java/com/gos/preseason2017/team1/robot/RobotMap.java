@@ -61,12 +61,12 @@ public class RobotMap {
 
     // Encoder-to-distance constants
     // How many ticks are there on the encoder wheel?
-    private static final double pulsePerRevolution = 360;
+    private static final double PULSE_PER_REVOLUTION = 360;
     // How far to we travel when the encoder turns one full revolution?
     // Gear ratio is turns of the wheel per turns of the encoder
-    private static final double distancePerRevolutionHighGear = 8.0/*wheel size*/ * Math.PI * (1 / 27.21)/*gear ratio*/; //(9.07)
-    private static final double distancePerRevolutionLowGear = 8.0/*wheel size*/ * Math.PI * (1 / 28.33)/*gear ratio*/; //28.33/15.9 (33.33)
+    private static final double DISTANCE_PER_REVOLUTION_HIGH_GEAR = 8.0/*wheel size*/ * Math.PI * (1 / 27.21)/*gear ratio*/; //(9.07)
+    private static final double DISTANCE_PER_REVOLUTION_LOW_GEAR = 8.0/*wheel size*/ * Math.PI * (1 / 28.33)/*gear ratio*/; //28.33/15.9 (33.33)
     // Given our set of wheels and gear box, how many inches do we travel per pulse?
-    public static final double DISTANCE_PER_PULSE_HIGH_GEAR = distancePerRevolutionHighGear / pulsePerRevolution;
-    public static final double DISTANCE_PER_PULSE_LOW_GEAR = distancePerRevolutionLowGear / pulsePerRevolution;
+    public static final double DISTANCE_PER_PULSE_HIGH_GEAR = DISTANCE_PER_REVOLUTION_HIGH_GEAR / PULSE_PER_REVOLUTION;
+    public static final double DISTANCE_PER_PULSE_LOW_GEAR = DISTANCE_PER_REVOLUTION_LOW_GEAR / PULSE_PER_REVOLUTION;
 }

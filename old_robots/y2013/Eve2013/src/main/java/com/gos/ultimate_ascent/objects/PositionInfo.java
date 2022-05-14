@@ -9,29 +9,29 @@ public class PositionInfo {
     public static final int BACK_RIGHT = 1;
     public static final int BACK_LEFT = 2;
 
-    private static final Position[] positions = new Position[4];
+    private static final Position[] POSITIONS = new Position[4];
 
     public static void init() {
         //set the should-be 3 positions here
-        positions[NO_POSITION] = new Position(0, 0);
-        positions[BACK_RIGHT] = new Position(
+        POSITIONS[NO_POSITION] = new Position(0, 0);
+        POSITIONS[BACK_RIGHT] = new Position(
             Constants.BACK_RIGHT_OFFSET,
             0.735); //78
-        positions[BACK_LEFT] = new Position(
+        POSITIONS[BACK_LEFT] = new Position(
             Constants.BACK_LEFT_OFFSET,
             0.81);
     } //end constructor
 
     public static void set(int position, int angleAdjustment, double shooterSpeed) {
-        positions[position] = new Position(angleAdjustment, shooterSpeed);
+        POSITIONS[position] = new Position(angleAdjustment, shooterSpeed);
     } //end set
 
     public static int getAngle(int position) {
-        return positions[position].getAngle();
+        return POSITIONS[position].getAngle();
     } //end getAngle
 
     public static double getSpeed(int position) {
-        return positions[position].getSpeed();
+        return POSITIONS[position].getSpeed();
     } //eng getSpeed
 
     private static class Position {

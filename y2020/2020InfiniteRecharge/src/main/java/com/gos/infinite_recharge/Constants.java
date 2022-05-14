@@ -62,15 +62,15 @@ public final class Constants {
 
     // TurnToAngleProfiled constant values
 
-    public static final double kTurnP = 1;
-    public static final double kTurnI = 0;
-    public static final double kTurnD = 0;
+    public static final double TURN_KP = 1;
+    public static final double TURN_KI = 0;
+    public static final double TURN_KD = 0;
 
-    public static final double kMaxTurnRateDegPerS = 100;
-    public static final double kMaxTurnAccelerationDegPerSSquared = 300;
+    public static final double MAX_TURN_RATE_DEG_PER_S = 100;
+    public static final double MAX_TURN_ACCELERATION_DEG_PER_S_SQUARED = 300;
 
-    public static final double kTurnToleranceDeg = 5;
-    public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
+    public static final double TURN_TOLERANCE_DEG = 5;
+    public static final double TURN_RATE_TOLERANCE_DEG_PER_S = 10; // degrees per second
 
     public static final double MINIMUM_TURN_SPEED = .25;
 
@@ -88,16 +88,16 @@ public final class Constants {
 
 
     public static class DriveConstants {
-        public static final double ksVolts = 0.179;
-        public static final double kvVoltSecondsPerMeter = 0.0653;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.00754;
-        public static final double kvVoltSecondsPerRadian = 2.5;
-        public static final double kaVoltSecondsSquaredPerRadian = 0.3;
-        public static final double maxVoltage = 10;
+        public static final double KS_VOLTS = 0.179;
+        public static final double KV_VOLT_SECONDS_PER_METER = 0.0653;
+        public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.00754;
+        public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
+        public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.3;
+        public static final double MAX_VOLTAGE = 10;
 
-        public static final double kTrackwidthMeters = 1.1554881713809029;
-        public static final DifferentialDriveKinematics kDriveKinematics =
-            new DifferentialDriveKinematics(kTrackwidthMeters);
+        public static final double TRACK_WIDTH_METERS = 1.1554881713809029;
+        public static final DifferentialDriveKinematics DRIVE_KINEMATICS =
+            new DifferentialDriveKinematics(TRACK_WIDTH_METERS);
     }
 
 

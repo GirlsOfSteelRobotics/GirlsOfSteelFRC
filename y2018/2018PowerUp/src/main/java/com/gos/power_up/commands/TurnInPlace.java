@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class TurnInPlace extends CommandBase {
 
-    private static final double kP = .005;
-    private static final double kI = 0;
-    private static final double kD = 0;
+    private static final double KP = .005;
+    private static final double KI = 0;
+    private static final double KD = 0;
 
     private boolean m_targetReached;
 
@@ -53,13 +53,13 @@ public class TurnInPlace extends CommandBase {
 
 
         double tempError = m_iError + (error * .02);
-        if (Math.abs(tempError * kI) < .5) {
+        if (Math.abs(tempError * KI) < .5) {
             m_iError = tempError;
         }
         System.out.println("current position " + currentPos);
 
-        m_leftTalon.set(ControlMode.PercentOutput, (kP * error) + (kD * dError) + (kI * m_iError));
-        m_rightTalon.set(ControlMode.PercentOutput, (kP * error) + (kD * dError) + (kI * m_iError));
+        m_leftTalon.set(ControlMode.PercentOutput, (KP * error) + (KD * dError) + (KI * m_iError));
+        m_rightTalon.set(ControlMode.PercentOutput, (KP * error) + (KD * dError) + (KI * m_iError));
 
         if (error < 1 && dError < 10) {
             m_targetReached = true;

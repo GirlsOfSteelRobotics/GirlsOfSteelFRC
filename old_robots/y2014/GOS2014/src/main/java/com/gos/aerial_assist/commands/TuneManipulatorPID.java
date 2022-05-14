@@ -19,7 +19,7 @@ public class TuneManipulatorPID extends CommandBase {
     private double m_i;
     private double m_d;
     private double m_setpoint;
-    private static final boolean m_pid = false;
+    private static final boolean PID = false;
     private final Manipulator m_manipulator;
 
     public TuneManipulatorPID(Manipulator manipulator) {
@@ -30,7 +30,7 @@ public class TuneManipulatorPID extends CommandBase {
     @Override
     public void initialize() {
         m_manipulator.initEncoder();
-        if (m_pid) {
+        if (PID) {
             m_manipulator.resetPIDError();
             m_manipulator.startPID();
             SmartDashboard.putNumber("Pivot P", 0);
@@ -45,7 +45,7 @@ public class TuneManipulatorPID extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_pid) {
+        if (PID) {
             m_p = SmartDashboard.getNumber("Pivot P", 0);
             m_i = SmartDashboard.getNumber("Pivot I", 0);
             m_d = SmartDashboard.getNumber("Pivot D", 0);
@@ -75,7 +75,7 @@ public class TuneManipulatorPID extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_manipulator.stopManipulator();
-        if (m_pid) {
+        if (PID) {
             m_manipulator.disablePID();
         }
     }

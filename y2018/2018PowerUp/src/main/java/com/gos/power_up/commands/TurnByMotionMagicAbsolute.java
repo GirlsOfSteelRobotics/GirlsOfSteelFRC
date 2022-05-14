@@ -32,7 +32,7 @@ public class TurnByMotionMagicAbsolute extends CommandBase {
 
     @Override
     public void initialize() {
-        m_shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.LOW);
         m_chassis.setInverted(false);
 
         m_chassis.configForTurnByMotionMagic();
@@ -76,7 +76,7 @@ public class TurnByMotionMagicAbsolute extends CommandBase {
 
         System.out.println("TurnByMotionMagicAbsolute: ended. Error = " + degreesError + " degrees");
         m_chassis.stop();
-        m_shifters.shiftGear(Shifters.Speed.kHigh);
+        m_shifters.shiftGear(Shifters.Speed.HIGH);
         m_chassis.setInverted(false);
     }
 }

@@ -20,7 +20,7 @@ public class TurnToGear extends CommandBase {
     // private double currentX;
 
     public enum Direction {
-        kLeft, kRight
+        LEFT, RIGHT
     }
 
     private final Direction m_direction;
@@ -49,10 +49,10 @@ public class TurnToGear extends CommandBase {
         */
         m_targetX = m_pipelineListener.getTargetX();
 
-        if (m_direction == Direction.kRight) {
+        if (m_direction == Direction.RIGHT) {
             m_chassis.turn(0.3, -1.0); // TODO: test
             System.out.println("turning right");
-        } else if (m_direction == Direction.kLeft) {
+        } else if (m_direction == Direction.LEFT) {
             m_chassis.turn(0.3, 1.0);
             System.out.println("turning left");
         }

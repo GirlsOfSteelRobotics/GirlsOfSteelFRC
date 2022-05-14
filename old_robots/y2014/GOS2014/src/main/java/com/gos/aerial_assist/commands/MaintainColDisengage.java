@@ -29,7 +29,7 @@ public class MaintainColDisengage extends CommandBase {
     @Override
     public void execute() {
         //while (!collector.isCollectorDisengaged()) {
-        m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); //1 for competition bot, -1 for practice bot
+        m_collector.moveCollectorUpOrDown(Configuration.DISENGAGE_COLLECTOR_SPEED); //1 for competition bot, -1 for practice bot
         //}
     }
 

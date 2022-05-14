@@ -6,7 +6,7 @@ import com.gos.rebound_rumble.subsystems.Turret;
 
 public class AutonomousShootTwoBalls extends CommandBase {
 
-    private static final double timeToShootTwoBalls = 5.0; //TODO find how long shooting 2 balls takes
+    private static final double TIME_TO_SHOOT_TWO_BALLS = 5.0; //TODO find how long shooting 2 balls takes
 
     private final Shooter m_shooter;
     private final Collector m_collector;
@@ -38,7 +38,7 @@ public class AutonomousShootTwoBalls extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return timeSinceInitialized() > timeToShootTwoBalls;
+        return timeSinceInitialized() > TIME_TO_SHOOT_TWO_BALLS;
     }
 
     @Override

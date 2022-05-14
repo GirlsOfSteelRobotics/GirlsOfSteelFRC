@@ -15,12 +15,12 @@ import com.gos.rebound_rumble.subsystems.Shooter;
 
 public class AutonomousChooser {
 
-    private static final boolean shoot = true;
-    private static final boolean moveToBridge = true;
-    private static final double yDistance = 2.7;
-    private static final boolean shootFromBridge = true;
-    private static final boolean goBackToKey = true;
-    private static final boolean shootFromKeyAfterBridge = true;
+    private static final boolean SHOOT = true;
+    private static final boolean MOVE_TO_BRIDGE = true;
+    private static final double Y_DISTANCE = 2.7;
+    private static final boolean SHOOT_FROM_BRIDGE = true;
+    private static final boolean GO_BACK_TO_KEY = true;
+    private static final boolean SHOOT_FROM_KEY_AFTER_BRIDGE = true;
     private final SendableChooser<Command> m_chooser;
     private Command m_autonomousCommand;
 
@@ -33,16 +33,16 @@ public class AutonomousChooser {
         //ShootUsingTable command to shoot w/camera
         m_chooser.addOption("Shoot, Bridge", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
-            shoot, moveToBridge, yDistance, !shootFromBridge,
-            !goBackToKey, !shootFromKeyAfterBridge));
+            SHOOT, MOVE_TO_BRIDGE, Y_DISTANCE, !SHOOT_FROM_BRIDGE,
+            !GO_BACK_TO_KEY, !SHOOT_FROM_KEY_AFTER_BRIDGE));
         m_chooser.addOption("Shoot, Bridge, Shoot", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
-            shoot, moveToBridge, yDistance, shootFromBridge,
-            !goBackToKey, !shootFromKeyAfterBridge));
+            SHOOT, MOVE_TO_BRIDGE, Y_DISTANCE, SHOOT_FROM_BRIDGE,
+            !GO_BACK_TO_KEY, !SHOOT_FROM_KEY_AFTER_BRIDGE));
         m_chooser.addOption("Bridge, Shoot", new AutonomousCommandGroup(
             oi, shooter, chassis, bridge,
-            !shoot, moveToBridge, yDistance, shootFromBridge,
-            !goBackToKey, !shootFromKeyAfterBridge));
+            !SHOOT, MOVE_TO_BRIDGE, Y_DISTANCE, SHOOT_FROM_BRIDGE,
+            !GO_BACK_TO_KEY, !SHOOT_FROM_KEY_AFTER_BRIDGE));
         m_chooser.addOption("Delay, Reverse Rollers", new DelayReverseRollers(shooter, collector));
     }
 

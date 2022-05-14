@@ -33,13 +33,13 @@ import com.gos.stronghold.robot.subsystems.Shooter;
  */
 @SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.NcssCount"})
 public class OI {
-    public enum DriveDirection { kFWD, kREV }
+    public enum DriveDirection { FWD, REV }
 
     /**
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
      */
     //IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-    private static final boolean rozieDrive = false;
+    private static final boolean ROZIE_DRIVE = false;
 
     private final Joystick m_drivingStickForward = new Joystick(0);
     private final Joystick m_drivingStickBackward = new Joystick(1);
@@ -60,7 +60,7 @@ public class OI {
     //private JoystickButton shiftUpButton2; //for backwards joystick
     private final JoystickButton m_shiftDownButton2; //for backwards joystick
 
-    private DriveDirection m_driveDirection = DriveDirection.kFWD;
+    private DriveDirection m_driveDirection = DriveDirection.FWD;
 
     private final JoystickButton m_switchCam;
     private final JoystickButton m_switchCam2; //for backwards joystick
@@ -201,7 +201,7 @@ public class OI {
         m_resetEncoders.whenPressed(new ResetEncoderDistance(chassis, flap, pivot));
 
         //ROZIE STUFF!!!!
-        if (rozieDrive) {
+        if (ROZIE_DRIVE) {
             m_rozieShiftDownButton = new JoystickButton(m_roziePad, 3);
             m_rozieShiftDownButton.whenPressed(new ShiftDown(shifters));
             m_rozieFlapUp = new JoystickButton(m_roziePad, 8); //switched 7 & 8 again
@@ -219,9 +219,9 @@ public class OI {
 
 
     public double getDrivingJoystickY() {
-        if (rozieDrive) {
+        if (ROZIE_DRIVE) {
             return m_roziePad.getY();
-        } else if (m_driveDirection == DriveDirection.kFWD) {
+        } else if (m_driveDirection == DriveDirection.FWD) {
             return m_drivingStickForward.getY();
         } else {
             return -m_drivingStickBackward.getY();
@@ -229,9 +229,9 @@ public class OI {
     }
 
     public double getDrivingJoystickX() {
-        if (rozieDrive) {
+        if (ROZIE_DRIVE) {
             return m_roziePad.getX();
-        } else if (m_driveDirection == DriveDirection.kFWD) {
+        } else if (m_driveDirection == DriveDirection.FWD) {
             return m_drivingStickForward.getX();
         } else {
             return m_drivingStickBackward.getX();
@@ -248,7 +248,7 @@ public class OI {
     }
 
     public boolean isJoystickReversed() {
-        return (m_driveDirection == DriveDirection.kREV);
+        return (m_driveDirection == DriveDirection.REV);
     }
 
     public double getDPadX() {

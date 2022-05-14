@@ -44,7 +44,7 @@ public class EngageCollector extends CommandBase {
      */
     @Override
     public void execute() {
-        m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed); //-1 for competition robot, 1 for practice robot
+        m_collector.moveCollectorUpOrDown(Configuration.ENGAGE_COLLECTOR_SPEED); //-1 for competition robot, 1 for practice robot
     } //Collector arm moves down to collect and hold ball in trident
 
     /**

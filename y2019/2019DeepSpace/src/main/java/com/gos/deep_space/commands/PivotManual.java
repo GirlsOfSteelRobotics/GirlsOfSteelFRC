@@ -32,7 +32,7 @@ public class PivotManual extends CommandBase {
 
     @Override
     public void execute() {
-        if (m_direction == PivotDirection.Up) {
+        if (m_direction == PivotDirection.UP) {
             m_pivot.incrementPivot();
         } else {
             m_pivot.decrementPivot();

@@ -136,8 +136,8 @@ public class Robot extends TimedRobot {
         //       Robot.ledlights.autoLights();
 
         // Start the robot out in low gear when starting autonomous
-        m_shifters.shiftLeft(Shifters.Speed.kLow);
-        m_shifters.shiftRight(Shifters.Speed.kLow);
+        m_shifters.shiftLeft(Shifters.Speed.LOW);
+        m_shifters.shiftRight(Shifters.Speed.LOW);
     }
 
     /**
@@ -162,8 +162,8 @@ public class Robot extends TimedRobot {
         }
 
         // Start the robot out in low gear when starting teleop
-        m_shifters.shiftLeft(Shifters.Speed.kLow);
-        m_shifters.shiftRight(Shifters.Speed.kLow);
+        m_shifters.shiftLeft(Shifters.Speed.LOW);
+        m_shifters.shiftRight(Shifters.Speed.LOW);
 
         m_chassis.resetEncoderDistance();
     }

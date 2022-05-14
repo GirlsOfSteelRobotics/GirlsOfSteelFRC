@@ -8,9 +8,9 @@ import com.gos.stronghold.robot.subsystems.Pivot;
  */
 public class PivotMiddle extends CommandBase {
 
-    private static final double EncoderValueUp = -30; //based on initial position
-    private static final double EncoderValueMiddle = 0; //TODO: fix these depending on which way is positive for motor
-    private static final double EncoderValueDown = 30; //TODO: fix values
+    private static final double ENCODER_VALUE_UP = -30; //based on initial position
+    private static final double ENCODER_VALUE_MIDDLE = 0; //TODO: fix these depending on which way is positive for motor
+    private static final double ENCODER_VALUE_DOWN = 30; //TODO: fix values
     private final Pivot m_pivot;
     private double m_encoderToUse;
     private double m_speed;
@@ -24,12 +24,12 @@ public class PivotMiddle extends CommandBase {
     @Override
     public void initialize() {
         if (m_pivot.getPosition() == 1) {
-            m_encoderToUse = EncoderValueUp;
+            m_encoderToUse = ENCODER_VALUE_UP;
             m_speed = -.1;
         } else if (m_pivot.getPosition() == 0) {
-            m_encoderToUse = EncoderValueMiddle;
+            m_encoderToUse = ENCODER_VALUE_MIDDLE;
         } else {
-            m_encoderToUse = EncoderValueDown;
+            m_encoderToUse = ENCODER_VALUE_DOWN;
             m_speed = .1;
         }
 

@@ -18,7 +18,7 @@ public class ShiftUp extends CommandBase {
 
     @Override
     public void initialize() {
-        m_shifters.shiftGear(Speed.kHigh);
+        m_shifters.shiftGear(Speed.HIGH);
 
     }
 

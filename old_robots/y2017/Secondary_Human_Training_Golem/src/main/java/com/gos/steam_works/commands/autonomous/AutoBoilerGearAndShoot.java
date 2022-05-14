@@ -22,20 +22,20 @@ public class AutoBoilerGearAndShoot extends SequentialCommandGroup {
 
     public AutoBoilerGearAndShoot(Chassis chassis, Shifters shifters, Agitator agitator, Shooter shooter, Loader loader, Camera camera, double distance, Direction direction) {
 
-        addCommands(new DriveByDistance(chassis, shifters, distance, Shifters.Speed.kLow));
-        if (direction == Direction.kLeft) {
+        addCommands(new DriveByDistance(chassis, shifters, distance, Shifters.Speed.LOW));
+        if (direction == Direction.LEFT) {
             addCommands(new DriveByMotionProfile(chassis, "/home/lvuser/shortTurn.dat", "/home/lvuser/longTurn.dat", 1.0));
-        } else if (direction == Direction.kRight) {
+        } else if (direction == Direction.RIGHT) {
             addCommands(new DriveByMotionProfile(chassis, "/home/lvuser/longTurn.dat", "/home/lvuser/shortTurn.dat", 1.0));
         }
         addCommands(new DriveByVision(chassis, camera));
         addCommands(new DriveByMotionProfile(chassis, "/home/lvuser/BackupFourInches.dat", "/home/lvuser/BackupFourInches.dat", 1.0));
 
         Command turnCommand;
-        if (direction == Direction.kLeft) {
-            turnCommand = new TurnByDistance(chassis, shifters, -8.0, 3.0, Shifters.Speed.kLow);
-        } else if (direction == Direction.kRight) {
-            turnCommand = new TurnByDistance(chassis, shifters, 3.0, -2.0, Shifters.Speed.kLow);
+        if (direction == Direction.LEFT) {
+            turnCommand = new TurnByDistance(chassis, shifters, -8.0, 3.0, Shifters.Speed.LOW);
+        } else if (direction == Direction.RIGHT) {
+            turnCommand = new TurnByDistance(chassis, shifters, 3.0, -2.0, Shifters.Speed.LOW);
         } else {
             throw new IllegalArgumentException();
         }

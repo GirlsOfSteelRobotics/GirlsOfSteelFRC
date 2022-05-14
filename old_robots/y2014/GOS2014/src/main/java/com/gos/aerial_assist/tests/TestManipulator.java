@@ -25,13 +25,13 @@ public class TestManipulator extends CommandBase {
 
     @Override
     public void initialize() {
-        SmartDashboard.putBoolean(RobotMap.manipulatorSD, true);
+        SmartDashboard.putBoolean(RobotMap.MANIPULATOR_SD, true);
     }
 
     @Override
     public void execute() {
-        m_speed = SmartDashboard.getNumber(RobotMap.manipulatorSD, 0.0);
-        if (SmartDashboard.getBoolean(RobotMap.manipulatorSD, false)) {
+        m_speed = SmartDashboard.getNumber(RobotMap.MANIPULATOR_SD, 0.0);
+        if (SmartDashboard.getBoolean(RobotMap.MANIPULATOR_SD, false)) {
             m_manipulator.setJag(m_speed);
         } else {
             m_manipulator.setJag(0.0);

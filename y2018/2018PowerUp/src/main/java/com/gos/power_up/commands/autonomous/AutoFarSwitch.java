@@ -38,13 +38,13 @@ public class AutoFarSwitch extends SequentialCommandGroup {
 
         //Move Robot into position
         addCommands(new DriveByMotionMagic(chassis, DISTANCE_FORWARD_1, 0));
-        if (robotPosition == GameData.FieldSide.left) {
+        if (robotPosition == GameData.FieldSide.LEFT) {
             addCommands(new AutoTurnRight(chassis, 25.0));
         } else {
             addCommands(new AutoTurnLeft(chassis, 25.0));
         }
         addCommands(new DriveByMotionMagic(chassis, DISTANCE_SIDE, 0));
-        if (robotPosition == GameData.FieldSide.left) {
+        if (robotPosition == GameData.FieldSide.LEFT) {
             addCommands(new AutoTurnLeft(chassis, 25.0));
         } else {
             addCommands(new AutoTurnRight(chassis, 25.0));

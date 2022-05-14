@@ -18,9 +18,9 @@ public class MoveManipulatorWithSlider extends CommandBase {
     private final Joystick m_driver;
     private final Manipulator m_manipulator;
 
-    private static final double m_fullRangeOnSlider = 100;
-    private static final double m_maxManipulatorAngle = 110;
-    private static final double m_minManipulatorAngle = -3;
+    private static final double FULL_RANGE_ON_SLIDER = 100;
+    private static final double MAX_MANIPULATOR_ANGLE = 110;
+    private static final double MIN_MANIPULATOR_ANGLE = -3;
 
     public MoveManipulatorWithSlider(Joystick joystick, Manipulator manipulator) {
         m_manipulator = manipulator;
@@ -34,7 +34,7 @@ public class MoveManipulatorWithSlider extends CommandBase {
 
     @Override
     public void execute() {
-        double angle = ((m_driver.getZ() / m_fullRangeOnSlider) * m_maxManipulatorAngle) + m_minManipulatorAngle;
+        double angle = ((m_driver.getZ() / FULL_RANGE_ON_SLIDER) * MAX_MANIPULATOR_ANGLE) + MIN_MANIPULATOR_ANGLE;
         m_manipulator.setSetPoint(angle);
     }
 

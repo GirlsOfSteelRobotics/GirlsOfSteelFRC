@@ -195,15 +195,15 @@ public class Chassis extends SubsystemBase {
         if (RobotBase.isSimulation()) {
 
             LinearSystem<N2, N2, N2> kDrivetrainPlant = LinearSystemId.identifyDrivetrainSystem(
-                    DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter,
-                    DriveConstants.kvVoltSecondsPerRadian, DriveConstants.kaVoltSecondsSquaredPerRadian);
+                    DriveConstants.KV_VOLT_SECONDS_PER_METER, DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER,
+                    DriveConstants.KV_VOLT_SECONDS_PER_RADIAN, DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_RADIAN);
             DCMotor kDriveGearbox = DCMotor.getNEO(2);
 
             DifferentialDrivetrainSim drivetrainSim = new DifferentialDrivetrainSim(
                     kDrivetrainPlant,
                     kDriveGearbox,
                     GEAR_RATIO,
-                    DriveConstants.kTrackwidthMeters,
+                    DriveConstants.TRACK_WIDTH_METERS,
                     Units.inchesToMeters(WHEEL_DIAMETER) / 2.0,
                     null);
 

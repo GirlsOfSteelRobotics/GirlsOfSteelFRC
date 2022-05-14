@@ -22,7 +22,7 @@ public final class Pivot extends SubsystemBase {
     public static final double PIVOT_TOLERANCE = 100;
 
     public enum PivotDirection {
-        Up, Down
+        UP, DOWN
     }
 
     private final WPI_TalonSRX m_pivot;

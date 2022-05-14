@@ -26,7 +26,7 @@ public class ControlPanel extends SubsystemBase {
      */
 
     public enum PanelColor {
-        yellow, blue, red, green, unknown
+        YELLOW, BLUE, RED, GREEN, UNKNOWN
     }
 
     private final WPI_TalonSRX m_controlPanel; // NOPMD
@@ -72,15 +72,15 @@ public class ControlPanel extends SubsystemBase {
         final ColorMatchResult match = m_colorMatcher.matchClosestColor(m_currentColor);
 
         if (match.color == BLUE_TARGET_COLOR) {
-            m_currentPanelColor = PanelColor.blue;
+            m_currentPanelColor = PanelColor.BLUE;
         } else if (match.color == RED_TARGET_COLOR) {
-            m_currentPanelColor = PanelColor.red;
+            m_currentPanelColor = PanelColor.RED;
         } else if (match.color == GREEN_TARGET_COLOR) {
-            m_currentPanelColor = PanelColor.green;
+            m_currentPanelColor = PanelColor.GREEN;
         } else if (match.color == YELLOW_TARGET_COLOR) {
-            m_currentPanelColor = PanelColor.yellow;
+            m_currentPanelColor = PanelColor.YELLOW;
         } else {
-            m_currentPanelColor = PanelColor.unknown;
+            m_currentPanelColor = PanelColor.UNKNOWN;
         }
 
         if (m_currentPanelColor != m_lastPanelColor) {

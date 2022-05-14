@@ -36,12 +36,12 @@ public class Shooter extends SubsystemBase {
     private static final double PULSES = 100.0;
     private static final double ENCODER_UNIT = (Math.PI * WHEEL_DIAMETER * GEAR_RATIO) / PULSES;
     //don't change this! ^^ just a formula
-    private static final double yDistance = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
+    private static final double Y_DISTANCE = TOP_HOOP_HEIGHT - ROBOT_HEIGHT; //the vertical distance
     //from the shooter to the top basket
 
-    private static final double p = 0.4; //0.25; //0.25; //0.15; //0.1; //0.25;
-    private static final double i = 50.0; //2.5; //0.06; //0.0002;
-    private static final double d = 0.0;
+    private static final double KP = 0.4; //0.25; //0.25; //0.15; //0.1; //0.25;
+    private static final double KI = 50.0; //2.5; //0.06; //0.0002;
+    private static final double KD = 0.0;
     //integral threshold -> cuts of the value that is being multipled by the i term
     //with the PID output
     private static final double INTEGRAL_THRESHOLD = 2500.0; //errorSum usually stabilized around 1700
@@ -60,7 +60,7 @@ public class Shooter extends SubsystemBase {
         RobotMap.ENCODER_SHOOTER_CHANNEL_B, true,
         CounterBase.EncodingType.k4X);
     private final Relay m_topRollersSpike = new Relay(RobotMap.TOP_ROLLER_SPIKE);
-    private final EncoderGoSPidController m_pid = new EncoderGoSPidController(p, i, d, m_encoder,
+    private final EncoderGoSPidController m_pid = new EncoderGoSPidController(KP, KI, KD, m_encoder,
         this::setJags, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
 
     private final ShooterLookupTable m_shooterLookupTable;
@@ -116,7 +116,7 @@ public class Shooter extends SubsystemBase {
     //this is for the weird bug in having to reassign PID values in execute
     //must be called in execute before anything else if using the shooter PID
     public void setPIDValues() {
-        m_pid.setPID(p, i, d);
+        m_pid.setPID(KP, KI, KD);
     }
 
     public double getPIDSetPoint() {
@@ -274,12 +274,12 @@ public class Shooter extends SubsystemBase {
     //this is the long complicated physics equation that was derived with mentors
     public double getBallVelocity(double xDistance) {
         double velocity;
-        velocity = ((xDistance * Math.sqrt(9.8 / ((2 * (xDistance * Math.cos(m_angle))) - yDistance))) / Math.tan(m_angle)) * (5.5 / 4.0);
+        velocity = ((xDistance * Math.sqrt(9.8 / ((2 * (xDistance * Math.cos(m_angle))) - Y_DISTANCE))) / Math.tan(m_angle)) * (5.5 / 4.0);
         return velocity;
     }
 
     private void calculateAngle(double xDistance) {
-        m_angle = Math.atan(yDistance / xDistance); //radians
+        m_angle = Math.atan(Y_DISTANCE / xDistance); //radians
     }
 
     //the compensation that the speed of the ball has to go based on the

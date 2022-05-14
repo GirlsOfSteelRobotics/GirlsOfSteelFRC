@@ -42,9 +42,9 @@ public class TurnByDistance extends CommandBase {
         // Robot.chassis.setupFPID(leftTalon);
         // Robot.chassis.setupFPID(rightTalon);
 
-        if (m_speed == Shifters.Speed.kLow) {
+        if (m_speed == Shifters.Speed.LOW) {
             m_chassis.setPid(0.17, 0.0, 0.02, 0.0);
-        } else if (m_speed == Shifters.Speed.kHigh) {
+        } else if (m_speed == Shifters.Speed.HIGH) {
             m_chassis.setPid(0.02, 0.0, 0.04, 0.0);
         }
 
@@ -88,7 +88,7 @@ public class TurnByDistance extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        m_shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.LOW);
         System.out.println("TurnByDistance Finished");
     }
 

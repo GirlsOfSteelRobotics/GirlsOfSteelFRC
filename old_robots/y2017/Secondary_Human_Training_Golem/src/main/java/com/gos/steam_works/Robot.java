@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         System.out.println("DisabledInit shifting into high gear");
-        m_shifters.shiftGear(Shifters.Speed.kHigh);
+        m_shifters.shiftGear(Shifters.Speed.HIGH);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
         m_autonomousCommand = m_oi.getAutonCommand();
 
         // start the robot out in low gear when starting autonomous
-        m_shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.LOW);
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
         }
 
         // start robot in low gear when starting teleop
-        m_shifters.shiftGear(Shifters.Speed.kLow);
+        m_shifters.shiftGear(Shifters.Speed.LOW);
     }
 
     /**

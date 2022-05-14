@@ -24,7 +24,7 @@ public class AccessoryLeftRev extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_accessoryMotors.startLeft(Direction.kRev);
+        m_accessoryMotors.startLeft(Direction.REV);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -12,7 +12,7 @@ public class Shifters extends SubsystemBase {
     private final DoubleSolenoid m_shifterLeft;
     private final DoubleSolenoid m_shifterRight;
 
-    public enum Speed { kHigh, kLow }
+    public enum Speed { HIGH, LOW }
 
     public Shifters() {
         m_shifterLeft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SHIFTER_LEFT_A, RobotMap.SHIFTER_LEFT_B);
@@ -28,7 +28,7 @@ public class Shifters extends SubsystemBase {
     // here. Call these from Commands.
 
     public void shiftLeft(Speed speed) {
-        if (speed == Speed.kHigh) {
+        if (speed == Speed.HIGH) {
             m_shifterLeft.set(DoubleSolenoid.Value.kForward);
             System.out.println("Shifting left side into high gear (fwd)");
         } else {
@@ -38,7 +38,7 @@ public class Shifters extends SubsystemBase {
     }
 
     public void shiftRight(Speed speed) {
-        if (speed == Speed.kHigh) {
+        if (speed == Speed.HIGH) {
             m_shifterRight.set(DoubleSolenoid.Value.kForward);
             System.out.println("Shifting right side into high gear (fwd)");
         } else {
