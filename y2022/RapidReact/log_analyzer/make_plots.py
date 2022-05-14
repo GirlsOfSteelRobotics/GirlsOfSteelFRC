@@ -6,6 +6,7 @@ import plotly
 import os
 
 from libraries.scripts.datalog_parser.load_log import load_log
+import libraries.scripts.datalog_parser.utils as utils
 
 
 def plot_go_to_angle(dataframe, output_directory):
@@ -60,16 +61,44 @@ def plot_shooter_rpm(dataframe, output_directory):
 
     fig.write_html(os.path.join(output_directory, "shooter_rpm.html"))
 
+def plot_shooting_window(df, output_directory, extra_time_buffer=5):
+    # Plot the whole log
+    plot_intake_angle(df, output_directory)
+    plot_go_to_angle(df, output_directory)
+    plot_shooter_rpm(df, output_directory)
+
+    # Get the times blocks we were spinning the shooter
+    time_windows = utils.load_command_running_windows(df, "ShooterSubsystem", "AutoLimelightConveyorAndShooterCommand")
+
+    for i, (min_time, max_time) in enumerate(time_windows):
+        filtered = utils.filter_by_time(df, min_time - extra_time_buffer, max_time + extra_time_buffer)
+        filtered_output_directory = os.path.join(output_directory, f"Shooter{i}")
+        if not os.path.exists(filtered_output_directory):
+            os.mkdir(filtered_output_directory)
+
+        plot_intake_angle(filtered, filtered_output_directory)
+        plot_go_to_angle(filtered, filtered_output_directory)
+        plot_shooter_rpm(filtered, filtered_output_directory)
+
 def main():
     directory = r"C:\Users\girls\Desktop\Worlds Robot Data"
-    converted_file = os.path.join(directory, "FRC_20220420_230730_GALILEO_P8.wpilog")
+    log_name = "FRC_20220420_230730_GALILEO_P8.wpilog"
+
+#     directory = r"C:\Users\PJ\Documents\GitHub\gos_data\RapidReactRobotLogs"
+#     log_name = "FRC_20220402_203438"
+
+    converted_file = os.path.join(directory, f"{log_name}.wpilog")
+    output_directory = os.path.join(directory, log_name)
+    if not os.path.exists(output_directory):
+        os.mkdir(output_directory)
 
     df = load_log(converted_file)
-    print("\n".join(sorted(list(df.keys()))))
 
-    plot_go_to_angle(df, directory)
-    plot_intake_angle(df, directory)
-    plot_shooter_rpm(df, directory)
+    # Debug what things are in log
+    utils.save_dataframe_metadata(df, output_directory)
+    print(f"Outputing to {output_directory}")
+
+    plot_shooting_window(df, output_directory)
 
 
 if __name__ == "__main__":

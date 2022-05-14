@@ -40,7 +40,7 @@ def get_data(entry, record):
         return arr
 
 
-def load_log(file):
+def load_wpilog_log(file):
 
     with open(file, "r") as f:
         mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
@@ -68,12 +68,29 @@ def load_log(file):
         else:
             entry = entries[record.entry]
 
-            data_map[entry.name].timestamps.append(timestamp)
+            data_map[entry.name].timestamps.append(int(timestamp * 50) / 50)
             data_map[entry.name].data.append(get_data(entry, record))
 
     series = {}
     for key in data_map:
         s = pd.Series(data_map[key].data, index=data_map[key].timestamps, name=key)
+        s = s.groupby(s.index).first()
         series[key] = s
 
-    return series
+    dataframe = pd.DataFrame(series)
+
+    return dataframe
+
+def load_pandas_log(file):
+    return pd.read_hdf(file)
+
+
+def load_log(file):
+    if os.path.exists(file + ".hdf5"):
+        print("Loading hdf5 ", file)
+        return load_pandas_log(file + ".hdf5")
+    else:
+        dataframe = load_wpilog_log(file)
+        dataframe.to_hdf(file + ".hdf5", "wpilog")
+
+        return dataframe
