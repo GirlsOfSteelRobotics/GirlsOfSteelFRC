@@ -9,11 +9,11 @@ import com.gos.lib.properties.PropertyManager;
 
 public class TurnToAngle extends CommandBase {
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false,"TurnToAngleKp",
+    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false, "TurnToAngleKp",
             0.02);
-    private static final PropertyManager.IProperty<Double> AUTO_KI = PropertyManager.createDoubleProperty(false,"TurnToAngleKi",
+    private static final PropertyManager.IProperty<Double> AUTO_KI = PropertyManager.createDoubleProperty(false, "TurnToAngleKi",
             0);
-    private static final PropertyManager.IProperty<Double> AUTO_KD = PropertyManager.createDoubleProperty(false,"TurnToAngleKd",
+    private static final PropertyManager.IProperty<Double> AUTO_KD = PropertyManager.createDoubleProperty(false, "TurnToAngleKd",
             0);
 
     private final Chassis m_chassis;

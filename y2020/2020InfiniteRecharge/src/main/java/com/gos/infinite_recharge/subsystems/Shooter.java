@@ -60,8 +60,8 @@ public class Shooter extends SubsystemBase {
         m_master.restoreFactoryDefaults();
         m_follower.restoreFactoryDefaults();
 
-        m_dashboardKp = PropertyManager.createDoubleProperty(false,"shooter_kp", SHOOTER_KP);
-        m_dashboardKff = PropertyManager.createDoubleProperty(false,"shooter_kff", SHOOTER_KFF);
+        m_dashboardKp = PropertyManager.createDoubleProperty(false, "shooter_kp", SHOOTER_KP);
+        m_dashboardKff = PropertyManager.createDoubleProperty(false, "shooter_kff", SHOOTER_KFF);
 
         m_limelight = limelight;
 

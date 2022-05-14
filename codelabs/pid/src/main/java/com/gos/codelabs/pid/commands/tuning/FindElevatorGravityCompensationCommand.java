@@ -6,7 +6,7 @@ import com.gos.lib.properties.PropertyManager;
 
 public class FindElevatorGravityCompensationCommand extends CommandBase {
 
-    public static final PropertyManager.IProperty<Double> ELEVATOR_SPEED = PropertyManager.createDoubleProperty(false,"Tuning.Elevator.GravityCompensationSpeed", 0);
+    public static final PropertyManager.IProperty<Double> ELEVATOR_SPEED = PropertyManager.createDoubleProperty(false, "Tuning.Elevator.GravityCompensationSpeed", 0);
     private final ElevatorSubsystem m_elevator;
 
     public FindElevatorGravityCompensationCommand(ElevatorSubsystem elevator) {

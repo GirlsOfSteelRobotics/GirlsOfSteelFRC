@@ -6,7 +6,7 @@ import com.gos.lib.properties.PropertyManager;
 
 public class DriveDistance extends CommandBase {
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false,"DriveDistanceKp", 0.5);
+    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false, "DriveDistanceKp", 0.5);
 
     private final Chassis m_chassis;
     private final double m_distance;

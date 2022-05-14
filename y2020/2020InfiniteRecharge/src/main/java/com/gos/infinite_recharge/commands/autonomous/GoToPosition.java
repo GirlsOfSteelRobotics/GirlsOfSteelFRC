@@ -20,8 +20,8 @@ public class GoToPosition extends CommandBase {
     private final double m_finalPositionX;
     private final double m_finalPositionY;
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false,"DriveToPointDriveKp", 0.04);
-    private static final PropertyManager.IProperty<Double> AUTO_KP_ANGLE = PropertyManager.createDoubleProperty(false,"DriveToPointSteerKp",  0.25);
+    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false, "DriveToPointDriveKp", 0.04);
+    private static final PropertyManager.IProperty<Double> AUTO_KP_ANGLE = PropertyManager.createDoubleProperty(false, "DriveToPointSteerKp",  0.25);
 
     public GoToPosition(Chassis chassis, double finalPositionX, double finalPositionY, double allowableError) {
         // Use requires() here to declare subsystem dependencies
