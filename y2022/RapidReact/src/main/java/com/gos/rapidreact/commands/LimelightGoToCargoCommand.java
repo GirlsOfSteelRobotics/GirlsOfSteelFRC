@@ -18,7 +18,7 @@ public class LimelightGoToCargoCommand extends CommandBase {
         this.m_limelight = intakeLimelightSubsystem;
         this.m_collector = collectorSubsystem;
 
-        addRequirements(this.m_chassis, this.m_limelight, this.m_collector);
+        addRequirements(this.m_chassis, this.m_limelight);
     }
 
     @Override
@@ -31,6 +31,8 @@ public class LimelightGoToCargoCommand extends CommandBase {
         if (m_limelight.isVisible() && m_limelight.distanceToCargo() < ChassisSubsystem.TO_XY_MAX_DISTANCE.getValue()) {
             m_atPosition = m_chassis.driveAndTurnPID(m_limelight.distanceToCargo(), m_limelight.getAngle());
             m_collector.rollerIn();
+        } else {
+            m_chassis.setArcadeDrive(0, 0);
         }
     }
 

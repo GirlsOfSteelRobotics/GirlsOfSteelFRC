@@ -11,22 +11,24 @@ import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"})
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
-    private static final double PIVOT_SPEED = .75;
+    private static final double PIVOT_SPEED = .3;
     public static final double ALLOWABLE_ERROR_DEG = 1;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
-    private static final double GEARING =  756.0;
+    private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
@@ -36,12 +38,13 @@ public class CollectorSubsystem extends SubsystemBase {
 
     // TODO play with these numbers for optimal ball pickup
     public static final double UP_ANGLE = 80;
-    public static final double DOWN_ANGLE = RobotBase.isReal() ? -1 : 0;
+    public static final double DOWN_ANGLE_TELE = RobotBase.isReal() ? -1 : 0;
+    public static final double DOWN_ANGLE_AUTO = RobotBase.isReal() ? 7 : 0;
 
     // From SysId
-    private static final double PIVOT_KS = 0.1831;
-    //private static final double PIVOT_KV = 0.12391;
-    //private static final double PIVOT_KA = 0.0063637;
+    private static final double PIVOT_KS = 0.18148;
+    //private static final double PIVOT_KV = 0.12495;
+    //private static final double PIVOT_KA = 0.0051913;
 
     private final SimableCANSparkMax m_roller;
     private final SimableCANSparkMax m_pivotLeft;
@@ -58,28 +61,32 @@ public class CollectorSubsystem extends SubsystemBase {
     private final PidProperty m_pivotPIDRight;
     private final SparkMaxPIDController m_pidControllerRight;
 
-    private SingleJointedArmSimWrapper m_simulator;
+    private SingleJointedArmSimWrapper m_leftSimulator;
+    private SingleJointedArmSimWrapper m_rightSimulator;
 
     private final DigitalInput m_limitSwitch;
 
-
-    private double m_pivotChangingSetpoint = DOWN_ANGLE;
+    // Logging
+    private final NetworkTableEntry m_leftIntakeAngleEntry;
+    private final NetworkTableEntry m_leftIntakeVelocityEntry;
+    private final NetworkTableEntry m_rightIntakeAngleEntry;
+    private final NetworkTableEntry m_rightIntakeVelocityEntry;
+    private final NetworkTableEntry m_intakeSwitchPressedEntry;
+    private final NetworkTableEntry m_intakeAngleGoalEntry;
 
     public CollectorSubsystem() {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller.restoreFactoryDefaults();
         m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotLeft.restoreFactoryDefaults();
         m_pivotLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotLeft.setInverted(true);
 
-        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotRight.restoreFactoryDefaults();
         m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
-
-        m_pivotRight.follow(m_pivotLeft, true);
 
         m_pivotEncoderLeft = m_pivotLeft.getEncoder();
         m_pivotEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
@@ -105,17 +112,27 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotLeft.burnFlash();
         m_pivotRight.burnFlash();
 
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("CollectorSubsystem");
+        m_leftIntakeAngleEntry = loggingTable.getEntry("Left Intake (deg)");
+        m_leftIntakeVelocityEntry = loggingTable.getEntry("Left Intake (dps)");
+        m_rightIntakeAngleEntry = loggingTable.getEntry("Right Intake (deg)");
+        m_rightIntakeVelocityEntry = loggingTable.getEntry("Right Intake (dps)");
+        m_intakeSwitchPressedEntry = loggingTable.getEntry("Limit Switch");
+        m_intakeAngleGoalEntry = loggingTable.getEntry("Angle Goal");
+
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
                 ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
-            m_simulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotLeft),
+            m_leftSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotLeft),
                 RevEncoderSimWrapper.create(m_pivotLeft), true);
+            m_rightSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotRight),
+                RevEncoderSimWrapper.create(m_pivotRight), true);
         }
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Collector", false, pidController, 0)
-            .addP(0)
+            .addP(0) //0.20201
             .addI(0)
             .addD(0)
             .addFF(0)
@@ -126,11 +143,12 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Pivot Lead Encoder (rad)", getIntakeLeftAngleRadians());
-        SmartDashboard.putNumber("Pivot Lead Encoder (deg)", getIntakeLeftAngleDegrees());
-        SmartDashboard.putNumber("Pivot Lead Encoder (deg/sec)", m_pivotEncoderLeft.getVelocity());
-        SmartDashboard.putNumber("Pivot Follow Encoder (deg)", getIntakeRightAngleDegrees());
-        SmartDashboard.putBoolean("Intake LS", limitSwitchPressed());
+        m_leftIntakeAngleEntry.setNumber(getIntakeLeftAngleDegrees());
+        m_leftIntakeVelocityEntry.setNumber(m_pivotEncoderLeft.getVelocity());
+        m_rightIntakeAngleEntry.setNumber(getIntakeRightAngleDegrees());
+        m_rightIntakeVelocityEntry.setNumber(m_pivotEncoderRight.getVelocity());
+        m_intakeSwitchPressedEntry.setBoolean(limitSwitchPressed());
+
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();
     }
@@ -144,20 +162,12 @@ public class CollectorSubsystem extends SubsystemBase {
         else {
             m_pivotLeft.set(-PIVOT_SPEED);
             m_pivotRight.set(-PIVOT_SPEED);
-            m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
         }
     }
 
     public void collectorUp() {
         m_pivotLeft.set(PIVOT_SPEED);
         m_pivotRight.set(PIVOT_SPEED);
-
-        m_pivotChangingSetpoint = getIntakeLeftAngleDegrees();
-    }
-
-    public void pivotToMagicAngle() {
-        SmartDashboard.putNumber("AHHHH", m_pivotChangingSetpoint);
-        collectorToAngle(m_pivotChangingSetpoint);
     }
 
     public boolean limitSwitchPressed() {
@@ -181,24 +191,17 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotRight.set(0);
     }
 
-    public void collectorDownPID() {
-        collectorToAngle(DOWN_ANGLE);
-    }
-
-    public void collectorUpPID() {
-        collectorToAngle(Math.toRadians(UP_ANGLE));
-    }
-
     /**
      * gets pivot point of collector to given angle using pid
      * @param pivotAngleDegreesGoal *IN DEGREES*
      */
-    public void collectorToAngle(double pivotAngleDegreesGoal) {
+    public boolean collectorToAngle(double pivotAngleDegreesGoal) {
+        m_intakeAngleGoalEntry.setNumber(pivotAngleDegreesGoal);
 
         if (pivotAngleDegreesGoal < getIntakeLeftAngleDegrees() && limitSwitchPressed()) {
             pivotStop();
+            return true;
         }
-
         else {
             double errorLeft = pivotAngleDegreesGoal - getIntakeLeftAngleDegrees();
             double errorRight = pivotAngleDegreesGoal - getIntakeRightAngleDegrees();
@@ -210,6 +213,9 @@ public class CollectorSubsystem extends SubsystemBase {
             double arbFeedforwardRight = gravityOffset + staticFrictionRight;
             m_pidControllerLeft.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardLeft);
             m_pidControllerRight.setReference(pivotAngleDegreesGoal, CANSparkMax.ControlType.kSmartMotion, 0, arbFeedforwardRight);
+
+            double error = Math.abs(pivotAngleDegreesGoal - getIntakeLeftAngleDegrees());
+            return error < CollectorSubsystem.ALLOWABLE_ERROR_DEG;
         }
 
     }
@@ -240,7 +246,8 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        m_simulator.update();
+        m_leftSimulator.update();
+        m_rightSimulator.update();
     }
 
     public final void resetPivotEncoder() {
