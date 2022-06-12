@@ -35,7 +35,6 @@ import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import com.gos.rapidreact.subsystems.CollectorSubsystem;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 import com.gos.rapidreact.subsystems.LEDManagerSubsystem;
-import com.gos.rapidreact.subsystems.PrideLEDManagerSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import com.gos.rapidreact.trajectory.TestTrajectoryStraight;
 import com.gos.rapidreact.trajectory.TrajectoryB54;
@@ -80,7 +79,6 @@ public class RobotContainer {
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
     private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector, m_shooterLimelight);
     private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_shooterLimelight, m_shooter, m_collector, m_verticalConveyor, m_autoModeFactory); // NOPMD
-    // private final PrideLEDManagerSubsystem m_prideLED = new PrideLEDManagerSubsystem();
 
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
