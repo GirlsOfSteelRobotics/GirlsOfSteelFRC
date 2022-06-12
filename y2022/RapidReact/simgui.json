@@ -31,6 +31,7 @@
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
       "/LiveWindow/LEDManagerSubsystem": "Subsystem",
+      "/LiveWindow/PrideLEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterLimelightSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
@@ -124,6 +125,9 @@
     }
   },
   "NetworkTables": {
+    "Chassis": {
+      "open": true
+    },
     "Shuffleboard": {
       "open": true,
       "superstructure widgets": {
