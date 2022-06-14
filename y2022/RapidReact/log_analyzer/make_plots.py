@@ -69,8 +69,12 @@ def plot_shooting_window(df, output_directory, extra_time_buffer=5):
 
     # Get the times blocks we were spinning the shooter
     time_windows = utils.load_command_running_windows(df, "ShooterSubsystem", "AutoLimelightConveyorAndShooterCommand")
+    print(time_windows)
 
     for i, (min_time, max_time) in enumerate(time_windows):
+        if min_time is None or max_time is None:
+            print("Uh oh")
+            continue
         filtered = utils.filter_by_time(df, min_time - extra_time_buffer, max_time + extra_time_buffer)
         filtered_output_directory = os.path.join(output_directory, f"Shooter{i}")
         if not os.path.exists(filtered_output_directory):
@@ -82,7 +86,7 @@ def plot_shooting_window(df, output_directory, extra_time_buffer=5):
 
 def main():
     directory = r"C:\Users\girls\Desktop\Worlds Robot Data"
-    log_name = "FRC_20220420_230730_GALILEO_P8.wpilog"
+    log_name = "FRC_20220421_153958_GALILEO_Q18"
 
 #     directory = r"C:\Users\PJ\Documents\GitHub\gos_data\RapidReactRobotLogs"
 #     log_name = "FRC_20220402_203438"
