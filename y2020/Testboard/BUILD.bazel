@@ -1,4 +1,0 @@
-alias(
-    name = "Testboard",
-    actual = "//y2020/Testboard/src/main/java/com/gos/testboard2020",
-)

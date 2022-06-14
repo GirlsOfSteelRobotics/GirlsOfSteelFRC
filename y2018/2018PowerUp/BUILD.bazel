@@ -1,4 +1,0 @@
-alias(
-    name = "2018PowerUp",
-    actual = "//y2018/2018PowerUp/src/main/java/com/gos/power_up",
-)

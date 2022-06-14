@@ -1,4 +1,0 @@
-alias(
-    name = "2020InfiniteRecharge",
-    actual = "//y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge",
-)

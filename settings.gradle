@@ -33,20 +33,19 @@ include 'old_robots:y2017:Secondary_Human_Training_Golem'
 include 'old_robots:y2017:Team1'
 include 'old_robots:y2017:Team_2'
 
-include 'y2018:2018PowerUp'
+include 'old_robots:y2018:2018PowerUp'
 
-include 'y2019:2019DeepSpace'
-include 'y2019:OffenseBot'
+include 'old_robots:y2019:2019DeepSpace'
+include 'old_robots:y2019:OffenseBot'
 
-include 'y2020:2020InfiniteRecharge'
-include 'y2020:2020InfiniteRechargeDashboard'
-include 'y2020:Testboard'
+include 'old_robots:y2020:2020InfiniteRecharge'
+include 'old_robots:y2020:2020InfiniteRechargeDashboard'
+include 'old_robots:y2020:Testboard'
 
-include 'y2021:OutreachBot'
-include 'y2021:OutreachBotDashboard'
+include 'old_robots:y2021:OutreachBot'
+include 'old_robots:y2021:OutreachBotDashboard'
 
 include 'y2022:ChassisProject'
-
 include 'y2022:RapidReact'
 include 'y2022:RapidReactDashboard'
 

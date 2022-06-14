@@ -1,0 +1,21 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "RobotMap",
+    srcs = ["RobotMap.java"],
+    visibility = ["//old_robots/y2019/OffenseBot:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "offense2019",
+    srcs = glob(["*.java"]),
+    main_class = "com.gos.offense2019.Main",
+    visibility = ["//old_robots/y2019/OffenseBot:__subpackages__"],
+    deps = [
+        "//old_robots/y2019/OffenseBot/src/main/java/com/gos/offense2019/commands",
+        "//old_robots/y2019/OffenseBot/src/main/java/com/gos/offense2019/subsystems",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

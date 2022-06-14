@@ -1,4 +1,0 @@
-alias(
-    name = "2019DeepSpace",
-    actual = "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space",
-)
