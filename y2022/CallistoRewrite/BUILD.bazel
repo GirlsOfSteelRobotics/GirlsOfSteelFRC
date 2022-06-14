@@ -1,4 +1,0 @@
-alias(
-    name = "CallistoRewrite",
-    actual = "//y2022/CallistoRewrite/src/main/java/com/gos/calisto/v2",
-)
