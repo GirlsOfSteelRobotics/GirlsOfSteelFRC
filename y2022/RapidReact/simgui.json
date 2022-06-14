@@ -31,7 +31,6 @@
       "/LiveWindow/HorizontalConveyorSubsystem": "Subsystem",
       "/LiveWindow/IntakeLimelightSubsystem": "Subsystem",
       "/LiveWindow/LEDManagerSubsystem": "Subsystem",
-      "/LiveWindow/PrideLEDManagerSubsystem": "Subsystem",
       "/LiveWindow/ShooterLimelightSubsystem": "Subsystem",
       "/LiveWindow/ShooterSubsystem": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
@@ -56,7 +55,11 @@
       "/Shuffleboard/test commands/CollectorDownCommand": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 10 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 20 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 30 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 45 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 60 Degrees": "Command",
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 70 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 80 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 90 Degrees": "Command",
       "/Shuffleboard/test commands/CollectorUpCommand": "Command",
@@ -97,7 +100,7 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 0 Degrees": {
+      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 30 Degrees": {
         "window": {
           "visible": true
         }
@@ -126,19 +129,27 @@
   },
   "NetworkTables": {
     "Chassis": {
+      "Odometry": {
+        "open": true
+      },
+      "TurnToAngle": {
+        "open": true
+      },
+      "open": true
+    },
+    "CollectorSubsystem": {
+      "open": true
+    },
+    "Preferences": {
       "open": true
     },
     "Shuffleboard": {
-      "open": true,
       "superstructure widgets": {
         "SuperstructureSendable": {
           "open": true
         },
         "open": true
       }
-    },
-    "SmartDashboard": {
-      "open": true
     }
   }
 }

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings({"PMD.TooManyFields", "PMD.UnusedPrivateMethod", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
@@ -96,18 +97,19 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_autoPivotAtAngle = new MirroredLEDBoolean(m_buffer, 25, 4, Color.kPapayaWhip, Color.kBlack);
 
-        Map<AutoModeFactory.AutonMode, LEDPattern> autonColorMap = Map.of(
-            AutoModeFactory.AutonMode.DRIVE_OFF_TARMAC, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kRed),
-            AutoModeFactory.AutonMode.ONE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kOrange),
-            AutoModeFactory.AutonMode.ONE_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kOrange),
-            AutoModeFactory.AutonMode.TWO_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kYellow),
-            AutoModeFactory.AutonMode.TWO_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kYellow),
-            AutoModeFactory.AutonMode.THREE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kGreen),
-            AutoModeFactory.AutonMode.FOUR_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kBlue),
-            AutoModeFactory.AutonMode.FOUR_BALL_HALF_HIGH, new MirroredLEDMovingPixel(m_buffer, 0, 20, Color.kBlue),
-            AutoModeFactory.AutonMode.FOUR_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kBlue),
-            AutoModeFactory.AutonMode.FIVE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kPurple)
-        );
+        Map<AutoModeFactory.AutonMode, LEDPattern> autonColorMap  = new HashMap<>();
+        autonColorMap.put(AutoModeFactory.AutonMode.DRIVE_OFF_TARMAC, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kRed));
+        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kOrange));
+        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kOrange));
+        autonColorMap.put(AutoModeFactory.AutonMode.TWO_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kYellow));
+        autonColorMap.put(AutoModeFactory.AutonMode.TWO_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kYellow));
+        autonColorMap.put(AutoModeFactory.AutonMode.THREE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kGreen));
+        autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kBlue));
+        autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_HALF_HIGH, new MirroredLEDMovingPixel(m_buffer, 0, 20, Color.kBlue));
+        autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kBlue));
+        autonColorMap.put(AutoModeFactory.AutonMode.SABOTAGE_UPPER, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kPurple));
+        autonColorMap.put(AutoModeFactory.AutonMode.SABOTAGE_LOWER, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kPurple));
+
         m_autoMode = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
 
         m_autoUpperIndexSensor = new MirroredLEDBoolean(m_buffer, 20, 4, Color.kFuchsia, Color.kBlack);

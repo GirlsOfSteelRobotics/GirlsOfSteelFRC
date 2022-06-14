@@ -16,7 +16,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(27.25);
     private static final Number[] RED_CARGO_PARAMS = {0};
     private static final Number[] BLUE_CARGO_PARAMS = {1};
-    private static final double FANCY_PIPELINE = 2;
+    private static final double FANCY_PIPELINE = 3;
     private static final double EXTRA_DISTANCE = Units.feetToMeters(0.5); //want to go past estimated to ensure it gets to the cargo
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
