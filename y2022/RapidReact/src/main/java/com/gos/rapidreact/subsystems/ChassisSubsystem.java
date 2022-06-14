@@ -315,6 +315,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.arcadeDrive(speed, steer);
     }
 
+    /**
+     * used to find the angle error
+     */
     public boolean goToCargo(double xCoordinate, double yCoordinate) {
 
         double xCurrent = m_odometry.getPoseMeters().getX();
@@ -330,6 +333,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return driveAndTurnPID(hDistance, angleError);
     }
 
+    /**
+     * turn to angle with pid -- always updating with limelight feed for autonomously driving to cargo
+     * move at constant speed because didn't want to slow down
+     */
     public boolean driveAndTurnPID(double distance, double angle) {
         double allowableDistanceError = Units.inchesToMeters(12.0); //for go to cargo
         double allowableAngleError = Units.degreesToRadians(5.0);

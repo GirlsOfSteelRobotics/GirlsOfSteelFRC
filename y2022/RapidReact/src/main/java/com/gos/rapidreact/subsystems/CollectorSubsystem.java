@@ -27,7 +27,8 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
     private static final double PIVOT_SPEED = .3;
     public static final double ALLOWABLE_ERROR_DEG = 1;
-    public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
+    public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET =
+        PropertyManager.createDoubleProperty(false, "Gravity Offset", 0); // PID constant to counteract gravity when wanting to move intake up
     private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
@@ -36,7 +37,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double ARM_MASS_KG = Units.lbsToKilograms(5);
     private static final boolean SIMULATE_GRAVITY = true;
 
-    // TODO play with these numbers for optimal ball pickup
+    // intake angle down more than goal angle -- use magnetic limit switch to stop intake before reaching pid angle
     public static final double UP_ANGLE = 80;
     public static final double DOWN_ANGLE_TELE = RobotBase.isReal() ? -1 : 0;
     public static final double DOWN_ANGLE_AUTO = RobotBase.isReal() ? 7 : 0;
@@ -267,6 +268,7 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotEncoderRight.setPosition(90);
     }
 
+    //
     public boolean getIndexSensor() {
         return !m_indexSensor.get();
     }
