@@ -1,4 +1,4 @@
-package com.gos.rapidreact.led;
+package com.gos.lib.led;
 
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
