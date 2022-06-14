@@ -1,4 +1,6 @@
-py_binary(
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary")
+
+gos_py_binary(
     name = "lint_gradlerio_versions",
     srcs = ["lint_gradlerio_versions.py"],
     deps = ["@rules_python//python/runfiles"],

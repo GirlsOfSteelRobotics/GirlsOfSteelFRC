@@ -1,6 +1,11 @@
-load("@rules_pmd//pmd:defs.bzl", "pmd")
+"""
+Girls of Steel rules for java. Mostly just adds automatic hooks into styleguide tools
+"""
+
 load("@bazelrio//:defs.bzl", "robot_java_binary")
 load("@rule_junit//tools:junit.bzl", junit4_tests = "junit_tests")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@rules_pmd//pmd:defs.bzl", "pmd")
 
 def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
     if not disable_pmd:
@@ -11,13 +16,13 @@ def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
             tags = ["java-styleguide"],
         )
     else:
-        print("PMD Disabled for " + name)
+        print("PMD Disabled for " + name)  # buildifier: disable=print
 
 def get_default_javac_opts():
     return ["-Werror", "-Xlint:all"]
 
 def gos_java_library(name, srcs, disable_pmd = False, disable_checkstyle = False, javacopts = [], **kwargs):
-    native.java_library(
+    java_library(
         name = name,
         srcs = srcs,
         javacopts = get_default_javac_opts() + javacopts,
@@ -35,7 +40,7 @@ def gos_java_binary(
         disable_pmd = False,
         disable_checkstyle = False,
         **kwargs):
-    native.java_binary(
+    java_binary(
         name = name,
         srcs = srcs,
         deps = deps,
