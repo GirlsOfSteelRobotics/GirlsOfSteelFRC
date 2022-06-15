@@ -179,7 +179,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private void shooterLights() {
         // Set, but don't necessarily write to the strip
-        m_angleToHub.angleToTarget(m_shooterLimelight.angleError());
+        m_angleToHub.angleToTarget(m_shooterLimelight.getAngle());
         m_angleToHubReady.setState(m_shooterLimelight.atAcceptableAngle());
         m_correctShootingDistance.setState(m_shooterLimelight.atAcceptableDistance());
         m_noLimelight.setState(!m_shooterLimelight.isVisible());
