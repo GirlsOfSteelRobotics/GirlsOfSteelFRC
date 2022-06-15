@@ -34,8 +34,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
+        m_leaderLeft.setInverted(true);
+        m_leaderRight.setInverted(false);
 
         m_followerLeft.follow(m_leaderLeft);
         m_followerRight.follow(m_leaderRight);
