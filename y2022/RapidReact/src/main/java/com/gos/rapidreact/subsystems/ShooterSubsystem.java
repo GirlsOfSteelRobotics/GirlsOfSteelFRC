@@ -5,7 +5,7 @@ import com.gos.lib.DeadbandHelper;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.ShooterLookupTable;
+import com.gos.rapidreact.subsystems.utils.ShooterLookupTable;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;

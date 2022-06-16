@@ -12,6 +12,12 @@ import com.gos.steam_works.RobotMap;
  *
  */
 public class Chassis extends SubsystemBase {
+
+
+    public enum TeleDriveDirection {
+        FWD, REV
+    }
+
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -21,6 +27,8 @@ public class Chassis extends SubsystemBase {
     private final WPI_TalonSRX m_driveRightC;
 
     private final DifferentialDrive m_robotDrive;
+
+    private TeleDriveDirection m_teleDriveDirection = TeleDriveDirection.FWD;
 
     public Chassis() {
         m_driveLeftA = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_A);
@@ -66,7 +74,9 @@ public class Chassis extends SubsystemBase {
         addChild("driveRightC", m_driveRightC);
     }
 
-
+    public void setTeleDriveDirection(TeleDriveDirection direction) {
+        m_teleDriveDirection = direction;
+    }
 
     public WPI_TalonSRX getLeftTalon() {
         return m_driveLeftA;
@@ -80,8 +90,24 @@ public class Chassis extends SubsystemBase {
         m_robotDrive.arcadeDrive(throttle, turn);
     }
 
+    public void arcadeDriveTele(double throttle, double turn) {
+        if (m_teleDriveDirection == TeleDriveDirection.FWD) {
+            arcadeDrive(throttle, turn);
+        } else if (m_teleDriveDirection == TeleDriveDirection.REV) {
+            arcadeDrive(-throttle, -turn);
+        }
+    }
+
     public void tankDrive(double left, double right) {
         m_robotDrive.tankDrive(left, right);
+    }
+
+    public void tankDriveTele(double left, double right) {
+        if (m_teleDriveDirection == TeleDriveDirection.FWD) {
+            tankDrive(left, right);
+        } else if (m_teleDriveDirection == TeleDriveDirection.REV) {
+            tankDrive(-left, -right);
+        }
     }
 
     public final void setupEncoder(WPI_TalonSRX talon) { // only call this on non-follower

@@ -1,24 +1,23 @@
 package com.gos.stronghold.robot.commands;
 
+import com.gos.stronghold.robot.subsystems.Chassis;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.stronghold.robot.OI;
-import com.gos.stronghold.robot.OI.DriveDirection;
 
 /**
  *
  */
 public class DriveForward extends CommandBase {
 
-    private final OI m_oi;
+    private final Chassis m_chassis;
 
-    public DriveForward(OI oi) {
-        m_oi = oi;
+    public DriveForward(Chassis chassis) {
+        m_chassis = chassis;
     }
 
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
-        m_oi.setDriveDirection(DriveDirection.FWD);
+        m_chassis.setTeleDriveDirection(Chassis.TeleDriveDirection.FWD);
     }
 
     // Called repeatedly when this Command is scheduled to run

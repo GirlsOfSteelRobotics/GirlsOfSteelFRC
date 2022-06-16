@@ -1,0 +1,14 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "autonomous",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2016/Neohuman_Assassination_Golem:__subpackages__"],
+    deps = [
+        "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/commands",
+        "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@snobot_sim//jar",
+    ],
+)

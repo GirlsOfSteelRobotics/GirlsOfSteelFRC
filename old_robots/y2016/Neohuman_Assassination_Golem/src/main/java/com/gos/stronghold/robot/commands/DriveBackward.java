@@ -1,24 +1,23 @@
 package com.gos.stronghold.robot.commands;
 
+import com.gos.stronghold.robot.subsystems.Chassis;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.stronghold.robot.OI;
-import com.gos.stronghold.robot.OI.DriveDirection;
 
 /**
  *
  */
 public class DriveBackward extends CommandBase {
 
-    private final OI m_oi;
+    private final Chassis m_chassis;
 
-    public DriveBackward(OI oi) {
-        m_oi = oi;
+    public DriveBackward(Chassis chassis) {
+        m_chassis = chassis;
     }
 
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
-        m_oi.setDriveDirection(DriveDirection.REV);
+        m_chassis.setTeleDriveDirection(Chassis.TeleDriveDirection.REV);
     }
 
     // Called repeatedly when this Command is scheduled to run

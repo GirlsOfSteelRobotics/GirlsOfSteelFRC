@@ -11,6 +11,8 @@ import com.gos.stronghold.robot.RobotMap;
  *
  */
 public class Chassis extends SubsystemBase {
+    public enum TeleDriveDirection { FWD, REV }
+
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -26,6 +28,8 @@ public class Chassis extends SubsystemBase {
 
     private double m_rotateToAngleRate;
     private final Shifters m_shifters;
+
+    private TeleDriveDirection m_driveDirection = TeleDriveDirection.FWD;
 
     public Chassis(Shifters shifters) {
         m_shifters = shifters;
@@ -80,6 +84,14 @@ public class Chassis extends SubsystemBase {
 
     }
 
+    public void setTeleDriveDirection(TeleDriveDirection driveDirection) {
+        this.m_driveDirection = driveDirection;
+        System.out.println("Drive direction set to: " + driveDirection);
+    }
+
+    public TeleDriveDirection getTeleDrivingDirection() {
+        return m_driveDirection;
+    }
 
 
     public void driveByJoystick(double y, double x) {

@@ -1,0 +1,37 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//codelabs/pid:__subpackages__"],
+    deps = [
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+    ],
+)
+
+gos_java_library(
+    name = "SmartDashboardNames",
+    srcs = ["SmartDashboardNames.java"],
+    visibility = ["//codelabs/pid:__subpackages__"],
+    deps = [
+    ],
+)
+
+gos_java_robot(
+    name = "pid",
+    srcs = glob(["*.java"]),
+    main_class = "com.gos.codelabs.pid.Main",
+    visibility = ["//codelabs/pid:__subpackages__"],
+    deps = [
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/auton_modes",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/auton",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/tuning",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@bazelrio//libraries/java/wpilib/wpiutil",
+    ],
+)

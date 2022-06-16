@@ -1,8 +1,8 @@
 package com.gos.stronghold.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.gos.stronghold.robot.OI;
 import com.gos.stronghold.robot.subsystems.Chassis;
 
 /**
@@ -10,11 +10,11 @@ import com.gos.stronghold.robot.subsystems.Chassis;
  */
 public class DriveByJoystick extends CommandBase {
 
-    private final OI m_oi;
+    private final Joystick m_drivingStickForward = new Joystick(0);
+    private final Joystick m_drivingStickBackward = new Joystick(1);
     private final Chassis m_chassis;
 
-    public DriveByJoystick(OI oi, Chassis chassis) {
-        m_oi = oi;
+    public DriveByJoystick(Chassis chassis) {
         m_chassis = chassis;
         addRequirements(m_chassis);
     }
@@ -29,7 +29,13 @@ public class DriveByJoystick extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        m_chassis.driveByJoystick(m_oi.getDrivingJoystickY(), m_oi.getDrivingJoystickX());
+        if (m_chassis.getTeleDrivingDirection() == Chassis.TeleDriveDirection.FWD) {
+            m_chassis.driveByJoystick(m_drivingStickForward.getY(), m_drivingStickForward.getX());
+        } else if (m_chassis.getTeleDrivingDirection() == Chassis.TeleDriveDirection.REV) {
+            m_chassis.driveByJoystick(-m_drivingStickForward.getY(), m_drivingStickBackward.getX());
+        } else {
+            throw new IllegalArgumentException();
+        }
         m_chassis.printEncoderValues();
     }
 

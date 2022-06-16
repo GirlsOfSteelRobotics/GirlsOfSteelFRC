@@ -1,6 +1,11 @@
 package com.gos.steam_works;
 
+import com.gos.steam_works.commands.DriveJoystickArcadeGamepad;
+import com.gos.steam_works.commands.DriveJoystickArcadeOneStick;
+import com.gos.steam_works.commands.DriveJoystickTankGamepad;
+import com.gos.steam_works.commands.DriveJoystickTankTwoStick;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.steam_works.commands.Climb;
@@ -8,7 +13,6 @@ import com.gos.steam_works.commands.CombinedShoot;
 import com.gos.steam_works.commands.CombinedShootGear;
 import com.gos.steam_works.commands.CombinedShootKey;
 import com.gos.steam_works.commands.DecrementHighShooter;
-import com.gos.steam_works.commands.Drive;
 import com.gos.steam_works.commands.DriveByDistance;
 import com.gos.steam_works.commands.IncrementHighShooter;
 import com.gos.steam_works.commands.ShiftDown;
@@ -34,17 +38,8 @@ import com.gos.steam_works.subsystems.Shooter;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.CyclomaticComplexity", "PMD.NcssCount"})
+@SuppressWarnings({"PMD.GodClass", "PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.CyclomaticComplexity", "PMD.NcssCount", "PMD.NPathComplexity"})
 public class OI {
-
-    public enum DriveDirection {
-        FWD, REV
-    }
-
-    public enum JoystickScaling {
-        LINEAR, DEADBAND, QUADRATIC
-    }
-
 
     //Drive Styles
     //gamepad: tank, split arcade
@@ -53,21 +48,15 @@ public class OI {
         ONE_STICK_ARCADE, GAME_PAD_ARCADE, TWO_STICK_TANK, GAME_PAD_TANK, DROPERATION
     }
 
-    private static final double DEADBAND = 0.3; //TODO: find a good value
-
     private static final DriveStyle DRIVE_STYLE = DriveStyle.ONE_STICK_ARCADE;
 
     private Joystick m_drivingStickForward;
     private Joystick m_drivingStickBackward;
     private Joystick m_drivingStickRight;
     private Joystick m_drivingStickLeft;
-    private Joystick m_drivingGamePad;
+    private XboxController m_drivingGamePad;
     private final Joystick m_operatingGamePad;
     private final Joystick m_autonSelector;
-
-    private DriveDirection m_driveDirection = DriveDirection.FWD;
-
-    private JoystickScaling m_joystickScale = JoystickScaling.LINEAR;
 
     private JoystickButton m_switchToForward;
     private JoystickButton m_switchToBackward;
@@ -110,14 +99,14 @@ public class OI {
             m_drivingStickForward = new Joystick(1);
             m_drivingStickBackward = new Joystick(2);
         } else if (DRIVE_STYLE == DriveStyle.GAME_PAD_ARCADE) {
-            m_drivingGamePad = new Joystick(1);
+            m_drivingGamePad = new XboxController(1);
         } else if (DRIVE_STYLE == DriveStyle.TWO_STICK_TANK) {
             m_drivingStickRight = new Joystick(1);
             m_drivingStickLeft = new Joystick(2);
         } else if (DRIVE_STYLE == DriveStyle.GAME_PAD_TANK) {
-            m_drivingGamePad = new Joystick(1);
+            m_drivingGamePad = new XboxController(1);
         } else if (DRIVE_STYLE == DriveStyle.DROPERATION) {
-            m_drivingGamePad = new Joystick(1);
+            m_drivingGamePad = new XboxController(1);
         }
 
         //BUTTON ASSIGNMENTS
@@ -164,8 +153,8 @@ public class OI {
 
             // DRIVING BUTTONS
             // Button to change between drive joysticks on trigger of both joysticks
-            m_switchToForward.whenPressed(new SwitchForward(this, m_chassis, m_camera));
-            m_switchToBackward.whenPressed(new SwitchBackward(this, m_chassis, m_camera));
+            m_switchToForward.whenPressed(new SwitchForward(m_chassis, m_camera));
+            m_switchToBackward.whenPressed(new SwitchBackward(m_chassis, m_camera));
             // Buttons for shifters
             m_shifterDown.whenPressed(new ShiftDown(m_shifters));
             m_shifterUp.whenPressed(new ShiftUp(m_shifters));
@@ -197,7 +186,23 @@ public class OI {
         driveByVision.whenPressed(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));*/
 
         // Default commands
-        m_chassis.setDefaultCommand(new Drive(this, m_chassis));
+        switch (DRIVE_STYLE) {
+        case ONE_STICK_ARCADE:
+            m_chassis.setDefaultCommand(new DriveJoystickArcadeOneStick(m_drivingStickRight, m_chassis));
+            break;
+        case GAME_PAD_ARCADE:
+            m_chassis.setDefaultCommand(new DriveJoystickArcadeGamepad(m_drivingGamePad, m_chassis));
+            break;
+        case TWO_STICK_TANK:
+            m_chassis.setDefaultCommand(new DriveJoystickTankTwoStick(m_drivingStickRight, m_drivingStickLeft, m_chassis));
+            break;
+        case GAME_PAD_TANK:
+            m_chassis.setDefaultCommand(new DriveJoystickTankGamepad(m_drivingGamePad, m_chassis));
+            break;
+        case DROPERATION:
+        default:
+            throw new IllegalArgumentException();
+        }
     }
 
     public DriveStyle getDriveStyle() {
@@ -240,112 +245,6 @@ public class OI {
         default:
             return new DriveByDistance(m_chassis, m_shifters, 75.5, Shifters.Speed.LOW);
         }
-    }
-
-    public double getDrivingJoystickY() {
-        double unscaledValue;
-
-        if (DRIVE_STYLE == DriveStyle.DROPERATION
-            || DRIVE_STYLE == DriveStyle.GAME_PAD_ARCADE) {
-            unscaledValue = m_drivingGamePad.getY();
-        } else if (DRIVE_STYLE == DriveStyle.ONE_STICK_ARCADE) {
-            if (m_driveDirection == DriveDirection.FWD) {
-                unscaledValue = m_drivingStickForward.getY();
-            } else {
-                unscaledValue = -m_drivingStickBackward.getY();
-            }
-        } else {
-            unscaledValue = 0.0;
-        }
-        return getScaledJoystickValue(unscaledValue);
-    }
-
-    public double getDrivingJoystickX() {
-        double unscaledValue;
-
-        if (DRIVE_STYLE == DriveStyle.GAME_PAD_ARCADE) { // keep the redundancy, it breaks if
-            unscaledValue = m_drivingGamePad.getZ(); //TODO: this should get the Z rotate value
-        } else if (DRIVE_STYLE == DriveStyle.DROPERATION) { // removed
-            unscaledValue = m_drivingGamePad.getX();
-        } else if (DRIVE_STYLE == DriveStyle.ONE_STICK_ARCADE) {
-            if (m_driveDirection == DriveDirection.FWD) {
-                unscaledValue = m_drivingStickForward.getX();
-            } else {
-                unscaledValue = -m_drivingStickBackward.getX();
-            }
-        } else {
-            unscaledValue = 0.0;
-        }
-
-        return getScaledJoystickValue(unscaledValue);
-    }
-
-    public double getDrivingJoystickLeft() {
-        double unscaledValue;
-
-        if (DRIVE_STYLE == DriveStyle.GAME_PAD_TANK) {
-            unscaledValue = m_drivingGamePad.getY();
-        } else if (DRIVE_STYLE == DriveStyle.TWO_STICK_TANK) {
-            unscaledValue = m_drivingStickLeft.getY();
-        } else {
-            unscaledValue = 0.0; //TODO: may want to return something else
-        }
-
-        return getScaledJoystickValue(unscaledValue);
-    }
-
-    public double getDrivingJoystickRight() {
-        double unscaledValue;
-
-        if (DRIVE_STYLE == DriveStyle.GAME_PAD_TANK) {
-            unscaledValue = m_drivingGamePad.getZ(); //TODO: this should get the Z vertical/rotate value
-        } else if (DRIVE_STYLE == DriveStyle.TWO_STICK_TANK) {
-            unscaledValue = m_drivingStickRight.getY();
-        } else {
-            unscaledValue = 0.0; //TODO: may want to return something else
-        }
-
-        return getScaledJoystickValue(unscaledValue);
-    }
-
-    public double getScaledJoystickValue(double input) {
-        double output = 0;
-
-        if (m_joystickScale == JoystickScaling.LINEAR) {
-            output = input;
-        } else if (m_joystickScale == JoystickScaling.DEADBAND) {
-            if (Math.abs(input) < DEADBAND) {
-                output = 0;
-            } else {
-                if (input > 0) {
-                    output = input - DEADBAND;
-                } else {
-                    output = input + DEADBAND;
-                }
-            }
-        } else if (m_joystickScale == JoystickScaling.QUADRATIC) {
-            if (input > 0) {
-                output = Math.pow(input, 2);
-            } else {
-                output = -1 * Math.pow(input, 2);
-            }
-        }
-
-        return output;
-    }
-
-    public void setDriveDirection(DriveDirection driveDirection) {
-        m_driveDirection = driveDirection;
-        System.out.println("Drive direction set to: " + driveDirection);
-    }
-
-    public void setJoystickScale(JoystickScaling joystickScale) {
-        m_joystickScale = joystickScale;
-        System.out.println("Joystick direction set to: " + joystickScale);
-    }
-
-    public boolean isJoystickReversed() {
-        return (m_driveDirection == DriveDirection.REV);
     }
 
     /**

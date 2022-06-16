@@ -20,10 +20,6 @@ public final class TrajectoryFactory {
     public static final class AutoConstants {
         public static final double MAX_SPEED_METERS_PER_SECOND = Units.inchesToMeters(120);
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = Units.inchesToMeters(120);
-
-        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-        public static final double RAMSETE_B = 2;
-        public static final double RAMSETE_ZETA = 0.7;
     }
 
     private TrajectoryFactory() {

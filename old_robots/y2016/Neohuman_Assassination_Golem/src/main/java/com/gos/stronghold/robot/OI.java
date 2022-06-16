@@ -33,7 +33,6 @@ import com.gos.stronghold.robot.subsystems.Shooter;
  */
 @SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.NcssCount"})
 public class OI {
-    public enum DriveDirection { FWD, REV }
 
     /**
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
@@ -59,8 +58,6 @@ public class OI {
 
     //private JoystickButton shiftUpButton2; //for backwards joystick
     private final JoystickButton m_shiftDownButton2; //for backwards joystick
-
-    private DriveDirection m_driveDirection = DriveDirection.FWD;
 
     private final JoystickButton m_switchCam;
     private final JoystickButton m_switchCam2; //for backwards joystick
@@ -136,11 +133,11 @@ public class OI {
         m_switchCam2.whenPressed(new SwitchCam(camera));
 
         m_switchToForward = new JoystickButton(m_drivingStickForward, 1);
-        m_switchToForward.whenPressed(new SwitchToForward(this, camera));
+        m_switchToForward.whenPressed(new SwitchToForward(chassis, camera));
 
 
         m_switchToBackward = new JoystickButton(m_drivingStickBackward, 1);
-        m_switchToBackward.whenPressed(new SwitchToBackward(this, camera));
+        m_switchToBackward.whenPressed(new SwitchToBackward(chassis, camera));
 
         // Button board buttons
         if (m_buttonBoard.getButtonCount() > 0) {
@@ -217,38 +214,8 @@ public class OI {
 
     }
 
-
-    public double getDrivingJoystickY() {
-        if (ROZIE_DRIVE) {
-            return m_roziePad.getY();
-        } else if (m_driveDirection == DriveDirection.FWD) {
-            return m_drivingStickForward.getY();
-        } else {
-            return -m_drivingStickBackward.getY();
-        }
-    }
-
-    public double getDrivingJoystickX() {
-        if (ROZIE_DRIVE) {
-            return m_roziePad.getX();
-        } else if (m_driveDirection == DriveDirection.FWD) {
-            return m_drivingStickForward.getX();
-        } else {
-            return m_drivingStickBackward.getX();
-        }
-    }
-
     public double getOperatorStickThrottle() {
         return m_gamePad.getThrottle();
-    }
-
-    public void setDriveDirection(DriveDirection driveDirection) {
-        this.m_driveDirection = driveDirection;
-        System.out.println("Drive direction set to: " + driveDirection);
-    }
-
-    public boolean isJoystickReversed() {
-        return (m_driveDirection == DriveDirection.REV);
     }
 
     public double getDPadX() {

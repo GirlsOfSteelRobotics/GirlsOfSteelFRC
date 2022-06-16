@@ -1,4 +1,4 @@
-package com.gos.rapidreact.sim;
+package com.gos.rapidreact.subsystems.sim;
 
 import com.gos.lib.properties.PropertyManager;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;

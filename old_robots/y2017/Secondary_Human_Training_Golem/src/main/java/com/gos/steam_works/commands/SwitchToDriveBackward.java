@@ -1,8 +1,6 @@
 package com.gos.steam_works.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.steam_works.OI;
-import com.gos.steam_works.OI.DriveDirection;
 import com.gos.steam_works.subsystems.Chassis;
 
 /**
@@ -11,10 +9,8 @@ import com.gos.steam_works.subsystems.Chassis;
 public class SwitchToDriveBackward extends CommandBase {
 
     private final Chassis m_chassis;
-    private final OI m_oi;
 
-    public SwitchToDriveBackward(OI oi, Chassis chassis) {
-        m_oi = oi;
+    public SwitchToDriveBackward(Chassis chassis) {
         m_chassis = chassis;
         addRequirements(m_chassis);
     }
@@ -22,7 +18,7 @@ public class SwitchToDriveBackward extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
-        m_oi.setDriveDirection(DriveDirection.REV);
+        m_chassis.setTeleDriveDirection(Chassis.TeleDriveDirection.REV);
     }
 
     // Called repeatedly when this Command is scheduled to run
