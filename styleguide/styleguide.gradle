@@ -32,48 +32,4 @@ pmd {
     ruleSets = []
 }
 
-//apply plugin: 'com.diffplug.spotless'
-//
-//spotless {
-//    java {
-//        target fileTree('.') {
-//            include '**/*.java'
-//            exclude '**/build/**', '**/build-*/**', 'bazel-*/**'
-//        }
-//        toggleOffOn()
-//        indentWithSpaces(4)
-//        removeUnusedImports()
-//        trimTrailingWhitespace()
-//        endWithNewline()
-//    }
-//    groovyGradle {
-//        target fileTree('.') {
-//            include '**/*.gradle'
-//            exclude '**/build/**', '**/build-*/**', 'bazel-*/**'
-//        }
-//        greclipse()
-//        indentWithSpaces(4)
-//        trimTrailingWhitespace()
-//        endWithNewline()
-//    }
-//    format 'xml', {
-//        target fileTree('.') {
-//            include '**/*.xml'
-//            include '**/*.fxml'
-//            exclude '**/build/**', '**/build-*/**', 'bazel-*/**', '.idea/**'
-//        }
-//        eclipseWtp('xml')
-//        trimTrailingWhitespace()
-//        indentWithSpaces(4)
-//        endWithNewline()
-//    }
-//    format 'misc', {
-//        target fileTree('.') {
-//            include '**/*.md', '**/.gitignore', "**/*.yml", "**/*.yaml"
-//            exclude '**/build/**', '**/build-*/**', 'bazel-*/**'
-//        }
-//        trimTrailingWhitespace()
-//        indentWithSpaces(4)
-//        endWithNewline()
-//    }
-//}
+apply from: "${rootDir}/styleguide/spotless.gradle"
