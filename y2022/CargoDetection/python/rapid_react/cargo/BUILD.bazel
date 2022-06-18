@@ -16,7 +16,4 @@ gos_py_library(
 gos_py_binary(
     name = "amalgamate_pipeline",
     srcs = ["amalgamate_pipeline.py"],
-    deps = [
-        ":cargo",
-    ],
 )
