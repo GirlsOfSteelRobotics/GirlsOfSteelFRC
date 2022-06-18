@@ -1,7 +1,7 @@
-package com.gos.rapidreact.led.mirrored;
+package com.gos.lib.led.mirrored;
 
-import com.gos.rapidreact.led.LEDFlash;
-import com.gos.rapidreact.led.LEDPattern;
+import com.gos.lib.led.LEDFlash;
+import com.gos.lib.led.LEDPattern;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 
