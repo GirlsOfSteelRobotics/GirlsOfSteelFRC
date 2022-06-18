@@ -1,4 +1,4 @@
-package com.gos.rapidreact.led;
+package com.gos.lib.led;
 
 public interface LEDPattern {
 
