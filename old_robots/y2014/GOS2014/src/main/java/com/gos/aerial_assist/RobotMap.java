@@ -53,18 +53,18 @@ public class RobotMap {
 
     public static final int ULTRASONIC_SENSOR_PORT = 3;
 
-    public static final String CollectorEncoderReader = "Collector Encoder Reader";
-    public static final String CollectorJagSpeed = "Collector Jag Speed";
-    public static final String CollectorWheelSpikeForward = "Collector Wheel Spike Forward";
-    public static final String CollectorWheelSpikeBackward = "Collector Wheel Spike Backward";
+    public static final String COLLECTOR_ENCODER_READER = "Collector Encoder Reader";
+    public static final String COLLECTOR_JAG_SPEED = "Collector Jag Speed";
+    public static final String COLLECTOR_WHEEL_SPIKE_FORWARD = "Collector Wheel Spike Forward";
+    public static final String COLLECTOR_WHEEL_SPIKE_BACKWARD = "Collector Wheel Spike Backward";
 
     //Names of things for SmartDashboard Test.  Should be changed once we know more things
-    public static final String chassisSD = "Chassis Jags";
-    public static final String leftChassisSD = "Left Chassis Jag";
-    public static final String rightChassisSD = "Right Chassis Jag";
-    public static final String manipulatorSD = "Manipulator Jag";
-    public static final String collectorSD = "Collector Jag";
-    public static final String kickerSD = "Kicker Jag";
-    public static final String kickerServoPrep = "Prep Kicker Servo";
-    public static final String kickerServoRelease = "Release Kicker Servo";
+    public static final String CHASSIS_SD = "Chassis Jags";
+    public static final String LEFT_CHASSIS_SD = "Left Chassis Jag";
+    public static final String RIGHT_CHASSIS_SD = "Right Chassis Jag";
+    public static final String MANIPULATOR_SD = "Manipulator Jag";
+    public static final String COLLECTOR_SD = "Collector Jag";
+    public static final String KICKER_SD = "Kicker Jag";
+    public static final String KICKER_SERVO_PREP = "Prep Kicker Servo";
+    public static final String KICKER_SERVO_RELEASE = "Release Kicker Servo";
 }

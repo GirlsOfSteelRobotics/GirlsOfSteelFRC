@@ -1,0 +1,14 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "autonomous",
+    srcs = glob(["*.java"]),
+    visibility = ["//y2022/RapidReact:__subpackages__"],
+    deps = [
+        "//y2022/RapidReact/src/main/java/com/gos/rapidreact/commands",
+        "//y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)

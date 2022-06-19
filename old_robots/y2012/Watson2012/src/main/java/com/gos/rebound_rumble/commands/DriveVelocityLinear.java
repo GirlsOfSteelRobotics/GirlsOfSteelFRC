@@ -15,19 +15,19 @@ public class DriveVelocityLinear extends CommandBase {
     public DriveVelocityLinear(Chassis chassis, Joystick driverJoystick, double scale) {
         m_chassis = chassis;
         m_joystick = driverJoystick;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         this.m_scale = scale;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
         m_chassis.initEncoders();
         m_chassis.initRatePIDs();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.setPIDsRate();
         m_xAxis = m_joystick.getX() * m_scale;
         m_yAxis = m_joystick.getY() * m_scale;
@@ -37,20 +37,17 @@ public class DriveVelocityLinear extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.disableRatePIDs();
         m_chassis.resetEncoders();
         m_chassis.endEncoders();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

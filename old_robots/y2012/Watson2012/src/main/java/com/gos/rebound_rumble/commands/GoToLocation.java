@@ -18,30 +18,27 @@ public class GoToLocation extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initPositionPIDs();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.goToLocation(m_x, m_y, m_degreesToFace);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_chassis.isGoToLocationFinished(m_x, m_y);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.disableRatePIDs();
         m_chassis.endEncoders();
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

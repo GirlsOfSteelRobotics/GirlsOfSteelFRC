@@ -12,9 +12,8 @@ package com.gos.ultimate_ascent.subsystems;
 //import edu.wpi.first.wpilibj.*;
 
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
 import com.gos.ultimate_ascent.objects.MagneticSpeedSensor;
 import com.gos.ultimate_ascent.objects.ShooterPoint;
@@ -25,7 +24,7 @@ import java.util.List;
 /**
  * @author Sylvie
  */
-public class Shooter extends Subsystem {
+public class Shooter extends SubsystemBase {
 
     private final Jaguar m_shooterJag;
     //Makes the special speed control sensor
@@ -52,13 +51,7 @@ public class Shooter extends Subsystem {
         m_magSpeed = new MagneticSpeedSensor(RobotMap.DIGITAL_INTPUT_CHANNEL);
 
         //Makes the PIDController
-        m_pid = new PIDController(m_p, m_i, m_d, m_magSpeed,
-            new PIDOutput() {
-                @Override
-                public void pidWrite(double output) {
-                    setJags(output);
-                }
-            });
+        m_pid = new PIDController(m_p, m_i, m_d);
         for (int i = 0; i < m_speeds.length; i++) {
             m_speeds[i] = null; // NOPMD
         }
@@ -66,7 +59,7 @@ public class Shooter extends Subsystem {
 
     //PID methods
     public void initPID() {
-        m_pid.enable();
+        m_pid.reset();
     }
 
     public void setPIDspeed(double speed) {
@@ -78,10 +71,6 @@ public class Shooter extends Subsystem {
         this.m_i = i;
         this.m_d = d;
         m_pid.setPID(p, i, d);
-    }
-
-    public void disablePID() {
-        m_pid.disable();
     }
 
     public boolean isWithinSetPoint(double setPoint) {
@@ -208,7 +197,5 @@ public class Shooter extends Subsystem {
         return m_shoot;
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

@@ -1,0 +1,19 @@
+load("@gos_pip_deps//:requirements.bzl", "requirement")
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_library")
+
+filegroup(
+    name = "ui_files",
+    srcs = glob(["*.ui"]),
+)
+
+gos_py_library(
+    name = "subpanels",
+    srcs = glob(["*.py"]),
+    skip_include_test = True,  #pyqt DLL causes problems
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("PyQt5"),
+        requirement("opencv-python"),
+        requirement("numpy"),
+    ],
+)

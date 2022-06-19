@@ -1,7 +1,7 @@
 package com.gos.rebound_rumble.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import com.gos.rebound_rumble.OI;
 import com.gos.rebound_rumble.subsystems.Bridge;
 import com.gos.rebound_rumble.subsystems.Chassis;
@@ -9,7 +9,7 @@ import com.gos.rebound_rumble.subsystems.Collector;
 import com.gos.rebound_rumble.subsystems.Shooter;
 import com.gos.rebound_rumble.subsystems.Turret;
 
-public class JoeAuto extends CommandGroup {
+public class JoeAuto extends SequentialCommandGroup {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.ExcessiveParameterList"})
     public JoeAuto(OI oi, Chassis chassis, Collector collector, Shooter shooter, Turret turret, Bridge bridge, boolean autoTrack, boolean autoShoot,
@@ -19,40 +19,40 @@ public class JoeAuto extends CommandGroup {
                    boolean autoShootFromBridge, boolean goBackToKey,
                    boolean shootFromKeyAfterBridge) {
 
-        addParallel(new Collect(collector));
-        addSequential(new PrintCommand("reached"));
+        addCommands(new Collect(collector));
+        addCommands(new PrintCommand("reached"));
 
         if (autoTrack) {
-            addParallel(new TurretTrackTarget(turret, oi.getOperatorJoystick()));
+            addCommands(new TurretTrackTarget(turret, oi.getOperatorJoystick()));
         }
 
         if (autoShoot) {
-            addSequential(new ShootUsingTable(shooter, oi, false), 10);
+            addCommands(new ShootUsingTable(shooter, oi, false).withTimeout(10));
         } else if (shootFromKey) {
-            addSequential(new Shoot(shooter, oi, Shooter.KEY_SPEED), 10);
-            addSequential(new PrintCommand("Shoot From Key"));
+            addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED).withTimeout(10));
+            addCommands(new PrintCommand("Shoot From Key"));
         }
 
         if (moveToBridge) {
-            addSequential(new MoveToSetPoint(chassis, yDistance));
-            addSequential(new PrintCommand("Move to Bridge"));
+            addCommands(new MoveToSetPoint(chassis, yDistance));
+            addCommands(new PrintCommand("Move to Bridge"));
 
             if (bridgeCollect) {
-                addSequential(new BridgeDown(bridge), 3);
-                addSequential(new BridgeUp(bridge));
-                addSequential(new MoveToSetPoint(chassis, -0.5), 3);
+                addCommands(new BridgeDown(bridge).withTimeout(3));
+                addCommands(new BridgeUp(bridge));
+                addCommands(new MoveToSetPoint(chassis, -0.5).withTimeout(3));
             }
 
             if (autoShootFromBridge) {
-                addSequential(new Shoot(shooter, oi, Shooter.BRIDGE_SPEED), 10);
+                addCommands(new Shoot(shooter, oi, Shooter.BRIDGE_SPEED).withTimeout(10));
             }
 
             if (goBackToKey) {
-                addSequential(new MoveToSetPoint(chassis, -yDistance));
-                addSequential(new PrintCommand("Back to Key"));
+                addCommands(new MoveToSetPoint(chassis, -yDistance));
+                addCommands(new PrintCommand("Back to Key"));
                 if (shootFromKeyAfterBridge) {
-                    addSequential(new Shoot(shooter, oi, Shooter.KEY_SPEED));
-                    addSequential(new PrintCommand("Shoot after back to key"));
+                    addCommands(new Shoot(shooter, oi, Shooter.KEY_SPEED));
+                    addCommands(new PrintCommand("Shoot after back to key"));
                 }
             }
         }

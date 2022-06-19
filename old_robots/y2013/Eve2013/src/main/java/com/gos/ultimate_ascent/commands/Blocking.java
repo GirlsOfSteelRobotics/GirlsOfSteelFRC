@@ -19,16 +19,16 @@ public class Blocking extends CommandBase {
     public Blocking(Feeder feeder) {
         m_feeder = feeder;
         m_blockerRaised = false;
-        requires(m_feeder);
+        addRequirements(m_feeder);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_blockerRaised = m_feeder.getIsRaised();
         m_oldBlockerRaised = m_blockerRaised;
         if (!m_blockerRaised) {
@@ -42,16 +42,13 @@ public class Blocking extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_oldBlockerRaised != m_newBlockerRaised;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

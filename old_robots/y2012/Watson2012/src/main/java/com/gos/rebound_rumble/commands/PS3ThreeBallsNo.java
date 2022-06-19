@@ -8,33 +8,30 @@ public class PS3ThreeBallsNo extends CommandBase {
 
     public PS3ThreeBallsNo(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.stopMiddleConveyor();
         m_collector.reverseBrush();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopBrush();
         m_collector.stopMiddleConveyor();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -1,6 +1,6 @@
 package com.gos.aerial_assist.objects;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.commands.AutonomousLowGoal;
@@ -18,18 +18,18 @@ public class AutonomousChooser {
     private Command m_autonomousCommand;
 
     public AutonomousChooser(Driving driving, Chassis chassis, Camera camera, Collector collector, Manipulator manipulator) {
-        m_chooser = new SendableChooser();
+        m_chooser = new SendableChooser<>();
         SmartDashboard.putData("Autonomous Chooser", m_chooser);
 
-        m_chooser.addDefault("Low Goal with Camera", new AutonomousLowGoalHot(chassis, driving, camera, collector, manipulator));
-        m_chooser.addObject("Low Goal (no camera)", new AutonomousLowGoal(chassis, driving, camera, manipulator, collector));
-        m_chooser.addObject("Mobility", new AutonomousMobility(chassis, driving));
-        m_chooser.addObject("Nothing", new DoNothing(driving));
+        m_chooser.setDefaultOption("Low Goal with Camera", new AutonomousLowGoalHot(chassis, driving, camera, collector, manipulator));
+        m_chooser.addOption("Low Goal (no camera)", new AutonomousLowGoal(chassis, driving, camera, manipulator, collector));
+        m_chooser.addOption("Mobility", new AutonomousMobility(chassis, driving));
+        m_chooser.addOption("Nothing", new DoNothing(driving));
     }
 
     public void start() {
-        m_autonomousCommand = (Command) m_chooser.getSelected();
-        m_autonomousCommand.start();
+        m_autonomousCommand = m_chooser.getSelected();
+        m_autonomousCommand.schedule();
     }
 
     public void end() {

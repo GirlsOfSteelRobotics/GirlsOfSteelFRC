@@ -9,31 +9,28 @@ public class StopChassis extends CommandBase {
 
     public StopChassis(Chassis chassis, DriveFlag drive) {
         m_chassis = chassis;
-        requires(drive);
-        requires(chassis);
+        addRequirements(drive);
+        addRequirements(chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.stopJags();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

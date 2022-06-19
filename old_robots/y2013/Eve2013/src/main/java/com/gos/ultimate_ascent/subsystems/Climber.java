@@ -8,13 +8,13 @@ package com.gos.ultimate_ascent.subsystems;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
 
 /**
  * @author Heather
  */
-public class Climber extends Subsystem {
+public class Climber extends SubsystemBase {
 
     //cLIMBER sPIKES
     private final Relay m_rightClimberSpike = new Relay(RobotMap.RIGHT_CLIMBER_SPIKE);
@@ -69,9 +69,7 @@ public class Climber extends Subsystem {
         m_leftClimberSpike.set(Relay.Value.kOff);
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
 
 }

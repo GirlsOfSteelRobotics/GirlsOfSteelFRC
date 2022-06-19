@@ -14,30 +14,28 @@ public class OpenGripAtBar extends CommandBase {
     private final Gripper m_gripper;
 
     public OpenGripAtBar(Gripper gripper) {
-        requires(gripper);
+        addRequirements(gripper);
         this.m_gripper = gripper;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_gripper.atBar();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_gripper.openGrip();
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

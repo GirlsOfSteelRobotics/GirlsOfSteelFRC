@@ -19,18 +19,18 @@ public class TuneManipulatorPID extends CommandBase {
     private double m_i;
     private double m_d;
     private double m_setpoint;
-    private static final boolean m_pid = false;
+    private static final boolean PID = false;
     private final Manipulator m_manipulator;
 
     public TuneManipulatorPID(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_manipulator.initEncoder();
-        if (m_pid) {
+        if (PID) {
             m_manipulator.resetPIDError();
             m_manipulator.startPID();
             SmartDashboard.putNumber("Pivot P", 0);
@@ -44,15 +44,15 @@ public class TuneManipulatorPID extends CommandBase {
     }
 
     @Override
-    protected void execute() {
-        if (m_pid) {
+    public void execute() {
+        if (PID) {
             m_p = SmartDashboard.getNumber("Pivot P", 0);
             m_i = SmartDashboard.getNumber("Pivot I", 0);
             m_d = SmartDashboard.getNumber("Pivot D", 0);
             m_setpoint = SmartDashboard.getNumber("Pivot setpoint", 0);
 
             if (m_setpoint != 0) {
-                m_manipulator.setSetPoint((double) m_setpoint);
+                m_manipulator.setSetPoint(m_setpoint);
                 m_manipulator.setPID(m_p, m_i, m_d);
             }
             SmartDashboard.putNumber("Pivot Error: ", m_manipulator.getError());
@@ -67,21 +67,18 @@ public class TuneManipulatorPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_setpoint > 110 || m_setpoint < -17;
 
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.stopManipulator();
-        if (m_pid) {
+        if (PID) {
             m_manipulator.disablePID();
         }
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

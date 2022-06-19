@@ -4,9 +4,7 @@ import sys
 if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
     os.chdir(os.environ["BUILD_WORKSPACE_DIRECTORY"])
 else:
-    sys.path.append(
-        os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", "..")
-    )
+    sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", ".."))
 
 from libraries.scripts.updater.replace_gradlerio_files import (
     replace_gradlerio_files_in_parts,

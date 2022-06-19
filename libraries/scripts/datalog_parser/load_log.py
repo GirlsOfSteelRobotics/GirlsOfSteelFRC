@@ -81,6 +81,7 @@ def load_wpilog_log(file):
 
     return dataframe
 
+
 def load_pandas_log(file):
     return pd.read_hdf(file)
 

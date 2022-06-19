@@ -21,21 +21,21 @@ public class TestAutonomousShootTwoBalls extends CommandBase {
 
         SmartDashboard.putNumber("ASTB,speed", 0.0);
         SmartDashboard.putNumber("ASTB,time", 0.0);
-        requires(m_shooter);
-        requires(chassis);
-        requires(m_collector);
-        requires(turret);
-        requires(bridge);
+        addRequirements(m_shooter);
+        addRequirements(chassis);
+        addRequirements(m_collector);
+        addRequirements(turret);
+        addRequirements(bridge);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_timeToShootTwoBalls = SmartDashboard.getNumber("ASTB,time", 0.0);
         double velocity = SmartDashboard.getNumber("ASTB,speed", 0.0);
         //        velocity = shooter.getBallVelocityFrTable(xDistance);
@@ -51,21 +51,18 @@ public class TestAutonomousShootTwoBalls extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return timeSinceInitialized() > m_timeToShootTwoBalls;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.disablePID();
         m_shooter.topRollersOff();
         m_collector.stopBrush();
         m_collector.stopMiddleConveyor();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

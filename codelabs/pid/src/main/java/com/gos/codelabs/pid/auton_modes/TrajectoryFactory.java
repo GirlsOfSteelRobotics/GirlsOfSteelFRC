@@ -18,12 +18,8 @@ import java.util.List;
 public final class TrajectoryFactory {
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = Units.inchesToMeters(120);
-        public static final double kMaxAccelerationMetersPerSecondSquared = Units.inchesToMeters(120);
-
-        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-        public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7;
+        public static final double MAX_SPEED_METERS_PER_SECOND = Units.inchesToMeters(120);
+        public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = Units.inchesToMeters(120);
     }
 
     private TrajectoryFactory() {
@@ -90,18 +86,18 @@ public final class TrajectoryFactory {
         var autoVoltageConstraint =
                 new DifferentialDriveVoltageConstraint(
                         new SimpleMotorFeedforward(
-                                Constants.DrivetrainConstants.ksVolts,
-                                Constants.DrivetrainConstants.kvVoltSecondsPerMeter,
-                                Constants.DrivetrainConstants.kaVoltSecondsSquaredPerMeter),
-                            Constants.DrivetrainConstants.kDriveKinematics,
+                                Constants.DrivetrainConstants.KS_VOLTS,
+                                Constants.DrivetrainConstants.KV_VOLT_SECONDS_PER_METER,
+                                Constants.DrivetrainConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+                            Constants.DrivetrainConstants.DRIVE_KINEMATICS,
                         10);
 
         // Create config for trajectory
         return new TrajectoryConfig(
-                        AutoConstants.kMaxSpeedMetersPerSecond,
-                        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                        AutoConstants.MAX_SPEED_METERS_PER_SECOND,
+                        AutoConstants.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
                         // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(Constants.DrivetrainConstants.kDriveKinematics)
+                        .setKinematics(Constants.DrivetrainConstants.DRIVE_KINEMATICS)
                         // Apply the voltage constraint
                         .addConstraint(autoVoltageConstraint);
     }

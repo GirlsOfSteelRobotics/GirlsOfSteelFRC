@@ -2,17 +2,14 @@ package com.gos.preseason2016.team_fbi.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shifters extends Subsystem {
+public class Shifters extends SubsystemBase {
 
     private final DoubleSolenoid m_shifterLeft = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
     private final DoubleSolenoid m_shifterRight = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
 
-    @Override
-    public void initDefaultCommand() {
 
-    }
 
     public void shiftLeft(boolean highgear) {
         if (highgear) {

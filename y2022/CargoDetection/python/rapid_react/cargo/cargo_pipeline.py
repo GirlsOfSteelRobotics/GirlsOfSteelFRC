@@ -118,13 +118,22 @@ class CargoPipeline:
         img_threshold = crop_image(img_threshold, self.params.image_crop)
         self.stopwatch_split("Crop")
 
-        good_contours, self.contours_failed_contour_filtering = find_and_filter_contours(img_threshold, self.params.contour_filtering)
+        good_contours, self.contours_failed_contour_filtering = find_and_filter_contours(
+            img_threshold, self.params.contour_filtering
+        )
         self.stopwatch_split("Contours")
 
-        filtered_hough_circles, filtered_threshold_image = find_filtered_hough_circles(img_threshold, good_contours, self.params.circle_detection)
+        filtered_hough_circles, filtered_threshold_image = find_filtered_hough_circles(
+            img_threshold, good_contours, self.params.circle_detection
+        )
         self.stopwatch_split("Find Circles")
 
-        self.surviving_contours, self.surviving_circles, self.contours_failed_circle_matching, self.unmatched_circles = find_valid_circles(good_contours, filtered_hough_circles, self.params.circle_detection)
+        (
+            self.surviving_contours,
+            self.surviving_circles,
+            self.contours_failed_circle_matching,
+            self.unmatched_circles,
+        ) = find_valid_circles(good_contours, filtered_hough_circles, self.params.circle_detection)
         self.stopwatch_split("Match Circles")
 
         self.threshold_image = cv2.bitwise_and(image, image, mask=img_threshold)
@@ -142,7 +151,7 @@ class CargoPipeline:
         return np.array([[]]) if self.best_contour is None else self.best_contour
 
     def y_value(self, contour):
-        x,y,w,h = cv.boundingRect(contour)
+        x, y, w, h = cv.boundingRect(contour)
         return y
 
     def print_stopwatch(self, throttle=0):

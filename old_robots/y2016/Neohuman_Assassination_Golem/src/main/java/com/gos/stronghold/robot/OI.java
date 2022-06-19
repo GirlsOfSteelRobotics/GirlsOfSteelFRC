@@ -1,7 +1,7 @@
 package com.gos.stronghold.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.stronghold.robot.commands.CollectBall;
 import com.gos.stronghold.robot.commands.FlapDown;
 import com.gos.stronghold.robot.commands.FlapUp;
@@ -33,13 +33,12 @@ import com.gos.stronghold.robot.subsystems.Shooter;
  */
 @SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.NcssCount"})
 public class OI {
-    public enum DriveDirection { kFWD, kREV }
 
     /**
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
      */
     //IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-    private static final boolean rozieDrive = false;
+    private static final boolean ROZIE_DRIVE = false;
 
     private final Joystick m_drivingStickForward = new Joystick(0);
     private final Joystick m_drivingStickBackward = new Joystick(1);
@@ -59,8 +58,6 @@ public class OI {
 
     //private JoystickButton shiftUpButton2; //for backwards joystick
     private final JoystickButton m_shiftDownButton2; //for backwards joystick
-
-    private DriveDirection m_driveDirection = DriveDirection.kFWD;
 
     private final JoystickButton m_switchCam;
     private final JoystickButton m_switchCam2; //for backwards joystick
@@ -136,11 +133,11 @@ public class OI {
         m_switchCam2.whenPressed(new SwitchCam(camera));
 
         m_switchToForward = new JoystickButton(m_drivingStickForward, 1);
-        m_switchToForward.whenPressed(new SwitchToForward(this, camera));
+        m_switchToForward.whenPressed(new SwitchToForward(chassis, camera));
 
 
         m_switchToBackward = new JoystickButton(m_drivingStickBackward, 1);
-        m_switchToBackward.whenPressed(new SwitchToBackward(this, camera));
+        m_switchToBackward.whenPressed(new SwitchToBackward(chassis, camera));
 
         // Button board buttons
         if (m_buttonBoard.getButtonCount() > 0) {
@@ -201,7 +198,7 @@ public class OI {
         m_resetEncoders.whenPressed(new ResetEncoderDistance(chassis, flap, pivot));
 
         //ROZIE STUFF!!!!
-        if (rozieDrive) {
+        if (ROZIE_DRIVE) {
             m_rozieShiftDownButton = new JoystickButton(m_roziePad, 3);
             m_rozieShiftDownButton.whenPressed(new ShiftDown(shifters));
             m_rozieFlapUp = new JoystickButton(m_roziePad, 8); //switched 7 & 8 again
@@ -217,38 +214,8 @@ public class OI {
 
     }
 
-
-    public double getDrivingJoystickY() {
-        if (rozieDrive) {
-            return m_roziePad.getY();
-        } else if (m_driveDirection == DriveDirection.kFWD) {
-            return m_drivingStickForward.getY();
-        } else {
-            return -m_drivingStickBackward.getY();
-        }
-    }
-
-    public double getDrivingJoystickX() {
-        if (rozieDrive) {
-            return m_roziePad.getX();
-        } else if (m_driveDirection == DriveDirection.kFWD) {
-            return m_drivingStickForward.getX();
-        } else {
-            return m_drivingStickBackward.getX();
-        }
-    }
-
     public double getOperatorStickThrottle() {
         return m_gamePad.getThrottle();
-    }
-
-    public void setDriveDirection(DriveDirection driveDirection) {
-        this.m_driveDirection = driveDirection;
-        System.out.println("Drive direction set to: " + driveDirection);
-    }
-
-    public boolean isJoystickReversed() {
-        return (m_driveDirection == DriveDirection.kREV);
     }
 
     public double getDPadX() {

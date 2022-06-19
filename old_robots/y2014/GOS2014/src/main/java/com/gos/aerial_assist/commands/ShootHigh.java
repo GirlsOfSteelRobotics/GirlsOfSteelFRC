@@ -6,17 +6,17 @@
 
 package com.gos.aerial_assist.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * @author
  */
 @SuppressWarnings("PMD")
-public class ShootHigh extends CommandGroup {
+public class ShootHigh extends SequentialCommandGroup {
 
     public ShootHigh() {
         //        addParallel(new setArmAnglePID(angle));
         //        addParallel(new LoadKicker());
-        //        addSequential(new KickSequential());
+        //        addCommands(new KickSequential());
     }
 }

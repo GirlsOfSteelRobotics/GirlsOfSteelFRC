@@ -1,7 +1,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Chassis;
 import com.gos.aerial_assist.subsystems.Driving;
 
@@ -19,38 +18,35 @@ public class TankDrive extends CommandBase {
     private final Joystick m_right;
     private final Chassis m_chassis;
 
-    public TankDrive(OI oi, Chassis chassis, Driving driving) {
-        requires(driving);
+    public TankDrive(Joystick chassisJoystick, Joystick operatorJoystick, Chassis chassis, Driving driving) {
+        addRequirements(driving);
         m_chassis = chassis;
 
-        m_left = oi.getChassisJoystick();
-        m_right = oi.getOperatorJoystick();
+        m_left = chassisJoystick;
+        m_right = operatorJoystick;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //System.out.println("Right: " + right.getY() + "\nLeft: " + left.getY());
         m_chassis.tankDrive(m_right.getY(), m_left.getY());
 
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

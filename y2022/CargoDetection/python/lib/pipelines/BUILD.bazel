@@ -1,0 +1,13 @@
+load("@gos_pip_deps//:requirements.bzl", "requirement")
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_library")
+
+gos_py_library(
+    name = "pipelines",
+    srcs = glob(["*.py"]),
+    imports = ["../.."],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("opencv-python"),
+        requirement("numpy"),
+    ],
+)

@@ -13,19 +13,19 @@ public class TestShootUsingTable extends CommandBase {
     public TestShootUsingTable(OI oi, Shooter shooter) {
         m_oi = oi;
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
         //        SmartDashboard.putNumber("Bank Addition", 0.0);
         SmartDashboard.putNumber("Distance", 0.0);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //        addition = SmartDashboard.getNumber("Bank Addition", 0.0);
         //        shooter.TESTAutoShootBank(addition,cameraDistance);
         m_distance = SmartDashboard.getNumber("Distance", 0.0);
@@ -34,12 +34,12 @@ public class TestShootUsingTable extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
@@ -47,8 +47,5 @@ public class TestShootUsingTable extends CommandBase {
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

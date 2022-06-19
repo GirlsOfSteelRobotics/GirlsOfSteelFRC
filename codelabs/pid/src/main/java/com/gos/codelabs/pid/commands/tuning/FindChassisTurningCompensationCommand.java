@@ -6,7 +6,7 @@ import com.gos.lib.properties.PropertyManager;
 
 
 public class FindChassisTurningCompensationCommand extends CommandBase {
-    private static final PropertyManager.IProperty<Double> CHASSIS_SPEED = PropertyManager.createDoubleProperty(false,"Tuning.Chassis.TurningComp", 0);
+    private static final PropertyManager.IProperty<Double> CHASSIS_SPEED = PropertyManager.createDoubleProperty(false, "Tuning.Chassis.TurningComp", 0);
 
     private final ChassisSubsystem m_chassisSubsystem;
 

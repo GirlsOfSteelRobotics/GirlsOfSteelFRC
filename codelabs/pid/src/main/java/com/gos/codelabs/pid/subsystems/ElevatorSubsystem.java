@@ -1,6 +1,7 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
+import com.gos.lib.properties.PropertyManager;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -12,7 +13,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.codelabs.pid.commands.tuning.FindElevatorGravityCompensationCommand;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -21,6 +21,8 @@ import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase {
+    public static final PropertyManager.IProperty<Double> ELEVATOR_SPEED = PropertyManager.createDoubleProperty(false, "Elevator.GravityCompensationSpeed", 0);
+
     public static final double ALLOWABLE_POSITION_ERROR = .25;
 
     public enum Positions {
@@ -79,7 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean goToPosition(double position) {
         m_desiredHeight = position;
-        m_pidController.setReference(position, CANSparkMax.ControlType.kSmartMotion, 0, FindElevatorGravityCompensationCommand.ELEVATOR_SPEED.getValue(), ArbFFUnits.kPercentOut);
+        m_pidController.setReference(position, CANSparkMax.ControlType.kSmartMotion, 0, ELEVATOR_SPEED.getValue(), ArbFFUnits.kPercentOut);
         return false;
     }
 

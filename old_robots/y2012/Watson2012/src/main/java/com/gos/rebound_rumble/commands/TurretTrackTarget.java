@@ -14,17 +14,17 @@ public class TurretTrackTarget extends CommandBase {
     public TurretTrackTarget(Turret turret, Joystick operatorJoystick) {
         m_turret = turret;
         this.m_operatorJoystick = operatorJoystick;
-        requires(m_turret);
+        addRequirements(m_turret);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_turret.initEncoder();
         m_turret.enablePID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_turret.changeTurretOffset();
         if (Camera.foundTarget()) {
             m_turret.autoTrack();
@@ -38,17 +38,13 @@ public class TurretTrackTarget extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
-        m_turret.disablePID();
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

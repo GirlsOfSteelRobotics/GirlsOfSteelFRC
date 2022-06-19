@@ -4,13 +4,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.preseason2017.team2.robot.RobotMap;
 
 /**
  *
  */
-public class Manipulator extends Subsystem {
+public class Manipulator extends SubsystemBase {
     private final WPI_TalonSRX m_collectRight;
     private final WPI_TalonSRX m_collectLeft;
 
@@ -29,9 +29,7 @@ public class Manipulator extends Subsystem {
         m_pivotB = new WPI_TalonSRX(RobotMap.PIVOT_LEFT);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 
     public void collectIn(double speed) {
         m_collectRight.set(ControlMode.PercentOutput, speed);

@@ -6,8 +6,6 @@ gos_java_robot(
     main_class = "com.gos.codelabs.first_code_lab.Main",
     deps = [
         "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/rev/revlib",
-        "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
     ],
 )

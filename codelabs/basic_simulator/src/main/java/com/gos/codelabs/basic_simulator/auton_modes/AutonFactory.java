@@ -5,21 +5,15 @@ import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.gos.codelabs.basic_simulator.RobotContainer;
 
 public class AutonFactory {
 
     private final SendableChooser<Command> m_sendableChooser;
 
-    public AutonFactory(RobotContainer robotContainer) {
+    public AutonFactory(ChassisSubsystem chassis, ElevatorSubsystem lift, PunchSubsystem punch) {
         m_sendableChooser = new SendableChooser<>();
 
-        // Alias for readability
-        ChassisSubsystem chassis = robotContainer.getChassis();
-        ElevatorSubsystem lift = robotContainer.getElevator();
-        PunchSubsystem punch = robotContainer.getPunch();
-
-        // Add all of the "real", full autonomous modes
+        // TODO hookup autonomous modes
     }
 
     public Command getAutonMode() {

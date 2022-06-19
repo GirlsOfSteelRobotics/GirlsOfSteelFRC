@@ -8,7 +8,7 @@ public class DrivePositionChassisTuning extends CommandBase {
 
     public DrivePositionChassisTuning(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         SmartDashboard.putNumber("Right P", 0.0);
         SmartDashboard.putNumber("Right D", 0.0);
         SmartDashboard.putNumber("Left P", 0.0);
@@ -19,13 +19,13 @@ public class DrivePositionChassisTuning extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initPositionPIDs();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.setPositionPIDValues(SmartDashboard.getNumber("Right P", 0.0),
             SmartDashboard.getNumber("Right D", 0.0),
             SmartDashboard.getNumber("Left P", 0.0),
@@ -36,19 +36,16 @@ public class DrivePositionChassisTuning extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.disablePositionPIDs();
         m_chassis.endEncoders();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

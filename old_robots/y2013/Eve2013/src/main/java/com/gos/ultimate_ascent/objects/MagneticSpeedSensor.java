@@ -4,13 +4,10 @@
 
 package com.gos.ultimate_ascent.objects;
 
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-
 /**
  * @author Sylvie
  */
-public class MagneticSpeedSensor implements PIDSource {
+public class MagneticSpeedSensor {
 
     private final MagneticPulseCounter m_pulseCounter;
 
@@ -24,18 +21,4 @@ public class MagneticSpeedSensor implements PIDSource {
         return m_pulseCounter.getRate();
     }
 
-    @Override
-    public double pidGet() {
-        return get();
-    }
-
-    @Override
-    public void setPIDSourceType(PIDSourceType pidSource) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public PIDSourceType getPIDSourceType() {
-        throw new UnsupportedOperationException();
-    }
 }

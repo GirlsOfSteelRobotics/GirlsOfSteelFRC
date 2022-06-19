@@ -271,4 +271,3 @@ public class CollectorSubsystem extends SubsystemBase {
         return !m_indexSensor.get();
     }
 }
-

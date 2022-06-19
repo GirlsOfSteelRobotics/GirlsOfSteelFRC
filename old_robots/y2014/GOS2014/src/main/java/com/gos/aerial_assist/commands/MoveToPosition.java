@@ -19,7 +19,7 @@ import com.gos.aerial_assist.subsystems.Driving;
  */
 public class MoveToPosition extends CommandBase {
 
-    private static final double m_offBy = 0.03;
+    private static final double OFF_BY = 0.03;
 
     private final Chassis m_chassis;
     private double m_distance;
@@ -30,12 +30,12 @@ public class MoveToPosition extends CommandBase {
 
     public MoveToPosition(Chassis chassis, Driving driving, double distance) {
         m_chassis = chassis;
-        requires(driving);
+        addRequirements(driving);
         this.m_distance = distance;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initPositionPIDS();
         m_chassis.resetPositionPIDError();
         m_chassis.initEncoders();
@@ -43,7 +43,7 @@ public class MoveToPosition extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //distance = SmartDashboard.getNumber("Distance", 0);
         m_chassis.setPosition(m_distance);
         SmartDashboard.putNumber("Left Encoder: ", m_chassis.getLeftEncoderDistance());
@@ -51,21 +51,18 @@ public class MoveToPosition extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         //Is finished when our position is within the "off by" range of the setpoint
 
-        return (Math.abs((m_chassis.getLeftEncoderDistance() - m_distance)) < m_offBy);
+        return (Math.abs((m_chassis.getLeftEncoderDistance() - m_distance)) < OFF_BY);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.disablePositionPID();
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

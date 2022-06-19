@@ -1,44 +1,45 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Drive;
 
-public class AutoDrive extends Command {
+public class AutoDrive extends CommandBase {
 
     private final Drive m_drive;
+    private final Timer m_timer;
 
     public AutoDrive(Drive drive) {
         m_drive = drive;
-        requires(m_drive);
+        m_timer = new Timer();
+        addRequirements(m_drive);
     }
 
     @Override
-    protected void initialize() {
-        setTimeout(3);
+    public void initialize() {
+        m_timer.reset();
+        m_timer.start();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         // TODO Auto-generated method stub
         m_drive.driveAuto();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         // TODO Auto-generated method stub
-        return isTimedOut();
+        return m_timer.hasElapsed(3);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         // TODO Auto-generated method stub
         m_drive.stop();
+        m_timer.stop();
     }
 
-    @Override
-    protected void interrupted() {
-        // TODO Auto-generated method stub
-        end();
-    }
+
 
 }

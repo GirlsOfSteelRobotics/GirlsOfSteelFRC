@@ -11,11 +11,11 @@ public class ChassisJags extends CommandBase {
 
     public ChassisJags(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         SmartDashboard.putBoolean("Chassis Jags", true);
         SmartDashboard.putBoolean("Right Jag", false);
         SmartDashboard.putBoolean("Back Jag", false);
@@ -24,7 +24,7 @@ public class ChassisJags extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = SmartDashboard.getNumber("Jag Speed", 0.0);
         if (SmartDashboard.getBoolean("Right Jag", false)) {
             m_chassis.setRightJag(m_speed);
@@ -47,19 +47,16 @@ public class ChassisJags extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
         //Eve:  return !SmartDashboard.getBoolean("Chassis Jags", true);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

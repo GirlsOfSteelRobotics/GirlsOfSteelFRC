@@ -16,7 +16,7 @@ public class AutoTuneCamera extends CommandBase {
 
     public AutoTuneCamera(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     //returns average of a set of 10 data pouints from the camera if it's stable
@@ -50,7 +50,7 @@ public class AutoTuneCamera extends CommandBase {
 
     @SuppressWarnings("PMD.CognitiveComplexity")
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         int nSteps = 10; //(int)(HALF_COURT/STEP);
         double[] imageTargetRatioData = new double[nSteps];
@@ -115,22 +115,19 @@ public class AutoTuneCamera extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 
     private static class LinearRegressionAuto {

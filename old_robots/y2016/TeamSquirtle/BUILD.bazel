@@ -1,16 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
-
-gos_java_robot(
+alias(
     name = "TeamSquirtle",
-    srcs = glob(["src/main/java/**/*.java"]),
-    disable_checkstyle = True,
-    main_class = "com.gos.preseason2016.team_squirtle.robot.Main",
-    deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/opencv",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
-        "@bazelrio//libraries/java/wpilib/old_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-    ],
+    actual = "//old_robots/y2016/TeamSquirtle/src/main/java/com/gos/preseason2016/team_squirtle/robot",
 )

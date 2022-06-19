@@ -20,14 +20,14 @@ public class AutoShootMany extends CommandBase {
     public AutoShootMany(Shooter shooter, Feeder feeder, int numShots, double desiredVoltage) {
         m_shooter = shooter;
         m_feeder = feeder;
-        requires(m_shooter);
-        requires(m_feeder);
+        addRequirements(m_shooter);
+        addRequirements(m_feeder);
         m_shots = numShots;
         this.m_desiredVoltage = desiredVoltage;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_counter = 0;
         m_pushed = false;
         m_shooter.setJags(m_desiredVoltage);
@@ -39,7 +39,7 @@ public class AutoShootMany extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (timeSinceInitialized() - m_time > WAIT_TIME) {
             if (!m_pushed) {
                 m_feeder.pushShooter();
@@ -54,19 +54,16 @@ public class AutoShootMany extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_counter >= m_shots; //counter is never changed -> continue to shoot
         //just in case a frisbee got stuck
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

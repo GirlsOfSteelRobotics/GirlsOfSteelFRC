@@ -11,27 +11,24 @@ public class TopRollersForward extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_shooter.topRollersForward();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.topRollersOff();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

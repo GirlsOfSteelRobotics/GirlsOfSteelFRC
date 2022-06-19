@@ -1,14 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
-
-gos_java_robot(
+alias(
     name = "GOS2014",
-    srcs = glob(["src/main/java/**/*.java"]),
-    disable_checkstyle = True,
-    main_class = "com.gos.aerial_assist.Main",
-    deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/ntcore",
-        "@bazelrio//libraries/java/wpilib/old_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-    ],
+    actual = "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist",
 )

@@ -7,29 +7,27 @@ public class AutoBrushFoward extends CommandBase {
 
     public AutoBrushFoward(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.forwardBrush();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         System.out.println("Brush Forward Done");
         return timeSinceInitialized() > 5;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

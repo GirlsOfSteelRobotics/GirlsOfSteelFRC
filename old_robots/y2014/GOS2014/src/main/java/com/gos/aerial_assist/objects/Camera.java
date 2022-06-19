@@ -9,10 +9,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Camera {
     //magic value must change
-    private static final double m_heightOfGoal = 2.57; //actually height of goal - height of robot CHANGE
+    private static final double HEIGHT_OF_GOAL = 2.57; //actually height of goal - height of robot CHANGE
     //Need to change this command into meters and not inches
-    private static final double m_initialVelocity = 8.65;
-    private static final double m_gravity = 9.82;
+    private static final double INITIAL_VELOCITY = 8.65;
+    private static final double GRAVITY = 9.82;
     private final double m_distance;
     private boolean m_isHot;
 
@@ -47,9 +47,9 @@ public class Camera {
 
     public double getVerticalAngleOffset() {
         double x = m_distance;
-        double y = m_heightOfGoal; //needs to be changed based on initial height of robot
-        double g = m_gravity;
-        double v = m_initialVelocity;
+        double y = HEIGHT_OF_GOAL; //needs to be changed based on initial height of robot
+        double g = GRAVITY;
+        double v = INITIAL_VELOCITY;
         //make sure all numbers are in metric units
         //        double positiveAngle = Math.atan(square(v)+Math.sqrt(fourthPower(v)-g*(g*square(x)+2*y*square(v)))/g*x);
         //return angle;

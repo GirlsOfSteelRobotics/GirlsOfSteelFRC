@@ -1,49 +1,44 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.stronghold.robot.subsystems.Shifters;
 import com.gos.stronghold.robot.subsystems.Shifters.Speed;
 
 /**
  *
  */
-public class ShiftDown extends Command {
+public class ShiftDown extends CommandBase {
     private final Shifters m_shifters;
 
     public ShiftDown(Shifters shifters) {
         m_shifters = shifters;
-        requires(m_shifters);
+        addRequirements(m_shifters);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
-        m_shifters.shiftLeft(Speed.kLow);
-        m_shifters.shiftRight(Speed.kLow);
+    public void initialize() {
+        m_shifters.shiftLeft(Speed.LOW);
+        m_shifters.shiftRight(Speed.LOW);
         //Robot.ledlights.redLight();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         // The solenoid setting commands should complete immediately
         return true;
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

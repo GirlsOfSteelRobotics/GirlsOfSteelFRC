@@ -4,14 +4,13 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.gos.rebound_rumble.RobotMap;
 import com.gos.rebound_rumble.objects.EncoderGoSPidController;
 
 @SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods", "PMD.TooManyFields"})
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     private static final double WHEEL_DIAMETER = 0.1524; //in meters
     private static final double GEAR_RATIO = 15.0 / 24.0;
@@ -22,15 +21,15 @@ public class Chassis extends Subsystem {
     private static final double ROBOT_DIAMETER = 0.8128; //the radius*2 of the circle the robot makes while turning in place
 
     //rate p & i & d values -> same for the left & right -> tuned for PIT comp
-    private static final double rateP = 0.75;
-    private static final double rateI = 0.1;
-    private static final double rateD = 0.0;
-    private static final double positionRightP = 0.48; //0.415; //practice bot:0.48;
-    private static final double positionRightI = 0.0;
-    private static final double positionRightD = 0.1;
-    private static final double positionLeftP = 0.48; //0.4; //practice bot:0.48;
-    private static final double positionLeftI = 0.0;
-    private static final double positionLeftD = 0.1;
+    private static final double RATE_P = 0.75;
+    private static final double RATE_I = 0.1;
+    private static final double RATE_D = 0.0;
+    private static final double POSITION_RIGHT_P = 0.48; //0.415; //practice bot:0.48;
+    private static final double POSITION_RIGHT_I = 0.0;
+    private static final double POSITION_RIGHT_D = 0.1;
+    private static final double POSITION_LEFT_P = 0.48; //0.4; //practice bot:0.48;
+    private static final double POSITION_LEFT_I = 0.0;
+    private static final double POSITION_LEFT_D = 0.1;
 
     public static final double DISTANCE_BACKBOARD_TO_BRIDGE = 7.0104;
     //backboard to where we need to be to push the bridge down
@@ -77,46 +76,22 @@ public class Chassis extends Subsystem {
 
     //create info for PIDs
 
-    private final EncoderGoSPidController m_rightRatePID = new EncoderGoSPidController(rateP,
-        rateI, rateD, m_rightEncoder,
+    private final EncoderGoSPidController m_rightRatePID = new EncoderGoSPidController(RATE_P,
+        RATE_I, RATE_D, m_rightEncoder,
         //this is an anonymous class, it lets us send values to both jags
         //new output parameter
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setRightJags(output);
-            }
-        }, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
-    private final EncoderGoSPidController m_leftRatePID = new EncoderGoSPidController(rateP,
-        rateI, rateD, m_leftEncoder,
+        this::setRightJags, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
+    private final EncoderGoSPidController m_leftRatePID = new EncoderGoSPidController(RATE_P,
+        RATE_I, RATE_D, m_leftEncoder,
         //this is an anonymous class, it lets us send values to both jags
         //new output parameter
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setLeftJags(output);
-            }
-        }, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
+        this::setLeftJags, EncoderGoSPidController.RATE, INTEGRAL_THRESHOLD);
     private final EncoderGoSPidController m_rightPositionPID = new EncoderGoSPidController(
-        positionRightP, positionRightI, positionRightD, m_rightEncoder,
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setRightJags(output);
-            }
-        }, EncoderGoSPidController.POSITION);
+        POSITION_RIGHT_P, POSITION_RIGHT_I, POSITION_RIGHT_D, m_rightEncoder,
+        this::setRightJags, EncoderGoSPidController.POSITION);
     private final EncoderGoSPidController m_leftPositionPID = new EncoderGoSPidController(
-        positionLeftP, positionLeftI, positionLeftD, m_leftEncoder,
-        new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                setLeftJags(output);
-            }
-        }, EncoderGoSPidController.POSITION);
+        POSITION_LEFT_P, POSITION_LEFT_I, POSITION_LEFT_D, m_leftEncoder,
+        this::setLeftJags, EncoderGoSPidController.POSITION);
 
     //again, make sure you can find this easily at comp
     //^^max acceleration -> used in the acceleration limiting method on the PID controllers
@@ -134,9 +109,7 @@ public class Chassis extends Subsystem {
         resetGyro();
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
     //jags
     public void setRightJags(double speed) {
@@ -423,18 +396,18 @@ public class Chassis extends Subsystem {
 
     public void setPositionPIDValues(double rightP, double rightD, double leftP,
                                      double leftD) {
-        m_rightPositionPID.setPID(rightP, positionRightI, rightD);
-        m_leftPositionPID.setPID(leftP, positionLeftI, leftD);
+        m_rightPositionPID.setPID(rightP, POSITION_RIGHT_I, rightD);
+        m_leftPositionPID.setPID(leftP, POSITION_LEFT_I, leftD);
     }
 
     public void setPIDsPosition() {
-        m_rightPositionPID.setPID(positionRightP, positionRightI, positionRightD);
-        m_leftPositionPID.setPID(positionLeftP, positionLeftI, positionLeftD);
+        m_rightPositionPID.setPID(POSITION_RIGHT_P, POSITION_RIGHT_I, POSITION_RIGHT_D);
+        m_leftPositionPID.setPID(POSITION_LEFT_P, POSITION_LEFT_I, POSITION_LEFT_D);
     }
 
     public void setPIDsRate() {
-        m_rightRatePID.setPID(rateP, rateI, rateD);
-        m_leftRatePID.setPID(rateP, rateI, rateD);
+        m_rightRatePID.setPID(RATE_P, RATE_I, RATE_D);
+        m_leftRatePID.setPID(RATE_P, RATE_I, RATE_D);
     }
 
     public void setRatePIDSetPoint(double setPoint) {

@@ -1,8 +1,8 @@
 package com.gos.recycle_rush.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.recycle_rush.robot.commands.autonomous.AutoCollector;
@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     private final Lifter m_lifter;
     private final OI m_oi;
     private final Shack m_shack;
-    private final SendableChooser m_autoChooser;
+    private final SendableChooser<Command> m_autoChooser;
     private Command m_autonomousCommand;
 
     public Robot() {
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
         m_lifter = new Lifter();
         m_shack = new Shack();
         m_oi = new OI(m_chassis, m_collector, m_shack);
-        m_autoChooser = new SendableChooser();
+        m_autoChooser = new SendableChooser<>();
     }
 
     /**
@@ -94,22 +94,22 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Release", new Release(m_shack, m_collector));
 
         // Default commands
-        m_lifter.setDefaultCommand(new LiftByJoystick(m_oi, m_lifter));
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_lifter.setDefaultCommand(new LiftByJoystick(m_oi.getOperatorJoystick(), m_lifter));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi.getChassisJoystick(), m_chassis));
 
     }
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        m_autonomousCommand = (Command) m_autoChooser.getSelected();
+        m_autonomousCommand = m_autoChooser.getSelected();
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
     }
 
@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -145,7 +145,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**

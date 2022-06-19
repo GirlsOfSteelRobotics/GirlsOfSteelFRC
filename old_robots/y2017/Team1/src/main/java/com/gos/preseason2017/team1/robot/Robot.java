@@ -1,8 +1,8 @@
 package com.gos.preseason2017.team1.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.preseason2017.team1.robot.commands.DriveByJoystick;
@@ -41,8 +41,8 @@ public class Robot extends TimedRobot {
         m_oi = new OI(m_shifters, m_jaw, m_shooter);
 
         m_chooser = new SendableChooser<>();
-        m_chooser.addDefault("Default: Do Nothing", new AutoDoNothing(m_driveSystem));
-        m_chooser.addObject("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(m_driveSystem, 10.0, 0.5));
+        m_chooser.setDefaultOption("Default: Do Nothing", new AutoDoNothing(m_driveSystem));
+        m_chooser.addOption("Drive Forwards(dist=10,speed=0.5)", new AutoDriveForwards(m_driveSystem, 10.0, 0.5));
         SmartDashboard.putData("Auto mode", m_chooser);
     }
 
@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
 
         // Default commands
-        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi, m_driveSystem));
+        m_driveSystem.setDefaultCommand(new DriveByJoystick(m_oi.getDriveStick(), m_driveSystem));
     }
 
     /**
@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**
@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
     }
 
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**

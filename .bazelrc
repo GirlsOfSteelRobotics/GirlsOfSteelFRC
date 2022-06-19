@@ -10,3 +10,6 @@ build:for-roborio --platforms=@bazelrio//platforms/roborio
 
 # Remote Cache
 import .bazelrc-buildbuddy
+
+# Run only styleguide checks
+build:styleguide --build_tag_filters=java-styleguide

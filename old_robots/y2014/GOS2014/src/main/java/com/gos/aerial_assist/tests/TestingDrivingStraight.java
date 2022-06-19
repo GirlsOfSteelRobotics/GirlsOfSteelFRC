@@ -21,11 +21,11 @@ public class TestingDrivingStraight extends CommandBase {
 
     public TestingDrivingStraight(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         System.out.println("Initializing TDS command.");
         SmartDashboard.putNumber("LeftJagAdjust", 0); //Setting LeftJagAdjust  variable to zero in SmartDashboard
         SmartDashboard.putNumber("RightJagAdjust", 0); //Same as line above
@@ -33,7 +33,7 @@ public class TestingDrivingStraight extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         double rightJagAdjust = SmartDashboard.getNumber("RightJagAdjust", 0);
         double leftJagAdjust = SmartDashboard.getNumber("LeftJagAdjust", 0);
         m_chassis.setLeftJag(.5 * leftJagAdjust);
@@ -45,19 +45,16 @@ public class TestingDrivingStraight extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.setRightJag(0.0);
         m_chassis.setLeftJag(0.0);
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -1,14 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
-
-gos_java_robot(
+alias(
     name = "ChassisProject",
-    srcs = glob(["src/main/java/**/*.java"]),
-    disable_checkstyle = True,
-    main_class = "frc.robot.Main",
-    deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/hal",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-    ],
+    actual = "//y2022/ChassisProject/src/main/java/frc/robot",
 )

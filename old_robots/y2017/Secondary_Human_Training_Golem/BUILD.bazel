@@ -1,17 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
-
-gos_java_robot(
+alias(
     name = "Secondary_Human_Training_Golem",
-    srcs = glob(["src/main/java/**/*.java"]),
-    disable_checkstyle = True,
-    main_class = "com.gos.steam_works.robot.Main",
-    deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/opencv",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
-        "@bazelrio//libraries/java/wpilib/ntcore",
-        "@bazelrio//libraries/java/wpilib/old_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-    ],
+    actual = "//old_robots/y2017/Secondary_Human_Training_Golem/src/main/java/com/gos/steam_works",
 )

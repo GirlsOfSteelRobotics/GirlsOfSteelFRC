@@ -16,7 +16,7 @@ import com.gos.aerial_assist.subsystems.Driving;
  * @author Sylvie and Jisue
  */
 public class MoveToPositionLSPB extends CommandBase {
-    private static final double m_offBy = 0.05;
+    private static final double OFF_BY = 0.05;
 
     private final Chassis m_chassis;
     private final LspbPidPlanner m_leftChassisPlanner;
@@ -29,7 +29,7 @@ public class MoveToPositionLSPB extends CommandBase {
         m_chassis = chassis;
         m_leftChassisPlanner = m_chassis.getLeftChassisPlanner();
         m_rightChassisPlanner = m_chassis.getRightChassisPlanner();
-        requires(driving);
+        addRequirements(driving);
         m_setPoint = setPoint;
         System.out.println("Moving Made!");
         //         chassis.initEncoders();
@@ -37,9 +37,9 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         SmartDashboard.putNumber("Setpoint Before", m_setPoint);
-        m_setPoint *= Configuration.signOfChassisPositionPIDSetpoint;
+        m_setPoint *= Configuration.SIGN_OF_CHASSIS_POSITION_PID_SETPOINT;
 
         System.out.println("In initialize");
         m_chassis.initEncoders();
@@ -52,7 +52,7 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //System.out.println("Left Encoder: " + chassis.getLeftEncoderDistance() + "Right Encoder" + chassis.getRightEncoderDistance());
         m_changeInTime = System.currentTimeMillis() - m_startTime;
         m_chassis.setPositionSeparate(m_leftChassisPlanner.getDesiredPosition(m_changeInTime), m_rightChassisPlanner.getDesiredPosition(m_changeInTime));
@@ -65,18 +65,18 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         if (m_changeInTime > 3000) {
             System.out.println("Time Exit Out of Chassis");
             return true;
         }
-        boolean ret = ((Math.abs(m_chassis.getLeftEncoderDistance() - m_setPoint) < m_offBy)
-            && (Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < m_offBy))
+        boolean ret = ((Math.abs(m_chassis.getLeftEncoderDistance() - m_setPoint) < OFF_BY)
+            && (Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < OFF_BY))
             || (m_chassis.getLeftEncoderDistance() > Math.abs(m_setPoint))
             || (m_chassis.getRightEncoderDistance() > Math.abs(m_setPoint));
 
-        System.out.println("First: " + (Math.abs(m_chassis.getLeftEncoderDistance() - m_setPoint) < m_offBy));
-        System.out.println("Second: " + (Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < m_offBy));
+        System.out.println("First: " + (Math.abs(m_chassis.getLeftEncoderDistance() - m_setPoint) < OFF_BY));
+        System.out.println("Second: " + (Math.abs(m_chassis.getRightEncoderDistance() - m_setPoint) < OFF_BY));
         System.out.println("Third: " + (m_chassis.getLeftEncoderDistance() > Math.abs(m_setPoint)));
         System.out.println("Fourth: " + (m_chassis.getRightEncoderDistance() > Math.abs(m_setPoint)));
         System.out.println("Return value: " + ret);
@@ -85,16 +85,13 @@ public class MoveToPositionLSPB extends CommandBase {
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
         m_chassis.disablePositionPID();
         m_chassis.stopJags();
-        m_setPoint *= Configuration.signOfChassisPositionPIDSetpoint; //To undo what we did before
+        m_setPoint *= Configuration.SIGN_OF_CHASSIS_POSITION_PID_SETPOINT; //To undo what we did before
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

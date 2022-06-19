@@ -1,18 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
-
-gos_java_robot(
+alias(
     name = "pid",
-    srcs = glob(["src/main/java/**/*.java"]),
-    main_class = "com.gos.codelabs.pid.Main",
-    deps = [
-        "//libraries/GirlsOfSteelLib",
-        "//libraries/GirlsOfSteelLibRev",
-        "@bazelrio//libraries/java/rev/revlib",
-        "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/ntcore",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
-        "@bazelrio//libraries/java/wpilib/wpiutil",
-        "@snobot_sim//jar",
-    ],
+    actual = "//codelabs/pid/src/main/java/com/gos/codelabs/pid",
 )

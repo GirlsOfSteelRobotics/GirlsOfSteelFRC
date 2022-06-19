@@ -19,11 +19,11 @@ public class ShooterPID extends CommandBase {
 
     public ShooterPID(Shooter shooter) {
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
         SmartDashboard.putNumber("Shooter Speed", 0.0);
@@ -33,7 +33,7 @@ public class ShooterPID extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = SmartDashboard.getNumber("Shooter Speed", 0.0);
         double p = SmartDashboard.getNumber("p value", 0.0);
         double i = SmartDashboard.getNumber("i value", 0.0);
@@ -47,17 +47,14 @@ public class ShooterPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return !SmartDashboard.getBoolean("Click when Done Testing Shooter PID", true);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

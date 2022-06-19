@@ -16,35 +16,33 @@ public class CloseBottomGrip extends CommandBase {
 
     public CloseBottomGrip(Gripper gripper) {
         m_gripper = gripper;
-        requires(m_gripper);
+        addRequirements(m_gripper);
     }
 
     //Command for closing the bottom gripper around the pyramid
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         m_gripper.closeGrip();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
 
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 
 }

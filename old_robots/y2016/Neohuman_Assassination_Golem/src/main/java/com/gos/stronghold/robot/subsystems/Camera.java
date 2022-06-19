@@ -1,13 +1,12 @@
 package com.gos.stronghold.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import com.gos.stronghold.robot.commands.camera.UpdateCam;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
 @SuppressWarnings("PMD")
-public class Camera extends Subsystem {
+public class Camera extends SubsystemBase {
 
     //    private CameraServer server;
     //    private Image frame;
@@ -99,11 +98,5 @@ public class Camera extends Subsystem {
         //            NIVision.IMAQdxGrab(curCam, frame, 1);
         //            server.setImage(frame);
         //        }
-    }
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new UpdateCam(this));
     }
 }
