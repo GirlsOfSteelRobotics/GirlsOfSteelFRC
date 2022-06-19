@@ -1,4 +1,3 @@
-
 import re
 import os
 
@@ -57,11 +56,13 @@ def load_command_running_windows(dataframe, subsystem_name, command_name):
 
     return time_pairs
 
+
 def filter_by_time(dataframe, min_time, max_time):
     return dataframe[(dataframe.index >= min_time) & (dataframe.index <= max_time)]
 
+
 def save_dataframe_metadata(df, output_directory):
-    with open(os.path.join(output_directory, 'metadata.txt'), 'w') as f:
+    with open(os.path.join(output_directory, "metadata.txt"), "w") as f:
         f.write("\n\nAll available keys:\n")
         f.write("\n".join(sorted(list(df.keys()))))
 
@@ -70,4 +71,3 @@ def save_dataframe_metadata(df, output_directory):
 
         f.write("\n\nAvailable Commands:\n")
         f.write("\n".join(f"{x[1]:45}({x[0]})" for x in sorted(get_commands_in_log(df))))
-

@@ -10,7 +10,7 @@ def get_build_file_versions(build_files):
     versions = collections.defaultdict(list)
 
     for build_file in build_files:
-        with open(build_file, 'r') as f:
+        with open(build_file, "r") as f:
             for line in f.readlines():
                 matches = re.search(r'edu\.wpi\.first\.GradleRIO.* version "(.*)"', line)
                 if matches:
@@ -26,9 +26,9 @@ def get_vendor_deps_versions(vendor_deps):
         versions = collections.defaultdict(list)
 
         for vendor_file in vendor_files:
-            with open(vendor_file, 'r') as f:
+            with open(vendor_file, "r") as f:
                 vendor_dep = json.load(f)
-                version = vendor_dep['version']
+                version = vendor_dep["version"]
                 versions[version].append(vendor_file)
 
         vendor_versions[vendor_name] = versions
@@ -83,15 +83,17 @@ def fix_gradlerio_build_file(versions):
         for bad_file in files:
             print(f"  Fixing {bad_file}")
             new_content = ""
-            with open(bad_file, 'r') as f:
+            with open(bad_file, "r") as f:
                 for line in f.readlines():
                     matches = re.search(r'edu\.wpi\.first\.GradleRIO.* version "(.*)"', line)
                     if matches:
-                        new_content += f'    id "edu.wpi.first.GradleRIO" version "{newest_version}"\n'
+                        new_content += (
+                            f'    id "edu.wpi.first.GradleRIO" version "{newest_version}"\n'
+                        )
                     else:
                         new_content += line
 
-            with open(bad_file, 'w') as f:
+            with open(bad_file, "w") as f:
                 f.write(new_content)
 
 
@@ -99,12 +101,16 @@ def get_this_directory():
 
     try:
         from rules_python.python.runfiles import runfiles
+
         r = runfiles.Create()
-        this_file = r.Rlocation("__main__/libraries/linters/gradlerio_versions/lint_gradlerio_versions.py")
-        return  os.path.dirname(this_file)
+        this_file = r.Rlocation(
+            "__main__/libraries/linters/gradlerio_versions/lint_gradlerio_versions.py"
+        )
+        return os.path.dirname(this_file)
 
     except ModuleNotFoundError:
         return os.path.dirname(os.path.realpath(__file__))
+
 
 def main():
 
@@ -116,7 +122,6 @@ def main():
 
     if len(gradlerio_versions) == 0:
         raise Exception(f"No build files were found. Check base directory '{base_directory}'")
-
 
     if len(gradlerio_versions) != 1:
         fix_gradlerio_build_file(gradlerio_versions)

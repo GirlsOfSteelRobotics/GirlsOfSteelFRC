@@ -17,7 +17,12 @@ USE_AMALGAMATION = False
 if USE_AMALGAMATION:
     from amalgum_pipeline import runPipeline, RED_NUM, BLUE_NUM, get_active_pipeline
 else:
-    from rapid_react.cargo.base_limelight_pipeline import runPipeline, RED_NUM, BLUE_NUM, get_active_pipeline
+    from rapid_react.cargo.base_limelight_pipeline import (
+        runPipeline,
+        RED_NUM,
+        BLUE_NUM,
+        get_active_pipeline,
+    )
 
 
 class Window(QMainWindow):
@@ -58,7 +63,9 @@ class Window(QMainWindow):
 
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
-        msg.setInformativeText("PJ is bad at QT. Copy the details into the appropriate color in y2022/CargoDetection/python/rapid_react/cargo/cargo_pipeline_params.py")
+        msg.setInformativeText(
+            "PJ is bad at QT. Copy the details into the appropriate color in y2022/CargoDetection/python/rapid_react/cargo/cargo_pipeline_params.py"
+        )
 
         params = get_active_pipeline(self.active_threshold_num).params
         msg.setDetailedText(str(params))

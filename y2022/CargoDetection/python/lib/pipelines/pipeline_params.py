@@ -25,9 +25,7 @@ class HsvThresholdParams:
 
 
 class ContourFilteringParams:
-    def __init__(
-        self, area_pair: Tuple[float, float], aspect_ratio_pair: Tuple[float, float]
-    ):
+    def __init__(self, area_pair: Tuple[float, float], aspect_ratio_pair: Tuple[float, float]):
         self.area_pair = area_pair
         self.aspect_ratio_pair = aspect_ratio_pair
 
@@ -62,9 +60,7 @@ class CircleDetectionParams:
 
 class CropImageFilterParams:
     class CropInfo:
-        def __init__(
-            self, min_x: int = 0, min_y: int = 0, max_x: int = None, max_y: int = None
-        ):
+        def __init__(self, min_x: int = 0, min_y: int = 0, max_x: int = None, max_y: int = None):
             self.min_x = min_x
             self.min_y = min_y
             self.max_x = max_x

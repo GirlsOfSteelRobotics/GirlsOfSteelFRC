@@ -1,4 +1,3 @@
-
 import os
 import sys
 import shutil
@@ -6,11 +5,10 @@ import shutil
 if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
     os.chdir(os.environ["BUILD_WORKSPACE_DIRECTORY"])
 else:
-    sys.path.append(
-        os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", "..")
-    )
+    sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", ".."))
 
 from libraries.scripts.updater.utils import walk_for_extension, regex_replace_file
+
 
 def __run_replacement(replacements, root=".", dir_blacklist=None):
 
@@ -18,6 +16,7 @@ def __run_replacement(replacements, root=".", dir_blacklist=None):
 
     for java_file in java_files:
         regex_replace_file(java_file, replacements)
+
 
 def run_converesion(project_path):
     old_vendor_dep = os.path.join(project_path, "vendordeps", "WPILibOldCommands.json")

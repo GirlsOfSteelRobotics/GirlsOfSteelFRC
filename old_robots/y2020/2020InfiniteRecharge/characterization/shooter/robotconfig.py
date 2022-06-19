@@ -18,4 +18,3 @@
     # a fraction [motor turns]/[wheel turns]
     "gearing": 1,
 }
-

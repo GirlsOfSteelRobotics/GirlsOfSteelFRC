@@ -29,12 +29,8 @@ def walk_with_blacklist(search_root, dir_blacklist=None):
 
 def walk_for_extension(search_root, extension, dir_blacklist=None):
     out_files = []
-    for root, dirs, files in walk_with_blacklist(
-        search_root, dir_blacklist=dir_blacklist
-    ):
-        out_files.extend(
-            [os.path.join(root, f) for f in files if f.endswith(extension)]
-        )
+    for root, dirs, files in walk_with_blacklist(search_root, dir_blacklist=dir_blacklist):
+        out_files.extend([os.path.join(root, f) for f in files if f.endswith(extension)])
 
     return out_files
 
