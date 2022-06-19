@@ -8,7 +8,10 @@ gos_java_library(
 
 gos_java_robot(
     name = "offense2019",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["RobotMap.java"],
+    ),
     main_class = "com.gos.offense2019.Main",
     visibility = ["//old_robots/y2019/OffenseBot:__subpackages__"],
     deps = [

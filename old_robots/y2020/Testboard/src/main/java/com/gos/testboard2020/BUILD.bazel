@@ -8,10 +8,14 @@ gos_java_library(
 
 gos_java_robot(
     name = "testboard2020",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
     main_class = "com.gos.testboard2020.Main",
     visibility = ["//old_robots/y2020/Testboard:__subpackages__"],
     deps = [
+        ":Constants",
         "//libraries/GirlsOfSteelLib",
         "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020/commands",
         "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020/subsystems",

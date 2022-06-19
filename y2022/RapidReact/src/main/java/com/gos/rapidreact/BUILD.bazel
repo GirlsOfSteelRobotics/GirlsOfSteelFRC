@@ -11,7 +11,10 @@ gos_java_library(
 
 gos_java_robot(
     name = "rapidreact",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
     main_class = "com.gos.rapidreact.Main",
     visibility = ["//y2022/RapidReact:__subpackages__"],
     deps = [
@@ -26,7 +29,6 @@ gos_java_robot(
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
         "@bazelrio//libraries/java/wpilib/wpiutil",
     ],
 )

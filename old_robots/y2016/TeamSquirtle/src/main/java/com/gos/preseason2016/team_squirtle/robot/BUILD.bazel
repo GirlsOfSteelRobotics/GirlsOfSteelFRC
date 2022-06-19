@@ -8,7 +8,10 @@ gos_java_library(
 
 gos_java_robot(
     name = "robot",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["RobotMap.java"],
+    ),
     main_class = "com.gos.preseason2016.team_squirtle.robot.Main",
     visibility = ["//old_robots/y2016/TeamSquirtle:__subpackages__"],
     deps = [

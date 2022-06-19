@@ -8,10 +8,14 @@ gos_java_library(
 
 gos_java_robot(
     name = "robot",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["RobotMap.java"],
+    ),
     main_class = "com.gos.stronghold.robot.Main",
     visibility = ["//old_robots/y2016/Neohuman_Assassination_Golem:__subpackages__"],
     deps = [
+        ":RobotMap",
         "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/commands",
         "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/commands/autonomous",
         "//old_robots/y2016/Neohuman_Assassination_Golem/src/main/java/com/gos/stronghold/robot/commands/buttons",

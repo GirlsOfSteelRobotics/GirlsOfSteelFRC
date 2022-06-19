@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        run: bazel test //... -k --config=remote
+        run: bazel test //... -k --config=remote --config=ci
 
 
   buildifier:

@@ -14,7 +14,13 @@ filegroup(
 
 gos_java_robot(
     name = "rebound_rumble",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = [
+            "OI.java",
+            "RobotMap.java",
+        ],
+    ),
     main_class = "com.gos.rebound_rumble.Main",
     visibility = ["//old_robots/y2012/Watson2012:__subpackages__"],
     deps = [

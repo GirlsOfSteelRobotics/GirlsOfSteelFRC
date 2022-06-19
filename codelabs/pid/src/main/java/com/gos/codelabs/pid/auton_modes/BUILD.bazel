@@ -16,15 +16,14 @@ gos_java_library(
 
 gos_java_library(
     name = "auton_modes",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["TrajectoryFactory.java"],
+    ),
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
-        "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
-        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/auton",
-        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
         "@snobot_sim//jar",
     ],
 )

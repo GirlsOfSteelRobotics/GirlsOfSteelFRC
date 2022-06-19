@@ -8,7 +8,10 @@ gos_java_library(
 
 gos_java_robot(
     name = "outreach2021",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
     main_class = "com.gos.outreach2021.Main",
     visibility = ["//old_robots/y2021/OutreachBot:__subpackages__"],
     deps = [

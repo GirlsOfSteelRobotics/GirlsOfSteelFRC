@@ -8,10 +8,14 @@ gos_java_library(
 
 gos_java_robot(
     name = "robot",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["RobotMap.java"],
+    ),
     main_class = "com.gos.recycle_rush.robot.Main",
     visibility = ["//old_robots/y2015/GoS2015:__subpackages__"],
     deps = [
+        ":RobotMap",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/autonomous",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/collector",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/drive",

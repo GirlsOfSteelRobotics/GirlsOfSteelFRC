@@ -14,10 +14,17 @@ gos_java_library(
 
 gos_java_robot(
     name = "ultimate_ascent",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = [
+            "Constants.java",
+            "RobotMap.java",
+        ],
+    ),
     main_class = "com.gos.ultimate_ascent.Main",
     visibility = ["//old_robots/y2013/Eve2013:__subpackages__"],
     deps = [
+        ":RobotMap",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/commands",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects:AutonomousChooser",

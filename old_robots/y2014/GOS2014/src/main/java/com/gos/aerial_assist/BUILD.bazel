@@ -14,10 +14,17 @@ gos_java_library(
 
 gos_java_robot(
     name = "aerial_assist",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = [
+            "RobotMap.java",
+            "Configuration.java",
+        ],
+    ),
     main_class = "com.gos.aerial_assist.Main",
     visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
     deps = [
+        ":RobotMap",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/commands",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:AutonomousChooser",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",

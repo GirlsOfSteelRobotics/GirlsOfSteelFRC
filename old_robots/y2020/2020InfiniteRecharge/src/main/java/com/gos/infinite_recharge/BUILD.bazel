@@ -11,10 +11,14 @@ gos_java_library(
 
 gos_java_robot(
     name = "infinite_recharge",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
     main_class = "com.gos.infinite_recharge.Main",
     visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
     deps = [
+        ":Constants",
         "//libraries/GirlsOfSteelLib",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/auto_modes",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands",
@@ -23,7 +27,6 @@ gos_java_robot(
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/trajectory_modes",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
         "@bazelrio//libraries/java/wpilib/wpiutil",
     ],
 )

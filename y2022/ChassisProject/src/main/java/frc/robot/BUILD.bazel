@@ -8,7 +8,10 @@ gos_java_library(
 
 gos_java_robot(
     name = "robot",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
     main_class = "frc.robot.Main",
     visibility = ["//y2022/ChassisProject:__subpackages__"],
     deps = [

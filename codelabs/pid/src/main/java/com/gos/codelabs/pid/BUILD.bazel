@@ -20,11 +20,19 @@ gos_java_library(
 
 gos_java_robot(
     name = "pid",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = [
+            "SmartDashboardNames.java",
+            "Constants.java",
+        ],
+    ),
     main_class = "com.gos.codelabs.pid.Main",
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
+        ":SmartDashboardNames",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/auton_modes",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/auton_modes:TrajectoryFactory",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/auton",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/tuning",

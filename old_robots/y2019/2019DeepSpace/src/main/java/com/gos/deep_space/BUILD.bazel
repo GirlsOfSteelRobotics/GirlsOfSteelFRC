@@ -8,7 +8,10 @@ gos_java_library(
 
 gos_java_robot(
     name = "deep_space",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["RobotMap.java"],
+    ),
     main_class = "com.gos.deep_space.Main",
     visibility = ["//old_robots/y2019/2019DeepSpace:__subpackages__"],
     deps = [
