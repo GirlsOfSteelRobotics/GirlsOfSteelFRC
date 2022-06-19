@@ -10,7 +10,6 @@ include 'codelabs:first_robot_code'
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
-include 'libraries:GirlsOfSteelLibNavx'
 
 //include 'old_robots:y2011:GOS2011:Drive'
 //include 'old_robots:y2011:GOS2011:MyRobot_otherschool'

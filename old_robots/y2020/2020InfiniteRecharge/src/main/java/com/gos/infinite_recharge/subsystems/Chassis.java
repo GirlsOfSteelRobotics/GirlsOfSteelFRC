@@ -3,12 +3,14 @@ package com.gos.infinite_recharge.subsystems;
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.Constants.DriveConstants;
 import com.gos.infinite_recharge.sim.CameraSimulator;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -33,8 +35,6 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.numbers.N2;
-import com.gos.lib.sensors.IGyroWrapper;
-import com.gos.lib.navx.NavXWrapper;
 
 import com.revrobotics.SparkMaxPIDController;
 
@@ -61,7 +61,7 @@ public class Chassis extends SubsystemBase {
     private final SparkMaxPIDController m_leftPidController;
     private final SparkMaxPIDController m_rightPidController;
 
-    private final IGyroWrapper m_gyro;
+    private final Gyro m_gyro;
 
     private final DifferentialDrive m_drive;
 
@@ -105,7 +105,7 @@ public class Chassis extends SubsystemBase {
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
-        m_gyro = new NavXWrapper();
+        m_gyro = new AHRS();
 
         IdleMode idleMode = IdleMode.kCoast;
         m_masterLeft.setIdleMode(idleMode);
@@ -228,7 +228,6 @@ public class Chassis extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_gyro.poll();
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), Units.inchesToMeters(m_leftEncoder.getPosition()),
             Units.inchesToMeters(m_rightEncoder.getPosition()));
 
@@ -301,7 +300,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getHeading() {
-        return -m_gyro.getYaw();
+        return -m_gyro.getAngle();
         // return 0;
     }
 
