@@ -32,4 +32,4 @@ pmd {
     ruleSets = []
 }
 
-apply from: "${rootDir}/styleguide/spotless.gradle"
+// apply from: "${rootDir}/styleguide/spotless.gradle"

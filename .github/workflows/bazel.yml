@@ -96,7 +96,7 @@ jobs:
         run: chmod +x buildozer-cmds.sh && ./buildozer-cmds.sh
 
       - name: Generate diff
-        run: git diff > bazel-lint-fixes.patch
+        run: git diff > bazel-unused-deps-fixes.patch
 
       - name: Check Output
         run: git --no-pager diff --exit-code HEAD
@@ -104,5 +104,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Upload Unused Deps Patch
-          path: bazel-lint-fixes.patch
+          path: bazel-unused-deps-fixes.patch
         if: ${{ failure() }}
