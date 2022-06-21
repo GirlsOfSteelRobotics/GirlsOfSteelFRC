@@ -9,6 +9,7 @@ import com.gos.scra.wcd.commands.ChassisCurvatureDriveCommand;
 import com.gos.scra.wcd.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
 /**
@@ -43,6 +44,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+    }
+
+    public Command getAutonomousCommand() {
+        return null;
     }
 
 
