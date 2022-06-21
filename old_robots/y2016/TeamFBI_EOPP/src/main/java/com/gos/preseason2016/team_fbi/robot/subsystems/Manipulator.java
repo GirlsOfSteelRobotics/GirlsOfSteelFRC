@@ -3,12 +3,12 @@ package com.gos.preseason2016.team_fbi.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Manipulator extends Subsystem {
+public class Manipulator extends SubsystemBase {
     private final MotorController m_conveyorBeltMotorRight;
     private final MotorController m_conveyorBeltMotorLeft;
 
@@ -18,9 +18,7 @@ public class Manipulator extends Subsystem {
         m_conveyorBeltMotorLeft = new WPI_TalonSRX(7);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 
     public void manipulatorConveyorBeltMotorRight(boolean fwd) {
         if (fwd) {

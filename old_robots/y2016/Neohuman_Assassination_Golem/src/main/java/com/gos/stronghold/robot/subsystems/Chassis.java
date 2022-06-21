@@ -3,14 +3,16 @@ package com.gos.stronghold.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.stronghold.robot.RobotMap;
 
 /**
  *
  */
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
+    public enum TeleDriveDirection { FWD, REV }
+
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -26,6 +28,8 @@ public class Chassis extends Subsystem {
 
     private double m_rotateToAngleRate;
     private final Shifters m_shifters;
+
+    private TeleDriveDirection m_driveDirection = TeleDriveDirection.FWD;
 
     public Chassis(Shifters shifters) {
         m_shifters = shifters;
@@ -80,10 +84,15 @@ public class Chassis extends Subsystem {
 
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
+    public void setTeleDriveDirection(TeleDriveDirection driveDirection) {
+        this.m_driveDirection = driveDirection;
+        System.out.println("Drive direction set to: " + driveDirection);
     }
+
+    public TeleDriveDirection getTeleDrivingDirection() {
+        return m_driveDirection;
+    }
+
 
     public void driveByJoystick(double y, double x) {
         SmartDashboard.putString("driveByJoystick?", y + "," + x);

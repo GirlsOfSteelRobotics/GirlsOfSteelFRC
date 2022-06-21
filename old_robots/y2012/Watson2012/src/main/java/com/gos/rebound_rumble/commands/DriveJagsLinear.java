@@ -14,36 +14,33 @@ public class DriveJagsLinear extends CommandBase {
 
     public DriveJagsLinear(Chassis chassis, Joystick driverJoystick, double scale) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         this.m_scale = scale;
         m_joystick = driverJoystick;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_xAxis = m_joystick.getX() * m_scale;
         m_yAxis = m_joystick.getY() * m_scale;
         m_chassis.driveJagsLinear(m_xAxis, m_yAxis);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

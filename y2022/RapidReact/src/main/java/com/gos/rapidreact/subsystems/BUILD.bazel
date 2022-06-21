@@ -1,0 +1,42 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "subsystems",
+    srcs = glob(
+        [
+            "*.java",
+            "utils/*.java",
+            "sim/*.java",
+        ],
+        exclude = ["LEDManagerSubsystem.java"],
+    ),
+    visibility = ["//y2022/RapidReact:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLibRev",
+        "//y2022/RapidReact/src/main/java/com/gos/rapidreact:Constants",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/rev/revlib",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)
+
+gos_java_library(
+    name = "LEDManagerSubsystem",
+    srcs = ["LEDManagerSubsystem.java"],
+    visibility = ["//y2022/RapidReact:__subpackages__"],
+    deps = [
+        ":subsystems",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/led",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/led/mirrored",
+        "//y2022/RapidReact/src/main/java/com/gos/rapidreact:Constants",
+        "//y2022/RapidReact/src/main/java/com/gos/rapidreact/auto_modes",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@snobot_sim//jar",
+    ],
+)

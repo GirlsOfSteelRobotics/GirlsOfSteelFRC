@@ -1,0 +1,28 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "RobotMap",
+    srcs = ["RobotMap.java"],
+    visibility = ["//old_robots/y2015/GoS2015:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "robot",
+    srcs = glob(
+        ["*.java"],
+        exclude = ["RobotMap.java"],
+    ),
+    main_class = "com.gos.recycle_rush.robot.Main",
+    visibility = ["//old_robots/y2015/GoS2015:__subpackages__"],
+    deps = [
+        ":RobotMap",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/autonomous",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/collector",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/drive",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/lifter",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/commands/shack",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

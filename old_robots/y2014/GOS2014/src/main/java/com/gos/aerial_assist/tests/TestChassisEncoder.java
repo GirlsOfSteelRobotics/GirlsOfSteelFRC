@@ -14,7 +14,7 @@
 //public class TestChassisEncoder extends CommandBase{
 //
 //    public TestChassisEncoder() {
-//        requires(chassis);
+//        addRequirements(chassis);
 //    }
 //
 //    protected void initialize() {

@@ -40,7 +40,7 @@ public class RobotContainer {
 
         new OI(this);
         new CommandTester(this);
-        m_autonFactory = new AutonFactory(this);
+        m_autonFactory = new AutonFactory();
 
         Shuffleboard.getTab("Command Tester").add("Super Structure Widget", new SuperstructureSendable())
             .withWidget(SmartDashboardNames.WIDGET_NAME)

@@ -13,17 +13,17 @@ public class DriveSlowVelocity extends CommandBase {
     public DriveSlowVelocity(Chassis chassis, Joystick driverJoystick) {
         m_chassis = chassis;
         this.m_driverJoystick = driverJoystick;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initRatePIDs();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.setPIDsRate();
         m_xAxis = m_driverJoystick.getX();
         m_yAxis = m_driverJoystick.getY();
@@ -31,20 +31,17 @@ public class DriveSlowVelocity extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.disableRatePIDs();
         m_chassis.endEncoders();
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

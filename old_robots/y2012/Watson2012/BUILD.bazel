@@ -1,20 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot", "gos_junit4_test")
-
-gos_java_robot(
+alias(
     name = "Watson2012",
-    srcs = glob(["src/main/java/**/*.java"]),
-    disable_checkstyle = True,
-    main_class = "com.gos.rebound_rumble.Main",
-    deps = [
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/ntcore",
-        "@bazelrio//libraries/java/wpilib/old_commands",
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-    ],
-)
-
-gos_junit4_test(
-    name = "test",
-    srcs = glob(["src/test/java/**/*.java"]),
-    deps = ["Watson2012"],
+    actual = "//old_robots/y2012/Watson2012/src/main/java/com/gos/rebound_rumble",
 )

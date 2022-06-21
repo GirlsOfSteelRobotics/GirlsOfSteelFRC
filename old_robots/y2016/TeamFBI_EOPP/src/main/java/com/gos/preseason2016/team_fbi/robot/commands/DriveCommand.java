@@ -1,50 +1,45 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import com.gos.preseason2016.team_fbi.robot.OI;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Drive;
 
 /**
  *
  */
-public class DriveCommand extends Command {
+public class DriveCommand extends CommandBase {
 
-    private final OI m_oi;
+    private final Joystick m_chassisJoystick;
     private final Drive m_drive;
 
-    public DriveCommand(OI oi, Drive drive) {
-        m_oi = oi;
+    public DriveCommand(Joystick chassisJoystick, Drive drive) {
+        m_chassisJoystick = chassisJoystick;
         m_drive = drive;
-        requires(m_drive);
+        addRequirements(m_drive);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
-        m_drive.moveByJoystick(m_oi.getChassisJoystick());
+    public void execute() {
+        m_drive.moveByJoystick(m_chassisJoystick);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_drive.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

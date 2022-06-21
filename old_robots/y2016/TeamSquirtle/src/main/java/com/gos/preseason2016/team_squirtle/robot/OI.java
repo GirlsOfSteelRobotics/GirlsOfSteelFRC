@@ -1,7 +1,7 @@
 package com.gos.preseason2016.team_squirtle.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.preseason2016.team_squirtle.robot.commands.RampDown;
 import com.gos.preseason2016.team_squirtle.robot.commands.RampUp;
 import com.gos.preseason2016.team_squirtle.robot.commands.ShiftHighGear;

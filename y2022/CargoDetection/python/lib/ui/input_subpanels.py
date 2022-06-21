@@ -8,8 +8,10 @@ import time
 import cv2
 import traceback
 
-DEFAULT_FILE_DIR = os.path.join(os.path.abspath(os.path.dirname(os.path.realpath(__file__))),
-                                "../../../../../../limelight_images")
+DEFAULT_FILE_DIR = os.path.join(
+    os.path.abspath(os.path.dirname(os.path.realpath(__file__))),
+    "../../../../../../limelight_images",
+)
 
 
 class DirectoryImageProviderWidget(QWidget):
@@ -23,9 +25,7 @@ class DirectoryImageProviderWidget(QWidget):
         self.width = None
 
     def select_directory(self):
-        directory = QFileDialog.getExistingDirectory(
-            self, "Open Directory", DEFAULT_FILE_DIR
-        )
+        directory = QFileDialog.getExistingDirectory(self, "Open Directory", DEFAULT_FILE_DIR)
         self.load_directory(directory)
 
     def load_directory(self, directory):
@@ -120,9 +120,7 @@ class StreamImageProviderWidget(QWidget):
         self.record_stream_btn.clicked.connect(__record_stream)
 
     def select_directory(self):
-        directory = QFileDialog.getExistingDirectory(
-            self, "Open Directory", DEFAULT_FILE_DIR
-        )
+        directory = QFileDialog.getExistingDirectory(self, "Open Directory", DEFAULT_FILE_DIR)
         self.snapshot_dir.setText(directory)
         self.thread.snapshot_directory = directory
 

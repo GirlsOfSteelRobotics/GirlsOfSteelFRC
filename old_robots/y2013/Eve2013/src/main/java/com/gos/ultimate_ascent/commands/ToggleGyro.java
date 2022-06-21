@@ -11,7 +11,7 @@ public class ToggleGyro extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         if (m_chassis.isGyroEnabled()) {
             m_chassis.stopGyro();
         } else {
@@ -20,21 +20,18 @@ public class ToggleGyro extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

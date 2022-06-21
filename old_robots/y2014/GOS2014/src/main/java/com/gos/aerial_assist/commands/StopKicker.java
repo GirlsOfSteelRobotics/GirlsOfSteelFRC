@@ -19,29 +19,26 @@ public class StopKicker extends CommandBase {
 
     public StopKicker(Kicker kicker) {
         m_kicker = kicker;
-        requires(m_kicker);
+        addRequirements(m_kicker);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false; //this never ends.
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -26,28 +26,25 @@ public class AutoMove extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_startTime = timeSinceInitialized();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.driveVoltage(m_x, m_y, 0, 1.0, true);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return timeSinceInitialized() - m_startTime > m_time;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

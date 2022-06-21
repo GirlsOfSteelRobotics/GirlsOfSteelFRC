@@ -13,14 +13,14 @@ public class FollowTrajectory extends BaseRamseteCoordinateGuiCommand {
     private final Trajectory m_trajectory;
 
     public static class AutoConstants {
-        public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7;
+        public static final double RAMSETE_B = 2;
+        public static final double RAMSETE_ZETA = 0.7;
     }
 
 
     public FollowTrajectory(Trajectory trajectory, ChassisSubsystem chassis) {
         super(trajectory,
-            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+            new RamseteController(AutoConstants.RAMSETE_B, AutoConstants.RAMSETE_ZETA),
             ChassisSubsystem.K_DRIVE_KINEMATICS,
             chassis);
 

@@ -23,24 +23,24 @@ public class TestCollector extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
-        SmartDashboard.putNumber(RobotMap.CollectorJagSpeed, 0.0);
-        SmartDashboard.putBoolean(RobotMap.CollectorWheelSpikeForward, false);
-        SmartDashboard.putBoolean(RobotMap.CollectorWheelSpikeBackward, false);
-        SmartDashboard.putNumber(RobotMap.CollectorEncoderReader, 0.0);
+    public void initialize() {
+        SmartDashboard.putNumber(RobotMap.COLLECTOR_JAG_SPEED, 0.0);
+        SmartDashboard.putBoolean(RobotMap.COLLECTOR_WHEEL_SPIKE_FORWARD, false);
+        SmartDashboard.putBoolean(RobotMap.COLLECTOR_WHEEL_SPIKE_BACKWARD, false);
+        SmartDashboard.putNumber(RobotMap.COLLECTOR_ENCODER_READER, 0.0);
 
     }
 
     @Override
-    protected void execute() {
-        m_collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.CollectorJagSpeed, 0));
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeForward, false)) {
+    public void execute() {
+        m_collector.moveCollectorUpOrDown(SmartDashboard.getNumber(RobotMap.COLLECTOR_JAG_SPEED, 0));
+        if (SmartDashboard.getBoolean(RobotMap.COLLECTOR_WHEEL_SPIKE_FORWARD, false)) {
             m_collector.collectorWheelFoward();
             // forward
         } else {
             m_collector.stopCollectorWheel();
         }
-        if (SmartDashboard.getBoolean(RobotMap.CollectorWheelSpikeBackward, false)) {
+        if (SmartDashboard.getBoolean(RobotMap.COLLECTOR_WHEEL_SPIKE_BACKWARD, false)) {
             m_collector.collectorWheelReverse();
             // backward
         } else {
@@ -50,25 +50,22 @@ public class TestCollector extends CommandBase {
         //            collector.stopCollectorWheel();
         //        }
         double collectorEncoderValue = m_collector.getCollectorSpeed();
-        SmartDashboard.putNumber(RobotMap.CollectorEncoderReader, collectorEncoderValue);
+        SmartDashboard.putNumber(RobotMap.COLLECTOR_ENCODER_READER, collectorEncoderValue);
         //This should print out the encoder vlaue on screen. Maybe.
 
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
 
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
     }
 
-    @Override
-    protected void interrupted() {
 
-    }
 
 }

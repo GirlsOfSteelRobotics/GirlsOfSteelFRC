@@ -7,7 +7,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
@@ -19,19 +18,19 @@ public class PivotArmToJoystick extends CommandBase {
     private final Manipulator m_manipulator;
     private double m_angle;
 
-    public PivotArmToJoystick(OI oi, Manipulator manipulator) {
+    public PivotArmToJoystick(Joystick joystick, Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
-        m_operator = oi.getOperatorJoystick();
+        addRequirements(m_manipulator); //HAVE TO REQUIRE MANIPULATOR SO THAT THIS DOESN'T INTERFERE WITH OTHER MANIPULATOR COMMANDS
+        m_operator = joystick;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_angle = m_manipulator.getAbsoluteDistance();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         System.out.println("Operator Y: " + m_operator.getY());
         if (m_operator.getY() > 0.5) {
             m_manipulator.setSetPoint(m_angle);
@@ -45,17 +44,14 @@ public class PivotArmToJoystick extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.holdAngle();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

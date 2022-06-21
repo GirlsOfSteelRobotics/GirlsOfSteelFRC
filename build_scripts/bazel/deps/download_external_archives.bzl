@@ -1,6 +1,13 @@
+"""
+"""
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def download_external_archives():
+    """
+    Downloads the necessary rules from external repositories
+    """
+
     # Download Extra java rules
     RULES_JVM_EXTERNAL_TAG = "4.2"
     RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
@@ -14,9 +21,9 @@ def download_external_archives():
     # Download BazelRio <3
     http_archive(
         name = "bazelrio",
-        url = "https://github.com/bazelRio/bazelRio/archive/refs/tags/0.10.0.zip",
-        sha256 = "18b109dbd5204910600823e6c9ff405fa7ed7c43d0a78f24077f8187311745a9",
-        strip_prefix = "bazelRio-0.10.0/bazelrio",
+        url = "https://github.com/pjreiniger/bazelRio/archive/cb93b9028400ebb64bc34fde1d7b859d88619ed6.tar.gz",
+        sha256 = "9c235d472c2674c3a8ff29d9ef44388a3a5c683e40fc6d5049b36a023696cb68",
+        strip_prefix = "bazelrio-cb93b9028400ebb64bc34fde1d7b859d88619ed6/bazelrio",
     )
 
     # Download Setup python
@@ -37,21 +44,11 @@ def download_external_archives():
     )
 
     # Download PMD
-    rules_pmd_version = "0.1.0"
-    rules_pmd_sha = "c8839b8e4fb76884632ee001e18a2c311363e208410f1cdd30c78e80aaee25e3"
+    rules_pmd_version = "4ee896258c9bedd6f935d5bf1a5c974feee12e0e"
+    rules_pmd_sha = "53db0850cdded5a43704c992f6a3efdf4a56d95107d8152b39fa84efb840d886"
     http_archive(
         name = "rules_pmd",
         sha256 = rules_pmd_sha,
         strip_prefix = "bazel_rules_pmd-{v}".format(v = rules_pmd_version),
-        url = "https://github.com/buildfoundation/bazel_rules_pmd/archive/v{v}.tar.gz".format(v = rules_pmd_version),
-    )
-
-    # Download java_rules, Since bazel 5.0 broke backwards compatibility and PMD won't load otherwise
-    RULES_JAVA_COMMITISH = "7a3c520737581f13691ad94a0f798a3518d869d1"
-    RULES_JAVA_SHA = "bb9c842258f6365edc43c1dda40fc4aa28afa407ba4f6765b784d52f8902dd20"
-    http_archive(
-        name = "rules_java",
-        sha256 = RULES_JAVA_SHA,
-        strip_prefix = "rules_java-{}".format(RULES_JAVA_COMMITISH),
-        url = "https://github.com/bazelbuild/rules_java/archive/{}.tar.gz".format(RULES_JAVA_COMMITISH),
+        url = "https://github.com/buildfoundation/bazel_rules_pmd/archive/{v}.tar.gz".format(v = rules_pmd_version),
     )

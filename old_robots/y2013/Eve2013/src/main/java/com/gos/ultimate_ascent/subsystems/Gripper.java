@@ -8,13 +8,13 @@ package com.gos.ultimate_ascent.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.ultimate_ascent.RobotMap;
 
 /**
  * @author Heather
  */
-public class Gripper extends Subsystem {
+public class Gripper extends SubsystemBase {
     private final DigitalInput m_openGripperSwitch;
     private final DigitalInput m_closeGripperSwitch;
     private final Solenoid m_openSolenoid;
@@ -60,7 +60,5 @@ public class Gripper extends Subsystem {
     }
     //This will count how many bar you hit, until you get to three at which point it returns true.
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

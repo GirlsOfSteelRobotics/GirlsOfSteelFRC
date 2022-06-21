@@ -1,8 +1,9 @@
 package com.gos.stronghold.robot;
 
+import com.gos.stronghold.robot.commands.camera.UpdateCam;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.stronghold.robot.commands.DriveByJoystick;
@@ -33,7 +34,7 @@ public class Robot extends TimedRobot {
      * (Initializing them here leads to very unclear error messages
      * if any of them throw an exception.)
      */
-    private final OI m_oi;
+    private final OI m_oi; // NOPMD(UnusedPrivateField)
     private final Chassis m_chassis;
     private final Shifters m_shifters;
     private final Flap m_flap;
@@ -71,20 +72,22 @@ public class Robot extends TimedRobot {
         // Populate the SmartDashboard menu for choosing the autonomous command to run
         m_autoChooser = new SendableChooser<>();
         //drive backwards:
-        m_autoChooser.addDefault("Do Nothing", new AutoDoNothing(m_chassis));
-        m_autoChooser.addObject("Reach Defense", new AutoDriveBackwards(m_chassis, 101, .4)); //55
-        m_autoChooser.addObject("LowBar", new FlapThenLowBar(m_chassis, m_flap, 156, .4)); //works 110
-        m_autoChooser.addObject("Moat", new AutoDriveBackwards(m_chassis, 156, 1)); //works 60
-        m_autoChooser.addObject("LowBar and Score", new AutoLowBarAndScore(m_chassis, m_flap, m_pivot, m_claw));
-        m_autoChooser.addObject("LowBar and Turn", new AutoLowBarAndTurn(m_chassis, m_flap));
+        m_autoChooser.setDefaultOption("Do Nothing", new AutoDoNothing(m_chassis));
+        m_autoChooser.addOption("Reach Defense", new AutoDriveBackwards(m_chassis, 101, .4)); //55
+        m_autoChooser.addOption("LowBar", new FlapThenLowBar(m_chassis, m_flap, 156, .4)); //works 110
+        m_autoChooser.addOption("Moat", new AutoDriveBackwards(m_chassis, 156, 1)); //works 60
+        m_autoChooser.addOption("LowBar and Score", new AutoLowBarAndScore(m_chassis, m_flap, m_pivot, m_claw));
+        m_autoChooser.addOption("LowBar and Turn", new AutoLowBarAndTurn(m_chassis, m_flap));
         //drive forwards:
-        m_autoChooser.addObject("Rough Terrain", new AutoDriveBackwards(m_chassis, 156, .4)); //works 110
-        m_autoChooser.addObject("Ramparts", new AutoDriveBackwards(m_chassis, 186, .4)); //140
-        m_autoChooser.addObject("RockWall", new AutoDriveBackwards(m_chassis, 196, .6)); //works //150
+        m_autoChooser.addOption("Rough Terrain", new AutoDriveBackwards(m_chassis, 156, .4)); //works 110
+        m_autoChooser.addOption("Ramparts", new AutoDriveBackwards(m_chassis, 186, .4)); //140
+        m_autoChooser.addOption("RockWall", new AutoDriveBackwards(m_chassis, 196, .6)); //works //150
 
         //autoChooser.addObject("Slow Drive", new AutoDriveSlowly(100));
 
         SmartDashboard.putData("Autochooser: ", m_autoChooser);
+
+        m_camera.setDefaultCommand(new UpdateCam(m_camera));
     }
 
     /**
@@ -94,7 +97,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         // Default commands
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis));
     }
 
     /**
@@ -108,7 +111,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
 
     }
 
@@ -127,14 +130,14 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
 
         //       Robot.ledlights.autoLights();
 
         // Start the robot out in low gear when starting autonomous
-        m_shifters.shiftLeft(Shifters.Speed.kLow);
-        m_shifters.shiftRight(Shifters.Speed.kLow);
+        m_shifters.shiftLeft(Shifters.Speed.LOW);
+        m_shifters.shiftRight(Shifters.Speed.LOW);
     }
 
     /**
@@ -142,7 +145,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         // Robot.chassis.ahrsToSmartDashboard();
         SmartDashboard.putNumber("FlapEncoder", m_flap.getFlapEncoderDistance());
         SmartDashboard.putNumber("Pivot Encoder", m_pivot.getEncoderDistance());
@@ -159,8 +162,8 @@ public class Robot extends TimedRobot {
         }
 
         // Start the robot out in low gear when starting teleop
-        m_shifters.shiftLeft(Shifters.Speed.kLow);
-        m_shifters.shiftRight(Shifters.Speed.kLow);
+        m_shifters.shiftLeft(Shifters.Speed.LOW);
+        m_shifters.shiftRight(Shifters.Speed.LOW);
 
         m_chassis.resetEncoderDistance();
     }
@@ -173,7 +176,7 @@ public class Robot extends TimedRobot {
         // Robot.chassis.ahrsToSmartDashboard();
         SmartDashboard.putNumber("FlapEncoder", m_flap.getFlapEncoderDistance());
         SmartDashboard.putNumber("Pivot Encoder", m_pivot.getEncoderDistance());
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**

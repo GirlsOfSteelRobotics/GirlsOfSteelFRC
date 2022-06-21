@@ -12,8 +12,6 @@ import com.gos.codelabs.pid.subsystems.ShooterSubsystem;
 
 public class OI {
 
-    public static final double ELEVATOR_JOYSTICK_DEADBAND = .01;
-
     private final XboxController m_driverJoystick;
     private final XboxController m_operatorJoystick;
 
@@ -28,10 +26,10 @@ public class OI {
         ShooterSubsystem shooter = robotContainer.getShooter();
 
         // Chassis
-        chassis.setDefaultCommand(new DriveChassisHaloDrive(chassis, this));
+        chassis.setDefaultCommand(new DriveChassisHaloDrive(chassis, m_driverJoystick));
 
         // Elevator
-        lift.setDefaultCommand(new ElevatorWithJoystickCommand(lift, this));
+        lift.setDefaultCommand(new ElevatorWithJoystickCommand(lift, m_operatorJoystick));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new ElevatorToPositionCommand(lift, ElevatorSubsystem.Positions.LOW));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new ElevatorToPositionCommand(lift, ElevatorSubsystem.Positions.MID));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new ElevatorToPositionCommand(lift, ElevatorSubsystem.Positions.HIGH));
@@ -42,25 +40,5 @@ public class OI {
 
     }
 
-    public double getDriverThrottle() {
-        // Y is negated so that pushing the joystick forward results in positive values
-        return -m_driverJoystick.getLeftY();
-    }
-
-    public double getDriverSpin() {
-        return m_driverJoystick.getRightX();
-    }
-
-    public double getElevatorJoystick() {
-        // Y is negated so that pushing the joystick forward results in positive values
-        double output = -m_operatorJoystick.getRightY();
-
-        // Ignore the noise that can happen when the joystick is neutral, but not perfectly 0.0
-        if (Math.abs(output) < ELEVATOR_JOYSTICK_DEADBAND) {
-            output = 0;
-        }
-
-        return output;
-    }
 
 }

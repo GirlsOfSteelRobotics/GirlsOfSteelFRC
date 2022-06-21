@@ -7,30 +7,27 @@ public class BridgeDown extends CommandBase {
 
     public BridgeDown(Bridge bridge) {
         m_bridge = bridge;
-        requires(m_bridge);
+        addRequirements(m_bridge);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_bridge.downBridgeArm();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_bridge.hasHitBridge();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("BridgeDown Done");
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

@@ -13,16 +13,15 @@ public class ManualTurret extends CommandBase {
     public ManualTurret(Turret turret, OI oi) {
         m_turret = turret;
         m_oi = oi;
-        requires(m_turret);
+        addRequirements(m_turret);
     }
 
     @Override
-    protected void initialize() {
-        m_turret.disablePID();
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_knobValue = m_oi.getTurretKnobValue(Turret.TURRET_OVERRIDE_DEADZONE);
         if (m_knobValue > 0) {
             m_speed = 0.2;
@@ -33,16 +32,14 @@ public class ManualTurret extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_turret.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

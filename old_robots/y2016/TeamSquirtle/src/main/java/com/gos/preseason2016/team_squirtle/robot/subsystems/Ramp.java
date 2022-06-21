@@ -2,12 +2,12 @@ package com.gos.preseason2016.team_squirtle.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class Ramp extends Subsystem {
+public class Ramp extends SubsystemBase {
     private final DoubleSolenoid m_rampPiston;
 
     public Ramp() {
@@ -24,7 +24,5 @@ public class Ramp extends Subsystem {
         m_rampPiston.set(DoubleSolenoid.Value.kReverse);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 }

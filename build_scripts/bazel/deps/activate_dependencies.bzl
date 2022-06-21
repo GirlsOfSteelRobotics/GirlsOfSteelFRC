@@ -1,10 +1,16 @@
+"""
+"""
+
+load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
+load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_pmd//pmd:toolchains.bzl", "rules_pmd_toolchains")
 load("@rules_python//python:pip.bzl", "pip_install")
-load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
-load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
 def activate_dependencies():
+    """
+    Final step of dependencies initialization. Does the various installation steps (pip_install, maven_intstall, etc)
+    """
     PMD_VERSION = "6.39.0"
     rules_pmd_toolchains(pmd_version = PMD_VERSION)
 

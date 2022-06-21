@@ -1,8 +1,8 @@
 //package com.gos.girlsofsteel.commands;
 //
-//import edu.wpi.first.wpilibj.command.CommandGroup;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //
-//public class CameraAuto extends CommandGroup {
+//public class CameraAuto extends SequentialCommandGroup {
 //
 //    public static int NumberOfCameraDataPoints = 11;
 //    public static int count = 0;
@@ -12,15 +12,15 @@
 //
 //    public CameraAuto() {
 //
-//            addSequential (new ResetEncoder());
+//            addCommands (new ResetEncoder());
 //        for (int x = 0; x < NumberOfCameraDataPoints; x++) {
 //           // count = x;
 //
-//            addSequential(new FindCameraDataPoint());
-//            //addSequential(new MoveToSetPoint(-1));
+//            addCommands(new FindCameraDataPoint());
+//            //addCommands(new MoveToSetPoint(-1));
 //            System.out.println("DONE MOVING!");
 //
 //        }
-//        addSequential(new FindCameraFunction());
+//        addCommands(new FindCameraFunction());
 //    }
 //}

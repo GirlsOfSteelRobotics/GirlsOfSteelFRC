@@ -1,0 +1,24 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//old_robots/y2021/OutreachBot:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "outreach2021",
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
+    main_class = "com.gos.outreach2021.Main",
+    visibility = ["//old_robots/y2021/OutreachBot:__subpackages__"],
+    deps = [
+        "//old_robots/y2021/OutreachBot/src/main/java/com/gos/outreach2021/commands",
+        "//old_robots/y2021/OutreachBot/src/main/java/com/gos/outreach2021/subsystems",
+        "@bazelrio//libraries/java/wpilib/hal",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

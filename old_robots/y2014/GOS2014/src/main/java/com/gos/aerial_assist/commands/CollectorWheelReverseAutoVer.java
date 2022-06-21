@@ -30,7 +30,7 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     /**
@@ -40,7 +40,7 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void execute() {
+    public void execute() {
         if (!m_camera.isHot()) {
             try {
                 Thread.sleep(4500);
@@ -60,7 +60,7 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
@@ -70,7 +70,7 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollectorWheel();
         //stops wheel once the command is finished
     }
@@ -80,9 +80,6 @@ public class CollectorWheelReverseAutoVer extends CommandBase {
      *
      * @author Sophia, Sonia
      */
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

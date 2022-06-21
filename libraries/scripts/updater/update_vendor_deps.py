@@ -59,9 +59,7 @@ def update_vendor_deps(ignore_cache=True, auto_commit=True):
                 if vendor_file in ["WPILibNewCommands.json", "WPILibOldCommands.json"]:
                     continue
                 elif vendor_file in vendor_replacements:
-                    new_file = os.path.join(
-                        CACHE_DIRECTORY, vendor_replacements[vendor_file]
-                    )
+                    new_file = os.path.join(CACHE_DIRECTORY, vendor_replacements[vendor_file])
                     file_to_write = os.path.join(root, vendor_replacements[vendor_file])
                     os.remove(os.path.join(root, vendor_file))
                 else:

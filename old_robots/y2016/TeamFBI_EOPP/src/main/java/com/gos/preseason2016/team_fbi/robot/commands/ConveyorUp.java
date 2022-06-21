@@ -1,39 +1,36 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Manipulator;
 
-public class ConveyorUp extends Command {
+public class ConveyorUp extends CommandBase {
 
     private final Manipulator m_manipulator;
 
     public ConveyorUp(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_manipulator.manipulatorConveyorBeltMotorLeft(true);
         m_manipulator.manipulatorConveyorBeltMotorRight(true);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.stopConveyorBeltMotor();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

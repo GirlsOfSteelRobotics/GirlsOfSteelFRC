@@ -1,0 +1,16 @@
+load("@gos_pip_deps//:requirements.bzl", "requirement")
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary")
+
+gos_py_binary(
+    name = "tester_main",
+    srcs = ["tester_main.py"],
+    env = {
+        "PATH": "C:/Users/PJ/Documents/GitHub/gos_monorepo/bazel-gos_monorepo/external/gos_pip_deps/pypi__pyqt5_qt5/PyQt5/Qt5/bin",
+    },
+    skip_include_test = True,  #pyqt DLL causes problems
+    deps = [
+        requirement("PyQt5"),
+        "//y2022/CargoDetection/python/lib/ui:subpanels",
+        "//y2022/CargoDetection/python/rapid_react/cargo",
+    ],
+)

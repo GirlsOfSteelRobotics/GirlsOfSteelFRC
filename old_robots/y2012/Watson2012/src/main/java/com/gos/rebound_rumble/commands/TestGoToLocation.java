@@ -1,10 +1,10 @@
 package com.gos.rebound_rumble.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.rebound_rumble.subsystems.Chassis;
 
-public class TestGoToLocation extends CommandGroup {
+public class TestGoToLocation extends SequentialCommandGroup {
 
     public TestGoToLocation(Chassis chassis) {
         //degree change relative to beginning position of the robot to end facing
@@ -14,8 +14,8 @@ public class TestGoToLocation extends CommandGroup {
         double degreesToFace = SmartDashboard.getNumber("GTL,degrees to face", 0.0);
         double degreesToTurn = Math.atan2(y, x) * 180 / Math.PI;
         double distanceToMove = Math.sqrt((x * x) + (y * y));
-        addSequential(new TurnToSetPoint(chassis, degreesToTurn));
-        addSequential(new MoveToSetPoint(chassis, distanceToMove));
-        addSequential(new TurnToSetPoint(chassis, degreesToFace - degreesToTurn));
+        addCommands(new TurnToSetPoint(chassis, degreesToTurn));
+        addCommands(new MoveToSetPoint(chassis, distanceToMove));
+        addCommands(new TurnToSetPoint(chassis, degreesToFace - degreesToTurn));
     }
 }

@@ -14,31 +14,28 @@ public class TestShooter extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = SmartDashboard.getNumber("Shooter Jag Speed", 0.0);
         m_shooter.setJags(m_speed);
         SmartDashboard.putNumber("Shooter Encoder", m_shooter.getEncoderRate());
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.stopJags();
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

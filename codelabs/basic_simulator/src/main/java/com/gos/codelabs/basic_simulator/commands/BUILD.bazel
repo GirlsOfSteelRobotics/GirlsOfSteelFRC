@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "commands",
+    srcs = glob(["*.java"]),
+    disable_pmd = True,
+    visibility = ["//codelabs/basic_simulator:__subpackages__"],
+    deps = [
+        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

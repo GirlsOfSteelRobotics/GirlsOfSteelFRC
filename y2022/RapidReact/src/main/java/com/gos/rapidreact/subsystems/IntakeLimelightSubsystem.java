@@ -60,4 +60,3 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
         m_angleError.setNumber(getAngle());
     }
 }
-

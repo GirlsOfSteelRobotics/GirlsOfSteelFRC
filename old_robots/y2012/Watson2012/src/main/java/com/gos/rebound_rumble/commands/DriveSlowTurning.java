@@ -15,36 +15,33 @@ public class DriveSlowTurning extends CommandBase {
     public DriveSlowTurning(Chassis chassis, Joystick driverJoystick, double scale, double turningScale) {
         m_chassis = chassis;
         m_joystick = driverJoystick;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         this.m_scale = scale;
         this.m_turningScale = turningScale;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_xAxis = m_joystick.getX() * m_scale;
         m_yAxis = m_joystick.getY() * m_scale;
         m_chassis.driveJagsLinearSlowTurning(m_xAxis, m_yAxis, m_turningScale);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

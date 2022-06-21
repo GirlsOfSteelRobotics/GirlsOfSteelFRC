@@ -14,16 +14,16 @@ import com.gos.aerial_assist.subsystems.Driving;
 public class DoNothing extends CommandBase {
 
     public DoNothing(Driving driving) {
-        requires(driving);
+        addRequirements(driving);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         //smanipulator.disablePID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //manipulator.stopJag();
         //        chassis.stopJags();
         //        collector.stopCollector();
@@ -31,12 +31,12 @@ public class DoNothing extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         //manipulator.stopJag();
         //        chassis.stopJags();
         //        collector.stopCollector();
@@ -44,9 +44,6 @@ public class DoNothing extends CommandBase {
         //manipulator.startPID();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

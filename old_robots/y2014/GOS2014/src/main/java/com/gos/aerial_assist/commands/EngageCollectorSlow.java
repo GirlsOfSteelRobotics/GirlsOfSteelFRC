@@ -12,7 +12,7 @@
 //public class EngageCollectorSlow extends CommandBase {
 //
 //    public EngageCollectorSlow() {
-//        requires(collector);
+//        addRequirements(collector);
 //    }
 //
 //    protected void initialize() {

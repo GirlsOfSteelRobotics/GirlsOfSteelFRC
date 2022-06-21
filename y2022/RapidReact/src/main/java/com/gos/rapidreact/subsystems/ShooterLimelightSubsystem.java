@@ -73,4 +73,3 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_limelight.setPipeline(2);
     }
 }
-

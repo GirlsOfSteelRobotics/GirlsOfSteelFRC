@@ -14,20 +14,20 @@ public class TestTurretPID extends CommandBase {
 
     public TestTurretPID(Turret turret) {
         m_turret = turret;
-        requires(m_turret);
+        addRequirements(m_turret);
         SmartDashboard.putNumber("Turret Setpoint", 0.0);
         SmartDashboard.putNumber("Turret P", 0.0);
         SmartDashboard.putNumber("Turret D", 0.0);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_turret.initEncoder();
         m_turret.enablePID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_p = SmartDashboard.getNumber("Turret P", 0.0);
         m_d = SmartDashboard.getNumber("Turret D", 0.0);
         m_turret.setPDs(m_p, m_d);
@@ -36,19 +36,15 @@ public class TestTurretPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
-        m_turret.disablePID();
+    public void end(boolean interrupted) {
         m_turret.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

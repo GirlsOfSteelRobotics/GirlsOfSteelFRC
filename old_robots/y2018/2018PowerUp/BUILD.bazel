@@ -1,0 +1,4 @@
+alias(
+    name = "2018PowerUp",
+    actual = "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up",
+)

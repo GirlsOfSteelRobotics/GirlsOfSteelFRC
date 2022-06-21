@@ -1,46 +1,41 @@
 package com.gos.preseason2017.team1.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.preseason2017.team1.robot.subsystems.Arm;
 
 /**
  *
  */
-public class ArmUp extends Command {
+public class ArmUp extends CommandBase {
     private final Arm m_arm;
 
     public ArmUp(Arm arm) {
         m_arm = arm;
-        requires(m_arm);
+        addRequirements(m_arm);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_arm.armUp();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

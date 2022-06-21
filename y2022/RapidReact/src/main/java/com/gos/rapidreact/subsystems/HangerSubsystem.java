@@ -113,6 +113,3 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHanger.set(0);
     }
 }
-
-
-

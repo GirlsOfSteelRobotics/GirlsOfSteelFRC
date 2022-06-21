@@ -1,0 +1,17 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "subsystems",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2020/Testboard:__subpackages__"],
+    deps = [
+        "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020:Constants",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/cscore",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@snobot_sim//jar",
+    ],
+)

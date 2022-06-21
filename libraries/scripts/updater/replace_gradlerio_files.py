@@ -36,9 +36,7 @@ def custom_update_robot_build_file(remote_build_file_data, build_file, latest_ve
 
     with open(build_file, "r") as f:
         original_contents = f.read()
-        robot_class_matches = re.search(
-            r'def ROBOT_MAIN_CLASS = "(.*)"', original_contents
-        )
+        robot_class_matches = re.search(r'def ROBOT_MAIN_CLASS = "(.*)"', original_contents)
         robot_class = robot_class_matches.group(1)
         raw_build_contents = remote_build_file_data.replace(
             "###GRADLERIOREPLACE###", latest_version
@@ -61,9 +59,7 @@ def custom_update_robot_build_file(remote_build_file_data, build_file, latest_ve
             if in_deps and line.startswith("}"):
                 new_build_contents += "\n\n"
                 for internal_project in internal_project_dependencies:
-                    new_build_contents += (
-                        f"    implementation project{internal_project}\n"
-                    )
+                    new_build_contents += f"    implementation project{internal_project}\n"
                 in_deps = False
         new_build_contents += line.rstrip() + "\n"
 
@@ -109,15 +105,15 @@ def update_build_files(run_custom_updates):
                             remote_build_file_data, build_file, latest_version
                         )
                     else:
-                        standard_update_robot_build_file(
-                            remote_build_file_data, build_file
-                        )
+                        standard_update_robot_build_file(remote_build_file_data, build_file)
                 else:
                     update_non_robot_build_file(build_file, latest_version)
 
 
 def replace_gradlerio_files(run_custom_updates):
-    base_url = "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources"
+    base_url = (
+        "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources"
+    )
 
     # fmt: off
     download_and_overwrite(base_url + "/gradle/shared/gradlew", "gradlew")

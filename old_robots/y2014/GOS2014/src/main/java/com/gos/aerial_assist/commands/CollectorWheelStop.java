@@ -26,7 +26,7 @@ public class CollectorWheelStop extends CommandBase {
      */
     public CollectorWheelStop(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     /**
@@ -35,7 +35,7 @@ public class CollectorWheelStop extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
@@ -45,7 +45,7 @@ public class CollectorWheelStop extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void execute() {
+    public void execute() {
 
     }
 
@@ -56,7 +56,7 @@ public class CollectorWheelStop extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
 
     }
@@ -67,7 +67,7 @@ public class CollectorWheelStop extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollectorWheel();
         //The collector wheel can now be stopped manually by drivers.
     }
@@ -77,9 +77,6 @@ public class CollectorWheelStop extends CommandBase {
      *
      * @author Sophia, Sonia
      */
-    @Override
-    protected void interrupted() {
 
-    }
 
 }

@@ -5,7 +5,7 @@
 
 package com.gos.ultimate_ascent.commands;
 
-import com.gos.ultimate_ascent.OI;
+import com.gos.ultimate_ascent.Constants;
 import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Shooter;
 import edu.wpi.first.wpilibj.RobotController;
@@ -27,20 +27,20 @@ public class AutoShoot extends CommandBase {
     public AutoShoot(Feeder feeder, Shooter shooter) {
         m_feeder = feeder;
         m_shooter = shooter;
-        requires(m_feeder);
-        requires(m_shooter);
+        addRequirements(m_feeder);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
-        m_desiredSpeed = OI.ENCODER_SPEED;
+    public void initialize() {
+        m_desiredSpeed = Constants.ENCODER_SPEED;
         m_shot = false;
 
     }
 
     @Override
-    protected void execute() {
-        m_shooter.setJags(OI.JAG_SPEED);
+    public void execute() {
+        m_shooter.setJags(Constants.JAG_SPEED);
         m_batteryVoltage = RobotController.getBatteryVoltage();
         SmartDashboard.putNumber("Encoder Rate", m_shooter.getEncoderRate());
         SmartDashboard.putNumber("Battery Voltage", m_batteryVoltage);
@@ -56,18 +56,15 @@ public class AutoShoot extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_shot && timeSinceInitialized() - m_time > 0.2;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_feeder.pullShooter();
         m_shooter.setJags(0.0);
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

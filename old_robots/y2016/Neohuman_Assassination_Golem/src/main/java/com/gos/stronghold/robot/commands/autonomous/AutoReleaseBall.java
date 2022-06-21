@@ -1,13 +1,13 @@
 package com.gos.stronghold.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.stronghold.robot.subsystems.Claw;
 
 /**
  *
  */
-public class AutoReleaseBall extends Command {
+public class AutoReleaseBall extends CommandBase {
 
     private final Claw m_claw;
     private final Timer m_tim;
@@ -15,39 +15,34 @@ public class AutoReleaseBall extends Command {
 
     public AutoReleaseBall(Claw claw, double time) {
         m_claw = claw;
-        requires(m_claw);
+        addRequirements(m_claw);
         m_time = time;
         m_tim = new Timer();
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_tim.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_claw.collectRelease(.9);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_tim.get() >= m_time;
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_claw.collectRelease(0);
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

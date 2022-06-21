@@ -21,17 +21,17 @@ public class Shoot extends CommandBase {
         m_shooter = shooter;
         this.m_speed = speed;
         m_camera = false;
-        requires(shooter);
+        addRequirements(shooter);
     }
 
     public Shoot(Shooter shooter) {
         m_camera = true;
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         if (m_camera) {
             //            speed = PositionInfo.getSpeed(ShooterCamera.getLocation());
             m_speed = 0.73;
@@ -42,7 +42,7 @@ public class Shoot extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (timeSinceInitialized() - m_time > 2) {
             m_shooter.setShootTrue();
         }
@@ -50,20 +50,17 @@ public class Shoot extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         //        shooter.disablePID();
         m_shooter.stopJags();
         m_shooter.stopEncoder();
         m_shooter.setShootFalse();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

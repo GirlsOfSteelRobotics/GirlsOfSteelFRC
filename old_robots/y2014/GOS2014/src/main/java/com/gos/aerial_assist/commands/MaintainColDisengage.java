@@ -19,33 +19,30 @@ public class MaintainColDisengage extends CommandBase {
     //Maintains the collector's dissengaged position'
     public MaintainColDisengage(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //while (!collector.isCollectorDisengaged()) {
-        m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed); //1 for competition bot, -1 for practice bot
+        m_collector.moveCollectorUpOrDown(Configuration.DISENGAGE_COLLECTOR_SPEED); //1 for competition bot, -1 for practice bot
         //}
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollector();
     } //the wheel stops spinning if it hasn't already, and the arm stops moving up once it hits the limit switch
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

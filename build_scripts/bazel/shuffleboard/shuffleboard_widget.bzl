@@ -1,3 +1,7 @@
+"""
+Provides helper macros for a shuffleboard widget library
+"""
+
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 
 def _generate_version_file_impl(ctx):
@@ -6,8 +10,8 @@ def _generate_version_file_impl(ctx):
         output = out,
         template = ctx.file.template,
         substitutions = {
-            "${plugin_version}": "TODO - Built with bazel",
             "${package_name}": ctx.attr.package,
+            "${plugin_version}": "TODO - Built with bazel",
         },
     )
     return [DefaultInfo(files = depset([out]))]
@@ -48,17 +52,17 @@ def shuffleboard_widget(name, package, generation_config_file, srcs = None, **kw
             "@maven//:com_google_guava_guava",
             "@bazelrio//libraries/java/wpilib/shuffleboard",
         ] + select({
-            "@bazel_tools//src/conditions:linux_x86_64": [
-                "@maven_javafx//:org_openjfx_javafx_controls_linux",
-                "@maven_javafx//:org_openjfx_javafx_graphics_linux",
-                "@maven_javafx//:org_openjfx_javafx_base_linux",
-                "@maven_javafx//:org_openjfx_javafx_fxml_linux",
-            ],
             "@bazel_tools//src/conditions:darwin": [
                 "@maven_javafx//:org_openjfx_javafx_controls_mac",
                 "@maven_javafx//:org_openjfx_javafx_graphics_mac",
                 "@maven_javafx//:org_openjfx_javafx_base_mac",
                 "@maven_javafx//:org_openjfx_javafx_fxml_mac",
+            ],
+            "@bazel_tools//src/conditions:linux_x86_64": [
+                "@maven_javafx//:org_openjfx_javafx_controls_linux",
+                "@maven_javafx//:org_openjfx_javafx_graphics_linux",
+                "@maven_javafx//:org_openjfx_javafx_base_linux",
+                "@maven_javafx//:org_openjfx_javafx_fxml_linux",
             ],
             "@bazel_tools//src/conditions:windows": [
                 "@maven_javafx//:org_openjfx_javafx_controls_win",
@@ -68,5 +72,6 @@ def shuffleboard_widget(name, package, generation_config_file, srcs = None, **kw
             ],
             "//conditions:default": [],
         }),
+        javacopts = ["-Xlint:-rawtypes"],
         **kwargs
     )

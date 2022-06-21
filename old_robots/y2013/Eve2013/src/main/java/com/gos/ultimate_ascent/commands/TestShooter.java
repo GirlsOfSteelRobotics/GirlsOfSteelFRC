@@ -16,11 +16,11 @@ public class TestShooter extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = SmartDashboard.getNumber("Speed", 0.0);
         if (SmartDashboard.getBoolean("Shoot", false)) {
             m_shooter.setJags(m_speed);
@@ -31,19 +31,16 @@ public class TestShooter extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.stopJags();
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

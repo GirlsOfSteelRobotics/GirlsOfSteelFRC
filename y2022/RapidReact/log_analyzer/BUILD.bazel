@@ -1,0 +1,11 @@
+load("@gos_pip_deps//:requirements.bzl", "requirement")
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary")
+
+gos_py_binary(
+    name = "make_plots",
+    srcs = ["make_plots.py"],
+    deps = [
+        "//libraries/scripts/datalog_parser",
+        requirement("plotly"),
+    ],
+)
