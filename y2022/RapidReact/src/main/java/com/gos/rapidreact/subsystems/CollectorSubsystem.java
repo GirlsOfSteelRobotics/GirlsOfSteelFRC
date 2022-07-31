@@ -17,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -52,8 +53,11 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private final DigitalInput m_indexSensor;
 
-    private final RelativeEncoder m_pivotEncoderLeft;
-    private final RelativeEncoder m_pivotEncoderRight;
+    private final RelativeEncoder m_pivotNeoEncoderLeft;
+    private final RelativeEncoder m_pivotNeoEncoderRight;
+
+    private final RelativeEncoder m_pivotExternalEncoderLeft;
+    private final RelativeEncoder m_pivotExternalEncoderRight;
 
     private final PidProperty m_pivotPIDLeft;
     private final SparkMaxPIDController m_pidControllerLeft;
@@ -67,12 +71,15 @@ public class CollectorSubsystem extends SubsystemBase {
     private final DigitalInput m_limitSwitch;
 
     // Logging
-    private final NetworkTableEntry m_leftIntakeAngleEntry;
+    private final NetworkTableEntry m_leftIntakeAngleNeoEncoderEntry;
     private final NetworkTableEntry m_leftIntakeVelocityEntry;
-    private final NetworkTableEntry m_rightIntakeAngleEntry;
+    private final NetworkTableEntry m_rightIntakeAngleNeoEncoderEntry;
     private final NetworkTableEntry m_rightIntakeVelocityEntry;
     private final NetworkTableEntry m_intakeSwitchPressedEntry;
     private final NetworkTableEntry m_intakeAngleGoalEntry;
+
+    private final NetworkTableEntry m_leftIntakeAngleExternalEncoderEntry;
+    private final NetworkTableEntry m_rightIntakeAngleExternalEncoderEntry;
 
     private final NetworkTableEntry m_leftGravityOffsetVoltage;
     private final NetworkTableEntry m_rightGravityOffsetVoltage;
@@ -91,13 +98,21 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotRight.restoreFactoryDefaults();
         m_pivotRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        m_pivotEncoderLeft = m_pivotLeft.getEncoder();
-        m_pivotEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
-        m_pivotEncoderLeft.setVelocityConversionFactor(360.0 / GEARING / 60.0);
+        m_pivotNeoEncoderLeft = m_pivotLeft.getEncoder();
+        m_pivotNeoEncoderLeft.setPositionConversionFactor(360.0 / GEARING);
+        m_pivotNeoEncoderLeft.setVelocityConversionFactor(360.0 / GEARING / 60.0);
 
-        m_pivotEncoderRight = m_pivotRight.getEncoder();
-        m_pivotEncoderRight.setPositionConversionFactor(360.0 / GEARING);
-        m_pivotEncoderRight.setVelocityConversionFactor(360.0 / GEARING / 60.0);
+        m_pivotNeoEncoderRight = m_pivotRight.getEncoder();
+        m_pivotNeoEncoderRight.setPositionConversionFactor(360.0 / GEARING);
+        m_pivotNeoEncoderRight.setVelocityConversionFactor(360.0 / GEARING / 60.0);
+
+        m_pivotExternalEncoderLeft = m_pivotLeft.getEncoder();
+        m_pivotNeoEncoderLeft.setPositionConversionFactor(1);
+        m_pivotNeoEncoderLeft.setVelocityConversionFactor(1);
+
+        m_pivotExternalEncoderRight = m_pivotRight.getEncoder();
+        m_pivotNeoEncoderRight.setPositionConversionFactor(1);
+        m_pivotNeoEncoderRight.setVelocityConversionFactor(1);
 
         m_indexSensor = new DigitalInput(Constants.INTAKE_INDEX_SENSOR);
 
@@ -116,14 +131,16 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pivotRight.burnFlash();
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("CollectorSubsystem");
-        m_leftIntakeAngleEntry = loggingTable.getEntry("Left Intake (deg)");
+        m_leftIntakeAngleNeoEncoderEntry = loggingTable.getEntry("Left Intake Neo (deg)");
         m_leftIntakeVelocityEntry = loggingTable.getEntry("Left Intake (dps)");
-        m_rightIntakeAngleEntry = loggingTable.getEntry("Right Intake (deg)");
+        m_rightIntakeAngleNeoEncoderEntry = loggingTable.getEntry("Right Intake Neo (deg)");
         m_rightIntakeVelocityEntry = loggingTable.getEntry("Right Intake (dps)");
         m_intakeSwitchPressedEntry = loggingTable.getEntry("Limit Switch");
         m_intakeAngleGoalEntry = loggingTable.getEntry("Angle Goal");
         m_leftGravityOffsetVoltage = loggingTable.getEntry("Left Gravity Offset (Voltage)");
         m_rightGravityOffsetVoltage = loggingTable.getEntry("Right Gravity Offset (Voltage)");
+        m_leftIntakeAngleExternalEncoderEntry = loggingTable.getEntry("Left Intake External (raw)");
+        m_rightIntakeAngleExternalEncoderEntry = loggingTable.getEntry("Right Intake External (raw)");
 
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
@@ -148,14 +165,17 @@ public class CollectorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_leftIntakeAngleEntry.setNumber(getIntakeLeftAngleDegrees());
-        m_leftIntakeVelocityEntry.setNumber(m_pivotEncoderLeft.getVelocity());
-        m_rightIntakeAngleEntry.setNumber(getIntakeRightAngleDegrees());
-        m_rightIntakeVelocityEntry.setNumber(m_pivotEncoderRight.getVelocity());
+        m_leftIntakeAngleNeoEncoderEntry.setNumber(getIntakeLeftAngleDegreesNeoEncoder());
+        m_leftIntakeVelocityEntry.setNumber(m_pivotNeoEncoderLeft.getVelocity());
+        m_rightIntakeAngleNeoEncoderEntry.setNumber(getIntakeRightAngleDegreesNeoEncoder());
+        m_rightIntakeVelocityEntry.setNumber(m_pivotNeoEncoderRight.getVelocity());
         m_intakeSwitchPressedEntry.setBoolean(limitSwitchPressed());
 
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();
+
+        SmartDashboard.putNumber("Left Intake External (raw)", getIntakeLeftAngleRawExternalEncoder());
+        SmartDashboard.putNumber("Right Intake External (raw)", getIntakeRightAngleRawExternalEncoder());
     }
 
     public void collectorDown() {
@@ -203,13 +223,13 @@ public class CollectorSubsystem extends SubsystemBase {
     public boolean collectorToAngle(double pivotAngleDegreesGoal) {
         m_intakeAngleGoalEntry.setNumber(pivotAngleDegreesGoal);
 
-        if (pivotAngleDegreesGoal < getIntakeLeftAngleDegrees() && limitSwitchPressed()) {
+        if (pivotAngleDegreesGoal < getIntakeLeftAngleDegreesNeoEncoder() && limitSwitchPressed()) {
             pivotStop();
             return true;
         }
         else {
-            double errorLeft = pivotAngleDegreesGoal - getIntakeLeftAngleDegrees();
-            double errorRight = pivotAngleDegreesGoal - getIntakeRightAngleDegrees();
+            double errorLeft = pivotAngleDegreesGoal - getIntakeLeftAngleDegreesNeoEncoder();
+            double errorRight = pivotAngleDegreesGoal - getIntakeRightAngleDegreesNeoEncoder();
 
             double gravityOffsetLeft = Math.cos(getIntakeLeftAngleRadians()) * GRAVITY_OFFSET.getValue();
             double gravityOffsetRight = Math.cos(getIntakeRightAngleRadians()) * GRAVITY_OFFSET.getValue();
@@ -222,26 +242,34 @@ public class CollectorSubsystem extends SubsystemBase {
 
             m_leftGravityOffsetVoltage.setNumber(gravityOffsetLeft);
             m_rightGravityOffsetVoltage.setNumber(gravityOffsetRight);
-            double error = Math.abs(pivotAngleDegreesGoal - getIntakeLeftAngleDegrees());
+            double error = Math.abs(pivotAngleDegreesGoal - getIntakeLeftAngleDegreesNeoEncoder());
             return error < CollectorSubsystem.ALLOWABLE_ERROR_DEG;
         }
 
     }
 
     public double getIntakeLeftAngleRadians() {
-        return Math.toRadians(getIntakeLeftAngleDegrees());
+        return Math.toRadians(getIntakeLeftAngleDegreesNeoEncoder());
     }
 
     public double getIntakeRightAngleRadians() {
-        return Math.toRadians(getIntakeRightAngleDegrees());
+        return Math.toRadians(getIntakeRightAngleDegreesNeoEncoder());
     }
 
-    public double getIntakeLeftAngleDegrees() { //for leader
-        return m_pivotEncoderLeft.getPosition();
+    public double getIntakeLeftAngleDegreesNeoEncoder() { //for leader
+        return m_pivotNeoEncoderLeft.getPosition();
     }
 
-    public double getIntakeRightAngleDegrees() {
-        return m_pivotEncoderRight.getPosition();
+    public double getIntakeRightAngleDegreesNeoEncoder() {
+        return m_pivotNeoEncoderRight.getPosition();
+    }
+
+    public double getIntakeLeftAngleRawExternalEncoder() {
+        return m_pivotExternalEncoderLeft.getPosition();
+    }
+
+    public double getIntakeRightAngleRawExternalEncoder() {
+        return m_pivotExternalEncoderRight.getPosition();
     }
 
     public double getPivotSpeed() {
@@ -263,8 +291,8 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public final void resetPivotEncoder() {
-        m_pivotEncoderLeft.setPosition(90);
-        m_pivotEncoderRight.setPosition(90);
+        m_pivotNeoEncoderLeft.setPosition(90);
+        m_pivotNeoEncoderRight.setPosition(90);
     }
 
     public boolean getIndexSensor() {

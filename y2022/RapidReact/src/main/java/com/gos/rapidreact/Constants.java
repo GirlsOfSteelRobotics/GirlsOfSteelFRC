@@ -13,25 +13,25 @@ import edu.wpi.first.math.util.Units;
  * globally (i.e. public static). Do not put anything functional in this class.
  *
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * constants are needed, to reduce verbosity.  nh
  */
 public final class Constants {
 
     //CAN
-    public static final int VERTICAL_CONVEYOR_SPARK = 1;
-    public static final int COLLECTOR_ROLLER = 2;
-    public static final int HANGER_LEFT_SPARK = 3;
-    public static final int DRIVE_LEFT_LEADER_SPARK = 4;
-    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
-    public static final int SHOOTER_LEADER_SPARK = 6;
-    public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 7;
-    public static final int HANGER_RIGHT_SPARK = 8;
-    public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
-    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
-    public static final int COLLECTOR_PIVOT_LEFT = 13;
-    public static final int COLLECTOR_PIVOT_RIGHT = 11;
-    public static final int VERTICAL_CONVEYOR_FEEDER_SPARK = 12;
-    public static final int SHOOTER_ROLLER = 14;
+    public static final int VERTICAL_CONVEYOR_SPARK = 1; //
+    public static final int COLLECTOR_ROLLER = 2; //
+    public static final int HANGER_LEFT_SPARK = 3; //
+    public static final int DRIVE_LEFT_LEADER_SPARK = 4; //
+    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5; //
+    public static final int SHOOTER_LEADER_SPARK = 6; //
+    public static final int HORIZONTAL_CONVEYOR_LEADER_SPARK = 7; //
+    public static final int HANGER_RIGHT_SPARK = 8; //
+    public static final int DRIVE_RIGHT_LEADER_SPARK = 9; //
+    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10; //
+    public static final int COLLECTOR_PIVOT_LEFT = 13; //
+    public static final int COLLECTOR_PIVOT_RIGHT = 11; //
+    public static final int VERTICAL_CONVEYOR_FEEDER_SPARK = 12; //
+    public static final int SHOOTER_ROLLER = 14; //
 
     // Bigger to avoid future conflicts
     public static final int PIGEON_PORT = 20;

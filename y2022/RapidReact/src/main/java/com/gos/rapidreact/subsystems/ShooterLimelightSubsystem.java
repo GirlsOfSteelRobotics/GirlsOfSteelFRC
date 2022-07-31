@@ -7,6 +7,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
@@ -14,13 +15,14 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
 
     public static final String LIMELIGHT_NAME = "limelight-george";
     public static final double MOUNTING_ANGLE_DEGREES = 30;
-    public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(29);
-    public static final double HUB_HEIGHT = Units.inchesToMeters(104); //8 ft, 8 in
     public static final double MIN_SHOOTING_DISTANCE = 1.46;
     public static final double MAX_SHOOTING_DISTANCE = 3.36;
     public static final double ALLOWABLE_TELEOP_ANGLE_ERROR = 4;
     public static final double ALLOWABLE_AUTO_ANGLE_ERROR = 2;
 
+    public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(29);
+    public static final double TARGET_HEIGHT_METERS = Units.inchesToMeters(104); // hub height
+    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(30);
 
     // Logging
     private final NetworkTableEntry m_distance;
@@ -35,7 +37,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public double getDistanceToHub() {
-        return m_limelight.getDistance(LIMELIGHT_HEIGHT, MOUNTING_ANGLE_DEGREES);
+        return m_limelight.getDist(CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS);
+        // return m_limelight.getDistance(LIMELIGHT_HEIGHT, MOUNTING_ANGLE_DEGREES);
     }
 
     public boolean isVisible() {
@@ -43,7 +46,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_limelight.getAngle();
+        return m_limelight.getHorizontalAngleDegrees();
     }
 
     public boolean atAcceptableDistance() {
@@ -63,6 +66,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public void periodic() {
         m_distance.setNumber(getDistanceToHub());
         m_angleError.setNumber(getAngle());
+
+        SmartDashboard.putNumber("Limelight Dist to Hub", getDistanceToHub());
 
         if (DriverStation.isEnabled()) {
             m_limelight.ledOff(0);

@@ -6,6 +6,7 @@ import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.properties.WpiPidPropertyBuilder;
+import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.sim.LimelightSim;
@@ -15,10 +16,12 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -67,7 +70,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PIDController m_toCargoPID;
     private final PidProperty m_toCargoPIDProperties;
 
-    private final PIDController m_turnAnglePID;
+    private final ProfiledPIDController m_turnAnglePID;
     private final PidProperty m_turnAnglePIDProperties;
 
     private final DifferentialDrive m_drive;
@@ -142,7 +145,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .addD(0)
             .build();
 
-        m_turnAnglePID = new PIDController(0, 0, 0);
+        m_turnAnglePID = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(0, 0));
         if (DriverStation.isTeleop()) {
             m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_TELEOP_ANGLE_ERROR, 5);
         }
@@ -150,10 +153,12 @@ public class ChassisSubsystem extends SubsystemBase {
             m_turnAnglePID.setTolerance(ShooterLimelightSubsystem.ALLOWABLE_AUTO_ANGLE_ERROR, 5);
         }
         m_turnAnglePID.enableContinuousInput(-180, 180);
-        m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
+        m_turnAnglePIDProperties = new WpiProfiledPidPropertyBuilder("Chassis to angle", false, m_turnAnglePID)
             .addP(0)
             .addI(0)
             .addD(0)
+            .addMaxAcceleration(0)
+            .addMaxVelocity(0)
             .build();
         //p 0.32, d 0.21
 
@@ -247,6 +252,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDProperties.updateIfChanged();
 
         SmartDashboard.putNumber("chassis dist", getLeftEncoderDistance());
+        SmartDashboard.putNumber("gyro (deg)", getYawAngle());
     }
 
     public void resetInitialOdometry(Pose2d pose) {
@@ -313,6 +319,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void setArcadeDrive(double speed, double steer) {
         m_drive.arcadeDrive(speed, steer);
+    }
+
+    public void setCurvatureDrive(double speed, double steer) {
+        m_drive.curvatureDrive(speed, steer, true);
     }
 
     public boolean goToCargo(double xCoordinate, double yCoordinate) {

@@ -39,7 +39,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return m_limelight.getAngle();
+        return m_limelight.getHorizontalAngleDegrees();
     }
 
     public boolean isVisible() {

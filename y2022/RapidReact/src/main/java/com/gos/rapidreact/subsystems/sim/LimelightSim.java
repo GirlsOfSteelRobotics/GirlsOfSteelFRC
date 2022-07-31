@@ -46,7 +46,7 @@ public class LimelightSim {
 
         m_cargoTarget = new CargoTarget();
         m_intakeSimulator = new LimelightSimulator(List.of(m_cargoTarget), intakeTransform, IntakeLimelightSubsystem.LIMELIGHT_HEIGHT, INTAKE_MAX_DISTANCE, IntakeLimelightSubsystem.LIMELIGHT_NAME);
-        m_shooterSimulator = new LimelightSimulator(RapidReactTargets.getTargets(), shooterTransform, ShooterLimelightSubsystem.LIMELIGHT_HEIGHT, SHOOTER_MAX_DISTANCE, ShooterLimelightSubsystem.LIMELIGHT_NAME);
+        m_shooterSimulator = new LimelightSimulator(RapidReactTargets.getTargets(), shooterTransform, ShooterLimelightSubsystem.CAMERA_HEIGHT_METERS, SHOOTER_MAX_DISTANCE, ShooterLimelightSubsystem.LIMELIGHT_NAME);
         m_rayPublisher = new CameraRayPublisher();
     }
 

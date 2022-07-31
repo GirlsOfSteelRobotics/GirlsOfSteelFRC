@@ -155,7 +155,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_rainbowFullStrip.writeLeds();
         }
 
-        m_autoPivotAtAngle.setStateAndWrite(m_collector.getIntakeRightAngleDegrees() > 89);
+        m_autoPivotAtAngle.setStateAndWrite(m_collector.getIntakeRightAngleDegreesNeoEncoder() > 89);
         m_autoUpperIndexSensor.setStateAndWrite(m_verticalConveyor.getUpperIndexSensor());
     }
 

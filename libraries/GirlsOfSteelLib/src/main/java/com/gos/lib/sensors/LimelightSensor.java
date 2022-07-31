@@ -1,11 +1,13 @@
 package com.gos.lib.sensors;
 
+import edu.wpi.first.math.ComputerVisionUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class LimelightSensor {
+
     private final NetworkTableEntry m_horizontalAngle;
     private final NetworkTableEntry m_verticalAngle;
     private final NetworkTableEntry m_isVisible;
@@ -14,6 +16,7 @@ public class LimelightSensor {
     private final NetworkTableEntry m_ledOff;
 
     public LimelightSensor(String limelightName) {
+
         NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable(limelightName);
 
         m_horizontalAngle = limelightTable.getEntry("tx");
@@ -22,17 +25,38 @@ public class LimelightSensor {
         m_pipeline = limelightTable.getEntry("pipeline");
         m_pythonRobot = limelightTable.getEntry("llrobot");
         m_ledOff = limelightTable.getEntry("ledMode");
-
     }
 
+    // distance from limelight docs
     public double getDistance(double limelightHeight, double mountingAngleDeg) {
         double distance;
         distance = (limelightHeight) / Math.tan(-1 * Units.degreesToRadians(mountingAngleDeg + m_verticalAngle.getDouble(0)));
         return distance;
     }
 
-    public double getAngle() {
+    // distance from wpilib docs
+    public double getDist(
+        double cameraHeightMeters,
+        double targetHeightMeters,
+        double cameraPitchRadians) {
+        return ComputerVisionUtil.calculateDistanceToTarget(cameraHeightMeters, targetHeightMeters, cameraPitchRadians,
+            getVerticalAngleRadians(), getHorizontalAngleRadians());
+    }
+
+    public double getHorizontalAngleDegrees() {
         return m_horizontalAngle.getDouble(0);
+    }
+
+    public double getHorizontalAngleRadians() {
+        return Units.degreesToRadians(m_horizontalAngle.getDouble(0));
+    }
+
+    public double getVerticalAngleDegrees() {
+        return m_verticalAngle.getDouble(0);
+    }
+
+    public double getVerticalAngleRadians() {
+        return Units.degreesToRadians(m_verticalAngle.getDouble(0));
     }
 
     public boolean isVisible() {
