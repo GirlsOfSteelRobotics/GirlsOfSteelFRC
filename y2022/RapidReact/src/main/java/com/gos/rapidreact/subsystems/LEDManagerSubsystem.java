@@ -99,8 +99,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         Map<AutoModeFactory.AutonMode, LEDPattern> autonColorMap  = new HashMap<>();
         autonColorMap.put(AutoModeFactory.AutonMode.DRIVE_OFF_TARMAC, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kRed));
-        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kOrange));
-        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kOrange));
+        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kOrangeRed));
+        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kOrangeRed));
         autonColorMap.put(AutoModeFactory.AutonMode.TWO_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kYellow));
         autonColorMap.put(AutoModeFactory.AutonMode.TWO_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kYellow));
         autonColorMap.put(AutoModeFactory.AutonMode.THREE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kGreen));
@@ -155,7 +155,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_rainbowFullStrip.writeLeds();
         }
 
-        m_autoPivotAtAngle.setStateAndWrite(m_collector.getIntakeRightAngleDegreesNeoEncoder() > 89);
+        m_autoPivotAtAngle.setStateAndWrite(m_collector.getIntakeRightAngleDegreesNeoEncoder() > 89 && m_collector.getIntakeRightAngleDegreesNeoEncoder() < 92);
         m_autoUpperIndexSensor.setStateAndWrite(m_verticalConveyor.getUpperIndexSensor());
     }
 

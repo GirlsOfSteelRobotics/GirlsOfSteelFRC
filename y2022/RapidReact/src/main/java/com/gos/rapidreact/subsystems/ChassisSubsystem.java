@@ -322,7 +322,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void setCurvatureDrive(double speed, double steer) {
-        m_drive.curvatureDrive(speed, steer, true);
+        m_drive.curvatureDrive(speed, steer, speed < 0.05);
     }
 
     public boolean goToCargo(double xCoordinate, double yCoordinate) {

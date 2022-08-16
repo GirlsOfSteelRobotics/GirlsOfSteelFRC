@@ -1,5 +1,6 @@
 package com.gos.rapidreact.commands;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
@@ -8,12 +9,11 @@ import com.gos.rapidreact.subsystems.ChassisSubsystem;
 public class TeleopCurvatureDriveCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
     private final XboxController m_joystick;
+    private final SlewRateLimiter m_slewRateLimiter = new SlewRateLimiter(2);
 
     public TeleopCurvatureDriveCommand(ChassisSubsystem chassisSubsystem, XboxController joystick) {
         m_chassis = chassisSubsystem;
         m_joystick = joystick;
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_chassis);
     }
 
@@ -24,12 +24,11 @@ public class TeleopCurvatureDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassis.setCurvatureDrive(-m_joystick.getLeftY(), m_joystick.getRightX());
+        m_chassis.setCurvatureDrive(m_slewRateLimiter.calculate(-m_joystick.getLeftY()) * 0.6, m_joystick.getRightX() * 0.6);
     }
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
         return false;
     }
 

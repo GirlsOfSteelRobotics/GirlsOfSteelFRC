@@ -7,12 +7,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterLimelightSubsystem extends SubsystemBase {
-    private final LimelightSensor m_limelight;
-
     public static final String LIMELIGHT_NAME = "limelight-george";
     public static final double MOUNTING_ANGLE_DEGREES = 30;
     public static final double MIN_SHOOTING_DISTANCE = 1.46;
@@ -23,6 +20,8 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(29);
     public static final double TARGET_HEIGHT_METERS = Units.inchesToMeters(104); // hub height
     public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(30);
+
+    private final LimelightSensor m_limelight;
 
     // Logging
     private final NetworkTableEntry m_distance;
@@ -67,12 +66,12 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
         m_distance.setNumber(getDistanceToHub());
         m_angleError.setNumber(getAngle());
 
-        SmartDashboard.putNumber("Limelight Dist to Hub", getDistanceToHub());
+        // SmartDashboard.putNumber("Limelight Dist to Hub", getDistanceToHub());
 
         if (DriverStation.isEnabled()) {
-            m_limelight.ledOff(0);
+            m_limelight.setLeds(LimelightSensor.LedMode.USE_PIPELINE);
         } else {
-            m_limelight.ledOff(1);
+            m_limelight.setLeds(LimelightSensor.LedMode.FORCE_OFF);
         }
 
         m_limelight.setPipeline(2);

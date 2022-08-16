@@ -26,7 +26,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"})
 public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
-    private static final double PIVOT_SPEED = .3;
+    private static final double PIVOT_SPEED = .2;
     public static final double ALLOWABLE_ERROR_DEG = 1;
     public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
     private static final double GEARING =  252.0;
@@ -68,16 +68,17 @@ public class CollectorSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_leftSimulator;
     private SingleJointedArmSimWrapper m_rightSimulator;
 
-    private final DigitalInput m_limitSwitch;
+    private final DigitalInput m_lowerLimitSwitch;
+    private final DigitalInput m_upperLimitSwitch;
 
     // Logging
     private final NetworkTableEntry m_leftIntakeAngleNeoEncoderEntry;
     private final NetworkTableEntry m_leftIntakeVelocityEntry;
     private final NetworkTableEntry m_rightIntakeAngleNeoEncoderEntry;
     private final NetworkTableEntry m_rightIntakeVelocityEntry;
-    private final NetworkTableEntry m_intakeSwitchPressedEntry;
+    private final NetworkTableEntry m_lowerIntakeSwitchPressedEntry;
+    private final NetworkTableEntry m_upperIntakeSwitchPressedEntry;
     private final NetworkTableEntry m_intakeAngleGoalEntry;
-
     private final NetworkTableEntry m_leftIntakeAngleExternalEncoderEntry;
     private final NetworkTableEntry m_rightIntakeAngleExternalEncoderEntry;
 
@@ -119,7 +120,8 @@ public class CollectorSubsystem extends SubsystemBase {
         m_pidControllerLeft = m_pivotLeft.getPIDController();
         m_pidControllerRight = m_pivotRight.getPIDController();
 
-        m_limitSwitch = new DigitalInput(Constants.INTAKE_LIMIT_SWITCH);
+        m_lowerLimitSwitch = new DigitalInput(Constants.INTAKE_LOWER_LIMIT_SWITCH);
+        m_upperLimitSwitch = new DigitalInput(Constants.INTAKE_UPPER_LIMIT_SWITCH);
 
         m_pivotPIDLeft = setupPidValues(m_pidControllerLeft);
         m_pivotPIDRight = setupPidValues(m_pidControllerRight);
@@ -135,7 +137,8 @@ public class CollectorSubsystem extends SubsystemBase {
         m_leftIntakeVelocityEntry = loggingTable.getEntry("Left Intake (dps)");
         m_rightIntakeAngleNeoEncoderEntry = loggingTable.getEntry("Right Intake Neo (deg)");
         m_rightIntakeVelocityEntry = loggingTable.getEntry("Right Intake (dps)");
-        m_intakeSwitchPressedEntry = loggingTable.getEntry("Limit Switch");
+        m_lowerIntakeSwitchPressedEntry = loggingTable.getEntry("Lower Limit Switch");
+        m_upperIntakeSwitchPressedEntry = loggingTable.getEntry("Upper Limit Switch");
         m_intakeAngleGoalEntry = loggingTable.getEntry("Angle Goal");
         m_leftGravityOffsetVoltage = loggingTable.getEntry("Left Gravity Offset (Voltage)");
         m_rightGravityOffsetVoltage = loggingTable.getEntry("Right Gravity Offset (Voltage)");
@@ -169,7 +172,10 @@ public class CollectorSubsystem extends SubsystemBase {
         m_leftIntakeVelocityEntry.setNumber(m_pivotNeoEncoderLeft.getVelocity());
         m_rightIntakeAngleNeoEncoderEntry.setNumber(getIntakeRightAngleDegreesNeoEncoder());
         m_rightIntakeVelocityEntry.setNumber(m_pivotNeoEncoderRight.getVelocity());
-        m_intakeSwitchPressedEntry.setBoolean(limitSwitchPressed());
+        m_lowerIntakeSwitchPressedEntry.setBoolean(lowerLimitSwitchPressed());
+        m_upperIntakeSwitchPressedEntry.setBoolean(upperLimitSwitchPressed());
+        m_leftIntakeAngleExternalEncoderEntry.setNumber(getIntakeLeftAngleRawExternalEncoder());
+        m_rightIntakeAngleExternalEncoderEntry.setNumber(getIntakeRightAngleRawExternalEncoder());
 
         m_pivotPIDLeft.updateIfChanged();
         m_pivotPIDRight.updateIfChanged();
@@ -179,7 +185,7 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void collectorDown() {
-        if (limitSwitchPressed()) {
+        if (lowerLimitSwitchPressed()) {
             m_pivotLeft.set(0);
             m_pivotRight.set(0);
         }
@@ -191,12 +197,23 @@ public class CollectorSubsystem extends SubsystemBase {
     }
 
     public void collectorUp() {
-        m_pivotLeft.set(PIVOT_SPEED);
-        m_pivotRight.set(PIVOT_SPEED);
+        if (upperLimitSwitchPressed()) {
+            m_pivotLeft.set(0);
+            m_pivotRight.set(0);
+        }
+
+        else {
+            m_pivotLeft.set(PIVOT_SPEED);
+            m_pivotRight.set(PIVOT_SPEED);
+        }
     }
 
-    public boolean limitSwitchPressed() {
-        return !m_limitSwitch.get();
+    public boolean lowerLimitSwitchPressed() {
+        return !m_lowerLimitSwitch.get();
+    }
+
+    public boolean upperLimitSwitchPressed() {
+        return !m_upperLimitSwitch.get();
     }
 
     public void rollerIn() {
@@ -223,10 +240,16 @@ public class CollectorSubsystem extends SubsystemBase {
     public boolean collectorToAngle(double pivotAngleDegreesGoal) {
         m_intakeAngleGoalEntry.setNumber(pivotAngleDegreesGoal);
 
-        if (pivotAngleDegreesGoal < getIntakeLeftAngleDegreesNeoEncoder() && limitSwitchPressed()) {
+        if (pivotAngleDegreesGoal < getIntakeLeftAngleDegreesNeoEncoder() && lowerLimitSwitchPressed()) {
             pivotStop();
             return true;
         }
+
+        if (pivotAngleDegreesGoal > getIntakeLeftAngleDegreesNeoEncoder() && upperLimitSwitchPressed()) {
+            pivotStop();
+            return true;
+        }
+
         else {
             double errorLeft = pivotAngleDegreesGoal - getIntakeLeftAngleDegreesNeoEncoder();
             double errorRight = pivotAngleDegreesGoal - getIntakeRightAngleDegreesNeoEncoder();
