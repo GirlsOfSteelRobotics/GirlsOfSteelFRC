@@ -1,0 +1,16 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "commands",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
+    deps = [
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist:RobotMap",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:LspbPidPlanner",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

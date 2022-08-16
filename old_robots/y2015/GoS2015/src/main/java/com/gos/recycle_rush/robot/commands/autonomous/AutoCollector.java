@@ -1,48 +1,48 @@
 package com.gos.recycle_rush.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.recycle_rush.robot.subsystems.Collector;
 
 /**
  *
  */
-public class AutoCollector extends Command {
+public class AutoCollector extends CommandBase {
 
     private final Collector m_collector;
+    private final Timer m_timer;
 
     public AutoCollector(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        m_timer = new Timer();
+        addRequirements(m_collector);
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
-        setTimeout(2.5);
+    public void initialize() {
+        m_timer.reset();
+        m_timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.collectorToteIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
-        return isTimedOut();
+    public boolean isFinished() {
+        return m_timer.hasElapsed(2.5);
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollecting();
+        m_timer.stop();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

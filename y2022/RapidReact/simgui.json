@@ -15,7 +15,7 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [13]": {
+      "SPARK MAX [9]": {
         "header": {
           "open": true
         }
@@ -41,7 +41,6 @@
       "/LiveWindow/Ungrouped/DigitalInput[9]": "Digital Input",
       "/LiveWindow/Ungrouped/PIDController[10]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[12]": "PIDController",
-      "/LiveWindow/Ungrouped/PIDController[14]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
@@ -102,11 +101,6 @@
     },
     "windows": {
       "/Shuffleboard/test commands/CollectorPivotPIDCommand - 30 Degrees": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/CollectorPivotPIDCommand - 80 Degrees": {
         "window": {
           "visible": true
         }

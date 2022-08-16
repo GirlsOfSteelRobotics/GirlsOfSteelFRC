@@ -16,9 +16,9 @@ public class ManualTuneCamera extends CommandBase {
 
     private final Chassis m_chassis;
 
-    public static final double HalfCourt = 7.1; //meaters (7.1)
-    public static final double Step = .5; //meaters
-    public static final double ErrorThreshold = .01;
+    public static final double HALF_COURT = 7.1; //meaters (7.1)
+    public static final double STEP = .5; //meaters
+    public static final double ERROR_THRESHOLD = .01;
     private int m_count;
     private double[] m_imageTargetRatioData = new double[50];
     private double[] m_distanceData = new double[50];
@@ -26,7 +26,7 @@ public class ManualTuneCamera extends CommandBase {
 
     public ManualTuneCamera(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         SmartDashboard.putBoolean("collect data", false);
     }
 
@@ -52,7 +52,7 @@ public class ManualTuneCamera extends CommandBase {
             errorSum += (values[i] - dataAverage) * (values[i] - dataAverage);
         }
         double averageError = Math.sqrt(errorSum) / max;
-        if (averageError < ErrorThreshold) {
+        if (averageError < ERROR_THRESHOLD) {
             // System.out.println(dataAverage);
             return dataAverage;
         }
@@ -60,14 +60,14 @@ public class ManualTuneCamera extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         //        chassis.initPositionPIDs();
     }
 
     @SuppressWarnings("PMD")
     @Override
-    protected void execute() {
+    public void execute() {
         //xAxis = driverJoystick.getX() * 0.5;
         //yAxis = driverJoystick.getY() * 0.5;
         //chassis.driveJagsLinear(xAxis, yAxis);
@@ -117,12 +117,12 @@ public class ManualTuneCamera extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
-        return (m_chassis.getRightEncoderDistance()) > HalfCourt - 2;
+    public boolean isFinished() {
+        return (m_chassis.getRightEncoderDistance()) > HALF_COURT - 2;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("data collection done! cnt=" + m_count);
         double[] ab = LineReg.bestFit(m_imageTargetRatioData, m_distanceData, m_count + 1);
         double a = ab[0];
@@ -140,10 +140,7 @@ public class ManualTuneCamera extends CommandBase {
         m_chassis.endEncoders();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 
     private static class LineReg {

@@ -11,18 +11,18 @@ public class MoveToSetPoint extends CommandBase {
     public MoveToSetPoint(Chassis chassis, double distance) {
         m_chassis = chassis;
         m_distanceToMove = distance;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initPositionPIDs();
         m_timeFinished = -1;
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.setPIDsPosition();
         m_chassis.move(m_distanceToMove);
         if (m_timeFinished == -1 && m_chassis.isMoveFinished(m_distanceToMove)) {
@@ -35,7 +35,7 @@ public class MoveToSetPoint extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         if (m_timeFinished != -1 && timeSinceInitialized() - m_timeFinished > 0.5) {
             System.out.println("Move to Set Point Done");
             return true;
@@ -44,14 +44,11 @@ public class MoveToSetPoint extends CommandBase {
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("Done with moving");
         m_chassis.disablePositionPIDs();
         m_chassis.endEncoders();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

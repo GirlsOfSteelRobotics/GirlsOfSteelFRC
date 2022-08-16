@@ -1,0 +1,17 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "auto_modes",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
+    deps = [
+        "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge:Constants",
+        "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands",
+        "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands/autonomous",
+        "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/subsystems",
+        "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/trajectory_modes",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@snobot_sim//jar",
+    ],
+)

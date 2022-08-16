@@ -84,9 +84,7 @@ class ContourFilterParamsWidget(QWidget):
     def set_params(self, contour_filtering_params: ContourFilteringParams):
         for i in range(2):
             self.area_slider.setSliderPosition(contour_filtering_params.area_pair)
-            self.aspect_ratio_slider.setSliderPosition(
-                contour_filtering_params.aspect_ratio_pair
-            )
+            self.aspect_ratio_slider.setSliderPosition(contour_filtering_params.aspect_ratio_pair)
 
     def ui_to_params(self) -> ContourFilteringParams:
         area = self.area_slider.value()

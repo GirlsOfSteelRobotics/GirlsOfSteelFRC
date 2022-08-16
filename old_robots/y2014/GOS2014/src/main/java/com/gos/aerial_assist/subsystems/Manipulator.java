@@ -8,10 +8,9 @@ package com.gos.aerial_assist.subsystems;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
 import com.gos.aerial_assist.objects.EncoderGoSPidController;
@@ -20,15 +19,15 @@ import com.gos.aerial_assist.objects.EncoderGoSPidController;
  * @author Sophia and Sam
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public class Manipulator extends Subsystem {
-    private static final double minAngle = 0; //needs to be changed, not correct
-    private static final double maxAngle = 113; //110 for comp bot//also needs to be changed
-    private static final double pulsePerRotation = 360; //THIS IS CORRECT FOR THE COMPETITION ROBOT
-    private static final double manipulatorJagSpeedStop = 0.0;
-    private static final double manipulatorJagSpeedDown = 1.0;
-    private static final double manipulatorJagSpeedUp = -1.0;
-    private static final double gearRatio = 13.0 / 70.0;
-    private static final double distancePerPulse = (pulsePerRotation * gearRatio) / pulsePerRotation; //360 is the number of degrees in a circle
+public class Manipulator extends SubsystemBase {
+    private static final double MIN_ANGLE = 0; //needs to be changed, not correct
+    private static final double MAX_ANGLE = 113; //110 for comp bot//also needs to be changed
+    private static final double PULSE_PER_ROTATION = 360; //THIS IS CORRECT FOR THE COMPETITION ROBOT
+    private static final double MANIPULATOR_JAG_SPEED_STOP = 0.0;
+    private static final double MANIPULATOR_JAG_SPEED_DOWN = 1.0;
+    private static final double MANIPULATOR_JAG_SPEED_UP = -1.0;
+    private static final double GEAR_RATIO = 13.0 / 70.0;
+    private static final double DISTANCE_PER_PULSE = (PULSE_PER_ROTATION * GEAR_RATIO) / PULSE_PER_ROTATION; //360 is the number of degrees in a circle
 
     private double m_angle; //starting angle
     private final Jaguar m_manipulatorJag;
@@ -47,35 +46,29 @@ public class Manipulator extends Subsystem {
     */
 
     //Old p for the practice bot arm
-    private static final double p = Configuration.manipulatorPivotP;
+    private static final double KP = Configuration.MANIPULATOR_PIVOT_P;
     //negative for the competition robot
     //private static double p = 0.12; //positive for the 2nd chassis
-    private static final double i = 0.0;
-    private static final double d = 0.0;
+    private static final double KI = 0.0;
+    private static final double KD = 0.0;
 
     //96 is from the old arm that was on the practice bot
     //private static int ZERO_ENCODER_VALUE = 86; //101 is the max angle, -17 (SHOULD BE CONSTANT) is how off from the horizontal all the way down is
 
-    private static final int ZERO_ENCODER_VALUE = Configuration.pivotEncoderZeroValue;
+    private static final int ZERO_ENCODER_VALUE = Configuration.PIVOT_ENCODER_ZERO_VALUE;
     //Practice bot <- //92; //COMPETITION BOT
 
     public Manipulator() {
 
         m_manipulatorJag = new Jaguar(RobotMap.MANIPULATOR_JAG);
         m_bobTheArmEncoder = new Encoder(RobotMap.MANIPULATOR_ENCODER_A, RobotMap.MANIPULATOR_ENCODER_B, true, CounterBase.EncodingType.k2X); //reverse boolean is true on the 2nd robot
-        m_bobTheArmEncoder.setDistancePerPulse(distancePerPulse); //assuming there's 360 pulses per revoluation
+        m_bobTheArmEncoder.setDistancePerPulse(DISTANCE_PER_PULSE); //assuming there's 360 pulses per revoluation
 
         m_dasBootLights = new Relay(RobotMap.LIGHTS);
-        m_angle = maxAngle;
+        m_angle = MAX_ANGLE;
 
 
-        m_manipulatorPID = new EncoderGoSPidController(p, i, d, m_bobTheArmEncoder, new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                m_manipulatorJag.set(output);
-            }
-        }, EncoderGoSPidController.POSITION, ZERO_ENCODER_VALUE);
+        m_manipulatorPID = new EncoderGoSPidController(KP, KI, KD, m_bobTheArmEncoder, m_manipulatorJag::set, EncoderGoSPidController.POSITION, ZERO_ENCODER_VALUE);
 
         System.out.println("Encoder Value ------------ " + m_manipulatorPID.getSignedDistance());
 
@@ -108,7 +101,7 @@ public class Manipulator extends Subsystem {
 
     public void moveJag(double desiredAngle) {
         this.m_desiredAngle = desiredAngle;
-        if (desiredAngle < minAngle || desiredAngle > maxAngle) {
+        if (desiredAngle < MIN_ANGLE || desiredAngle > MAX_ANGLE) {
             throw new IllegalArgumentException("Angle for arm manipulation is invalid");
         }
         if (desiredAngle == m_angle) {
@@ -161,16 +154,16 @@ public class Manipulator extends Subsystem {
 
 
     public void moveManipulatorDown() {
-        m_manipulatorJag.set(manipulatorJagSpeedDown * Configuration.desiredAnglePivotArmSign);
+        m_manipulatorJag.set(MANIPULATOR_JAG_SPEED_DOWN * Configuration.DESIRED_ANGLE_PIVOT_ARM_SIGN);
     } //Sets/returns the speed of the manipulator jag for manual adjusting using buttons on PS3 controller
 
     public void moveManipulatorUp() {
-        m_manipulatorJag.set(manipulatorJagSpeedUp * Configuration.desiredAnglePivotArmSign);
+        m_manipulatorJag.set(MANIPULATOR_JAG_SPEED_UP * Configuration.DESIRED_ANGLE_PIVOT_ARM_SIGN);
         //sets/returns the speed of the manipulator jag for manual adjusting using buttons on PS3 controller
     }
 
     public void stopManipulator() {
-        m_manipulatorJag.set(manipulatorJagSpeedStop);
+        m_manipulatorJag.set(MANIPULATOR_JAG_SPEED_STOP);
     } //Stops the manipulator jag
 
     //    public double getCurrentAngle(double angle) {
@@ -245,9 +238,7 @@ public class Manipulator extends Subsystem {
         return m_bobTheArmEncoder.getRaw();
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
 
     public final void resetPIDError() {

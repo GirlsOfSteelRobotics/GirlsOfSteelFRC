@@ -38,7 +38,7 @@ public class RobotContainer {
 
         new OI(this);
         new CommandTester(this);
-        m_autonFactory = new AutonFactory(this);
+        m_autonFactory = new AutonFactory(m_chassisSubsystem, m_elevatorSubsystem, m_punchSubsystem);
     }
 
     /**

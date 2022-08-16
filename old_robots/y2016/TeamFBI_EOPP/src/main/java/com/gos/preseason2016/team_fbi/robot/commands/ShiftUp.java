@@ -1,46 +1,41 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.preseason2016.team_fbi.robot.subsystems.Shifters;
 
-public class ShiftUp extends Command {
+public class ShiftUp extends CommandBase {
 
     private final Shifters m_shifters;
 
     public ShiftUp(Shifters shifters) {
         m_shifters = shifters;
-        requires(m_shifters);
+        addRequirements(m_shifters);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shifters.shiftLeft(true);
         m_shifters.shiftRight(true);
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         // TODO Auto-generated method stub
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         // TODO Auto-generated method stub
 
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-        // TODO Auto-generated method stub
 
-    }
 
 }

@@ -6,12 +6,12 @@
 
 package com.gos.aerial_assist.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * @author Sylvie
  */
-public class Driving extends Subsystem {
+public class Driving extends SubsystemBase {
 
     /*
     This subsystem is supposed to be completely empty (minus the initDefaultCommand()).
@@ -25,8 +25,6 @@ public class Driving extends Subsystem {
     made for drive commands. DO NOT REMOVE/DELETE THIS SUBSYSTEM.
     */
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
 }

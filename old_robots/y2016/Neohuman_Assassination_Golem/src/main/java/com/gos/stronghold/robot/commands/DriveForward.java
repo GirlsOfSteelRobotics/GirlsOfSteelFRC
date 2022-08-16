@@ -1,47 +1,41 @@
 package com.gos.stronghold.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import com.gos.stronghold.robot.OI;
-import com.gos.stronghold.robot.OI.DriveDirection;
+import com.gos.stronghold.robot.subsystems.Chassis;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  *
  */
-public class DriveForward extends Command {
+public class DriveForward extends CommandBase {
 
-    private final OI m_oi;
+    private final Chassis m_chassis;
 
-    public DriveForward(OI oi) {
-        m_oi = oi;
+    public DriveForward(Chassis chassis) {
+        m_chassis = chassis;
     }
 
     // Called just before this Command runs the first time
     @Override
-    protected void initialize() {
-        m_oi.setDriveDirection(DriveDirection.kFWD);
+    public void initialize() {
+        m_chassis.setTeleDriveDirection(Chassis.TeleDriveDirection.FWD);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     // Called once after isFinished returns true
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
 
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

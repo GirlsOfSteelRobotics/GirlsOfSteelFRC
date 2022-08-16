@@ -19,34 +19,31 @@ public class TestJags extends CommandBase {
 
     public TestJags(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.setJags(1.0);
         SmartDashboard.putNumber("Left Encoder", m_chassis.getLeftEncoder());
         SmartDashboard.putNumber("Right Encoder", m_chassis.getRightEncoder());
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.setJags(0.0);
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

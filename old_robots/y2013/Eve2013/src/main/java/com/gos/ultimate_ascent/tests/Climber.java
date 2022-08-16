@@ -23,7 +23,7 @@ public class Climber extends CommandBase {
     public Climber(com.gos.ultimate_ascent.subsystems.Climber climber, Gripper gripper) {
         m_climber = climber;
         m_gripper = gripper;
-        requires(climber);
+        addRequirements(climber);
 
         SmartDashboard.putString("Comand called", "comand called");
 
@@ -37,11 +37,11 @@ public class Climber extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
 
         if (SmartDashboard.getBoolean("Spikes", false) && SmartDashboard.getBoolean("Spikes Foward Backwards", false)) {
@@ -76,15 +76,13 @@ public class Climber extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 }

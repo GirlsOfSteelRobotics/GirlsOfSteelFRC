@@ -77,8 +77,6 @@ dependencies {
 
     implementation project(":libraries:GirlsOfSteelLib")
     implementation project(":libraries:GirlsOfSteelLibCtre")
-    implementation project(":libraries:GirlsOfSteelLibNavx")
-    implementation project(":libraries:GirlsOfSteelLibRev")
 }
 
 // Simulation configuration (e.g. environment variables).

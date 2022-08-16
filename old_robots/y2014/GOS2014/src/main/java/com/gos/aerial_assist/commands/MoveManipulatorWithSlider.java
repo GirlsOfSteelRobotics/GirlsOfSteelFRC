@@ -6,7 +6,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
 /**
@@ -19,38 +18,35 @@ public class MoveManipulatorWithSlider extends CommandBase {
     private final Joystick m_driver;
     private final Manipulator m_manipulator;
 
-    private static final double m_fullRangeOnSlider = 100;
-    private static final double m_maxManipulatorAngle = 110;
-    private static final double m_minManipulatorAngle = -3;
+    private static final double FULL_RANGE_ON_SLIDER = 100;
+    private static final double MAX_MANIPULATOR_ANGLE = 110;
+    private static final double MIN_MANIPULATOR_ANGLE = -3;
 
-    public MoveManipulatorWithSlider(OI oi, Manipulator manipulator) {
+    public MoveManipulatorWithSlider(Joystick joystick, Manipulator manipulator) {
         m_manipulator = manipulator;
-        m_driver = oi.getChassisJoystick();
-        requires(m_manipulator);
+        m_driver = joystick;
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
-        double angle = ((m_driver.getZ() / m_fullRangeOnSlider) * m_maxManipulatorAngle) + m_minManipulatorAngle;
+    public void execute() {
+        double angle = ((m_driver.getZ() / FULL_RANGE_ON_SLIDER) * MAX_MANIPULATOR_ANGLE) + MIN_MANIPULATOR_ANGLE;
         m_manipulator.setSetPoint(angle);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

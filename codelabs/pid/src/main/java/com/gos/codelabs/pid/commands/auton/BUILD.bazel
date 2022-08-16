@@ -1,0 +1,15 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "auton",
+    srcs = glob(["*.java"]),
+    visibility = ["//codelabs/pid:__subpackages__"],
+    deps = [
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
+        "//libraries/GirlsOfSteelLib",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)

@@ -69,8 +69,6 @@ dependencies {
 
 
     implementation project(":libraries:GirlsOfSteelLib")
-    implementation project(":libraries:GirlsOfSteelLibCtre")
-    implementation project(":libraries:GirlsOfSteelLibNavx")
     implementation project(":libraries:GirlsOfSteelLibRev")
 }
 
@@ -91,4 +89,3 @@ jar {
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
-

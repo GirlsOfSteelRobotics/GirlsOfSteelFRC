@@ -9,7 +9,7 @@ public class TestShooterPID extends CommandBase {
 
     public TestShooterPID(Shooter shooter) {
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
         SmartDashboard.putNumber("Shooter Setpoint", 0.0);
         SmartDashboard.putNumber("Shooter,p", 0.0);
         SmartDashboard.putNumber("Shooter,i", 0.0);
@@ -20,13 +20,13 @@ public class TestShooterPID extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //        autoShoot = SmartDashboard.getBoolean("Auto Shoot?", false);
         //        bank = SmartDashboard.getBoolean("Bank?", false);
         //        SmartDashboard.putNumber("Shooter Encoder", shooter.getEncoderRate());
@@ -48,20 +48,17 @@ public class TestShooterPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.disablePID();
         m_shooter.stopEncoder();
         m_shooter.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

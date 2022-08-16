@@ -15,18 +15,18 @@ public class ShootBestFitLine extends CommandBase {
         m_shooter = shooter;
         m_operatorJoystick = operatorJoystick;
 
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
         m_cameraDistance = Camera.getXDistance();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_shooter.autoShootBestFitLine(m_cameraDistance);
         if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3
             || Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
@@ -35,20 +35,17 @@ public class ShootBestFitLine extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return !Camera.isConnected();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.topRollersOff();
         m_shooter.disablePID();
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

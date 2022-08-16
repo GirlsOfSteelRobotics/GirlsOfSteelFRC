@@ -15,39 +15,37 @@ public class OpenAllGrippers extends CommandBase {
     private final Gripper m_gripper;
 
     public OpenAllGrippers(Gripper bottomGripper) {
-        //        requires(topGripper);
-        //        requires(middleGripper);
+        //        addRequirements(topGripper);
+        //        addRequirements(middleGripper);
         m_gripper = bottomGripper;
-        requires(m_gripper);
+        addRequirements(m_gripper);
     }
 
     //Command for closing the bottom gripper around the pyramid
 
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //        topGripper.openGrip();
         //        middleGripper.openGrip();
         m_gripper.openGrip();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
 
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 
 }

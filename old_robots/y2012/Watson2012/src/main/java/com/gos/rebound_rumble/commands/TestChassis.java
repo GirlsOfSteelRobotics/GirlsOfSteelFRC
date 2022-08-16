@@ -10,7 +10,7 @@ public class TestChassis extends CommandBase {
 
     public TestChassis(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         SmartDashboard.putBoolean("Right Jags", false);
         SmartDashboard.putBoolean("Left Jags", false);
         SmartDashboard.putNumber("Jag speed", 0.0);
@@ -20,12 +20,12 @@ public class TestChassis extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = SmartDashboard.getNumber("Jag speed", 0.0);
         SmartDashboard.putNumber("Right Encoder:", m_chassis.getRightEncoderDistance());
         SmartDashboard.putNumber("Left Encoder", m_chassis.getLeftEncoderDistance());
@@ -41,19 +41,16 @@ public class TestChassis extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
         m_chassis.endEncoders();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

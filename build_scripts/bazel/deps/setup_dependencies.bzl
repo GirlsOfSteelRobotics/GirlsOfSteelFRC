@@ -1,8 +1,14 @@
-load("@rules_pmd//pmd:dependencies.bzl", "rules_pmd_dependencies")
+"""
+"""
+
 load("@bazelrio//:defs.bzl", "setup_bazelrio")
 load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
+load("@rules_pmd//pmd:dependencies.bzl", "rules_pmd_dependencies")
 
 def setup_dependencies():
+    """
+    Second step of dependency initialization.
+    """
     rules_pmd_dependencies()
     setup_bazelrio_dependencies(
         toolchain_versions = "2022-1",

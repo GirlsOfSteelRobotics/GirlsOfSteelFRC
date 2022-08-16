@@ -1,4 +1,9 @@
-from lib.pipelines.pipeline_params import HsvThresholdParams, CircleDetectionParams, ContourFilteringParams, CropImageFilterParams
+from lib.pipelines.pipeline_params import (
+    HsvThresholdParams,
+    CircleDetectionParams,
+    ContourFilteringParams,
+    CropImageFilterParams,
+)
 
 
 class CargoPipelineParams:

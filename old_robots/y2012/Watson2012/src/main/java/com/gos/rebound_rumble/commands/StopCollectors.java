@@ -8,31 +8,28 @@ public class StopCollectors extends CommandBase {
 
     public StopCollectors(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_collector.stopBrush();
         m_collector.stopMiddleConveyor();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

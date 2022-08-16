@@ -8,7 +8,7 @@ import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.properties.WpiPidPropertyBuilder;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
-import com.gos.rapidreact.sim.LimelightSim;
+import com.gos.rapidreact.subsystems.sim.LimelightSim;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;

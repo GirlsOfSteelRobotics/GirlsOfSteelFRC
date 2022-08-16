@@ -11,8 +11,7 @@ package com.gos.aerial_assist.subsystems;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.aerial_assist.Configuration;
 import com.gos.aerial_assist.RobotMap;
 import com.gos.aerial_assist.objects.EncoderGoSPidController;
@@ -22,13 +21,13 @@ import com.gos.aerial_assist.objects.LspbPidPlanner;
  * @author Heather
  */
 @SuppressWarnings({"PMD.AvoidReassigningParameters", "PMD.GodClass", "PMD.TooManyMethods"})
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     private final Jaguar m_rightJag;
     private final Jaguar m_leftJag;
 
     //DifferentialDrive drive = new DifferentialDrive(rightJag, leftJag); USE THIS IF DRIVING CODE DOESN'T WORK
-    private static final double m_deadZoneScale = 0.3;
+    private static final double DEAD_ZONE_SCALE = 0.3;
 
     private final Encoder m_rightEncoder;
     private final Encoder m_leftEncoder;
@@ -40,11 +39,11 @@ public class Chassis extends Subsystem {
 
     //need the p for 2nd robot
     private final double m_kPRight; //Competition chassis gains 0.2
-    private static final double Piright = 0;
-    private static final double Pdright = 0;
+    private static final double RIGHT_KI = 0;
+    private static final double RIGHT_KD = 0;
     private final double m_kPpLeft; //Competition chassis gains 0.2
-    private static final double m_kPileft = 0;
-    private static final double m_kPdleft = 0;
+    private static final double LEFT_KI = 0;
+    private static final double LEFT_KD = 0;
 
     //    private double leftDistancePerPulsePosition = (wheelCircumference) / (leftPulsePerRevolution * gearRatio); //(leftPulsePerRevolution * gearRatio) / (wheelCircumference);
     //    private double rightDistancePerPulsePosition = (wheelCircumference) / (rightPulsePerRevolution * gearRatio); //(rightPulsePerRevolution * gearRatio) / (wheelCircumference);
@@ -57,22 +56,22 @@ public class Chassis extends Subsystem {
 
     //Competition robot, 4/23/14 pushed the robot forward 1 meter
     //Divided the raw values by four because the distances were off by a factor of four
-    private static final double m_leftDistancePerPulsePosition = (1.0 / (4810.4 / 4.0));
-    private static final double m_rightDistancePerPulsePosition = (1.0 / (4957.5 / 4));
+    private static final double LEFT_DISTANCE_PER_PULSE_POSITION = (1.0 / (4810.4 / 4.0));
+    private static final double RIGHT_DISTANCE_PER_PULSE_POSITION = (1.0 / (4957.5 / 4));
 
     public Chassis() {
         m_leftChassisPlanner = new LspbPidPlanner();
         m_rightChassisPlanner = new LspbPidPlanner();
 
-        m_kPRight = Configuration.rightPositionP;
-        m_kPpLeft = Configuration.leftPositionP;
+        m_kPRight = Configuration.RIGHT_POSITION_P;
+        m_kPpLeft = Configuration.LEFT_POSITION_P;
 
         m_rightJag = new Jaguar(RobotMap.RIGHT_JAG_PORT);
         m_leftJag = new Jaguar(RobotMap.LEFT_JAG_PORT);
 
         //2nd Robot encoder stuff
-        m_rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, Configuration.rightEncoderReverse, CounterBase.EncodingType.k4X);
-        m_leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, Configuration.leftEncoderReverse, CounterBase.EncodingType.k4X);
+        m_rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, Configuration.RIGHT_ENCODER_REVERSE, CounterBase.EncodingType.k4X);
+        m_leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, Configuration.LEFT_ENCODER_REVERSE, CounterBase.EncodingType.k4X);
 
         /*Old practice bot code (before they switched the ports of right and left
          rightPositionPID = new EncoderGoSPIDController(Ppright, Piright, Pdright, leftEncoder, new PIDOutput() {
@@ -90,21 +89,9 @@ public class Chassis extends Subsystem {
          }, 2, false);
 
          */
-        m_rightPositionPID = new EncoderGoSPidController(m_kPRight, Piright, Pdright, m_rightEncoder, new PIDOutput() {
+        m_rightPositionPID = new EncoderGoSPidController(m_kPRight, RIGHT_KI, RIGHT_KD, m_rightEncoder, m_rightJag::set, 2, Configuration.RIGHT_PID_REVERSE_ENCODER, false); //For the competition bot (practice bot is true, false)
 
-            @Override
-            public void pidWrite(double output) {
-                m_rightJag.set(output);
-            }
-        }, 2, Configuration.rightPIDReverseEncoder, false); //For the competition bot (practice bot is true, false)
-
-        m_leftPositionPID = new EncoderGoSPidController(m_kPpLeft, m_kPileft, m_kPdleft, m_leftEncoder, new PIDOutput() {
-
-            @Override
-            public void pidWrite(double output) {
-                m_leftJag.set(output);
-            }
-        }, 2, Configuration.leftPIDReverseEncoder, false);
+        m_leftPositionPID = new EncoderGoSPidController(m_kPpLeft, LEFT_KI, LEFT_KD, m_leftEncoder, m_leftJag::set, 2, Configuration.LEFT_PID_REVERSE_ENCODER, false);
     }
 
     public double square(double joystickValue, double scale) {
@@ -129,21 +116,21 @@ public class Chassis extends Subsystem {
     }
 
     public void setJags(double speed) {
-        m_leftJag.set(speed * Configuration.leftSetpointSign);
-        m_rightJag.set(speed * Configuration.rightSetpointSign); //Right jag is backwards on the competition robot
+        m_leftJag.set(speed * Configuration.LEFT_SETPOINT_SIGN);
+        m_rightJag.set(speed * Configuration.RIGHT_SETPOINT_SIGN); //Right jag is backwards on the competition robot
     }
 
     public void setLeftJag(double speed) {
-        m_leftJag.set(speed * Configuration.leftSetpointSign); //left jag going wrong way so negative
+        m_leftJag.set(speed * Configuration.LEFT_SETPOINT_SIGN); //left jag going wrong way so negative
     }
 
     public void setRightJag(double speed) {
-        m_rightJag.set(speed * Configuration.rightSetpointSign);
+        m_rightJag.set(speed * Configuration.RIGHT_SETPOINT_SIGN);
     }
 
     public void initEncoders() {
-        m_rightEncoder.setDistancePerPulse(m_rightDistancePerPulsePosition);
-        m_leftEncoder.setDistancePerPulse(m_leftDistancePerPulsePosition);
+        m_rightEncoder.setDistancePerPulse(RIGHT_DISTANCE_PER_PULSE_POSITION);
+        m_leftEncoder.setDistancePerPulse(LEFT_DISTANCE_PER_PULSE_POSITION);
     }
 
     public double getLeftEncoderDistance() {
@@ -229,9 +216,9 @@ public class Chassis extends Subsystem {
      is not tasty
      */
     public double jerkyDeadZone(double value) {
-        if (value < m_deadZoneScale && value > 0.0) {
+        if (value < DEAD_ZONE_SCALE && value > 0.0) {
             value = 0.0;
-        } else if (value > -m_deadZoneScale && value < 0.0) {
+        } else if (value > -DEAD_ZONE_SCALE && value < 0.0) {
             value = 0.0;
         }
         return value;
@@ -247,8 +234,8 @@ public class Chassis extends Subsystem {
     public double smoothDeadZone(double value) {
         boolean neg = value < 0;
         value = Math.abs(value);
-        if (value > m_deadZoneScale) {
-            value = ((value - m_deadZoneScale) / (1 - m_deadZoneScale));
+        if (value > DEAD_ZONE_SCALE) {
+            value = ((value - DEAD_ZONE_SCALE) / (1 - DEAD_ZONE_SCALE));
             if (neg) {
                 value = -value;
             }
@@ -304,9 +291,7 @@ public class Chassis extends Subsystem {
         //System.out.println("right: " + (-(x-y)) +"\n left: " + (x+y));
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
     public double getErrorSum() {
         return m_leftPositionPID.getErrorSum();
@@ -383,13 +368,13 @@ public class Chassis extends Subsystem {
         System.out.println("Right Side Error: " + m_rightPositionPID.getError());
         System.out.println("Left Side Error: " + m_leftPositionPID.getError());
         //rightPositionPID.setSetPoint(distance);
-        m_rightPositionPID.setSetPoint(Configuration.rightSetpointSign * distance);
-        m_leftPositionPID.setSetPoint(Configuration.leftSetpointSign * distance);
+        m_rightPositionPID.setSetPoint(Configuration.RIGHT_SETPOINT_SIGN * distance);
+        m_leftPositionPID.setSetPoint(Configuration.LEFT_SETPOINT_SIGN * distance);
     }
 
     public void setPositionSeparate(double leftDistance, double rightDistance) {
-        m_rightPositionPID.setSetPoint(Configuration.rightSetpointSign * rightDistance); //This is correct for the competition and practice chassis
-        m_leftPositionPID.setSetPoint(Configuration.leftSetpointSign * leftDistance);
+        m_rightPositionPID.setSetPoint(Configuration.RIGHT_SETPOINT_SIGN * rightDistance); //This is correct for the competition and practice chassis
+        m_leftPositionPID.setSetPoint(Configuration.LEFT_SETPOINT_SIGN * leftDistance);
     }
 
     /*

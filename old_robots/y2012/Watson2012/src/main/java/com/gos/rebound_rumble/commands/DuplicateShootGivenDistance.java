@@ -8,25 +8,25 @@ public class DuplicateShootGivenDistance extends CommandBase {
 
     public DuplicateShootGivenDistance(Shooter shooter, double speed) {
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
         this.m_speed = speed;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initPID();
         m_shooter.initEncoder();
         System.out.println("Shooting initialized");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_shooter.shoot(m_speed);
 
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         //If this is bridge shooting, wait a long time. Otherwise(key shooting) don't wait a long time
         if (m_speed > 25) {
             return timeSinceInitialized() > 10;
@@ -36,14 +36,11 @@ public class DuplicateShootGivenDistance extends CommandBase {
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         System.out.println("Shooting Finished");
         m_shooter.disablePID();
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

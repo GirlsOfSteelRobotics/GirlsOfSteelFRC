@@ -4,14 +4,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.outreach2016.robot.RobotMap;
 
 /**
  *
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public class Manipulator extends Subsystem {
+public class Manipulator extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -68,11 +68,7 @@ public class Manipulator extends Subsystem {
         m_pivotMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
 
     public boolean getTopLimitSwitch() {
         return m_pivotMotor.isFwdLimitSwitchClosed() == 0;

@@ -1,12 +1,12 @@
 package com.gos.ultimate_ascent.tests;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class Chassis extends CommandGroup {
+public class Chassis extends SequentialCommandGroup {
 
     public Chassis(com.gos.ultimate_ascent.subsystems.Chassis chassis) {
-        addSequential(new ChassisJags(chassis));
+        addCommands(new ChassisJags(chassis));
         //adds chassis PID as soon as the user says testing jags is done
-        addSequential(new ChassisPID(chassis));
+        addCommands(new ChassisPID(chassis));
     }
 }

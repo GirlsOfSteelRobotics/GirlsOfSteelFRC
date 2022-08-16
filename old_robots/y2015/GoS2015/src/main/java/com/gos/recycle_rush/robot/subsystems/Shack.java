@@ -2,10 +2,10 @@ package com.gos.recycle_rush.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.recycle_rush.robot.RobotMap;
 
-public class Shack extends Subsystem {
+public class Shack extends SubsystemBase {
 
     private final DoubleSolenoid m_shack;
 
@@ -21,8 +21,6 @@ public class Shack extends Subsystem {
         m_shack.set(DoubleSolenoid.Value.kReverse);
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 
 }

@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class ShooterCamera {
-    private static final double positionOneAngleOffset = -7.2;
-    private static final double positionTwoAngleOffset = 0;
+    private static final double POSITION_ONE_ANGLE_OFFSET = -7.2;
+    private static final double POSITION_TWO_ANGLE_OFFSET = 0;
 
     //magic value must change
-    private static final double epsilon = 5;
+    private static final double EPSILON = 5;
     private static double heightOfDesiredPosition;
     private static double widthOfDesiredPosition;
 
@@ -38,9 +38,9 @@ public class ShooterCamera {
 
     public static double getLocationOffsetAngle() {
         if (atShootPositionOne()) {
-            return positionOneAngleOffset;
+            return POSITION_ONE_ANGLE_OFFSET;
         } else if (atShootPositionTwo()) {
-            return positionTwoAngleOffset;
+            return POSITION_TWO_ANGLE_OFFSET;
         }
         return 0;
     }
@@ -133,13 +133,13 @@ public class ShooterCamera {
         heightOfDesiredPosition = 63;
         widthOfDesiredPosition = 205;
         //check width and height are in desired position
-        return (foundTopTarget() && getTopTargetPixelHeight() > heightOfDesiredPosition - epsilon && getTopTargetPixelHeight() < epsilon + heightOfDesiredPosition && getTopTargetPixelWidth() > widthOfDesiredPosition - epsilon && getTopTargetPixelWidth() < epsilon + widthOfDesiredPosition);
+        return (foundTopTarget() && getTopTargetPixelHeight() > heightOfDesiredPosition - EPSILON && getTopTargetPixelHeight() < EPSILON + heightOfDesiredPosition && getTopTargetPixelWidth() > widthOfDesiredPosition - EPSILON && getTopTargetPixelWidth() < EPSILON + widthOfDesiredPosition);
     }
 
     private static boolean atShootPositionTwo() {
         heightOfDesiredPosition = 1;
         widthOfDesiredPosition = 2;
         //check width and height are in desired position
-        return (foundSideTarget() && getSideTargetPixelHeight() > heightOfDesiredPosition - epsilon && getSideTargetPixelHeight() < epsilon + heightOfDesiredPosition && getSideTargetPixelWidth() > widthOfDesiredPosition - epsilon && getSideTargetPixelWidth() < epsilon + widthOfDesiredPosition);
+        return (foundSideTarget() && getSideTargetPixelHeight() > heightOfDesiredPosition - EPSILON && getSideTargetPixelHeight() < EPSILON + heightOfDesiredPosition && getSideTargetPixelWidth() > widthOfDesiredPosition - EPSILON && getSideTargetPixelWidth() < EPSILON + widthOfDesiredPosition);
     }
 }

@@ -1,0 +1,36 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "RobotMap",
+    srcs = [
+        "Configuration.java",
+        "RobotMap.java",
+    ],
+    visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
+    deps = [
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)
+
+gos_java_robot(
+    name = "aerial_assist",
+    srcs = glob(
+        ["*.java"],
+        exclude = [
+            "RobotMap.java",
+            "Configuration.java",
+        ],
+    ),
+    main_class = "com.gos.aerial_assist.Main",
+    visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
+    deps = [
+        ":RobotMap",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/commands",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:AutonomousChooser",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/tests",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

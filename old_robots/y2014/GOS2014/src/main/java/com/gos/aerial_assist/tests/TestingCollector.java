@@ -19,17 +19,17 @@ public class TestingCollector extends CommandBase {
 
     public TestingCollector(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
         m_direction = true;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_collector.collectorWheelFoward();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         m_direction = !m_direction;
         m_collector.stopCollectorWheel();
@@ -41,16 +41,14 @@ public class TestingCollector extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 
 }

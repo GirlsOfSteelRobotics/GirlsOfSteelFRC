@@ -1,0 +1,8 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "planning",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2017/Team_2:__subpackages__"],
+    deps = ["@snobot_sim//jar"],
+)

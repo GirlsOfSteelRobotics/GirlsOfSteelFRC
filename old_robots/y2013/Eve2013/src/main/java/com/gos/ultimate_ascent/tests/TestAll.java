@@ -8,13 +8,13 @@ package com.gos.ultimate_ascent.tests;
 
 import com.gos.ultimate_ascent.subsystems.Feeder;
 import com.gos.ultimate_ascent.subsystems.Gripper;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author kateashwood
  */
-public class TestAll extends CommandGroup {
+public class TestAll extends SequentialCommandGroup {
 
     // Called just before this Command runs the first time
     public TestAll(Feeder feeder, com.gos.ultimate_ascent.subsystems.Chassis chassis, com.gos.ultimate_ascent.subsystems.Shooter shooter, com.gos.ultimate_ascent.subsystems.Climber climber, Gripper gripper) {

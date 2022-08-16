@@ -18,12 +18,12 @@ public class HoldChassisInPlace extends CommandBase {
 
     public HoldChassisInPlace(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
 
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initPositionPIDS();
         m_chassis.resetPositionPIDError();
@@ -33,7 +33,7 @@ public class HoldChassisInPlace extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_chassis.setPosition(m_setPoint);
         /* USING ENCODERS
         if(chassis.getLeftEncoder() > 0)
@@ -65,20 +65,17 @@ public class HoldChassisInPlace extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
-        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0, 0);
-        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0, 0);
+    public void end(boolean interrupted) {
+        m_chassis.setLeftPositionPIDValues(Configuration.LEFT_POSITION_P, 0, 0);
+        m_chassis.setRightPositionPIDValues(Configuration.RIGHT_POSITION_P, 0, 0);
         m_chassis.disablePositionPID();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -1,10 +1,8 @@
 package com.gos.recycle_rush.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Camera extends Subsystem {
+public class Camera extends SubsystemBase {
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

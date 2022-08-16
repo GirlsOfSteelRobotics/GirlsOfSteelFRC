@@ -15,7 +15,7 @@ import com.gos.aerial_assist.subsystems.Collector;
  */
 public class CollectorUpALittle extends CommandBase {
 
-    private static final double m_putDownTime = 0.15;
+    private static final double PUT_DOWN_TIME = 0.15;
 
     private final Collector m_collector;
     private double m_startTime;
@@ -26,7 +26,7 @@ public class CollectorUpALittle extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_startTime = Timer.getFPGATimestamp();
         System.out.println("Collector up a little!!!!!!!!!!!");
 
@@ -34,30 +34,27 @@ public class CollectorUpALittle extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         m_changeInTime = Timer.getFPGATimestamp() - m_startTime;
-        if (m_changeInTime < m_putDownTime) {
-            m_collector.moveCollectorUpOrDown(Configuration.disengageCollectorSpeed);
+        if (m_changeInTime < PUT_DOWN_TIME) {
+            m_collector.moveCollectorUpOrDown(Configuration.DISENGAGE_COLLECTOR_SPEED);
         } else {
-            m_collector.moveCollectorUpOrDown(Configuration.engageCollectorSpeed);
+            m_collector.moveCollectorUpOrDown(Configuration.ENGAGE_COLLECTOR_SPEED);
         }
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_changeInTime > .3;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollector();
         m_collector.stopCollectorWheel();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

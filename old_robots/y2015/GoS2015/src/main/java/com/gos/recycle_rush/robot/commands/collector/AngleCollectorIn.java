@@ -1,6 +1,6 @@
 package com.gos.recycle_rush.robot.commands.collector;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.recycle_rush.robot.subsystems.Collector;
 
 /*
@@ -8,37 +8,34 @@ import com.gos.recycle_rush.robot.subsystems.Collector;
  * the drivers want -> could use a command group
  *
  */
-public class AngleCollectorIn extends Command {
+public class AngleCollectorIn extends CommandBase {
 
     private final Collector m_collector;
 
     public AngleCollectorIn(Collector collector) {
         m_collector = collector;
-        requires(m_collector);
+        addRequirements(m_collector);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         // Only needs to run once to move collector pneumatic in
         m_collector.collectorIn();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return true;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

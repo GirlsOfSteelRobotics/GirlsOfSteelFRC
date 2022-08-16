@@ -1,0 +1,24 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//y2022/ChassisProject:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "robot",
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
+    main_class = "frc.robot.Main",
+    visibility = ["//y2022/ChassisProject:__subpackages__"],
+    deps = [
+        "//y2022/ChassisProject/src/main/java/frc/robot/commands",
+        "//y2022/ChassisProject/src/main/java/frc/robot/subsystems",
+        "@bazelrio//libraries/java/wpilib/hal",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

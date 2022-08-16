@@ -4,7 +4,7 @@ package com.gos.preseason2016.team_squirtle.robot.subsystems;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.vision.VisionThread;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -13,7 +13,7 @@ import org.opencv.imgproc.Imgproc;
 /**
  *
  */
-public class Camera extends Subsystem {
+public class Camera extends SubsystemBase {
     private final UsbCamera m_cam; //FIXME: How do you tell it which camera
 
     @SuppressWarnings("PMD.DoNotUseThreads")
@@ -58,9 +58,5 @@ public class Camera extends Subsystem {
     // here. Call these from Commands.
 
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
+
 }

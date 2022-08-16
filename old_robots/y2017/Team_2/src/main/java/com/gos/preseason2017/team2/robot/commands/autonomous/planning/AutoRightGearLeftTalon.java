@@ -1,7 +1,7 @@
 package com.gos.preseason2017.team2.robot.commands.autonomous.planning;
 
 public class AutoRightGearLeftTalon {
-    public static final int kNumPoints = 185;
+    public static final int NUM_POINTS = 185;
     // Position (rotations)    Velocity (RPM)    Duration (ms)
     public static double[][] Points = new double[][] { // NOPMD(UseShortArrayInitializer)
         {0, 0, 10},

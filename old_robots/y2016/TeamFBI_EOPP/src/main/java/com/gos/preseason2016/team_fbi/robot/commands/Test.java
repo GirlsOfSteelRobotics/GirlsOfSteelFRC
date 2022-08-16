@@ -1,37 +1,33 @@
 package com.gos.preseason2016.team_fbi.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Test extends Command {
+public class Test extends CommandBase {
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         // TODO Auto-generated method stub
 
     }
 
-    @Override
-    protected void interrupted() {
-        // TODO Auto-generated method stub
 
-    }
 
 }

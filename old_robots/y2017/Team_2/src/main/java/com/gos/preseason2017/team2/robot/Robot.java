@@ -1,8 +1,8 @@
 package com.gos.preseason2017.team2.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.preseason2017.team2.robot.commands.DriveByJoystick;
@@ -36,9 +36,9 @@ public class Robot extends TimedRobot {
         m_oi = new OI(m_manipulator);
 
         m_chooser = new SendableChooser<>();
-        m_chooser.addDefault("Default: Do Nothing", new AutoDoNothing(m_chassis));
-        m_chooser.addObject("Drive Forwards(10 in, 0.5 speed)", new AutoDriveForward(m_chassis, 10.0, 0.5));
-        m_chooser.addObject("Drive Backwards(10 in, 0.5 speed)", new AutoDriveBackwards(m_chassis, 10.0, 0.5));
+        m_chooser.setDefaultOption("Default: Do Nothing", new AutoDoNothing(m_chassis));
+        m_chooser.addOption("Drive Forwards(10 in, 0.5 speed)", new AutoDriveForward(m_chassis, 10.0, 0.5));
+        m_chooser.addOption("Drive Backwards(10 in, 0.5 speed)", new AutoDriveBackwards(m_chassis, 10.0, 0.5));
         SmartDashboard.putData("Auto mode", m_chooser);
     }
 
@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
 
         // Set the default command for a subsystem here.
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi.getStick(), m_chassis));
     }
 
     /**
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
     }
 
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         m_chassis.ahrsToSmartDashboard();
 
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**

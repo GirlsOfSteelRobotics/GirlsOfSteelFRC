@@ -13,11 +13,11 @@ public class DelayReverseRollers extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (timeSinceInitialized() > 4.0) {
             m_collector.reverseBrush();
             m_collector.reverseMiddleConveyor();
@@ -26,20 +26,17 @@ public class DelayReverseRollers extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopBrush();
         m_collector.stopMiddleConveyor();
         m_shooter.topRollersOff();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -21,11 +21,11 @@ public class ChassisPID extends CommandBase {
 
     public ChassisPID(Chassis chassis) {
         m_chassis = chassis;
-        requires(chassis);
+        addRequirements(chassis);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initRatePIDs();
         SmartDashboard.putNumber("PID rate", 0.0);
@@ -48,7 +48,7 @@ public class ChassisPID extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //get rate
         m_rate = SmartDashboard.getNumber("PID rate", 0.0);
         //get P, I, & D's
@@ -98,21 +98,18 @@ public class ChassisPID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false; //from KiwiDrive
         //Eve:  return !SmartDashboard.getBoolean("Click When Done Testing Chassis PID", true);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopRatePIDs();
         m_chassis.stopEncoders();
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

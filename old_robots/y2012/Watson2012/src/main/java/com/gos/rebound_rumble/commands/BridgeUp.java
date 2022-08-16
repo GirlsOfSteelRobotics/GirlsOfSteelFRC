@@ -7,31 +7,28 @@ public class BridgeUp extends CommandBase {
 
     public BridgeUp(Bridge bridge) {
         m_bridge = bridge;
-        requires(m_bridge);
+        addRequirements(m_bridge);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_bridge.upBridgeArm();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_bridge.isFullyUp();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_bridge.stopBridgeArm();
         System.out.println("Up Bridge Done");
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

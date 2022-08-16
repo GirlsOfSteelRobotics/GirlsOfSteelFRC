@@ -19,12 +19,12 @@ public class ShootUsingTable extends CommandBase {
         m_shooter = shooter;
         m_oi = oi;
         m_operatorJoystick = oi.getOperatorJoystick();
-        requires(m_shooter);
+        addRequirements(m_shooter);
         this.m_bank = bank;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
         m_cameraDistance = Camera.getXDistance()/* - 38*(0.0254/1.0)*/;
@@ -33,7 +33,7 @@ public class ShootUsingTable extends CommandBase {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         //        if(bank){
         //            shooter.autoShootBank(cameraDistance);
         //        }else{
@@ -47,13 +47,13 @@ public class ShootUsingTable extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return !Camera.isConnected(); //return opposite so when it is connected
         //it returns false so it does NOT finish
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
@@ -61,8 +61,5 @@ public class ShootUsingTable extends CommandBase {
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

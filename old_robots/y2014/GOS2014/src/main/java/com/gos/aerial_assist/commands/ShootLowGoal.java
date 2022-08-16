@@ -5,7 +5,7 @@
 
 package com.gos.aerial_assist.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.aerial_assist.subsystems.Collector;
 import com.gos.aerial_assist.subsystems.Manipulator;
 
@@ -14,14 +14,14 @@ import com.gos.aerial_assist.subsystems.Manipulator;
  *
  * @author Sonia, Sophia
  */
-public class ShootLowGoal extends CommandGroup {
+public class ShootLowGoal extends SequentialCommandGroup {
 
     /**
      * This variable (0) stores the angle for the collector arm in order to shoot into the low goal.
      *
      * @author Sonia, Sophia
      */
-    private static final double m_kickAngle = 0;
+    private static final double KICK_ANGLE = 0;
 
     /**
      * This method sets the arm angle to 0 and reverses the collector wheel in order to shoot the ball into the low
@@ -30,7 +30,7 @@ public class ShootLowGoal extends CommandGroup {
      * @author Sonia, Sophia
      */
     public ShootLowGoal(Manipulator manipulator, Collector collector) {
-        addSequential(new SetArmAngle(manipulator, m_kickAngle));
-        addSequential(new CollectorWheelReverse(collector));
+        addCommands(new SetArmAngle(manipulator, KICK_ANGLE));
+        addCommands(new CollectorWheelReverse(collector));
     }
 }

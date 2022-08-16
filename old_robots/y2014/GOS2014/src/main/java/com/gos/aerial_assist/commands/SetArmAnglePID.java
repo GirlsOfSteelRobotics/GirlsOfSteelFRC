@@ -26,18 +26,18 @@ public class SetArmAnglePID extends CommandBase {
 
     public SetArmAnglePID(Manipulator manipulator, double desiredAngle) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
         m_desiredAngle = desiredAngle;
         m_allowedAngleError = 4; //2 degrees of error on both sides allowed
     }
 
     @Override
-    protected void initialize() {
-        m_angle = m_desiredAngle * Configuration.desiredAnglePivotArmSign;
+    public void initialize() {
+        m_angle = m_desiredAngle * Configuration.DESIRED_ANGLE_PIVOT_ARM_SIGN;
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (m_angle < -18.2) {
             m_angle = -18.2;
         } else if (m_angle > 113) {
@@ -49,18 +49,15 @@ public class SetArmAnglePID extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return Math.abs(m_desiredAngle - m_manipulator.getAbsoluteDistance()) < m_allowedAngleError;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.holdAngle();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

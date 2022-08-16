@@ -17,17 +17,17 @@ public class Shoot extends CommandBase {
         m_shooter = shooter;
         m_oi = oi;
         m_operatorJoystick = m_oi.getOperatorJoystick();
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_shooter.shoot(m_speed);
         if (Math.abs(m_operatorJoystick.getThrottle()) >= 0.3
             || Math.abs(m_operatorJoystick.getTwist()) >= 0.3) {
@@ -36,12 +36,12 @@ public class Shoot extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
@@ -49,9 +49,6 @@ public class Shoot extends CommandBase {
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }
