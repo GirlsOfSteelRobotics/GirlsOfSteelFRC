@@ -63,7 +63,7 @@ public class AutoModeFactory extends SequentialCommandGroup {
         m_oneBallAutoLow = new OneBallAutoLowCommandGroup(chassis, shooter, verticalConveyor);
         m_sendableChooser.addOption("One Ball Auto Low", AutonMode.ONE_BALL_LOW);
 
-        m_oneBallAutoHigh = new OneBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor);
+        m_oneBallAutoHigh = new OneBallAutoHighCommandGroup(chassis, shooter, verticalConveyor, shooterLimelight);
         m_sendableChooser.addOption("One Ball Auto High", AutonMode.ONE_BALL_HIGH);
 
         m_twoBallAutoLow = new TwoBallAutoLowCommandGroup(chassis, shooter, verticalConveyor, horizontalConveyor, collector);

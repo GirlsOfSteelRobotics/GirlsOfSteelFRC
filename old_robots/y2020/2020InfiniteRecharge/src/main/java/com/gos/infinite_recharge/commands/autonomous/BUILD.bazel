@@ -5,7 +5,8 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge:Constants",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/subsystems",

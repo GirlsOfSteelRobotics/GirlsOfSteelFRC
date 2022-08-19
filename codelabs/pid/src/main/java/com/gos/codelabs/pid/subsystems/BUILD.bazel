@@ -7,8 +7,8 @@ gos_java_library(
     deps = [
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid:SmartDashboardNames",
-        "//libraries/GirlsOfSteelLib",
-        "//libraries/GirlsOfSteelLibRev",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
         "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",

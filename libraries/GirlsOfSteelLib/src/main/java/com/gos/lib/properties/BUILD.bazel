@@ -1,11 +1,11 @@
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 
 gos_java_library(
-    name = "mirrored",
+    name = "properties",
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/led",
         "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
     ],
 )
