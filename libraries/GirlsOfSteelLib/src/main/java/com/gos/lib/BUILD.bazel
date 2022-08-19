@@ -1,10 +1,7 @@
 load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 
 gos_java_library(
-    name = "led",
+    name = "lib",
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
-    deps = [
-        "@bazelrio//libraries/java/wpilib/wpilibj",
-    ],
 )

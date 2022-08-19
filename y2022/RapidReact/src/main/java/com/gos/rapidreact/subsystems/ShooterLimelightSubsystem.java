@@ -36,7 +36,7 @@ public class ShooterLimelightSubsystem extends SubsystemBase {
     }
 
     public double getDistanceToHub() {
-        return m_limelight.getDist(CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS);
+        return m_limelight.getDistance(CAMERA_HEIGHT_METERS, TARGET_HEIGHT_METERS, CAMERA_PITCH_RADIANS);
         // return m_limelight.getDistance(LIMELIGHT_HEIGHT, MOUNTING_ANGLE_DEGREES);
     }
 

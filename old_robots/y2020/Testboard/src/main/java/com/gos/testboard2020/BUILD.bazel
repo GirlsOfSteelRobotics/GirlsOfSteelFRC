@@ -16,7 +16,8 @@ gos_java_robot(
     visibility = ["//old_robots/y2020/Testboard:__subpackages__"],
     deps = [
         ":Constants",
-        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
         "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020/commands",
         "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020/subsystems",
         "@bazelrio//libraries/java/wpilib/new_commands",

@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLimelightSubsystem extends SubsystemBase {
 
-    private final LimelightSensor m_limelight;
-
     public static final String LIMELIGHT_NAME = "limelight-terry"; // Dr Richards is too long
 
-    public static final double MOUNTING_ANGLE_DEGREES = -25; //degrees
+    public static final double MOUNTING_ANGLE_RADIANS = Units.degreesToRadians(-25);
     public static final double LIMELIGHT_HEIGHT = Units.inchesToMeters(27.25);
     private static final Number[] RED_CARGO_PARAMS = {0};
     private static final Number[] BLUE_CARGO_PARAMS = {1};
     private static final double FANCY_PIPELINE = 3;
     private static final double EXTRA_DISTANCE = Units.feetToMeters(0.5); //want to go past estimated to ensure it gets to the cargo
+
+    private final LimelightSensor m_limelight;
 
     // Logging
     private final NetworkTableEntry m_distanceEntry;
@@ -35,7 +35,7 @@ public class IntakeLimelightSubsystem extends SubsystemBase {
     }
 
     public double distanceToCargo() {
-        return m_limelight.getDistance(LIMELIGHT_HEIGHT, MOUNTING_ANGLE_DEGREES) + EXTRA_DISTANCE;
+        return m_limelight.getDistance(LIMELIGHT_HEIGHT, 0, MOUNTING_ANGLE_RADIANS) + EXTRA_DISTANCE;
     }
 
     public double getAngle() {

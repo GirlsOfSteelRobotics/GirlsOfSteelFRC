@@ -16,7 +16,7 @@ public class LimelightSensor {
         FORCE_BLINK(2),
         FORCE_ON(3);
 
-        private double m_val;
+        private final double m_val;
 
         LedMode(double val) {
             m_val = val;
@@ -27,7 +27,7 @@ public class LimelightSensor {
         VISION_PROCESSING(0),
         DRIVER_CAMERA(1);
 
-        private double m_val;
+        private final double m_val;
 
         CamMode(double val) {
             m_val = val;
@@ -48,6 +48,10 @@ public class LimelightSensor {
     private final NetworkTableEntry m_pipeline;
     private final NetworkTableEntry m_pythonRobot;
 
+    public LimelightSensor() {
+        this("limelight");
+    }
+
     public LimelightSensor(String limelightName) {
 
         NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable(limelightName);
@@ -67,15 +71,8 @@ public class LimelightSensor {
         m_pythonRobot = limelightTable.getEntry("llrobot");
     }
 
-    // distance from limelight docs
-    public double getDistance(double limelightHeight, double mountingAngleDeg) {
-        double distance;
-        distance = (limelightHeight) / Math.tan(-1 * Units.degreesToRadians(mountingAngleDeg + m_verticalAngle.getDouble(0)));
-        return distance;
-    }
-
     // distance from wpilib docs
-    public double getDist(
+    public double getDistance(
         double cameraHeightMeters,
         double targetHeightMeters,
         double cameraPitchRadians) {
@@ -84,19 +81,31 @@ public class LimelightSensor {
     }
 
     public double getHorizontalAngleDegrees() {
-        return m_horizontalAngle.getDouble(0);
+        return m_horizontalAngle.getDouble(INVALID_VALUE);
     }
 
     public double getHorizontalAngleRadians() {
-        return Units.degreesToRadians(m_horizontalAngle.getDouble(0));
+        return Units.degreesToRadians(getHorizontalAngleDegrees());
     }
 
     public double getVerticalAngleDegrees() {
-        return m_verticalAngle.getDouble(0);
+        return m_verticalAngle.getDouble(INVALID_VALUE);
     }
 
     public double getVerticalAngleRadians() {
-        return Units.degreesToRadians(m_verticalAngle.getDouble(0));
+        return Units.degreesToRadians(getVerticalAngleDegrees());
+    }
+
+    public double getArea() {
+        return m_area.getDouble(INVALID_VALUE);
+    }
+
+    public double getLatency() {
+        return m_latency.getDouble(INVALID_VALUE);
+    }
+
+    public Number[] getPythonData() {
+        return m_pythonLimelight.getNumberArray(new Number[]{});
     }
 
     public boolean isVisible() {
@@ -113,18 +122,6 @@ public class LimelightSensor {
 
     public void setLeds(LedMode ledMode) {
         m_ledMode.setDouble(ledMode.m_val);
-    }
-
-    public double getArea() {
-        return m_area.getDouble(INVALID_VALUE);
-    }
-
-    public double getLatency() {
-        return m_latency.getDouble(INVALID_VALUE);
-    }
-
-    public Number[] getPythonData() {
-        return m_pythonLimelight.getNumberArray(new Number[]{});
     }
 
     public void setCamMode(CamMode camMode) {

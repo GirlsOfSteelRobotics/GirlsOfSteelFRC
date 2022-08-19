@@ -5,7 +5,7 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//y2022/RapidReact:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpimath",
