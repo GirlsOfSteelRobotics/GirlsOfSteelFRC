@@ -22,5 +22,29 @@ jobs:
       with:
         java-version: 1.11
 
+    - name: Get current time
+      uses: josStorer/get-current-time@v2.0.1
+      id: current-time
+      with:
+        format: YYYY.MM.DD-HH
+
     - name: Build Everything
-      run: ./gradlew build
+      run: ./gradlew build publish -Pversion="${{ steps.current-time.outputs.formattedTime }}"
+
+    - name: Create vendordep UUID
+      id: generate-uuid
+      uses: filipstefansson/uuid-action@v1
+
+    - name: Generate Vendor Dep template
+      run: |
+        export VERSION=${{ steps.current-time.outputs.formattedTime }}
+        export GUID=${{ steps.generate-uuid.outputs.uuid }}
+        envsubst < gos_vendordep_template.json > build/maven_output/GirlsOfSteelLib.json
+      if: runner.os == 'Linux' || matrix.os == 'macOS'
+
+
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: Maven Artifacts - ${{ matrix.platform }}
+        path: build/maven_output
