@@ -1,6 +1,6 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.gos.codelabs.BaseTestFixture;
+import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

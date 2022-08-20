@@ -1,4 +1,4 @@
-package com.gos.codelabs;
+package com.gos.codelabs.basic_simulator;
 
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;

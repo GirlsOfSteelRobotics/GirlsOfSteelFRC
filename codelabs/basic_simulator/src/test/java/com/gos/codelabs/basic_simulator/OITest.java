@@ -1,5 +1,6 @@
-package com.gos.codelabs;
+package com.gos.codelabs.basic_simulator;
 
+import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import com.gos.codelabs.basic_simulator.RobotContainer;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;

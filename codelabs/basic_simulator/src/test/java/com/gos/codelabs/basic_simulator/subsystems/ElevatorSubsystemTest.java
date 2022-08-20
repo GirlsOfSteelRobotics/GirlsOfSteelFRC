@@ -1,6 +1,6 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.gos.codelabs.BaseTestFixture;
+import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import edu.wpi.first.math.util.Units;
 import org.junit.Test;
 
