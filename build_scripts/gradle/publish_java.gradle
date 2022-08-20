@@ -1,0 +1,39 @@
+apply plugin: 'maven-publish'
+
+task javadoc(type: Javadoc, overwrite: true) {
+    source = sourceSets.main.allJava
+
+    javadoc.options.links("http://docs.oracle.com/javase/8/docs/api/")
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+publishing {
+
+    repositories {
+        maven {
+            url "${rootDir}/build/maven_output"
+        }
+    }
+
+    publications {
+
+        snobot_sim_java(MavenPublication) {
+            groupId "${project.groupId}"
+            version "${project.version}"
+
+            artifact jar
+            artifact javadocJar
+            artifact sourcesJar
+        }
+    }
+}
+

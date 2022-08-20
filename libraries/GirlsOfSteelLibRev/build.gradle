@@ -12,3 +12,6 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+ext.groupId = "com.gos.lib.rev"
+apply from: "${rootDir}/build_scripts/gradle/publish_java.gradle"
