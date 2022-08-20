@@ -32,7 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private ISimWrapper m_simulator;
 
     public ShooterSubsystem() {
-        m_wheelMotor = new SimableCANSparkMax(Constants.CAN_SPINNING_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_wheelMotor = new SimableCANSparkMax(Constants.CAN_SPINNING_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_encoder = m_wheelMotor.getEncoder();
         m_pidController = m_wheelMotor.getPIDController();
 

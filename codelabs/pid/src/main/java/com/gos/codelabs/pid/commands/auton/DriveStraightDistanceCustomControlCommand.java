@@ -1,8 +1,8 @@
 package com.gos.codelabs.pid.commands.auton;
 
+import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.lib.DeadbandHelper;
-import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
 
 public class DriveStraightDistanceCustomControlCommand extends CommandBase {
 

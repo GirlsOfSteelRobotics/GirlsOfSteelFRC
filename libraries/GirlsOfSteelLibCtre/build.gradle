@@ -16,4 +16,3 @@ test {
 
 ext.groupId = "com.gos.lib.ctre"
 apply from: "${rootDir}/build_scripts/gradle/publish_java.gradle"
-

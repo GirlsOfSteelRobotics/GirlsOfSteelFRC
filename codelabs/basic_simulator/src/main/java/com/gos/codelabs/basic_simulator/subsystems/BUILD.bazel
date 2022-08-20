@@ -7,10 +7,8 @@ gos_java_library(
     visibility = ["//codelabs/basic_simulator:__subpackages__"],
     deps = [
         "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator:Constants",
-        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator:SmartDashboardNames",
         "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
         "@bazelrio//libraries/java/wpilib/wpimath",
         "@snobot_sim//jar",

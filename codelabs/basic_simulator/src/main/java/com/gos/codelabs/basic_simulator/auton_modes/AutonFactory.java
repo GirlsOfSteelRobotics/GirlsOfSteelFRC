@@ -12,8 +12,7 @@ public class AutonFactory {
 
     public AutonFactory(ChassisSubsystem chassis, ElevatorSubsystem lift, PunchSubsystem punch) {
         m_sendableChooser = new SendableChooser<>();
-
-        // TODO hookup autonomous modes
+        m_sendableChooser.addOption("Default Mode", new DriveElevatePunchCommandGroup(chassis, lift, punch));
     }
 
     public Command getAutonMode() {

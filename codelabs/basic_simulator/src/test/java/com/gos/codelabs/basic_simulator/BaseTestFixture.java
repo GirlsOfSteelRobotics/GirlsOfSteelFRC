@@ -1,9 +1,7 @@
-package com.gos.codelabs;
+package com.gos.codelabs.basic_simulator;
 
 import edu.wpi.first.hal.HAL;
-import edu.wpi.first.hal.simulation.SimulatorJNI;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
-import edu.wpi.first.wpilibj.simulation.SimDeviceSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.junit.After;
@@ -23,8 +21,6 @@ public class BaseTestFixture {
     public void setupSimulator() {
         try {
             HAL.initialize(0, 0);
-            SimulatorJNI.resetHandles();
-            SimDeviceSim.resetData();
 
             Field privateStringField = CommandScheduler.class.getDeclaredField("instance");
             privateStringField.setAccessible(true);
@@ -50,6 +46,7 @@ public class BaseTestFixture {
     public void teardown() {
         CommandScheduler.getInstance().disable();
         DriverStationSim.setEnabled(false);
+        DriverStationSim.resetData();
     }
 
 

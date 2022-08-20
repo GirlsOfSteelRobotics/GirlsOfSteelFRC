@@ -1,7 +1,7 @@
 package com.gos.codelabs.pid.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.codelabs.pid.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class ShooterRpmCommand extends CommandBase {

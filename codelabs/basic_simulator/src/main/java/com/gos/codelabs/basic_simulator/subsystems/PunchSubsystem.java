@@ -1,30 +1,26 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import com.gos.codelabs.basic_simulator.Constants;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.codelabs.basic_simulator.Constants;
-import com.gos.codelabs.basic_simulator.SmartDashboardNames;
 
-public class PunchSubsystem extends SubsystemBase {
+public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
 
     private final Solenoid m_punchSolenoid;
 
-    private final NetworkTableEntry m_isPunchExtendedEntry;
-
     public PunchSubsystem() {
         m_punchSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_PUNCH);
+    }
 
-        NetworkTable table = NetworkTableInstance.getDefault().getTable(SmartDashboardNames.SUPER_STRUCTURE_TABLE_NAME + "/" + SmartDashboardNames.PUNCH_TABLE_NAME);
-        m_isPunchExtendedEntry = table.getEntry(SmartDashboardNames.PUNCH_IS_EXTENDED);
+
+    @Override
+    public void close() {
+        m_punchSolenoid.close();
     }
 
     @Override
     public void periodic() {
-        m_isPunchExtendedEntry.setBoolean(isExtended());
     }
 
     public boolean isExtended() {
