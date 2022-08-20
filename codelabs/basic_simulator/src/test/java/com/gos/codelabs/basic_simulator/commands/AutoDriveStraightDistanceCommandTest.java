@@ -1,7 +1,7 @@
 package com.gos.codelabs.basic_simulator.commands;
 
-import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.basic_simulator.BaseTestFixture;
+import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.util.Units;
 import org.junit.Test;
 
@@ -21,6 +21,7 @@ public class AutoDriveStraightDistanceCommandTest  extends BaseTestFixture {
 
             assertFalse(command.isScheduled());
             assertEquals(goal, chassis.getAverageDistance(), AutoDriveStraightDistanceCommand.ALLOWABLE_ERROR);
+
         }
     }
 }

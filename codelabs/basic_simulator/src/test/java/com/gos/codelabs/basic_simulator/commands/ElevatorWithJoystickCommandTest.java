@@ -33,6 +33,7 @@ public class ElevatorWithJoystickCommandTest extends BaseTestFixture {
             });
 
             assertTrue(elevator.getHeight() < 0);
+
         }
     }
 }

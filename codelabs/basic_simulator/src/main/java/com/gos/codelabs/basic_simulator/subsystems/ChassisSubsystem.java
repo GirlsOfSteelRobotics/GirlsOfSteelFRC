@@ -3,6 +3,7 @@ package com.gos.codelabs.basic_simulator.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
+import com.gos.codelabs.basic_simulator.Constants;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.numbers.N2;
@@ -18,7 +19,6 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.codelabs.basic_simulator.Constants;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.module_wrappers.wpi.ADXRS450GyroWrapper;
@@ -57,20 +57,20 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.8;
 
         public static final LinearSystem<N2, N2, N2> K_DRIVETRAIN_PLANT =
-            LinearSystemId.identifyDrivetrainSystem(KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER,
-                KV_VOLT_SECONDS_PER_RADIAN, KA_VOLT_SECONDS_SQUARED_PER_RADIAN);
+                LinearSystemId.identifyDrivetrainSystem(KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER,
+                        KV_VOLT_SECONDS_PER_RADIAN, KA_VOLT_SECONDS_SQUARED_PER_RADIAN);
 
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS =
-            new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
+                new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 
         public static DifferentialDrivetrainSim createSim() {
             return new DifferentialDrivetrainSim(
-                K_DRIVETRAIN_PLANT,
-                DRIVE_GEARBOX,
-                K_DRIVE_GEARING,
-                K_TRACK_WIDTH_METERS,
-                K_WHEEL_DIAMETER_METERS / 2.0,
-                Constants.SIMULATE_SENSOR_NOISE ? VecBuilder.fill(0, 0, 0.0001, 0.1, 0.1, 0.005, 0.005) : null); // NOPMD
+                    K_DRIVETRAIN_PLANT,
+                    DRIVE_GEARBOX,
+                    K_DRIVE_GEARING,
+                    K_TRACK_WIDTH_METERS,
+                    K_WHEEL_DIAMETER_METERS / 2.0,
+                    Constants.SIMULATE_SENSOR_NOISE ? VecBuilder.fill(0, 0, 0.0001, 0.1, 0.1, 0.005, 0.005) : null); // NOPMD
         }
 
         private DrivetrainConstants() {
@@ -109,6 +109,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
                     RevEncoderSimWrapper.create(m_rightDriveA),
                     new ADXRS450GyroWrapper(m_gyro));
             m_simulator.setRightInverted(false);
+
             m_differentialDrive.setSafetyEnabled(false);
         }
     }
@@ -123,15 +124,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_gyro.close();
     }
 
-    public void setThrottle(double speed) {
-        // TODO implement
-    }
-
-    public void setSpin(double turningSpeed) {
-        // TODO implement
-    }
-
-    public void setSpeedAndSteer(double speed, double steer) {
+    public void arcadeDrive(double speed, double steer) {
         // TODO implement
     }
 
@@ -142,6 +135,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     @Override
     public void periodic() {
         m_odometry.update(m_gyro.getRotation2d(), getLeftDistance(), getRightDistance());
+        m_field.setRobotPose(m_odometry.getPoseMeters());
     }
 
     @Override

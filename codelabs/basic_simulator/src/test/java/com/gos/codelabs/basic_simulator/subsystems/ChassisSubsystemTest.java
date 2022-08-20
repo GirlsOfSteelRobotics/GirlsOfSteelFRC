@@ -14,7 +14,7 @@ public class ChassisSubsystemTest extends BaseTestFixture {
     public void testDriveForwards() {
 
         try (ChassisSubsystem chassis = new ChassisSubsystem()) {
-            chassis.setThrottle(1);
+            chassis.arcadeDrive(1, 0);
 
             // Run for one second
             runCycles(LOOPS_TO_RUN);
@@ -29,8 +29,9 @@ public class ChassisSubsystemTest extends BaseTestFixture {
 
     @Test
     public void testDriveBackwards() {
+
         try (ChassisSubsystem chassis = new ChassisSubsystem()) {
-            chassis.setThrottle(-1);
+            chassis.arcadeDrive(-1, 0);
 
             // Run for one second
             runCycles(LOOPS_TO_RUN);
@@ -46,8 +47,9 @@ public class ChassisSubsystemTest extends BaseTestFixture {
 
     @Test
     public void testTurnClockwise() {
+
         try (ChassisSubsystem chassis = new ChassisSubsystem()) {
-            chassis.setSpin(1);
+            chassis.arcadeDrive(0, 1);
 
             // Run for one second
             runCycles(LOOPS_TO_RUN);
@@ -63,8 +65,9 @@ public class ChassisSubsystemTest extends BaseTestFixture {
 
     @Test
     public void testTurnCounterClockwise() {
+
         try (ChassisSubsystem chassis = new ChassisSubsystem()) {
-            chassis.setSpin(-1);
+            chassis.arcadeDrive(0, -1);
 
             // Run for one second
             runCycles(LOOPS_TO_RUN);

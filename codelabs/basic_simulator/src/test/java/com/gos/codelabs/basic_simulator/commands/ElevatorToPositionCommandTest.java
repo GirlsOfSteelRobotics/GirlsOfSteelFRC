@@ -19,7 +19,7 @@ public class ElevatorToPositionCommandTest extends BaseTestFixture {
             runCycles(100, null, () -> !command.isScheduled());
 
             assertFalse(command.isScheduled());
-            assertEquals(goal.m_heightMeters, elevator.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR * 2);
+            assertEquals(goal.m_heightMeters, elevator.getHeight(), ElevatorSubsystem.ALLOWABLE_POSITION_ERROR);
         }
     }
 }
