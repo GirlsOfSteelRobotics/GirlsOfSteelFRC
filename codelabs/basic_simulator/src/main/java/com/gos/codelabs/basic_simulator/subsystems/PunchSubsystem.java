@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.codelabs.basic_simulator.Constants;
 import com.gos.codelabs.basic_simulator.SmartDashboardNames;
 
-public class PunchSubsystem extends SubsystemBase {
+public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
 
     private final Solenoid m_punchSolenoid;
 
@@ -20,6 +20,11 @@ public class PunchSubsystem extends SubsystemBase {
 
         NetworkTable table = NetworkTableInstance.getDefault().getTable(SmartDashboardNames.SUPER_STRUCTURE_TABLE_NAME + "/" + SmartDashboardNames.PUNCH_TABLE_NAME);
         m_isPunchExtendedEntry = table.getEntry(SmartDashboardNames.PUNCH_IS_EXTENDED);
+    }
+
+    @Override
+    public void close() {
+        m_punchSolenoid.close();
     }
 
     @Override

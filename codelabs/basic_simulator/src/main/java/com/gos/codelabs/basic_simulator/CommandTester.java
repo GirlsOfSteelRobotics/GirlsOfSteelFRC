@@ -13,11 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class CommandTester {
 
     public CommandTester(RobotContainer robotContainer) {
-
         // Alias for readability
-        ChassisSubsystem chassis = robotContainer.getChassis();
-        ElevatorSubsystem elevator = robotContainer.getElevator();
-        PunchSubsystem punch = robotContainer.getPunch();
+        ChassisSubsystem chassis = robotContainer.getChassis(); // NOPMD(CloseResource)
+        ElevatorSubsystem elevator = robotContainer.getElevator(); // NOPMD(CloseResource)
+        PunchSubsystem punch = robotContainer.getPunch(); // NOPMD(CloseResource)
 
         // Elevator
         addCommand("Lift To Position Low", new ElevatorToPositionCommand(elevator, ElevatorSubsystem.Positions.LOW));

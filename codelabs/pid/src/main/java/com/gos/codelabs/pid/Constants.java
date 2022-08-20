@@ -1,9 +1,7 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+// Copyright (c) FIRST and other WPILib contributors.
+
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
 package com.gos.codelabs.pid;
 
@@ -64,7 +62,7 @@ public final class Constants {
         public static final double TRACK_WIDTH_METERS = 0.69;
         public static final double WHEEL_DIAMETER_METERS = 0.15;
 
-        public static final double KS_VOLTS = 1.22;
+        public static final double KS_VOLTS = .15;
         public static final double KV_VOLT_SECONDS_PER_METER = .5;
         public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.2;
         public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;

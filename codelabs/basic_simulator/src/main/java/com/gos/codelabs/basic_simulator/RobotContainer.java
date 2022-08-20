@@ -8,7 +8,7 @@ import com.gos.codelabs.basic_simulator.auton_modes.AutonFactory;
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
-import com.gos.codelabs.basic_simulator.subsystems.ShooterSubsystem;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -18,12 +18,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 @SuppressWarnings("PMD.SingularField")
-public class RobotContainer {
+public class RobotContainer implements AutoCloseable {
     // Subsystems
     private final ChassisSubsystem m_chassisSubsystem;
     private final ElevatorSubsystem m_elevatorSubsystem;
     private final PunchSubsystem m_punchSubsystem;
-    private final ShooterSubsystem m_shooterSubsystem;
+
+    // Joysticks
+    private final XboxController m_driverJoystick;
+    private final XboxController m_operatorJoystick;
 
     private final AutonFactory m_autonFactory;
 
@@ -34,11 +37,26 @@ public class RobotContainer {
         m_chassisSubsystem = new ChassisSubsystem();
         m_elevatorSubsystem = new ElevatorSubsystem();
         m_punchSubsystem = new PunchSubsystem();
-        m_shooterSubsystem = new ShooterSubsystem();
 
-        new OI(this);
+        m_driverJoystick = new XboxController(0);
+        m_operatorJoystick = new XboxController(1);
+
         new CommandTester(this);
         m_autonFactory = new AutonFactory(m_chassisSubsystem, m_elevatorSubsystem, m_punchSubsystem);
+
+        // Configure the button bindings
+        configureButtonBindings();
+    }
+
+    @Override
+    public void close() {
+        m_chassisSubsystem.close();
+        m_elevatorSubsystem.close();
+        m_punchSubsystem.close();
+    }
+
+    private void configureButtonBindings() {
+        // TODO implement
     }
 
     /**
@@ -60,9 +78,5 @@ public class RobotContainer {
 
     public PunchSubsystem getPunch() {
         return m_punchSubsystem;
-    }
-
-    public ShooterSubsystem getShooter() {
-        return m_shooterSubsystem;
     }
 }

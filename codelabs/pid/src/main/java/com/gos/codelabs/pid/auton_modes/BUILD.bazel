@@ -8,6 +8,7 @@ gos_java_library(
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/auton",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpimath",
         "@snobot_sim//jar",

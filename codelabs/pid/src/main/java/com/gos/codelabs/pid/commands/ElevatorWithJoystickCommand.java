@@ -1,8 +1,8 @@
 package com.gos.codelabs.pid.commands;
 
+import com.gos.codelabs.pid.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.codelabs.pid.subsystems.ElevatorSubsystem;
 
 public class ElevatorWithJoystickCommand extends CommandBase {
     private static final double ELEVATOR_JOYSTICK_DEADBAND = .01;

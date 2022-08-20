@@ -8,6 +8,6 @@
     <suppress files="PipelineListener.java" checks="[a-zA-Z0-9]*" />
     <suppress files="GripPipeline.java" checks="[a-zA-Z0-9]*" />
     <suppress files="GripPipelineListener.java"
-              checks="[a-zA-Z0-9]*" />
-    <suppress files="[\\/]edu[\\/]wpi[\\/]" checks="."/>
+        checks="[a-zA-Z0-9]*" />
+    <suppress files="[\\/]edu[\\/]wpi[\\/]" checks="." />
 </suppressions>

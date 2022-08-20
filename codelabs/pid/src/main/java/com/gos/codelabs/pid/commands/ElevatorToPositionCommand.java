@@ -1,7 +1,7 @@
 package com.gos.codelabs.pid.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.codelabs.pid.subsystems.ElevatorSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ElevatorToPositionCommand extends CommandBase {
 

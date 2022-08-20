@@ -2,6 +2,7 @@ package com.gos.codelabs.basic_simulator.commands;
 
 import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
 import com.gos.codelabs.BaseTestFixture;
+import edu.wpi.first.math.util.Units;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,14 +12,15 @@ public class AutoDriveStraightDistanceCommandTest  extends BaseTestFixture {
 
     @Test
     public void testExecution() {
-        ChassisSubsystem chassis = new ChassisSubsystem();
-        AutoDriveStraightDistanceCommand command = new AutoDriveStraightDistanceCommand(chassis, 20);
-        command.schedule();
+        double goal = Units.inchesToMeters(20);
+        try (ChassisSubsystem chassis = new ChassisSubsystem()) {
+            AutoDriveStraightDistanceCommand command = new AutoDriveStraightDistanceCommand(chassis, goal);
+            command.schedule();
 
-        runCycles(400);
+            runCycles(400);
 
-        assertFalse(command.isScheduled());
-        assertEquals(20, chassis.getAverageDistance(), AutoDriveStraightDistanceCommand.ALLOWABLE_ERROR);
-
+            assertFalse(command.isScheduled());
+            assertEquals(goal, chassis.getAverageDistance(), AutoDriveStraightDistanceCommand.ALLOWABLE_ERROR);
+        }
     }
 }
