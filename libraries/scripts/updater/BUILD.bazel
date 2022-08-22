@@ -33,11 +33,22 @@ gos_py_binary(
 )
 
 gos_py_binary(
+    name = "update_bazelrio",
+    srcs = ["update_bazelrio.py"],
+    deps = [
+        ":replace_gradlerio_files",
+        ":update_vendor_deps",
+        "//libraries/scripts/git:git_python_wrappers",
+    ],
+)
+
+gos_py_binary(
     name = "update_everything",
     srcs = ["update_everything.py"],
     deps = [
         ":replace_gradlerio_files",
         ":replace_old_names",
+        ":update_bazelrio",
         ":update_vendor_deps",
         "//libraries/scripts/gradle:run_spotless",
     ],

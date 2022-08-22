@@ -11,13 +11,25 @@ from libraries.scripts.git.git_python_wrappers import commit_all_changes
 CACHE_DIRECTORY = os.path.join(tempfile.gettempdir(), "gos_vendor_cache")
 
 
-def download_latest_vendordeps(vendor_dep_urls, ignore_cache):
+def download_latest_vendordeps(ignore_cache):
+    year = "2022"
+
+    # fmt: off
+    vendor_dep_urls = {}
+    vendor_dep_urls["navx_frc.json"] = f"http://www.kauailabs.com/dist/frc/{year}/navx_frc.json"
+    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc{year}-latest.json"
+    vendor_dep_urls["REVLib.json"] = "https://rev-robotics-software-metadata.netlify.app/REVLib.json"
+    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
+    # fmt: on
+
+    vendor_files = []
 
     if not os.path.exists(CACHE_DIRECTORY):
         os.mkdir(CACHE_DIRECTORY)
 
     for name, url in vendor_dep_urls.items():
         cached_file = os.path.join(CACHE_DIRECTORY, name)
+        vendor_files.append(cached_file)
         if os.path.exists(cached_file) and not ignore_cache:
             continue
 
@@ -32,25 +44,17 @@ def download_latest_vendordeps(vendor_dep_urls, ignore_cache):
         with open(cached_file, "wb") as f:
             f.write(data)
 
+    return vendor_files
+
 
 def update_vendor_deps(ignore_cache=True, auto_commit=True):
-
-    year = "2022"
-
-    # fmt: off
-    vendor_dep_urls = {}
-    vendor_dep_urls["navx_frc.json"] = f"http://www.kauailabs.com/dist/frc/{year}/navx_frc.json"
-    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc{year}-latest.json"
-    vendor_dep_urls["REVLib.json"] = "https://rev-robotics-software-metadata.netlify.app/REVLib.json"
-    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
-    # fmt: on
 
     # Used when a vendor changes its filename name
     vendor_replacements = {}
     vendor_replacements["REVRobotics.json"] = "REVLib.json"
     vendor_replacements["REVColorSensorV3.json"] = "REVLib.json"
 
-    download_latest_vendordeps(vendor_dep_urls, ignore_cache)
+    download_latest_vendordeps(ignore_cache)
 
     for root, dirs, files in walk_with_blacklist("."):
         if root.endswith("vendordeps"):
@@ -69,15 +73,16 @@ def update_vendor_deps(ignore_cache=True, auto_commit=True):
                 shutil.copy(new_file, file_to_write)
 
     if auto_commit:
-        commit_all_changes("Updating vendor deps")
+        commit_all_changes("Auto-Update: Updating vendor deps")
 
 
 def main():
     if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
         os.chdir(os.environ["BUILD_WORKSPACE_DIRECTORY"])
 
-    update_vendor_deps(auto_commit=False)
+    update_vendor_deps(ignore_cache=True, auto_commit=False)
 
 
 if __name__ == "__main__":
+    # py -m libraries.scripts.updater.update_vendor_deps
     main()

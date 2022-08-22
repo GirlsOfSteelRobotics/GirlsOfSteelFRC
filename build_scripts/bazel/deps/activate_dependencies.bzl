@@ -5,7 +5,8 @@ load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_pmd//pmd:toolchains.bzl", "rules_pmd_toolchains")
-load("@rules_python//python:pip.bzl", "pip_install")
+load("@rules_python//python:pip.bzl", "pip_install", "pip_parse")
+load("//build_scripts/bazel/deps:versions.bzl", "SNOBOTSIM_VERSION", "SNOBOT_SIM_SHA")
 
 def activate_dependencies():
     """
@@ -14,9 +15,15 @@ def activate_dependencies():
     PMD_VERSION = "6.39.0"
     rules_pmd_toolchains(pmd_version = PMD_VERSION)
 
-    pip_install(
+    # To regenerate lock file:
+    #
+    # .\venv\Scripts\activate
+    # pip uninstall -r requirements.txt
+    # pip install -r requirements.txt
+    # pip freeze >> build_scripts/bazel/deps/requirements_lock.txt
+    pip_parse(
         name = "gos_pip_deps",
-        requirements = "//:requirements.txt",
+        requirements_lock = "//build_scripts/bazel/deps:requirements_lock.txt",
     )
     pip_install(
         name = "__bazelrio_deploy_pip_deps",
@@ -27,8 +34,8 @@ def activate_dependencies():
 
     jvm_maven_import_external(
         name = "snobot_sim",
-        artifact = "org.snobotv2:snobot_sim_java:2022.2.2.0",
-        artifact_sha256 = "656a265bd7cc7eb3035341a7880ce24940b4afcec184123247774c3511872e9b",
+        artifact = "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
+        artifact_sha256 = SNOBOT_SIM_SHA,
         server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
     )
 
