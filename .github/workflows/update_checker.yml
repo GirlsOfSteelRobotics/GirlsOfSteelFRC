@@ -1,0 +1,32 @@
+name: Update Checker
+
+on: [workflow_dispatch]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Setup git
+        run: |
+          git config --global user.email "update_runner@example.com"
+          git config --global user.name "Update Runner Bot"
+
+      - name: Fetch
+        run: git fetch origin dnl_enable_all_projects_and_spotless
+
+      - name: Check for updates
+        run: python3 -m libraries.scripts.updater.update_everything
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          base: main
+          title: Update Robot Libraries
+          branch: update_robot_deps

@@ -13,3 +13,7 @@ activate_dependencies()
 load("@maven//:defs.bzl", "pinned_maven_install")
 
 pinned_maven_install()
+
+load("@gos_pip_deps//:requirements.bzl", "install_deps")
+
+install_deps()

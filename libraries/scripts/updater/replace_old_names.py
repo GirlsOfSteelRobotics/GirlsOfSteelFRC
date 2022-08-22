@@ -36,7 +36,7 @@ def run_standard_replacement(auto_commit=True):
     __run_replacement(replacements)
 
     if auto_commit:
-        commit_all_changes("Ran standard vscode replacements")
+        commit_all_changes("Auto-Update: Ran standard vscode replacements")
 
 
 def run_our_additional_replacements(auto_commit=True):
@@ -50,7 +50,7 @@ def run_our_additional_replacements(auto_commit=True):
     __run_replacement(replacements)
 
     if auto_commit:
-        commit_all_changes("Ran our additional replacements")
+        commit_all_changes("Auto-Update: Ran our additional replacements")
 
 
 def run_all_replacements():
