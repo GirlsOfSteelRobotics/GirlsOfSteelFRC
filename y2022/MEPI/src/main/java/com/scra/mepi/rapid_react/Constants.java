@@ -13,28 +13,28 @@ package com.scra.mepi.rapid_react;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  // CAN IDs
-  public static final int DRIVE_LEFT_LEADER = 2;
-  public static final int DRIVE_LEFT_FOLLOWER = 3;
-  public static final int DRIVE_RIGHT_LEADER = 4;
-  public static final int DRIVE_RIGHT_FOLLOWER = 5;
-  public static final int TOWER_SPARK = 8;
-  public static final int TOWER_KICKER_SPARK = 9;
-  public static final int SHOOTER_SPARK = 10;
-  public static final int HOPPER_SPARK = 7;
-  public static final int SHOOTER_HOOD_SPARK = 11;
-  public static final int CLIMBER_LEFT = 12;
-  public static final int CLIMBER_RIGHT = 13;
+    // CAN IDs
+    public static final int DRIVE_LEFT_LEADER = 2;
+    public static final int DRIVE_LEFT_FOLLOWER = 3;
+    public static final int DRIVE_RIGHT_LEADER = 4;
+    public static final int DRIVE_RIGHT_FOLLOWER = 5;
+    public static final int TOWER_SPARK = 8;
+    public static final int TOWER_KICKER_SPARK = 9;
+    public static final int SHOOTER_SPARK = 10;
+    public static final int HOPPER_SPARK = 7;
+    public static final int SHOOTER_HOOD_SPARK = 11;
+    public static final int CLIMBER_LEFT = 12;
+    public static final int CLIMBER_RIGHT = 13;
 
-  // DIO
-  public static final int LEFT_LIMIT_SWITCH = 0;
-  public static final int RIGHT_LIMIT_SWITCH = 1;
+    // DIO
+    public static final int LEFT_LIMIT_SWITCH = 0;
+    public static final int RIGHT_LIMIT_SWITCH = 1;
 
-  // Odometry
-  public static final double DRIVE_CONVERSION_FACTOR = 1;
-  public static final double DRIVE_TRACK = 0; // TODO
+    // Odometry
+    public static final double DRIVE_CONVERSION_FACTOR = 1;
+    public static final double DRIVE_TRACK = 0; // TODO
 
-  // Auto Aim
-  public static final double MAX_TURN_VELOCITY = 0.5;
-  public static final double MAX_TURN_ACCELERATION = 0.5;
+    // Auto Aim
+    public static final double MAX_TURN_VELOCITY = 0.5;
+    public static final double MAX_TURN_ACCELERATION = 0.5;
 }

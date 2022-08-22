@@ -4,45 +4,50 @@
 
 package com.scra.mepi.rapid_react.commands;
 
+import com.scra.mepi.rapid_react.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.scra.mepi.rapid_react.subsystems.DrivetrainSubsystem;
 
-/** An example command that uses an example subsystem. */
+/**
+ * An example command that uses an example subsystem.
+ */
 public class DriveCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final DrivetrainSubsystem m_subsystem;
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final DrivetrainSubsystem m_subsystem;
 
-  private final XboxController m_joystick;
-  /**
-   * Creates a new DriveCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public DriveCommand(DrivetrainSubsystem subsystem, XboxController joystick) {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
-    m_joystick = joystick;
-  }
+    private final XboxController m_joystick;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    /**
+     * Creates a new DriveCommand.
+     *
+     * @param subsystem The subsystem used by this command.
+     */
+    public DriveCommand(DrivetrainSubsystem subsystem, XboxController joystick) {
+        m_subsystem = subsystem;
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(subsystem);
+        m_joystick = joystick;
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    m_subsystem.control(-m_joystick.getLeftY(), m_joystick.getRightX());
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        m_subsystem.control(-m_joystick.getLeftY(), m_joystick.getRightX());
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

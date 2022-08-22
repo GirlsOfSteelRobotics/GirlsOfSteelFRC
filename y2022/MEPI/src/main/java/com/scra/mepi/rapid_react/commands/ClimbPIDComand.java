@@ -1,11 +1,9 @@
 package com.scra.mepi.rapid_react.commands;
 
-import org.opencv.calib3d.StereoBM;
-
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.scra.mepi.rapid_react.subsystems.ClimberSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ClimbPIDComand extends CommandBase{
+public class ClimbPIDComand extends CommandBase {
     private final ClimberSubsystem m_climberSubsystem;
     private final double m_goal;
 
@@ -16,16 +14,17 @@ public class ClimbPIDComand extends CommandBase{
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
-    @Override 
+    @Override
     public void execute() {
-        m_climberSubsystem.RunClimberPID(m_goal);
+        m_climberSubsystem.runClimberPID(m_goal);
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(m_climberSubsystem.getPIDPosition()) < 100 || (m_climberSubsystem.leftLimitSwitchPress() || m_climberSubsystem.rightLimitSwitchPress()); 
+        return Math.abs(m_climberSubsystem.getPIDPosition()) < 100 || (m_climberSubsystem.leftLimitSwitchPress() || m_climberSubsystem.rightLimitSwitchPress());
     }
 
     @Override

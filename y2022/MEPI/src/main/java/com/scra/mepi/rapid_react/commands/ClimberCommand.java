@@ -4,44 +4,49 @@
 
 package com.scra.mepi.rapid_react.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.scra.mepi.rapid_react.subsystems.ClimberSubsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
+/**
+ * An example command that uses an example subsystem.
+ */
 public class ClimberCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ClimberSubsystem m_subsystem;
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final ClimberSubsystem m_subsystem;
 
-  private final double m_speed;
-  /**
-   * Creates a new ClimberCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ClimberCommand(ClimberSubsystem subsystem, double speed) {
-    m_subsystem = subsystem;
-    m_speed = speed;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
-  }
+    private final double m_speed;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    /**
+     * Creates a new ClimberCommand.
+     *
+     * @param subsystem The subsystem used by this command.
+     */
+    public ClimberCommand(ClimberSubsystem subsystem, double speed) {
+        m_subsystem = subsystem;
+        m_speed = speed;
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(subsystem);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    m_subsystem.set(m_speed);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        m_subsystem.set(m_speed);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
