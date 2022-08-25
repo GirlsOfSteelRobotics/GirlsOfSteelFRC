@@ -1,6 +1,6 @@
 package com.gos.rapidreact.commands.tuning;
 
-import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class VelocityControlDrivingTuningCommand extends CommandBase {
 
     private final ChassisSubsystem m_chassis;
-    private static final PropertyManager.IProperty<Double> GOAL_VELOCITY_FPS = PropertyManager.createDoubleProperty(false, "Chassis Tune Velocity (ft/s)", 0);
-    private static final PropertyManager.IProperty<Double> GOAL_ACCELERATION = PropertyManager.createDoubleProperty(false, "Chassis Tune Acceleration", 0);
+    private static final GosDoubleProperty GOAL_VELOCITY_FPS = new GosDoubleProperty(false, "Chassis Tune Velocity (ft/s)", 0);
+    private static final GosDoubleProperty GOAL_ACCELERATION = new GosDoubleProperty(false, "Chassis Tune Acceleration", 0);
 
     public VelocityControlDrivingTuningCommand(ChassisSubsystem chassis) {
         this.m_chassis = chassis;

@@ -1,6 +1,6 @@
 package com.gos.rapidreact.subsystems.sim;
 
-import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rapidreact.subsystems.IntakeLimelightSubsystem;
 import com.gos.rapidreact.subsystems.ShooterLimelightSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LimelightSim {
-    private static final PropertyManager.IProperty<Double> CARGO_X = PropertyManager.createDoubleProperty(false, "Sim Limelight Cargo X", 0);
-    private static final PropertyManager.IProperty<Double> CARGO_Y = PropertyManager.createDoubleProperty(false, "Sim Limelight Cargo Y", 0);
+    private static final GosDoubleProperty CARGO_X = new GosDoubleProperty(false, "Sim Limelight Cargo X", 0);
+    private static final GosDoubleProperty CARGO_Y = new GosDoubleProperty(false, "Sim Limelight Cargo Y", 0);
 
     private static final double INTAKE_MAX_DISTANCE = Double.MAX_VALUE;
     private static final double SHOOTER_MAX_DISTANCE = Double.MAX_VALUE;

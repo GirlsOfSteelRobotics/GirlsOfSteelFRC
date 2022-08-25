@@ -1,6 +1,7 @@
 package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.sensors.LidarLite;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -11,7 +12,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import com.gos.lib.properties.PropertyManager;
 
 /**
  * Add your docs here.
@@ -20,31 +20,31 @@ import com.gos.lib.properties.PropertyManager;
 public class Limelight extends SubsystemBase {
 
     /// how hard to turn toward the target
-    private static final PropertyManager.IProperty<Double> STEER_KP_PROPERTY = PropertyManager.createDoubleProperty(false,
+    private static final GosDoubleProperty STEER_KP_PROPERTY = new GosDoubleProperty(false,
             "LimelightSteerK", 0.05);
 
-    private static final PropertyManager.IProperty<Double> STEER_KI_PROPERTY = PropertyManager.createDoubleProperty(false,
+    private static final GosDoubleProperty STEER_KI_PROPERTY = new GosDoubleProperty(false,
             "LimelightSteerKI", 0.0);
 
-    private static final PropertyManager.IProperty<Double> STEER_KD_PROPERTY = PropertyManager.createDoubleProperty(false,
+    private static final GosDoubleProperty STEER_KD_PROPERTY = new GosDoubleProperty(false,
             "LimelightSteerKD", 0.0);
 
     // how hard to drive fwd toward the target
-    private static final PropertyManager.IProperty<Double> DRIVE_K = PropertyManager.createDoubleProperty(false,
+    private static final GosDoubleProperty DRIVE_K = new GosDoubleProperty(false,
             "LimelightDriveK", 0.3);
 
     // Area of the target when the robot reaches the wall
-    private static final PropertyManager.IProperty<Double> DESIRED_TARGET_AREA = PropertyManager.createDoubleProperty(false,
+    private static final GosDoubleProperty DESIRED_TARGET_AREA = new GosDoubleProperty(false,
             "LimelightTargetArea", 13.0);
 
     // Simple speed limit so we don't drive too fast
-    private static final PropertyManager.IProperty<Double> MAX_DRIVE = PropertyManager.createDoubleProperty(false,
+    private static final GosDoubleProperty MAX_DRIVE = new GosDoubleProperty(false,
             "LimelihtMaxDrive", 0.3);
 
     // Measured from middle of Limelight to middle of high target
-    private static final PropertyManager.IProperty<Double> CAMERA_HEIGHT_OFFSET = PropertyManager.createDoubleProperty(true,
+    private static final GosDoubleProperty CAMERA_HEIGHT_OFFSET = new GosDoubleProperty(true,
             "LimelightHeightOffset", 60.0);
-    private static final PropertyManager.IProperty<Double> CAMERA_ANGLE_OFFSET = PropertyManager.createDoubleProperty(true,
+    private static final GosDoubleProperty CAMERA_ANGLE_OFFSET = new GosDoubleProperty(true,
             "LimelightAngleOffset", 20.0);
 
     private static final double ALLOWABLE_ERROR = 2;

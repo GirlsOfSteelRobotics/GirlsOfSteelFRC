@@ -38,13 +38,9 @@ public class PidProperty {
 
         private HeavyDoubleProperty createDoubleProperty(String propertyNameSuffix, double defaultValue, DoubleConsumer setter) {
             String propertyName = m_baseName + ".mm." + propertyNameSuffix;
-            PropertyManager.IProperty<Double> prop = PropertyManager.createDoubleProperty(m_isConstant, propertyName, defaultValue);
-            if (m_isConstant) {
-                return new HeavyDoubleProperty(setter, prop);
-            }
-            else {
-                return new HeavyDoubleProperty(setter, prop);
-            }
+            GosDoubleProperty prop = new GosDoubleProperty(m_isConstant, propertyName, defaultValue);
+
+            return new HeavyDoubleProperty(setter, prop);
         }
 
         protected Builder addP(double defaultValue, DoubleConsumer setter) {

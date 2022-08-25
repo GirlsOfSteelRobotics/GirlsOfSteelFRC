@@ -57,17 +57,18 @@ public final class PropertyManager {
         }
     }
 
-    public interface IProperty<TypeT> {
+    @Deprecated
+    /* default */ interface IProperty<TypeT> {
         TypeT getValue();
 
         String getName();
     }
 
-    private static class ConstantProperty<TypeT> implements IProperty<TypeT> {
+    /* default */ static class ConstantProperty<TypeT> implements IProperty<TypeT> {
         private final TypeT m_value;
         private final String m_name;
 
-        private ConstantProperty(String key, TypeT value) {
+        /* default */ ConstantProperty(String key, TypeT value) {
             m_value = value;
             m_name = key;
 
@@ -88,14 +89,14 @@ public final class PropertyManager {
         }
     }
 
-    private static class BaseProperty<TypeT> implements IProperty<TypeT> {
+    /* default */ static class BaseProperty<TypeT> implements IProperty<TypeT> {
         private final String m_key;
         private final TypeT m_default;
         private final BiConsumer<String, TypeT> m_setter;
         private final BiFunction<String, TypeT, TypeT> m_getter;
         private final String m_constructionStackTrace;
 
-        private BaseProperty(String key, TypeT defaultValue, BiConsumer<String, TypeT> setter,
+        /* default */ BaseProperty(String key, TypeT defaultValue, BiConsumer<String, TypeT> setter,
                 BiFunction<String, TypeT, TypeT> getter) {
             m_key = key;
             m_default = defaultValue;
@@ -136,57 +137,5 @@ public final class PropertyManager {
         public String getName() {
             return m_key;
         }
-    }
-
-    private static class IntProperty extends BaseProperty<Integer> {
-        private IntProperty(String key, int defaultValue) {
-            super(key, defaultValue, Preferences::setInt, Preferences::getInt);
-        }
-    }
-
-    public static IProperty<Integer> createIntProperty(boolean isConstant, String key, int defaultValue) {
-        if (isConstant) {
-            return new ConstantProperty<>(key, defaultValue);
-        }
-        return new IntProperty(key, defaultValue);
-    }
-
-    private static class DoubleProperty extends BaseProperty<Double> {
-        private DoubleProperty(String key, double defaultValue) {
-            super(key, defaultValue, Preferences::setDouble, Preferences::getDouble);
-        }
-    }
-
-    public static IProperty<Double> createDoubleProperty(boolean isConstant, String key, double defaultValue) {
-        if (isConstant) {
-            return new ConstantProperty<>(key, defaultValue);
-        }
-        return new DoubleProperty(key, defaultValue);
-    }
-
-    private static class StringProperty extends BaseProperty<String> {
-        private StringProperty(String key, String defaultValue) {
-            super(key, defaultValue, Preferences::setString, Preferences::getString);
-        }
-    }
-
-    public static IProperty<String> createStringProperty(boolean isConstant, String key, String defaultValue) {
-        if (isConstant) {
-            return new ConstantProperty<>(key, defaultValue);
-        }
-        return new StringProperty(key, defaultValue);
-    }
-
-    private static class BooleanProperty extends BaseProperty<Boolean> {
-        private BooleanProperty(String key, boolean defaultValue) {
-            super(key, defaultValue, Preferences::setBoolean, Preferences::getBoolean);
-        }
-    }
-
-    public static IProperty<Boolean> createBooleanProperty(boolean isConstant, String key, boolean defaultValue) {
-        if (isConstant) {
-            return new ConstantProperty<>(key, defaultValue);
-        }
-        return new BooleanProperty(key, defaultValue);
     }
 }
