@@ -4,13 +4,15 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.scra.mepi.rapid_react.Constants;
 import com.scra.mepi.rapid_react.ShooterLookupTable;
-import com.scra.mepi.rapid_react.TunableNumber;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -29,12 +31,9 @@ public class ShooterSubsytem extends SubsystemBase {
     private final ShooterLookupTable m_shooterLookupTable;
     private final RelativeEncoder m_encoder;
     private final SparkMaxPIDController m_pidController;
-    private final TunableNumber m_tunableNumberkP = new TunableNumber("Shooter(kP)", 0);
-    private final TunableNumber m_tunableNumberkD = new TunableNumber("Shooter(kD)", 0);
-    private final TunableNumber m_tunableNumberkFF = new TunableNumber("Shooter(kFF)", 0.0004);
-    private final TunableNumber m_tunableNumberkI = new TunableNumber("Shooter(kI)", 0);
-    private final TunableNumber m_tunableAllowableError =
-        new TunableNumber("Shooter(AllowableError))", 50);
+    private final PidProperty m_pidProperties;
+    private final PropertyManager.IProperty<Double> m_tunableAllowableError =
+        PropertyManager.createDoubleProperty(false, "Shooter(AllowableError))", 50);
 
     public ShooterSubsytem() {
         m_shooterMotor = new CANSparkMax(Constants.SHOOTER_SPARK, MotorType.kBrushless);
@@ -42,6 +41,12 @@ public class ShooterSubsytem extends SubsystemBase {
         m_shooterLookupTable = new ShooterLookupTable();
         m_encoder = m_shooterMotor.getEncoder();
         m_pidController = m_shooterMotor.getPIDController();
+        m_pidProperties = new RevPidPropertyBuilder("Shooter", false, m_pidController, 0)
+            .addP(0)
+            .addI(0)
+            .addD(0)
+            .addFF(0.0004)
+            .build();
         m_shooterMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotor.restoreFactoryDefaults();
         m_shooterMotor.setInverted(true);
@@ -50,14 +55,7 @@ public class ShooterSubsytem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
-        if (m_tunableNumberkP.hasChanged()
-            || m_tunableNumberkI.hasChanged()
-            || m_tunableNumberkD.hasChanged()
-            || m_tunableNumberkFF.hasChanged()
-            || m_tunableAllowableError.hasChanged()) {
-            configurePID();
-        }
+        m_pidProperties.updateIfChanged();
         SmartDashboard.putNumber("shooterRpm", getRPM());
     }
 
@@ -70,16 +68,9 @@ public class ShooterSubsytem extends SubsystemBase {
         m_pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
 
-    public void configurePID() {
-        m_pidController.setP(m_tunableNumberkP.get());
-        m_pidController.setD(m_tunableNumberkD.get());
-        m_pidController.setFF(m_tunableNumberkFF.get());
-        m_pidController.setI(m_tunableNumberkI.get());
-    }
-
     public boolean checkAtSpeed(double goal) {
         double error = Math.abs(goal - getRPM());
-        return m_tunableAllowableError.get() > error;
+        return m_tunableAllowableError.getValue() > error;
     }
 
     public double getRPM() {

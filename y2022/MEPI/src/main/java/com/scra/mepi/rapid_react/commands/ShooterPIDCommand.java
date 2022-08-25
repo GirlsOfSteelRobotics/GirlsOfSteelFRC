@@ -4,7 +4,7 @@
 
 package com.scra.mepi.rapid_react.commands;
 
-import com.scra.mepi.rapid_react.TunableNumber;
+import com.gos.lib.properties.PropertyManager;
 import com.scra.mepi.rapid_react.subsystems.ShooterSubsytem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -12,15 +12,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * An example command that uses an example subsystem.
  */
 public class ShooterPIDCommand extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final ShooterSubsytem m_shooterSubsystem;
 
-    private final TunableNumber m_tunableShooterGoal = new TunableNumber("Shooter Goal", 1000);
+    private final PropertyManager.IProperty<Double> m_tunableShooterGoal = PropertyManager.createDoubleProperty(false, "Shooter Goal", 1000);
 
     /**
      * Creates a new ExampleCommand.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param shooterSubsystem The subsystem used by this command.
      */
     public ShooterPIDCommand(ShooterSubsytem shooterSubsystem) {
         m_shooterSubsystem = shooterSubsystem;
@@ -36,7 +35,7 @@ public class ShooterPIDCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_shooterSubsystem.setPidRpm(m_tunableShooterGoal.get());
+        m_shooterSubsystem.setPidRpm(m_tunableShooterGoal.getValue());
     }
 
     // Called once the command ends or is interrupted.
@@ -47,6 +46,6 @@ public class ShooterPIDCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return m_shooterSubsystem.checkAtSpeed(m_tunableShooterGoal.get());
+        return m_shooterSubsystem.checkAtSpeed(m_tunableShooterGoal.getValue());
     }
 }

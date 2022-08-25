@@ -4,6 +4,8 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
@@ -11,13 +13,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.scra.mepi.rapid_react.Constants;
-import com.scra.mepi.rapid_react.TunableNumber;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -48,16 +50,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     // PID
     private final SparkMaxPIDController m_leftController = m_leftLeader.getPIDController();
+    private final PidProperty m_leftProperties;
     private final SparkMaxPIDController m_rightController = m_rightLeader.getPIDController();
-    private final TunableNumber m_velocityP = new TunableNumber("Drive Train Velocity P", 1);
-    private final TunableNumber m_velocityI = new TunableNumber("Drive Train Velocity I");
-    private final TunableNumber m_velocityD = new TunableNumber("Drive Train Velocity D");
+    private final PidProperty m_rightProperties;
 
     /**
      * Creates a new DrivetrainSubsystem.
      */
     public DrivetrainSubsystem() {
         m_gyro.calibrate();
+
+        m_leftProperties = setupVelocityPidValues(m_leftController);
+        m_rightProperties = setupVelocityPidValues(m_rightController);
 
         m_leftLeader.restoreFactoryDefaults();
         m_leftFollower.restoreFactoryDefaults();
@@ -80,9 +84,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightFollower.burnFlash();
 
         SmartDashboard.putData(m_field);
-        if (m_velocityP.hasChanged() || m_velocityI.hasChanged() || m_velocityD.hasChanged()) {
-            updateDrivePID();
-        }
+    }
+
+    private PidProperty setupVelocityPidValues(SparkMaxPIDController pidController) {
+        return new RevPidPropertyBuilder("ChassisVelocity", false, pidController, 0)
+            .addP(1)
+            .addI(0)
+            .addD(0)
+            .build();
     }
 
     public void control(double speed, double rotation) {
@@ -103,21 +112,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return m_odometry.getPoseMeters();
     }
 
-    public final void updateDrivePID() {
-        m_leftController.setP(m_velocityP.get());
-        m_leftController.setI(m_velocityI.get());
-        m_leftController.setD(m_velocityD.get());
-        m_rightController.setP(m_velocityP.get());
-        m_rightController.setI(m_velocityI.get());
-        m_rightController.setD(m_velocityD.get());
-    }
-
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         var gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
         m_odometry.update(gyroAngle, m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_field.setRobotPose(m_odometry.getPoseMeters());
+
+        m_leftProperties.updateIfChanged();
+        m_rightProperties.updateIfChanged();
     }
 
     @Override

@@ -4,8 +4,9 @@
 
 package com.scra.mepi.rapid_react.commands;
 
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
 import com.scra.mepi.rapid_react.Constants;
-import com.scra.mepi.rapid_react.TunableNumber;
 import com.scra.mepi.rapid_react.subsystems.DrivetrainSubsystem;
 import com.scra.mepi.rapid_react.subsystems.LimelightSubsystem;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -20,9 +21,7 @@ public class AutoAimCommand extends CommandBase {
     private final DrivetrainSubsystem m_driveTrainSubsystem;
     private final LimelightSubsystem m_limelightSubsystem;
     private final ProfiledPIDController m_controller;
-    private final TunableNumber m_p = new TunableNumber("AutoAim(kP)", 0);
-    private final TunableNumber m_i = new TunableNumber("AutoAim(kI)", 0);
-    private final TunableNumber m_d = new TunableNumber("AutoAim(kD)", 0);
+    private final PidProperty m_pidProperties;
 
     /**
      * Creates a new AutoAimCommand.
@@ -35,11 +34,16 @@ public class AutoAimCommand extends CommandBase {
         m_limelightSubsystem = limelightSubsystem;
         m_controller =
             new ProfiledPIDController(
-                m_p.get(),
-                m_i.get(),
-                m_d.get(),
+                0,
+                0,
+                0,
                 new TrapezoidProfile.Constraints(
                     Constants.MAX_TURN_VELOCITY, Constants.MAX_TURN_ACCELERATION));
+        m_pidProperties = new WpiProfiledPidPropertyBuilder("AutoAim", false, m_controller)
+            .addP(0)
+            .addI(0)
+            .addD(0)
+            .build();
         m_controller.setTolerance(5);
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(driveTrainSubsystem);
@@ -54,6 +58,8 @@ public class AutoAimCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        m_pidProperties.updateIfChanged();
+
         double turnSpeed = m_controller.calculate(m_limelightSubsystem.limelightAngle());
         ChassisSpeeds chassisSpeed = new ChassisSpeeds(0, 0, turnSpeed);
         m_driveTrainSubsystem.applyChassisSpeed(chassisSpeed);
