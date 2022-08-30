@@ -10,11 +10,20 @@ import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.scra.mepi.rapid_react.Constants;
 import com.scra.mepi.rapid_react.ShooterLookupTable;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
+import org.snobotv2.sim_wrappers.ISimWrapper;
+import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class ShooterSubsytem extends SubsystemBase {
     private static final double AFTER_ENCODER_REDUCTION = 0.5;
@@ -24,9 +33,9 @@ public class ShooterSubsytem extends SubsystemBase {
     /**
      * Creates a new Shooter.
      */
-    private final CANSparkMax m_shooterMotor;
+    private final SimableCANSparkMax m_shooterMotor;
 
-    private final CANSparkMax m_hoodMotor; // NOPMD
+    private final SimableCANSparkMax m_hoodMotor; // NOPMD
 
     private final ShooterLookupTable m_shooterLookupTable;
     private final RelativeEncoder m_encoder;
@@ -35,9 +44,13 @@ public class ShooterSubsytem extends SubsystemBase {
     private final PropertyManager.IProperty<Double> m_tunableAllowableError =
         PropertyManager.createDoubleProperty(false, "Shooter(AllowableError))", 50);
 
+    // Simulation
+    private ISimWrapper m_shooterSimulator;
+    private ISimWrapper m_hoodSimulator;
+
     public ShooterSubsytem() {
-        m_shooterMotor = new CANSparkMax(Constants.SHOOTER_SPARK, MotorType.kBrushless);
-        m_hoodMotor = new CANSparkMax(Constants.SHOOTER_HOOD_SPARK, MotorType.kBrushless);
+        m_shooterMotor = new SimableCANSparkMax(Constants.SHOOTER_SPARK, MotorType.kBrushless);
+        m_hoodMotor = new SimableCANSparkMax(Constants.SHOOTER_HOOD_SPARK, MotorType.kBrushless);
         m_shooterLookupTable = new ShooterLookupTable();
         m_encoder = m_shooterMotor.getEncoder();
         m_pidController = m_shooterMotor.getPIDController();
@@ -51,6 +64,19 @@ public class ShooterSubsytem extends SubsystemBase {
         m_shooterMotor.restoreFactoryDefaults();
         m_shooterMotor.setInverted(true);
         m_shooterMotor.burnFlash();
+
+        if (RobotBase.isSimulation()) {
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
+            m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim,
+                new RevMotorControllerSimWrapper(m_shooterMotor),
+                RevEncoderSimWrapper.create(m_shooterMotor));
+
+            m_hoodSimulator = new InstantaneousMotorSim(
+                new RevMotorControllerSimWrapper(m_hoodMotor),
+                RevEncoderSimWrapper.create(m_hoodMotor),
+                1
+            );
+        }
     }
 
     @Override
@@ -61,7 +87,8 @@ public class ShooterSubsytem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // This method will be called once per scheduler run during simulation
+        m_hoodSimulator.update();
+        m_shooterSimulator.update();
     }
 
     public void setPidRpm(double rpm) {

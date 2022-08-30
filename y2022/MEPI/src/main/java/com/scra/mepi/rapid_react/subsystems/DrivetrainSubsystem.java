@@ -7,10 +7,10 @@ package com.scra.mepi.rapid_react.subsystems;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,24 +19,29 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.navx.NavxWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 // Drive train
 @SuppressWarnings("PMD.TooManyFields")
 public class DrivetrainSubsystem extends SubsystemBase {
-    private final CANSparkMax m_leftLeader =
-        new CANSparkMax(Constants.DRIVE_LEFT_LEADER, MotorType.kBrushless);
-    private final CANSparkMax m_leftFollower =
-        new CANSparkMax(Constants.DRIVE_LEFT_FOLLOWER, MotorType.kBrushless);
-    private final CANSparkMax m_rightLeader =
-        new CANSparkMax(Constants.DRIVE_RIGHT_LEADER, MotorType.kBrushless);
-    private final CANSparkMax m_rightFollower =
-        new CANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER, MotorType.kBrushless);
+    private final SimableCANSparkMax m_leftLeader =
+        new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER, MotorType.kBrushless);
+    private final SimableCANSparkMax m_leftFollower =
+        new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER, MotorType.kBrushless);
+    private final SimableCANSparkMax m_rightLeader =
+        new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER, MotorType.kBrushless);
+    private final SimableCANSparkMax m_rightFollower =
+        new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER, MotorType.kBrushless);
     private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLeader, m_rightLeader);
     private final DifferentialDriveKinematics m_kinematics =
         new DifferentialDriveKinematics(Constants.DRIVE_TRACK);
@@ -53,6 +58,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final PidProperty m_leftProperties;
     private final SparkMaxPIDController m_rightController = m_rightLeader.getPIDController();
     private final PidProperty m_rightProperties;
+
+    // Simulation
+    private DifferentialDrivetrainSimWrapper m_simulator;
 
     /**
      * Creates a new DrivetrainSubsystem.
@@ -84,6 +92,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightFollower.burnFlash();
 
         SmartDashboard.putData(m_field);
+
+
+        if (RobotBase.isSimulation()) {
+            DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
+                DifferentialDrivetrainSim.KitbotMotor.kDoubleNEOPerSide,
+                DifferentialDrivetrainSim.KitbotGearing.k5p95,
+                DifferentialDrivetrainSim.KitbotWheelSize.kSixInch,
+                null);
+            m_simulator = new DifferentialDrivetrainSimWrapper(
+                drivetrainSim,
+                new RevMotorControllerSimWrapper(m_leftLeader),
+                new RevMotorControllerSimWrapper(m_rightLeader),
+                RevEncoderSimWrapper.create(m_leftLeader),
+                RevEncoderSimWrapper.create(m_rightLeader),
+                new NavxWrapper().getYawGyro());
+            m_simulator.setRightInverted(false);
+        }
     }
 
     private PidProperty setupVelocityPidValues(SparkMaxPIDController pidController) {
@@ -125,6 +150,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // This method will be called once per scheduler run during simulation
+        m_simulator.update();
     }
 }
