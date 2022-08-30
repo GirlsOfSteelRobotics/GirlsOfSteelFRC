@@ -45,5 +45,6 @@ include 'libraries:GirlsOfSteelLibCtre'
 //include 'old_robots:y2021:OutreachBotDashboard'
 
 //include 'y2022:ChassisProject'
+include 'y2022:MEPI'
 include 'y2022:RapidReact'
 include 'y2022:RapidReactDashboard'
