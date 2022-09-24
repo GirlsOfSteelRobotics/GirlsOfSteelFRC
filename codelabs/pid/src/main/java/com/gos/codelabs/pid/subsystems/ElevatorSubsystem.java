@@ -1,7 +1,7 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
-import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;

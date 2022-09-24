@@ -1,8 +1,8 @@
 package com.gos.codelabs.pid.commands.tuning;
 
 import com.gos.codelabs.pid.subsystems.ShooterSubsystem;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.lib.properties.PropertyManager;
 
 public class FindShooterFFGainCommand extends CommandBase {
 
