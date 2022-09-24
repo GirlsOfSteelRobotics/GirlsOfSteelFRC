@@ -10,6 +10,7 @@ rootProject.name = 'GirlsOfSteelRobotics'
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
+include 'libraries:SwerveShuffleboard'
 
 //include 'old_robots:y2011:GOS2011:Drive'
 //include 'old_robots:y2011:GOS2011:MyRobot_otherschool'
