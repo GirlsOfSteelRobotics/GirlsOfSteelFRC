@@ -57,7 +57,6 @@ public final class PropertyManager {
         }
     }
 
-    @Deprecated
     /* default */ interface IProperty<TypeT> {
         TypeT getValue();
 
