@@ -1,7 +1,7 @@
 package com.gos.rapidreact.subsystems;
 
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
-import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
@@ -28,7 +28,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double ROLLER_SPEED = 0.5;
     private static final double PIVOT_SPEED = .2;
     public static final double ALLOWABLE_ERROR_DEG = 1;
-    public static final PropertyManager.IProperty<Double> GRAVITY_OFFSET = PropertyManager.createDoubleProperty(false, "Gravity Offset", 0);
+    public static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0);
     private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);

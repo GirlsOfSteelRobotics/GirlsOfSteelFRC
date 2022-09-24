@@ -1,14 +1,14 @@
 package com.gos.infinite_recharge.commands;
 
 import com.gos.infinite_recharge.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.lib.properties.PropertyManager;
 import com.gos.infinite_recharge.subsystems.Shooter;
 
 
 public class TuneRPM extends CommandBase {
 
-    private static final PropertyManager.IProperty<Double> TUNE_RPM_PROP = PropertyManager.createDoubleProperty(false, "TuneRpm", Constants.DEFAULT_RPM);
+    private static final GosDoubleProperty TUNE_RPM_PROP = new GosDoubleProperty(false, "TuneRpm", Constants.DEFAULT_RPM);
     private final Shooter m_shooter;
 
     public TuneRPM(Shooter shooter) {

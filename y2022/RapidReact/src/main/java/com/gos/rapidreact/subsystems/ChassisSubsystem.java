@@ -2,9 +2,9 @@ package com.gos.rapidreact.subsystems;
 
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.HeavyDoubleProperty;
 import com.gos.lib.properties.PidProperty;
-import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.properties.WpiPidPropertyBuilder;
 import com.gos.lib.properties.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -48,10 +48,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
-    private static final PropertyManager.IProperty<Double> TO_XY_DISTANCE_SPEED = PropertyManager.createDoubleProperty(false, "To XY Dist Speed", 0);
-    public static final PropertyManager.IProperty<Double> TO_XY_MAX_DISTANCE = PropertyManager.createDoubleProperty(false, "To XY Max Dist", 4);
+    private static final GosDoubleProperty TO_XY_DISTANCE_SPEED = new GosDoubleProperty(false, "To XY Dist Speed", 0);
+    public static final GosDoubleProperty TO_XY_MAX_DISTANCE = new GosDoubleProperty(false, "To XY Max Dist", 4);
 
-    private static final PropertyManager.IProperty<Double> DRIVER_OL_RAMP_RATE = PropertyManager.createDoubleProperty(false, "OpenLoopRampRate", 0.5);
+    private static final GosDoubleProperty DRIVER_OL_RAMP_RATE = new GosDoubleProperty(false, "OpenLoopRampRate", 0.5);
 
     private final HeavyDoubleProperty m_openLoopRampRateProperty;
 

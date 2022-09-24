@@ -2,18 +2,18 @@ package com.gos.infinite_recharge.commands.autonomous;
 
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.subsystems.Chassis;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.lib.DeadbandHelper;
-import com.gos.lib.properties.PropertyManager;
 
 public class TurnToAngle extends CommandBase {
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false, "TurnToAngleKp",
+    private static final GosDoubleProperty AUTO_KP = new GosDoubleProperty(false, "TurnToAngleKp",
             0.02);
-    private static final PropertyManager.IProperty<Double> AUTO_KI = PropertyManager.createDoubleProperty(false, "TurnToAngleKi",
+    private static final GosDoubleProperty AUTO_KI = new GosDoubleProperty(false, "TurnToAngleKi",
             0);
-    private static final PropertyManager.IProperty<Double> AUTO_KD = PropertyManager.createDoubleProperty(false, "TurnToAngleKd",
+    private static final GosDoubleProperty AUTO_KD = new GosDoubleProperty(false, "TurnToAngleKd",
             0);
 
     private final Chassis m_chassis;

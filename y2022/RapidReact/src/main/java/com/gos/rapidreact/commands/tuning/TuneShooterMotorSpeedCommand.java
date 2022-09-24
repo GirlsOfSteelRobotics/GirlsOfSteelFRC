@@ -1,14 +1,14 @@
 package com.gos.rapidreact.commands.tuning;
 
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
-import com.gos.lib.properties.PropertyManager;
 
 
 public class TuneShooterMotorSpeedCommand extends CommandBase {
     private final ShooterSubsystem m_shooter;
 
-    public static final PropertyManager.IProperty<Double> SHOOTER_SPEED = PropertyManager.createDoubleProperty(false, "Tune Shooter Motor Speed", 0);
+    public static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "Tune Shooter Motor Speed", 0);
 
     public TuneShooterMotorSpeedCommand(ShooterSubsystem shooterSubsystem) {
         this.m_shooter = shooterSubsystem;

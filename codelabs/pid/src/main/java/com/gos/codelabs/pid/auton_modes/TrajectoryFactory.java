@@ -1,7 +1,9 @@
 package com.gos.codelabs.pid.auton_modes;
 
-import com.gos.lib.properties.PropertyManager;
 import com.gos.codelabs.pid.Constants;
+import com.gos.codelabs.pid.commands.auton.DriveTrajectoryCommand;
+import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -9,8 +11,6 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
-import com.gos.codelabs.pid.commands.auton.DriveTrajectoryCommand;
-import com.gos.codelabs.pid.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.List;
 public final class TrajectoryFactory {
 
     public static final class AutoConstants {
-        public static final PropertyManager.IProperty<Double> MAX_SPEED_METERS_PER_SECOND = PropertyManager.createDoubleProperty(false, "Trajectory.MaxVelocity", Units.inchesToMeters(12));
-        public static final PropertyManager.IProperty<Double> MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = PropertyManager.createDoubleProperty(false, "Trajectory.MaxAcceleration", Units.inchesToMeters(12));
+        public static final GosDoubleProperty MAX_SPEED_METERS_PER_SECOND = new GosDoubleProperty(false, "Trajectory.MaxVelocity", Units.inchesToMeters(12));
+        public static final GosDoubleProperty MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = new GosDoubleProperty(false, "Trajectory.MaxAcceleration", Units.inchesToMeters(12));
 
     }
 

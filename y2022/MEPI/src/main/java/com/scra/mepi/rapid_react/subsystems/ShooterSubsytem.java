@@ -4,8 +4,8 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
-import com.gos.lib.properties.PropertyManager;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -41,8 +41,7 @@ public class ShooterSubsytem extends SubsystemBase {
     private final RelativeEncoder m_encoder;
     private final SparkMaxPIDController m_pidController;
     private final PidProperty m_pidProperties;
-    private final PropertyManager.IProperty<Double> m_tunableAllowableError =
-        PropertyManager.createDoubleProperty(false, "Shooter(AllowableError))", 50);
+    private final GosDoubleProperty m_tunableAllowableError = new GosDoubleProperty(false, "Shooter(AllowableError))", 50);
 
     // Simulation
     private ISimWrapper m_shooterSimulator;
