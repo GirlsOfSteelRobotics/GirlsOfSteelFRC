@@ -5,6 +5,7 @@ import com.gos.codelabs.gitflow.subsystems.AriellaCodelab2021Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.AmandaCodelab2021Part1;
 import com.gos.codelabs.gitflow.subsystems.AshleyCodelab2021Part1SubsystemsSubsystem;
 import com.gos.codelabs.gitflow.subsystems.ChassisSubsystem;
+import com.gos.codelabs.gitflow.subsystems.EllieSubsystem;
 import com.gos.codelabs.gitflow.subsystems.GraceGCodeLab2020Subsystem;
 import com.gos.codelabs.gitflow.subsystems.JacksonCodelab2020Part1Part1;
 import com.gos.codelabs.gitflow.subsystems.JaniseCodelab2021Pt1Subsystem;
@@ -41,6 +42,7 @@ public class RobotContainer {
     private AmandaCodelab2021Part1 m_amandaCodeLab;
     private JustinaCodelab2021Part1Subsystem m_justinaCodeLab2021Part1;
     private JaniseCodelab2021Pt1Subsystem m_janiseCodelab2021Pt1;
+    private EllieSubsystem m_ellieSubsystem;
 
     ///////////////////////////////////////
     // Don't touch things below here
