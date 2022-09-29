@@ -2,9 +2,9 @@ rootProject.name = 'GirlsOfSteelRobotics'
 
 //include 'codelabs:basic_simulator'
 //include 'codelabs:custom_shuffleboard'
-//include 'codelabs:gitflow'
+include 'codelabs:gitflow'
 //include 'codelabs:pid'
-//include 'codelabs:basic_java'
+include 'codelabs:basic_java'
 //include 'codelabs:first_robot_code'
 
 include 'libraries:GirlsOfSteelLib'
