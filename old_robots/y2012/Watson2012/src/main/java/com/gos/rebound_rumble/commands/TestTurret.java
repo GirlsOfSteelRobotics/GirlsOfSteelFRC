@@ -14,19 +14,18 @@ public class TestTurret extends CommandBase {
 
     public TestTurret(Turret turret) {
         m_turret = turret;
-        requires(m_turret);
+        addRequirements(m_turret);
         SmartDashboard.putNumber("Turret Jags Speed", 0.0);
         SmartDashboard.putNumber("Turret Encoder Pulses", 0.0);
         SmartDashboard.putBoolean("Turret Encoder in Degrees", false);
     }
 
     @Override
-    protected void initialize() {
-        m_turret.disablePID();
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = SmartDashboard.getNumber("Turret Jags Speed", 0.0);
         m_turret.setJagSpeed(m_speed);
         m_pulses = SmartDashboard.getNumber("Turret Encoder Pulses", 0.0);
@@ -36,18 +35,15 @@ public class TestTurret extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_turret.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -4,9 +4,8 @@ import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ElevatorToPositionCommand extends CommandBase {
-
     private final ElevatorSubsystem m_lift;
-    private final double m_position;
+    private final double m_goal;
     private final boolean m_holdAtPosition;
     private boolean m_finished;
 
@@ -21,7 +20,7 @@ public class ElevatorToPositionCommand extends CommandBase {
 
     public ElevatorToPositionCommand(ElevatorSubsystem lift, double position, boolean holdAtPosition) {
         m_lift = lift;
-        m_position = position;
+        m_goal = position;
         m_holdAtPosition = holdAtPosition;
 
         addRequirements(lift);

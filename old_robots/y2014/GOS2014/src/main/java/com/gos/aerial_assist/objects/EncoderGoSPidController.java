@@ -1,8 +1,9 @@
 package com.gos.aerial_assist.objects;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
+
+import java.util.function.DoubleConsumer;
 
 @SuppressWarnings("PMD")
 public class EncoderGoSPidController implements Runnable {
@@ -20,7 +21,7 @@ public class EncoderGoSPidController implements Runnable {
     private double m_output;
 
     private final Encoder m_encoder;
-    private final PIDOutput m_jags;
+    private final DoubleConsumer m_jags;
     private final int m_type;
     //for setSetPoint()
     private double m_setPoint;
@@ -45,27 +46,27 @@ public class EncoderGoSPidController implements Runnable {
     private boolean m_modEncoder = false;
 
     public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
-                                   PIDOutput jags, int type) {
+                                   DoubleConsumer jags, int type) {
         this(kp, ki, kd, encoder, jags, type, 0);
     }
 
     public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
-                                   PIDOutput jags, int type, int zeroEncoderValue) {
+                                   DoubleConsumer jags, int type, int zeroEncoderValue) {
         this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, false, false);
     }
 
     public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
-                                   PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder) {
+                                   DoubleConsumer jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder) {
         this(kp, ki, kd, encoder, jags, type, zeroEncoderValue, reverseEncoder, modEncoder, 999999999);
     }
 
     public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
-                                   PIDOutput jags, int type, boolean reverseEncoder, boolean modEncoder) {
+                                   DoubleConsumer jags, int type, boolean reverseEncoder, boolean modEncoder) {
         this(kp, ki, kd, encoder, jags, type, 0, reverseEncoder, modEncoder);
     }
 
     public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
-                                   PIDOutput jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder, double integralThreshold) {
+                                   DoubleConsumer jags, int type, int zeroEncoderValue, boolean reverseEncoder, boolean modEncoder, double integralThreshold) {
         m_kp = kp;
         m_ki = ki;
         m_kd = kd;
@@ -148,10 +149,10 @@ public class EncoderGoSPidController implements Runnable {
 
             }
             //System.out.println("PID output: " + output + "\tP value: " + Kp + "\tError: " + error + "\tEncoder Value: " + currentPosition);
-            m_jags.pidWrite(m_output);
+            m_jags.accept(m_output);
             Timer.delay(0.01); //we don't want to run this faster than the encoder reads values
         }
-        m_jags.pidWrite(0.0);
+        m_jags.accept(0.0);
     }
 
     private synchronized void calculateRate() {

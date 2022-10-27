@@ -48,11 +48,11 @@ public class AutonomousOptions extends CommandBase {
         m_shooter = shooter;
         m_collector = collector;
 
-        requires(m_turret);
-        requires(m_shooter);
-        requires(m_chassis);
-        requires(m_bridge);
-        requires(m_collector);
+        addRequirements(m_turret);
+        addRequirements(m_shooter);
+        addRequirements(m_chassis);
+        addRequirements(m_bridge);
+        addRequirements(m_collector);
         this.m_autoTrack = autoTrack;
         this.m_autoShoot = autoShoot;
         this.m_shootFromKey = shootFromKey;
@@ -67,7 +67,7 @@ public class AutonomousOptions extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_turret.initEncoder();
         m_turret.enablePID();
         m_shooter.initEncoder();
@@ -77,7 +77,7 @@ public class AutonomousOptions extends CommandBase {
 
     @Override
     @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.AvoidDeeplyNestedIfStmts", "PMD.CyclomaticComplexity"})
-    protected void execute() {
+    public void execute() {
         if (m_getXDistanceCamera) {
             m_xDistance = 5.3939 - Camera.getXDistance();
             //5.3939 = half the field - (bridge/2 + space between robot and bridge
@@ -112,13 +112,12 @@ public class AutonomousOptions extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
-        m_turret.disablePID();
+    public void end(boolean interrupted) {
         m_turret.stopJag();
         m_shooter.disablePID();
         m_shooter.stopJags();
@@ -131,9 +130,6 @@ public class AutonomousOptions extends CommandBase {
         m_collector.stopMiddleConveyor();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

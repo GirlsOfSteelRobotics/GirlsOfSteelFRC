@@ -17,17 +17,17 @@ public class PS3ShootUsingJoystick extends CommandBase {
         m_shooter = shooter;
         m_operatorJoystick = oi.getOperatorJoystick();
         m_oi = oi;
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = Math.abs(m_operatorJoystick.getZ()) * 40.0;
         m_shooter.shootUsingBallVelocity(m_speed);
         if (m_shooter.isWithinSetPoint(m_speed) && !m_oi.areTopRollersOverriden()) {
@@ -36,12 +36,12 @@ public class PS3ShootUsingJoystick extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
@@ -49,9 +49,6 @@ public class PS3ShootUsingJoystick extends CommandBase {
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

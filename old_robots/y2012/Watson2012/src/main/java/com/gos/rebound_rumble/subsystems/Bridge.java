@@ -3,10 +3,10 @@ package com.gos.rebound_rumble.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.rebound_rumble.RobotMap;
 
-public class Bridge extends Subsystem {
+public class Bridge extends SubsystemBase {
     private static final double JAG_SPEED = 1.0;
 
     private final Jaguar m_bridgeArmJag = new Jaguar(RobotMap.BRIDGE_ARM_JAG);
@@ -65,7 +65,5 @@ public class Bridge extends Subsystem {
         }
     }
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+
 }

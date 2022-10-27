@@ -18,19 +18,19 @@ public class TestDriveSlowVelocity extends CommandBase {
     public TestDriveSlowVelocity(Chassis chassis, Joystick operatorJoystick) {
         m_chassis = chassis;
         this.m_driverJoystick = operatorJoystick;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         SmartDashboard.putNumber("Chassis P", 0.0);
         SmartDashboard.putNumber("Chassis I", 0.0);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initRatePIDs();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_p = SmartDashboard.getNumber("Chassis P", 0.0);
         m_i = SmartDashboard.getNumber("Chassis I", 0.0);
         m_chassis.setRatePIDValues(m_p, m_i, 0.0);
@@ -40,20 +40,17 @@ public class TestDriveSlowVelocity extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.disableRatePIDs();
         m_chassis.endEncoders();
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

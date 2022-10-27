@@ -10,36 +10,33 @@ public class TestTurnToSetPoint extends CommandBase {
 
     public TestTurnToSetPoint(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         SmartDashboard.putNumber("Turn,degrees", 0.0);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
         m_chassis.initPositionPIDs();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_degreesToTurn = SmartDashboard.getNumber("Turn,degrees", 0.0);
         m_chassis.turn(m_degreesToTurn);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_chassis.isTurnFinished(m_degreesToTurn);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.disablePositionPIDs();
         m_chassis.endEncoders();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

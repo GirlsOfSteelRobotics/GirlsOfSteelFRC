@@ -1,8 +1,9 @@
 package com.gos.rebound_rumble.objects;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
+
+import java.util.function.DoubleConsumer;
 
 @SuppressWarnings({"PMD.AvoidSynchronizedAtMethodLevel", "PMD.DoNotUseThreads", "PMD.TooManyFields"})
 public class EncoderGoSPidController implements Runnable {
@@ -12,7 +13,7 @@ public class EncoderGoSPidController implements Runnable {
     private double m_ki;
     private double m_kd;
     private final Encoder m_encoder;
-    private final PIDOutput m_jags;
+    private final DoubleConsumer m_jags;
     private final int m_type;
     //for setSetPoint()
     private double m_setPoint;
@@ -37,7 +38,7 @@ public class EncoderGoSPidController implements Runnable {
     public static final int POSITION = 2;
 
     public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
-                                   PIDOutput jags, int type) {
+                                   DoubleConsumer jags, int type) {
         this.m_kp = kp;
         this.m_ki = ki;
         this.m_kd = kd;
@@ -47,7 +48,7 @@ public class EncoderGoSPidController implements Runnable {
     }
 
     public EncoderGoSPidController(double kp, double ki, double kd, Encoder encoder,
-                                   PIDOutput jags, int type, double integralThreshold) {
+                                   DoubleConsumer jags, int type, double integralThreshold) {
         this.m_kp = kp;
         this.m_ki = ki;
         this.m_kd = kd;
@@ -122,10 +123,10 @@ public class EncoderGoSPidController implements Runnable {
                 }
             }
 
-            m_jags.pidWrite(output);
+            m_jags.accept(output);
             Timer.delay(0.01); //we don't want to run this faster than the encoder reads values
         }
-        m_jags.pidWrite(0.0);
+        m_jags.accept(0.0);
     }
 
     private synchronized void calculateRate() {

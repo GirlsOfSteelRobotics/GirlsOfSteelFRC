@@ -27,7 +27,7 @@ public class CollectorWheelReverse extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
@@ -38,7 +38,7 @@ public class CollectorWheelReverse extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.collectorWheelReverse(); //use specific method for clarity
     }
     //The wheel reverses to release the ball. Possibly for both gentle and long passes.
@@ -50,7 +50,7 @@ public class CollectorWheelReverse extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
@@ -60,7 +60,7 @@ public class CollectorWheelReverse extends CommandBase {
      * @author Sophia, Sonia
      */
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopCollectorWheel();
         //stops wheel once the command is finished
     }
@@ -70,9 +70,6 @@ public class CollectorWheelReverse extends CommandBase {
      *
      * @author Sophia, Sonia
      */
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

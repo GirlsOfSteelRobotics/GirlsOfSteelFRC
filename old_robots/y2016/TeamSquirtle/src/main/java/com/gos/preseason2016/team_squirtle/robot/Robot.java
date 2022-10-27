@@ -1,8 +1,8 @@
 package com.gos.preseason2016.team_squirtle.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import com.gos.preseason2016.team_squirtle.robot.commands.DriveByJoystick;
 import com.gos.preseason2016.team_squirtle.robot.commands.autonomous.AutoDrive;
 import com.gos.preseason2016.team_squirtle.robot.subsystems.Camera;
@@ -44,19 +44,19 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
 
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi.getJoystick(), m_chassis));
     }
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
     public void autonomousInit() {
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-            m_autonomousCommand.start();
+            m_autonomousCommand.schedule();
         }
     }
 
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     /**

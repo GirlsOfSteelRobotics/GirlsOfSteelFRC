@@ -12,8 +12,8 @@ public class CameraShooterTest extends CommandBase {
     public CameraShooterTest(Shooter shooter, Collector collector) {
         m_shooter = shooter;
         m_collector = collector;
-        requires(m_shooter);
-        requires(m_collector);
+        addRequirements(m_shooter);
+        addRequirements(m_collector);
         SmartDashboard.putNumber("CST,speed", 0.0);
         SmartDashboard.putBoolean("shoot", false);
         SmartDashboard.putBoolean("top rollers", false);
@@ -23,13 +23,13 @@ public class CameraShooterTest extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_shooter.setPIDValues(SmartDashboard.getNumber("CST,P", 0.0), SmartDashboard.getNumber("CST,I", 0.0), 0.0);
         m_speed = SmartDashboard.getNumber("CST,speed", 0.0);
         if (SmartDashboard.getBoolean("collectors", false)) {
@@ -54,17 +54,14 @@ public class CameraShooterTest extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.disablePID();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

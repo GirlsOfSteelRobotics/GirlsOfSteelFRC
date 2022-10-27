@@ -61,4 +61,3 @@ public final class Utils {
         return Color.color(0, 0, 0);
     }
 }
-

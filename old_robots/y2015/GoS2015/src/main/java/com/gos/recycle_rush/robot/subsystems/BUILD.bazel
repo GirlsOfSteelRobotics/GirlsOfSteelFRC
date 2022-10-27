@@ -1,0 +1,15 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "subsystems",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2015/GoS2015:__subpackages__"],
+    deps = [
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot:RobotMap",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/kauailabs/navx",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@snobot_sim//jar",
+    ],
+)

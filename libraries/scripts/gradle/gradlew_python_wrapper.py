@@ -20,7 +20,7 @@ def run_gradle_commands(commands):
     if os.name == "nt":
         args.append("gradlew.bat")
     else:
-        args.append("gradlew")
+        args.append("./gradlew")
 
     args.extend(commands)
     __run_command(args)

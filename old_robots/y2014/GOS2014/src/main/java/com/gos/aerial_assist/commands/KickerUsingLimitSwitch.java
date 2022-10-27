@@ -12,12 +12,12 @@ import com.gos.aerial_assist.subsystems.Kicker;
  * @author the programmers
  */
 public class KickerUsingLimitSwitch extends CommandBase {
+    private static final boolean TESTING_LIMIT = false;
+    private static final boolean TESTING_MOTOR = false;
 
     private final Kicker m_kicker;
     private int m_loadingOrShooting;
     private boolean m_isLoaded;
-    private static final boolean m_testingLimit = false;
-    private static final boolean m_testingMotor = false;
     private final boolean m_smartDashboard;
     private double m_startTime;
     private double m_changeInTime;
@@ -25,14 +25,14 @@ public class KickerUsingLimitSwitch extends CommandBase {
     //0 = loading; 1 = shooting
     public KickerUsingLimitSwitch(Kicker kicker, int position, boolean usingSD) {
         m_kicker = kicker;
-        requires(m_kicker);
+        addRequirements(m_kicker);
         m_loadingOrShooting = position;
         m_smartDashboard = usingSD;
     }
 
     @Override
-    protected void initialize() {
-        if (!m_testingLimit) {
+    public void initialize() {
+        if (!TESTING_LIMIT) {
             if (m_smartDashboard) {
                 SmartDashboard.putNumber("Position", -1);
             }
@@ -42,14 +42,14 @@ public class KickerUsingLimitSwitch extends CommandBase {
             }
             m_startTime = System.currentTimeMillis();
         }
-        if (m_testingMotor) {
+        if (TESTING_MOTOR) {
             SmartDashboard.putNumber("Turn Kicker Jag", 0.0);
         }
     }
 
     @Override
-    protected void execute() {
-        if (!m_testingLimit) {
+    public void execute() {
+        if (!TESTING_LIMIT) {
             m_changeInTime = System.currentTimeMillis() - m_startTime;
             if (m_smartDashboard) {
                 m_loadingOrShooting = (int) SmartDashboard.getNumber("Position", 0);
@@ -70,7 +70,7 @@ public class KickerUsingLimitSwitch extends CommandBase {
             }
 
         }
-        if (m_testingMotor) {
+        if (TESTING_MOTOR) {
             double motorSpeed = SmartDashboard.getNumber("Turn Kicker Jag", 0);
             System.out.println("Sending: " + motorSpeed);
             //kicker.setJag(motorSpeed);
@@ -82,9 +82,9 @@ public class KickerUsingLimitSwitch extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         System.out.println("Is the limit hit: " + m_kicker.getLimitSwitch());
-        if (!m_testingLimit) {
+        if (!TESTING_LIMIT) {
             if (m_changeInTime > 5000) {
                 return true; //If more than 5 seconds have passed, stop trying! It probably means the battery is burned out... OR motor is burned out...
             }
@@ -104,14 +104,11 @@ public class KickerUsingLimitSwitch extends CommandBase {
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         //kicker.stopJag();
         m_kicker.stopTalon();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

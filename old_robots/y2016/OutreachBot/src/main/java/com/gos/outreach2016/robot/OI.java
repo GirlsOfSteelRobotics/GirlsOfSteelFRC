@@ -1,7 +1,7 @@
 package com.gos.outreach2016.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.outreach2016.robot.commands.AccessoryLeftFwd;
 import com.gos.outreach2016.robot.commands.AccessoryLeftRev;
@@ -74,7 +74,7 @@ public class OI {
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand(driveSystem, accessoryMotors));
-        SmartDashboard.putData("DriveByJoystick", new DriveByJoystick(this, driveSystem));
+        SmartDashboard.putData("DriveByJoystick", new DriveByJoystick(m_driveStick, driveSystem));
         SmartDashboard.putData("Shift Up", new ShiftUp(shifters));
         SmartDashboard.putData("Shift Down", new ShiftDown(shifters));
         SmartDashboard.putData("Accessory Left Fwd", new AccessoryLeftFwd(accessoryMotors));

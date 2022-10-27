@@ -1,0 +1,4 @@
+alias(
+    name = "Testboard",
+    actual = "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020",
+)

@@ -1,0 +1,24 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "subsystems",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
+        "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge:Constants",
+        "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/sim",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/kauailabs/navx",
+        "@bazelrio//libraries/java/rev/revlib",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/cscore",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)

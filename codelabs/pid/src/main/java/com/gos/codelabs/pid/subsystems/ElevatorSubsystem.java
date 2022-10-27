@@ -1,6 +1,7 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -12,7 +13,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.codelabs.pid.commands.tuning.FindElevatorGravityCompensationCommand;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -21,6 +21,8 @@ import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase {
+    public static final GosDoubleProperty GRAVITY_COMPENSATION = new GosDoubleProperty(false, "Elevator.GravityCompensationSpeed", 0);
+
     public static final double ALLOWABLE_POSITION_ERROR = .25;
 
     public enum Positions {
@@ -47,7 +49,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private ISimWrapper m_elevatorSim;
 
     public ElevatorSubsystem() {
-        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_liftEncoder = m_liftMotor.getEncoder();
         m_pidController = m_liftMotor.getPIDController();
 
@@ -57,8 +59,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         m_pidProperty = new RevPidPropertyBuilder("Elevator", false, m_pidController, 0)
                 .addP(0)
                 .addFF(0)
-                .addMaxAcceleration(0)
-                .addMaxVelocity(0)
+                .addMaxAcceleration(0.1)
+                .addMaxVelocity(0.1)
                 .build();
 
         if (RobotBase.isSimulation()) {
@@ -79,7 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean goToPosition(double position) {
         m_desiredHeight = position;
-        m_pidController.setReference(position, CANSparkMax.ControlType.kSmartMotion, 0, FindElevatorGravityCompensationCommand.ELEVATOR_SPEED.getValue(), ArbFFUnits.kPercentOut);
+        m_pidController.setReference(position, CANSparkMax.ControlType.kSmartMotion, 0, GRAVITY_COMPENSATION.getValue(), ArbFFUnits.kPercentOut);
         return false;
     }
 
@@ -102,6 +104,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public double getHeightInches() {
         return Units.metersToInches(getHeightMeters());
+    }
+
+    public double getVelocityMps() {
+        return m_liftEncoder.getVelocity();
+    }
+
+    public double getVelocityInchesPerSec() {
+        return Units.metersToInches(getVelocityMps());
     }
 
     public double getDesiredHeightMeters() {

@@ -1,7 +1,6 @@
 package com.gos.aerial_assist.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import com.gos.aerial_assist.OI;
 import com.gos.aerial_assist.subsystems.Chassis;
 
 /**
@@ -15,21 +14,21 @@ public class ScaledArcadeDrive extends CommandBase {
     private double m_x;
     private double m_y;
 
-    public ScaledArcadeDrive(OI oi, Chassis chassis, double scale) {
+    public ScaledArcadeDrive(Joystick joystick, Chassis chassis, double scale) {
         m_chassis = chassis;
-        m_joystick = oi.getChassisJoystick();
-        requires(m_chassis);
+        m_joystick = joystick;
+        addRequirements(m_chassis);
         this.m_scale = scale;
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         //SmartDashboard.putNumber("Scale", 1);
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_x = m_joystick.getX();
         m_y = m_joystick.getY();
         //scale = SmartDashboard.getNumber("Scale", 0);
@@ -37,18 +36,15 @@ public class ScaledArcadeDrive extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

@@ -19,7 +19,7 @@ public class ChassisJagsAndEncoders extends CommandBase {
 
     public ChassisJagsAndEncoders(Chassis chassis) {
         m_chassis = chassis;
-        requires(m_chassis);
+        addRequirements(m_chassis);
         //        SmartDashboard.putBoolean("Right Jag", false);
         //        SmartDashboard.putBoolean("Back Jag", false);
         //        SmartDashboard.putBoolean("Left Jag", false);
@@ -30,13 +30,13 @@ public class ChassisJagsAndEncoders extends CommandBase {
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_chassis.initEncoders();
     }
 
     @Override
     @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-    protected void execute() {
+    public void execute() {
         //        speed = SmartDashboard.getNumber("Jag speed", 0.0);
         //        SmartDashboard.putNumber("Right Encoder", chassis.getRightEncoderDistance());
         //        SmartDashboard.putNumber("Back Encoder:", chassis.getBackEncoderDistance());
@@ -92,20 +92,17 @@ public class ChassisJagsAndEncoders extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_chassis.stopJags();
         m_chassis.stopEncoders();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 
 }

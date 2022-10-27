@@ -17,34 +17,31 @@ public class ManipulatorManualDown extends CommandBase {
 
     public ManipulatorManualDown(Manipulator manipulator) {
         m_manipulator = manipulator;
-        requires(m_manipulator);
+        addRequirements(m_manipulator);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_manipulator.disablePID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_manipulator.moveManipulatorDown();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_manipulator.stopManipulator();
         //manipulator.startPID();
         //manipulator.resetPIDError();
         m_manipulator.initEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

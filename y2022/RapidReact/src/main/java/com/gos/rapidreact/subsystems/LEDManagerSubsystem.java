@@ -2,15 +2,15 @@ package com.gos.rapidreact.subsystems;
 
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
-import com.gos.rapidreact.led.LEDAngleToTargetOverAndUnder;
-import com.gos.rapidreact.led.LEDFlash;
-import com.gos.rapidreact.led.LEDPattern;
-import com.gos.rapidreact.led.LEDRainbow;
-import com.gos.rapidreact.led.mirrored.MirroredLEDBoolean;
-import com.gos.rapidreact.led.mirrored.MirroredLEDMovingPixel;
-import com.gos.rapidreact.led.mirrored.MirroredLEDPatternLookup;
-import com.gos.rapidreact.led.mirrored.MirroredLEDFlash;
-import com.gos.rapidreact.led.mirrored.MirroredLEDSolidColor;
+import com.gos.lib.led.LEDAngleToTargetOverAndUnder;
+import com.gos.lib.led.LEDFlash;
+import com.gos.lib.led.LEDPattern;
+import com.gos.lib.led.LEDRainbow;
+import com.gos.lib.led.mirrored.MirroredLEDBoolean;
+import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
+import com.gos.lib.led.mirrored.MirroredLEDPatternLookup;
+import com.gos.lib.led.mirrored.MirroredLEDFlash;
+import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings({"PMD.TooManyFields", "PMD.UnusedPrivateMethod", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
@@ -91,23 +92,24 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_readyToShoot = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
 
-        m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kGreen);
+        m_readyToHang = new LEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.25, Color.kBlue);
         m_rainbowFullStrip = new LEDRainbow(m_buffer, 0, MAX_INDEX_LED);
 
         m_autoPivotAtAngle = new MirroredLEDBoolean(m_buffer, 25, 4, Color.kPapayaWhip, Color.kBlack);
 
-        Map<AutoModeFactory.AutonMode, LEDPattern> autonColorMap = Map.of(
-            AutoModeFactory.AutonMode.DRIVE_OFF_TARMAC, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kRed),
-            AutoModeFactory.AutonMode.ONE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kOrange),
-            AutoModeFactory.AutonMode.ONE_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kOrange),
-            AutoModeFactory.AutonMode.TWO_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kYellow),
-            AutoModeFactory.AutonMode.TWO_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kYellow),
-            AutoModeFactory.AutonMode.THREE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kGreen),
-            AutoModeFactory.AutonMode.FOUR_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kBlue),
-            AutoModeFactory.AutonMode.FOUR_BALL_HALF_HIGH, new MirroredLEDMovingPixel(m_buffer, 0, 20, Color.kBlue),
-            AutoModeFactory.AutonMode.FOUR_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kBlue),
-            AutoModeFactory.AutonMode.FIVE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kPurple)
-        );
+        Map<AutoModeFactory.AutonMode, LEDPattern> autonColorMap  = new HashMap<>();
+        autonColorMap.put(AutoModeFactory.AutonMode.DRIVE_OFF_TARMAC, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kRed));
+        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kOrangeRed));
+        autonColorMap.put(AutoModeFactory.AutonMode.ONE_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kOrangeRed));
+        autonColorMap.put(AutoModeFactory.AutonMode.TWO_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kYellow));
+        autonColorMap.put(AutoModeFactory.AutonMode.TWO_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kYellow));
+        autonColorMap.put(AutoModeFactory.AutonMode.THREE_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kGreen));
+        autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_LOW, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kBlue));
+        autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_HALF_HIGH, new MirroredLEDMovingPixel(m_buffer, 0, 20, Color.kBlue));
+        autonColorMap.put(AutoModeFactory.AutonMode.FOUR_BALL_HIGH, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kBlue));
+        autonColorMap.put(AutoModeFactory.AutonMode.SABOTAGE_UPPER, new MirroredLEDFlash(m_buffer, 0, 20, 1.0, Color.kPurple));
+        autonColorMap.put(AutoModeFactory.AutonMode.SABOTAGE_LOWER, new MirroredLEDSolidColor(m_buffer, 0, 20, Color.kPurple));
+
         m_autoMode = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
 
         m_autoUpperIndexSensor = new MirroredLEDBoolean(m_buffer, 20, 4, Color.kFuchsia, Color.kBlack);
@@ -153,7 +155,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_rainbowFullStrip.writeLeds();
         }
 
-        m_autoPivotAtAngle.setStateAndWrite(m_collector.getIntakeRightAngleDegrees() > 89);
+        m_autoPivotAtAngle.setStateAndWrite(m_collector.getIntakeRightAngleDegreesNeoEncoder() > 89 && m_collector.getIntakeRightAngleDegreesNeoEncoder() < 92);
         m_autoUpperIndexSensor.setStateAndWrite(m_verticalConveyor.getUpperIndexSensor());
     }
 
@@ -177,13 +179,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private void shooterLights() {
         // Set, but don't necessarily write to the strip
-        m_angleToHub.angleToTarget(m_shooterLimelight.angleError());
+        m_angleToHub.angleToTarget(m_shooterLimelight.getAngle());
         m_angleToHubReady.setState(m_shooterLimelight.atAcceptableAngle());
         m_correctShootingDistance.setState(m_shooterLimelight.atAcceptableDistance());
         m_noLimelight.setState(!m_shooterLimelight.isVisible());
 
         // Set and write these to the strip always
-        m_shooterAtSpeed.setStateAndWrite(m_shooter.isShooterAtSpeed() && m_shooter.isRollerAtSpeed());
+        m_shooterAtSpeed.setStateAndWrite(m_shooter.isShooterAtSpeed());
 
         if (m_shooterLimelight.isVisible()) {
             if (m_shooter.isShooterAtSpeed() && m_shooterLimelight.isReadyToShoot()) {
@@ -206,7 +208,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void hangerLights() {
-        if (DriverStation.isFMSAttached()) {
+        if (DriverStation.isFMSAttached() && DriverStation.isTeleop()) {
             if (DriverStation.getMatchTime() < 25) {
                 m_readyToHang.writeLeds();
             }

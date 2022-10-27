@@ -8,8 +8,8 @@
 package com.gos.aerial_assist;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.aerial_assist.commands.ArcadeDrive;
 import com.gos.aerial_assist.commands.DoNothing;
@@ -60,14 +60,14 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
 
-        m_chassis.setRightEncoderReverseDirection(Configuration.rightEncoderReverse);
-        m_chassis.setLeftEncoderReverseDirection(Configuration.leftEncoderReverse);
-        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0.0, 0.0);
-        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0.0, 0.0);
-        m_manipulator.setPID(Configuration.manipulatorPivotP, 0.0, 0.0);
-        m_chassis.setLeftPositionPIDValues(Configuration.leftPositionP, 0.0, 0.0);
-        m_chassis.setRightPositionPIDValues(Configuration.rightPositionP, 0.0, 0.0);
-        m_manipulator.setPID(Configuration.manipulatorPivotP, 0.0, 0.0);
+        m_chassis.setRightEncoderReverseDirection(Configuration.RIGHT_ENCODER_REVERSE);
+        m_chassis.setLeftEncoderReverseDirection(Configuration.LEFT_ENCODER_REVERSE);
+        m_chassis.setLeftPositionPIDValues(Configuration.LEFT_POSITION_P, 0.0, 0.0);
+        m_chassis.setRightPositionPIDValues(Configuration.RIGHT_POSITION_P, 0.0, 0.0);
+        m_manipulator.setPID(Configuration.MANIPULATOR_PIVOT_P, 0.0, 0.0);
+        m_chassis.setLeftPositionPIDValues(Configuration.LEFT_POSITION_P, 0.0, 0.0);
+        m_chassis.setRightPositionPIDValues(Configuration.RIGHT_POSITION_P, 0.0, 0.0);
+        m_manipulator.setPID(Configuration.MANIPULATOR_PIVOT_P, 0.0, 0.0);
 
         SmartDashboard.putData(new KickerUsingLimitSwitch(m_kicker, -1, true));
         SmartDashboard.putData(new TestKickerEncoder(m_kicker));
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
         //new AutonomousMobility().start();
         // new AutonomousLowGoalHot().start();
         //auto.start();
-        m_autonomousCommand.start();
+        m_autonomousCommand.schedule();
     }
 
     /**
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
         if (m_auto != null) {
             m_auto.cancel();
         }
-        new ArcadeDrive(m_oi, m_driving, m_chassis).start(); //Starts arcade drive automatically
+        new ArcadeDrive(m_oi.getChassisJoystick(), m_driving, m_chassis).schedule(); //Starts arcade drive automatically
     }
 
     /**
@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         SmartDashboard.putBoolean("Robot Is Hot", Camera.isGoalHot());
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         //Configuration.configureForRobot((int) SmartDashboard.getNumber("Robot Configuration", 0));
         //        SmartDashboard.putNumber("robotCameraAngle",(double)CommandBase.camera.getVerticalAngleOffset());
         //        System.out.println("Camera Angle: " + (double)CommandBase.camera.getVerticalAngleOffset());

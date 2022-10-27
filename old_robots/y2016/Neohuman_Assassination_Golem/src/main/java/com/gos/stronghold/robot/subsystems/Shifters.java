@@ -2,17 +2,17 @@ package com.gos.stronghold.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.stronghold.robot.RobotMap;
 
 /**
  *
  */
-public class Shifters extends Subsystem {
+public class Shifters extends SubsystemBase {
     private final DoubleSolenoid m_shifterLeft;
     private final DoubleSolenoid m_shifterRight;
 
-    public enum Speed { kHigh, kLow }
+    public enum Speed { HIGH, LOW }
 
     private boolean m_inHighGear;
 
@@ -25,7 +25,7 @@ public class Shifters extends Subsystem {
     // here. Call these from Commands.
 
     public void shiftLeft(Speed speed) {
-        if (speed == Speed.kHigh) {
+        if (speed == Speed.HIGH) {
             m_shifterLeft.set(DoubleSolenoid.Value.kReverse);
             System.out.println("Shifting left side into high gear (fwd)");
             m_inHighGear = true;
@@ -37,7 +37,7 @@ public class Shifters extends Subsystem {
     }
 
     public void shiftRight(Speed speed) {
-        if (speed == Speed.kHigh) {
+        if (speed == Speed.HIGH) {
             m_shifterRight.set(DoubleSolenoid.Value.kReverse);
             System.out.println("Shifting right side into high gear (fwd)");
             m_inHighGear = true;
@@ -61,9 +61,5 @@ public class Shifters extends Subsystem {
         return m_inHighGear;
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
 }

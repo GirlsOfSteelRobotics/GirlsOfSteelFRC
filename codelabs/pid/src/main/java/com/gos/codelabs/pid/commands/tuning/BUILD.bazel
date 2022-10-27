@@ -1,0 +1,13 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "tuning",
+    srcs = glob(["*.java"]),
+    visibility = ["//codelabs/pid:__subpackages__"],
+    deps = [
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@snobot_sim//jar",
+    ],
+)

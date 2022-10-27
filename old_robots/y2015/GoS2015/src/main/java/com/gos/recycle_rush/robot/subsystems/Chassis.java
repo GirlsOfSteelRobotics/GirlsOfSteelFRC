@@ -6,27 +6,27 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.gos.recycle_rush.robot.RobotMap;
 
 
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public class Chassis extends Subsystem {
+public class Chassis extends SubsystemBase {
 
     // PID Constants
-    private static final double kP = 1.0;
-    private static final double kI = 0.01;
-    private static final double kD = 20;
+    private static final double KP = 1.0;
+    private static final double KI = 0.01;
+    private static final double KD = 20;
 
     // Encoder to Distance Constants
-    private static final double inchesPerTick = Math.PI * 6 / (4 * 256);
-    private static final double inchesPerTickStrafing = inchesPerTick / 2;
+    private static final double INCHES_PER_TICK = Math.PI * 6 / (4 * 256);
+    private static final double INCHES_PER_TICK_STRAFING = INCHES_PER_TICK / 2;
 
     // Speed constant for autonomous driving (
     // (may need to change for strafing vs. normal driving)
-    private static final double autoSpeed = 0.25;
+    private static final double AUTO_SPEED = 0.25;
 
     private static final double MIN_SPEED = .5;
     private static final double MAX_SPEED = .75;
@@ -36,7 +36,7 @@ public class Chassis extends Subsystem {
     private static final double MIN_SPEED_STRAFING = .3;
     private static final double MAX_SPEED_STRAFING = .7;
 
-    private static final double topSpeed = 400;
+    private static final double TOP_SPEED = 400;
 
     // WPI_TalonSRXs
     private final WPI_TalonSRX m_frontRightWheel;
@@ -68,24 +68,24 @@ public class Chassis extends Subsystem {
         m_rearRightWheel.setNeutralMode(NeutralMode.Brake);
         m_rearLeftWheel.setNeutralMode(NeutralMode.Brake);
 
-        m_frontRightWheel.config_kP(0, kP);
-        m_frontRightWheel.config_kI(0, kI);
-        m_frontRightWheel.config_kD(0, kD);
+        m_frontRightWheel.config_kP(0, KP);
+        m_frontRightWheel.config_kI(0, KI);
+        m_frontRightWheel.config_kD(0, KD);
         m_frontRightWheel.setSensorPhase(false);
 
-        m_frontLeftWheel.config_kP(0, kP);
-        m_frontLeftWheel.config_kI(0, kI);
-        m_frontLeftWheel.config_kD(0, kD);
+        m_frontLeftWheel.config_kP(0, KP);
+        m_frontLeftWheel.config_kI(0, KI);
+        m_frontLeftWheel.config_kD(0, KD);
         m_frontLeftWheel.setSensorPhase(false);
 
-        m_rearRightWheel.config_kP(0, kP);
-        m_rearRightWheel.config_kI(0, kI);
-        m_rearRightWheel.config_kD(0, kD);
+        m_rearRightWheel.config_kP(0, KP);
+        m_rearRightWheel.config_kI(0, KI);
+        m_rearRightWheel.config_kD(0, KD);
         m_rearRightWheel.setSensorPhase(false);
 
-        m_rearLeftWheel.config_kP(0, kP);
-        m_rearLeftWheel.config_kI(0, kI);
-        m_rearLeftWheel.config_kD(0, kD);
+        m_rearLeftWheel.config_kP(0, KP);
+        m_rearLeftWheel.config_kI(0, KI);
+        m_rearLeftWheel.config_kD(0, KD);
         m_rearLeftWheel.setSensorPhase(false);
 
         m_getGyro = true;
@@ -96,7 +96,7 @@ public class Chassis extends Subsystem {
 
         m_gosDrive = new MecanumDrive(m_rearLeftWheel, m_rearRightWheel, m_frontLeftWheel, m_frontRightWheel);
 
-        m_gosDrive.setMaxOutput(topSpeed);
+        m_gosDrive.setMaxOutput(TOP_SPEED);
 
         // Invert the left side motors
 
@@ -290,11 +290,11 @@ public class Chassis extends Subsystem {
     }
 
     public void autoTurnClockwise() {
-        m_gosDrive.driveCartesian(0, 0, autoSpeed, 0);
+        m_gosDrive.driveCartesian(0, 0, AUTO_SPEED, 0);
     }
 
     public void autoTurnCounterclockwise() {
-        m_gosDrive.driveCartesian(0, 0, -autoSpeed, 0);
+        m_gosDrive.driveCartesian(0, 0, -AUTO_SPEED, 0);
     }
 
     public void driveForward() {
@@ -367,7 +367,7 @@ public class Chassis extends Subsystem {
      * the forward direction
      */
     public double getDistanceForward() {
-        return (rearLeftEncoderDistance() + frontRightEncoderDistance()) / 2 * inchesPerTickStrafing;
+        return (rearLeftEncoderDistance() + frontRightEncoderDistance()) / 2 * INCHES_PER_TICK_STRAFING;
     }
 
     /**
@@ -375,7 +375,7 @@ public class Chassis extends Subsystem {
      * the backward direction
      */
     public double getDistanceBackwards() {
-        return (rearLeftEncoderDistance() + frontRightEncoderDistance()) / 2 * inchesPerTickStrafing;
+        return (rearLeftEncoderDistance() + frontRightEncoderDistance()) / 2 * INCHES_PER_TICK_STRAFING;
     }
 
     /**
@@ -384,7 +384,7 @@ public class Chassis extends Subsystem {
      */
     public double getDistanceLeft() {
         // calculates the average of the encoder distances
-        return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance()) / 4 * inchesPerTick);
+        return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance()) / 4 * INCHES_PER_TICK);
     }
 
     /**
@@ -393,10 +393,8 @@ public class Chassis extends Subsystem {
      */
     public double getDistanceRight() {
         // calculates the average of the encoder distances
-        return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance()) / 4 * inchesPerTick);
+        return ((rearLeftEncoderDistance() + frontLeftEncoderDistance() + frontRightEncoderDistance() + rearRightEncoderDistance()) / 4 * INCHES_PER_TICK);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 }

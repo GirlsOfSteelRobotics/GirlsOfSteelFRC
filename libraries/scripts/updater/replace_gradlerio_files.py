@@ -12,7 +12,7 @@ from libraries.scripts.git.git_python_wrappers import (
 
 
 def download_and_overwrite(url, destination, replacements=None):
-    data = urlopen(url).read()
+    data = load_url(url)
 
     if replacements:
         contents = data.decode("utf-8")
@@ -36,9 +36,7 @@ def custom_update_robot_build_file(remote_build_file_data, build_file, latest_ve
 
     with open(build_file, "r") as f:
         original_contents = f.read()
-        robot_class_matches = re.search(
-            r'def ROBOT_MAIN_CLASS = "(.*)"', original_contents
-        )
+        robot_class_matches = re.search(r'def ROBOT_MAIN_CLASS = "(.*)"', original_contents)
         robot_class = robot_class_matches.group(1)
         raw_build_contents = remote_build_file_data.replace(
             "###GRADLERIOREPLACE###", latest_version
@@ -61,9 +59,7 @@ def custom_update_robot_build_file(remote_build_file_data, build_file, latest_ve
             if in_deps and line.startswith("}"):
                 new_build_contents += "\n\n"
                 for internal_project in internal_project_dependencies:
-                    new_build_contents += (
-                        f"    implementation project{internal_project}\n"
-                    )
+                    new_build_contents += f"    implementation project{internal_project}\n"
                 in_deps = False
         new_build_contents += line.rstrip() + "\n"
 
@@ -91,12 +87,30 @@ def update_non_robot_build_file(build_file, latest_version):
     regex_replace_file(build_file, replacements)
 
 
-def update_build_files(run_custom_updates):
-    version_file_url = "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources/gradle/version.txt"
-    latest_version = urlopen(version_file_url).read().decode("utf-8").strip()
+def load_url(url_suffix, pinned_version="3fd2b5b7dda0e9aff1fe2bb9114e7d37d9cae3dc"):
+    project_subpath = f"wpilibsuite/vscode-wpilib"
 
-    remote_build_file_url = "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources/gradle/java/build.gradle"
-    remote_build_file_data = urlopen(remote_build_file_url).read().decode("utf-8")
+    download_url = "/".join(
+        ["https://raw.githubusercontent.com", project_subpath, pinned_version, url_suffix]
+    )
+    # print(f"Downloading from {download_url}")
+
+    # content_url = "/".join(["https://github.com", project_subpath, "blob/", pinned_version, url_suffix])
+    # print(f"See content at {content_url}")
+
+    return urlopen(download_url).read()
+
+
+def get_gradlerio_version():
+    return load_url("vscode-wpilib/resources/gradle/version.txt").decode("utf-8").strip()
+
+
+def update_build_files(run_custom_updates):
+    latest_version = get_gradlerio_version()
+
+    remote_build_file_data = load_url("vscode-wpilib/resources/gradle/java/build.gradle").decode(
+        "utf-8"
+    )
 
     raw_build_files = walk_for_extension(".", "build.gradle")
     for build_file in raw_build_files:
@@ -109,22 +123,18 @@ def update_build_files(run_custom_updates):
                             remote_build_file_data, build_file, latest_version
                         )
                     else:
-                        standard_update_robot_build_file(
-                            remote_build_file_data, build_file
-                        )
+                        standard_update_robot_build_file(remote_build_file_data, build_file)
                 else:
                     update_non_robot_build_file(build_file, latest_version)
 
 
 def replace_gradlerio_files(run_custom_updates):
-    base_url = "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources"
-
     # fmt: off
-    download_and_overwrite(base_url + "/gradle/shared/gradlew", "gradlew")
-    download_and_overwrite(base_url + "/gradle/shared/gradlew.bat", "gradlew.bat")
-    download_and_overwrite(base_url + "/gradle/shared/gradle/wrapper/gradle-wrapper.jar", "gradle/wrapper/gradle-wrapper.jar")
-    download_and_overwrite(base_url + "/gradle/shared/gradle/wrapper/gradle-wrapper.properties", "gradle/wrapper/gradle-wrapper.properties")
-    download_and_overwrite(base_url + "/gradle/java/.wpilib/wpilib_preferences.json", ".wpilib/wpilib_preferences.json", replacements=[('"teamNumber": -1', '"teamNumber": 3504')])
+    download_and_overwrite("vscode-wpilib/resources/gradle/shared/gradlew", "gradlew")
+    download_and_overwrite("vscode-wpilib/resources/gradle/shared/gradlew.bat", "gradlew.bat")
+    download_and_overwrite("vscode-wpilib/resources/gradle/shared/gradle/wrapper/gradle-wrapper.jar", "gradle/wrapper/gradle-wrapper.jar")
+    download_and_overwrite("vscode-wpilib/resources/gradle/shared/gradle/wrapper/gradle-wrapper.properties", "gradle/wrapper/gradle-wrapper.properties")
+    download_and_overwrite("vscode-wpilib/resources/gradle/java/.wpilib/wpilib_preferences.json", ".wpilib/wpilib_preferences.json", replacements=[('"teamNumber": -1', '"teamNumber": 3504')])
     # fmt: on
 
     update_build_files(run_custom_updates)
@@ -133,10 +143,10 @@ def replace_gradlerio_files(run_custom_updates):
 def replace_gradlerio_files_in_parts():
     # Do a little git hack to break the update into two parts
     replace_gradlerio_files(False)
-    commit_all_changes("Raw update of gradlerio files")
+    commit_all_changes("Auto-Update: Raw update of gradlerio files")
     checkout_files_from_branch("HEAD~1", ["."])
     replace_gradlerio_files(True)
-    commit_all_changes("Update gradlerio files with our additions")
+    commit_all_changes("Auto-Update: Update gradlerio files with our additions")
 
 
 if __name__ == "__main__":

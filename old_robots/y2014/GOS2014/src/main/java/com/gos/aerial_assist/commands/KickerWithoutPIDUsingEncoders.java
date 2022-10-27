@@ -12,7 +12,7 @@ import com.gos.aerial_assist.subsystems.Kicker;
  */
 public class KickerWithoutPIDUsingEncoders extends CommandBase {
 
-    private static final double m_loadingEncoderPosition = .45; // this value is "about"; currentEncoderValue % 360
+    private static final double LOADING_ENCODER_POSITION = .45; // this value is "about"; currentEncoderValue % 360
 
     private final Kicker m_kicker;
 
@@ -20,34 +20,31 @@ public class KickerWithoutPIDUsingEncoders extends CommandBase {
     @SuppressWarnings("PMD.UnusedFormalParameter")
     public KickerWithoutPIDUsingEncoders(Kicker kicker, int loadingOrShooting) {
         m_kicker = kicker;
-        requires(m_kicker);
+        addRequirements(m_kicker);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
 
     }
 
     @Override
-    protected void execute() {
-        if (m_kicker.getEncoder() % 360 < m_loadingEncoderPosition) {
+    public void execute() {
+        if (m_kicker.getEncoder() % 360 < LOADING_ENCODER_POSITION) {
             m_kicker.setJag(1.0);
         }
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_kicker.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

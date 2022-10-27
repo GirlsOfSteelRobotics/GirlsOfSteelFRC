@@ -1,6 +1,6 @@
 package com.gos.recycle_rush.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import com.gos.recycle_rush.robot.subsystems.Chassis;
 import com.gos.recycle_rush.robot.subsystems.Collector;
 import com.gos.recycle_rush.robot.subsystems.Lifter;
@@ -10,34 +10,34 @@ import com.gos.recycle_rush.robot.subsystems.Shack;
 /**
  *
  */
-public class AutoThreeTotes extends CommandGroup {
-    private static final double distanceFwd1 = 55;
-    private static final double distanceFwd2 = 55;
-    private static final double distanceLeft1 = 107;
-    private static final double distanceBack1 = 50;
-    private static final double distanceFirst1 = 22.25;
+public class AutoThreeTotes extends SequentialCommandGroup {
+    private static final double DISTANCE_FWD1 = 55;
+    private static final double DISTANCE_FWD2 = 55;
+    private static final double DISTANCE_LEFT1 = 107;
+    private static final double DISTANCE_BACK1 = 50;
+    private static final double DISTANCE_FIRST1 = 22.25;
 
     public AutoThreeTotes(Chassis chassis, Shack shack, Collector collector, Lifter lifter) {
-        addSequential(new AutoCollector(collector));
-        addSequential(new Lifting(shack, collector, lifter));
-        addSequential(new AutoFirstPickup(chassis, distanceFirst1));
-        addSequential(new AutoCollector(collector));
-        addSequential(new Lifting(shack, collector, lifter));
+        addCommands(new AutoCollector(collector));
+        addCommands(new Lifting(shack, collector, lifter));
+        addCommands(new AutoFirstPickup(chassis, DISTANCE_FIRST1));
+        addCommands(new AutoCollector(collector));
+        addCommands(new Lifting(shack, collector, lifter));
         // used to get first can and tote
 
-        addSequential(new AutoCollector(collector));
-        addSequential(new AutoDriveForward(chassis, distanceFwd1));
-        addSequential(new Lifting(shack, collector, lifter));
+        addCommands(new AutoCollector(collector));
+        addCommands(new AutoDriveForward(chassis, DISTANCE_FWD1));
+        addCommands(new Lifting(shack, collector, lifter));
         // gets middle tote assuming partner cleared second can
 
-        addSequential(new AutoCollector(collector));
-        addSequential(new AutoDriveForward(chassis, distanceFwd2));
-        addSequential(new Lifting(shack, collector, lifter));
+        addCommands(new AutoCollector(collector));
+        addCommands(new AutoDriveForward(chassis, DISTANCE_FWD2));
+        addCommands(new Lifting(shack, collector, lifter));
         // gets last tote assuming partner cleared third can
 
-        addSequential(new AutoDriveLeft(chassis, distanceLeft1));
-        addSequential(new Release(shack, collector));
-        addSequential(new AutoDriveBackwards(chassis, distanceBack1));
+        addCommands(new AutoDriveLeft(chassis, DISTANCE_LEFT1));
+        addCommands(new Release(shack, collector));
+        addCommands(new AutoDriveBackwards(chassis, DISTANCE_BACK1));
         // turn into the autozone to get robot set
     }
 }

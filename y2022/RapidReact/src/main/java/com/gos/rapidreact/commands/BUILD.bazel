@@ -1,0 +1,14 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "commands",
+    srcs = glob(["*.java"]),
+    visibility = ["//y2022/RapidReact:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//y2022/RapidReact/src/main/java/com/gos/rapidreact/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+    ],
+)

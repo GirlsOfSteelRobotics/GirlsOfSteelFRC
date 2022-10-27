@@ -1,7 +1,7 @@
 package com.gos.preseason2017.team1.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.gos.preseason2017.team1.robot.commands.JawIn;
 import com.gos.preseason2017.team1.robot.commands.JawOut;
 import com.gos.preseason2017.team1.robot.commands.ShiftDown;

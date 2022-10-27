@@ -3,15 +3,15 @@ package com.gos.stronghold.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.stronghold.robot.RobotMap;
 
 /**
  *
  */
-public class Flap extends Subsystem {
+public class Flap extends SubsystemBase {
 
-    private static final double maxEncoder = 360; //max encoder val
+    private static final double MAX_ENCODER = 360; //max encoder val
 
     private final WPI_TalonSRX m_flapTalon;
     private double m_encOffsetValue;
@@ -24,11 +24,7 @@ public class Flap extends Subsystem {
         m_flapTalon.setNeutralMode(NeutralMode.Brake);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -42,7 +38,7 @@ public class Flap extends Subsystem {
     }
 
     public double getMaxEnc() {
-        return maxEncoder;
+        return MAX_ENCODER;
     }
 
     //assuming that going forward will raise the flap and going backwards will lower the flap

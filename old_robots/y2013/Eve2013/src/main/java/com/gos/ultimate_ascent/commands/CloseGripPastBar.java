@@ -18,29 +18,27 @@ public class CloseGripPastBar extends CommandBase {
     public CloseGripPastBar(Gripper gripper) {
         this.m_gripper = gripper;
 
-        requires(gripper);
+        addRequirements(gripper);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_gripper.pastBar();
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_gripper.closeGrip();
     }
 
-    @Override
-    protected void interrupted() {
-    }
+
 
 }

@@ -1,6 +1,6 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.gos.codelabs.BaseTestFixture;
+import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -11,18 +11,17 @@ public class PunchSubsystemTest extends BaseTestFixture {
     @Test
     public void testExtensionAndRetraction() {
 
-        PunchSubsystem punch = new PunchSubsystem();
+        try (PunchSubsystem punch = new PunchSubsystem()) {
 
-        assertFalse(punch.isExtended());
+            assertFalse(punch.isExtended());
 
-        punch.extend();
-        runCycles(3);
-        assertTrue(punch.isExtended());
+            punch.extend();
+            runCycles(3);
+            assertTrue(punch.isExtended());
 
-        punch.retract();
-        runCycles(3);
-        assertFalse(punch.isExtended());
-
-
+            punch.retract();
+            runCycles(3);
+            assertFalse(punch.isExtended());
+        }
     }
 }

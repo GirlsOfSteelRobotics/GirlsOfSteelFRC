@@ -3,13 +3,13 @@ package com.gos.outreach2016.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.outreach2016.robot.RobotMap;
 
 /**
  *
  */
-public class DriveSystem extends Subsystem {
+public class DriveSystem extends SubsystemBase {
     private final WPI_TalonSRX m_driveLeftA;
     private final WPI_TalonSRX m_driveLeftB;
     private final WPI_TalonSRX m_driveLeftC;
@@ -59,9 +59,7 @@ public class DriveSystem extends Subsystem {
 
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

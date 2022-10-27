@@ -13,17 +13,17 @@ public class ManualShoot extends CommandBase {
     public ManualShoot(Shooter shooter, OI oi) {
         m_oi = oi;
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_shooter.initEncoder();
         m_shooter.initPID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_sliderValue = m_oi.getShooterSliderValue();
         m_shooterSpeed = m_shooter.manualShooterSpeedConverter(m_sliderValue);
         m_shooter.setPIDSpeed(m_shooterSpeed);
@@ -33,12 +33,12 @@ public class ManualShoot extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         if (!m_oi.areTopRollersOverriden()) {
             m_shooter.topRollersOff();
         }
@@ -46,9 +46,6 @@ public class ManualShoot extends CommandBase {
         m_shooter.stopEncoder();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

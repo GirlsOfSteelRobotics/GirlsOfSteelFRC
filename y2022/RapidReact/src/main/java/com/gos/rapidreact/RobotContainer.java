@@ -5,16 +5,15 @@
 
 package com.gos.rapidreact;
 
-import com.gos.rapidreact.commands.AutoConveyorAndShooterCommand;
-import com.gos.rapidreact.commands.CollectorHackPIDDown;
+import com.gos.rapidreact.commands.AutoLimelightConveyorAndShooterCommand;
 import com.gos.rapidreact.commands.HangerDownCommand;
 import com.gos.rapidreact.commands.HangerUpCommand;
 import com.gos.rapidreact.commands.FeederVerticalConveyorForwardCommand;
 import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.LimelightGoToHubAngleCommand;
-import com.gos.rapidreact.commands.ShooterFeederCommandGroup;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
+import com.gos.rapidreact.commands.TeleopCurvatureDriveCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
@@ -24,8 +23,11 @@ import com.gos.rapidreact.commands.HorizontalConveyorForwardCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.SetInitialOdometryCommand;
-import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerDownCommand;
+import com.gos.rapidreact.commands.debug.LeftHangerUpCommand;
+import com.gos.rapidreact.commands.debug.RightHangerDownCommand;
+import com.gos.rapidreact.commands.debug.RightHangerUpCommand;
 import com.gos.rapidreact.commands.tuning.ResetCollectorPivotEncoderCommand;
 import com.gos.rapidreact.commands.tuning.TuneShooterGoalRPMCommand;
 import com.gos.rapidreact.commands.tuning.VelocityControlDrivingTuningCommand;
@@ -44,6 +46,8 @@ import com.gos.rapidreact.subsystems.HorizontalConveyorSubsystem;
 import com.gos.rapidreact.subsystems.VerticalConveyorSubsystem;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
@@ -73,10 +77,8 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final IntakeLimelightSubsystem m_intakeLimelight = new IntakeLimelightSubsystem();
     private final ShooterLimelightSubsystem m_shooterLimelight = new ShooterLimelightSubsystem();
-    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector);
+    private final AutoModeFactory m_autoModeFactory = new AutoModeFactory(m_chassis, m_shooter, m_verticalConveyor, m_horizontalConveyor, m_collector, m_shooterLimelight);
     private final LEDManagerSubsystem m_led = new LEDManagerSubsystem(m_shooterLimelight, m_shooter, m_collector, m_verticalConveyor, m_autoModeFactory); // NOPMD
-
-
 
     private final XboxController m_driverJoystick = new XboxController(0);
     private final XboxController m_operatorJoystick = new XboxController(1);
@@ -108,14 +110,18 @@ public class RobotContainer {
         testCommands.add("CollectorUpCommand", new CollectorUpCommand(m_collector));
         // testCommands.add("RollerInCommand", new RollerInCommand(m_collector));
         // testCommands.add("RollerOutCommand", new RollerOutCommand(m_collector));
-        testCommands.add("CollectorPivotPIDCommand - 0 Degrees", new CollectorPivotPIDCommand(m_collector, 0));
-        // testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, 45));
-        testCommands.add("CollectorPivotPIDCommand - 90 Degrees", new CollectorPivotPIDCommand(m_collector, 90));
+        testCommands.add("CollectorPivotPIDCommand - 10 Degrees", new CollectorPivotPIDCommand(m_collector, 10));
+        testCommands.add("CollectorPivotPIDCommand - 20 Degrees", new CollectorPivotPIDCommand(m_collector, 20));
+        testCommands.add("CollectorPivotPIDCommand - 30 Degrees", new CollectorPivotPIDCommand(m_collector, 30));
+        testCommands.add("CollectorPivotPIDCommand - 45 Degrees", new CollectorPivotPIDCommand(m_collector, 45));
+        testCommands.add("CollectorPivotPIDCommand - 60 Degrees", new CollectorPivotPIDCommand(m_collector, 60));
+        testCommands.add("CollectorPivotPIDCommand - 70 Degrees", new CollectorPivotPIDCommand(m_collector, 70));
+        testCommands.add("CollectorPivotPIDCommand - 80 Degrees", new CollectorPivotPIDCommand(m_collector, 80));
 
         // testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         // testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
 
-        // testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
+        testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
         // testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
         // testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
         // testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
@@ -132,15 +138,13 @@ public class RobotContainer {
 
         testCommands.add("LimelightGoToCargo", new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
 
-        testCommands.add("ChangeCollectorDown", new CollectorHackPIDDown(m_collector));
-
-        testCommands.add("Limelight Go To Hub Angle", new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight));
+        testCommands.add("Limelight Go To Hub Angle", new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight, m_shooter));
 
         testCommands.add("GoToHubAngle - 45", new TurnToAngleCommand(m_chassis, 45));
         testCommands.add("GoToHubAngle - -45", new TurnToAngleCommand(m_chassis, -45));
         testCommands.add("GoToHubAngle - 20", new TurnToAngleCommand(m_chassis, 20));
 
-        testCommands.add("Automated Shooter & Conveyor", new AutoConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor));
+        testCommands.add("Automated Shooter & Conveyor", new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor));
 
         //testCommands.add("GoToHubDist - 10", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(10)));
         //testCommands.add("GoToHubDist - 15", new GoToHubDistanceCommand(m_chassis, m_shooterLimelight, Units.feetToMeters(15)));
@@ -148,10 +152,10 @@ public class RobotContainer {
         //testCommands.add("Drive Dist 60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(60), Units.inchesToMeters(2)));
         //testCommands.add("Drive Dist -60", new DriveDistanceCommand(m_chassis, Units.inchesToMeters(-60), Units.inchesToMeters(2)));
 
-        // testCommands.add("Right Hang Up", new RightHangerUpCommand(m_hanger));
-        // testCommands.add("Right Hang Down", new RightHangerDownCommand(m_hanger));
-        // testCommands.add("Left Hang Up", new LeftHangerUpCommand(m_hanger));
-        // testCommands.add("Left Hang Down", new LeftHangerDownCommand(m_hanger));
+        testCommands.add("Right Hang Up", new RightHangerUpCommand(m_hanger));
+        testCommands.add("Right Hang Down", new RightHangerDownCommand(m_hanger));
+        testCommands.add("Left Hang Up", new LeftHangerUpCommand(m_hanger));
+        testCommands.add("Left Hang Down", new LeftHangerDownCommand(m_hanger));
 
         // Trajectories
         trajecCommands.add("B54", TrajectoryB54.fromBto5to4(m_chassis));
@@ -166,6 +170,13 @@ public class RobotContainer {
         }
 
         // PropertyManager.printDynamicProperties();
+
+        if (RobotBase.isSimulation()) {
+            DataLogManager.start("datalogs");
+        } else {
+            DataLogManager.start();
+        }
+        DriverStation.startDataLog(DataLogManager.getLog(), false);
     }
 
 
@@ -176,7 +187,8 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
+        // m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
+        m_chassis.setDefaultCommand(new TeleopCurvatureDriveCommand(m_chassis, m_driverJoystick));
 
         final JoystickButton rollerIn = new JoystickButton(m_driverJoystick, XboxController.Button.kRightBumper.value); //right bumper
         rollerIn.whileHeld(new RollerInCommand(m_collector), true);
@@ -184,6 +196,7 @@ public class RobotContainer {
         rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
         limelightGoToCargo.whileHeld(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
+        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight, m_shooter));
 
         //operator
         new POVButton(m_operatorJoystick, 0).whileHeld(new CollectorUpCommand(m_collector)); //left bumper
@@ -191,22 +204,23 @@ public class RobotContainer {
         final JoystickButton pivotPIDUp = new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value);
         pivotPIDUp.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.UP_ANGLE));
         final JoystickButton pivotPIDDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value);
-        //        pivotPIDDown.whileHeld(new ChangeCollectorDownAngleCommand(m_collector));
-        //        pivotPIDDown.whileHeld(new ChangeCollectorDownAngleCommand(m_collector));
-        pivotPIDDown.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE));
+        pivotPIDDown.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE_TELE));
         new Button(() -> m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
-        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.DEFAULT_SHOOTER_RPM)).whenReleased(() -> m_shooter.setShooterSpeed(0));
-        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new ShooterFeederCommandGroup(m_verticalConveyor, m_shooter, 10));
+        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.FENDER_RPM_LOW)).whenReleased(() -> m_shooter.setShooterSpeed(0));
+        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).whenReleased(() -> {
+            m_shooter.setShooterSpeed(0);
+            m_verticalConveyor.stopFeedMotor();
+        });
         new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new HangerUpCommand(m_hanger));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new HangerDownCommand(m_hanger));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
-        //        new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new FeederVerticalConveyorBackwardCommand(m_verticalConveyor));
-        // final JoystickButton automatedVerticalConveyor = new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value);
-        //        automatedVerticalConveyor.whileHeld(new AutomatedVerticalConveyorCommand(m_verticalConveyor, m_horizontalConveyor));
-
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.TARMAC_EDGE_RPM_HIGH)).whenReleased(() -> {
+            m_shooter.setShooterSpeed(0);
+            m_verticalConveyor.stopFeedMotor();
+        });
     }
 
 
@@ -220,15 +234,19 @@ public class RobotContainer {
         return m_autoModeFactory.getAutonomousMode();
     }
 
+    public void teleopInit() {
+
+        m_shooter.setShooterSpeed(0);
+        m_verticalConveyor.stopFeedMotor();
+    }
+
     private class SuperstructureSendable implements Sendable {
-
-
 
         @Override
         public void initSendable(SendableBuilder builder) {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
             builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_ANGLE, m_collector::getIntakeLeftAngleDegrees, null);
+                SmartDashboardNames.INTAKE_ANGLE, m_collector::getIntakeLeftAngleDegreesNeoEncoder, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.INTAKE_SPEED, m_collector::getPivotSpeed, null);
             builder.addDoubleProperty(

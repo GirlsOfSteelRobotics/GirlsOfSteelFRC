@@ -1,12 +1,12 @@
 package com.gos.stronghold.robot.subsystems;
 
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  *
  */
-public class LEDLights extends Subsystem {
+public class LEDLights extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -50,10 +50,6 @@ public class LEDLights extends Subsystem {
      * }
      * }
      **/
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+
 
 }

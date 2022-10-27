@@ -1,0 +1,4 @@
+alias(
+    name = "2020InfiniteRecharge",
+    actual = "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge",
+)

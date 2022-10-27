@@ -1,0 +1,19 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "subsystems",
+    srcs = glob(["*.java"]),
+    visibility = ["//codelabs/pid:__subpackages__"],
+    deps = [
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid:SmartDashboardNames",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
+        "//libraries/GirlsOfSteelLibRev/src/main/java/com/gos/lib/rev",
+        "@bazelrio//libraries/java/rev/revlib",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)

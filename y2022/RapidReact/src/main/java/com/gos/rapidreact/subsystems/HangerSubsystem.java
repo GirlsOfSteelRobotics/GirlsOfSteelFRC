@@ -1,19 +1,17 @@
 package com.gos.rapidreact.subsystems;
 
 
-import com.gos.lib.properties.PidProperty;
-import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkMaxLimitSwitch;
-import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -23,33 +21,24 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 
 
 public class HangerSubsystem extends SubsystemBase {
-    //these constants are all not correct
-    public static final int ENGAGED_RATCHET_ANGLE = 90;
-    public static final int DISENGAGED_RATCHET_ANGLE = 0;
     public static final double HANGER_UP_SPEED = 1.0;
     public static final double HANGER_DOWN_SPEED = -HANGER_UP_SPEED;
     private static final double GEAR = 80;
-    public static final double ALLOWABLE_ERROR = Units.inchesToMeters(5);
 
-    private final Servo m_servo;
     private final SimableCANSparkMax m_leftHanger;
     private final SimableCANSparkMax m_rightHanger;
 
     private final RelativeEncoder m_leftEncoder;
     private final RelativeEncoder m_rightEncoder;
 
-    private final PidProperty m_pid;
-    private final SparkMaxPIDController m_pidController;
+    private ISimWrapper m_leftSimulator;
+    private ISimWrapper m_rightSimulator;
 
-    private ISimWrapper m_simulator;
-
-    private final SparkMaxLimitSwitch m_bottomLeftLimit;
-    private final SparkMaxLimitSwitch m_bottomRightLimit;
-    private final SparkMaxLimitSwitch m_topLeftLimit;
-    private final SparkMaxLimitSwitch m_topRightLimit;
+    // Logging
+    private final NetworkTableEntry m_leftHangerHeightEntry;
+    private final NetworkTableEntry m_rightHangerHeightEntry;
 
     public HangerSubsystem() {
-        m_servo = new Servo(Constants.SERVO_CHANNEL);
         m_leftHanger = new SimableCANSparkMax(Constants.HANGER_LEFT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leftHanger.restoreFactoryDefaults();
         m_rightHanger = new SimableCANSparkMax(Constants.HANGER_RIGHT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -63,44 +52,30 @@ public class HangerSubsystem extends SubsystemBase {
         m_leftEncoder.setPositionConversionFactor(GEAR);
         m_rightEncoder.setPositionConversionFactor(GEAR);
 
-        m_pidController = m_leftHanger.getPIDController();
-
-        m_pid = new RevPidPropertyBuilder("Hanger PID", false, m_pidController, 0)
-            .addP(0)
-            .addD(0)
-            .build();
-
         m_leftHanger.burnFlash();
         m_rightHanger.burnFlash();
 
-        m_bottomLeftLimit = m_leftHanger.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
-        m_bottomRightLimit = m_rightHanger.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
-        m_topLeftLimit = m_leftHanger.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
-        m_topRightLimit = m_rightHanger.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
-
-        m_topRightLimit.enableLimitSwitch(false); // TODO turn back on
-        m_topLeftLimit.enableLimitSwitch(false);
-        m_bottomLeftLimit.enableLimitSwitch(false);
-        m_bottomRightLimit.enableLimitSwitch(false);
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Hanger");
+        m_leftHangerHeightEntry = loggingTable.getEntry("LeftHeight");
+        m_rightHangerHeightEntry = loggingTable.getEntry("RightHeight");
 
         if (RobotBase.isSimulation()) {
-            ElevatorSim elevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
-            m_simulator = new ElevatorSimWrapper(elevatorSim,
+            ElevatorSim leftElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
+            m_leftSimulator = new ElevatorSimWrapper(leftElevatorSim,
                 new RevMotorControllerSimWrapper(m_leftHanger),
                 RevEncoderSimWrapper.create(m_leftHanger));
+            ElevatorSim rightElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4));
+            m_rightSimulator = new ElevatorSimWrapper(rightElevatorSim,
+                new RevMotorControllerSimWrapper(m_rightHanger),
+                RevEncoderSimWrapper.create(m_rightHanger));
         }
     }
 
 
     @Override
     public void periodic() {
-        // SmartDashboard.putNumber("Hanger Height Encoder", getLeftHangerHeight());
-        // SmartDashboard.putBoolean("Hanger bottom right LS", m_bottomRightLimit.isPressed());
-        // SmartDashboard.putBoolean("Hanger bottom left LS", m_bottomLeftLimit.isPressed());
-        // SmartDashboard.putBoolean("Hanger top right LS", m_topRightLimit.isPressed());
-        // SmartDashboard.putBoolean("Hanger top left LS", m_topLeftLimit.isPressed());
-
-        m_pid.updateIfChanged();
+        m_leftHangerHeightEntry.setNumber(getLeftHangerHeight());
+        m_rightHangerHeightEntry.setNumber(getRightHangerHeight());
     }
 
     public double getLeftHangerSpeed() {
@@ -127,33 +102,10 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHanger.set(speed);
     }
 
-    public void engageRatchet() {
-        m_servo.setAngle(ENGAGED_RATCHET_ANGLE);
-    }
-
-    public void disengageRatchet() {
-        m_servo.setAngle(DISENGAGED_RATCHET_ANGLE);
-    }
-
-    public void setHangerUpMiddleRungPID() {
-        hangerToHeight(Units.feetToMeters(4));
-    }
-
-    public void setHangerUpLowRungPID() {
-        hangerToHeight(Units.feetToMeters(4));
-    }
-
-    public void setHangerDownPID() {
-        hangerToHeight(Units.feetToMeters(0));
-    }
-
-    public void hangerToHeight(double hangerHeight) {
-        m_pidController.setReference(hangerHeight, CANSparkMax.ControlType.kPosition, 0);
-    }
-
     @Override
     public void simulationPeriodic() {
-        m_simulator.update();
+        m_leftSimulator.update();
+        m_rightSimulator.update();
     }
 
     public void stop() {
@@ -161,6 +113,3 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHanger.set(0);
     }
 }
-
-
-

@@ -10,34 +10,31 @@ public class ReverseTopMiddleRollers extends CommandBase {
     public ReverseTopMiddleRollers(Collector collector, Shooter shooter) {
         m_collector = collector;
         m_shooter = shooter;
-        requires(m_collector);
-        requires(m_shooter);
+        addRequirements(m_collector);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_collector.reverseMiddleConveyor();
         m_shooter.topRollersBackward();
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_collector.stopMiddleConveyor();
         m_shooter.topRollersOff();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

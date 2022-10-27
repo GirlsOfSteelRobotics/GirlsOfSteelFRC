@@ -56,12 +56,12 @@ public class ChassisSubsystem extends SubsystemBase {
     @SuppressWarnings("PMD.CloseResource")
     public ChassisSubsystem() {
 
-        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkMaxLowLevel.MotorType.kBrushed);
-        CANSparkMax leftDriveB = new CANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
+        CANSparkMax leftDriveB = new CANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveB.follow(m_leftDriveA);
 
-        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkMaxLowLevel.MotorType.kBrushed);
-        CANSparkMax rightDriveB = new CANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
+        CANSparkMax rightDriveB = new CANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveB.follow(m_rightDriveA);
         m_rightDriveA.setInverted(true);
 
@@ -212,8 +212,23 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveWithVelocity(double leftVelocity, double rightVelocity) {
-        m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY);
-        m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY);
+        driveWithVelocity(leftVelocity, rightVelocity, 0, 0);
+    }
+
+    public void driveWithVelocity(double leftVelocity, double rightVelocity, double leftAccelMpss, double rightAccelMpss) {
+
+        double staticFrictionLeft = Constants.DrivetrainConstants.KS_VOLTS * Math.signum(leftVelocity);
+        double staticFrictionRight = Constants.DrivetrainConstants.KS_VOLTS * Math.signum(rightVelocity);
+        double accelerationLeft = Constants.DrivetrainConstants.KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAccelMpss);
+        double accelerationRight = Constants.DrivetrainConstants.KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(rightAccelMpss);
+
+        double arbLeft = staticFrictionLeft + accelerationLeft;
+        double arbRight = staticFrictionRight + accelerationRight;
+
+        SparkMaxPIDController.ArbFFUnits arbUnit = SparkMaxPIDController.ArbFFUnits.kVoltage;
+
+        m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
+        m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Velocity Goal", leftVelocity);

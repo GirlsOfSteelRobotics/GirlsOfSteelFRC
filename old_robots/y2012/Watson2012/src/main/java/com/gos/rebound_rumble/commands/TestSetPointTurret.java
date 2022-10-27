@@ -10,34 +10,31 @@ public class TestSetPointTurret extends CommandBase {
 
     public TestSetPointTurret(Turret turret) {
         m_turret = turret;
-        requires(m_turret);
+        addRequirements(m_turret);
         SmartDashboard.putNumber("Turret Relative Angle", 0.0);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_turret.initEncoder();
         m_turret.enablePID();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_angle = SmartDashboard.getNumber("Turret Relative Angle", 0.0);
         m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_angle);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_turret.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

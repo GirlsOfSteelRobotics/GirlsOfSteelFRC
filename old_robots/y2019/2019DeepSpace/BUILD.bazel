@@ -1,0 +1,4 @@
+alias(
+    name = "2019DeepSpace",
+    actual = "//old_robots/y2019/2019DeepSpace/src/main/java/com/gos/deep_space",
+)

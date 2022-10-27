@@ -27,17 +27,17 @@ public class ShooterTuning extends CommandBase {
 
     public ShooterTuning(Shooter shooter) {
         m_shooter = shooter;
-        requires(m_shooter);
+        addRequirements(m_shooter);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         SmartDashboard.putNumber("speed", 0.0);
         SmartDashboard.putBoolean("test speed", false);
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         if (SmartDashboard.getBoolean("test speed", false)) {
             m_batteryVoltage = RobotController.getBatteryVoltage();
             m_speed = SmartDashboard.getNumber("speed", 0.0);
@@ -60,17 +60,14 @@ public class ShooterTuning extends CommandBase {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return m_done;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_shooter.stopJags();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

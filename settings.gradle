@@ -1,16 +1,16 @@
 rootProject.name = 'GirlsOfSteelRobotics'
 
-//include 'codelabs:basic_simulator'
+include 'codelabs:basic_simulator'
 //include 'codelabs:custom_shuffleboard'
-//include 'codelabs:gitflow'
+include 'codelabs:gitflow'
 //include 'codelabs:pid'
-//include 'codelabs:basic_java'
+include 'codelabs:basic_java'
 //include 'codelabs:first_robot_code'
 
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
-include 'libraries:GirlsOfSteelLibNavx'
+include 'libraries:SwerveShuffleboard'
 
 //include 'old_robots:y2011:GOS2011:Drive'
 //include 'old_robots:y2011:GOS2011:MyRobot_otherschool'
@@ -33,23 +33,21 @@ include 'libraries:GirlsOfSteelLibNavx'
 //include 'old_robots:y2017:Team1'
 //include 'old_robots:y2017:Team_2'
 //
+//include 'old_robots:y2018:2018PowerUp'
 //
-//include 'y2018:2018Beta'
-//include 'y2018:2018PowerUp'
+//include 'old_robots:y2019:2019DeepSpace'
+//include 'old_robots:y2019:OffenseBot'
 //
-//include 'y2019:2019DeepSpace'
-//include 'y2019:OffenseBot'
+//include 'old_robots:y2020:2020InfiniteRecharge'
+//include 'old_robots:y2020:2020InfiniteRechargeDashboard'
+//include 'old_robots:y2020:Testboard'
+//
+//include 'old_robots:y2021:OutreachBot'
+//include 'old_robots:y2021:OutreachBotDashboard'
 
-//include 'y2020:2020InfiniteRecharge'
-//include 'y2020:2020InfiniteRechargeDashboard'
-//include 'y2020:Testboard'
-//
-//include 'y2021:OutreachBot'
-//include 'y2021:OutreachBotDashboard'
-//
-//include 'y2022:CallistoRewrite'
 //include 'y2022:ChassisProject'
-
+//include 'y2022:MEPI'
 include 'y2022:RapidReact'
 include 'y2022:RapidReactDashboard'
 
+include 'y2023:Preseason'

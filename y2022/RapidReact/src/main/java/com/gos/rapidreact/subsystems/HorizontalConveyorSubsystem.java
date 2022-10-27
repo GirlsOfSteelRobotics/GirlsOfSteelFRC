@@ -15,7 +15,7 @@ public class HorizontalConveyorSubsystem extends SubsystemBase {
 
 
     private final SimableCANSparkMax m_leader;
-    
+
 
     public HorizontalConveyorSubsystem() {
         m_leader = new SimableCANSparkMax(Constants.HORIZONTAL_CONVEYOR_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -51,4 +51,3 @@ public class HorizontalConveyorSubsystem extends SubsystemBase {
     }
 
 }
-

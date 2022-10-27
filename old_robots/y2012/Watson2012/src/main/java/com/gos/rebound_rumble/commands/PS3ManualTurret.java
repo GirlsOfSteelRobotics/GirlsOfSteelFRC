@@ -13,31 +13,28 @@ public class PS3ManualTurret extends CommandBase {
     public PS3ManualTurret(Turret turret, Joystick operatorJoystick) {
         m_turret = turret;
         m_operatorJoystick = operatorJoystick;
-        requires(m_turret);
+        addRequirements(m_turret);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         m_speed = m_operatorJoystick.getX() * .5;
         m_turret.setJagSpeed(m_speed);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

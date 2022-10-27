@@ -1,0 +1,25 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//old_robots/y2020/Testboard:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "testboard2020",
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
+    main_class = "com.gos.testboard2020.Main",
+    visibility = ["//old_robots/y2020/Testboard:__subpackages__"],
+    deps = [
+        ":Constants",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
+        "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020/commands",
+        "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)

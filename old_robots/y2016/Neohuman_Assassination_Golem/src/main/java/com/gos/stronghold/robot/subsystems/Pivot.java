@@ -3,13 +3,13 @@ package com.gos.stronghold.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.gos.stronghold.robot.RobotMap;
 
 /**
  *
  */
-public class Pivot extends Subsystem {
+public class Pivot extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -41,12 +41,7 @@ public class Pivot extends Subsystem {
         m_pivotMotor.set(ControlMode.PercentOutput, -speed);
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
 
-    }
 
     public boolean getTopLimitSwitch() {
         return m_pivotMotor.isRevLimitSwitchClosed() == 0;

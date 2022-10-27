@@ -12,33 +12,30 @@ public class SetPointTurret extends CommandBase {
     public SetPointTurret(Turret turret, OI oi) {
         m_turret = turret;
         m_oi = oi;
-        requires(m_turret);
+        addRequirements(m_turret);
     }
 
     @Override
-    protected void initialize() {
+    public void initialize() {
         m_turret.initEncoder();
         m_turret.enablePID();
     }
 
     @Override
-    protected void execute() {
-        m_knobValue = m_oi.getTurretKnobValue(m_turret.TURRET_OVERRIDE_DEADZONE);
+    public void execute() {
+        m_knobValue = m_oi.getTurretKnobValue(Turret.TURRET_OVERRIDE_DEADZONE);
         m_turret.setPIDSetPoint(m_turret.getEncoderDistance() + m_knobValue);
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         m_turret.stopJag();
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 }

@@ -7,31 +7,27 @@ public class DisableTurret extends CommandBase {
 
     public DisableTurret(Turret turret) {
         m_turret = turret;
-        requires(m_turret);
+        addRequirements(m_turret);
     }
 
     @Override
-    protected void initialize() {
-        m_turret.disablePID();
+    public void initialize() {
         m_turret.stopJag();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
     }
 
     @Override
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
     }
 
-    @Override
-    protected void interrupted() {
-        end();
-    }
+
 
 }

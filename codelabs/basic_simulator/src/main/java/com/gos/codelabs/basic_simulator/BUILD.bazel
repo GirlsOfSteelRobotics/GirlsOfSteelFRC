@@ -1,0 +1,35 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    disable_pmd = True,
+    visibility = ["//codelabs/basic_simulator:__subpackages__"],
+)
+
+gos_java_library(
+    name = "SmartDashboardNames",
+    srcs = ["SmartDashboardNames.java"],
+    visibility = ["//codelabs/basic_simulator:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "basic_simulator",
+    srcs = glob(
+        ["*.java"],
+        exclude = [
+            "SmartDashboardNames.java",
+            "Constants.java",
+        ],
+    ),
+    disable_pmd = True,
+    main_class = "com.gos.codelabs.basic_simulator.Main",
+    visibility = ["//codelabs/basic_simulator:__subpackages__"],
+    deps = [
+        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/auton_modes",
+        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/commands",
+        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)
