@@ -31,7 +31,7 @@ import java.util.List;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-@SuppressWarnings("PMD.UnusedPrivateField")
+@SuppressWarnings("PMD.UnusedPrivateField,PMD.TooManyFields")
 public class RobotContainer {
     private static final String DRIVETRAIN_NAME = "m_drivetrain";
 
