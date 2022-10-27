@@ -14,4 +14,13 @@ package com.gos.preseason2023;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final int SWERVE_FRONT_LEFT_SPIN_ID = 1;
+    public static final int SWERVE_FRONT_RIGHT_SPIN_ID = 2;
+    public static final int SWERVE_BACK_LEFT_SPIN_ID = 3;
+    public static final int SWERVE_BACK_RIGHT_SPIN_ID = 4;
+
+    public static final int SWERVE_FRONT_LEFT_POWER_ID = 5;
+    public static final int SWERVE_FRONT_RIGHT_POWER_ID = 6;
+    public static final int SWERVE_BACK_LEFT_POWER_ID = 7;
+    public static final int SWERVE_BACK_RIGHT_POWER_ID = 8;
 }
