@@ -5,6 +5,8 @@
 
 package com.gos.preseason2023;
 
+import com.gos.preseason2023.commands.JoystickSwerveCommand;
+import com.gos.preseason2023.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,11 +26,17 @@ public class RobotContainer {
 
     private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+    private final ChassisSubsystem m_chassis;
+
+    private final XboxController m_joystick;
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        m_chassis = new ChassisSubsystem();
+        m_joystick = new XboxController(0);
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -43,6 +51,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+        m_chassis.setDefaultCommand(new JoystickSwerveCommand(m_chassis, m_joystick));
     }
 
 
