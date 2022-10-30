@@ -6,9 +6,9 @@ gos_java_robot(
     disable_checkstyle = True,
     main_class = "com.gos.preseason2023.Main",
     deps = [
+        "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/rev/revlib",
         "@snobot_sim//jar",
     ],
 )
