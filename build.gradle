@@ -1,10 +1,19 @@
 
 plugins {
-    id 'com.diffplug.spotless' version '5.5.0' apply false
-    id 'com.github.spotbugs' version '5.0.0-beta.1' apply false
+    id 'com.diffplug.spotless' version '6.4.2' apply false
+    id 'com.github.spotbugs' version '5.0.8' apply false
 }
 
-allprojects {
+subprojects {
+    // TODO(pj) surely there is a better way
+    var ignored_subprojects = ["codelabs", "libraries", "old_robots"]
+    for(int year = 2011; year < 3000; ++year) {
+        ignored_subprojects.add("y" + year)
+    }
+    if (ignored_subprojects.contains(name)) {
+        return
+    }
+
     apply from: "${rootDir}/styleguide/styleguide.gradle"
 }
 
