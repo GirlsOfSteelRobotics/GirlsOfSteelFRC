@@ -5,7 +5,16 @@
       "/LiveWindow/ChassisSubsystem": "Subsystem",
       "/LiveWindow/CollectorExampleSubsystem": "Subsystem",
       "/LiveWindow/ExampleSubsystem": "Subsystem",
-      "/LiveWindow/Ungrouped/Scheduler": "Scheduler"
+      "/LiveWindow/Ungrouped/ADXRS450_Gyro[0]": "Gyro",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Field": "Field2d"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }
