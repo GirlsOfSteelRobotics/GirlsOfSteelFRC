@@ -23,8 +23,8 @@ public final class Constants {
     public static final int SWERVE_FRONT_RIGHT_POWER_ID = 6;
     public static final int SWERVE_BACK_LEFT_POWER_ID = 7;
     public static final int SWERVE_BACK_RIGHT_POWER_ID = 8;
-    public static final int COLLECTOR_PIVOT_LEFT = 3;
-    public static final int COLLECTOR_PIVOT_RIGHT = 4;
-    public static final int COLLECTOR_ROLLER = 9;
+    public static final int COLLECTOR_PIVOT_LEFT = 9;
+    public static final int COLLECTOR_PIVOT_RIGHT = 10;
+    public static final int COLLECTOR_ROLLER = 11;
 
 }
