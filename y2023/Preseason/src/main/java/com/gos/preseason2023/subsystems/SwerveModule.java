@@ -11,7 +11,7 @@ public class SwerveModule {
     private final CANSparkMax m_powerMotor;
 
     private final RelativeEncoder m_spinEncoder;
-    private final RelativeEncoder m_powerEncoder;
+    private final RelativeEncoder m_powerEncoder; // NOPMD
 
     public SwerveModule(int spinID, int powerID) {
         m_spinMotor = new CANSparkMax(spinID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -23,7 +23,7 @@ public class SwerveModule {
 
     public void goToState(SwerveModuleState state) {
         double error = state.angle.getDegrees() - m_spinEncoder.getPosition();
-        if(error > 0) {
+        if (error > 0) {
             m_spinMotor.set(0.5);
         }
         else {
