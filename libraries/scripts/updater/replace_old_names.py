@@ -15,7 +15,7 @@ def __run_replacement(replacements, root=".", dir_blacklist=None):
         regex_replace_file(java_file, replacements)
 
 
-def run_standard_replacement(auto_commit=True):
+def run_standard_replacement(auto_commit):
 
     # Last sync Dec 19, 2021
     wpilib_replacements_url = "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources/java_replacements.json"
@@ -39,11 +39,36 @@ def run_standard_replacement(auto_commit=True):
         commit_all_changes("Auto-Update: Ran standard vscode replacements")
 
 
-def run_our_additional_replacements(auto_commit=True):
+def run_our_additional_replacements(auto_commit):
     replacements = []
 
     # Put our smarter-than-wpilib replacements here
     # fmt: off
+
+    # Deprecated Buttons
+    replacements.append((r"\.whileHeld\((new .*?\(.*?\)), true\);", r".whileTrue(\1);"))
+    replacements.append((r"\.whileHeld\(", r".whileTrue("))
+    replacements.append((r"\.whenHeld\(", r".whileTrue("))
+    replacements.append((r"\.whenReleased\(", r".onFalse("))
+    replacements.append((r"\.whenPressed\(", r".onTrue("))
+    replacements.append((r"\.whenActive\(", r".onTrue("))
+    replacements.append((r"\.onTrue\((new .*?\(.*?\)), true\);", r".onTrue(\1);"))
+    replacements.append((r"new Button\(", r"new Trigger("))
+    replacements.append((r"new edu.wpi.first.wpilibj2.command.button.Button\(", r"new Trigger("))
+    replacements.append((r" Button (.*?) = new JoystickButton", r" JoystickButton \1 = new JoystickButton"))
+    replacements.append((r"import edu.wpi.first.wpilibj2.command.button.Button;", "import edu.wpi.first.wpilibj2.command.button.Trigger;"))
+
+    # Deprecated Commands
+    replacements.append((r"\.withInterrupt\(", ".until("))
+
+    # Now uses Rotation2d
+    replacements.append((r"\.drivePolar\((.*), (.*?), (.*?)\);", r".drivePolar(\1, Rotation2d.fromDegrees(\2), \3);"))
+    replacements.append((r"\.driveCartesian\((.*), (.*?), (.*?), (.*?)\);", r".driveCartesian(\1, \2, \3, Rotation2d.fromDegrees(\4));"))
+
+    # Now uses Rotation2d
+    replacements.append((r"ElevatorSim\((.*), (.*), (.*), (.*), (.*), (.*)\);", r"ElevatorSim(\1, \2, \3, \4, \5, \6, true);"))
+    replacements.append((r"ElevatorSim\((\n.*),(\n.*),(\n.*),(\n.*),(\n.*),(\n.*)\);", r"ElevatorSim(\1, \2, \3, \4, \5, \6, true);"))
+    replacements.append((r"ElevatorSim\((\n.*),(\n.*),(\n.*),(\n.*),(\n.*),(\n.*),(\n.*)\);", r"ElevatorSim(\1, \2, \3, \4, \5, \6, true, \7);"))
     # fmt: on
 
     # Run these on all the files
@@ -53,6 +78,11 @@ def run_our_additional_replacements(auto_commit=True):
         commit_all_changes("Auto-Update: Ran our additional replacements")
 
 
-def run_all_replacements():
-    run_standard_replacement()
-    run_our_additional_replacements()
+def run_all_replacements(auto_commit=True):
+    run_standard_replacement(auto_commit=auto_commit)
+    run_our_additional_replacements(auto_commit=auto_commit)
+
+
+if __name__ == "__main__":
+    #  py -m libraries.scripts.updater.replace_old_names
+    run_all_replacements(auto_commit=False)

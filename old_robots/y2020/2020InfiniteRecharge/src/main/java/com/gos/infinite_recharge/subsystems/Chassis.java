@@ -221,7 +221,7 @@ public class Chassis extends SubsystemBase {
 
     private void createField(String name) {
 
-        Field2d field = new Field2d();
+        Field2d field = new Field2d(); // NOPMD(CloseResource)
         m_fields.add(field);
         Shuffleboard.getTab("Fields").add(name + "Field", field);
     }
@@ -231,7 +231,7 @@ public class Chassis extends SubsystemBase {
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), Units.inchesToMeters(m_leftEncoder.getPosition()),
             Units.inchesToMeters(m_rightEncoder.getPosition()));
 
-        for (Field2d field : m_fields) {
+        for (Field2d field : m_fields) { // NOPMD(CloseResource)
             field.setRobotPose(m_odometry.getPoseMeters());
         }
 

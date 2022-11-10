@@ -3,22 +3,15 @@ package com.gos.infinite_recharge.commands.autonomous;
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.subsystems.Chassis;
 import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import org.snobotv2.coordinate_gui.RamsetePublisher;
+import org.snobotv2.coordinate_gui.commands.BaseRamseteCoordinateGuiCommand;
 
-public class FollowTrajectory extends SequentialCommandGroup {
+public class FollowTrajectory extends BaseRamseteCoordinateGuiCommand {
 
     private final Chassis m_chassis;
-    private final Trajectory m_trajectory;
-    private final RamsetePublisher m_ramsetePublisher;
-
-    private double m_goalVelocityLeft;
-    private double m_goalVelocityRight;
 
     public static class AutoConstants {
         public static final double SLOW_SPEED_METERS_PER_SECOND = Units.inchesToMeters(48);
@@ -34,29 +27,23 @@ public class FollowTrajectory extends SequentialCommandGroup {
     }
 
     public FollowTrajectory(Trajectory trajectory, Chassis chassis) {
-
-        this.m_chassis = chassis;
-        this.m_trajectory = trajectory;
-
-        m_ramsetePublisher = new RamsetePublisher();
-
-        RamseteCommand ramseteCommand = new RamseteCommand(
-            trajectory,
-            m_chassis::getPose,
+        super(trajectory,
             new RamseteController(AutoConstants.RAMSETE_B, AutoConstants.RAMSETE_ZETA),
             Constants.DriveConstants.DRIVE_KINEMATICS,
-            this::setVelocityGoal,
-            m_chassis
-        );
+            chassis);
 
-        addCommands(ramseteCommand);
-        addCommands(new InstantCommand(() -> m_chassis.stop(), m_chassis));
+        this.m_chassis = chassis;
     }
 
-    private void setVelocityGoal(double leftVelocityMeters, double rightVelocityMeters) {
+    @Override
+    protected Pose2d getPose() {
+        return m_chassis.getPose();
+    }
 
-        double leftVelocityInchesPerSecond = Units.metersToInches(leftVelocityMeters);
-        double rightVelocityInchesPerSecond = Units.metersToInches(rightVelocityMeters);
+    @Override
+    protected void setVelocity(double leftVelocityMps, double rightVelocityMps, double leftAccelMpss, double rightAccelMpss) {
+        double leftVelocityInchesPerSecond = Units.metersToInches(leftVelocityMps);
+        double rightVelocityInchesPerSecond = Units.metersToInches(rightVelocityMps);
         m_goalVelocityLeft = leftVelocityInchesPerSecond;
         m_goalVelocityRight = rightVelocityInchesPerSecond;
         //System.out.println("Setting goal velocity: " + m_goalVelocityLeft + ", " + m_goalVelocityRight);
@@ -64,18 +51,8 @@ public class FollowTrajectory extends SequentialCommandGroup {
     }
 
     @Override
-    public void initialize() {
-        super.initialize();
-        m_ramsetePublisher.initialize(m_trajectory);
-    }
-
-    @Override
-    public void execute() {
-        super.execute();
-
-        m_ramsetePublisher.addMeasurement(m_chassis.getPose(),
-                new DifferentialDriveWheelSpeeds(Units.inchesToMeters(m_goalVelocityLeft), Units.inchesToMeters(m_goalVelocityRight)),
-                new DifferentialDriveWheelSpeeds(Units.inchesToMeters(m_chassis.getLeftEncoderSpeed()), Units.inchesToMeters(m_chassis.getRightEncoderSpeed())));
+    protected DifferentialDriveWheelSpeeds getCurrentWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(Units.inchesToMeters(m_chassis.getLeftEncoderSpeed()), Units.inchesToMeters(m_chassis.getRightEncoderSpeed()));
     }
 
     @Override

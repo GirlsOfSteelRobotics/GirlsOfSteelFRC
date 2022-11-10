@@ -24,10 +24,4 @@ public class SingleShoot extends SequentialCommandGroup {
             }),
             new StopShooter(shooter));
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        super.end(interrupted);
-        System.out.println("Command finished");
-    }
 }

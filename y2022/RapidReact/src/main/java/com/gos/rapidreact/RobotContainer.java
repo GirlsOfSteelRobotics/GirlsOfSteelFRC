@@ -56,6 +56,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -209,18 +210,18 @@ public class RobotContainer {
         new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
         new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
         new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
-        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.FENDER_RPM_LOW)).whenReleased(() -> m_shooter.setShooterSpeed(0));
-        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).whenReleased(() -> {
+        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.FENDER_RPM_LOW)).whenReleased(new InstantCommand(() -> m_shooter.setShooterSpeed(0)));
+        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).whenReleased(new InstantCommand(() -> {
             m_shooter.setShooterSpeed(0);
             m_verticalConveyor.stopFeedMotor();
-        });
+        }));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new HangerUpCommand(m_hanger));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new HangerDownCommand(m_hanger));
         new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.TARMAC_EDGE_RPM_HIGH)).whenReleased(() -> {
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.TARMAC_EDGE_RPM_HIGH)).whenReleased(new InstantCommand(() -> {
             m_shooter.setShooterSpeed(0);
             m_verticalConveyor.stopFeedMotor();
-        });
+        }));
     }
 
 
