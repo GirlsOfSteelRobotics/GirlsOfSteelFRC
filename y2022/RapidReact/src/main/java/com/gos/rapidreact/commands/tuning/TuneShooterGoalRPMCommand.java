@@ -1,13 +1,13 @@
 package com.gos.rapidreact.commands.tuning;
 
-import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.rapidreact.subsystems.ShooterSubsystem;
 
 
 public class TuneShooterGoalRPMCommand extends CommandBase {
     private final ShooterSubsystem m_shooter;
-    private static final PropertyManager.IProperty<Double> SHOOTER_GOAL = PropertyManager.createDoubleProperty(false, "Tune Shooter RPM Goal", 0);
+    private static final GosDoubleProperty SHOOTER_GOAL = new GosDoubleProperty(false, "Tune Shooter RPM Goal", 0);
 
     public TuneShooterGoalRPMCommand(ShooterSubsystem shooterSubsystem) {
         this.m_shooter = shooterSubsystem;

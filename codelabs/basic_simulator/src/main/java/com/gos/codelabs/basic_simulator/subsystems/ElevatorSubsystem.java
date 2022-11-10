@@ -3,18 +3,21 @@ package com.gos.codelabs.basic_simulator.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
+import com.gos.codelabs.basic_simulator.Constants;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.simulation.DIOSim;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.codelabs.basic_simulator.Constants;
+import org.snobotv2.module_wrappers.BaseDigitalInputWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
-import org.snobotv2.sim_wrappers.ISimWrapper;
 
-public class ElevatorSubsystem extends SubsystemBase {
-    public static final double ALLOWABLE_POSITION_ERROR = .25;
+public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
+    public static final double ALLOWABLE_POSITION_ERROR = Units.inchesToMeters(1);
 
     public enum Positions {
         LOW(Units.inchesToMeters(10)),
@@ -34,24 +37,55 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
-    private ISimWrapper m_elevatorSim;
+    private ElevatorSimWrapper m_elevatorSim;
+
+    private static final class ElevatorSimConstants {
+        public static final double K_ELEVATOR_GEARING = 10.0;
+        public static final double K_CARRIAGE_MASS = 4.0; // kg
+        public static final double K_MIN_ELEVATOR_HEIGHT = -5.0;
+        public static final double K_MAX_ELEVATOR_HEIGHT = Units.inchesToMeters(50e50);
+        public static final DCMotor K_ELEVATOR_GEARBOX = DCMotor.getVex775Pro(4);
+        public static final double K_ELEVATOR_DRUM_RADIUS = Units.inchesToMeters(2.0);
+    }
 
     public ElevatorSubsystem() {
-        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_liftEncoder = m_liftMotor.getEncoder();
 
         m_lowerLimitSwitch = new DigitalInput(Constants.DIO_LIFT_LOWER_LIMIT);
         m_upperLimitSwitch = new DigitalInput(Constants.DIO_LIFT_UPPER_LIMIT);
 
         if (RobotBase.isSimulation()) {
-            m_elevatorSim = new ElevatorSimWrapper(Constants.ElevatorSimConstants.createSim(),
+            ElevatorSim sim = new ElevatorSim(
+                    ElevatorSimConstants.K_ELEVATOR_GEARBOX,
+                    ElevatorSimConstants.K_ELEVATOR_GEARING,
+                    ElevatorSimConstants.K_CARRIAGE_MASS,
+                    ElevatorSimConstants.K_ELEVATOR_DRUM_RADIUS,
+                    ElevatorSimConstants.K_MIN_ELEVATOR_HEIGHT,
+                    ElevatorSimConstants.K_MAX_ELEVATOR_HEIGHT);
+
+            m_elevatorSim = new ElevatorSimWrapper(sim,
                     new RevMotorControllerSimWrapper(m_liftMotor),
                     RevEncoderSimWrapper.create(m_liftMotor));
+            m_elevatorSim.setLowerLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_lowerLimitSwitch)::setValue));
+            m_elevatorSim.setUpperLimitSwitch(new BaseDigitalInputWrapper(new DIOSim(m_upperLimitSwitch)::setValue));
         }
     }
 
     @Override
+    public void close() {
+        m_liftMotor.close();
+        m_lowerLimitSwitch.close();
+        m_upperLimitSwitch.close();
+    }
+
+    @Override
     public void periodic() {
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_elevatorSim.update();
     }
 
     public boolean goToPosition(double position) {
@@ -60,7 +94,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public boolean isAtLowerLimit() {
-
         // TODO implement
         return false;
     }
@@ -70,6 +103,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         return false;
     }
 
+    public void stop() {
+        // TODO implement
+    }
+
     public void setSpeed(double speed) {
         // TODO implement
     }
@@ -77,10 +114,5 @@ public class ElevatorSubsystem extends SubsystemBase {
     public double getHeight() {
         // TODO implement
         return 0;
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        m_elevatorSim.update();
     }
 }

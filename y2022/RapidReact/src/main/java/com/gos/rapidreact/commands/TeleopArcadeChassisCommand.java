@@ -1,14 +1,14 @@
 package com.gos.rapidreact.commands;
 
-import com.gos.lib.properties.PropertyManager;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.rapidreact.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class TeleopArcadeChassisCommand extends CommandBase {
-    private static final PropertyManager.IProperty<Double> SLOW_MULTIPLIER = PropertyManager.createDoubleProperty(false, "TeleDriveSlowMult", 0.5);
-    private static final PropertyManager.IProperty<Double> TURN_SCALING_MULTIPLIER = PropertyManager.createDoubleProperty(false, "TeleTurnScaling", 0.8);
+    private static final GosDoubleProperty SLOW_MULTIPLIER = new GosDoubleProperty(false, "TeleDriveSlowMult", 0.5);
+    private static final GosDoubleProperty TURN_SCALING_MULTIPLIER = new GosDoubleProperty(false, "TeleTurnScaling", 0.8);
     private final ChassisSubsystem m_chassis;
     private final XboxController m_joystick;
 

@@ -86,12 +86,12 @@ def load_pandas_log(file):
     return pd.read_hdf(file)
 
 
-def load_log(file):
-    if os.path.exists(file + ".hdf5"):
-        print("Loading hdf5 ", file)
-        return load_pandas_log(file + ".hdf5")
+def load_log(input_log, cached_hdf5_file):
+    if os.path.exists(cached_hdf5_file):
+        print("Loading hdf5 ", cached_hdf5_file)
+        return load_pandas_log(cached_hdf5_file)
     else:
-        dataframe = load_wpilog_log(file)
-        dataframe.to_hdf(file + ".hdf5", "wpilog")
+        dataframe = load_wpilog_log(input_log)
+        dataframe.to_hdf(cached_hdf5_file, "wpilog")
 
         return dataframe

@@ -12,10 +12,10 @@ import java.util.function.DoubleConsumer;
  */
 public class HeavyDoubleProperty {
     private final DoubleConsumer m_setter;
-    private final PropertyManager.IProperty<Double> m_property;
+    private final GosDoubleProperty m_property;
     private double m_lastValue;
 
-    public HeavyDoubleProperty(DoubleConsumer setter, PropertyManager.IProperty<Double> property) {
+    public HeavyDoubleProperty(DoubleConsumer setter, GosDoubleProperty property) {
         m_setter = setter;
         m_property = property;
         m_lastValue = property.getValue();

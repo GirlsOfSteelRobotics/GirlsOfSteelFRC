@@ -2,22 +2,22 @@ package com.gos.infinite_recharge.commands.autonomous;
 
 import com.gos.infinite_recharge.Constants;
 import com.gos.infinite_recharge.subsystems.Chassis;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
-import com.gos.lib.properties.PropertyManager;
 
 public class TurnToAngleProfiled extends ProfiledPIDCommand {
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(
+    private static final GosDoubleProperty AUTO_KP = new GosDoubleProperty(
             true, "TurnToAngleProfiledKp", 0.05);
-    private static final PropertyManager.IProperty<Double> AUTO_KI = PropertyManager.createDoubleProperty(
+    private static final GosDoubleProperty AUTO_KI = new GosDoubleProperty(
         true, "TurnToAngleProfiledKi", 0.05);
-    private static final PropertyManager.IProperty<Double> AUTO_KD = PropertyManager.createDoubleProperty(
+    private static final GosDoubleProperty AUTO_KD = new GosDoubleProperty(
         true, "TurnToAngleProfiledKd", 0.05);
-    private static final PropertyManager.IProperty<Double> MAX_TURN_RATE_DEG_PER_SEC = PropertyManager.createDoubleProperty(
+    private static final GosDoubleProperty MAX_TURN_RATE_DEG_PER_SEC = new GosDoubleProperty(
         true, "MaxTurnRateDegPerSec", Constants.MAX_TURN_RATE_DEG_PER_S);
-    private static final PropertyManager.IProperty<Double> MAX_TURN_ACCELERATION_DEG_PER_SEC_SQUARED = PropertyManager.createDoubleProperty(
+    private static final GosDoubleProperty MAX_TURN_ACCELERATION_DEG_PER_SEC_SQUARED = new GosDoubleProperty(
         true, "MaxTurnAccelerationDegPerSecSquared", Constants.MAX_TURN_ACCELERATION_DEG_PER_S_SQUARED);
 
     // private final Chassis m_chassis;

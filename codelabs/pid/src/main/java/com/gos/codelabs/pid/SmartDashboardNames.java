@@ -11,6 +11,7 @@ public final class SmartDashboardNames {
     public static final String ELEVATOR_DESIRED_HEIGHT          = "Desired Height";
     public static final String ELEVATOR_UPPER_LIMIT_SWITCH      = "Upper Limit Switch";
     public static final String ELEVATOR_LOWER_LIMIT_SWITCH      = "Lower Limit Switch";
+    public static final String ELEVATOR_VELOCITY = "Elevator Velocity (mps)";
 
     public static final String PUNCH_TABLE_NAME = "Punch";
     public static final String PUNCH_IS_EXTENDED                = "Extended";

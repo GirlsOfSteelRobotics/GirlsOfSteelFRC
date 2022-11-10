@@ -1,0 +1,109 @@
+
+base_package: com.gos.lib.shuffleboard
+plugin_summary: "XXX"
+plugin_name: "SwerveDrive"
+widgets:
+  - table: SwerveDrive
+    package_name: swerve
+    widget_name: Swerve Drive Widget
+    sd_table_name_constant: SWERVE_DRIVE_TABLE_NAME
+
+    children_tables:
+      - table: LeftFront
+        table_name: LEFT_FRONT_SWERVE_DRIVE
+        shapes:
+          - type: Rectangle
+            name: rrCurrentState
+          - type: Rectangle
+            name: rrDesiredState
+        entries:
+          - type: double
+            name: currentAngle
+            dasboard_constant: CURRENT_ANGLE
+            sim_incr: 2
+          - type: double
+            name: desiredAngle
+            dasboard_constant: DESIRED_ANGLE
+            sim_incr: 2
+          - type: double
+            name: driveMotorPercentage
+            dasboard_constant: DRIVE_MOTOR_PERCENTAGE
+            sim_incr: .05
+          - type: double
+            name: turnMotorPercentage
+            dasboard_constant: TURN_MOTOR_PERCENTAGE
+            sim_incr: .05
+      - table: LeftRear
+        table_name: LEFT_REAR_SWERVE_DRIVE
+        shapes:
+          - type: Rectangle
+            name: rrCurrentState
+          - type: Rectangle
+            name: rrDesiredState
+        entries:
+          - type: double
+            name: currentAngle
+            dasboard_constant: CURRENT_ANGLE
+            sim_incr: 2
+          - type: double
+            name: desiredAngle
+            dasboard_constant: DESIRED_ANGLE
+            sim_incr: 2
+          - type: double
+            name: driveMotorPercentage
+            dasboard_constant: DRIVE_MOTOR_PERCENTAGE
+            sim_incr: .05
+          - type: double
+            name: turnMotorPercentage
+            dasboard_constant: TURN_MOTOR_PERCENTAGE
+            sim_incr: .05
+
+      - table: RightFront
+        table_name: RIGHT_FRONT_SWERVE_DRIVE
+        shapes:
+          - type: Rectangle
+            name: rrCurrentState
+          - type: Rectangle
+            name: rrDesiredState
+        entries:
+          - type: double
+            name: currentAngle
+            dasboard_constant: CURRENT_ANGLE
+            sim_incr: 2
+          - type: double
+            name: desiredAngle
+            dasboard_constant: DESIRED_ANGLE
+            sim_incr: 2
+          - type: double
+            name: driveMotorPercentage
+            dasboard_constant: DRIVE_MOTOR_PERCENTAGE
+            sim_incr: .05
+          - type: double
+            name: turnMotorPercentage
+            dasboard_constant: TURN_MOTOR_PERCENTAGE
+            sim_incr: .05
+
+      - table: RightRear
+        table_name: RIGHT_REAR_SWERVE_DRIVE
+        shapes:
+          - type: Rectangle
+            name: rrCurrentState
+          - type: Rectangle
+            name: rrDesiredState
+        entries:
+          - type: double
+            name: currentAngle
+            dasboard_constant: CURRENT_ANGLE
+            sim_incr: 2
+          - type: double
+            name: desiredAngle
+            dasboard_constant: DESIRED_ANGLE
+            sim_incr: 2
+          - type: double
+            name: driveMotorPercentage
+            dasboard_constant: DRIVE_MOTOR_PERCENTAGE
+            sim_incr: .05
+          - type: double
+            name: turnMotorPercentage
+            dasboard_constant: TURN_MOTOR_PERCENTAGE
+            sim_incr: .05

@@ -384,7 +384,8 @@ user.bazelrc
 !/settings.gradle
 .vscode
 .wpilib
-gradle
+gradle/*.jar
+gradle/*.properties
 gradlew
 gradlew.bat
 WPILib-License.md

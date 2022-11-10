@@ -106,18 +106,23 @@ def plot_shooting_window(df, output_directory, extra_time_buffer=5):
 
 
 def main():
-    directory = r"C:\Users\girls\Desktop\Worlds Robot Data"
+    directory = r"C:\Users\girls\Desktop\2022RobotLogs\champs\matches"
     log_name = "FRC_20220421_153958_GALILEO_Q18"
+
+    # directory = r"C:\Users\girls\Desktop\2022RobotLogs\wvrox\matches"
+    # log_name = "FRC_20220806_164844_WVMOR_E19"
 
     #     directory = r"C:\Users\PJ\Documents\GitHub\gos_data\RapidReactRobotLogs"
     #     log_name = "FRC_20220402_203438"
 
-    converted_file = os.path.join(directory, f"{log_name}.wpilog")
     output_directory = os.path.join(directory, log_name)
     if not os.path.exists(output_directory):
         os.mkdir(output_directory)
 
-    df = load_log(converted_file)
+    input_log = os.path.join(directory, f"{log_name}.wpilog")
+    hdf5_log = os.path.join(output_directory, f"{log_name}.hdf5")
+
+    df = load_log(input_log, hdf5_log)
 
     # Debug what things are in log
     utils.save_dataframe_metadata(df, output_directory)

@@ -9,15 +9,17 @@ from libraries.scripts.git.git_python_wrappers import (
 )
 
 
-def run_smart_spotless(run_all_projects=True, auto_commit=True):
+def run_smart_spotless(run_all_projects=True, auto_commit=True, commands=None):
     all_project_files = ["styleguide/styleguide.gradle", "settings.gradle"]
     if run_all_projects:
         checkout_files_from_branch("origin/dnl_enable_all_projects_and_spotless", all_project_files)
 
-    run_gradle_commands(["spotlessApply"])
+    commands = commands or ["spotlessApply"]
+
+    run_gradle_commands(commands)
 
     if run_all_projects:
         checkout_files_from_branch("HEAD", all_project_files)
 
     if auto_commit:
-        commit_all_changes("Ran spotless")
+        commit_all_changes("Auto-Update: Ran spotless")

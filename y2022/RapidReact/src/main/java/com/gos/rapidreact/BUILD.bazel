@@ -18,7 +18,7 @@ gos_java_robot(
     main_class = "com.gos.rapidreact.Main",
     visibility = ["//y2022/RapidReact:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/properties",
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/auto_modes",
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/commands",
         "//y2022/RapidReact/src/main/java/com/gos/rapidreact/commands/debug",

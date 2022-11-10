@@ -1,6 +1,7 @@
 package com.gos.infinite_recharge.subsystems;
 
 import com.gos.infinite_recharge.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxRelativeEncoder;
@@ -22,7 +23,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.gos.lib.properties.PropertyManager;
 
 public class Shooter extends SubsystemBase {
 
@@ -44,8 +44,8 @@ public class Shooter extends SubsystemBase {
 
     private final NetworkTable m_customNetworkTable;
 
-    private final PropertyManager.IProperty<Double> m_dashboardKp;
-    private final PropertyManager.IProperty<Double> m_dashboardKff;
+    private final GosDoubleProperty m_dashboardKp;
+    private final GosDoubleProperty m_dashboardKff;
 
     private final NetworkTableEntry m_isAtShooterSpeedEntry;
 
@@ -60,8 +60,8 @@ public class Shooter extends SubsystemBase {
         m_master.restoreFactoryDefaults();
         m_follower.restoreFactoryDefaults();
 
-        m_dashboardKp = PropertyManager.createDoubleProperty(false, "shooter_kp", SHOOTER_KP);
-        m_dashboardKff = PropertyManager.createDoubleProperty(false, "shooter_kff", SHOOTER_KFF);
+        m_dashboardKp = new GosDoubleProperty(false, "shooter_kp", SHOOTER_KP);
+        m_dashboardKff = new GosDoubleProperty(false, "shooter_kff", SHOOTER_KFF);
 
         m_limelight = limelight;
 

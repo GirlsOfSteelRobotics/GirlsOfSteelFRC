@@ -1,0 +1,20 @@
+
+
+plugins {
+    id "java"
+    id 'application'
+}
+
+ext {
+    package_name = "com.gos.lib.shuffleboard"
+    publishing_version = "2022.0.0"
+}
+
+application {
+    mainClassName = 'com.gos.lib.shuffleboard.swerve.SwerveStandaloneMain'
+}
+
+apply from: "${rootDir}/build_scripts/gradle/custom_dashboard_helper.gradle"
+
+ext.groupId = "com.gos.lib.shuffleboard.swerve"
+apply from: "${rootDir}/build_scripts/gradle/publish_java.gradle"

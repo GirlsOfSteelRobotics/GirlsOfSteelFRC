@@ -13,6 +13,7 @@ import com.gos.rapidreact.commands.HorizontalConveyorBackwardCommand;
 import com.gos.rapidreact.commands.LimelightGoToCargoCommand;
 import com.gos.rapidreact.commands.LimelightGoToHubAngleCommand;
 import com.gos.rapidreact.commands.ShooterRpmPIDCommand;
+import com.gos.rapidreact.commands.TeleopCurvatureDriveCommand;
 import com.gos.rapidreact.commands.TurnToAngleCommand;
 import com.gos.rapidreact.commands.VerticalConveyorDownCommand;
 import com.gos.rapidreact.commands.CollectorDownCommand;
@@ -22,7 +23,6 @@ import com.gos.rapidreact.commands.HorizontalConveyorForwardCommand;
 import com.gos.rapidreact.commands.RollerInCommand;
 import com.gos.rapidreact.commands.RollerOutCommand;
 import com.gos.rapidreact.commands.SetInitialOdometryCommand;
-import com.gos.rapidreact.commands.TeleopArcadeChassisCommand;
 import com.gos.rapidreact.commands.VerticalConveyorUpCommand;
 import com.gos.rapidreact.commands.debug.LeftHangerDownCommand;
 import com.gos.rapidreact.commands.debug.LeftHangerUpCommand;
@@ -121,7 +121,7 @@ public class RobotContainer {
         // testCommands.add("EngageRatchetCommand", new EngageRatchetCommand(m_hanger));
         // testCommands.add("DisengageRatchetCommand", new DisengageRatchetCommand(m_hanger));
 
-        // testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
+        testCommands.add("HorizontalConveyorForwardCommand", new HorizontalConveyorForwardCommand(m_horizontalConveyor));
         // testCommands.add("HorizontalConveyorBackwardCommand", new HorizontalConveyorBackwardCommand(m_horizontalConveyor));
         // testCommands.add("VerticalConveyorUpCommand", new VerticalConveyorUpCommand(m_verticalConveyor));
         // testCommands.add("VerticalConveyorDownCommand", new VerticalConveyorDownCommand(m_verticalConveyor));
@@ -187,7 +187,8 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
+        // m_chassis.setDefaultCommand(new TeleopArcadeChassisCommand(m_chassis, m_driverJoystick));
+        m_chassis.setDefaultCommand(new TeleopCurvatureDriveCommand(m_chassis, m_driverJoystick));
 
         final JoystickButton rollerIn = new JoystickButton(m_driverJoystick, XboxController.Button.kRightBumper.value); //right bumper
         rollerIn.whileHeld(new RollerInCommand(m_collector), true);
@@ -245,7 +246,7 @@ public class RobotContainer {
         public void initSendable(SendableBuilder builder) {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
             builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_ANGLE, m_collector::getIntakeLeftAngleDegrees, null);
+                SmartDashboardNames.INTAKE_ANGLE, m_collector::getIntakeLeftAngleDegreesNeoEncoder, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.INTAKE_SPEED, m_collector::getPivotSpeed, null);
             builder.addDoubleProperty(

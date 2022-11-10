@@ -7,6 +7,5 @@ gos_java_library(
     deps = [
         "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/led",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@snobot_sim//jar",
     ],
 )

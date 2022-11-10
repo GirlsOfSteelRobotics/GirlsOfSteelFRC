@@ -1,12 +1,12 @@
 package com.gos.infinite_recharge.commands.autonomous;
 
 import com.gos.infinite_recharge.subsystems.Chassis;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.lib.properties.PropertyManager;
 
 public class DriveDistance extends CommandBase {
 
-    private static final PropertyManager.IProperty<Double> AUTO_KP = PropertyManager.createDoubleProperty(false, "DriveDistanceKp", 0.5);
+    private static final GosDoubleProperty AUTO_KP = new GosDoubleProperty(false, "DriveDistanceKp", 0.5);
 
     private final Chassis m_chassis;
     private final double m_distance;

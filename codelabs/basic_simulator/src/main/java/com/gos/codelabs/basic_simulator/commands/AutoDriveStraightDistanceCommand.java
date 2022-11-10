@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class AutoDriveStraightDistanceCommand extends CommandBase {
 
     public static final double ALLOWABLE_ERROR = .5;
-    private static final double KP = .3;
 
     private final ChassisSubsystem m_chassis;
     private final double m_goalDistance;

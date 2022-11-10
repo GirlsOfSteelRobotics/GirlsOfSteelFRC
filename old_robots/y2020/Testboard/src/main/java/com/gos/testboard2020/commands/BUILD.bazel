@@ -5,7 +5,7 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//old_robots/y2020/Testboard:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLib/src/main/java/com/gos/lib/sensors",
         "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020/subsystems",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/wpilibj",
