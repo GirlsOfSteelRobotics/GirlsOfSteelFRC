@@ -4,7 +4,6 @@ import com.gos.infinite_recharge.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.sensors.LidarLite;
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cscore.HttpCamera;
