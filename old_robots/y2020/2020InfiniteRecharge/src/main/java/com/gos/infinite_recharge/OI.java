@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import com.gos.infinite_recharge.commands.autonomous.SingleShoot;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator
