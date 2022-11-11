@@ -136,17 +136,17 @@ public class OI {
         m_bridgeArmUp = new JoystickButton(m_driverJoystick, BRIDGE_ARM_UP_BUTTON);
         m_holdPosition = new JoystickButton(m_driverJoystick, HOLD_POSITION_BUTTON);
 
-        m_disableChassisLeft.whenPressed(new DisableChassis(chassis));
-        m_disableChassisRight.whenPressed(new DisableChassis(chassis));
-        m_normalDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, NORMAL_DRIVE, HALF_TURNING));
-        m_slowDriveJags.whenPressed(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
-        m_mediumDriveJags.whenPressed((new DriveSlowTurning(chassis, m_driverJoystick, MEDIUM_DRIVE, MEDIUM_TURNING)));
-        m_driveSlowVelocity.whenPressed(new DriveSlowVelocity(chassis, m_driverJoystick)); //at the momement
+        m_disableChassisLeft.onTrue(new DisableChassis(chassis));
+        m_disableChassisRight.onTrue(new DisableChassis(chassis));
+        m_normalDriveJags.onTrue(new DriveSlowTurning(chassis, m_driverJoystick, NORMAL_DRIVE, HALF_TURNING));
+        m_slowDriveJags.onTrue(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
+        m_mediumDriveJags.onTrue((new DriveSlowTurning(chassis, m_driverJoystick, MEDIUM_DRIVE, MEDIUM_TURNING)));
+        m_driveSlowVelocity.onTrue(new DriveSlowVelocity(chassis, m_driverJoystick)); //at the momement
         //doesn't work -> not really necessary (not used for bridge really)
-        m_bridgeArmDown.whenPressed(new BridgeDown(bridge));
-        m_bridgeArmUp.whenPressed(new BridgeUp(bridge));
-        m_holdPosition.whileHeld(new HoldPosition(chassis));
-        m_holdPosition.whenReleased(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
+        m_bridgeArmDown.onTrue(new BridgeDown(bridge));
+        m_bridgeArmUp.onTrue(new BridgeUp(bridge));
+        m_holdPosition.whileTrue(new HoldPosition(chassis));
+        m_holdPosition.onFalse(new DriveSlowTurning(chassis, m_driverJoystick, SLOW_DRIVE, HALF_TURNING));
 
         m_operatorJoystick = new Joystick(OPERATOR_JOYSTICK_PORT);
 
@@ -163,16 +163,16 @@ public class OI {
 
         //TODO ask drive team if they want to switch some of these to "while held" functions
         //maybe shooting?
-        m_collectBalls.whenPressed(new Collect(collector));
-        m_collectorsReverse.whenPressed(new ReverseCollectors(collector));
-        m_stopCollector.whenPressed(new StopCollectors(collector));
-        m_turretOverride.whenPressed(new PS3ManualTurret(turret, m_operatorJoystick));
-        m_restartTurretTracking.whenPressed(new TurretTrackTarget(turret, m_operatorJoystick));
-        m_autoShoot.whileHeld(new ShootUsingTable(shooter, this, true));
-        m_disableShooter.whenPressed(new DisableShooter(shooter));
-        m_disableTurret.whenPressed(new DisableTurret(turret));
-        m_shootFromKey.whileHeld(new Shoot(shooter, this, 24.0)); //dead-reckoning from key
-        m_reverseTopMiddleRollers.whileHeld(new ReverseTopMiddleRollers(collector, shooter));
+        m_collectBalls.onTrue(new Collect(collector));
+        m_collectorsReverse.onTrue(new ReverseCollectors(collector));
+        m_stopCollector.onTrue(new StopCollectors(collector));
+        m_turretOverride.onTrue(new PS3ManualTurret(turret, m_operatorJoystick));
+        m_restartTurretTracking.onTrue(new TurretTrackTarget(turret, m_operatorJoystick));
+        m_autoShoot.whileTrue(new ShootUsingTable(shooter, this, true));
+        m_disableShooter.onTrue(new DisableShooter(shooter));
+        m_disableTurret.onTrue(new DisableTurret(turret));
+        m_shootFromKey.whileTrue(new Shoot(shooter, this, 24.0)); //dead-reckoning from key
+        m_reverseTopMiddleRollers.whileTrue(new ReverseTopMiddleRollers(collector, shooter));
     }
 
     public Joystick getDriverJoystick() {

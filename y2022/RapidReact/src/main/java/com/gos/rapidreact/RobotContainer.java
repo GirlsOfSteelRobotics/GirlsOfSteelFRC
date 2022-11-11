@@ -57,7 +57,7 @@ import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.rapidreact.auto_modes.AutoModeFactory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -192,33 +192,33 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new TeleopCurvatureDriveCommand(m_chassis, m_driverJoystick));
 
         final JoystickButton rollerIn = new JoystickButton(m_driverJoystick, XboxController.Button.kRightBumper.value); //right bumper
-        rollerIn.whileHeld(new RollerInCommand(m_collector), true);
+        rollerIn.whileTrue(new RollerInCommand(m_collector));
         final JoystickButton rollerOut = new JoystickButton(m_driverJoystick, XboxController.Button.kLeftBumper.value); //left bumper
-        rollerOut.whileHeld(new RollerOutCommand(m_collector), true);
+        rollerOut.whileTrue(new RollerOutCommand(m_collector));
         final JoystickButton limelightGoToCargo = new JoystickButton(m_driverJoystick, XboxController.Button.kA.value);
-        limelightGoToCargo.whileHeld(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
-        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileHeld(new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight, m_shooter));
+        limelightGoToCargo.whileTrue(new LimelightGoToCargoCommand(m_chassis, m_intakeLimelight, m_collector));
+        new Trigger(() -> m_driverJoystick.getRightTriggerAxis() > 0.5).whileTrue(new LimelightGoToHubAngleCommand(m_chassis, m_shooterLimelight, m_shooter));
 
         //operator
-        new POVButton(m_operatorJoystick, 0).whileHeld(new CollectorUpCommand(m_collector)); //left bumper
-        new POVButton(m_operatorJoystick, 180).whileHeld(new CollectorDownCommand(m_collector));
+        new POVButton(m_operatorJoystick, 0).whileTrue(new CollectorUpCommand(m_collector)); //left bumper
+        new POVButton(m_operatorJoystick, 180).whileTrue(new CollectorDownCommand(m_collector));
         final JoystickButton pivotPIDUp = new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value);
-        pivotPIDUp.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.UP_ANGLE));
+        pivotPIDUp.whileTrue(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.UP_ANGLE));
         final JoystickButton pivotPIDDown = new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value);
-        pivotPIDDown.whileHeld(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE_TELE));
-        new Button(() -> m_operatorJoystick.getLeftY() > 0.8).whileHeld(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
-        new Button(() -> m_operatorJoystick.getLeftY() < -0.8).whileHeld(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
-        new Button(() -> m_operatorJoystick.getRightY() < -0.5).whileHeld(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
-        new Button(() -> m_operatorJoystick.getRightY() > 0.5).whileHeld(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
-        new Button(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.FENDER_RPM_LOW)).whenReleased(new InstantCommand(() -> m_shooter.setShooterSpeed(0)));
-        new Button(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileHeld(new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).whenReleased(new InstantCommand(() -> {
+        pivotPIDDown.whileTrue(new CollectorPivotPIDCommand(m_collector, CollectorSubsystem.DOWN_ANGLE_TELE));
+        new Trigger(() -> m_operatorJoystick.getLeftY() > 0.8).whileTrue(new VerticalConveyorDownCommand(m_verticalConveyor)); //joystick left
+        new Trigger(() -> m_operatorJoystick.getLeftY() < -0.8).whileTrue(new VerticalConveyorUpCommand(m_verticalConveyor)); //joystick left
+        new Trigger(() -> m_operatorJoystick.getRightY() < -0.5).whileTrue(new HorizontalConveyorForwardCommand(m_horizontalConveyor)); //joystick right
+        new Trigger(() -> m_operatorJoystick.getRightY() > 0.5).whileTrue(new HorizontalConveyorBackwardCommand(m_horizontalConveyor)); //joystick right
+        new Trigger(() -> m_operatorJoystick.getLeftTriggerAxis() > 0.5).whileTrue(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.FENDER_RPM_LOW)).onFalse(new InstantCommand(() -> m_shooter.setShooterSpeed(0)));
+        new Trigger(() -> m_operatorJoystick.getRightTriggerAxis() > 0.5).whileTrue(new AutoLimelightConveyorAndShooterCommand(m_shooterLimelight, m_shooter, m_verticalConveyor)).onFalse(new InstantCommand(() -> {
             m_shooter.setShooterSpeed(0);
             m_verticalConveyor.stopFeedMotor();
         }));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new HangerUpCommand(m_hanger));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new HangerDownCommand(m_hanger));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileHeld(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.TARMAC_EDGE_RPM_HIGH)).whenReleased(new InstantCommand(() -> {
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileTrue(new HangerUpCommand(m_hanger));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileTrue(new HangerDownCommand(m_hanger));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileTrue(new FeederVerticalConveyorForwardCommand(m_verticalConveyor));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kA.value).whileTrue(new ShooterRpmPIDCommand(m_shooter, ShooterSubsystem.TARMAC_EDGE_RPM_HIGH)).onFalse(new InstantCommand(() -> {
             m_shooter.setShooterSpeed(0);
             m_verticalConveyor.stopFeedMotor();
         }));

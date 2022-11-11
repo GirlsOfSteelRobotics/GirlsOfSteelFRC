@@ -45,38 +45,38 @@ public class OI {
         m_drivingPad = new XboxController(0);
         m_operatingPad = new XboxController(1);
 
-        new JoystickButton(m_operatingPad, Button.kA.value).whileHeld(new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
-        new JoystickButton(m_operatingPad, Button.kB.value).whileHeld(new RunShooterRPMWhileHeld(shooter, Constants.DEFAULT_RPM));
-        //new JoystickButton(m_operatingPad, Button.kLeftBumper.value).whileHeld(new RunShooterRPMWhileHeld(shooter, 2000));
-        new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));
-        new JoystickButton(m_operatingPad, Button.kLeftBumper.value).whileHeld(new IntakeCells(shooterIntake, true));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getLeftTriggerAxis() > .8).whileHeld(new IntakeCells(shooterIntake, false));
-        new JoystickButton(m_operatingPad, Button.kRightBumper.value).whileHeld(new ConveyorWhileHeld(shooterConveyor, true));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_operatingPad.getRightTriggerAxis() > .8).whileHeld(new ConveyorWhileHeld(shooterConveyor, false));
-        //new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld();
-        new JoystickButton(m_operatingPad, Button.kX.value).whenPressed(new MovePiston(shooterIntake, true));
-        new JoystickButton(m_operatingPad, Button.kY.value).whenPressed(new MovePiston(shooterIntake, false));
-        //new POVButton(m_operatingPad, 90).whenPressed(new TuneRPM(shooter));
-        new POVButton(m_operatingPad, 0).whenPressed(new ConveyorAdvanceOneUnit(shooterConveyor));
-        new POVButton(m_operatingPad, 180).whenPressed(new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
-        new JoystickButton(m_operatingPad, Button.kBack.value).whileHeld(new RunShooterRPMWhileHeld(shooter, Constants.LONG_RPM));
-        new JoystickButton(m_operatingPad, Button.kStart.value).whileHeld(new VelocityControlDrivingTuning(chassis));
+        new JoystickButton(m_operatingPad, Button.kA.value).whileTrue(new AutomatedConveyorIntake(shooterIntake, shooterConveyor));
+        new JoystickButton(m_operatingPad, Button.kB.value).whileTrue(new RunShooterRPMWhileHeld(shooter, Constants.DEFAULT_RPM));
+        //new JoystickButton(m_operatingPad, Button.kLeftBumper.value).whileTrue(new RunShooterRPMWhileHeld(shooter, 2000));
+        new JoystickButton(m_operatingPad, Button.kX.value).onTrue(new MovePiston(shooterIntake, true));
+        new JoystickButton(m_operatingPad, Button.kLeftBumper.value).whileTrue(new IntakeCells(shooterIntake, true));
+        new Trigger(() -> m_operatingPad.getLeftTriggerAxis() > .8).whileTrue(new IntakeCells(shooterIntake, false));
+        new JoystickButton(m_operatingPad, Button.kRightBumper.value).whileTrue(new ConveyorWhileHeld(shooterConveyor, true));
+        new Trigger(() -> m_operatingPad.getRightTriggerAxis() > .8).whileTrue(new ConveyorWhileHeld(shooterConveyor, false));
+        //new JoystickButton(m_operatingPad, Button.kBack.value).whileTrue();
+        new JoystickButton(m_operatingPad, Button.kX.value).onTrue(new MovePiston(shooterIntake, true));
+        new JoystickButton(m_operatingPad, Button.kY.value).onTrue(new MovePiston(shooterIntake, false));
+        //new POVButton(m_operatingPad, 90).onTrue(new TuneRPM(shooter));
+        new POVButton(m_operatingPad, 0).onTrue(new ConveyorAdvanceOneUnit(shooterConveyor));
+        new POVButton(m_operatingPad, 180).onTrue(new SingleShoot(shooter, shooterConveyor, Constants.DEFAULT_RPM));
+        new JoystickButton(m_operatingPad, Button.kBack.value).whileTrue(new RunShooterRPMWhileHeld(shooter, Constants.LONG_RPM));
+        new JoystickButton(m_operatingPad, Button.kStart.value).whileTrue(new VelocityControlDrivingTuning(chassis));
 
-        new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new HangerLift(lift, true));
-        new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new HangerLift(lift, false));
-        //new JoystickButton(m_drivingPad, Button.kB.value).whileHeld(new WinchWind(winch, true));
-        //new JoystickButton(m_drivingPad, Button.kA.value).whileHeld(new WinchWind(winch, false));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getLeftTriggerAxis() > .8).whileHeld(new WinchWind(winch, false));
-        new edu.wpi.first.wpilibj2.command.button.Button(() -> m_drivingPad.getRightTriggerAxis() > .8).whileHeld(new WinchWind(winch, true));
-        new JoystickButton(m_drivingPad, Button.kY.value).whenPressed(new ControlPanelRotationControl(controlPanel));
-        new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(camera));
-        new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(camera));
-        new POVButton(m_drivingPad, 90).whenHeld(new SpinControlPanel(controlPanel));
-        new POVButton(m_drivingPad, 270).whenHeld(new AlignLeftRight(chassis, limelight));
-        //new POVButton(m_drivingPad, 90).whenHeld(new AlignForwardBackward(chassis, limelight));
+        new JoystickButton(m_drivingPad, Button.kA.value).whileTrue(new HangerLift(lift, true));
+        new JoystickButton(m_drivingPad, Button.kB.value).whileTrue(new HangerLift(lift, false));
+        //new JoystickButton(m_drivingPad, Button.kB.value).whileTrue(new WinchWind(winch, true));
+        //new JoystickButton(m_drivingPad, Button.kA.value).whileTrue(new WinchWind(winch, false));
+        new Trigger(() -> m_drivingPad.getLeftTriggerAxis() > .8).whileTrue(new WinchWind(winch, false));
+        new Trigger(() -> m_drivingPad.getRightTriggerAxis() > .8).whileTrue(new WinchWind(winch, true));
+        new JoystickButton(m_drivingPad, Button.kY.value).onTrue(new ControlPanelRotationControl(controlPanel));
+        new POVButton(m_drivingPad, 0).onTrue(new SwitchToCamClimb(camera));
+        new POVButton(m_drivingPad, 180).onTrue(new SwitchToCamIntake(camera));
+        new POVButton(m_drivingPad, 90).whileTrue(new SpinControlPanel(controlPanel));
+        new POVButton(m_drivingPad, 270).whileTrue(new AlignLeftRight(chassis, limelight));
+        //new POVButton(m_drivingPad, 90).whileTrue(new AlignForwardBackward(chassis, limelight));
 
-        new JoystickButton(m_drivingPad, Button.kLeftBumper.value).whileHeld(new DriveLessByJoystickWhenPressed(chassis, m_drivingPad));
-        //new JoystickButton(m_drivingPad, Button.kB.value).whenPressed(new DriveByJoystick(chassis, this));
+        new JoystickButton(m_drivingPad, Button.kLeftBumper.value).whileTrue(new DriveLessByJoystickWhenPressed(chassis, m_drivingPad));
+        //new JoystickButton(m_drivingPad, Button.kB.value).onTrue(new DriveByJoystick(chassis, this));
 
 
     }

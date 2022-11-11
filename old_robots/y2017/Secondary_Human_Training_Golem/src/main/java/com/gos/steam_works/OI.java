@@ -123,14 +123,14 @@ public class OI {
         m_climb = new JoystickButton(m_operatingGamePad, 10);
 
         // Shooter buttons
-        m_shootKey.whileHeld(new CombinedShootKey(m_agitator, m_shooter, m_loader));
-        m_shootGear.whileHeld(new CombinedShootGear(m_agitator, m_shooter, m_loader));
-        m_shoot.whileHeld(new CombinedShoot(m_agitator, m_shooter, m_loader));
-        m_incrementHighShooter.whenPressed(new IncrementHighShooter(m_shooter));
-        m_decrementHighShooter.whenPressed(new DecrementHighShooter(m_shooter));
+        m_shootKey.whileTrue(new CombinedShootKey(m_agitator, m_shooter, m_loader));
+        m_shootGear.whileTrue(new CombinedShootGear(m_agitator, m_shooter, m_loader));
+        m_shoot.whileTrue(new CombinedShoot(m_agitator, m_shooter, m_loader));
+        m_incrementHighShooter.onTrue(new IncrementHighShooter(m_shooter));
+        m_decrementHighShooter.onTrue(new DecrementHighShooter(m_shooter));
         // Climber buttons
-        m_unClimb.whileHeld(new UnClimb(m_climber));
-        m_climb.whileHeld(new Climb(m_climber));
+        m_unClimb.whileTrue(new UnClimb(m_climber));
+        m_climb.whileTrue(new Climb(m_climber));
 
         if (DRIVE_STYLE == DriveStyle.ONE_STICK_ARCADE) {
             //DRIVER BUTTONS
@@ -153,11 +153,11 @@ public class OI {
 
             // DRIVING BUTTONS
             // Button to change between drive joysticks on trigger of both joysticks
-            m_switchToForward.whenPressed(new SwitchForward(m_chassis, m_camera));
-            m_switchToBackward.whenPressed(new SwitchBackward(m_chassis, m_camera));
+            m_switchToForward.onTrue(new SwitchForward(m_chassis, m_camera));
+            m_switchToBackward.onTrue(new SwitchBackward(m_chassis, m_camera));
             // Buttons for shifters
-            m_shifterDown.whenPressed(new ShiftDown(m_shifters));
-            m_shifterUp.whenPressed(new ShiftUp(m_shifters));
+            m_shifterDown.onTrue(new ShiftDown(m_shifters));
+            m_shifterUp.onTrue(new ShiftUp(m_shifters));
         } else if (DRIVE_STYLE == DriveStyle.GAME_PAD_ARCADE) {
             //DRIVER BUTTONS
             // Buttons for shifters copied to both joysticks
@@ -183,7 +183,7 @@ public class OI {
 
         /* Drive by vision (plus back up a few inches when done)
         driveByVision = new JoystickButton(gamePad, 1);
-        driveByVision.whenPressed(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));*/
+        driveByVision.onTrue(new CreateMotionProfile("/home/lvuser/leftMP.dat", "/home/lvuser/rightMP.dat"));*/
 
         // Default commands
         switch (DRIVE_STYLE) {
