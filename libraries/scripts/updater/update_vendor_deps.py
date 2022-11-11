@@ -12,14 +12,12 @@ CACHE_DIRECTORY = os.path.join(tempfile.gettempdir(), "gos_vendor_cache")
 
 
 def download_latest_vendordeps(ignore_cache):
-    year = "2022"
-
     # fmt: off
     vendor_dep_urls = {}
-    vendor_dep_urls["navx_frc.json"] = f"http://www.kauailabs.com/dist/frc/{year}/navx_frc.json"
-    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc{year}-latest.json"
-    vendor_dep_urls["REVLib.json"] = "https://rev-robotics-software-metadata.netlify.app/REVLib.json"
-    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
+    vendor_dep_urls["navx_frc.json"] = f"https://raw.githubusercontent.com/rzblue/navx-frc/maven/navx_frc.json"
+    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc2023-latest.json"
+    vendor_dep_urls["REVLib.json"] = "https://software-metadata.revrobotics.com/REVLib-2023.json"
+    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json"
     # fmt: on
 
     vendor_files = []
@@ -51,8 +49,6 @@ def update_vendor_deps(ignore_cache=True, auto_commit=True):
 
     # Used when a vendor changes its filename name
     vendor_replacements = {}
-    vendor_replacements["REVRobotics.json"] = "REVLib.json"
-    vendor_replacements["REVColorSensorV3.json"] = "REVLib.json"
 
     download_latest_vendordeps(ignore_cache)
 
@@ -60,7 +56,7 @@ def update_vendor_deps(ignore_cache=True, auto_commit=True):
         if root.endswith("vendordeps"):
             for vendor_file in files:
 
-                if vendor_file in ["WPILibNewCommands.json", "WPILibOldCommands.json"]:
+                if vendor_file in ["WPILibNewCommands.json"]:
                     continue
                 elif vendor_file in vendor_replacements:
                     new_file = os.path.join(CACHE_DIRECTORY, vendor_replacements[vendor_file])
