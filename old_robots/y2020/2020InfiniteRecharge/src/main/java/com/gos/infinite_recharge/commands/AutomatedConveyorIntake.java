@@ -29,16 +29,16 @@ public class AutomatedConveyorIntake extends SequentialCommandGroup {
         ConveyorWhileHeld runConveyor = new ConveyorWhileHeld(shooterConveyor, true);
 
         //cell intake runs until handoff break sensor is true (a ball has been collected)
-        addCommands(intakeCell.withInterrupt(m_shooterConveyor::getHandoff));
+        addCommands(intakeCell.until(m_shooterConveyor::getHandoff));
 
         if (m_shooterConveyor.getHandoff()) {
-            addCommands(runConveyor.withInterrupt(() -> {
+            addCommands(runConveyor.until(() -> {
                 return !m_shooterConveyor.getSecondary();
             }));
         }
 
         //conveyor belt runs until secondary break sensor is true (collected ball has been positioned at bottom of conveyor)
-        addCommands(new ConveyorWhileHeld(shooterConveyor, true).withInterrupt(() -> {
+        addCommands(new ConveyorWhileHeld(shooterConveyor, true).until(() -> {
             return m_shooterConveyor.getTop() || (m_shooterConveyor.getSecondary() && !m_shooterConveyor.getHandoff());
         }));
 

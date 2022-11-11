@@ -83,30 +83,30 @@ public class OI {
 
         /* BUTTON ACTIONS */
 
-        shifterDown.whenPressed(new ShiftDown(shifters));
-        shifterUp.whenPressed(new ShiftUp(shifters));
-        //driveByDistanceLow.whenPressed(new DriveByDistance(50.0, Shifters.Speed.kLow));
+        shifterDown.onTrue(new ShiftDown(shifters));
+        shifterUp.onTrue(new ShiftUp(shifters));
+        //driveByDistanceLow.onTrue(new DriveByDistance(50.0, Shifters.Speed.kLow));
 
         //turn left:
-        //driveByMotionProfile.whenPressed(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
+        //driveByMotionProfile.onTrue(new DriveByMotionProfile("/home/lvuser/shortTurn2018.dat", "/home/lvuser/longTurn2018.dat"));
 
-        liftUp.whileHeld(new LiftUp(lift));
-        liftDown.whileHeld(new LiftDown(lift));
-        liftToSwitch.whenPressed(new SwitchPosition(lift, wrist));
-        liftToGround.whenPressed(new CollectPosition(lift, wrist));
-        liftEnterRecovery.whenPressed(new LiftEnterRecoveryMode(lift));
+        liftUp.whileTrue(new LiftUp(lift));
+        liftDown.whileTrue(new LiftDown(lift));
+        liftToSwitch.onTrue(new SwitchPosition(lift, wrist));
+        liftToGround.onTrue(new CollectPosition(lift, wrist));
+        liftEnterRecovery.onTrue(new LiftEnterRecoveryMode(lift));
 
-        wristIn.whileHeld(new WristIn(wrist));
-        wristOut.whileHeld(new WristOut(wrist));
+        wristIn.whileTrue(new WristIn(wrist));
+        wristOut.whileTrue(new WristOut(wrist));
 
-        collect.whileHeld(new Collect(collector));
-        //releaseFast.whileHeld(new ReleaseFast());
-        releaseSlow.whileHeld(new ReleaseSlow(collector));
+        collect.whileTrue(new Collect(collector));
+        //releaseFast.whileTrue(new ReleaseFast());
+        releaseSlow.whileTrue(new ReleaseSlow(collector));
 
-        climb.whileHeld(new ClimbUp(climber));
-        unClimb.whileHeld(new ClimbDown(climber));
+        climb.whileTrue(new ClimbUp(climber));
+        unClimb.whileTrue(new ClimbDown(climber));
 
-        motionMagic.whenPressed(new DriveByMotionMagic(chassis, 25.0, -90.0));
+        motionMagic.onTrue(new DriveByMotionMagic(chassis, 25.0, -90.0));
 
 
         chassis.setDefaultCommand(new DriveByJoystick(chassis, m_amazonGamePad));
