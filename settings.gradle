@@ -49,5 +49,7 @@ include 'libraries:SwerveShuffleboard'
 //include 'y2022:MEPI'
 include 'y2022:RapidReact'
 include 'y2022:RapidReactDashboard'
+include 'y2022:SCRAWestCoastDrive'
+
 
 include 'y2023:Preseason'
