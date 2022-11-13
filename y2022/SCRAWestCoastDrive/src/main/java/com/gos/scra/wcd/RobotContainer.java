@@ -5,6 +5,7 @@
 
 package com.gos.scra.wcd;
 
+import com.gos.scra.wcd.commands.ChassisArcadeDriveCommand;
 import com.gos.scra.wcd.commands.ChassisCurvatureDriveCommand;
 import com.gos.scra.wcd.subsystems.ChassisSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -28,8 +29,8 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        m_chassisSubsystem.setDefaultCommand(new ChassisCurvatureDriveCommand(m_chassisSubsystem, m_driverJoystick));
-        // m_chassisSubsystem.setDefaultCommand(new ChassisArcadeDriveCommand(m_chassisSubsystem, m_driverJoystick));
+//        m_chassisSubsystem.setDefaultCommand(new ChassisCurvatureDriveCommand(m_chassisSubsystem, m_driverJoystick));
+         m_chassisSubsystem.setDefaultCommand(new ChassisArcadeDriveCommand(m_chassisSubsystem, m_driverJoystick));
 
         configureButtonBindings();
     }
