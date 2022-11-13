@@ -13,21 +13,15 @@ public class SingleShoot extends SequentialCommandGroup {
 
         addCommands(
             new RunShooterRPM(shooter, rpm),
-            new ConveyorWhileHeld(shooterConveyor, true).withInterrupt(() -> {
+            new ConveyorWhileHeld(shooterConveyor, true).until(() -> {
 
                 System.out.println("Part One: " + shooterConveyor.getTop());
                 return shooterConveyor.getTop();
             }),
-            new ConveyorWhileHeld(shooterConveyor, true).withInterrupt(() -> {
+            new ConveyorWhileHeld(shooterConveyor, true).until(() -> {
                 System.out.println("Part Two: " + shooterConveyor.getTop());
                 return !shooterConveyor.getTop();
             }),
             new StopShooter(shooter));
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        super.end(interrupted);
-        System.out.println("Command finished");
     }
 }

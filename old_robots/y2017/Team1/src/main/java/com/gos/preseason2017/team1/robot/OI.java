@@ -49,34 +49,34 @@ public class OI {
         m_gamePad = new Joystick(1);
 
         /*    shootPrep = new JoystickButton(gamePad, 2);
-            shootPrep.whenPressed(new ShootPrep());
+            shootPrep.onTrue(new ShootPrep());
             shoot = new JoystickButton(gamePad, 3);
-            shoot.whenPressed(new Shoot());
+            shoot.onTrue(new Shoot());
 
             //collect = new JoystickButton(gamePad, 7);
-            //collect.whileHeld(new Collect());
+            //collect.whileTrue(new Collect());
 
             /*
             armUp = new JoystickButton(gamePad, 10);
-            armUp.whenPressed(new ArmUp());
+            armUp.onTrue(new ArmUp());
             armDown = new JoystickButton(gamePad, 9);
-            armDown.whenPressed(new ArmDown());
+            armDown.onTrue(new ArmDown());
             */
 
         m_shiftUp = new JoystickButton(m_gamePad, 10);
-        m_shiftUp.whenPressed(new ShiftUp(shifters));
+        m_shiftUp.onTrue(new ShiftUp(shifters));
         m_shiftDown = new JoystickButton(m_gamePad, 9);
-        m_shiftDown.whenPressed(new ShiftDown(shifters));
+        m_shiftDown.onTrue(new ShiftDown(shifters));
 
         m_jawIn = new JoystickButton(m_gamePad, 5);
-        m_jawIn.whenPressed(new JawIn(jaw));
+        m_jawIn.onTrue(new JawIn(jaw));
         m_jawOut = new JoystickButton(m_gamePad, 6);
-        m_jawOut.whenPressed(new JawOut(jaw));
+        m_jawOut.onTrue(new JawOut(jaw));
 
         m_shooterIn = new JoystickButton(m_gamePad, 1);
-        m_shooterIn.whenPressed(new ShooterIn(shooter));
+        m_shooterIn.onTrue(new ShooterIn(shooter));
         m_shooterOut = new JoystickButton(m_gamePad, 4);
-        m_shooterOut.whenPressed(new ShooterOut(shooter));
+        m_shooterOut.onTrue(new ShooterOut(shooter));
     }
 
     public Joystick getDriveStick() {

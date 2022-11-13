@@ -11,15 +11,7 @@ public class TestAutonomousCenter extends SequentialCommandGroup {
 
     private final boolean m_autoTrack;
 
-    private final Chassis m_chassis;
-    private final Collector m_collector;
-    private final Shooter m_shooter;
-
     public TestAutonomousCenter(Chassis chassis, Collector collector, Shooter shooter, Turret turret) {
-        m_chassis = chassis;
-        m_collector = collector;
-        m_shooter = shooter;
-
         SmartDashboard.putBoolean("Auto Track?", false);
         m_autoTrack = SmartDashboard.getBoolean("Auto Track?", false);
         addCommands(new AutonomousKeyShootTwoBalls(chassis, collector, shooter, turret, m_autoTrack));
@@ -41,14 +33,4 @@ public class TestAutonomousCenter extends SequentialCommandGroup {
         //        addCommands(new ShootUsingTable());
         //shoot again -> using camera distance & the table
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        new DisableChassis(m_chassis).schedule();
-        new DisableShooter(m_shooter).schedule();
-        new StopCollectors(m_collector).schedule();
-    }
-
-
-
 }

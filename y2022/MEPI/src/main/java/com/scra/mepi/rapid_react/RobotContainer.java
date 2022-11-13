@@ -26,7 +26,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -99,49 +99,49 @@ public class RobotContainer {
 
         // driver joystick
         new JoystickButton(m_driverJoystick, XboxController.Button.kLeftBumper.value)
-            .whenHeld(m_intakeInCommand);
+            .whileTrue(m_intakeInCommand);
         new JoystickButton(m_driverJoystick, XboxController.Button.kRightBumper.value)
-            .whenHeld(m_intakeOutCommand);
-        new Button(() -> m_driverJoystick.getLeftTriggerAxis() > 0.5)
-            .whileHeld(new ToggleIntakeCommand(m_intakeSubsystem));
-        new Button(() -> m_driverJoystick.getRightTriggerAxis() > 0.5)
-            .whileHeld(new AutoAimCommand(m_drivetrainSubsystem, m_limelightSubsystem));
+            .whileTrue(m_intakeOutCommand);
+        new Trigger(() -> m_driverJoystick.getLeftTriggerAxis() > 0.5)
+            .whileTrue(new ToggleIntakeCommand(m_intakeSubsystem));
+        new Trigger(() -> m_driverJoystick.getRightTriggerAxis() > 0.5)
+            .whileTrue(new AutoAimCommand(m_drivetrainSubsystem, m_limelightSubsystem));
 
         // control joystic
-        new Button(() -> m_controlJoystick.getLeftY() > 0.75)
-            .whileHeld(new TowerUpCommand(m_towerSubsystem));
-        new Button(() -> m_controlJoystick.getLeftY() < -0.75)
-            .whileHeld(new TowerDownCommand(m_towerSubsystem));
-        // new Button(() -> m_controlJoystick.getRightY() > 0.75)
-        //     .whileHeld(new ClimberCommand(m_climberSubsystem, 0.25));
-        // new Button(() -> m_controlJoystick.getRightY() < -0.75)
-        //     .whileHeld(new ClimberCommand(m_climberSubsystem, -0.25));
-        new Button(() -> m_controlJoystick.getLeftTriggerAxis() > 0.5)
-            .whileHeld(new KickIfShootSetRPMCommand(m_shooterSubsystem, m_towerSubsystem)).whenReleased(new SetShooterSpeedCommand(m_shooterSubsystem, 0));
-        new Button(() -> m_controlJoystick.getRightTriggerAxis() > 0.5)
-            .whileHeld(new KickIfShooterDistanceGoBrrCommand(m_shooterSubsystem, m_towerSubsystem, m_limelightSubsystem, m_shooterLookupTable)).whenReleased(new SetShooterSpeedCommand(m_shooterSubsystem, 0));
+        new Trigger(() -> m_controlJoystick.getLeftY() > 0.75)
+            .whileTrue(new TowerUpCommand(m_towerSubsystem));
+        new Trigger(() -> m_controlJoystick.getLeftY() < -0.75)
+            .whileTrue(new TowerDownCommand(m_towerSubsystem));
+        // new Trigger(() -> m_controlJoystick.getRightY() > 0.75)
+        //     .whileTrue(new ClimberCommand(m_climberSubsystem, 0.25));
+        // new Trigger(() -> m_controlJoystick.getRightY() < -0.75)
+        //     .whileTrue(new ClimberCommand(m_climberSubsystem, -0.25));
+        new Trigger(() -> m_controlJoystick.getLeftTriggerAxis() > 0.5)
+            .whileTrue(new KickIfShootSetRPMCommand(m_shooterSubsystem, m_towerSubsystem)).onFalse(new SetShooterSpeedCommand(m_shooterSubsystem, 0));
+        new Trigger(() -> m_controlJoystick.getRightTriggerAxis() > 0.5)
+            .whileTrue(new KickIfShooterDistanceGoBrrCommand(m_shooterSubsystem, m_towerSubsystem, m_limelightSubsystem, m_shooterLookupTable)).onFalse(new SetShooterSpeedCommand(m_shooterSubsystem, 0));
         new JoystickButton(m_controlJoystick, XboxController.Button.kLeftBumper.value)
-            .whenHeld(m_shooterPIDCommand).whenReleased(new
+            .whileTrue(m_shooterPIDCommand).onFalse(new
                 SetShooterSpeedCommand(m_shooterSubsystem, 0));
 
         new JoystickButton(m_controlJoystick, XboxController.Button.kX.value)
-            .whenHeld(m_towerKickerCommand);
+            .whileTrue(m_towerKickerCommand);
 
         // new JoystickButton(m_joystick, XboxController.Button.kB.value)
-        // .whenPressed(m_intakeOutCommand);
-        // new Button(() -> m_joystick.getLeftTriggerAxis() > 0.5).whileHeld(new
+        // .onTrue(m_intakeOutCommand);
+        // new Trigger(() -> m_joystick.getLeftTriggerAxis() > 0.5).whileTrue(new
         // TowerKickerCommand(m_towerSubsystem));
-        // new Button(() -> m_joystick.getRightTriggerAxis() > 0.5).whileHeld(new
+        // new Trigger(() -> m_joystick.getRightTriggerAxis() > 0.5).whileTrue(new
         // ShooterPIDCommand(m_shooterSubsytem, m_tunableShooterGoal.get()));
         // new JoystickButton(m_joystick, XboxController.Button.kX.value)
-        // .whenHeld(new SetShooterSpeedCommand(m_shooterSubsytem)).whenReleased(() ->
+        // .whileTrue(new SetShooterSpeedCommand(m_shooterSubsytem)).onFalse(() ->
         // m_shooterSubsytem.setShooterSpeed(0));
         // new JoystickButton(m_controlJoystick, XboxController.Button.kLeftBumper.value)
-        //     .whenPressed(new ClimberCommand(m_climberSubsystem, 0.5));
+        //     .onTrue(new ClimberCommand(m_climberSubsystem, 0.5));
         // new JoystickButton(m_controlJoystick, XboxController.Button.kRightBumper.value)
-        //     .whenPressed(new ClimberCommand(m_climberSubsystem, -0.5));
-        // new POVButton(m_joystick, 0).whenPressed(new ToggleIntakeCommand(m_intakeSubsystem));
-        // new POVButton(m_joystick, 180).whileHeld(new TowerDownCommand(m_towerSubsystem));
+        //     .onTrue(new ClimberCommand(m_climberSubsystem, -0.5));
+        // new POVButton(m_joystick, 0).onTrue(new ToggleIntakeCommand(m_intakeSubsystem));
+        // new POVButton(m_joystick, 180).whileTrue(new TowerDownCommand(m_towerSubsystem));
 
     }
 

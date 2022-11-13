@@ -35,14 +35,14 @@ public class OI {
         m_chassisJoystick = new Joystick(RobotMap.CHASSIS_JOYSTICK);
 
         m_conveyorUp = new JoystickButton(m_operatorJoystick, 5); //TODO: change
-        m_conveyorUp.whileHeld(new ConveyorUp(manipulator));
+        m_conveyorUp.whileTrue(new ConveyorUp(manipulator));
         m_conveyorDown = new JoystickButton(m_operatorJoystick, 4); //TODO: change
-        m_conveyorDown.whileHeld(new ConveyorDown(manipulator));
+        m_conveyorDown.whileTrue(new ConveyorDown(manipulator));
 
         m_shiftUp = new JoystickButton(m_chassisJoystick, 5); //TODO: change
-        m_shiftUp.whenPressed(new ShiftUp(shifters));
+        m_shiftUp.onTrue(new ShiftUp(shifters));
         m_shiftDown = new JoystickButton(m_chassisJoystick, 3); //TODO: change
-        m_shiftDown.whenPressed(new ShiftDown(shifters));
+        m_shiftDown.onTrue(new ShiftDown(shifters));
     }
 
     public Joystick getChassisJoystick() {
