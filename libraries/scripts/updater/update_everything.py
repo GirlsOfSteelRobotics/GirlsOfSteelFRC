@@ -17,9 +17,9 @@ def update_everything():
     replace_gradlerio_files(True)
     run_all_replacements()
     update_bazelrio()
-    run_smart_spotless(
-        commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
-    )
+    # run_smart_spotless(
+    #     commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
+    # )
 
 
 if __name__ == "__main__":
