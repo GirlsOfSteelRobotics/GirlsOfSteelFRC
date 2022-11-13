@@ -273,44 +273,44 @@ public class Chassis extends SubsystemBase {
 
     public void autoDriveRight(double goalDist) {
         // figure out what the angle should be
-        m_gosDrive.drivePolar(calculateSpeed(goalDist, getDistanceRight()), Rotation2d.fromDegrees(180), 0);
+        m_gosDrive.drivePolar(calculateSpeed(goalDist, getDistanceRight()), Rotation2d.fromDegrees(Rotation2d.fromDegrees(180)), 0);
     }
 
     public void autoDriveLeft(double goalDist) {
-        m_gosDrive.drivePolar(calculateSpeed(goalDist, getDistanceLeft()), Rotation2d.fromDegrees(0), 0);
+        m_gosDrive.drivePolar(calculateSpeed(goalDist, getDistanceLeft()), Rotation2d.fromDegrees(Rotation2d.fromDegrees(0)), 0);
     }
 
     public void autoDriveBackward(double goalDist) {
         // check to make sure this angle is correct
-        m_gosDrive.drivePolar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), Rotation2d.fromDegrees(270), 0);
+        m_gosDrive.drivePolar(calculateSpeedStrafing(goalDist, getDistanceBackwards()), Rotation2d.fromDegrees(Rotation2d.fromDegrees(270)), 0);
     }
 
     public void autoDriveForward(double goalDist) {
-        m_gosDrive.drivePolar(calculateSpeedStrafing(goalDist, getDistanceForward()), Rotation2d.fromDegrees(90), 0);
+        m_gosDrive.drivePolar(calculateSpeedStrafing(goalDist, getDistanceForward()), Rotation2d.fromDegrees(Rotation2d.fromDegrees(90)), 0);
     }
 
     public void autoTurnClockwise() {
-        m_gosDrive.driveCartesian(0, 0, AUTO_SPEED, Rotation2d.fromDegrees(0));
+        m_gosDrive.driveCartesian(0, 0, AUTO_SPEED, Rotation2d.fromDegrees(Rotation2d.fromDegrees(0)));
     }
 
     public void autoTurnCounterclockwise() {
-        m_gosDrive.driveCartesian(0, 0, -AUTO_SPEED, Rotation2d.fromDegrees(0));
+        m_gosDrive.driveCartesian(0, 0, -AUTO_SPEED, Rotation2d.fromDegrees(Rotation2d.fromDegrees(0)));
     }
 
     public void driveForward() {
-        m_gosDrive.drivePolar(1, Rotation2d.fromDegrees(90), 0);
+        m_gosDrive.drivePolar(1, Rotation2d.fromDegrees(Rotation2d.fromDegrees(90)), 0);
     }
 
     public void driveBackward(Joystick chassisJoystick) {
-        m_gosDrive.driveCartesian(0, -throttleSpeed(chassisJoystick), 0, Rotation2d.fromDegrees(0));
+        m_gosDrive.driveCartesian(0, -throttleSpeed(chassisJoystick), 0, Rotation2d.fromDegrees(Rotation2d.fromDegrees(0)));
     }
 
     public void driveRight(Joystick chassisJoystick) {
-        m_gosDrive.driveCartesian(-throttleSpeed(chassisJoystick), 0, 0, Rotation2d.fromDegrees(0));
+        m_gosDrive.driveCartesian(-throttleSpeed(chassisJoystick), 0, 0, Rotation2d.fromDegrees(Rotation2d.fromDegrees(0)));
     }
 
     public void driveLeft(Joystick chassisJoystick) {
-        m_gosDrive.driveCartesian(throttleSpeed(chassisJoystick), 0, 0, Rotation2d.fromDegrees(0));
+        m_gosDrive.driveCartesian(throttleSpeed(chassisJoystick), 0, 0, Rotation2d.fromDegrees(Rotation2d.fromDegrees(0)));
     }
 
     public void stop() {
