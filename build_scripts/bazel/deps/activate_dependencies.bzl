@@ -36,7 +36,7 @@ def activate_dependencies():
         name = "snobot_sim",
         artifact = "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
         artifact_sha256 = SNOBOT_SIM_SHA,
-        server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
+        server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
     )
 
     maven_install(

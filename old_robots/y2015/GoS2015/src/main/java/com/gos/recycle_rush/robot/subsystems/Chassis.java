@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -223,7 +224,7 @@ public class Chassis extends SubsystemBase {
         m_gosDrive.driveCartesian(beattieDeadBand(-stick.getY()) * throttleSpeed(stick),
             beattieDeadBand(stick.getX()) * throttleSpeed(stick),
             (beattieTwistDeadBand(stick.getTwist())) * throttleSpeed(stick),
-            m_getGyro ? temp : 0);
+            Rotation2d.fromDegrees(m_getGyro ? temp : 0));
 
         SmartDashboard.putNumber("Sending Val Front Left", m_frontLeftWheel.getClosedLoopTarget());
         SmartDashboard.putNumber("Sending Val Rear Left", m_rearLeftWheel.getClosedLoopTarget());
