@@ -18,5 +18,6 @@ public class DriveChassisWithJoystickCommand extends CommandBase {
     @Override
     public void execute() {
         // TODO implement
+        m_chassis.arcadeDrive(-1 * (m_driverJoystick.getLeftY()), m_driverJoystick.getRightX());
     }
 }

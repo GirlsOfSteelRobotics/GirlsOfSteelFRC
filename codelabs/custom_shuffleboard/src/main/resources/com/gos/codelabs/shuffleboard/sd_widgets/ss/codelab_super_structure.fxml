@@ -9,9 +9,18 @@
     fx:controller="com.gos.codelabs.shuffleboard.sd_widgets.ss.CodelabSuperStructureController">
 
     <Group fx:id="m_group">
+        <children>
+            <Rectangle fx:id="m_base" fill = "peachPuff"/>
+            <Rectangle fx:id="m_elevatorBox" fill = "papayawhip"/>
+            <Rectangle fx:id="m_liftUpperLimitSwitch" fill = "mediumpurple"/>
+            <Rectangle fx:id="m_liftLowerLimitSwitch" fill = "mediumpurple"/>
+            <Rectangle fx:id="m_punch" fill = "lightpink"/>
+            <Circle fx:id="m_spinningWheel" fill = "mediumvioletred"/>
+        </children>
         <!-- Put your shapes in here. -->
         <!-- Examples. -->
         <!-- <Circle fx:id="m_spinningWheel" fill="plum"/> -->
         <!-- <Rectangle fx:id="m_punch" fill="peachPuff"/> -->
     </Group>
 </Pane>
+
