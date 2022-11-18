@@ -1,8 +1,12 @@
 package com.gos.preseason2023.subsystems;
 
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -13,8 +17,14 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SwerveModuleSimWrapper;
 
+
 public class SwerveModule {
 
+    private final PidProperty m_swerveRotationPID;
+    private final SparkMaxPIDController m_swerveRotationPidController;
+
+    private final PidProperty m_swerveVelocityPID;
+    private final SparkMaxPIDController m_swerveVelocityPidController;
     private static final double TURNING_GEAR_RATION = (50.0 / 14.0) * (60.0 / 10.0);
     private static final double DRIVE_GEAR_RATION = (50.0 / 14.0) * (19.0 / 25.0) * (45.0 / 15.0);
 
@@ -29,11 +39,22 @@ public class SwerveModule {
     private SwerveModuleSimWrapper m_simWrapper;
 
     public SwerveModule(int spinID, int powerID) {
+
         m_spinMotor = new SimableCANSparkMax(spinID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_powerMotor = new SimableCANSparkMax(powerID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         m_spinEncoder = m_spinMotor.getEncoder();
         m_powerEncoder = m_powerMotor.getEncoder();
+
+        m_swerveRotationPidController = m_spinMotor.getPIDController();
+        m_swerveRotationPID = new RevPidPropertyBuilder("Swerve Rotation PID", false, m_swerveRotationPidController, 0)
+            .addP(0)
+            .build();
+
+        m_swerveVelocityPidController = m_powerMotor.getPIDController();
+        m_swerveVelocityPID = new RevPidPropertyBuilder("Swerve Velocity PID", false, m_swerveVelocityPidController, 0)
+            .addP(0)
+            .build();
 
         if (RobotBase.isSimulation()) {
             SwerveModuleSim moduleSim = new SwerveModuleSim(
@@ -58,15 +79,12 @@ public class SwerveModule {
     }
 
     public void goToState(SwerveModuleState state) {
-        double error = state.angle.getDegrees() - m_spinEncoder.getPosition();
-        if (error > 0) {
-            m_spinMotor.set(0.5);
-        }
-        else {
-            m_spinMotor.set(-.5);
-        }
+        m_swerveRotationPID.updateIfChanged();
+        m_swerveVelocityPID.updateIfChanged();
 
-        m_powerMotor.set(state.speedMetersPerSecond);
+        m_swerveRotationPidController.setReference(state.angle.getDegrees(), CANSparkMax.ControlType.kPosition);
+        m_swerveVelocityPidController.setReference(state.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
+
     }
 
     public SwerveModuleState getState() {

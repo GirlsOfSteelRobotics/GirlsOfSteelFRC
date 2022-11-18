@@ -11,7 +11,9 @@ import com.gos.preseason2023.commands.CollectorPivotCommand;
 import com.gos.preseason2023.commands.CollectorRollerCommand;
 import com.gos.preseason2023.subsystems.CollectorExampleSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.gos.preseason2023.commands.ExampleCommand;
 import com.gos.preseason2023.subsystems.ExampleSubsystem;
@@ -47,6 +49,10 @@ public class RobotContainer {
         m_joystick = new XboxController(0);
         // Configure the button bindings
         configureButtonBindings();
+
+        if (RobotBase.isSimulation()) {
+            DriverStationSim.setEnabled(true);
+        }
     }
 
 
