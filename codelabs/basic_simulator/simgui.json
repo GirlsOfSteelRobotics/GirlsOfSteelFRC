@@ -20,20 +20,6 @@
       "/SmartDashboard/Test Retract Punch": "Command",
       "/SmartDashboard/Test Timed Drive Backwards": "Command",
       "/SmartDashboard/Test Timed Drive Forwards": "Command"
-    },
-    "windows": {
-      "/SmartDashboard/Field": {
-        "window": {
-          "visible": true
-        }
-      }
-    }
-  },
-  "NetworkTables": {
-    "SmartDashboard": {
-      "Field": {
-        "open": true
-      }
     }
   }
 }
