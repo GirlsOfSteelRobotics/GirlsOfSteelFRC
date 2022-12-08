@@ -93,8 +93,32 @@ public class ChassisSubsystem extends SubsystemBase {
         m_simWrapper.update();
     }
 
-    public void setJoystickDrive(double xAxis, double yAxis, double steer) {
+    public void setRobotOrientedDrive(double xAxis, double yAxis, double steer) {
         ChassisSpeeds speeds = new ChassisSpeeds(xAxis, yAxis, steer);
+        // Convert to module states
+        SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
+
+        // Front left module state
+        SwerveModuleState frontLeft = moduleStates[0];
+
+        // Front right module state
+        SwerveModuleState frontRight = moduleStates[1];
+
+        // Back left module state
+        SwerveModuleState backLeft = moduleStates[2];
+
+        // Back right module state
+        SwerveModuleState backRight = moduleStates[3];
+
+        m_swerveFrontLeft.goToState(frontLeft);
+        m_swerveFrontRight.goToState(frontRight);
+        m_swerveBackLeft.goToState(backLeft);
+        m_swerveBackRight.goToState(backRight);
+    }
+
+    public void setFieldOrientedDrive(double xAxis, double yAxis, double steer) {
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            2.0, 2.0, Math.PI / 2.0, Rotation2d.fromDegrees(45.0));
         // Convert to module states
         SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
 

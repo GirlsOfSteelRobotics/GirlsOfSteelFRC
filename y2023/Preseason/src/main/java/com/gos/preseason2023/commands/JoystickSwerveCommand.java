@@ -22,7 +22,7 @@ public class JoystickSwerveCommand extends CommandBase {
         double robotXSpeed = -m_joystick.getLeftY();
         double robotYSpeed = -m_joystick.getLeftX();
         double robotRotation = -m_joystick.getRightX();
-        m_chassis.setJoystickDrive(robotXSpeed * m_maxSpeedSwerve, robotYSpeed * m_maxSpeedSwerve, robotRotation);
+        m_chassis.setRobotOrientedDrive(robotXSpeed * m_maxSpeedSwerve, robotYSpeed * m_maxSpeedSwerve, robotRotation);
 
 
 
