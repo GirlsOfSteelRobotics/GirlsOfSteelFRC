@@ -17,7 +17,7 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.ElevatorSimWrapper;
 
 public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
-    public static final double ALLOWABLE_POSITION_ERROR = Units.inchesToMeters(1);
+    public static final double ALLOWABLE_POSITION_ERROR = Units.inchesToMeters(2);
 
     public enum Positions {
         LOW(Units.inchesToMeters(10)),
@@ -90,6 +90,20 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
     public boolean goToPosition(double position) {
         // TODO implement
+
+        if (Math.abs(getHeight() - position) > ALLOWABLE_POSITION_ERROR) {
+            if (getHeight() < position) {
+                m_liftMotor.set(0.5);
+                System.out.println(getHeight());
+            } else if (getHeight() > position) {
+                m_liftMotor.set(-0.5);
+                System.out.println(getHeight());
+            }
+        }
+        else {
+            m_liftMotor.set(0);
+            return true;
+        }
         return false;
     }
 
@@ -105,14 +119,17 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void stop() {
         // TODO implement
+
     }
 
     public void setSpeed(double speed) {
         // TODO implement
+        m_liftMotor.set(speed);
     }
 
     public double getHeight() {
         // TODO implement
-        return 0;
+        return m_liftEncoder.getPosition();
+
     }
 }
