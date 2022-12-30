@@ -13,12 +13,13 @@ RUN sudo apt install -y apt-transport-https gnupg
 RUN curl -s "https://get.sdkman.io?rcupdate=true" | bash
 #
 ## Install java
-RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh & sdk install java 11.0.12-open"
+RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh"
 #
 ## Install gradle
-RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh && sdk install gradle"
+RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh && sdk install gradle && sdk install java 11.0.12-open"
 #
 RUN echo "source /root/.sdkman/bin/sdkman-init.sh" >> /root/.bashrc
+
 #
 ## Install Bazel
 #RUN curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg
