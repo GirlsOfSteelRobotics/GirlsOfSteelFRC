@@ -103,7 +103,7 @@ public class Chassis extends SubsystemBase {
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
-        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_gyro = new AHRS();
 
@@ -279,7 +279,7 @@ public class Chassis extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
-        m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+        m_odometry.resetPosition(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose);
         m_simulator.resetOdometry(pose);
     }
 
