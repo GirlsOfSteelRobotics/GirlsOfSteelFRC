@@ -44,11 +44,18 @@ def activate_dependencies():
         artifacts = [
             "com.google.guava:guava:21.0",
             "org.fxmisc.easybind:easybind:1.0.3",
-            "junit:junit:4.12",
+            "org.junit.jupiter:junit-jupiter-api:5.8.2",
+            "org.junit.jupiter:junit-jupiter-params:5.8.2",
+            "org.junit.jupiter:junit-jupiter-engine:5.8.2",
+            "org.junit.platform:junit-platform-commons:1.6.1",
+            "org.junit.platform:junit-platform-console:1.6.1",
+            "org.junit.platform:junit-platform-engine:1.6.1",
+            "org.junit.platform:junit-platform-launcher:1.6.1",
+            "org.junit.platform:junit-platform-suite-api:1.6.1",
             "org.ejml:ejml-simple:0.38",
         ],
         repositories = ["https://repo1.maven.org/maven2", "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
-        maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
+        #maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
     )
 
     # Separate this because the maven_install_json doesn't download other OS native files
