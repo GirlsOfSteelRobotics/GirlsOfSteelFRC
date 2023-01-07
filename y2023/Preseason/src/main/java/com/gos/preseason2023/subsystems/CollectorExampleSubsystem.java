@@ -20,7 +20,7 @@ public class CollectorExampleSubsystem extends SubsystemBase {
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         // m_pivotLeft.setInverted(true);      fyi we're not using because it's funky with following
-        
+
         // left motor will always follow what the write motor is doing
         m_pivotRight.follow(m_pivotLeft, true);
     }
@@ -34,4 +34,3 @@ public class CollectorExampleSubsystem extends SubsystemBase {
     }
 
 }
-
