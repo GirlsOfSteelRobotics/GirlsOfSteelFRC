@@ -12,12 +12,13 @@ CACHE_DIRECTORY = os.path.join(tempfile.gettempdir(), "gos_vendor_cache")
 
 
 def download_latest_vendordeps(ignore_cache):
+    year = "2023"
     # fmt: off
     vendor_dep_urls = {}
-    vendor_dep_urls["navx_frc.json"] = f"https://raw.githubusercontent.com/rzblue/navx-frc/maven/navx_frc.json"
-    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc2023-latest.json"
-    vendor_dep_urls["REVLib.json"] = "https://software-metadata.revrobotics.com/REVLib-2023.json"
-    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json"
+    vendor_dep_urls["navx_frc.json"] = f"https://dev.studica.com/releases/{year}/NavX.json"
+    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc{year}-latest.json"
+    vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
+    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
     # fmt: on
 
     vendor_files = []
