@@ -60,11 +60,11 @@ public class HangerSubsystem extends SubsystemBase {
         m_rightHangerHeightEntry = loggingTable.getEntry("RightHeight");
 
         if (RobotBase.isSimulation()) {
-            ElevatorSim leftElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true);
+            ElevatorSim leftElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true, true);
             m_leftSimulator = new ElevatorSimWrapper(leftElevatorSim,
                 new RevMotorControllerSimWrapper(m_leftHanger),
                 RevEncoderSimWrapper.create(m_leftHanger));
-            ElevatorSim rightElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true);
+            ElevatorSim rightElevatorSim = new ElevatorSim(DCMotor.getNeo550(2), GEAR, Units.lbsToKilograms(10), Units.inchesToMeters(2), Units.feetToMeters(0), Units.feetToMeters(4), true, true);
             m_rightSimulator = new ElevatorSimWrapper(rightElevatorSim,
                 new RevMotorControllerSimWrapper(m_rightHanger),
                 RevEncoderSimWrapper.create(m_rightHanger));
