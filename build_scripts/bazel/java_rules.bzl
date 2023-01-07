@@ -3,8 +3,7 @@ Girls of Steel rules for java. Mostly just adds automatic hooks into styleguide 
 """
 
 load("@bazelrio//:defs.bzl", "robot_java_binary")
-load("@rule_junit//tools:junit.bzl", junit5_tests = "junit_tests")
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("@rules_pmd//pmd:defs.bzl", "pmd")
 
 def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
@@ -54,7 +53,6 @@ def gos_java_binary(
         __styleguide(name, srcs, disable_pmd, disable_checkstyle)
 
 def gos_junit5_test(name, srcs, deps = [], runtime_deps = [], args = [], package = "org", disable_pmd = False, disable_checkstyle = False, **kwargs):
-
     junit_deps = [
         "@maven//:org_junit_jupiter_junit_jupiter_api",
         "@maven//:org_junit_jupiter_junit_jupiter_params",
@@ -68,8 +66,7 @@ def gos_junit5_test(name, srcs, deps = [], runtime_deps = [], args = [], package
         "@maven//:org_junit_platform_junit_platform_launcher",
         "@maven//:org_junit_platform_junit_platform_suite_api",
     ]
-
-    native.java_test(
+    java_test(
         name = name,
         srcs = srcs,
         deps = deps + junit_deps,
