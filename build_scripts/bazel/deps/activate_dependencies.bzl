@@ -55,7 +55,7 @@ def activate_dependencies():
             "org.ejml:ejml-simple:0.38",
         ],
         repositories = ["https://repo1.maven.org/maven2", "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
-        #maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
+        maven_install_json = "//build_scripts/bazel/deps:maven_install.json",
     )
 
     # Separate this because the maven_install_json doesn't download other OS native files
