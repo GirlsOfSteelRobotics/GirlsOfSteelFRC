@@ -8,6 +8,11 @@
 	"extensions": [
 		"vscjava.vscode-gradle"
 	],
+	"features": {
+		"ghcr.io/devcontainers/features/sshd:1": {
+			"version": "latest"
+		}
+	}
 	//"onCreateCommand": ""
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

@@ -5,7 +5,7 @@ RUN apt install sudo -y
 #
 ## Install needed packages
 RUN sudo apt install -y python3 python3-pip
-RUN sudo apt install -y curl wget
+RUN sudo apt install -y curl wget vim
 RUN sudo apt install -y zip unzip
 RUN sudo apt install -y apt-transport-https gnupg
 #
