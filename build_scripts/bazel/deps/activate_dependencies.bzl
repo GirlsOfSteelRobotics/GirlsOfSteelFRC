@@ -36,7 +36,7 @@ def activate_dependencies():
         name = "snobot_sim",
         artifact = "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
         artifact_sha256 = SNOBOT_SIM_SHA,
-        server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],
+        server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
     )
 
     maven_install(
@@ -44,7 +44,14 @@ def activate_dependencies():
         artifacts = [
             "com.google.guava:guava:21.0",
             "org.fxmisc.easybind:easybind:1.0.3",
-            "junit:junit:4.12",
+            "org.junit.jupiter:junit-jupiter-api:5.8.2",
+            "org.junit.jupiter:junit-jupiter-params:5.8.2",
+            "org.junit.jupiter:junit-jupiter-engine:5.8.2",
+            "org.junit.platform:junit-platform-commons:1.6.1",
+            "org.junit.platform:junit-platform-console:1.6.1",
+            "org.junit.platform:junit-platform-engine:1.6.1",
+            "org.junit.platform:junit-platform-launcher:1.6.1",
+            "org.junit.platform:junit-platform-suite-api:1.6.1",
             "org.ejml:ejml-simple:0.38",
         ],
         repositories = ["https://repo1.maven.org/maven2", "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development"],

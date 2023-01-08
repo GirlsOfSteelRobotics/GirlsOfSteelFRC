@@ -80,7 +80,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_differentialDrive = new DifferentialDrive(m_leftDriveA, m_rightDriveA);
 
-        m_odometry = new DifferentialDriveOdometry(new Rotation2d());
+        m_odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
 
@@ -242,7 +242,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         m_leftEncoder.setPosition(0);
         m_rightEncoder.setPosition(0);
-        m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+        m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose);
         m_simulator.resetOdometry(pose);
     }
 }

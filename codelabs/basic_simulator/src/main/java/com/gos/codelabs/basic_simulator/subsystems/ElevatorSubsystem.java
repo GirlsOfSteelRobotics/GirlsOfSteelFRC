@@ -57,11 +57,11 @@ public class ElevatorSubsystem extends SubsystemBase implements AutoCloseable {
 
         if (RobotBase.isSimulation()) {
             ElevatorSim sim = new ElevatorSim(
-                    ElevatorSimConstants.K_ELEVATOR_GEARBOX, 
-                    ElevatorSimConstants.K_ELEVATOR_GEARING, 
-                    ElevatorSimConstants.K_CARRIAGE_MASS, 
-                    ElevatorSimConstants.K_ELEVATOR_DRUM_RADIUS, 
-                    ElevatorSimConstants.K_MIN_ELEVATOR_HEIGHT, 
+                    ElevatorSimConstants.K_ELEVATOR_GEARBOX,
+                    ElevatorSimConstants.K_ELEVATOR_GEARING,
+                    ElevatorSimConstants.K_CARRIAGE_MASS,
+                    ElevatorSimConstants.K_ELEVATOR_DRUM_RADIUS,
+                    ElevatorSimConstants.K_MIN_ELEVATOR_HEIGHT,
                     ElevatorSimConstants.K_MAX_ELEVATOR_HEIGHT, true);
 
             m_elevatorSim = new ElevatorSimWrapper(sim,

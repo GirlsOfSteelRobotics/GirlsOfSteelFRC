@@ -102,12 +102,12 @@ public final class Constants {
         public static ElevatorSim createSim() {
 
             return new ElevatorSim(
-                    ElevatorSimConstants.ELEVATOR_GEARBOX, 
-                    ElevatorSimConstants.ELEVATOR_GEARING, 
-                    ElevatorSimConstants.CARRIAGE_MASS, 
-                    ElevatorSimConstants.DRUM_RADIUS, 
-                    ElevatorSimConstants.MIN_ELEVATOR_HEIGHT, 
-                    ElevatorSimConstants.MAX_ELEVATOR_HEIGHT, true, 
+                    ElevatorSimConstants.ELEVATOR_GEARBOX,
+                    ElevatorSimConstants.ELEVATOR_GEARING,
+                    ElevatorSimConstants.CARRIAGE_MASS,
+                    ElevatorSimConstants.DRUM_RADIUS,
+                    ElevatorSimConstants.MIN_ELEVATOR_HEIGHT,
+                    ElevatorSimConstants.MAX_ELEVATOR_HEIGHT, true,
                     SIMULATE_SENSOR_NOISE ?  VecBuilder.fill(0.01) : null); // NOPMD
         }
 
