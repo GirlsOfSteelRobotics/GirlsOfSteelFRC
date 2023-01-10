@@ -26,13 +26,13 @@ public class OI {
 
         m_stick = new Joystick(0);
         m_btnShiftUp = new JoystickButton(m_stick, 5);
-        m_btnShiftUp.whenPressed(new ShiftHighGear(shifters));
+        m_btnShiftUp.onTrue(new ShiftHighGear(shifters));
         m_btnShiftDown = new JoystickButton(m_stick, 6);
-        m_btnShiftDown.whenPressed(new ShiftLowGear(shifters));
+        m_btnShiftDown.onTrue(new ShiftLowGear(shifters));
         m_rampUp = new JoystickButton(m_stick, 3);
-        m_rampUp.whenPressed(new RampUp(ramp));
+        m_rampUp.onTrue(new RampUp(ramp));
         m_rampDown = new JoystickButton(m_stick, 4);
-        m_rampDown.whenPressed(new RampDown(ramp));
+        m_rampDown.onTrue(new RampDown(ramp));
     }
 
     public Joystick getJoystick() {

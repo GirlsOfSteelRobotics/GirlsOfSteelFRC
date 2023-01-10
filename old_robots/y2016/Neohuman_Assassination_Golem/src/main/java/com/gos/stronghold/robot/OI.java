@@ -117,98 +117,98 @@ public class OI {
         //DriveStick Buttons
 
         //shiftUpButton = new JoystickButton(drivingStickForward, 4);
-        //shiftUpButton.whenPressed(new ShiftUp());
+        //shiftUpButton.onTrue(new ShiftUp());
         m_shiftDownButton = new JoystickButton(m_drivingStickForward, 3);
-        m_shiftDownButton.whenPressed(new ShiftDown(shifters));
+        m_shiftDownButton.onTrue(new ShiftDown(shifters));
 
         //shiftUpButton2 = new JoystickButton (drivingStickBackward, 4);
         //shiftUpButton2.whenPressed (new ShiftUp());
         m_shiftDownButton2 = new JoystickButton(m_drivingStickBackward, 3);
-        m_shiftDownButton2.whenPressed(new ShiftDown(shifters));
+        m_shiftDownButton2.onTrue(new ShiftDown(shifters));
 
         m_switchCam = new JoystickButton(m_drivingStickForward, 10);
-        m_switchCam.whenPressed(new SwitchCam(camera));
+        m_switchCam.onTrue(new SwitchCam(camera));
 
         m_switchCam2 = new JoystickButton(m_drivingStickBackward, 10);
-        m_switchCam2.whenPressed(new SwitchCam(camera));
+        m_switchCam2.onTrue(new SwitchCam(camera));
 
         m_switchToForward = new JoystickButton(m_drivingStickForward, 1);
-        m_switchToForward.whenPressed(new SwitchToForward(chassis, camera));
+        m_switchToForward.onTrue(new SwitchToForward(chassis, camera));
 
 
         m_switchToBackward = new JoystickButton(m_drivingStickBackward, 1);
-        m_switchToBackward.whenPressed(new SwitchToBackward(chassis, camera));
+        m_switchToBackward.onTrue(new SwitchToBackward(chassis, camera));
 
         // Button board buttons
         if (m_buttonBoard.getButtonCount() > 0) {
             m_shooterPistonsOut = new JoystickButton(m_buttonBoard, 3);
-            m_shooterPistonsOut.whenPressed(new ShooterPistonsOut(shooter));
+            m_shooterPistonsOut.onTrue(new ShooterPistonsOut(shooter));
             m_shooterPistonsIn = new JoystickButton(m_buttonBoard, 4);
-            m_shooterPistonsIn.whenPressed(new ShooterPistonsIn(shooter));
+            m_shooterPistonsIn.onTrue(new ShooterPistonsIn(shooter));
             m_shootBallButtonBoard = new JoystickButton(m_buttonBoard, 6);
-            m_shootBallButtonBoard.whenPressed(new ShootBall(claw, shooter));
+            m_shootBallButtonBoard.onTrue(new ShootBall(claw, shooter));
             m_pivotUpButtonBoard = new JoystickButton(m_buttonBoard, 7);
-            m_pivotUpButtonBoard.whileHeld(new PivotUp(pivot));
+            m_pivotUpButtonBoard.whileTrue(new PivotUp(pivot));
             m_collectBallButtonBoard = new JoystickButton(m_buttonBoard, 8);
-            m_collectBallButtonBoard.whileHeld(new CollectBall(claw, shooter));
+            m_collectBallButtonBoard.whileTrue(new CollectBall(claw, shooter));
             m_releaseBallButtonBoard = new JoystickButton(m_buttonBoard, 9);
-            m_releaseBallButtonBoard.whileHeld(new ReleaseBall(claw, shooter));
+            m_releaseBallButtonBoard.whileTrue(new ReleaseBall(claw, shooter));
             m_pivotDownButtonBoard = new JoystickButton(m_buttonBoard, 10);
-            m_pivotDownButtonBoard.whileHeld(new PivotDown(pivot));
+            m_pivotDownButtonBoard.whileTrue(new PivotDown(pivot));
             m_flapUpButtonBoard = new JoystickButton(m_buttonBoard, 11);
-            m_flapUpButtonBoard.whileHeld(new FlapUp(flap));
+            m_flapUpButtonBoard.whileTrue(new FlapUp(flap));
             m_flapDownButtonBoard = new JoystickButton(m_buttonBoard, 12);
-            m_flapDownButtonBoard.whileHeld(new FlapDown(flap));
+            m_flapDownButtonBoard.whileTrue(new FlapDown(flap));
         }
 
         //GamePad Buttons
 
         // these work for both claw and shooter
         m_collectBallButton = new JoystickButton(m_gamePad, 5);
-        m_collectBallButton.whileHeld(new CollectBall(claw, shooter));
+        m_collectBallButton.whileTrue(new CollectBall(claw, shooter));
         m_releaseBallButton = new JoystickButton(m_gamePad, 6);
-        m_releaseBallButton.whileHeld(new ReleaseBall(claw, shooter));
+        m_releaseBallButton.whileTrue(new ReleaseBall(claw, shooter));
         m_shooterStop = new JoystickButton(m_gamePad, 1);
-        m_shooterStop.whenPressed(new StopShooterWheels(claw, shooter));
+        m_shooterStop.onTrue(new StopShooterWheels(claw, shooter));
 
         //flap: rocker = drivers want to use to control movement of flap at full speed, w/o rocker goes until limit switch
 
         m_flapUp = new JoystickButton(m_gamePad, 8); //switched 7 & 8 again
-        m_flapUp.whileHeld(new FlapUp(flap)); //false because it is not rocker button
+        m_flapUp.whileTrue(new FlapUp(flap)); //false because it is not rocker button
         m_flapDown = new JoystickButton(m_gamePad, 7);
-        m_flapDown.whileHeld(new FlapDown(flap));
+        m_flapDown.whileTrue(new FlapDown(flap));
         //flapUpRocker = new JoystickButton(buttonBoard, 5);
-        //flapUpRocker.whileHeld(new FlapUp(true); //true because using rocker
+        //flapUpRocker.whileTrue(new FlapUp(true); //true because using rocker
         //flapDownRocker = new JoystickButton(buttonBoard, 6);
-        //flapDownRocker.whileHeld(new FlapUp(true)); //^^
+        //flapDownRocker.whileTrue(new FlapUp(true)); //^^
 
         //pivot
         m_pivotUp = new JoystickButton(m_gamePad, 3); //switched 2 & 3 again
-        m_pivotUp.whileHeld(new PivotUp(pivot));
+        m_pivotUp.whileTrue(new PivotUp(pivot));
         m_pivotDown = new JoystickButton(m_gamePad, 2);
-        m_pivotDown.whileHeld(new PivotDown(pivot));
+        m_pivotDown.whileTrue(new PivotDown(pivot));
         m_pivotMiddle = new JoystickButton(m_gamePad, 4); //this is always left unused
-        m_pivotMiddle.whileHeld(new PivotMiddle(pivot));
+        m_pivotMiddle.whileTrue(new PivotMiddle(pivot));
 
         //test nav board
         m_testDesiredRotationAngle = new JoystickButton(m_drivingStickForward, 7);
-        m_testDesiredRotationAngle.whenPressed(new RotateToDesiredAngle(chassis, .2, 90));
+        m_testDesiredRotationAngle.onTrue(new RotateToDesiredAngle(chassis, .2, 90));
 
         m_resetEncoders = new JoystickButton(m_gamePad, 9);
-        m_resetEncoders.whenPressed(new ResetEncoderDistance(chassis, flap, pivot));
+        m_resetEncoders.onTrue(new ResetEncoderDistance(chassis, flap, pivot));
 
         //ROZIE STUFF!!!!
         if (ROZIE_DRIVE) {
             m_rozieShiftDownButton = new JoystickButton(m_roziePad, 3);
-            m_rozieShiftDownButton.whenPressed(new ShiftDown(shifters));
+            m_rozieShiftDownButton.onTrue(new ShiftDown(shifters));
             m_rozieFlapUp = new JoystickButton(m_roziePad, 8); //switched 7 & 8 again
-            m_rozieFlapUp.whileHeld(new FlapUp(flap)); //false because it is not rocker button
+            m_rozieFlapUp.whileTrue(new FlapUp(flap)); //false because it is not rocker button
             m_rozieFlapDown = new JoystickButton(m_roziePad, 7);
-            m_rozieFlapDown.whileHeld(new FlapDown(flap));
+            m_rozieFlapDown.whileTrue(new FlapDown(flap));
             m_roziePivotUp = new JoystickButton(m_roziePad, 3); //switched 2 & 3 again
-            m_roziePivotUp.whileHeld(new PivotUp(pivot));
+            m_roziePivotUp.whileTrue(new PivotUp(pivot));
             m_roziePivotDown = new JoystickButton(m_roziePad, 2);
-            m_roziePivotDown.whileHeld(new PivotDown(pivot));
+            m_roziePivotDown.whileTrue(new PivotDown(pivot));
         }
 
 

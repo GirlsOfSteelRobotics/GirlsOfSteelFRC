@@ -82,64 +82,64 @@ public class OI {
 
         //Defining Driver Buttons - microsoft joytick
         m_startDrive = new JoystickButton(m_driverJoystick, 9);
-        m_startDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, false));
+        m_startDrive.onTrue(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, false));
         m_stopChassis = new JoystickButton(m_driverJoystick, 7);
-        m_stopChassis.whenPressed(new StopChassis(chassis, drive));
+        m_stopChassis.onTrue(new StopChassis(chassis, drive));
         m_gyroDrive = new JoystickButton(m_driverJoystick, 11);
-        m_gyroDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, true));
+        m_gyroDrive.onTrue(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, true));
         m_normalDrive = new JoystickButton(m_driverJoystick, 10);
-        m_normalDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, false));
+        m_normalDrive.onTrue(new Drive(m_driverJoystick, chassis, drive, 1.0, 0.5, false));
         m_liningDrive = new JoystickButton(m_driverJoystick, 12);
-        m_liningDrive.whenPressed(new Drive(m_driverJoystick, chassis, drive, 0.5, 0.25, true));
+        m_liningDrive.onTrue(new Drive(m_driverJoystick, chassis, drive, 0.5, 0.25, true));
         //disables driver rotation
         m_disableRotation = new JoystickButton(m_driverJoystick, 2);
-        m_disableRotation.whileHeld(new DisableRotation(chassis));
+        m_disableRotation.whileTrue(new DisableRotation(chassis));
         //        rotateRight = new JoystickButton(driverJoystick, 4);
-        //        rotateRight.whenPressed(new Rotate(Chassis.FEEDER_RIGHT, true));
+        //        rotateRight.onTrue(new Rotate(Chassis.FEEDER_RIGHT, true));
         //        rotateLeft = new JoystickButton(driverJoystick, 3);
-        //        rotateLeft.whenPressed(new Rotate(Chassis.FEEDER_LEFT, true));
+        //        rotateLeft.onTrue(new Rotate(Chassis.FEEDER_LEFT, true));
         m_rotateShootingBackRight = new JoystickButton(m_driverJoystick, 6);
-        m_rotateShootingBackRight.whenPressed(new Rotate(chassis,
+        m_rotateShootingBackRight.onTrue(new Rotate(chassis,
             //  ShooterCamera.getTopDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
             90, false));
         m_rotateShootingBackLeft = new JoystickButton(m_driverJoystick, 5);
-        m_rotateShootingBackLeft.whenPressed(new Rotate(chassis,
+        m_rotateShootingBackLeft.onTrue(new Rotate(chassis,
             //                ShooterCamera.getSideDiffAngle() + ShooterCamera.getLocationOffsetAngle(), false));
             -90, false));
         //        Working blocker raising code
         //        raiseBlocker = new JoystickButton(driverJoystick, 12);
-        //        raiseBlocker.whenPressed(new RaiseBlocker());
+        //        raiseBlocker.onTrue(new RaiseBlocker());
         //        lowerBlocker = new JoystickButton(driverJoystick, 8);
-        //        lowerBlocker.whenPressed(new LowerBlocker());
+        //        lowerBlocker.onTrue(new LowerBlocker());
 
 
         //Defining Operator Buttons
         m_prepShoot = new JoystickButton(m_operatorJoystick, R1);
-        m_prepShoot.whileHeld(new Shoot(shooter, 0.9));
+        m_prepShoot.whileTrue(new Shoot(shooter, 0.9));
         //prepShootPyramid = new JoystickButton(operatorJoystick, L1);
-        //prepShootPyramid.whileHeld(new Shoot(0.85));
+        //prepShootPyramid.whileTrue(new Shoot(0.85));
         m_loadFrisbee = new JoystickButton(m_operatorJoystick, X);
-        m_loadFrisbee.whileHeld(new PushPullShooterPiston(feeder, shooter));
+        m_loadFrisbee.whileTrue(new PushPullShooterPiston(feeder, shooter));
         m_tipOver = new JoystickButton(m_operatorJoystick, SQUARE);
-        m_tipOver.whenPressed(new TipRobotOver(climber));
+        m_tipOver.onTrue(new TipRobotOver(climber));
         m_retract = new JoystickButton(m_operatorJoystick, TRIANGLE);
-        m_retract.whenPressed(new RetractClimberPiston(climber));
+        m_retract.onTrue(new RetractClimberPiston(climber));
         m_closeBottomGrip = new JoystickButton(m_operatorJoystick, SELECT);
-        m_closeBottomGrip.whenPressed(new CloseBottomGrip(gripper));
+        m_closeBottomGrip.onTrue(new CloseBottomGrip(gripper));
         m_openBottomGrip = new JoystickButton(m_operatorJoystick, START);
-        m_openBottomGrip.whenPressed(new OpenAllGrippers(gripper));
+        m_openBottomGrip.onTrue(new OpenAllGrippers(gripper));
         m_closeTopGrip = new JoystickButton(m_operatorJoystick, HOME);
-        m_closeTopGrip.whenPressed(new CloseTopGrip());
+        m_closeTopGrip.onTrue(new CloseTopGrip());
         m_climb = new JoystickButton(m_operatorJoystick, CIRCLE);
-        m_climb.whileHeld(new StartClimbMotors(climber));
+        m_climb.whileTrue(new StartClimbMotors(climber));
         m_stopClimbing = new JoystickButton(m_operatorJoystick, L2);
-        m_stopClimbing.whenPressed(new StopClimbMotors(climber));
+        m_stopClimbing.onTrue(new StopClimbMotors(climber));
         m_stopClimbing2 = new JoystickButton(m_operatorJoystick, R2);
-        m_stopClimbing2.whenPressed(new StopClimbMotors(climber));
+        m_stopClimbing2.onTrue(new StopClimbMotors(climber));
 
         //Raising and lowering the blocker using a toggle
         m_toggleBlocker = new JoystickButton(m_operatorJoystick, L1);
-        m_toggleBlocker.whenPressed(new Blocking(feeder));
+        m_toggleBlocker.onTrue(new Blocking(feeder));
     }
 
     public Joystick getDrivingJoystick() {

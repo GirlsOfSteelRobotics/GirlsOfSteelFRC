@@ -3,8 +3,7 @@ Girls of Steel rules for java. Mostly just adds automatic hooks into styleguide 
 """
 
 load("@bazelrio//:defs.bzl", "robot_java_binary")
-load("@rule_junit//tools:junit.bzl", junit4_tests = "junit_tests")
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("@rules_pmd//pmd:defs.bzl", "pmd")
 
 def __styleguide(name, srcs, disable_pmd, disable_checkstyle):
@@ -53,12 +52,28 @@ def gos_java_binary(
     if srcs:
         __styleguide(name, srcs, disable_pmd, disable_checkstyle)
 
-def gos_junit4_test(name, srcs, deps = [], disable_pmd = False, disable_checkstyle = False, **kwargs):
-    junit4_tests(
+def gos_junit5_test(name, srcs, deps = [], runtime_deps = [], args = [], package = "org", disable_pmd = False, disable_checkstyle = False, **kwargs):
+    junit_deps = [
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_params",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+    ]
+
+    junit_runtime_deps = [
+        "@maven//:org_junit_platform_junit_platform_commons",
+        "@maven//:org_junit_platform_junit_platform_console",
+        "@maven//:org_junit_platform_junit_platform_engine",
+        "@maven//:org_junit_platform_junit_platform_launcher",
+        "@maven//:org_junit_platform_junit_platform_suite_api",
+    ]
+    java_test(
         name = name,
         srcs = srcs,
-        javacopts = get_default_javac_opts(),
-        deps = deps + ["@maven//:junit_junit"],
+        deps = deps + junit_deps,
+        runtime_deps = runtime_deps + junit_runtime_deps,
+        args = args + ["--select-package", package],
+        main_class = "org.junit.platform.console.ConsoleLauncher",
+        use_testrunner = False,
         **kwargs
     )
 

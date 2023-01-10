@@ -57,5 +57,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # py -m libraries.scripts.updater.update_vendor_deps
+    # py -m libraries.scripts.updater.update_bazelrio
     main()

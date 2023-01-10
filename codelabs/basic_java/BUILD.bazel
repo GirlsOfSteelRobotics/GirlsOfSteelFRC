@@ -1,4 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_binary", "gos_junit4_test")
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_binary", "gos_junit5_test")
 
 gos_java_binary(
     name = "basic_java",
@@ -6,7 +6,7 @@ gos_java_binary(
     main_class = "com.gos.codelabs.basic_java.RunCalculator",
 )
 
-gos_junit4_test(
+gos_junit5_test(
     name = "test",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = ["basic_java"],

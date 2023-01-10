@@ -54,7 +54,7 @@ public class Chassis extends SubsystemBase {
     private final RelativeEncoder m_leftEncoder;
 
     private final ADXRS450_Gyro m_gyroscope;
-    private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d());
+    private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
     private final Field2d m_field;
     private final RobotPositionPublisher m_coordinateGuiPublisher;
 

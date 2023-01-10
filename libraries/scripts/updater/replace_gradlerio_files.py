@@ -87,7 +87,7 @@ def update_non_robot_build_file(build_file, latest_version):
     regex_replace_file(build_file, replacements)
 
 
-def load_url(url_suffix, pinned_version="3fd2b5b7dda0e9aff1fe2bb9114e7d37d9cae3dc"):
+def load_url(url_suffix, pinned_version="main"):
     project_subpath = f"wpilibsuite/vscode-wpilib"
 
     download_url = "/".join(

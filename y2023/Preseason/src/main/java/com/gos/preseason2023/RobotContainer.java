@@ -68,13 +68,13 @@ public class RobotContainer {
         m_chassis.setDefaultCommand(new JoystickSwerveCommand(m_chassis, m_joystick));
 
         final JoystickButton pivotUp = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-        pivotUp.whileHeld(new CollectorPivotCommand(m_collectorSubsystem, 0.5));
+        pivotUp.whileTrue(new CollectorPivotCommand(m_collectorSubsystem, 0.5));
         final JoystickButton pivotDown = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-        pivotDown.whileHeld(new CollectorPivotCommand(m_collectorSubsystem, -0.5));
+        pivotDown.whileTrue(new CollectorPivotCommand(m_collectorSubsystem, -0.5));
         final JoystickButton rollerIn = new JoystickButton(m_driverController, XboxController.Button.kA.value);
-        rollerIn.whileHeld(new CollectorRollerCommand(m_collectorSubsystem, 0.5));
+        rollerIn.whileTrue(new CollectorRollerCommand(m_collectorSubsystem, 0.5));
         final JoystickButton rollerOut = new JoystickButton(m_driverController, XboxController.Button.kX.value);
-        rollerOut.whileHeld(new CollectorRollerCommand(m_collectorSubsystem, -0.5));
+        rollerOut.whileTrue(new CollectorRollerCommand(m_collectorSubsystem, -0.5));
     }
 
 

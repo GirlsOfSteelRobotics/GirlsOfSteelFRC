@@ -14,7 +14,6 @@ import com.gos.offense2019.subsystems.Chassis;
 import com.gos.offense2019.subsystems.HatchCollector;
 import com.gos.offense2019.subsystems.Shifters;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -35,14 +34,14 @@ public class OI {
         POVButton shiftUp = new POVButton(m_drivingPad, 0);
         POVButton shiftDown = new POVButton(m_drivingPad, 180);
 
-        Button hatchRelease = new JoystickButton(m_drivingPad, 5);
-        Button hatchGrab = new JoystickButton(m_drivingPad, 6);
+        JoystickButton hatchRelease = new JoystickButton(m_drivingPad, 5);
+        JoystickButton hatchGrab = new JoystickButton(m_drivingPad, 6);
 
 
-        shiftUp.whenPressed(new Shift(shifters, Shifters.Speed.HIGH));
-        shiftDown.whenPressed(new Shift(shifters, Shifters.Speed.LOW));
+        shiftUp.onTrue(new Shift(shifters, Shifters.Speed.HIGH));
+        shiftDown.onTrue(new Shift(shifters, Shifters.Speed.LOW));
 
-        hatchRelease.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.RELEASE));
-        hatchGrab.whenPressed(new HatchCollect(hatch, HatchCollector.HatchState.GRAB));
+        hatchRelease.onTrue(new HatchCollect(hatch, HatchCollector.HatchState.RELEASE));
+        hatchGrab.onTrue(new HatchCollect(hatch, HatchCollector.HatchState.GRAB));
     }
 }
