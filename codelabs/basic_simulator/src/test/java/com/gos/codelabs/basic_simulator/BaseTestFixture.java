@@ -4,20 +4,20 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.lang.reflect.Field;
 import java.util.function.BooleanSupplier;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class BaseTestFixture {
 
     protected static final double DOUBLE_EPSILON = 1e-6;
 
     @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
-    @Before
+    @BeforeEach
     public void setupSimulator() {
         try {
             HAL.initialize(0, 0);
@@ -42,7 +42,7 @@ public class BaseTestFixture {
 
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         CommandScheduler.getInstance().disable();
         DriverStationSim.setEnabled(false);

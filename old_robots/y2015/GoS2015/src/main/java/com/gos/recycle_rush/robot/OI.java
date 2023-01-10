@@ -46,57 +46,57 @@ public class OI {
 
         //Collectors: collect/release tote on z-axis
         m_collectTote = new LTButton(m_operatorJoystick);
-        m_collectTote.whenActive(new CollectTote(collector));
+        m_collectTote.onTrue(new CollectTote(collector));
         m_releaseTote = new RTButton(m_operatorJoystick);
-        m_releaseTote.whenActive(new ReleaseTote(collector));
+        m_releaseTote.onTrue(new ReleaseTote(collector));
         m_angleIn = new JoystickButton(m_operatorJoystick, 5); //hello sonia i am so interested in ur life please tell me everything
-        m_angleIn.whenPressed(new AngleCollectorIn(collector)); //omg sonia u dont even exist in real life am i just dreaming i think im loopy
+        m_angleIn.onTrue(new AngleCollectorIn(collector)); //omg sonia u dont even exist in real life am i just dreaming i think im loopy
         m_angleOut = new JoystickButton(m_operatorJoystick, 6); //what is going on i am so confused what does this even mean
-        m_angleOut.whenPressed(new AngleCollectorOut(collector)); //lolol lets rap
+        m_angleOut.onTrue(new AngleCollectorOut(collector)); //lolol lets rap
 
         // Shack
         m_shackIn = new JoystickButton(m_operatorJoystick, 1);
-        m_shackIn.whenPressed(new ShackIn(shack));
+        m_shackIn.onTrue(new ShackIn(shack));
         m_shackOut = new JoystickButton(m_operatorJoystick, 2);
-        m_shackOut.whenPressed(new ShackOut(shack));
+        m_shackOut.onTrue(new ShackOut(shack));
 
         // Lifting
         // liftUp = new JoystickButton(operatorJoystick, 7);
-        // liftUp.whenPressed(new LiftUpWhileHeld());
-        // liftUp.whileHeld(new LiftUpHeld());
+        // liftUp.onTrue(new LiftUpWhileHeld());
+        // liftUp.whileTrue(new LiftUpHeld());
         // liftDown = new JoystickButton(operatorJoystick, 8);
-        // liftDown.whenPressed(new LiftDownWhileHeld());
-        // liftDown.whileHeld(new LiftDownHeld());
+        // liftDown.onTrue(new LiftDownWhileHeld());
+        // liftDown.whileTrue(new LiftDownHeld());
         // liftOneTote = new JoystickButton(chassisJoystick, 9);
 
         // autoDriveRight = new JoystickButton(chassisJoystick, 5);
-        // autoDriveRight.whenPressed(new AutoDriveRight(50));
+        // autoDriveRight.onTrue(new AutoDriveRight(50));
         // autoDriveLeft = new JoystickButton(chassisJoystick, 6);
-        // autoDriveLeft.whenPressed(new AutoDriveLeft(50));
+        // autoDriveLeft.onTrue(new AutoDriveLeft(50));
         // autoDriveForward = new JoystickButton(chassisJoystick, 4);
-        // autoDriveForward.whenPressed(new AutoDriveForward(50));
+        // autoDriveForward.onTrue(new AutoDriveForward(50));
         // autoDriveBackwards = new JoystickButton(chassisJoystick, 3);
-        // autoDriveBackwards.whenReleased(new AutoDriveBackwards(50));
+        // autoDriveBackwards.onFalse(new AutoDriveBackwards(50));
 
         /*
          * //Drive buttons initialization driveForward = new
-         * JoystickButton(chassisJoystick, 5); driveForward.whileHeld(new
+         * JoystickButton(chassisJoystick, 5); driveForward.whileTrue(new
          * DriveForward()); driveBackward = new JoystickButton(chassisJoystick,
-         * 6); driveBackward.whileHeld(new DriveBackward()); driveRight = new
-         * JoystickButton(chassisJoystick, 4); driveRight.whileHeld(new
+         * 6); driveBackward.whileTrue(new DriveBackward()); driveRight = new
+         * JoystickButton(chassisJoystick, 4); driveRight.whileTrue(new
          * DriveRight()); driveLeft = new JoystickButton(chassisJoystick, 3);
-         * driveLeft.whileHeld(new DriveLeft());
+         * driveLeft.whileTrue(new DriveLeft());
          */
 
         // Gyro Buttons
         m_resetGyro = new JoystickButton(m_chassisJoystick, 17);
-        m_resetGyro.whenPressed(new ResetGyro(chassis));
+        m_resetGyro.onTrue(new ResetGyro(chassis));
         m_getGyro = new JoystickButton(m_chassisJoystick, 18);
-        m_getGyro.whenPressed(new GetGyro(chassis));
+        m_getGyro.onTrue(new GetGyro(chassis));
 
         // Pid TESTING
         // pidLifterTesting = new JoystickButton(chassisJoystick, 10);
-        // pidLifterTesting.whenPressed(new PIDLifterTesting());
+        // pidLifterTesting.onTrue(new PIDLifterTesting());
     }
 
     public Joystick getOperatorJoystick() {

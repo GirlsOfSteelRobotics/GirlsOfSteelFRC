@@ -34,7 +34,7 @@ public class CommandTester {
     }
 
     private void addCommand(String name, CommandBase command) {
-        CommandBase namedCommand =  command.withName(name);
-        SmartDashboard.putData(name, namedCommand);
+        command.setName(name);
+        SmartDashboard.putData(name, command);
     }
 }

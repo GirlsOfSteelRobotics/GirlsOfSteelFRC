@@ -83,7 +83,8 @@ public class CommandTester {
     }
 
     private void addCommand(String name, CommandBase command) {
-        CommandBase namedCommand =  command.andThen(() -> SmartDashboard.putBoolean("Auton Running", false)).withName(name);
+        CommandBase namedCommand =  command.andThen(() -> SmartDashboard.putBoolean("Auton Running", false));
+        namedCommand.setName(name);
         Shuffleboard.getTab("Command Tester").add(name, namedCommand);
     }
 }

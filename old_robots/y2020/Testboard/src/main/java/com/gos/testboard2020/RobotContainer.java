@@ -75,14 +75,14 @@ public class RobotContainer {
     private void configureButtonBindings() {
         m_drivingPad = new Joystick(0);
 
-        new JoystickButton(m_drivingPad, 1).whenPressed(new TryBlinkin(m_blinkin));
-        new JoystickButton(m_drivingPad, 2).whenPressed(new ReadLidar(m_lidar));
-        new JoystickButton(m_drivingPad, 4).whenPressed(new SpinByLidar(m_motor, m_lidar));
+        new JoystickButton(m_drivingPad, 1).onTrue(new TryBlinkin(m_blinkin));
+        new JoystickButton(m_drivingPad, 2).onTrue(new ReadLidar(m_lidar));
+        new JoystickButton(m_drivingPad, 4).onTrue(new SpinByLidar(m_motor, m_lidar));
 
-        new JoystickButton(m_drivingPad, 3).whenPressed(new OuterShootAlign2(m_limelight));
+        new JoystickButton(m_drivingPad, 3).onTrue(new OuterShootAlign2(m_limelight));
 
-        new POVButton(m_drivingPad, 0).whenPressed(new SwitchToCamClimb(m_camera));
-        new POVButton(m_drivingPad, 180).whenPressed(new SwitchToCamIntake(m_camera));
+        new POVButton(m_drivingPad, 0).onTrue(new SwitchToCamClimb(m_camera));
+        new POVButton(m_drivingPad, 180).onTrue(new SwitchToCamIntake(m_camera));
     }
 
     /**

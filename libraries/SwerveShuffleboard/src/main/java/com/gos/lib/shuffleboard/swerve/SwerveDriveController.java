@@ -117,7 +117,7 @@ public class SwerveDriveController {
         m_frontRightModule = new SwerveModule(RIGHT_X, FRONT_Y);
         m_rearLeftModule = new SwerveModule(LEFT_X, REAR_Y);
         m_rearRightModule = new SwerveModule(RIGHT_X, REAR_Y);
-    
+
     }
 
     public void updateLeftFront(SwerveModuleData data) {

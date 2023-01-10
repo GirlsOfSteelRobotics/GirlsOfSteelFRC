@@ -50,7 +50,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final RelativeEncoder m_leftEncoder = m_leftLeader.getEncoder();
     private final RelativeEncoder m_rightEncoder = m_rightLeader.getEncoder();
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
-    private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d());
+    private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
     private final Field2d m_field = new Field2d();
 
     // PID

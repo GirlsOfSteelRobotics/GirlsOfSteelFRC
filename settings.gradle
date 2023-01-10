@@ -1,16 +1,16 @@
 rootProject.name = 'GirlsOfSteelRobotics'
 
-include 'codelabs:basic_simulator'
+//include 'codelabs:basic_simulator'
 //include 'codelabs:custom_shuffleboard'
-include 'codelabs:gitflow'
+//include 'codelabs:gitflow'
 //include 'codelabs:pid'
-include 'codelabs:basic_java'
+//include 'codelabs:basic_java'
 //include 'codelabs:first_robot_code'
 
 include 'libraries:GirlsOfSteelLib'
 include 'libraries:GirlsOfSteelLibRev'
 include 'libraries:GirlsOfSteelLibCtre'
-include 'libraries:SwerveShuffleboard'
+//include 'libraries:SwerveShuffleboard'
 
 //include 'old_robots:y2011:GOS2011:Drive'
 //include 'old_robots:y2011:GOS2011:MyRobot_otherschool'
@@ -49,5 +49,8 @@ include 'libraries:SwerveShuffleboard'
 //include 'y2022:MEPI'
 include 'y2022:RapidReact'
 include 'y2022:RapidReactDashboard'
+include 'y2022:SCRAWestCoastDrive'
+
 
 include 'y2023:Preseason'
+include 'y2023:ChargedUp'
