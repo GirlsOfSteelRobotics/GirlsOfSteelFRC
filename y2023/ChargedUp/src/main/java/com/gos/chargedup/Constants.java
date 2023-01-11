@@ -19,6 +19,8 @@ public final class Constants {
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
+    public static final int PIGEON_PORT = 1;
+
     public static class OperatorConstants {
         public static final int DRIVER_CONTROLLER_PORT = 0;
     }
