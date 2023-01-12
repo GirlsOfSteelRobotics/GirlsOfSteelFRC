@@ -14,7 +14,11 @@ package com.gos.chargedup;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static class OperatorConstants {
-        public static final int DRIVER_CONTROLLER_PORT = 0;
-    }
+
+    public static final int CLAW_INTAKE_RIGHT = 0;
+
+    public static final int CLAW_INTAKE_LEFT = 1;
+
+    public static final int DRIVER_CONTROLLER_PORT = 0;
+
 }
