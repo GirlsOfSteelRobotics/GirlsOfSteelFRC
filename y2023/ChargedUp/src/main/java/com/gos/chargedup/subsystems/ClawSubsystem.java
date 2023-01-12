@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.Constants;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,17 +11,13 @@ public class ClawSubsystem extends SubsystemBase {
 
     private static final double CLAW_SPEED = 0.2;
 
-    public static final int CLAW_INTAKE_RIGHT = 0;
-
-    public static final int CLAW_INTAKE_LEFT = 1;
-
     private final SimableCANSparkMax m_rightIntakeLead;
     private final SimableCANSparkMax m_leftIntake; //NOPMD
 
 
     public ClawSubsystem() {
-        m_rightIntakeLead = new SimableCANSparkMax(CLAW_INTAKE_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leftIntake = new SimableCANSparkMax(CLAW_INTAKE_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_rightIntakeLead = new SimableCANSparkMax(Constants.CLAW_INTAKE_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leftIntake = new SimableCANSparkMax(Constants.CLAW_INTAKE_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leftIntake.follow(m_rightIntakeLead, true);
 
     }

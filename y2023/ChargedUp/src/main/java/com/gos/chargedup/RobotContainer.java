@@ -5,7 +5,7 @@
 
 package com.gos.chargedup;
 
-import com.gos.chargedup.Constants.OperatorConstants;
+
 import com.gos.chargedup.autonomous.AutonomousFactory;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
@@ -33,7 +33,7 @@ public class RobotContainer {
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
-        new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+        new CommandXboxController(Constants.DRIVER_CONTROLLER_PORT);
 
 
     /**
