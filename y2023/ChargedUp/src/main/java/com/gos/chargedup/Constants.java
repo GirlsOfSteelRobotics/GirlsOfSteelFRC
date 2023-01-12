@@ -14,5 +14,4 @@ package com.gos.chargedup;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
 }

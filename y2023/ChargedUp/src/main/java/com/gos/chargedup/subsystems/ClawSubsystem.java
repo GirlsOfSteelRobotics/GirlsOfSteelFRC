@@ -18,7 +18,6 @@ public class ClawSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_leftIntake; //NOPMD
 
 
-
     public ClawSubsystem() {
         m_rightIntakeLead = new SimableCANSparkMax(CLAW_INTAKE_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leftIntake = new SimableCANSparkMax(CLAW_INTAKE_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
