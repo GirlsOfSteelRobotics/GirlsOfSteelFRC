@@ -1,15 +1,15 @@
 package com.gos.chargedup.commands;
 
 import com.gos.chargedup.subsystems.ChassisSubsystem;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class CurvatureDriveCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
 
-    private final XboxController m_joystick;
+    private final CommandXboxController m_joystick;
 
-    public CurvatureDriveCommand(ChassisSubsystem chassisSubsystem, XboxController joystick) {
+    public CurvatureDriveCommand(ChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
         m_chassis = chassisSubsystem;
         m_joystick = joystick;
         addRequirements(this.m_chassis);
