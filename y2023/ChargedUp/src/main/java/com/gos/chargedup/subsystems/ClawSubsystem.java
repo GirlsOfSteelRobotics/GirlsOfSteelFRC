@@ -12,13 +12,13 @@ public class ClawSubsystem extends SubsystemBase {
     private static final double CLAW_SPEED = 0.2;
 
     private final SimableCANSparkMax m_rightIntakeLead;
-    private final SimableCANSparkMax m_leftIntake; //NOPMD
+    private final SimableCANSparkMax m_leftIntakeFollow; //NOPMD
 
 
     public ClawSubsystem() {
         m_rightIntakeLead = new SimableCANSparkMax(Constants.CLAW_INTAKE_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leftIntake = new SimableCANSparkMax(Constants.CLAW_INTAKE_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leftIntake.follow(m_rightIntakeLead, true);
+        m_leftIntakeFollow = new SimableCANSparkMax(Constants.CLAW_INTAKE_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_leftIntakeFollow.follow(m_rightIntakeLead, true);
 
     }
 
