@@ -6,7 +6,7 @@
 package com.gos.chargedup;
 
 import com.gos.chargedup.Constants.OperatorConstants;
-import com.gos.chargedup.autonomous.AutonomousFactory;
+import autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.ExampleCommand;
 import com.gos.chargedup.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.RobotBase;
