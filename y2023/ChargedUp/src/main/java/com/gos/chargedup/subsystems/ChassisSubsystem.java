@@ -18,8 +18,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final DifferentialDrive m_drive;
 
-    private final DifferentialDriveOdometry m_odometry;
-    private final WPI_PigeonIMU m_gyro;
+    private final DifferentialDriveOdometry m_odometry; // NOPMD
+    private final WPI_PigeonIMU m_gyro; //NOPMD
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);

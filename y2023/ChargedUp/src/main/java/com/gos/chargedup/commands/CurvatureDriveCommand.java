@@ -8,6 +8,7 @@ public class CurvatureDriveCommand extends CommandBase {
     private final ChassisSubsystem m_chassis;
 
     private final CommandXboxController m_joystick;
+    private final double m_steerSpeed = 0.75; // NOPMD
 
     public CurvatureDriveCommand(ChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
         m_chassis = chassisSubsystem;
@@ -23,7 +24,7 @@ public class CurvatureDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        m_chassis.setCurvatureDrive(-m_joystick.getLeftY(), .75 * -m_joystick.getRightX());
+        m_chassis.setCurvatureDrive(-m_joystick.getLeftY(), m_steerSpeed * -m_joystick.getRightX());
     }
 
     @Override
