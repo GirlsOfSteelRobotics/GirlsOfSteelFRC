@@ -7,6 +7,8 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.subsystems.ChassisSubsystem;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.ExampleSubsystem;
@@ -28,7 +30,7 @@ public class RobotContainer {
 
     private final ClawSubsystem m_claw = new ClawSubsystem();
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
+    private final ChassisSubsystem m_chassisSubsystem = new ChassisSubsystem();
     private final AutonomousFactory m_autonomousFactory;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -67,6 +69,7 @@ public class RobotContainer {
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
         m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
     }
 
 
