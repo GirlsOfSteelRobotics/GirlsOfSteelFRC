@@ -1,0 +1,25 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ChassisSubsystem": "Subsystem",
+      "/LiveWindow/ElevatorSubsystem": "Subsystem",
+      "/LiveWindow/PunchSubsystem": "Subsystem",
+      "/LiveWindow/Ungrouped/ADXRS450_Gyro[0]": "Gyro",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Lift To Position High": "Command",
+      "/SmartDashboard/Lift To Position Low": "Command",
+      "/SmartDashboard/Lift To Position Mid": "Command",
+      "/SmartDashboard/Test Drive Distance Backwards": "Command",
+      "/SmartDashboard/Test Drive Distance Forwards": "Command",
+      "/SmartDashboard/Test Extend Punch": "Command",
+      "/SmartDashboard/Test Retract Punch": "Command",
+      "/SmartDashboard/Test Timed Drive Backwards": "Command",
+      "/SmartDashboard/Test Timed Drive Forwards": "Command"
+    }
+  }
+}

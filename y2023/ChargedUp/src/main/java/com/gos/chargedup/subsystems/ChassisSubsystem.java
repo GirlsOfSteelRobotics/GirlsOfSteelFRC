@@ -4,13 +4,23 @@ import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 public class ChassisSubsystem extends SubsystemBase {
+    //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
     private final SimableCANSparkMax m_leaderRight;
@@ -18,8 +28,20 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final DifferentialDrive m_drive;
 
-    private final DifferentialDriveOdometry m_odometry; // NOPMD
-    private final WPI_PigeonIMU m_gyro; //NOPMD
+    //Odometry
+    private final DifferentialDriveOdometry m_odometry;
+    private final WPI_PigeonIMU m_gyro;
+
+    private final RelativeEncoder m_rightEncoder;
+
+    private final RelativeEncoder m_leftEncoder;
+
+    //Field
+    private final Field2d m_field;
+
+    //SIM
+    private DifferentialDrivetrainSimWrapper m_simulator;
+
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -47,6 +69,28 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
+        m_rightEncoder = m_leaderRight.getEncoder();
+        m_leftEncoder = m_leaderLeft.getEncoder();
+
+        m_field = new Field2d();
+
+        if (RobotBase.isSimulation()) {
+            DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
+                DifferentialDrivetrainSim.KitbotMotor.kDoubleNEOPerSide,
+                DifferentialDrivetrainSim.KitbotGearing.k5p95,
+                DifferentialDrivetrainSim.KitbotWheelSize.kSixInch,
+                null);
+            m_simulator = new DifferentialDrivetrainSimWrapper(
+                drivetrainSim,
+                new RevMotorControllerSimWrapper(m_leaderLeft),
+                new RevMotorControllerSimWrapper(m_leaderRight),
+                RevEncoderSimWrapper.create(m_leaderLeft),
+                RevEncoderSimWrapper.create(m_leaderRight),
+                new CtrePigeonImuWrapper(m_gyro));
+            m_simulator.setRightInverted(false);
+
+            SmartDashboard.putData(m_field);
+        }
     }
 
     public void setArcadeDrive(double speed, double steer) {
@@ -55,6 +99,18 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public void setCurvatureDrive(double speed, double steer) {
         m_drive.curvatureDrive(speed, steer, speed < 0.05);
+
+    }
+
+    @Override
+    public void periodic() {
+        m_odometry.update(Rotation2d.fromDegrees(m_gyro.getYaw()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+        m_field.setRobotPose(m_odometry.getPoseMeters());
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_simulator.update();
 
     }
 
