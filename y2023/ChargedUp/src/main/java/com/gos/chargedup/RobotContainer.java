@@ -5,9 +5,12 @@
 
 package com.gos.chargedup;
 
-import com.gos.chargedup.Constants.OperatorConstants;
+
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.ExampleCommand;
+import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.subsystems.ChassisSubsystem;
+
+import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
@@ -24,13 +27,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+    private final ClawSubsystem m_claw = new ClawSubsystem();
+    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+    private final ChassisSubsystem m_chassisSubsystem = new ChassisSubsystem();
     private final AutonomousFactory m_autonomousFactory;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
-        new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+        new CommandXboxController(Constants.DRIVER_CONTROLLER_PORT);
 
 
     /**
@@ -58,13 +63,13 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-        new Trigger(m_exampleSubsystem::exampleCondition)
-            .onTrue(new ExampleCommand(m_exampleSubsystem));
+        m_driverController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_driverController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
         m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
     }
 
 
