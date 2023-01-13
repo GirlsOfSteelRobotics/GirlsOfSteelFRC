@@ -11,6 +11,11 @@
           "open": true
         }
       }
+    },
+    "Solenoids": {
+      "window": {
+        "visible": true
+      }
     }
   },
   "NTProvider": {

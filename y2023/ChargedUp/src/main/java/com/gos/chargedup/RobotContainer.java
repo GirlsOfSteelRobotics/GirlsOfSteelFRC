@@ -9,7 +9,8 @@ package com.gos.chargedup;
 import com.gos.chargedup.autonomous.AutonomousFactory;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.ExampleSubsystem;
+
+import com.gos.chargedup.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,7 +28,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     private final ClawSubsystem m_claw = new ClawSubsystem();
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+    private final IntakeSubsystem m_intake = new IntakeSubsystem();
 
     private final AutonomousFactory m_autonomousFactory;
 
@@ -43,7 +45,7 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
-        m_autonomousFactory = new AutonomousFactory(m_exampleSubsystem);
+        m_autonomousFactory = new AutonomousFactory();
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
@@ -64,9 +66,8 @@ public class RobotContainer {
         m_driverController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
         m_driverController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
 
-        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-        // cancelling on release.
-        m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
+        m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
     }
 
 
