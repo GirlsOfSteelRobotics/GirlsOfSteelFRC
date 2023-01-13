@@ -14,6 +14,7 @@ import com.gos.codelabs.gitflow.subsystems.JaniseCodelab2021Pt1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.JustinaCodelab2021Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.KatherineCodeLabe2022Part1Subsystem;
 import com.gos.codelabs.gitflow.subsystems.PJCodelab2021Part1Subsystem;
+import com.gos.codelabs.gitflow.subsystems.SiennaCodeLab2022Part1Subsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,7 +32,7 @@ import java.util.List;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-@SuppressWarnings("PMD.UnusedPrivateField")
+@SuppressWarnings("PMD.UnusedPrivateField,PMD.TooManyFields")
 public class RobotContainer {
     private static final String DRIVETRAIN_NAME = "m_drivetrain";
 
@@ -46,6 +47,8 @@ public class RobotContainer {
     private JustinaCodelab2021Part1Subsystem m_justinaCodeLab2021Part1;
     private JaniseCodelab2021Pt1Subsystem m_janiseCodelab2021Pt1;
     private EllieSubsystem m_ellieSubsystem;
+
+    private SiennaCodeLab2022Part1Subsystem m_siennaSubsystem;
 
     private AshleyCodelab2022Part1Subsystem m_ashleyCodelab2022Part1;
 
