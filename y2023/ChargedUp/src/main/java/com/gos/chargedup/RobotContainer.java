@@ -5,11 +5,8 @@
 
 package com.gos.chargedup;
 
-import com.gos.chargedup.Constants.OperatorConstants;
 import autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.ExampleCommand;
 
-import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 

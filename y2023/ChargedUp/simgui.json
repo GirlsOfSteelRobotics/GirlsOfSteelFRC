@@ -1,21 +1,12 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [4]": {
-        "header": {
-          "open": true
-        }
-      }
-    }
-  },
-  "HALProvider": {
-    "Other Devices": {
-      "SPARK MAX [0]": {
+      "Pigeon IMU[1]": {
         "header": {
           "open": true
         }
       },
-      "SPARK MAX [1]": {
+      "SPARK MAX [4]": {
         "header": {
           "open": true
         }
@@ -25,7 +16,25 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "LiveWindow": {
+        ".status": {
+          "open": true
+        },
+        "open": true
+      }
     }
   }
 }
