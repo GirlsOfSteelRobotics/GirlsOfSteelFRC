@@ -21,4 +21,7 @@ public final class Constants {
 
     public static final int DRIVER_CONTROLLER_PORT = 0;
 
+    public static final int PIVOT_MOTOR = 1;
+    public static final int FIRST_STAGE_PISTON = 1;
+    public static final int SECOND_STAGE_PISTON = 1;
 }
