@@ -21,10 +21,20 @@ public final class Constants {
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
     public static final int PIGEON_PORT = 1;
 
+    //motors
     public static final int CLAW_INTAKE_RIGHT = 0;
 
     public static final int CLAW_INTAKE_LEFT = 1;
 
+    public static final int PIVOT_MOTOR = 2;
+
     public static final int DRIVER_CONTROLLER_PORT = 0;
+
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
+
+
+    //pneumatics
+    public static final int FIRST_STAGE_PISTON = 7;
+    public static final int SECOND_STAGE_PISTON = 8;
 
 }

@@ -40,11 +40,11 @@ public class ClawSubsystem extends SubsystemBase {
         m_rightIntakeLead.set(0);
     }
 
-    public Command createMoveClawIntakeInCommand() {
+    public Command commandMoveArmIntakeIn() {
         return this.startEnd(this::moveClawIntakeIn, this::stopClawIntake);
     }
 
-    public Command createMoveClawIntakeOutCommand() {
+    public Command commandMoveArmIntakeOut() {
         return this.startEnd(this::moveClawIntakeOut, this::stopClawIntake);
     }
 }
