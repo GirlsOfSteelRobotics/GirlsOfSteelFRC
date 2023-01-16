@@ -54,90 +54,90 @@ public class OI {
 
         // Climber buttons
         POVButton frontToZero = new POVButton(m_drivingPad, 90);
-        frontToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.FRONT));
+        frontToZero.onTrue(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.FRONT));
 
         POVButton backToZero = new POVButton(m_drivingPad, 270);
-        backToZero.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.BACK));
+        backToZero.onTrue(new ClimberToSetPoint(climber, blinkin, Climber.FIRST_GOAL_POS, Climber.ClimberType.BACK));
 
         POVButton toSecondUp = new POVButton(m_drivingPad, 180);
-        toSecondUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.SECOND_GOAL_POS, Climber.ClimberType.ALL));
+        toSecondUp.onTrue(new ClimberToSetPoint(climber, blinkin, Climber.SECOND_GOAL_POS, Climber.ClimberType.ALL));
 
         POVButton toThirdUp = new POVButton(m_drivingPad, 0);
-        toThirdUp.whenPressed(new ClimberToSetPoint(climber, blinkin, Climber.THIRD_GOAL_POS, Climber.ClimberType.ALL));
+        toThirdUp.onTrue(new ClimberToSetPoint(climber, blinkin, Climber.THIRD_GOAL_POS, Climber.ClimberType.ALL));
 
         JoystickButton frontDown = new JoystickButton(m_drivingPad, 2);
-        frontDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.FRONT));
+        frontDown.whileTrue(new ClimberManual(climber, false, Climber.ClimberType.FRONT));
 
         JoystickButton backDown = new JoystickButton(m_drivingPad, 4);
-        backDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.BACK));
+        backDown.whileTrue(new ClimberManual(climber, false, Climber.ClimberType.BACK));
 
         JoystickButton allUp = new JoystickButton(m_drivingPad, 5);
-        allUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.ALL));
+        allUp.whileTrue(new ClimberManual(climber, true, Climber.ClimberType.ALL));
 
         JoystickButton allDown = new JoystickButton(m_drivingPad, 6);
-        allDown.whileHeld(new ClimberManual(climber, false, Climber.ClimberType.ALL));
+        allDown.whileTrue(new ClimberManual(climber, false, Climber.ClimberType.ALL));
 
         JoystickButton frontUp = new JoystickButton(m_drivingPad, 1);
-        frontUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.FRONT));
+        frontUp.whileTrue(new ClimberManual(climber, true, Climber.ClimberType.FRONT));
 
         JoystickButton backUp = new JoystickButton(m_drivingPad, 3);
-        backUp.whileHeld(new ClimberManual(climber, true, Climber.ClimberType.BACK));
+        backUp.whileTrue(new ClimberManual(climber, true, Climber.ClimberType.BACK));
 
 
         // allToZero = new POVButton(drivingPad, 180);
-        // allToZero.whenPressed(new ClimberAllToZero());
+        // allToZero.onTrue(new ClimberAllToZero());
 
         // robotToSecond = new POVButton(drivingPad, 270);
-        // robotToSecond.whenPressed(new RobotToPlatform(2));
+        // robotToSecond.onTrue(new RobotToPlatform(2));
 
         // robotToThird = new POVButton(drivingPad, 90);
-        // robotToThird.whenPressed(new RobotToPlatform(3));
+        // robotToThird.onTrue(new RobotToPlatform(3));
 
         //Lidar button (testing purposes only)
         // lidarDrive = new JoystickButton(drivingPad, 9);
-        // lidarDrive.whenPressed(new LidarDriveForward(82, true));
+        // lidarDrive.onTrue(new LidarDriveForward(82, true));
 
         // BabyDrive buttons
         JoystickButton babyDriveForward = new JoystickButton(m_drivingPad, 8);
-        babyDriveForward.whileHeld(new BabyDriveForward(babyDrive));
+        babyDriveForward.whileTrue(new BabyDriveForward(babyDrive));
 
         JoystickButton babyDriveBackward = new JoystickButton(m_drivingPad, 7);
-        babyDriveBackward.whileHeld(new BabyDriveBackwards(babyDrive));
+        babyDriveBackward.whileTrue(new BabyDriveBackwards(babyDrive));
 
         // Collector buttons
         JoystickButton collect = new JoystickButton(m_operatingPad, 5);
-        collect.whileHeld(new CollectorCollect(collector));
+        collect.whileTrue(new CollectorCollect(collector));
 
         JoystickButton release = new JoystickButton(m_operatingPad, 6);
-        release.whileHeld(new CollectorRelease(collector));
+        release.whileTrue(new CollectorRelease(collector));
 
         // Hatch buttons
         JoystickButton hatchCollect = new JoystickButton(m_operatingPad, 7);
-        hatchCollect.whileHeld(new HatchCollect(hatch));
+        hatchCollect.whileTrue(new HatchCollect(hatch));
 
         JoystickButton hatchRelease = new JoystickButton(m_operatingPad, 8);
-        hatchRelease.whileHeld(new HatchRelease(hatch));
+        hatchRelease.whileTrue(new HatchRelease(hatch));
 
         // Pivot buttons
         // negative is down, positive is up
         // must start up
         JoystickButton pivotUp = new JoystickButton(m_operatingPad, 2);
-        pivotUp.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.UP));
+        pivotUp.whileTrue(new PivotManual(pivot, Pivot.PivotDirection.UP));
 
         JoystickButton pivotDown = new JoystickButton(m_operatingPad, 1);
-        pivotDown.whileHeld(new PivotManual(pivot, Pivot.PivotDirection.DOWN));
+        pivotDown.whileTrue(new PivotManual(pivot, Pivot.PivotDirection.DOWN));
 
         JoystickButton pivotGround = new JoystickButton(m_operatingPad, 3);
-        pivotGround.whenPressed(new PivotToGround(pivot));
+        pivotGround.onTrue(new PivotToGround(pivot));
 
         JoystickButton pivotRocket = new JoystickButton(m_operatingPad, 4);
-        pivotRocket.whenPressed(new PivotToRocket(pivot));
+        pivotRocket.onTrue(new PivotToRocket(pivot));
 
         JoystickButton pivotShip = new JoystickButton(m_operatingPad, 10);
-        pivotShip.whenPressed(new PivotToShip(pivot));
+        pivotShip.onTrue(new PivotToShip(pivot));
 
         // DriveByVision button
         // driveByVision = new JoystickButton (operatingPad, 9);
-        // driveByVision.whenPressed(new DriveByVision());
+        // driveByVision.onTrue(new DriveByVision());
     }
 }

@@ -51,26 +51,26 @@ public class OI {
         m_operatorGamePad = new Joystick(1);
 
         m_joystickButton2 = new JoystickButton(m_driveStick, 2);
-        m_joystickButton2.whenPressed(new ShiftDown(shifters));
+        m_joystickButton2.onTrue(new ShiftDown(shifters));
         m_joystickButton3 = new JoystickButton(m_driveStick, 3);
-        m_joystickButton3.whenPressed(new ShiftUp(shifters));
+        m_joystickButton3.onTrue(new ShiftUp(shifters));
 
         m_closeArm = new JoystickButton(m_operatorGamePad, 6); //good
-        m_closeArm.whenPressed(new CloseArm(manipulator));
+        m_closeArm.onTrue(new CloseArm(manipulator));
         m_openArm = new JoystickButton(m_operatorGamePad, 5); //good
-        m_openArm.whenPressed(new OpenArm(manipulator));
+        m_openArm.onTrue(new OpenArm(manipulator));
         m_collectBall = new JoystickButton(m_operatorGamePad, 3); //good
-        m_collectBall.whileHeld(new CollectBall(manipulator));
+        m_collectBall.whileTrue(new CollectBall(manipulator));
         m_releaseBall = new JoystickButton(m_operatorGamePad, 4); //good
-        m_releaseBall.whileHeld(new ReleaseBall(manipulator));
+        m_releaseBall.whileTrue(new ReleaseBall(manipulator));
         m_shootBall = new JoystickButton(m_operatorGamePad, 2);
-        m_shootBall.whenPressed(new ShootBall(manipulator));
+        m_shootBall.onTrue(new ShootBall(manipulator));
         m_shooterIn = new JoystickButton(m_operatorGamePad, 1);
-        m_shooterIn.whenPressed(new ShooterIn(manipulator));
+        m_shooterIn.onTrue(new ShooterIn(manipulator));
         m_pivotUp = new JoystickButton(m_operatorGamePad, 7); //good
-        m_pivotUp.whileHeld(new PivotUp(manipulator));
+        m_pivotUp.whileTrue(new PivotUp(manipulator));
         m_pivotDown = new JoystickButton(m_operatorGamePad, 8); //good
-        m_pivotDown.whileHeld(new PivotDown(manipulator));
+        m_pivotDown.whileTrue(new PivotDown(manipulator));
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand(driveSystem, accessoryMotors));

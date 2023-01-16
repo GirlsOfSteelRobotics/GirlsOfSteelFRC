@@ -170,7 +170,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
 
-        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
         m_coordinateGuiPublisher = new RobotPositionPublisher();
 
         m_field = new Field2d();
@@ -256,9 +256,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void resetInitialOdometry(Pose2d pose) {
-        m_leftEncoder.setPosition(0);
-        m_rightEncoder.setPosition(0);
-        m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getYawAngle()));
+        m_odometry.resetPosition(Rotation2d.fromDegrees(getYawAngle()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose);
 
         if (RobotBase.isSimulation()) {
             m_simulator.resetOdometry(pose);

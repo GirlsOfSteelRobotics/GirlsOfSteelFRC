@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -16,7 +17,6 @@ import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -47,7 +47,7 @@ public class Shooter extends SubsystemBase {
     private final GosDoubleProperty m_dashboardKp;
     private final GosDoubleProperty m_dashboardKff;
 
-    private final NetworkTableEntry m_isAtShooterSpeedEntry;
+    private final GenericEntry m_isAtShooterSpeedEntry;
 
     private ISimWrapper m_simulator;
 

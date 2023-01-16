@@ -11,6 +11,7 @@
         <exclude name="JUnitTestsShouldIncludeAssert" />
         <exclude name="JUnitAssertionsShouldIncludeMessage" />
         <exclude name="JUnitTestContainsTooManyAsserts" />
+        <exclude name="JUnit5TestShouldBePackagePrivate" />
         <exclude name="SystemPrintln" />
     </rule>
 

@@ -79,13 +79,13 @@ public class RobotContainer {
 
         // Elevator
         m_elevatorSubsystem.setDefaultCommand(new ElevatorWithJoystickCommand(m_elevatorSubsystem, m_operatorJoystick));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileHeld(new ElevatorToPositionCommand(m_elevatorSubsystem, ElevatorSubsystem.Positions.LOW));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileHeld(new ElevatorToPositionCommand(m_elevatorSubsystem, ElevatorSubsystem.Positions.MID));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileHeld(new ElevatorToPositionCommand(m_elevatorSubsystem, ElevatorSubsystem.Positions.HIGH));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kB.value).whileTrue(new ElevatorToPositionCommand(m_elevatorSubsystem, ElevatorSubsystem.Positions.LOW));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kY.value).whileTrue(new ElevatorToPositionCommand(m_elevatorSubsystem, ElevatorSubsystem.Positions.MID));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kX.value).whileTrue(new ElevatorToPositionCommand(m_elevatorSubsystem, ElevatorSubsystem.Positions.HIGH));
 
         // Shooter
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value).whileHeld(new ShooterRpmCommand(m_shooterSubsystem, 3200));
-        new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value).whileHeld(new ShooterRpmCommand(m_shooterSubsystem, 2500));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kLeftBumper.value).whileTrue(new ShooterRpmCommand(m_shooterSubsystem, 3200));
+        new JoystickButton(m_operatorJoystick, XboxController.Button.kRightBumper.value).whileTrue(new ShooterRpmCommand(m_shooterSubsystem, 2500));
 
     }
 

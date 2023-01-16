@@ -8,24 +8,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CollectorExampleSubsystem extends SubsystemBase {
 
-    //create object for motor controllers
+    // create object for motor controllers
     private final SimableCANSparkMax m_pivotLeft;
     private final SimableCANSparkMax m_pivotRight;
     private final SimableCANSparkMax m_roller;
 
     public CollectorExampleSubsystem() {
-        // TODO: Set the default command, if any, for this subsystem by calling setDefaultCommand(command)
-        //       in the constructor or in the robot coordination class, such as RobotContainer.
-        //       Also, you can call addChild(name, sendableChild) to associate sendables with the subsystem
-        //       such as SpeedControllers, Encoders, DigitalInputs, etc.
-
+        // set to CAN IDs (constants), motor type is brushless
         m_pivotLeft = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_pivotRight = new SimableCANSparkMax(Constants.COLLECTOR_PIVOT_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_roller = new SimableCANSparkMax(Constants.COLLECTOR_ROLLER, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        //m_pivotLeft.setInverted(true); don't use this way with following
+        // m_pivotLeft.setInverted(true);      fyi we're not using because it's funky with following
 
-        //left motor will always follow what the right motor does
+        // left motor will always follow what the write motor is doing
         m_pivotRight.follow(m_pivotLeft, true);
     }
 
@@ -36,5 +32,5 @@ public class CollectorExampleSubsystem extends SubsystemBase {
     public void moveRoller(double speed) {
         m_roller.set(speed);
     }
-}
 
+}

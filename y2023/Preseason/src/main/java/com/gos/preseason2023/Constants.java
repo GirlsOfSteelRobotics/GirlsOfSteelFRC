@@ -15,6 +15,7 @@ package com.gos.preseason2023;
  */
 public final class Constants {
     public static final int COLLECTOR_PIVOT_LEFT = 3;
-    public static final int COLLECTOR_PIVOT_RIGHT = 3;
+    public static final int COLLECTOR_PIVOT_RIGHT = 4;
     public static final int COLLECTOR_ROLLER = 9;
+
 }

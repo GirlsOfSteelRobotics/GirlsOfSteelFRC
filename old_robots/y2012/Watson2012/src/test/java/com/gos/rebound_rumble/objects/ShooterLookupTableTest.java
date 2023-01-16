@@ -1,8 +1,8 @@
 package com.gos.rebound_rumble.objects;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ShooterLookupTableTest {
     private static final double EPSILON = 1e-6;

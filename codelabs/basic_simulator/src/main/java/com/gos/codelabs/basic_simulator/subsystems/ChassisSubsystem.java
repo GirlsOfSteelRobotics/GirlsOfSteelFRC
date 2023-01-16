@@ -96,7 +96,7 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
         m_differentialDrive = new DifferentialDrive(m_leftDriveA, m_rightDriveA);
 
-        m_odometry = new DifferentialDriveOdometry(new Rotation2d());
+        m_odometry = new DifferentialDriveOdometry(new Rotation2d(), 0, 0);
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
 

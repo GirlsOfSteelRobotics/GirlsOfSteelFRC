@@ -6,11 +6,11 @@ import com.gos.preseason2023.subsystems.CollectorExampleSubsystem;
 
 public class CollectorRollerCommand extends CommandBase {
     private final CollectorExampleSubsystem m_collector;
-    private double m_speed;
+    private final double m_speed;
 
     public CollectorRollerCommand(CollectorExampleSubsystem collectorExampleSubsystem, double speed) {
-        m_speed = speed;
         this.m_collector = collectorExampleSubsystem;
+        m_speed = speed;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_collector);

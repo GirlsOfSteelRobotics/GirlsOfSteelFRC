@@ -1,13 +1,15 @@
 package com.gos.codelabs.basic_java;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CalculatorTest {
     @Test
     public void testAddition() {
         Calculator myCalculator = new Calculator();
         double result = myCalculator.add(3, 4);
-        assert result == 7;
+        assertEquals(7, result);
     }
 
     @Test

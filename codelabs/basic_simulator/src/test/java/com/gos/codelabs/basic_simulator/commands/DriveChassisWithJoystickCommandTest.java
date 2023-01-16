@@ -5,10 +5,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import com.gos.codelabs.basic_simulator.BaseTestFixture;
 import com.gos.codelabs.basic_simulator.RobotContainer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+//import org.junit.jupiter.api.Test;
+//
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DriveChassisWithJoystickCommandTest extends BaseTestFixture {
 
