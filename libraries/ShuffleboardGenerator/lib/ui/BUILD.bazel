@@ -6,5 +6,8 @@ gos_py_library(
     srcs = glob(["*.py"]),
     imports = [".."],
     visibility = ["//visibility:public"],
-    data = glob(["*.ui"])
+    data = glob(["*.ui"]),
+    deps = [
+        requirement("PyQt5"),
+    ],
 )
