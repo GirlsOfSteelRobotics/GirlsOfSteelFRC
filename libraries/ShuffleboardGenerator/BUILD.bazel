@@ -2,15 +2,24 @@ load("@gos_pip_deps//:requirements.bzl", "requirement")
 load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary")
 
 gos_py_binary(
-    name = "ShuffleboardGenerator",
-    srcs = glob(["*.py"]),
+    name = "generate_dashboard",
+    srcs = ["generate_dashboard.py"],
     data = ["//libraries/ShuffleboardGenerator/lib/templates"],
-    main = "generate_dashboard.py",
     visibility = ["//visibility:public"],
     deps = [
         requirement("jinja2"),
         requirement("pyyaml"),
         "//libraries/ShuffleboardGenerator/lib",
         "@rules_python//python/runfiles",
+    ],
+)
+
+gos_py_binary(
+    name = "gui",
+    srcs = ["gui.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":generate_dashboard",
+        "//libraries/ShuffleboardGenerator/lib/ui",
     ],
 )
