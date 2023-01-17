@@ -30,6 +30,7 @@ public class VisionSubsystem implements Subsystem {
     //getDistanceAngle
 
     public VisionSubsystem() {
+
         m_camera = new PhotonCamera("photonvision");
         var camList = new ArrayList<Pair<PhotonCamera, Transform3d>>();
         m_robotPoseEstimator = new RobotPoseEstimator(null, RobotPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camList);
