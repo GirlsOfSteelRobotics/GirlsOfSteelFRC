@@ -16,7 +16,7 @@ from libraries.ShuffleboardGenerator.lib.ui.subpanels import load_ui_file
 class Window(QMainWindow):
 
     DEFAULT_FILE_DIR = os.path.join(
-        get_this_directory(), "..", "..", "y2022", "RapidReactDashboard"
+        get_this_directory(), "..", "..", "y2023", "ChargedUpDashboard"
     )
     DEFAULT_FILE = os.path.join(DEFAULT_FILE_DIR, "dashboard.yml")
 

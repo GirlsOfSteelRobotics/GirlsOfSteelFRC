@@ -47,7 +47,7 @@ class WidgetTopLevelConfigWidget(QWidget):
         self.nt_constant.setText(widget_config["sd_table_name_constant"])
 
         self.child_table_config.config_to_view(widget_config["children_tables"][0])
-        self.shapes_widget.config_to_view(widget_config["shapes"])
+        self.shapes_widget.config_to_view(widget_config.get("shapes", []))
 
     def view_to_config(self):
         widget_config = {}
