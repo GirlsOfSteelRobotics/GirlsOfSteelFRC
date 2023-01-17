@@ -8,3 +8,4 @@ colorama
 pandas
 plotly
 tables
+qdarkstyle

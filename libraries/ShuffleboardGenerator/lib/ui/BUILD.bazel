@@ -4,9 +4,10 @@ load("//build_scripts/bazel:python_rules.bzl", "gos_py_library")
 gos_py_library(
     name = "ui",
     srcs = glob(["*.py"]),
-    imports = [".."],
-    visibility = ["//visibility:public"],
     data = glob(["*.ui"]),
+    imports = [".."],
+    skip_include_test = True,  #pyqt DLL causes problems
+    visibility = ["//visibility:public"],
     deps = [
         requirement("PyQt5"),
     ],

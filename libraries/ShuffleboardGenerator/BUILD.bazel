@@ -17,6 +17,7 @@ gos_py_binary(
 gos_py_binary(
     name = "gui",
     srcs = ["gui.py"],
+    skip_include_test = True,  #pyqt DLL causes problems
     visibility = ["//visibility:public"],
     deps = [
         ":generate_dashboard",
