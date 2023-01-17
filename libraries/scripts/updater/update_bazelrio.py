@@ -46,7 +46,9 @@ def update_bazelrio(auto_commit=True, ignore_cache=False):
             bazelrio_versions += f'{vendor_name}_VERSION = "{version}"\n'
 
             if vendor_name in java_libraries_with_sha:
-                bazelrio_versions += f'{vendor_name}_VERSION_SHA = "{get_java_dep_sha(vendor_dep, version)}"\n'
+                bazelrio_versions += (
+                    f'{vendor_name}_VERSION_SHA = "{get_java_dep_sha(vendor_dep, version)}"\n'
+                )
 
     bazelrio_versions += f'WPILIB_VERSION = "{get_gradlerio_version()}"\n'
 
