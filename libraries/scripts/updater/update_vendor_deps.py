@@ -19,6 +19,8 @@ def download_latest_vendordeps(ignore_cache):
     vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc{year}-latest.json"
     vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
     vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
+    vendor_dep_urls["PhotonLib-json-1.0.json"] = "https://maven.photonvision.org/repository/internal/org/photonvision/PhotonLib-json/1.0/PhotonLib-json-1.0.json"
+    vendor_dep_urls["PathplannerLib.json"] = "http://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib.json"
     # fmt: on
 
     vendor_files = []
@@ -32,7 +34,7 @@ def download_latest_vendordeps(ignore_cache):
         if os.path.exists(cached_file) and not ignore_cache:
             continue
 
-        print(f"Downloading {cached_file}")
+        print(f"Downloading {cached_file} - {url}")
 
         req = Request(url)
         req.add_header(
@@ -47,6 +49,7 @@ def download_latest_vendordeps(ignore_cache):
 
 
 def update_vendor_deps(ignore_cache=True, auto_commit=True):
+    print(f"Writing vendordep cache to {CACHE_DIRECTORY}")
 
     # Used when a vendor changes its filename name
     vendor_replacements = {}
