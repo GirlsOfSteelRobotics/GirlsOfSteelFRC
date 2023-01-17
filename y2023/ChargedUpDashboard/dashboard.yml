@@ -1,0 +1,43 @@
+
+base_package: com.gos.chargedup.shuffleboard
+plugin_summary: "Widgets for the Charged Up Robot"
+plugin_name: "Charged Up Robot"
+widgets:
+  - table: SuperStructure
+    package_name: super_structure
+    widget_name: Charged Up Bot Super Structure Widget
+    sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+
+    children_tables:
+      - table: SuperStructure
+        table_name: SUPER_STRUCTURE
+        entries:
+          - type: double
+            name: armAngle
+            dasboard_constant: ARM_ANGLE
+            sim_incr: 2
+          - type: double
+              name: armSpeed
+              dasboard_constant: ARM_SPEED
+          - type: double
+              name: intakeAngle
+              dasboard_constant: INTAKE_ANGLE
+          - type: boolean
+              name: armExtension1
+              dasboard_constant: ARM_EXTENSION1
+          - type: boolean
+              name: armExtension2
+              dasboard_constant: ARM_EXTENSION2
+          - type: double
+              name: turretSpeed
+              dasboard_constant: TURRET_SPEED
+          - type: double
+              name: turretAngle
+              dasboard_constant: TURRET_ANGLE
+          - type: double
+              name: intakeSpeed
+              dasboard_constant: INTAKE_SPEED
+          - type: double
+              name: intakeRollerSpeed
+              dasboard_constant: INTAKE_ROLLER_SPEED
+
