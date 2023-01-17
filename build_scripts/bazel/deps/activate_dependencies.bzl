@@ -6,7 +6,7 @@ load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_pmd//pmd:toolchains.bzl", "rules_pmd_toolchains")
 load("@rules_python//python:pip.bzl", "pip_install", "pip_parse")
-load("//build_scripts/bazel/deps:versions.bzl", "SNOBOTSIM_VERSION", "SNOBOT_SIM_SHA")
+load("//build_scripts/bazel/deps:versions.bzl", "PATHPLANNERLIB_VERSION", "PATHPLANNERLIB_VERSION_SHA", "PHOTONLIB_JSON_1_0_VERSION", "PHOTONLIB_JSON_1_0_VERSION_SHA", "SNOBOTSIM_SHA", "SNOBOTSIM_VERSION")
 
 def activate_dependencies():
     """
@@ -35,8 +35,22 @@ def activate_dependencies():
     jvm_maven_import_external(
         name = "snobot_sim",
         artifact = "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
-        artifact_sha256 = SNOBOT_SIM_SHA,
+        artifact_sha256 = SNOBOTSIM_SHA,
         server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
+    )
+
+    jvm_maven_import_external(
+        name = "photonvision",
+        artifact = "org.photonvision:PhotonLib-java:{v}".format(v = PHOTONLIB_JSON_1_0_VERSION),
+        artifact_sha256 = PHOTONLIB_JSON_1_0_VERSION_SHA,
+        server_urls = ["https://maven.photonvision.org/repository/internal", "https://maven.photonvision.org/repository/snapshots"],
+    )
+
+    jvm_maven_import_external(
+        name = "pathplanner",
+        artifact = "com.pathplanner.lib:PathplannerLib-java:{v}".format(v = PATHPLANNERLIB_VERSION),
+        artifact_sha256 = PATHPLANNERLIB_VERSION_SHA,
+        server_urls = ["https://3015rangerrobotics.github.io/pathplannerlib/repo"],
     )
 
     maven_install(
