@@ -2,8 +2,14 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,9 +17,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
 
+    public static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final double ARM_MOTOR_SPEED = 0.2;
 
     private final SimableCANSparkMax m_pivotMotor;
+
+    private final RelativeEncoder m_pivotMotorEncoder;
+
+    private final PidProperty m_pivotPID;
+
+    private final SparkMaxPIDController m_pivotPIDController;
 
     private final Solenoid m_outerPiston;
 
@@ -23,6 +36,22 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_outerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.FIRST_STAGE_PISTON);
         m_innerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SECOND_STAGE_PISTON);
+
+        m_pivotMotorEncoder = m_pivotMotor.getEncoder();
+        m_pivotPIDController = m_pivotMotor.getPIDController();
+
+        m_pivotPID = setupPidValues(m_pivotPIDController);
+    }
+
+    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        return new RevPidPropertyBuilder("Collector", false, pidController, 0)
+            .addP(0)
+            .addI(0)
+            .addD(0)
+            .addFF(0)
+            .addMaxVelocity(Units.inchesToMeters(0))
+            .addMaxAcceleration(Units.inchesToMeters(0))
+            .build();
     }
 
     public void pivotArmUp() {
@@ -59,5 +88,24 @@ public class ArmSubsystem extends SubsystemBase {
     public Command commandPivotArmDown() {
         return this.startEnd(this::pivotArmDown, this::pivotArmStop);
     }
+
+    public boolean pivotArmToAngle(double pivotAngleGoal) {
+        return true;
+        // m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0);
+    }
+
+    public Command commandFullRetract() {
+        return this. runOnce(this::fullRetract);
+    }
+
+    public Command commandMiddleRetract() {
+        return this. runOnce(this::middleRetract);
+    }
+
+    public Command commandOut() {
+        return this. runOnce(this::out);
+    }
+
+
 }
 
