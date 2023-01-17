@@ -1,7 +1,11 @@
 import os
 import shutil
-from lib.template_helpers import *
-from lib.template_helpers import package_to_dir, load_template, camel_to_snake
+from libraries.ShuffleboardGenerator.lib.template_helpers import *
+from libraries.ShuffleboardGenerator.lib.template_helpers import (
+    package_to_dir,
+    load_template,
+    camel_to_snake,
+)
 
 
 class WidgetGenerator:
@@ -220,7 +224,7 @@ class TopLevelGenerator:
 
 def maybe_add_standalone_buttons(widget_config):
 
-    boolean_keys = [f"DIGIT{i}" for i in range(9)]
+    boolean_keys = [f"DIGIT{i}" for i in range(1, 10)] + ["DIGIT0"]
     double_keys = [
         ("Q", "A"),
         ("W", "S"),
@@ -230,6 +234,9 @@ def maybe_add_standalone_buttons(widget_config):
         ("Y", "H"),
         ("U", "J"),
         ("I", "K"),
+        ("O", "L"),
+        ("P", "SEMICOLON"),
+        ("BRACELEFT", "QUOTE"),
     ]
 
     def populate(base_type):

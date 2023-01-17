@@ -29,16 +29,26 @@ def update_bazelrio(auto_commit=True, ignore_cache=False):
 
     vendor_deps_files = download_latest_vendordeps(ignore_cache)
 
+    java_libraries_with_sha = [
+        "SNOBOTSIM",
+        "PHOTONLIB_JSON_1_0",
+        "PATHPLANNERLIB",
+    ]
+
     bazelrio_versions = ""
     for vendor_file in vendor_deps_files:
         with open(vendor_file, "r") as f:
             vendor_name = os.path.basename(vendor_file)[: -len(".json")].upper()
+            vendor_name = vendor_name.replace("-", "_")
+            vendor_name = vendor_name.replace(".", "_")
             vendor_dep = json.load(f)
-            version = vendor_dep["version"]
+            version = vendor_dep["version"].replace("+", "_").replace("_", "_")
             bazelrio_versions += f'{vendor_name}_VERSION = "{version}"\n'
 
-            if vendor_name == "SNOBOTSIM":
-                bazelrio_versions += f'SNOBOT_SIM_SHA = "{get_java_dep_sha(vendor_dep, version)}"\n'
+            if vendor_name in java_libraries_with_sha:
+                bazelrio_versions += (
+                    f'{vendor_name}_VERSION_SHA = "{get_java_dep_sha(vendor_dep, version)}"\n'
+                )
 
     bazelrio_versions += f'WPILIB_VERSION = "{get_gradlerio_version()}"\n'
 
@@ -53,7 +63,7 @@ def main():
     if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
         os.chdir(os.environ["BUILD_WORKSPACE_DIRECTORY"])
 
-    update_bazelrio(auto_commit=False)
+    update_bazelrio(auto_commit=False, ignore_cache=True)
 
 
 if __name__ == "__main__":

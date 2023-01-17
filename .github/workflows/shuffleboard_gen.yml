@@ -19,20 +19,16 @@ jobs:
         run: pip3 install -r requirements.txt
 
       - name: Re-gen Codelab
-        run: python generate_dashboard.py --config_file=../../codelabs/custom_shuffleboard/dashboard.yml
-        working-directory: libraries/ShuffleboardGenerator
+        run: python -m libraries.ShuffleboardGenerator.generate_dashboard --config_file=codelabs/custom_shuffleboard/dashboard.yml
 
       - name: Re-gen 2020
-        run: python generate_dashboard.py --config_file=../../old_robots/y2020/2020InfiniteRechargeDashboard/dashboard.yml
-        working-directory: libraries/ShuffleboardGenerator
+        run: python -m libraries.ShuffleboardGenerator.generate_dashboard --config_file=old_robots/y2020/2020InfiniteRechargeDashboard/dashboard.yml
 
       - name: Re-gen 2021
-        run: python generate_dashboard.py --config_file=../../old_robots/y2021/OutreachBotDashboard/dashboard.yml
-        working-directory: libraries/ShuffleboardGenerator
+        run: python -m libraries.ShuffleboardGenerator.generate_dashboard --config_file=old_robots/y2021/OutreachBotDashboard/dashboard.yml
 
       - name: Re-gen 2022
-        run: python generate_dashboard.py --config_file=../../y2022/RapidReactDashboard/dashboard.yml
-        working-directory: libraries/ShuffleboardGenerator
+        run: python -m libraries.ShuffleboardGenerator.generate_dashboard --config_file=y2022/RapidReactDashboard/dashboard.yml
 
       - name: Check output
         run: git --no-pager diff --exit-code HEAD
