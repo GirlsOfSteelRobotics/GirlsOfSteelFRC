@@ -34,7 +34,7 @@ def update_bazelrio(auto_commit=True, ignore_cache=False):
         with open(vendor_file, "r") as f:
             vendor_name = os.path.basename(vendor_file)[: -len(".json")].upper()
             vendor_dep = json.load(f)
-            version = vendor_dep["version"]
+            version = vendor_dep["version"].replace("+", "_")
             bazelrio_versions += f'{vendor_name}_VERSION = "{version}"\n'
 
             if vendor_name == "SNOBOTSIM":
