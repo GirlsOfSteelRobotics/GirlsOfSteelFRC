@@ -6,18 +6,29 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.math.Pair;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.photonvision.RobotPoseEstimator;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
+
+
+import java.util.Optional;
+
 
 public class ChassisSubsystem extends SubsystemBase {
     //Chassis and motors
@@ -42,8 +53,19 @@ public class ChassisSubsystem extends SubsystemBase {
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
 
+    private VisionSubsystem m_pcw;
+
+    private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
+    private final DifferentialDriveKinematics m_kinematics =
+        new DifferentialDriveKinematics(TRACK_WIDTH);
+
+    private final DifferentialDrivePoseEstimator m_poseEstimator;
+
+
+
 
     public ChassisSubsystem() {
+
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -73,6 +95,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftEncoder = m_leaderLeft.getEncoder();
 
         m_field = new Field2d();
+
+        m_poseEstimator = new DifferentialDrivePoseEstimator(
+            m_kinematics, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
+
+        m_pcw = new VisionSubsystem();
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -113,5 +140,31 @@ public class ChassisSubsystem extends SubsystemBase {
         m_simulator.update();
 
     }
+
+    //NEW ODOMETRY
+    public void updateOdometry() {
+        m_poseEstimator.update(
+            m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+
+        // Also apply vision measurements. We use 0.3 seconds in the past as an example
+        // -- on
+        // a real robot, this must be calculated based either on latency or timestamps.
+        Pair<Pose2d, Double> result =
+            m_pcw.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+        var camPose = result.getFirst();
+        var camPoseObsTime = result.getSecond();
+        if (camPose != null) {
+            m_poseEstimator.addVisionMeasurement(camPose, camPoseObsTime);
+            m_field.getObject("Camera Estimated Position").setPose(camPose);
+        } else {
+            // move it way off the screen to make it disappear
+            m_field.getObject("Camera Estimated Position").setPose(new Pose2d(-100, -100, new Rotation2d()));
+        }
+
+        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+    }
+
+
+
 
 }
