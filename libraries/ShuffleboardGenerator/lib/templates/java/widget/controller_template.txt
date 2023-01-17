@@ -5,18 +5,42 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 
 public class {{widget.table}}Controller {
 
     private static final double MAX_WIDTH = 1; // TODO figure out real value
     private static final double MAX_HEIGHT = 1; // TODO figure out real value
+{% for shape in widget.shapes %}
+    {%- if shape.type == "Rectangle" %}
+    private static final double {{camel_to_snake(shape.name).upper()}}_HEIGHT = 1; // TODO figure out real value
+    private static final double {{camel_to_snake(shape.name).upper()}}_WIDTH = 1; // TODO figure out real value
+    {%- elif shape.type == "Arc" %}
+    private static final double {{camel_to_snake(shape.name).upper()}}_HEIGHT = 1; // TODO figure out real value
+    private static final double {{camel_to_snake(shape.name).upper()}}_WIDTH = 1; // TODO figure out real value
+    {%- elif shape.type == "Circle" %}
+    private static final double {{camel_to_snake(shape.name).upper()}}_RADIUS = 1; // TODO figure out real value
+    {%- endif %}
+    {%- endfor %}
+
+{% for shape in widget.shapes %}
+    private static final double {{camel_to_snake(shape.name).upper()}}_X = 1; // TODO figure out real value
+    private static final double {{camel_to_snake(shape.name).upper()}}_Y = 1; // TODO figure out real value
+{%- endfor %}
 
     @FXML
     private Group m_group;
 
     @FXML
     private Pane m_pane;
+
+    {% for shape in widget.shapes %}
+    @FXML
+    private {{shape.type}} m_{{shape.name}};
+{% endfor %}
 
     @FXML
     public void initialize() {
@@ -28,8 +52,7 @@ public class {{widget.table}}Controller {
         m_pane.setMinWidth(MAX_WIDTH * minWidthMultiplier);
 
         DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> {
-            double output = Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
-            return output;
+            return Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
         }, m_pane.widthProperty(), m_pane.heightProperty());
 
         Scale scale = new Scale();
@@ -38,6 +61,24 @@ public class {{widget.table}}Controller {
 
         m_group.getTransforms().add(scale);
         ///////////////////////////////////////////////////////////
+
+{% for shape in widget.shapes %}
+{%- if shape.type == "Rectangle" %}
+        m_{{ shape.name }}.setX({{camel_to_snake(shape.name).upper()}}_X);
+        m_{{ shape.name }}.setY({{camel_to_snake(shape.name).upper()}}_Y);
+        m_{{ shape.name }}.setHeight({{camel_to_snake(shape.name).upper()}}_HEIGHT);
+        m_{{ shape.name }}.setWidth({{camel_to_snake(shape.name).upper()}}_WIDTH);
+{%- elif shape.type == "Circle" %}
+        m_{{ shape.name }}.setCenterX({{camel_to_snake(shape.name).upper()}}_X);
+        m_{{ shape.name }}.setCenterY({{camel_to_snake(shape.name).upper()}}_Y);
+        m_{{ shape.name }}.setRadius({{camel_to_snake(shape.name).upper()}}_RADIUS);
+{%- elif shape.type == "Arc" %}
+        m_{{ shape.name }}.setCenterX({{camel_to_snake(shape.name).upper()}}_X);
+        m_{{ shape.name }}.setCenterY({{camel_to_snake(shape.name).upper()}}_Y);
+        m_{{ shape.name }}.setRadiusY({{camel_to_snake(shape.name).upper()}}_HEIGHT);
+        m_{{ shape.name }}.setRadiusX({{camel_to_snake(shape.name).upper()}}_WIDTH);
+{%- endif %}
+{% endfor %}
     }
 
 {% for child in widget.children_tables %}
