@@ -1,6 +1,8 @@
 package com.gos.chargedup.subsystems;
 
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.photonvision.PhotonCamera;
 import org.photonvision.RobotPoseEstimator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -30,10 +33,17 @@ public class VisionSubsystem implements Subsystem {
     //getDistanceAngle
 
     public VisionSubsystem() {
+        AprilTagFieldLayout aprilTagFieldLayout;
+
 
         m_camera = new PhotonCamera("photonvision");
         var camList = new ArrayList<Pair<PhotonCamera, Transform3d>>();
-        m_robotPoseEstimator = new RobotPoseEstimator(null, RobotPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camList);
+        try {
+            aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        m_robotPoseEstimator = new RobotPoseEstimator(aprilTagFieldLayout, RobotPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camList);
 
     }
 
