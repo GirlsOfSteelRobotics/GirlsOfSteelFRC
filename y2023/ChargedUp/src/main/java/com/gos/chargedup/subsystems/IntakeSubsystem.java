@@ -11,29 +11,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
 
     private static final double HOPPER_SPEED = 0.5;
+
     private final Solenoid m_intakeSolenoidLeft;
     private final Solenoid m_intakeSolenoidRight;
-
     private final SimableCANSparkMax m_hopper;
 
 
-    public IntakeSubsystem() {
 
-        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_INTAKE);
-        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_INTAKE);
+    public IntakeSubsystem() {
+        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_RIGHT_OUTER_INTAKE);
+        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_LEFT_OUTER_INTAKE);
         m_hopper = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
     }
 
     public void extend() {
         m_intakeSolenoidRight.set(true);
         m_intakeSolenoidLeft.set(true);
-
     }
 
     public void retract() {
         m_intakeSolenoidRight.set(false);
         m_intakeSolenoidLeft.set(false);
-
     }
 
     //    in out stop
@@ -59,15 +57,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public Command createHopperInMotorCommand() {
-        return this.runOnce(this::extend);
+        return this.startEnd(this::hopperIn, this::hopperStop);
     }
 
     public Command createHopperOutMotorCommand() {
-        return this.runOnce(this::extend);
-    }
-
-    public Command createHopperStopMotorCommand() {
-        return this.runOnce(this::extend);
+        return this.startEnd(this::hopperOut, this::hopperStop);
     }
 
 }
