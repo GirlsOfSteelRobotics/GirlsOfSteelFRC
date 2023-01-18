@@ -58,4 +58,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+    public void autoEngage() {
+        double error = m_gyro.getRotation2d().getDegrees();
+    }
+
 }
