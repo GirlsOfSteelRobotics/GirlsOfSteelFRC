@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -30,6 +31,11 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_followerLeft;
     private final SimableCANSparkMax m_leaderRight;
     private final SimableCANSparkMax m_followerRight;
+
+    private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
+    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+    private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
+
 
     private final DifferentialDrive m_drive;
 
@@ -50,8 +56,9 @@ public class ChassisSubsystem extends SubsystemBase {
     private VisionSubsystem m_pcw;
 
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
-    private final DifferentialDriveKinematics m_kinematics =
+    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
         new DifferentialDriveKinematics(TRACK_WIDTH);
+
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -88,10 +95,17 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
+        m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+        m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+
+        m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+
         m_field = new Field2d();
+        SmartDashboard.putData(m_field);
 
         m_poseEstimator = new DifferentialDrivePoseEstimator(
-            m_kinematics, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
+            K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
         m_pcw = new VisionSubsystem();
 
@@ -110,7 +124,6 @@ public class ChassisSubsystem extends SubsystemBase {
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
 
-            SmartDashboard.putData(m_field);
         }
     }
 
@@ -125,8 +138,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_odometry.update(Rotation2d.fromDegrees(m_gyro.getYaw()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-        m_field.setRobotPose(m_odometry.getPoseMeters());
+        m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
+        updateOdometry();
     }
 
     @Override
