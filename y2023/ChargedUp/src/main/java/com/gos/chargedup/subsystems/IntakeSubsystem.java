@@ -1,7 +1,8 @@
 package com.gos.chargedup.subsystems;
 
-
 import com.gos.chargedup.Constants;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -9,23 +10,43 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-    private final Solenoid m_intakeSolenoid;
+    private static final double HOPPER_SPEED = 0.5;
+    private final Solenoid m_intakeSolenoidLeft;
+    private final Solenoid m_intakeSolenoidRight;
+
+    private final SimableCANSparkMax m_hopper;
 
 
     public IntakeSubsystem() {
 
-        m_intakeSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_INTAKE);
-
+        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_INTAKE);
+        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_INTAKE);
+        m_hopper = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
     }
 
     public void extend() {
-        m_intakeSolenoid.set(true);
+        m_intakeSolenoidRight.set(true);
+        m_intakeSolenoidLeft.set(true);
 
     }
 
     public void retract() {
-        m_intakeSolenoid.set(false);
+        m_intakeSolenoidRight.set(false);
+        m_intakeSolenoidLeft.set(false);
 
+    }
+
+    //    in out stop
+    public void hopperIn() {
+        m_hopper.set(HOPPER_SPEED);
+    }
+
+    public void hopperOut() {
+        m_hopper.set(-HOPPER_SPEED);
+    }
+
+    public void hopperStop() {
+        m_hopper.set(0);
     }
 
 
@@ -36,5 +57,17 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command createRetractSolenoidCommand() {
         return this.runOnce(this::retract);
     }
-}
 
+    public Command createHopperInMotorCommand() {
+        return this.runOnce(this::extend);
+    }
+
+    public Command createHopperOutMotorCommand() {
+        return this.runOnce(this::extend);
+    }
+
+    public Command createHopperStopMotorCommand() {
+        return this.runOnce(this::extend);
+    }
+
+}

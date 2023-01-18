@@ -19,8 +19,11 @@ public final class Constants {
 
     public static final int CLAW_INTAKE_LEFT = 1;
 
+    public static final int HOPPER_MOTOR = 2;
+
     public static final int DRIVER_CONTROLLER_PORT = 0;
 
     public static final int SOLENOID_INTAKE = 2;
+
 
 }
