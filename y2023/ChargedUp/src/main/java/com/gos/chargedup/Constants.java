@@ -15,6 +15,12 @@ package com.gos.chargedup;
  */
 public final class Constants {
 
+    public static final int DRIVE_LEFT_LEADER_SPARK = 4;
+    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
+    public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
+    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
+    public static final int PIGEON_PORT = 1;
+
     public static final int CLAW_INTAKE_RIGHT = 0;
 
     public static final int CLAW_INTAKE_LEFT = 1;
@@ -23,7 +29,7 @@ public final class Constants {
 
     public static final int DRIVER_CONTROLLER_PORT = 0;
 
-    public static final int SOLENOID_INTAKE = 2;
+    public static final int SOLENOID_LEFT_OUTER_INTAKE = 4;
 
-
+    public static final int SOLENOID_RIGHT_OUTER_INTAKE = 3;
 }

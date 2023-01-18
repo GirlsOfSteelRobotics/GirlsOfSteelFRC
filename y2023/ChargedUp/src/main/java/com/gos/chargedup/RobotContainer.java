@@ -7,6 +7,8 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.subsystems.ChassisSubsystem;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
 
@@ -30,7 +32,7 @@ public class RobotContainer {
     private final ClawSubsystem m_claw = new ClawSubsystem();
 
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
-
+    private final ChassisSubsystem m_chassisSubsystem = new ChassisSubsystem();
     private final AutonomousFactory m_autonomousFactory;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -68,6 +70,8 @@ public class RobotContainer {
 
         m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
         m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
+
+        m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
     }
 
 
