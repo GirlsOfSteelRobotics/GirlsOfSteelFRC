@@ -146,21 +146,18 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getPitch() {
-        System.out.println(m_gyro.getPitch());
         return m_gyro.getPitch();
     }
 
     public void autoEngage() {
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
-            System.out.println("pj is amazing");
 
         } else if (getPitch() > 0) {
             setArcadeDrive(-AUTO_ENGAGE_SPEED.getValue(), 0);
-            System.out.println("grace is amazing");
+
         } else if (getPitch() < 0) {
             setArcadeDrive(AUTO_ENGAGE_SPEED.getValue(), 0);
-            System.out.println(("sienna is amazing"));
         }
     }
 
@@ -168,6 +165,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createAutoEngageCommand() {
         return this.run(this::autoEngage);
     }
+
     @Override
     public void periodic() {
         updateOdometry();
