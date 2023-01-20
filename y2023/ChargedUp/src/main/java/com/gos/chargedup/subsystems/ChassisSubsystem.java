@@ -65,11 +65,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
-    public double getPitch () {
+    public double getPitch() {
         System.out.println(m_gyro.getPitch());
         return m_gyro.getPitch();
     }
-    public void autoEngage () {
+
+    public void autoEngage() {
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
             System.out.println("pj is amazing");
