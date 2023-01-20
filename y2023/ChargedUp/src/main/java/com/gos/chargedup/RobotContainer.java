@@ -73,8 +73,8 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_operatorController.x().whileTrue(m_claw.commandMoveArmIntakeIn());
-        m_operatorController.y().whileTrue(m_claw.commandMoveArmIntakeOut());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
