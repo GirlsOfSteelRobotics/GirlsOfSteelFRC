@@ -27,7 +27,6 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final RelativeEncoder m_pivotMotorEncoder;
 
-    private final PidProperty m_pivotPID;
 
     private final SparkMaxPIDController m_pivotPIDController;
 
@@ -38,6 +37,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final DigitalInput m_lowerLimitSwitch;
 
     private final DigitalInput m_upperLimitSwitch;
+
+    private final PidProperty m_pivotPID;
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -119,10 +120,13 @@ public class ArmSubsystem extends SubsystemBase {
             m_pivotMotor.set(0);
         }
 
-        return error < ALLOWABLE_ERROR.getValue();
+        return error <= ALLOWABLE_ERROR.getValue();
     }
 
-
+    @Override
+    public void periodic() {
+        m_pivotPID.updateIfChanged();
+    }
 
     public Command commandFullRetract() {
         return this. runOnce(this::fullRetract);
