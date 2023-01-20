@@ -1,54 +1,58 @@
 package com.gos.chargedup.subsystems;
 
 
-import edu.wpi.first.math.Pair;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
-import org.photonvision.RobotPoseEstimator;
+import org.photonvision.PhotonPoseEstimator;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Optional;
 
 
 public class VisionSubsystem implements Subsystem {
 
-    private PhotonCamera m_camera;
+    // TODO get transform for real robot
+    private static final Transform3d ROBOT_TO_CAMERA =
+        new Transform3d(
+            new Translation3d(0.5, 0.0, 0.5),
+            new Rotation3d(0, 0, 0));
 
-    private RobotPoseEstimator m_robotPoseEstimator;
+    private static final String CAMERA_NAME = "OV5647";
 
+    private final PhotonCamera m_camera;
 
-    static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
-    static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
-    // Angle between horizontal and the camera.
-    static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
-
-    //getDistanceAngle
+    private PhotonPoseEstimator m_photonPoseEstimator;
 
     public VisionSubsystem() {
+        m_camera = new PhotonCamera(CAMERA_NAME);
 
-        m_camera = new PhotonCamera("photonvision");
-        var camList = new ArrayList<Pair<PhotonCamera, Transform3d>>();
-        m_robotPoseEstimator = new RobotPoseEstimator(null, RobotPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camList);
-
+        try {
+            AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
+            m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_camera, ROBOT_TO_CAMERA);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public Pair<Pose2d, Double> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
-        m_robotPoseEstimator.setReferencePose(prevEstimatedRobotPose);
+    public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
+        m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
 
-        double currentTime = Timer.getFPGATimestamp();
-        Optional<Pair<Pose3d, Double>> result = m_robotPoseEstimator.update();
-        if (result.isPresent()) {
-            return new Pair<Pose2d, Double>(
-                result.get().getFirst().toPose2d(), currentTime - result.get().getSecond());
-        } else {
-            return new Pair<Pose2d, Double>(null, 0.0);
+        Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update();
+        if (estimate.isPresent()) {
+            EstimatedRobotPose pose = estimate.get();
+            System.out.println("Got something at " + pose.estimatedPose + ", " + pose.timestampSeconds);
         }
+        //else{ System.out.println("No target found");}
 
+
+        return estimate;
     }
 
 
