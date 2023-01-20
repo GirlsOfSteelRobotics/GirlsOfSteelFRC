@@ -1,5 +1,5 @@
 import yaml
-from lib.generate_dashboard_structure import (
+from libraries.ShuffleboardGenerator.lib.generate_dashboard_structure import (
     WidgetGenerator,
     TopLevelGenerator,
     maybe_add_standalone_buttons,
@@ -124,4 +124,5 @@ def generate_dashboard(
 
 
 if __name__ == "__main__":
+    "py -m libraries.ShuffleboardGenerator.generate_dashboard --config_file=y2022/RapidReactDashboard/dashboard.yml"
     main(sys.argv[1:])

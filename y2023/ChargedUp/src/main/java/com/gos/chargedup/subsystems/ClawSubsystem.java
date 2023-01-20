@@ -2,50 +2,49 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSubsystem extends SubsystemBase {
 
-    private static final double CLAW_SPEED = 0.2;
+    private final Solenoid m_rightIntake;
 
-    private final SimableCANSparkMax m_rightIntakeLead;
-    private final SimableCANSparkMax m_leftIntakeFollow; //NOPMD
+    private final Solenoid m_leftIntake; //NOPMD
 
 
     public ClawSubsystem() {
-        m_rightIntakeLead = new SimableCANSparkMax(Constants.CLAW_INTAKE_RIGHT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leftIntakeFollow = new SimableCANSparkMax(Constants.CLAW_INTAKE_LEFT, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_leftIntakeFollow.follow(m_rightIntakeLead, true);
+
+        m_rightIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_RIGHT_INTAKE);
+        m_leftIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_LEFT_INTAKE);
 
     }
 
     //intake in
 
     public void moveClawIntakeIn() {
-        m_rightIntakeLead.set(CLAW_SPEED);
+        m_rightIntake.set(true);
+        m_leftIntake.set(true);
     }
 
     //intake out
 
     public void moveClawIntakeOut() {
-        m_rightIntakeLead.set(-CLAW_SPEED);
+
+        m_rightIntake.set(false);
+        m_leftIntake.set(false);
     }
 
     //set motors to 0
 
-    public void stopClawIntake() {
-        m_rightIntakeLead.set(0);
+
+    public Command createMoveClawIntakeInCommand() {
+        return this.runOnce(this::moveClawIntakeIn);
     }
 
-    public Command commandMoveArmIntakeIn() {
-        return this.startEnd(this::moveClawIntakeIn, this::stopClawIntake);
-    }
-
-    public Command commandMoveArmIntakeOut() {
-        return this.startEnd(this::moveClawIntakeOut, this::stopClawIntake);
+    public Command createMoveClawIntakeOutCommand() {
+        return this.runOnce(this::moveClawIntakeOut);
     }
 }
 

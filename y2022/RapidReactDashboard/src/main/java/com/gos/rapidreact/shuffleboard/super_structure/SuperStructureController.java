@@ -16,6 +16,7 @@ public class SuperStructureController {
 
     private static final double MAX_WIDTH = 36;
     private static final double MAX_HEIGHT = 56;
+
     private static final double CHASSIS_HEIGHT = 4;
     private static final double CHASSIS_WIDTH = 36;
     private static final double INTAKE_WIDTH = 10;
@@ -71,12 +72,6 @@ public class SuperStructureController {
     private Circle m_intakeWheel;
 
     @FXML
-    private Rotate m_intakeRotation;
-
-    @FXML
-    private Rotate m_intakeWheelRotation;
-
-    @FXML
     private Rectangle m_horizontalConveyor;
 
     @FXML
@@ -92,13 +87,14 @@ public class SuperStructureController {
     private Circle m_intakeIndexingSensor;
 
     @FXML
-    private Rotate m_intakeIndexingSensorRotation;
-
-    @FXML
     private Circle m_upperVConveyorSensor;
 
     @FXML
     private Circle m_lowerVConveyorSensor;
+
+    private Rotate m_intakeIndexingSensorRotation;
+    private Rotate m_intakeRotation;
+    private Rotate m_intakeWheelRotation;
 
     @FXML
     public void initialize() {
@@ -130,16 +126,6 @@ public class SuperStructureController {
         m_intake.setHeight(INTAKE_HEIGHT);
         m_intake.setWidth(INTAKE_WIDTH);
 
-        m_intakeRotation = new Rotate();
-        m_intakeRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX() + m_intake.getWidth(), m_intake.xProperty()));
-        m_intakeRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
-        m_intake.getTransforms().add(m_intakeRotation);
-
-        m_intakeWheelRotation = new Rotate();
-        m_intakeWheelRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX() + m_intake.getWidth(), m_intake.xProperty()));
-        m_intakeWheelRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
-        m_intakeWheel.getTransforms().add(m_intakeWheelRotation);
-
         m_intakeWheel.setCenterX(INTAKE_WHEEL_X);
         m_intakeWheel.setCenterY(INTAKE_WHEEL_Y);
         m_intakeWheel.setRadius(INTAKE_WHEEL_RADIUS);
@@ -168,18 +154,29 @@ public class SuperStructureController {
         m_intakeIndexingSensor.setCenterY(INTAKE_BREAK_SENSOR_Y);
         m_intakeIndexingSensor.setRadius(INTAKE_BREAK_SENSOR_RADIUS);
 
+        m_upperVConveyorSensor.setCenterX(LOWER_VERT_BREAK_SENSOR_X);
+        m_upperVConveyorSensor.setCenterY(LOWER_VERT_BREAK_SENSOR_Y);
+        m_upperVConveyorSensor.setRadius(LOWER_VERT_BREAK_SENSOR_RADIUS);
+
+        m_lowerVConveyorSensor.setCenterX(UPPER_VERT_BREAK_SENSOR_X);
+        m_lowerVConveyorSensor.setCenterY(UPPER_VERT_BREAK_SENSOR_Y);
+        m_lowerVConveyorSensor.setRadius(UPPER_VERT_BREAK_SENSOR_RADIUS);
+
+        // Hook up rotations
+        m_intakeRotation = new Rotate();
+        m_intakeRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX() + m_intake.getWidth(), m_intake.xProperty()));
+        m_intakeRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
+        m_intake.getTransforms().add(m_intakeRotation);
+
+        m_intakeWheelRotation = new Rotate();
+        m_intakeWheelRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX() + m_intake.getWidth(), m_intake.xProperty()));
+        m_intakeWheelRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
+        m_intakeWheel.getTransforms().add(m_intakeWheelRotation);
+
         m_intakeIndexingSensorRotation = new Rotate();
         m_intakeIndexingSensorRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX() + m_intake.getWidth(), m_intake.xProperty()));
         m_intakeIndexingSensorRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY() + m_intake.getHeight(), m_intake.yProperty()));
         m_intakeIndexingSensor.getTransforms().add(m_intakeWheelRotation);
-
-        m_upperVConveyorSensor.setCenterX(UPPER_VERT_BREAK_SENSOR_X);
-        m_upperVConveyorSensor.setCenterY(UPPER_VERT_BREAK_SENSOR_Y);
-        m_upperVConveyorSensor.setRadius(UPPER_VERT_BREAK_SENSOR_RADIUS);
-
-        m_lowerVConveyorSensor.setCenterX(LOWER_VERT_BREAK_SENSOR_X);
-        m_lowerVConveyorSensor.setCenterY(LOWER_VERT_BREAK_SENSOR_Y);
-        m_lowerVConveyorSensor.setRadius(LOWER_VERT_BREAK_SENSOR_RADIUS);
 
     }
 
