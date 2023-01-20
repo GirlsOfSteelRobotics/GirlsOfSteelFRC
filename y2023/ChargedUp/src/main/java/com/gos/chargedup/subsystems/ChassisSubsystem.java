@@ -19,10 +19,13 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
+
+import java.util.Optional;
 
 
 public class ChassisSubsystem extends SubsystemBase {
@@ -138,38 +141,35 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
         updateOdometry();
+
+        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
+        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
     }
 
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
-
     }
 
     //NEW ODOMETRY
     public void updateOdometry() {
+
+        m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
-        // Also apply vision measurements. We use 0.3 seconds in the past as an example
-        // -- on
-        // a real robot, this must be calculated based either on latency or timestamps.
-        Pair<Pose2d, Double> result =
+        Optional<EstimatedRobotPose> result =
             m_pcw.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
-        var camPose = result.getFirst();
-        var camPoseObsTime = result.getSecond();
-        if (camPose != null) {
-            m_poseEstimator.addVisionMeasurement(camPose, camPoseObsTime);
-            m_field.getObject("Camera Estimated Position").setPose(camPose);
+        if (result.isPresent()) {
+            EstimatedRobotPose camPose = result.get();
+            Pose2d pose2d = camPose.estimatedPose.toPose2d();
+            m_poseEstimator.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+            m_field.getObject("Camera Estimated Position").setPose(pose2d);
         } else {
             // move it way off the screen to make it disappear
             m_field.getObject("Camera Estimated Position").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
-
-        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
     }
 
 
