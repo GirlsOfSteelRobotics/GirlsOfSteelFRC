@@ -28,8 +28,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxPIDController m_leftPIDcontroller;
     private final SparkMaxPIDController m_rightPIDcontroller;
 
-    private final PidProperty m_leftProperties;
-    private final PidProperty m_rightProperties;
+    private final PidProperty m_leftPIDProperties;
+    private final PidProperty m_rightPIDProperties;
 
     public ChassisSubsystem() {
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -61,14 +61,14 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
         m_rightPIDcontroller = m_leaderRight.getPIDController();
 
-        m_leftProperties = setupPidValues(m_leftPIDcontroller);
-        m_rightProperties = setupPidValues(m_rightPIDcontroller);
+        m_leftPIDProperties = setupPidValues(m_leftPIDcontroller);
+        m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
 
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(.00003) //this needs to be tuned!
+            .addP(0) //this needs to be tuned!
             .addI(0)
             .addD(0)
             .addFF(0)
@@ -97,5 +97,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.curvatureDrive(speed, steer, speed < 0.05);
 
     }
+
+    public void periodic(){
+
+    }
+
+
 
 }
