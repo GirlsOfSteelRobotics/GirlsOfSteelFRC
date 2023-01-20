@@ -74,6 +74,8 @@ public class RobotContainer {
         // cancelling on release.
         m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
+
+        m_driverController.a().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
     }
 
 
