@@ -16,7 +16,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -67,8 +66,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
-
-
 
 
     private final SparkMaxPIDController m_leftPIDcontroller;
@@ -159,7 +156,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
     }
 
-    public void smartVelocityControl(double leftVelocity, double rightVelocity, double leftAcceleration, double rightAcceleration) {
+    public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
 
@@ -179,13 +176,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.curvatureDrive(speed, steer, speed < 0.05);
 
     }
-@Override
-    public void periodic(){
-        m_odometry.update(Rotation2d.fromDegrees(m_.getPosition(), m_leaderRight.getPosition());
-
-
-    }
-
 
 
     @Override
@@ -194,6 +184,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
         m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+
+        m_leftPIDProperties.updateIfChanged();
+        m_rightPIDProperties.updateIfChanged();
     }
 
     @Override
