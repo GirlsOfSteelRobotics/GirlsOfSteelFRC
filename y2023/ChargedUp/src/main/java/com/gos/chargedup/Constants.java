@@ -27,4 +27,7 @@ public final class Constants {
 
     public static final int DRIVER_CONTROLLER_PORT = 0;
 
+    public static final int SOLENOID_RIGHT_INTAKE = 0;
+
+    public static final int SOLENOID_LEFT_INTAKE = 1;
 }
