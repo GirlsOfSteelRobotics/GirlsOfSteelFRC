@@ -32,6 +32,10 @@ public final class Constants {
 
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
+    //Limit Switch
+    public static final int INTAKE_LOWER_LIMIT_SWITCH = 7;
+    public static final int INTAKE_UPPER_LIMIT_SWITCH = 6;
+
 
     //pneumatics
     public static final int FIRST_STAGE_PISTON = 7;
