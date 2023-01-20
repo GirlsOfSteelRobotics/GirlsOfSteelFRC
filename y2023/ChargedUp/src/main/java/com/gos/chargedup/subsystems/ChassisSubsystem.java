@@ -97,8 +97,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.curvatureDrive(speed, steer, speed < 0.05);
 
     }
-
+@Override
     public void periodic(){
+        m_odometry.update(Rotation2d.fromDegrees(m_.getPosition(), m_leaderRight.getPosition());
+
 
     }
 
