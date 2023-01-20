@@ -78,7 +78,7 @@
         <!-- <exclude name="NcssMethodCount" /> -->
         <!-- <exclude name="NPathComplexity" /> -->
         <!-- <exclude name="SignatureDeclareThrowsException" /> -->
-        <!-- <exclude name="TooManyFields" /> -->
+         <exclude name="TooManyFields" />
         <!-- <exclude name="TooManyMethods" /> -->
     </rule>
 

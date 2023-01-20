@@ -2,10 +2,13 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
+import com.gos.lib.properties.PidProperty;
+import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -65,7 +68,11 @@ public class ChassisSubsystem extends SubsystemBase {
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
 
+    private final SparkMaxPIDController m_leftPIDcontroller;
+    private final SparkMaxPIDController m_rightPIDcontroller;
 
+    private final PidProperty m_leftPIDProperties;
+    private final PidProperty m_rightPIDProperties;
 
     public ChassisSubsystem() {
 
@@ -94,6 +101,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
+
+        m_leftPIDcontroller = m_leaderLeft.getPIDController();
+        m_rightPIDcontroller = m_leaderRight.getPIDController();
+
+        m_leftPIDProperties = setupPidValues(m_leftPIDcontroller);
+        m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
+
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
@@ -126,7 +140,32 @@ public class ChassisSubsystem extends SubsystemBase {
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
 
+
         }
+
+    }
+
+    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            .addP(0) //this needs to be tuned!
+            .addI(0)
+            .addD(0)
+            .addFF(0)
+            .addMaxVelocity((Units.inchesToMeters(0)))
+            .addMaxAcceleration((Units.inchesToMeters(0)))
+            .build();
+    }
+
+    public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+        m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
+        m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
+
+    }
+
+    public void trapezoidMotionControl(double leftDistance, double rightDistance) {
+        m_leftPIDcontroller.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0);
+        m_rightPIDcontroller.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0);
+
     }
 
     public void setArcadeDrive(double speed, double steer) {
@@ -138,12 +177,16 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+
     @Override
     public void periodic() {
         updateOdometry();
 
         m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
         m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+
+        m_leftPIDProperties.updateIfChanged();
+        m_rightPIDProperties.updateIfChanged();
     }
 
     @Override
