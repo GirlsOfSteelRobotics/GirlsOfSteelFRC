@@ -33,4 +33,7 @@ public final class Constants {
     public static final int INTAKE_LIMIT_SWITCH = 2;
     public static final int RIGHT_LIMIT_SWITCH = 2;
 
+    public static final int SOLENOID_RIGHT_INTAKE = 0;
+
+    public static final int SOLENOID_LEFT_INTAKE = 1;
 }

@@ -50,8 +50,6 @@ public final class Constants {
     public static final int INTAKE_LOWER_LIMIT_SWITCH = 7;
     public static final int INTAKE_UPPER_LIMIT_SWITCH = 6;
 
-
-
     //from FRC game manual page 24
     public static final double TARMAC_DEPTH = Units.feetToMeters(7.75);
     //TODO: update this to have correct robot size based on CAD
