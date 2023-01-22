@@ -12,6 +12,7 @@ import com.gos.chargedup.subsystems.ChassisSubsystem;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.ExampleSubsystem;
+import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,6 +38,8 @@ public class RobotContainer {
     private final CommandXboxController m_driverController =
         new CommandXboxController(Constants.DRIVER_CONTROLLER_PORT);
 
+    private final LEDManagerSubsystem m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController); //NOPMD
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -50,6 +53,7 @@ public class RobotContainer {
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
         }
+
     }
 
 
