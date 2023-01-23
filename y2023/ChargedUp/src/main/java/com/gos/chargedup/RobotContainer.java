@@ -8,6 +8,7 @@ package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
@@ -32,11 +33,16 @@ public class RobotContainer {
     private final ClawSubsystem m_claw = new ClawSubsystem();
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final ChassisSubsystem m_chassisSubsystem = new ChassisSubsystem();
+
+    private final ArmSubsystem m_arm = new ArmSubsystem();
     private final AutonomousFactory m_autonomousFactory;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
         new CommandXboxController(Constants.DRIVER_CONTROLLER_PORT);
+
+    private final CommandXboxController m_operatorController =
+        new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
     private final LEDManagerSubsystem m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController); //NOPMD
 
@@ -67,13 +73,16 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_driverController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-        m_driverController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
         m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
+
+        m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
+        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
     }
 
 
