@@ -19,6 +19,16 @@ public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.2;
 
+    private static final double TURRET_ENCODER_VALUE_LEFT_LS = 1.0;
+
+
+    private static final double TURRET_ENCODER_VALUE_RIGHT_LS = 1.0;
+
+
+    private static final double TURRET_ENCODER_VALUE_INTAKE_LS = 1.0;
+
+    private static final double TURRET_POSITION = 1;
+
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Gravity Offset", 1);
 
     private final SimableCANSparkMax m_turretMotor;
@@ -57,11 +67,34 @@ public class TurretSubsystem extends SubsystemBase {
             .build();
     }
 
+    public double getEncoder() {
+        return m_turretEncoder.getPosition();
+    }
+
+    public void setEncoder(double relativeEncoder) {
+        m_turretEncoder.setPosition(relativeEncoder);
+    }
+
+
     @Override
     public void periodic() {
         m_turretPID.updateIfChanged();
+        m_turretEncoder.setPosition(TURRET_POSITION);
 
+        if (leftLimitSwitchPressed()) {
+            setEncoder(TURRET_ENCODER_VALUE_LEFT_LS);
+
+        }
+        else if (rightLimitSwitchPressed()) {
+            setEncoder(TURRET_ENCODER_VALUE_RIGHT_LS);
+
+        }
+        else if (intakeLimitSwitchPressed()) {
+            setEncoder(TURRET_ENCODER_VALUE_INTAKE_LS);
+
+        }
     }
+
 
 
     public void moveTurretClockwise() {
@@ -109,6 +142,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
+
 
 }
 
