@@ -2,11 +2,12 @@
 
 <?import javafx.scene.layout.BorderPane?>
 <BorderPane fx:id="m_root" prefHeight="700" prefWidth="600"
-            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="{{widget_package_name}}.{{widget.table}}Widget">
+    xmlns="http://javafx.com/javafx/8.0.141"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="{{widget_package_name}}.{{widget.table}}Widget">
     <center>
         <fx:include fx:id="m_widget"
-                    source="/{{package_to_dir(project_package_name)}}/{{package_to_dir(widget.package_name)}}/{{camel_to_snake(widget.table)}}.fxml"/>
+            source="/{{package_to_dir(project_package_name)}}/{{package_to_dir(widget.package_name)}}/{{camel_to_snake(widget.table)}}.fxml" />
     </center>
 </BorderPane>
 
