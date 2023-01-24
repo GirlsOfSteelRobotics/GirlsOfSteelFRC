@@ -18,27 +18,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.2;
-
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Gravity Offset", 1);
-
     private final SimableCANSparkMax m_turretMotor;
-
     private final RelativeEncoder m_turretEncoder;
-
     private final PidProperty m_turretPID;
     private final SparkMaxPIDController m_turretPidController;
 
-    //left relative to intake limit switch
-    private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_LIMIT_SWITCH);
-    private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_LIMIT_SWITCH);
-    //right relative to intake limit switch
-    private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_LIMIT_SWITCH);
+    private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); //left ls relative to intake
+    private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_TURRET_LIMIT_SWITCH);
+    private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_TURRET_LIMIT_SWITCH); //right ls relative to intake
 
     public TurretSubsystem() {
 
-        m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_turretMotor = new SimableCANSparkMax(Constants.TURRET_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_turretMotor.burnFlash();
 
         m_turretEncoder = m_turretMotor.getEncoder();
 
@@ -60,7 +55,6 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_turretPID.updateIfChanged();
-
     }
 
 
@@ -97,13 +91,10 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public double getTurretAngleDegreesNeoEncoder() {
-
         return m_turretEncoder.getPosition();
     }
 
-
     public boolean turretPID(double goalAngle) {
-
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
 
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);

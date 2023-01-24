@@ -10,14 +10,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ClawSubsystem extends SubsystemBase {
 
     private final Solenoid m_rightIntake;
-
     private final Solenoid m_leftIntake; //NOPMD
 
-
     public ClawSubsystem() {
-
-        m_rightIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_RIGHT_INTAKE);
-        m_leftIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_LEFT_INTAKE);
+        m_rightIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.RIGHT_CLAW_PISTON);
+        m_leftIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.LEFT_INTAKE_PISTON);
 
     }
 
@@ -31,7 +28,6 @@ public class ClawSubsystem extends SubsystemBase {
     //intake out
 
     public void moveClawIntakeOut() {
-
         m_rightIntake.set(false);
         m_leftIntake.set(false);
     }

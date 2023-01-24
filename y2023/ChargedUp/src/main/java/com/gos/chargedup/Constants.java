@@ -15,39 +15,31 @@ package com.gos.chargedup;
  */
 public final class Constants {
 
+    //motors
     public static final int DRIVE_LEFT_LEADER_SPARK = 4;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
     public static final int PIGEON_PORT = 1;
-
-    //motors
-    public static final int CLAW_INTAKE_RIGHT = 0;
-
-    public static final int CLAW_INTAKE_LEFT = 1;
-
-    public static final int PIVOT_MOTOR = 2;
-
-    public static final int DRIVER_CONTROLLER_PORT = 0;
-
-    public static final int TURRET_MOTOR = 3;
-
-    public static final int LEFT_LIMIT_SWITCH = 2;
-    public static final int INTAKE_LIMIT_SWITCH = 2;
-    public static final int RIGHT_LIMIT_SWITCH = 2;
-
-    public static final int SOLENOID_RIGHT_INTAKE = 0;
-
-    public static final int SOLENOID_LEFT_INTAKE = 1;
-    public static final int OPERATOR_CONTROLLER_PORT = 1;
+    public static final int PIVOT_SPARK = 2;
+    public static final int TURRET_SPARK = 3;
 
     //Limit Switch
     public static final int INTAKE_LOWER_LIMIT_SWITCH = 7;
     public static final int INTAKE_UPPER_LIMIT_SWITCH = 6;
+    public static final int LEFT_TURRET_LIMIT_SWITCH = 5;
+    public static final int INTAKE_TURRET_LIMIT_SWITCH = 4;
+    public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
 
 
     //pneumatics
-    public static final int FIRST_STAGE_PISTON = 7;
-    public static final int SECOND_STAGE_PISTON = 8;
+    public static final int ARM_OUTER_PISTON = 7;
+    public static final int ARM_INNER_PISTON = 8;
+    public static final int RIGHT_CLAW_PISTON = 0;
+    public static final int LEFT_INTAKE_PISTON = 1;
+
+    //controllers
+    public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
 
 }

@@ -97,6 +97,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeft.follow(m_leaderLeft, false);
         m_followerRight.follow(m_leaderRight, false);
 
+        m_leaderLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_leaderRight.burnFlash();
+        m_followerRight.burnFlash();
+
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
@@ -196,7 +201,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //NEW ODOMETRY
     public void updateOdometry() {
-
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
