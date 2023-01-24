@@ -4,13 +4,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.*?>
 
-<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="{{widget_package_name}}.{{widget.table}}Controller">
+<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="{{widget_package_name}}.{{widget.table}}Controller">
 
     <Group fx:id="m_group">
-    <!-- Put your shapes in here. -->
-    <!-- Examples. -->
-    <!--     <Circle fx:id="m_spinningWheel" fill="plum"/> -->
-    <!--     <Rectangle fx:id="m_punch" fill="peachPuff"/> -->
+        {%- for shape in widget.shapes %}
+        <{{shape.type}} fx:id="m_{{shape.name}}" fill="papayawhip" />
+        {%- endfor %}
     </Group>
 </Pane>
+
