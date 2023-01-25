@@ -13,14 +13,13 @@ public class IntakeSubsystem extends SubsystemBase {
     private static final double HOPPER_SPEED = 0.5;
     private final Solenoid m_intakeSolenoidLeft;
     private final Solenoid m_intakeSolenoidRight;
-
     private final SimableCANSparkMax m_hopper;
 
 
     public IntakeSubsystem() {
 
-        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_INTAKE);
-        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_INTAKE);
+        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_LEFT_PISTON);
+        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_RIGHT_PISTON);
         m_hopper = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
     }
 
@@ -33,7 +32,6 @@ public class IntakeSubsystem extends SubsystemBase {
     public void retract() {
         m_intakeSolenoidRight.set(false);
         m_intakeSolenoidLeft.set(false);
-
     }
 
     //    in out stop
@@ -59,15 +57,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public Command createHopperInMotorCommand() {
-        return this.runOnce(this::extend);
+        return this.startEnd(this::hopperIn, this::hopperStop);
     }
 
     public Command createHopperOutMotorCommand() {
-        return this.runOnce(this::extend);
-    }
-
-    public Command createHopperStopMotorCommand() {
-        return this.runOnce(this::extend);
+        return this.startEnd(this::hopperOut, this::hopperStop);
     }
 
 }

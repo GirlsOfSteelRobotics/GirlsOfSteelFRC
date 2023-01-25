@@ -32,7 +32,9 @@ public final class Constants {
 
     public static final int DRIVER_CONTROLLER_PORT = 0;
 
-    public static final int SOLENOID_INTAKE = 2;
+    public static final int INTAKE_LEFT_PISTON = 2;
+    public static final int INTAKE_RIGHT_PISTON = 5;
+
 
 
     public static final int TURRET_MOTOR = 3;
