@@ -129,6 +129,8 @@ public class TurretSubsystem extends SubsystemBase {
         return this.startEnd(this::commandMoveTurretCounterClockwise, this::stopTurret);
     }
 
+    public Command
+
     public double getTurretAngleDegreesNeoEncoder() {
 
         return m_turretEncoder.getPosition();
