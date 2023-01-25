@@ -14,6 +14,7 @@ import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.ExampleSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
+import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -54,11 +55,14 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
-        m_autonomousFactory = new AutonomousFactory(m_exampleSubsystem);
+        m_autonomousFactory = new AutonomousFactory(m_exampleSubsystem, m_chassisSubsystem);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
         }
+
+        PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
+
 
     }
 
