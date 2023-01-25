@@ -7,12 +7,10 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.ExampleSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 
 import com.gos.chargedup.subsystems.IntakeSubsystem;
