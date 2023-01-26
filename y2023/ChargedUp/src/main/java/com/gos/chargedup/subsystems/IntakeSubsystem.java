@@ -18,8 +18,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public IntakeSubsystem() {
 
-        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_LEFT_PISTON);
-        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_RIGHT_PISTON);
+        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_LEFT_PISTON);
+        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_RIGHT_PISTON);
         m_hopper = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
     }
 
