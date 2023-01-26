@@ -12,46 +12,53 @@ import javafx.scene.transform.Scale;
 
 public class SuperStructureController {
 
-    private static final double MAX_WIDTH = 50; // TODO figure out real value
-    private static final double MAX_HEIGHT = 80; // TODO figure out real value
+    private static final double MAX_WIDTH = 100; // TODO figure out real value
+    private static final double MAX_HEIGHT = 100; // TODO figure out real value
 
-    private static final double CHASSIS_HEIGHT = 5; // TODO figure out real value
-    private static final double CHASSIS_WIDTH = 37; // TODO figure out real value
-    private static final double TURRET_HEIGHT = 3; // TODO figure out real value
-    private static final double TURRET_WIDTH = 7; // TODO figure out real value
-    private static final double ARM_BASE_HEIGHT = 30; // TODO figure out real value
-    private static final double ARM_BASE_WIDTH = 3; // TODO figure out real value
-    private static final double ARM1_HEIGHT = 31; // TODO figure out real value
-    private static final double ARM1_WIDTH = 2; // TODO figure out real value
-    private static final double ARM2_HEIGHT = 31; // TODO figure out real value
-    private static final double ARM2_WIDTH = 2; // TODO figure out real value
+    private static final double CHASSIS_HEIGHT = 6; // TODO figure out real value
+    private static final double CHASSIS_WIDTH = 30; // TODO figure out real value
+    private static final double TURRET_HEIGHT = 9.5; // TODO figure out real value
+    private static final double TURRET_WIDTH = 15.5; // TODO figure out real value
+    private static final double ARM_BASE_HEIGHT = 18.5; // TODO figure out real value
+    private static final double ARM_BASE_WIDTH = 2; // TODO figure out real value
+    private static final double ARM1_HEIGHT = 30; // TODO figure out real value
+    private static final double ARM1_WIDTH = 1; // TODO figure out real value
+    private static final double ARM2_HEIGHT = 49; // TODO figure out real value
+    private static final double ARM2_WIDTH = 1; // TODO figure out real value
+
+    private static final double ARM3_HEIGHT = 63;
+
+    private static final double ARM3_WIDTH = 1;
     private static final double ARM_JOINT_RADIUS = 1; // TODO figure out real value
-    private static final double CLAW_HEIGHT = 12; // TODO figure out real value
-    private static final double CLAW_WIDTH = 3; // TODO figure out real value
+    private static final double CLAW_HEIGHT = 19; // TODO figure out real value
+    private static final double CLAW_WIDTH = 1; // TODO figure out real value
     private static final double BASKET_HEIGHT = 3; // TODO figure out real value
     private static final double BASKET_WIDTH = 15; // TODO figure out real value
     private static final double HOPPER_HEIGHT = 4; // TODO figure out real value
     private static final double HOPPER_WIDTH = 3; // TODO figure out real value
-    private static final double INTAKE_HEIGHT = 7; // TODO figure out real value
-    private static final double INTAKE_WIDTH = 7; // TODO figure out real value
+    private static final double INTAKE_HEIGHT = 24; // TODO figure out real value
+    private static final double INTAKE_WIDTH = 6; // TODO figure out real value
     private static final double INTAKE_ROLLER1_RADIUS = 2; // TODO figure out real value
     private static final double INTAKE_ROLLER2_RADIUS = 2; // TODO figure out real value
 
 
-    private static final double CHASSIS_X = 1; // TODO figure out real value
-    private static final double CHASSIS_Y = 1; // TODO figure out real value
-    private static final double TURRET_X = 1; // TODO figure out real value
-    private static final double TURRET_Y = 1; // TODO figure out real value
-    private static final double ARM_BASE_X = 1; // TODO figure out real value
-    private static final double ARM_BASE_Y = 1; // TODO figure out real value
-    private static final double ARM1_X = 1; // TODO figure out real value
-    private static final double ARM1_Y = 1; // TODO figure out real value
-    private static final double ARM2_X = 1; // TODO figure out real value
-    private static final double ARM2_Y = 1; // TODO figure out real value
-    private static final double ARM_JOINT_X = 1; // TODO figure out real value
-    private static final double ARM_JOINT_Y = 1; // TODO figure out real value
-    private static final double CLAW_X = 1; // TODO figure out real value
-    private static final double CLAW_Y = 1; // TODO figure out real value
+    private static final double CHASSIS_X = 35; // TODO figure out real value
+    private static final double CHASSIS_Y = 94; // TODO figure out real value
+    private static final double TURRET_X = 38.5; // TODO figure out real value
+    private static final double TURRET_Y = 90.5; // TODO figure out real value
+    private static final double ARM_BASE_X = 45; // TODO figure out real value
+    private static final double ARM_BASE_Y = 72; // TODO figure out real value
+    private static final double ARM1_X = ARM_BASE_X; // TODO figure out real value
+    private static final double ARM1_Y = ARM_BASE_Y; // TODO figure out real value
+    private static final double ARM2_X = ARM_BASE_X; // TODO figure out real value
+    private static final double ARM2_Y = ARM_BASE_Y; // TODO figure out real value
+
+    private static final double ARM3_X = ARM_BASE_X;
+    private static final double ARM3_Y = ARM_BASE_Y;
+    private static final double ARM_JOINT_X = ARM_BASE_X + 1; // TODO figure out real value
+    private static final double ARM_JOINT_Y = ARM_BASE_Y; // TODO figure out real value
+    private static final double CLAW_X = ARM3_X + 62; // TODO figure out real value
+    private static final double CLAW_Y = ARM3_Y + 10; // TODO figure out real value
     private static final double BASKET_X = 1; // TODO figure out real value
     private static final double BASKET_Y = 1; // TODO figure out real value
     private static final double HOPPER_X = 1; // TODO figure out real value
@@ -84,6 +91,9 @@ public class SuperStructureController {
 
     @FXML
     private Rectangle m_arm2;
+
+    @FXML
+    private Rectangle m_arm3;
 
     @FXML
     private Circle m_armJoint;
@@ -152,6 +162,11 @@ public class SuperStructureController {
         m_arm2.setY(ARM2_Y);
         m_arm2.setHeight(ARM2_HEIGHT);
         m_arm2.setWidth(ARM2_WIDTH);
+
+        m_arm3.setX(ARM2_X);
+        m_arm3.setY(ARM2_Y);
+        m_arm3.setHeight(ARM3_HEIGHT);
+        m_arm3.setWidth(ARM3_WIDTH);
 
         m_armJoint.setCenterX(ARM_JOINT_X);
         m_armJoint.setCenterY(ARM_JOINT_Y);

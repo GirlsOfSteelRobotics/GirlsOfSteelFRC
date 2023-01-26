@@ -26,6 +26,9 @@ widgets:
     - type: boolean
       name: armExtension2
       dasboard_constant: ARM_EXTENSION2
+    - type: boolean
+      name: armExtension3
+      dasboard_constant: ARM_EXTENSION3
     - type: double
       name: turretSpeed
       dasboard_constant: TURRET_SPEED
@@ -39,6 +42,7 @@ widgets:
       name: intakeRollerSpeed
       dasboard_constant: INTAKE_ROLLER_SPEED
   shapes:
+
   - type: Rectangle
     name: chassis
   - type: Rectangle
@@ -49,6 +53,8 @@ widgets:
     name: arm1
   - type: Rectangle
     name: arm2
+  - type: Rectangle
+    name: arm3
   - type: Circle
     name: armJoint
   - type: Rectangle
