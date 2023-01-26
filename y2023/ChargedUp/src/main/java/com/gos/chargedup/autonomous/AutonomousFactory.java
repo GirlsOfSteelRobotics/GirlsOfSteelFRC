@@ -5,6 +5,7 @@
 
 package com.gos.chargedup.autonomous;
 
+import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,11 +15,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 public final class AutonomousFactory {
     private final SendableChooser<Command> m_autonomousModes;
 
-    public AutonomousFactory(ExampleSubsystem subsystem) {
+    public AutonomousFactory(ExampleSubsystem subsystem, ChassisSubsystem chassis) {
         m_autonomousModes = new SendableChooser<>();
 
         m_autonomousModes.addOption("Example", subsystem.exampleMethodCommand());
 
+        m_autonomousModes.addOption("Autonomous drive", new AutonomousDriveTimeCommand(chassis));
         SmartDashboard.putData(m_autonomousModes);
     }
 

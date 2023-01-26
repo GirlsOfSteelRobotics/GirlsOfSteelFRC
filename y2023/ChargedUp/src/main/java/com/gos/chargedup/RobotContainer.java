@@ -54,7 +54,7 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
-        m_autonomousFactory = new AutonomousFactory(m_exampleSubsystem);
+        m_autonomousFactory = new AutonomousFactory(m_exampleSubsystem, m_chassisSubsystem);
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
