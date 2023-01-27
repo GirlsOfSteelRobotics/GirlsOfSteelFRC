@@ -39,12 +39,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_outerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.ARM_OUTER_PISTON);
-        m_innerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.ARM_INNER_PISTON);
+        m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON);
+        m_innerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON);
 
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_pivotMotor.burnFlash();
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
         m_pivotPIDController = m_pivotMotor.getPIDController();
@@ -56,6 +55,8 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLimitSwitch = new DigitalInput(Constants.INTAKE_UPPER_LIMIT_SWITCH);
 
         m_pivotPID = setupPidValues(m_pivotPIDController);
+
+        m_pivotMotor.burnFlash();
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {

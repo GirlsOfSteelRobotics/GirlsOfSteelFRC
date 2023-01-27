@@ -24,21 +24,20 @@ public final class Constants {
     public static final int PIVOT_SPARK = 2;
     public static final int TURRET_SPARK = 3;
 
-    //Limit Switch
+    //DIO
     public static final int INTAKE_LOWER_LIMIT_SWITCH = 7;
     public static final int INTAKE_UPPER_LIMIT_SWITCH = 6;
     public static final int LEFT_TURRET_LIMIT_SWITCH = 5;
     public static final int INTAKE_TURRET_LIMIT_SWITCH = 4;
     public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
 
-
-    //pneumatics
+    //Pneumatics
     public static final int ARM_OUTER_PISTON = 7;
-    public static final int ARM_INNER_PISTON = 8;
+    public static final int ARM_INNER_PISTON = 2;
     public static final int RIGHT_CLAW_PISTON = 0;
     public static final int LEFT_INTAKE_PISTON = 1;
 
-    //controllers
+    //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 

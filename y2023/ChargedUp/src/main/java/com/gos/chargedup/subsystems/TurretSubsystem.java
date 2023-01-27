@@ -33,12 +33,13 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_turretMotor.burnFlash();
 
         m_turretEncoder = m_turretMotor.getEncoder();
 
         m_turretPidController = m_turretMotor.getPIDController();
         m_turretPID = setupPidValues(m_turretPidController);
+
+        m_turretMotor.burnFlash();
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {

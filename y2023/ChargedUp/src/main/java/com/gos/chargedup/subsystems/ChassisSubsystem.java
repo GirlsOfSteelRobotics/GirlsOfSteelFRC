@@ -97,11 +97,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeft.follow(m_leaderLeft, false);
         m_followerRight.follow(m_leaderRight, false);
 
-        m_leaderLeft.burnFlash();
-        m_followerLeft.burnFlash();
-        m_leaderRight.burnFlash();
-        m_followerRight.burnFlash();
-
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
         m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
@@ -121,6 +116,11 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+
+        m_leaderLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_leaderRight.burnFlash();
+        m_followerRight.burnFlash();
 
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
