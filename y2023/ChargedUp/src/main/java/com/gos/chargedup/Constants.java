@@ -35,8 +35,6 @@ public final class Constants {
     public static final int INTAKE_LEFT_PISTON = 2;
     public static final int INTAKE_RIGHT_PISTON = 5;
 
-
-
     public static final int TURRET_MOTOR = 3;
 
     public static final int LEFT_LIMIT_SWITCH = 2;
