@@ -23,7 +23,7 @@ import java.util.Map;
 public class SuperStructureStandaloneMain {
     private final SuperStructureWidget m_controller;
 
-    private double m_superStructureArmAngle;
+    private double m_superStructureArmAngle = -45;
     private double m_superStructureArmSpeed;
     private double m_superStructureIntakeAngle;
     private boolean m_superStructureArmExtension1;
@@ -32,6 +32,7 @@ public class SuperStructureStandaloneMain {
     private double m_superStructureTurretAngle;
     private double m_superStructureIntakeSpeed;
     private double m_superStructureIntakeRollerSpeed;
+    private boolean extended;
 
 
     private final Label m_superStructureArmAngleLabel = new Label("Q/A -> superStructureArmAngle");
@@ -68,12 +69,12 @@ public class SuperStructureStandaloneMain {
 
             // SuperStructure
             case Q:
-                m_superStructureArmAngle -= 2;
-                m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
+                    m_superStructureArmAngle -= 2;
+                    m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
                 break;
             case A:
-                m_superStructureArmAngle += 2;
-                m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
+                    m_superStructureArmAngle += 2;
+                    m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
                 break;
             case W:
                 m_superStructureArmSpeed = 0.25;
@@ -137,7 +138,7 @@ public class SuperStructureStandaloneMain {
             default:
                 // ignored
             }
-            handleUpdate();
+                handleUpdate();
         });
 
 
@@ -162,7 +163,7 @@ public class SuperStructureStandaloneMain {
                 break;
 
             case DIGIT1:
-                m_superStructureArmExtension1 = false;
+//                m_superStructureArmExtension1 = false;
                 m_superStructureArmExtension1Label.setTextFill(Color.BLACK);
                 break;
 

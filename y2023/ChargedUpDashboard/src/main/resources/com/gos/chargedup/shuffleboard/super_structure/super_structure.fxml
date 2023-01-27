@@ -12,9 +12,7 @@
         <Rectangle fx:id="m_chassis" fill="maroon" />
         <Rectangle fx:id="m_turret" fill="maroon" />
         <Rectangle fx:id="m_armBase" fill="maroon" />
-        <Rectangle fx:id="m_arm1" fill="maroon" />
-        <Rectangle fx:id="m_arm2" fill="maroon" />
-        <Rectangle fx:id="m_arm3" fill="maroon" />
+        <Rectangle fx:id="m_arm" fill="maroon" />
         <Circle fx:id="m_armJoint" fill="maroon" />
         <Rectangle fx:id="m_claw" fill="maroon" />
         <Rectangle fx:id="m_basket" fill="maroon" />

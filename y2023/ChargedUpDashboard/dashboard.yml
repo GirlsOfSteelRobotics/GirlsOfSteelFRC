@@ -50,11 +50,7 @@ widgets:
   - type: Rectangle
     name: armBase
   - type: Rectangle
-    name: arm1
-  - type: Rectangle
-    name: arm2
-  - type: Rectangle
-    name: arm3
+    name: arm
   - type: Circle
     name: armJoint
   - type: Rectangle

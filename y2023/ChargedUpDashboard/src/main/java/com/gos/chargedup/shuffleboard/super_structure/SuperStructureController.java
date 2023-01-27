@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 //import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 
 public class SuperStructureController {
@@ -21,17 +22,11 @@ public class SuperStructureController {
     private static final double TURRET_WIDTH = 15.5; // TODO figure out real value
     private static final double ARM_BASE_HEIGHT = 18.5; // TODO figure out real value
     private static final double ARM_BASE_WIDTH = 2; // TODO figure out real value
-    private static final double ARM1_HEIGHT = 30; // TODO figure out real value
-    private static final double ARM1_WIDTH = 1; // TODO figure out real value
-    private static final double ARM2_HEIGHT = 49; // TODO figure out real value
-    private static final double ARM2_WIDTH = 1; // TODO figure out real value
-
-    private static final double ARM3_HEIGHT = 63;
-
-    private static final double ARM3_WIDTH = 1;
+    private static final double ARM_HEIGHT = 30; // TODO figure out real value
+    private static final double ARM_WIDTH = 1; // TODO figure out real value
     private static final double ARM_JOINT_RADIUS = 1; // TODO figure out real value
-    private static final double CLAW_HEIGHT = 19; // TODO figure out real value
-    private static final double CLAW_WIDTH = 1; // TODO figure out real value
+    private static final double CLAW_HEIGHT = 10; // TODO figure out real value
+    private static final double CLAW_WIDTH = 2; // TODO figure out real value
     private static final double BASKET_HEIGHT = 3; // TODO figure out real value
     private static final double BASKET_WIDTH = 15; // TODO figure out real value
     private static final double HOPPER_HEIGHT = 4; // TODO figure out real value
@@ -48,17 +43,12 @@ public class SuperStructureController {
     private static final double TURRET_Y = 90.5; // TODO figure out real value
     private static final double ARM_BASE_X = 45; // TODO figure out real value
     private static final double ARM_BASE_Y = 72; // TODO figure out real value
-    private static final double ARM1_X = ARM_BASE_X; // TODO figure out real value
-    private static final double ARM1_Y = ARM_BASE_Y; // TODO figure out real value
-    private static final double ARM2_X = ARM_BASE_X; // TODO figure out real value
-    private static final double ARM2_Y = ARM_BASE_Y; // TODO figure out real value
-
-    private static final double ARM3_X = ARM_BASE_X;
-    private static final double ARM3_Y = ARM_BASE_Y;
+    private static final double ARM_X = ARM_BASE_X + 1; // TODO figure out real value
+    private static final double ARM_Y = ARM_BASE_Y; // TODO figure out real value
     private static final double ARM_JOINT_X = ARM_BASE_X + 1; // TODO figure out real value
     private static final double ARM_JOINT_Y = ARM_BASE_Y; // TODO figure out real value
-    private static final double CLAW_X = ARM3_X + 62; // TODO figure out real value
-    private static final double CLAW_Y = ARM3_Y + 10; // TODO figure out real value
+    private static final double CLAW_X = ARM_X - 1; // TODO figure out real value
+    private static final double CLAW_Y = ARM_Y + 30; // TODO figure out real value
     private static final double BASKET_X = 1; // TODO figure out real value
     private static final double BASKET_Y = 1; // TODO figure out real value
     private static final double HOPPER_X = 1; // TODO figure out real value
@@ -87,13 +77,7 @@ public class SuperStructureController {
     private Rectangle m_armBase;
 
     @FXML
-    private Rectangle m_arm1;
-
-    @FXML
-    private Rectangle m_arm2;
-
-    @FXML
-    private Rectangle m_arm3;
+    private Rectangle m_arm;
 
     @FXML
     private Circle m_armJoint;
@@ -115,6 +99,12 @@ public class SuperStructureController {
 
     @FXML
     private Circle m_intakeRoller2;
+
+    @FXML
+    private Rotate m_armRotation;
+
+    @FXML
+    private Rotate m_clawRotation;
 
 
     @FXML
@@ -153,20 +143,10 @@ public class SuperStructureController {
         m_armBase.setHeight(ARM_BASE_HEIGHT);
         m_armBase.setWidth(ARM_BASE_WIDTH);
 
-        m_arm1.setX(ARM1_X);
-        m_arm1.setY(ARM1_Y);
-        m_arm1.setHeight(ARM1_HEIGHT);
-        m_arm1.setWidth(ARM1_WIDTH);
-
-        m_arm2.setX(ARM2_X);
-        m_arm2.setY(ARM2_Y);
-        m_arm2.setHeight(ARM2_HEIGHT);
-        m_arm2.setWidth(ARM2_WIDTH);
-
-        m_arm3.setX(ARM2_X);
-        m_arm3.setY(ARM2_Y);
-        m_arm3.setHeight(ARM3_HEIGHT);
-        m_arm3.setWidth(ARM3_WIDTH);
+        m_arm.setX(ARM_X);
+        m_arm.setY(ARM_Y);
+        m_arm.setHeight(ARM_HEIGHT);
+        m_arm.setWidth(ARM_WIDTH);
 
         m_armJoint.setCenterX(ARM_JOINT_X);
         m_armJoint.setCenterY(ARM_JOINT_Y);
@@ -200,11 +180,23 @@ public class SuperStructureController {
         m_intakeRoller2.setCenterY(INTAKE_ROLLER2_Y);
         m_intakeRoller2.setRadius(INTAKE_ROLLER2_RADIUS);
 
+        m_armRotation = new Rotate();
+        m_armRotation.setAngle(-45);
+        m_armRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_arm.getX(), m_arm.xProperty()));
+        m_armRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_arm.getY(), m_arm.yProperty()));
+        m_arm.getTransforms().add(m_armRotation);
+
+        m_clawRotation = new Rotate();
+        m_clawRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_arm.getX(), m_arm.xProperty()));
+        m_clawRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_arm.getY(), m_arm.yProperty()));
+        m_claw.getTransforms().add(m_armRotation);
+
     }
 
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
         // TODO implement
+        m_armRotation.setAngle(superStructureData.getArmAngle());
     }
 
 
