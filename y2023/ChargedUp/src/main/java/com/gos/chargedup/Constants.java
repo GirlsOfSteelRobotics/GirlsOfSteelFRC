@@ -48,6 +48,6 @@ public final class Constants {
 
     //pneumatics
     public static final int FIRST_STAGE_PISTON = 7;
-    public static final int SECOND_STAGE_PISTON = 8;
+    public static final int SECOND_STAGE_PISTON = 4;
 
 }
