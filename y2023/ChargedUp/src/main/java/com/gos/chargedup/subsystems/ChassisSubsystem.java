@@ -32,7 +32,7 @@ import java.util.Optional;
 
 public class ChassisSubsystem extends SubsystemBase {
     //Chassis and motors
-    private final SimableCANSparkMax m_leaderLeft;
+    private final SimableCANSpfarkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
     private final SimableCANSparkMax m_leaderRight;
     private final SimableCANSparkMax m_followerRight;
