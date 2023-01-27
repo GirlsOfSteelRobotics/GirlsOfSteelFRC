@@ -187,8 +187,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftPIDProperties.updateIfChanged();
         m_rightPIDProperties.updateIfChanged();
+
     }
 
+
+    public Pose2d getPose() {
+        return m_poseEstimator.getEstimatedPosition();
+    }
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
