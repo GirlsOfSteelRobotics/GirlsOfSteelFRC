@@ -7,10 +7,10 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class TestLineCommandGroup extends SequentialCommandGroup {
+
     public static final PathPlannerTrajectory TEST_LINE = PathPlanner.loadPath("TestLine", new PathConstraints(4, 3));
+
     public TestLineCommandGroup(ChassisSubsystem chassis) {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
             chassis.followTrajectoryCommand(TEST_LINE, true)
         );
