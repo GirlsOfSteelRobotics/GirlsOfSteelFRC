@@ -17,7 +17,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public IntakeSubsystem() {
-
         m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_LEFT_PISTON);
         m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_RIGHT_PISTON);
         m_hopper = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -29,9 +28,17 @@ public class IntakeSubsystem extends SubsystemBase {
 
     }
 
+    public boolean isIntakeDown() {
+        return m_intakeSolenoidLeft.get();
+    }
+
     public void retract() {
         m_intakeSolenoidRight.set(false);
         m_intakeSolenoidLeft.set(false);
+    }
+
+    public double getHopperSpeed() {
+        return m_hopper.get();
     }
 
     //    in out stop

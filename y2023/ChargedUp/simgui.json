@@ -9,7 +9,7 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [4]": {
+      "SPARK MAX [2]": {
         "header": {
           "open": true
         }
@@ -24,22 +24,24 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/LiveWindow/ChassisSubsystem": "Subsystem",
-      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
-      "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
-      "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
-      "/LiveWindow/Ungrouped/Pigeon IMU [1]": "Gyro",
-      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Automated Turret - 2": "Command",
+      "/SmartDashboard/Automated Turret - 6": "Command",
+      "/SmartDashboard/Automated Turret - 8": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
-      "/SmartDashboard/Field": {
+      "/SmartDashboard/Automated Turret - 2": {
         "window": {
           "visible": true
         }
       },
-      "/SmartDashboard/SendableChooser[0]": {
+      "/SmartDashboard/Automated Turret - 8": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
         "window": {
           "visible": true
         }
