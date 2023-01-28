@@ -124,6 +124,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
+        m_leaderLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_leaderRight.burnFlash();
+        m_followerRight.burnFlash();
+
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
 
@@ -223,7 +228,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //NEW ODOMETRY
     public void updateOdometry() {
-
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
