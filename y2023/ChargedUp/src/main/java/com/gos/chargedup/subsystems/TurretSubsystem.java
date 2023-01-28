@@ -11,6 +11,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,9 +31,14 @@ public class TurretSubsystem extends SubsystemBase {
     private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_TURRET_LIMIT_SWITCH);
     private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_TURRET_LIMIT_SWITCH); //right ls relative to intake
 
-    public TurretSubsystem() {
+    private final NetworkTableEntry m_leftLimitSwitchEntry;
+    private final NetworkTableEntry m_rightLimitSwitchEntry;
+    private final NetworkTableEntry m_intakeLimitSwitchEntry;
+    private final NetworkTableEntry m_encoderDegEntry;
 
-        m_turretMotor = new SimableCANSparkMax(Constants.TURRET_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+    public TurretSubsystem() {
+        m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
@@ -40,6 +48,13 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretPID = setupPidValues(m_turretPidController);
 
         m_turretMotor.burnFlash();
+
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Turret Subsystem");
+        m_leftLimitSwitchEntry = loggingTable.getEntry("Turret Left LS");
+        m_intakeLimitSwitchEntry = loggingTable.getEntry("Turret Intake LS");
+        m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
+        m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
+
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -56,6 +71,11 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_turretPID.updateIfChanged();
+
+        m_leftLimitSwitchEntry.setBoolean(leftLimitSwitchPressed());
+        m_intakeLimitSwitchEntry.setBoolean(intakeLimitSwitchPressed());
+        m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
+        m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
     }
 
 

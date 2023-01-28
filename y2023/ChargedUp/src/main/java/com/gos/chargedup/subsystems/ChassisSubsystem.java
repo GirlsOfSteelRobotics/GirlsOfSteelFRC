@@ -16,6 +16,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -79,6 +82,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
 
+    private final NetworkTableEntry m_gyroAngleDegEntry;
 
 
     public ChassisSubsystem() {
@@ -137,6 +141,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_pcw = new VisionSubsystem();
 
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
+        m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
+
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
                 DifferentialDrivetrainSim.KitbotMotor.kDoubleNEOPerSide,
@@ -168,6 +175,24 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
     }
 
+    @Override
+    public void periodic() {
+        updateOdometry();
+
+        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
+        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+
+        m_leftPIDProperties.updateIfChanged();
+        m_rightPIDProperties.updateIfChanged();
+
+        m_gyroAngleDegEntry.setNumber(getYaw());
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_simulator.update();
+    }
+
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
@@ -193,6 +218,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_gyro.getPitch();
     }
 
+    public double getYaw() {
+        return m_gyro.getYaw();
+    }
+
     public void autoEngage() {
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
@@ -205,25 +234,8 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-
     public Command createAutoEngageCommand() {
         return this.run(this::autoEngage);
-    }
-
-    @Override
-    public void periodic() {
-        updateOdometry();
-
-        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
-        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
-
-        m_leftPIDProperties.updateIfChanged();
-        m_rightPIDProperties.updateIfChanged();
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        m_simulator.update();
     }
 
     //NEW ODOMETRY

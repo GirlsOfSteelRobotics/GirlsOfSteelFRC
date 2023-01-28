@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -11,39 +12,52 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
 
     private static final double HOPPER_SPEED = 0.5;
+    private static final double INTAKE_SPEED = 0.5;
     private final Solenoid m_intakeSolenoidLeft;
     private final Solenoid m_intakeSolenoidRight;
-    private final SimableCANSparkMax m_hopper;
+    private final SimableCANSparkMax m_hopperMotor;
+    private final SimableCANSparkMax m_intakeMotor;
 
 
     public IntakeSubsystem() {
         m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_LEFT_PISTON);
         m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_RIGHT_PISTON);
-        m_hopper = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_hopperMotor = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        m_hopperMotor.restoreFactoryDefaults();
+        m_intakeMotor.restoreFactoryDefaults();
+
+        m_hopperMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+        m_hopperMotor.burnFlash();
+        m_intakeMotor.burnFlash();
     }
 
     public void extend() {
         m_intakeSolenoidRight.set(true);
         m_intakeSolenoidLeft.set(true);
-
+        m_intakeMotor.set(INTAKE_SPEED);
     }
 
     public void retract() {
         m_intakeSolenoidRight.set(false);
         m_intakeSolenoidLeft.set(false);
+        m_intakeMotor.set(0);
     }
 
     //    in out stop
     public void hopperIn() {
-        m_hopper.set(HOPPER_SPEED);
+        m_hopperMotor.set(HOPPER_SPEED);
     }
 
     public void hopperOut() {
-        m_hopper.set(-HOPPER_SPEED);
+        m_hopperMotor.set(-HOPPER_SPEED);
     }
 
     public void hopperStop() {
-        m_hopper.set(0);
+        m_hopperMotor.set(0);
     }
 
 
