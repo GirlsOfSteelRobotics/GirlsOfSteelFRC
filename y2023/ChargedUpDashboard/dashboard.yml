@@ -17,9 +17,9 @@ widgets:
     - type: double
       name: armSpeed
       dasboard_constant: ARM_SPEED
-    - type: double
-      name: intakeAngle
-      dasboard_constant: INTAKE_ANGLE
+    - type: boolean
+      name: intakeDown
+      dasboard_constant: INTAKE_DOWN
     - type: boolean
       name: armExtension1
       dasboard_constant: ARM_EXTENSION1

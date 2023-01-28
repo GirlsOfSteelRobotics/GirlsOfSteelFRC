@@ -207,7 +207,12 @@ public class SuperStructureController {
         // TODO implement
         m_armRotation.setAngle(superStructureData.getArmAngle());
 
-        m_intakeRotation.setAngle(superStructureData.getIntakeAngle());
+        if(superStructureData.isIntakeDown() == true) {
+            m_intakeRotation.setAngle(-90.0);
+        } else {
+            m_intakeRotation.setAngle(180.0);
+        }
+
 
         if(superStructureData.isArmExtension1() == false && superStructureData.isArmExtension2() == false){
             m_arm.setHeight(15);

@@ -23,27 +23,20 @@ import java.util.Map;
 public class SuperStructureStandaloneMain {
     private final SuperStructureWidget m_controller;
 
-    private double m_superStructureArmAngle = -45;
+    private double m_superStructureArmAngle;
     private double m_superStructureArmSpeed;
-    private double m_superStructureIntakeAngle = -66;
+    private boolean m_superStructureIntakeDown;
     private boolean m_superStructureArmExtension1;
     private boolean m_superStructureArmExtension2;
-    //private double m_superStructureTurretSpeed;
-    //private double m_superStructureTurretAngle;
     private double m_superStructureIntakeSpeed;
-    //private double m_superStructureIntakeRollerSpeed;
-    private boolean extended;
 
 
     private final Label m_superStructureArmAngleLabel = new Label("Q/A -> superStructureArmAngle");
     private final Label m_superStructureArmSpeedLabel = new Label("W/S -> superStructureArmSpeed");
-    private final Label m_superStructureIntakeAngleLabel = new Label("E/D -> superStructureIntakeAngle");
-    private final Label m_superStructureArmExtension1Label = new Label("DIGIT1 -> superStructureArmExtension1");
-    private final Label m_superStructureArmExtension2Label = new Label("DIGIT2 -> superStructureArmExtension2");
-    //private final Label m_superStructureTurretSpeedLabel = new Label("R/F -> superStructureTurretSpeed");
-    //private final Label m_superStructureTurretAngleLabel = new Label("T/G -> superStructureTurretAngle");
-    private final Label m_superStructureIntakeSpeedLabel = new Label("Y/H -> superStructureIntakeSpeed");
-    //private final Label m_superStructureIntakeRollerSpeedLabel = new Label("U/J -> superStructureIntakeRollerSpeed");
+    private final Label m_superStructureIntakeDownLabel = new Label("DIGIT1 -> superStructureIntakeDown");
+    private final Label m_superStructureArmExtension1Label = new Label("DIGIT2 -> superStructureArmExtension1");
+    private final Label m_superStructureArmExtension2Label = new Label("DIGIT3 -> superStructureArmExtension2");
+    private final Label m_superStructureIntakeSpeedLabel = new Label("E/D -> superStructureIntakeSpeed");
 
     public SuperStructureStandaloneMain(Scene scene, SuperStructureWidget robotController) {
         m_controller = robotController;
@@ -54,13 +47,10 @@ public class SuperStructureStandaloneMain {
 
         labelPane.getChildren().add(m_superStructureArmAngleLabel);
         labelPane.getChildren().add(m_superStructureArmSpeedLabel);
-        labelPane.getChildren().add(m_superStructureIntakeAngleLabel);
+        labelPane.getChildren().add(m_superStructureIntakeDownLabel);
         labelPane.getChildren().add(m_superStructureArmExtension1Label);
         labelPane.getChildren().add(m_superStructureArmExtension2Label);
-        //labelPane.getChildren().add(m_superStructureTurretSpeedLabel);
-        //labelPane.getChildren().add(m_superStructureTurretAngleLabel);
         labelPane.getChildren().add(m_superStructureIntakeSpeedLabel);
-        //labelPane.getChildren().add(m_superStructureIntakeRollerSpeedLabel);
         ((BorderPane) scene.getRoot()).setBottom(labelPane);
 
         scene.setOnKeyPressed(event -> {
@@ -69,12 +59,12 @@ public class SuperStructureStandaloneMain {
 
             // SuperStructure
             case Q:
-                    m_superStructureArmAngle -= 2;
-                    m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
+                m_superStructureArmAngle -= 2;
+                m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
                 break;
             case A:
-                    m_superStructureArmAngle += 2;
-                    m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
+                m_superStructureArmAngle += 2;
+                m_superStructureArmAngleLabel.setTextFill(Color.GREEN);
                 break;
             case W:
                 m_superStructureArmSpeed = 0.25;
@@ -84,63 +74,34 @@ public class SuperStructureStandaloneMain {
                 m_superStructureArmSpeed = -0.25;
                 m_superStructureArmSpeedLabel.setTextFill(Color.GREEN);
                 break;
-            case E:
-                m_superStructureIntakeAngle -= 2;
-                m_superStructureIntakeAngleLabel.setTextFill(Color.GREEN);
-                break;
-            case D:
-                m_superStructureIntakeAngle += 2;
-                m_superStructureIntakeAngleLabel.setTextFill(Color.GREEN);
-                break;
 
             case DIGIT1:
-                m_superStructureArmExtension1 = true;
-                m_superStructureArmExtension2 = false;
-                m_superStructureArmExtension1Label.setTextFill(Color.GREEN);
+                m_superStructureIntakeDown = true;
+                m_superStructureIntakeDownLabel.setTextFill(Color.GREEN);
                 break;
 
             case DIGIT2:
+                m_superStructureArmExtension1 = true;
+                m_superStructureArmExtension1Label.setTextFill(Color.GREEN);
+                break;
+
+            case DIGIT3:
                 m_superStructureArmExtension2 = true;
-                m_superStructureArmExtension1 = false;
                 m_superStructureArmExtension2Label.setTextFill(Color.GREEN);
                 break;
-            //case R:
-              //  m_superStructureTurretSpeed = 0.25;
-                //m_superStructureTurretSpeedLabel.setTextFill(Color.GREEN);
-               // break;
-            //case F:
-              //  m_superStructureTurretSpeed = -0.25;
-               // m_superStructureTurretSpeedLabel.setTextFill(Color.GREEN);
-                //break;
-            //case T:
-              //  m_superStructureTurretAngle = 0.25;
-               // m_superStructureTurretAngleLabel.setTextFill(Color.GREEN);
-               // break;
-            //case G:
-              //  m_superStructureTurretAngle = -0.25;
-                //m_superStructureTurretAngleLabel.setTextFill(Color.GREEN);
-                //break;
-            case Y:
+            case E:
                 m_superStructureIntakeSpeed = 0.25;
                 m_superStructureIntakeSpeedLabel.setTextFill(Color.GREEN);
                 break;
-            case H:
+            case D:
                 m_superStructureIntakeSpeed = -0.25;
                 m_superStructureIntakeSpeedLabel.setTextFill(Color.GREEN);
                 break;
-            //case U:
-               // m_superStructureIntakeRollerSpeed = 0.25;
-                //m_superStructureIntakeRollerSpeedLabel.setTextFill(Color.GREEN);
-                //break;
-            //case J:
-              //  m_superStructureIntakeRollerSpeed = -0.25;
-                //m_superStructureIntakeRollerSpeedLabel.setTextFill(Color.GREEN);
-               // break;
 
             default:
                 // ignored
             }
-                handleUpdate();
+            handleUpdate();
         });
 
 
@@ -158,40 +119,26 @@ public class SuperStructureStandaloneMain {
                 m_superStructureArmSpeed = 0;
                 m_superStructureArmSpeedLabel.setTextFill(Color.BLACK);
                 break;
-            case E:
-            case D:
-                m_superStructureIntakeAngleLabel.setTextFill(Color.BLACK);
-                break;
 
             case DIGIT1:
-                //m_superStructureArmExtension1 = false;
-                m_superStructureArmExtension1Label.setTextFill(Color.BLACK);
+                m_superStructureIntakeDown = false;
+                m_superStructureIntakeDownLabel.setTextFill(Color.BLACK);
                 break;
 
             case DIGIT2:
-                //m_superStructureArmExtension2 = false;
+                m_superStructureArmExtension1 = false;
+                m_superStructureArmExtension1Label.setTextFill(Color.BLACK);
+                break;
+
+            case DIGIT3:
+                m_superStructureArmExtension2 = false;
                 m_superStructureArmExtension2Label.setTextFill(Color.BLACK);
                 break;
-            case R:
-            //case F:
-              //  m_superStructureTurretSpeed = 0;
-                //m_superStructureTurretSpeedLabel.setTextFill(Color.BLACK);
-                //break;
-            case T:
-            //case G:
-              //  m_superStructureTurretAngle = 0;
-                //m_superStructureTurretAngleLabel.setTextFill(Color.BLACK);
-                //break;
-            case Y:
-            case H:
+            case E:
+            case D:
                 m_superStructureIntakeSpeed = 0;
                 m_superStructureIntakeSpeedLabel.setTextFill(Color.BLACK);
                 break;
-            case U:
-            //case J:
-              //  m_superStructureIntakeRollerSpeed = 0;
-                //m_superStructureIntakeRollerSpeedLabel.setTextFill(Color.BLACK);
-                //break;
             default:
                 break;
             }
@@ -206,12 +153,9 @@ public class SuperStructureStandaloneMain {
             SuperStructureData data = new SuperStructureData(
                 m_superStructureArmAngle,
                 m_superStructureArmSpeed,
-                m_superStructureIntakeAngle,
+                m_superStructureIntakeDown,
                 m_superStructureArmExtension1,
                 m_superStructureArmExtension2,
-                //m_superStructureTurretSpeed,
-                //m_superStructureTurretAngle,
-                //m_superStructureIntakeRollerSpeed,
                 m_superStructureIntakeSpeed
             );
 

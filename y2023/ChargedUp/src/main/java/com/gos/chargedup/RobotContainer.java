@@ -126,6 +126,8 @@ public class RobotContainer {
                 SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed,null);
             builder.addDoubleProperty(
                 SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed,null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown,null);
 
         }
     }
