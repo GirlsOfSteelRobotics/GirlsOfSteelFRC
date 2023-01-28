@@ -16,6 +16,7 @@ public final class AutonomousFactory {
     private final SendableChooser<Command> m_autonomousModes;
 
     public AutonomousFactory(ExampleSubsystem subsystem, ChassisSubsystem chassis) {
+    public AutonomousFactory() {
         m_autonomousModes = new SendableChooser<>();
 
         m_autonomousModes.addOption("Example", subsystem.exampleMethodCommand());

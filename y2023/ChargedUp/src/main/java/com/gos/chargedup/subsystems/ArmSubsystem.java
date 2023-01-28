@@ -42,8 +42,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_outerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.FIRST_STAGE_PISTON);
-        m_innerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SECOND_STAGE_PISTON);
+        m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.FIRST_STAGE_PISTON);
+        m_innerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.SECOND_STAGE_PISTON);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
         m_pivotPIDController = m_pivotMotor.getPIDController();

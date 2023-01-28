@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.revrobotics.CANSparkMax;
@@ -17,6 +18,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +33,9 @@ import java.util.Optional;
 
 
 public class ChassisSubsystem extends SubsystemBase {
+    public static final double PITCH_LOWER_LIMIT = -5.0;
+    public static final double PITCH_UPPER_LIMIT = 5.0;
+    public static final GosDoubleProperty AUTO_ENGAGE_SPEED = new GosDoubleProperty(false, "Chassis speed for auto engage", 0.1);
     //Chassis and motors
     private final SimableCANSpfarkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
@@ -73,6 +78,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
+
+
 
     public ChassisSubsystem() {
 
@@ -177,6 +184,26 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+    public double getPitch() {
+        return m_gyro.getPitch();
+    }
+
+    public void autoEngage() {
+        if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
+            setArcadeDrive(0, 0);
+
+        } else if (getPitch() > 0) {
+            setArcadeDrive(-AUTO_ENGAGE_SPEED.getValue(), 0);
+
+        } else if (getPitch() < 0) {
+            setArcadeDrive(AUTO_ENGAGE_SPEED.getValue(), 0);
+        }
+    }
+
+
+    public Command createAutoEngageCommand() {
+        return this.run(this::autoEngage);
+    }
 
     @Override
     public void periodic() {
