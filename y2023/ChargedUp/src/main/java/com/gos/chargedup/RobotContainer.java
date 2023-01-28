@@ -91,6 +91,8 @@ public class RobotContainer {
         // cancelling on release.
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
 
+        m_driverController.a().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
+
         m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
         m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
         m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
