@@ -19,11 +19,13 @@ def download_external_archives():
     )
 
     # Download BazelRio <3
+    BAZELRIO_COMMITISH = "757540fb62540aef068f645d4014748d4a41c0be"
+    BAZELRIO_SHA256 = "4004c281e3d80dcf530cd904ea6cf1e2c80109b84a763388031155e5e3b773dc"
     http_archive(
         name = "bazelrio",
-        url = "https://github.com/pjreiniger/bazelRio/archive/db22d1f91d5714947ae17f906eb55553f86d0742.tar.gz",
-        sha256 = "35e09ba3528d1a887679708350fce6933c6dcf64a61ec6b81516b077151c07e1",
-        strip_prefix = "bazelrio-db22d1f91d5714947ae17f906eb55553f86d0742/bazelrio",
+        url = "https://github.com/pjreiniger/bazelRio/archive/{}.tar.gz".format(BAZELRIO_COMMITISH),
+        sha256 = BAZELRIO_SHA256,
+        strip_prefix = "bazelrio-{}/bazelrio".format(BAZELRIO_COMMITISH),
     )
 
     # Download Setup python
