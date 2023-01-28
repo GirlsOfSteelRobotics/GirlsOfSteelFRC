@@ -48,9 +48,10 @@ include 'libraries:GirlsOfSteelLibCtre'
 //include 'y2022:ChassisProject'
 //include 'y2022:MEPI'
 include 'y2022:RapidReact'
-include 'y2022:RapidReactDashboard'
+//include 'y2022:RapidReactDashboard'
 include 'y2022:SCRAWestCoastDrive'
 
 
 include 'y2023:Preseason'
 include 'y2023:ChargedUp'
+include 'y2023:ChargedUpDashboard'

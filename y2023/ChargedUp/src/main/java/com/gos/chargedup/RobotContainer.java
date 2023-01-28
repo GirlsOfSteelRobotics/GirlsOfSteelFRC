@@ -14,6 +14,8 @@ import com.gos.chargedup.subsystems.ChassisSubsystem;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 
@@ -67,6 +69,7 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
         }
 
+        SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
         SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
         SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
@@ -97,6 +100,10 @@ public class RobotContainer {
         m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
         m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
         m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
+        m_driverController.x().whileTrue((m_arm.commandFullRetract()));
+        m_driverController.y().whileTrue((m_arm.commandMiddleRetract()));
+        m_driverController.leftBumper().whileTrue((m_arm.commandOut()));
+
     }
 
 
@@ -108,5 +115,28 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         return m_autonomousFactory.getAutonomousCommand();
+    }
+
+
+    private class SuperstructureSendable implements Sendable {
+
+        @Override
+        public void initSendable(SendableBuilder builder) {
+            builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
+
+            builder.addDoubleProperty(
+                SmartDashboardNames.ARM_ANGLE, m_arm::getPosition, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.ARM_EXTENSION1, m_arm::isInnerPistonIn, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.ARM_EXTENSION2, m_arm::isOuterPistonIn, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
+
+        }
     }
 }
