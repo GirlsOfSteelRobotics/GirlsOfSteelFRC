@@ -19,15 +19,14 @@ public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.2;
 
-    private static final double TURRET_ENCODER_VALUE_LEFT_LS = 1.0;
+    private static final double TURRET_ENCODER_VALUE_LEFT_LS = -1.0;
 
 
     private static final double TURRET_ENCODER_VALUE_RIGHT_LS = 1.0;
 
 
-    private static final double TURRET_ENCODER_VALUE_INTAKE_LS = 1.0;
+    private static final double TURRET_ENCODER_VALUE_INTAKE_LS = 0.0;
 
-    private static final double TURRET_POSITION = 1;
 
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Gravity Offset", 1);
 
@@ -79,7 +78,6 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_turretPID.updateIfChanged();
-        m_turretEncoder.setPosition(TURRET_POSITION);
 
         if (leftLimitSwitchPressed()) {
             setEncoder(TURRET_ENCODER_VALUE_LEFT_LS);
