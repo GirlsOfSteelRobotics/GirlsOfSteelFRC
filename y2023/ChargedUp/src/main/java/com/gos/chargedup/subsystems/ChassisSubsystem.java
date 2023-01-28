@@ -194,6 +194,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public Pose2d getPose() {
         return m_poseEstimator.getEstimatedPosition();
     }
+
     @Override
     public void simulationPeriodic() {
         m_simulator.update();

@@ -7,16 +7,19 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
+import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -30,6 +33,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
+
+    private final TurretSubsystem m_turret = new TurretSubsystem();
 
     private final ClawSubsystem m_claw = new ClawSubsystem();
 
@@ -61,6 +66,10 @@ public class RobotContainer {
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
         }
+
+        SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, TurretSubsystem.LOW_TRANSLATIONS[2]));
+        SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, TurretSubsystem.LOW_TRANSLATIONS[6]));
+        SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, TurretSubsystem.LOW_TRANSLATIONS[8]));
 
     }
 
