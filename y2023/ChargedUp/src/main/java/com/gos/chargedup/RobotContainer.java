@@ -123,11 +123,11 @@ public class RobotContainer {
             builder.addBooleanProperty(
                 SmartDashboardNames.ARM_EXTENSION2, m_arm::isOuterPistonIn, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed,null);
+                SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed,null);
+                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown,null);
+                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
 
         }
     }

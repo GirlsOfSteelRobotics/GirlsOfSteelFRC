@@ -28,6 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeSolenoidLeft.set(true);
 
     }
+
     public boolean isIntakeDown() {
         return m_intakeSolenoidLeft.get();
     }
