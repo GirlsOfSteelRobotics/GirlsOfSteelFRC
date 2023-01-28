@@ -12,10 +12,10 @@ public final class SmartDashboardNames {
     public static final String INTAKE_ANGLE                     = "IntakeAngle";
     public static final String ARM_EXTENSION1                   = "ArmExtension1";
     public static final String ARM_EXTENSION2                   = "ArmExtension2";
-    public static final String TURRET_SPEED                     = "TurretSpeed";
-    public static final String TURRET_ANGLE                     = "TurretAngle";
+    //public static final String TURRET_SPEED                     = "TurretSpeed";
+    //public static final String TURRET_ANGLE                     = "TurretAngle";
     public static final String INTAKE_SPEED                     = "IntakeSpeed";
-    public static final String INTAKE_ROLLER_SPEED              = "IntakeRollerSpeed";
+    //public static final String INTAKE_ROLLER_SPEED              = "IntakeRollerSpeed";
 
 
     private SmartDashboardNames() {

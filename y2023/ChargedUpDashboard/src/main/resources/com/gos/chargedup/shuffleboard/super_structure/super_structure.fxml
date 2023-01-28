@@ -9,16 +9,12 @@
     fx:controller="com.gos.chargedup.shuffleboard.super_structure.SuperStructureController">
 
     <Group fx:id="m_group">
-        <Rectangle fx:id="m_chassis" fill="maroon" />
-        <Rectangle fx:id="m_turret" fill="maroon" />
-        <Rectangle fx:id="m_armBase" fill="maroon" />
-        <Rectangle fx:id="m_arm" fill="maroon" />
-        <Circle fx:id="m_armJoint" fill="maroon" />
-        <Rectangle fx:id="m_claw" fill="maroon" />
-        <Rectangle fx:id="m_basket" fill="maroon" />
-        <Rectangle fx:id="m_hopper" fill="maroon" />
-        <Rectangle fx:id="m_intake" fill="maroon" />
-        <Circle fx:id="m_intakeRoller1" fill="maroon" />
-        <Circle fx:id="m_intakeRoller2" fill="maroon" />
+        <Rectangle fx:id="m_chassis" fill="palevioletred" />
+        <Rectangle fx:id="m_turret" fill="palevioletred" />
+        <Rectangle fx:id="m_armBase" fill="powderblue" />
+        <Rectangle fx:id="m_arm" fill="pink" />
+        <Circle fx:id="m_armJoint" fill="palevioletred" />
+        <Rectangle fx:id="m_claw" fill="lightskyblue" />
+        <Rectangle fx:id="m_intake" fill="plum" />
     </Group>
 </Pane>

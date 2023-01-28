@@ -22,7 +22,7 @@ public class SuperStructureController {
     private static final double TURRET_WIDTH = 15.5; // TODO figure out real value
     private static final double ARM_BASE_HEIGHT = 18.5; // TODO figure out real value
     private static final double ARM_BASE_WIDTH = 2; // TODO figure out real value
-    private static final double ARM_HEIGHT = 30; // TODO figure out real value
+    private static final double ARM_HEIGHT = 15; // TODO figure out real value
     private static final double ARM_WIDTH = 1; // TODO figure out real value
     private static final double ARM_JOINT_RADIUS = 1; // TODO figure out real value
     private static final double CLAW_HEIGHT = 10; // TODO figure out real value
@@ -31,7 +31,7 @@ public class SuperStructureController {
     private static final double BASKET_WIDTH = 15; // TODO figure out real value
     private static final double HOPPER_HEIGHT = 4; // TODO figure out real value
     private static final double HOPPER_WIDTH = 3; // TODO figure out real value
-    private static final double INTAKE_HEIGHT = 24; // TODO figure out real value
+    private static final double INTAKE_HEIGHT = 15; // TODO figure out real value
     private static final double INTAKE_WIDTH = 6; // TODO figure out real value
     private static final double INTAKE_ROLLER1_RADIUS = 2; // TODO figure out real value
     private static final double INTAKE_ROLLER2_RADIUS = 2; // TODO figure out real value
@@ -48,17 +48,17 @@ public class SuperStructureController {
     private static final double ARM_JOINT_X = ARM_BASE_X + 1; // TODO figure out real value
     private static final double ARM_JOINT_Y = ARM_BASE_Y; // TODO figure out real value
     private static final double CLAW_X = ARM_X - 1; // TODO figure out real value
-    private static final double CLAW_Y = ARM_Y + 30; // TODO figure out real value
-    private static final double BASKET_X = 1; // TODO figure out real value
-    private static final double BASKET_Y = 1; // TODO figure out real value
-    private static final double HOPPER_X = 1; // TODO figure out real value
-    private static final double HOPPER_Y = 1; // TODO figure out real value
-    private static final double INTAKE_X = 1; // TODO figure out real value
-    private static final double INTAKE_Y = 1; // TODO figure out real value
-    private static final double INTAKE_ROLLER1_X = 1; // TODO figure out real value
-    private static final double INTAKE_ROLLER1_Y = 1; // TODO figure out real value
-    private static final double INTAKE_ROLLER2_X = 1; // TODO figure out real value
-    private static final double INTAKE_ROLLER2_Y = 1; // TODO figure out real value
+    private static final double CLAW_Y = ARM_Y + 15; // TODO figure out real value
+   // private static final double BASKET_X = 1; // TODO figure out real value
+   // private static final double BASKET_Y = 1; // TODO figure out real value
+   // private static final double HOPPER_X = 1; // TODO figure out real value
+   // private static final double HOPPER_Y = 1; // TODO figure out real value
+    private static final double INTAKE_X = CHASSIS_X + 30; // TODO figure out real value
+    private static final double INTAKE_Y = CHASSIS_Y; // TODO figure out real value
+    // private static final double INTAKE_ROLLER1_X = 1; // TODO figure out real value
+    // private static final double INTAKE_ROLLER1_Y = 1; // TODO figure out real value
+    // private static final double INTAKE_ROLLER2_X = 1; // TODO figure out real value
+    // private static final double INTAKE_ROLLER2_Y = 1; // TODO figure out real value
 
     @FXML
     private Group m_group;
@@ -85,26 +85,29 @@ public class SuperStructureController {
     @FXML
     private Rectangle m_claw;
 
-    @FXML
-    private Rectangle m_basket;
+    //FXML
+    //private Rectangle m_basket;
 
-    @FXML
-    private Rectangle m_hopper;
+    //@FXML
+    //private Rectangle m_hopper;
 
     @FXML
     private Rectangle m_intake;
 
-    @FXML
-    private Circle m_intakeRoller1;
+    //@FXML
+   // private Circle m_intakeRoller1;
 
-    @FXML
-    private Circle m_intakeRoller2;
+    //@FXML
+    //private Circle m_intakeRoller2;
 
     @FXML
     private Rotate m_armRotation;
 
     @FXML
     private Rotate m_clawRotation;
+
+    @FXML
+    private Rotate m_intakeRotation;
 
 
     @FXML
@@ -157,28 +160,28 @@ public class SuperStructureController {
         m_claw.setHeight(CLAW_HEIGHT);
         m_claw.setWidth(CLAW_WIDTH);
 
-        m_basket.setX(BASKET_X);
-        m_basket.setY(BASKET_Y);
-        m_basket.setHeight(BASKET_HEIGHT);
-        m_basket.setWidth(BASKET_WIDTH);
+        //m_basket.setX(BASKET_X);
+        //m_basket.setY(BASKET_Y);
+        //m_basket.setHeight(BASKET_HEIGHT);
+        //m_basket.setWidth(BASKET_WIDTH);
 
-        m_hopper.setX(HOPPER_X);
-        m_hopper.setY(HOPPER_Y);
-        m_hopper.setHeight(HOPPER_HEIGHT);
-        m_hopper.setWidth(HOPPER_WIDTH);
+        //m_hopper.setX(HOPPER_X);
+        //m_hopper.setY(HOPPER_Y);
+        //m_hopper.setHeight(HOPPER_HEIGHT);
+        //m_hopper.setWidth(HOPPER_WIDTH);
 
         m_intake.setX(INTAKE_X);
         m_intake.setY(INTAKE_Y);
         m_intake.setHeight(INTAKE_HEIGHT);
         m_intake.setWidth(INTAKE_WIDTH);
 
-        m_intakeRoller1.setCenterX(INTAKE_ROLLER1_X);
-        m_intakeRoller1.setCenterY(INTAKE_ROLLER1_Y);
-        m_intakeRoller1.setRadius(INTAKE_ROLLER1_RADIUS);
+        //m_intakeRoller1.setCenterX(INTAKE_ROLLER1_X);
+        //m_intakeRoller1.setCenterY(INTAKE_ROLLER1_Y);
+        //m_intakeRoller1.setRadius(INTAKE_ROLLER1_RADIUS);
 
-        m_intakeRoller2.setCenterX(INTAKE_ROLLER2_X);
-        m_intakeRoller2.setCenterY(INTAKE_ROLLER2_Y);
-        m_intakeRoller2.setRadius(INTAKE_ROLLER2_RADIUS);
+        //m_intakeRoller2.setCenterX(INTAKE_ROLLER2_X);
+        //m_intakeRoller2.setCenterY(INTAKE_ROLLER2_Y);
+        //m_intakeRoller2.setRadius(INTAKE_ROLLER2_RADIUS);
 
         m_armRotation = new Rotate();
         m_armRotation.setAngle(-45);
@@ -191,12 +194,31 @@ public class SuperStructureController {
         m_clawRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_arm.getY(), m_arm.yProperty()));
         m_claw.getTransforms().add(m_armRotation);
 
+        m_intakeRotation = new Rotate();
+        m_intakeRotation.setAngle(-66);
+        m_intakeRotation.pivotXProperty().bind(Bindings.createObjectBinding(() -> m_intake.getX(), m_intake.xProperty()));
+        m_intakeRotation.pivotYProperty().bind(Bindings.createObjectBinding(() -> m_intake.getY(), m_intake.yProperty()));
+        m_intake.getTransforms().add(m_intakeRotation);
+
     }
 
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
         // TODO implement
         m_armRotation.setAngle(superStructureData.getArmAngle());
+
+        m_intakeRotation.setAngle(superStructureData.getIntakeAngle());
+
+        if(superStructureData.isArmExtension1() == false && superStructureData.isArmExtension2() == false){
+            m_arm.setHeight(15);
+            m_claw.setY(ARM_Y + 15);
+        } else if (superStructureData.isArmExtension1() == false && superStructureData.isArmExtension2() == true) {
+            m_arm.setHeight(25);
+            m_claw.setY(ARM_Y + 25);
+        } else if (superStructureData.isArmExtension1() == true && superStructureData.isArmExtension2() == false) {
+            m_arm.setHeight(35);
+            m_claw.setY(ARM_Y + 35);
+        }
     }
 
 
