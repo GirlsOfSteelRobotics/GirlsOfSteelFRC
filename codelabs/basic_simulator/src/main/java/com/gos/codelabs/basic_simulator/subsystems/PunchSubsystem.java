@@ -25,16 +25,14 @@ public class PunchSubsystem extends SubsystemBase implements AutoCloseable {
 
     public boolean isExtended() {
         // TODO implement
-        return m_punchSolenoid.get();
+        return false;
     }
 
     public void extend() {
         // TODO implement
-        m_punchSolenoid.set(true);
     }
 
     public void retract() {
         // TODO implement
-        m_punchSolenoid.set(false);
     }
 }

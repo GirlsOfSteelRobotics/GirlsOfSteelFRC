@@ -58,35 +58,6 @@ public class CodelabSuperStructureController {
         ///////////////////////////////////////////////////////////
 
         // TODO implement
-        m_spinningWheel.setRadius(2);
-        m_spinningWheel.setCenterX(10);
-        m_spinningWheel.setCenterY(20);
-
-        m_punch.setWidth(5);
-        m_punch.setHeight(7);
-        m_punch.setX(30);
-        m_punch.setY(25);
-
-        m_base.setWidth(35);
-        m_base.setHeight(3);
-        m_base.setX(5);
-        m_base.setY(32);
-
-        m_elevatorBox.setWidth(5);
-        m_elevatorBox.setHeight(12);
-        m_elevatorBox.setX(13);
-        m_elevatorBox.setY(20);
-
-        m_liftLowerLimitSwitch.setWidth(2);
-        m_liftLowerLimitSwitch.setHeight(2);
-        m_liftLowerLimitSwitch.setX(14.5);
-        m_liftLowerLimitSwitch.setY(30);
-
-        m_liftUpperLimitSwitch.setWidth(2);
-        m_liftUpperLimitSwitch.setHeight(2);
-        m_liftUpperLimitSwitch.setX(14.5);
-        m_liftUpperLimitSwitch.setY(19);
-
     }
 
 

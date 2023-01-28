@@ -126,8 +126,6 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void arcadeDrive(double speed, double steer) {
         // TODO implement
-        m_differentialDrive.arcadeDrive(speed, steer);
-
     }
 
     public void stop() {
@@ -140,7 +138,6 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         m_field.setRobotPose(m_odometry.getPoseMeters());
     }
 
-
     @Override
     public void simulationPeriodic() {
         m_simulator.update();
@@ -148,21 +145,21 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
     public double getHeading() {
         // TODO implement
-        return m_gyro.getAngle();
+        return 0;
     }
 
     public double getLeftDistance() {
         // TODO implement
-        return m_leftEncoder.getPosition();
+        return 0;
     }
 
     public double getRightDistance() {
         // TODO implement
-        return m_rightEncoder.getPosition();
+        return 0;
     }
 
     public double getAverageDistance() {
         // TODO implement
-        return ((getLeftDistance() + getRightDistance()) / 2);
+        return 0;
     }
 }
