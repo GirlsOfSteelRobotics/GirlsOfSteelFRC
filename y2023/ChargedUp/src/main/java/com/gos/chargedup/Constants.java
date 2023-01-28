@@ -26,7 +26,7 @@ public final class Constants {
 
     public static final int CLAW_INTAKE_LEFT = 1;
 
-    public static final int HOPPER_MOTOR = 10;
+    public static final int HOPPER_MOTOR = 11;
 
     public static final int PIVOT_MOTOR = 2;
 

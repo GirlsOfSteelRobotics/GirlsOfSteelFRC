@@ -34,11 +34,41 @@
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/FunctionalCommand": "Command",
       "/SmartDashboard/PPRamseteCommand_field": "Field2d",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/SendableChooser[1]": "String Chooser",
+      "/SmartDashboard/Test Line": "Command",
+      "/SmartDashboard/Test Mild Curve": "Command",
+      "/SmartDashboard/Test S Curve": "Command"
     },
     "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/FunctionalCommand": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/SendableChooser[0]": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test Line": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test Mild Curve": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test S Curve": {
         "window": {
           "visible": true
         }
@@ -50,6 +80,31 @@
       "Preferences": {
         "open": true
       }
+    }
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 766,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "SPARK MAX [4]-Velocity"
+            }
+          ]
+        }
+      ]
     }
   }
 }

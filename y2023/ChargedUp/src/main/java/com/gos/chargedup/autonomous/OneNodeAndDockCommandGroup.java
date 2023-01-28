@@ -1,0 +1,18 @@
+package com.gos.chargedup.autonomous;
+
+import com.gos.chargedup.subsystems.ChassisSubsystem;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+public class OneNodeAndDockCommandGroup extends SequentialCommandGroup {
+    public static final PathPlannerTrajectory ONE_NODE_AND_DOCK = PathPlanner.loadPath("OneNodeAndDock", new PathConstraints(4, 3));
+    public OneNodeAndDockCommandGroup(ChassisSubsystem chassis) {
+        // TODO: Add your sequential commands in the super() call, e.g.
+        //           super(new OpenClawCommand(), new MoveArmCommand());
+        super(
+            chassis.followTrajectoryCommand(ONE_NODE_AND_DOCK, true)
+        );
+    }
+}
