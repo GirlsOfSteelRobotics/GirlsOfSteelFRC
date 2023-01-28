@@ -16,8 +16,8 @@ public class ClawSubsystem extends SubsystemBase {
 
     public ClawSubsystem() {
 
-        m_rightIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_RIGHT_INTAKE);
-        m_leftIntake = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_LEFT_INTAKE);
+        m_rightIntake = new Solenoid(PneumaticsModuleType.REVPH, Constants.SOLENOID_RIGHT_INTAKE);
+        m_leftIntake = new Solenoid(PneumaticsModuleType.REVPH, Constants.SOLENOID_LEFT_INTAKE);
 
     }
 
