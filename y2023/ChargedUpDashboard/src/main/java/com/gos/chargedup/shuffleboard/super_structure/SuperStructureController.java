@@ -13,52 +13,38 @@ import javafx.scene.transform.Scale;
 
 public class SuperStructureController {
 
-    private static final double MAX_WIDTH = 100; // TODO figure out real value
-    private static final double MAX_HEIGHT = 100; // TODO figure out real value
+    private static final double MAX_WIDTH = 100;
+    private static final double MAX_HEIGHT = 100;
 
-    private static final double CHASSIS_HEIGHT = 6; // TODO figure out real value
-    private static final double CHASSIS_WIDTH = 30; // TODO figure out real value
-    private static final double TURRET_HEIGHT = 9.5; // TODO figure out real value
-    private static final double TURRET_WIDTH = 15.5; // TODO figure out real value
-    private static final double ARM_BASE_HEIGHT = 18.5; // TODO figure out real value
-    private static final double ARM_BASE_WIDTH = 2; // TODO figure out real value
-    private static final double ARM_HEIGHT = 15; // TODO figure out real value
-    private static final double ARM_WIDTH = 1; // TODO figure out real value
-    private static final double ARM_JOINT_RADIUS = 1; // TODO figure out real value
-    private static final double CLAW_HEIGHT = 10; // TODO figure out real value
-    private static final double CLAW_WIDTH = 2; // TODO figure out real value
-    private static final double BASKET_HEIGHT = 3; // TODO figure out real value
-    private static final double BASKET_WIDTH = 15; // TODO figure out real value
-    private static final double HOPPER_HEIGHT = 4; // TODO figure out real value
-    private static final double HOPPER_WIDTH = 3; // TODO figure out real value
-    private static final double INTAKE_HEIGHT = 15; // TODO figure out real value
-    private static final double INTAKE_WIDTH = 6; // TODO figure out real value
-    private static final double INTAKE_ROLLER1_RADIUS = 2; // TODO figure out real value
-    private static final double INTAKE_ROLLER2_RADIUS = 2; // TODO figure out real value
+    private static final double CHASSIS_HEIGHT = 6;
+    private static final double CHASSIS_WIDTH = 30;
+    private static final double TURRET_HEIGHT = 9.5;
+    private static final double TURRET_WIDTH = 15.5;
+    private static final double ARM_BASE_HEIGHT = 18.5;
+    private static final double ARM_BASE_WIDTH = 2;
+    private static final double ARM_HEIGHT = 15;
+    private static final double ARM_WIDTH = 1;
+    private static final double ARM_JOINT_RADIUS = 1;
+    private static final double CLAW_HEIGHT = 10;
+    private static final double CLAW_WIDTH = 2;
+    private static final double INTAKE_HEIGHT = 15;
+    private static final double INTAKE_WIDTH = 6;
 
 
-    private static final double CHASSIS_X = 35; // TODO figure out real value
-    private static final double CHASSIS_Y = 94; // TODO figure out real value
-    private static final double TURRET_X = 38.5; // TODO figure out real value
-    private static final double TURRET_Y = 90.5; // TODO figure out real value
-    private static final double ARM_BASE_X = 45; // TODO figure out real value
-    private static final double ARM_BASE_Y = 72; // TODO figure out real value
-    private static final double ARM_X = ARM_BASE_X + 1; // TODO figure out real value
-    private static final double ARM_Y = ARM_BASE_Y; // TODO figure out real value
-    private static final double ARM_JOINT_X = ARM_BASE_X + 1; // TODO figure out real value
-    private static final double ARM_JOINT_Y = ARM_BASE_Y; // TODO figure out real value
-    private static final double CLAW_X = ARM_X - 1; // TODO figure out real value
-    private static final double CLAW_Y = ARM_Y + 15; // TODO figure out real value
-   // private static final double BASKET_X = 1; // TODO figure out real value
-   // private static final double BASKET_Y = 1; // TODO figure out real value
-   // private static final double HOPPER_X = 1; // TODO figure out real value
-   // private static final double HOPPER_Y = 1; // TODO figure out real value
-    private static final double INTAKE_X = CHASSIS_X + 30; // TODO figure out real value
-    private static final double INTAKE_Y = CHASSIS_Y; // TODO figure out real value
-    // private static final double INTAKE_ROLLER1_X = 1; // TODO figure out real value
-    // private static final double INTAKE_ROLLER1_Y = 1; // TODO figure out real value
-    // private static final double INTAKE_ROLLER2_X = 1; // TODO figure out real value
-    // private static final double INTAKE_ROLLER2_Y = 1; // TODO figure out real value
+    private static final double CHASSIS_X = 35;
+    private static final double CHASSIS_Y = 94;
+    private static final double TURRET_X = 38.5;
+    private static final double TURRET_Y = 90.5;
+    private static final double ARM_BASE_X = 45;
+    private static final double ARM_BASE_Y = 72;
+    private static final double ARM_X = ARM_BASE_X + 1;
+    private static final double ARM_Y = ARM_BASE_Y;
+    private static final double ARM_JOINT_X = ARM_BASE_X + 1;
+    private static final double ARM_JOINT_Y = ARM_BASE_Y;
+    private static final double CLAW_X = ARM_X - 1;
+    private static final double CLAW_Y = ARM_Y + 15;
+    private static final double INTAKE_X = CHASSIS_X + 30;
+    private static final double INTAKE_Y = CHASSIS_Y;
 
     @FXML
     private Group m_group;
@@ -85,28 +71,13 @@ public class SuperStructureController {
     @FXML
     private Rectangle m_claw;
 
-    //FXML
-    //private Rectangle m_basket;
-
-    //@FXML
-    //private Rectangle m_hopper;
-
     @FXML
     private Rectangle m_intake;
 
-    //@FXML
-   // private Circle m_intakeRoller1;
-
-    //@FXML
-    //private Circle m_intakeRoller2;
-
-    @FXML
     private Rotate m_armRotation;
 
-    @FXML
     private Rotate m_clawRotation;
 
-    @FXML
     private Rotate m_intakeRotation;
 
 
@@ -119,9 +90,7 @@ public class SuperStructureController {
         m_pane.setMinHeight(MAX_HEIGHT * minWidthMultiplier);
         m_pane.setMinWidth(MAX_WIDTH * minWidthMultiplier);
 
-        DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> {
-            return Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT);
-        }, m_pane.widthProperty(), m_pane.heightProperty());
+        DoubleBinding scaleBinding = Bindings.createDoubleBinding(() -> Math.min(m_pane.getWidth() / MAX_WIDTH, m_pane.getHeight() / MAX_HEIGHT), m_pane.widthProperty(), m_pane.heightProperty());
 
         Scale scale = new Scale();
         scale.xProperty().bind(scaleBinding);
@@ -160,28 +129,10 @@ public class SuperStructureController {
         m_claw.setHeight(CLAW_HEIGHT);
         m_claw.setWidth(CLAW_WIDTH);
 
-        //m_basket.setX(BASKET_X);
-        //m_basket.setY(BASKET_Y);
-        //m_basket.setHeight(BASKET_HEIGHT);
-        //m_basket.setWidth(BASKET_WIDTH);
-
-        //m_hopper.setX(HOPPER_X);
-        //m_hopper.setY(HOPPER_Y);
-        //m_hopper.setHeight(HOPPER_HEIGHT);
-        //m_hopper.setWidth(HOPPER_WIDTH);
-
         m_intake.setX(INTAKE_X);
         m_intake.setY(INTAKE_Y);
         m_intake.setHeight(INTAKE_HEIGHT);
         m_intake.setWidth(INTAKE_WIDTH);
-
-        //m_intakeRoller1.setCenterX(INTAKE_ROLLER1_X);
-        //m_intakeRoller1.setCenterY(INTAKE_ROLLER1_Y);
-        //m_intakeRoller1.setRadius(INTAKE_ROLLER1_RADIUS);
-
-        //m_intakeRoller2.setCenterX(INTAKE_ROLLER2_X);
-        //m_intakeRoller2.setCenterY(INTAKE_ROLLER2_Y);
-        //m_intakeRoller2.setRadius(INTAKE_ROLLER2_RADIUS);
 
         m_armRotation = new Rotate();
         m_armRotation.setAngle(-45);
@@ -207,20 +158,20 @@ public class SuperStructureController {
         // TODO implement
         m_armRotation.setAngle(superStructureData.getArmAngle());
 
-        if(superStructureData.isIntakeDown() == true) {
+        if (superStructureData.isIntakeDown()) {
             m_intakeRotation.setAngle(-90.0);
         } else {
             m_intakeRotation.setAngle(180.0);
         }
 
 
-        if(superStructureData.isArmExtension1() == false && superStructureData.isArmExtension2() == false){
+        if (!superStructureData.isArmExtension1() && !superStructureData.isArmExtension2()) {
             m_arm.setHeight(15);
             m_claw.setY(ARM_Y + 15);
-        } else if (superStructureData.isArmExtension1() == false && superStructureData.isArmExtension2() == true) {
+        } else if (!superStructureData.isArmExtension1() && superStructureData.isArmExtension2()) {
             m_arm.setHeight(25);
             m_claw.setY(ARM_Y + 25);
-        } else if (superStructureData.isArmExtension1() == true && superStructureData.isArmExtension2() == false) {
+        } else if (superStructureData.isArmExtension1() && !superStructureData.isArmExtension2()) {
             m_arm.setHeight(35);
             m_claw.setY(ARM_Y + 35);
         }
