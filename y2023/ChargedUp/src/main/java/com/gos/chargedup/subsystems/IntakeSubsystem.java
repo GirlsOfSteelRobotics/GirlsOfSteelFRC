@@ -34,6 +34,10 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeSolenoidLeft.set(false);
     }
 
+    public double getHopperSpeed() {
+        return m_hopper.get();
+    }
+
     //    in out stop
     public void hopperIn() {
         m_hopper.set(HOPPER_SPEED);

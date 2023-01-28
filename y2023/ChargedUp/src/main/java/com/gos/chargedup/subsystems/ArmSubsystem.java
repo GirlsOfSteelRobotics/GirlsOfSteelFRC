@@ -73,6 +73,10 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotor.set(-ARM_MOTOR_SPEED);
     }
 
+    public double getArmMotorSpeed() {
+        return m_pivotMotor.get();
+    }
+
     public void pivotArmStop() {
         m_pivotMotor.set(0);
     }
@@ -80,16 +84,28 @@ public class ArmSubsystem extends SubsystemBase {
     public void fullRetract() {
         m_outerPiston.set(true);
         m_innerPiston.set(false);
+        System.out.println("retract");
     }
+
+    public boolean isInnerPistonIn() {
+        return m_innerPiston.get();
+    }
+
+    public boolean isOuterPistonIn() {
+        return m_outerPiston.get();
+    }
+
 
     public void middleRetract() {
         m_outerPiston.set(false);
         m_innerPiston.set(false);
+        System.out.println("mid");
     }
 
     public void out() {
         m_outerPiston.set(false);
         m_innerPiston.set(true);
+        System.out.println("out");
     }
 
     public Command commandPivotArmUp() {

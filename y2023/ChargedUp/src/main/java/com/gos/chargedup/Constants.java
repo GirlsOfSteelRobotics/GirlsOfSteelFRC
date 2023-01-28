@@ -26,7 +26,7 @@ public final class Constants {
 
     public static final int CLAW_INTAKE_LEFT = 1;
 
-    public static final int HOPPER_MOTOR = 10;
+    public static final int HOPPER_MOTOR = 11;
 
     public static final int PIVOT_MOTOR = 2;
 
@@ -40,8 +40,8 @@ public final class Constants {
     public static final int TURRET_MOTOR = 3;
 
     public static final int LEFT_LIMIT_SWITCH = 2;
-    public static final int INTAKE_LIMIT_SWITCH = 2;
-    public static final int RIGHT_LIMIT_SWITCH = 2;
+    public static final int INTAKE_LIMIT_SWITCH = 1;
+    public static final int RIGHT_LIMIT_SWITCH = 3;
 
     public static final int SOLENOID_RIGHT_INTAKE = 0;
 
