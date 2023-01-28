@@ -37,7 +37,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double PITCH_UPPER_LIMIT = 5.0;
     public static final GosDoubleProperty AUTO_ENGAGE_SPEED = new GosDoubleProperty(false, "Chassis speed for auto engage", 0.1);
     //Chassis and motors
-    private final SimableCANSpfarkMax m_leaderLeft;
+    private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
     private final SimableCANSparkMax m_leaderRight;
     private final SimableCANSparkMax m_followerRight;
