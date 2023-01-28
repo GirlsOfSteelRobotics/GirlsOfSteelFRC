@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
+import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -11,22 +12,20 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.util.function.BooleanConsumer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -36,14 +35,13 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
-import javax.sound.sampled.BooleanControl;
 import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.BooleanSupplier;
-import java.util.function.Consumer;
 
 
 public class ChassisSubsystem extends SubsystemBase {
+    public static final double PITCH_LOWER_LIMIT = -5.0;
+    public static final double PITCH_UPPER_LIMIT = 5.0;
+    public static final GosDoubleProperty AUTO_ENGAGE_SPEED = new GosDoubleProperty(false, "Chassis speed for auto engage", 0.1);
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
@@ -87,6 +85,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
 
+
+
     public ChassisSubsystem() {
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -129,6 +129,11 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+
+        m_leaderLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_leaderRight.burnFlash();
+        m_followerRight.burnFlash();
 
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
@@ -174,6 +179,16 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }
 
+    public CommandBase commandChassisVelocity() {
+        return this.runEnd(
+            () -> smartVelocityControl(Units.feetToMeters(5), Units.feetToMeters(5)),
+            this::stop);
+    }
+
+    private void stop() {
+        setArcadeDrive(0, 0);
+    }
+
     public void trapezoidMotionControl(double leftDistance, double rightDistance) {
         m_leftPIDcontroller.setReference(leftDistance, CANSparkMax.ControlType.kSmartMotion, 0);
         m_rightPIDcontroller.setReference(rightDistance, CANSparkMax.ControlType.kSmartMotion, 0);
@@ -189,6 +204,26 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+    public double getPitch() {
+        return m_gyro.getPitch();
+    }
+
+    public void autoEngage() {
+        if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
+            setArcadeDrive(0, 0);
+
+        } else if (getPitch() > 0) {
+            setArcadeDrive(-AUTO_ENGAGE_SPEED.getValue(), 0);
+
+        } else if (getPitch() < 0) {
+            setArcadeDrive(AUTO_ENGAGE_SPEED.getValue(), 0);
+        }
+    }
+
+
+    public Command createAutoEngageCommand() {
+        return this.run(this::autoEngage);
+    }
 
     @Override
     public void periodic() {
@@ -199,6 +234,12 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_leftPIDProperties.updateIfChanged();
         m_rightPIDProperties.updateIfChanged();
+
+    }
+
+
+    public Pose2d getPose() {
+        return m_poseEstimator.getEstimatedPosition();
     }
 
     @Override
@@ -208,7 +249,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //NEW ODOMETRY
     public void updateOdometry() {
-
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
@@ -226,21 +266,17 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public void resetOdometry(Pose2d pose2d){
+    public void resetOdometry(Pose2d pose2d) {
         m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
         m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
         System.out.println("Reset Odometry was called");
-    }
-
-    public Pose2d getPose(){
-        return m_poseEstimator.getEstimatedPosition();
     }
 
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
         return new SequentialCommandGroup(
             new InstantCommand(() -> {
                 // Reset odometry for the first path you run during auto
-                if(isFirstPath){
+                if (isFirstPath) {
                     this.resetOdometry(traj.getInitialPose());
                 }
             }).repeatedly().withTimeout(1),

@@ -7,16 +7,26 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 
+//test paths
+import com.gos.chargedup.commands.testing.TestLineCommandGroup;
+import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
+import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
+
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.ExampleSubsystem;
-import com.gos.chargedup.subsystems.LEDManagerSubsystem;
+import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.pathplanner.lib.server.PathPlannerServer;
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.RobotBase;
+import com.gos.chargedup.subsystems.LEDManagerSubsystem;
+
+import com.gos.chargedup.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -31,8 +41,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
+    private final TurretSubsystem m_turret = new TurretSubsystem();
+
     private final ClawSubsystem m_claw = new ClawSubsystem();
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+    private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final ChassisSubsystem m_chassisSubsystem = new ChassisSubsystem();
 
     private final ArmSubsystem m_arm = new ArmSubsystem();
@@ -55,17 +68,25 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
-        m_autonomousFactory = new AutonomousFactory(m_exampleSubsystem, m_chassisSubsystem);
+        m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem);
+
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
+            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
-
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
+        SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
 
+        SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
+        SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
+        SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
+
+        SmartDashboard.putData("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
+        SmartDashboard.putData("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
+        SmartDashboard.putData("Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
 
     }
-
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -82,11 +103,14 @@ public class RobotContainer {
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
-        m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
+
+        m_driverController.a().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
 
         m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
         m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
+        m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
+        m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
     }
 
 

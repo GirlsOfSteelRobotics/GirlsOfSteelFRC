@@ -21,13 +21,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final double ARM_MOTOR_SPEED = 0.2;
-
-
     private final SimableCANSparkMax m_pivotMotor;
+    private static final double GEAR_RATIO = 5.0 * 2.0 * 4.0;
 
     private final RelativeEncoder m_pivotMotorEncoder;
-
-
     private final SparkMaxPIDController m_pivotPIDController;
 
     private final Solenoid m_outerPiston;
@@ -41,17 +38,25 @@ public class ArmSubsystem extends SubsystemBase {
     private final PidProperty m_pivotPID;
 
     public ArmSubsystem() {
-        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_outerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.FIRST_STAGE_PISTON);
-        m_innerPiston = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SECOND_STAGE_PISTON);
+        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON);
+        m_innerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON);
+
+        m_pivotMotor.restoreFactoryDefaults();
+        m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
         m_pivotPIDController = m_pivotMotor.getPIDController();
+
+        m_pivotMotorEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
+        m_pivotMotorEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
 
         m_lowerLimitSwitch = new DigitalInput(Constants.INTAKE_LOWER_LIMIT_SWITCH);
         m_upperLimitSwitch = new DigitalInput(Constants.INTAKE_UPPER_LIMIT_SWITCH);
 
         m_pivotPID = setupPidValues(m_pivotPIDController);
+
+        m_pivotMotor.burnFlash();
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
