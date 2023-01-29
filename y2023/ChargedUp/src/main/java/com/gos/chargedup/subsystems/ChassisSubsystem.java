@@ -63,7 +63,7 @@ public class ChassisSubsystem extends SubsystemBase {
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
 
-    private final VisionSubsystem m_pcw;
+    private final Vision m_vision;
 
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
@@ -135,7 +135,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
-        m_pcw = new VisionSubsystem();
+        m_vision = new PhotonVisionSubsystem();
+        // m_vision = new LimelightVisionSubsystem();
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -212,7 +213,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        updateOdometry();
+        updateOdometryPhotonVision();
 
         m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
         m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
@@ -233,13 +234,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     //NEW ODOMETRY
-    public void updateOdometry() {
+    public void updateOdometryPhotonVision() {
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
         Optional<EstimatedRobotPose> result =
-            m_pcw.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+            m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();
@@ -250,8 +251,5 @@ public class ChassisSubsystem extends SubsystemBase {
             m_field.getObject("Camera Estimated Position").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
     }
-
-
-
-
 }
+

@@ -1,5 +1,7 @@
 package com.gos.lib.sensors;
 
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -40,6 +42,8 @@ public class LimelightSensor {
     private final NetworkTableEntry m_area;
     private final NetworkTableEntry m_latency;
     private final NetworkTableEntry m_pythonLimelight;
+    private final NetworkTableEntry m_botPose;
+
 
     // Robot -> Camera
     private final NetworkTableEntry m_ledMode;
@@ -62,6 +66,7 @@ public class LimelightSensor {
         m_area = limelightTable.getEntry("ta");
         m_latency = limelightTable.getEntry("tl");
         m_pythonLimelight = limelightTable.getEntry("llpython");
+        m_botPose = limelightTable.getEntry("botpose");
 
         // Robot -> Camera
         m_ledMode = limelightTable.getEntry("ledMode");
@@ -103,6 +108,13 @@ public class LimelightSensor {
         return m_latency.getDouble(INVALID_VALUE);
     }
 
+    public Pose3d getRobotPose() {
+        double [] botPoseArray = m_botPose.getDoubleArray(new double[6]);
+        Rotation3d rotation3d = new Rotation3d(botPoseArray[3], botPoseArray[4], botPoseArray[5]);
+        Pose3d pose = new Pose3d(botPoseArray[0], botPoseArray[1], botPoseArray[2], rotation3d);
+        return pose;
+    }
+
     public Number[] getPythonData() {
         return m_pythonLimelight.getNumberArray(new Number[]{});
     }
@@ -126,7 +138,6 @@ public class LimelightSensor {
     public void setCamMode(CamMode camMode) {
         m_camMode.setDouble(camMode.m_val);
     }
-
 
     /**
      * Algorithm from https://docs.limelightvision.io/en/latest/cs_estimating_distance.html Estimates

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 
-public class VisionSubsystem implements Subsystem {
+public class PhotonVisionSubsystem implements Subsystem, Vision {
 
     // TODO get transform for real robot
     private static final Transform3d ROBOT_TO_CAMERA =
@@ -30,7 +30,7 @@ public class VisionSubsystem implements Subsystem {
 
     private PhotonPoseEstimator m_photonPoseEstimator;
 
-    public VisionSubsystem() {
+    public PhotonVisionSubsystem() {
         m_camera = new PhotonCamera(CAMERA_NAME);
 
         try {
@@ -41,6 +41,7 @@ public class VisionSubsystem implements Subsystem {
         }
     }
 
+    @Override
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
 
