@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class OnlyDockAndEngageCommandGroup extends SequentialCommandGroup {
 
-    public static final PathPlannerTrajectory ONLY_DOCK_AND_ENGAGE = PathPlanner.loadPath("OnlyDockAndEngage", new PathConstraints(4, 3));
+    public static final PathPlannerTrajectory ONLY_DOCK_AND_ENGAGE = PathPlanner.loadPath("OnlyDockandEngage", new PathConstraints(4, 3));
 
     public OnlyDockAndEngageCommandGroup(ChassisSubsystem chassis) {
         super(

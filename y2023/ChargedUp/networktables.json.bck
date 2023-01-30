@@ -10,10 +10,7 @@
   {
     "name": "/Preferences/Chassis.mm.kp",
     "type": "double",
-    "value": 0.87,
-    "name": "/Preferences/Chassis.mm.kp",
-    "type": "double",
-    "value": 0.0,
+    "value": 0.7,
     "properties": {
       "persistent": true
     }
@@ -38,7 +35,6 @@
     "name": "/Preferences/Chassis.mm.kff",
     "type": "double",
     "value": 0.1524,
-    "value": 0.25,
     "properties": {
       "persistent": true
     }
@@ -63,9 +59,6 @@
     "name": "/Preferences/Pivot Arm Allowable Error",
     "type": "double",
     "value": 0.0,
-    "name": "/Preferences/Gravity Offset",
-    "type": "double",
-    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -119,7 +112,15 @@
     }
   },
   {
-    "name": "/Preferences/Chassis.mm.kp",
+    "name": "/Preferences/Turret Angle Allowable Error",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm.mm.kp",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -127,7 +128,7 @@
     }
   },
   {
-    "name": "/Preferences/Chassis.mm.ki",
+    "name": "/Preferences/Arm.mm.ki",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -135,7 +136,7 @@
     }
   },
   {
-    "name": "/Preferences/Chassis.mm.kd",
+    "name": "/Preferences/Arm.mm.kd",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -143,7 +144,7 @@
     }
   },
   {
-    "name": "/Preferences/Chassis.mm.kff",
+    "name": "/Preferences/Arm.mm.kff",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -151,7 +152,7 @@
     }
   },
   {
-    "name": "/Preferences/Chassis.mm.max_velocity",
+    "name": "/Preferences/Arm.mm.max_velocity",
     "type": "double",
     "value": 0.0,
     "properties": {
@@ -159,25 +160,9 @@
     }
   },
   {
-    "name": "/Preferences/Chassis.mm.max_acceleration",
+    "name": "/Preferences/Arm.mm.max_acceleration",
     "type": "double",
     "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Pivot Arm Allowable Error",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Chassis speed for auto engage",
-    "type": "double",
-    "value": 0.1,
     "properties": {
       "persistent": true
     }
