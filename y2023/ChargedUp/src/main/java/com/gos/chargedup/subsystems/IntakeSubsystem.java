@@ -28,9 +28,17 @@ public class IntakeSubsystem extends SubsystemBase {
 
     }
 
+    public boolean isIntakeDown() {
+        return m_intakeSolenoidLeft.get();
+    }
+
     public void retract() {
         m_intakeSolenoidRight.set(false);
         m_intakeSolenoidLeft.set(false);
+    }
+
+    public double getHopperSpeed() {
+        return m_hopper.get();
     }
 
     //    in out stop

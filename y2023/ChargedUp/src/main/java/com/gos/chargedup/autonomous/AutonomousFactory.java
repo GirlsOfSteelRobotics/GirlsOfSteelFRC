@@ -46,6 +46,7 @@ public final class AutonomousFactory {
         m_twoPieceAuto = new TwoPieceAutoCommandGroup(chassis);
         m_autonomousModes.addOption("Two Piece", m_twoPieceAuto);
 
+        m_autonomousModes.addOption("Autonomous drive", new AutonomousDriveTimeCommand(chassis));
         SmartDashboard.putData(m_autonomousModes);
 
     }
