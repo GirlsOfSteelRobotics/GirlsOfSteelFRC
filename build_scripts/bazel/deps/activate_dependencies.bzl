@@ -6,7 +6,7 @@ load("@bazelrio//:deps.bzl", "setup_bazelrio_dependencies")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_pmd//pmd:toolchains.bzl", "rules_pmd_toolchains")
 load("@rules_python//python:pip.bzl", "pip_install", "pip_parse")
-load("//build_scripts/bazel/deps:versions.bzl", "PATHPLANNERLIB_VERSION", "PATHPLANNERLIB_VERSION_SHA", "PHOTONLIB_JSON_1_0_VERSION", "PHOTONLIB_JSON_1_0_VERSION_SHA", "SNOBOTSIM_SHA", "SNOBOTSIM_VERSION")
+load("//build_scripts/bazel/deps:versions.bzl", "PATHPLANNERLIB_VERSION", "PATHPLANNERLIB_VERSION_SHA", "PHOTONLIB_JSON_1_0_VERSION", "PHOTONLIB_JSON_1_0_VERSION_SHA", "SNOBOTSIM_VERSION", "SNOBOTSIM_VERSION_SHA")
 
 def activate_dependencies():
     """
@@ -35,7 +35,7 @@ def activate_dependencies():
     jvm_maven_import_external(
         name = "snobot_sim",
         artifact = "org.snobotv2:snobot_sim_java:{v}".format(v = SNOBOTSIM_VERSION),
-        artifact_sha256 = SNOBOTSIM_SHA,
+        artifact_sha256 = SNOBOTSIM_VERSION_SHA,
         server_urls = ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
     )
 

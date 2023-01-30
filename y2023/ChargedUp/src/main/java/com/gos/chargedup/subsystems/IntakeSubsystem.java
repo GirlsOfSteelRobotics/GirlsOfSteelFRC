@@ -41,10 +41,18 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeMotor.set(INTAKE_SPEED);
     }
 
+    public boolean isIntakeDown() {
+        return m_intakeSolenoidLeft.get();
+    }
+
     public void retract() {
         m_intakeSolenoidRight.set(false);
         m_intakeSolenoidLeft.set(false);
         m_intakeMotor.set(0);
+    }
+
+    public double getHopperSpeed() {
+        return m_hopper.get();
     }
 
     //    in out stop
