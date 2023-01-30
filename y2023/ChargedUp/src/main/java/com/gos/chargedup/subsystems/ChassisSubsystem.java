@@ -193,6 +193,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_simulator.update();
     }
 
+    public Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
+
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);

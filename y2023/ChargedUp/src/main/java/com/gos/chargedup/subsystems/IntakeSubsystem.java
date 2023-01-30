@@ -52,7 +52,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public double getHopperSpeed() {
-        return m_hopper.get();
+        return m_hopperMotor.get();
     }
 
     //    in out stop
