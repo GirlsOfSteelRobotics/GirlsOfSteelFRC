@@ -11,6 +11,9 @@
     "name": "/Preferences/Chassis.mm.kp",
     "type": "double",
     "value": 0.87,
+    "name": "/Preferences/Chassis.mm.kp",
+    "type": "double",
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -35,6 +38,7 @@
     "name": "/Preferences/Chassis.mm.kff",
     "type": "double",
     "value": 0.1524,
+    "value": 0.25,
     "properties": {
       "persistent": true
     }
