@@ -11,6 +11,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -37,8 +40,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final PidProperty m_pivotPID;
 
+    private final NetworkTableEntry m_lowerLimitSwitchEntry;
+    private final NetworkTableEntry m_upperLImitSwitchEntry;
+    private final NetworkTableEntry m_encoderDegEntry;
+
     public ArmSubsystem() {
-        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON);
         m_innerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON);
 
@@ -57,6 +64,12 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotPID = setupPidValues(m_pivotPIDController);
 
         m_pivotMotor.burnFlash();
+
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Subsystem");
+        m_lowerLimitSwitchEntry = loggingTable.getEntry("Arm Lower LS");
+        m_upperLImitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
+        m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
+
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -68,6 +81,14 @@ public class ArmSubsystem extends SubsystemBase {
             .addMaxVelocity(Units.inchesToMeters(0))
             .addMaxAcceleration(Units.inchesToMeters(0))
             .build();
+    }
+
+    @Override
+    public void periodic() {
+        m_pivotPID.updateIfChanged();
+        m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
+        m_upperLImitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
+        m_encoderDegEntry.setNumber(getArmAngleDeg());
     }
 
     public void pivotArmUp() {
@@ -121,7 +142,7 @@ public class ArmSubsystem extends SubsystemBase {
         return this.startEnd(this::pivotArmDown, this::pivotArmStop);
     }
 
-    public double getPosition() {
+    public double getArmAngleDeg() {
         return m_pivotMotorEncoder.getPosition();
     }
 
@@ -134,7 +155,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean pivotArmToAngle(double pivotAngleGoal) {
-        double error = getPosition() - pivotAngleGoal;
+        double error = getArmAngleDeg() - pivotAngleGoal;
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0);
         } else {
@@ -142,11 +163,6 @@ public class ArmSubsystem extends SubsystemBase {
         }
 
         return error <= ALLOWABLE_ERROR.getValue();
-    }
-
-    @Override
-    public void periodic() {
-        m_pivotPID.updateIfChanged();
     }
 
     public Command commandFullRetract() {

@@ -21,9 +21,11 @@ public final class Constants {
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
-    public static final int PIVOT_SPARK = 2;
-    public static final int TURRET_SPARK = 3;
     public static final int HOPPER_MOTOR = 11;
+    public static final int PIVOT_MOTOR = 2;
+    public static final int TURRET_MOTOR = 3;
+    public static final int INTAKE_MOTOR = 6;
+
 
     //DIO
     public static final int INTAKE_LOWER_LIMIT_SWITCH = 7;

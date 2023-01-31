@@ -139,7 +139,7 @@ public class RobotContainer {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
 
             builder.addDoubleProperty(
-                SmartDashboardNames.ARM_ANGLE, m_arm::getPosition, null);
+                SmartDashboardNames.ARM_ANGLE, m_arm::getArmAngleDeg, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.ARM_EXTENSION1, m_arm::isInnerPistonIn, null);
             builder.addBooleanProperty(
