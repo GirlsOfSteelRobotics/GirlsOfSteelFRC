@@ -30,7 +30,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public TurretSubsystem() {
 
-        m_turretMotor = new SimableCANSparkMax(Constants.TURRET_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
@@ -101,7 +101,6 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
-
 
 }
 

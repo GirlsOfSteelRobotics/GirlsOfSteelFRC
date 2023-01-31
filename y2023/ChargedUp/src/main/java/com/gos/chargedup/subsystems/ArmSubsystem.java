@@ -37,6 +37,16 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final PidProperty m_pivotPID;
 
+    private static final double CUBE_LOW_ANGLE = 15;
+    private static final double CONE_LOW_ANGLE = 15;
+    private static final double CUBE_MIDDLE_ANGLE = 30;
+    private static final double CONE_MIDDLE_ANGLE = 40;
+    private static final double CUBE_HIGH_ANGLE = 50;
+    private static final double CONE_HIGH_ANGLE = 60;
+
+    public static final double[] armLevel = {CUBE_LOW_ANGLE, CONE_LOW_ANGLE, CUBE_MIDDLE_ANGLE, CONE_MIDDLE_ANGLE, CUBE_HIGH_ANGLE, CONE_HIGH_ANGLE};
+
+
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON);
@@ -159,6 +169,22 @@ public class ArmSubsystem extends SubsystemBase {
 
     public Command commandOut() {
         return this. runOnce(this::out);
+    }
+
+    public int findNodeLevel() {
+        double armAngle = getPosition();
+        double error = -1;
+        double currentMinError = 100;
+        int currentBestArrayPos = -1;
+        for (int i = 0; i < 6; i++) {
+            error = Math.abs(armAngle - armLevel[i]);
+            if (error <= ALLOWABLE_ERROR.getValue() && error < currentMinError) {
+                currentMinError = error;
+                currentBestArrayPos = i;
+            }
+        }
+
+        return currentBestArrayPos;
     }
 
 

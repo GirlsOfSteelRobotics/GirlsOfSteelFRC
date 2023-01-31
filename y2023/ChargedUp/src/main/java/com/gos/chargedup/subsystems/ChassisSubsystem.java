@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.FieldConstants;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -13,6 +14,7 @@ import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
@@ -155,6 +157,27 @@ public class ChassisSubsystem extends SubsystemBase {
 
         }
 
+    }
+
+    public void nodeCount(FieldConstants fieldConstants) {
+        for (int i = 0; i < FieldConstants.NODE_ROW_COUNT; i++) {
+            FieldConstants.LOW_TRANSLATIONS[i] = new Translation2d(FieldConstants.LOW_X, FieldConstants.NODE_FIRST_Y + FieldConstants.NODE_SEPARATION_Y * i);
+        }
+    }
+
+    public Translation2d findingClosestNode() {
+        final Pose2d currentRobotPosition = getPose();
+        double minDist = Integer.MAX_VALUE;
+        Translation2d closestNode = FieldConstants.LOW_TRANSLATIONS[0];
+        for (int i = 0; i < FieldConstants.NODE_ROW_COUNT; i++) {
+            double xDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getX() - currentRobotPosition.getX()), 2);
+            double yDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getY() - currentRobotPosition.getY()), 2);
+            if(Math.sqrt(xDistance + yDistance) < minDist) {
+                minDist = Math.sqrt(xDistance + yDistance);
+                closestNode = FieldConstants.LOW_TRANSLATIONS[i];
+            }
+        }
+        return closestNode;
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
