@@ -1,25 +1,56 @@
 {
-  "HALProvider": {
-    "Addressable LEDs": {
-      "0": {
-        "columns": 30
-      },
-      "window": {
-        "visible": true
-      }
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Automated Turret - 2": "Command",
+      "/SmartDashboard/Automated Turret - 6": "Command",
+      "/SmartDashboard/Automated Turret - 8": "Command",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/FunctionalCommand": "Command",
+      "/SmartDashboard/PPRamseteCommand_field": "Field2d",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/Test Line": "Command",
+      "/SmartDashboard/Test Mild Curve": "Command",
+      "/SmartDashboard/Test S Curve": "Command"
     },
-    "Other Devices": {
-      "SPARK MAX [4]": {
-        "header": {
-          "open": true
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/FunctionalCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SendableChooser[0]": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test Line": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test Mild Curve": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test S Curve": {
+        "window": {
+          "visible": true
         }
       }
     }
   },
-  "NTProvider": {
-    "types": {
-      "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+  "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
     }
   }
 }

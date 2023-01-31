@@ -11,6 +11,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,24 +21,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.2;
-
-    public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Gravity Offset", 1);
-
+    public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
     private final SimableCANSparkMax m_turretMotor;
-
     private final RelativeEncoder m_turretEncoder;
-
     private final PidProperty m_turretPID;
     private final SparkMaxPIDController m_turretPidController;
 
-    //left relative to intake limit switch
-    private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_LIMIT_SWITCH);
-    private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_LIMIT_SWITCH);
-    //right relative to intake limit switch
-    private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_LIMIT_SWITCH);
+    private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); //left ls relative to intake
+    private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_TURRET_LIMIT_SWITCH);
+    private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_TURRET_LIMIT_SWITCH); //right ls relative to intake
+
+    private final NetworkTableEntry m_leftLimitSwitchEntry;
+    private final NetworkTableEntry m_rightLimitSwitchEntry;
+    private final NetworkTableEntry m_intakeLimitSwitchEntry;
+    private final NetworkTableEntry m_encoderDegEntry;
+
 
     public TurretSubsystem() {
-
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -44,6 +46,15 @@ public class TurretSubsystem extends SubsystemBase {
 
         m_turretPidController = m_turretMotor.getPIDController();
         m_turretPID = setupPidValues(m_turretPidController);
+
+        m_turretMotor.burnFlash();
+
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Turret Subsystem");
+        m_leftLimitSwitchEntry = loggingTable.getEntry("Turret Left LS");
+        m_intakeLimitSwitchEntry = loggingTable.getEntry("Turret Intake LS");
+        m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
+        m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
+
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -61,6 +72,10 @@ public class TurretSubsystem extends SubsystemBase {
     public void periodic() {
         m_turretPID.updateIfChanged();
 
+        m_leftLimitSwitchEntry.setBoolean(leftLimitSwitchPressed());
+        m_intakeLimitSwitchEntry.setBoolean(intakeLimitSwitchPressed());
+        m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
+        m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
     }
 
 
@@ -97,18 +112,16 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public double getTurretAngleDegreesNeoEncoder() {
-
         return m_turretEncoder.getPosition();
     }
 
-
     public boolean turretPID(double goalAngle) {
-
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
 
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
+
 
 }
 
