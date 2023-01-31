@@ -12,8 +12,15 @@ import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 
+//test paths
+import com.gos.chargedup.commands.testing.TestLineCommandGroup;
+import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
+import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
+
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
+import com.pathplanner.lib.server.PathPlannerServer;
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -65,17 +72,24 @@ public class RobotContainer {
 
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem);
 
+
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
+            DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
+        PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
+        SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
         SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
         SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
 
-    }
+        SmartDashboard.putData("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
+        SmartDashboard.putData("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
+        SmartDashboard.putData("Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
 
+    }
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the

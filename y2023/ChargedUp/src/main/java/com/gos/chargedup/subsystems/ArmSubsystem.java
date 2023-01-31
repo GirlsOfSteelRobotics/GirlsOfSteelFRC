@@ -60,7 +60,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        return new RevPidPropertyBuilder("Collector", false, pidController, 0)
+        return new RevPidPropertyBuilder("Arm", false, pidController, 0)
             .addP(0)
             .addI(0)
             .addD(0)
