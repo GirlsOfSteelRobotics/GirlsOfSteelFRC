@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.frc2023.util.Alert;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -43,6 +44,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_lowerLimitSwitchEntry;
     private final NetworkTableEntry m_upperLImitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
+
+    private final Alert m_pivotUnpluggedAlert;
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -70,6 +73,8 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLImitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
 
+        m_pivotUnpluggedAlert = new Alert("Arm", "Pivot Motor Unplugged", Alert.AlertType.ERROR);
+
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -89,6 +94,8 @@ public class ArmSubsystem extends SubsystemBase {
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLImitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
+
+        m_pivotUnpluggedAlert.set();
     }
 
     public void pivotArmUp() {
@@ -132,6 +139,10 @@ public class ArmSubsystem extends SubsystemBase {
         m_outerPiston.set(false);
         m_innerPiston.set(true);
         System.out.println("out");
+    }
+
+    public boolean isPivotMotorUnplugged() {
+        return m_pivotMotorEncoder.
     }
 
     public Command commandPivotArmUp() {
