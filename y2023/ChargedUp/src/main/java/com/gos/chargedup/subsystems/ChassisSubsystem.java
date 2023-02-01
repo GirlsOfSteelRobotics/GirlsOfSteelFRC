@@ -5,23 +5,32 @@ import com.gos.chargedup.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
@@ -79,6 +88,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
 
+    private final NetworkTableEntry m_gyroAngleDegEntry;
 
 
     public ChassisSubsystem() {
@@ -138,6 +148,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_vision = new PhotonVisionSubsystem();
         // m_vision = new LimelightVisionSubsystem();
 
+        NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
+        m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
+
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
                 DifferentialDrivetrainSim.KitbotMotor.kDoubleNEOPerSide,
@@ -172,7 +185,16 @@ public class ChassisSubsystem extends SubsystemBase {
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
+    }
 
+    public CommandBase commandChassisVelocity() {
+        return this.runEnd(
+            () -> smartVelocityControl(Units.feetToMeters(5), Units.feetToMeters(5)),
+            this::stop);
+    }
+
+    private void stop() {
+        setArcadeDrive(0, 0);
     }
 
     public void trapezoidMotionControl(double leftDistance, double rightDistance) {
@@ -194,6 +216,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_gyro.getPitch();
     }
 
+    public double getYaw() {
+        return m_gyro.getYaw();
+    }
+
     public void autoEngage() {
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
@@ -205,7 +231,6 @@ public class ChassisSubsystem extends SubsystemBase {
             setArcadeDrive(AUTO_ENGAGE_SPEED.getValue(), 0);
         }
     }
-
 
     public Command createAutoEngageCommand() {
         return this.run(this::autoEngage);
@@ -251,5 +276,31 @@ public class ChassisSubsystem extends SubsystemBase {
             m_field.getObject("Camera Estimated Position").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
     }
-}
 
+    public void resetOdometry(Pose2d pose2d) {
+        m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
+        m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
+        System.out.println("Reset Odometry was called");
+    }
+
+    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> {
+                // Reset odometry for the first path you run during auto
+                if (isFirstPath) {
+                    this.resetOdometry(traj.getInitialPose());
+                }
+            }).repeatedly().withTimeout(1),
+            new PPRamseteCommand(
+                traj,
+                this::getPose, // Pose supplier
+                new RamseteController(),
+                K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
+                this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
+                true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+                this // Requires this drive subsystem
+            ));
+
+    }
+
+}
