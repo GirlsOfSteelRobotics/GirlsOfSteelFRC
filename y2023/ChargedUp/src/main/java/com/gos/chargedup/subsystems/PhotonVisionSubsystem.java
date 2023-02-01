@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
@@ -21,7 +22,7 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
     // TODO get transform for real robot
     private static final Transform3d ROBOT_TO_CAMERA =
         new Transform3d(
-            new Translation3d(0.5, 0.0, 0.5),
+            new Translation3d(0.5, 0.0, Units.inchesToMeters(28.5)),
             new Rotation3d(0, 0, 0));
 
     private static final String CAMERA_NAME = "OV5647";
@@ -52,12 +53,7 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         }
         //else{ System.out.println("No target found");}
 
-
         return estimate;
     }
-
-
-
-
 }
 

@@ -6,6 +6,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class LimelightSensor {
 
@@ -42,7 +43,9 @@ public class LimelightSensor {
     private final NetworkTableEntry m_area;
     private final NetworkTableEntry m_latency;
     private final NetworkTableEntry m_pythonLimelight;
-    private final NetworkTableEntry m_botPose;
+    private final NetworkTableEntry m_botPoseWpiBlue;
+    private final NetworkTableEntry m_botPoseWpiRed;
+
 
 
     // Robot -> Camera
@@ -66,7 +69,8 @@ public class LimelightSensor {
         m_area = limelightTable.getEntry("ta");
         m_latency = limelightTable.getEntry("tl");
         m_pythonLimelight = limelightTable.getEntry("llpython");
-        m_botPose = limelightTable.getEntry("botpose");
+        m_botPoseWpiBlue = limelightTable.getEntry("botpose_wpiblue");
+        m_botPoseWpiRed = limelightTable.getEntry("botpose_wpired");
 
         // Robot -> Camera
         m_ledMode = limelightTable.getEntry("ledMode");
@@ -109,10 +113,16 @@ public class LimelightSensor {
     }
 
     public Pose3d getRobotPose() {
-        double [] botPoseArray = m_botPose.getDoubleArray(new double[6]);
-        Rotation3d rotation3d = new Rotation3d(botPoseArray[3], botPoseArray[4], botPoseArray[5]);
-        Pose3d pose = new Pose3d(botPoseArray[0], botPoseArray[1], botPoseArray[2], rotation3d);
-        return pose;
+        NetworkTableEntry botPose;
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
+            botPose = m_botPoseWpiBlue;
+        } else {
+            botPose = m_botPoseWpiRed;
+        }
+
+        double [] botPoseArray = botPose.getDoubleArray(new double[6]);
+        Rotation3d rotation3d = new Rotation3d(botPoseArray[3], Math.toRadians(botPoseArray[4]), Math.toRadians(botPoseArray[5]));
+        return new Pose3d(botPoseArray[0], botPoseArray[1], botPoseArray[2], rotation3d);
     }
 
     public Number[] getPythonData() {
