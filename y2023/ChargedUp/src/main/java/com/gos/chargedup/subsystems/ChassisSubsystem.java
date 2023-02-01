@@ -182,6 +182,28 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
     }
 
+    @Override
+    public void periodic() {
+        updateOdometry();
+
+        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
+        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+
+        m_leftPIDProperties.updateIfChanged();
+        m_rightPIDProperties.updateIfChanged();
+
+        m_gyroAngleDegEntry.setNumber(getYaw());
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_simulator.update();
+    }
+
+    public Pose2d getPose() {
+        return m_poseEstimator.getEstimatedPosition();
+    }
+
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
         m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
@@ -236,30 +258,8 @@ public class ChassisSubsystem extends SubsystemBase {
         return this.run(this::autoEngage);
     }
 
-    @Override
-    public void periodic() {
-        updateOdometryPhotonVision();
-
-        m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
-        m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
-
-        m_leftPIDProperties.updateIfChanged();
-        m_rightPIDProperties.updateIfChanged();
-
-    }
-
-
-    public Pose2d getPose() {
-        return m_poseEstimator.getEstimatedPosition();
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        m_simulator.update();
-    }
-
     //NEW ODOMETRY
-    public void updateOdometryPhotonVision() {
+    public void updateOdometry() {
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         m_poseEstimator.update(
             m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
