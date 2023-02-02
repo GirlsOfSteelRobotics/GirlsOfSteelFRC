@@ -113,7 +113,7 @@ public class LimelightSensor {
     }
 
     public Pose3d getRobotPose() {
-        NetworkTableEntry botPose;
+        NetworkTableEntry botPose; // NOPMD(CloseResource)
         if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
             botPose = m_botPoseWpiBlue;
         } else {

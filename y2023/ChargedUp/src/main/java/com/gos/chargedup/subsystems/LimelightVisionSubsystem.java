@@ -9,7 +9,7 @@ import org.photonvision.EstimatedRobotPose;
 
 import java.util.Optional;
 
-public class LimelightVisionSubsystem extends SubsystemBase implements Vision{
+public class LimelightVisionSubsystem extends SubsystemBase implements Vision {
     private final LimelightSensor m_limelight;
 
     private static final String LIMELIGHT_NAME = "limelight";
@@ -18,6 +18,7 @@ public class LimelightVisionSubsystem extends SubsystemBase implements Vision{
         m_limelight = new LimelightSensor(LIMELIGHT_NAME);
     }
 
+    @Override
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
         if (!m_limelight.isVisible()) {
             return Optional.empty();
