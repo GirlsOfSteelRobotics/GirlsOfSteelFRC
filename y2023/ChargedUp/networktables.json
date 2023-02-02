@@ -166,5 +166,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/JoystickTurnDamping",
+    "type": "double",
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/JoysticTurnInPlaceThreshold",
+    "type": "double",
+    "value": 0.05,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
