@@ -14,7 +14,6 @@ def strip_imports_and_append(of, filename):
 
 
 def amalgamate_pipeline():
-
     this_dir = r"C:\Users\PJ\Documents\GitHub\gos_monorepo\y2022\CargoDetection\python"
     pipelines_dir = os.path.join(this_dir, "lib", "pipelines")
     game_dir = os.path.join(this_dir, "rapid_react", "cargo")

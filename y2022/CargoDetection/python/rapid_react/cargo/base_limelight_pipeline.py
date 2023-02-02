@@ -18,7 +18,6 @@ def get_active_pipeline(active_pipeline):
 
 
 def runPipeline(image, ll_robot):
-
     ll_python = []
 
     if len(ll_robot) >= 1:
