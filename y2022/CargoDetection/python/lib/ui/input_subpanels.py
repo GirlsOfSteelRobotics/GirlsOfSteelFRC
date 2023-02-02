@@ -29,7 +29,6 @@ class DirectoryImageProviderWidget(QWidget):
         self.load_directory(directory)
 
     def load_directory(self, directory):
-
         self.selected_directory.setText(directory)
         self.image_list.clear()
 
@@ -84,7 +83,6 @@ class StreamImageProviderWidget(QWidget):
             self.running = True
 
             while self.running:
-
                 _, frame = self.cap.read()
 
                 try:

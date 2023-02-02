@@ -5,7 +5,6 @@ from lib.pipelines.pipeline_params import CircleDetectionParams
 
 
 def find_filtered_hough_circles(img_threshold, contours, circle_params: CircleDetectionParams):
-
     filtered_threshold_image = np.zeros(img_threshold.shape, dtype=np.uint8)
     cv2.drawContours(filtered_threshold_image, contours, -1, 255, thickness=cv2.FILLED)
 
