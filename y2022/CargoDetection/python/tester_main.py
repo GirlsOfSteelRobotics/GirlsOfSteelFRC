@@ -48,7 +48,6 @@ class Window(QMainWindow):
         self.params_settings.set_params(params)
 
     def update_settings(self):
-
         try:
             params = get_active_pipeline(self.active_threshold_num).params
             self.params_settings.ui_to_params(params)

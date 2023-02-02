@@ -10,7 +10,6 @@ from libraries.ShuffleboardGenerator.lib.template_helpers import (
 
 class WidgetGenerator:
     def __init__(self, template_dir, project_dir, overall_package, widget_config):
-
         self.project_package_name = overall_package
         self.widget_config = widget_config
         self.template_dir = template_dir
@@ -59,7 +58,6 @@ class WidgetGenerator:
         return load_template(self.template_dir, template_file)
 
     def dump_single_components(self):
-
         data_template = self._load_template("dashboard_gen/widget/data_template.txt")
         data_type_template = self._load_template("dashboard_gen/widget/data_type_template.txt")
 
@@ -78,7 +76,6 @@ class WidgetGenerator:
             open(data_type_path, "w").write(data_type_dump)
 
     def dump_widget(self):
-
         kwargs = self.default_kwargs.copy()
         template_output = self._load_template("dashboard_gen/widget/widget_template.txt").render(
             **kwargs
@@ -113,7 +110,6 @@ class WidgetGenerator:
     ########################
 
     def maybe_dump_fxml(self, force):
-
         snake_name = camel_to_snake(self.widget_config["table"])
 
         controller_file = os.path.join(self.widget_resource_dir, snake_name + ".fxml")
@@ -200,7 +196,6 @@ class TopLevelGenerator:
         return load_template(self.template_dir, template_file)
 
     def dump_plugin(self):
-
         template_output = self._load_template("dashboard_gen/plugin_template.txt").render(
             overall_config=self.overall_config
         )
@@ -211,7 +206,6 @@ class TopLevelGenerator:
         open(output_file, "w").write(template_output)
 
     def maybe_dump_utils(self, force):
-
         template_output = self._load_template("java/Utils.java.txt").render(
             overall_config=self.overall_config
         )
@@ -223,7 +217,6 @@ class TopLevelGenerator:
 
 
 def maybe_add_standalone_buttons(widget_config):
-
     boolean_keys = [f"DIGIT{i}" for i in range(1, 10)] + ["DIGIT0"]
     double_keys = [
         ("Q", "A"),

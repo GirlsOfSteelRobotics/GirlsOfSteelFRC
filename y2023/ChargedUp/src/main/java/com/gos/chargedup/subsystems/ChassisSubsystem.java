@@ -229,9 +229,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.arcadeDrive(speed, steer);
     }
 
-    public void setCurvatureDrive(double speed, double steer) {
-        m_drive.curvatureDrive(speed, steer, speed < 0.05);
-
+    public void setCurvatureDrive(double speed, double steer, boolean allowTurnInPlace) {
+        m_drive.curvatureDrive(speed, steer, allowTurnInPlace);
     }
 
     public double getPitch() {

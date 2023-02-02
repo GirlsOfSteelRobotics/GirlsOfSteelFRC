@@ -33,7 +33,6 @@ def package_to_dir(package_name):
 
 
 def _getter_name(variable):
-
     if variable["type"] == "boolean":
         return "is"
 
@@ -55,7 +54,6 @@ def _default_array(variable):
 
 
 def __default_value_for_type(the_type):
-
     default_lookup = {}
     default_lookup["Double"] = "0.0"
     default_lookup["double"] = "0.0"
@@ -76,7 +74,6 @@ def _default_value_lookup(variable):
 
 
 def _on_key_released(child, entry, array_index=None):
-
     template_file = None
 
     if entry["type"] == "double":
@@ -122,7 +119,6 @@ def _get_keys(child, entry, array_index=None):
 
 
 def _on_key_pressed(child, entry, array_index=None):
-
     template_file = None
 
     if entry["type"] == "double":
@@ -170,7 +166,6 @@ def _add_template_functions(template):
 
 
 def load_template(template_dir, template_name):
-
     template_path = os.path.join(template_dir, template_name)
 
     with open(template_path, "r") as f:

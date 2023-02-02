@@ -59,7 +59,6 @@ def update_vendor_deps(ignore_cache=True, auto_commit=True):
     for root, dirs, files in walk_with_blacklist("."):
         if root.endswith("vendordeps"):
             for vendor_file in files:
-
                 if vendor_file in ["WPILibNewCommands.json"]:
                     continue
                 elif vendor_file in vendor_replacements:
