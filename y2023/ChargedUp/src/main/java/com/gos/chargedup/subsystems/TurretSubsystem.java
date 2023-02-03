@@ -17,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.frc2023.util.Alert;
 
 public class TurretSubsystem extends SubsystemBase {
 
@@ -36,6 +37,8 @@ public class TurretSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_intakeLimitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
 
+    private final Alert m_turretMotorErrorAlert;
+
 
     public TurretSubsystem() {
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -54,6 +57,8 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry = loggingTable.getEntry("Turret Intake LS");
         m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
+
+        m_turretMotorErrorAlert = new Alert("Turret", "Turret Motor Error", Alert.AlertType.ERROR);
 
     }
 
@@ -76,8 +81,13 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry.setBoolean(intakeLimitSwitchPressed());
         m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
         m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
+
+        m_turretMotorErrorAlert.set(turretMotorError());
     }
 
+    public boolean turretMotorError() {
+        return m_turretMotor.getFaults() != 0;
+    }
 
     public void moveTurretClockwise() {
         m_turretMotor.set(TURRET_SPEED);

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.frc2023.util.Alert;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -17,6 +18,10 @@ public class IntakeSubsystem extends SubsystemBase {
     private final Solenoid m_intakeSolenoidRight;
     private final SimableCANSparkMax m_hopperMotor;
     private final SimableCANSparkMax m_intakeMotor;
+
+    private final Alert m_intakeMotorErrorAlert;
+
+    private final Alert m_hopperMotorErrorAlert;
 
 
     public IntakeSubsystem() {
@@ -33,6 +38,27 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_hopperMotor.burnFlash();
         m_intakeMotor.burnFlash();
+
+        m_intakeMotorErrorAlert = new Alert("Intake", "Intake Motor Error", Alert.AlertType.ERROR);
+
+        m_hopperMotorErrorAlert = new Alert("Hopper", "Hopper Motor Error", Alert.AlertType.ERROR);
+
+    }
+
+    @Override
+    public void periodic() {
+        m_intakeMotorErrorAlert.set(intakeMotorError());
+
+        m_hopperMotorErrorAlert.set(hopperMotorError());
+    }
+
+    public boolean intakeMotorError() {
+        return m_intakeMotor.getFaults() != 0;
+
+    }
+
+    public boolean hopperMotorError() {
+        return m_hopperMotor.getFaults() != 0;
     }
 
     public void extend() {

@@ -45,7 +45,7 @@ public class ArmSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_upperLImitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
 
-    private final Alert m_pivotUnpluggedAlert;
+    private final Alert m_pivotErrorAlert;
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -73,7 +73,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLImitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
 
-        m_pivotUnpluggedAlert = new Alert("Arm", "Pivot Motor Unplugged", Alert.AlertType.ERROR);
+        m_pivotErrorAlert = new Alert("Arm", "Pivot Motor Error", Alert.AlertType.ERROR);
 
     }
 
@@ -95,7 +95,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLImitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
 
-        m_pivotUnpluggedAlert.set();
+        m_pivotErrorAlert.set(pivotMotorError());
     }
 
     public void pivotArmUp() {
@@ -141,8 +141,8 @@ public class ArmSubsystem extends SubsystemBase {
         System.out.println("out");
     }
 
-    public boolean isPivotMotorUnplugged() {
-        return m_pivotMotorEncoder.
+    public boolean pivotMotorError() {
+        return m_pivotMotor.getFaults() != 0;
     }
 
     public Command commandPivotArmUp() {

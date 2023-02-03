@@ -19,14 +19,12 @@ public class ClawSubsystem extends SubsystemBase {
     }
 
     //intake in
-
     public void moveClawIntakeIn() {
         m_rightIntake.set(true);
         m_leftIntake.set(true);
     }
 
     //intake out
-
     public void moveClawIntakeOut() {
         m_rightIntake.set(false);
         m_leftIntake.set(false);

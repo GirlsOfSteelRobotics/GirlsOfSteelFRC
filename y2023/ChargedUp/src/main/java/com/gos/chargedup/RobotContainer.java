@@ -9,24 +9,20 @@ package com.gos.chargedup;
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
-import com.gos.chargedup.subsystems.ArmSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
-
-//test paths
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
-
+import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
+import com.gos.chargedup.subsystems.IntakeSubsystem;
+import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
-import com.gos.chargedup.subsystems.LEDManagerSubsystem;
-
-import com.gos.chargedup.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;

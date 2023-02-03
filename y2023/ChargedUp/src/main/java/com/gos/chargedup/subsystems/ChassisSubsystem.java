@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.frc2023.util.Alert;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -90,6 +91,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
 
+    private final Alert m_leaderLeftMotorErrorAlert;
+
+    private final Alert m_followerLeftMotorErrorAlert;
+
+    private final Alert m_leaderRightMotorErrorAlert;
+
+    private final Alert m_followerRightMotorErrorAlert;
 
     public ChassisSubsystem() {
 
@@ -150,6 +158,14 @@ public class ChassisSubsystem extends SubsystemBase {
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
 
+        m_leaderLeftMotorErrorAlert = new Alert("Chassis", "Chassis Leader Left Motor Error", Alert.AlertType.ERROR);
+
+        m_followerLeftMotorErrorAlert = new Alert("Chassis", "Chassis Follower Left Motor Error", Alert.AlertType.ERROR);
+
+        m_leaderRightMotorErrorAlert = new Alert("Chassis", "Chassis Leader Right Motor Error", Alert.AlertType.ERROR);
+
+        m_followerRightMotorErrorAlert = new Alert("Chassis", "Chassis Follower Right Motor Error", Alert.AlertType.ERROR);
+
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
                 DifferentialDrivetrainSim.KitbotMotor.kDoubleNEOPerSide,
@@ -192,6 +208,30 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
+
+        m_leaderLeftMotorErrorAlert.set((leaderLeftMotorError()));
+
+        m_followerLeftMotorErrorAlert.set(followerLeftMotorError());
+
+        m_leaderRightMotorErrorAlert.set(leaderRightMotorError());
+
+        m_followerRightMotorErrorAlert.set(followerRightMotorError());
+    }
+
+    public boolean leaderLeftMotorError() {
+        return m_leaderLeft.getFaults() != 0;
+    }
+
+    public boolean followerLeftMotorError() {
+        return m_followerLeft.getFaults() != 0;
+    }
+
+    public boolean leaderRightMotorError() {
+        return m_leaderRight.getFaults() != 0;
+    }
+
+    public boolean followerRightMotorError() {
+        return m_followerRight.getFaults() != 0;
     }
 
     @Override

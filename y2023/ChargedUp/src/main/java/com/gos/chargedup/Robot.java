@@ -5,9 +5,11 @@
 
 package com.gos.chargedup;
 
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.littletonrobotics.frc2023.util.Alert;
 
 
 /**
@@ -21,6 +23,20 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
+
+    private final PneumaticHub m_pneumaticHub = new PneumaticHub();
+
+    private final Alert m_rightClawPistonAlert = new Alert("Claw", "Right Solenoid Error", Alert.AlertType.ERROR);
+
+    private final Alert m_leftClawPistonAlert = new Alert("Claw", "Left Solenoid Error", Alert.AlertType.ERROR);
+
+    private final Alert m_rightIntakePistonAlert = new Alert("Intake", "Right Intake Piston Error", Alert.AlertType.ERROR);
+
+    private final Alert m_leftIntakePistonAlert = new Alert("Intake", "Left Intake Piston Error", Alert.AlertType.ERROR);
+
+    private final Alert m_innerArmAlert = new Alert("Arm", "Inner Arm Error", Alert.AlertType.ERROR);
+
+    private final Alert m_outerArmAlert = new Alert("Arm", "Outer Arm Error", Alert.AlertType.ERROR);
 
 
     /**
@@ -49,6 +65,18 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        m_leftClawPistonAlert.set(m_pneumaticHub.getFaults().Channel1Fault);
+
+        m_rightClawPistonAlert.set(m_pneumaticHub.getFaults().Channel0Fault);
+
+        m_leftIntakePistonAlert.set(m_pneumaticHub.getFaults().Channel3Fault);
+
+        m_rightIntakePistonAlert.set(m_pneumaticHub.getFaults().Channel5Fault);
+
+        m_innerArmAlert.set(m_pneumaticHub.getFaults().Channel2Fault);
+
+        m_outerArmAlert.set(m_pneumaticHub.getFaults().Channel7Fault);
+
     }
 
 
