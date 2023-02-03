@@ -85,7 +85,7 @@ public class RobotContainer {
         SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
         SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
         SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
-        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_chassisSubsystem, m_arm, m_turret));
+        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_chassisSubsystem, m_arm, m_turret, m_intake));
 
         SmartDashboard.putData("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
         SmartDashboard.putData("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
