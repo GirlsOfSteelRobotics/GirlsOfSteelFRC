@@ -19,7 +19,7 @@ import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
-import com.pathplanner.lib.server.PathPlannerServer;
+//import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj.RobotBase;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 
 import com.gos.chargedup.subsystems.IntakeSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -72,12 +74,23 @@ public class RobotContainer {
 
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem);
 
+        ShuffleboardTab testCommands = Shuffleboard.getTab("test commands");
+        testCommands.add("Move Turret Clockwise", m_turret.commandMoveTurretClockwise());
+        testCommands.add("Move Turret Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
+        testCommands.add("Turret PID - 0 degrees", m_turret.commandTurretPID(0));
+        testCommands.add("Turret PID - 90 degrees", m_turret.commandTurretPID(90));
+        testCommands.add("Turret PID - 180 degrees", m_turret.commandTurretPID(180));
+        testCommands.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
+        testCommands.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
+        testCommands.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+
+
 
         if (RobotBase.isSimulation()) {
             DriverStationSim.setEnabled(true);
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
-        PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
+        // PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
         SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());

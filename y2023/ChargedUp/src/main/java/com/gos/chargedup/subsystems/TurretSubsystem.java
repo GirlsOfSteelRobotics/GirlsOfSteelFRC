@@ -10,18 +10,33 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+//import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.2;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
+    private static final double GEARING = 252.0;
+    private static final double J_KG_METERS_SQUARED = 1;
+    private static final double TURRET_LENGTH_METERS = Units.inchesToMeters(7);
+    private static final double MIN_ANGLE_RADS = 0;
+    private static final double MAX_ANGLE_RADS = Math.PI / 2;
+    private static final double TURRET_MASS_KG = Units.lbsToKilograms(5);
+    private static final boolean SIMULATE_GRAVITY = true;
+    private SingleJointedArmSimWrapper m_turretSimulator;
     private final SimableCANSparkMax m_turretMotor;
     private final RelativeEncoder m_turretEncoder;
     private final PidProperty m_turretPID;
@@ -55,6 +70,12 @@ public class TurretSubsystem extends SubsystemBase {
         m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
 
+        if (RobotBase.isSimulation()) {
+            SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
+                TURRET_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, TURRET_MASS_KG, SIMULATE_GRAVITY);
+            m_turretSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_turretMotor),
+                RevEncoderSimWrapper.create(m_turretMotor), true);
+        }
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -103,13 +124,18 @@ public class TurretSubsystem extends SubsystemBase {
         return !m_rightLimitSwitch.get();
     }
 
-    public Command commandMoveTurretClockwise() {
+    public CommandBase commandMoveTurretClockwise() {
         return this.startEnd(this::moveTurretClockwise, this::stopTurret);
     }
 
-    public Command commandMoveTurretCounterClockwise() {
+    public CommandBase commandMoveTurretCounterClockwise() {
         return this.startEnd(this::commandMoveTurretCounterClockwise, this::stopTurret);
     }
+
+    public CommandBase commandTurretPID(double angle) {
+        return this.startEnd(() -> turretPID(angle), this::stopTurret);
+    }
+
 
     public double getTurretAngleDegreesNeoEncoder() {
         return m_turretEncoder.getPosition();
@@ -121,7 +147,9 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
-
+    public void simulationPeriodic() {
+        m_turretSimulator.update();
+    }
 
 }
 

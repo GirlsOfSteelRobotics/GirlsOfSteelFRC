@@ -10,15 +10,22 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -43,6 +50,14 @@ public class ArmSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_lowerLimitSwitchEntry;
     private final NetworkTableEntry m_upperLImitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
+    private static final double GEARING =  252.0;
+    private static final double J_KG_METERS_SQUARED = 1;
+    private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
+    private static final double MIN_ANGLE_RADS = 0;
+    private static final double MAX_ANGLE_RADS = Math.PI / 2;
+    private static final double ARM_MASS_KG = Units.lbsToKilograms(5);
+    private static final boolean SIMULATE_GRAVITY = true;
+    private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -70,6 +85,12 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLImitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
 
+        if (RobotBase.isSimulation()) {
+            SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
+                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
+            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
+                RevEncoderSimWrapper.create(m_pivotMotor), true);
+        }
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -134,12 +155,15 @@ public class ArmSubsystem extends SubsystemBase {
         System.out.println("out");
     }
 
-    public Command commandPivotArmUp() {
+    public CommandBase commandPivotArmUp() {
         return this.startEnd(this::pivotArmUp, this::pivotArmStop);
     }
 
-    public Command commandPivotArmDown() {
+    public CommandBase commandPivotArmDown() {
         return this.startEnd(this::pivotArmDown, this::pivotArmStop);
+    }
+    public CommandBase commandPivotArmToAngle(double angle) {
+        return this.startEnd(() -> pivotArmToAngle(angle), this::pivotArmStop);
     }
 
     public double getArmAngleDeg() {
@@ -177,6 +201,10 @@ public class ArmSubsystem extends SubsystemBase {
         return this. runOnce(this::out);
     }
 
+
+    public void simulationPeriodic() {
+        m_pivotSimulator.update();
+    }
 
 }
 
