@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
@@ -21,7 +22,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.littletonrobotics.frc2023.util.Alert;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -47,7 +47,7 @@ public class ArmSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_upperLImitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
 
-    private final Alert m_pivotErrorAlert;
+    private final SparkMaxAlerts m_pivotErrorAlert;
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -75,8 +75,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLImitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
 
-        m_pivotErrorAlert = new Alert("Arm", "Pivot Motor Error", Alert.AlertType.ERROR);
-
+        m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -97,7 +96,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLImitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
 
-        m_pivotErrorAlert.set(pivotMotorError());
+        m_pivotErrorAlert.checkAlerts();
     }
 
     public void pivotArmUp() {

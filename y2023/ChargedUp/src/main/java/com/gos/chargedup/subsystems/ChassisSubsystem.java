@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
@@ -33,7 +34,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.littletonrobotics.frc2023.util.Alert;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -92,13 +92,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
 
-    private final Alert m_leaderLeftMotorErrorAlert;
+    private final SparkMaxAlerts m_leaderLeftMotorErrorAlert;
 
-    private final Alert m_followerLeftMotorErrorAlert;
+    private final SparkMaxAlerts m_followerLeftMotorErrorAlert;
 
-    private final Alert m_leaderRightMotorErrorAlert;
+    private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
 
-    private final Alert m_followerRightMotorErrorAlert;
+    private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
     public ChassisSubsystem() {
 
@@ -159,13 +159,10 @@ public class ChassisSubsystem extends SubsystemBase {
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
 
-        m_leaderLeftMotorErrorAlert = new Alert("Chassis", "Chassis Leader Left Motor Error", Alert.AlertType.ERROR);
-
-        m_followerLeftMotorErrorAlert = new Alert("Chassis", "Chassis Follower Left Motor Error", Alert.AlertType.ERROR);
-
-        m_leaderRightMotorErrorAlert = new Alert("Chassis", "Chassis Leader Right Motor Error", Alert.AlertType.ERROR);
-
-        m_followerRightMotorErrorAlert = new Alert("Chassis", "Chassis Follower Right Motor Error", Alert.AlertType.ERROR);
+        m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
+        m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
+        m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
+        m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -210,13 +207,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_gyroAngleDegEntry.setNumber(getYaw());
 
-        m_leaderLeftMotorErrorAlert.set((leaderLeftMotorError()));
-
-        m_followerLeftMotorErrorAlert.set(followerLeftMotorError());
-
-        m_leaderRightMotorErrorAlert.set(leaderRightMotorError());
-
-        m_followerRightMotorErrorAlert.set(followerRightMotorError());
+        m_leaderLeftMotorErrorAlert.checkAlerts();
+        m_followerLeftMotorErrorAlert.checkAlerts();
+        m_leaderRightMotorErrorAlert.checkAlerts();
+        m_followerLeftMotorErrorAlert.checkAlerts();
     }
 
     public boolean leaderLeftMotorError() {
