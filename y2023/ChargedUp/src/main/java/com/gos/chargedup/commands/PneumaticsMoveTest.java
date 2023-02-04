@@ -6,8 +6,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.littletonrobotics.frc2023.util.Alert;
 
-import java.sql.Time;
-
 
 public class PneumaticsMoveTest extends CommandBase {
 
