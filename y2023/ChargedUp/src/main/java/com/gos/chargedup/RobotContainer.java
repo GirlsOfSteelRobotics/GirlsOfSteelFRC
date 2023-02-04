@@ -142,6 +142,8 @@ public class RobotContainer {
 
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_ANGLE, m_arm::getArmAngleDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ARM_GOAL_ANGLE, m_arm::getArmAngleGoal, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.ARM_EXTENSION1, m_arm::isInnerPistonIn, null);
             builder.addBooleanProperty(
@@ -152,6 +154,14 @@ public class RobotContainer {
                 SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_SPEED, m_turret::getTurretSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_ANGLE, m_turret::getTurretAngleDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_GOAL_ANGLE, m_turret::getTurretAngleGoalDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ROBOT_ANGLE, () -> m_chassisSubsystem.getPose().getRotation().getDegrees(), null);
 
         }
     }
