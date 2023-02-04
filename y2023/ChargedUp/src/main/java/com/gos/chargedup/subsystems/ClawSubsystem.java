@@ -15,12 +15,10 @@ public class ClawSubsystem extends SubsystemBase {
     private final Solenoid m_rightIntake;
     private final Solenoid m_leftIntake; //NOPMD
 
-    private final PneumaticHub m_pneumaticHub;
 
-    public ClawSubsystem(PneumaticHub pneumaticHub) {
+    public ClawSubsystem() {
         m_rightIntake = new Solenoid(PneumaticsModuleType.REVPH, Constants.RIGHT_CLAW_PISTON);
         m_leftIntake = new Solenoid(PneumaticsModuleType.REVPH, Constants.LEFT_INTAKE_PISTON);
-        m_pneumaticHub = pneumaticHub;
 
     }
 
@@ -50,12 +48,12 @@ public class ClawSubsystem extends SubsystemBase {
         return this.runOnce(this::moveClawIntakeOut);
     }
 
-    public CommandBase createIsRightClawPneumaticMoving() {
-        return new PneumaticsMoveTest(m_pneumaticHub, m_rightIntake, Constants.RIGHT_CLAW_PISTON, "Claw: Right Piston");
+    public CommandBase createIsRightClawPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_rightIntake, Constants.RIGHT_CLAW_PISTON, "Claw: Right Piston");
     }
 
-    public CommandBase createIsLeftClawPneumaticMoving() {
-        return new PneumaticsMoveTest(m_pneumaticHub, m_leftIntake, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
+    public CommandBase createIsLeftClawPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_leftIntake, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
     }
 }
 

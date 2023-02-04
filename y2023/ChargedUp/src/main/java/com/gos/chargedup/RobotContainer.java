@@ -74,9 +74,9 @@ public class RobotContainer {
 
         m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
-        m_claw = new ClawSubsystem(pneumaticHub);
-        m_arm = new ArmSubsystem(pneumaticHub);
-        m_intake = new IntakeSubsystem(pneumaticHub);
+        m_claw = new ClawSubsystem();
+        m_arm = new ArmSubsystem();
+        m_intake = new IntakeSubsystem();
 
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem);
         configureBindings();
@@ -92,7 +92,7 @@ public class RobotContainer {
         SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
         SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
         SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
-        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
+        SmartDashboard.putData("Run checklist", new ChecklistTestAll(pneumaticHub, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
 
         SmartDashboard.putData("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
         SmartDashboard.putData("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));

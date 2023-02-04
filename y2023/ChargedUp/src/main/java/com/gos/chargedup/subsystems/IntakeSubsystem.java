@@ -22,11 +22,9 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_hopperMotor;
     private final SimableCANSparkMax m_intakeMotor;
 
-    private final PneumaticHub m_pneumaticHub;
 
 
-    public IntakeSubsystem(PneumaticHub pneumaticHub) {
-        m_pneumaticHub = pneumaticHub;
+    public IntakeSubsystem() {
         m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_LEFT_PISTON);
         m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_RIGHT_PISTON);
         m_hopperMotor = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -100,11 +98,11 @@ public class IntakeSubsystem extends SubsystemBase {
         return new RobotMotorsMove(m_intakeMotor, "Intake: Intake motor", 1.0);
     }
 
-    public CommandBase createIsIntakeLeftPneumaticMoving() {
-        return new PneumaticsMoveTest(m_pneumaticHub, m_intakeSolenoidLeft, Constants.INTAKE_LEFT_PISTON, "Intake: Left Piston");
+    public CommandBase createIsIntakeLeftPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_intakeSolenoidLeft, Constants.INTAKE_LEFT_PISTON, "Intake: Left Piston");
     }
 
-    public CommandBase createIsIntakeRightPneumaticMoving() {
-        return new PneumaticsMoveTest(m_pneumaticHub, m_intakeSolenoidRight, Constants.INTAKE_RIGHT_PISTON, "Intake: Right Piston");
+    public CommandBase createIsIntakeRightPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_intakeSolenoidRight, Constants.INTAKE_RIGHT_PISTON, "Intake: Right Piston");
     }
 }

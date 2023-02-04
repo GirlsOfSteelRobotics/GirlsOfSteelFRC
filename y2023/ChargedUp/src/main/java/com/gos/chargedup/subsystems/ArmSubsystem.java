@@ -27,11 +27,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ArmSubsystem extends SubsystemBase {
 
     public static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
+
     private static final double ARM_MOTOR_SPEED = 0.2;
+
     private final SimableCANSparkMax m_pivotMotor;
+
     private static final double GEAR_RATIO = 5.0 * 2.0 * 4.0;
 
     private final RelativeEncoder m_pivotMotorEncoder;
+
     private final SparkMaxPIDController m_pivotPIDController;
 
     private final Solenoid m_outerPiston;
@@ -45,13 +49,13 @@ public class ArmSubsystem extends SubsystemBase {
     private final PidProperty m_pivotPID;
 
     private final NetworkTableEntry m_lowerLimitSwitchEntry;
+
     private final NetworkTableEntry m_upperLImitSwitchEntry;
+
     private final NetworkTableEntry m_encoderDegEntry;
 
-    private final PneumaticHub m_pneumaticHub;
 
-    public ArmSubsystem(PneumaticHub pneumaticHub) {
-        m_pneumaticHub = pneumaticHub;
+    public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON);
         m_innerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON);
@@ -189,12 +193,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     }
 
-    public CommandBase createIsArmInnerPneumaticMoving() {
-        return new PneumaticsMoveTest(m_pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
+    public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
     }
 
-    public CommandBase createIsArmOuterPneumaticMoving() {
-        return new PneumaticsMoveTest(m_pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
+    public CommandBase createIsArmOuterPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
     }
 
 
