@@ -38,6 +38,8 @@ public final class Constants {
     public static final int ARM_OUTER_PISTON = 7;
     public static final int ARM_INNER_PISTON = 2;
     public static final int RIGHT_CLAW_PISTON = 0;
+
+    public static final int LEFT_CLAW_PISTON = 4;
     public static final int LEFT_INTAKE_PISTON = 1;
     public static final int INTAKE_LEFT_PISTON = 3;
     public static final int INTAKE_RIGHT_PISTON = 5;
