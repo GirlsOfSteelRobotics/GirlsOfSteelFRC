@@ -19,6 +19,7 @@ public class AutomatedTurretToSelectedPegCommand extends CommandBase {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_turretSubsystem);
+
     }
 
     @Override
@@ -33,6 +34,7 @@ public class AutomatedTurretToSelectedPegCommand extends CommandBase {
         double robotAngle = Math.toDegrees(Math.atan2(yDistance, xDistance));
         double angleAdjustment = robotAngle + currentRobotPosition.getRotation().getDegrees() + 180;
         m_turretSubsystem.turretPID(angleAdjustment);
+
     }
 
 

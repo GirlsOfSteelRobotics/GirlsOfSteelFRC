@@ -1,12 +1,12 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [2]": {
+      "SPARK MAX [4]": {
         "header": {
           "open": true
         }
       },
-      "SPARK MAX [3]": {
+      "SPARK MAX [9]": {
         "header": {
           "open": true
         }
@@ -16,47 +16,38 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/test commands/Arm angle PID - 0 degrees": "Command",
-      "/Shuffleboard/test commands/Arm angle PID - 45 degrees": "Command",
-      "/Shuffleboard/test commands/Arm angle PID - 90 degrees": "Command",
-      "/Shuffleboard/test commands/Move Turret Clockwise": "Command",
-      "/Shuffleboard/test commands/Move Turret Counter Clockwise": "Command",
-      "/Shuffleboard/test commands/Turret PID - 0 degrees": "Command",
-      "/Shuffleboard/test commands/Turret PID - 180 degrees": "Command",
-      "/Shuffleboard/test commands/Turret PID - 90 degrees": "Command",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
+      "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/FunctionalCommand": "Command",
       "/SmartDashboard/PPRamseteCommand_field": "Field2d",
+      "/SmartDashboard/Run checklist": "Command",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/Test Line": "Command",
       "/SmartDashboard/Test Mild Curve": "Command",
       "/SmartDashboard/Test S Curve": "Command"
     },
     "windows": {
-      "/Shuffleboard/test commands/Turret PID - 0 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Turret PID - 180 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Turret PID - 90 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/FunctionalCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Run checklist": {
         "window": {
           "visible": true
         }
@@ -88,31 +79,24 @@
       "Preferences": {
         "open": true
       }
+    },
+    "transitory": {
+      "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "Alerts": {
+          "open": true
+        },
+        "open": true
+      }
     }
   },
   "Plot": {
     "Plot <0>": {
-      "plots": [
-        {
-          "axis": [
-            {
-              "autoFit": true
-            }
-          ],
-          "height": 338,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "SPARK MAX [2]-Velocity"
-            }
-          ]
-        }
-      ]
+      "window": {
+        "visible": false
+      }
     }
   }
 }
