@@ -59,6 +59,7 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double ARM_MASS_KG = Units.lbsToKilograms(5);
     private static final boolean SIMULATE_GRAVITY = true;
     private SingleJointedArmSimWrapper m_pivotSimulator;
+    public static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0);
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -164,7 +165,7 @@ public class ArmSubsystem extends SubsystemBase {
         return this.startEnd(this::pivotArmDown, this::pivotArmStop);
     }
     public CommandBase commandPivotArmToAngle(double angle) {
-        return this.startEnd(() -> pivotArmToAngle(angle), this::pivotArmStop);
+        return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle);
     }
 
     public double getArmAngleDeg() {
@@ -181,8 +182,9 @@ public class ArmSubsystem extends SubsystemBase {
 
     public boolean pivotArmToAngle(double pivotAngleGoal) {
         double error = getArmAngleDeg() - pivotAngleGoal;
+        double gravityOffset = Math.cos(getArmAngleDeg()) * GRAVITY_OFFSET.getValue();
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
-            m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0);
+            m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
         } else {
             m_pivotMotor.set(0);
         }
@@ -207,10 +209,20 @@ public class ArmSubsystem extends SubsystemBase {
 
     }
 
+    public CommandBase tuneGravityOffsetPID(){
+        return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
+    }
+    public void tuneGravityOffset() {
+        m_pivotMotor.setVoltage(GRAVITY_OFFSET.getValue());
+    }
+
+
 
     public void simulationPeriodic() {
         m_pivotSimulator.update();
     }
+
+
 
 }
 

@@ -84,7 +84,7 @@ public class RobotContainer {
         testCommands.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
         testCommands.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         testCommands.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
-
+        testCommands.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
 
 
         if (RobotBase.isSimulation()) {
