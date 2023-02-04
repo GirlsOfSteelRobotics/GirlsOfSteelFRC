@@ -2,9 +2,11 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.temp.PhotonPoseEstimator;
+import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -32,9 +34,11 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
     private static final String CAMERA_NAME = "OV5647";
 
     //get or tune this constant
-    private static final double POSE_AMBIGUITY_THRESHOLD = 0.5;
+    private static final GosDoubleProperty POSE_AMBIGUITY_THRESHOLD = new GosDoubleProperty(false, "Pose ambiguity threshold", 0.2);
 
-    private static final double POSE_DISTANCE_THRESHOLD = 0.5;
+    private static final GosDoubleProperty POSE_DISTANCE_THRESHOLD = new GosDoubleProperty(false, "Pose distance Threshold", 0.5);
+
+    private static final GosDoubleProperty POSE_DISTANCE_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pose distance allowable error", 0.2);
 
     private final PhotonCamera m_camera;
 
@@ -71,8 +75,17 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
                 //DISTANCE: use pythagorean theorem to get absolute distance (Math.sqrt(x^2 + y^2))
                 double targetPositionCamera = Math.sqrt((target.getBestCameraToTarget().getX() * target.getBestCameraToTarget().getX()) + (target.getBestCameraToTarget().getY() * target.getBestCameraToTarget().getY()));
 
+                Optional<Pose3d> targetPosition = m_aprilTagFieldLayout.getTagPose(target.getFiducialId());
+                Pose3d altTransformPosition =
+                    targetPosition
+                        .get()
+                        .transformBy(target.getAlternateCameraToTarget().inverse())
+                        .transformBy(ROBOT_TO_CAMERA.inverse());
+                double distBetweenAltandPrev = Math.sqrt((altTransformPosition.getX() - prevEstimatedRobotPose.getX()) * (altTransformPosition.getX() - prevEstimatedRobotPose.getX()) + ((altTransformPosition.getY() - prevEstimatedRobotPose.getY())) * (altTransformPosition.getY() - prevEstimatedRobotPose.getY()));
+                boolean isInSamePlace = distBetweenAltandPrev <= POSE_DISTANCE_ALLOWABLE_ERROR.getValue();
+
                 //check ambiguity and distance
-                if (target.getPoseAmbiguity() <= POSE_AMBIGUITY_THRESHOLD && targetPositionCamera <= POSE_DISTANCE_THRESHOLD) {
+                if (target.getPoseAmbiguity() <= POSE_AMBIGUITY_THRESHOLD.getValue() && targetPositionCamera <= POSE_DISTANCE_THRESHOLD.getValue() && isInSamePlace) {
                     goodTargets.add(target);
                 }
             }
@@ -80,6 +93,7 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
 
         PhotonPipelineResult goodCameraResults = new PhotonPipelineResult(cameraResult.getLatencyMillis(), goodTargets);
         goodCameraResults.setTimestampSeconds(cameraResult.getTimestampSeconds());
+
 
         //DEBUGGING:
         SmartDashboard.putNumber("Number of found targets (pre-filter): ", cameraResult.getTargets().size());
