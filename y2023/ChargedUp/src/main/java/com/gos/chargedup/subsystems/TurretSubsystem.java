@@ -36,6 +36,8 @@ public class TurretSubsystem extends SubsystemBase {
     private final PidProperty m_turretPID;
     private final SparkMaxPIDController m_turretPidController;
 
+    private double m_turretGoalAngle = Double.MIN_VALUE;
+
     private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); //left ls relative to intake
     private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_TURRET_LIMIT_SWITCH);
     private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_TURRET_LIMIT_SWITCH); //right ls relative to intake
@@ -108,6 +110,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void stopTurret() {
+        m_turretGoalAngle = Double.MIN_VALUE;
         m_turretMotor.set(0);
     }
 
@@ -139,10 +142,24 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public boolean turretPID(double goalAngle) {
+        m_turretGoalAngle = goalAngle;
+
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
 
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
+    }
+
+    public double getTurretAngleDeg() {
+        return m_turretEncoder.getPosition();
+    }
+
+    public double getTurretAngleGoalDeg() {
+        return m_turretGoalAngle;
+    }
+
+    public double getTurretSpeed() {
+        return m_turretMotor.getAppliedOutput();
     }
 
     public CommandBase createIsTurretMotorMoving() {

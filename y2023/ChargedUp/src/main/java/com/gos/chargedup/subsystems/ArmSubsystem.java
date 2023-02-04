@@ -35,6 +35,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_pivotMotor;
     private static final double GEAR_RATIO = 5.0 * 2.0 * 4.0;
 
+    private double m_armAngleGoal = Double.MIN_VALUE;
+
     private final RelativeEncoder m_pivotMotorEncoder;
     private final SparkMaxPIDController m_pivotPIDController;
 
@@ -123,10 +125,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public double getArmMotorSpeed() {
-        return m_pivotMotor.get();
+        return m_pivotMotor.getAppliedOutput();
     }
 
     public void pivotArmStop() {
+        m_armAngleGoal = Double.MIN_VALUE;
         m_pivotMotor.set(0);
     }
 
@@ -172,6 +175,10 @@ public class ArmSubsystem extends SubsystemBase {
         return m_pivotMotorEncoder.getPosition();
     }
 
+    public double getArmAngleGoal() {
+        return m_armAngleGoal;
+    }
+
     public boolean isLowerLimitSwitchedPressed() {
         return !m_lowerLimitSwitch.get();
     }
@@ -181,6 +188,8 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean pivotArmToAngle(double pivotAngleGoal) {
+        m_armAngleGoal = pivotAngleGoal;
+
         double error = getArmAngleDeg() - pivotAngleGoal;
         double gravityOffset = Math.cos(getArmAngleDeg()) * GRAVITY_OFFSET.getValue();
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
