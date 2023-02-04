@@ -5,7 +5,9 @@
 
 package com.gos.chargedup;
 
+import com.gos.lib.rev.PneumaticHubAlerts;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -25,19 +27,10 @@ public class Robot extends TimedRobot {
     private RobotContainer m_robotContainer;
 
     private final PneumaticHub m_pneumaticHub = new PneumaticHub();
+    private final PneumaticHubAlerts m_pneumaticHubAlert = new PneumaticHubAlerts(m_pneumaticHub);
+    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
 
-    private final Alert m_rightClawPistonAlert = new Alert("Claw", "Right Solenoid Error", Alert.AlertType.ERROR);
-
-    private final Alert m_leftClawPistonAlert = new Alert("Claw", "Left Solenoid Error", Alert.AlertType.ERROR);
-
-    private final Alert m_rightIntakePistonAlert = new Alert("Intake", "Right Intake Piston Error", Alert.AlertType.ERROR);
-
-    private final Alert m_leftIntakePistonAlert = new Alert("Intake", "Left Intake Piston Error", Alert.AlertType.ERROR);
-
-    private final Alert m_innerArmAlert = new Alert("Arm", "Inner Arm Error", Alert.AlertType.ERROR);
-
-    private final Alert m_outerArmAlert = new Alert("Arm", "Outer Arm Error", Alert.AlertType.ERROR);
-
+    private static final double LOW_BATTERY_VOLTAGE = 11.9;
 
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -65,18 +58,8 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        m_leftClawPistonAlert.set(m_pneumaticHub.getFaults().Channel1Fault);
-
-        m_rightClawPistonAlert.set(m_pneumaticHub.getFaults().Channel0Fault);
-
-        m_leftIntakePistonAlert.set(m_pneumaticHub.getFaults().Channel3Fault);
-
-        m_rightIntakePistonAlert.set(m_pneumaticHub.getFaults().Channel5Fault);
-
-        m_innerArmAlert.set(m_pneumaticHub.getFaults().Channel2Fault);
-
-        m_outerArmAlert.set(m_pneumaticHub.getFaults().Channel7Fault);
-
+        m_pneumaticHubAlert.checkAlerts();
+        m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
     }
 
 

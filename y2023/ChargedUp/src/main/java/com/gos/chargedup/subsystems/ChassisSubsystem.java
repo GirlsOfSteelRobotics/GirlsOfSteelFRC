@@ -210,7 +210,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
-        m_followerLeftMotorErrorAlert.checkAlerts();
+        m_followerRightMotorErrorAlert.checkAlerts();
     }
 
     public boolean leaderLeftMotorError() {
