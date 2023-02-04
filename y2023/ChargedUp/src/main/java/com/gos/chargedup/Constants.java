@@ -14,9 +14,8 @@ package com.gos.chargedup;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int PIGEON_PORT = 1;
 
-    //motors
+    // CAN
     public static final int DRIVE_LEFT_LEADER_SPARK = 4;
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
@@ -25,6 +24,7 @@ public final class Constants {
     public static final int PIVOT_MOTOR = 2;
     public static final int TURRET_MOTOR = 3;
     public static final int INTAKE_MOTOR = 6;
+    public static final int PIGEON_PORT = 20;
 
 
     //DIO

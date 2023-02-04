@@ -41,7 +41,6 @@ def get_data(entry, record):
 
 
 def load_wpilog_log(file):
-
     with open(file, "r") as f:
         mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
         reader = DataLogReader(mm)

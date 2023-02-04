@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -268,9 +269,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.arcadeDrive(speed, steer);
     }
 
-    public void setCurvatureDrive(double speed, double steer) {
-        m_drive.curvatureDrive(speed, steer, speed < 0.05);
-
+    public void setCurvatureDrive(double speed, double steer, boolean allowTurnInPlace) {
+        m_drive.curvatureDrive(speed, steer, allowTurnInPlace);
     }
 
     public double getPitch() {
@@ -342,4 +342,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
+    public CommandBase createIsLeftMotorMoving() {
+        return new RobotMotorsMove(m_leaderLeft, "Chassis: Leader left motor", 1.0);
+
+    }
+
+    public CommandBase createIsRightMotorMoving() {
+        return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
+
+    }
 }

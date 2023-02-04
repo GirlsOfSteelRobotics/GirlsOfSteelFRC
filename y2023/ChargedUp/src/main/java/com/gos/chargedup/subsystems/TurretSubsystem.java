@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -16,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.util.Alert;
 
@@ -132,6 +134,10 @@ public class TurretSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
 
+    public CommandBase createIsTurretMotorMoving() {
+        return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
+
+    }
 
 }
 

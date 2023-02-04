@@ -41,6 +41,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerRight.follow(m_leaderRight);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
+
+        m_leaderLeft.burnFlash();
+        m_followerLeft.burnFlash();
+        m_leaderRight.burnFlash();
+        m_followerRight.burnFlash();
     }
 
     public void setCurvatureDrive(double speed, double steer, boolean allowTurnInPlace) {
