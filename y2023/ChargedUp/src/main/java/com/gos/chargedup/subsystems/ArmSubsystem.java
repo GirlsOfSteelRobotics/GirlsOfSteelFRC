@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.PneumaticsMoveTest;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
@@ -16,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,7 +48,10 @@ public class ArmSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_upperLImitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
 
-    public ArmSubsystem() {
+    private final PneumaticHub m_pneumaticHub;
+
+    public ArmSubsystem(PneumaticHub pneumaticHub) {
+        m_pneumaticHub = pneumaticHub;
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON);
         m_innerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON);
@@ -182,6 +187,14 @@ public class ArmSubsystem extends SubsystemBase {
     public CommandBase createIsPivotMotorMoving() {
         return new RobotMotorsMove(m_pivotMotor, "Arm: Pivot motor", 1.0);
 
+    }
+
+    public CommandBase createIsArmInnerPneumaticMoving() {
+        return new PneumaticsMoveTest(m_pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
+    }
+
+    public CommandBase createIsArmOuterPneumaticMoving() {
+        return new PneumaticsMoveTest(m_pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
     }
 
 
