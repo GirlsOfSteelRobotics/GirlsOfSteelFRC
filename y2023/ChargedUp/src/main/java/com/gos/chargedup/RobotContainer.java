@@ -46,15 +46,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
-//    private final TurretSubsystem m_turret;
+    private final TurretSubsystem m_turret;
 
-//    private final IntakeSubsystem m_intake;
+    private final IntakeSubsystem m_intake;
     private final ChassisSubsystem m_chassisSubsystem;
 
-//    private final ArmSubsystem m_arm;
+    private final ArmSubsystem m_arm;
     private final AutonomousFactory m_autonomousFactory;
 
-//    private final ClawSubsystem m_claw;
+    private final ClawSubsystem m_claw;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandXboxController m_driverController =
@@ -73,11 +73,11 @@ public class RobotContainer {
         // Configure the trigger bindings
 
 
-//        m_turret = new TurretSubsystem();
+        m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
-//        m_claw = new ClawSubsystem();
-//        m_arm = new ArmSubsystem();
-//        m_intake = new IntakeSubsystem();
+        m_claw = new ClawSubsystem();
+        m_arm = new ArmSubsystem();
+        m_intake = new IntakeSubsystem();
 
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem);
         configureBindings();
@@ -92,10 +92,10 @@ public class RobotContainer {
         SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
-//        SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
-//        SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
-//        SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
-//        SmartDashboard.putData("Run checklist", new ChecklistTestAll(pneumaticHub, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
+        SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
+        SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
+        SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
+        SmartDashboard.putData("Run checklist", new ChecklistTestAll(pneumaticHub, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
         SmartDashboard.putData("Sync Odometries", m_chassisSubsystem.syncOdometriesOldandNew());
 
         SmartDashboard.putData("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
@@ -114,8 +114,8 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-//        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-//        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
@@ -123,13 +123,13 @@ public class RobotContainer {
 
         m_driverController.a().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
 
-//        m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
-//        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
-//        m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
-//        m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
-//        m_driverController.x().whileTrue((m_arm.commandFullRetract()));
-//        m_driverController.y().whileTrue((m_arm.commandMiddleRetract()));
-//        m_driverController.leftBumper().whileTrue((m_arm.commandOut()));
+        m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
+        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
+        m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
+        m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
+        m_driverController.x().whileTrue((m_arm.commandFullRetract()));
+        m_driverController.y().whileTrue((m_arm.commandMiddleRetract()));
+        m_driverController.leftBumper().whileTrue((m_arm.commandOut()));
 
     }
 
@@ -151,26 +151,26 @@ public class RobotContainer {
         public void initSendable(SendableBuilder builder) {
             builder.setSmartDashboardType(SmartDashboardNames.SUPER_STRUCTURE);
 
-//            builder.addDoubleProperty(
-//                SmartDashboardNames.ARM_ANGLE, m_arm::getArmAngleDeg, null);
-//            builder.addDoubleProperty(
-//                SmartDashboardNames.ARM_GOAL_ANGLE, m_arm::getArmAngleGoal, null);
-//            builder.addBooleanProperty(
-//                SmartDashboardNames.ARM_EXTENSION1, m_arm::isInnerPistonIn, null);
-//            builder.addBooleanProperty(
-//                SmartDashboardNames.ARM_EXTENSION2, m_arm::isOuterPistonIn, null);
-//            builder.addDoubleProperty(
-//                SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
-//            builder.addDoubleProperty(
-//                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
-//            builder.addBooleanProperty(
-//                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
-//            builder.addDoubleProperty(
-//                SmartDashboardNames.TURRET_SPEED, m_turret::getTurretSpeed, null);
-//            builder.addDoubleProperty(
-//                SmartDashboardNames.TURRET_ANGLE, m_turret::getTurretAngleDeg, null);
-//            builder.addDoubleProperty(
-//                SmartDashboardNames.TURRET_GOAL_ANGLE, m_turret::getTurretAngleGoalDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ARM_ANGLE, m_arm::getArmAngleDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ARM_GOAL_ANGLE, m_arm::getArmAngleGoal, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.ARM_EXTENSION1, m_arm::isInnerPistonIn, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.ARM_EXTENSION2, m_arm::isOuterPistonIn, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
+            builder.addBooleanProperty(
+                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_SPEED, m_turret::getTurretSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_ANGLE, m_turret::getTurretAngleDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_GOAL_ANGLE, m_turret::getTurretAngleGoalDeg, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ROBOT_ANGLE, () -> m_chassisSubsystem.getPose().getRotation().getDegrees(), null);
 
