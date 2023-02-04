@@ -36,7 +36,7 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
     //get or tune this constant
     private static final GosDoubleProperty POSE_AMBIGUITY_THRESHOLD = new GosDoubleProperty(false, "Pose ambiguity threshold", 0.2);
 
-    private static final GosDoubleProperty POSE_DISTANCE_THRESHOLD = new GosDoubleProperty(false, "Pose distance Threshold", 0.5);
+    private static final GosDoubleProperty POSE_DISTANCE_THRESHOLD = new GosDoubleProperty(false, "Pose distance Threshold", 4.25);
 
     private static final GosDoubleProperty POSE_DISTANCE_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pose distance allowable error", 0.2);
 
@@ -76,6 +76,10 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
                 double targetPositionCamera = Math.sqrt((target.getBestCameraToTarget().getX() * target.getBestCameraToTarget().getX()) + (target.getBestCameraToTarget().getY() * target.getBestCameraToTarget().getY()));
 
                 Optional<Pose3d> targetPosition = m_aprilTagFieldLayout.getTagPose(target.getFiducialId());
+                if (targetPosition.isEmpty()) {
+                    System.out.println("Bad fiducial? " + target.getFiducialId());
+                    continue;
+                }
                 Pose3d altTransformPosition =
                     targetPosition
                         .get()
@@ -102,7 +106,7 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update(goodCameraResults);
         if (estimate.isPresent()) {
             EstimatedRobotPose pose = estimate.get();
-            System.out.println("Got something at " + pose.estimatedPose + ", " + pose.timestampSeconds);
+//            System.out.println("Got something at " + pose.estimatedPose + ", " + pose.timestampSeconds);
         }
         //else{ System.out.println("No target found");}
 
