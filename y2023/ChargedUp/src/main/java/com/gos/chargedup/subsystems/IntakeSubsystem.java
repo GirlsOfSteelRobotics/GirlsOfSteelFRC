@@ -1,12 +1,16 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.PneumaticsMoveTest;
+import com.gos.chargedup.commands.RobotMotorsMove;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -17,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final Solenoid m_intakeSolenoidRight;
     private final SimableCANSparkMax m_hopperMotor;
     private final SimableCANSparkMax m_intakeMotor;
+
 
 
     public IntakeSubsystem() {
@@ -85,4 +90,19 @@ public class IntakeSubsystem extends SubsystemBase {
         return this.startEnd(this::hopperOut, this::hopperStop);
     }
 
+    public CommandBase createIsHopperMotorMoving() {
+        return new RobotMotorsMove(m_hopperMotor, "Intake: Hopper motor", 1.0);
+    }
+
+    public CommandBase createIsIntakeMotorMoving() {
+        return new RobotMotorsMove(m_intakeMotor, "Intake: Intake motor", 1.0);
+    }
+
+    public CommandBase createIsIntakeLeftPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_intakeSolenoidLeft, Constants.INTAKE_LEFT_PISTON, "Intake: Left Piston");
+    }
+
+    public CommandBase createIsIntakeRightPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_intakeSolenoidRight, Constants.INTAKE_RIGHT_PISTON, "Intake: Right Piston");
+    }
 }

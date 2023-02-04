@@ -16,9 +16,9 @@ public final class AutonomousFactory {
     private final SendableChooser<Command> m_autonomousModes;
     public final CommandBase m_onlyDockAndEngage;
     public final CommandBase m_onlyLeaveCommunity;
-    //    public final CommandBase m_dockEngageAndCommunity;
+    public final CommandBase m_dockEngageAndCommunity;
     public final CommandBase m_oneNodeAndDock;
-    //    public final CommandBase m_onePieceAndDockEngage;
+    public final CommandBase m_onePieceAndDockEngage;
     public final CommandBase m_manyPieceAuto;
     public final CommandBase m_twoPieceAuto;
 
@@ -31,14 +31,14 @@ public final class AutonomousFactory {
         m_onlyLeaveCommunity = new OnlyLeaveCommunityCommandGroup(chassis);
         m_autonomousModes.addOption("Only Leave Community", m_onlyLeaveCommunity);
 
-        //        m_dockEngageAndCommunity = new DockEngageAndCommunityCommandGroup(chassis);
-        //        m_autonomousModes.addOption("Dock, Engage, & Community", m_dockEngageAndCommunity);
+        m_dockEngageAndCommunity = new DockEngageAndCommunityCommandGroup(chassis);
+        m_autonomousModes.addOption("Dock, Engage, & Community", m_dockEngageAndCommunity);
 
         m_oneNodeAndDock = new OneNodeAndDockCommandGroup(chassis);
         m_autonomousModes.addOption("One Node & Dock", m_oneNodeAndDock);
 
-        //        m_onePieceAndDockEngage = new OnePieceAndDockEngageCommandGroup(chassis);
-        //        m_autonomousModes.addOption("One Piece, Dock & Engage", m_onePieceAndDockEngage);
+        m_onePieceAndDockEngage = new OnePieceAndDockEngageCommandGroup(chassis);
+        m_autonomousModes.addOption("One Piece, Dock & Engage", m_onePieceAndDockEngage);
 
         m_manyPieceAuto = new ManyPieceAutoCommandGroup(chassis);
         m_autonomousModes.addOption("Many Piece", m_manyPieceAuto);
