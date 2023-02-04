@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -26,6 +28,8 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double ARM_MOTOR_SPEED = 0.2;
     private final SimableCANSparkMax m_pivotMotor;
     private static final double GEAR_RATIO = 5.0 * 2.0 * 4.0;
+
+    private double m_armAngleGoal = Double.MIN_VALUE;
 
     private final RelativeEncoder m_pivotMotorEncoder;
     private final SparkMaxPIDController m_pivotPIDController;
@@ -100,10 +104,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public double getArmMotorSpeed() {
-        return m_pivotMotor.get();
+        return m_pivotMotor.getAppliedOutput();
     }
 
     public void pivotArmStop() {
+        m_armAngleGoal = Double.MIN_VALUE;
         m_pivotMotor.set(0);
     }
 
@@ -146,6 +151,10 @@ public class ArmSubsystem extends SubsystemBase {
         return m_pivotMotorEncoder.getPosition();
     }
 
+    public double getArmAngleGoal() {
+        return m_armAngleGoal;
+    }
+
     public boolean isLowerLimitSwitchedPressed() {
         return !m_lowerLimitSwitch.get();
     }
@@ -155,6 +164,8 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean pivotArmToAngle(double pivotAngleGoal) {
+        m_armAngleGoal = pivotAngleGoal;
+
         double error = getArmAngleDeg() - pivotAngleGoal;
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0);
@@ -175,6 +186,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     public Command commandOut() {
         return this. runOnce(this::out);
+    }
+
+    public CommandBase createIsPivotMotorMoving() {
+        return new RobotMotorsMove(m_pivotMotor, "Arm: Pivot motor", 1.0);
+
     }
 
 

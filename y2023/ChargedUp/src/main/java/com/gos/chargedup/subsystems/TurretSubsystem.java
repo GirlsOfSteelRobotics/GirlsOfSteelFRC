@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -16,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TurretSubsystem extends SubsystemBase {
@@ -26,6 +28,8 @@ public class TurretSubsystem extends SubsystemBase {
     private final RelativeEncoder m_turretEncoder;
     private final PidProperty m_turretPID;
     private final SparkMaxPIDController m_turretPidController;
+
+    private double m_turretGoalAngle = Double.MIN_VALUE;
 
     private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); //left ls relative to intake
     private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_TURRET_LIMIT_SWITCH);
@@ -88,6 +92,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void stopTurret() {
+        m_turretGoalAngle = Double.MIN_VALUE;
         m_turretMotor.set(0);
     }
 
@@ -116,12 +121,30 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public boolean turretPID(double goalAngle) {
+        m_turretGoalAngle = goalAngle;
+
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
 
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
 
+    public double getTurretAngleDeg() {
+        return m_turretEncoder.getPosition();
+    }
+
+    public double getTurretAngleGoalDeg() {
+        return m_turretGoalAngle;
+    }
+
+    public double getTurretSpeed() {
+        return m_turretMotor.getAppliedOutput();
+    }
+
+    public CommandBase createIsTurretMotorMoving() {
+        return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
+
+    }
 
 }
 

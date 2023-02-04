@@ -8,6 +8,7 @@ package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
+import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -84,6 +85,7 @@ public class RobotContainer {
         SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
         SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
         SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
+        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_chassisSubsystem, m_arm, m_turret, m_intake));
 
         SmartDashboard.putData("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
         SmartDashboard.putData("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
@@ -140,6 +142,8 @@ public class RobotContainer {
 
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_ANGLE, m_arm::getArmAngleDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ARM_GOAL_ANGLE, m_arm::getArmAngleGoal, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.ARM_EXTENSION1, m_arm::isInnerPistonIn, null);
             builder.addBooleanProperty(
@@ -150,6 +154,14 @@ public class RobotContainer {
                 SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_SPEED, m_turret::getTurretSpeed, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_ANGLE, m_turret::getTurretAngleDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.TURRET_GOAL_ANGLE, m_turret::getTurretAngleGoalDeg, null);
+            builder.addDoubleProperty(
+                SmartDashboardNames.ROBOT_ANGLE, () -> m_chassisSubsystem.getPose().getRotation().getDegrees(), null);
 
         }
     }
