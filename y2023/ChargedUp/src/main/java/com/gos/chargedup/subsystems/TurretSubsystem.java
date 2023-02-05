@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TurretSubsystem extends SubsystemBase {
 
-    private static final double TURRET_SPEED = 0.2;
+    private static final double TURRET_SPEED = 0.3;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
     private final SimableCANSparkMax m_turretMotor;
     private final RelativeEncoder m_turretEncoder;

@@ -110,22 +110,23 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+//        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+//        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.a().whileTrue(m_turret.commandMoveTurretClockwise());
 
-        m_driverController.a().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
-
+//        m_driverController.a().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
+//
         m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
-        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
-        m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
-        m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
-        m_driverController.x().whileTrue((m_arm.commandFullRetract()));
-        m_driverController.y().whileTrue((m_arm.commandMiddleRetract()));
-        m_driverController.leftBumper().whileTrue((m_arm.commandOut()));
+//        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
+//        m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
+//        m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
+//        m_driverController.x().whileTrue((m_arm.commandFullRetract()));
+//        m_driverController.y().whileTrue((m_arm.commandMiddleRetract()));
+//        m_driverController.leftBumper().whileTrue((m_arm.commandOut()));
 
     }
 
