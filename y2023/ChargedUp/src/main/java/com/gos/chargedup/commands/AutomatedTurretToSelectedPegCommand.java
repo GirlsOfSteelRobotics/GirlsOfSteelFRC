@@ -13,11 +13,11 @@ public class AutomatedTurretToSelectedPegCommand extends CommandBase {
     private final Translation2d m_nodePosition;
 
     public AutomatedTurretToSelectedPegCommand(ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d nodePosition) {
-        this.m_chassisSubsystem = chassisSubsystem;
-        this.m_turretSubsystem = turretSubsystem;
-        this.m_nodePosition = nodePosition;
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
+        setName("AutomatedTurretToSelectedPeg - (" + nodePosition.getX() + ", " + nodePosition.getY() + ")");
+
+        m_chassisSubsystem = chassisSubsystem;
+        m_turretSubsystem = turretSubsystem;
+        m_nodePosition = nodePosition;
         addRequirements(this.m_turretSubsystem);
 
     }

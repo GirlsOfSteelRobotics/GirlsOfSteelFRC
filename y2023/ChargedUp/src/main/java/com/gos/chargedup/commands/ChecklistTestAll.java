@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class ChecklistTestAll extends SequentialCommandGroup {
 
     public ChecklistTestAll(PneumaticHub pneumaticHub, ChassisSubsystem chassis, ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, ClawSubsystem claw) {
+        setName("Self Test Checklist");
 
         //chassis
         addCommands(chassis.createIsLeftMotorMoving());

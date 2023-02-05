@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.RobotBase;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 
 import com.gos.chargedup.subsystems.IntakeSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -86,17 +88,25 @@ public class RobotContainer {
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
-        SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
-        SmartDashboard.putData("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
-        SmartDashboard.putData("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
-        SmartDashboard.putData("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(pneumaticHub, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
+        createTestCommands();
+    }
 
-        SmartDashboard.putData("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
-        SmartDashboard.putData("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
-        SmartDashboard.putData("Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
+    private void createTestCommands() {
+        ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
+
+        SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
+        tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
+        tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
+        tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
+
+        tab.add("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
+        tab.add("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
+        tab.add("Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
+
+        tab.add("Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
 
     }
 
@@ -110,24 +120,22 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-//        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-//        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
-
-        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-        // cancelling on release.
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
-        m_driverController.a().whileTrue(m_turret.commandMoveTurretClockwise());
 
-//        m_driverController.a().whileTrue(m_chassisSubsystem.createAutoEngageCommand());
-//
+        // Driver
+        m_driverController.a().whileTrue(m_arm.commandOut());
+        m_driverController.x().whileTrue(m_arm.commandFullRetract());
+        m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
+        m_driverController.leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
+        m_driverController.rightBumper().whileTrue(m_turret.commandMoveTurretCounterClockwise());
+
+        // Operator
+        m_operatorController.leftBumper().whileTrue(m_intake.createRetractSolenoidCommand());
+        m_operatorController.rightBumper().whileTrue(m_intake.createExtendSolenoidCommand());
         m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
-//        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
-//        m_driverController.b().whileTrue((m_intake.createExtendSolenoidCommand()));
-//        m_driverController.a().whileTrue((m_intake.createRetractSolenoidCommand()));
-//        m_driverController.x().whileTrue((m_arm.commandFullRetract()));
-//        m_driverController.y().whileTrue((m_arm.commandMiddleRetract()));
-//        m_driverController.leftBumper().whileTrue((m_arm.commandOut()));
-
+        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
     }
 
 

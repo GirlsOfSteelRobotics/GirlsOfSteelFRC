@@ -14,5 +14,6 @@ public class TestSCurveCommandGroup extends SequentialCommandGroup {
         super(
             chassis.followTrajectoryCommand(TEST_S_CURVE, true)
         );
+        setName("TestTrajectorySCurve");
     }
 }

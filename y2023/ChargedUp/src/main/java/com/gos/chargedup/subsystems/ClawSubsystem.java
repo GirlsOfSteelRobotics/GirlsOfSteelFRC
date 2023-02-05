@@ -6,7 +6,6 @@ import com.gos.chargedup.commands.PneumaticsMoveTest;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -23,29 +22,26 @@ public class ClawSubsystem extends SubsystemBase {
     }
 
     //intake in
-
     public void moveClawIntakeIn() {
         m_rightIntake.set(true);
         m_leftIntake.set(true);
     }
 
     //intake out
-
     public void moveClawIntakeOut() {
         m_rightIntake.set(false);
         m_leftIntake.set(false);
-        //m_pneumaticsHub.getPressure(Constants.RIGHT_CLAW_PISTON);
     }
 
-    //set motors to 0
-
-
-    public Command createMoveClawIntakeInCommand() {
-        return this.runOnce(this::moveClawIntakeIn);
+    /////////////////////
+    // Command Factories
+    /////////////////////
+    public CommandBase createMoveClawIntakeInCommand() {
+        return this.runOnce(this::moveClawIntakeIn).withName("ClawIntakeIn");
     }
 
-    public Command createMoveClawIntakeOutCommand() {
-        return this.runOnce(this::moveClawIntakeOut);
+    public CommandBase createMoveClawIntakeOutCommand() {
+        return this.runOnce(this::moveClawIntakeOut).withName("ClawIntakeOut");
     }
 
     public CommandBase createIsRightClawPneumaticMoving(PneumaticHub pneumaticHub) {

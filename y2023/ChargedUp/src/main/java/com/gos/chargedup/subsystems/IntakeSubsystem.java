@@ -73,7 +73,9 @@ public class IntakeSubsystem extends SubsystemBase {
         m_hopperMotor.set(0);
     }
 
-
+    /////////////////////
+    // Command Factories
+    /////////////////////
     public Command createExtendSolenoidCommand() {
         return this.runOnce(this::extend);
     }
@@ -83,11 +85,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public Command createHopperInMotorCommand() {
-        return this.startEnd(this::hopperIn, this::hopperStop);
+        return this.runEnd(this::hopperIn, this::hopperStop);
     }
 
     public Command createHopperOutMotorCommand() {
-        return this.startEnd(this::hopperOut, this::hopperStop);
+        return this.runEnd(this::hopperOut, this::hopperStop);
     }
 
     public CommandBase createIsHopperMotorMoving() {

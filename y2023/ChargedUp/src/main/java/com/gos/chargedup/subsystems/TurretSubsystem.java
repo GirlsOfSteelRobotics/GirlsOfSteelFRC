@@ -16,7 +16,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -108,14 +107,6 @@ public class TurretSubsystem extends SubsystemBase {
         return !m_rightLimitSwitch.get();
     }
 
-    public Command commandMoveTurretClockwise() {
-        return this.startEnd(this::moveTurretClockwise, this::stopTurret);
-    }
-
-    public Command commandMoveTurretCounterClockwise() {
-        return this.startEnd(this::commandMoveTurretCounterClockwise, this::stopTurret);
-    }
-
     public double getTurretAngleDegreesNeoEncoder() {
         return m_turretEncoder.getPosition();
     }
@@ -141,9 +132,17 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretMotor.getAppliedOutput();
     }
 
+    // Command Factories
+    public CommandBase commandMoveTurretClockwise() {
+        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
+    }
+
+    public CommandBase commandMoveTurretCounterClockwise() {
+        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
+    }
+
     public CommandBase createIsTurretMotorMoving() {
         return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
-
     }
 
 }
