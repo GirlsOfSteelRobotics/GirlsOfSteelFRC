@@ -139,14 +139,6 @@ public class ArmSubsystem extends SubsystemBase {
         System.out.println("out");
     }
 
-    public boolean pivotMotorError() {
-        return m_pivotMotor.getFaults() != 0;
-    }
-
-    public Command commandPivotArmUp() {
-        return this.startEnd(this::pivotArmUp, this::pivotArmStop);
-    }
-
     public boolean isInnerPistonIn() {
         return m_innerPiston.get();
     }

@@ -88,10 +88,6 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretMotorErrorAlert.checkAlerts();
     }
 
-    public boolean turretMotorError() {
-        return m_turretMotor.getFaults() != 0;
-    }
-
     public void moveTurretClockwise() {
         m_turretMotor.set(TURRET_SPEED);
     }

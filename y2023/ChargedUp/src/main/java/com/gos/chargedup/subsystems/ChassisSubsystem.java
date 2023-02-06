@@ -206,23 +206,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
-        m_followerLeftMotorErrorAlert.checkAlerts();
-    }
-
-    public boolean leaderLeftMotorError() {
-        return m_leaderLeft.getFaults() != 0;
-    }
-
-    public boolean followerLeftMotorError() {
-        return m_followerLeft.getFaults() != 0;
-    }
-
-    public boolean leaderRightMotorError() {
-        return m_leaderRight.getFaults() != 0;
-    }
-
-    public boolean followerRightMotorError() {
-        return m_followerRight.getFaults() != 0;
+        m_followerRightMotorErrorAlert.checkAlerts();
     }
 
     @Override
