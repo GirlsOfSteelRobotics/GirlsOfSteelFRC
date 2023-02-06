@@ -1,10 +1,12 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.PneumaticsMoveTest;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +26,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final Alert m_intakeMotorErrorAlert;
 
     private final Alert m_hopperMotorErrorAlert;
+
 
 
     public IntakeSubsystem() {
@@ -96,7 +99,9 @@ public class IntakeSubsystem extends SubsystemBase {
         m_hopperMotor.set(0);
     }
 
-
+    /////////////////////
+    // Command Factories
+    /////////////////////
     public Command createExtendSolenoidCommand() {
         return this.runOnce(this::extend);
     }
@@ -106,11 +111,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public Command createHopperInMotorCommand() {
-        return this.startEnd(this::hopperIn, this::hopperStop);
+        return this.runEnd(this::hopperIn, this::hopperStop);
     }
 
     public Command createHopperOutMotorCommand() {
-        return this.startEnd(this::hopperOut, this::hopperStop);
+        return this.runEnd(this::hopperOut, this::hopperStop);
     }
 
     public CommandBase createIsHopperMotorMoving() {
@@ -119,6 +124,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public CommandBase createIsIntakeMotorMoving() {
         return new RobotMotorsMove(m_intakeMotor, "Intake: Intake motor", 1.0);
+    }
 
+    public CommandBase createIsIntakeLeftPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_intakeSolenoidLeft, Constants.INTAKE_LEFT_PISTON, "Intake: Left Piston");
+    }
+
+    public CommandBase createIsIntakeRightPneumaticMoving(PneumaticHub pneumaticHub) {
+        return new PneumaticsMoveTest(pneumaticHub, m_intakeSolenoidRight, Constants.INTAKE_RIGHT_PISTON, "Intake: Right Piston");
     }
 }

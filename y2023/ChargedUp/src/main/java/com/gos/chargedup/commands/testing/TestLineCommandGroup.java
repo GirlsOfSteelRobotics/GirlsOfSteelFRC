@@ -14,5 +14,7 @@ public class TestLineCommandGroup extends SequentialCommandGroup {
         super(
             chassis.followTrajectoryCommand(TEST_LINE, true)
         );
+
+        setName("TestTrajectoryStraightLine");
     }
 }
