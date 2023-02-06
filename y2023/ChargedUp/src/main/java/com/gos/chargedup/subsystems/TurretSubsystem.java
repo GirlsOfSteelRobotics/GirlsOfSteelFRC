@@ -29,12 +29,14 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class TurretSubsystem extends SubsystemBase {
 
-    private static final double TURRET_SPEED = 0.2;
+    private static final double TURRET_SPEED = 0.3;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
     private final SimableCANSparkMax m_turretMotor;
     private final RelativeEncoder m_turretEncoder;
     private final PidProperty m_turretPID;
     private final SparkMaxPIDController m_turretPidController;
+
+    private double m_turretGoalAngle = Double.MIN_VALUE;
 
     private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); //left ls relative to intake
     private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_TURRET_LIMIT_SWITCH);
@@ -108,6 +110,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void stopTurret() {
+        m_turretGoalAngle = Double.MIN_VALUE;
         m_turretMotor.set(0);
     }
 
@@ -139,15 +142,37 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public boolean turretPID(double goalAngle) {
+        m_turretGoalAngle = goalAngle;
+
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
 
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
 
+    public double getTurretAngleDeg() {
+        return m_turretEncoder.getPosition();
+    }
+
+    public double getTurretAngleGoalDeg() {
+        return m_turretGoalAngle;
+    }
+
+    public double getTurretSpeed() {
+        return m_turretMotor.getAppliedOutput();
+    }
+
+    // Command Factories
+    public CommandBase commandMoveTurretClockwise() {
+        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
+    }
+
+    public CommandBase commandMoveTurretCounterClockwise() {
+        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
+    }
+
     public CommandBase createIsTurretMotorMoving() {
         return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
-
     }
 
     public void simulationPeriodic() {
