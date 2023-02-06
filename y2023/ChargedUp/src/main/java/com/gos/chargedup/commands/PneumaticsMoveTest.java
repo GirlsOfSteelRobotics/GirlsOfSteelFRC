@@ -31,8 +31,6 @@ public class PneumaticsMoveTest extends CommandBase {
         m_startPressure = 0;
         m_alert = new Alert(label, Alert.AlertType.ERROR);
         m_timer = new Timer();
-
-
     }
 
     @Override
@@ -44,16 +42,12 @@ public class PneumaticsMoveTest extends CommandBase {
 
     @Override
     public void execute() {
-        m_solenoid.set(!m_solenoid.get());
+        m_solenoid.toggle();
     }
 
     @Override
     public boolean isFinished() {
-        if (m_timer.get() >= 1) {
-            return (m_solenoid.get());
-        }
-        return false;
-
+        return m_timer.hasElapsed(1);
     }
 
     @Override

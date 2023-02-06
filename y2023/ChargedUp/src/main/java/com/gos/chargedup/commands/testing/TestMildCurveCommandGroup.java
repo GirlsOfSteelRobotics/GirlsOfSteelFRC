@@ -14,5 +14,6 @@ public class TestMildCurveCommandGroup extends SequentialCommandGroup {
         super(
             chassis.followTrajectoryCommand(TEST_MILD_CURVE, true)
         );
+        setName("TestTrajectoryMildCurve");
     }
 }

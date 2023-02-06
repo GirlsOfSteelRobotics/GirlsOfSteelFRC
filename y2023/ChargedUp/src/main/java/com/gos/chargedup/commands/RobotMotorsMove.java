@@ -58,8 +58,6 @@ public class RobotMotorsMove extends CommandBase {
     public void end(boolean interrupted) {
         m_motor.set(0);
         boolean isRobotAtPos = m_encoder.getPosition() - m_startPosMotor >= m_expectedDist;
-        //Use alert to see if it worked
-        //System.out.println(m_label + ": isMotorMoving -> \t" + isRobotAtPos);
         m_alert.set(!isRobotAtPos);
         m_timer.stop();
     }
