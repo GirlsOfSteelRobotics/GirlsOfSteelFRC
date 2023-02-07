@@ -11,21 +11,21 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.system.plant.DCMotor;
+//import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj2.command.Command;
+//import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+//import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
-import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+//import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class TurretSubsystem extends SubsystemBase {
 
@@ -69,10 +69,6 @@ public class TurretSubsystem extends SubsystemBase {
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
 
         if (RobotBase.isSimulation()) {
-//            SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
-//                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
-//            m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
-//                RevEncoderSimWrapper.create(m_pivotMotor), true);
             m_turretSimulator = new InstantaneousMotorSim(new RevMotorControllerSimWrapper(m_turretMotor), RevEncoderSimWrapper.create(m_turretMotor), 180);
         }
 
@@ -131,8 +127,9 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandMoveTurretCounterClockwise() {
-        return this.startEnd(this::commandMoveTurretCounterClockwise, this::stopTurret);
+        return this.startEnd(this::moveTurretCounterClockwise, this::stopTurret);
     }
+
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> turretPID(angle), this::stopTurret).withName("Turret PID" + angle);
     }
@@ -162,19 +159,11 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretMotor.getAppliedOutput();
     }
 
-    // Command Factories
-    public CommandBase commandMoveTurretClockwise() {
-        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
-    }
-
-    public CommandBase commandMoveTurretCounterClockwise() {
-        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
-    }
-
     public CommandBase createIsTurretMotorMoving() {
         return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
     }
 
+    @Override
     public void simulationPeriodic() {
         m_turretSimulator.update();
     }

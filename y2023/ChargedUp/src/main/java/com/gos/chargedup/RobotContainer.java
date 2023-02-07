@@ -20,7 +20,7 @@ import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
-//import com.pathplanner.lib.server.PathPlannerServer;
+import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;

@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj2.command.Command;
+//import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -161,9 +161,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     public boolean isInnerPistonIn() {
         return m_innerPiston.get();
+    }
+
     public CommandBase commandPivotArmDown() {
         return this.startEnd(this::pivotArmDown, this::pivotArmStop);
     }
+
     public CommandBase commandPivotArmToAngle(double angle) {
         return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle);
     }
@@ -217,30 +220,22 @@ public class ArmSubsystem extends SubsystemBase {
         return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
     }
 
-    public CommandBase tuneGravityOffsetPID(){
+    public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
     }
+
     public void tuneGravityOffset() {
         m_pivotMotor.setVoltage(GRAVITY_OFFSET.getValue());
     }
 
-
-
+    @Override
     public void simulationPeriodic() {
         m_pivotSimulator.update();
     }
-
 
     public CommandBase createIsArmOuterPneumaticMoving(PneumaticHub pneumaticHub) {
         return new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
     }
 
-    public CommandBase commandPivotArmUp() {
-        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp");
-    }
-
-    public CommandBase commandPivotArmDown() {
-        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown");
-    }
 }
 
