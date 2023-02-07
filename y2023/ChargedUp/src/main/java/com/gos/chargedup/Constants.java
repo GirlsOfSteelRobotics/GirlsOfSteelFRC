@@ -5,6 +5,8 @@
 
 package com.gos.chargedup;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -47,5 +49,9 @@ public final class Constants {
     //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
+
+    //Auto velocity and acceleration
+    public static final double AUTO_VELOCITY = Units.inchesToMeters(36);
+    public static final double AUTO_ACCELERATION = Units.inchesToMeters(12);
 
 }

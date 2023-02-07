@@ -1,7 +1,6 @@
 package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
-import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -35,10 +34,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
-import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
-import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
-import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
-import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 import java.util.Optional;
 
@@ -87,10 +82,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
 
-    private final GosDoubleProperty MAX_VELOCITY = new GosDoubleProperty(false, "Max Chassis Velocity", 0);
+    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
     //SIM
-    private DifferentialDrivetrainSimWrapper m_simulator;
+    //private DifferentialDrivetrainSimWrapper m_simulator;
 
 
     public ChassisSubsystem() {
@@ -158,14 +153,15 @@ public class ChassisSubsystem extends SubsystemBase {
                 DifferentialDrivetrainSim.KitbotGearing.k5p95,
                 DifferentialDrivetrainSim.KitbotWheelSize.kSixInch,
                 null);
-//            m_simulator = new DifferentialDrivetrainSimWrapper(
-//                drivetrainSim,
-//                new RevMotorControllerSimWrapper(m_leaderLeft),
-//                new RevMotorControllerSimWrapper(m_leaderRight),
-//                RevEncoderSimWrapper.create(m_leaderLeft),
-//                RevEncoderSimWrapper.create(m_leaderRight),
-//                new CtrePigeonImuWrapper(m_gyro));
-            m_simulator.setRightInverted(false);
+//          m_simulator = new DifferentialDrivetrainSimWrapper(
+//              drivetrainSim,
+//              new RevMotorControllerSimWrapper(m_leaderLeft),
+//              new RevMotorControllerSimWrapper(m_leaderRight),
+//              RevEncoderSimWrapper.create(m_leaderLeft),
+//              RevEncoderSimWrapper.create(m_leaderRight),
+//              new CtrePigeonImuWrapper(m_gyro));
+//              m_simulator.setRightInverted(false);
+//          )
         }
 
     }
@@ -175,8 +171,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .addP(0) //this needs to be tuned!
             .addI(0)
             .addD(0)
-            .addFF(0)
-            .addMaxVelocity((Units.inchesToMeters(0)))
+            .addFF(.22)
+            .addMaxVelocity((Units.inchesToMeters(2)))
             .addMaxAcceleration((Units.inchesToMeters(0)))
             .build();
     }
@@ -202,10 +198,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
-    @Override
-    public void simulationPeriodic() {
-        m_simulator.update();
-    }
+//  @Override
+//  public void simulationPeriodic()
+//      m_simulator.update();
+//  }
 
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
@@ -286,7 +282,7 @@ public class ChassisSubsystem extends SubsystemBase {
     ////////////////////
     public CommandBase commandChassisVelocity() {
         return this.runEnd(
-            () -> smartVelocityControl(Units.inchesToMeters(MAX_VELOCITY.getValue()), Units.inchesToMeters(MAX_VELOCITY.getValue())),
+            () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
             this::stop);
     }
 
