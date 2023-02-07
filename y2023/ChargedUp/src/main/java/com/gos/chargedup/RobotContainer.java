@@ -22,6 +22,8 @@ import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.PneumaticHub;
@@ -98,6 +100,8 @@ public class RobotContainer {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
 
         SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
+        tab.add("Chassis velocity tune", m_chassisSubsystem.commandChassisVelocity());
+
         tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
         tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
         tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
@@ -107,6 +111,17 @@ public class RobotContainer {
         tab.add("Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
 
         tab.add("Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
+        tab.add("Tune Turret Velocity", m_turret.createTuneVelocity());
+        tab.add("Toggle Break Mode", m_turret.createToggleBrakeMode());
+        tab.add("Reset Turret Encoder", m_turret.createResetEncoder());
+        tab.add("Tune Turret Position (0 degrees)", m_turret.createTunePosition(0));
+        tab.add("Tune Turret Position (90 degrees)", m_turret.createTunePosition(90));
+        tab.add("Tune Turret Position (-90 degrees)", m_turret.createTunePosition(-90));
+        tab.add("Chassis position tune: 0 deg", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+        tab.add("Chassis position tune: 90 deg", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
+        tab.add("Chassis position tune: -90 deg", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
+
+
 
     }
 

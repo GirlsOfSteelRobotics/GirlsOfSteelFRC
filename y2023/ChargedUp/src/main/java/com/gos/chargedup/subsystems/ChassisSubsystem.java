@@ -1,5 +1,6 @@
 package com.gos.chargedup.subsystems;
 
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.commands.RobotMotorsMove;
@@ -66,7 +67,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //Odometry
     private final DifferentialDriveOdometry m_odometry;
-    private final WPI_PigeonIMU m_gyro;
+    private final WPI_Pigeon2 m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
 
@@ -85,6 +86,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_rightPIDProperties;
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
+
+    private final GosDoubleProperty MAX_VELOCITY = new GosDoubleProperty(false, "Max Chassis Velocity", 0);
 
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
@@ -115,7 +118,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
-        m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
+        m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
@@ -155,13 +158,13 @@ public class ChassisSubsystem extends SubsystemBase {
                 DifferentialDrivetrainSim.KitbotGearing.k5p95,
                 DifferentialDrivetrainSim.KitbotWheelSize.kSixInch,
                 null);
-            m_simulator = new DifferentialDrivetrainSimWrapper(
-                drivetrainSim,
-                new RevMotorControllerSimWrapper(m_leaderLeft),
-                new RevMotorControllerSimWrapper(m_leaderRight),
-                RevEncoderSimWrapper.create(m_leaderLeft),
-                RevEncoderSimWrapper.create(m_leaderRight),
-                new CtrePigeonImuWrapper(m_gyro));
+//            m_simulator = new DifferentialDrivetrainSimWrapper(
+//                drivetrainSim,
+//                new RevMotorControllerSimWrapper(m_leaderLeft),
+//                new RevMotorControllerSimWrapper(m_leaderRight),
+//                RevEncoderSimWrapper.create(m_leaderLeft),
+//                RevEncoderSimWrapper.create(m_leaderRight),
+//                new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
         }
 
@@ -189,6 +192,14 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
+
+        SmartDashboard.putNumber("Chassis Velocity Left motor", Units.metersToInches(m_leftEncoder.getVelocity()));
+        SmartDashboard.putNumber("Chassis Velocity Right motor", Units.metersToInches(m_rightEncoder.getVelocity()));
+        SmartDashboard.putNumber("Position values: X", Units.metersToInches(getPose().getX()));
+        SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
+        SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());
+
+
     }
 
     @Override
@@ -201,6 +212,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
+        System.out.println("chassis velocity commanded");
+        System.out.println(leftVelocity + ", " + rightVelocity);
         m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }
@@ -273,7 +286,7 @@ public class ChassisSubsystem extends SubsystemBase {
     ////////////////////
     public CommandBase commandChassisVelocity() {
         return this.runEnd(
-            () -> smartVelocityControl(Units.feetToMeters(5), Units.feetToMeters(5)),
+            () -> smartVelocityControl(Units.inchesToMeters(MAX_VELOCITY.getValue()), Units.inchesToMeters(MAX_VELOCITY.getValue())),
             this::stop);
     }
 
@@ -306,5 +319,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase createIsRightMotorMoving() {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
+    }
+
+    public CommandBase createResetOdometry(Pose2d pose2d){
+        return this.runOnce(() -> resetOdometry(pose2d));
     }
 }
