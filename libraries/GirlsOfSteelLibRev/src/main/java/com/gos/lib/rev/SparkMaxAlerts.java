@@ -17,7 +17,6 @@ public class SparkMaxAlerts {
     public void checkAlerts() {
         short bitmask = m_sparkMax.getFaults();
 
-        System.out.println(bitmask);
         String currentErrorString = m_motorString;
         for (CANSparkMax.FaultID faultId : CANSparkMax.FaultID.values()) {
             if ((bitmask & (1<<faultId.value)) != 0) {
