@@ -284,9 +284,6 @@ public class ChassisSubsystem extends SubsystemBase {
             this::stop);
     }
 
-    public CommandBase createAutoEngageCommand() {
-        return run(this::autoEngage).withName("AutoEngage");
-    }
 
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
         return new SequentialCommandGroup(

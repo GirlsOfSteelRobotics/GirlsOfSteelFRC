@@ -103,14 +103,7 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         SmartDashboard.putNumber("Number of found targets (pre-filter): ", cameraResult.getTargets().size());
         SmartDashboard.putNumber("Number of good targets (post-filter): ", goodTargets.size());
 
-        Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update(goodCameraResults);
-        if (estimate.isPresent()) {
-            EstimatedRobotPose pose = estimate.get();
-//            System.out.println("Got something at " + pose.estimatedPose + ", " + pose.timestampSeconds);
-        }
-        //else{ System.out.println("No target found");}
-
-        return estimate;
+        return m_photonPoseEstimator.update(goodCameraResults);
     }
 }
 
