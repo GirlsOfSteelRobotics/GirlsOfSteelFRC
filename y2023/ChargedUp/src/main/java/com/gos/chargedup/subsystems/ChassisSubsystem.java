@@ -243,12 +243,19 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    public Command createAutoEngageCommand() {
+        return this.run(this::autoEngage);
+    }
+
+
     //NEW ODOMETRY
     public void updateOdometry() {
+        //OLD ODOMETRY
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-        m_poseEstimator.update(
-            m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
+        //NEW ODOMETRY
+        m_poseEstimator.update(
+                    m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
             m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
@@ -306,5 +313,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase createIsRightMotorMoving() {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
+    }
+
+    public CommandBase syncOdometriesOldandNew() {
+        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
+
     }
 }
