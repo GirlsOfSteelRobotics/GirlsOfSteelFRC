@@ -307,4 +307,21 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase createIsRightMotorMoving() {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
+
+    public void drivetrainToBrakeMode() {
+        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+    }
+
+    public void drivetrainToCoastMode(){
+        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+    }
+
 }
