@@ -1,30 +1,104 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "0": {
-        "columns": 30
-      },
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "SPARK MAX [4]": {
         "header": {
           "open": true
         }
       }
-    },
-    "Solenoids": {
-      "window": {
-        "visible": true
-      }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
+      "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/TestCommands/Auto Engage": "Command",
+      "/Shuffleboard/TestCommands/Automated Turret - 2": "Command",
+      "/Shuffleboard/TestCommands/Automated Turret - 6": "Command",
+      "/Shuffleboard/TestCommands/Automated Turret - 8": "Command",
+      "/Shuffleboard/TestCommands/Test Line": "Command",
+      "/Shuffleboard/TestCommands/Test Mild Curve": "Command",
+      "/Shuffleboard/TestCommands/Test S Curve": "Command",
+      "/SmartDashboard/Automated Turret - 2": "Command",
+      "/SmartDashboard/Automated Turret - 6": "Command",
+      "/SmartDashboard/Automated Turret - 8": "Command",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/FunctionalCommand": "Command",
+      "/SmartDashboard/PPRamseteCommand_field": "Field2d",
+      "/SmartDashboard/Run checklist": "Command",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/Test Line": "Command",
+      "/SmartDashboard/Test Mild Curve": "Command",
+      "/SmartDashboard/Test S Curve": "Command"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/FunctionalCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Run checklist": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SendableChooser[0]": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test Line": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test Mild Curve": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test S Curve": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
+    "transitory": {
+      "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "Alerts": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
+  "Plot": {
+    "Plot <0>": {
+      "window": {
+        "visible": false
+      }
     }
   }
 }

@@ -9,7 +9,6 @@ import sys
 
 
 def get_this_directory():
-
     try:
         from rules_python.python.runfiles import runfiles
 
