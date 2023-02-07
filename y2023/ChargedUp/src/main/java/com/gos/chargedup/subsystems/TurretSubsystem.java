@@ -11,21 +11,17 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-//import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-//import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-//import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
-//import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class TurretSubsystem extends SubsystemBase {
 
@@ -122,18 +118,6 @@ public class TurretSubsystem extends SubsystemBase {
         return !m_rightLimitSwitch.get();
     }
 
-    public CommandBase commandMoveTurretClockwise() {
-        return this.startEnd(this::moveTurretClockwise, this::stopTurret);
-    }
-
-    public CommandBase commandMoveTurretCounterClockwise() {
-        return this.startEnd(this::moveTurretCounterClockwise, this::stopTurret);
-    }
-
-    public CommandBase commandTurretPID(double angle) {
-        return this.runEnd(() -> turretPID(angle), this::stopTurret).withName("Turret PID" + angle);
-    }
-
     public double getTurretAngleDegreesNeoEncoder() {
         return m_turretEncoder.getPosition();
     }
@@ -161,6 +145,18 @@ public class TurretSubsystem extends SubsystemBase {
 
     public CommandBase createIsTurretMotorMoving() {
         return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
+    }
+
+    public CommandBase commandMoveTurretClockwise() {
+        return this.startEnd(this::moveTurretClockwise, this::stopTurret);
+    }
+
+    public CommandBase commandMoveTurretCounterClockwise() {
+        return this.startEnd(this::moveTurretCounterClockwise, this::stopTurret);
+    }
+
+    public CommandBase commandTurretPID(double angle) {
+        return this.runEnd(() -> turretPID(angle), this::stopTurret).withName("Turret PID" + angle);
     }
 
     @Override

@@ -20,7 +20,6 @@ import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
 
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
-import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -99,9 +98,6 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
-        PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
-        // PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
-        SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(pneumaticHub, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
