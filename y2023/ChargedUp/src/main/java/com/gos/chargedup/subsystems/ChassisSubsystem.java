@@ -43,28 +43,31 @@ import java.util.Optional;
 
 
 public class ChassisSubsystem extends SubsystemBase {
-    public static final double PITCH_LOWER_LIMIT = -5.0;
-    public static final double PITCH_UPPER_LIMIT = 5.0;
-    public static final GosDoubleProperty AUTO_ENGAGE_SPEED = new GosDoubleProperty(false, "Chassis speed for auto engage", 0.1);
+    private static final GosDoubleProperty AUTO_ENGAGE_SPEED = new GosDoubleProperty(false, "Chassis speed for auto engage", 0.1);
+
+    private static final double PITCH_LOWER_LIMIT = -5.0;
+    private static final double PITCH_UPPER_LIMIT = 5.0;
+
+    private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
+    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+    private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
+
+    private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
+    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
+        new DifferentialDriveKinematics(TRACK_WIDTH);
+
     //Chassis and motors
     private final SimableCANSparkMax m_leaderLeft;
     private final SimableCANSparkMax m_followerLeft;
     private final SimableCANSparkMax m_leaderRight;
     private final SimableCANSparkMax m_followerRight;
 
-    private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
-    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
-    private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
-
-
     private final DifferentialDrive m_drive;
 
     //Odometry
     private final DifferentialDriveOdometry m_odometry;
     private final WPI_PigeonIMU m_gyro;
-
     private final RelativeEncoder m_rightEncoder;
-
     private final RelativeEncoder m_leftEncoder;
 
     //Field
@@ -74,11 +77,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private DifferentialDrivetrainSimWrapper m_simulator;
 
     private final Vision m_vision;
-
-    private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
-    public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
-        new DifferentialDriveKinematics(TRACK_WIDTH);
-
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -90,7 +88,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_rightPIDProperties;
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
-
 
     public ChassisSubsystem() {
 
@@ -166,8 +163,6 @@ public class ChassisSubsystem extends SubsystemBase {
                 RevEncoderSimWrapper.create(m_leaderRight),
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
-
-
         }
 
     }
@@ -210,12 +205,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }
 
-    public CommandBase commandChassisVelocity() {
-        return this.runEnd(
-            () -> smartVelocityControl(Units.feetToMeters(5), Units.feetToMeters(5)),
-            this::stop);
-    }
-
     private void stop() {
         setArcadeDrive(0, 0);
     }
@@ -254,10 +243,6 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public Command createAutoEngageCommand() {
-        return this.run(this::autoEngage);
-    }
-
     //NEW ODOMETRY
     public void updateOdometry() {
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
@@ -283,6 +268,19 @@ public class ChassisSubsystem extends SubsystemBase {
         System.out.println("Reset Odometry was called");
     }
 
+    ////////////////////
+    // Command Factories
+    ////////////////////
+    public CommandBase commandChassisVelocity() {
+        return this.runEnd(
+            () -> smartVelocityControl(Units.feetToMeters(5), Units.feetToMeters(5)),
+            this::stop);
+    }
+
+    public CommandBase createAutoEngageCommand() {
+        return run(this::autoEngage).withName("AutoEngage");
+    }
+
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
         return new SequentialCommandGroup(
             new InstantCommand(() -> {
@@ -300,16 +298,13 @@ public class ChassisSubsystem extends SubsystemBase {
                 true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
                 this // Requires this drive subsystem
             ));
-
     }
 
     public CommandBase createIsLeftMotorMoving() {
         return new RobotMotorsMove(m_leaderLeft, "Chassis: Leader left motor", 1.0);
-
     }
 
     public CommandBase createIsRightMotorMoving() {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
-
     }
 }
