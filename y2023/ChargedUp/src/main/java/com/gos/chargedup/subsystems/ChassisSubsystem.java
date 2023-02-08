@@ -89,6 +89,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_rightPIDProperties;
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
+    private final NetworkTableEntry m_leftEncoderPosition;
+    private final NetworkTableEntry m_leftEncoderVelocity;
+    private final NetworkTableEntry m_rightEncoderPosition;
+    private final NetworkTableEntry m_rightEncoderVelocity;
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
@@ -157,6 +161,11 @@ public class ChassisSubsystem extends SubsystemBase {
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
 
+        m_leftEncoderPosition = loggingTable.getEntry("Left Position");
+        m_leftEncoderVelocity = loggingTable.getEntry("Left Velocity");
+        m_rightEncoderPosition = loggingTable.getEntry("Right Position");
+        m_rightEncoderVelocity = loggingTable.getEntry("Right Velocity");
+
         m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
@@ -202,9 +211,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
-
-        SmartDashboard.putNumber("Chassis Velocity Left motor", Units.metersToInches(m_leftEncoder.getVelocity()));
-        SmartDashboard.putNumber("Chassis Velocity Right motor", Units.metersToInches(m_rightEncoder.getVelocity()));
+        m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
+        m_leftEncoderVelocity.setNumber(Units.metersToInches(m_leftEncoder.getVelocity()));
+        m_rightEncoderPosition.setNumber(Units.metersToInches(m_rightEncoder.getPosition()));
+        m_rightEncoderVelocity.setNumber(Units.metersToInches(m_rightEncoder.getVelocity()));
         SmartDashboard.putNumber("Position values: X", Units.metersToInches(getPose().getX()));
         SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
         SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());

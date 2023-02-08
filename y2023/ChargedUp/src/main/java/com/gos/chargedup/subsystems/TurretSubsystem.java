@@ -2,11 +2,11 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -18,7 +18,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -46,6 +45,7 @@ public class TurretSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightLimitSwitchEntry;
     private final NetworkTableEntry m_intakeLimitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
+    private final NetworkTableEntry m_encoderVelocityEntry;
 
     private final SparkMaxAlerts m_turretMotorErrorAlert;
 
@@ -71,6 +71,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry = loggingTable.getEntry("Turret Intake LS");
         m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
+        m_encoderVelocityEntry = loggingTable.getEntry("Turret Velocity (deg-per-sec)");
 
         m_turretMotorErrorAlert = new SparkMaxAlerts(m_turretMotor, "turret motor");
 
@@ -98,7 +99,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry.setBoolean(intakeLimitSwitchPressed());
         m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
         m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
-        SmartDashboard.putNumber("Turret Motor Velocity: ", m_turretEncoder.getVelocity());
+        m_encoderVelocityEntry.setNumber(m_turretEncoder.getVelocity());
 
         m_turretMotorErrorAlert.checkAlerts();
     }
