@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
@@ -69,7 +70,10 @@ public class ChassisSubsystem extends SubsystemBase {
     //Field
     private final Field2d m_field;
 
-    private final VisionSubsystem m_pcw;
+    //SIM
+    private DifferentialDrivetrainSimWrapper m_simulator;
+
+    private final Vision m_vision;
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -84,9 +88,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
-    //SIM
-    //private DifferentialDrivetrainSimWrapper m_simulator;
-
+    private final SparkMaxAlerts m_leaderLeftMotorErrorAlert;
+    private final SparkMaxAlerts m_followerLeftMotorErrorAlert;
+    private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
+    private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
     public ChassisSubsystem() {
 
@@ -142,10 +147,16 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
-        m_pcw = new VisionSubsystem();
+        m_vision = new PhotonVisionSubsystem();
+        // m_vision = new LimelightVisionSubsystem();
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
+
+        m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
+        m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
+        m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
+        m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -195,6 +206,11 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
         SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());
 
+        m_leaderLeftMotorErrorAlert.checkAlerts();
+        m_followerLeftMotorErrorAlert.checkAlerts();
+        m_leaderRightMotorErrorAlert.checkAlerts();
+        m_followerRightMotorErrorAlert.checkAlerts();
+    }
 
     }
 
@@ -204,7 +220,7 @@ public class ChassisSubsystem extends SubsystemBase {
 //  }
 
     public Pose2d getPose() {
-        return m_odometry.getPoseMeters();
+        return m_poseEstimator.getEstimatedPosition();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
@@ -252,14 +268,21 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    public CommandBase createAutoEngageCommand() {
+        return this.run(this::autoEngage);
+    }
+
+
     //NEW ODOMETRY
     public void updateOdometry() {
+        //OLD ODOMETRY
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-        m_poseEstimator.update(
-            m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
+        //NEW ODOMETRY
+        m_poseEstimator.update(
+                    m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
-            m_pcw.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+            m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();
@@ -286,9 +309,6 @@ public class ChassisSubsystem extends SubsystemBase {
             this::stop);
     }
 
-    public CommandBase createAutoEngageCommand() {
-        return run(this::autoEngage).withName("AutoEngage");
-    }
 
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
         return new SequentialCommandGroup(
@@ -319,5 +339,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase createResetOdometry(Pose2d pose2d){
         return this.runOnce(() -> resetOdometry(pose2d));
+    }
+
+    public CommandBase syncOdometryWithPoseEstimator() {
+        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
+
     }
 }

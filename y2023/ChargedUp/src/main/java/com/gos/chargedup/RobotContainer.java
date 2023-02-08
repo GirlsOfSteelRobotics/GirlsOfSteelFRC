@@ -10,15 +10,14 @@ import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
-import com.gos.chargedup.subsystems.ArmSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
-
-//test paths
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
-
+import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
+import com.gos.chargedup.subsystems.IntakeSubsystem;
+import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
@@ -26,11 +25,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotBase;
-import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 
-import com.gos.chargedup.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
@@ -89,6 +87,8 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
+
+        DriverStation.silenceJoystickConnectionWarning(true);
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
@@ -98,6 +98,7 @@ public class RobotContainer {
 
     private void createTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
+        SmartDashboard.putData("Sync Odometries", m_chassisSubsystem.syncOdometriesOldandNew());
 
         SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
         tab.add("Chassis velocity tune", m_chassisSubsystem.commandChassisVelocity());
@@ -122,6 +123,16 @@ public class RobotContainer {
         tab.add("Chassis position tune: -90 deg", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
 
 
+
+        tab.add("Move Turret Clockwise", m_turret.commandMoveTurretClockwise());
+        tab.add("Move Turret Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
+        tab.add("Turret PID - 0 degrees", m_turret.commandTurretPID(0));
+        tab.add("Turret PID - 90 degrees", m_turret.commandTurretPID(90));
+        tab.add("Turret PID - 180 degrees", m_turret.commandTurretPID(180));
+        tab.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
+        tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
+        tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+        tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
 
     }
 
