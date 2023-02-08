@@ -112,6 +112,16 @@ public class RobotContainer {
 
         tab.add("Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
 
+        tab.add("Move Turret Clockwise", m_turret.commandMoveTurretClockwise());
+        tab.add("Move Turret Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
+        tab.add("Turret PID - 0 degrees", m_turret.commandTurretPID(0));
+        tab.add("Turret PID - 90 degrees", m_turret.commandTurretPID(90));
+        tab.add("Turret PID - 180 degrees", m_turret.commandTurretPID(180));
+        tab.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
+        tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
+        tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+        tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+
     }
 
     /**

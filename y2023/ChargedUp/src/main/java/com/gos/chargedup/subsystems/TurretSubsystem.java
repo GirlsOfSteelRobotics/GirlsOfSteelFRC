@@ -16,8 +16,12 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class TurretSubsystem extends SubsystemBase {
 
@@ -39,6 +43,8 @@ public class TurretSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_intakeLimitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
 
+    private InstantaneousMotorSim m_turretSimulator;
+
 
     public TurretSubsystem() {
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -58,10 +64,13 @@ public class TurretSubsystem extends SubsystemBase {
         m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
 
+        if (RobotBase.isSimulation()) {
+            m_turretSimulator = new InstantaneousMotorSim(new RevMotorControllerSimWrapper(m_turretMotor), RevEncoderSimWrapper.create(m_turretMotor), 180);
+        }
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        return new RevPidPropertyBuilder("Collector", false, pidController, 0)
+        return new RevPidPropertyBuilder("Turret", false, pidController, 0)
             .addP(0) //0.20201
             .addI(0)
             .addD(0)
@@ -79,6 +88,11 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry.setBoolean(intakeLimitSwitchPressed());
         m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
         m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_turretSimulator.update();
     }
 
 
@@ -143,6 +157,10 @@ public class TurretSubsystem extends SubsystemBase {
 
     public CommandBase createIsTurretMotorMoving() {
         return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
+    }
+
+    public CommandBase commandTurretPID(double angle) {
+        return this.runEnd(() -> turretPID(angle), this::stopTurret).withName("Turret PID" + angle);
     }
 
 }

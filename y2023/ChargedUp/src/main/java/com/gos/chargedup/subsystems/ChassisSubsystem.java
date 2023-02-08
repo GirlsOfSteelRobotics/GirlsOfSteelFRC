@@ -243,7 +243,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public Command createAutoEngageCommand() {
+    public CommandBase createAutoEngageCommand() {
         return this.run(this::autoEngage);
     }
 
