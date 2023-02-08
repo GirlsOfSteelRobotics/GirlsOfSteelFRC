@@ -23,6 +23,7 @@ import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotBase;
 
@@ -84,6 +85,8 @@ public class RobotContainer {
             DriverStationSim.setEnabled(true);
             DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
         }
+
+        DriverStation.silenceJoystickConnectionWarning(true);
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
@@ -93,6 +96,7 @@ public class RobotContainer {
 
     private void createTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
+        SmartDashboard.putData("Sync Odometries", m_chassisSubsystem.syncOdometriesOldandNew());
 
         SmartDashboard.putData(m_chassisSubsystem.commandChassisVelocity());
         tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
@@ -104,6 +108,16 @@ public class RobotContainer {
         tab.add("Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
 
         tab.add("Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
+
+        tab.add("Move Turret Clockwise", m_turret.commandMoveTurretClockwise());
+        tab.add("Move Turret Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
+        tab.add("Turret PID - 0 degrees", m_turret.commandTurretPID(0));
+        tab.add("Turret PID - 90 degrees", m_turret.commandTurretPID(90));
+        tab.add("Turret PID - 180 degrees", m_turret.commandTurretPID(180));
+        tab.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
+        tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
+        tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+        tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
 
     }
 

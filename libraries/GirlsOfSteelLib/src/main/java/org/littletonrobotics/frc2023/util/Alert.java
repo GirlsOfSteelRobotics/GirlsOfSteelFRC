@@ -58,7 +58,6 @@ public class Alert {
         groups.get(group).m_alerts.add(this);
     }
 
-
     /**
      * Sets whether the alert should currently be displayed. When activated, the alert text will also
      * be sent to the console.

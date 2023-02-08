@@ -24,7 +24,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_intakeMotor;
 
     private final SparkMaxAlerts m_intakeMotorErrorAlert;
-
     private final SparkMaxAlerts m_hopperMotorErrorAlert;
 
 
@@ -45,7 +44,6 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeMotor.burnFlash();
 
         m_intakeMotorErrorAlert = new SparkMaxAlerts(m_intakeMotor, "intake motor ");
-
         m_hopperMotorErrorAlert = new SparkMaxAlerts(m_hopperMotor, "hopper motor ");
     }
 
