@@ -73,7 +73,10 @@ public class ChassisSubsystem extends SubsystemBase {
     //Field
     private final Field2d m_field;
 
-    private final VisionSubsystem m_pcw;
+    //SIM
+    private DifferentialDrivetrainSimWrapper m_simulator;
+
+    private final Vision m_vision;
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -85,10 +88,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_rightPIDProperties;
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
-
-    //SIM
-    private DifferentialDrivetrainSimWrapper m_simulator;
-
 
     public ChassisSubsystem() {
 
@@ -144,7 +143,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
-        m_pcw = new VisionSubsystem();
+        m_vision = new PhotonVisionSubsystem();
+        // m_vision = new LimelightVisionSubsystem();
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -197,7 +197,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return m_odometry.getPoseMeters();
+        return m_poseEstimator.getEstimatedPosition();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
@@ -243,14 +243,21 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    public CommandBase createAutoEngageCommand() {
+        return this.run(this::autoEngage);
+    }
+
+
     //NEW ODOMETRY
     public void updateOdometry() {
+        //OLD ODOMETRY
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-        m_poseEstimator.update(
-            m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
+        //NEW ODOMETRY
+        m_poseEstimator.update(
+                    m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
-            m_pcw.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+            m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();
@@ -277,9 +284,6 @@ public class ChassisSubsystem extends SubsystemBase {
             this::stop);
     }
 
-    public CommandBase createAutoEngageCommand() {
-        return run(this::autoEngage).withName("AutoEngage");
-    }
 
     public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
         return new SequentialCommandGroup(
@@ -306,5 +310,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase createIsRightMotorMoving() {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
+    }
+
+    public CommandBase syncOdometriesOldandNew() {
+        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
+
     }
 }

@@ -67,8 +67,6 @@ public class TurretSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             m_turretSimulator = new InstantaneousMotorSim(new RevMotorControllerSimWrapper(m_turretMotor), RevEncoderSimWrapper.create(m_turretMotor), 180);
         }
-
-
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -90,6 +88,11 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry.setBoolean(intakeLimitSwitchPressed());
         m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
         m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_turretSimulator.update();
     }
 
 
@@ -143,25 +146,21 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretMotor.getAppliedOutput();
     }
 
+    // Command Factories
+    public CommandBase commandMoveTurretClockwise() {
+        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
+    }
+
+    public CommandBase commandMoveTurretCounterClockwise() {
+        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
+    }
+
     public CommandBase createIsTurretMotorMoving() {
         return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
     }
 
-    public CommandBase commandMoveTurretClockwise() {
-        return this.startEnd(this::moveTurretClockwise, this::stopTurret);
-    }
-
-    public CommandBase commandMoveTurretCounterClockwise() {
-        return this.startEnd(this::moveTurretCounterClockwise, this::stopTurret);
-    }
-
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> turretPID(angle), this::stopTurret).withName("Turret PID" + angle);
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        m_turretSimulator.update();
     }
 
 }

@@ -234,7 +234,7 @@
   {
     "name": "/Preferences/Turret.mm.max_acceleration",
     "type": "double",
-    "value": 30.0,
+    "value": 90.0,
     "properties": {
       "persistent": true
     }
