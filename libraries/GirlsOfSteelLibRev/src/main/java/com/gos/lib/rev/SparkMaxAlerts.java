@@ -17,20 +17,16 @@ public class SparkMaxAlerts {
     public void checkAlerts() {
         short bitmask = m_sparkMax.getFaults();
 
-        String currentErrorString = m_motorString;
+        StringBuilder errorBuilder = new StringBuilder(m_motorString);
         for (CANSparkMax.FaultID faultId : CANSparkMax.FaultID.values()) {
-            if ((bitmask & (1<<faultId.value)) != 0) {
-                currentErrorString = currentErrorString + " " + faultId;
+            if ((bitmask & (1 << faultId.value)) != 0) {
+                errorBuilder.append(' ').append(faultId);
             }
         }
 
-        m_alert.setText(currentErrorString);
+        String errorString = errorBuilder.toString();
+        m_alert.setText(errorString);
 
-        if (!(currentErrorString.equals(m_motorString))) {
-            m_alert.set(true);
-        }
-        else {
-            m_alert.set(false);
-        }
+        m_alert.set(!(errorString.equals(m_motorString)));
     }
 }
