@@ -38,9 +38,9 @@ public class TurretSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 20.0 * (160.0 / 14.0);
     private double m_turretGoalAngle = Double.MIN_VALUE;
 
-    private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); // left ls relative to intake
+    private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); //left ls relative to intake
     private final DigitalInput m_intakeLimitSwitch = new DigitalInput(Constants.INTAKE_TURRET_LIMIT_SWITCH);
-    private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_TURRET_LIMIT_SWITCH); // right ls relative to intake
+    private final DigitalInput m_rightLimitSwitch = new DigitalInput(Constants.RIGHT_TURRET_LIMIT_SWITCH); //right ls relative to intake
 
     private final NetworkTableEntry m_leftLimitSwitchEntry;
     private final NetworkTableEntry m_rightLimitSwitchEntry;

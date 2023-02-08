@@ -5,6 +5,7 @@
 
 package com.gos.chargedup;
 
+import com.pathplanner.lib.PathConstraints;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -51,7 +52,6 @@ public final class Constants {
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     //Auto velocity and acceleration
-    public static final double AUTO_VELOCITY = Units.inchesToMeters(36);
-    public static final double AUTO_ACCELERATION = Units.inchesToMeters(12);
+    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(12));
 
 }

@@ -35,6 +35,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
+import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
+import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
+import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
+import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 import java.util.Optional;
 
@@ -164,15 +168,14 @@ public class ChassisSubsystem extends SubsystemBase {
                 DifferentialDrivetrainSim.KitbotGearing.k5p95,
                 DifferentialDrivetrainSim.KitbotWheelSize.kSixInch,
                 null);
-//          m_simulator = new DifferentialDrivetrainSimWrapper(
-//              drivetrainSim,
-//              new RevMotorControllerSimWrapper(m_leaderLeft),
-//              new RevMotorControllerSimWrapper(m_leaderRight),
-//              RevEncoderSimWrapper.create(m_leaderLeft),
-//              RevEncoderSimWrapper.create(m_leaderRight),
-//              new CtrePigeonImuWrapper(m_gyro));
-//              m_simulator.setRightInverted(false);
-//          )
+            m_simulator = new DifferentialDrivetrainSimWrapper(
+                drivetrainSim,
+                new RevMotorControllerSimWrapper(m_leaderLeft),
+                new RevMotorControllerSimWrapper(m_leaderRight),
+                RevEncoderSimWrapper.create(m_leaderLeft),
+                RevEncoderSimWrapper.create(m_leaderRight),
+                new CtrePigeonImuWrapper(m_gyro));
+            m_simulator.setRightInverted(false);
         }
 
     }
@@ -212,20 +215,16 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerRightMotorErrorAlert.checkAlerts();
     }
 
+    @Override
+    public void simulationPeriodic() {
+        m_simulator.update();
     }
-
-//  @Override
-//  public void simulationPeriodic()
-//      m_simulator.update();
-//  }
 
     public Pose2d getPose() {
         return m_poseEstimator.getEstimatedPosition();
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
-        System.out.println("chassis velocity commanded");
-        System.out.println(leftVelocity + ", " + rightVelocity);
         m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
         m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }
@@ -337,12 +336,11 @@ public class ChassisSubsystem extends SubsystemBase {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
-    public CommandBase createResetOdometry(Pose2d pose2d){
+    public CommandBase createResetOdometry(Pose2d pose2d) {
         return this.runOnce(() -> resetOdometry(pose2d));
     }
 
     public CommandBase syncOdometryWithPoseEstimator() {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
-
     }
 }
