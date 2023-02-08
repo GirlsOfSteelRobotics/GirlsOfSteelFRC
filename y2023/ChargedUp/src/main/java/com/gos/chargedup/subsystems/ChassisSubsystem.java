@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import com.gos.chargedup.Constants;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
@@ -89,6 +90,11 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
 
+    private final SparkMaxAlerts m_leaderLeftMotorErrorAlert;
+    private final SparkMaxAlerts m_followerLeftMotorErrorAlert;
+    private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
+    private final SparkMaxAlerts m_followerRightMotorErrorAlert;
+
     public ChassisSubsystem() {
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -149,6 +155,11 @@ public class ChassisSubsystem extends SubsystemBase {
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
 
+        m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
+        m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
+        m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
+        m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
+
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
                 DifferentialDrivetrainSim.KitbotMotor.kDoubleNEOPerSide,
@@ -189,6 +200,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
+
+        m_leaderLeftMotorErrorAlert.checkAlerts();
+        m_followerLeftMotorErrorAlert.checkAlerts();
+        m_leaderRightMotorErrorAlert.checkAlerts();
+        m_followerRightMotorErrorAlert.checkAlerts();
     }
 
     @Override

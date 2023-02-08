@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.PneumaticsMoveTest;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -59,6 +60,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_encoderDegEntry;
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
+    private final SparkMaxAlerts m_pivotErrorAlert;
+
     private double m_armAngleGoal = Double.MIN_VALUE;
 
     public ArmSubsystem() {
@@ -87,6 +90,8 @@ public class ArmSubsystem extends SubsystemBase {
         m_upperLimitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
 
+        m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
+
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
                 ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
@@ -112,6 +117,8 @@ public class ArmSubsystem extends SubsystemBase {
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
+
+        m_pivotErrorAlert.checkAlerts();
     }
 
     @Override
