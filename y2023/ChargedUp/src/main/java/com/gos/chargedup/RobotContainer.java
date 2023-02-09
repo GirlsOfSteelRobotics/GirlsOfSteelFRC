@@ -132,10 +132,6 @@ public class RobotContainer {
         // Operator
         m_operatorController.leftBumper().whileTrue(m_intake.createRetractSolenoidCommand());
         m_operatorController.rightBumper().whileTrue(m_intake.createExtendSolenoidCommand());
-//        m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
-//        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
-//        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-//        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.a().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
     }

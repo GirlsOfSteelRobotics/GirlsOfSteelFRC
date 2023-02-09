@@ -52,11 +52,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         clear();
-        if(m_optionConeLED) {
+        if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
         }
 
-        else if(m_optionCubeLED) {
+        else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
 
@@ -86,7 +86,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     public void setCubeGamePieceSignal() {
-         m_optionCubeLED = true;
+        m_optionCubeLED = true;
     }
 
     public CommandBase commandConeGamePieceSignal() {
