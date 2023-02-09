@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.commands.PneumaticsMoveTest;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -22,6 +23,9 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SimableCANSparkMax m_hopperMotor;
     private final SimableCANSparkMax m_intakeMotor;
 
+    private final SparkMaxAlerts m_intakeMotorErrorAlert;
+    private final SparkMaxAlerts m_hopperMotorErrorAlert;
+
 
 
     public IntakeSubsystem() {
@@ -38,6 +42,24 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_hopperMotor.burnFlash();
         m_intakeMotor.burnFlash();
+
+        m_intakeMotorErrorAlert = new SparkMaxAlerts(m_intakeMotor, "intake motor ");
+        m_hopperMotorErrorAlert = new SparkMaxAlerts(m_hopperMotor, "hopper motor ");
+    }
+
+    @Override
+    public void periodic() {
+        m_intakeMotorErrorAlert.checkAlerts();
+        m_hopperMotorErrorAlert.checkAlerts();
+    }
+
+    public boolean intakeMotorError() {
+        return m_intakeMotor.getFaults() != 0;
+
+    }
+
+    public boolean hopperMotorError() {
+        return m_hopperMotor.getFaults() != 0;
     }
 
     public void extend() {
