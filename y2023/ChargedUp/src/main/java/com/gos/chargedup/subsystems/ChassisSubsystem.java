@@ -1,6 +1,6 @@
 package com.gos.chargedup.subsystems;
 
-import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
 import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
@@ -67,7 +67,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     //Odometry
     private final DifferentialDriveOdometry m_odometry;
-    private final WPI_PigeonIMU m_gyro;
+    private final WPI_Pigeon2 m_gyro;
     private final RelativeEncoder m_rightEncoder;
     private final RelativeEncoder m_leftEncoder;
 
@@ -89,6 +89,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_rightPIDProperties;
 
     private final NetworkTableEntry m_gyroAngleDegEntry;
+    private final NetworkTableEntry m_leftEncoderPosition;
+    private final NetworkTableEntry m_leftEncoderVelocity;
+    private final NetworkTableEntry m_rightEncoderPosition;
+    private final NetworkTableEntry m_rightEncoderVelocity;
+
+    private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
     private final SparkMaxAlerts m_leaderLeftMotorErrorAlert;
     private final SparkMaxAlerts m_followerLeftMotorErrorAlert;
@@ -120,7 +126,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
-        m_gyro = new WPI_PigeonIMU(Constants.PIGEON_PORT);
+        m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
@@ -155,6 +161,11 @@ public class ChassisSubsystem extends SubsystemBase {
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
 
+        m_leftEncoderPosition = loggingTable.getEntry("Left Position");
+        m_leftEncoderVelocity = loggingTable.getEntry("Left Velocity");
+        m_rightEncoderPosition = loggingTable.getEntry("Right Position");
+        m_rightEncoderVelocity = loggingTable.getEntry("Right Velocity");
+
         m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
@@ -183,8 +194,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .addP(0) //this needs to be tuned!
             .addI(0)
             .addD(0)
-            .addFF(0)
-            .addMaxVelocity((Units.inchesToMeters(0)))
+            .addFF(.22)
+            .addMaxVelocity((Units.inchesToMeters(2)))
             .addMaxAcceleration((Units.inchesToMeters(0)))
             .build();
     }
@@ -200,6 +211,13 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightPIDProperties.updateIfChanged();
 
         m_gyroAngleDegEntry.setNumber(getYaw());
+        m_leftEncoderPosition.setNumber(Units.metersToInches(m_leftEncoder.getPosition()));
+        m_leftEncoderVelocity.setNumber(Units.metersToInches(m_leftEncoder.getVelocity()));
+        m_rightEncoderPosition.setNumber(Units.metersToInches(m_rightEncoder.getPosition()));
+        m_rightEncoderVelocity.setNumber(Units.metersToInches(m_rightEncoder.getVelocity()));
+        SmartDashboard.putNumber("Position values: X", Units.metersToInches(getPose().getX()));
+        SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
+        SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -296,7 +314,7 @@ public class ChassisSubsystem extends SubsystemBase {
     ////////////////////
     public CommandBase commandChassisVelocity() {
         return this.runEnd(
-            () -> smartVelocityControl(Units.feetToMeters(5), Units.feetToMeters(5)),
+            () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
             this::stop);
     }
 
@@ -328,8 +346,11 @@ public class ChassisSubsystem extends SubsystemBase {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
-    public CommandBase syncOdometriesOldandNew() {
-        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
+    public CommandBase createResetOdometry(Pose2d pose2d) {
+        return this.runOnce(() -> resetOdometry(pose2d));
+    }
 
+    public CommandBase syncOdometryWithPoseEstimator() {
+        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
     }
 }

@@ -2,11 +2,11 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -28,11 +28,13 @@ public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.3;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
+    public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 0);
     private final SimableCANSparkMax m_turretMotor;
     private final RelativeEncoder m_turretEncoder;
     private final PidProperty m_turretPID;
     private final SparkMaxPIDController m_turretPidController;
 
+    private static final double GEAR_RATIO = 20.0 * (160.0 / 14.0);
     private double m_turretGoalAngle = Double.MIN_VALUE;
 
     private final DigitalInput m_leftLimitSwitch = new DigitalInput(Constants.LEFT_TURRET_LIMIT_SWITCH); //left ls relative to intake
@@ -43,6 +45,7 @@ public class TurretSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightLimitSwitchEntry;
     private final NetworkTableEntry m_intakeLimitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
+    private final NetworkTableEntry m_encoderVelocityEntry;
 
     private final SparkMaxAlerts m_turretMotorErrorAlert;
 
@@ -55,6 +58,8 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         m_turretEncoder = m_turretMotor.getEncoder();
+        m_turretEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
+        m_turretEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
 
         m_turretPidController = m_turretMotor.getPIDController();
         m_turretPID = setupPidValues(m_turretPidController);
@@ -66,6 +71,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry = loggingTable.getEntry("Turret Intake LS");
         m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
+        m_encoderVelocityEntry = loggingTable.getEntry("Turret Velocity (deg-per-sec)");
 
         m_turretMotorErrorAlert = new SparkMaxAlerts(m_turretMotor, "turret motor");
 
@@ -76,12 +82,12 @@ public class TurretSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Turret", false, pidController, 0)
-            .addP(0) //0.20201
+            .addP(0.001) //0.20201
             .addI(0)
-            .addD(0)
-            .addFF(0)
-            .addMaxVelocity(Units.inchesToMeters(0))
-            .addMaxAcceleration(Units.inchesToMeters(0))
+            .addD(0.04)
+            .addFF(0.00675)
+            .addMaxVelocity(Units.inchesToMeters(80))
+            .addMaxAcceleration(Units.inchesToMeters(160))
             .build();
     }
 
@@ -93,6 +99,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry.setBoolean(intakeLimitSwitchPressed());
         m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
         m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
+        m_encoderVelocityEntry.setNumber(m_turretEncoder.getVelocity());
 
         m_turretMotorErrorAlert.checkAlerts();
     }
@@ -141,6 +148,10 @@ public class TurretSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
 
+    public void tuneVelocity(double goalVelocity) {
+        m_turretPidController.setReference(goalVelocity, CANSparkMax.ControlType.kVelocity, 0);
+    }
+
     public double getTurretAngleDeg() {
         return m_turretEncoder.getPosition();
     }
@@ -170,5 +181,16 @@ public class TurretSubsystem extends SubsystemBase {
         return this.runEnd(() -> turretPID(angle), this::stopTurret).withName("Turret PID" + angle);
     }
 
+    public CommandBase createTuneVelocity() {
+        return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret);
+    }
+
+    public CommandBase createToggleBrakeMode() {
+        return this.runEnd(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast), () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake));
+    }
+
+    public CommandBase createResetEncoder() {
+        return this.runOnce(() -> m_turretEncoder.setPosition(0.0));
+    }
 }
 

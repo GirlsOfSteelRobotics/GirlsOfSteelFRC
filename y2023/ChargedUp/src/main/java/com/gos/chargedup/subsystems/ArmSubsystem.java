@@ -32,7 +32,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
-    public static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0);
+    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0);
 
     private static final double GEAR_RATIO = 5.0 * 2.0 * 4.0;
     private static final double ARM_MOTOR_SPEED = 0.2;
@@ -54,14 +54,17 @@ public class ArmSubsystem extends SubsystemBase {
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
+    private double m_armAngleGoal = Double.MIN_VALUE;
+
     private final NetworkTableEntry m_lowerLimitSwitchEntry;
     private final NetworkTableEntry m_upperLimitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
-    private SingleJointedArmSimWrapper m_pivotSimulator;
+    private final NetworkTableEntry m_goalAngleDegEntry;
 
     private final SparkMaxAlerts m_pivotErrorAlert;
 
-    private double m_armAngleGoal = Double.MIN_VALUE;
+    private SingleJointedArmSimWrapper m_pivotSimulator;
+
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -88,6 +91,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_lowerLimitSwitchEntry = loggingTable.getEntry("Arm Lower LS");
         m_upperLimitSwitchEntry = loggingTable.getEntry("Arm Upper LS");
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
+        m_goalAngleDegEntry = loggingTable.getEntry("Arm Goal (deg)");
 
         m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
 
@@ -116,6 +120,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
+        m_goalAngleDegEntry.setNumber(m_armAngleGoal);
 
         m_pivotErrorAlert.checkAlerts();
     }
@@ -185,7 +190,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_armAngleGoal = pivotAngleGoal;
 
         double error = getArmAngleDeg() - pivotAngleGoal;
-        double gravityOffset = Math.cos(getArmAngleDeg()) * GRAVITY_OFFSET.getValue();
+        double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
         } else {

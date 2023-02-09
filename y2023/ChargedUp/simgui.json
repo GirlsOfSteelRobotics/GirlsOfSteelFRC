@@ -31,12 +31,21 @@
       "/Shuffleboard/TestCommands/Automated Turret - 2": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 6": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 8": "Command",
+      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, -90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 0)": "Command",
+      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 90 deg)": "Command",
       "/Shuffleboard/TestCommands/Move Turret Clockwise": "Command",
       "/Shuffleboard/TestCommands/Move Turret Counter Clockwise": "Command",
+      "/Shuffleboard/TestCommands/Reset Turret Encoder": "Command",
+      "/Shuffleboard/TestCommands/Sync Odometry": "Command",
       "/Shuffleboard/TestCommands/Test Line": "Command",
       "/Shuffleboard/TestCommands/Test Mild Curve": "Command",
       "/Shuffleboard/TestCommands/Test S Curve": "Command",
+      "/Shuffleboard/TestCommands/Toggle Break Mode": "Command",
+      "/Shuffleboard/TestCommands/Tune Chassis Velocity": "Command",
       "/Shuffleboard/TestCommands/Tune Gravity Offset": "Command",
+      "/Shuffleboard/TestCommands/Tune Turret Position (-90 degrees)": "Command",
+      "/Shuffleboard/TestCommands/Tune Turret Velocity": "Command",
       "/Shuffleboard/TestCommands/Turret PID - 0 degrees": "Command",
       "/Shuffleboard/TestCommands/Turret PID - 180 degrees": "Command",
       "/Shuffleboard/TestCommands/Turret PID - 90 degrees": "Command",
@@ -148,6 +157,9 @@
         "open": true
       }
     }
+  },
+  "NetworkTables View": {
+    "visible": false
   },
   "Plot": {
     "Plot <0>": {
