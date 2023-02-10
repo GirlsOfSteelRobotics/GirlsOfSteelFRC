@@ -48,6 +48,11 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
+    private static final double array1 = 14;
+    private static final double array2 = 24;
+    private static final double array3 = 34;
+
+    public static final double[] xValuesOfArrays = {array1, array2, array3};
 
     private final DifferentialDrive m_drive;
 
@@ -165,11 +170,11 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public Translation2d findingClosestNode() {
+    public Translation2d findingClosestNode(int nodeIndex) {
         final Pose2d currentRobotPosition = getPose();
         double minDist = Integer.MAX_VALUE;
         Translation2d closestNode = FieldConstants.LOW_TRANSLATIONS[0];
-        for (int i = 0; i < FieldConstants.NODE_ROW_COUNT; i++) {
+        for (int i = nodeIndex; i < FieldConstants.NODE_ROW_COUNT; i += 3) {
             double xDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getX() - currentRobotPosition.getX()), 2);
             double yDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getY() - currentRobotPosition.getY()), 2);
             if(Math.sqrt(xDistance + yDistance) < minDist) {
@@ -273,8 +278,6 @@ public class ChassisSubsystem extends SubsystemBase {
             m_field.getObject("Camera Estimated Position").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
     }
-
-
 
 
 }
