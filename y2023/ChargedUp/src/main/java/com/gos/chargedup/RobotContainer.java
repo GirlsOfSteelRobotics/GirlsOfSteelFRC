@@ -7,6 +7,7 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
@@ -36,6 +37,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import java.util.Arrays;
 
 
 /**
@@ -130,6 +133,17 @@ public class RobotContainer {
         tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
         tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+
+        //TODO: change the height angle thing to actual value lol
+        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, 0, 0, 0));
+        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[1].getX(), FieldConstants.LOW_TRANSLATIONS[1].getY(), 0));
+        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2].getX(), FieldConstants.LOW_TRANSLATIONS[2].getY(), 0));
+        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.MID_TRANSLATIONS[0].getX(), FieldConstants.MID_TRANSLATIONS[0].getY(), 1));
+        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.MID_TRANSLATIONS[1].getX(), FieldConstants.MID_TRANSLATIONS[1].getY(), 1));
+        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.MID_TRANSLATIONS[2].getX(), FieldConstants.MID_TRANSLATIONS[2].getY(), 1));
+        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.HIGH_TRANSLATIONS[0].getX(), FieldConstants.HIGH_TRANSLATIONS[0].getY(), 2));
+        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.HIGH_TRANSLATIONS[1].getX(), FieldConstants.HIGH_TRANSLATIONS[1].getY(), 2));
+        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.HIGH_TRANSLATIONS[2].getX(), FieldConstants.HIGH_TRANSLATIONS[2].getY(), 2));
 
     }
 
