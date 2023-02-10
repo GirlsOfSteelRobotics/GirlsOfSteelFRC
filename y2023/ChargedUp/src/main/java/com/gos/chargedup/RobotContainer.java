@@ -7,6 +7,7 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
@@ -131,6 +132,13 @@ public class RobotContainer {
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
         tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
 
+        tab.add("Arm PID Check If Allowed - 45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 45));
+        tab.add("Arm PID Check if Allowed - 90 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 90));
+        tab.add("Arm PID Check if Allowed - 0 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 0));
+        tab.add("Arm PID Check if Allowed - -45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, -45));
+
+        //tab.add("Intake Out", m_intake.createExtendSolenoidCommand());
+        //tab.add("Intake In", m_intake.createRetractSolenoidCommand());
     }
 
     /**

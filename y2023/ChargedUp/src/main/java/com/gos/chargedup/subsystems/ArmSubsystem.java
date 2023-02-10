@@ -34,6 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0);
 
+    public static final double ARM_HIT_INTAKE_ANGLE = 15;
     private static final double GEAR_RATIO = 5.0 * 2.0 * 4.0;
     private static final double ARM_MOTOR_SPEED = 0.2;
 
@@ -64,6 +65,7 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_pivotErrorAlert;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
+
 
 
     public ArmSubsystem() {

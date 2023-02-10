@@ -129,4 +129,11 @@ public class IntakeSubsystem extends SubsystemBase {
     public CommandBase createIsIntakeRightPneumaticMoving(PneumaticHub pneumaticHub) {
         return new PneumaticsMoveTest(pneumaticHub, m_intakeSolenoidRight, Constants.INTAKE_RIGHT_PISTON, "Intake: Right Piston");
     }
+
+    public boolean getIntakeOut() {
+        return false;
+        //return m_intakeSolenoidLeft.get() && m_intakeSolenoidRight.get();
+
+    }
+
 }
