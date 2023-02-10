@@ -309,6 +309,30 @@ public class ChassisSubsystem extends SubsystemBase {
         System.out.println("Reset Odometry was called");
     }
 
+    public boolean isInCommunityZone() {
+
+        if ((m_poseEstimator.getEstimatedPosition().getX() < 73 && m_poseEstimator.getEstimatedPosition().getY() < 216) || (m_poseEstimator.getEstimatedPosition().getX() < 135 && m_poseEstimator.getEstimatedPosition().getY() < 158)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isInLoadingZone() {
+
+        if ((m_poseEstimator.getEstimatedPosition().getX() > (650 - 247) && m_poseEstimator.getEstimatedPosition().getY() > (316 - 48)) || (m_poseEstimator.getEstimatedPosition().getX() > (650 - 116) && m_poseEstimator.getEstimatedPosition().getY() > (316 - 99))) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canExtendArm(boolean community, boolean loading) {
+
+        if(community || loading) {
+            return true;
+        }
+        return false;
+    }
+
     ////////////////////
     // Command Factories
     ////////////////////
