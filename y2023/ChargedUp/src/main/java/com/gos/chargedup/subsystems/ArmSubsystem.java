@@ -37,10 +37,10 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO = 45.0 * 4.0;
     private static final double ARM_MOTOR_SPEED = 0.15;
 
-    private static final double ARM_CUBE_MIDDLE_DEG = 0;
-    private static final double ARM_CUBE_HIGH_DEG = 15;
-    private static final double ARM_CONE_MIDDLE_DEG = 15;
-    private static final double ARM_CONE_HIGH_DEG = 30;
+    public static final double ARM_CUBE_MIDDLE_DEG = 0;
+    public static final double ARM_CUBE_HIGH_DEG = 15;
+    public static final double ARM_CONE_MIDDLE_DEG = 15;
+    public static final double ARM_CONE_HIGH_DEG = 30;
 
     private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
@@ -48,7 +48,7 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double MIN_ANGLE_RADS = Math.toRadians(-25);
     private static final double MAX_ANGLE_RADS = Math.toRadians(80);
     public static final double MIN_ANGLE_DEG = -61;
-    private static final double MAX_ANGLE_DEG = 80;
+    public static final double MAX_ANGLE_DEG = 50;
     private static final boolean SIMULATE_GRAVITY = true;
 
     private final SimableCANSparkMax m_pivotMotor;
@@ -249,7 +249,7 @@ public class ArmSubsystem extends SubsystemBase {
         return this.run(() -> m_pivotMotorEncoder.setPosition(angle)).withName("Reset Pivot Encoder").ignoringDisable(true);
     }
 
-    public void resetPivotEncoder() {
+    public final void resetPivotEncoder() {
         m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
