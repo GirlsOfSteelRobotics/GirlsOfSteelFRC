@@ -1,5 +1,6 @@
 package com.gos.chargedup.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -7,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.littletonrobotics.frc2023.util.Alert;
 
 
-public class PneumaticsMoveTest extends CommandBase {
+public class DoubleSolenoidMoveTest extends CommandBase {
 
     private final PneumaticHub m_pneumaticsHub;
 
-    private final Solenoid m_solenoid;
+    private final DoubleSolenoid m_solenoid;
 
     private final int m_channel;
 
@@ -21,7 +22,7 @@ public class PneumaticsMoveTest extends CommandBase {
 
     private final Alert m_alert;
 
-    public PneumaticsMoveTest(PneumaticHub pneumaticHub, Solenoid solenoid, int channel, String label) {
+    public DoubleSolenoidMoveTest(PneumaticHub pneumaticHub, DoubleSolenoid solenoid, int channel, String label) {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -54,8 +55,7 @@ public class PneumaticsMoveTest extends CommandBase {
     public void end(boolean interrupted) {
         m_timer.stop();
         double endPressure = m_pneumaticsHub.getPressure(m_channel);
-        boolean isPneuMoving = (m_startPressure < endPressure);
-        m_alert.set(!isPneuMoving);
-        m_solenoid.set(false);
+        boolean didSolenoidMove = (m_startPressure < endPressure);
+        m_alert.set(!didSolenoidMove);
     }
 }

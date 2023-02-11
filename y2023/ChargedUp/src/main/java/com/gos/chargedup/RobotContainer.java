@@ -141,10 +141,16 @@ public class RobotContainer {
         tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
 
+
         // arm extension
         tab.add("Arm Full Retract", m_arm.commandFullRetract());
         tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
         tab.add("Arm Full Extend", m_arm.commandFullExtend());
+
+        tab.add("Arm Inner Piston Forward", m_arm.commandInnerPistonForward());
+        tab.add("Arm Inner Piston Reverse", m_arm.commandInnerPistonReverse());
+        tab.add("Outer Inner Piston Forward", m_arm.commandOuterPistonForward());
+        tab.add("Outer Inner Piston Reverse", m_arm.commandOuterPistonReverse());
 
         // claw
         tab.add("Claw In", m_claw.createMoveClawIntakeInCommand());

@@ -2,12 +2,12 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.lib.rev.SparkMaxAlerts;
-import com.gos.chargedup.commands.PneumaticsMoveTest;
+import com.gos.chargedup.commands.DoubleSolenoidMoveTest;
 import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
+import com.gos.lib.rev.SparkMaxAlerts;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -19,10 +19,10 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -49,8 +49,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxPIDController m_pivotPIDController;
     private final PidProperty m_pivotPID;
 
-    private final Solenoid m_outerPiston;
-    private final Solenoid m_innerPiston;
+    private final DoubleSolenoid m_outerPiston;
+    private final DoubleSolenoid m_innerPiston;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
@@ -68,8 +68,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_outerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON);
-        m_innerPiston = new Solenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON);
+        m_outerPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON_OUT, Constants.ARM_OUTER_PISTON_IN);
+        m_innerPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON_OUT, Constants.ARM_INNER_PISTON_IN);
 
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -156,26 +156,42 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void fullRetract() {
-        m_outerPiston.set(true);
-        m_innerPiston.set(false);
+        m_outerPiston.set(DoubleSolenoid.Value.kForward);
+        m_innerPiston.set(DoubleSolenoid.Value.kForward);
     }
 
     public void middleRetract() {
-        m_outerPiston.set(false);
-        m_innerPiston.set(false);
+        m_outerPiston.set(DoubleSolenoid.Value.kReverse);
+        m_innerPiston.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void out() {
-        m_outerPiston.set(false);
-        m_innerPiston.set(true);
+        m_outerPiston.set(DoubleSolenoid.Value.kReverse);
+        m_innerPiston.set(DoubleSolenoid.Value.kForward);
     }
 
     public boolean isInnerPistonIn() {
-        return m_innerPiston.get();
+        return m_innerPiston.get().equals(DoubleSolenoid.Value.kReverse);
     }
 
     public boolean isOuterPistonIn() {
-        return m_outerPiston.get();
+        return m_outerPiston.get().equals(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void innerPistonForward() {
+        m_innerPiston.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void innerPistonReverse() {
+        m_innerPiston.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void outerPistonForward() {
+        m_outerPiston.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void outerPistonReverse() {
+        m_outerPiston.set(DoubleSolenoid.Value.kReverse);
     }
 
     public boolean isLowerLimitSwitchedPressed() {
@@ -207,6 +223,22 @@ public class ArmSubsystem extends SubsystemBase {
     ///////////////////////
     // Command Factories
     ///////////////////////
+    public CommandBase commandInnerPistonForward() {
+        return runOnce(this::innerPistonForward);
+    }
+
+    public CommandBase commandInnerPistonReverse() {
+        return runOnce(this::innerPistonReverse);
+    }
+
+    public CommandBase commandOuterPistonForward() {
+        return runOnce(this::outerPistonForward);
+    }
+
+    public CommandBase commandOuterPistonReverse() {
+        return runOnce(this::outerPistonReverse);
+    }
+
     public CommandBase commandFullRetract() {
         return runOnce(this::fullRetract).withName("ArmPistonsFullRetract");
     }
@@ -224,7 +256,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
+        return new DoubleSolenoidMoveTest(pneumaticHub, m_innerPiston, Constants.PRESSURE_SENSOR_PORT, "Arm: Inner Piston");
     }
 
     public CommandBase tuneGravityOffsetPID() {
@@ -232,7 +264,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsArmOuterPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
+        return new DoubleSolenoidMoveTest(pneumaticHub, m_outerPiston, Constants.PRESSURE_SENSOR_PORT, "Claw: Left Piston");
     }
 
     public CommandBase commandPivotArmUp() {
