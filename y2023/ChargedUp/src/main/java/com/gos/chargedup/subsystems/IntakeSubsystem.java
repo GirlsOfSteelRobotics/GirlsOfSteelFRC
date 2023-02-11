@@ -98,11 +98,11 @@ public class IntakeSubsystem extends SubsystemBase {
     /////////////////////
     // Command Factories
     /////////////////////
-    public Command createExtendSolenoidCommand() {
+    public Command createIntakeOutCommand() {
         return this.runOnce(this::extend);
     }
 
-    public Command createRetractSolenoidCommand() {
+    public Command createIntakeInCommand() {
         return this.runOnce(this::retract);
     }
 
