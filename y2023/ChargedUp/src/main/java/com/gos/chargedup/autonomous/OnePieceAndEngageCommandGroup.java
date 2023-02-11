@@ -12,9 +12,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
-    public static final PathPlannerTrajectory ONE_PIECE_DOCK_AND_ENGAGE = PathPlanner.loadPath("ONEPieceDockandEngage", Constants.DEFAULT_PATH_CONSTRAINTS);
 
-    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
+
+    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String path) {
+
+        PathPlannerTrajectory ONE_PIECE_DOCK_AND_ENGAGE = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
+
         //score
         addCommands(new ScorePieceCommandGroup(turret, arm, claw));
 

@@ -11,8 +11,7 @@ public class OnlyDockAndEngageCommandGroup extends SequentialCommandGroup {
     public static final PathPlannerTrajectory ONLY_DOCK_AND_ENGAGE = PathPlanner.loadPath("OnlyDockandEngage", Constants.DEFAULT_PATH_CONSTRAINTS);
 
     public OnlyDockAndEngageCommandGroup(ChassisSubsystem chassis) {
-        super(
-            chassis.followTrajectoryCommand(ONLY_DOCK_AND_ENGAGE, true)
-        );
+        addCommands(chassis.followTrajectoryCommand(ONLY_DOCK_AND_ENGAGE, true));
+        addCommands(chassis.createAutoEngageCommand());
     }
 }

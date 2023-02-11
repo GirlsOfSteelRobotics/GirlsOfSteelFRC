@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class OnlyLeaveCommunityCommandGroup extends SequentialCommandGroup {
 
-    public static final PathPlannerTrajectory ONLY_LEAVE_COMMUNITY = PathPlanner.loadPath("OnlyLeaveCommunity", Constants.DEFAULT_PATH_CONSTRAINTS);
 
-    public OnlyLeaveCommunityCommandGroup(ChassisSubsystem chassis) {
-        super(
-            chassis.followTrajectoryCommand(ONLY_LEAVE_COMMUNITY, true)
-        );
+    public OnlyLeaveCommunityCommandGroup(ChassisSubsystem chassis, String path) {
+        PathPlannerTrajectory ONLY_LEAVE_COMMUNITY = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
+        addCommands(chassis.followTrajectoryCommand(ONLY_LEAVE_COMMUNITY, true));
+
     }
 }
