@@ -14,7 +14,6 @@ from libraries.ShuffleboardGenerator.lib.ui.subpanels import load_ui_file
 
 
 class Window(QMainWindow):
-
     DEFAULT_FILE_DIR = os.path.join(get_this_directory(), "..", "..", "y2023", "ChargedUpDashboard")
     DEFAULT_FILE = os.path.join(DEFAULT_FILE_DIR, "dashboard.yml")
 
@@ -43,7 +42,6 @@ class Window(QMainWindow):
             self.load_config(filename)
 
     def handle_gen_clicked(self):
-
         # Save the file anytime we run generation
         self.save_config()
 
@@ -72,7 +70,6 @@ class Window(QMainWindow):
         msg.exec_()
 
     def load_config(self, config_file):
-
         with open(config_file, "r") as f:
             config = yaml.safe_load(f)
 
@@ -86,7 +83,6 @@ class Window(QMainWindow):
         self.actionSave.setEnabled(False)
 
     def save_config(self):
-
         config = self.toplevel_widget.view_to_config()
         widget_config = self.widget_toplevel_widget.view_to_config()
         config["widgets"] = [widget_config]

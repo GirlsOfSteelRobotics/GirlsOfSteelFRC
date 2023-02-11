@@ -63,7 +63,6 @@ class CargoPipeline:
         self.prev_time = t
 
     def reset(self):
-
         self.contours_failed_contour_filtering = []
         self.contours_failed_circle_matching = []
         self.unmatched_circles = []
@@ -80,7 +79,6 @@ class CargoPipeline:
         self.stopwatch = {}
 
     def annotate_image(self, image):
-
         BAD_CONTOUR_COLOR = (0, 0, 0)
         UNMATCHED_CONTOUR_COLOR = (252, 0, 249)
         UNMATCHED_CIRCLES_COLOR = (125, 1, 123)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.*?>
+
+<Pane fx:id="m_pane" xmlns="http://javafx.com/javafx/9"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.gos.chargedup.shuffleboard.super_structure.SuperStructureController">
+
+    <Group fx:id="m_group">
+        <Rectangle fx:id="m_chassis" fill="palevioletred" />
+        <Rectangle fx:id="m_turret" fill="palevioletred" />
+        <Rectangle fx:id="m_armBase" fill="powderblue" />
+        <Rectangle fx:id="m_arm" fill="pink" />
+        <Rectangle fx:id="m_armGoal" stroke="black" />
+        <Circle fx:id="m_armJoint" fill="palevioletred" />
+        <Rectangle fx:id="m_claw" fill="lightskyblue" />
+        <Rectangle fx:id="m_intake" fill="plum" />
+        <Rectangle fx:id="m_chassisTopDown" fill="coral" />
+        <Rectangle fx:id="m_turretTopDown" fill="chartreuse" />
+        <Rectangle fx:id="m_turretTopDownGoal" stroke="black" />
+    </Group>
+</Pane>

@@ -98,7 +98,6 @@ def fix_gradlerio_build_file(versions):
 
 
 def get_this_directory():
-
     try:
         from rules_python.python.runfiles import runfiles
 
@@ -113,7 +112,6 @@ def get_this_directory():
 
 
 def main():
-
     base_directory = os.path.join(get_this_directory(), "..", "..", "..")
 
     gradlerio_versions, vendor_deps_versions = get_versions(base_directory)
