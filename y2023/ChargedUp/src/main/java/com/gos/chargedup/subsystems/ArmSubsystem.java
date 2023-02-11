@@ -40,8 +40,9 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
-    private static final double MIN_ANGLE_RADS = 0;
+    private static final double MIN_ANGLE_RADS = Math.toRadians(-25);
     private static final double MAX_ANGLE_RADS = Math.PI / 2;
+    private static final double MIN_ANGLE_DEG = -50;
     private static final boolean SIMULATE_GRAVITY = true;
 
     private final SimableCANSparkMax m_pivotMotor;
@@ -218,6 +219,22 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void tuneGravityOffset() {
         m_pivotMotor.setVoltage(GRAVITY_OFFSET.getValue());
+    }
+
+    public CommandBase createPivotToBrakeMode() {
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Pivot to Brake").ignoringDisable(true);
+    }
+
+    public CommandBase createPivotToCoastMode() {
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).withName("Pivot to Coast").ignoringDisable(true);
+    }
+
+    public CommandBase createResetPivotEncoder() {
+        return this.run(() -> m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG)).withName("Reset Pivot Encoder").ignoringDisable(true);
+    }
+
+    public void resetPivotEncoder() {
+        m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
     ///////////////////////
