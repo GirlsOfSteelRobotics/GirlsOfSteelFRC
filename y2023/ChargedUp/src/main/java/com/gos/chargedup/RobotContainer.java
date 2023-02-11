@@ -124,7 +124,8 @@ public class RobotContainer {
         tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
         tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
         tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
-        tab.add("Toggle Break Mode", m_turret.createToggleBrakeMode());
+        tab.add("Turret To Break Mode", m_turret.createTurretToBrakeMode());
+        tab.add("Turret To Coast Mode", m_turret.createTurretToCoastMode());
         tab.add("Reset Turret Encoder", m_turret.createResetEncoder());
         tab.add("Move Turret Clockwise", m_turret.commandMoveTurretClockwise());
         tab.add("Move Turret Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
@@ -140,6 +141,10 @@ public class RobotContainer {
         tab.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
         tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+
+        tab.add("Reset Pivot Encoder", m_arm.createResetPivotEncoder());
+        tab.add("Pivot to Coast Mode", m_arm.createPivotToCoastMode());
+        tab.add("Pivot to Brake Mode", m_arm.createPivotToBrakeMode());
 
         // arm extension
         tab.add("Arm Full Retract", m_arm.commandFullRetract());
@@ -158,6 +163,7 @@ public class RobotContainer {
         tab.add("Intake Roller Out", m_intake.createIntakeOutCommand());
 
         tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+
 
     }
 
