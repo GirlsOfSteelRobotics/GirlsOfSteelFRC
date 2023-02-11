@@ -82,6 +82,14 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PidProperty m_rightPIDProperties;
 
 
+    double xPositionButton = 10;
+    private static final double DISTANCE_BETWEEN_ARRAYS = 30;
+    private final double ARRAY_1 = xPositionButton;
+    private final double ARRAY_2 = xPositionButton + DISTANCE_BETWEEN_ARRAYS;
+    private final double ARRAY_3 = xPositionButton + 2 * DISTANCE_BETWEEN_ARRAYS;
+    final double[] closestArray = {ARRAY_1, ARRAY_2, ARRAY_3};
+
+
 
     public ChassisSubsystem() {
 
@@ -167,16 +175,22 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Translation2d findingClosestNode() {
         final Pose2d currentRobotPosition = getPose();
+        double currentXPos = currentRobotPosition.getX();
         double minDist = Integer.MAX_VALUE;
         Translation2d closestNode = FieldConstants.LOW_TRANSLATIONS[0];
-        for (int i = 0; i < FieldConstants.NODE_ROW_COUNT; i++) {
-            double xDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getX() - currentRobotPosition.getX()), 2);
-            double yDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getY() - currentRobotPosition.getY()), 2);
-            if(Math.sqrt(xDistance + yDistance) < minDist) {
-                minDist = Math.sqrt(xDistance + yDistance);
-                closestNode = FieldConstants.LOW_TRANSLATIONS[i];
+        for (int i = 0; i < 3; i++)
+            xValeNodeIncrements = closestArray[i];
+            if (currentXPos < closestArray) {
+
             }
-        }
+//        for (int i = 0; i < FieldConstants.NODE_ROW_COUNT; i++) {
+//            double xDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getX() - currentRobotPosition.getX()), 2);
+//            double yDistance = Math.pow((FieldConstants.LOW_TRANSLATIONS[i].getY() - currentRobotPosition.getY()), 2);
+//            if(Math.sqrt(xDistance + yDistance) < minDist) {
+//                minDist = Math.sqrt(xDistance + yDistance);
+//                closestNode = FieldConstants.LOW_TRANSLATIONS[i];
+//            }
+//        }
         return closestNode;
     }
 
