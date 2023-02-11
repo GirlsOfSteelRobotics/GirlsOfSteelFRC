@@ -1,5 +1,10 @@
 package com.gos.chargedup.commands;
 
+import com.gos.chargedup.FieldConstants;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -7,16 +12,23 @@ import com.gos.chargedup.subsystems.TurretSubsystem;
 
 
 public class AimTurretCommand extends CommandBase {
+    private static final Field2d DEBUG_FIELD = new Field2d();
+
+    static {
+        Shuffleboard.getTab("Debug").add(DEBUG_FIELD);
+    }
+
     private final ArmSubsystem m_armSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final TurretSubsystem m_turretSubsystem;
-    private double targetX;
-    private double targetY;
+    private final double m_targetX;
+    private final double m_targetY;
+    private final double m_targetPitch;
 
-    private double currentX;
-    private double currentY;
+    private double m_currentX;
+    private double m_currentY;
 
-    private double targetPitch;
+
 
     public AimTurretCommand(ArmSubsystem m_armSubsystem, ChassisSubsystem m_chassisSubsystem, TurretSubsystem m_turretSubsystem, double x, double y, double pitch) {
         this.m_armSubsystem = m_armSubsystem;
@@ -26,11 +38,10 @@ public class AimTurretCommand extends CommandBase {
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_armSubsystem, this.m_turretSubsystem);
 
-        targetX = x;
-        targetY = y;
+        m_targetX = x;
+        m_targetY = y;
 
-        targetPitch = pitch;
-
+        m_targetPitch = pitch;
 
     }
 
@@ -41,22 +52,37 @@ public class AimTurretCommand extends CommandBase {
 
     @Override
     public void execute() {
-        currentX = m_chassisSubsystem.getPose().getX();
-        currentY = m_chassisSubsystem.getPose().getY();
+        DEBUG_FIELD.setRobotPose(m_chassisSubsystem.getPose());
+        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(m_targetX, m_targetY, Rotation2d.fromDegrees(0)));
 
-        System.out.println("goal x: " + targetX + "\ngoal y: " + targetY);
-        System.out.println("current x: " + currentX + "\ncurrent y: " + currentY);
+        m_currentX = m_chassisSubsystem.getPose().getX();
+        m_currentY = m_chassisSubsystem.getPose().getY();
+
 
         double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
 
-        double turretAngle = Math.toDegrees(Math.atan2(targetY-currentY, targetX-currentX)) - currentAngle;
-        System.out.println("turret angle: " + turretAngle);
+        double targetAngle = Math.toDegrees(Math.atan2(m_targetY - m_currentY, m_targetX - m_currentX));
+
+        double turretAngle = currentAngle - targetAngle;
+
+
+        // System.out.println("\ngoal x: " + m_targetX + "\ngoal y: " + m_targetY);
+        // System.out.println("current x: " + m_currentX + "\ncurrent y: " + m_currentY);
+        // System.out.println("target angle: " + targetAngle);
+        // System.out.println("robot angle: " + currentAngle);
+        // System.out.println("turret angle: " + turretAngle);
+
+
+        if (turretAngle > 180)
+            turretAngle -= 360;
+        else if (turretAngle < -180)
+            turretAngle += 360;
+
         m_turretSubsystem.turretPID(turretAngle);
 
-        System.out.println("pitch: " + targetPitch);
-        m_armSubsystem.commandPivotArmToAngle(targetPitch);
 
-
+        //System.out.println("pitch: " + m_targetPitch);
+        m_armSubsystem.commandPivotArmToAngle(m_targetPitch);
 
     }
 

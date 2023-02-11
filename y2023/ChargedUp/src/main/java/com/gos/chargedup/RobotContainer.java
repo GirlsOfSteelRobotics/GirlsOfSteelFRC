@@ -134,7 +134,7 @@ public class RobotContainer {
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
         tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
 
-        //TODO: change the height angle thing to actual value lol
+        //TODO: change the pitch to actual value lol and also update field constant values to the most recent from unbuggy version from mechanical advantage
         tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, 0, 0, 0));
         tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[1].getX(), FieldConstants.LOW_TRANSLATIONS[1].getY(), 0));
         tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2].getX(), FieldConstants.LOW_TRANSLATIONS[2].getY(), 0));

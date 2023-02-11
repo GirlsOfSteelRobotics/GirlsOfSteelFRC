@@ -10,6 +10,9 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     }
   },
@@ -24,6 +27,7 @@
       "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/Debug/Field": "Field2d",
       "/Shuffleboard/TestCommands/Arm angle PID - 0 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 45 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 90 degrees": "Command",
