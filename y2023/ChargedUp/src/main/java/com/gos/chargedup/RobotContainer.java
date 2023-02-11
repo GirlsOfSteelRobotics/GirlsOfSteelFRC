@@ -10,6 +10,7 @@ import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 
@@ -123,11 +124,12 @@ public class RobotContainer {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Driver
-        m_driverController.a().whileTrue(m_arm.commandOut());
+        // m_driverController.a().whileTrue(m_arm.commandOut());
         m_driverController.x().whileTrue(m_arm.commandFullRetract());
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
-        m_driverController.leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
+        m_driverController. leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
         m_driverController.rightBumper().whileTrue(m_turret.commandMoveTurretCounterClockwise());
+        m_driverController.leftTrigger().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
         m_operatorController.leftBumper().whileTrue(m_intake.createRetractSolenoidCommand());

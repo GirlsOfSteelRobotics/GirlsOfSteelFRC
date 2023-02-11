@@ -10,7 +10,7 @@
   {
     "name": "/Preferences/Chassis.mm.kp",
     "type": "double",
-    "value": 0.7,
+    "value": 0.8,
     "properties": {
       "persistent": true
     }
@@ -163,6 +163,30 @@
     "name": "/Preferences/Arm.mm.max_acceleration",
     "type": "double",
     "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/JoystickTurnDamping",
+    "type": "double",
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/JoysticTurnInPlaceThreshold",
+    "type": "double",
+    "value": 0.05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis speed for brake",
+    "type": "double",
+    "value": 0.2,
     "properties": {
       "persistent": true
     }

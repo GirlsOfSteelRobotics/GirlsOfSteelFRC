@@ -316,7 +316,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
-    public void drivetrainToCoastMode(){
+    public void drivetrainToCoastMode() {
         m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
