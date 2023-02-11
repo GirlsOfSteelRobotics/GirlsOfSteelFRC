@@ -228,7 +228,7 @@ public class ArmSubsystem extends SubsystemBase {
         return runOnce(this::middleRetract).withName("ArmPistonsMiddleRetract");
     }
 
-    public CommandBase commandOut() {
+    public CommandBase commandFullExtend() {
         return runOnce(this::out).withName("ArmPistonsOut");
     }
 
