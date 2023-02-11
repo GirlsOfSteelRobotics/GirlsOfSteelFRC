@@ -5,7 +5,6 @@ import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
-    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, IntakeSubsystem intake, String autoName) {
+    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName) {
 
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
@@ -26,8 +25,8 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
             claw.createMoveClawIntakeInCommand() //piece is firmly in the claw? finish + tune soon
         ));
 
-        List<PathPlannerTrajectory> TWOPieceNodes0And1 = PathPlanner.loadPathGroup(autoName, Constants.DEFAULT_PATH_CONSTRAINTS);
-        Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(TWOPieceNodes0And1);
+        List<PathPlannerTrajectory> twoPieceNodes0And1 = PathPlanner.loadPathGroup(autoName, Constants.DEFAULT_PATH_CONSTRAINTS);
+        Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceNodes0And1);
 
         //score first piece:
         addCommands(new ScorePieceCommandGroup(turret, arm, claw));

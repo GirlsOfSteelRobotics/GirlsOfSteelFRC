@@ -180,7 +180,7 @@ public class TurretSubsystem extends SubsystemBase {
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> moveTurretToPID(angle), this::stopTurret)
             .withName("Turret PID" + angle)
-            .until(()-> moveTurretToPID(angle));
+            .until(() -> moveTurretToPID(angle));
     }
 
     public CommandBase createTuneVelocity() {

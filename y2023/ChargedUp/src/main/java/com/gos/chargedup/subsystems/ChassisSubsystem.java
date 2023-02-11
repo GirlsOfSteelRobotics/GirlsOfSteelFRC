@@ -356,7 +356,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
     }
 
-    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap){
+    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
         return new RamseteAutoBuilder(
             this::getPose, // Pose supplier
             this::resetOdometry,

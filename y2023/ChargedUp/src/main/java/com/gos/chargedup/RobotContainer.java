@@ -80,7 +80,7 @@ public class RobotContainer {
         m_arm = new ArmSubsystem();
         m_intake = new IntakeSubsystem();
 
-        m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw, m_intake);
+        m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw);
         configureBindings();
 
         if (RobotBase.isSimulation()) {

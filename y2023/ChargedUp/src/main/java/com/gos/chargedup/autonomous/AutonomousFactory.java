@@ -8,7 +8,6 @@ package com.gos.chargedup.autonomous;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,7 +32,7 @@ public final class AutonomousFactory {
 
     public final CommandBase m_oneNodeAndEngage;
 
-    public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, IntakeSubsystem intake) {
+    public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
         m_autonomousModes = new SendableChooser<>();
 
         m_onlyDockAndEngage = new OnlyDockAndEngageCommandGroup(chassis);
@@ -57,13 +56,13 @@ public final class AutonomousFactory {
         m_twoPieceAuto = new TwoPieceAutoCommandGroup(chassis);
         m_autonomousModes.addOption("Two Piece", m_twoPieceAuto);
 
-        m_twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, intake, "TWOPieceNodes0And1");
+        m_twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1");
         m_autonomousModes.setDefaultOption("Two Piece Nodes 0 and 1", m_twoPieceNodes0and1);
 
-        m_twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, intake, "TWOPieceNodes7And8");
+        m_twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8");
         m_autonomousModes.addOption("Two Piece Nodes 7 and 8", m_twoPieceNodes7and8);
 
-        m_oneNodeAndEngage = new OnePieceAndEngageCommandGroup(chassis, turret,arm,claw,intake);
+        m_oneNodeAndEngage = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw);
         m_autonomousModes.addOption("One Piece Node and Engage", m_oneNodeAndEngage);
 
         m_autonomousModes.addOption("Autonomous drive", new AutonomousDriveTimeCommand(chassis));
