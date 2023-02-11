@@ -2,6 +2,7 @@ package com.gos.lib.rev;
 
 import edu.wpi.first.hal.REVPHFaults;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import org.littletonrobotics.frc2023.util.Alert;
 
 public class PneumaticHubAlerts {
