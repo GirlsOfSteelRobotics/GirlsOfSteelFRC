@@ -10,8 +10,8 @@ public class OnlyLeaveCommunityCommandGroup extends SequentialCommandGroup {
 
 
     public OnlyLeaveCommunityCommandGroup(ChassisSubsystem chassis, String path) {
-        PathPlannerTrajectory ONLY_LEAVE_COMMUNITY = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
-        addCommands(chassis.followTrajectoryCommand(ONLY_LEAVE_COMMUNITY, true));
+        PathPlannerTrajectory onlyLeaveCommunity = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
+        addCommands(chassis.followTrajectoryCommand(onlyLeaveCommunity, true));
 
     }
 }

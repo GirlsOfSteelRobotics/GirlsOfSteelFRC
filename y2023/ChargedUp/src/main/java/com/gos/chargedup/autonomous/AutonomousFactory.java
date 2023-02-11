@@ -74,7 +74,7 @@ public final class AutonomousFactory {
         m_oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3");
         m_autonomousModes.addOption("One Piece Node and Engage 3", m_oneNodeAndEngage3);
 
-        m_oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw,"ONEPieceDockandEngage4");
+        m_oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4");
         m_autonomousModes.addOption("One Piece Node and Engage 4", m_oneNodeAndEngage4);
 
         m_oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5");
@@ -101,8 +101,8 @@ public final class AutonomousFactory {
         m_autonomousModes.addOption("Autonomous drive", new AutonomousDriveTimeCommand(chassis));
         //Smart dashboard dropdown
         SmartDashboard.putData(m_autonomousModes);
-
     }
+
     public Command getAutonomousCommand() {
         return m_autonomousModes.getSelected();
     }

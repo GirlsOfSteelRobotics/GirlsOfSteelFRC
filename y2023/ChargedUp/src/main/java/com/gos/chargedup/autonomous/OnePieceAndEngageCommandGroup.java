@@ -16,13 +16,13 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
     public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String path) {
 
-        PathPlannerTrajectory ONE_PIECE_DOCK_AND_ENGAGE = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
+        PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
 
         //score
         addCommands(new ScorePieceCommandGroup(turret, arm, claw));
 
         //drive to docking station
-        addCommands(chassis.followTrajectoryCommand(ONE_PIECE_DOCK_AND_ENGAGE, true));
+        addCommands(chassis.followTrajectoryCommand(oneNodeAndEngage, true));
 
         //dock and engage
         addCommands(chassis.createAutoEngageCommand());
