@@ -131,8 +131,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean getIntakeOut() {
-        return false;
-        //return m_intakeSolenoidLeft.get() && m_intakeSolenoidRight.get();
+        return m_intakeSolenoidLeft.get() && m_intakeSolenoidRight.get();
 
     }
 
