@@ -205,12 +205,16 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotor.setVoltage(GRAVITY_OFFSET.getValue());
     }
 
-    public void pivotToBrakeMode() {
-        m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    public CommandBase createPivotToBrakeMode() {
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Pivot to Brake").ignoringDisable(true);
     }
 
-    public void pivotToCoastMode() {
-        m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    public CommandBase createPivotToCoastMode() {
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).withName("Pivot to Coast").ignoringDisable(true);
+    }
+
+    public CommandBase createResetPivotEncoder() {
+        return this.run(() -> m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG)).withName("Reset Pivot Encoder").ignoringDisable(true);
     }
 
     public void resetPivotEncoder() {
