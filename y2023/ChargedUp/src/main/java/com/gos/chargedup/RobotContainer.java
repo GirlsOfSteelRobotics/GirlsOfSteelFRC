@@ -182,8 +182,6 @@ public class RobotContainer {
         m_driverController.leftTrigger().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
-        m_operatorController.leftBumper().whileTrue(m_intake.createRetractSolenoidCommand());
-        m_operatorController.rightBumper().whileTrue(m_intake.createExtendSolenoidCommand());
         m_operatorController.a().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_operatorController.leftBumper().whileTrue(m_intake.createIntakeInCommand());
