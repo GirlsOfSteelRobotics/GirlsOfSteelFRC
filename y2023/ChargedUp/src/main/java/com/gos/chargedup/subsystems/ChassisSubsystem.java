@@ -8,6 +8,7 @@ import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.RamseteAutoBuilder;
 import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -40,6 +41,7 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -352,5 +354,17 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase syncOdometryWithPoseEstimator() {
         return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap){
+        return new RamseteAutoBuilder(
+            this::getPose, // Pose supplier
+            this::resetOdometry,
+            new RamseteController(),
+            K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
+            this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
+            eventMap,
+            true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+            this);
     }
 }

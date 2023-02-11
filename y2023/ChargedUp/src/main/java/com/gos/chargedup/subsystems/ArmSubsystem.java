@@ -34,6 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", 0);
 
+    private static final double PNEUMATICS_WAIT = 0.5;
     private static final double GEAR_RATIO = 5.0 * 2.0 * 4.0;
     private static final double ARM_MOTOR_SPEED = 0.2;
 
@@ -197,7 +198,7 @@ public class ArmSubsystem extends SubsystemBase {
             m_pivotMotor.set(0);
         }
 
-        return error <= ALLOWABLE_ERROR.getValue();
+        return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
     }
 
     public void tuneGravityOffset() {
@@ -208,15 +209,15 @@ public class ArmSubsystem extends SubsystemBase {
     // Command Factories
     ///////////////////////
     public CommandBase commandFullRetract() {
-        return runOnce(this::fullRetract).withName("ArmPistonsFullRetract");
+        return runOnce(this::fullRetract).withName("ArmPistonsFullRetract").withTimeout(PNEUMATICS_WAIT);
     }
 
     public CommandBase commandMiddleRetract() {
-        return runOnce(this::middleRetract).withName("ArmPistonsMiddleRetract");
+        return runOnce(this::middleRetract).withName("ArmPistonsMiddleRetract").withTimeout(PNEUMATICS_WAIT);
     }
 
-    public CommandBase commandOut() {
-        return runOnce(this::out).withName("ArmPistonsOut");
+    public CommandBase commandFullExtend() {
+        return runOnce(this::out).withName("ArmPistonsOut").withTimeout(PNEUMATICS_WAIT);
     }
 
     public CommandBase createIsPivotMotorMoving() {
@@ -244,7 +245,9 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandPivotArmToAngle(double angle) {
-        return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle);
+        return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
+            .withName("Arm to Angle" + angle)
+            .until(() -> pivotArmToAngle(angle));
     }
 }
 

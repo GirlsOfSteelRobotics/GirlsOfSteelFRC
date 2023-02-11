@@ -80,7 +80,7 @@ public class RobotContainer {
         m_arm = new ArmSubsystem();
         m_intake = new IntakeSubsystem();
 
-        m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem);
+        m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw, m_intake);
         configureBindings();
 
         if (RobotBase.isSimulation()) {
@@ -146,7 +146,7 @@ public class RobotContainer {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Driver
-        m_driverController.a().whileTrue(m_arm.commandOut());
+        m_driverController.a().whileTrue(m_arm.commandFullExtend());
         m_driverController.x().whileTrue(m_arm.commandFullRetract());
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
         m_driverController.leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());

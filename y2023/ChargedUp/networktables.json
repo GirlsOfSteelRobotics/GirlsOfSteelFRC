@@ -58,7 +58,7 @@
   {
     "name": "/Preferences/Pivot Arm Allowable Error",
     "type": "double",
-    "value": 0.0,
+    "value": 5.0,
     "properties": {
       "persistent": true
     }
