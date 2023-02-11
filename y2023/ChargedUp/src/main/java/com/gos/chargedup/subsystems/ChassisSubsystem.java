@@ -346,6 +346,23 @@ public class ChassisSubsystem extends SubsystemBase {
         return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
+    public void drivetrainToBrakeMode() {
+        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+    }
+
+    public void drivetrainToCoastMode() {
+        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+    }
+
+
     public CommandBase createResetOdometry(Pose2d pose2d) {
         return this.runOnce(() -> resetOdometry(pose2d));
     }
