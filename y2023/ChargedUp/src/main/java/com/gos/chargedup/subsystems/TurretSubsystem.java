@@ -139,7 +139,7 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretEncoder.getPosition();
     }
 
-    public boolean moveTurretToPID(double goalAngle) {
+    public boolean moveTurretToAngleWithPID(double goalAngle) {
         m_turretGoalAngle = goalAngle;
 
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
@@ -178,9 +178,9 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandTurretPID(double angle) {
-        return this.runEnd(() -> moveTurretToPID(angle), this::stopTurret)
+        return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
             .withName("Turret PID" + angle)
-            .until(() -> moveTurretToPID(angle));
+            .until(() -> moveTurretToAngleWithPID(angle));
     }
 
     public CommandBase createTuneVelocity() {

@@ -33,7 +33,7 @@ public class AutomatedTurretToSelectedPegCommand extends CommandBase {
         double yDistance = m_nodePosition.getY() - currentRobotPosition.getY();
         double robotAngle = Math.toDegrees(Math.atan2(yDistance, xDistance));
         double angleAdjustment = robotAngle + currentRobotPosition.getRotation().getDegrees() + 180;
-        m_turretSubsystem.moveTurretToPID(angleAdjustment);
+        m_turretSubsystem.moveTurretToAngleWithPID(angleAdjustment);
 
     }
 
