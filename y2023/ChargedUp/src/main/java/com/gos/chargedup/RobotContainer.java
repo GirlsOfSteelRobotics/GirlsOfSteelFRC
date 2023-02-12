@@ -10,11 +10,14 @@ import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
+import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystem;
+
+//test paths
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
-import com.gos.chargedup.subsystems.ArmSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
@@ -99,37 +102,68 @@ public class RobotContainer {
     private void createTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
 
+        // testing
         tab.add("Tune Chassis Velocity", m_chassisSubsystem.commandChassisVelocity());
         tab.add("Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
 
-        tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
-        tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
-        tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
-
+        // auto trajectories
         tab.add("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
         tab.add("Test Mild Curve", new TestMildCurveCommandGroup(m_chassisSubsystem));
         tab.add("Test S Curve", new TestSCurveCommandGroup(m_chassisSubsystem));
 
+        // auto engage
         tab.add("Auto Engage", m_chassisSubsystem.createAutoEngageCommand());
-        tab.add("Tune Turret Velocity", m_turret.createTuneVelocity());
-        tab.add("Toggle Break Mode", m_turret.createToggleBrakeMode());
-        tab.add("Reset Turret Encoder", m_turret.createResetEncoder());
+
+        // chassis reset odometry test
         tab.add("Chassis position tune: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
         tab.add("Chassis position tune: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
         tab.add("Chassis position tune: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
 
-
-
+        // turret
+        tab.add("Tune Turret Velocity", m_turret.createTuneVelocity());
+        tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
+        tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
+        tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
+        tab.add("Turret To Break Mode", m_turret.createTurretToBrakeMode());
+        tab.add("Turret To Coast Mode", m_turret.createTurretToCoastMode());
+        tab.add("Reset Turret Encoder", m_turret.createResetEncoder());
         tab.add("Move Turret Clockwise", m_turret.commandMoveTurretClockwise());
         tab.add("Move Turret Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
         tab.add("Tune Turret Position (-90 degrees)", m_turret.commandTurretPID(-90));
         tab.add("Turret PID - 0 degrees", m_turret.commandTurretPID(0));
         tab.add("Turret PID - 90 degrees", m_turret.commandTurretPID(90));
         tab.add("Turret PID - 180 degrees", m_turret.commandTurretPID(180));
+
+        // arm pivot
+        tab.add("Arm Pivot Down", m_arm.commandPivotArmDown());
+        tab.add("Arm Pivot Up", m_arm.commandPivotArmUp());
+
         tab.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
         tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+
+        tab.add("Reset Pivot Encoder", m_arm.createResetPivotEncoder());
+        tab.add("Pivot to Coast Mode", m_arm.createPivotToCoastMode());
+        tab.add("Pivot to Brake Mode", m_arm.createPivotToBrakeMode());
+
+        // arm extension
+        tab.add("Arm Full Retract", m_arm.commandFullRetract());
+        tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
+        tab.add("Arm Full Extend", m_arm.commandFullExtend());
+
+        // claw
+        tab.add("Claw In", m_claw.createMoveClawIntakeInCommand());
+        tab.add("Claw Out", m_claw.createMoveClawIntakeOutCommand());
+
+        // intake
+        tab.add("Intake Out", m_intake.createIntakeOutCommand());
+        tab.add("Intake In", m_intake.createIntakeInCommand());
+
+        tab.add("Intake Roller In", m_intake.createIntakeInCommand());
+        tab.add("Intake Roller Out", m_intake.createIntakeOutCommand());
+
         tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+
 
     }
 
@@ -149,12 +183,15 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_arm.commandFullExtend());
         m_driverController.x().whileTrue(m_arm.commandFullRetract());
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
-        m_driverController.leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
+        m_driverController. leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
         m_driverController.rightBumper().whileTrue(m_turret.commandMoveTurretCounterClockwise());
+        m_driverController.leftTrigger().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
-        m_operatorController.leftBumper().whileTrue(m_intake.createRetractSolenoidCommand());
-        m_operatorController.rightBumper().whileTrue(m_intake.createExtendSolenoidCommand());
+        m_operatorController.a().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+        m_operatorController.leftBumper().whileTrue(m_intake.createIntakeInCommand());
+        m_operatorController.rightBumper().whileTrue(m_intake.createIntakeOutCommand());
         m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
         m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());

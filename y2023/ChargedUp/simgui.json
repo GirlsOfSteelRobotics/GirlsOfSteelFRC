@@ -1,12 +1,12 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
-      "SPARK MAX [2]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [3]": {
+      "SPARK MAX [4]": {
         "header": {
           "open": true
         }
@@ -30,40 +30,13 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
-      "/Shuffleboard/TestCommands/Arm angle PID - 0 degrees": "Command",
-      "/Shuffleboard/TestCommands/Arm angle PID - 45 degrees": "Command",
-      "/Shuffleboard/TestCommands/Arm angle PID - 90 degrees": "Command",
       "/Shuffleboard/TestCommands/Auto Engage": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 2": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 6": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 8": "Command",
-      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, -90 deg)": "Command",
-      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 0)": "Command",
-      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 90 deg)": "Command",
-      "/Shuffleboard/TestCommands/Move Turret Clockwise": "Command",
-      "/Shuffleboard/TestCommands/Move Turret Counter Clockwise": "Command",
-      "/Shuffleboard/TestCommands/Reset Turret Encoder": "Command",
-      "/Shuffleboard/TestCommands/Sync Odometry": "Command",
       "/Shuffleboard/TestCommands/Test Line": "Command",
       "/Shuffleboard/TestCommands/Test Mild Curve": "Command",
       "/Shuffleboard/TestCommands/Test S Curve": "Command",
-      "/Shuffleboard/TestCommands/Toggle Break Mode": "Command",
-      "/Shuffleboard/TestCommands/Tune Chassis Velocity": "Command",
-      "/Shuffleboard/TestCommands/Tune Gravity Offset": "Command",
-      "/Shuffleboard/TestCommands/Tune Turret Position (-90 degrees)": "Command",
-      "/Shuffleboard/TestCommands/Tune Turret Velocity": "Command",
-      "/Shuffleboard/TestCommands/Turret PID - 0 degrees": "Command",
-      "/Shuffleboard/TestCommands/Turret PID - 180 degrees": "Command",
-      "/Shuffleboard/TestCommands/Turret PID - 90 degrees": "Command",
-      "/Shuffleboard/test commands/Arm angle PID - 0 degrees": "Command",
-      "/Shuffleboard/test commands/Arm angle PID - 45 degrees": "Command",
-      "/Shuffleboard/test commands/Arm angle PID - 90 degrees": "Command",
-      "/Shuffleboard/test commands/Move Turret Clockwise": "Command",
-      "/Shuffleboard/test commands/Move Turret Counter Clockwise": "Command",
-      "/Shuffleboard/test commands/Tune Gravity Offset": "Command",
-      "/Shuffleboard/test commands/Turret PID - 0 degrees": "Command",
-      "/Shuffleboard/test commands/Turret PID - 180 degrees": "Command",
-      "/Shuffleboard/test commands/Turret PID - 90 degrees": "Command",
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
@@ -72,37 +45,11 @@
       "/SmartDashboard/PPRamseteCommand_field": "Field2d",
       "/SmartDashboard/Run checklist": "Command",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
-      "/SmartDashboard/Sync Odometries": "Command",
       "/SmartDashboard/Test Line": "Command",
       "/SmartDashboard/Test Mild Curve": "Command",
       "/SmartDashboard/Test S Curve": "Command"
     },
     "windows": {
-      "/Shuffleboard/test commands/Arm angle PID - 45 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Arm angle PID - 90 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Tune Gravity Offset": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Turret PID - 180 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/Turret PID - 90 degrees": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "window": {
           "visible": true
@@ -150,9 +97,6 @@
         "open": true
       }
     }
-  },
-  "NetworkTables View": {
-    "visible": false
   },
   "Plot": {
     "Plot <0>": {
