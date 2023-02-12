@@ -63,7 +63,6 @@ public class Robot extends TimedRobot {
         m_pneumaticHubAlert.checkAlerts();
         m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
         SmartDashboard.putNumber("Air Pressure", m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
-        SmartDashboard.putNumber("Air Pressure2", m_pneumaticHub.getPressure(1));
 
     }
 

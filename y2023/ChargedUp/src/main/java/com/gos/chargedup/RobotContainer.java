@@ -152,10 +152,10 @@ public class RobotContainer {
         tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
         tab.add("Arm Full Extend", m_arm.commandFullExtend());
 
-        tab.add("Arm Inner Piston Forward", m_arm.commandInnerPistonForward());
-        tab.add("Arm Inner Piston Reverse", m_arm.commandInnerPistonReverse());
-        tab.add("Outer Inner Piston Forward", m_arm.commandOuterPistonForward());
-        tab.add("Outer Inner Piston Reverse", m_arm.commandOuterPistonReverse());
+        tab.add("Arm Inner Piston Extended", m_arm.commandInnerPistonExtended());
+        tab.add("Arm Inner Piston Retracted", m_arm.commandInnerPistonRetracted());
+        tab.add("Outer Inner Piston Extended", m_arm.commandOuterPistonExtended());
+        tab.add("Outer Inner Piston Retracted", m_arm.commandOuterPistonRetracted());
 
         // claw
         tab.add("Claw In", m_claw.createMoveClawIntakeInCommand());
@@ -198,8 +198,8 @@ public class RobotContainer {
         m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_operatorController.leftBumper().whileTrue(m_arm.commandPivotArmUp());
         m_operatorController.leftTrigger().whileTrue(m_arm.commandPivotArmDown());
-        m_operatorController.rightBumper().onTrue(m_arm.commandInnerPistonForward());
-        m_operatorController.rightTrigger().onTrue(m_arm.commandInnerPistonReverse());
+        m_operatorController.rightBumper().onTrue(m_arm.commandInnerPistonExtended());
+        m_operatorController.rightTrigger().onTrue(m_arm.commandInnerPistonRetracted());
     }
 
 

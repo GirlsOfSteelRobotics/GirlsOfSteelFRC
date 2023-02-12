@@ -34,6 +34,12 @@ public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
+    private static final DoubleSolenoid.Value OUTER_PISTON_EXTENDED = DoubleSolenoid.Value.kForward;
+    private static final DoubleSolenoid.Value OUTER_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
+
+    private static final DoubleSolenoid.Value INNER_PISTON_EXTENDED = DoubleSolenoid.Value.kForward;
+    private static final DoubleSolenoid.Value INNER_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
+
     private static final double GEAR_RATIO = 45.0 * 4.0;
     private static final double ARM_MOTOR_SPEED = 0.15;
 
@@ -45,10 +51,10 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
-    private static final double MIN_ANGLE_RADS = Math.toRadians(-25);
-    private static final double MAX_ANGLE_RADS = Math.toRadians(80);
     public static final double MIN_ANGLE_DEG = -61;
     public static final double MAX_ANGLE_DEG = 50;
+    private static final double MIN_ANGLE_RADS = Math.toRadians(MIN_ANGLE_DEG);
+    private static final double MAX_ANGLE_RADS = Math.toRadians(MAX_ANGLE_DEG);
     private static final boolean SIMULATE_GRAVITY = true;
 
     private final SimableCANSparkMax m_pivotMotor;
@@ -173,42 +179,42 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void fullRetract() {
-        m_outerPiston.set(DoubleSolenoid.Value.kForward);
-        m_innerPiston.set(DoubleSolenoid.Value.kForward);
+        m_outerPiston.set(OUTER_PISTON_EXTENDED);
+        m_innerPiston.set(INNER_PISTON_RETRACTED);
     }
 
     public void middleRetract() {
-        m_outerPiston.set(DoubleSolenoid.Value.kReverse);
-        m_innerPiston.set(DoubleSolenoid.Value.kReverse);
+        m_outerPiston.set(OUTER_PISTON_RETRACTED);
+        m_innerPiston.set(INNER_PISTON_RETRACTED);
     }
 
     public void out() {
-        m_outerPiston.set(DoubleSolenoid.Value.kReverse);
-        m_innerPiston.set(DoubleSolenoid.Value.kForward);
+        m_outerPiston.set(OUTER_PISTON_RETRACTED);
+        m_innerPiston.set(INNER_PISTON_EXTENDED);
     }
 
     public boolean isInnerPistonIn() {
-        return m_innerPiston.get().equals(DoubleSolenoid.Value.kReverse);
+        return m_innerPiston.get() == INNER_PISTON_EXTENDED;
     }
 
     public boolean isOuterPistonIn() {
-        return m_outerPiston.get().equals(DoubleSolenoid.Value.kReverse);
+        return m_outerPiston.get() == OUTER_PISTON_RETRACTED;
     }
 
-    public void innerPistonForward() {
-        m_innerPiston.set(DoubleSolenoid.Value.kForward);
+    public void setInnerPistonExtended() {
+        m_innerPiston.set(INNER_PISTON_EXTENDED);
     }
 
-    public void innerPistonReverse() {
-        m_innerPiston.set(DoubleSolenoid.Value.kReverse);
+    public void setInnerPistonRetracted() {
+        m_innerPiston.set(INNER_PISTON_RETRACTED);
     }
 
-    public void outerPistonForward() {
-        m_outerPiston.set(DoubleSolenoid.Value.kForward);
+    public void setOuterPistonExtended() {
+        m_outerPiston.set(OUTER_PISTON_EXTENDED);
     }
 
-    public void outerPistonReverse() {
-        m_outerPiston.set(DoubleSolenoid.Value.kReverse);
+    public void setOutPistonRetracted() {
+        m_outerPiston.set(OUTER_PISTON_RETRACTED);
     }
 
     public boolean isLowerLimitSwitchedPressed() {
@@ -256,20 +262,20 @@ public class ArmSubsystem extends SubsystemBase {
     ///////////////////////
     // Command Factories
     ///////////////////////
-    public CommandBase commandInnerPistonForward() {
-        return runOnce(this::innerPistonForward);
+    public CommandBase commandInnerPistonExtended() {
+        return runOnce(this::setInnerPistonExtended);
     }
 
-    public CommandBase commandInnerPistonReverse() {
-        return runOnce(this::innerPistonReverse);
+    public CommandBase commandInnerPistonRetracted() {
+        return runOnce(this::setInnerPistonRetracted);
     }
 
-    public CommandBase commandOuterPistonForward() {
-        return runOnce(this::outerPistonForward);
+    public CommandBase commandOuterPistonExtended() {
+        return runOnce(this::setOuterPistonExtended);
     }
 
-    public CommandBase commandOuterPistonReverse() {
-        return runOnce(this::outerPistonReverse);
+    public CommandBase commandOuterPistonRetracted() {
+        return runOnce(this::setOutPistonRetracted);
     }
 
     public CommandBase commandFullRetract() {
