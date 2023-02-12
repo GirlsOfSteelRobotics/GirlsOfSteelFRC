@@ -16,13 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public final class AutonomousFactory {
-    //Unused auto paths: should not be used beyond testing purposes (and definitely not at competitions)
-    // public final CommandBase m_dockEngageAndCommunity;
-    //public final CommandBase m_oneNodeAndDock;
-
-    //public final CommandBase m_onePieceAndDockEngage;
-    //public final CommandBase m_manyPieceAuto;
-    //public final CommandBase m_twoPieceAuto;
 
     private final SendableChooser<Command> m_autonomousModes;
 
@@ -46,22 +39,6 @@ public final class AutonomousFactory {
 
     public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
         m_autonomousModes = new SendableChooser<>();
-
-        //Unused auto codes to be deleted as soon as we're ready:
-        //m_dockEngageAndCommunity = new DockEngageAndCommunityCommandGroup(chassis);
-        //m_autonomousModes.addOption("Dock, Engage, & Community", m_dockEngageAndCommunity);
-
-        //m_oneNodeAndDock = new OneNodeAndDockCommandGroup(chassis);
-        //m_autonomousModes.addOption("One Node & Dock", m_oneNodeAndDock);
-
-        //m_onePieceAndDockEngage = new OnePieceAndDockEngageCommandGroup(chassis);
-        //m_autonomousModes.addOption("One Piece, Dock & Engage", m_onePieceAndDockEngage);
-
-        //m_manyPieceAuto = new ManyPieceAutoCommandGroup(chassis);
-        //m_autonomousModes.addOption("Many Piece", m_manyPieceAuto);
-
-        //m_twoPieceAuto = new TwoPieceAutoCommandGroup(chassis);
-        //m_autonomousModes.addOption("Two Piece", m_twoPieceAuto);
 
         //Two scoring nodes (high), no engaging (nodes 0,1; nodes 7,8)
         m_twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1");
@@ -95,7 +72,7 @@ public final class AutonomousFactory {
         m_onlyDockAndEngage = new OnlyDockAndEngageCommandGroup(chassis);
         m_autonomousModes.addOption("Only Dock & Engage", m_onlyDockAndEngage);
 
-        //To be finished: Two scoring nodes (nodes 3,4; nodes 4,5) and engage
+        //ToDo: Two scoring nodes (nodes 3,4; nodes 4,5) and engage
 
         //Auto drive
         m_autonomousModes.addOption("Autonomous drive", new AutonomousDriveTimeCommand(chassis));

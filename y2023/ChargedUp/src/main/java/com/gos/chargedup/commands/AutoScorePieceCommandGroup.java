@@ -5,8 +5,10 @@ import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class ScorePieceCommandGroup extends SequentialCommandGroup {
-    public ScorePieceCommandGroup(TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
+public class AutoScorePieceCommandGroup extends SequentialCommandGroup {
+
+    //general question because I'll forget: Can we reuse the same or very similar code in teleop? like we link it to a button that just scores
+    public AutoScorePieceCommandGroup(TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
         //assuming robot is in correct position to score (intake facing nodes)
         //turret 180, arm to angle, arm extend, drop piece
         addCommands(turret.commandTurretPID(180));

@@ -1,7 +1,7 @@
 package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.commands.ScorePieceCommandGroup;
+import com.gos.chargedup.commands.AutoScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
@@ -19,7 +19,7 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
         PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
 
         //score
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw));
+        addCommands(new AutoScorePieceCommandGroup(turret, arm, claw));
 
         //drive to docking station
         addCommands(chassis.followTrajectoryCommand(oneNodeAndEngage, true));

@@ -1,7 +1,7 @@
 package com.gos.chargedup.autonomous;
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.commands.ScorePieceCommandGroup;
+import com.gos.chargedup.commands.AutoScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
@@ -29,13 +29,13 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceNodes0And1);
 
         //score first piece:
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw));
+        addCommands(new AutoScorePieceCommandGroup(turret, arm, claw));
 
         //drive, get piece, drive back
         addCommands(fullAuto);
 
         //score piece:
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw));
+        addCommands(new AutoScorePieceCommandGroup(turret, arm, claw));
 
     }
 }
