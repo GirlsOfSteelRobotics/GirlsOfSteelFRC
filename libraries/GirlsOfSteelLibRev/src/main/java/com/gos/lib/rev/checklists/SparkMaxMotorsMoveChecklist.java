@@ -1,14 +1,14 @@
-package com.gos.chargedup.commands;
+package com.gos.lib.rev.checklists;
 
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.littletonrobotics.frc2023.util.Alert;
 
-public class RobotMotorsMove extends CommandBase {
+public class SparkMaxMotorsMoveChecklist extends CommandBase {
 
     private final RelativeEncoder m_encoder;
 
@@ -24,8 +24,8 @@ public class RobotMotorsMove extends CommandBase {
 
     private final Alert m_alert;
 
-    public RobotMotorsMove(SimableCANSparkMax motor, String label, double expectedDist) {
-        super();
+    public SparkMaxMotorsMoveChecklist(Subsystem subsystem, CANSparkMax motor, String label, double expectedDist) {
+        addRequirements(subsystem);
         m_encoder = motor.getEncoder();
         m_motor = motor;
         m_startPosMotor = 0;

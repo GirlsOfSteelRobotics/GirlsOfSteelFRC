@@ -2,12 +2,13 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.commands.DoubleSolenoidMoveTest;
+import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import java.util.function.DoubleSupplier;
 
 public class ClawSubsystem extends SubsystemBase {
 
@@ -40,8 +41,8 @@ public class ClawSubsystem extends SubsystemBase {
         return this.runOnce(this::moveClawIntakeOut).withName("ClawIntakeOut");
     }
 
-    public CommandBase createIsClawPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new DoubleSolenoidMoveTest(pneumaticHub, m_claw, Constants.PRESSURE_SENSOR_PORT, "Claw: Right Piston");
+    public CommandBase createIsClawPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_claw, "Claw: Right Piston");
     }
 }
 

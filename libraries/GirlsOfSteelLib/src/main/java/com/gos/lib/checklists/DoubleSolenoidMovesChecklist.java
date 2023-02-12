@@ -1,19 +1,19 @@
-package com.gos.chargedup.commands;
+package com.gos.lib.checklists;
 
-import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.littletonrobotics.frc2023.util.Alert;
 
+import java.util.function.DoubleSupplier;
 
-public class SolenoidMoveTest extends CommandBase {
 
-    private final PneumaticHub m_pneumaticsHub;
+public class DoubleSolenoidMovesChecklist extends CommandBase {
 
-    private final Solenoid m_solenoid;
+    private final DoubleSupplier m_pressureSupplier;
 
-    private final int m_channel;
+    private final DoubleSolenoid m_solenoid;
 
     private double m_startPressure;
 
@@ -21,13 +21,10 @@ public class SolenoidMoveTest extends CommandBase {
 
     private final Alert m_alert;
 
-    public SolenoidMoveTest(PneumaticHub pneumaticHub, Solenoid solenoid, int channel, String label) {
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
-        m_pneumaticsHub = pneumaticHub;
+    public DoubleSolenoidMovesChecklist(Subsystem subsystem, DoubleSupplier pressureSupplier, DoubleSolenoid solenoid, String label) {
+        addRequirements(subsystem);
+        m_pressureSupplier = pressureSupplier;
         m_solenoid = solenoid;
-        m_channel = channel;
         m_startPressure = 0;
         m_alert = new Alert(label, Alert.AlertType.ERROR);
         m_timer = new Timer();
@@ -35,7 +32,7 @@ public class SolenoidMoveTest extends CommandBase {
 
     @Override
     public void initialize() {
-        m_startPressure = m_pneumaticsHub.getPressure(m_channel);
+        m_startPressure = m_pressureSupplier.getAsDouble();
         m_timer.reset();
         m_timer.start();
     }
@@ -53,7 +50,7 @@ public class SolenoidMoveTest extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_timer.stop();
-        double endPressure = m_pneumaticsHub.getPressure(m_channel);
+        double endPressure = m_pressureSupplier.getAsDouble();
         boolean didSolenoidMove = (m_startPressure < endPressure);
         m_alert.set(!didSolenoidMove);
     }
