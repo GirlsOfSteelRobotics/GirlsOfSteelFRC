@@ -1,17 +1,18 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.commands.SolenoidMoveTest;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
+import com.gos.lib.checklists.SolenoidMovesChecklist;
 import com.gos.lib.rev.SparkMaxAlerts;
-import com.gos.chargedup.commands.RobotMotorsMove;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import java.util.function.DoubleSupplier;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -114,18 +115,18 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsHopperMotorMoving() {
-        return new RobotMotorsMove(m_hopperMotor, "Intake: Hopper motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_hopperMotor, "Intake: Hopper motor", 1.0);
     }
 
     public CommandBase createIsIntakeMotorMoving() {
-        return new RobotMotorsMove(m_intakeMotor, "Intake: Intake motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_intakeMotor, "Intake: Intake motor", 1.0);
     }
 
-    public CommandBase createIsIntakeLeftPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new SolenoidMoveTest(pneumaticHub, m_intakeSolenoidLeft, Constants.PRESSURE_SENSOR_PORT, "Intake: Left Piston");
+    public CommandBase createIsIntakeLeftPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new SolenoidMovesChecklist(this, pressureSupplier, m_intakeSolenoidLeft, "Intake: Left Piston");
     }
 
-    public CommandBase createIsIntakeRightPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new SolenoidMoveTest(pneumaticHub, m_intakeSolenoidRight, Constants.PRESSURE_SENSOR_PORT, "Intake: Right Piston");
+    public CommandBase createIsIntakeRightPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new SolenoidMovesChecklist(this, pressureSupplier, m_intakeSolenoidRight, "Intake: Right Piston");
     }
 }

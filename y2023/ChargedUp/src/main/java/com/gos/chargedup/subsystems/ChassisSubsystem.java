@@ -3,7 +3,7 @@ package com.gos.chargedup.subsystems;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
 import com.gos.lib.rev.SparkMaxAlerts;
-import com.gos.chargedup.commands.RobotMotorsMove;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -339,11 +339,11 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsLeftMotorMoving() {
-        return new RobotMotorsMove(m_leaderLeft, "Chassis: Leader left motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_leaderLeft, "Chassis: Leader left motor", 1.0);
     }
 
     public CommandBase createIsRightMotorMoving() {
-        return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
     public void drivetrainToBrakeMode() {

@@ -2,8 +2,8 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.commands.DoubleSolenoidMoveTest;
-import com.gos.chargedup.commands.RobotMotorsMove;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
+import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -20,7 +20,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
@@ -29,6 +28,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+
+import java.util.function.DoubleSupplier;
 
 public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
@@ -291,19 +292,19 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsPivotMotorMoving() {
-        return new RobotMotorsMove(m_pivotMotor, "Arm: Pivot motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
     }
 
-    public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new DoubleSolenoidMoveTest(pneumaticHub, m_innerPiston, Constants.PRESSURE_SENSOR_PORT, "Arm: Inner Piston");
+    public CommandBase createIsArmInnerPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_innerPiston, "Arm: Inner Piston");
     }
 
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
     }
 
-    public CommandBase createIsArmOuterPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new DoubleSolenoidMoveTest(pneumaticHub, m_outerPiston, Constants.PRESSURE_SENSOR_PORT, "Claw: Left Piston");
+    public CommandBase createIsArmOuterPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_outerPiston, "Claw: Left Piston");
     }
 
     public CommandBase commandPivotArmUp() {
