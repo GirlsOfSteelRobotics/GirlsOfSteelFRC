@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.littletonrobotics.frc2023.util.Alert;
 
 
-public class PneumaticsMoveTest extends CommandBase {
+public class SolenoidMoveTest extends CommandBase {
 
     private final PneumaticHub m_pneumaticsHub;
 
@@ -21,7 +21,7 @@ public class PneumaticsMoveTest extends CommandBase {
 
     private final Alert m_alert;
 
-    public PneumaticsMoveTest(PneumaticHub pneumaticHub, Solenoid solenoid, int channel, String label) {
+    public SolenoidMoveTest(PneumaticHub pneumaticHub, Solenoid solenoid, int channel, String label) {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -54,8 +54,7 @@ public class PneumaticsMoveTest extends CommandBase {
     public void end(boolean interrupted) {
         m_timer.stop();
         double endPressure = m_pneumaticsHub.getPressure(m_channel);
-        boolean isPneuMoving = (m_startPressure < endPressure);
-        m_alert.set(!isPneuMoving);
-        m_solenoid.set(false);
+        boolean didSolenoidMove = (m_startPressure < endPressure);
+        m_alert.set(!didSolenoidMove);
     }
 }

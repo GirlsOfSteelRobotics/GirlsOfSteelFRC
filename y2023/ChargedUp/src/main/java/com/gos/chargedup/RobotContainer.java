@@ -142,7 +142,8 @@ public class RobotContainer {
         tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
 
-        tab.add("Reset Pivot Encoder", m_arm.createResetPivotEncoder());
+        tab.add("Reset Pivot Encoder", m_arm.createResetPivotEncoder(ArmSubsystem.MIN_ANGLE_DEG));
+        tab.add("Reset Pivot Encoder (0 deg)", m_arm.createResetPivotEncoder(0));
         tab.add("Pivot to Coast Mode", m_arm.createPivotToCoastMode());
         tab.add("Pivot to Brake Mode", m_arm.createPivotToBrakeMode());
 
@@ -150,6 +151,11 @@ public class RobotContainer {
         tab.add("Arm Full Retract", m_arm.commandFullRetract());
         tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
         tab.add("Arm Full Extend", m_arm.commandFullExtend());
+
+        tab.add("Arm Inner Piston Extended", m_arm.commandInnerPistonExtended());
+        tab.add("Arm Inner Piston Retracted", m_arm.commandInnerPistonRetracted());
+        tab.add("Outer Inner Piston Extended", m_arm.commandOuterPistonExtended());
+        tab.add("Outer Inner Piston Retracted", m_arm.commandOuterPistonRetracted());
 
         // claw
         tab.add("Claw In", m_claw.createMoveClawIntakeInCommand());
@@ -190,12 +196,10 @@ public class RobotContainer {
         // Operator
         m_operatorController.a().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_operatorController.leftBumper().whileTrue(m_intake.createIntakeInCommand());
-        m_operatorController.rightBumper().whileTrue(m_intake.createIntakeOutCommand());
-        m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
-        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.leftBumper().whileTrue(m_arm.commandPivotArmUp());
+        m_operatorController.leftTrigger().whileTrue(m_arm.commandPivotArmDown());
+        m_operatorController.rightBumper().onTrue(m_arm.commandInnerPistonExtended());
+        m_operatorController.rightTrigger().onTrue(m_arm.commandInnerPistonRetracted());
     }
 
 
