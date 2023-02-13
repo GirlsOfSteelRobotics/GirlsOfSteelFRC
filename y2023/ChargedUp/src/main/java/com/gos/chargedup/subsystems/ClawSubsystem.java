@@ -13,6 +13,7 @@ import java.util.function.DoubleSupplier;
 public class ClawSubsystem extends SubsystemBase {
 
     private final DoubleSolenoid m_claw;
+    private static final double CLAW_WAIT = 2;
 
 
     public ClawSubsystem() {
@@ -34,11 +35,11 @@ public class ClawSubsystem extends SubsystemBase {
     // Command Factories
     /////////////////////
     public CommandBase createMoveClawIntakeInCommand() {
-        return this.runOnce(this::moveClawIntakeIn).withName("ClawIntakeIn");
+        return this.run(this::moveClawIntakeIn).withName("ClawIntakeIn").withTimeout(CLAW_WAIT);
     }
 
     public CommandBase createMoveClawIntakeOutCommand() {
-        return this.runOnce(this::moveClawIntakeOut).withName("ClawIntakeOut");
+        return this.run(this::moveClawIntakeOut).withName("ClawIntakeOut").withTimeout(CLAW_WAIT);
     }
 
     public CommandBase createIsClawPneumaticMoving(DoubleSupplier pressureSupplier) {
