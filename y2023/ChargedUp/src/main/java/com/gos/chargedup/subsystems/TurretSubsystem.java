@@ -12,6 +12,8 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -50,7 +52,6 @@ public class TurretSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_turretMotorErrorAlert;
 
     private InstantaneousMotorSim m_turretSimulator;
-
 
     public TurretSubsystem() {
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -163,6 +164,8 @@ public class TurretSubsystem extends SubsystemBase {
     public double getTurretSpeed() {
         return m_turretMotor.getAppliedOutput();
     }
+
+
 
     // Command Factories
     public CommandBase commandMoveTurretClockwise() {
