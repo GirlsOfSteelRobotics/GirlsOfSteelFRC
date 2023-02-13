@@ -18,7 +18,6 @@ import java.util.Optional;
 
 public class VisionSubsystem implements Subsystem {
 
-    // TODO get transform for real robot
     private static final Transform3d ROBOT_TO_CAMERA =
         new Transform3d(
             new Translation3d(0.5, 0.0, 0.5),
@@ -28,7 +27,7 @@ public class VisionSubsystem implements Subsystem {
 
     private final PhotonCamera m_camera;
 
-    private PhotonPoseEstimator m_photonPoseEstimator;
+    private final PhotonPoseEstimator m_photonPoseEstimator;
 
     public VisionSubsystem() {
         m_camera = new PhotonCamera(CAMERA_NAME);

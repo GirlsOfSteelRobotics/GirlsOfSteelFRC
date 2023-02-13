@@ -34,7 +34,6 @@ public class CollectorSubsystem extends SubsystemBase {
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(16);
     private static final double MIN_ANGLE_RADS = 0;
     private static final double MAX_ANGLE_RADS = Math.PI / 2;
-    private static final double ARM_MASS_KG = Units.lbsToKilograms(5);
     private static final boolean SIMULATE_GRAVITY = true;
 
     // TODO play with these numbers for optimal ball pickup
@@ -147,7 +146,7 @@ public class CollectorSubsystem extends SubsystemBase {
 
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
-                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, ARM_MASS_KG, SIMULATE_GRAVITY);
+                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY);
             m_leftSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotLeft),
                 RevEncoderSimWrapper.create(m_pivotLeft), true);
             m_rightSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotRight),

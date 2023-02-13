@@ -74,7 +74,6 @@ def custom_update_robot_build_file(remote_build_file_data, build_file, latest_ve
 
 
 def update_non_robot_build_file(build_file, latest_version):
-
     replacements = []
     replacements.append(
         (

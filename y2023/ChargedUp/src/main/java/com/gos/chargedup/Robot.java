@@ -5,9 +5,14 @@
 
 package com.gos.chargedup;
 
+import com.gos.lib.rev.PneumaticHubAlerts;
+import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.littletonrobotics.frc2023.util.Alert;
 
 
 /**
@@ -22,6 +27,12 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
+    private final PneumaticHub m_pneumaticHub = new PneumaticHub();
+    private final PneumaticHubAlerts m_pneumaticHubAlert = new PneumaticHubAlerts(m_pneumaticHub);
+    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
+
+    private static final double LOW_BATTERY_VOLTAGE = 11.9;
+
 
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -31,7 +42,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        m_robotContainer = new RobotContainer();
+        m_robotContainer = new RobotContainer(() -> m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
     }
 
 
@@ -49,6 +60,10 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        m_pneumaticHubAlert.checkAlerts();
+        m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
+        SmartDashboard.putNumber("Air Pressure", m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
+
     }
 
 
