@@ -29,13 +29,13 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceNodes0And1);
 
         //score first piece:
-        addCommands(new AutoScorePieceCommandGroup(turret, arm, claw));
+        addCommands(new AutoScorePieceCommandGroup(turret, arm, claw, ArmSubsystem.ARM_CONE_HIGH_DEG));
 
         //drive, get piece, drive back
         addCommands(fullAuto);
 
         //score piece:
-        addCommands(new AutoScorePieceCommandGroup(turret, arm, claw));
+        addCommands(new AutoScorePieceCommandGroup(turret, arm, claw, ArmSubsystem.ARM_CUBE_HIGH_DEG));
 
     }
 }

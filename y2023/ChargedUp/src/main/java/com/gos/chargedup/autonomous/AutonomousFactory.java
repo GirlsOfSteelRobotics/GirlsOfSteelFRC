@@ -31,7 +31,9 @@ public final class AutonomousFactory {
 
     public final CommandBase m_oneNodeAndEngage5;
 
-    public final CommandBase m_scoreAtCurrentPos;
+    public final CommandBase m_scoreConeAtCurrentPos;
+
+    public final CommandBase m_scoreCubeAtCurrentPos;
 
     public final CommandBase m_onlyLeaveCommunityEnd;
 
@@ -48,18 +50,21 @@ public final class AutonomousFactory {
         m_autonomousModes.addOption("Two Piece Nodes 7 and 8", m_twoPieceNodes7and8);
 
         //One scoring node (high), engage at end (nodes 3, 4, 5)
-        m_oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3");
+        m_oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", ArmSubsystem.ARM_CONE_HIGH_DEG);
         m_autonomousModes.addOption("One Piece Node and Engage 3", m_oneNodeAndEngage3);
 
-        m_oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4");
+        m_oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", ArmSubsystem.ARM_CUBE_HIGH_DEG);
         m_autonomousModes.addOption("One Piece Node and Engage 4", m_oneNodeAndEngage4);
 
-        m_oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5");
+        m_oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", ArmSubsystem.ARM_CONE_HIGH_DEG);
         m_autonomousModes.addOption("One Piece Node and Engage 5", m_oneNodeAndEngage5);
 
         //score wherever the robot is (no chassis parameter)
-        m_scoreAtCurrentPos = new ScoreHighAtCurrentPosCommandGroup(turret, arm, claw);
-        m_autonomousModes.addOption("Score High at Current Position's node", m_scoreAtCurrentPos);
+        m_scoreConeAtCurrentPos = new ScoreHighConeAtCurrentPosCommandGroup(turret, arm, claw);
+        m_autonomousModes.addOption("Score Cone High at Current Position's node", m_scoreConeAtCurrentPos);
+
+        m_scoreCubeAtCurrentPos = new ScoreHighCubeAtCurrentPosCommandGroup(turret, arm, claw);
+        m_autonomousModes.addOption("Score Cube High at Current Position's node", m_scoreCubeAtCurrentPos);
 
         //just leave the community (by the player station and by the end)
         m_onlyLeaveCommunityEnd = new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity");
