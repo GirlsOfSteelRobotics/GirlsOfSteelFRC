@@ -2,7 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.commands.RobotMotorsMove;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -174,7 +174,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsTurretMotorMoving() {
-        return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
     }
 
     public CommandBase commandTurretPID(double angle) {

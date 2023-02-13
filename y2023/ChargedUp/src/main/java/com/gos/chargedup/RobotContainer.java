@@ -11,13 +11,11 @@ import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
-import com.gos.chargedup.subsystems.ArmSubsystem;
-import com.gos.chargedup.subsystems.ChassisSubsystem;
-
-//test paths
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
+import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
@@ -29,9 +27,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotBase;
-
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
@@ -39,6 +35,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import java.util.function.DoubleSupplier;
 
 
 /**
@@ -69,11 +67,12 @@ public class RobotContainer {
 
     private final LEDManagerSubsystem m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController); //NOPMD
 
+    private final DoubleSupplier m_pressureSupplier;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer(PneumaticHub pneumaticHub) {
+    public RobotContainer(DoubleSupplier pressureSupplier) {
         // Configure the trigger bindings
 
 
@@ -84,6 +83,8 @@ public class RobotContainer {
         m_intake = new IntakeSubsystem();
 
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw);
+
+        m_pressureSupplier = pressureSupplier;
         configureBindings();
 
         if (RobotBase.isSimulation()) {
@@ -95,7 +96,7 @@ public class RobotContainer {
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
-        SmartDashboard.putData("Run checklist", new ChecklistTestAll(pneumaticHub, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
+        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
         createTestCommands();
     }
 
@@ -142,7 +143,8 @@ public class RobotContainer {
         tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
 
-        tab.add("Reset Pivot Encoder", m_arm.createResetPivotEncoder());
+        tab.add("Reset Pivot Encoder", m_arm.createResetPivotEncoder(ArmSubsystem.MIN_ANGLE_DEG));
+        tab.add("Reset Pivot Encoder (0 deg)", m_arm.createResetPivotEncoder(0));
         tab.add("Pivot to Coast Mode", m_arm.createPivotToCoastMode());
         tab.add("Pivot to Brake Mode", m_arm.createPivotToBrakeMode());
 
@@ -150,6 +152,11 @@ public class RobotContainer {
         tab.add("Arm Full Retract", m_arm.commandFullRetract());
         tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
         tab.add("Arm Full Extend", m_arm.commandFullExtend());
+
+        tab.add("Arm Inner Piston Extended", m_arm.commandInnerPistonExtended());
+        tab.add("Arm Inner Piston Retracted", m_arm.commandInnerPistonRetracted());
+        tab.add("Outer Inner Piston Extended", m_arm.commandOuterPistonExtended());
+        tab.add("Outer Inner Piston Retracted", m_arm.commandOuterPistonRetracted());
 
         // claw
         tab.add("Claw In", m_claw.createMoveClawIntakeInCommand());
@@ -183,19 +190,17 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_arm.commandFullExtend());
         m_driverController.x().whileTrue(m_arm.commandFullRetract());
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
-        m_driverController. leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
-        m_driverController.rightBumper().whileTrue(m_turret.commandMoveTurretCounterClockwise());
+        m_driverController.leftBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_driverController.leftTrigger().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
-        m_operatorController.a().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-        m_operatorController.b().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_operatorController.leftBumper().whileTrue(m_intake.createIntakeInCommand());
-        m_operatorController.rightBumper().whileTrue(m_intake.createIntakeOutCommand());
-        m_operatorController.a().whileTrue(m_arm.commandPivotArmUp());
-        m_operatorController.b().whileTrue(m_arm.commandPivotArmDown());
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.y().whileTrue(m_arm.commandPivotArmUp());
+        m_operatorController.a().whileTrue(m_arm.commandPivotArmDown());
+        m_operatorController.leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
+        m_operatorController.rightBumper().whileTrue(m_turret.commandMoveTurretCounterClockwise());
+        m_operatorController.leftTrigger().onTrue(m_arm.commandInnerPistonExtended());
+        m_operatorController.rightTrigger().onTrue(m_arm.commandInnerPistonRetracted());
     }
 
 

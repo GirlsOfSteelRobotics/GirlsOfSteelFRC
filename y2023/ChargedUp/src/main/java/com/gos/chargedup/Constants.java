@@ -38,14 +38,15 @@ public final class Constants {
     public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
 
     //Pneumatics
-    public static final int ARM_OUTER_PISTON = 7;
-    public static final int ARM_INNER_PISTON = 2;
-    public static final int RIGHT_CLAW_PISTON = 0;
+    public static final int ARM_OUTER_PISTON_OUT = 11;
+    public static final int ARM_OUTER_PISTON_IN = 8;
+    public static final int ARM_INNER_PISTON_REVERSE = 13;
+    public static final int ARM_INNER_PISTON_FORWARD = 12;
 
-    public static final int LEFT_CLAW_PISTON = 4;
-    public static final int LEFT_INTAKE_PISTON = 1;
-    public static final int INTAKE_LEFT_PISTON = 3;
-    public static final int INTAKE_RIGHT_PISTON = 5;
+    public static final int CLAW_PISTON_FORWARD = 9;
+    public static final int CLAW_PISTON_REVERSE = 10;
+    public static final int INTAKE_LEFT_PISTON = 15;
+    public static final int INTAKE_RIGHT_PISTON = 14;
 
     //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
@@ -54,4 +55,6 @@ public final class Constants {
     //Auto velocity and acceleration
     public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(144), Units.inchesToMeters(144));
 
+    // Pneumatics Module
+    public static final int PRESSURE_SENSOR_PORT = 0;
 }
