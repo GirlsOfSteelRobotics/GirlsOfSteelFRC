@@ -5,7 +5,7 @@
 
 package com.gos.chargedup;
 
-import com.gos.lib.rev.PneumaticHubAlerts;
+import com.gos.lib.checklists.PneumaticHubAlerts;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
