@@ -313,7 +313,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase commandChassisVelocity() {
         return this.runEnd(
             () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
-            this::stop);
+            this::stop).withName("Tune Chassis Velocity");
     }
 
     public CommandBase createIsLeftMotorMoving() {
@@ -342,11 +342,13 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
     public CommandBase createResetOdometry(Pose2d pose2d) {
-        return this.runOnce(() -> resetOdometry(pose2d));
+        return this.runOnce(() -> resetOdometry(pose2d))
+            .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
     public CommandBase syncOdometryWithPoseEstimator() {
-        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
+        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()))
+            .withName("Sync Odometry /w Pose");
     }
 
     public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {

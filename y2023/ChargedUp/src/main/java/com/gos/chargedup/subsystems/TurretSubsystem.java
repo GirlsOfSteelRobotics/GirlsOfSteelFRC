@@ -46,6 +46,7 @@ public class TurretSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_intakeLimitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
     private final NetworkTableEntry m_encoderVelocityEntry;
+    private final NetworkTableEntry m_angleGoalEntry;
 
     private final SparkMaxAlerts m_turretMotorErrorAlert;
 
@@ -71,7 +72,8 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry = loggingTable.getEntry("Turret Intake LS");
         m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
-        m_encoderVelocityEntry = loggingTable.getEntry("Turret Velocity (deg-per-sec)");
+        m_encoderVelocityEntry = loggingTable.getEntry("Turret Velocity (deg per sec)");
+        m_angleGoalEntry = loggingTable.getEntry("Goal Angle");
 
         m_turretMotorErrorAlert = new SparkMaxAlerts(m_turretMotor, "turret motor");
 
@@ -100,6 +102,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
         m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
         m_encoderVelocityEntry.setNumber(m_turretEncoder.getVelocity());
+        m_angleGoalEntry.setNumber(m_turretGoalAngle);
 
         m_turretMotorErrorAlert.checkAlerts();
     }

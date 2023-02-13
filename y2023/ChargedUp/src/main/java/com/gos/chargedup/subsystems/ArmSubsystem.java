@@ -265,19 +265,19 @@ public class ArmSubsystem extends SubsystemBase {
     // Command Factories
     ///////////////////////
     public CommandBase commandInnerPistonExtended() {
-        return runOnce(this::setInnerPistonExtended);
+        return runOnce(this::setInnerPistonExtended).withName("Arm Inner Extended");
     }
 
     public CommandBase commandInnerPistonRetracted() {
-        return runOnce(this::setInnerPistonRetracted);
+        return runOnce(this::setInnerPistonRetracted).withName("Arm Inner Retracted");
     }
 
     public CommandBase commandOuterPistonExtended() {
-        return runOnce(this::setOuterPistonExtended);
+        return runOnce(this::setOuterPistonExtended).withName("Arm Outer Extended");
     }
 
     public CommandBase commandOuterPistonRetracted() {
-        return runOnce(this::setOutPistonRetracted);
+        return runOnce(this::setOutPistonRetracted).withName("Arm Outer Retracted");
     }
 
     public CommandBase commandFullRetract() {

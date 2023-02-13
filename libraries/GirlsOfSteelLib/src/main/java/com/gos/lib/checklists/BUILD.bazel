@@ -1,0 +1,12 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "checklists",
+    srcs = glob(["*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "//libraries/GirlsOfSteelLib/src/main/java/org/littletonrobotics/frc2023/util:mechanical_advantage",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+    ],
+)
