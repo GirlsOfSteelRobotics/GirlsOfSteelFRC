@@ -52,8 +52,24 @@ public final class PropertyManager {
     }
 
     public static void printDynamicProperties() {
+        printDynamicProperties(true);
+    }
+
+    public static void printDynamicProperties(boolean printOnlyMismatches) {
+        // Print all the properties that do not match their default
         for (BaseProperty<?> prop : DYNAMIC_PROPERTIES) {
-            System.out.println(prop.m_constructionStackTrace);
+            if (!prop.m_default.equals(prop.getValue())) {
+                System.err.println(prop.m_constructionStackTrace);
+            }
+        }
+
+        // If we want to print all dynamic properties, only print out the ones that didn't get logged in stderr
+        if (!printOnlyMismatches) {
+            for (BaseProperty<?> prop : DYNAMIC_PROPERTIES) {
+                if (prop.m_default.equals(prop.getValue())) {
+                    System.out.println(prop.m_constructionStackTrace);
+                }
+            }
         }
     }
 
@@ -113,8 +129,11 @@ public final class PropertyManager {
                 .append(" -- at:");
 
             // Skip the first couple entries, because they are all the same.
-            // getStackTrace() -> BaseProperty() -> <type>Property() -> create<type>Property()
-            for (int i = 4; i < stackTrace.length; ++i) {
+            // getStackTrace() -> BaseProperty() -> Gos<type>Property()
+            //
+            // Also cut off the end because it is always the same
+            // startRobot() -> runRobot() -> startCompetition() -> robotIni()
+            for (int i = 3; i < stackTrace.length - 4; ++i) {
                 sb.append("\n  ").append(stackTrace[i]);
             }
             m_constructionStackTrace = sb.toString();
