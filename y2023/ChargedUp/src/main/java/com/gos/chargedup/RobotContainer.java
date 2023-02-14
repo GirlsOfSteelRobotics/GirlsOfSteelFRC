@@ -148,6 +148,8 @@ public class RobotContainer {
         tab.add("Pivot to Coast Mode", m_arm.createPivotToCoastMode());
         tab.add("Pivot to Brake Mode", m_arm.createPivotToBrakeMode());
 
+        tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+
         // arm extension
         tab.add("Arm Full Retract", m_arm.commandFullRetract());
         tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
@@ -157,6 +159,7 @@ public class RobotContainer {
         tab.add("Arm Inner Piston Retracted", m_arm.commandInnerPistonRetracted());
         tab.add("Outer Inner Piston Extended", m_arm.commandOuterPistonExtended());
         tab.add("Outer Inner Piston Retracted", m_arm.commandOuterPistonRetracted());
+
 
         // claw
         tab.add("Claw In", m_claw.createMoveClawIntakeInCommand());
@@ -169,7 +172,6 @@ public class RobotContainer {
         tab.add("Intake Roller In", m_intake.createIntakeInCommand());
         tab.add("Intake Roller Out", m_intake.createIntakeOutCommand());
 
-        tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
 
 
     }
@@ -190,17 +192,26 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_arm.commandFullExtend());
         m_driverController.x().whileTrue(m_arm.commandFullRetract());
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
-        m_driverController.leftBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
-        m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_driverController.leftTrigger().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.leftTrigger().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
+        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
-        m_operatorController.y().whileTrue(m_arm.commandPivotArmUp());
-        m_operatorController.a().whileTrue(m_arm.commandPivotArmDown());
-        m_operatorController.leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
-        m_operatorController.rightBumper().whileTrue(m_turret.commandMoveTurretCounterClockwise());
-        m_operatorController.leftTrigger().onTrue(m_arm.commandInnerPistonExtended());
-        m_operatorController.rightTrigger().onTrue(m_arm.commandInnerPistonRetracted());
+        Trigger leftJoystickAsButtonRight = new Trigger(() -> m_operatorController.getLeftX() > .5);
+        Trigger leftJoystickAsButtonLeft = new Trigger(() -> m_operatorController.getLeftX() < -.5);
+        Trigger leftJoystickAsButtonDown = new Trigger(() -> m_operatorController.getLeftY() > .5);
+        Trigger leftJoystickAsButtonUp = new Trigger(() -> m_operatorController.getLeftY() < -.5);
+        leftJoystickAsButtonRight.whileTrue(m_turret.commandMoveTurretCounterClockwise());
+        leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
+        leftJoystickAsButtonUp.whileTrue(m_arm.commandPivotArmUp());
+        leftJoystickAsButtonDown.whileTrue(m_arm.commandPivotArmDown());
+        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.b().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.a().whileTrue(m_intake.createIntakeInCommand());
+        m_operatorController.x().whileTrue(m_intake.createIntakeOutCommand());
+        m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
+        m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
+        m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
     }
 
 
