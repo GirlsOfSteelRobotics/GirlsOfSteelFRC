@@ -31,9 +31,10 @@ public class Robot extends TimedRobot {
 
     private final PneumaticHub m_pneumaticHub = new PneumaticHub();
     private final PneumaticHubAlerts m_pneumaticHubAlert = new PneumaticHubAlerts(m_pneumaticHub);
-    private final PowerDistribution m_powerDistribution = new PowerDistribution();
 
-    private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistribution(m_powerDistribution);
+    private final PowerDistribution m_powerDistribution = new PowerDistribution();
+    private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistributionAlerts(m_powerDistribution);
+
     private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
     private static final double LOW_BATTERY_VOLTAGE = 11.9;
 
@@ -67,6 +68,8 @@ public class Robot extends TimedRobot {
         m_pneumaticHubAlert.checkAlerts();
         m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
         SmartDashboard.putNumber("Air Pressure", m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
+        m_powerDistributionAlert.checkAlerts();
+        SmartDashboard.putNumber("Power Distribution", m_powerDistribution.getCurrent(Constants.PRESSURE_SENSOR_PORT));
 
     }
 

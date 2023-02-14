@@ -16,8 +16,9 @@ public class PowerDistributionAlerts {
 
     }
 
+    @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity", "PMD.NcssCount"})
     public void checkAlerts() {
-        StringBuilder alertMessageBuilder = new StringBuilder(400);
+        StringBuilder alertMessageBuilder = new StringBuilder(700);
         alertMessageBuilder.append(ALERT_NAME);
 
         PowerDistributionFaults faults = m_powerDistribution.getFaults();
