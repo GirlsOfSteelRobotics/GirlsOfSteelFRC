@@ -20,6 +20,7 @@ import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
+import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,6 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.function.DoubleSupplier;
 
@@ -98,6 +100,10 @@ public class RobotContainer {
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
         createTestCommands();
+
+        if (RobotBase.isReal()) {
+            PropertyManager.printDynamicProperties();
+        }
     }
 
     private void createTestCommands() {
@@ -122,9 +128,9 @@ public class RobotContainer {
 
         // turret
         tab.add("Tune Turret Velocity", m_turret.createTuneVelocity());
-        tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[2]));
-        tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[6]));
-        tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.LOW_TRANSLATIONS[8]));
+        tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2]));
+        tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[6]));
+        tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[8]));
         tab.add("Turret To Break Mode", m_turret.createTurretToBrakeMode());
         tab.add("Turret To Coast Mode", m_turret.createTurretToCoastMode());
         tab.add("Reset Turret Encoder", m_turret.createResetEncoder());
