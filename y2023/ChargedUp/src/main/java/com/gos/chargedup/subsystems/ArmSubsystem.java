@@ -42,7 +42,7 @@ public class ArmSubsystem extends SubsystemBase {
     private static final DoubleSolenoid.Value INNER_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
-    private static final double ARM_MOTOR_SPEED = 0.15;
+    private static final double ARM_MOTOR_SPEED = 0.30;
 
     public static final double ARM_CUBE_MIDDLE_DEG = 0;
     public static final double ARM_CUBE_HIGH_DEG = 15;
