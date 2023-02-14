@@ -58,7 +58,7 @@
   {
     "name": "/Preferences/Pivot Arm Allowable Error",
     "type": "double",
-    "value": 0.0,
+    "value": 50.0,
     "properties": {
       "persistent": true
     }
@@ -275,6 +275,14 @@
     "name": "/Preferences/Max Chassis Velocity",
     "type": "double",
     "value": 60.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis speed for brake",
+    "type": "double",
+    "value": 0.2,
     "properties": {
       "persistent": true
     }
