@@ -153,14 +153,14 @@ public class RobotContainer {
         tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
         tab.add("Arm Full Extend", m_arm.commandFullExtend());
 
-        tab.add("Arm Inner Piston Extended", m_arm.commandInnerPistonExtended());
-        tab.add("Arm Inner Piston Retracted", m_arm.commandInnerPistonRetracted());
-        tab.add("Outer Inner Piston Extended", m_arm.commandOuterPistonExtended());
-        tab.add("Outer Inner Piston Retracted", m_arm.commandOuterPistonRetracted());
+        tab.add("Arm Bottom Piston Extended", m_arm.commandBottomPistonExtended());
+        tab.add("Arm Bottom Piston Retracted", m_arm.commandBottomPistonRetracted());
+        tab.add("Arm Top Piston Extended", m_arm.commandTopPistonExtended());
+        tab.add("Arm Top Piston Retracted", m_arm.commandTopPistonRetracted());
 
         // claw
-        tab.add("Claw In", m_claw.createMoveClawIntakeInCommand());
-        tab.add("Claw Out", m_claw.createMoveClawIntakeOutCommand());
+        tab.add("Claw In", m_claw.createMoveClawIntakeCloseCommand());
+        tab.add("Claw Out", m_claw.createMoveClawIntakeOpenCommand());
 
         // intake
         tab.add("Intake Out", m_intake.createIntakeOutCommand());
@@ -199,8 +199,8 @@ public class RobotContainer {
         m_operatorController.a().whileTrue(m_arm.commandPivotArmDown());
         m_operatorController.leftBumper().whileTrue(m_turret.commandMoveTurretClockwise());
         m_operatorController.rightBumper().whileTrue(m_turret.commandMoveTurretCounterClockwise());
-        m_operatorController.leftTrigger().onTrue(m_arm.commandInnerPistonExtended());
-        m_operatorController.rightTrigger().onTrue(m_arm.commandInnerPistonRetracted());
+        m_operatorController.leftTrigger().onTrue(m_arm.commandBottomPistonExtended());
+        m_operatorController.rightTrigger().onTrue(m_arm.commandBottomPistonRetracted());
     }
 
 
@@ -226,9 +226,9 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_GOAL_ANGLE, m_arm::getArmAngleGoal, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.ARM_EXTENSION1, m_arm::isInnerPistonIn, null);
+                SmartDashboardNames.ARM_EXTENSION1, m_arm::isBottomPistonIn, null);
             builder.addBooleanProperty(
-                SmartDashboardNames.ARM_EXTENSION2, m_arm::isOuterPistonIn, null);
+                SmartDashboardNames.ARM_EXTENSION2, m_arm::isTopPistonIn, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
             builder.addDoubleProperty(

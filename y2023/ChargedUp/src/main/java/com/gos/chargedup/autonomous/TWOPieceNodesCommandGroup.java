@@ -22,21 +22,21 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
             //middle part
-            claw.createMoveClawIntakeInCommand() //piece is firmly in the claw? finish + tune soon
+            claw.createMoveClawIntakeCloseCommand() //piece is firmly in the claw? finish + tune soon
         ));
 
         List<PathPlannerTrajectory> twoPieceNodes0And1 = PathPlanner.loadPathGroup(autoName, Constants.DEFAULT_PATH_CONSTRAINTS);
         Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceNodes0And1);
 
         //score first piece:
-        addCommands(turret.commandTurretPID(180));
+        //addCommands(turret.commandTurretPID(180));
         addCommands(new ScorePieceCommandGroup(turret, arm, claw, ArmSubsystem.ARM_CONE_HIGH_DEG));
 
         //drive, get piece, drive back
         addCommands(fullAuto);
 
         //score piece:
-        addCommands(turret.commandTurretPID(180));
+        //addCommands(turret.commandTurretPID(180));
         addCommands(new ScorePieceCommandGroup(turret, arm, claw, ArmSubsystem.ARM_CUBE_HIGH_DEG));
 
     }
