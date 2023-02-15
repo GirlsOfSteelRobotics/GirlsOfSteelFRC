@@ -1,8 +1,9 @@
 package com.gos.chargedup.subsystems;
 
 
-import com.gos.chargedup.AutoEnumsWithScorePiece;
+import com.gos.chargedup.AutoEnumsWithScorePiecePivot;
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.GamePieceType;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -254,25 +255,36 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
-    public void moveArmToPieceScorePosition(AutoEnumsWithScorePiece type) {
+    public boolean moveArmToPieceScorePosition(AutoEnumsWithScorePiecePivot type, GamePieceType gamePieceType) {
+        double angle = 0.0;
         switch (type) {
-        case HighCone:
-            commandPivotArmToAngle(ARM_CONE_HIGH_DEG);
+        case High:
+            if(gamePieceType == GamePieceType.Cone) {
+                //pivotArmToAngle(ARM_CONE_HIGH_DEG);
+                angle = ARM_CONE_HIGH_DEG
+            }
+            else {
+                //pivotArmToAngle();
+                angle = ARM_CUBE_HIGH_DEG;
+            }
             break;
-        case HighCube:
-            commandPivotArmToAngle(ARM_CUBE_HIGH_DEG);
+        case Medium:
+            if (gamePieceType == GamePieceType.Cone){
+                //pivotArmToAngle();
+                angle = ARM_CONE_MIDDLE_DEG;
+            }
+            else {
+                //pivotArmToAngle();
+                angle = ARM_CUBE_MIDDLE_DEG;
+            }
+
             break;
-        case MediumCone:
-            commandPivotArmToAngle(ARM_CONE_MIDDLE_DEG);
-            break;
-        case MediumCube:
-            commandPivotArmToAngle(ARM_CUBE_MIDDLE_DEG);
-            break;
-        case LowCone:
-        case LowCube:
-            commandPivotArmToAngle(MIN_ANGLE_DEG);
+        case Low:
+            //pivotArmToAngle();
+            angle = MIN_ANGLE_DEG;
             break;
         }
+        return pivotArmToAngle(angle);
     }
 
 
@@ -350,8 +362,9 @@ public class ArmSubsystem extends SubsystemBase {
             .until(() -> pivotArmToAngle(angle));
     }
 
-    public CommandBase commandMoveArmToPieceScorePosition(AutoEnumsWithScorePiece piece){
-        return this.runEnd(() -> moveArmToPieceScorePosition(piece), this::pivotArmStop);
+    public CommandBase commandMoveArmToPieceScorePosition(AutoEnumsWithScorePiecePivot piece, GamePieceType gamePieceType){
+        return this.runEnd(() -> moveArmToPieceScorePosition(piece, gamePieceType), this::pivotArmStop)
+            .until(() -> moveArmToPieceScorePosition(piece, gamePieceType));
     }
 }
 

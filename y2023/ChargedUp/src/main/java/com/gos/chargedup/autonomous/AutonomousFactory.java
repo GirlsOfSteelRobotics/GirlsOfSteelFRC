@@ -5,7 +5,8 @@
 
 package com.gos.chargedup.autonomous;
 
-import com.gos.chargedup.AutoEnumsWithScorePiece;
+import com.gos.chargedup.AutoEnumsWithScorePiecePivot;
+import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
@@ -44,27 +45,27 @@ public final class AutonomousFactory {
         m_autonomousModes = new SendableChooser<>();
 
         //Two scoring nodes (high), no engaging (nodes 0,1; nodes 7,8)
-        m_twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1");
+        m_twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1", AutoEnumsWithScorePiecePivot.High);
         m_autonomousModes.setDefaultOption("Two Piece Nodes 0 and 1", m_twoPieceNodes0and1);
 
-        m_twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8");
+        m_twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8", AutoEnumsWithScorePiecePivot.High);
         m_autonomousModes.addOption("Two Piece Nodes 7 and 8", m_twoPieceNodes7and8);
 
         //One scoring node (high), engage at end (nodes 3, 4, 5)
-        m_oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", AutoEnumsWithScorePiece.HighCone);
+        m_oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", AutoEnumsWithScorePiecePivot.High, GamePieceType.Cone);
         m_autonomousModes.addOption("One Piece Node and Engage 3", m_oneNodeAndEngage3);
 
-        m_oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", ArmSubsystem.ARM_CUBE_HIGH_DEG);
+        m_oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", AutoEnumsWithScorePiecePivot.High, GamePieceType.Cube);
         m_autonomousModes.addOption("One Piece Node and Engage 4", m_oneNodeAndEngage4);
 
-        m_oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", ArmSubsystem.ARM_CONE_HIGH_DEG);
+        m_oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", AutoEnumsWithScorePiecePivot.High, GamePieceType.Cone);
         m_autonomousModes.addOption("One Piece Node and Engage 5", m_oneNodeAndEngage5);
 
         //score wherever the robot is (no chassis parameter)
-        m_scoreConeAtCurrentPos = new ScoreHighConeAtCurrentPosCommandGroup(turret, arm, claw);
+        m_scoreConeAtCurrentPos = new ScoreHighConeAtCurrentPosCommandGroup(turret, arm, claw, AutoEnumsWithScorePiecePivot.High, GamePieceType.Cone);
         m_autonomousModes.addOption("Score Cone High at Current Position's node", m_scoreConeAtCurrentPos);
 
-        m_scoreCubeAtCurrentPos = new ScoreHighCubeAtCurrentPosCommandGroup(turret, arm, claw);
+        m_scoreCubeAtCurrentPos = new ScoreHighCubeAtCurrentPosCommandGroup(turret, arm, claw, AutoEnumsWithScorePiecePivot.High, GamePieceType.Cube);
         m_autonomousModes.addOption("Score Cube High at Current Position's node", m_scoreCubeAtCurrentPos);
 
         //just leave the community (by the player station and by the end)
