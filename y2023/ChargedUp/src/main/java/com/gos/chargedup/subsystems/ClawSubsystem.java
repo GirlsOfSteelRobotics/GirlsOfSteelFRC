@@ -21,25 +21,25 @@ public class ClawSubsystem extends SubsystemBase {
 
     }
 
-    //intake in
-    public void moveClawIntakeIn() {
+    //intake close
+    public void moveClawIntakeClose() {
         m_claw.set(DoubleSolenoid.Value.kForward);
     }
 
-    //intake out
-    public void moveClawIntakeOut() {
+    //intake open
+    public void moveClawIntakeOpen() {
         m_claw.set(DoubleSolenoid.Value.kReverse);
     }
 
     /////////////////////
     // Command Factories
     /////////////////////
-    public CommandBase createMoveClawIntakeInCommand() {
-        return this.run(this::moveClawIntakeIn).withName("ClawIntakeIn").withTimeout(CLAW_WAIT);
+    public CommandBase createMoveClawIntakeCloseCommand() {
+        return this.run(this::moveClawIntakeClose).withName("ClawIntakeClose").withTimeout(CLAW_WAIT);
     }
 
-    public CommandBase createMoveClawIntakeOutCommand() {
-        return this.run(this::moveClawIntakeOut).withName("ClawIntakeOut").withTimeout(CLAW_WAIT);
+    public CommandBase createMoveClawIntakeOpenCommand() {
+        return this.run(this::moveClawIntakeOpen).withName("ClawIntakeOpen").withTimeout(CLAW_WAIT);
     }
 
     public CommandBase createIsClawPneumaticMoving(DoubleSupplier pressureSupplier) {

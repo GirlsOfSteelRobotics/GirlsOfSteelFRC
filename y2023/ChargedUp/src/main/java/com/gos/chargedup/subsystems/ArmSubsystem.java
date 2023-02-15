@@ -35,11 +35,11 @@ public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
-    private static final DoubleSolenoid.Value OUTER_PISTON_EXTENDED = DoubleSolenoid.Value.kForward;
-    private static final DoubleSolenoid.Value OUTER_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kForward;
+    private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
 
-    private static final DoubleSolenoid.Value INNER_PISTON_EXTENDED = DoubleSolenoid.Value.kForward;
-    private static final DoubleSolenoid.Value INNER_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value BOTTOM_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value BOTTOM_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
     private static final double ARM_MOTOR_SPEED = 0.30;
@@ -66,8 +66,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxPIDController m_pivotPIDController;
     private final PidProperty m_pivotPID;
 
-    private final DoubleSolenoid m_outerPiston;
-    private final DoubleSolenoid m_innerPiston;
+    private final DoubleSolenoid m_topPiston;
+    private final DoubleSolenoid m_bottomPiston;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
@@ -86,8 +86,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_outerPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_OUTER_PISTON_OUT, Constants.ARM_OUTER_PISTON_IN);
-        m_innerPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_INNER_PISTON_FORWARD, Constants.ARM_INNER_PISTON_REVERSE);
+        m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
+        m_bottomPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_BOTTOM_PISTON_FORWARD, Constants.ARM_BOTTOM_PISTON_REVERSE);
 
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -106,8 +106,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         m_pivotMotor.burnFlash();
 
-        m_innerPiston.set(DoubleSolenoid.Value.kReverse);
-        m_outerPiston.set(DoubleSolenoid.Value.kReverse);
+        fullRetract();
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Arm Subsystem");
         m_lowerLimitSwitchEntry = loggingTable.getEntry("Arm Lower LS");
@@ -182,43 +181,43 @@ public class ArmSubsystem extends SubsystemBase {
         return m_armAngleGoal;
     }
 
-    public void fullRetract() {
-        m_outerPiston.set(OUTER_PISTON_EXTENDED);
-        m_innerPiston.set(INNER_PISTON_RETRACTED);
+    public final void fullRetract() {
+        m_topPiston.set(TOP_PISTON_EXTENDED);
+        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
     }
 
     public void middleRetract() {
-        m_outerPiston.set(OUTER_PISTON_RETRACTED);
-        m_innerPiston.set(INNER_PISTON_RETRACTED);
+        m_topPiston.set(TOP_PISTON_RETRACTED);
+        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
     }
 
     public void out() {
-        m_outerPiston.set(OUTER_PISTON_RETRACTED);
-        m_innerPiston.set(INNER_PISTON_EXTENDED);
+        m_topPiston.set(TOP_PISTON_RETRACTED);
+        m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
     }
 
-    public boolean isInnerPistonIn() {
-        return m_innerPiston.get() == INNER_PISTON_EXTENDED;
+    public boolean isBottomPistonIn() {
+        return m_bottomPiston.get() == BOTTOM_PISTON_EXTENDED;
     }
 
-    public boolean isOuterPistonIn() {
-        return m_outerPiston.get() == OUTER_PISTON_RETRACTED;
+    public boolean isTopPistonIn() {
+        return m_topPiston.get() == TOP_PISTON_RETRACTED;
     }
 
-    public void setInnerPistonExtended() {
-        m_innerPiston.set(INNER_PISTON_EXTENDED);
+    public void setBottomPistonExtended() {
+        m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
     }
 
-    public void setInnerPistonRetracted() {
-        m_innerPiston.set(INNER_PISTON_RETRACTED);
+    public void setBottomPistonRetracted() {
+        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
     }
 
-    public void setOuterPistonExtended() {
-        m_outerPiston.set(OUTER_PISTON_EXTENDED);
+    public void setTopPistonExtended() {
+        m_topPiston.set(TOP_PISTON_EXTENDED);
     }
 
-    public void setOutPistonRetracted() {
-        m_outerPiston.set(OUTER_PISTON_RETRACTED);
+    public void setTopPistonRetracted() {
+        m_topPiston.set(TOP_PISTON_RETRACTED);
     }
 
     public boolean isLowerLimitSwitchedPressed() {
@@ -266,20 +265,20 @@ public class ArmSubsystem extends SubsystemBase {
     ///////////////////////
     // Command Factories
     ///////////////////////
-    public CommandBase commandInnerPistonExtended() {
-        return runOnce(this::setInnerPistonExtended).withName("Arm Inner Extended");
+    public CommandBase commandBottomPistonExtended() {
+        return runOnce(this::setBottomPistonExtended).withName("Arm Bottom Piston Extended");
     }
 
-    public CommandBase commandInnerPistonRetracted() {
-        return runOnce(this::setInnerPistonRetracted).withName("Arm Inner Retracted");
+    public CommandBase commandBottomPistonRetracted() {
+        return runOnce(this::setBottomPistonRetracted).withName("Arm Bottom Piston Retracted");
     }
 
-    public CommandBase commandOuterPistonExtended() {
-        return runOnce(this::setOuterPistonExtended).withName("Arm Outer Extended");
+    public CommandBase commandTopPistonExtended() {
+        return runOnce(this::setTopPistonExtended).withName("Arm Top Piston Extended");
     }
 
-    public CommandBase commandOuterPistonRetracted() {
-        return runOnce(this::setOutPistonRetracted).withName("Arm Outer Retracted");
+    public CommandBase commandTopPistonRetracted() {
+        return runOnce(this::setTopPistonRetracted).withName("Arm Top Piston Retracted");
     }
 
     public CommandBase commandFullRetract() {
@@ -298,16 +297,16 @@ public class ArmSubsystem extends SubsystemBase {
         return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
     }
 
-    public CommandBase createIsArmInnerPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_innerPiston, "Arm: Inner Piston");
+    public CommandBase createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
 
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
     }
 
-    public CommandBase createIsArmOuterPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_outerPiston, "Claw: Left Piston");
+    public CommandBase createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_topPiston, "Claw: Left Piston");
     }
 
     public CommandBase commandPivotArmUp() {

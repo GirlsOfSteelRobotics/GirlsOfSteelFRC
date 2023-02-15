@@ -264,6 +264,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void autoEngage() {
+
+        System.out.println(getPitch());
+
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
 

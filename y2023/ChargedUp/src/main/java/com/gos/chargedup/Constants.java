@@ -38,10 +38,10 @@ public final class Constants {
     public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
 
     //Pneumatics
-    public static final int ARM_OUTER_PISTON_OUT = 11;
-    public static final int ARM_OUTER_PISTON_IN = 8;
-    public static final int ARM_INNER_PISTON_REVERSE = 13;
-    public static final int ARM_INNER_PISTON_FORWARD = 12;
+    public static final int ARM_TOP_PISTON_OUT = 11;
+    public static final int ARM_TOP_PISTON_IN = 8;
+    public static final int ARM_BOTTOM_PISTON_REVERSE = 13;
+    public static final int ARM_BOTTOM_PISTON_FORWARD = 12;
 
     public static final int CLAW_PISTON_FORWARD = 9;
     public static final int CLAW_PISTON_REVERSE = 10;
@@ -53,7 +53,7 @@ public final class Constants {
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     //Auto velocity and acceleration
-    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(144), Units.inchesToMeters(144));
+    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36));
 
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;
