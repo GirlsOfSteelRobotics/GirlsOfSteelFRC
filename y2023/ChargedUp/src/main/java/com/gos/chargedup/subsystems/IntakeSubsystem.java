@@ -129,4 +129,10 @@ public class IntakeSubsystem extends SubsystemBase {
     public CommandBase createIsIntakeRightPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new SolenoidMovesChecklist(this, pressureSupplier, m_intakeSolenoidRight, "Intake: Right Piston");
     }
+
+    public boolean getIntakeOut() {
+        return m_intakeSolenoidLeft.get() && m_intakeSolenoidRight.get();
+
+    }
+
 }
