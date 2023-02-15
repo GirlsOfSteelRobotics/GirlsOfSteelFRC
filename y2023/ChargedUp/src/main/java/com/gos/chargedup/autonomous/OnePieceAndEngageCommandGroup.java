@@ -1,5 +1,6 @@
 package com.gos.chargedup.autonomous;
 
+import com.gos.chargedup.AutoEnumsWithScorePiece;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmSubsystem;
@@ -17,14 +18,14 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
 
 
-    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String path, double angle) {
+    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String path, AutoEnumsWithScorePiece piece) {
 
         PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
         Command driveAutoOnePieceEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(oneNodeAndEngage);
 
         //score
         //addCommands(turret.commandTurretPID(180));
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw, angle));
+        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece));
 
         //drive to docking station
         addCommands(driveAutoOnePieceEngage);

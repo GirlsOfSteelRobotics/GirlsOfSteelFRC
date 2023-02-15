@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.AutoEnumsWithScorePiece;
 import com.gos.chargedup.Constants;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
@@ -46,6 +47,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static final double ARM_CUBE_MIDDLE_DEG = 0;
     public static final double ARM_CUBE_HIGH_DEG = 15;
+
     public static final double ARM_CONE_MIDDLE_DEG = 15;
     public static final double ARM_CONE_HIGH_DEG = 30;
     private static final double PNEUMATICS_WAIT = 0.5;
@@ -246,6 +248,38 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotor.setVoltage(GRAVITY_OFFSET.getValue());
     }
 
+
+
+    public final void resetPivotEncoder() {
+        m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
+    }
+
+    public void moveArmToPieceScorePosition(AutoEnumsWithScorePiece type) {
+        switch (type) {
+        case HighCone:
+            commandPivotArmToAngle(ARM_CONE_HIGH_DEG);
+            break;
+        case HighCube:
+            commandPivotArmToAngle(ARM_CUBE_HIGH_DEG);
+            break;
+        case MediumCone:
+            commandPivotArmToAngle(ARM_CONE_MIDDLE_DEG);
+            break;
+        case MediumCube:
+            commandPivotArmToAngle(ARM_CUBE_MIDDLE_DEG);
+            break;
+        case LowCone:
+        case LowCube:
+            commandPivotArmToAngle(MIN_ANGLE_DEG);
+            break;
+        }
+    }
+
+
+    ///////////////////////
+    // Command Factories
+    ///////////////////////
+
     public CommandBase createPivotToBrakeMode() {
         return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Pivot to Brake").ignoringDisable(true);
     }
@@ -258,13 +292,6 @@ public class ArmSubsystem extends SubsystemBase {
         return this.run(() -> m_pivotMotorEncoder.setPosition(angle)).withName("Reset Pivot Encoder").ignoringDisable(true);
     }
 
-    public final void resetPivotEncoder() {
-        m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
-    }
-
-    ///////////////////////
-    // Command Factories
-    ///////////////////////
     public CommandBase commandBottomPistonExtended() {
         return runOnce(this::setBottomPistonExtended).withName("Arm Bottom Piston Extended");
     }
@@ -321,6 +348,10 @@ public class ArmSubsystem extends SubsystemBase {
         return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
             .withName("Arm to Angle" + angle)
             .until(() -> pivotArmToAngle(angle));
+    }
+
+    public CommandBase commandMoveArmToPieceScorePosition(AutoEnumsWithScorePiece piece){
+        return this.runEnd(() -> moveArmToPieceScorePosition(piece), this::pivotArmStop);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.gos.chargedup.autonomous;
 
+import com.gos.chargedup.AutoEnumsWithScorePiece;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmSubsystem;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
-    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName) {
+    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName, AutoEnumsWithScorePiece piece) {
 
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
@@ -30,14 +31,14 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         //score first piece:
         //addCommands(turret.commandTurretPID(180));
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw, ArmSubsystem.ARM_CONE_HIGH_DEG));
+        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece));
 
         //drive, get piece, drive back
         addCommands(fullAuto);
 
         //score piece:
         //addCommands(turret.commandTurretPID(180));
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw, ArmSubsystem.ARM_CUBE_HIGH_DEG));
+        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece));
 
     }
 }
