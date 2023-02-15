@@ -8,7 +8,6 @@ from libraries.scripts.git.git_python_wrappers import commit_all_changes
 
 
 def __run_replacement(replacements, root=".", dir_blacklist=None):
-
     java_files = walk_for_extension(root, "java", dir_blacklist=dir_blacklist)
 
     for java_file in java_files:
@@ -16,7 +15,6 @@ def __run_replacement(replacements, root=".", dir_blacklist=None):
 
 
 def run_standard_replacement(auto_commit):
-
     # Last sync Dec 19, 2021
     wpilib_replacements_url = "https://raw.githubusercontent.com/wpilibsuite/vscode-wpilib/main/vscode-wpilib/resources/java_replacements.json"
 

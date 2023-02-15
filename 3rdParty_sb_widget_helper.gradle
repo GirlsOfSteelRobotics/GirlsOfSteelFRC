@@ -1,4 +1,6 @@
 
+apply plugin: "de.undercouch.download"
+
 repositories {
     mavenLocal()
     maven { url "https://raw.githubusercontent.com/snobotsim/maven_repo/master/release" }
@@ -20,7 +22,13 @@ task deleteOldWidgets(type: Delete) {
     followSymlinks = true
 }
 
-task install_shuffleboard_plugins(type: Copy, dependsOn: deleteOldWidgets) {
+task downloadMechanicalAdvantageAlerts(type: Download) {
+    src 'https://github.com/Mechanical-Advantage/NetworkAlerts/releases/download/v1.0.0/NetworkAlerts.jar'
+    dest "${System.getProperty("user.home")}/Shuffleboard/plugins"
+    overwrite true
+}
+
+task install_shuffleboard_plugins(type: Copy, dependsOn: [deleteOldWidgets, downloadMechanicalAdvantageAlerts]) {
     group = "Girls of Steel"
     description = "Copies any Girls of Steel widgets from maven into the shuffleboard area"
     from configurations.custom_widgets

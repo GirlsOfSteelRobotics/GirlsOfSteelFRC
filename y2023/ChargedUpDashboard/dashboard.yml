@@ -15,6 +15,10 @@ widgets:
       dasboard_constant: ARM_ANGLE
       sim_incr: 2
     - type: double
+      name: armGoalAngle
+      dasboard_constant: ARM_GOAL_ANGLE
+      sim_incr: 2
+    - type: double
       name: armSpeed
       dasboard_constant: ARM_SPEED
     - type: boolean
@@ -29,9 +33,22 @@ widgets:
     - type: double
       name: intakeSpeed
       dasboard_constant: INTAKE_SPEED
-
+    - type: double
+      name: turretSpeed
+      dasboard_constant: TURRET_SPEED
+    - type: double
+      name: turretAngle
+      dasboard_constant: TURRET_ANGLE
+      sim_incr: 2
+    - type: double
+      name: turretGoalAngle
+      dasboard_constant: TURRET_GOAL_ANGLE
+      sim_incr: 2
+    - type: double
+      name: robotAngle
+      dasboard_constant: ROBOT_ANGLE
+      sim_incr: 2
   shapes:
-
   - type: Rectangle
     name: chassis
   - type: Rectangle
@@ -40,10 +57,17 @@ widgets:
     name: armBase
   - type: Rectangle
     name: arm
+  - type: Rectangle
+    name: armGoal
   - type: Circle
     name: armJoint
   - type: Rectangle
     name: claw
   - type: Rectangle
     name: intake
-
+  - type: Rectangle
+    name: chassisTopDown
+  - type: Rectangle
+    name: turretTopDown
+  - type: Rectangle
+    name: turretTopDownGoal

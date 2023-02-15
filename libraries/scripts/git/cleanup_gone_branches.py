@@ -35,7 +35,6 @@ def delete_gone_branches(gone_branches):
 
 
 def main():
-
     if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
         os.chdir(os.environ["BUILD_WORKSPACE_DIRECTORY"])
 

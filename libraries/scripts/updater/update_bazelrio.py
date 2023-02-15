@@ -26,7 +26,6 @@ def get_java_dep_sha(vendor_dep, version):
 
 
 def update_bazelrio(auto_commit=True, ignore_cache=False):
-
     vendor_deps_files = download_latest_vendordeps(ignore_cache)
 
     java_libraries_with_sha = [

@@ -1,50 +1,188 @@
 {
   "HALProvider": {
     "Addressable LEDs": {
-      "0": {
-        "columns": 30
-      },
       "window": {
         "visible": true
       }
     },
     "Other Devices": {
-      "SPARK MAX [2]": {
+      "SPARK MAX [4]": {
         "header": {
           "open": true
         }
-      }
-    },
-    "Solenoids": {
-      "window": {
-        "visible": true
       }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[8]": "PIDController",
+      "/LiveWindow/Ungrouped/Pigeon 2 [20]": "Gyro",
+      "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
+      "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/TestCommands/Arm Full Extend": "Command",
+      "/Shuffleboard/TestCommands/Arm Full Retract": "Command",
+      "/Shuffleboard/TestCommands/Arm Inner Piston Extended": "Command",
+      "/Shuffleboard/TestCommands/Arm Inner Piston Forward": "Command",
+      "/Shuffleboard/TestCommands/Arm Inner Piston Retracted": "Command",
+      "/Shuffleboard/TestCommands/Arm Inner Piston Reverse": "Command",
+      "/Shuffleboard/TestCommands/Arm Mid Retract": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot Down": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot Up": "Command",
+      "/Shuffleboard/TestCommands/Arm angle PID - 0 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm angle PID - 45 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm angle PID - 90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Auto Engage": "Command",
+      "/Shuffleboard/TestCommands/Automated Turret - 2": "Command",
+      "/Shuffleboard/TestCommands/Automated Turret - 6": "Command",
+      "/Shuffleboard/TestCommands/Automated Turret - 8": "Command",
+      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, -90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 0)": "Command",
+      "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Claw In": "Command",
+      "/Shuffleboard/TestCommands/Claw Out": "Command",
+      "/Shuffleboard/TestCommands/Intake In": "Command",
+      "/Shuffleboard/TestCommands/Intake Out": "Command",
+      "/Shuffleboard/TestCommands/Intake Roller In": "Command",
+      "/Shuffleboard/TestCommands/Intake Roller Out": "Command",
+      "/Shuffleboard/TestCommands/Move Turret Clockwise": "Command",
+      "/Shuffleboard/TestCommands/Move Turret Counter Clockwise": "Command",
+      "/Shuffleboard/TestCommands/Outer Inner Piston Extended": "Command",
+      "/Shuffleboard/TestCommands/Outer Inner Piston Forward": "Command",
+      "/Shuffleboard/TestCommands/Outer Inner Piston Retracted": "Command",
+      "/Shuffleboard/TestCommands/Outer Inner Piston Reverse": "Command",
+      "/Shuffleboard/TestCommands/Pivot to Brake Mode": "Command",
+      "/Shuffleboard/TestCommands/Pivot to Coast Mode": "Command",
+      "/Shuffleboard/TestCommands/Reset Pivot Encoder": "Command",
+      "/Shuffleboard/TestCommands/Reset Pivot Encoder (0 deg)": "Command",
+      "/Shuffleboard/TestCommands/Reset Turret Encoder": "Command",
+      "/Shuffleboard/TestCommands/Sync Odometry": "Command",
+      "/Shuffleboard/TestCommands/Test Line": "Command",
+      "/Shuffleboard/TestCommands/Test Mild Curve": "Command",
+      "/Shuffleboard/TestCommands/Test S Curve": "Command",
+      "/Shuffleboard/TestCommands/Toggle Break Mode": "Command",
+      "/Shuffleboard/TestCommands/Tune Chassis Velocity": "Command",
+      "/Shuffleboard/TestCommands/Tune Gravity Offset": "Command",
+      "/Shuffleboard/TestCommands/Tune Turret Position (-90 degrees)": "Command",
+      "/Shuffleboard/TestCommands/Tune Turret Velocity": "Command",
+      "/Shuffleboard/TestCommands/Turret PID - 0 degrees": "Command",
+      "/Shuffleboard/TestCommands/Turret PID - 180 degrees": "Command",
+      "/Shuffleboard/TestCommands/Turret PID - 90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Turret To Break Mode": "Command",
+      "/Shuffleboard/TestCommands/Turret To Coast Mode": "Command",
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/SmartDashboard/FunctionalCommand": "Command",
+      "/SmartDashboard/PPRamseteCommand_field": "Field2d",
+      "/SmartDashboard/Run checklist": "Command",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/Test Line": "Command",
+      "/SmartDashboard/Test Mild Curve": "Command",
+      "/SmartDashboard/Test S Curve": "Command"
     },
     "windows": {
-      "/SmartDashboard/Automated Turret - 2": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Automated Turret - 8": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "window": {
           "visible": true
         }
+      },
+      "/SmartDashboard/FunctionalCommand": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Run checklist": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/SendableChooser[0]": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Test Line": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
+    "transitory": {
+      "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "Alerts": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
+  },
+  "Plot": {
+    "Plot <0>": {
+      "window": {
+        "visible": false
+      }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 189,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "SPARK MAX [2]-Velocity"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "SPARK MAX [3]-Velocity"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "visible": false
       }
     }
   }
