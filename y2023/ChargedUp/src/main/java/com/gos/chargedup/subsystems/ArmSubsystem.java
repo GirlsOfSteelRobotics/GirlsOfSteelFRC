@@ -66,8 +66,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxPIDController m_pivotPIDController;
     private final PidProperty m_pivotPID;
 
-    private final DoubleSolenoid m_TopPiston;
-    private final DoubleSolenoid m_BottomPiston;
+    private final DoubleSolenoid m_topPiston;
+    private final DoubleSolenoid m_bottomPiston;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
@@ -86,8 +86,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
-        m_TopPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
-        m_BottomPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_BOTTOM_PISTON_FORWARD, Constants.ARM_BOTTOM_PISTON_REVERSE);
+        m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
+        m_bottomPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_BOTTOM_PISTON_FORWARD, Constants.ARM_BOTTOM_PISTON_REVERSE);
 
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -181,43 +181,43 @@ public class ArmSubsystem extends SubsystemBase {
         return m_armAngleGoal;
     }
 
-    public void fullRetract() {
-        m_TopPiston.set(TOP_PISTON_EXTENDED);
-        m_BottomPiston.set(BOTTOM_PISTON_RETRACTED);
+    public final void fullRetract() {
+        m_topPiston.set(TOP_PISTON_EXTENDED);
+        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
     }
 
     public void middleRetract() {
-        m_TopPiston.set(TOP_PISTON_RETRACTED);
-        m_BottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        m_topPiston.set(TOP_PISTON_RETRACTED);
+        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
     }
 
     public void out() {
-        m_TopPiston.set(TOP_PISTON_RETRACTED);
-        m_BottomPiston.set(BOTTOM_PISTON_EXTENDED);
+        m_topPiston.set(TOP_PISTON_RETRACTED);
+        m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
     }
 
     public boolean isBottomPistonIn() {
-        return m_BottomPiston.get() == BOTTOM_PISTON_EXTENDED;
+        return m_bottomPiston.get() == BOTTOM_PISTON_EXTENDED;
     }
 
     public boolean isTopPistonIn() {
-        return m_TopPiston.get() == TOP_PISTON_RETRACTED;
+        return m_topPiston.get() == TOP_PISTON_RETRACTED;
     }
 
     public void setBottomPistonExtended() {
-        m_BottomPiston.set(BOTTOM_PISTON_EXTENDED);
+        m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
     }
 
     public void setBottomPistonRetracted() {
-        m_BottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
     }
 
     public void setTopPistonExtended() {
-        m_TopPiston.set(TOP_PISTON_EXTENDED);
+        m_topPiston.set(TOP_PISTON_EXTENDED);
     }
 
     public void setOutPistonRetracted() {
-        m_TopPiston.set(TOP_PISTON_RETRACTED);
+        m_topPiston.set(TOP_PISTON_RETRACTED);
     }
 
     public boolean isLowerLimitSwitchedPressed() {
@@ -298,7 +298,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_BottomPiston, "Arm: Bottom Piston");
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
 
     public CommandBase tuneGravityOffsetPID() {
@@ -306,7 +306,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_TopPiston, "Claw: Left Piston");
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_topPiston, "Claw: Left Piston");
     }
 
     public CommandBase commandPivotArmUp() {
