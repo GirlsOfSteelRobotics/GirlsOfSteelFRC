@@ -66,11 +66,10 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         m_pneumaticHubAlert.checkAlerts();
+        m_powerDistributionAlert.checkAlerts();
+
         m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
         SmartDashboard.putNumber("Air Pressure", m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
-        m_powerDistributionAlert.checkAlerts();
-        SmartDashboard.putNumber("Power Distribution", m_powerDistribution.getCurrent(Constants.PRESSURE_SENSOR_PORT));
-
     }
 
 

@@ -50,6 +50,8 @@ public class ArmSubsystem extends SubsystemBase {
     public static final double ARM_CONE_HIGH_DEG = 30;
     private static final double PNEUMATICS_WAIT = 0.5;
 
+    public static final double ARM_HIT_INTAKE_ANGLE = 15;
+
     private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);

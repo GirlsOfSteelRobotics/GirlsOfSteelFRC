@@ -7,6 +7,7 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
+import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
@@ -177,6 +178,12 @@ public class RobotContainer {
 
         tab.add("Intake Roller In", m_intake.createIntakeInCommand());
         tab.add("Intake Roller Out", m_intake.createIntakeOutCommand());
+
+        // Smart arm movement
+        tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 45));
+        tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 90));
+        tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 0));
+        tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, -45));
 
 
 
