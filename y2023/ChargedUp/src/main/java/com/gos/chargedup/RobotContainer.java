@@ -169,8 +169,8 @@ public class RobotContainer {
 
 
         // claw
-        tab.add("Claw In", m_claw.createMoveClawIntakeCloseCommand());
-        tab.add("Claw Out", m_claw.createMoveClawIntakeOpenCommand());
+        tab.add("Claw Close", m_claw.createMoveClawIntakeCloseCommand());
+        tab.add("Claw Open", m_claw.createMoveClawIntakeOpenCommand());
 
         // intake
         tab.add("Intake Out", m_intake.createIntakeOutCommand());

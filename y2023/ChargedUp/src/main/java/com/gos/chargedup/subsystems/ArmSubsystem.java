@@ -216,7 +216,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_topPiston.set(TOP_PISTON_EXTENDED);
     }
 
-    public void setOutPistonRetracted() {
+    public void setTopPistonRetracted() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
     }
 
@@ -278,7 +278,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandTopPistonRetracted() {
-        return runOnce(this::setOutPistonRetracted).withName("Arm Top Piston Retracted");
+        return runOnce(this::setTopPistonRetracted).withName("Arm Top Piston Retracted");
     }
 
     public CommandBase commandFullRetract() {
