@@ -19,14 +19,14 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
 
 
-    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String path, AutoPivotHeight piece, GamePieceType gamePieceType) {
+    public OnePieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String path, AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
 
         PathPlannerTrajectory oneNodeAndEngage = PathPlanner.loadPath(path, Constants.DEFAULT_PATH_CONSTRAINTS);
         Command driveAutoOnePieceEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(oneNodeAndEngage);
 
         //score
         //addCommands(turret.commandTurretPID(180));
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece, gamePieceType));
+        addCommands(new ScorePieceCommandGroup(turret, arm, claw, pivotHeightType, gamePieceType));
 
         //drive to docking station
         addCommands(driveAutoOnePieceEngage);
