@@ -291,15 +291,15 @@ public class ArmSubsystem extends SubsystemBase {
     ///////////////////////
 
     public CommandBase createPivotToBrakeMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Pivot to Brake").ignoringDisable(true);
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).ignoringDisable(true).withName("Pivot to Brake");
     }
 
     public CommandBase createPivotToCoastMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).withName("Pivot to Coast").ignoringDisable(true);
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).ignoringDisable(true).withName("Pivot to Coast");
     }
 
     public CommandBase createResetPivotEncoder(double angle) {
-        return this.run(() -> m_pivotMotorEncoder.setPosition(angle)).withName("Reset Pivot Encoder").ignoringDisable(true);
+        return this.run(() -> m_pivotMotorEncoder.setPosition(angle)).ignoringDisable(true).withName("Reset Pivot Encoder");
     }
 
     public CommandBase commandBottomPistonExtended() {
@@ -319,15 +319,15 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandFullRetract() {
-        return runOnce(this::fullRetract).withName("ArmPistonsFullRetract").withTimeout(PNEUMATICS_WAIT);
+        return runOnce(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
     }
 
     public CommandBase commandMiddleRetract() {
-        return runOnce(this::middleRetract).withName("ArmPistonsMiddleRetract").withTimeout(PNEUMATICS_WAIT);
+        return runOnce(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
     public CommandBase commandFullExtend() {
-        return runOnce(this::out).withName("ArmPistonsOut").withTimeout(PNEUMATICS_WAIT);
+        return runOnce(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
     }
 
     public CommandBase createIsPivotMotorMoving() {
@@ -356,8 +356,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     public CommandBase commandPivotArmToAngle(double angle) {
         return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
-            .withName("Arm to Angle" + angle)
-            .until(() -> pivotArmToAngle(angle));
+            .until(() -> pivotArmToAngle(angle))
+            .withName("Arm to Angle" + angle);
     }
 
     public CommandBase commandMoveArmToPieceScorePosition(AutoPivotHeight piece, GamePieceType gamePieceType) {
