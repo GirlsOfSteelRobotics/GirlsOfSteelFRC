@@ -261,7 +261,7 @@ public class ArmSubsystem extends SubsystemBase {
         case High:
             if(gamePieceType == GamePieceType.Cone) {
                 //pivotArmToAngle(ARM_CONE_HIGH_DEG);
-                angle = ARM_CONE_HIGH_DEG
+                angle = ARM_CONE_HIGH_DEG;
             }
             else {
                 //pivotArmToAngle();
