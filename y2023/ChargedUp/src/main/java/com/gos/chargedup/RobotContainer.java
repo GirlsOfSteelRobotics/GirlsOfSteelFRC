@@ -65,7 +65,7 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
-    private final LEDManagerSubsystem m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController); //NOPMD
+    private final LEDManagerSubsystem m_ledManagerSubsystem;
 
     private final DoubleSupplier m_pressureSupplier;
 
@@ -74,13 +74,12 @@ public class RobotContainer {
      */
     public RobotContainer(DoubleSupplier pressureSupplier) {
         // Configure the trigger bindings
-
-
         m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
         m_claw = new ClawSubsystem();
         m_arm = new ArmSubsystem();
         m_intake = new IntakeSubsystem();
+        m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController, m_chassisSubsystem, m_arm, m_turret); //NOPMD
 
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw);
 
