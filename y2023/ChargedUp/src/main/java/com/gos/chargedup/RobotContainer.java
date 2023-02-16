@@ -11,6 +11,7 @@ import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
+import com.gos.chargedup.commands.TurretArmToIntakeCommandGroup;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 
@@ -158,6 +159,9 @@ public class RobotContainer {
         tab.add("Intake Roller Out", m_intake.createIntakeOutCommand());
 
         tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+
+        // turret arm to intake command
+        tab.add("turret arm to intake command", new TurretArmToIntakeCommandGroup(m_arm, m_intake, m_turret));
 
     }
 

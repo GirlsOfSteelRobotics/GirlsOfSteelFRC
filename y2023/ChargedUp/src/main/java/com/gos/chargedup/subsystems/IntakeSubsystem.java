@@ -10,7 +10,6 @@ import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -98,19 +97,19 @@ public class IntakeSubsystem extends SubsystemBase {
     /////////////////////
     // Command Factories
     /////////////////////
-    public Command createIntakeOutCommand() {
+    public CommandBase createIntakeOutCommand() {
         return this.runOnce(this::extend);
     }
 
-    public Command createIntakeInCommand() {
+    public CommandBase createIntakeInCommand() {
         return this.runOnce(this::retract);
     }
 
-    public Command createHopperInMotorCommand() {
+    public CommandBase createHopperInMotorCommand() {
         return this.runEnd(this::hopperIn, this::hopperStop);
     }
 
-    public Command createHopperOutMotorCommand() {
+    public CommandBase createHopperOutMotorCommand() {
         return this.runEnd(this::hopperOut, this::hopperStop);
     }
 
