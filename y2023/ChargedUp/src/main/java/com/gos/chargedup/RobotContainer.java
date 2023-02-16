@@ -130,6 +130,7 @@ public class RobotContainer {
         tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
         tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
         tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+        tab.add("Arm to Angle w/ Prevention", m_arm.commandPivotArmToAnglePrevention(45, m_chassisSubsystem, m_operatorController));
 
     }
 

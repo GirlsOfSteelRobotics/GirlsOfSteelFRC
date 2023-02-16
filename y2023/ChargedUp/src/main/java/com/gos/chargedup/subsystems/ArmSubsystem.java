@@ -19,13 +19,16 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
@@ -187,6 +190,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean pivotArmToAngle(double pivotAngleGoal) {
+        System.out.println("I'm moving!");
         m_armAngleGoal = pivotAngleGoal;
 
         double error = getArmAngleDeg() - pivotAngleGoal;
@@ -207,40 +211,111 @@ public class ArmSubsystem extends SubsystemBase {
     ///////////////////////
     // Command Factories
     ///////////////////////
+    public CommandBase commandFullRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.run(this::fullRetract),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase commandFullRetract() {
-        return runOnce(this::fullRetract).withName("ArmPistonsFullRetract");
+        return (this.runOnce(this::fullRetract));
+    }
+
+    public CommandBase commandMiddleRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.run(this::middleRetract).withName("ArmPistonsMiddleRetract"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase commandMiddleRetract() {
         return runOnce(this::middleRetract).withName("ArmPistonsMiddleRetract");
     }
 
+    public CommandBase commandOutPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.run(this::out).withName("ArmPistonsOut"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase commandOut() {
         return runOnce(this::out).withName("ArmPistonsOut");
+    }
+
+    public CommandBase createIsPivotMotorMovingPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            new RobotMotorsMove(m_pivotMotor, "Arm: Pivot motor", 1.0),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase createIsPivotMotorMoving() {
         return new RobotMotorsMove(m_pivotMotor, "Arm: Pivot motor", 1.0);
     }
 
+
+    public CommandBase createIsArmInnerPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
         return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
+    }
+
+    public CommandBase tuneGravityOffsetPIDPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.runEnd(this::tuneGravityOffset, this::pivotArmStop),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
     }
 
+    public CommandBase createIsArmOuterPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase createIsArmOuterPneumaticMoving(PneumaticHub pneumaticHub) {
         return new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
+    }
+
+    public CommandBase commandPivotArmUpPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmUp() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp");
     }
 
+    public CommandBase commandPivotArmDownPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase commandPivotArmDown() {
         return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown");
+    }
+
+    public CommandBase commandPivotArmToAnglePrevention(double angle, ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmToAngle(double angle) {

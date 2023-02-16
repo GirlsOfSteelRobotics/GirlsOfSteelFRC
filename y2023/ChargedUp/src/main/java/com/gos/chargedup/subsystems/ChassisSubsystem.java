@@ -311,7 +311,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean isInCommunityZone() {
 
-        if ((m_poseEstimator.getEstimatedPosition().getX() < 73 && m_poseEstimator.getEstimatedPosition().getY() < 216) || (m_poseEstimator.getEstimatedPosition().getX() < 135 && m_poseEstimator.getEstimatedPosition().getY() < 158)) {
+        if ((m_poseEstimator.getEstimatedPosition().getX() < Units.inchesToMeters(73) && m_poseEstimator.getEstimatedPosition().getY() < Units.inchesToMeters(216) || (m_poseEstimator.getEstimatedPosition().getX() < 135 && m_poseEstimator.getEstimatedPosition().getY() < 158)) {
             return true;
         }
         return false;
@@ -325,9 +325,9 @@ public class ChassisSubsystem extends SubsystemBase {
         return false;
     }
 
-    public boolean canExtendArm(boolean community, boolean loading) {
+    public boolean canExtendArm() {
 
-        if(community || loading) {
+        if(this.isInCommunityZone() || this.isInLoadingZone()) {
             return true;
         }
         return false;

@@ -27,6 +27,7 @@
       "/Shuffleboard/TestCommands/Arm angle PID - 0 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 45 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm to Angle w/ Prevention": "Command",
       "/Shuffleboard/TestCommands/Auto Engage": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 2": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 6": "Command",
