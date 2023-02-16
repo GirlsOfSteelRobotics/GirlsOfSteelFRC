@@ -1,0 +1,57 @@
+package com.gos.lib.checklists;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import org.littletonrobotics.frc2023.util.Alert;
+
+import java.util.function.DoubleSupplier;
+
+
+public class DoubleSolenoidMovesChecklist extends CommandBase {
+
+    private final DoubleSupplier m_pressureSupplier;
+
+    private final DoubleSolenoid m_solenoid;
+
+    private double m_startPressure;
+
+    private final Timer m_timer;
+
+    private final Alert m_alert;
+
+    public DoubleSolenoidMovesChecklist(Subsystem subsystem, DoubleSupplier pressureSupplier, DoubleSolenoid solenoid, String label) {
+        addRequirements(subsystem);
+        m_pressureSupplier = pressureSupplier;
+        m_solenoid = solenoid;
+        m_startPressure = 0;
+        m_alert = new Alert(label, Alert.AlertType.ERROR);
+        m_timer = new Timer();
+    }
+
+    @Override
+    public void initialize() {
+        m_startPressure = m_pressureSupplier.getAsDouble();
+        m_timer.reset();
+        m_timer.start();
+    }
+
+    @Override
+    public void execute() {
+        m_solenoid.toggle();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return m_timer.hasElapsed(1);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_timer.stop();
+        double endPressure = m_pressureSupplier.getAsDouble();
+        boolean didSolenoidMove = (m_startPressure < endPressure);
+        m_alert.set(!didSolenoidMove);
+    }
+}

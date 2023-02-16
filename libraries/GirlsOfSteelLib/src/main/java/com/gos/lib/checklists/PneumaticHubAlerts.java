@@ -1,4 +1,4 @@
-package com.gos.lib.rev;
+package com.gos.lib.checklists;
 
 import edu.wpi.first.hal.REVPHFaults;
 import edu.wpi.first.wpilibj.PneumaticHub;
