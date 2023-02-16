@@ -2,13 +2,12 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
-import com.gos.lib.rev.SparkMaxAlerts;
-import com.gos.chargedup.commands.RobotMotorsMove;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPRamseteCommand;
+import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
+import com.pathplanner.lib.auto.RamseteAutoBuilder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -26,13 +25,11 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
@@ -40,6 +37,7 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -266,6 +264,9 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void autoEngage() {
+
+        System.out.println(getPitch());
+
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
 
@@ -315,35 +316,15 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase commandChassisVelocity() {
         return this.runEnd(
             () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
-            this::stop);
-    }
-
-
-    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
-        return new SequentialCommandGroup(
-            new InstantCommand(() -> {
-                // Reset odometry for the first path you run during auto
-                if (isFirstPath) {
-                    this.resetOdometry(traj.getInitialPose());
-                }
-            }).repeatedly().withTimeout(1),
-            new PPRamseteCommand(
-                traj,
-                this::getPose, // Pose supplier
-                new RamseteController(),
-                K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
-                this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
-                true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-                this // Requires this drive subsystem
-            ));
+            this::stop).withName("Chassis: Tune Velocity");
     }
 
     public CommandBase createIsLeftMotorMoving() {
-        return new RobotMotorsMove(m_leaderLeft, "Chassis: Leader left motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_leaderLeft, "Chassis: Leader left motor", 1.0);
     }
 
     public CommandBase createIsRightMotorMoving() {
-        return new RobotMotorsMove(m_leaderRight, "Chassis: Leader right motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 
     public void drivetrainToBrakeMode() {
@@ -364,10 +345,24 @@ public class ChassisSubsystem extends SubsystemBase {
 
 
     public CommandBase createResetOdometry(Pose2d pose2d) {
-        return this.runOnce(() -> resetOdometry(pose2d));
+        return this.runOnce(() -> resetOdometry(pose2d))
+            .withName("Reset Odometry [" + pose2d.getX() + ", " + pose2d.getY() + ", " + pose2d.getRotation().getDegrees() + "]");
     }
 
     public CommandBase syncOdometryWithPoseEstimator() {
-        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()));
+        return runOnce(() ->  m_odometry.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), m_poseEstimator.getEstimatedPosition()))
+            .withName("Sync Odometry /w Pose");
+    }
+
+    public RamseteAutoBuilder ramseteAutoBuilder(Map<String, Command> eventMap) {
+        return new RamseteAutoBuilder(
+            this::getPose, // Pose supplier
+            this::resetOdometry,
+            new RamseteController(),
+            K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
+            this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
+            eventMap,
+            true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+            this);
     }
 }

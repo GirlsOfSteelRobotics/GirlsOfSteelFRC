@@ -2,7 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.commands.RobotMotorsMove;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -26,7 +26,10 @@ import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class TurretSubsystem extends SubsystemBase {
 
-    private static final double TURRET_SPEED = 0.3;
+    public static final double TURRET_LEFT_OF_INTAKE = -10;
+    public static final double TURRET_RIGHT_OF_INTAKE = 10;
+
+    private static final double TURRET_SPEED = 0.4;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
     public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 0);
     private final SimableCANSparkMax m_turretMotor;
@@ -46,6 +49,7 @@ public class TurretSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_intakeLimitSwitchEntry;
     private final NetworkTableEntry m_encoderDegEntry;
     private final NetworkTableEntry m_encoderVelocityEntry;
+    private final NetworkTableEntry m_angleGoalEntry;
 
     private final SparkMaxAlerts m_turretMotorErrorAlert;
 
@@ -71,7 +75,8 @@ public class TurretSubsystem extends SubsystemBase {
         m_intakeLimitSwitchEntry = loggingTable.getEntry("Turret Intake LS");
         m_rightLimitSwitchEntry = loggingTable.getEntry("Turret Right LS");
         m_encoderDegEntry = loggingTable.getEntry("Turret Encoder (deg)");
-        m_encoderVelocityEntry = loggingTable.getEntry("Turret Velocity (deg-per-sec)");
+        m_encoderVelocityEntry = loggingTable.getEntry("Turret Velocity (deg per sec)");
+        m_angleGoalEntry = loggingTable.getEntry("Goal Angle");
 
         m_turretMotorErrorAlert = new SparkMaxAlerts(m_turretMotor, "turret motor");
 
@@ -100,6 +105,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_rightLimitSwitchEntry.setBoolean(rightLimitSwitchPressed());
         m_encoderDegEntry.setNumber(getTurretAngleDegreesNeoEncoder());
         m_encoderVelocityEntry.setNumber(m_turretEncoder.getVelocity());
+        m_angleGoalEntry.setNumber(m_turretGoalAngle);
 
         m_turretMotorErrorAlert.checkAlerts();
     }
@@ -139,7 +145,7 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretEncoder.getPosition();
     }
 
-    public boolean turretPID(double goalAngle) {
+    public boolean moveTurretToAngleWithPID(double goalAngle) {
         m_turretGoalAngle = goalAngle;
 
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
@@ -164,33 +170,41 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretMotor.getAppliedOutput();
     }
 
+    ///////////////////////
     // Command Factories
+    ///////////////////////
     public CommandBase commandMoveTurretClockwise() {
-        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
+        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("Turret: Move CW");
     }
 
     public CommandBase commandMoveTurretCounterClockwise() {
-        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
+        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("Turret: Move CCW");
     }
 
     public CommandBase createIsTurretMotorMoving() {
-        return new RobotMotorsMove(m_turretMotor, "Turret: Turret motor", 1.0);
+        return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
     }
 
     public CommandBase commandTurretPID(double angle) {
-        return this.runEnd(() -> turretPID(angle), this::stopTurret).withName("Turret PID" + angle);
+        return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
+            .withName("Turret PID" + angle)
+            .until(() -> moveTurretToAngleWithPID(angle));
     }
 
     public CommandBase createTuneVelocity() {
         return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret);
     }
 
-    public CommandBase createToggleBrakeMode() {
-        return this.runEnd(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast), () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake));
+    public CommandBase createTurretToBrakeMode() {
+        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Turret to Brake").ignoringDisable(true);
+    }
+
+    public CommandBase createTurretToCoastMode() {
+        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).withName("Turret to Coast").ignoringDisable(true);
     }
 
     public CommandBase createResetEncoder() {
-        return this.runOnce(() -> m_turretEncoder.setPosition(0.0));
+        return this.runOnce(() -> m_turretEncoder.setPosition(0.0)).withName("Turret: Reset Encoder").ignoringDisable(true);
     }
 }
 
