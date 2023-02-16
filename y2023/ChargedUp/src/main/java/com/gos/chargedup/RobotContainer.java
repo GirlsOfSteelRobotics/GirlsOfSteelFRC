@@ -218,10 +218,10 @@ public class RobotContainer {
         leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_arm.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_arm.commandPivotArmDown());
-        m_operatorController.y().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
-        m_operatorController.b().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
-        m_operatorController.a().whileTrue(m_intake.createIntakeInCommand());
-        m_operatorController.x().whileTrue(m_intake.createIntakeOutCommand());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
+        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
+        //        m_operatorController.a().whileTrue(m_intake.createIntakeInCommand());
+        //        m_operatorController.x().whileTrue(m_intake.createIntakeOutCommand());
         m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
