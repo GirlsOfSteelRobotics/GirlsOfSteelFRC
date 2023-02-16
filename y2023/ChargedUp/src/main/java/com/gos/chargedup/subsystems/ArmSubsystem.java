@@ -1,7 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 
-import com.gos.chargedup.AutoEnumsWithScorePiecePivot;
+import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
@@ -255,31 +255,29 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
-    public boolean moveArmToPieceScorePosition(AutoEnumsWithScorePiecePivot type, GamePieceType gamePieceType) {
+    public boolean moveArmToPieceScorePosition(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         double angle = 0.0;
-        switch (type) {
-        case High:
-            if(gamePieceType == GamePieceType.Cone) {
+
+        switch (pivotHeightType) {
+        case HIGH:
+            if (gamePieceType == GamePieceType.CONE) {
                 //pivotArmToAngle(ARM_CONE_HIGH_DEG);
                 angle = ARM_CONE_HIGH_DEG;
-            }
-            else {
+            } else {
                 //pivotArmToAngle();
                 angle = ARM_CUBE_HIGH_DEG;
             }
             break;
-        case Medium:
-            if (gamePieceType == GamePieceType.Cone){
+        case MEDIUM:
+            if (gamePieceType == GamePieceType.CONE) {
                 //pivotArmToAngle();
                 angle = ARM_CONE_MIDDLE_DEG;
-            }
-            else {
+            } else {
                 //pivotArmToAngle();
                 angle = ARM_CUBE_MIDDLE_DEG;
             }
-
             break;
-        case Low:
+        case LOW:
             //pivotArmToAngle();
             angle = MIN_ANGLE_DEG;
             break;
@@ -362,7 +360,7 @@ public class ArmSubsystem extends SubsystemBase {
             .until(() -> pivotArmToAngle(angle));
     }
 
-    public CommandBase commandMoveArmToPieceScorePosition(AutoEnumsWithScorePiecePivot piece, GamePieceType gamePieceType){
+    public CommandBase commandMoveArmToPieceScorePosition(AutoPivotHeight piece, GamePieceType gamePieceType) {
         return this.runEnd(() -> moveArmToPieceScorePosition(piece, gamePieceType), this::pivotArmStop)
             .until(() -> moveArmToPieceScorePosition(piece, gamePieceType));
     }

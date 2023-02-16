@@ -1,6 +1,6 @@
 package com.gos.chargedup.autonomous;
 
-import com.gos.chargedup.AutoEnumsWithScorePiecePivot;
+import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
-    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName, AutoEnumsWithScorePiecePivot piece) {
+    public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName, AutoPivotHeight piece) {
 
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
@@ -32,14 +32,14 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         //score first piece:
         //addCommands(turret.commandTurretPID(180));
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece, GamePieceType.Cone));
+        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece, GamePieceType.CONE));
 
         //drive, get piece, drive back
         addCommands(fullAuto);
 
         //score piece:
         //addCommands(turret.commandTurretPID(180));
-        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece, GamePieceType.Cube));
+        addCommands(new ScorePieceCommandGroup(turret, arm, claw, piece, GamePieceType.CUBE));
 
     }
 }
