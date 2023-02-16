@@ -35,6 +35,12 @@ public final class AutonomousFactory {
             m_autonomousModes.addOption("Two Piece Nodes 7 and 8: " + height, twoPieceNodes7and8);
         }
 
+        //two piece AND engage
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase twoPieceEngage = new TwoPieceAndEngageCommandGroup(chassis, turret, arm, claw, "TWOPieceEngage", AutoPivotHeight.HIGH);
+            m_autonomousModes.addOption("Two Piece & Engage: " + height, twoPieceEngage);
+        }
+
         //One scoring node (high), engage at end (nodes 3, 4, 5)
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", AutoPivotHeight.HIGH, GamePieceType.CONE);
