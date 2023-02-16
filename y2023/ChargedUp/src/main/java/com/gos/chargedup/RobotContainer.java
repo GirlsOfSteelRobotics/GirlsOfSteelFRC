@@ -111,8 +111,8 @@ public class RobotContainer {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
 
         // testing
-        tab.add("Tune Chassis Velocity", m_chassisSubsystem.commandChassisVelocity());
-        tab.add("Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
+        tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
+        tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
 
         // auto trajectories
         tab.add("Test Line", new TestLineCommandGroup(m_chassisSubsystem));
@@ -128,44 +128,44 @@ public class RobotContainer {
         tab.add("Chassis position tune: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
 
         // turret
-        tab.add("Tune Turret Velocity", m_turret.createTuneVelocity());
-        tab.add("Automated Turret - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2]));
-        tab.add("Automated Turret - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[6]));
-        tab.add("Automated Turret - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[8]));
+        tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
+        tab.add("Turret: Automated - 2", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2]));
+        tab.add("Turret: Automated - 6", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[6]));
+        tab.add("Turret: Automated - 8", new AutomatedTurretToSelectedPegCommand(m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[8]));
         tab.add("Turret To Break Mode", m_turret.createTurretToBrakeMode());
         tab.add("Turret To Coast Mode", m_turret.createTurretToCoastMode());
-        tab.add("Reset Turret Encoder", m_turret.createResetEncoder());
-        tab.add("Move Turret Clockwise", m_turret.commandMoveTurretClockwise());
-        tab.add("Move Turret Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
-        tab.add("Tune Turret Position (-90 degrees)", m_turret.commandTurretPID(-90));
+        tab.add("Turret Reset Encoder", m_turret.createResetEncoder());
+        tab.add("Turret: Move Clockwise", m_turret.commandMoveTurretClockwise());
+        tab.add("Turret: Move Counter Clockwise", m_turret.commandMoveTurretCounterClockwise());
+        tab.add("Turret: Tune Position (-90 degrees)", m_turret.commandTurretPID(-90));
         tab.add("Turret PID - 0 degrees", m_turret.commandTurretPID(0));
         tab.add("Turret PID - 90 degrees", m_turret.commandTurretPID(90));
         tab.add("Turret PID - 180 degrees", m_turret.commandTurretPID(180));
 
         // arm pivot
-        tab.add("Arm Pivot Down", m_arm.commandPivotArmDown());
-        tab.add("Arm Pivot Up", m_arm.commandPivotArmUp());
+        tab.add("Arm: Pivot Down", m_arm.commandPivotArmDown());
+        tab.add("Arm: Pivot Up", m_arm.commandPivotArmUp());
 
-        tab.add("Arm angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
-        tab.add("Arm angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
-        tab.add("Arm angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+        tab.add("Arm: Angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
+        tab.add("Arm: Angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
+        tab.add("Arm: Angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
 
-        tab.add("Reset Pivot Encoder", m_arm.createResetPivotEncoder(ArmSubsystem.MIN_ANGLE_DEG));
-        tab.add("Reset Pivot Encoder (0 deg)", m_arm.createResetPivotEncoder(0));
+        tab.add("Pivot: Reset Encoder", m_arm.createResetPivotEncoder(ArmSubsystem.MIN_ANGLE_DEG));
+        tab.add("Pivot: Reset Encoder (0 deg)", m_arm.createResetPivotEncoder(0));
         tab.add("Pivot to Coast Mode", m_arm.createPivotToCoastMode());
         tab.add("Pivot to Brake Mode", m_arm.createPivotToBrakeMode());
 
-        tab.add("Tune Gravity Offset", m_arm.tuneGravityOffsetPID());
+        tab.add("Gravity Offset Tune", m_arm.tuneGravityOffsetPID());
 
         // arm extension
-        tab.add("Arm Full Retract", m_arm.commandFullRetract());
-        tab.add("Arm Mid Retract", m_arm.commandMiddleRetract());
-        tab.add("Arm Full Extend", m_arm.commandFullExtend());
+        tab.add("Arm: Full Retract", m_arm.commandFullRetract());
+        tab.add("Arm: Mid Retract", m_arm.commandMiddleRetract());
+        tab.add("Arm: Full Extend", m_arm.commandFullExtend());
 
-        tab.add("Arm Bottom Piston Extended", m_arm.commandBottomPistonExtended());
-        tab.add("Arm Bottom Piston Retracted", m_arm.commandBottomPistonRetracted());
-        tab.add("Arm Top Piston Extended", m_arm.commandTopPistonExtended());
-        tab.add("Arm Top Piston Retracted", m_arm.commandTopPistonRetracted());
+        tab.add("Arm Piston: Bottom Extended", m_arm.commandBottomPistonExtended());
+        tab.add("Arm Piston: Bottom Retracted", m_arm.commandBottomPistonRetracted());
+        tab.add("Arm Piston: Top Extended", m_arm.commandTopPistonExtended());
+        tab.add("Arm Piston: Top Retracted", m_arm.commandTopPistonRetracted());
 
 
         // claw
