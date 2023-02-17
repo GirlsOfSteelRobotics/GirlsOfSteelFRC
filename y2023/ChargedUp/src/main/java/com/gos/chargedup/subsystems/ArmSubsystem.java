@@ -307,19 +307,19 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandBottomPistonExtended() {
-        return runOnce(this::setBottomPistonExtended).withName("Arm Bottom Piston Extended");
+        return runOnce(this::setBottomPistonExtended).withName("Arm Piston: Bottom Extended");
     }
 
     public CommandBase commandBottomPistonRetracted() {
-        return runOnce(this::setBottomPistonRetracted).withName("Arm Bottom Piston Retracted");
+        return runOnce(this::setBottomPistonRetracted).withName("Arm Piston: Bottom Retracted");
     }
 
     public CommandBase commandTopPistonExtended() {
-        return runOnce(this::setTopPistonExtended).withName("Arm Top Piston Extended");
+        return runOnce(this::setTopPistonExtended).withName("Arm Piston: Top Extended");
     }
 
     public CommandBase commandTopPistonRetracted() {
-        return runOnce(this::setTopPistonRetracted).withName("Arm Top Piston Retracted");
+        return runOnce(this::setTopPistonRetracted).withName("Arm Piston: Top Retracted");
     }
 
     public CommandBase commandFullRetract() {
@@ -351,11 +351,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandPivotArmUp() {
-        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp");
+        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
     }
 
     public CommandBase commandPivotArmDown() {
-        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown");
+        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
     public CommandBase commandPivotArmToAngle(double angle) {

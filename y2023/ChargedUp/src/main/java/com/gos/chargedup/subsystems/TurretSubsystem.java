@@ -170,13 +170,15 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretMotor.getAppliedOutput();
     }
 
+    ///////////////////////
     // Command Factories
+    ///////////////////////
     public CommandBase commandMoveTurretClockwise() {
-        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
+        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("Turret: Move CW");
     }
 
     public CommandBase commandMoveTurretCounterClockwise() {
-        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
+        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("Turret: Move CCW");
     }
 
     public CommandBase createIsTurretMotorMoving() {

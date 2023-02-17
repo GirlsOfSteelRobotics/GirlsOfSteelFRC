@@ -316,7 +316,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase commandChassisVelocity() {
         return this.runEnd(
             () -> smartVelocityControl(Units.inchesToMeters(m_maxVelocity.getValue()), Units.inchesToMeters(m_maxVelocity.getValue())),
-            this::stop).withName("Tune Chassis Velocity");
+            this::stop).withName("Chassis: Tune Velocity");
     }
 
     public CommandBase createIsLeftMotorMoving() {
