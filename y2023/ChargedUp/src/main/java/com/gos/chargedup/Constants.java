@@ -27,7 +27,7 @@ public final class Constants {
     public static final int PIVOT_MOTOR = 2;
     public static final int TURRET_MOTOR = 3;
     public static final int INTAKE_MOTOR = 6;
-    public static final int PIGEON_PORT;
+    public static final int PIGEON_PORT = 20;
 
 
 
