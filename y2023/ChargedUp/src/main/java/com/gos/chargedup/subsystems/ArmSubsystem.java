@@ -281,7 +281,11 @@ public class ArmSubsystem extends SubsystemBase {
             //pivotArmToAngle();
             angle = MIN_ANGLE_DEG;
             break;
+        default:
+            angle = ARM_CONE_HIGH_DEG;
+            break;
         }
+
         return pivotArmToAngle(angle);
     }
 
