@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.Rectangle;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -99,6 +100,11 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
+    private final Rectangle m_communityRectangle1 = new Rectangle(0.0, Units.inchesToMeters(132.375), Units.feetToMeters(18.0));
+
+    private final Rectangle m_communityRectangle2 = new Rectangle(Units.inchesToMeters(132.375), Units.inchesToMeters(193.25), Units.feetToMeters(18.0) - Units.inchesToMeters(59.39) + Units.inchesToMeters(2.0));
+
+    //private final Rectangle m_loadingRectangle1 = new Rectangle()
     public ChassisSubsystem() {
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
