@@ -94,13 +94,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightEncoderPosition;
     private final NetworkTableEntry m_rightEncoderVelocity;
 
-    private static final double Y_POSITION_BUTTON = 10;
-    private static final double DISTANCE_BETWEEN_ARRAYS = 30;
-    private static final double ARRAY_1 = Y_POSITION_BUTTON;
-    private static final double ARRAY_2 = Y_POSITION_BUTTON + DISTANCE_BETWEEN_ARRAYS;
-    private static final double ARRAY_3 = Y_POSITION_BUTTON + (2 * DISTANCE_BETWEEN_ARRAYS);
-    private final double[] m_closestArray = {ARRAY_1, ARRAY_2, ARRAY_3};
-
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
@@ -203,14 +196,24 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public double findingClosestNode() {
+    public double findingClosestNode(double yPositionButton) {
+        double DISTANCE_BETWEEN_ARRAYS = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
+        double ARRAY_1 = yPositionButton + 0 * DISTANCE_BETWEEN_ARRAYS;
+        double ARRAY_2 = yPositionButton + 1 * DISTANCE_BETWEEN_ARRAYS;
+        double ARRAY_3 = yPositionButton + 2 * DISTANCE_BETWEEN_ARRAYS;
+        double[] m_closestArray = {ARRAY_1, ARRAY_2, ARRAY_3};
+
         final Pose2d currentRobotPosition = getPose();
         double currentYPos = currentRobotPosition.getY();
         double minDist = Integer.MAX_VALUE;
         double closestNode = minDist;
+        System.out.println("Searching for closest... " + yPositionButton + ", " + currentYPos);
         for (int i = 0; i < 3; i++) {
-            if ((Math.abs(currentYPos - m_closestArray[i])) < minDist) {
+            double currentDistance = Math.abs(currentYPos - m_closestArray[i]);
+            if (currentDistance < minDist) {
+                System.out.println("  Subsection " + i + " is better (" + m_closestArray[i] + ", old=" + minDist  + ")");
                 closestNode = m_closestArray[i];
+                minDist = currentDistance;
             }
         }
         return closestNode;
