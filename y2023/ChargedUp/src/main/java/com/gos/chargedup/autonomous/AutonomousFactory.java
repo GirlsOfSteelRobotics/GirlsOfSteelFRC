@@ -21,6 +21,7 @@ public final class AutonomousFactory {
 
     private final SendableChooser<Command> m_autonomousModes;
 
+    @SuppressWarnings("PMD.NPathComplexity")
     public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
         m_autonomousModes = new SendableChooser<>();
 

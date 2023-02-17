@@ -33,6 +33,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 
+@SuppressWarnings("PMD.GodClass")
 public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
@@ -85,7 +86,6 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_pivotErrorAlert;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
-
 
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
