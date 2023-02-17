@@ -94,12 +94,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_rightEncoderPosition;
     private final NetworkTableEntry m_rightEncoderVelocity;
 
-    double m_yPositionButton = 10;
+    private static final double Y_POSITION_BUTTON = 10;
     private static final double DISTANCE_BETWEEN_ARRAYS = 30;
-    private final double m_array1 = m_yPositionButton;
-    private final double m_array2 = m_yPositionButton + DISTANCE_BETWEEN_ARRAYS;
-    private final double m_array3 = m_yPositionButton + (2 * DISTANCE_BETWEEN_ARRAYS);
-    final double[] m_closestArray = {m_array1, m_array2, m_array3};
+    private static final double ARRAY_1 = Y_POSITION_BUTTON;
+    private static final double ARRAY_2 = Y_POSITION_BUTTON + DISTANCE_BETWEEN_ARRAYS;
+    private static final double ARRAY_3 = Y_POSITION_BUTTON + (2 * DISTANCE_BETWEEN_ARRAYS);
+    private final double[] m_closestArray = {ARRAY_1, ARRAY_2, ARRAY_3};
 
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
