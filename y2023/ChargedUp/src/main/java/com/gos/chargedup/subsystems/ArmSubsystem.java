@@ -1,7 +1,9 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.GamePieceType;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -47,6 +49,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static final double ARM_CUBE_MIDDLE_DEG = 0;
     public static final double ARM_CUBE_HIGH_DEG = 15;
+
     public static final double ARM_CONE_MIDDLE_DEG = 15;
     public static final double ARM_CONE_HIGH_DEG = 30;
     private static final double PNEUMATICS_WAIT = 0.5;
@@ -239,16 +242,19 @@ public class ArmSubsystem extends SubsystemBase {
         return !m_upperLimitSwitch.get();
     }
 
-    public boolean pivotArmToAngle(double pivotAngleGoal) {
-        m_armAngleGoal = pivotAngleGoal;
-
-        double error = getArmAngleDeg() - pivotAngleGoal;
+    public void pivotArmToAngle(double pivotAngleGoal) {
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
+
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
         } else {
             m_pivotMotor.set(0);
         }
+    }
+
+    public boolean isArmAtAngle(double pivotAngleGoal) {
+        m_armAngleGoal = pivotAngleGoal;
+        double error = getArmAngleDeg() - pivotAngleGoal;
 
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
     }
@@ -257,51 +263,88 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotor.setVoltage(GRAVITY_OFFSET.getValue());
     }
 
-    public CommandBase createPivotToBrakeMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Pivot to Brake").ignoringDisable(true);
-    }
 
-    public CommandBase createPivotToCoastMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).withName("Pivot to Coast").ignoringDisable(true);
-    }
-
-    public CommandBase createResetPivotEncoder(double angle) {
-        return this.run(() -> m_pivotMotorEncoder.setPosition(angle)).withName("Reset Pivot Encoder").ignoringDisable(true);
-    }
 
     public final void resetPivotEncoder() {
         m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
+    private double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+        double angle = 0.0;
+
+        switch (pivotHeightType) {
+        case HIGH:
+            if (gamePieceType == GamePieceType.CONE) {
+                //pivotArmToAngle(ARM_CONE_HIGH_DEG);
+                angle = ARM_CONE_HIGH_DEG;
+            } else {
+                //pivotArmToAngle();
+                angle = ARM_CUBE_HIGH_DEG;
+            }
+            break;
+        case MEDIUM:
+            if (gamePieceType == GamePieceType.CONE) {
+                //pivotArmToAngle();
+                angle = ARM_CONE_MIDDLE_DEG;
+            } else {
+                //pivotArmToAngle();
+                angle = ARM_CUBE_MIDDLE_DEG;
+            }
+            break;
+        case LOW:
+            //pivotArmToAngle();
+            angle = MIN_ANGLE_DEG;
+            break;
+        default:
+            angle = ARM_CONE_HIGH_DEG;
+            break;
+        }
+        return angle;
+    }
+
+
     ///////////////////////
     // Command Factories
     ///////////////////////
+
+    public CommandBase createPivotToBrakeMode() {
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).ignoringDisable(true).withName("Pivot to Brake");
+    }
+
+    public CommandBase createPivotToCoastMode() {
+        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).ignoringDisable(true).withName("Pivot to Coast");
+    }
+
+    public CommandBase createResetPivotEncoder(double angle) {
+        return this.run(() -> m_pivotMotorEncoder.setPosition(angle)).ignoringDisable(true).withName("Reset Pivot Encoder");
+    }
+
     public CommandBase commandBottomPistonExtended() {
-        return runOnce(this::setBottomPistonExtended).withName("Arm Bottom Piston Extended");
+        return runOnce(this::setBottomPistonExtended).withName("Arm Piston: Bottom Extended");
     }
 
     public CommandBase commandBottomPistonRetracted() {
-        return runOnce(this::setBottomPistonRetracted).withName("Arm Bottom Piston Retracted");
+        return runOnce(this::setBottomPistonRetracted).withName("Arm Piston: Bottom Retracted");
     }
 
     public CommandBase commandTopPistonExtended() {
-        return runOnce(this::setTopPistonExtended).withName("Arm Top Piston Extended");
+        return runOnce(this::setTopPistonExtended).withName("Arm Piston: Top Extended");
     }
 
     public CommandBase commandTopPistonRetracted() {
-        return runOnce(this::setTopPistonRetracted).withName("Arm Top Piston Retracted");
+        return runOnce(this::setTopPistonRetracted).withName("Arm Piston: Top Retracted");
     }
 
     public CommandBase commandFullRetract() {
-        return runOnce(this::fullRetract).withName("ArmPistonsFullRetract").withTimeout(PNEUMATICS_WAIT);
+        return runOnce(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
     }
 
     public CommandBase commandMiddleRetract() {
-        return runOnce(this::middleRetract).withName("ArmPistonsMiddleRetract").withTimeout(PNEUMATICS_WAIT);
+        return runOnce(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
     public CommandBase commandFullExtend() {
-        return runOnce(this::out).withName("ArmPistonsOut").withTimeout(PNEUMATICS_WAIT);
+        return runOnce(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
     }
 
     public CommandBase createIsPivotMotorMoving() {
@@ -321,7 +364,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandPivotArmUp() {
-        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp");
+        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
     }
 
     public int findNodeLevel() {
@@ -341,13 +384,29 @@ public class ArmSubsystem extends SubsystemBase {
 
 
     public CommandBase commandPivotArmDown() {
-        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown");
+        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
-    public CommandBase commandPivotArmToAngle(double angle) {
+    public CommandBase commandPivotArmToAngleHold(double angle) {
+        return this.run(() -> pivotArmToAngle(angle))
+            .until(() -> isArmAtAngle(angle))
+            .withName("Arm to Angle" + angle);
+    }
+
+    public CommandBase commandPivotArmToAngleNonHold(double angle) {
         return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
-            .withName("Arm to Angle" + angle)
-            .until(() -> pivotArmToAngle(angle));
+            .until(() -> isArmAtAngle(angle))
+            .withName("Arm to Angle" + angle);
+    }
+
+    public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight piece, GamePieceType gamePieceType) {
+        double angle = getArmAngleForScoring(piece, gamePieceType);
+        return commandPivotArmToAngleHold(angle);
+    }
+
+    public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight piece, GamePieceType gamePieceType) {
+        double angle = getArmAngleForScoring(piece, gamePieceType);
+        return commandPivotArmToAngleNonHold(angle);
     }
 }
 

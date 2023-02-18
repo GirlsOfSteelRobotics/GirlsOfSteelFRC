@@ -170,13 +170,15 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretMotor.getAppliedOutput();
     }
 
+    ///////////////////////
     // Command Factories
+    ///////////////////////
     public CommandBase commandMoveTurretClockwise() {
-        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
+        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("Turret: Move CW");
     }
 
     public CommandBase commandMoveTurretCounterClockwise() {
-        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
+        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("Turret: Move CCW");
     }
 
     public CommandBase createIsTurretMotorMoving() {
@@ -185,8 +187,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
-            .withName("Turret PID" + angle)
-            .until(() -> moveTurretToAngleWithPID(angle));
+            .until(() -> moveTurretToAngleWithPID(angle))
+            .withName("Turret PID" + angle);
     }
 
     public CommandBase createTuneVelocity() {
@@ -194,15 +196,15 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public CommandBase createTurretToBrakeMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Turret to Brake").ignoringDisable(true);
+        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).ignoringDisable(true).withName("Turret to Brake");
     }
 
     public CommandBase createTurretToCoastMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).withName("Turret to Coast").ignoringDisable(true);
+        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).ignoringDisable(true).withName("Turret to Coast");
     }
 
     public CommandBase createResetEncoder() {
-        return this.runOnce(() -> m_turretEncoder.setPosition(0.0)).withName("Reset Turret Encoder").ignoringDisable(true);
+        return this.runOnce(() -> m_turretEncoder.setPosition(0.0)).ignoringDisable(true).withName("Reset Turret Encoder");
     }
 }
 
