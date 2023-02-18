@@ -42,10 +42,10 @@ import java.util.Optional;
 
 
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_SPEED = new GosDoubleProperty(false, "Chassis speed for auto engage", 0.1);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .02);
 
-    private static final double PITCH_LOWER_LIMIT = -5.0;
-    private static final double PITCH_UPPER_LIMIT = 5.0;
+    private static final double PITCH_LOWER_LIMIT = -3.0;
+    private static final double PITCH_UPPER_LIMIT = 3.0;
 
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
     private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
@@ -216,6 +216,7 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Position values: X", Units.metersToInches(getPose().getX()));
         SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
         SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("Chassis Pitch", getPitch());
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -255,8 +256,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_drive.curvatureDrive(speed, steer, allowTurnInPlace);
     }
 
+    // INTENTIONALLY ROLL, WE ARE NOT BEING PSYCOPATHS I PROMISE
     public double getPitch() {
-        return m_gyro.getPitch();
+        return m_gyro.getRoll();
     }
 
     public double getYaw() {
@@ -264,17 +266,22 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void autoEngage() {
-
-        System.out.println(getPitch());
+        double speed = -getPitch() * AUTO_ENGAGE_KP.getValue();
 
         if (getPitch() > PITCH_LOWER_LIMIT && getPitch() < PITCH_UPPER_LIMIT) {
             setArcadeDrive(0, 0);
 
         } else if (getPitch() > 0) {
-            setArcadeDrive(-AUTO_ENGAGE_SPEED.getValue(), 0);
+            if (speed < -0.35) {
+                speed = -0.35;
+            }
+            setArcadeDrive(speed, 0);
 
         } else if (getPitch() < 0) {
-            setArcadeDrive(AUTO_ENGAGE_SPEED.getValue(), 0);
+            if (speed > 0.35) {
+                speed = 0.35;
+            }
+            setArcadeDrive(speed, 0);
         }
     }
 
