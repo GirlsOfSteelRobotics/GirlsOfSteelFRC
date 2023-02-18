@@ -54,7 +54,7 @@ public final class Constants {
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     //Auto velocity and acceleration
-    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(36));
+    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
 
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;

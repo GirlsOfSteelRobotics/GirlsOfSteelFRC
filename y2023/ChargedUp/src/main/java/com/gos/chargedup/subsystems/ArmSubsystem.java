@@ -87,6 +87,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
+
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
