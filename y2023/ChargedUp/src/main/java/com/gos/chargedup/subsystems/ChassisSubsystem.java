@@ -17,6 +17,7 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.frc2023.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.ctre.CtrePigeonImuWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -91,6 +93,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_leftEncoderVelocity;
     private final NetworkTableEntry m_rightEncoderPosition;
     private final NetworkTableEntry m_rightEncoderVelocity;
+
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
 
@@ -185,6 +188,33 @@ public class ChassisSubsystem extends SubsystemBase {
             m_simulator.setRightInverted(false);
         }
 
+    }
+
+    public void nodeCount(FieldConstants fieldConstants) {
+        for (int i = 0; i < FieldConstants.Grids.NODE_ROW_COUNT; i++) {
+            FieldConstants.Grids.LOW_TRANSLATIONS[i] = new Translation2d(FieldConstants.Grids.LOW_X, FieldConstants.Grids.NODE_FIRST_Y + FieldConstants.Grids.NODE_SEPARATION_Y * i);
+        }
+    }
+
+    public double findingClosestNode(double yPositionButton) {
+        double distanceBetweenArrays = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
+        double array1 = yPositionButton + 0 * distanceBetweenArrays;
+        double array2 = yPositionButton + 1 * distanceBetweenArrays;
+        double array3 = yPositionButton + 2 * distanceBetweenArrays;
+        double[] mClosestArray = {array1, array2, array3};
+
+        final Pose2d currentRobotPosition = getPose();
+        double currentYPos = currentRobotPosition.getY();
+        double minDist = Integer.MAX_VALUE;
+        double closestNode = minDist;
+        for (int i = 0; i < 3; i++) {
+            double currentDistance = Math.abs(currentYPos - mClosestArray[i]);
+            if (currentDistance < minDist) {
+                closestNode = mClosestArray[i];
+                minDist = currentDistance;
+            }
+        }
+        return closestNode;
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {

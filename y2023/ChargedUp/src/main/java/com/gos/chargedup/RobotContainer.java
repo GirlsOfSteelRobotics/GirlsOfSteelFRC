@@ -8,6 +8,7 @@ package com.gos.chargedup;
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
+import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
@@ -107,6 +108,7 @@ public class RobotContainer {
         }
     }
 
+    @SuppressWarnings("PMD.NcssCount")
     private void createTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
 
@@ -186,6 +188,17 @@ public class RobotContainer {
         tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, -45));
 
 
+
+        //TODO: change the pitch to actual value lol and also update field constant values to the most recent from unbuggy version from mechanical advantage
+        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, 0, 0, 0));
+        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1].getX(), FieldConstants.Grids.LOW_TRANSLATIONS[1].getY(), 0));
+        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2].getX(), FieldConstants.Grids.LOW_TRANSLATIONS[2].getY(), 0));
+        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0].getX(), FieldConstants.Grids.MID_TRANSLATIONS[0].getY(), 1));
+        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1].getX(), FieldConstants.Grids.MID_TRANSLATIONS[1].getY(), 1));
+        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2].getX(), FieldConstants.Grids.MID_TRANSLATIONS[2].getY(), 1));
+        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[0].getY(), 2));
+        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[1].getY(), 2));
+        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[2].getY(), 2));
 
     }
 
