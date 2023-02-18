@@ -42,6 +42,9 @@ public class ClawSubsystem extends SubsystemBase {
         return this.run(this::moveClawIntakeOpen).withTimeout(CLAW_WAIT).withName("ClawIntakeOpen");
     }
 
+    //////////////
+    // Checklists
+    //////////////
     public CommandBase createIsClawPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_claw, "Claw: Right Piston");
     }

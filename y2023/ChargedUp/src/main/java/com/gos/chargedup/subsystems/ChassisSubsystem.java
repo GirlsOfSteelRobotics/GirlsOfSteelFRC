@@ -319,14 +319,6 @@ public class ChassisSubsystem extends SubsystemBase {
             this::stop).withName("Chassis: Tune Velocity");
     }
 
-    public CommandBase createIsLeftMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_leaderLeft, "Chassis: Leader left motor", 1.0);
-    }
-
-    public CommandBase createIsRightMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
-    }
-
     public void drivetrainToBrakeMode() {
         m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -364,5 +356,16 @@ public class ChassisSubsystem extends SubsystemBase {
             eventMap,
             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
             this);
+    }
+
+    ////////////////
+    // Checklists
+    ////////////////
+    public CommandBase createIsLeftMotorMoving() {
+        return new SparkMaxMotorsMoveChecklist(this, m_leaderLeft, "Chassis: Leader left motor", 1.0);
+    }
+
+    public CommandBase createIsRightMotorMoving() {
+        return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
 }
