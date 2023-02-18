@@ -352,16 +352,16 @@ public class ArmSubsystem extends SubsystemBase {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
 
-    public CommandBase createIsArmInnerPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
+//    public CommandBase createIsArmInnerPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
+//        return new ConditionalCommand(
+//            new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston"),
+//            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+//            cs::canExtendArm);
+//    }
 
-    public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
-    }
+//    public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
+//        return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
+//    }
 
     public CommandBase tuneGravityOffsetPIDPrevention(ChassisSubsystem cs, CommandXboxController x) {
         return new ConditionalCommand(
@@ -385,16 +385,16 @@ public class ArmSubsystem extends SubsystemBase {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_topPiston, "Claw: Left Piston");
     }
 
-    public CommandBase createIsArmOuterPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
-        return new ConditionalCommand(
-            new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston"),
-            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-            cs::canExtendArm);
-    }
+//    public CommandBase createIsArmOuterPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
+//        return new ConditionalCommand(
+//            new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston"),
+//            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+//            cs::canExtendArm);
+//    }
 
-    public CommandBase createIsArmOuterPneumaticMoving(PneumaticHub pneumaticHub) {
-        return new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
-    }
+//    public CommandBase createIsArmOuterPneumaticMoving(PneumaticHub pneumaticHub) {
+//        return new PneumaticsMoveTest(pneumaticHub, m_outerPiston, Constants.LEFT_CLAW_PISTON, "Claw: Left Piston");
+//    }
 
     public CommandBase commandPivotArmUpPrevention(ChassisSubsystem cs, CommandXboxController x) {
         return new ConditionalCommand(
