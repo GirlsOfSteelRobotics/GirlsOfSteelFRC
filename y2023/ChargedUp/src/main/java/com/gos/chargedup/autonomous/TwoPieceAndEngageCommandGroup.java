@@ -21,14 +21,6 @@ import java.util.List;
 
 public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
     public TwoPieceAndEngageCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName, AutoPivotHeight pivotHeightType) {
-        double goalAngle;
-        if (pivotHeightType == AutoPivotHeight.HIGH) {
-            goalAngle = ArmSubsystem.ARM_CUBE_HIGH_DEG;
-        } else if (pivotHeightType == AutoPivotHeight.MEDIUM) {
-            goalAngle = ArmSubsystem.ARM_CUBE_MIDDLE_DEG;
-        } else {
-            goalAngle = ArmSubsystem.MIN_ANGLE_DEG;
-        }
 
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
@@ -43,7 +35,8 @@ public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
 
         eventMap.put("setArmAndTurretToScore", new ParallelCommandGroup(
             turret.commandTurretPID(180),
-            arm.commandPivotArmToAngleReg(goalAngle)
+            arm.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE) //set for second piece
+
         ));
 
         //score second piece

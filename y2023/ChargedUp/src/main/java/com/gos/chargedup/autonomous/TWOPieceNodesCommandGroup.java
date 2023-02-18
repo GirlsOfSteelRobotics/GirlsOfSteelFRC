@@ -21,14 +21,6 @@ import java.util.List;
 public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
     public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName, AutoPivotHeight pivotHeightType) {
-        double goalAngle;
-        if (pivotHeightType == AutoPivotHeight.HIGH) {
-            goalAngle = ArmSubsystem.ARM_CUBE_HIGH_DEG;
-        } else if (pivotHeightType == AutoPivotHeight.MEDIUM) {
-            goalAngle = ArmSubsystem.ARM_CUBE_MIDDLE_DEG;
-        } else {
-            goalAngle = ArmSubsystem.MIN_ANGLE_DEG;
-        }
 
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
@@ -37,14 +29,13 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         eventMap.put("resetArmAndTurret", new ParallelCommandGroup(
             turret.commandTurretPID(0),
-            arm.commandPivotArmToAngleReg(ArmSubsystem.MIN_ANGLE_DEG)
+            arm.commandPivotArmToAngleNonHold(ArmSubsystem.MIN_ANGLE_DEG)
 
         ));
 
         eventMap.put("setArmAndTurretToScore", new ParallelCommandGroup(
             turret.commandTurretPID(180),
-            arm.commandPivotArmToAngleHold(goalAngle)
-
+            arm.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE) //set for second piece
         ));
 
         List<PathPlannerTrajectory> twoPieceNodes0And1 = PathPlanner.loadPathGroup(autoName, Constants.DEFAULT_PATH_CONSTRAINTS);
