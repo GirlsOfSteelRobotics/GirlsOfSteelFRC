@@ -231,16 +231,19 @@ public class ArmSubsystem extends SubsystemBase {
         return !m_upperLimitSwitch.get();
     }
 
-    public boolean pivotArmToAngle(double pivotAngleGoal) {
-        m_armAngleGoal = pivotAngleGoal;
-
-        double error = getArmAngleDeg() - pivotAngleGoal;
+    public void pivotArmToAngle(double pivotAngleGoal) {
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
+
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
         } else {
             m_pivotMotor.set(0);
         }
+    }
+
+    public boolean isArmAtAngle(double pivotAngleGoal) {
+        m_armAngleGoal = pivotAngleGoal;
+        double error = getArmAngleDeg() - pivotAngleGoal;
 
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
     }
@@ -255,7 +258,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
-    public boolean moveArmToPieceScorePosition(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+    private double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         double angle = 0.0;
 
         switch (pivotHeightType) {
@@ -285,8 +288,7 @@ public class ArmSubsystem extends SubsystemBase {
             angle = ARM_CONE_HIGH_DEG;
             break;
         }
-
-        return pivotArmToAngle(angle);
+        return angle;
     }
 
 
@@ -358,15 +360,26 @@ public class ArmSubsystem extends SubsystemBase {
         return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
-    public CommandBase commandPivotArmToAngle(double angle) {
-        return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
-            .until(() -> pivotArmToAngle(angle))
+    public CommandBase commandPivotArmToAngleHold(double angle) {
+        return this.run(() -> pivotArmToAngle(angle))
+            .until(() -> isArmAtAngle(angle))
             .withName("Arm to Angle" + angle);
     }
 
-    public CommandBase commandMoveArmToPieceScorePosition(AutoPivotHeight piece, GamePieceType gamePieceType) {
-        return this.runEnd(() -> moveArmToPieceScorePosition(piece, gamePieceType), this::pivotArmStop)
-            .until(() -> moveArmToPieceScorePosition(piece, gamePieceType));
+    public CommandBase commandPivotArmToAngleNonHold(double angle) {
+        return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
+            .until(() -> isArmAtAngle(angle))
+            .withName("Arm to Angle" + angle);
+    }
+
+    public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight piece, GamePieceType gamePieceType) {
+        double angle = getArmAngleForScoring(piece, gamePieceType);
+        return commandPivotArmToAngleHold(angle);
+    }
+
+    public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight piece, GamePieceType gamePieceType) {
+        double angle = getArmAngleForScoring(piece, gamePieceType);
+        return commandPivotArmToAngleNonHold(angle);
     }
 }
 

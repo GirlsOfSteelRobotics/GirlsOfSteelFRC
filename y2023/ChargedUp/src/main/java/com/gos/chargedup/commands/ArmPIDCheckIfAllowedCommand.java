@@ -58,7 +58,7 @@ public class ArmPIDCheckIfAllowedCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return m_armSubsystem.pivotArmToAngle(m_goalAngle);
+        return m_armSubsystem.isArmAtAngle(m_goalAngle);
     }
 
     @Override

@@ -146,9 +146,9 @@ public class RobotContainer {
         tab.add("Arm: Pivot Down", m_arm.commandPivotArmDown());
         tab.add("Arm: Pivot Up", m_arm.commandPivotArmUp());
 
-        tab.add("Arm: Angle PID - 0 degrees", m_arm.commandPivotArmToAngle(0));
-        tab.add("Arm: Angle PID - 45 degrees", m_arm.commandPivotArmToAngle(45));
-        tab.add("Arm: Angle PID - 90 degrees", m_arm.commandPivotArmToAngle(90));
+        tab.add("Arm: Angle PID - 0 degrees", m_arm.commandPivotArmToAngleNonHold(0));
+        tab.add("Arm: Angle PID - 45 degrees", m_arm.commandPivotArmToAngleNonHold(45));
+        tab.add("Arm: Angle PID - 90 degrees", m_arm.commandPivotArmToAngleNonHold(90));
 
         tab.add("Pivot: Reset Encoder", m_arm.createResetPivotEncoder(ArmSubsystem.MIN_ANGLE_DEG));
         tab.add("Pivot: Reset Encoder (0 deg)", m_arm.createResetPivotEncoder(0));
