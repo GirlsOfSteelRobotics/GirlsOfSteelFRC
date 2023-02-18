@@ -195,12 +195,11 @@ public class TurretSubsystem extends SubsystemBase {
         return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret);
     }
 
-    public CommandBase createTurretToBrakeMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).ignoringDisable(true).withName("Turret to Brake");
-    }
-
     public CommandBase createTurretToCoastMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).ignoringDisable(true).withName("Turret to Coast");
+        return this.runEnd(
+            () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
+            () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
+            .ignoringDisable(true).withName("Turret to Coast");
     }
 
     public CommandBase createResetEncoder() {

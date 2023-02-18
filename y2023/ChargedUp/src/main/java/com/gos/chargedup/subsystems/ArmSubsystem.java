@@ -294,12 +294,11 @@ public class ArmSubsystem extends SubsystemBase {
     // Command Factories
     ///////////////////////
 
-    public CommandBase createPivotToBrakeMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).ignoringDisable(true).withName("Pivot to Brake");
-    }
-
     public CommandBase createPivotToCoastMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).ignoringDisable(true).withName("Pivot to Coast");
+        return this.runEnd(
+            () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
+            () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
+            .ignoringDisable(true).withName("Pivot to Coast");
     }
 
     public CommandBase createResetPivotEncoder(double angle) {

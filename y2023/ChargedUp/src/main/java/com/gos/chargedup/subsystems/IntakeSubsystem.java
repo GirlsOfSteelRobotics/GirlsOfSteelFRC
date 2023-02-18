@@ -17,7 +17,7 @@ import java.util.function.DoubleSupplier;
 public class IntakeSubsystem extends SubsystemBase {
 
     private static final double HOPPER_SPEED = 0.5;
-    private static final double INTAKE_SPEED = 0.5;
+    private static final double INTAKE_SPEED = 1;
     private final Solenoid m_intakeSolenoidLeft;
     private final Solenoid m_intakeSolenoidRight;
     private final SimableCANSparkMax m_hopperMotor;
