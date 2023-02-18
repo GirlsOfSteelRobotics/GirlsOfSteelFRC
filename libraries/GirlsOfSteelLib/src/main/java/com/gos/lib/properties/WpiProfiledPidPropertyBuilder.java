@@ -47,7 +47,7 @@ public final class WpiProfiledPidPropertyBuilder extends PidProperty.Builder imp
 
     @Override
     public IPidPropertyBuilder addMaxAcceleration(double defaultValue) {
-        addMaxVelocity(defaultValue, (double val) -> {
+        addMaxAcceleration(defaultValue, (double val) -> {
             m_constraints = new TrapezoidProfile.Constraints(m_constraints.maxVelocity, val);
             m_pidController.setConstraints(m_constraints);
         });
