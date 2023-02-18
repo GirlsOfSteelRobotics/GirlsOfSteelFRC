@@ -29,10 +29,10 @@ public class AimTurretCommand extends CommandBase {
 
 
 
-    public AimTurretCommand(ArmSubsystem m_armSubsystem, ChassisSubsystem m_chassisSubsystem, TurretSubsystem m_turretSubsystem, double x, double y, double pitch) {
-        this.m_armSubsystem = m_armSubsystem;
-        this.m_chassisSubsystem = m_chassisSubsystem;
-        this.m_turretSubsystem = m_turretSubsystem;
+    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, double x, double y, double pitch) {
+        this.m_armSubsystem = armSubsystem;
+        this.m_chassisSubsystem = chassisSubsystem;
+        this.m_turretSubsystem = turretSubsystem;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_armSubsystem, this.m_turretSubsystem);
@@ -51,14 +51,11 @@ public class AimTurretCommand extends CommandBase {
 
     @Override
     public void execute() {
-        DEBUG_FIELD.setRobotPose(m_chassisSubsystem.getPose());
-        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(m_targetX, m_targetY, Rotation2d.fromDegrees(0)));
 
         m_currentX = m_chassisSubsystem.getPose().getX();
         m_currentY = m_chassisSubsystem.getPose().getY();
 
         double closestYvalue = m_chassisSubsystem.findingClosestNode(m_targetY);
-        System.out.println(closestYvalue);
 
         double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
 
@@ -66,23 +63,18 @@ public class AimTurretCommand extends CommandBase {
 
         double turretAngle = currentAngle - targetAngle;
 
+        DEBUG_FIELD.setRobotPose(m_chassisSubsystem.getPose());
+        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(m_targetX, closestYvalue, Rotation2d.fromDegrees(0)));
 
-        // System.out.println("\ngoal x: " + m_targetX + "\ngoal y: " + m_targetY);
-        // System.out.println("current x: " + m_currentX + "\ncurrent y: " + m_currentY);
-        // System.out.println("target angle: " + targetAngle);
-        // System.out.println("robot angle: " + currentAngle);
-        // System.out.println("turret angle: " + turretAngle);
-
-
-        if (turretAngle > 180)
+        if (turretAngle > 180) {
             turretAngle -= 360;
-        else if (turretAngle < -180)
+        }
+        else if (turretAngle < -180) {
             turretAngle += 360;
+        }
 
         m_turretSubsystem.moveTurretToAngleWithPID(turretAngle);
 
-
-        //System.out.println("pitch: " + m_targetPitch);
         m_armSubsystem.commandPivotArmToAngle(m_targetPitch);
 
     }

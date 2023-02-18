@@ -42,8 +42,6 @@ import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.function.DoubleSupplier;
 
-import java.util.Arrays;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -110,6 +108,7 @@ public class RobotContainer {
         }
     }
 
+    @SuppressWarnings("PMD.NcssCount")
     private void createTestCommands() {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
 

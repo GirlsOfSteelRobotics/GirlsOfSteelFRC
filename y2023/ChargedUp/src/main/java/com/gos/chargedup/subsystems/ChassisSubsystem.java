@@ -197,22 +197,20 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double findingClosestNode(double yPositionButton) {
-        double DISTANCE_BETWEEN_ARRAYS = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
-        double ARRAY_1 = yPositionButton + 0 * DISTANCE_BETWEEN_ARRAYS;
-        double ARRAY_2 = yPositionButton + 1 * DISTANCE_BETWEEN_ARRAYS;
-        double ARRAY_3 = yPositionButton + 2 * DISTANCE_BETWEEN_ARRAYS;
-        double[] m_closestArray = {ARRAY_1, ARRAY_2, ARRAY_3};
+        double distanceBetweenArrays = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
+        double array1 = yPositionButton + 0 * distanceBetweenArrays;
+        double array2 = yPositionButton + 1 * distanceBetweenArrays;
+        double array3 = yPositionButton + 2 * distanceBetweenArrays;
+        double[] mClosestArray = {array1, array2, array3};
 
         final Pose2d currentRobotPosition = getPose();
         double currentYPos = currentRobotPosition.getY();
         double minDist = Integer.MAX_VALUE;
         double closestNode = minDist;
-        System.out.println("Searching for closest... " + yPositionButton + ", " + currentYPos);
         for (int i = 0; i < 3; i++) {
-            double currentDistance = Math.abs(currentYPos - m_closestArray[i]);
+            double currentDistance = Math.abs(currentYPos - mClosestArray[i]);
             if (currentDistance < minDist) {
-                System.out.println("  Subsection " + i + " is better (" + m_closestArray[i] + ", old=" + minDist  + ")");
-                closestNode = m_closestArray[i];
+                closestNode = mClosestArray[i];
                 minDist = currentDistance;
             }
         }

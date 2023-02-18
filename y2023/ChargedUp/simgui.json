@@ -1,4 +1,13 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "SPARK MAX [5]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
@@ -64,6 +73,13 @@
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Run checklist": "Command",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    },
+    "windows": {
+      "/Shuffleboard/TestCommands/High Cube": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }
