@@ -107,6 +107,24 @@
       "names": [
         "event"
       ]
+    },
+    {
+      "position": 0.1,
+      "names": [
+        "resetArmAndTurret"
+      ]
+    },
+    {
+      "position": 1.1,
+      "names": [
+        "setArmAndTurretToScore"
+      ]
+    },
+    {
+      "position": 2.1,
+      "names": [
+        "resetArmAndTurret"
+      ]
     }
   ]
 }
