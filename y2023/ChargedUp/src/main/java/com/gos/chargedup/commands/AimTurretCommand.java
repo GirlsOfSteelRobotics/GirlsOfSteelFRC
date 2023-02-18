@@ -87,6 +87,7 @@ public class AimTurretCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        m_turretSubsystem.stopTurret();
+        m_armSubsystem.pivotArmStop();
     }
 }
