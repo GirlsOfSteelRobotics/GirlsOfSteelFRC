@@ -75,7 +75,7 @@ public class AimTurretCommand extends CommandBase {
 
         m_turretSubsystem.moveTurretToAngleWithPID(turretAngle);
 
-        m_armSubsystem.commandPivotArmToAngle(m_targetPitch);
+        m_armSubsystem.pivotArmToAngle(m_targetPitch);
 
     }
 
