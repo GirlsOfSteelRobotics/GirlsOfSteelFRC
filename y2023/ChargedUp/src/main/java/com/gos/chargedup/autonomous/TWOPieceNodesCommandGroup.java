@@ -21,22 +21,29 @@ import java.util.List;
 public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
     public TWOPieceNodesCommandGroup(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw, String autoName, AutoPivotHeight pivotHeightType) {
+        double goalAngle;
+        if (pivotHeightType == AutoPivotHeight.HIGH) {
+            goalAngle = ArmSubsystem.ARM_CUBE_HIGH_DEG;
+        } else if (pivotHeightType == AutoPivotHeight.MEDIUM) {
+            goalAngle = ArmSubsystem.ARM_CUBE_MIDDLE_DEG;
+        } else {
+            goalAngle = ArmSubsystem.MIN_ANGLE_DEG;
+        }
+
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
-
-            //middle part
             claw.createMoveClawIntakeCloseCommand() //piece is firmly in the claw? finish + tune soon
         ));
 
         eventMap.put("resetArmAndTurret", new ParallelCommandGroup(
-            turret.commandTurretPID(0.0),
-            arm.commandPivotArmToAngle(ArmSubsystem.MIN_ANGLE_DEG)
+            turret.commandTurretPID(0),
+            arm.commandPivotArmToAngleReg(ArmSubsystem.MIN_ANGLE_DEG)
 
         ));
 
         eventMap.put("setArmAndTurretToScore", new ParallelCommandGroup(
             turret.commandTurretPID(180),
-            arm.commandPivotArmToAngle(ArmSubsystem.ARM_CONE_HIGH_DEG)
+            arm.commandPivotArmToAngleHold(goalAngle)
 
         ));
 
@@ -44,17 +51,15 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
         Command fullAuto = chassis.ramseteAutoBuilder(eventMap).fullAuto(twoPieceNodes0And1);
 
         //score first piece:
-        //addCommands(turret.commandTurretPID(180));
         addCommands(new ScorePieceCommandGroup(turret, arm, claw, pivotHeightType, GamePieceType.CONE));
 
         //drive, get piece, drive back
         addCommands(fullAuto);
 
-        //score piece:
-        //addCommands(turret.commandTurretPID(180));
-        addCommands(turret.commandTurretPID(69));
-
+        //score second piece
+        //addCommands(turret.commandTurretPID(69)); //NICE
         addCommands(new ScorePieceCommandGroup(turret, arm, claw, pivotHeightType, GamePieceType.CUBE));
+
 
     }
 }

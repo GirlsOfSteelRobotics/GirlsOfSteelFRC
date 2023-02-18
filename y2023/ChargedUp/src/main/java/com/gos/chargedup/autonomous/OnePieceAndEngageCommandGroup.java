@@ -25,11 +25,11 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
         Command driveAutoOnePieceEngage = chassis.ramseteAutoBuilder(new HashMap<>()).fullAuto(oneNodeAndEngage);
 
         //score
-        //addCommands(turret.commandTurretPID(180));
         addCommands(new ScorePieceCommandGroup(turret, arm, claw, pivotHeightType, gamePieceType));
 
         //drive to docking station
-        addCommands(driveAutoOnePieceEngage);
+        addCommands((driveAutoOnePieceEngage)
+            .alongWith(arm.commandPivotArmToAngleHold(ArmSubsystem.MIN_ANGLE_DEG)));
 
         //dock and engage
         addCommands(chassis.createAutoEngageCommand());

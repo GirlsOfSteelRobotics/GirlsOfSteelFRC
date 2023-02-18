@@ -22,7 +22,5 @@ public class ScorePieceCommandGroup extends SequentialCommandGroup {
 
         //piece dropped on node by now, reset arm back now:
         addCommands(arm.commandFullRetract());
-        //addCommands((arm.commandPivotArmToAngle(ArmSubsystem.MIN_ANGLE_DEG))
-        //    .alongWith(turret.commandTurretPID(0)));
     }
 }
