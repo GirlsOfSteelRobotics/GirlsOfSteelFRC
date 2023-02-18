@@ -88,16 +88,6 @@ public class ArmSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
 
-    private static final double CUBE_LOW_ANGLE = 15;
-    private static final double CONE_LOW_ANGLE = 15;
-    private static final double CUBE_MIDDLE_ANGLE = 30;
-    private static final double CONE_MIDDLE_ANGLE = 40;
-    private static final double CUBE_HIGH_ANGLE = 50;
-    private static final double CONE_HIGH_ANGLE = 60;
-
-    public static final double[] ARM_LEVEL = {CUBE_LOW_ANGLE, CONE_LOW_ANGLE, CUBE_MIDDLE_ANGLE, CONE_MIDDLE_ANGLE, CUBE_HIGH_ANGLE, CONE_HIGH_ANGLE};
-
-
     public ArmSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
@@ -366,22 +356,6 @@ public class ArmSubsystem extends SubsystemBase {
     public CommandBase commandPivotArmUp() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
     }
-
-    public int findNodeLevel() {
-        double armAngle = getArmAngleDeg();
-        double currentMinError = 100;
-        int currentBestArrayPos = -1;
-        for (int i = 0; i < 6; i++) {
-            double error = Math.abs(armAngle - ARM_LEVEL[i]);
-            if (error <= ALLOWABLE_ERROR.getValue() && error < currentMinError) {
-                currentMinError = error;
-                currentBestArrayPos = i;
-            }
-        }
-
-        return currentBestArrayPos;
-    }
-
 
     public CommandBase commandPivotArmDown() {
         return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Up");
