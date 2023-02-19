@@ -1,7 +1,7 @@
 import os
 import shutil
-from libraries.ShuffleboardGenerator.lib.template_helpers import *
-from libraries.ShuffleboardGenerator.lib.template_helpers import (
+from libraries.DashboardGenerator.lib.template_helpers import *
+from libraries.DashboardGenerator.lib.template_helpers import (
     package_to_dir,
     load_template,
     camel_to_snake,

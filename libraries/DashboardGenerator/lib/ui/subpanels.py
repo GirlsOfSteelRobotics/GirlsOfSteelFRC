@@ -19,7 +19,7 @@ def load_ui_file(filename, parent):
 class TopLevelConfigWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/top_level_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/top_level_config.ui", self)
 
     def config_to_view(self, config):
         self.m_basePackageName.setText(config["base_package"])
@@ -38,7 +38,7 @@ class TopLevelConfigWidget(QWidget):
 class WidgetTopLevelConfigWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/widget_top_level_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/widget_top_level_config.ui", self)
 
     def config_to_view(self, widget_config):
         self.table_name.setText(widget_config["table"])
@@ -65,7 +65,7 @@ class WidgetTopLevelConfigWidget(QWidget):
 class ShapeWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/shape_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/shape_config.ui", self)
         self.setStyleSheet(
             "QFrame {"
             "background-color: rgb(0, 0, 0);"
@@ -90,7 +90,7 @@ class ShapeWidget(QWidget):
 class TopLevelShapesConfigWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/shape_top_level_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/shape_top_level_config.ui", self)
 
         self.shapes_layout = QVBoxLayout()
         self.scrollAreaWidgetContents.setLayout(self.shapes_layout)
@@ -123,7 +123,7 @@ class TopLevelShapesConfigWidget(QWidget):
 class ChildTableConfig(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/child_table_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/child_table_config.ui", self)
 
         self.fields_layout = QVBoxLayout()
         self.scrollAreaWidgetContents.setLayout(self.fields_layout)
@@ -163,7 +163,7 @@ class ChildTableConfig(QWidget):
 class FieldConfigWidget(QFrame):
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/field_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/field_config.ui", self)
         self.setStyleSheet(
             "QFrame {"
             "background-color: rgb(0, 0, 0);"
@@ -212,7 +212,7 @@ class FieldConfigWidget(QFrame):
 class GenerateConfigWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/generate_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/generate_config.ui", self)
 
         # Initialize default values
         self.force_utils.setChecked(True)
