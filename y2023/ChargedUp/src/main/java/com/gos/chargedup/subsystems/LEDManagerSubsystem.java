@@ -36,6 +36,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final MirroredLEDBoolean m_armAtAngle;
     private final MirroredLEDBoolean m_goodDistance;
 
+    private final MirroredLEDFlash m_goodDistToLoadingPiece;
+
     private final MirroredLEDPercentScale m_dockAngle;
 
     private final MirroredLEDRainbow m_notInCommunityZone;
@@ -63,6 +65,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_armAtAngle = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kAntiqueWhite, Color.kRed);
         m_goodDistance = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kAntiqueWhite, Color.kRed);
 
+        m_goodDistToLoadingPiece = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
+
         m_dockAngle = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kRed, 30);
 
         m_notInCommunityZone = new MirroredLEDRainbow(m_buffer, 0, MAX_INDEX_LED);
@@ -72,6 +76,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // Set the data
         m_led.setData(m_buffer);
         m_led.start();
+    }
+
+    public boolean atGoodPositionToLoadPiece() {
+        // get y distance
+        // get the angle of the turret (field-oriented)
+        // good distance to loading piece?
+        return false;
     }
 
     @Override
@@ -85,7 +96,15 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_cubeGamePieceSignal.writeLeds();
         }
 
-        driverPracticePatterns();
+        // else if (chassis.incommunityzone): community zone patterns
+
+        // else if chassis.inloadingzone: loading zone patterns
+
+        else {
+            communityZonePatterns();
+        }
+
+        // driverPracticePatterns();
         m_led.setData(m_buffer);
     }
 
@@ -95,9 +114,29 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
-    public void teleopPatterns() {
+    public void communityZonePatterns() {
+        if (m_turretSubsystem.atTurretAngle() && m_armSubsystem.atArmAngle()) {
+            m_readyToScore.writeLeds();
+        }
+        else if (!m_turretSubsystem.atTurretAngle() || !m_armSubsystem.atArmAngle()) {
+            m_turretAngle.distanceToTarget(m_turretSubsystem.getTurretError());
+            m_armAtAngle.setState(m_armSubsystem.atArmAngle());
+        }
+    }
+
+    public void loadingZonePatterns() {
+        // if good dist
+        m_goodDistToLoadingPiece.writeLeds();
+        // else {
+            m_notInCommunityZone.writeLeds();
+        // }
+
+    }
+
+    public void generalTeleopPatterns() {
         m_optionCubeLED = false;
         m_optionConeLED = false;
+        m_notInCommunityZone.writeLeds();
     }
 
     private void driverPracticePatterns() {
@@ -115,11 +154,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandConeGamePieceSignal() {
-        return this.runEnd(this::setConeGamePieceSignal, this::teleopPatterns);
+        return this.runEnd(this::setConeGamePieceSignal, this::generalTeleopPatterns);
     }
 
     public CommandBase commandCubeGamePieceSignal() {
-        return this.runEnd(this::setCubeGamePieceSignal, this::teleopPatterns);
+        return this.runEnd(this::setCubeGamePieceSignal, this::generalTeleopPatterns);
     }
 }
 

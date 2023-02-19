@@ -230,7 +230,7 @@ public class ArmSubsystem extends SubsystemBase {
     public boolean pivotArmToAngle(double pivotAngleGoal) {
         m_armAngleGoal = pivotAngleGoal;
 
-        double error = getArmAngleDeg() - pivotAngleGoal;
+        double error = getArmAngleDeg() - m_armAngleGoal;
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
@@ -238,6 +238,11 @@ public class ArmSubsystem extends SubsystemBase {
             m_pivotMotor.set(0);
         }
 
+        return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
+    }
+
+    public boolean atArmAngle() {
+        double error = getArmAngleDeg() - m_armAngleGoal;
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
     }
 
