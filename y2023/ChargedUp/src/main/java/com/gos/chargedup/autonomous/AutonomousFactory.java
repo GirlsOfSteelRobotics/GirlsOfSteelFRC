@@ -18,23 +18,28 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public final class AutonomousFactory {
 
     private final SendableChooser<Command> m_autonomousModes;
+    private final SendableChooser<>
+
+    public enum AutonMode {
+        TWO_PIECE_NODE_0_AND_1,
+        TWO_PIECE_NODE_7_AND_8,
+        ONE_NODE_AND_ENGAGE_3,
+        ONE_NONE_AND_ENGAGE_4,
+        ONE_NODE_AND_ENGAGE_5,
+        SCORE_AT_CURRENT_POS,
+        ONLY_LEAVE_COMMUNITY_END,
+        ONLY_LEAVE_COMMUNITY_PLAYER_STATION,
+        ONLY_DOCK_AND_ENGAGE
+    }
 
     public final CommandBase m_onlyDockAndEngage;
-
     public final CommandBase m_twoPieceNodes0and1;
-
     public final CommandBase m_twoPieceNodes7and8;
-
     public final CommandBase m_oneNodeAndEngage3;
-
     public final CommandBase m_oneNodeAndEngage4;
-
     public final CommandBase m_oneNodeAndEngage5;
-
     public final CommandBase m_scoreAtCurrentPos;
-
     public final CommandBase m_onlyLeaveCommunityEnd;
-
     public final CommandBase m_onlyLeaveCommunityPlayerStation;
 
     public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
@@ -78,6 +83,12 @@ public final class AutonomousFactory {
         m_autonomousModes.addOption("Autonomous drive", new AutonomousDriveTimeCommand(chassis));
         //Smart dashboard dropdown
         SmartDashboard.putData(m_autonomousModes);
+    }
+
+    private Command getCommandFromChooser(AutonMode mode) {
+        switch (mode) {
+
+        }
     }
 
     public Command getAutonomousCommand() {
