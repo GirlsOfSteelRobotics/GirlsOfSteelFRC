@@ -1,5 +1,5 @@
 filegroup(
-    name = "templates",
+    name = "shuffleboard",
     srcs = glob(["**"]),
     visibility = ["//visibility:public"],
 )
