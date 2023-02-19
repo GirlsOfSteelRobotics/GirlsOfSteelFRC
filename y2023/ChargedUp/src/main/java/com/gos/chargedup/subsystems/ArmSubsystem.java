@@ -297,12 +297,11 @@ public class ArmSubsystem extends SubsystemBase {
     // Command Factories
     ///////////////////////
 
-    public CommandBase createPivotToBrakeMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).ignoringDisable(true).withName("Pivot to Brake");
-    }
-
     public CommandBase createPivotToCoastMode() {
-        return this.run(() -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).ignoringDisable(true).withName("Pivot to Coast");
+        return this.runEnd(
+            () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
+            () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
+            .ignoringDisable(true).withName("Pivot to Coast");
     }
 
     public CommandBase createResetPivotEncoder(double angle) {
@@ -337,20 +336,8 @@ public class ArmSubsystem extends SubsystemBase {
         return runOnce(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
     }
 
-    public CommandBase createIsPivotMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
-    }
-
-    public CommandBase createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
-    }
-
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
-    }
-
-    public CommandBase createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_topPiston, "Claw: Left Piston");
     }
 
     public CommandBase commandPivotArmUp() {
@@ -364,7 +351,7 @@ public class ArmSubsystem extends SubsystemBase {
     public CommandBase commandPivotArmToAngleHold(double angle) {
         return this.run(() -> pivotArmToAngle(angle))
             .until(() -> isArmAtAngle(angle))
-            .withName("Arm to Angle" + angle);
+            .withName("Arm to Angle And Hold" + angle);
     }
 
     public CommandBase commandPivotArmToAngleNonHold(double angle) {
@@ -373,14 +360,29 @@ public class ArmSubsystem extends SubsystemBase {
             .withName("Arm to Angle" + angle);
     }
 
-    public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight piece, GamePieceType gamePieceType) {
-        double angle = getArmAngleForScoring(piece, gamePieceType);
-        return commandPivotArmToAngleHold(angle);
+    public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight height, GamePieceType gamePieceType) {
+        double angle = getArmAngleForScoring(height, gamePieceType);
+        return commandPivotArmToAngleHold(angle).withName("Score [" + height + "," + gamePieceType + "] and Hold");
     }
 
-    public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight piece, GamePieceType gamePieceType) {
-        double angle = getArmAngleForScoring(piece, gamePieceType);
-        return commandPivotArmToAngleNonHold(angle);
+    public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight height, GamePieceType gamePieceType) {
+        double angle = getArmAngleForScoring(height, gamePieceType);
+        return commandPivotArmToAngleNonHold(angle).withName("Score [" + height + "," + gamePieceType + "]");
+    }
+
+    ////////////////
+    // Checklists
+    ////////////////
+    public CommandBase createIsArmTopPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_topPiston, "Claw: Left Piston");
+    }
+
+    public CommandBase createIsPivotMotorMoving() {
+        return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
+    }
+
+    public CommandBase createIsArmBottomPneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_bottomPiston, "Arm: Bottom Piston");
     }
 }
 

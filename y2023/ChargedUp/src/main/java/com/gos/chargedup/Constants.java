@@ -23,10 +23,10 @@ public final class Constants {
     public static final int DRIVE_LEFT_FOLLOWER_SPARK = 2;
     public static final int DRIVE_RIGHT_LEADER_SPARK = 3;
     public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
-    public static final int HOPPER_MOTOR = 5;
+    public static final int HOPPER_MOTOR = 10;
     public static final int PIVOT_MOTOR = 6;
     public static final int TURRET_MOTOR = 7;
-    public static final int INTAKE_MOTOR = 8;
+    public static final int INTAKE_MOTOR = 5;
     public static final int PIGEON_PORT = 20;
 
 

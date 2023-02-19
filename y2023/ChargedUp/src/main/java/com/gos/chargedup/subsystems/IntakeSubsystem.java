@@ -17,7 +17,7 @@ import java.util.function.DoubleSupplier;
 public class IntakeSubsystem extends SubsystemBase {
 
     private static final double HOPPER_SPEED = 0.5;
-    private static final double INTAKE_SPEED = 0.5;
+    private static final double INTAKE_SPEED = 1;
     private final Solenoid m_intakeSolenoidLeft;
     private final Solenoid m_intakeSolenoidRight;
     private final SimableCANSparkMax m_hopperMotor;
@@ -95,6 +95,10 @@ public class IntakeSubsystem extends SubsystemBase {
         m_hopperMotor.set(0);
     }
 
+    public boolean getIntakeOut() {
+        return m_intakeSolenoidLeft.get() && m_intakeSolenoidRight.get();
+    }
+
     /////////////////////
     // Command Factories
     /////////////////////
@@ -114,6 +118,9 @@ public class IntakeSubsystem extends SubsystemBase {
         return this.runEnd(this::hopperOut, this::hopperStop);
     }
 
+    ///////////////
+    // Checklists
+    ///////////////
     public CommandBase createIsHopperMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_hopperMotor, "Intake: Hopper motor", 1.0);
     }
@@ -128,11 +135,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public CommandBase createIsIntakeRightPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new SolenoidMovesChecklist(this, pressureSupplier, m_intakeSolenoidRight, "Intake: Right Piston");
-    }
-
-    public boolean getIntakeOut() {
-        return m_intakeSolenoidLeft.get() && m_intakeSolenoidRight.get();
-
     }
 
 }
