@@ -21,27 +21,30 @@ public class ClawSubsystem extends SubsystemBase {
 
     }
 
-    //intake in
-    public void moveClawIntakeIn() {
-        m_claw.set(DoubleSolenoid.Value.kForward);
+    //intake close
+    public void moveClawIntakeClose() {
+        m_claw.set(DoubleSolenoid.Value.kReverse);
     }
 
-    //intake out
-    public void moveClawIntakeOut() {
-        m_claw.set(DoubleSolenoid.Value.kReverse);
+    //intake open
+    public void moveClawIntakeOpen() {
+        m_claw.set(DoubleSolenoid.Value.kForward);
     }
 
     /////////////////////
     // Command Factories
     /////////////////////
-    public CommandBase createMoveClawIntakeInCommand() {
-        return this.run(this::moveClawIntakeIn).withName("ClawIntakeIn").withTimeout(CLAW_WAIT);
+    public CommandBase createMoveClawIntakeCloseCommand() {
+        return this.run(this::moveClawIntakeClose).withTimeout(CLAW_WAIT).withName("ClawIntakeClose");
     }
 
-    public CommandBase createMoveClawIntakeOutCommand() {
-        return this.run(this::moveClawIntakeOut).withName("ClawIntakeOut").withTimeout(CLAW_WAIT);
+    public CommandBase createMoveClawIntakeOpenCommand() {
+        return this.run(this::moveClawIntakeOpen).withTimeout(CLAW_WAIT).withName("ClawIntakeOpen");
     }
 
+    //////////////
+    // Checklists
+    //////////////
     public CommandBase createIsClawPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_claw, "Claw: Right Piston");
     }

@@ -1,0 +1,16 @@
+{%- for widget in overall_config.widgets %}
+import './{{widget.package_name.replace("_", "-")}}';
+{%- endfor %}
+{%- for widget in overall_config.widgets %}
+import {elementConfig as {{lower_first_char(widget.table)}}Elements } from "./{{widget.package_name.replace("_", "-")}}"
+{%- endfor %}
+import { FrcDashboard } from '@frc-web-components/fwc';
+
+export default function addPlugin(dashboard: FrcDashboard) {
+  dashboard.addElements({
+{%- for widget in overall_config.widgets %}
+    '{{widget.package_name.replace("_", "-")}}': {{lower_first_char(widget.table)}}Elements,
+{%- endfor %}
+  } as any, 'Girls of Steel');
+}
+

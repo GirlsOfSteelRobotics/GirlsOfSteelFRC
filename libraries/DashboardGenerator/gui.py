@@ -6,11 +6,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 import qdarkstyle
 import traceback
 
-from libraries.ShuffleboardGenerator.generate_dashboard import (
+from libraries.DashboardGenerator.generate_dashboard import (
     generate_dashboard,
     get_this_directory,
 )
-from libraries.ShuffleboardGenerator.lib.ui.subpanels import load_ui_file
+from libraries.DashboardGenerator.lib.ui.subpanels import load_ui_file
 
 
 class Window(QMainWindow):
@@ -19,7 +19,7 @@ class Window(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        load_ui_file("libraries/ShuffleboardGenerator/lib/ui/main_window_config.ui", self)
+        load_ui_file("libraries/DashboardGenerator/lib/ui/main_window_config.ui", self)
         self.centralwidget.setLayout(self.main_layout)
         self.config_file = None
         self.actionSave.setEnabled(False)
@@ -100,5 +100,5 @@ def main():
 
 
 if __name__ == "__main__":
-    "py -m libraries.ShuffleboardGenerator.gui"
+    "py -m libraries.DashboardGenerator.gui"
     main()

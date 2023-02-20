@@ -26,7 +26,10 @@ import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class TurretSubsystem extends SubsystemBase {
 
-    private static final double TURRET_SPEED = 0.3;
+    public static final double TURRET_LEFT_OF_INTAKE = -10;
+    public static final double TURRET_RIGHT_OF_INTAKE = 10;
+
+    private static final double TURRET_SPEED = 0.4;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
     public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 0);
     private final SimableCANSparkMax m_turretMotor;
@@ -177,39 +180,43 @@ public class TurretSubsystem extends SubsystemBase {
         return m_turretMotor.getAppliedOutput();
     }
 
+    ///////////////////////
     // Command Factories
+    ///////////////////////
     public CommandBase commandMoveTurretClockwise() {
-        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("MoveTurretCW");
+        return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("Turret: Move CW");
     }
 
     public CommandBase commandMoveTurretCounterClockwise() {
-        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("MoveTurretCCW");
-    }
-
-    public CommandBase createIsTurretMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
+        return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("Turret: Move CCW");
     }
 
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
-            .withName("Turret PID" + angle)
-            .until(() -> moveTurretToAngleWithPID(angle));
+            .until(() -> moveTurretToAngleWithPID(angle))
+            .withName("Turret PID" + angle);
     }
 
     public CommandBase createTuneVelocity() {
         return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret);
     }
 
-    public CommandBase createTurretToBrakeMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).withName("Turret to Brake").ignoringDisable(true);
-    }
-
     public CommandBase createTurretToCoastMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).withName("Turret to Coast").ignoringDisable(true);
+        return this.runEnd(
+            () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
+            () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
+            .ignoringDisable(true).withName("Turret to Coast");
     }
 
     public CommandBase createResetEncoder() {
-        return this.runOnce(() -> m_turretEncoder.setPosition(0.0)).withName("Reset Turret Encoder").ignoringDisable(true);
+        return this.runOnce(() -> m_turretEncoder.setPosition(0.0)).ignoringDisable(true).withName("Reset Turret Encoder");
+    }
+
+    //////////////////
+    // Checklists
+    //////////////////
+    public CommandBase createIsTurretMotorMoving() {
+        return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
     }
 }
 

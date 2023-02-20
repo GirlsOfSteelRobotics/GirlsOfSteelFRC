@@ -1,0 +1,14 @@
+{% for child in widget.children_tables %}
+export interface {{child.table}}Data {
+{%- for variable in child.entries %}
+    {{variable.name}}: {%- if variable.type == "double" or variable.type == "Double" %} number{%- elif variable.type == "boolean" %} boolean{%- elif variable.type == "String" %} string{% else %} UHOH {%- endif %};
+{%- endfor %}
+}
+{% endfor %}
+{% if widget.children_tables|length != 1 %}
+export interface {{widget.table}}Data {
+{%- for child in widget.children_tables %}
+    {{lower_first_char(child.table)}} : {{child.table}}Data;
+{%- endfor %}
+}
+{%- endif %}
