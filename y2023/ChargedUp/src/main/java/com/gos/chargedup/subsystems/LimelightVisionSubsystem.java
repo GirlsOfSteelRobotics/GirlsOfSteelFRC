@@ -23,7 +23,7 @@ public class LimelightVisionSubsystem extends SubsystemBase implements Vision {
         if (!m_limelight.isVisible()) {
             return Optional.empty();
         }
-        EstimatedRobotPose estimatedRobotPose = new EstimatedRobotPose(m_limelight.getRobotPose(), Timer.getFPGATimestamp() - m_limelight.getLatency());
+        EstimatedRobotPose estimatedRobotPose = new EstimatedRobotPose(m_limelight.getRobotPose(), Timer.getFPGATimestamp() - m_limelight.getLatency(), null);
 
         return Optional.of(estimatedRobotPose);
     }
