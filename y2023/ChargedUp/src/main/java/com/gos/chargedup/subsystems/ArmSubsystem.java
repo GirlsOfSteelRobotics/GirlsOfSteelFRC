@@ -96,6 +96,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_pivotMotor.setInverted(true);
+        m_pivotMotor.setSmartCurrentLimit(60);
 
         m_pivotMotorEncoder = m_pivotMotor.getEncoder();
         m_pivotPIDController = m_pivotMotor.getPIDController();
@@ -259,7 +260,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
-    private double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
+    public double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         double angle = 0.0;
 
         switch (pivotHeightType) {

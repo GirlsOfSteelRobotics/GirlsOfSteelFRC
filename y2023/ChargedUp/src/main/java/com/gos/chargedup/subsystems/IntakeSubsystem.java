@@ -37,6 +37,8 @@ public class IntakeSubsystem extends SubsystemBase {
         m_hopperMotor.restoreFactoryDefaults();
         m_intakeMotor.restoreFactoryDefaults();
 
+        m_intakeMotor.setSmartCurrentLimit(30);
+        m_hopperMotor.setSmartCurrentLimit(30);
         m_hopperMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
