@@ -13,6 +13,7 @@ import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
+import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
@@ -219,9 +220,10 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_arm.commandFullExtend());
         m_driverController.x().whileTrue(m_arm.commandFullRetract());
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
-        m_driverController.leftTrigger().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
         Trigger leftJoystickAsButtonRight = new Trigger(() -> m_operatorController.getLeftX() > .5);
