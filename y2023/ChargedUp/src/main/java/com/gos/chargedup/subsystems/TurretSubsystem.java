@@ -61,6 +61,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_turretMotor.setSmartCurrentLimit(60);
 
         m_turretEncoder = m_turretMotor.getEncoder();
         m_turretEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
@@ -182,10 +183,6 @@ public class TurretSubsystem extends SubsystemBase {
         return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("Turret: Move CCW");
     }
 
-    public CommandBase createIsTurretMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
-    }
-
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
             .until(() -> moveTurretToAngleWithPID(angle))
@@ -196,16 +193,22 @@ public class TurretSubsystem extends SubsystemBase {
         return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret);
     }
 
-    public CommandBase createTurretToBrakeMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake)).ignoringDisable(true).withName("Turret to Brake");
-    }
-
     public CommandBase createTurretToCoastMode() {
-        return this.run(() -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast)).ignoringDisable(true).withName("Turret to Coast");
+        return this.runEnd(
+            () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
+            () -> m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
+            .ignoringDisable(true).withName("Turret to Coast");
     }
 
     public CommandBase createResetEncoder() {
         return this.runOnce(() -> m_turretEncoder.setPosition(0.0)).ignoringDisable(true).withName("Reset Turret Encoder");
+    }
+
+    //////////////////
+    // Checklists
+    //////////////////
+    public CommandBase createIsTurretMotorMoving() {
+        return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
     }
 }
 

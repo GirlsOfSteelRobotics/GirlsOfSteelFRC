@@ -23,12 +23,12 @@ public class ClawSubsystem extends SubsystemBase {
 
     //intake close
     public void moveClawIntakeClose() {
-        m_claw.set(DoubleSolenoid.Value.kForward);
+        m_claw.set(DoubleSolenoid.Value.kReverse);
     }
 
     //intake open
     public void moveClawIntakeOpen() {
-        m_claw.set(DoubleSolenoid.Value.kReverse);
+        m_claw.set(DoubleSolenoid.Value.kForward);
     }
 
     /////////////////////
@@ -42,6 +42,9 @@ public class ClawSubsystem extends SubsystemBase {
         return this.run(this::moveClawIntakeOpen).withTimeout(CLAW_WAIT).withName("ClawIntakeOpen");
     }
 
+    //////////////
+    // Checklists
+    //////////////
     public CommandBase createIsClawPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_claw, "Claw: Right Piston");
     }

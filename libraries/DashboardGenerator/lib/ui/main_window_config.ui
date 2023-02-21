@@ -121,19 +121,19 @@
   <customwidget>
    <class>TopLevelConfigWidget</class>
    <extends>QWidget</extends>
-   <header>libraries/ShuffleboardGenerator/lib/ui/subpanels.h</header>
+   <header>libraries/DashboardGenerator/lib/ui/subpanels.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>WidgetTopLevelConfigWidget</class>
    <extends>QWidget</extends>
-   <header>libraries/ShuffleboardGenerator/lib/ui/subpanels.h</header>
+   <header>libraries/DashboardGenerator/lib/ui/subpanels.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>GenerateConfigWidget</class>
    <extends>QWidget</extends>
-   <header>libraries/ShuffleboardGenerator/lib/ui/subpanels.h</header>
+   <header>libraries/DashboardGenerator/lib/ui/subpanels.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

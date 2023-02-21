@@ -70,5 +70,18 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.1,
+      "names": [
+        "resetArmAndTurret"
+      ]
+    },
+    {
+      "position": 1.1,
+      "names": [
+        "setArmAndTurretToScore"
+      ]
+    }
+  ]
 }

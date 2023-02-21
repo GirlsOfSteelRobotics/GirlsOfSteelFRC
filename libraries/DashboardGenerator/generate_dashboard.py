@@ -1,5 +1,5 @@
 import yaml
-from libraries.ShuffleboardGenerator.lib.generate_dashboard_structure import (
+from libraries.DashboardGenerator.lib.generate_shuffleboard import (
     WidgetGenerator,
     TopLevelGenerator,
     maybe_add_standalone_buttons,
@@ -13,7 +13,7 @@ def get_this_directory():
         from rules_python.python.runfiles import runfiles
 
         r = runfiles.Create()
-        this_file = r.Rlocation("__main__/libraries/ShuffleboardGenerator/generate_dashboard.py")
+        this_file = r.Rlocation("__main__/libraries/DashboardGenerator/generate_dashboard.py")
         return os.path.dirname(this_file)
 
     except ModuleNotFoundError:
@@ -86,7 +86,7 @@ def generate_dashboard(
     force_controller,
 ):
     this_dir = get_this_directory()
-    template_dir = os.path.join(this_dir, "lib", "templates")
+    template_dir = os.path.join(this_dir, "lib", "templates", "shuffleboard")
 
     if not project_dir:
         print("Output directory not specified, using config file location")
@@ -123,5 +123,5 @@ def generate_dashboard(
 
 
 if __name__ == "__main__":
-    "py -m libraries.ShuffleboardGenerator.generate_dashboard --config_file=y2022/RapidReactDashboard/dashboard.yml"
+    "py -m libraries.DashboardGenerator.generate_dashboard --config_file=y2022/RapidReactDashboard/dashboard.yml"
     main(sys.argv[1:])
