@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.Rectangle;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -41,6 +42,14 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 import java.util.Map;
 import java.util.Optional;
+
+import static org.littletonrobotics.frc2023.FieldConstants.Community.INNER_X;
+import static org.littletonrobotics.frc2023.FieldConstants.Community.LEFT_Y;
+import static org.littletonrobotics.frc2023.FieldConstants.Community.MID_X;
+import static org.littletonrobotics.frc2023.FieldConstants.Community.MID_Y;
+import static org.littletonrobotics.frc2023.FieldConstants.Community.OUTER_X;
+import static org.littletonrobotics.frc2023.FieldConstants.Community.RIGHT_Y;
+import static org.littletonrobotics.frc2023.FieldConstants.FIELD_LENGTH;
 
 
 public class ChassisSubsystem extends SubsystemBase {
@@ -102,6 +111,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
+    private final Rectangle m_communityRectangle1 = new Rectangle(INNER_X, MID_X, LEFT_Y, true);
+
+    private final Rectangle m_communityRectangle2 = new Rectangle(MID_X, OUTER_X, MID_Y, true);
+
+    private final Rectangle m_loadingRectangle1 = new Rectangle(MID_X, INNER_X, RIGHT_Y, false);
+    private final Rectangle m_loadingRectangle2 = new Rectangle(OUTER_X, MID_X, LEFT_Y, false);
     public ChassisSubsystem() {
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -354,7 +369,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean isInCommunityZone() {
 
-        if ((m_poseEstimator.getEstimatedPosition().getX() < 73 && m_poseEstimator.getEstimatedPosition().getY() < 216) || (m_poseEstimator.getEstimatedPosition().getX() < 135 && m_poseEstimator.getEstimatedPosition().getY() < 158)) {
+        if (m_communityRectangle1.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_communityRectangle2.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY())) {
             return true;
         }
         return false;
@@ -362,15 +377,15 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean isInLoadingZone() {
 
-        if ((m_poseEstimator.getEstimatedPosition().getX() > (650 - 247) && m_poseEstimator.getEstimatedPosition().getY() > (316 - 48)) || (m_poseEstimator.getEstimatedPosition().getX() > (650 - 116) && m_poseEstimator.getEstimatedPosition().getY() > (316 - 99))) {
+        if (m_communityRectangle1.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_communityRectangle2.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY())) {
             return true;
         }
         return false;
     }
 
-    public boolean canExtendArm(boolean community, boolean loading) {
+    public boolean canExtendArm() {
 
-        if(community || loading) {
+        if(this.isInCommunityZone() || this.isInLoadingZone()) {
             return true;
         }
         return false;
