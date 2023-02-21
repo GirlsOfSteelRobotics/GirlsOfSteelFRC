@@ -1,22 +1,32 @@
 package com.gos.lib.checklists;
 
+import edu.wpi.first.hal.PowerDistributionStickyFaults;
 import edu.wpi.first.hal.REVPHFaults;
+import edu.wpi.first.hal.REVPHStickyFaults;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import org.littletonrobotics.frc2023.util.Alert;
 
 public class PneumaticHubAlerts {
     private static final String ALERT_NAME = "pneumatic hub";
+    private static final String STICKY_ALERT_NAME = "pneumatic hub (sticky) ";
 
     private final PneumaticHub m_pneumaticHub;
     private final Alert m_alert;
+    private final Alert m_alertSticky;
 
     public PneumaticHubAlerts(PneumaticHub pneumaticHub) {
         m_pneumaticHub = pneumaticHub;
         m_alert = new Alert("pneumatic hub", Alert.AlertType.ERROR);
+        m_alertSticky = new Alert("pneumatic hub (sticky) ", Alert.AlertType.ERROR);
+    }
+
+    public void checkAlerts() {
+        checkFaults();
+        checkStickyFaults();
     }
 
     @SuppressWarnings({"PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-    public void checkAlerts() {
+    public void checkFaults() {
         // lookie so many if statements :)))))))
         StringBuilder alertMessageBuilder = new StringBuilder(400);
         alertMessageBuilder.append(ALERT_NAME);
@@ -97,4 +107,40 @@ public class PneumaticHubAlerts {
 
         m_alert.set(!ALERT_NAME.equals(alertMessage));
     }
+
+    public void checkStickyFaults() {
+        StringBuilder alertMessageBuilder = new StringBuilder(700);
+        alertMessageBuilder.append(STICKY_ALERT_NAME);
+
+        REVPHStickyFaults revphStickyFaults = m_pneumaticHub.getStickyFaults();
+
+        if (revphStickyFaults.CompressorOverCurrent) {
+            alertMessageBuilder.append("Compressor Over Current fault");
+        }
+        if (revphStickyFaults.CompressorOpen) {
+            alertMessageBuilder.append("Compressor open fault");
+        }
+        if (revphStickyFaults.SolenoidOverCurrent) {
+            alertMessageBuilder.append("Solenoid Over Current fault");
+        }
+        if (revphStickyFaults.Brownout) {
+            alertMessageBuilder.append("Brownout fault");
+        }
+        if (revphStickyFaults.CanWarning) {
+            alertMessageBuilder.append("Can Warning fault");
+        }
+        if (revphStickyFaults.CanBusOff) {
+            alertMessageBuilder.append("Can Bus Off fault");
+        }
+        if (revphStickyFaults.HasReset) {
+            alertMessageBuilder.append("Has resent fault");
+        }
+
+        String alertMessage = alertMessageBuilder.toString();
+        m_alertSticky.setText(alertMessage);
+
+        m_alertSticky.set(!STICKY_ALERT_NAME.equals(alertMessage));
+
+    }
+
 }

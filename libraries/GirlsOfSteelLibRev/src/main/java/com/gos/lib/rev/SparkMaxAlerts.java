@@ -7,15 +7,18 @@ public class SparkMaxAlerts {
     public final CANSparkMax m_sparkMax;
     public final String m_motorString;
     public final Alert m_alert;
+    //public final Alert m_alertSticky;
 
     public SparkMaxAlerts(CANSparkMax sparkMax, String motor) {
         m_sparkMax = sparkMax;
         m_motorString = motor;
         m_alert = new Alert(m_motorString, Alert.AlertType.ERROR);
+        //m_alertSticky = new Alert(m_motorString, Alert.AlertType.ERROR);
     }
 
     public void checkAlerts() {
         short bitmask = m_sparkMax.getFaults();
+
 
         StringBuilder errorBuilder = new StringBuilder(m_motorString);
         for (CANSparkMax.FaultID faultId : CANSparkMax.FaultID.values()) {
