@@ -266,24 +266,19 @@ public class ArmSubsystem extends SubsystemBase {
         switch (pivotHeightType) {
         case HIGH:
             if (gamePieceType == GamePieceType.CONE) {
-                //pivotArmToAngle(ARM_CONE_HIGH_DEG);
                 angle = ARM_CONE_HIGH_DEG;
             } else {
-                //pivotArmToAngle();
                 angle = ARM_CUBE_HIGH_DEG;
             }
             break;
         case MEDIUM:
             if (gamePieceType == GamePieceType.CONE) {
-                //pivotArmToAngle();
                 angle = ARM_CONE_MIDDLE_DEG;
             } else {
-                //pivotArmToAngle();
                 angle = ARM_CUBE_MIDDLE_DEG;
             }
             break;
         case LOW:
-            //pivotArmToAngle();
             angle = MIN_ANGLE_DEG;
             break;
         default:
