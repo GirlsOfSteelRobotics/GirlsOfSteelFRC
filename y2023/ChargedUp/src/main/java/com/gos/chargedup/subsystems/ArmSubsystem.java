@@ -35,6 +35,11 @@ import java.util.function.DoubleSupplier;
 
 @SuppressWarnings("PMD.GodClass")
 public class ArmSubsystem extends SubsystemBase {
+
+    public static boolean armNoWork;
+    public static boolean armPivotNoWork;
+    public static boolean armExtendNoWork;
+
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
@@ -89,6 +94,10 @@ public class ArmSubsystem extends SubsystemBase {
 
 
     public ArmSubsystem() {
+        armNoWork = false;
+        armPivotNoWork = false;
+        armExtendNoWork = false;
+
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
         m_bottomPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_BOTTOM_PISTON_FORWARD, Constants.ARM_BOTTOM_PISTON_REVERSE);
@@ -162,11 +171,13 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void pivotArmUp() {
-        m_pivotMotor.set(ARM_MOTOR_SPEED);
+        if(!armNoWork && !armPivotNoWork)
+            m_pivotMotor.set(ARM_MOTOR_SPEED);
     }
 
     public void pivotArmDown() {
-        m_pivotMotor.set(-ARM_MOTOR_SPEED);
+        if(!armNoWork && !armPivotNoWork)
+            m_pivotMotor.set(-ARM_MOTOR_SPEED);
     }
 
     public double getArmMotorSpeed() {
@@ -187,18 +198,24 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public final void fullRetract() {
-        m_topPiston.set(TOP_PISTON_EXTENDED);
-        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        if(!armNoWork && !armExtendNoWork) {
+            m_topPiston.set(TOP_PISTON_EXTENDED);
+            m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        }
     }
 
     public void middleRetract() {
-        m_topPiston.set(TOP_PISTON_RETRACTED);
-        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        if(!armNoWork && !armExtendNoWork) {
+            m_topPiston.set(TOP_PISTON_RETRACTED);
+            m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        }
     }
 
     public void out() {
-        m_topPiston.set(TOP_PISTON_RETRACTED);
-        m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
+        if(!armNoWork && !armExtendNoWork) {
+            m_topPiston.set(TOP_PISTON_RETRACTED);
+            m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
+        }
     }
 
     public boolean isBottomPistonIn() {

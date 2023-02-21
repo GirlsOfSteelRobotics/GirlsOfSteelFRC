@@ -25,6 +25,8 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class TurretSubsystem extends SubsystemBase {
+    public static boolean turretNoWork;
+    public static boolean turretReverse;
 
     public static final double TURRET_LEFT_OF_INTAKE = -10;
     public static final double TURRET_RIGHT_OF_INTAKE = 10;
@@ -57,6 +59,9 @@ public class TurretSubsystem extends SubsystemBase {
 
 
     public TurretSubsystem() {
+        turretNoWork = false;
+        turretReverse = false;
+
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -118,11 +123,17 @@ public class TurretSubsystem extends SubsystemBase {
 
 
     public void moveTurretClockwise() {
-        m_turretMotor.set(TURRET_SPEED);
+        if(!turretNoWork && !turretReverse)
+            m_turretMotor.set(TURRET_SPEED);
+        else if(turretReverse)
+            m_turretMotor.set(-TURRET_SPEED);
     }
 
     public void moveTurretCounterClockwise() {
-        m_turretMotor.set(-TURRET_SPEED);
+        if(!turretNoWork && !turretReverse)
+            m_turretMotor.set(-TURRET_SPEED);
+        else if(turretReverse)
+            m_turretMotor.set(TURRET_SPEED);
     }
 
     public void stopTurret() {

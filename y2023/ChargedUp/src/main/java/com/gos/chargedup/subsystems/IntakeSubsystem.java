@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.function.DoubleSupplier;
 
 public class IntakeSubsystem extends SubsystemBase {
+    public static boolean intakeNoWork;
+    public static boolean intakeReverse;
 
     private static final double HOPPER_SPEED = 0.5;
     private static final double INTAKE_SPEED = 1;
@@ -29,6 +31,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public IntakeSubsystem() {
+        intakeReverse = false;
+        intakeNoWork = false;
+
         m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_LEFT_PISTON);
         m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_RIGHT_PISTON);
         m_hopperMotor = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -65,9 +70,15 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void extend() {
-        m_intakeSolenoidRight.set(true);
-        m_intakeSolenoidLeft.set(true);
-        m_intakeMotor.set(INTAKE_SPEED);
+        if(!intakeNoWork && !intakeReverse) {
+            m_intakeSolenoidRight.set(true);
+            m_intakeSolenoidLeft.set(true);
+            m_intakeMotor.set(INTAKE_SPEED);
+        } else if(intakeReverse) {
+            m_intakeSolenoidRight.set(false);
+            m_intakeSolenoidLeft.set(false);
+            m_intakeMotor.set(0);
+        }
     }
 
     public boolean isIntakeDown() {
@@ -75,9 +86,16 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void retract() {
-        m_intakeSolenoidRight.set(false);
-        m_intakeSolenoidLeft.set(false);
-        m_intakeMotor.set(0);
+        if(!intakeNoWork && !intakeReverse) {
+            m_intakeSolenoidRight.set(false);
+            m_intakeSolenoidLeft.set(false);
+            m_intakeMotor.set(0);
+        } else if(intakeReverse)
+        {
+            m_intakeSolenoidRight.set(true);
+            m_intakeSolenoidLeft.set(true);
+            m_intakeMotor.set(INTAKE_SPEED);
+        }
     }
 
     public double getHopperSpeed() {

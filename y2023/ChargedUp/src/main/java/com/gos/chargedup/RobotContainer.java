@@ -12,6 +12,7 @@ import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
+import com.gos.chargedup.commands.SetOffBombCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
@@ -202,6 +203,20 @@ public class RobotContainer {
         tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM));
         tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH));
 
+    }
+
+    private void bombs() {
+        ShuffleboardTab tab = Shuffleboard.getTab("Bombs");
+
+        tab.add("Stop Arm", new SetOffBombCommand("armNoWork"));
+        tab.add("Stop Arm Pivot", new SetOffBombCommand("armPivotNoWork"));
+        tab.add("Stop Arm Extend", new SetOffBombCommand("armExtendNoWork"));
+        tab.add("Stop Turret", new SetOffBombCommand("turretNoWork"));
+        tab.add("Reverse Turret", new SetOffBombCommand("turretReverse"));
+        tab.add("Stop Claw", new SetOffBombCommand("clawNoWork"));
+        tab.add("Reverse Claw", new SetOffBombCommand("clawReverse"));
+        tab.add("Stop Intake", new SetOffBombCommand("intakeNoWork"));
+        tab.add("Reverse Intake", new SetOffBombCommand("intakeReverse"));
     }
 
     /**
