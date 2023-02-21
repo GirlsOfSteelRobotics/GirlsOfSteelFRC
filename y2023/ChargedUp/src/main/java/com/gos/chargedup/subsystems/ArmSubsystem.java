@@ -235,7 +235,6 @@ public class ArmSubsystem extends SubsystemBase {
     public void pivotArmToAngle(double pivotAngleGoal) {
         m_armAngleGoal = pivotAngleGoal;
 
-        double error = getArmAngleDeg() - m_armAngleGoal;
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
 
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {

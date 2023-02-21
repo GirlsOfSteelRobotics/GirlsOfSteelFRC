@@ -20,82 +20,69 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public final class AutonomousFactory {
 
     private final SendableChooser<Command> m_autonomousModes;
-    private final SendableChooser<>
+    private final SendableChooser<AutoPivotHeight> m_armHeight;
 
     public enum AutonMode {
-        TWO_PIECE_NODE_0_AND_1,
-        TWO_PIECE_NODE_7_AND_8,
-        ONE_NODE_AND_ENGAGE_3,
-        ONE_NONE_AND_ENGAGE_4,
-        ONE_NODE_AND_ENGAGE_5,
-        SCORE_AT_CURRENT_POS,
         ONLY_LEAVE_COMMUNITY_END,
         ONLY_LEAVE_COMMUNITY_PLAYER_STATION,
-        ONLY_DOCK_AND_ENGAGE
+        ONLY_DOCK_AND_ENGAGE,
+        SCORE_AT_CURRENT_POS,
+        ONE_NODE_AND_ENGAGE_3,
+        ONE_NODE_AND_ENGAGE_4,
+        ONE_NODE_AND_ENGAGE_5,
+        TWO_PIECE_NODE_0_AND_1,
+        TWO_PIECE_NODE_7_AND_8,
     }
-
-    public final CommandBase m_onlyDockAndEngage;
-    public final CommandBase m_twoPieceNodes0and1;
-    public final CommandBase m_twoPieceNodes7and8;
-    public final CommandBase m_oneNodeAndEngage3;
-    public final CommandBase m_oneNodeAndEngage4;
-    public final CommandBase m_oneNodeAndEngage5;
-    public final CommandBase m_scoreAtCurrentPos;
-    public final CommandBase m_onlyLeaveCommunityEnd;
-    public final CommandBase m_onlyLeaveCommunityPlayerStation;
 
     @SuppressWarnings("PMD.NPathComplexity")
     public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
         m_autonomousModes = new SendableChooser<>();
+        m_armHeight = new SendableChooser<>();
 
         //Two scoring nodes (each height), no engaging (nodes 0,1; nodes 7,8)
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1", AutoPivotHeight.HIGH);
             m_autonomousModes.setDefaultOption("Two Piece Nodes 0 and 1: " + height, twoPieceNodes0and1);
         }
-
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8", AutoPivotHeight.HIGH);
             m_autonomousModes.addOption("Two Piece Nodes 7 and 8: " + height, twoPieceNodes7and8);
         }
-
         //two piece AND engage
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase twoPieceEngage = new TwoPieceAndEngageCommandGroup(chassis, turret, arm, claw, "TWOPieceEngage", AutoPivotHeight.HIGH);
             m_autonomousModes.addOption("Two Piece & Engage: " + height, twoPieceEngage);
         }
-
         //One scoring node (high), engage at end (nodes 3, 4, 5)
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", AutoPivotHeight.HIGH, GamePieceType.CONE);
             m_autonomousModes.addOption("One Piece Node and Engage 3: " + height, oneNodeAndEngage3);
         }
-
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", AutoPivotHeight.HIGH, GamePieceType.CUBE);
             m_autonomousModes.addOption("One Piece Node and Engage 4: " + height, oneNodeAndEngage4);
         }
-
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", AutoPivotHeight.HIGH, GamePieceType.CONE);
             m_autonomousModes.addOption("One Piece Node and Engage 5: " + height, oneNodeAndEngage5);
         }
-
         //score wherever the robot is (no chassis parameter)
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase scoreConeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, AutoPivotHeight.HIGH, GamePieceType.CONE);
             m_autonomousModes.addOption("Score Cone at Current Position's node: " + height, scoreConeAtCurrentPos);
         }
-
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             CommandBase scoreCubeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, AutoPivotHeight.HIGH, GamePieceType.CUBE);
             m_autonomousModes.addOption("Score Cube at Current Position's node: " + height, scoreCubeAtCurrentPos);
         }
 
+        m_armHeight.addOption("Low", AutoPivotHeight.LOW);
+        m_armHeight.addOption("Medium", AutoPivotHeight.MEDIUM);
+        m_armHeight.addOption("High", AutoPivotHeight.HIGH);
+
         //just leave the community (by the player station and by the end)
         CommandBase onlyLeaveCommunityEnd = new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity");
         m_autonomousModes.addOption("Leave community zone at far end", onlyLeaveCommunityEnd);
-
 
         CommandBase onlyLeaveCommunityPlayerStation = new OnlyLeaveCommunityCommandGroup(chassis, "PlayerStationLeaveCommunity");
         m_autonomousModes.addOption("Leave community zone at player station", onlyLeaveCommunityPlayerStation);
@@ -110,12 +97,11 @@ public final class AutonomousFactory {
         m_autonomousModes.addOption("Autonomous drive", new AutonomousDriveTimeCommand(chassis));
         //Smart dashboard dropdown
         SmartDashboard.putData(m_autonomousModes);
-    }
 
-    private Command getCommandFromChooser(AutonMode mode) {
-        switch (mode) {
-
-        }
+        // Game piece height
+        m_armHeight.addOption("Score low", AutoPivotHeight.LOW);
+        m_armHeight.addOption("Score medium", AutoPivotHeight.MEDIUM);
+        m_armHeight.addOption("Score high", AutoPivotHeight.HIGH);
     }
 
     public Command getAutonomousCommand() {

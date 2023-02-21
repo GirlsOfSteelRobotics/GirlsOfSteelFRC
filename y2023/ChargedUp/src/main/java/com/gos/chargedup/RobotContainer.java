@@ -56,7 +56,6 @@ public class RobotContainer {
 
     private final IntakeSubsystem m_intake;
     private final ChassisSubsystem m_chassisSubsystem;
-
     private final ArmSubsystem m_arm;
     private final AutonomousFactory m_autonomousFactory;
 
@@ -126,6 +125,8 @@ public class RobotContainer {
 
         tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
         tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
+
+        tab.add("Chassis: teleop dock and engage", new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
 
         // turret
         tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
@@ -214,7 +215,7 @@ public class RobotContainer {
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
         m_driverController.leftTrigger().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
 
         // Operator
         Trigger leftJoystickAsButtonRight = new Trigger(() -> m_operatorController.getLeftX() > .5);
