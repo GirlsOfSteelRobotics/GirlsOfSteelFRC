@@ -28,14 +28,14 @@ public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
         ));
 
         eventMap.put("resetArmAndTurret", new ParallelCommandGroup(
-            turret.commandTurretPID(0),
-            arm.commandPivotArmToAngleHold(ArmSubsystem.MIN_ANGLE_DEG)
+            turret.commandTurretPID(0))
+            // arm.commandPivotArmToAngleHold(ArmSubsystem.MIN_ANGLE_DEG)
 
         ));
 
         eventMap.put("setArmAndTurretToScore", new ParallelCommandGroup(
-            turret.commandTurretPID(180),
-            arm.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE) //set for second piece
+            turret.commandTurretPID(180);
+            // arm.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, GamePieceType.CUBE) //set for second piece
 
         ));
 
