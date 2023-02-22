@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.ArmPreventionLogic;
 import com.gos.chargedup.Constants;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -17,9 +18,12 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
@@ -185,7 +189,17 @@ public class TurretSubsystem extends SubsystemBase {
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
             .until(() -> moveTurretToAngleWithPID(angle))
-            .withName("Turret PID" + angle);
+            .withName("Turret PID: " + angle);
+    }
+
+    public CommandBase commandTurretPIDPrevention(double angle, ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
+        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm, turret, intake);
+        return new ConditionalCommand(
+            this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
+                .until(() -> moveTurretToAngleWithPID(angle)),
+            this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)), //change controllers?
+            armPreventionLogic::canTurretMove
+        ).withName("Turret Prevention: " + angle);
     }
 
     public CommandBase createTuneVelocity() {
