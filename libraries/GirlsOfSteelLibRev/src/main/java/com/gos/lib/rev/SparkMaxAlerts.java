@@ -7,18 +7,24 @@ public class SparkMaxAlerts {
     public final CANSparkMax m_sparkMax;
     public final String m_motorString;
     public final Alert m_alert;
-    //public final Alert m_alertSticky;
+    public final Alert m_alertSticky;
 
     public SparkMaxAlerts(CANSparkMax sparkMax, String motor) {
         m_sparkMax = sparkMax;
         m_motorString = motor;
         m_alert = new Alert(m_motorString, Alert.AlertType.ERROR);
-        //m_alertSticky = new Alert(m_motorString, Alert.AlertType.ERROR);
+        m_alertSticky = new Alert(m_motorString, Alert.AlertType.ERROR);
+        int x = sparkMax.getStickyFaults();
+
     }
 
     public void checkAlerts() {
-        short bitmask = m_sparkMax.getFaults();
+        checkFaults();
+        checkStickyFaults();
+    }
 
+    public void checkFaults() {
+        short bitmask = m_sparkMax.getFaults();
 
         StringBuilder errorBuilder = new StringBuilder(m_motorString);
         for (CANSparkMax.FaultID faultId : CANSparkMax.FaultID.values()) {
@@ -31,5 +37,23 @@ public class SparkMaxAlerts {
         m_alert.setText(errorString);
 
         m_alert.set(!(errorString.equals(m_motorString)));
+    }
+
+    public void checkStickyFaults() {
+        short bitmask = m_sparkMax.getStickyFaults();
+
+        StringBuilder errorBuilder = new StringBuilder(m_motorString);
+        for (CANSparkMax.FaultID faultId : CANSparkMax.FaultID.values()) {
+            if ((bitmask & (1 << faultId.value)) != 0) {
+                errorBuilder.append(' ').append(faultId);
+            }
+        }
+
+        String errorString = errorBuilder.toString();
+        m_alertSticky.setText(errorString);
+
+        m_alertSticky.set(!(errorString.equals(m_motorString)));
+
+
     }
 }
