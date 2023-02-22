@@ -52,6 +52,7 @@ public final class Constants {
     //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
+    public static final int NUMPAD_CONTROLLER_PORT = 2;
 
     //Auto velocity and acceleration
     public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));

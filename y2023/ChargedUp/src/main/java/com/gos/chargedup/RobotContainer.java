@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.littletonrobotics.frc2023.FieldConstants;
@@ -70,6 +71,9 @@ public class RobotContainer {
 
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
+
+    private final CommandJoystick m_numpadController =
+        new CommandJoystick(Constants.NUMPAD_CONTROLLER_PORT);
 
     private final LEDManagerSubsystem m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController); //NOPMD
 
@@ -256,6 +260,9 @@ public class RobotContainer {
         m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
+
+        //Numpad Joystick
+        m_numpadController.button(1).whileTrue(m)
     }
 
 
