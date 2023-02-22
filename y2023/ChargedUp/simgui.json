@@ -30,6 +30,16 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/AutomatedTurret/High Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/High Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/High Cube": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cube": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cube": "Command",
+      "/Shuffleboard/Debug/Field": "Field2d",
       "/Shuffleboard/TestCommands/Arm Full Extend": "Command",
       "/Shuffleboard/TestCommands/Arm Full Retract": "Command",
       "/Shuffleboard/TestCommands/Arm Inner Piston Extended": "Command",
@@ -39,13 +49,27 @@
       "/Shuffleboard/TestCommands/Arm Mid Retract": "Command",
       "/Shuffleboard/TestCommands/Arm Piston: Bottom Extended": "Command",
       "/Shuffleboard/TestCommands/Arm Piston: Bottom Retracted": "Command",
+      "/Shuffleboard/TestCommands/Arm Piston: Full Extend": "Command",
+      "/Shuffleboard/TestCommands/Arm Piston: Full Retract": "Command",
+      "/Shuffleboard/TestCommands/Arm Piston: Mid Retract": "Command",
       "/Shuffleboard/TestCommands/Arm Piston: Top Extended": "Command",
       "/Shuffleboard/TestCommands/Arm Piston: Top Retracted": "Command",
       "/Shuffleboard/TestCommands/Arm Pivot Down": "Command",
       "/Shuffleboard/TestCommands/Arm Pivot Up": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Angle PID - 0 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Angle PID - 45 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Angle PID - 90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Gravity Offset Tune": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Pivot Down": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Pivot Up": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Reset Encoder": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: Reset Encoder (0 deg)": "Command",
+      "/Shuffleboard/TestCommands/Arm Pivot: to Coast Mode": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 0 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 45 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm to Angle Prevention": "Command",
+      "/Shuffleboard/TestCommands/Arm to Angle PreventionXXXXXX": "Command",
       "/Shuffleboard/TestCommands/Arm to Angle w/ Prevention": "Command",
       "/Shuffleboard/TestCommands/Arm: Angle PID - 0 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm: Angle PID - 45 degrees": "Command",
@@ -59,20 +83,31 @@
       "/Shuffleboard/TestCommands/Automated Turret - 2": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 6": "Command",
       "/Shuffleboard/TestCommands/Automated Turret - 8": "Command",
+      "/Shuffleboard/TestCommands/Chassis Auto Engage": "Command",
       "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, -90 deg)": "Command",
       "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 0)": "Command",
       "/Shuffleboard/TestCommands/Chassis position tune: (0, 0, 90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Chassis set position: (0, 0, -90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 0)": "Command",
+      "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Chassis set position: Node 4": "Command",
       "/Shuffleboard/TestCommands/Chassis: Sync Odometry": "Command",
       "/Shuffleboard/TestCommands/Chassis: Tune Velocity": "Command",
       "/Shuffleboard/TestCommands/Claw Close": "Command",
       "/Shuffleboard/TestCommands/Claw In": "Command",
       "/Shuffleboard/TestCommands/Claw Open": "Command",
       "/Shuffleboard/TestCommands/Claw Out": "Command",
+      "/Shuffleboard/TestCommands/Claw: Close": "Command",
+      "/Shuffleboard/TestCommands/Claw: Open": "Command",
       "/Shuffleboard/TestCommands/Gravity Offset Tune": "Command",
       "/Shuffleboard/TestCommands/Intake In": "Command",
       "/Shuffleboard/TestCommands/Intake Out": "Command",
+      "/Shuffleboard/TestCommands/Intake Piston: In": "Command",
+      "/Shuffleboard/TestCommands/Intake Piston: Out": "Command",
       "/Shuffleboard/TestCommands/Intake Roller In": "Command",
       "/Shuffleboard/TestCommands/Intake Roller Out": "Command",
+      "/Shuffleboard/TestCommands/Intake Roller: In": "Command",
+      "/Shuffleboard/TestCommands/Intake Roller: Out": "Command",
       "/Shuffleboard/TestCommands/Move Turret Clockwise": "Command",
       "/Shuffleboard/TestCommands/Move Turret Counter Clockwise": "Command",
       "/Shuffleboard/TestCommands/Outer Inner Piston Extended": "Command",
@@ -95,6 +130,9 @@
       "/Shuffleboard/TestCommands/Test Mild Curve": "Command",
       "/Shuffleboard/TestCommands/Test S Curve": "Command",
       "/Shuffleboard/TestCommands/Toggle Break Mode": "Command",
+      "/Shuffleboard/TestCommands/Trajectory: Test Line": "Command",
+      "/Shuffleboard/TestCommands/Trajectory: Test Mild Curve": "Command",
+      "/Shuffleboard/TestCommands/Trajectory: Test S Curve": "Command",
       "/Shuffleboard/TestCommands/Tune Chassis Velocity": "Command",
       "/Shuffleboard/TestCommands/Tune Gravity Offset": "Command",
       "/Shuffleboard/TestCommands/Tune Turret Position (-90 degrees)": "Command",
@@ -110,6 +148,12 @@
       "/Shuffleboard/TestCommands/Turret: Automated - 8": "Command",
       "/Shuffleboard/TestCommands/Turret: Move Clockwise": "Command",
       "/Shuffleboard/TestCommands/Turret: Move Counter Clockwise": "Command",
+      "/Shuffleboard/TestCommands/Turret: PID - -90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Turret: PID - 0 degrees": "Command",
+      "/Shuffleboard/TestCommands/Turret: PID - 180 degrees": "Command",
+      "/Shuffleboard/TestCommands/Turret: PID - 90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Turret: Reset Encoder": "Command",
+      "/Shuffleboard/TestCommands/Turret: To Coast Mode": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Position (-90 degrees)": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Velocity": "Command",
       "/SmartDashboard/Automated Turret - 2": "Command",
@@ -125,22 +169,24 @@
       "/SmartDashboard/Test S Curve": "Command"
     },
     "windows": {
-      "/Shuffleboard/TestCommands/Arm to Angle w/ Prevention": {
+      "/Shuffleboard/TestCommands/Arm to Angle PreventionXXXXXX": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 0)": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/Field": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/FunctionalCommand": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Run checklist": {
+        "bottom": 544,
+        "height": 8.013679504394531,
+        "image": "C:\\Users\\homep\\OneDrive\\Desktop\\2023-field.png",
+        "left": 46,
+        "right": 1088,
+        "top": 36,
+        "width": 16.541748046875,
         "window": {
           "visible": true
         }
@@ -177,9 +223,6 @@
         "open": true
       }
     }
-  },
-  "NetworkTables View": {
-    "visible": false
   },
   "Plot": {
     "Plot <0>": {

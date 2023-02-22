@@ -115,8 +115,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final Rectangle m_communityRectangle2 = new Rectangle(MID_X, OUTER_X, MID_Y, true);
 
-    private final Rectangle m_loadingRectangle1 = new Rectangle(MID_X, INNER_X, RIGHT_Y, false);
-    private final Rectangle m_loadingRectangle2 = new Rectangle(OUTER_X, MID_X, LEFT_Y, false);
+    private final Rectangle m_loadingRectangle1 = new Rectangle(INNER_X, MID_X, RIGHT_Y, false);
+
+    private final Rectangle m_loadingRectangle2 = new Rectangle(MID_X, OUTER_X, MID_Y, false);
+
     public ChassisSubsystem() {
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -267,6 +269,8 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
         SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Chassis Pitch", getPitch());
+        SmartDashboard.putBoolean("In Community", isInCommunityZone());
+        SmartDashboard.putBoolean("In Loading", isInLoadingZone());
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -377,7 +381,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean isInLoadingZone() {
 
-        if (m_communityRectangle1.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_communityRectangle2.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY())) {
+        if (m_loadingRectangle1.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_loadingRectangle2.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY())) {
             return true;
         }
         return false;
@@ -386,8 +390,10 @@ public class ChassisSubsystem extends SubsystemBase {
     public boolean canExtendArm() {
 
         if(this.isInCommunityZone() || this.isInLoadingZone()) {
+            System.out.print("I'm in the zone!");
             return true;
         }
+        System.out.print("I'm not in the zone!");
         return false;
     }
 
