@@ -7,6 +7,19 @@ widgets:
     package_name: super_structure
     widget_name: Infinite Recharge Super Structure Widget
     sd_table_name_constant: SUPER_STRUCTURE_TABLE_NAME
+
+    shapes:
+      - { type: Circle, name: robotShooterCurrentRPM }
+      - { type: Arc, name: shooterHood }
+      - { type: Circle, name: robotShooterGoalRPM }
+      - { type: Circle, name: shooterHandoff }
+      - { type: Circle, name: shooterSecondary }
+      - { type: Circle, name: shooterTop }
+      - { type: Rectangle, name: robotConveyor }
+      - { type: Rectangle, name: robotIntake }
+      - { type: Rectangle, name: controlPanel }
+      - { type: Rectangle, name: winch }
+      - { type: Rectangle, name: lift }
     children_tables:
     - table: ControlPanel
       table_name: CONTROL_PANEL_TABLE_NAME

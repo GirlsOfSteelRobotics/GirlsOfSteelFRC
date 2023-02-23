@@ -19,15 +19,16 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
 
     // CAN
-    public static final int DRIVE_LEFT_LEADER_SPARK = 4;
-    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 5;
-    public static final int DRIVE_RIGHT_LEADER_SPARK = 9;
-    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 10;
-    public static final int HOPPER_MOTOR = 11;
-    public static final int PIVOT_MOTOR = 2;
-    public static final int TURRET_MOTOR = 3;
-    public static final int INTAKE_MOTOR = 6;
+    public static final int DRIVE_LEFT_LEADER_SPARK = 1;
+    public static final int DRIVE_LEFT_FOLLOWER_SPARK = 2;
+    public static final int DRIVE_RIGHT_LEADER_SPARK = 3;
+    public static final int DRIVE_RIGHT_FOLLOWER_SPARK = 4;
+    public static final int HOPPER_MOTOR = 10;
+    public static final int PIVOT_MOTOR = 6;
+    public static final int TURRET_MOTOR = 7;
+    public static final int INTAKE_MOTOR = 5;
     public static final int PIGEON_PORT = 20;
+
 
 
     //DIO
@@ -38,22 +39,22 @@ public final class Constants {
     public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
 
     //Pneumatics
-    public static final int ARM_OUTER_PISTON_OUT = 11;
-    public static final int ARM_OUTER_PISTON_IN = 8;
-    public static final int ARM_INNER_PISTON_REVERSE = 13;
-    public static final int ARM_INNER_PISTON_FORWARD = 12;
+    public static final int ARM_TOP_PISTON_OUT = 11;
+    public static final int ARM_TOP_PISTON_IN = 8;
+    public static final int ARM_BOTTOM_PISTON_REVERSE = 13;
+    public static final int ARM_BOTTOM_PISTON_FORWARD = 12;
 
     public static final int CLAW_PISTON_FORWARD = 9;
     public static final int CLAW_PISTON_REVERSE = 10;
-    public static final int INTAKE_LEFT_PISTON = 15;
-    public static final int INTAKE_RIGHT_PISTON = 14;
+    public static final int INTAKE_PISTON_FORWARD = 15;
+    public static final int INTAKE_PISTON_REVERSE = 14;
 
     //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     //Auto velocity and acceleration
-    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(36), Units.inchesToMeters(12));
+    public static final PathConstraints DEFAULT_PATH_CONSTRAINTS = new PathConstraints(Units.inchesToMeters(48), Units.inchesToMeters(48));
 
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;

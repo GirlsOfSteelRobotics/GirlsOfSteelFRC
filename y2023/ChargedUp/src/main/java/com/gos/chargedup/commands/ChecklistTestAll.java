@@ -20,17 +20,15 @@ public class ChecklistTestAll extends SequentialCommandGroup {
 
         //arm
         addCommands(arm.createIsPivotMotorMoving());
-        addCommands(arm.createIsArmInnerPneumaticMoving(pressureSupplier));
-        addCommands(arm.createIsArmOuterPneumaticMoving(pressureSupplier));
+        addCommands(arm.createIsArmBottomPneumaticMoving(pressureSupplier));
+        addCommands(arm.createIsArmTopPneumaticMoving(pressureSupplier));
 
         //turret
         addCommands(turret.createIsTurretMotorMoving());
 
         //intake
         addCommands(intake.createIsIntakeMotorMoving());
-        addCommands(intake.createIsHopperMotorMoving());
-        addCommands(intake.createIsIntakeLeftPneumaticMoving(pressureSupplier));
-        addCommands(intake.createIsIntakeRightPneumaticMoving(pressureSupplier));
+        addCommands(intake.createIsIntakePneumaticMoving(pressureSupplier));
 
         //claw
         addCommands(claw.createIsClawPneumaticMoving(pressureSupplier));

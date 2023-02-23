@@ -58,7 +58,7 @@
   {
     "name": "/Preferences/Pivot Arm Allowable Error",
     "type": "double",
-    "value": 0.0,
+    "value": 5.0,
     "properties": {
       "persistent": true
     }
@@ -283,6 +283,14 @@
     "name": "/Preferences/Chassis speed for brake",
     "type": "double",
     "value": 0.2,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis auto engage kP",
+    "type": "double",
+    "value": 0.02,
     "properties": {
       "persistent": true
     }

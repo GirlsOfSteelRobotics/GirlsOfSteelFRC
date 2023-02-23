@@ -13,6 +13,7 @@ import java.util.function.DoubleSupplier;
 public class ClawSubsystem extends SubsystemBase {
 
     private final DoubleSolenoid m_claw;
+    private static final double CLAW_WAIT = 2;
 
 
     public ClawSubsystem() {
@@ -20,27 +21,30 @@ public class ClawSubsystem extends SubsystemBase {
 
     }
 
-    //intake in
-    public void moveClawIntakeIn() {
-        m_claw.set(DoubleSolenoid.Value.kForward);
+    //intake close
+    public void moveClawIntakeClose() {
+        m_claw.set(DoubleSolenoid.Value.kReverse);
     }
 
-    //intake out
-    public void moveClawIntakeOut() {
-        m_claw.set(DoubleSolenoid.Value.kReverse);
+    //intake open
+    public void moveClawIntakeOpen() {
+        m_claw.set(DoubleSolenoid.Value.kForward);
     }
 
     /////////////////////
     // Command Factories
     /////////////////////
-    public CommandBase createMoveClawIntakeInCommand() {
-        return this.runOnce(this::moveClawIntakeIn).withName("ClawIntakeIn");
+    public CommandBase createMoveClawIntakeCloseCommand() {
+        return this.run(this::moveClawIntakeClose).withTimeout(CLAW_WAIT).withName("ClawIntakeClose");
     }
 
-    public CommandBase createMoveClawIntakeOutCommand() {
-        return this.runOnce(this::moveClawIntakeOut).withName("ClawIntakeOut");
+    public CommandBase createMoveClawIntakeOpenCommand() {
+        return this.run(this::moveClawIntakeOpen).withTimeout(CLAW_WAIT).withName("ClawIntakeOpen");
     }
 
+    //////////////
+    // Checklists
+    //////////////
     public CommandBase createIsClawPneumaticMoving(DoubleSupplier pressureSupplier) {
         return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_claw, "Claw: Right Piston");
     }

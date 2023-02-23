@@ -1,0 +1,357 @@
+<dashboard-tab
+    tab-name="TeleOperated"
+    slot="tab"
+    source-provider="NetworkTables"
+    selected=""
+>
+
+
+    <frc-camera
+        source-provider="NetworkTables"
+        style="transform: translate(80px, 361px); --image-width:538px; --image-height:302.625px; --crosshair-width:2px; --crosshair-color:#ffffff; --image-display:block; width: 538px; height: 349px;"
+        streams="[]"
+    ></frc-camera>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/TestCommands/High Cone Left"
+        style="transform: translate(61px, 56px);"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/TestCommands/High Cube"
+        style="transform: translate(253px, 58px);"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/TestCommands/High Cone Right"
+        style="transform: translate(438px, 57px);"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(71px, 174px);"
+        source-key="/Shuffleboard/TestCommands/Mid Cone Left"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(260px, 170px);"
+        source-key="/Shuffleboard/TestCommands/Mid Cube"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(451px, 164px);"
+        source-key="/Shuffleboard/TestCommands/Mid Cone Right"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(80px, 274px);"
+        source-key="/Shuffleboard/TestCommands/Low Cone Left"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(270px, 281px);"
+        source-key="/Shuffleboard/TestCommands/Low Cube"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(451px, 277px);"
+        source-key="/Shuffleboard/TestCommands/Low Cone Right"
+        label=""
+    ></frc-robot-command>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Turret"
+    slot="tab"
+    source-provider="NetworkTables"
+>
+    <frc-line-chart
+        title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(231px, 55px); width: 1063px; height: 785px;"
+    >
+        <frc-chart-axis
+            source-provider="NetworkTables"
+            min="-190"
+            max="190"
+            tick-values="[]"
+            label="Deg"
+        ></frc-chart-axis>
+        <frc-chart-axis
+            source-provider="NetworkTables"
+            axis-id="Axis 2"
+            min="-100"
+            max="100"
+            label="Deg/s"
+            tick-values="[]"
+            position="right"
+        ></frc-chart-axis>
+        <frc-chart-data
+            label="Angle"
+            color="#00aa00"
+            source-provider="NetworkTables"
+            source-key="/Turret Subsystem/Turret Encoder (deg)"
+        ></frc-chart-data>
+        <frc-chart-data
+            source-provider="NetworkTables"
+            label="Goal"
+            source-key="/Turret Subsystem/Goal Angle"
+        ></frc-chart-data>
+        <frc-chart-data
+            source-provider="NetworkTables"
+            source-key="/Turret Subsystem/Turret Velocity (deg per sec)"
+            axis-id="Axis 2"
+            label="Velocity"
+        ></frc-chart-data>
+    </frc-line-chart>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(47px, 74px);"
+        source-key="/Shuffleboard/TestCommands/Turret: PID - 0 degrees"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(42px, 132px);"
+        source-key="/Shuffleboard/TestCommands/Turret: PID - 90 degrees"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(35px, 191px);"
+        source-key="/Shuffleboard/TestCommands/Turret: PID - 180 degrees"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(40px, 22px);"
+        source-key="/Shuffleboard/TestCommands/Turret: PID - -90 degrees"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(38px, 256px);"
+        source-key="/Shuffleboard/TestCommands/Turret: To Coast Mode"
+        name=""
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/TestCommands/Turret: Reset Encoder"
+        style="transform: translate(41px, 312px);"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(38px, 374px);"
+        source-key="/Shuffleboard/TestCommands/Turret: Tune Velocity"
+        label=""
+    ></frc-robot-command>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Chassis"
+    slot="tab"
+    source-provider="NetworkTables"
+    source-key="/Shuffleboard/TestCommands/Sync Odometry"
+>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(39px, 55px);"
+        source-key="/Shuffleboard/TestCommands/Chassis set position: (0, 0, 0)"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(43px, 134px);"
+        source-key="/Shuffleboard/TestCommands/Chassis set position: (0, 0, 90 deg)"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(49px, 201px);"
+        source-key="/Shuffleboard/TestCommands/Chassis set position: (0, 0, -90 deg)"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(46px, 267px);"
+        source-key="/Shuffleboard/TestCommands/Chassis: Tune Velocity"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/TestCommands/Chassis: Sync Odometry"
+        style="transform: translate(49px, 332px);"
+        label=""
+    ></frc-robot-command>
+    <frc-field
+        source-key="/SmartDashboard/Field"
+        source-provider="NetworkTables"
+        style="transform: translate(473px, 85px); width: 636px; height: 320px;"
+        image="/field-images/2019-field.jpg"
+        top-left-field-corner-x="217"
+        top-left-field-corner-y="40"
+        bottom-right-field-corner-x="1372"
+        bottom-right-field-corner-y="615"
+    >
+        <frc-field-robot
+            source-key="/SmartDashboard/Field/Robot"
+            source-provider="NetworkTables"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(93.3398deg);"
+            pose="[0,0,0]"
+        ></frc-field-robot>
+        <frc-field-robot
+            source-key="/SmartDashboard/Field/Camera Estimated Position"
+            source-provider="NetworkTables"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(90deg);"
+            pose="[0,0,0]"
+        ></frc-field-robot>
+        <frc-field-robot
+            source-key="/SmartDashboard/Field/oldOdom"
+            source-provider="NetworkTables"
+            style="width: 0px; height: 0px; transform: translate(0px, 0px) rotate(93.3398deg);"
+            pose="[0,0,0]"
+        ></frc-field-robot>
+    </frc-field>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(51px, 393px);"
+        source-key="/Shuffleboard/TestCommands/Chassis Auto Engage"
+    ></frc-robot-command>
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Arm"
+    slot="tab"
+    source-provider="NetworkTables"
+>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: Angle PID - 0 degrees"
+        style="transform: translate(24px, 18px);"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: Angle PID - 45 degrees"
+        style="transform: translate(22px, 67px);"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(23px, 132px);"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: Angle PID - 90 degrees"
+        label=""
+    ></frc-robot-command>
+    <frc-line-chart
+        title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(234px, 29px);"
+    >
+        <frc-chart-axis
+            source-provider="NetworkTables"
+            min="-80"
+            max="50"
+            tick-values="[]"
+        ></frc-chart-axis>
+        <frc-chart-axis
+            source-provider="NetworkTables"
+            axis-id="Axis 2"
+            min="-100"
+            max="100"
+            tick-values="[]"
+        ></frc-chart-axis>
+        <frc-chart-data
+            label="Angle"
+            color="#00aa00"
+            source-provider="NetworkTables"
+            source-key="/Arm Subsystem/Arm Encoder (deg)"
+        ></frc-chart-data>
+        <frc-chart-data
+            source-provider="NetworkTables"
+            source-key="/Arm Subsystem/Arm Goal (deg)"
+            label="Goal"
+        ></frc-chart-data>
+        <frc-chart-data
+            source-provider="NetworkTables"
+            source-key="/Arm Subsystem/Arm Velocity"
+            axis-id="Axis 2"
+            label="Velocity"
+        ></frc-chart-data>
+    </frc-line-chart>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(23px, 257px);"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: Reset Encoder"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(22px, 308px);"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: Reset Encoder (0 deg)"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(25px, 360px);"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: to Coast Mode"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(28px, 580px);"
+        source-key="/Shuffleboard/TestCommands/Arm Piston: Mid Retract"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(30px, 525px);"
+        source-key="/Shuffleboard/TestCommands/Arm Piston: Mid Retract"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(31px, 469px);"
+        source-key="/Shuffleboard/TestCommands/Arm Piston: Full Retract"
+    ></frc-robot-command>
+
+</dashboard-tab>
+<dashboard-tab
+    tab-name="Pit"
+    slot="tab"
+    source-provider="NetworkTables"
+>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(13px, 123px);"
+        source-key="/Shuffleboard/TestCommands/Turret: To Coast Mode"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(14px, 10px);"
+        source-key="/SmartDashboard/Run checklist"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(15px, 177px);"
+        source-key="/Shuffleboard/TestCommands/Turret: Reset Encoder"
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(14px, 304px);"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: to Coast Mode"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(11px, 356px);"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: Reset Encoder"
+        label=""
+    ></frc-robot-command>
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(11px, 407px);"
+        source-key="/Shuffleboard/TestCommands/Arm Pivot: Reset Encoder (0 deg)"
+        label=""
+    ></frc-robot-command>
+</dashboard-tab>
