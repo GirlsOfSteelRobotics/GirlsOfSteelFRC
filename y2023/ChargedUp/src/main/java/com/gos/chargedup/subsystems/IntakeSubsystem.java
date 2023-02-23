@@ -1,14 +1,14 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.Constants;
+import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
-import com.gos.lib.checklists.SolenoidMovesChecklist;
 import com.gos.lib.rev.SparkMaxAlerts;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,127 +16,107 @@ import java.util.function.DoubleSupplier;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-    private static final double HOPPER_SPEED = 0.5;
-    private static final double INTAKE_SPEED = 1;
-    private final Solenoid m_intakeSolenoidLeft;
-    private final Solenoid m_intakeSolenoidRight;
-    private final SimableCANSparkMax m_hopperMotor;
+    private static final double INTAKE_SPEED = 0.5;
+    private final DoubleSolenoid m_intakeSolenoid;
     private final SimableCANSparkMax m_intakeMotor;
 
     private final SparkMaxAlerts m_intakeMotorErrorAlert;
-    private final SparkMaxAlerts m_hopperMotorErrorAlert;
 
 
 
     public IntakeSubsystem() {
-        m_intakeSolenoidRight = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_LEFT_PISTON);
-        m_intakeSolenoidLeft = new Solenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_RIGHT_PISTON);
-        m_hopperMotor = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_PISTON_FORWARD, Constants.INTAKE_PISTON_REVERSE);
         m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        m_hopperMotor.restoreFactoryDefaults();
         m_intakeMotor.restoreFactoryDefaults();
+        m_intakeMotor.setInverted(true);
 
         m_intakeMotor.setSmartCurrentLimit(30);
-        m_hopperMotor.setSmartCurrentLimit(30);
-        m_hopperMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_intakeMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_hopperMotor.burnFlash();
         m_intakeMotor.burnFlash();
 
         m_intakeMotorErrorAlert = new SparkMaxAlerts(m_intakeMotor, "intake motor ");
-        m_hopperMotorErrorAlert = new SparkMaxAlerts(m_hopperMotor, "hopper motor ");
     }
 
     @Override
     public void periodic() {
         m_intakeMotorErrorAlert.checkAlerts();
-        m_hopperMotorErrorAlert.checkAlerts();
     }
 
-    public boolean intakeMotorError() {
-        return m_intakeMotor.getFaults() != 0;
-
+    public void extendAndRoll() {
+        extend();
+        intakeRollersIn();
     }
 
-    public boolean hopperMotorError() {
-        return m_hopperMotor.getFaults() != 0;
-    }
-
-    public void extend() {
-        m_intakeSolenoidRight.set(true);
-        m_intakeSolenoidLeft.set(true);
-        m_intakeMotor.set(INTAKE_SPEED);
-    }
-
-    public boolean isIntakeDown() {
-        return m_intakeSolenoidLeft.get();
-    }
-
-    public void retract() {
-        m_intakeSolenoidRight.set(false);
-        m_intakeSolenoidLeft.set(false);
+    public void retractAndStopRoll() {
+        retract();
         m_intakeMotor.set(0);
     }
 
-    public double getHopperSpeed() {
-        return m_hopperMotor.get();
+    public void extend() {
+        m_intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 
-    //    in out stop
-    public void hopperIn() {
-        m_hopperMotor.set(HOPPER_SPEED);
+    public void retract() {
+        m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
-    public void hopperOut() {
-        m_hopperMotor.set(-HOPPER_SPEED);
+    public boolean isIntakeDown() {
+        return m_intakeSolenoid.get().equals(DoubleSolenoid.Value.kReverse);
     }
 
-    public void hopperStop() {
-        m_hopperMotor.set(0);
+    public void intakeRollersIn() {
+        m_intakeMotor.set(INTAKE_SPEED);
     }
 
-    public boolean getIntakeOut() {
-        return m_intakeSolenoidLeft.get() && m_intakeSolenoidRight.get();
+    public void intakeRollersOut() {
+        m_intakeMotor.set(-INTAKE_SPEED);
+    }
+
+    public void intakeRollersStop() {
+        m_intakeMotor.set(0);
+    }
+
+    public double getIntakeRollerSpeed() {
+        return m_intakeMotor.getAppliedOutput();
     }
 
     /////////////////////
     // Command Factories
     /////////////////////
-    public CommandBase createIntakeOutCommand() {
-        return this.runOnce(this::extend);
+    public CommandBase createIntakeOutAndRollCommand() {
+        return this.runOnce(this::extendAndRoll);
     }
 
-    public CommandBase createIntakeInCommand() {
-        return this.runOnce(this::retract);
+    public CommandBase createIntakeInAndStopRollCommand() {
+        return this.runOnce(this::retractAndStopRoll);
     }
 
-    public CommandBase createHopperInMotorCommand() {
-        return this.runEnd(this::hopperIn, this::hopperStop);
+    public CommandBase createIntakeOut() {
+        return this.runEnd(this::intakeRollersOut, this::intakeRollersStop).withName("intake out");
     }
 
-    public CommandBase createHopperOutMotorCommand() {
-        return this.runEnd(this::hopperOut, this::hopperStop);
+    public CommandBase createIntakeIn() {
+        return this.runEnd(this::intakeRollersIn, this::intakeRollersStop).withName("intake in");
+    }
+
+    public CommandBase createIntakeExtend() {
+        return this.run(this::extend).withName("intake extend");
+    }
+
+    public CommandBase createIntakeRetract() {
+        return this.run(this::retract).withName("intakeRetract");
     }
 
     ///////////////
     // Checklists
     ///////////////
-    public CommandBase createIsHopperMotorMoving() {
-        return new SparkMaxMotorsMoveChecklist(this, m_hopperMotor, "Intake: Hopper motor", 1.0);
-    }
-
     public CommandBase createIsIntakeMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_intakeMotor, "Intake: Intake motor", 1.0);
     }
 
-    public CommandBase createIsIntakeLeftPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new SolenoidMovesChecklist(this, pressureSupplier, m_intakeSolenoidLeft, "Intake: Left Piston");
+    public CommandBase createIsIntakePneumaticMoving(DoubleSupplier pressureSupplier) {
+        return new DoubleSolenoidMovesChecklist(this, pressureSupplier, m_intakeSolenoid, "Intake: Piston");
     }
-
-    public CommandBase createIsIntakeRightPneumaticMoving(DoubleSupplier pressureSupplier) {
-        return new SolenoidMovesChecklist(this, pressureSupplier, m_intakeSolenoidRight, "Intake: Right Piston");
-    }
-
 }

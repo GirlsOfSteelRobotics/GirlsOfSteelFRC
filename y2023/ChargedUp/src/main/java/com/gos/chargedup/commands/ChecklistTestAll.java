@@ -28,9 +28,7 @@ public class ChecklistTestAll extends SequentialCommandGroup {
 
         //intake
         addCommands(intake.createIsIntakeMotorMoving());
-        addCommands(intake.createIsHopperMotorMoving());
-        addCommands(intake.createIsIntakeLeftPneumaticMoving(pressureSupplier));
-        addCommands(intake.createIsIntakeRightPneumaticMoving(pressureSupplier));
+        addCommands(intake.createIsIntakePneumaticMoving(pressureSupplier));
 
         //claw
         addCommands(claw.createIsClawPneumaticMoving(pressureSupplier));
