@@ -15,7 +15,7 @@ public class ScorePieceCommandGroup extends SequentialCommandGroup {
         //arm to angle, arm extend, drop piece
         addCommands((arm.commandMoveArmToPieceScorePositionAndHold(pivotHeightType, gamePieceType))
             .alongWith(turret.commandTurretPID(180)));
-        addCommands(arm.commandFullExtend());
+        addCommands(arm.createArmToSpecifiedHeight(pivotHeightType));
 
         //check that this function works:
         addCommands(claw.createMoveClawIntakeOpenCommand());
