@@ -174,11 +174,12 @@ public class RobotContainer {
         tab.add("Claw: Open", m_claw.createMoveClawIntakeOpenCommand());
 
         // intake
-        tab.add("Intake Piston: Out", m_intake.createIntakeOutCommand());
-        tab.add("Intake Piston: In", m_intake.createIntakeInCommand());
+        tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
+        tab.add("Intake Piston: In", m_intake.createIntakeRetract());
 
-        tab.add("Intake Roller: In", m_intake.createIntakeInCommand());
-        tab.add("Intake Roller: Out", m_intake.createIntakeOutCommand());
+        tab.add("Intake Roller: In", m_intake.createIntakeIn());
+        tab.add("Intake Roller: Out", m_intake.createIntakeOut());
+
 
         // Smart arm movement
         tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 45));
@@ -234,8 +235,8 @@ public class RobotContainer {
         leftJoystickAsButtonDown.whileTrue(m_arm.commandPivotArmDown());
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
         m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
-        m_operatorController.b().whileTrue(m_intake.createIntakeInCommand());
-        m_operatorController.y().whileTrue(m_intake.createIntakeOutCommand());
+        m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
+        m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
         m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
@@ -270,7 +271,7 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
+                SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
             builder.addDoubleProperty(

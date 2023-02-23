@@ -46,8 +46,8 @@ public final class Constants {
 
     public static final int CLAW_PISTON_FORWARD = 9;
     public static final int CLAW_PISTON_REVERSE = 10;
-    public static final int INTAKE_LEFT_PISTON = 15;
-    public static final int INTAKE_RIGHT_PISTON = 14;
+    public static final int INTAKE_PISTON_FORWARD = 15;
+    public static final int INTAKE_PISTON_REVERSE = 14;
 
     //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
