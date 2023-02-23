@@ -120,8 +120,8 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
             }
         }
 
-         m_field.getObject("Best Guess").setPoses(bestGuessPoses);
-         m_field.getObject("Alt Guess").setPoses(altGuessPoses);
+        m_field.getObject("Best Guess").setPoses(bestGuessPoses);
+        m_field.getObject("Alt Guess").setPoses(altGuessPoses);
 
         PhotonPipelineResult goodCameraResults = new PhotonPipelineResult(cameraResult.getLatencyMillis(), goodTargets);
         goodCameraResults.setTimestampSeconds(cameraResult.getTimestampSeconds());

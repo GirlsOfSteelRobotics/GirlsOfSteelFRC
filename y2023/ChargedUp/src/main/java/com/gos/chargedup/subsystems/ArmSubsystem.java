@@ -371,7 +371,7 @@ public class ArmSubsystem extends SubsystemBase {
         return commandPivotArmToAngleNonHold(angle).withName("Score [" + height + "," + gamePieceType + "]");
     }
 
-    public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height){
+    public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height) {
         if (height == AutoPivotHeight.HIGH) {
             return commandFullExtend();
         }
