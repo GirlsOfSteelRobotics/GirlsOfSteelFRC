@@ -27,45 +27,45 @@ public final class AutonomousFactory {
 
         //Two scoring nodes (each height), no engaging (nodes 0,1; nodes 7,8)
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1", AutoPivotHeight.HIGH);
+            CommandBase twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1", height);
             m_autonomousModes.setDefaultOption("Two Piece Nodes 0 and 1: " + height, twoPieceNodes0and1);
         }
 
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8", AutoPivotHeight.HIGH);
+            CommandBase twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8", height);
             m_autonomousModes.addOption("Two Piece Nodes 7 and 8: " + height, twoPieceNodes7and8);
         }
 
         //two piece AND engage
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase twoPieceEngage = new TwoPieceAndEngageCommandGroup(chassis, turret, arm, claw, "TWOPieceEngage", AutoPivotHeight.HIGH);
+            CommandBase twoPieceEngage = new TwoPieceAndEngageCommandGroup(chassis, turret, arm, claw, "TWOPieceEngage", height);
             m_autonomousModes.addOption("Two Piece & Engage: " + height, twoPieceEngage);
         }
 
         //One scoring node (high), engage at end (nodes 3, 4, 5)
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", AutoPivotHeight.HIGH, GamePieceType.CONE);
+            CommandBase oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE);
             m_autonomousModes.addOption("One Piece Node and Engage 3: " + height, oneNodeAndEngage3);
         }
 
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", AutoPivotHeight.HIGH, GamePieceType.CUBE);
+            CommandBase oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", height, GamePieceType.CUBE);
             m_autonomousModes.addOption("One Piece Node and Engage 4: " + height, oneNodeAndEngage4);
         }
 
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", AutoPivotHeight.HIGH, GamePieceType.CONE);
+            CommandBase oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE);
             m_autonomousModes.addOption("One Piece Node and Engage 5: " + height, oneNodeAndEngage5);
         }
 
         //score wherever the robot is (no chassis parameter)
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase scoreConeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, AutoPivotHeight.HIGH, GamePieceType.CONE);
+            CommandBase scoreConeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, height, GamePieceType.CONE);
             m_autonomousModes.addOption("Score Cone at Current Position's node: " + height, scoreConeAtCurrentPos);
         }
 
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
-            CommandBase scoreCubeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, AutoPivotHeight.HIGH, GamePieceType.CUBE);
+            CommandBase scoreCubeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, height, GamePieceType.CUBE);
             m_autonomousModes.addOption("Score Cube at Current Position's node: " + height, scoreCubeAtCurrentPos);
         }
 

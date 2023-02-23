@@ -52,7 +52,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static final double ARM_CONE_MIDDLE_DEG = 15;
     public static final double ARM_CONE_HIGH_DEG = 30;
-    private static final double PNEUMATICS_WAIT = 0.5;
+    private static final double PNEUMATICS_WAIT = 1.3;
 
     public static final double ARM_HIT_INTAKE_ANGLE = 15;
 
@@ -326,15 +326,15 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandFullRetract() {
-        return runOnce(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
+        return run(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
     }
 
     public CommandBase commandMiddleRetract() {
-        return runOnce(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
+        return run(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
     public CommandBase commandFullExtend() {
-        return runOnce(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
+        return run(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
     }
 
     public CommandBase tuneGravityOffsetPID() {
@@ -369,6 +369,18 @@ public class ArmSubsystem extends SubsystemBase {
     public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight height, GamePieceType gamePieceType) {
         double angle = getArmAngleForScoring(height, gamePieceType);
         return commandPivotArmToAngleNonHold(angle).withName("Score [" + height + "," + gamePieceType + "]");
+    }
+
+    public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height) {
+        if (height == AutoPivotHeight.HIGH) {
+            return commandFullExtend();
+        }
+        else if (height == AutoPivotHeight.MEDIUM) {
+            return commandMiddleRetract();
+        }
+        else {
+            return commandFullRetract();
+        }
     }
 
     ////////////////
