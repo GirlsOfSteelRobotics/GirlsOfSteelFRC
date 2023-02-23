@@ -25,8 +25,16 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/AutomatedTurret/High Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/High Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/High Cube": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cube": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cube": "Command",
       "/Shuffleboard/Debug/Field": "Field2d",
-      "/Shuffleboard/PhotonVision OV5647/Field": "Field2d",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Extended": "Command",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Retracted": "Command",
       "/Shuffleboard/TestCommands/Arm Full Extend": "Command",
@@ -74,6 +82,7 @@
       "/Shuffleboard/TestCommands/Chassis set position: (0, 0, -90 deg)": "Command",
       "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 0)": "Command",
       "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Chassis set position: Node 4": "Command",
       "/Shuffleboard/TestCommands/Chassis: Sync Odometry": "Command",
       "/Shuffleboard/TestCommands/Chassis: Tune Velocity": "Command",
       "/Shuffleboard/TestCommands/Claw Close": "Command",
@@ -151,7 +160,12 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
-      "/Shuffleboard/PhotonVision OV5647/Field": {
+      "/Shuffleboard/AutomatedTurret/High Cone Left": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/AutomatedTurret/High Cone Right": {
         "window": {
           "visible": true
         }

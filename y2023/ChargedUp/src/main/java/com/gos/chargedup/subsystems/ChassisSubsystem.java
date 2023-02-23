@@ -114,6 +114,11 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.restoreFactoryDefaults();
         m_followerRight.restoreFactoryDefaults();
 
+        m_leaderLeft.setSmartCurrentLimit(60);
+        m_followerLeft.setSmartCurrentLimit(60);
+        m_leaderRight.setSmartCurrentLimit(60);
+        m_followerRight.setSmartCurrentLimit(60);
+
         m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);

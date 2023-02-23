@@ -102,6 +102,7 @@ public class RobotContainer {
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
         createTestCommands();
+        automatedTurretCommands();
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
@@ -124,6 +125,7 @@ public class RobotContainer {
         tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
         tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
         tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
+        tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometry(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
 
         tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
         tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
@@ -183,17 +185,21 @@ public class RobotContainer {
         tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 90));
         tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 0));
         tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, -45));
+    }
 
-        //TODO: change the pitch to actual value lol and also update field constant values to the most recent from unbuggy version from mechanical advantage
-        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, 0, 0, 0));
-        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1].getX(), FieldConstants.Grids.LOW_TRANSLATIONS[1].getY(), 0));
-        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2].getX(), FieldConstants.Grids.LOW_TRANSLATIONS[2].getY(), 0));
-        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0].getX(), FieldConstants.Grids.MID_TRANSLATIONS[0].getY(), 1));
-        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1].getX(), FieldConstants.Grids.MID_TRANSLATIONS[1].getY(), 1));
-        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2].getX(), FieldConstants.Grids.MID_TRANSLATIONS[2].getY(), 1));
-        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[0].getY(), 2));
-        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[1].getY(), 2));
-        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[2].getY(), 2));
+    private void automatedTurretCommands() {
+
+        ShuffleboardTab tab = Shuffleboard.getTab("AutomatedTurret");
+
+        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW));
+        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM));
+        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH));
+        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW));
+        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM));
+        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH));
+        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW));
+        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM));
+        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH));
 
     }
 
