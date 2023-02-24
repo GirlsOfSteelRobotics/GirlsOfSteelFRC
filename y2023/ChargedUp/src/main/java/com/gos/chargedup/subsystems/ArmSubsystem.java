@@ -63,6 +63,7 @@ public class ArmSubsystem extends SubsystemBase {
     public static final double MAX_ANGLE_DEG = 50;
     private static final double MIN_ANGLE_RADS = Math.toRadians(MIN_ANGLE_DEG);
     private static final double MAX_ANGLE_RADS = Math.toRadians(MAX_ANGLE_DEG);
+
     private static final boolean SIMULATE_GRAVITY = true;
 
     private final SimableCANSparkMax m_pivotMotor;
@@ -163,10 +164,24 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void pivotArmUp() {
         m_pivotMotor.set(ARM_MOTOR_SPEED);
+
+        if (m_pivotMotorEncoder.getPosition() < MAX_ANGLE_DEG) {
+            m_pivotMotor.set(ARM_MOTOR_SPEED);
+        }
+        else {
+            m_pivotMotor.stopMotor();
+        }
     }
 
     public void pivotArmDown() {
-        m_pivotMotor.set(-ARM_MOTOR_SPEED);
+        m_pivotMotor.set(ARM_MOTOR_SPEED);
+
+        if (m_pivotMotorEncoder.getPosition() > MIN_ANGLE_DEG) {
+            m_pivotMotor.set(ARM_MOTOR_SPEED);
+        }
+        else {
+            m_pivotMotor.stopMotor();
+        }
     }
 
     public double getArmMotorSpeed() {

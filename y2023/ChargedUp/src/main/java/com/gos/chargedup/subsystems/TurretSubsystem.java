@@ -30,6 +30,10 @@ public class TurretSubsystem extends SubsystemBase {
     public static final double TURRET_RIGHT_OF_INTAKE = 10;
 
     private static final double TURRET_SPEED = 0.4;
+
+    private static final double MIN_ANGLE = -380;
+
+    private static final double MAX_ANGLE = 380;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
     public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 0);
     private final SimableCANSparkMax m_turretMotor;
@@ -119,11 +123,26 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void moveTurretClockwise() {
         m_turretMotor.set(TURRET_SPEED);
+
+        if (m_turretEncoder.getPosition() < MAX_ANGLE) {
+            m_turretMotor.set(TURRET_SPEED);
+        }
+        else {
+            m_turretMotor.stopMotor();
+        }
     }
 
     public void moveTurretCounterClockwise() {
         m_turretMotor.set(-TURRET_SPEED);
+
+        if (m_turretEncoder.getPosition() > MIN_ANGLE) {
+            m_turretMotor.set(TURRET_SPEED);
+        }
+        else {
+            m_turretMotor.stopMotor();
+        }
     }
+
 
     public void stopTurret() {
         m_turretGoalAngle = Double.MIN_VALUE;
@@ -176,6 +195,7 @@ public class TurretSubsystem extends SubsystemBase {
     ///////////////////////
     public CommandBase commandMoveTurretClockwise() {
         return this.runEnd(this::moveTurretClockwise, this::stopTurret).withName("Turret: Move CW");
+
     }
 
     public CommandBase commandMoveTurretCounterClockwise() {
@@ -210,4 +230,3 @@ public class TurretSubsystem extends SubsystemBase {
         return new SparkMaxMotorsMoveChecklist(this, m_turretMotor, "Turret: Turret motor", 1.0);
     }
 }
-
