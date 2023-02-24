@@ -18,30 +18,62 @@ public class ArmPreventionLogic {
         this.m_intake = intake;
     }
 
-    public boolean canArmExtend() {
-        if (m_intake.getIntakeOut()) {
-            return m_arm.isArmAtAngle(m_arm.MIN_ANGLE_DEG);   //check if intake is down & if arm is at min angle
+    public boolean canArmExtend() {     //mainly for fullExtend
+        //annoying hard-code stuff cause we can't simulate pneumatic stuff; delete when needed
+        boolean isIntakeDown = m_intake.isIntakeDown();
+        //boolean isIntakeDown = true;
+
+        if (isIntakeDown) {
+            //when intake is down:
+            // check if arm hits intake
+            return m_arm.getArmAngleDeg() > m_arm.ARM_HIT_DOWN_INTAKE_ANGLE;
         } else {
-            //check if arm is within allowable range
-            return m_arm.getArmAngleDeg() > m_arm.ARM_HIT_INTAKE_ANGLE
-                && m_arm.getArmAngleDeg() <= m_arm.MAX_ANGLE_DEG;
+            //when intake is up:
+            //check if arm hits intake
+            return m_arm.getArmAngleDeg() > m_arm.ARM_HIT_UP_INTAKE_ANGLE;
         }
     }
 
     public boolean canArmMoveVertically() {
-        if (m_intake.getIntakeOut()) {    //check if intake is down
+        boolean isIntakeDown = m_intake.isIntakeDown();
+        //boolean isIntakeDown = true;
+
+        if (isIntakeDown) {    //check if intake is down
             return true;
         } else {
+            //when intake is up:
             //check if arm is within allowable range
-            return (m_arm.getArmAngleDeg() > m_arm.ARM_HIT_INTAKE_ANGLE
-                && m_arm.getArmAngleDeg() < m_arm.MAX_ANGLE_DEG);
+            return m_arm.getArmAngleDeg() >= m_arm.ARM_HIT_UP_INTAKE_ANGLE;
         }
     }
 
     public boolean canTurretMove() {
-        //check if turret faces intake and arm is extended and at min angle
-        return m_turret.getTurretAngleDeg() != 0    //tune allowable angle
-            && m_arm.isBottomPistonIn()
-            && m_arm.getArmAngleDeg() > m_arm.MIN_ANGLE_DEG;
+        boolean isIntakeDown = m_intake.isIntakeDown();
+        //boolean isIntakeDown = false;
+
+        if (isIntakeDown) {
+            //when intake is down:
+            //check if arm is above min angle if intake is down
+            if (m_arm.getArmAngleDeg() > m_arm.MIN_ANGLE_DEG) {
+                return true;
+            } else {
+                //check if turret hits intake
+                return m_turret.getTurretAngleDeg() > m_turret.TURRET_RIGHT_OF_INTAKE
+                    || m_turret.getTurretAngleDeg() < m_turret.TURRET_LEFT_OF_INTAKE;
+            }
+        } else {
+            //when intake is up:
+            //check if arm is above intake
+            return m_arm.getArmAngleDeg() > m_arm.ARM_HIT_UP_INTAKE_ANGLE;
+
+            //sad failed range limit
+            /*(m_turret.getTurretAngleDeg() > m_turret.TURRET_LEFT_OF_INTAKE //CW range
+                && m_turret.getTurretAngleDeg() < m_turret.TURRET_MAX_ANGLE)
+                || (m_turret.getTurretAngleDeg() < m_turret.TURRET_RIGHT_OF_INTAKE //CCW range
+                && m_turret.getTurretAngleDeg() > m_turret.TURRET_MIN_ANGLE)*/
+
+        }
+
+
     }
 }

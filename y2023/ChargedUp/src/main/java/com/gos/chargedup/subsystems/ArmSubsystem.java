@@ -58,7 +58,9 @@ public class ArmSubsystem extends SubsystemBase {
     public static final double ARM_CONE_HIGH_DEG = 30;
     private static final double PNEUMATICS_WAIT = 1.3;
 
-    public static final double ARM_HIT_INTAKE_ANGLE = 15;
+    public static final double ARM_HIT_UP_INTAKE_ANGLE = -15; //arbitrary val
+    public static final double ARM_HIT_DOWN_INTAKE_ANGLE = -10; //arbitrary val
+
 
     private static final double GEARING =  252.0;
     private static final double J_KG_METERS_SQUARED = 1;
@@ -206,7 +208,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isBottomPistonIn() {
-        return m_bottomPiston.get() == BOTTOM_PISTON_EXTENDED;
+        return m_bottomPiston.get() == BOTTOM_PISTON_RETRACTED;
     }
 
     public boolean isTopPistonIn() {

@@ -94,19 +94,19 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIntakeOut() {
-        return this.runEnd(this::intakeRollersOut, this::intakeRollersStop).withName("intake out");
+        return this.runEnd(this::intakeRollersOut, this::intakeRollersStop).withName("Intake Roller: Out");
     }
 
     public CommandBase createIntakeIn() {
-        return this.runEnd(this::intakeRollersIn, this::intakeRollersStop).withName("intake in");
+        return this.runEnd(this::intakeRollersIn, this::intakeRollersStop).withName("Intake Roller: In");
     }
 
     public CommandBase createIntakeExtend() {
-        return this.run(this::extend).withName("intake extend");
+        return this.run(this::extend).withName("Intake Piston: Extend");
     }
 
     public CommandBase createIntakeRetract() {
-        return this.run(this::retract).withName("intakeRetract");
+        return this.run(this::retract).withName("Intake Piston: Retract");
     }
 
     ///////////////

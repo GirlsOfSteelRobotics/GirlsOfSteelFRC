@@ -32,6 +32,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     public static final double TURRET_LEFT_OF_INTAKE = -10;
     public static final double TURRET_RIGHT_OF_INTAKE = 10;
+    public static final double TURRET_MAX_ANGLE = (360 - TURRET_LEFT_OF_INTAKE);
+    public static final double TURRET_MIN_ANGLE = -(360 - TURRET_RIGHT_OF_INTAKE);
 
     private static final double TURRET_SPEED = 0.4;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
@@ -186,20 +188,38 @@ public class TurretSubsystem extends SubsystemBase {
         return this.runEnd(this::moveTurretCounterClockwise, this::stopTurret).withName("Turret: Move CCW");
     }
 
+    public CommandBase commandTurretPreventionClockwise(ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
+        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm, turret, intake);
+        return new ConditionalCommand(
+            this.runEnd(this::moveTurretClockwise, this::stopTurret),
+            this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)), //change controllers?
+            armPreventionLogic::canTurretMove
+        ).withName("Turret Prevention: Move CW");
+    }
+
+    public CommandBase commandTurretPreventionCounterClockwise(ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
+        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm, turret, intake);
+        return new ConditionalCommand(
+            this.runEnd(this::moveTurretCounterClockwise, this::stopTurret),
+            this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)), //change controllers?
+            armPreventionLogic::canTurretMove
+        ).withName("Turret Prevention: Move CCW");
+    }
+
     public CommandBase commandTurretPID(double angle) {
         return this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
             .until(() -> moveTurretToAngleWithPID(angle))
             .withName("Turret PID: " + angle);
     }
 
-    public CommandBase commandTurretPIDPrevention(double angle, ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
+    public CommandBase commandTurretPreventionPID(double angle, ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
         ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm, turret, intake);
         return new ConditionalCommand(
             this.runEnd(() -> moveTurretToAngleWithPID(angle), this::stopTurret)
                 .until(() -> moveTurretToAngleWithPID(angle)),
             this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)), //change controllers?
             armPreventionLogic::canTurretMove
-        ).withName("Turret Prevention: " + angle);
+        ).withName("Turret Prevention PID: " + angle);
     }
 
     public CommandBase createTuneVelocity() {

@@ -42,10 +42,10 @@ public class ArmPIDCheckIfAllowedCommand extends CommandBase {
                 m_armSubsystem.pivotArmToAngle(m_goalAngle);
             } else if (!m_intakeSubsystem.isIntakeDown()) {
                 // check if intake is in and arm angle is less than contact w/ intake angle
-                if (m_armSubsystem.getArmAngleDeg() < m_armSubsystem.ARM_HIT_INTAKE_ANGLE) {
+                if (m_armSubsystem.getArmAngleDeg() < m_armSubsystem.ARM_HIT_UP_INTAKE_ANGLE) {
                     m_armSubsystem.pivotArmStop();
                 // check if arm angle is greater than contact w/ intake angle and less than goal angle
-                } else if (m_armSubsystem.getArmAngleDeg() > m_armSubsystem.ARM_HIT_INTAKE_ANGLE && m_armSubsystem.getArmAngleDeg() < m_armSubsystem.getArmAngleGoal()) {
+                } else if (m_armSubsystem.getArmAngleDeg() > m_armSubsystem.ARM_HIT_UP_INTAKE_ANGLE && m_armSubsystem.getArmAngleDeg() < m_armSubsystem.getArmAngleGoal()) {
                     m_armSubsystem.pivotArmToAngle(m_goalAngle);
                 } else {
                     m_armSubsystem.pivotArmStop();
