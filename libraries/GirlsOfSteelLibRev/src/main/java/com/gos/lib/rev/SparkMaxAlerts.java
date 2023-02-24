@@ -14,8 +14,6 @@ public class SparkMaxAlerts {
         m_motorString = motor;
         m_alert = new Alert(m_motorString, Alert.AlertType.ERROR);
         m_alertSticky = new Alert(m_motorString, Alert.AlertType.ERROR);
-        int x = sparkMax.getStickyFaults();
-
     }
 
     public void checkAlerts() {

@@ -1,8 +1,7 @@
 package com.gos.lib.ctre;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2_Faults;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import org.littletonrobotics.frc2023.util.Alert;
 
 public class PigeonAlerts {
@@ -15,8 +14,6 @@ public class PigeonAlerts {
 
 
     public PigeonAlerts(Pigeon2 pigeon2) {
-        int deviceNumber = pigeon2.getDeviceID();
-
         m_pigeon = pigeon2;
         m_alert = new Alert("pigeon", Alert.AlertType.ERROR);
         m_alertSticky = new Alert("pigeon (sticky)", Alert.AlertType.ERROR);
@@ -27,11 +24,13 @@ public class PigeonAlerts {
         checkStickyFaults();
     }
 
+    @SuppressWarnings({"PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
     public void checkFaults() {
         StringBuilder alertMessageBuilder = new StringBuilder(700);
         alertMessageBuilder.append(ALERT_NAME);
 
-        Pigeon2_Faults faults = m_pigeon.getFaults();
+        Pigeon2_Faults faults = new Pigeon2_Faults();
+        m_pigeon.getFaults(faults);
 
         if (faults.HardwareFault) {
             alertMessageBuilder.append(" Hardwar Fault");
@@ -73,8 +72,51 @@ public class PigeonAlerts {
         m_alert.set(!ALERT_NAME.equals(alertMessage));
     }
 
-    public void checkStickyFaults () {
+    @SuppressWarnings({"PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
+    public void checkStickyFaults() {
         StringBuilder alertMessageBuilder = new StringBuilder(700);
         alertMessageBuilder.append(STICKY_ALERT_NAME);
+
+        Pigeon2_Faults stickyFaults = new Pigeon2_Faults();
+        m_pigeon.getStickyFaults(stickyFaults);
+
+        if (stickyFaults.HardwareFault) {
+            alertMessageBuilder.append(" Hardware Fault");
+        }
+        if (stickyFaults.APIError) {
+            alertMessageBuilder.append(" APIE Error");
+        }
+        if (stickyFaults.UnderVoltage) {
+            alertMessageBuilder.append(" Under Voltage fault");
+        }
+        if (stickyFaults.ResetDuringEn) {
+            alertMessageBuilder.append(" Reset During En Fault");
+        }
+        if (stickyFaults.SaturatedRotVelocity) {
+            alertMessageBuilder.append(" Saturated Rot Velocity fault");
+        }
+        if (stickyFaults.SaturatedAccel) {
+            alertMessageBuilder.append(" Saturated Accel fault");
+        }
+        if (stickyFaults.SaturatedMag) {
+            alertMessageBuilder.append(" Saturated Mag fault");
+        }
+        if (stickyFaults.BootIntoMotion) {
+            alertMessageBuilder.append(" Boot into motion fault");
+        }
+        if (stickyFaults.MagnetometerFault) {
+            alertMessageBuilder.append(" Magnetometer Fault");
+        }
+        if (stickyFaults.GyroFault) {
+            alertMessageBuilder.append(" Gyro fault");
+        }
+        if (stickyFaults.AccelFault) {
+            alertMessageBuilder.append(" Accel Fault");
+        }
+
+        String alertMessage = alertMessageBuilder.toString();
+        m_alertSticky.setText(alertMessage);
+
+        m_alertSticky.set(!STICKY_ALERT_NAME.equals(alertMessage));
     }
 }

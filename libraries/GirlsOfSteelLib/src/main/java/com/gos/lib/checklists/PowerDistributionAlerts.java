@@ -5,6 +5,7 @@ import edu.wpi.first.hal.PowerDistributionStickyFaults;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import org.littletonrobotics.frc2023.util.Alert;
 
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class PowerDistributionAlerts {
     private static final String ALERT_NAME = "power distribution";
     private static final String STICKY_ALERT_NAME = "power distribution (sticky) ";
@@ -26,6 +27,7 @@ public class PowerDistributionAlerts {
         checkStickyFaults();
     }
 
+    @SuppressWarnings({"PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
     public void checkFaults() {
         StringBuilder alertMessageBuilder = new StringBuilder(700);
         alertMessageBuilder.append(ALERT_NAME);
@@ -119,7 +121,8 @@ public class PowerDistributionAlerts {
         m_alert.set(!ALERT_NAME.equals(alertMessage));
     }
 
-    public void checkStickyFaults () {
+    @SuppressWarnings({"PMD.NcssCount", "PMD.CognitiveComplexity", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
+    public void checkStickyFaults() {
         StringBuilder alertMessageBuilder = new StringBuilder(700);
         alertMessageBuilder.append(STICKY_ALERT_NAME);
 
