@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
+import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -102,6 +103,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
+    private final PigeonAlerts m_pigeonAlerts;
+
     public ChassisSubsystem() {
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -176,6 +179,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
+
+        m_pigeonAlerts = new PigeonAlerts(m_gyro);
 
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -257,6 +262,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
         m_followerRightMotorErrorAlert.checkAlerts();
+
+        m_pigeonAlerts.checkAlerts();
     }
 
     @Override
