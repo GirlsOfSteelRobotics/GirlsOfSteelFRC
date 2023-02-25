@@ -1,6 +1,5 @@
 package com.gos.chargedup.subsystems;
 
-
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
@@ -23,7 +22,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
@@ -37,7 +35,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
@@ -371,16 +369,16 @@ public class ArmSubsystem extends SubsystemBase {
             cs::canExtendArm);
     }
 
-//    public CommandBase createIsArmInnerPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
-//        return new ConditionalCommand(
-//            new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston"),
-//            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-//            cs::canExtendArm);
-//    }
+    //public CommandBase createIsArmInnerPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
+    //    return new ConditionalCommand(
+    //        new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston"),
+    //        this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+    //        cs::canExtendArm);
+    //}
 
-//    public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
-//        return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
-//    }
+    //public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
+    //    return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
+    //}
 
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
@@ -420,8 +418,8 @@ public class ArmSubsystem extends SubsystemBase {
             this.run(() -> {
                 System.out.println("BAD");
                 x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1);
-        }),
-            cs::canExtendArm);
+            }),
+                cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmToAngleNonHold(double angle) {

@@ -2,7 +2,7 @@ package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.Constants;
-import com.gos.chargedup.Rectangle;
+import com.gos.chargedup.RectangleInterface;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -42,14 +42,6 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 import java.util.Map;
 import java.util.Optional;
-
-import static org.littletonrobotics.frc2023.FieldConstants.Community.INNER_X;
-import static org.littletonrobotics.frc2023.FieldConstants.Community.LEFT_Y;
-import static org.littletonrobotics.frc2023.FieldConstants.Community.MID_X;
-import static org.littletonrobotics.frc2023.FieldConstants.Community.MID_Y;
-import static org.littletonrobotics.frc2023.FieldConstants.Community.OUTER_X;
-import static org.littletonrobotics.frc2023.FieldConstants.Community.RIGHT_Y;
-import static org.littletonrobotics.frc2023.FieldConstants.FIELD_LENGTH;
 
 
 public class ChassisSubsystem extends SubsystemBase {
@@ -111,15 +103,23 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
-    private final Rectangle m_communityRectangle1 = new Rectangle(INNER_X, MID_X, LEFT_Y, true);
+    private final RectangleInterface m_communityRectangle1;
 
-    private final Rectangle m_communityRectangle2 = new Rectangle(MID_X, OUTER_X, MID_Y, true);
+    private final RectangleInterface m_communityRectangle2;
 
-    private final Rectangle m_loadingRectangle1 = new Rectangle(INNER_X, MID_X, RIGHT_Y, false);
+    private final RectangleInterface m_loadingRectangle1;
 
-    private final Rectangle m_loadingRectangle2 = new Rectangle(MID_X, OUTER_X, MID_Y, false);
+    private final RectangleInterface m_loadingRectangle2;
 
+    @SuppressWarnings("PMD.NcssCount")
     public ChassisSubsystem() {
+        m_field = new Field2d();
+        SmartDashboard.putData(m_field);
+
+        m_communityRectangle1 = new RectangleInterface(FieldConstants.Community.INNER_X, FieldConstants.Community.LEFT_Y, FieldConstants.Community.MID_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityRight");
+        m_communityRectangle2 = new RectangleInterface(FieldConstants.Community.MID_X, FieldConstants.Community.MID_Y, FieldConstants.Community.OUTER_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityLeft");
+        m_loadingRectangle1 = new RectangleInterface(FieldConstants.LoadingZone.OUTER_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.MID_Y, m_field, "BlueLoadingRight");
+        m_loadingRectangle2 = new RectangleInterface(FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.INNER_X, FieldConstants.LoadingZone.RIGHT_Y, m_field, "BlueLoadingLeft");
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -172,14 +172,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.burnFlash();
         m_followerRight.burnFlash();
 
-        m_field = new Field2d();
-        SmartDashboard.putData(m_field);
-
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
         m_vision = new PhotonVisionSubsystem();
-        // m_vision = new LimelightVisionSubsystem();
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -372,30 +368,23 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean isInCommunityZone() {
-
-        if (m_communityRectangle1.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_communityRectangle2.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY())) {
-            return true;
-        }
-        return false;
+        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
     }
 
     public boolean isInLoadingZone() {
-
-        if (m_loadingRectangle1.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_loadingRectangle2.contains(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY())) {
-            return true;
-        }
-        return false;
+        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
     }
 
     public boolean canExtendArm() {
 
-        if(this.isInCommunityZone() || this.isInLoadingZone()) {
+        if (this.isInCommunityZone() || this.isInLoadingZone()) {
             System.out.print("I'm in the zone!");
             return true;
         }
         System.out.print("I'm not in the zone!");
         return false;
     }
+
 
     ////////////////////
     // Command Factories

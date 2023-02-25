@@ -169,23 +169,8 @@
       "/SmartDashboard/Test S Curve": "Command"
     },
     "windows": {
-      "/Shuffleboard/TestCommands/Arm to Angle PreventionXXXXXX": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 0)": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
-        "bottom": 544,
         "height": 8.013679504394531,
-        "image": "C:\\Users\\homep\\OneDrive\\Desktop\\2023-field.png",
-        "left": 46,
-        "right": 1088,
-        "top": 36,
         "width": 16.541748046875,
         "window": {
           "visible": true
