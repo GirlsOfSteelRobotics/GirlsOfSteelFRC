@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "SPARK MAX [5]": {
         "header": {
@@ -30,6 +25,15 @@
       "/LiveWindow/Ungrouped/Pigeon IMU [20]": "Gyro",
       "/LiveWindow/Ungrouped/RevSim[0] Basic PID": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/Shuffleboard/AutomatedTurret/High Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/High Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/High Cube": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/Low Cube": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cone Left": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cone Right": "Command",
+      "/Shuffleboard/AutomatedTurret/Mid Cube": "Command",
       "/Shuffleboard/Debug/Field": "Field2d",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Extended": "Command",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Retracted": "Command",
@@ -78,9 +82,9 @@
       "/Shuffleboard/TestCommands/Chassis set position: (0, 0, -90 deg)": "Command",
       "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 0)": "Command",
       "/Shuffleboard/TestCommands/Chassis set position: (0, 0, 90 deg)": "Command",
+      "/Shuffleboard/TestCommands/Chassis set position: Node 4": "Command",
       "/Shuffleboard/TestCommands/Chassis: Sync Odometry": "Command",
       "/Shuffleboard/TestCommands/Chassis: Tune Velocity": "Command",
-      "/Shuffleboard/TestCommands/Chassis: teleop dock and engage": "Command",
       "/Shuffleboard/TestCommands/Claw Close": "Command",
       "/Shuffleboard/TestCommands/Claw In": "Command",
       "/Shuffleboard/TestCommands/Claw Open": "Command",
@@ -156,26 +160,21 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
-      "/Shuffleboard/TestCommands/Chassis: teleop dock and engage": {
+      "/Shuffleboard/AutomatedTurret/High Cone Left": {
         "window": {
           "visible": true
         }
       },
-      "/SmartDashboard/SendableChooser[0]": {
+      "/Shuffleboard/AutomatedTurret/High Cone Right": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/TestCommands/High Cube": {
         "window": {
           "visible": true
         }
       }
     }
-  },
-  "NetworkTables": {
-    "transitory": {
-      "Shuffleboard": {
-        "open": true
-      }
-    }
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }
