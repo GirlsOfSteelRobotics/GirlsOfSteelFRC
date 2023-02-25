@@ -83,9 +83,11 @@ public class RobotContainer {
         m_claw = new ClawSubsystem();
         m_arm = new ArmSubsystem();
         m_intake = new IntakeSubsystem();
-        m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController, m_chassisSubsystem, m_arm, m_turret); //NOPMD
-
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw);
+
+        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_arm, m_turret, m_autonomousFactory); //NOPMD
+
+
 
         m_pressureSupplier = pressureSupplier;
         configureBindings();
@@ -223,7 +225,7 @@ public class RobotContainer {
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
         m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
         m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator

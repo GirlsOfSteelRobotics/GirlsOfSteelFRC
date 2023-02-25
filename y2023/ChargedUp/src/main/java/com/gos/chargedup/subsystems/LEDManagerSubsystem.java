@@ -2,27 +2,38 @@ package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.lib.led.LEDFlash;
-import com.gos.lib.led.LEDMovingPixel;
 import com.gos.lib.led.LEDPattern;
 import com.gos.lib.led.mirrored.MirroredLEDBoolean;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
+import com.gos.lib.led.mirrored.MirroredLEDMovingPixel;
+import com.gos.lib.led.mirrored.MirroredLEDPatternLookup;
 import com.gos.lib.led.mirrored.MirroredLEDPercentScale;
 import com.gos.lib.led.mirrored.MirroredLEDRainbow;
 import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LEDManagerSubsystem extends SubsystemBase {
+
+    private static final int MAX_INDEX_LED = 30;
+
+    private static final int AUTO_HEIGHT_START = 0;
+    private static final int AUTO_HEIGHT_COUNT = MAX_INDEX_LED / 4;
+
+    private static final int AUTO_MODE_START = AUTO_HEIGHT_COUNT;
+
+    private static final int AUTO_MODE_COUNT = MAX_INDEX_LED / 4;
+
+
     // subsystems
-    private final CommandXboxController m_joystick;
+    //private final CommandXboxController m_joystick;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmSubsystem m_armSubsystem;
     private final TurretSubsystem m_turretSubsystem;
@@ -32,7 +43,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     protected final AddressableLED m_led;
 
     // Testing LED
-    private final MirroredLEDPercentScale m_drivetrainSpeed;
+    //private final MirroredLEDPercentScale m_drivetrainSpeed;
 
     // Comp LED
     private final MirroredLEDFlash m_coneGamePieceSignal;
@@ -45,19 +56,21 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final MirroredLEDFlash m_readyToScore;
     private final MirroredLEDPercentScale m_turretAngle;
     private final MirroredLEDBoolean m_armAtAngle;
-    // private final MirroredLEDBoolean m_goodDistance;
 
-    private final MirroredLEDFlash m_goodDistToLoadingPiece;
+    //private final MirroredLEDFlash m_goodDistToLoadingPiece;
 
     private final MirroredLEDPercentScale m_dockAngle;
 
     private final MirroredLEDRainbow m_notInCommunityZone;
 
-    private static final int MAX_INDEX_LED = 30;
-    private static final int HALF_MAX_INDEX_LED = (int)(MAX_INDEX_LED / 2);
+    private final AutonomousFactory m_autoModeFactory;
 
-    public LEDManagerSubsystem(CommandXboxController joystick, ChassisSubsystem chassisSubsystem, ArmSubsystem armSubsystem, TurretSubsystem turretSubsystem) {
-        m_joystick = joystick;
+    private final MirroredLEDPatternLookup<AutonomousFactory.AutonMode> m_autoModeColor;
+    private final MirroredLEDPatternLookup<AutoPivotHeight> m_heightColor;
+
+    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
+        m_autoModeFactory = autonomousFactory;
+
         m_chassisSubsystem = chassisSubsystem;
         m_armSubsystem = armSubsystem;
         m_turretSubsystem = turretSubsystem;
@@ -66,7 +79,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_led = new AddressableLED(0);
 
         // Test LED
-        m_drivetrainSpeed = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kGreen, 15);
+        //m_drivetrainSpeed = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kGreen, 15);
 
         // Comp LED
         m_coneGamePieceSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kYellow);
@@ -77,7 +90,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_armAtAngle = new MirroredLEDBoolean(m_buffer, 10, 10, Color.kAntiqueWhite, Color.kRed);
         // m_goodDistance = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kAntiqueWhite, Color.kRed);
 
-        m_goodDistToLoadingPiece = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
+        //m_goodDistToLoadingPiece = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
 
         m_dockAngle = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kRed, 30);
 
@@ -89,25 +102,29 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         // starting position -- color (1 - pink, 2 - red, 3 - orange, 4 - yellow, 5 - green, 6 - blue, 7 - purple)
         Map<AutonomousFactory.AutonMode, LEDPattern> autonColorMap = new HashMap<>();
-        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_END, new MirroredLEDSolidColor(m_buffer, 0, HALF_MAX_INDEX_LED, Color.kPink));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_PLAYER_STATION, new MirroredLEDSolidColor(m_buffer, 0, HALF_MAX_INDEX_LED, Color.kPurple));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE, new MirroredLEDSolidColor(m_buffer, 0, HALF_MAX_INDEX_LED, Color.kPapayaWhip));
+        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_END, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
+        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_LEAVE_COMMUNITY_PLAYER_STATION, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
+        autonColorMap.put(AutonomousFactory.AutonMode.ONLY_DOCK_AND_ENGAGE, new MirroredLEDSolidColor(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPapayaWhip));
 
-        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, 0, HALF_MAX_INDEX_LED, 0.5, Color.kPapayaWhip));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, 0, HALF_MAX_INDEX_LED, 0.5, Color.kDarkOrange));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, new MirroredLEDFlash(m_buffer, 0, HALF_MAX_INDEX_LED, 0.5, Color.kYellow));
-        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, 0, HALF_MAX_INDEX_LED, 0.5, Color.kGreen));
+        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CUBE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kPapayaWhip));
+        autonColorMap.put(AutonomousFactory.AutonMode.SCORE_CONE_AT_CURRENT_POS, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kAliceBlue));
+        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_3, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kDarkOrange));
+        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_4, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kYellow));
+        autonColorMap.put(AutonomousFactory.AutonMode.ONE_NODE_AND_ENGAGE_5, new MirroredLEDFlash(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, 0.5, Color.kGreen));
 
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new LEDMovingPixel(m_buffer, 0, HALF_MAX_INDEX_LED, Color.kPink));
-        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new LEDMovingPixel(m_buffer, 0, HALF_MAX_INDEX_LED, Color.kPurple));
+        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_0_AND_1, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPink));
+        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_NODE_7_AND_8, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kPurple));
+        autonColorMap.put(AutonomousFactory.AutonMode.TWO_PIECE_ENGAGE, new MirroredLEDMovingPixel(m_buffer, AUTO_MODE_START, AUTO_MODE_COUNT, Color.kDarkOrchid));
 
         // no scoring -- solid red
         // low - red, middle - blue, high - purple
-        Map<AutoPivotHeight, LEDPattern> autoHightMap = new HashMap<>();
-        autoHightMap.put(AutoPivotHeight.LOW, new LEDFlash(m_buffer, HALF_MAX_INDEX_LED, HALF_MAX_INDEX_LED, 0.5, Color.kRed));
-        autoHightMap.put(AutoPivotHeight.MEDIUM, new LEDFlash(m_buffer, HALF_MAX_INDEX_LED, HALF_MAX_INDEX_LED,0.5, Color.kBlue));
-        autoHightMap.put(AutoPivotHeight.HIGH, new LEDFlash(m_buffer, HALF_MAX_INDEX_LED, HALF_MAX_INDEX_LED, 0.5, Color.kPurple));
+        Map<AutoPivotHeight, LEDPattern> autoHeightMap = new HashMap<>();
+        autoHeightMap.put(AutoPivotHeight.LOW, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, Color.kRed));
+        autoHeightMap.put(AutoPivotHeight.MEDIUM, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, Color.kBlue));
+        autoHeightMap.put(AutoPivotHeight.HIGH, new MirroredLEDFlash(m_buffer, AUTO_HEIGHT_START, AUTO_HEIGHT_COUNT, 0.5, Color.kPurple));
 
+        m_autoModeColor = new MirroredLEDPatternLookup<>(m_buffer, autonColorMap);
+        m_heightColor = new MirroredLEDPatternLookup<>(m_buffer, autoHeightMap);
 
         m_led.setLength(m_buffer.getLength());
 
@@ -123,9 +140,25 @@ public class LEDManagerSubsystem extends SubsystemBase {
         return false;
     }
 
-    @Override
-    public void periodic() {
-        clear();
+    private void disabledPatternsMode() {
+        AutonomousFactory.AutonMode autoMode = m_autoModeFactory.getSelectedAuto();
+        m_autoModeColor.setKey(autoMode);
+
+        if (m_autoModeColor.hasKey(autoMode)) {
+            m_autoModeColor.writeLeds();
+        }
+    }
+
+    private void disabledPatternsHeight() {
+        AutoPivotHeight height = m_autoModeFactory.getSelectedHeight();
+        m_heightColor.setKey(height);
+
+        if (m_heightColor.hasKey(height)) {
+            m_heightColor.writeLeds();
+        }
+    }
+
+    public void enabledPatterns() {
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
         }
@@ -143,6 +176,19 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         else {
             communityZonePatterns();
+        }
+    }
+
+    @Override
+    public void periodic() {
+        clear();
+
+        if (DriverStation.isDisabled()) {
+            disabledPatternsMode();
+            disabledPatternsHeight();
+        }
+        else {
+            enabledPatterns();
         }
 
         // driverPracticePatterns();
@@ -170,24 +216,18 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
-    public void loadingZonePatterns() {
-        // if good dist
-        m_goodDistToLoadingPiece.writeLeds();
-        // else {
-            m_notInCommunityZone.writeLeds();
-        // }
-
-    }
+    //public void loadingZonePatterns() {
+    // if good dist
+    //m_goodDistToLoadingPiece.writeLeds();
+    // else {
+    //m_notInCommunityZone.writeLeds();
+    // }
+    //}
 
     public void generalTeleopPatterns() {
         m_optionCubeLED = false;
         m_optionConeLED = false;
         m_notInCommunityZone.writeLeds();
-    }
-
-    private void driverPracticePatterns() {
-        m_drivetrainSpeed.distanceToTarget(Math.abs(m_joystick.getLeftY()));
-        m_drivetrainSpeed.writeLeds();
     }
 
     public void setConeGamePieceSignal() {
