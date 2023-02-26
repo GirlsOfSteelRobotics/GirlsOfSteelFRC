@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 import com.gos.chargedup.AutoPivotHeight;
+import com.gos.chargedup.Constants;
 import com.gos.chargedup.autonomous.AutonomousFactory;
 import com.gos.lib.led.LEDFlash;
 import com.gos.lib.led.LEDMovingPixel;
@@ -63,7 +64,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_turretSubsystem = turretSubsystem;
 
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
-        m_led = new AddressableLED(0);
+        m_led = new AddressableLED(Constants.LED_PORT);
 
         // Test LED
         m_drivetrainSpeed = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kGreen, 15);

@@ -58,4 +58,7 @@ public final class Constants {
 
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;
+
+    // PWM
+    public static final int LED_PORT = 0;
 }
