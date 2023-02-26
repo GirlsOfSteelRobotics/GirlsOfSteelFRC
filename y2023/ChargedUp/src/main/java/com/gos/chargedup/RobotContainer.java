@@ -245,12 +245,6 @@ public class RobotContainer {
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
 
 
-//        m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
-//        m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
-//        m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
-//        m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonRetracted());
-
-
     }
 
 
