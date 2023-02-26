@@ -41,8 +41,8 @@ public final class Constants {
     //Pneumatics
     public static final int ARM_TOP_PISTON_OUT = 11;
     public static final int ARM_TOP_PISTON_IN = 8;
-    public static final int ARM_BOTTOM_PISTON_REVERSE = 13;
-    public static final int ARM_BOTTOM_PISTON_FORWARD = 12;
+    public static final int ARM_BOTTOM_PISTON_REVERSE = 12;
+    public static final int ARM_BOTTOM_PISTON_FORWARD = 13;
 
     public static final int CLAW_PISTON_FORWARD = 9;
     public static final int CLAW_PISTON_REVERSE = 10;
