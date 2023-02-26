@@ -13,6 +13,7 @@ import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
+import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
@@ -82,9 +83,11 @@ public class RobotContainer {
         m_claw = new ClawSubsystem();
         m_arm = new ArmSubsystem();
         m_intake = new IntakeSubsystem();
-        m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController, m_chassisSubsystem, m_arm, m_turret); //NOPMD
-
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw);
+
+        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_arm, m_turret, m_autonomousFactory); //NOPMD
+
+
 
         m_pressureSupplier = pressureSupplier;
         configureBindings();
@@ -100,6 +103,7 @@ public class RobotContainer {
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
         createTestCommands();
+        automatedTurretCommands();
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
@@ -122,6 +126,7 @@ public class RobotContainer {
         tab.add("Chassis set position: (0, 0, 0)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
         tab.add("Chassis set position: (0, 0, 90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(90))));
         tab.add("Chassis set position: (0, 0, -90 deg)", m_chassisSubsystem.createResetOdometry(new Pose2d(0, 0, Rotation2d.fromDegrees(-90))));
+        tab.add("Chassis set position: Node 4", m_chassisSubsystem.createResetOdometry(new Pose2d(1.7909518525803976, 2.752448813168305, Rotation2d.fromDegrees(180))));
 
         tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
         tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
@@ -172,28 +177,33 @@ public class RobotContainer {
         tab.add("Claw: Open", m_claw.createMoveClawIntakeOpenCommand());
 
         // intake
-        tab.add("Intake Piston: Out", m_intake.createIntakeOutCommand());
-        tab.add("Intake Piston: In", m_intake.createIntakeInCommand());
+        tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
+        tab.add("Intake Piston: In", m_intake.createIntakeRetract());
 
-        tab.add("Intake Roller: In", m_intake.createIntakeInCommand());
-        tab.add("Intake Roller: Out", m_intake.createIntakeOutCommand());
+        tab.add("Intake Roller: In", m_intake.createIntakeIn());
+        tab.add("Intake Roller: Out", m_intake.createIntakeOut());
+
 
         // Smart arm movement
         tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 45));
         tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 90));
         tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 0));
         tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, -45));
+    }
 
-        //TODO: change the pitch to actual value lol and also update field constant values to the most recent from unbuggy version from mechanical advantage
-        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, 0, 0, 0));
-        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1].getX(), FieldConstants.Grids.LOW_TRANSLATIONS[1].getY(), 0));
-        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2].getX(), FieldConstants.Grids.LOW_TRANSLATIONS[2].getY(), 0));
-        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0].getX(), FieldConstants.Grids.MID_TRANSLATIONS[0].getY(), 1));
-        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1].getX(), FieldConstants.Grids.MID_TRANSLATIONS[1].getY(), 1));
-        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2].getX(), FieldConstants.Grids.MID_TRANSLATIONS[2].getY(), 1));
-        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[0].getY(), 2));
-        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[1].getY(), 2));
-        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2].getX(), FieldConstants.Grids.HIGH_TRANSLATIONS[2].getY(), 2));
+    private void automatedTurretCommands() {
+
+        ShuffleboardTab tab = Shuffleboard.getTab("AutomatedTurret");
+
+        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW));
+        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM));
+        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH));
+        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW));
+        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM));
+        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH));
+        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW));
+        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM));
+        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH));
 
     }
 
@@ -213,9 +223,10 @@ public class RobotContainer {
         m_driverController.a().whileTrue(m_arm.commandFullExtend());
         m_driverController.x().whileTrue(m_arm.commandFullRetract());
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
-        m_driverController.leftTrigger().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
         m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
+        m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
         Trigger leftJoystickAsButtonRight = new Trigger(() -> m_operatorController.getLeftX() > .5);
@@ -228,8 +239,8 @@ public class RobotContainer {
         leftJoystickAsButtonDown.whileTrue(m_arm.commandPivotArmDown());
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
         m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
-        m_operatorController.b().whileTrue(m_intake.createIntakeInCommand());
-        m_operatorController.y().whileTrue(m_intake.createIntakeOutCommand());
+        m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
+        m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
         m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
@@ -264,7 +275,7 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
+                SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
             builder.addDoubleProperty(

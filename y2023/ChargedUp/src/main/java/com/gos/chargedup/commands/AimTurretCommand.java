@@ -1,7 +1,10 @@
 package com.gos.chargedup.commands;
 
+import com.gos.chargedup.AutoPivotHeight;
+import com.gos.chargedup.GamePieceType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -29,7 +32,8 @@ public class AimTurretCommand extends CommandBase {
 
 
 
-    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, double x, double y, double pitch) {
+    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height) {
+        setName("Score " + gamePiece + " " + position + " " + height);
         this.m_armSubsystem = armSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_turretSubsystem = turretSubsystem;
@@ -37,10 +41,10 @@ public class AimTurretCommand extends CommandBase {
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_armSubsystem, this.m_turretSubsystem);
 
-        m_targetX = x;
-        m_targetY = y;
+        m_targetX = targetPos.getX();
+        m_targetY = targetPos.getY();
 
-        m_targetPitch = pitch;
+        m_targetPitch = armSubsystem.getArmAngleForScoring(height, gamePiece);
 
     }
 

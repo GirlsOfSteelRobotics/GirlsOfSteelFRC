@@ -60,6 +60,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
         m_turretMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_turretMotor.setSmartCurrentLimit(60);
 
         m_turretEncoder = m_turretMotor.getEncoder();
         m_turretEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
