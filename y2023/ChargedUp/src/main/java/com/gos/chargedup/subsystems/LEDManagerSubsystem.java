@@ -176,8 +176,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
 
         else {
+            generalTeleopPatterns();
+        }
+
+        /*
+        else {
             communityZonePatterns();
         }
+        */
     }
 
     @Override
