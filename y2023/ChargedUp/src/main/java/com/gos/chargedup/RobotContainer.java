@@ -207,7 +207,7 @@ public class RobotContainer {
         tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH));
 
         // turret arm to intake command
-        tab.add("turret arm to intake command", new TurretArmToIntakeCommandGroup(m_arm, m_intake, m_turret));
+        tab.add("turret arm to intake command", new TurretArmToIntakeCommandGroup(m_arm, m_turret));
 
     }
 
