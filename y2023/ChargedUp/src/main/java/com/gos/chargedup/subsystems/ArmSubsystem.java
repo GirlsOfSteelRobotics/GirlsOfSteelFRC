@@ -1,6 +1,5 @@
 package com.gos.chargedup.subsystems;
 
-
 import com.gos.chargedup.ArmPreventionLogic;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
@@ -37,7 +36,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
@@ -338,8 +337,8 @@ public class ArmSubsystem extends SubsystemBase {
         return runOnce(this::fullExtend).withTimeout(PNEUMATICS_WAIT).withName("Arm Piston: Full Extend");
     }
 
-    public CommandBase commandFullExtendPrevention(ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
-        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm, turret, intake);
+    public CommandBase commandFullExtendPrevention(ArmSubsystem arm, CommandXboxController x) {
+        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm);
         return new ConditionalCommand(
             this.runOnce(this::fullExtend).withTimeout(PNEUMATICS_WAIT),
             this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)), //change controllers?
@@ -355,8 +354,8 @@ public class ArmSubsystem extends SubsystemBase {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
-    public CommandBase commandPivotArmUpPrevention(ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
-        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm, turret, intake);
+    public CommandBase commandPivotArmUpPrevention(ArmSubsystem arm, CommandXboxController x) {
+        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm);
         return new ConditionalCommand(
             this.runEnd(this::pivotArmUp, this::pivotArmStop),
             this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)), //change controllers?
@@ -368,8 +367,8 @@ public class ArmSubsystem extends SubsystemBase {
         return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Down");
     }
 
-    public CommandBase commandPivotArmDownPrevention(ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, CommandXboxController x) {
-        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm, turret, intake);
+    public CommandBase commandPivotArmDownPrevention(ArmSubsystem arm, CommandXboxController x) {
+        ArmPreventionLogic armPreventionLogic = new ArmPreventionLogic(arm);
         return new ConditionalCommand(
             this.runEnd(this::pivotArmDown, this::pivotArmStop),
             this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)), //change controllers?

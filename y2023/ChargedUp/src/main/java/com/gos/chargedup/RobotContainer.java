@@ -146,13 +146,13 @@ public class RobotContainer {
         tab.add("Turret: PID - 180 degrees", m_turret.commandTurretPID(180));
 
         //turret prevention
-        tab.add("Turret Prevention Test: Move CW", m_turret.commandTurretPreventionClockwise(m_arm, m_turret, m_intake, m_operatorController));
-        tab.add("Turret Prevention Test: Move CCW", m_turret.commandTurretPreventionCounterClockwise(m_arm, m_turret, m_intake, m_operatorController));
+        tab.add("Turret Prevention Test: Move CW", m_turret.commandTurretPreventionClockwise(m_arm, m_operatorController));
+        tab.add("Turret Prevention Test: Move CCW", m_turret.commandTurretPreventionCounterClockwise(m_arm, m_operatorController));
 
-        tab.add("Turret Prevention Test: PID - -90 degrees", m_turret.commandTurretPreventionPID(-90, m_arm, m_turret, m_intake, m_operatorController));
-        tab.add("Turret Prevention Test: PID - 0 degrees", m_turret.commandTurretPreventionPID(0, m_arm, m_turret, m_intake, m_operatorController));
-        tab.add("Turret Prevention Test: PID - 90 degrees", m_turret.commandTurretPreventionPID(90, m_arm, m_turret, m_intake, m_operatorController));
-        tab.add("Turret Prevention Test: PID - 180 degrees", m_turret.commandTurretPreventionPID(180, m_arm, m_turret, m_intake, m_operatorController));
+        tab.add("Turret Prevention Test: PID - -90 degrees", m_turret.commandTurretPreventionPID(-90, m_arm, m_operatorController));
+        tab.add("Turret Prevention Test: PID - 0 degrees", m_turret.commandTurretPreventionPID(0, m_arm, m_operatorController));
+        tab.add("Turret Prevention Test: PID - 90 degrees", m_turret.commandTurretPreventionPID(90, m_arm, m_operatorController));
+        tab.add("Turret Prevention Test: PID - 180 degrees", m_turret.commandTurretPreventionPID(180, m_arm, m_operatorController));
 
         // arm pivot
         tab.add("Arm Pivot: Pivot Down", m_arm.commandPivotArmDown());
@@ -179,9 +179,9 @@ public class RobotContainer {
         tab.add("Arm Piston: Top Retracted", m_arm.commandTopPistonRetracted());
 
         //arm piston & pivot prevention
-        tab.add("Arm Piston Prevention Test: Full Extend", m_arm.commandFullExtendPrevention(m_arm, m_turret, m_intake, m_operatorController));
-        tab.add("Arm Prevention Test: Pivot Up", m_arm.commandPivotArmUpPrevention(m_arm, m_turret, m_intake, m_operatorController));
-        tab.add("Arm Prevention Test: Pivot Down", m_arm.commandPivotArmDownPrevention(m_arm, m_turret, m_intake, m_operatorController));
+        tab.add("Arm Piston Prevention Test: Full Extend", m_arm.commandFullExtendPrevention(m_arm, m_operatorController));
+        tab.add("Arm Prevention Test: Pivot Up", m_arm.commandPivotArmUpPrevention(m_arm, m_operatorController));
+        tab.add("Arm Prevention Test: Pivot Down", m_arm.commandPivotArmDownPrevention(m_arm, m_operatorController));
 
         // claw
         tab.add("Claw: Close", m_claw.createMoveClawIntakeCloseCommand());
