@@ -38,9 +38,9 @@ public class ArmPIDCheckIfAllowedCommand extends CommandBase {
         }
         else if (m_turretSubsytem.getTurretAngleDeg() > TurretSubsystem.TURRET_LEFT_OF_INTAKE && m_turretSubsytem.getTurretAngleDeg() < TurretSubsystem.TURRET_RIGHT_OF_INTAKE) {
             // check if intake is out
-            if (m_intakeSubsystem.getIntakeOut()) {
+            if (m_intakeSubsystem.isIntakeDown()) {
                 m_armSubsystem.pivotArmToAngle(m_goalAngle);
-            } else if (!m_intakeSubsystem.getIntakeOut()) {
+            } else if (!m_intakeSubsystem.isIntakeDown()) {
                 // check if intake is in and arm angle is less than contact w/ intake angle
                 if (m_armSubsystem.getArmAngleDeg() < m_armSubsystem.ARM_HIT_INTAKE_ANGLE) {
                     m_armSubsystem.pivotArmStop();
@@ -58,7 +58,7 @@ public class ArmPIDCheckIfAllowedCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return m_armSubsystem.pivotArmToAngle(m_goalAngle);
+        return m_armSubsystem.isArmAtAngle(m_goalAngle);
     }
 
     @Override

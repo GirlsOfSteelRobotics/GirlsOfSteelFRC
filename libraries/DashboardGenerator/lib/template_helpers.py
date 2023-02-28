@@ -78,12 +78,12 @@ def _on_key_released(child, entry, array_index=None):
 
     if entry["type"] == "double":
         if "sim_value" in entry:
-            template_file = "java/keyboard_templates/key_released_sim_value.txt"
+            template_file = "shuffleboard/java/keyboard_templates/key_released_sim_value.txt"
         elif "sim_incr" in entry:
-            template_file = "java/keyboard_templates/key_released_sim_incr.txt"
+            template_file = "shuffleboard/java/keyboard_templates/key_released_sim_incr.txt"
 
     elif entry["type"] == "boolean":
-        template_file = "java/keyboard_templates/key_released_boolean.txt"
+        template_file = "shuffleboard/java/keyboard_templates/key_released_boolean.txt"
     elif _is_array(entry):
         un_arrayed = entry.copy()
         un_arrayed["type"] = un_arrayed["type"][:-2]
@@ -123,12 +123,12 @@ def _on_key_pressed(child, entry, array_index=None):
 
     if entry["type"] == "double":
         if "sim_value" in entry:
-            template_file = "java/keyboard_templates/key_press_sim_value.txt"
+            template_file = "shuffleboard/java/keyboard_templates/key_press_sim_value.txt"
         elif "sim_incr" in entry:
-            template_file = "java/keyboard_templates/key_press_sim_incr.txt"
+            template_file = "shuffleboard/java/keyboard_templates/key_press_sim_incr.txt"
 
     elif entry["type"] == "boolean":
-        template_file = "java/keyboard_templates/key_press_boolean.txt"
+        template_file = "shuffleboard/java/keyboard_templates/key_press_boolean.txt"
     elif _is_array(entry):
         un_arrayed = entry.copy()
         un_arrayed["type"] = un_arrayed["type"][:-2]

@@ -5,6 +5,9 @@
 
 package com.gos.chargedup.autonomous;
 
+import com.gos.chargedup.AutoPivotHeight;
+import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.commands.ScorePieceCommandGroup;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
@@ -14,68 +17,69 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
 public final class AutonomousFactory {
 
     private final SendableChooser<Command> m_autonomousModes;
 
-    public final CommandBase m_onlyDockAndEngage;
-
-    public final CommandBase m_twoPieceNodes0and1;
-
-    public final CommandBase m_twoPieceNodes7and8;
-
-    public final CommandBase m_oneNodeAndEngage3;
-
-    public final CommandBase m_oneNodeAndEngage4;
-
-    public final CommandBase m_oneNodeAndEngage5;
-
-    public final CommandBase m_scoreConeAtCurrentPos;
-
-    public final CommandBase m_scoreCubeAtCurrentPos;
-
-    public final CommandBase m_onlyLeaveCommunityEnd;
-
-    public final CommandBase m_onlyLeaveCommunityPlayerStation;
-
+    @SuppressWarnings("PMD.NPathComplexity")
     public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
         m_autonomousModes = new SendableChooser<>();
 
-        //Two scoring nodes (high), no engaging (nodes 0,1; nodes 7,8)
-        m_twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1");
-        m_autonomousModes.setDefaultOption("Two Piece Nodes 0 and 1", m_twoPieceNodes0and1);
+        //Two scoring nodes (each height), no engaging (nodes 0,1; nodes 7,8)
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase twoPieceNodes0and1 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1", height);
+            m_autonomousModes.setDefaultOption("Two Piece Nodes 0 and 1: " + height, twoPieceNodes0and1);
+        }
 
-        m_twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8");
-        m_autonomousModes.addOption("Two Piece Nodes 7 and 8", m_twoPieceNodes7and8);
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase twoPieceNodes7and8 = new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8", height);
+            m_autonomousModes.addOption("Two Piece Nodes 7 and 8: " + height, twoPieceNodes7and8);
+        }
+
+        //two piece AND engage
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase twoPieceEngage = new TwoPieceAndEngageCommandGroup(chassis, turret, arm, claw, "TWOPieceEngage", height);
+            m_autonomousModes.addOption("Two Piece & Engage: " + height, twoPieceEngage);
+        }
 
         //One scoring node (high), engage at end (nodes 3, 4, 5)
-        m_oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", ArmSubsystem.ARM_CONE_HIGH_DEG);
-        m_autonomousModes.addOption("One Piece Node and Engage 3", m_oneNodeAndEngage3);
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase oneNodeAndEngage3 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE);
+            m_autonomousModes.addOption("One Piece Node and Engage 3: " + height, oneNodeAndEngage3);
+        }
 
-        m_oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", ArmSubsystem.ARM_CUBE_HIGH_DEG);
-        m_autonomousModes.addOption("One Piece Node and Engage 4", m_oneNodeAndEngage4);
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase oneNodeAndEngage4 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", height, GamePieceType.CUBE);
+            m_autonomousModes.addOption("One Piece Node and Engage 4: " + height, oneNodeAndEngage4);
+        }
 
-        m_oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", ArmSubsystem.ARM_CONE_HIGH_DEG);
-        m_autonomousModes.addOption("One Piece Node and Engage 5", m_oneNodeAndEngage5);
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase oneNodeAndEngage5 = new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE);
+            m_autonomousModes.addOption("One Piece Node and Engage 5: " + height, oneNodeAndEngage5);
+        }
 
         //score wherever the robot is (no chassis parameter)
-        m_scoreConeAtCurrentPos = new ScoreHighConeAtCurrentPosCommandGroup(turret, arm, claw);
-        m_autonomousModes.addOption("Score Cone High at Current Position's node", m_scoreConeAtCurrentPos);
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase scoreConeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, height, GamePieceType.CONE);
+            m_autonomousModes.addOption("Score Cone at Current Position's node: " + height, scoreConeAtCurrentPos);
+        }
 
-        m_scoreCubeAtCurrentPos = new ScoreHighCubeAtCurrentPosCommandGroup(turret, arm, claw);
-        m_autonomousModes.addOption("Score Cube High at Current Position's node", m_scoreCubeAtCurrentPos);
+        for (AutoPivotHeight height : AutoPivotHeight.values()) {
+            CommandBase scoreCubeAtCurrentPos = new ScorePieceCommandGroup(turret, arm, claw, height, GamePieceType.CUBE);
+            m_autonomousModes.addOption("Score Cube at Current Position's node: " + height, scoreCubeAtCurrentPos);
+        }
 
         //just leave the community (by the player station and by the end)
-        m_onlyLeaveCommunityEnd = new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity");
-        m_autonomousModes.addOption("Leave community zone at far end", m_onlyLeaveCommunityEnd);
+        CommandBase onlyLeaveCommunityEnd = new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity");
+        m_autonomousModes.addOption("Leave community zone at far end", onlyLeaveCommunityEnd);
 
-        m_onlyLeaveCommunityPlayerStation = new OnlyLeaveCommunityCommandGroup(chassis, "PlayerStationLeaveCommunity");
-        m_autonomousModes.addOption("Leave community zone at player station", m_onlyLeaveCommunityPlayerStation);
+
+        CommandBase onlyLeaveCommunityPlayerStation = new OnlyLeaveCommunityCommandGroup(chassis, "PlayerStationLeaveCommunity");
+        m_autonomousModes.addOption("Leave community zone at player station", onlyLeaveCommunityPlayerStation);
 
         //just dock and engage the robot from the middle of the charging station
-        m_onlyDockAndEngage = new OnlyDockAndEngageCommandGroup(chassis);
-        m_autonomousModes.addOption("Only Dock & Engage", m_onlyDockAndEngage);
+        CommandBase onlyDockAndEngage = new OnlyDockAndEngageCommandGroup(chassis);
+        m_autonomousModes.addOption("Only Dock & Engage", onlyDockAndEngage);
 
         //ToDo: Two scoring nodes (nodes 3,4; nodes 4,5) and engage
 

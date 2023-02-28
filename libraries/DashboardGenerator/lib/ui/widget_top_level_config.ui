@@ -72,13 +72,13 @@
   <customwidget>
    <class>ChildTableConfig</class>
    <extends>QWidget</extends>
-   <header>libraries/ShuffleboardGenerator/lib/ui/subpanels.h</header>
+   <header>libraries/DashboardGenerator/lib/ui/subpanels.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TopLevelShapesConfigWidget</class>
    <extends>QWidget</extends>
-   <header>libraries/ShuffleboardGenerator/lib/ui/subpanels.h</header>
+   <header>libraries/DashboardGenerator/lib/ui/subpanels.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
