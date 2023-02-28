@@ -39,11 +39,5 @@ public class FourBallAutoHalfCommandGroup extends SequentialCommandGroup {
                 .alongWith(new CollectorPivotPIDCommand(collector, CollectorSubsystem.UP_ANGLE)),
             new ShootWithBothIntakes(verticalConveyor, horizontalConveyor, shooter, SECOND_SHOT_RPM, 5));
 
-
-        addCommands(new yourcmand().withTimeoutput(4));
-        addCommands(new yourcmand());
-        addCommands(new yourcmand());
-        addCommands(new yourcmand());
-        addCommands(new yourcmand());
     }
 }
