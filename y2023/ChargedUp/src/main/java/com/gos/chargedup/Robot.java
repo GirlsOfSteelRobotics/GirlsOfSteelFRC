@@ -5,10 +5,13 @@
 
 package com.gos.chargedup;
 
-import com.gos.lib.rev.PneumaticHubAlerts;
+import com.gos.lib.checklists.PneumaticHubAlerts;
+import com.gos.lib.checklists.PowerDistributionAlerts;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.littletonrobotics.frc2023.util.Alert;
@@ -28,8 +31,11 @@ public class Robot extends TimedRobot {
 
     private final PneumaticHub m_pneumaticHub = new PneumaticHub();
     private final PneumaticHubAlerts m_pneumaticHubAlert = new PneumaticHubAlerts(m_pneumaticHub);
-    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
 
+    private final PowerDistribution m_powerDistribution = new PowerDistribution();
+    private final PowerDistributionAlerts m_powerDistributionAlert = new PowerDistributionAlerts(m_powerDistribution);
+
+    private final Alert m_lowBatterVoltage = new Alert("low battery", Alert.AlertType.ERROR);
     private static final double LOW_BATTERY_VOLTAGE = 11.9;
 
 
@@ -41,7 +47,8 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        m_robotContainer = new RobotContainer(m_pneumaticHub);
+        m_pneumaticHub.enableCompressorAnalog(110, 120);
+        m_robotContainer = new RobotContainer(() -> m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
     }
 
 
@@ -60,7 +67,11 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         m_pneumaticHubAlert.checkAlerts();
+        m_powerDistributionAlert.checkAlerts();
+
         m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
+        SmartDashboard.putNumber("Air Pressure", m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
+        SmartDashboard.putBoolean("Compressor On", m_pneumaticHub.getCompressor());
     }
 
 

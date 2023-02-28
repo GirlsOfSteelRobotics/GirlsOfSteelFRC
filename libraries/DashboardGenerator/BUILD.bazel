@@ -1,0 +1,26 @@
+load("@gos_pip_deps//:requirements.bzl", "requirement")
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary")
+
+gos_py_binary(
+    name = "generate_dashboard",
+    srcs = ["generate_dashboard.py"],
+    data = ["//libraries/DashboardGenerator/lib/templates/shuffleboard"],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("jinja2"),
+        requirement("pyyaml"),
+        "//libraries/DashboardGenerator/lib",
+        "@rules_python//python/runfiles",
+    ],
+)
+
+gos_py_binary(
+    name = "gui",
+    srcs = ["gui.py"],
+    skip_include_test = True,  #pyqt DLL causes problems
+    visibility = ["//visibility:public"],
+    deps = [
+        ":generate_dashboard",
+        "//libraries/DashboardGenerator/lib/ui",
+    ],
+)

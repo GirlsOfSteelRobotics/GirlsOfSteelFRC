@@ -5,12 +5,13 @@ import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import java.util.function.DoubleSupplier;
 
 public class ChecklistTestAll extends SequentialCommandGroup {
 
-    public ChecklistTestAll(PneumaticHub pneumaticHub, ChassisSubsystem chassis, ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, ClawSubsystem claw) {
+    public ChecklistTestAll(DoubleSupplier pressureSupplier, ChassisSubsystem chassis, ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, ClawSubsystem claw) {
         setName("Self Test Checklist");
 
         //chassis
@@ -19,21 +20,18 @@ public class ChecklistTestAll extends SequentialCommandGroup {
 
         //arm
         addCommands(arm.createIsPivotMotorMoving());
-        addCommands(arm.createIsArmInnerPneumaticMoving(pneumaticHub));
-        addCommands(arm.createIsArmOuterPneumaticMoving(pneumaticHub));
+        addCommands(arm.createIsArmBottomPneumaticMoving(pressureSupplier));
+        addCommands(arm.createIsArmTopPneumaticMoving(pressureSupplier));
 
         //turret
         addCommands(turret.createIsTurretMotorMoving());
 
         //intake
         addCommands(intake.createIsIntakeMotorMoving());
-        addCommands(intake.createIsHopperMotorMoving());
-        addCommands(intake.createIsIntakeLeftPneumaticMoving(pneumaticHub));
-        addCommands(intake.createIsIntakeRightPneumaticMoving(pneumaticHub));
+        addCommands(intake.createIsIntakePneumaticMoving(pressureSupplier));
 
         //claw
-        addCommands(claw.createIsLeftClawPneumaticMoving(pneumaticHub));
-        addCommands(claw.createIsRightClawPneumaticMoving(pneumaticHub));
+        addCommands(claw.createIsClawPneumaticMoving(pressureSupplier));
 
     }
 

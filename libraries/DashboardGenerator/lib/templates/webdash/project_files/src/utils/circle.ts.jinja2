@@ -1,0 +1,37 @@
+
+
+import { Shape } from "./shape";
+
+export class Circle extends Shape {
+  centerX: number;
+  centerY: number;
+  radius: number;
+
+  constructor(x: number, y: number, radius: number, fillColor?: string) {
+    super(fillColor);
+    this.centerX = x;
+    this.centerY = y;
+    this.radius = radius;
+    this.fillColor = fillColor;
+  }
+
+  render(ctx: CanvasRenderingContext2D) {
+    ctx.save();
+
+
+    ctx.beginPath();
+    ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = this.fillColor!;
+    ctx.fill();
+    // ctx.lineWidth = 5;
+    // ctx.strokeStyle = '#003300';
+    // ctx.stroke();
+
+    // ctx.beginPath();
+    // ctx.fillStyle = this.fillColor!;
+
+    // ctx.ellipse(this.centerX, this.centerY, this.radius, this.radius, 0, 0, 0, false)
+
+    ctx.restore();
+  }
+}

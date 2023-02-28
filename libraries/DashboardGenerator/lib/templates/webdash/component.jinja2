@@ -1,0 +1,98 @@
+import { html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js"
+import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./{{widget.package_name.replace("_", "-")}}/renderer"
+import { {{widget.table}}Data } from "./{{widget.package_name.replace("_", "-")}}/datatypes"
+
+/* tslint:disable */
+
+export const elementConfig = {
+  dashboard: {
+    displayName: "{{widget.table}}",
+  },
+  properties: {
+{%- for child in widget.children_tables %}
+  {%- for variable in child.entries %}
+    {{variable.name}}: { type: "{%- if variable.type == "double" %}Number{%- elif variable.type == "boolean" %}Boolean{% else %} UHOH {% endif %}", {% if loop.first %}primary: true{%else%}reflect: true{%endif%} },
+  {%- endfor %}
+{%- endfor %}
+  }
+};
+
+@customElement("{{widget.package_name.replace("_", "-")}}")
+export class {{widget.table}} extends LitElement {
+  static properties = elementConfig.properties;
+
+{% for child in widget.children_tables %}
+  {%- for variable in child.entries %}
+  @property({ type: {% if variable.type == "double" %}Number{%- elif variable.type == "boolean" %}Boolean{% else %} UHOH {% endif %} }) {{variable.name}} = {% if variable.type == "double" %}0{%- elif variable.type == "boolean" %}true{% else %} UHOH {% endif %};
+  {%- endfor %}
+{%- endfor %}
+
+  renderer = new Renderer();
+
+  firstUpdated() {
+    const canvas = this.shadowRoot?.querySelector("canvas") as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+
+    const updateObjectsAndDrawings = () => {
+      this.renderRobot(canvas, ctx);
+      window.requestAnimationFrame(updateObjectsAndDrawings);
+    };
+
+    const resizeObserver = new ResizeObserver(() => this.resized());
+    resizeObserver.observe(this);
+
+    window.requestAnimationFrame(updateObjectsAndDrawings);
+  }
+
+  private renderRobot(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+    const { width, height } = this.getBoundingClientRect();
+    const scale = Math.min(width / MAX_WIDTH, height / MAX_HEIGHT);
+
+    ctx.beginPath();
+    ctx.scale(scale, scale);
+
+  {%- for child in widget.children_tables %}
+
+    const {{lower_first_char(child.table)}}Info: {{child.table}}Data = {
+    {%- for variable in child.entries %}
+      {{variable.name}}: this.{{variable.name}},
+    {%- endfor %}
+    };
+  {%- endfor %}
+
+{%- if widget.children_tables|length != 1 %}
+      const {{lower_first_char(widget.table)}}Info: {{widget.table}}Data = {
+{%- for child in widget.children_tables %}
+        {{lower_first_char(child.table)}} : {{lower_first_char(child.table)}}Data,
+{%- endfor %}
+      };
+{%- endif %}
+
+    this.renderer.render(ctx, {{lower_first_char(widget.table)}}Info);
+
+    ctx.restore();
+  }
+
+  private resized(): void {
+    this.requestUpdate();
+  }
+
+  render() {
+    const rect = this.getBoundingClientRect();
+    const { width, height } = rect;
+    return html`
+      <canvas
+        width="${width}"
+        height="${height}"
+        style="border:1px solid #000000;"
+      />
+    `;
+  }
+}
+
