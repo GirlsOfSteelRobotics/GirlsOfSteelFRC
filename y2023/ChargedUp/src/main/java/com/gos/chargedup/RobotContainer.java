@@ -239,9 +239,18 @@ public class RobotContainer {
         m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
         m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
         m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
+
         m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
+
+        // Backup manual controls for debugging
+        // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
+        // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
+        // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
+        // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
+
+
     }
 
 
