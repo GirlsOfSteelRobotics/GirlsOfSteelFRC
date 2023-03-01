@@ -1,7 +1,9 @@
 package com.gos.chargedup.commands;
 
 import com.gos.chargedup.AutoPivotHeight;
+import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -30,9 +32,15 @@ public class AimTurretCommand extends CommandBase {
     private double m_currentX;
     private double m_currentY;
 
+    private ClawAlignedCheck m_clawAlignedCheck;
+
+    private Translation2d m_nodePos;
+
+    private LEDManagerSubsystem m_ledManagerSubsystem;
 
 
-    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height) {
+
+    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height, LEDManagerSubsystem ledManagerSubsystem) {
         setName("Score " + gamePiece + " " + position + " " + height);
         this.m_armSubsystem = armSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
@@ -46,6 +54,10 @@ public class AimTurretCommand extends CommandBase {
 
         m_targetPitch = armSubsystem.getArmAngleForScoring(height, gamePiece);
 
+        m_clawAlignedCheck = new ClawAlignedCheck(m_chassisSubsystem, m_armSubsystem, m_turretSubsystem);
+        m_ledManagerSubsystem = ledManagerSubsystem;
+
+        m_nodePos = targetPos;
     }
 
     @Override
@@ -80,6 +92,13 @@ public class AimTurretCommand extends CommandBase {
         m_turretSubsystem.moveTurretToAngleWithPID(turretAngle);
 
         m_armSubsystem.pivotArmToAngle(m_targetPitch);
+
+        if (m_clawAlignedCheck.isClawAtPoint(m_nodePos)){
+            System.out.println("X " + m_clawAlignedCheck.getClawXValue(m_nodePos));
+            System.out.println("Y " + m_clawAlignedCheck.getClawYValue(m_nodePos));
+
+            m_ledManagerSubsystem.clawIsAligned();
+        }
 
     }
 

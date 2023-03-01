@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.Constants;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -240,6 +241,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+
         updateOdometry();
 
         m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
@@ -262,6 +264,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
         m_followerRightMotorErrorAlert.checkAlerts();
+
+
 
         m_pigeonAlerts.checkAlerts();
     }
@@ -417,4 +421,5 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase createIsRightMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
+
 }

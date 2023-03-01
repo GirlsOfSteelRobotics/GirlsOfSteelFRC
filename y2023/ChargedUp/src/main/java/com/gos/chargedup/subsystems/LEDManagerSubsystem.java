@@ -1,13 +1,16 @@
 package com.gos.chargedup.subsystems;
 
+import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
 import com.gos.lib.led.mirrored.MirroredLEDPercentScale;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.littletonrobotics.frc2023.FieldConstants;
 
 public class LEDManagerSubsystem extends SubsystemBase {
     // subsystems
@@ -30,6 +33,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private static final int MAX_INDEX_LED = 30;
 
+    private final MirroredLEDFlash m_clawAlignedSignal;
+
+
+
+
     public LEDManagerSubsystem(CommandXboxController joystick) {
         m_joystick = joystick;
 
@@ -44,9 +52,15 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_led.setLength(m_buffer.getLength());
 
+        //for Claw Aligned Check
+
+        m_clawAlignedSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
+
         // Set the data
         m_led.setData(m_buffer);
         m_led.start();
+
+
     }
 
     @Override
@@ -62,6 +76,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         driverPracticePatterns();
         m_led.setData(m_buffer);
+
     }
 
     public void clear() {
@@ -89,11 +104,20 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_optionCubeLED = true;
     }
 
+    public void clawIsAligned() {
+        m_clawAlignedSignal.writeLeds();
+
+    }
+
     public CommandBase commandConeGamePieceSignal() {
         return this.runEnd(this::setConeGamePieceSignal, this::teleopPatterns);
     }
 
     public CommandBase commandCubeGamePieceSignal() {
+        return this.runEnd(this::setCubeGamePieceSignal, this::teleopPatterns);
+    }
+
+    public CommandBase commandClawAlignedSignal() {
         return this.runEnd(this::setCubeGamePieceSignal, this::teleopPatterns);
     }
 }

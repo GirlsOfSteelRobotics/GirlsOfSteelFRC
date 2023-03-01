@@ -65,6 +65,12 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double MAX_ANGLE_RADS = Math.toRadians(MAX_ANGLE_DEG);
     private static final boolean SIMULATE_GRAVITY = true;
 
+    private static final double ARM_RETRACTED_LENGTH = 1.0;
+
+    private static final double ARM_MIDDLE_LENGTH = 1.0;
+
+    private static final double ARM_EXTENDED_LENGTH = 1.0;
+
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
     private final SparkMaxPIDController m_pivotPIDController;
@@ -86,6 +92,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_pivotErrorAlert;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
+
+    private double m_getArmLengthMeters;
 
 
     public ArmSubsystem() {
@@ -189,16 +197,24 @@ public class ArmSubsystem extends SubsystemBase {
     public final void fullRetract() {
         m_topPiston.set(TOP_PISTON_EXTENDED);
         m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        m_getArmLengthMeters = ARM_RETRACTED_LENGTH;
+
     }
 
     public void middleRetract() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        m_getArmLengthMeters = ARM_MIDDLE_LENGTH;
     }
 
     public void out() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
+        m_getArmLengthMeters = ARM_EXTENDED_LENGTH;
+    }
+
+    public double getArmLengthMeters(){
+        return m_getArmLengthMeters;
     }
 
     public boolean isBottomPistonIn() {
