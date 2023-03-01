@@ -163,7 +163,6 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void pivotArmUp() {
-        m_pivotMotor.set(ARM_MOTOR_SPEED);
 
         if (m_pivotMotorEncoder.getPosition() < MAX_ANGLE_DEG) {
             m_pivotMotor.set(ARM_MOTOR_SPEED);
