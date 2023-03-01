@@ -58,8 +58,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final MirroredLEDPercentScale m_turretAngle;
     private final MirroredLEDBoolean m_armAtAngle;
 
-    //private final MirroredLEDFlash m_goodDistToLoadingPiece;
-
     private final MirroredLEDPercentScale m_dockAngle;
 
     private final MirroredLEDRainbow m_notInCommunityZone;
@@ -134,14 +132,14 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_led.start();
     }
 
-    public boolean atGoodPositionToLoadPiece() {
-        // get y distance
-        // get the angle of the turret (field-oriented)
-        // good distance to loading piece?
-        return false;
-    }
+    private void disabledPatterns() {
+        AutoPivotHeight height = m_autoModeFactory.getSelectedHeight();
+        m_heightColor.setKey(height);
 
-    private void disabledPatternsMode() {
+        if (m_heightColor.hasKey(height)) {
+            m_heightColor.writeLeds();
+        }
+
         AutonomousFactory.AutonMode autoMode = m_autoModeFactory.getSelectedAuto();
         m_autoModeColor.setKey(autoMode);
 
@@ -150,33 +148,24 @@ public class LEDManagerSubsystem extends SubsystemBase {
         }
     }
 
-    private void disabledPatternsHeight() {
-        AutoPivotHeight height = m_autoModeFactory.getSelectedHeight();
-        m_heightColor.setKey(height);
-
-        if (m_heightColor.hasKey(height)) {
-            m_heightColor.writeLeds();
-        }
-    }
-
-    public void enabledPatterns() {
+    private void enabledPatterns() {
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
         }
-
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
-
-        // else if (chassis.incommunityzone): community zone patterns
-
-        // else if chassis.inloadingzone: loading zone patterns
+        // else if (m_chassisSubsystem.inCommunityZone()) {
+        //     communityZonePatterns();
+        // }
+        // else if (m_chassisSubsystem.inLoadingZone()) {
+        //     loadingZonePatterns();
+        // }
         else if (m_optionDockLED) {
             dockAndEngagePatterns();
         }
-
         else {
-            generalTeleopPatterns();
+            m_notInCommunityZone.writeLeds();
         }
 
         /*
@@ -191,8 +180,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         clear();
 
         if (DriverStation.isDisabled()) {
-            disabledPatternsMode();
-            disabledPatternsHeight();
+            disabledPatterns();
         }
         else {
             enabledPatterns();
@@ -202,7 +190,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_led.setData(m_buffer);
     }
 
-    public void clear() {
+    private void clear() {
         for (int i = 0; i < MAX_INDEX_LED; i++) {
             m_buffer.setRGB(i, 0, 0, 0);
         }
@@ -213,45 +201,35 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
     }
 
-    public void communityZonePatterns() {
-        if (m_turretSubsystem.atTurretAngle() && m_armSubsystem.atArmAngle()) {
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private void communityZonePatterns() {
+        if (m_turretSubsystem.atTurretAngle() && m_armSubsystem.isArmAtAngle()) {
             m_readyToScore.writeLeds();
         }
-        else if (!m_turretSubsystem.atTurretAngle() || !m_armSubsystem.atArmAngle()) {
+        else if (!m_turretSubsystem.atTurretAngle() || !m_armSubsystem.isArmAtAngle()) {
             m_turretAngle.distanceToTarget(m_turretSubsystem.getTurretError());
-            m_armAtAngle.setState(m_armSubsystem.atArmAngle());
+            m_armAtAngle.setState(m_armSubsystem.isArmAtAngle());
         }
     }
 
-    //public void loadingZonePatterns() {
-    // if good dist
-    //m_goodDistToLoadingPiece.writeLeds();
-    // else {
-    //m_notInCommunityZone.writeLeds();
-    // }
-    //}
-
-    public void generalTeleopPatterns() {
-        m_optionCubeLED = false;
-        m_optionConeLED = false;
-        m_notInCommunityZone.writeLeds();
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private void loadingZonePatterns() {
+        // if good dist
+        //m_goodDistToLoadingPiece.writeLeds();
+        // else {
+        //m_notInCommunityZone.writeLeds();
+        // }
     }
 
-    public void setConeGamePieceSignal() {
-        m_optionConeLED = true;
-
-    }
-
-    public void setCubeGamePieceSignal() {
-        m_optionCubeLED = true;
-    }
-
+    //////////////////////
+    // Command Factories
+    //////////////////////
     public CommandBase commandConeGamePieceSignal() {
-        return this.runEnd(this::setConeGamePieceSignal, this::generalTeleopPatterns);
+        return this.runEnd(() -> m_optionConeLED = true, () -> m_optionConeLED = false);
     }
 
     public CommandBase commandCubeGamePieceSignal() {
-        return this.runEnd(this::setCubeGamePieceSignal, this::generalTeleopPatterns);
+        return this.runEnd(() -> m_optionCubeLED = true, () -> m_optionCubeLED = false);
     }
 }
 

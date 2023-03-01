@@ -87,8 +87,6 @@ public class RobotContainer {
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_arm, m_turret, m_autonomousFactory); //NOPMD
 
-
-
         m_pressureSupplier = pressureSupplier;
         configureBindings();
 

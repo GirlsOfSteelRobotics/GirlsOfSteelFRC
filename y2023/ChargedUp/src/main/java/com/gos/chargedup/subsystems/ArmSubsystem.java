@@ -240,21 +240,18 @@ public class ArmSubsystem extends SubsystemBase {
 
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
-        }
-        else {
+        } else {
             m_pivotMotor.set(0);
         }
     }
 
-    public boolean isArmAtAngle(double pivotAngleGoal) {
-        m_armAngleGoal = pivotAngleGoal;
-        double error = getArmAngleDeg() - pivotAngleGoal;
-
-        return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
+    public boolean isArmAtAngle() {
+        return isArmAtAngle(m_armAngleGoal);
     }
 
-    public boolean atArmAngle() {
-        double error = getArmAngleDeg() - m_armAngleGoal;
+    public boolean isArmAtAngle(double pivotAngleGoal) {
+        double error = getArmAngleDeg() - pivotAngleGoal;
+
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
     }
 
