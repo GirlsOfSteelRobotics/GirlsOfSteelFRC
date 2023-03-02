@@ -33,7 +33,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
@@ -234,6 +234,8 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void pivotArmToAngle(double pivotAngleGoal) {
+        m_armAngleGoal = pivotAngleGoal;
+
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
 
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
@@ -243,8 +245,11 @@ public class ArmSubsystem extends SubsystemBase {
         }
     }
 
+    public boolean isArmAtAngle() {
+        return isArmAtAngle(m_armAngleGoal);
+    }
+
     public boolean isArmAtAngle(double pivotAngleGoal) {
-        m_armAngleGoal = pivotAngleGoal;
         double error = getArmAngleDeg() - pivotAngleGoal;
 
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
