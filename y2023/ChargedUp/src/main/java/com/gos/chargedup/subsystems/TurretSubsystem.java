@@ -155,6 +155,16 @@ public class TurretSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
 
+    public boolean atTurretAngle() {
+        double error = m_turretGoalAngle - getTurretAngleDegreesNeoEncoder();
+
+        return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
+    }
+
+    public double getTurretError() {
+        return m_turretGoalAngle - getTurretAngleDegreesNeoEncoder();
+    }
+
     public void tuneVelocity(double goalVelocity) {
         m_turretPidController.setReference(goalVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }

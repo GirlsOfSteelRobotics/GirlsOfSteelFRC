@@ -57,7 +57,6 @@ public class RobotContainer {
 
     private final IntakeSubsystem m_intake;
     private final ChassisSubsystem m_chassisSubsystem;
-
     private final ArmSubsystem m_arm;
     private final AutonomousFactory m_autonomousFactory;
 
@@ -78,17 +77,14 @@ public class RobotContainer {
      */
     public RobotContainer(DoubleSupplier pressureSupplier) {
         // Configure the trigger bindings
-
-
         m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
         m_claw = new ClawSubsystem();
         m_arm = new ArmSubsystem();
         m_intake = new IntakeSubsystem();
-
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw);
 
-        m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController);
+        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_arm, m_turret, m_autonomousFactory); //NOPMD
 
         m_pressureSupplier = pressureSupplier;
         configureBindings();
@@ -131,6 +127,8 @@ public class RobotContainer {
 
         tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
         tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
+
+        tab.add("Chassis: teleop dock and engage", new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
 
         // turret
         tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
@@ -224,7 +222,7 @@ public class RobotContainer {
         m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
         m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
         m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
@@ -240,9 +238,18 @@ public class RobotContainer {
         m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
         m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
         m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
+
         m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
+
+        // Backup manual controls for debugging
+        // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
+        // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
+        // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
+        // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
+
+
     }
 
 

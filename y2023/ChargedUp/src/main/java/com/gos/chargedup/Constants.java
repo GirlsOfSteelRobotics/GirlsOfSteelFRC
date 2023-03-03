@@ -39,10 +39,10 @@ public final class Constants {
     public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
 
     //Pneumatics
-    public static final int ARM_TOP_PISTON_OUT = 11;
-    public static final int ARM_TOP_PISTON_IN = 8;
-    public static final int ARM_BOTTOM_PISTON_REVERSE = 13;
-    public static final int ARM_BOTTOM_PISTON_FORWARD = 12;
+    public static final int ARM_TOP_PISTON_OUT = 12;
+    public static final int ARM_TOP_PISTON_IN = 13;
+    public static final int ARM_BOTTOM_PISTON_REVERSE = 11;
+    public static final int ARM_BOTTOM_PISTON_FORWARD = 8;
 
     public static final int CLAW_PISTON_FORWARD = 9;
     public static final int CLAW_PISTON_REVERSE = 10;
@@ -58,4 +58,7 @@ public final class Constants {
 
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;
+
+    // PWM
+    public static final int LED_PORT = 0;
 }

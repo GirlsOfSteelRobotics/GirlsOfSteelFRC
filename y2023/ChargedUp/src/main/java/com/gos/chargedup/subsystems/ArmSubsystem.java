@@ -38,8 +38,8 @@ public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
-    private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kForward;
-    private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
 
     private static final DoubleSolenoid.Value BOTTOM_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
     private static final DoubleSolenoid.Value BOTTOM_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
@@ -250,6 +250,8 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void pivotArmToAngle(double pivotAngleGoal) {
+        m_armAngleGoal = pivotAngleGoal;
+
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
 
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
@@ -259,8 +261,11 @@ public class ArmSubsystem extends SubsystemBase {
         }
     }
 
+    public boolean isArmAtAngle() {
+        return isArmAtAngle(m_armAngleGoal);
+    }
+
     public boolean isArmAtAngle(double pivotAngleGoal) {
-        m_armAngleGoal = pivotAngleGoal;
         double error = getArmAngleDeg() - pivotAngleGoal;
 
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();

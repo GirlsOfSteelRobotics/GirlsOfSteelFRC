@@ -100,10 +100,10 @@ public class AimTurretCommand extends CommandBase {
 
         if (x) {
             System.out.println("Is claw aligned: " + m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle()));
-            m_ledManagerSubsystem.clawIsAligned(true);
+            m_ledManagerSubsystem.setClawIsAligned(true);
         }
         else {
-            m_ledManagerSubsystem.clawIsAligned(false);
+            m_ledManagerSubsystem.setClawIsAligned(false);
         }
 
 

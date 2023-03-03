@@ -2,6 +2,7 @@
   "HALProvider": {
     "Addressable LEDs": {
       "0": {
+        "columns": 15,
         "serpentine": true
       },
       "window": {
@@ -94,6 +95,7 @@
       "/Shuffleboard/TestCommands/Chassis set position: Node 4": "Command",
       "/Shuffleboard/TestCommands/Chassis: Sync Odometry": "Command",
       "/Shuffleboard/TestCommands/Chassis: Tune Velocity": "Command",
+      "/Shuffleboard/TestCommands/Chassis: teleop dock and engage": "Command",
       "/Shuffleboard/TestCommands/Claw Close": "Command",
       "/Shuffleboard/TestCommands/Claw In": "Command",
       "/Shuffleboard/TestCommands/Claw Open": "Command",
@@ -161,25 +163,27 @@
       "/Shuffleboard/TestCommands/Turret: To Coast Mode": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Position (-90 degrees)": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Velocity": "Command",
+      "/SmartDashboard/Auto Mode Select": "String Chooser",
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
       "/SmartDashboard/Automated Turret - 8": "Command",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Height Options": "String Chooser",
       "/SmartDashboard/Run checklist": "Command",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
-      "/Shuffleboard/AutomatedTurret/High Cone Right": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/TestCommands/High Cube": {
+      "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true
         }
       },
       "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Height Options": {
         "window": {
           "visible": true
         }
