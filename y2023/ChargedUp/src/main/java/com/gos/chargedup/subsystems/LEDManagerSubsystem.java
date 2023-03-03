@@ -53,6 +53,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private boolean m_optionConeLED;
     private boolean m_optionCubeLED;
     private boolean m_optionDockLED;
+    private boolean m_clawIsAligned;
 
     private final MirroredLEDFlash m_readyToScore;
     private final MirroredLEDPercentScale m_turretAngle;
@@ -66,6 +67,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDPatternLookup<AutonomousFactory.AutonMode> m_autoModeColor;
     private final MirroredLEDPatternLookup<AutoPivotHeight> m_heightColor;
+
+    private final MirroredLEDFlash m_clawAlignedSignal;
 
     public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
@@ -127,6 +130,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         m_led.setLength(m_buffer.getLength());
 
+        //for Claw Aligned Check
+        m_clawAlignedSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
+
         // Set the data
         m_led.setData(m_buffer);
         m_led.start();
@@ -167,6 +173,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else {
             m_notInCommunityZone.writeLeds();
         }
+
+        if (m_clawIsAligned) {
+            m_clawAlignedSignal.writeLeds();
+        }
+
 
         /*
         else {
@@ -219,6 +230,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // else {
         //m_notInCommunityZone.writeLeds();
         // }
+    }
+
+    public void setClawIsAligned(boolean isAligned) {
+        m_clawIsAligned = isAligned;
     }
 
     //////////////////////

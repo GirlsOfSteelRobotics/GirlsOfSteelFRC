@@ -1,7 +1,9 @@
 package com.gos.chargedup.commands;
 
 import com.gos.chargedup.AutoPivotHeight;
+import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -28,11 +30,17 @@ public class AimTurretCommand extends CommandBase {
     private final double m_targetPitch;
 
     private double m_currentX;
+
     private double m_currentY;
 
+    private final ClawAlignedCheck m_clawAlignedCheck;
 
 
-    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height) {
+    private final LEDManagerSubsystem m_ledManagerSubsystem;
+
+
+
+    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height, LEDManagerSubsystem ledManagerSubsystem) {
         setName("Score " + gamePiece + " " + position + " " + height);
         this.m_armSubsystem = armSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
@@ -45,6 +53,9 @@ public class AimTurretCommand extends CommandBase {
         m_targetY = targetPos.getY();
 
         m_targetPitch = armSubsystem.getArmAngleForScoring(height, gamePiece);
+
+        m_clawAlignedCheck = new ClawAlignedCheck(m_chassisSubsystem, m_armSubsystem);
+        m_ledManagerSubsystem = ledManagerSubsystem;
 
     }
 
@@ -59,7 +70,8 @@ public class AimTurretCommand extends CommandBase {
         m_currentX = m_chassisSubsystem.getPose().getX();
         m_currentY = m_chassisSubsystem.getPose().getY();
 
-        double closestYvalue = m_chassisSubsystem.findingClosestNode(m_targetY);
+        double closestYvalue = m_chassisSubsystem.findingClosestNodeY(m_targetY);
+        Translation2d nodePosAbs = new Translation2d(m_targetX, closestYvalue);
 
         double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
 
@@ -81,6 +93,20 @@ public class AimTurretCommand extends CommandBase {
 
         m_armSubsystem.pivotArmToAngle(m_targetPitch);
 
+
+        if (m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle())) {
+            System.out.println("Is claw aligned: " + m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle()));
+            m_ledManagerSubsystem.setClawIsAligned(true);
+        }
+        else {
+            m_ledManagerSubsystem.setClawIsAligned(false);
+        }
+
+
+    }
+
+    private double turretAbsoluteAngle() {
+        return m_chassisSubsystem.getPose().getRotation().getRadians() + Math.toRadians(m_turretSubsystem.getTurretAngleDeg());
     }
 
     @Override

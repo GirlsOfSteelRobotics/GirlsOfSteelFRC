@@ -206,7 +206,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public double findingClosestNode(double yPositionButton) {
+    public double findingClosestNodeY(double yPositionButton) {
         double distanceBetweenArrays = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
         double array1 = yPositionButton + 0 * distanceBetweenArrays;
         double array2 = yPositionButton + 1 * distanceBetweenArrays;
@@ -224,6 +224,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 minDist = currentDistance;
             }
         }
+
         return closestNode;
     }
 
@@ -240,6 +241,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+
         updateOdometry();
 
         m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
@@ -262,6 +264,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
         m_followerRightMotorErrorAlert.checkAlerts();
+
+
 
         m_pigeonAlerts.checkAlerts();
     }
@@ -417,4 +421,5 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase createIsRightMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
+
 }
