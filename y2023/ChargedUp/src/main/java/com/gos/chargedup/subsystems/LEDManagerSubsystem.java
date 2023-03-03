@@ -1,16 +1,13 @@
 package com.gos.chargedup.subsystems;
 
-import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.lib.led.mirrored.MirroredLEDFlash;
 import com.gos.lib.led.mirrored.MirroredLEDPercentScale;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import org.littletonrobotics.frc2023.FieldConstants;
 
 public class LEDManagerSubsystem extends SubsystemBase {
     // subsystems
@@ -35,7 +32,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_clawAlignedSignal;
 
-
+    private boolean m_clawIsAligned;
 
 
     public LEDManagerSubsystem(CommandXboxController joystick) {
@@ -74,6 +71,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_cubeGamePieceSignal.writeLeds();
         }
 
+        if (m_clawIsAligned) {
+            m_clawAlignedSignal.writeLeds();
+        }
+
+
         driverPracticePatterns();
         m_led.setData(m_buffer);
 
@@ -104,9 +106,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_optionCubeLED = true;
     }
 
-    public void clawIsAligned() {
-        m_clawAlignedSignal.writeLeds();
-
+    public void clawIsAligned(boolean isAligned) {
+        m_clawIsAligned = isAligned;
     }
 
     public CommandBase commandConeGamePieceSignal() {
@@ -117,8 +118,5 @@ public class LEDManagerSubsystem extends SubsystemBase {
         return this.runEnd(this::setCubeGamePieceSignal, this::teleopPatterns);
     }
 
-    public CommandBase commandClawAlignedSignal() {
-        return this.runEnd(this::setCubeGamePieceSignal, this::teleopPatterns);
-    }
 }
 

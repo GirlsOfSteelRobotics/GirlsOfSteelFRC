@@ -33,7 +33,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 import java.util.function.DoubleSupplier;
 
-@SuppressWarnings("PMD.GodClass")
+@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
@@ -213,7 +213,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_getArmLengthMeters = ARM_EXTENDED_LENGTH;
     }
 
-    public double getArmLengthMeters(){
+    public double getArmLengthMeters() {
         return m_getArmLengthMeters;
     }
 

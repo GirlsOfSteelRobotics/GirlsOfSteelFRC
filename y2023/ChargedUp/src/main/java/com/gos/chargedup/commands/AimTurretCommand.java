@@ -30,13 +30,13 @@ public class AimTurretCommand extends CommandBase {
     private final double m_targetPitch;
 
     private double m_currentX;
+
     private double m_currentY;
 
-    private ClawAlignedCheck m_clawAlignedCheck;
+    private final ClawAlignedCheck m_clawAlignedCheck;
 
-    private Translation2d m_nodePos;
 
-    private LEDManagerSubsystem m_ledManagerSubsystem;
+    private final LEDManagerSubsystem m_ledManagerSubsystem;
 
 
 
@@ -54,10 +54,9 @@ public class AimTurretCommand extends CommandBase {
 
         m_targetPitch = armSubsystem.getArmAngleForScoring(height, gamePiece);
 
-        m_clawAlignedCheck = new ClawAlignedCheck(m_chassisSubsystem, m_armSubsystem, m_turretSubsystem);
+        m_clawAlignedCheck = new ClawAlignedCheck(m_chassisSubsystem, m_armSubsystem);
         m_ledManagerSubsystem = ledManagerSubsystem;
 
-        m_nodePos = targetPos;
     }
 
     @Override
@@ -71,7 +70,8 @@ public class AimTurretCommand extends CommandBase {
         m_currentX = m_chassisSubsystem.getPose().getX();
         m_currentY = m_chassisSubsystem.getPose().getY();
 
-        double closestYvalue = m_chassisSubsystem.findingClosestNode(m_targetY);
+        double closestYvalue = m_chassisSubsystem.findingClosestNodeY(m_targetY);
+        Translation2d nodePosAbs = new Translation2d(m_targetX, closestYvalue);
 
         double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
 
@@ -93,13 +93,24 @@ public class AimTurretCommand extends CommandBase {
 
         m_armSubsystem.pivotArmToAngle(m_targetPitch);
 
-        if (m_clawAlignedCheck.isClawAtPoint(m_nodePos)){
-            System.out.println("X " + m_clawAlignedCheck.getClawXValue(m_nodePos));
-            System.out.println("Y " + m_clawAlignedCheck.getClawYValue(m_nodePos));
+        boolean x = m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle());
+        boolean y = m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle());
 
-            m_ledManagerSubsystem.clawIsAligned();
+        System.out.println(x + ", " + y);
+
+        if (x) {
+            System.out.println("Is claw aligned: " + m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle()));
+            m_ledManagerSubsystem.clawIsAligned(true);
+        }
+        else {
+            m_ledManagerSubsystem.clawIsAligned(false);
         }
 
+
+    }
+
+    public double turretAbsoluteAngle() {
+        return m_chassisSubsystem.getPose().getRotation().getRadians() + Math.toRadians(m_turretSubsystem.getTurretAngleDeg());
     }
 
     @Override

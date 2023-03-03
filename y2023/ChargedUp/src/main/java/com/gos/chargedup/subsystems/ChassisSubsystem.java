@@ -1,7 +1,6 @@
 package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
-import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.Constants;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -207,7 +206,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public double findingClosestNode(double yPositionButton) {
+    public double findingClosestNodeY(double yPositionButton) {
         double distanceBetweenArrays = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
         double array1 = yPositionButton + 0 * distanceBetweenArrays;
         double array2 = yPositionButton + 1 * distanceBetweenArrays;
@@ -225,6 +224,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 minDist = currentDistance;
             }
         }
+
         return closestNode;
     }
 
