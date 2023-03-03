@@ -93,12 +93,8 @@ public class AimTurretCommand extends CommandBase {
 
         m_armSubsystem.pivotArmToAngle(m_targetPitch);
 
-        boolean x = m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle());
-        boolean y = m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle());
 
-        System.out.println(x + ", " + y);
-
-        if (x) {
+        if (m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle())) {
             System.out.println("Is claw aligned: " + m_clawAlignedCheck.isClawAtPoint(nodePosAbs, turretAbsoluteAngle()));
             m_ledManagerSubsystem.setClawIsAligned(true);
         }
@@ -109,7 +105,7 @@ public class AimTurretCommand extends CommandBase {
 
     }
 
-    public double turretAbsoluteAngle() {
+    private double turretAbsoluteAngle() {
         return m_chassisSubsystem.getPose().getRotation().getRadians() + Math.toRadians(m_turretSubsystem.getTurretAngleDeg());
     }
 
