@@ -186,6 +186,7 @@ public class RobotContainer {
         tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 90));
         tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 0));
         tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, -45));
+        tab.add("Arm to Angle PreventionXXXXXX", m_arm.commandPivotArmToAnglePrevention(45.0, m_chassisSubsystem, m_operatorController));
     }
 
     private void automatedTurretCommands() {

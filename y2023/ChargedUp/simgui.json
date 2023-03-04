@@ -73,6 +73,7 @@
       "/Shuffleboard/TestCommands/Arm angle PID - 0 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 45 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm angle PID - 90 degrees": "Command",
+      "/Shuffleboard/TestCommands/Arm to Angle PreventionXXXXXX": "Command",
       "/Shuffleboard/TestCommands/Arm: Angle PID - 0 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm: Angle PID - 45 degrees": "Command",
       "/Shuffleboard/TestCommands/Arm: Angle PID - 90 degrees": "Command",
@@ -179,8 +180,43 @@
         }
       },
       "/SmartDashboard/Field": {
-        "window": {
-          "visible": true
+        "BlueCommunityLeft": {
+          "arrows": false,
+          "length": 0.10000000149011612,
+          "width": 0.10000000149011612
+        },
+        "BlueCommunityRight": {
+          "arrows": false,
+          "color": [
+            255.0,
+            107.66665649414063,
+            0.0,
+            255.0
+          ],
+          "length": 0.10000000149011612,
+          "width": 0.10000000149011612
+        },
+        "BlueLoadingLeft": {
+          "arrows": false,
+          "color": [
+            0.0,
+            255.0,
+            39.666648864746094,
+            255.0
+          ],
+          "length": 0.10000000149011612,
+          "width": 0.10000000149011612
+        },
+        "BlueLoadingRight": {
+          "arrows": false,
+          "color": [
+            0.16922630369663239,
+            0.9666666388511658,
+            0.04654321447014809,
+            255.0
+          ],
+          "length": 0.10000000149011612,
+          "width": 0.10000000149011612
         }
       },
       "/SmartDashboard/Height Options": {
@@ -189,5 +225,8 @@
         }
       }
     }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

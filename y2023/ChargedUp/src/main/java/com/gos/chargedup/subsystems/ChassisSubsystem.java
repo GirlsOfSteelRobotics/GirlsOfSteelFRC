@@ -4,6 +4,7 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.lib.ctre.PigeonAlerts;
+import com.gos.chargedup.RectangleInterface;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -110,13 +111,30 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_leaderRightMotorErrorAlert;
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
+    private final RectangleInterface m_communityRectangle1;
+
+    private final RectangleInterface m_communityRectangle2;
+
+    private final RectangleInterface m_loadingRectangle1;
+
+    private final RectangleInterface m_loadingRectangle2;
+
+    @SuppressWarnings("PMD.NcssCount")
     private final PigeonAlerts m_pigeonAlerts;
 
     //max velocity and acceleration tuning
     private final GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
     private final GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
 
+    @SuppressWarnings("PMD.NcssCount")
     public ChassisSubsystem() {
+        m_field = new Field2d();
+        SmartDashboard.putData(m_field);
+
+        m_communityRectangle1 = new RectangleInterface(FieldConstants.Community.INNER_X, FieldConstants.Community.LEFT_Y, FieldConstants.Community.MID_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityRight");
+        m_communityRectangle2 = new RectangleInterface(FieldConstants.Community.MID_X, FieldConstants.Community.MID_Y, FieldConstants.Community.OUTER_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityLeft");
+        m_loadingRectangle1 = new RectangleInterface(FieldConstants.LoadingZone.OUTER_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.MID_Y, m_field, "BlueLoadingRight");
+        m_loadingRectangle2 = new RectangleInterface(FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.INNER_X, FieldConstants.LoadingZone.RIGHT_Y, m_field, "BlueLoadingLeft");
 
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -169,14 +187,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.burnFlash();
         m_followerRight.burnFlash();
 
-        m_field = new Field2d();
-        SmartDashboard.putData(m_field);
-
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
         m_vision = new PhotonVisionSubsystem();
-        // m_vision = new LimelightVisionSubsystem();
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -270,6 +284,8 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Position values: Y", Units.metersToInches(getPose().getY()));
         SmartDashboard.putNumber("Position values: theta", getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Chassis Pitch", getPitch());
+        SmartDashboard.putBoolean("In Community", isInCommunityZone());
+        SmartDashboard.putBoolean("In Loading", isInLoadingZone());
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -373,6 +389,19 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator.resetPosition(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition(), pose2d);
         System.out.println("Reset Odometry was called");
     }
+
+    public boolean isInCommunityZone() {
+        return m_communityRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_communityRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
+    }
+
+    public boolean isInLoadingZone() {
+        return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
+    }
+
+    public boolean canExtendArm() {
+        return (this.isInCommunityZone() || this.isInLoadingZone());
+    }
+
 
     @SuppressWarnings("PMD.AvoidReassigningParameters")
     public PPRamseteCommand driveToPoint(Pose2d point) {
