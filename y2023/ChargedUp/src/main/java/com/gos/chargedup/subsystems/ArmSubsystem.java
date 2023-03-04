@@ -35,50 +35,37 @@ import java.util.function.DoubleSupplier;
 
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmSubsystem extends SubsystemBase {
+
+    //pivot motor stuff (motorized):
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
+
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
-    private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
-    private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
-
-    private static final DoubleSolenoid.Value BOTTOM_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
-    private static final DoubleSolenoid.Value BOTTOM_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
-
-    private static final double GEAR_RATIO = 45.0 * 4.0;
     private static final double ARM_MOTOR_SPEED = 0.30;
 
+    private static final double GEAR_RATIO = 45.0 * 4.0;
     public static final double ARM_CUBE_MIDDLE_DEG = 0;
     public static final double ARM_CUBE_HIGH_DEG = 15;
 
     public static final double ARM_CONE_MIDDLE_DEG = 15;
     public static final double ARM_CONE_HIGH_DEG = 30;
-    private static final double PNEUMATICS_WAIT = 1.3;
 
     public static final double ARM_HIT_INTAKE_ANGLE = 15;
 
     private static final double GEARING =  252.0;
+
     private static final double J_KG_METERS_SQUARED = 1;
-    private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
+
     public static final double MIN_ANGLE_DEG = -61;
     public static final double MAX_ANGLE_DEG = 50;
     private static final double MIN_ANGLE_RADS = Math.toRadians(MIN_ANGLE_DEG);
     private static final double MAX_ANGLE_RADS = Math.toRadians(MAX_ANGLE_DEG);
     private static final boolean SIMULATE_GRAVITY = true;
-
-    //Todo: Get the actual values for the lengths for the arm
-    private static final double ARM_RETRACTED_LENGTH = 1.0;
-
-    private static final double ARM_MIDDLE_LENGTH = 1.0;
-
-    private static final double ARM_EXTENDED_LENGTH = 1.0;
-
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
     private final SparkMaxPIDController m_pivotPIDController;
     private final PidProperty m_pivotPID;
 
-    private final DoubleSolenoid m_topPiston;
-    private final DoubleSolenoid m_bottomPiston;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
@@ -93,6 +80,31 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_pivotErrorAlert;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
+
+    //arm extension stuff (pneumatics):
+    private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
+
+    private static final DoubleSolenoid.Value BOTTOM_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value BOTTOM_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
+
+    private static final double PNEUMATICS_WAIT = 1.3;
+
+    private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
+    //UNSORTED
+
+
+    //Todo: Get the actual values for the lengths for the arm
+    private static final double ARM_RETRACTED_LENGTH = 1.0;
+
+    private static final double ARM_MIDDLE_LENGTH = 1.0;
+
+    private static final double ARM_EXTENDED_LENGTH = 1.0;
+
+    private final DoubleSolenoid m_topPiston;
+    private final DoubleSolenoid m_bottomPiston;
+
+
 
     private double m_currentArmLengthMeters;
 
