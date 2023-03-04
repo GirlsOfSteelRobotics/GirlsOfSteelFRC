@@ -174,6 +174,21 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
+      "/Shuffleboard/AutomatedTurret/High Cone Right": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/AutomatedTurret/Low Cone Right": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/AutomatedTurret/Mid Cone Left": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true

@@ -8,6 +8,7 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -34,13 +35,16 @@ public class AimTurretCommand extends CommandBase {
 
     private double m_currentY;
 
+    private Transform2d m_turretPos;
+
     private final ClawAlignedCheck m_clawAlignedCheck;
 
+    private static final double SHIFT_Y_CHASSIS_POS = 1.95; //inches below center - def on blossom, not sure of bubbles
+    private static final double SHIFT_X_CHASSIS_POS = .5; //inches left of center
 
     private final LEDManagerSubsystem m_ledManagerSubsystem;
 
     private final ArmExtensionSubsystem m_armExtension;
-
 
 
     public AimTurretCommand(ArmPivotSubsystem armSubsystem, ArmExtensionSubsystem armExtension, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height, LEDManagerSubsystem ledManagerSubsystem) {
@@ -72,21 +76,23 @@ public class AimTurretCommand extends CommandBase {
 
         Translation2d correctedTarget = AllianceFlipper.maybeFlip(m_baseTargetLocation);
 
+        double closestYValue = m_chassisSubsystem.findingClosestNodeY(correctedTarget.getY());
+        Translation2d nodePosAbs = new Translation2d(correctedTarget.getX(), closestYValue);
+
+        double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
 
         m_currentX = m_chassisSubsystem.getPose().getX();
         m_currentY = m_chassisSubsystem.getPose().getY();
 
-        double closestYvalue = m_chassisSubsystem.findingClosestNodeY(correctedTarget.getY());
-        Translation2d nodePosAbs = new Translation2d(correctedTarget.getX(), closestYvalue);
+        m_turretPos = new Transform2d(new Translation2d(m_currentX - SHIFT_X_CHASSIS_POS, m_currentY - SHIFT_Y_CHASSIS_POS), new Rotation2d(0, 0));
 
-        double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
-
-        double targetAngle = Math.toDegrees(Math.atan2((closestYvalue) - m_currentY, correctedTarget.getX() - m_currentX));
+        double targetAngle = Math.toDegrees(Math.atan2((closestYValue) - m_turretPos.getY(), correctedTarget.getX() - m_turretPos.getX()));
+        //double targetAngle = Math.toDegrees(Math.atan2((closestYValue) - m_currentX, correctedTarget.getX() - m_currentY));
 
         double turretAngle = currentAngle - targetAngle;
 
         DEBUG_FIELD.setRobotPose(m_chassisSubsystem.getPose());
-        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(correctedTarget.getX(), closestYvalue, Rotation2d.fromDegrees(0)));
+        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(correctedTarget.getX(), closestYValue, Rotation2d.fromDegrees(0)));
 
         if (turretAngle > 180) {
             turretAngle -= 360;
