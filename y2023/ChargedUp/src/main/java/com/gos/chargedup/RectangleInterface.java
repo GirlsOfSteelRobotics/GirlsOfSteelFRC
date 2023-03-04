@@ -2,6 +2,7 @@ package com.gos.chargedup;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import java.util.ArrayList;
 
@@ -19,7 +20,6 @@ public class RectangleInterface {
     private final Field2d m_field;
 
     private final String m_name;
-
 
     //constructor
     public RectangleInterface(double leftTopX, double leftTopY, double rightBottomX, double rightBottomY, Field2d field, String name) {
@@ -41,8 +41,15 @@ public class RectangleInterface {
     }
 
     public boolean pointIsInRect(double xLoc, double yLoc) {
-        return (m_rightBottomY < yLoc && yLoc < m_leftTopY
-            && m_leftTopX < xLoc && xLoc < m_rightBottomX);
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+            return (m_rightBottomY < yLoc && yLoc < m_leftTopY
+                && AllianceFlipper.flipX(m_leftTopX) > xLoc && xLoc > AllianceFlipper.flipX(m_rightBottomX));
+        }
+        else {
+            return (m_rightBottomY < yLoc && yLoc < m_leftTopY
+                && m_leftTopX < xLoc && xLoc < m_rightBottomX);
+        }
+
     }
 
 }

@@ -126,6 +126,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
     private final GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
 
+    @SuppressWarnings("PMD.NcssCount")
     public ChassisSubsystem() {
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
@@ -398,13 +399,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public boolean canExtendArm() {
-
-        if (this.isInCommunityZone() || this.isInLoadingZone()) {
-            System.out.print("I'm in the zone!");
-            return true;
-        }
-        System.out.print("I'm not in the zone!");
-        return false;
+        return (this.isInCommunityZone() || this.isInLoadingZone());
     }
 
 

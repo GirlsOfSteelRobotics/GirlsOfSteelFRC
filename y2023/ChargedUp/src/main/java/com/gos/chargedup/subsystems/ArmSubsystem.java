@@ -390,17 +390,6 @@ public class ArmSubsystem extends SubsystemBase {
             cs::canExtendArm);
     }
 
-    //public CommandBase createIsArmInnerPneumaticMovingPrevention(PneumaticHub pneumaticHub, ChassisSubsystem cs, CommandXboxController x) {
-    //    return new ConditionalCommand(
-    //        new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston"),
-    //        this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
-    //        cs::canExtendArm);
-    //}
-
-    //public CommandBase createIsArmInnerPneumaticMoving(PneumaticHub pneumaticHub) {
-    //    return new PneumaticsMoveTest(pneumaticHub, m_innerPiston, Constants.ARM_INNER_PISTON, "Arm: Inner Piston");
-    //}
-
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
     }
