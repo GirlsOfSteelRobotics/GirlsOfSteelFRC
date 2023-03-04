@@ -133,7 +133,7 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
     private final GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
 
-    @SuppressWarnings("PMD.NcssCount")
+    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public ChassisSubsystem() {
         m_field = new GosField();
         SmartDashboard.putData(m_field.getSendable());

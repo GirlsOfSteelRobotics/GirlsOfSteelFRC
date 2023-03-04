@@ -1,10 +1,6 @@
 package com.gos.chargedup;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import java.util.ArrayList;
 
 public class RectangleInterface {
 
@@ -17,7 +13,7 @@ public class RectangleInterface {
     private final double m_leftTopY;
 
     //field
-    private GosField.RectangleObject m_field;
+    private final GosField.RectangleObject m_field;
 
     //constructor
     public RectangleInterface(double leftTopX, double leftTopY, double rightBottomX, double rightBottomY, GosField field, String name) {

@@ -19,6 +19,12 @@ import java.util.Optional;
 
 public class GosField {
 
+    private final Field2d m_field;
+    private final FieldObject2d m_currentTrajectoryObject;
+    private final FieldObject2d m_trajectorySetpoint;
+    private final FieldObject2d m_odometryObject;
+
+    @SuppressWarnings("PMD.DataClass")
     public static class CameraObject {
 
         private final FieldObject2d m_bestGuesses;
@@ -61,8 +67,8 @@ public class GosField {
     }
 
     public static class RectangleObject {
-        private Pose2d[] m_corners = new Pose2d[4];
-        private FieldObject2d m_object;
+        private final Pose2d[] m_corners = new Pose2d[4];
+        private final FieldObject2d m_object;
         private DriverStation.Alliance m_lastAlliance;
 
         public RectangleObject(double leftTopX, double leftTopY, double rightBottomX, double rightBottomY, GosField field, String name) {
@@ -94,18 +100,7 @@ public class GosField {
         }
     }
 
-    private final Field2d m_field;
-    private final FieldObject2d m_currentTrajectoryObject;
-    private final FieldObject2d m_trajectorySetpoint;
-    private final FieldObject2d m_odometryObject;
-
     public GosField() {
-        m_field = new Field2d();
-
-        FieldObject2d aprilTagObjects = m_field.getObject("AprilTags");
-        m_currentTrajectoryObject = m_field.getObject("Trajectory");
-        m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
-        m_odometryObject = m_field.getObject("OldOdometry");
 
         AprilTagFieldLayout aprilTagLayout;
         try {
@@ -113,6 +108,13 @@ public class GosField {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        m_field = new Field2d();
+
+        FieldObject2d aprilTagObjects = m_field.getObject("AprilTags"); // NOPMD(CloseResource)
+        m_currentTrajectoryObject = m_field.getObject("Trajectory");
+        m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
+        m_odometryObject = m_field.getObject("OldOdometry");
 
         List<Pose2d> tagPoses = new ArrayList<>();
         for (AprilTag tag : aprilTagLayout.getTags()) {
