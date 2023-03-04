@@ -70,6 +70,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_clawAlignedSignal;
 
+    private final MirroredLEDFlash m_isInLoadingZoneSignal;
+
     public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
 
@@ -93,6 +95,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // m_goodDistance = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kAntiqueWhite, Color.kRed);
 
         //m_goodDistToLoadingPiece = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
+
+        m_isInLoadingZoneSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kCornflowerBlue);
 
         m_dockAngle = new MirroredLEDPercentScale(m_buffer, 0, MAX_INDEX_LED, Color.kRed, 30);
 
@@ -161,12 +165,12 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
-        // else if (m_chassisSubsystem.inCommunityZone()) {
-        //     communityZonePatterns();
-        // }
-        // else if (m_chassisSubsystem.inLoadingZone()) {
-        //     loadingZonePatterns();
-        // }
+        else if (m_chassisSubsystem.isInCommunityZone()) {
+            communityZonePatterns();
+        }
+        else if (m_chassisSubsystem.isInLoadingZone()) {
+            loadingZonePatterns();
+        }
         else if (m_optionDockLED) {
             dockAndEngagePatterns();
         }
@@ -225,11 +229,10 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void loadingZonePatterns() {
-        // if good dist
-        //m_goodDistToLoadingPiece.writeLeds();
-        // else {
-        //m_notInCommunityZone.writeLeds();
-        // }
+        if (m_chassisSubsystem.isInLoadingZone()) {
+            m_isInLoadingZoneSignal.writeLeds();
+        }
+
     }
 
     public void setClawIsAligned(boolean isAligned) {

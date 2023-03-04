@@ -1,6 +1,5 @@
 package com.gos.chargedup.subsystems;
 
-
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
@@ -22,11 +21,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
@@ -359,24 +361,67 @@ public class ArmSubsystem extends SubsystemBase {
         return runOnce(this::setTopPistonRetracted).withName("Arm Piston: Top Retracted");
     }
 
+    public CommandBase commandFullRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.run(this::fullRetract),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase commandFullRetract() {
         return run(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
+    }
+
+    public CommandBase commandMiddleRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.run(this::middleRetract).withName("ArmPistonsMiddleRetract"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase commandMiddleRetract() {
         return run(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
+    public CommandBase commandFullExtendPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.run(this::out).withName("Arm Pistons: FullExtend").withTimeout(PNEUMATICS_WAIT),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase commandFullExtend() {
         return run(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
+    }
+
+    // TODO Are these ones necessary
+    public CommandBase commandOutPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.run(this::out).withName("ArmPistonsOut"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
     }
 
+    public CommandBase commandPivotArmUpPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
+    }
+
     public CommandBase commandPivotArmUp() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
+    }
+
+    public CommandBase commandPivotArmDownPrevention(ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown"),
+            this.run(() ->  x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
+            cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmDown() {
@@ -387,6 +432,16 @@ public class ArmSubsystem extends SubsystemBase {
         return this.run(() -> pivotArmToAngle(angle))
             .until(() -> isArmAtAngle(angle))
             .withName("Arm to Angle And Hold" + angle);
+    }
+
+    public CommandBase commandPivotArmToAnglePrevention(double angle, ChassisSubsystem cs, CommandXboxController x) {
+        return new ConditionalCommand(
+            this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle),
+            this.run(() -> {
+                System.out.println("BAD");
+                x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+            }),
+                cs::canExtendArm);
     }
 
     public CommandBase commandPivotArmToAngleNonHold(double angle) {

@@ -302,5 +302,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/max velocity - chassis",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/max acceleration - chassis",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
