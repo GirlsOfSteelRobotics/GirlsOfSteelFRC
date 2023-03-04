@@ -1,5 +1,6 @@
 package com.gos.chargedup.commands;
 
+import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.GamePieceType;
@@ -7,14 +8,12 @@ import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
-import org.littletonrobotics.frc2023.FieldConstants;
 
 
 public class AimTurretCommand extends CommandBase {
@@ -27,8 +26,7 @@ public class AimTurretCommand extends CommandBase {
     private final ArmSubsystem m_armSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final TurretSubsystem m_turretSubsystem;
-    private final double m_targetX;
-    private final double m_targetY;
+    private final Translation2d m_baseTargetLocation;
     private final double m_targetPitch;
 
     private double m_currentX;
@@ -51,8 +49,7 @@ public class AimTurretCommand extends CommandBase {
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_armSubsystem, this.m_turretSubsystem);
 
-        m_targetX = targetPos.getX();
-        m_targetY = targetPos.getY();
+        m_baseTargetLocation = targetPos;
 
         m_targetPitch = armSubsystem.getArmAngleForScoring(height, gamePiece);
 
@@ -69,28 +66,23 @@ public class AimTurretCommand extends CommandBase {
     @Override
     public void execute() {
 
-        double localTargetX;
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-            localTargetX = FieldConstants.FIELD_LENGTH - m_targetX;
-        }
-        else {
-            localTargetX = m_targetX;
-        }
+        Translation2d correctedTarget = AllianceFlipper.maybeFlip(m_baseTargetLocation);
+
 
         m_currentX = m_chassisSubsystem.getPose().getX();
         m_currentY = m_chassisSubsystem.getPose().getY();
 
-        double closestYvalue = m_chassisSubsystem.findingClosestNodeY(m_targetY);
-        Translation2d nodePosAbs = new Translation2d(localTargetX, closestYvalue);
+        double closestYvalue = m_chassisSubsystem.findingClosestNodeY(correctedTarget.getY());
+        Translation2d nodePosAbs = new Translation2d(correctedTarget.getX(), closestYvalue);
 
         double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
 
-        double targetAngle = Math.toDegrees(Math.atan2((closestYvalue) - m_currentY, localTargetX - m_currentX));
+        double targetAngle = Math.toDegrees(Math.atan2((closestYvalue) - m_currentY, correctedTarget.getX() - m_currentX));
 
         double turretAngle = currentAngle - targetAngle;
 
         DEBUG_FIELD.setRobotPose(m_chassisSubsystem.getPose());
-        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(localTargetX, closestYvalue, Rotation2d.fromDegrees(0)));
+        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(correctedTarget.getX(), closestYvalue, Rotation2d.fromDegrees(0)));
 
         if (turretAngle > 180) {
             turretAngle -= 360;

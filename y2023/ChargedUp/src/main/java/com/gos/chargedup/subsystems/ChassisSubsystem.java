@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -20,7 +21,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,7 +31,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -114,8 +113,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final PigeonAlerts m_pigeonAlerts;
 
     //max velocity and acceleration tuning
-    GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
-    GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
+    private final GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
+    private final GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
 
     public ChassisSubsystem() {
 
@@ -375,15 +374,9 @@ public class ChassisSubsystem extends SubsystemBase {
         System.out.println("Reset Odometry was called");
     }
 
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public PPRamseteCommand driveToPoint(Pose2d point) {
-
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-            point = new Pose2d(
-                FieldConstants.FIELD_LENGTH - point.getX(),
-                point.getY(),
-                point.getRotation().rotateBy(Rotation2d.fromDegrees(180)));
-        }
-
+        point = AllianceFlipper.maybeFlip(point);
 
         m_field.getObject("Point to Drive To").setPose(point);
 

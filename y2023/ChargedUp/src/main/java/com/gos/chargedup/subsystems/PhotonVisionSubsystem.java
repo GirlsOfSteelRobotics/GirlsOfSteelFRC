@@ -32,7 +32,7 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
     // TODO get transform for real robot
     private static final Transform3d ROBOT_TO_CAMERA =
         new Transform3d(
-            new Translation3d(0.5, Units.inchesToMeters(11), Units.inchesToMeters(12.5)),
+            new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12)),
             new Rotation3d(0, 0, 0));
 
     private static final String CAMERA_NAME = "OV5647";
