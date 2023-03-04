@@ -24,7 +24,7 @@ public class TWOPieceNodesCommandGroup extends SequentialCommandGroup {
 
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
-            claw.createMoveClawIntakeCloseCommand() //piece is firmly in the claw? finish + tune soon
+            claw.createMoveClawIntakeInCommand() //piece is firmly in the claw? finish + tune soon
         ));
 
         eventMap.put("resetArmAndTurret", new ParallelCommandGroup(

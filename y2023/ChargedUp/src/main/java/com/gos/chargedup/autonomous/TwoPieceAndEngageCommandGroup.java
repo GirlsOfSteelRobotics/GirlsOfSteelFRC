@@ -24,7 +24,7 @@ public class TwoPieceAndEngageCommandGroup extends SequentialCommandGroup {
 
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("pickUpObject", new SequentialCommandGroup(
-            claw.createMoveClawIntakeCloseCommand()
+            claw.createMoveClawIntakeInCommand()
         ));
 
         eventMap.put("resetArmAndTurret", new ParallelCommandGroup(

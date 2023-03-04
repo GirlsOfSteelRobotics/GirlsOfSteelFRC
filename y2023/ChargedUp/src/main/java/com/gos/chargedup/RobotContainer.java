@@ -170,8 +170,8 @@ public class RobotContainer {
 
 
         // claw
-        tab.add("Claw: Close", m_claw.createMoveClawIntakeCloseCommand());
-        tab.add("Claw: Open", m_claw.createMoveClawIntakeOpenCommand());
+        tab.add("Claw: Close", m_claw.createMoveClawIntakeInCommand());
+        tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
 
         // intake
         tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
@@ -234,8 +234,8 @@ public class RobotContainer {
         leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_arm.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_arm.commandPivotArmDown());
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
-        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
         m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
 

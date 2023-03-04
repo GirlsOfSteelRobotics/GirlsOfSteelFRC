@@ -30,6 +30,7 @@ public final class Constants {
     public static final int TURRET_MOTOR = 7;
     public static final int INTAKE_MOTOR = 5;
     public static final int PIGEON_PORT = 20;
+    public static final int CLAW_MOTOR = 11; //todo check number
 
 
 
