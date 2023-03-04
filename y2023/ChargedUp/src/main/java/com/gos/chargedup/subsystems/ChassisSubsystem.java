@@ -27,6 +27,7 @@ import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
@@ -36,7 +37,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -103,6 +103,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_leftEncoderVelocity;
     private final NetworkTableEntry m_rightEncoderPosition;
     private final NetworkTableEntry m_rightEncoderVelocity;
+    private final NetworkTableEntry m_trajectoryErrorX;
+    private final NetworkTableEntry m_trajectoryErrorY;
+    private final NetworkTableEntry m_trajectoryErrorAngle;
+    private final NetworkTableEntry m_trajectoryVelocitySetpointX;
+    private final NetworkTableEntry m_trajectoryVelocitySetpointY;
+    private final NetworkTableEntry m_trajectoryVelocitySetpointAngle;
 
 
     private final GosDoubleProperty m_maxVelocity = new GosDoubleProperty(false, "Max Chassis Velocity", 60);
@@ -201,6 +207,13 @@ public class ChassisSubsystem extends SubsystemBase {
         m_rightEncoderPosition = loggingTable.getEntry("Right Position");
         m_rightEncoderVelocity = loggingTable.getEntry("Right Velocity");
 
+        m_trajectoryErrorX = loggingTable.getEntry("Trajectory Error X");
+        m_trajectoryErrorY = loggingTable.getEntry("Trajectory Error Y");
+        m_trajectoryErrorAngle = loggingTable.getEntry("Trajectory Error Angle");
+        m_trajectoryVelocitySetpointX = loggingTable.getEntry("Trajectory Velocity Setpoint X");
+        m_trajectoryVelocitySetpointY = loggingTable.getEntry("Trajectory Velocity Setpoint Y");
+        m_trajectoryVelocitySetpointAngle = loggingTable.getEntry("Trajectory Velocity Setpoint Angle");
+
         m_leaderLeftMotorErrorAlert = new SparkMaxAlerts(m_leaderLeft, "left chassis motor ");
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
@@ -211,8 +224,8 @@ public class ChassisSubsystem extends SubsystemBase {
         PPRamseteCommand.setLoggingCallbacks(
             m_field::setTrajectory,
             m_field::setTrajectorySetpoint,
-            null,
-            null
+            this::logTrajectoryChassisSetpoint,
+            this::logTrajectoryErrors
         );
 
         if (RobotBase.isSimulation()) {
@@ -233,10 +246,16 @@ public class ChassisSubsystem extends SubsystemBase {
 
     }
 
-    public void nodeCount(FieldConstants fieldConstants) {
-        for (int i = 0; i < FieldConstants.Grids.NODE_ROW_COUNT; i++) {
-            FieldConstants.Grids.LOW_TRANSLATIONS[i] = new Translation2d(FieldConstants.Grids.LOW_X, FieldConstants.Grids.NODE_FIRST_Y + FieldConstants.Grids.NODE_SEPARATION_Y * i);
-        }
+    private void logTrajectoryErrors(Translation2d translation2d, Rotation2d rotation2d) {
+        m_trajectoryErrorX.setNumber(translation2d.getX());
+        m_trajectoryErrorY.setNumber(translation2d.getY());
+        m_trajectoryErrorAngle.setNumber(rotation2d.getDegrees());
+    }
+
+    private void logTrajectoryChassisSetpoint(ChassisSpeeds chassisSpeeds) {
+        m_trajectoryVelocitySetpointX.setNumber(chassisSpeeds.vxMetersPerSecond);
+        m_trajectoryVelocitySetpointY.setNumber(chassisSpeeds.vyMetersPerSecond);
+        m_trajectoryVelocitySetpointAngle.setNumber(chassisSpeeds.omegaRadiansPerSecond);
     }
 
     public double findingClosestNodeY(double yPositionButton) {
