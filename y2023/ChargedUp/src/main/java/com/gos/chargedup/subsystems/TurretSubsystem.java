@@ -199,7 +199,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public CommandBase createTuneVelocity() {
-        return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret);
+        return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret).withName("Tune Velocity");
     }
 
     public CommandBase createTurretToCoastMode() {

@@ -1,8 +1,8 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.GosField;
 import com.gos.lib.properties.GosDoubleProperty;
-import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -11,8 +11,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import org.photonvision.EstimatedRobotPose;
@@ -50,12 +48,11 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
 
     private final PhotonPoseEstimator m_photonPoseEstimator;
 
-    private final Field2d m_field;
+    private final GosField.CameraObject m_field;
 
-    public PhotonVisionSubsystem() {
+    public PhotonVisionSubsystem(GosField field) {
         m_camera = new PhotonCamera(CAMERA_NAME);
-        m_field = new Field2d();
-        Shuffleboard.getTab("PhotonVision " + CAMERA_NAME).add(m_field);
+        this.m_field = new GosField.CameraObject(field, CAMERA_NAME);
 
         try {
             m_aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
@@ -63,20 +60,12 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        List<Pose2d> tagPoses = new ArrayList<>();
-        for (AprilTag tag : m_aprilTagFieldLayout.getTags()) {
-            tagPoses.add(tag.pose.toPose2d());
-        }
-        m_field.getObject("tags").setPoses(tagPoses);
     }
 
 
 
     @Override
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
-        m_field.setRobotPose(prevEstimatedRobotPose);
-
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
 
         PhotonPipelineResult cameraResult = m_camera.getLatestResult();
@@ -87,6 +76,8 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         List<Pose2d> altGuessPoses = new ArrayList<>();
 
         if (!cameraResult.hasTargets()) {
+            m_field.setBestGuesses(bestGuessPoses);
+            m_field.setAltGuesses(altGuessPoses);
             return Optional.empty();
         } else {
             for (PhotonTrackedTarget target: cameraResult.getTargets()) {
@@ -120,8 +111,8 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
             }
         }
 
-        m_field.getObject("Best Guess").setPoses(bestGuessPoses);
-        m_field.getObject("Alt Guess").setPoses(altGuessPoses);
+        m_field.setBestGuesses(bestGuessPoses);
+        m_field.setAltGuesses(altGuessPoses);
 
         PhotonPipelineResult goodCameraResults = new PhotonPipelineResult(cameraResult.getLatencyMillis(), goodTargets);
         goodCameraResults.setTimestampSeconds(cameraResult.getTimestampSeconds());
@@ -131,7 +122,9 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         SmartDashboard.putNumber("Number of found targets (pre-filter): ", cameraResult.getTargets().size());
         SmartDashboard.putNumber("Number of good targets (post-filter): ", goodTargets.size());
 
-        return m_photonPoseEstimator.update(goodCameraResults);
+        Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update(goodCameraResults);
+        m_field.setEstimate(estimate);
+        return estimate;
     }
 }
 
