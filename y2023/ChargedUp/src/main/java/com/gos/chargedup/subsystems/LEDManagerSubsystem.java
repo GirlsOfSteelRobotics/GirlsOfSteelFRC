@@ -70,8 +70,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_clawAlignedSignal;
 
-    private final MirroredLEDFlash m_isInCommunityZoneSignal;
-
     private final MirroredLEDFlash m_isInLoadingZoneSignal;
 
     public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
@@ -97,8 +95,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
         // m_goodDistance = new MirroredLEDBoolean(m_buffer, 0, 10, Color.kAntiqueWhite, Color.kRed);
 
         //m_goodDistToLoadingPiece = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kGreen);
-
-        m_isInCommunityZoneSignal = new MirroredLEDFlash(m_buffer, 0, 10, 0.5, Color.kMintcream);
 
         m_isInLoadingZoneSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kCornflowerBlue);
 
@@ -169,12 +165,12 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
-         else if (m_chassisSubsystem.isInCommunityZone()) {
-             communityZonePatterns();
-         }
-         else if (m_chassisSubsystem.isInLoadingZone()) {
-             loadingZonePatterns();
-         }
+        else if (m_chassisSubsystem.isInCommunityZone()) {
+            communityZonePatterns();
+        }
+        else if (m_chassisSubsystem.isInLoadingZone()) {
+            loadingZonePatterns();
+        }
         else if (m_optionDockLED) {
             dockAndEngagePatterns();
         }

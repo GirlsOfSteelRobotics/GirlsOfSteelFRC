@@ -19,15 +19,15 @@ public class AllianceFlipper {
         return rotation.plus(Rotation2d.fromDegrees(180));
     }
 
-    public static double flipX(double xPos) {
-        return FieldConstants.FIELD_LENGTH - xPos;
-    }
-
     public static Pose2d flip(Pose2d pose) {
         return new Pose2d(
             flip(pose.getTranslation()),
             flip(pose.getRotation())
         );
+    }
+
+    public static double flipX(double xPos) {
+        return FieldConstants.FIELD_LENGTH - xPos;
     }
 
     public static Translation2d maybeFlip(Translation2d translation) {
