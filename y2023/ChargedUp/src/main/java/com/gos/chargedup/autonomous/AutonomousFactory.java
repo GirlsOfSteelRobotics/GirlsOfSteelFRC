@@ -8,7 +8,8 @@ package com.gos.chargedup.autonomous;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.GamePieceType;
 import com.gos.chargedup.commands.ScorePieceCommandGroup;
-import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
+import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import  com.gos.chargedup.subsystems.TurretSubsystem;
@@ -43,23 +44,23 @@ public final class AutonomousFactory {
     private final Map<AutoPivotHeight, Map<AutonMode, Command>> m_autoOptions = new HashMap<>();
 
     @SuppressWarnings({"PMD.NPathComplexity", "PMD.CyclomaticComplexity"})
-    public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmSubsystem arm, ClawSubsystem claw) {
+    public AutonomousFactory(ChassisSubsystem chassis, TurretSubsystem turret, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, ClawSubsystem claw) {
         m_armHeight = new SendableChooser<>();
         m_chooseAutoOption = new SendableChooser<>();
 
         // Initialize map
         for (AutoPivotHeight height : AutoPivotHeight.values()) {
             m_autoOptions.put(height, new HashMap<>());
-            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_0_AND_1, new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes0And1", height));
-            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, turret, arm, claw, "TWOPieceNodes7And8", height));
-            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, turret, arm, claw, "TWOPieceEngage", height));
+            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_0_AND_1, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes0And1", height));
+            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_NODE_7_AND_8, new TWOPieceNodesCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceNodes7And8", height));
+            m_autoOptions.get(height).put(AutonMode.TWO_PIECE_ENGAGE, new TwoPieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "TWOPieceEngage", height));
 
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage4", height, GamePieceType.CUBE));
-            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_5, new OnePieceAndEngageCommandGroup(chassis, turret, arm, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_3, new OnePieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "ONEPieceDockandEngage3", height, GamePieceType.CONE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_4, new OnePieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "ONEPieceDockandEngage4", height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.ONE_NODE_AND_ENGAGE_5, new OnePieceAndEngageCommandGroup(chassis, turret, armPivot, armExtension, claw, "ONEPieceDockandEngage5", height, GamePieceType.CONE));
 
-            m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(turret, arm, claw, height, GamePieceType.CONE));
-            m_autoOptions.get(height).put(AutonMode.SCORE_CUBE_AT_CURRENT_POS, new ScorePieceCommandGroup(turret, arm, claw, height, GamePieceType.CUBE));
+            m_autoOptions.get(height).put(AutonMode.SCORE_CONE_AT_CURRENT_POS, new ScorePieceCommandGroup(turret, armPivot, armExtension, claw, height, GamePieceType.CONE));
+            m_autoOptions.get(height).put(AutonMode.SCORE_CUBE_AT_CURRENT_POS, new ScorePieceCommandGroup(turret, armPivot, armExtension, claw, height, GamePieceType.CUBE));
 
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_END, new OnlyLeaveCommunityCommandGroup(chassis, "EndLeaveCommunity"));
             m_autoOptions.get(height).put(AutonMode.ONLY_LEAVE_COMMUNITY_PLAYER_STATION, new OnlyLeaveCommunityCommandGroup(chassis, "PlayerStationLeaveCommunity"));
