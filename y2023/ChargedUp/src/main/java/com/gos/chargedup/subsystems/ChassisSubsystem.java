@@ -8,13 +8,19 @@ import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.auto.RamseteAutoBuilder;
+import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -25,6 +31,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -32,6 +39,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
@@ -104,6 +112,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
     private final PigeonAlerts m_pigeonAlerts;
+
+    //max velocity and acceleration tuning
+    GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
+    GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
 
     public ChassisSubsystem() {
 
@@ -363,6 +375,37 @@ public class ChassisSubsystem extends SubsystemBase {
         System.out.println("Reset Odometry was called");
     }
 
+    public PPRamseteCommand driveToPoint(Pose2d point) {
+
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+            point = new Pose2d(
+                FieldConstants.FIELD_LENGTH - point.getX(),
+                point.getY(),
+                point.getRotation().rotateBy(Rotation2d.fromDegrees(180)));
+        }
+
+
+        m_field.getObject("Point to Drive To").setPose(point);
+
+        PathPlannerTrajectory traj1 = PathPlanner.generatePath(
+            new PathConstraints(Units.inchesToMeters(m_tuningVelocity.getValue()), Units.inchesToMeters(m_tuningAcceleration.getValue())),
+            new PathPoint(new Translation2d(getPose().getX(), getPose().getY()), getPose().getRotation()),
+            new PathPoint(point.getTranslation(), point.getRotation())
+        );
+
+        return new PPRamseteCommand(
+            traj1,
+            this::getPose, // Pose supplier
+            new RamseteController(),
+            K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
+            this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
+            false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+            this // Requires this drive subsystem
+        );
+
+
+    }
+
     ////////////////////
     // Command Factories
     ////////////////////
@@ -420,6 +463,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public CommandBase createIsRightMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
+    }
+
+    public CommandBase createDriveToPoint(Pose2d point) {
+        return new ProxyCommand(() -> driveToPoint(point));
     }
 
 }

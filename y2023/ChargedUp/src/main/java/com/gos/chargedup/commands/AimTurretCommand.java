@@ -7,12 +7,14 @@ import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.chargedup.subsystems.ArmSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
+import org.littletonrobotics.frc2023.FieldConstants;
 
 
 public class AimTurretCommand extends CommandBase {
@@ -67,20 +69,28 @@ public class AimTurretCommand extends CommandBase {
     @Override
     public void execute() {
 
+        double localTargetX;
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+            localTargetX = FieldConstants.FIELD_LENGTH - m_targetX;
+        }
+        else {
+            localTargetX = m_targetX;
+        }
+
         m_currentX = m_chassisSubsystem.getPose().getX();
         m_currentY = m_chassisSubsystem.getPose().getY();
 
         double closestYvalue = m_chassisSubsystem.findingClosestNodeY(m_targetY);
-        Translation2d nodePosAbs = new Translation2d(m_targetX, closestYvalue);
+        Translation2d nodePosAbs = new Translation2d(localTargetX, closestYvalue);
 
         double currentAngle = m_chassisSubsystem.getPose().getRotation().getDegrees();
 
-        double targetAngle = Math.toDegrees(Math.atan2((closestYvalue) - m_currentY, m_targetX - m_currentX));
+        double targetAngle = Math.toDegrees(Math.atan2((closestYvalue) - m_currentY, localTargetX - m_currentX));
 
         double turretAngle = currentAngle - targetAngle;
 
         DEBUG_FIELD.setRobotPose(m_chassisSubsystem.getPose());
-        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(m_targetX, closestYvalue, Rotation2d.fromDegrees(0)));
+        DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(localTargetX, closestYvalue, Rotation2d.fromDegrees(0)));
 
         if (turretAngle > 180) {
             turretAngle -= 360;

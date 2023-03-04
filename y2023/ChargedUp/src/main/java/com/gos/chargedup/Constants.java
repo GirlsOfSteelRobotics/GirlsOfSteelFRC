@@ -6,6 +6,9 @@
 package com.gos.chargedup;
 
 import com.pathplanner.lib.PathConstraints;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -61,4 +64,10 @@ public final class Constants {
 
     // PWM
     public static final int LED_PORT = 0;
+
+    //defined location the robot can pick up pieces from
+    public static final Pose2d ROBOT_LEFT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(597), Units.inchesToMeters(282), new Rotation2d(0));
+
+    public static final Pose2d ROBOT_RIGHT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(587), Units.inchesToMeters(229), new Rotation2d(0));
+
 }
