@@ -32,7 +32,7 @@ public class ChecklistTestAll extends SequentialCommandGroup {
         addCommands(intake.createIsIntakePneumaticMoving(pressureSupplier));
 
         //claw
-        addCommands(claw.createIsClawPneumaticMoving(pressureSupplier));
+        addCommands(claw.createIsClawMotorMoving());
 
     }
 

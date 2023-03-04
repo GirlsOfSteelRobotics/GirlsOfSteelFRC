@@ -38,10 +38,13 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.littletonrobotics.frc2023.FieldConstants;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 
@@ -174,8 +177,8 @@ public class RobotContainer {
 
 
         // claw
-        tab.add("Claw: Close", m_claw.createMoveClawIntakeCloseCommand());
-        tab.add("Claw: Open", m_claw.createMoveClawIntakeOpenCommand());
+        tab.add("Claw: Close", m_claw.createMoveClawIntakeInCommand());
+        tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
 
         // intake
         tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
@@ -211,11 +214,11 @@ public class RobotContainer {
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
-     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+     * {@link Trigger#Trigger(BooleanSupplier)} constructor with an arbitrary
      * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * CommandXboxController}'s subclasses for {@link
+     * CommandXboxController Xbox}/{@link CommandPS4Controller
+     * PS4} controllers or {@link CommandJoystick Flight
      * joysticks}.
      */
     private void configureBindings() {
@@ -238,8 +241,8 @@ public class RobotContainer {
         leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
-        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
         m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
 
