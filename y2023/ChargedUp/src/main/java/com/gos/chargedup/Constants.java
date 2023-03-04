@@ -9,6 +9,7 @@ import com.pathplanner.lib.PathConstraints;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -70,4 +71,7 @@ public final class Constants {
 
     public static final Pose2d ROBOT_RIGHT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(587), Units.inchesToMeters(229), new Rotation2d(0));
 
+    public static final DigitalInput ROBOT_NAME = new DigitalInput(4); //todo: get actual port number
+
+    public static final boolean IS_ROBOT_REAL = ROBOT_NAME.get();
 }

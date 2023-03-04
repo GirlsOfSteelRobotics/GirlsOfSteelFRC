@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.Constants;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -30,10 +31,18 @@ import java.util.Optional;
 public class PhotonVisionSubsystem implements Subsystem, Vision {
 
     // TODO get transform for real robot
-    private static final Transform3d ROBOT_TO_CAMERA =
-        new Transform3d(
-            new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12)),
-            new Rotation3d(0, 0, 0));
+
+
+    private static final Transform3d ROBOT_TO_CAMERA;
+
+    static {
+        //toDo: make these values work as expected
+        if (Constants.IS_ROBOT_REAL) {
+            ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12)), new Rotation3d(0, 0, 0));
+        } else {
+            ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12.25)), new Rotation3d(0, 0, 0));
+        }
+    }
 
     private static final String CAMERA_NAME = "OV5647";
 

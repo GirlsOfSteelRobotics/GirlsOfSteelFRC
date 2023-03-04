@@ -45,11 +45,27 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
-    public static final double ARM_CUBE_MIDDLE_DEG = 0;
-    public static final double ARM_CUBE_HIGH_DEG = 15;
+    public static final double ARM_CUBE_MIDDLE_DEG;
+    public static final double ARM_CUBE_HIGH_DEG;
 
-    public static final double ARM_CONE_MIDDLE_DEG = 15;
-    public static final double ARM_CONE_HIGH_DEG = 30;
+    public static final double ARM_CONE_MIDDLE_DEG;
+    public static final double ARM_CONE_HIGH_DEG;
+
+    static {
+        //toDo: make these values work as expected
+        if (Constants.IS_ROBOT_REAL) {
+            ARM_CUBE_MIDDLE_DEG = 0;
+            ARM_CUBE_HIGH_DEG = 15;
+            ARM_CONE_MIDDLE_DEG = 15;
+            ARM_CONE_HIGH_DEG = 30;
+
+        } else {
+            ARM_CUBE_MIDDLE_DEG = 0;
+            ARM_CUBE_HIGH_DEG = 16; //only to get rid of warning
+            ARM_CONE_MIDDLE_DEG = 15;
+            ARM_CONE_HIGH_DEG = 30;
+        }
+    }
 
     public static final double ARM_HIT_INTAKE_ANGLE = 15;
 
@@ -117,10 +133,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
 
         resetPivotEncoder();
-
-
-
     }
+
 
     //SORTING: PIVOT STUFF (MOTORIZED)
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
