@@ -40,8 +40,8 @@ public class ArmSubsystem extends SubsystemBase {
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
-    private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kForward;
-    private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value TOP_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
+    private static final DoubleSolenoid.Value TOP_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
 
     private static final DoubleSolenoid.Value BOTTOM_PISTON_EXTENDED = DoubleSolenoid.Value.kReverse;
     private static final DoubleSolenoid.Value BOTTOM_PISTON_RETRACTED = DoubleSolenoid.Value.kForward;
@@ -54,7 +54,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static final double ARM_CONE_MIDDLE_DEG = 15;
     public static final double ARM_CONE_HIGH_DEG = 30;
-    private static final double PNEUMATICS_WAIT = 0.5;
+    private static final double PNEUMATICS_WAIT = 1.3;
 
     public static final double ARM_HIT_INTAKE_ANGLE = 15;
 
@@ -66,6 +66,13 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double MIN_ANGLE_RADS = Math.toRadians(MIN_ANGLE_DEG);
     private static final double MAX_ANGLE_RADS = Math.toRadians(MAX_ANGLE_DEG);
     private static final boolean SIMULATE_GRAVITY = true;
+
+    //Todo: Get the actual values for the lengths for the arm
+    private static final double ARM_RETRACTED_LENGTH = 1.0;
+
+    private static final double ARM_MIDDLE_LENGTH = 1.0;
+
+    private static final double ARM_EXTENDED_LENGTH = 1.0;
 
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
@@ -88,6 +95,8 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_pivotErrorAlert;
 
     private SingleJointedArmSimWrapper m_pivotSimulator;
+
+    private double m_currentArmLengthMeters;
 
 
     public ArmSubsystem() {
@@ -191,16 +200,24 @@ public class ArmSubsystem extends SubsystemBase {
     public final void fullRetract() {
         m_topPiston.set(TOP_PISTON_EXTENDED);
         m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        m_currentArmLengthMeters = ARM_RETRACTED_LENGTH;
+
     }
 
     public void middleRetract() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+        m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
     }
 
     public void out() {
         m_topPiston.set(TOP_PISTON_RETRACTED);
         m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
+        m_currentArmLengthMeters = ARM_EXTENDED_LENGTH;
+    }
+
+    public double getArmLengthMeters() {
+        return m_currentArmLengthMeters;
     }
 
     public boolean isBottomPistonIn() {
@@ -236,7 +253,8 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void pivotArmToAngle(double pivotAngleGoal) {
-        System.out.print("hi");
+        m_armAngleGoal = pivotAngleGoal;
+
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
 
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
@@ -246,8 +264,11 @@ public class ArmSubsystem extends SubsystemBase {
         }
     }
 
+    public boolean isArmAtAngle() {
+        return isArmAtAngle(m_armAngleGoal);
+    }
+
     public boolean isArmAtAngle(double pivotAngleGoal) {
-        m_armAngleGoal = pivotAngleGoal;
         double error = getArmAngleDeg() - pivotAngleGoal;
 
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
@@ -336,7 +357,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandFullRetract() {
-        return runOnce(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
+        return run(this::fullRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsFullRetract");
     }
 
     public CommandBase commandMiddleRetractPrevention(ChassisSubsystem cs, CommandXboxController x) {
@@ -347,7 +368,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandMiddleRetract() {
-        return runOnce(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
+        return run(this::middleRetract).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsMiddleRetract");
     }
 
     public CommandBase commandFullExtendPrevention(ChassisSubsystem cs, CommandXboxController x) {
@@ -358,7 +379,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandFullExtend() {
-        return runOnce(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
+        return run(this::out).withTimeout(PNEUMATICS_WAIT).withName("ArmPistonsOut");
     }
 
     // TODO Are these ones necessary
@@ -436,6 +457,18 @@ public class ArmSubsystem extends SubsystemBase {
     public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight height, GamePieceType gamePieceType) {
         double angle = getArmAngleForScoring(height, gamePieceType);
         return commandPivotArmToAngleNonHold(angle).withName("Score [" + height + "," + gamePieceType + "]");
+    }
+
+    public CommandBase createArmToSpecifiedHeight(AutoPivotHeight height) {
+        if (height == AutoPivotHeight.HIGH) {
+            return commandFullExtend();
+        }
+        else if (height == AutoPivotHeight.MEDIUM) {
+            return commandMiddleRetract();
+        }
+        else {
+            return commandFullRetract();
+        }
     }
 
     ////////////////

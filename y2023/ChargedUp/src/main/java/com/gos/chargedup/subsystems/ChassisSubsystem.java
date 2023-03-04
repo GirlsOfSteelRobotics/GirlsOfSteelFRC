@@ -1,14 +1,21 @@
 package com.gos.chargedup.subsystems;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
+import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.chargedup.RectangleInterface;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPoint;
 import com.pathplanner.lib.auto.RamseteAutoBuilder;
+import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -32,6 +39,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.frc2023.FieldConstants;
 import org.photonvision.EstimatedRobotPose;
@@ -112,6 +120,12 @@ public class ChassisSubsystem extends SubsystemBase {
     private final RectangleInterface m_loadingRectangle2;
 
     @SuppressWarnings("PMD.NcssCount")
+    private final PigeonAlerts m_pigeonAlerts;
+
+    //max velocity and acceleration tuning
+    private final GosDoubleProperty m_tuningVelocity = new GosDoubleProperty(false, "max velocity - chassis", 48);
+    private final GosDoubleProperty m_tuningAcceleration = new GosDoubleProperty(false, "max acceleration - chassis", 48);
+
     public ChassisSubsystem() {
         m_field = new Field2d();
         SmartDashboard.putData(m_field);
@@ -190,6 +204,8 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
 
+        m_pigeonAlerts = new PigeonAlerts(m_gyro);
+
         if (RobotBase.isSimulation()) {
             DifferentialDrivetrainSim drivetrainSim = DifferentialDrivetrainSim.createKitbotSim(
                 DifferentialDrivetrainSim.KitbotMotor.kDoubleNEOPerSide,
@@ -214,7 +230,7 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
-    public double findingClosestNode(double yPositionButton) {
+    public double findingClosestNodeY(double yPositionButton) {
         double distanceBetweenArrays = FieldConstants.Grids.NODE_SEPARATION_Y * 3;
         double array1 = yPositionButton + 0 * distanceBetweenArrays;
         double array2 = yPositionButton + 1 * distanceBetweenArrays;
@@ -232,6 +248,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 minDist = currentDistance;
             }
         }
+
         return closestNode;
     }
 
@@ -248,6 +265,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+
         updateOdometry();
 
         m_field.getObject("oldOdom").setPose(m_odometry.getPoseMeters());
@@ -272,6 +290,10 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert.checkAlerts();
         m_leaderRightMotorErrorAlert.checkAlerts();
         m_followerRightMotorErrorAlert.checkAlerts();
+
+
+
+        m_pigeonAlerts.checkAlerts();
     }
 
     @Override
@@ -386,6 +408,31 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
 
+    @SuppressWarnings("PMD.AvoidReassigningParameters")
+    public PPRamseteCommand driveToPoint(Pose2d point) {
+        point = AllianceFlipper.maybeFlip(point);
+
+        m_field.getObject("Point to Drive To").setPose(point);
+
+        PathPlannerTrajectory traj1 = PathPlanner.generatePath(
+            new PathConstraints(Units.inchesToMeters(m_tuningVelocity.getValue()), Units.inchesToMeters(m_tuningAcceleration.getValue())),
+            new PathPoint(new Translation2d(getPose().getX(), getPose().getY()), getPose().getRotation()),
+            new PathPoint(point.getTranslation(), point.getRotation())
+        );
+
+        return new PPRamseteCommand(
+            traj1,
+            this::getPose, // Pose supplier
+            new RamseteController(),
+            K_DRIVE_KINEMATICS, // DifferentialDriveKinematics
+            this::smartVelocityControl, // DifferentialDriveWheelSpeeds supplier
+            false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+            this // Requires this drive subsystem
+        );
+
+
+    }
+
     ////////////////////
     // Command Factories
     ////////////////////
@@ -444,4 +491,9 @@ public class ChassisSubsystem extends SubsystemBase {
     public CommandBase createIsRightMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_leaderRight, "Chassis: Leader right motor", 1.0);
     }
+
+    public CommandBase createDriveToPoint(Pose2d point) {
+        return new ProxyCommand(() -> driveToPoint(point));
+    }
+
 }

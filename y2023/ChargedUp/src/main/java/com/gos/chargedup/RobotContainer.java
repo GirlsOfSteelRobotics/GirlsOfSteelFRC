@@ -13,6 +13,7 @@ import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
+import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
 import com.gos.chargedup.commands.testing.TestLineCommandGroup;
 import com.gos.chargedup.commands.testing.TestMildCurveCommandGroup;
 import com.gos.chargedup.commands.testing.TestSCurveCommandGroup;
@@ -56,7 +57,6 @@ public class RobotContainer {
 
     private final IntakeSubsystem m_intake;
     private final ChassisSubsystem m_chassisSubsystem;
-
     private final ArmSubsystem m_arm;
     private final AutonomousFactory m_autonomousFactory;
 
@@ -69,8 +69,7 @@ public class RobotContainer {
     private final CommandXboxController m_operatorController =
         new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
-    private final LEDManagerSubsystem m_ledManagerSubsystem = new LEDManagerSubsystem(m_driverController); //NOPMD
-
+    private final LEDManagerSubsystem m_ledManagerSubsystem;
     private final DoubleSupplier m_pressureSupplier;
 
     /**
@@ -78,15 +77,14 @@ public class RobotContainer {
      */
     public RobotContainer(DoubleSupplier pressureSupplier) {
         // Configure the trigger bindings
-
-
         m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
         m_claw = new ClawSubsystem();
         m_arm = new ArmSubsystem();
         m_intake = new IntakeSubsystem();
-
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_arm, m_claw);
+
+        m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_arm, m_turret, m_autonomousFactory); //NOPMD
 
         m_pressureSupplier = pressureSupplier;
         configureBindings();
@@ -129,6 +127,8 @@ public class RobotContainer {
 
         tab.add("Chassis: Tune Velocity", m_chassisSubsystem.commandChassisVelocity());
         tab.add("Chassis: Sync Odometry", m_chassisSubsystem.syncOdometryWithPoseEstimator());
+
+        tab.add("Chassis: teleop dock and engage", new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
 
         // turret
         tab.add("Turret: Tune Velocity", m_turret.createTuneVelocity());
@@ -174,11 +174,12 @@ public class RobotContainer {
         tab.add("Claw: Open", m_claw.createMoveClawIntakeOpenCommand());
 
         // intake
-        tab.add("Intake Piston: Out", m_intake.createIntakeOutCommand());
-        tab.add("Intake Piston: In", m_intake.createIntakeInCommand());
+        tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
+        tab.add("Intake Piston: In", m_intake.createIntakeRetract());
 
-        tab.add("Intake Roller: In", m_intake.createIntakeInCommand());
-        tab.add("Intake Roller: Out", m_intake.createIntakeOutCommand());
+        tab.add("Intake Roller: In", m_intake.createIntakeIn());
+        tab.add("Intake Roller: Out", m_intake.createIntakeOut());
+
 
         // Smart arm movement
         tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_arm, m_intake, m_turret, 45));
@@ -192,15 +193,15 @@ public class RobotContainer {
 
         ShuffleboardTab tab = Shuffleboard.getTab("AutomatedTurret");
 
-        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW));
-        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM));
-        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH));
-        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW));
-        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM));
-        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH));
-        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW));
-        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM));
-        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH));
+        tab.add("Low Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
+        tab.add("Mid Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
+        tab.add("High Cone Left", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[0], "Left", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
+        tab.add("Low Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
+        tab.add("Mid Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
+        tab.add("High Cube", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[1], "", GamePieceType.CUBE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
+        tab.add("Low Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
+        tab.add("Mid Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
+        tab.add("High Cone Right", new AimTurretCommand(m_arm, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
 
     }
 
@@ -217,12 +218,12 @@ public class RobotContainer {
         m_chassisSubsystem.setDefaultCommand(new CurvatureDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Driver
-        m_driverController.a().whileTrue(m_arm.commandFullExtend());
-        m_driverController.x().whileTrue(m_arm.commandFullRetract());
-        m_driverController.y().whileTrue(m_arm.commandMiddleRetract());
-        m_driverController.leftTrigger().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
+        m_driverController.x().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_LEFT_BLUE_PICK_UP_POINT));
+        m_driverController.b().whileTrue(m_chassisSubsystem.createDriveToPoint(Constants.ROBOT_RIGHT_BLUE_PICK_UP_POINT));
+        m_driverController.rightBumper().whileTrue(m_ledManagerSubsystem.commandConeGamePieceSignal());
         m_driverController.rightTrigger().whileTrue(m_ledManagerSubsystem.commandCubeGamePieceSignal());
-        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController));
+        m_driverController.leftBumper().whileTrue(new TeleopDockingArcadeDriveCommand(m_chassisSubsystem, m_driverController, m_ledManagerSubsystem));
+        m_driverController.leftTrigger().whileTrue(new TeleopMediumArcadeDriveCommand(m_chassisSubsystem, m_driverController));
 
         // Operator
         Trigger leftJoystickAsButtonRight = new Trigger(() -> m_operatorController.getLeftX() > .5);
@@ -235,11 +236,20 @@ public class RobotContainer {
         leftJoystickAsButtonDown.whileTrue(m_arm.commandPivotArmDown());
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
         m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
-        m_operatorController.b().whileTrue(m_intake.createIntakeInCommand());
-        m_operatorController.y().whileTrue(m_intake.createIntakeOutCommand());
+        m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
+        m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
+
         m_operatorController.leftBumper().whileTrue(m_arm.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_arm.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
+
+        // Backup manual controls for debugging
+        // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
+        // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
+        // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
+        // m_operatorController.leftTrigger().whileTrue(m_arm.commandTopPistonRetracted());
+
+
     }
 
 
@@ -271,7 +281,7 @@ public class RobotContainer {
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_SPEED, m_arm::getArmMotorSpeed, null);
             builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_SPEED, m_intake::getHopperSpeed, null);
+                SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
             builder.addBooleanProperty(
                 SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
             builder.addDoubleProperty(
