@@ -1,6 +1,7 @@
 package com.gos.chargedup.commands;
 
-import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
+import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
@@ -11,7 +12,7 @@ import java.util.function.DoubleSupplier;
 
 public class ChecklistTestAll extends SequentialCommandGroup {
 
-    public ChecklistTestAll(DoubleSupplier pressureSupplier, ChassisSubsystem chassis, ArmSubsystem arm, TurretSubsystem turret, IntakeSubsystem intake, ClawSubsystem claw) {
+    public ChecklistTestAll(DoubleSupplier pressureSupplier, ChassisSubsystem chassis, ArmPivotSubsystem armPivot, ArmExtensionSubsystem armExtension, TurretSubsystem turret, IntakeSubsystem intake, ClawSubsystem claw) {
         setName("Self Test Checklist");
 
         //chassis
@@ -19,9 +20,9 @@ public class ChecklistTestAll extends SequentialCommandGroup {
         addCommands(chassis.createIsRightMotorMoving());
 
         //arm
-        addCommands(arm.createIsPivotMotorMoving());
-        addCommands(arm.createIsArmBottomPneumaticMoving(pressureSupplier));
-        addCommands(arm.createIsArmTopPneumaticMoving(pressureSupplier));
+        addCommands(armPivot.createIsPivotMotorMoving());
+        addCommands(armExtension.createIsArmBottomPneumaticMoving(pressureSupplier));
+        addCommands(armExtension.createIsArmTopPneumaticMoving(pressureSupplier));
 
         //turret
         addCommands(turret.createIsTurretMotorMoving());

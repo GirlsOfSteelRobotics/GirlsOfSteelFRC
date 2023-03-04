@@ -2,17 +2,17 @@ package com.gos.chargedup.commands;
 
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 
 
 public class ArmPIDCheckIfAllowedCommand extends CommandBase {
-    private final ArmSubsystem m_armSubsystem;
+    private final ArmPivotSubsystem m_armSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final TurretSubsystem m_turretSubsytem;
     private final double m_goalAngle;
 
-    public ArmPIDCheckIfAllowedCommand(ArmSubsystem armSubsystem, IntakeSubsystem intakeSubsystem, TurretSubsystem turretSubsystem, double goalAngle) {
+    public ArmPIDCheckIfAllowedCommand(ArmPivotSubsystem armSubsystem, IntakeSubsystem intakeSubsystem, TurretSubsystem turretSubsystem, double goalAngle) {
         this.m_armSubsystem = armSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
         this.m_turretSubsytem = turretSubsystem;
