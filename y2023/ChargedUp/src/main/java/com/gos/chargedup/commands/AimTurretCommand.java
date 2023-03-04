@@ -4,6 +4,7 @@ import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.ClawAlignedCheck;
 import com.gos.chargedup.GamePieceType;
+import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -11,7 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 
@@ -23,7 +24,7 @@ public class AimTurretCommand extends CommandBase {
         Shuffleboard.getTab("Debug").add(DEBUG_FIELD);
     }
 
-    private final ArmSubsystem m_armSubsystem;
+    private final ArmPivotSubsystem m_armSubsystem;
     private final ChassisSubsystem m_chassisSubsystem;
     private final TurretSubsystem m_turretSubsystem;
     private final Translation2d m_baseTargetLocation;
@@ -38,13 +39,16 @@ public class AimTurretCommand extends CommandBase {
 
     private final LEDManagerSubsystem m_ledManagerSubsystem;
 
+    private final ArmExtensionSubsystem m_armExtension;
 
 
-    public AimTurretCommand(ArmSubsystem armSubsystem, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height, LEDManagerSubsystem ledManagerSubsystem) {
+
+    public AimTurretCommand(ArmPivotSubsystem armSubsystem, ArmExtensionSubsystem armExtension, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height, LEDManagerSubsystem ledManagerSubsystem) {
         setName("Score " + gamePiece + " " + position + " " + height);
         this.m_armSubsystem = armSubsystem;
         this.m_chassisSubsystem = chassisSubsystem;
         this.m_turretSubsystem = turretSubsystem;
+        m_armExtension = armExtension;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_armSubsystem, this.m_turretSubsystem);
@@ -53,7 +57,7 @@ public class AimTurretCommand extends CommandBase {
 
         m_targetPitch = armSubsystem.getArmAngleForScoring(height, gamePiece);
 
-        m_clawAlignedCheck = new ClawAlignedCheck(m_chassisSubsystem, m_armSubsystem);
+        m_clawAlignedCheck = new ClawAlignedCheck(m_chassisSubsystem, m_armExtension);
         m_ledManagerSubsystem = ledManagerSubsystem;
 
     }

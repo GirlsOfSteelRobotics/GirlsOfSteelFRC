@@ -36,7 +36,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
     // subsystems
     //private final CommandXboxController m_joystick;
     private final ChassisSubsystem m_chassisSubsystem;
-    private final ArmSubsystem m_armSubsystem;
+    private final ArmPivotSubsystem m_armSubsystem;
     private final TurretSubsystem m_turretSubsystem;
 
     // Led core
@@ -72,7 +72,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_isInLoadingZoneSignal;
 
-    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
+    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
 
         m_chassisSubsystem = chassisSubsystem;
