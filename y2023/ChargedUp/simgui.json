@@ -103,6 +103,7 @@
       "/Shuffleboard/TestCommands/Claw Out": "Command",
       "/Shuffleboard/TestCommands/Claw: Close": "Command",
       "/Shuffleboard/TestCommands/Claw: Open": "Command",
+      "/Shuffleboard/TestCommands/Compressor: Disable": "Command",
       "/Shuffleboard/TestCommands/Gravity Offset Tune": "Command",
       "/Shuffleboard/TestCommands/High Cone Left": "Command",
       "/Shuffleboard/TestCommands/High Cone Right": "Command",
