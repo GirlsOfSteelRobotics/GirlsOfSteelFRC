@@ -2,7 +2,7 @@ package com.gos.lib.properties;
 
 import edu.wpi.first.wpilibj.Preferences;
 
-public class GosIntProperty {
+public class GosIntProperty implements PropertyManager.IProperty<Integer> {
     private final PropertyManager.IProperty<Integer> m_impl;
 
     public GosIntProperty(boolean isConstant, String key, int defaultValue) {
@@ -13,10 +13,12 @@ public class GosIntProperty {
         }
     }
 
-    public int getValue() {
+    @Override
+    public Integer getValue() {
         return m_impl.getValue();
     }
 
+    @Override
     public String getName() {
         return m_impl.getName();
     }

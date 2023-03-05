@@ -32,12 +32,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -81,7 +83,7 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer(DoubleSupplier pressureSupplier) {
+    public RobotContainer(PneumaticHub pneumaticHub) {
         // Configure the trigger bindings
         m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
@@ -93,7 +95,8 @@ public class RobotContainer {
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_autonomousFactory); //NOPMD
 
-        m_pressureSupplier = pressureSupplier;
+        pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
+        m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
         configureBindings();
 
         if (RobotBase.isSimulation()) {
@@ -106,7 +109,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_intake, m_claw));
-        createTestCommands();
+        createTestCommands(pneumaticHub);
         automatedTurretCommands();
 
         if (RobotBase.isReal()) {
@@ -115,8 +118,10 @@ public class RobotContainer {
     }
 
     @SuppressWarnings("PMD.NcssCount")
-    private void createTestCommands() {
+    private void createTestCommands(PneumaticHub pneumaticHub) {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
+
+        tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
 
         // auto trajectories
         tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));

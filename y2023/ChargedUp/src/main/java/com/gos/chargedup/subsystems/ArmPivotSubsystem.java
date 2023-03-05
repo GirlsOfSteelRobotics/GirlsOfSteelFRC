@@ -39,7 +39,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
-    private static final double ARM_MOTOR_SPEED = 0.30;
+    private static final double ARM_MOTOR_SPEED = 0.20;
 
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
 
