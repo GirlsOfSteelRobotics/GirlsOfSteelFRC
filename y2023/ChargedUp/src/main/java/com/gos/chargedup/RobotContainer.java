@@ -11,6 +11,7 @@ import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
+import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
@@ -164,7 +165,7 @@ public class RobotContainer {
         tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
         tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
 
-        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder(ArmPivotSubsystem.MIN_ANGLE_DEG));
+        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder());
         tab.add("Arm Pivot: Reset Encoder (0 deg)", m_armPivot.createResetPivotEncoder(0));
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
@@ -246,14 +247,16 @@ public class RobotContainer {
         leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeInCommand());
-        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOutCommand());
-        m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
-        m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
+        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
+        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
 
         m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_armExtend.commandMiddleRetract());
+
+        m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());

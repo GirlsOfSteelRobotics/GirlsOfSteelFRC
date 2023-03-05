@@ -34,6 +34,7 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_clawMotor.restoreFactoryDefaults();
 
+        m_clawMotor.setInverted(true);
         m_clawEncoder = m_clawMotor.getEncoder();
         m_clawMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_clawMotor.setSmartCurrentLimit(10);
@@ -55,7 +56,7 @@ public class ClawSubsystem extends SubsystemBase {
 
     //intake open
     public void moveClawIntakeOut() {
-        m_clawMotor.set(-CLAW_SPEED.getValue());
+        m_clawMotor.set(-1);
     }
 
     public void stopIntake() {
