@@ -65,6 +65,23 @@ public class SetOffBombCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        if(bomb.equals("armNoWork"))
+            ArmSubsystem.armNoWork = false;
+        else if(bomb.equals("armPivotNoWork"))
+            ArmSubsystem.armPivotNoWork = false;
+        else if(bomb.equals("armExtendNoWork"))
+            ArmSubsystem.armExtendNoWork = false;
+        else if(bomb.equals("turretNoWork"))
+            TurretSubsystem.turretNoWork = false;
+        else if(bomb.equals("turretReverse"))
+            TurretSubsystem.turretReverse = false;
+        else if(bomb.equals("clawNoWork"))
+            ClawSubsystem.clawNoWork = false;
+        else if(bomb.equals("clawReverse"))
+            ClawSubsystem.clawReverse = false;
+        else if(bomb.equals("intakeNoWork"))
+            IntakeSubsystem.intakeNoWork = false;
+        else
+            IntakeSubsystem.intakeReverse = false;
     }
 }

@@ -109,6 +109,7 @@ public class RobotContainer {
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_arm, m_turret, m_intake, m_claw));
         createTestCommands();
         automatedTurretCommands();
+        bombs();
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
@@ -262,7 +263,7 @@ public class RobotContainer {
         m_operatorController.rightTrigger().whileTrue(m_arm.commandMiddleRetract());
 
         //Numpad Joystick
-        m_numpadController.button(1).whileTrue(m)
+        //m_numpadController.button(1).whileTrue(m);
     }
 
 

@@ -359,11 +359,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public CommandBase commandPivotArmUp() {
-        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Down");
+        return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
     public CommandBase commandPivotArmDown() {
-        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Up");
+        return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Down");
     }
 
     public CommandBase commandPivotArmToAngleHold(double angle) {

@@ -1,7 +1,7 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [5]": {
+      "SPARK MAX [7]": {
         "header": {
           "open": true
         }
@@ -34,6 +34,15 @@
       "/Shuffleboard/AutomatedTurret/Mid Cone Left": "Command",
       "/Shuffleboard/AutomatedTurret/Mid Cone Right": "Command",
       "/Shuffleboard/AutomatedTurret/Mid Cube": "Command",
+      "/Shuffleboard/Bombs/Reverse Claw": "Command",
+      "/Shuffleboard/Bombs/Reverse Intake": "Command",
+      "/Shuffleboard/Bombs/Reverse Turret": "Command",
+      "/Shuffleboard/Bombs/Stop Arm": "Command",
+      "/Shuffleboard/Bombs/Stop Arm Extend": "Command",
+      "/Shuffleboard/Bombs/Stop Arm Pivot": "Command",
+      "/Shuffleboard/Bombs/Stop Claw": "Command",
+      "/Shuffleboard/Bombs/Stop Intake": "Command",
+      "/Shuffleboard/Bombs/Stop Turret": "Command",
       "/Shuffleboard/Debug/Field": "Field2d",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Extended": "Command",
       "/Shuffleboard/TestCommands/Arm Bottom Piston Retracted": "Command",
@@ -160,17 +169,22 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
-      "/Shuffleboard/AutomatedTurret/High Cone Left": {
+      "/Shuffleboard/Bombs/Reverse Turret": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/AutomatedTurret/High Cone Right": {
+      "/Shuffleboard/Bombs/Stop Turret": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/TestCommands/High Cube": {
+      "/Shuffleboard/TestCommands/Turret: Move Clockwise": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
         "window": {
           "visible": true
         }
