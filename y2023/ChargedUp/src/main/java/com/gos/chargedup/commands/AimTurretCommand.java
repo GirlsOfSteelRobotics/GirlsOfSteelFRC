@@ -87,7 +87,6 @@ public class AimTurretCommand extends CommandBase {
         m_turretPos = new Transform2d(new Translation2d(m_currentX - SHIFT_X_CHASSIS_POS, m_currentY - SHIFT_Y_CHASSIS_POS), new Rotation2d(0, 0));
 
         double targetAngle = Math.toDegrees(Math.atan2((closestYValue) - m_turretPos.getY(), correctedTarget.getX() - m_turretPos.getX()));
-        //double targetAngle = Math.toDegrees(Math.atan2((closestYValue) - m_currentX, correctedTarget.getX() - m_currentY));
 
         double turretAngle = currentAngle - targetAngle;
 
