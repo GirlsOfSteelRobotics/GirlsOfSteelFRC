@@ -19,7 +19,7 @@ public class ScorePieceCommandGroup extends SequentialCommandGroup {
         addCommands(armExtension.createArmToSpecifiedHeight(pivotHeightType));
 
         //check that this function works:
-        addCommands(claw.createMoveClawIntakeOpenCommand());
+        addCommands(claw.createMoveClawIntakeOutCommand());
 
         //piece dropped on node by now, reset arm back now:
         addCommands(armExtension.commandFullRetract());

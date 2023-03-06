@@ -30,7 +30,7 @@ public class OnePieceAndEngageCommandGroup extends SequentialCommandGroup {
 
         //drive to docking station
         addCommands((driveAutoOnePieceEngage)
-            .alongWith(armPivot.commandPivotArmToAngleHold(ArmPivotSubsystem.MIN_ANGLE_DEG)));
+            .alongWith(armPivot.commandGoHome()));
 
         //dock and engage
         addCommands(chassis.createAutoEngageCommand());

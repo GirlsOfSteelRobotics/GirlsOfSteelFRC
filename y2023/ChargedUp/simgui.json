@@ -103,6 +103,7 @@
       "/Shuffleboard/TestCommands/Claw Out": "Command",
       "/Shuffleboard/TestCommands/Claw: Close": "Command",
       "/Shuffleboard/TestCommands/Claw: Open": "Command",
+      "/Shuffleboard/TestCommands/Compressor: Disable": "Command",
       "/Shuffleboard/TestCommands/Gravity Offset Tune": "Command",
       "/Shuffleboard/TestCommands/High Cone Left": "Command",
       "/Shuffleboard/TestCommands/High Cone Right": "Command",
@@ -170,6 +171,7 @@
       "/SmartDashboard/Automated Turret - 8": "Command",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Height Options": "String Chooser",
+      "/SmartDashboard/OV5647 Sim Field": "Field2d",
       "/SmartDashboard/Run checklist": "Command",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
@@ -195,6 +197,19 @@
         }
       },
       "/SmartDashboard/Field": {
+        "AprilTags": {
+          "arrows": false,
+          "color": [
+            1.0,
+            1.0,
+            1.0,
+            255.0
+          ],
+          "length": 0.10000000149011612,
+          "style": "Box/Image",
+          "weight": 1.0,
+          "width": 0.10000000149011612
+        },
         "BlueCommunityLeft": {
           "arrows": false,
           "length": 0.10000000149011612,
@@ -203,9 +218,9 @@
         "BlueCommunityRight": {
           "arrows": false,
           "color": [
-            255.0,
-            107.66665649414063,
-            0.0,
+            1.0,
+            0.21280276775360107,
+            0.044117629528045654,
             255.0
           ],
           "length": 0.10000000149011612,
@@ -225,13 +240,108 @@
         "BlueLoadingRight": {
           "arrows": false,
           "color": [
-            0.16922630369663239,
-            0.9666666388511658,
             0.04654321447014809,
+            0.9666666388511658,
+            0.7501670122146606,
             255.0
           ],
           "length": 0.10000000149011612,
           "width": 0.10000000149011612
+        },
+        "OV5647: AltGuesses": {
+          "arrowColor": [
+            255.0,
+            0.0,
+            15.00013542175293,
+            255.0
+          ],
+          "arrowSize": 31,
+          "arrowWeight": 1.0,
+          "style": "Hidden"
+        },
+        "OV5647: BestGuesses": {
+          "arrowColor": [
+            0.02672049030661583,
+            0.6813725233078003,
+            0.02672049030661583,
+            255.0
+          ],
+          "arrowSize": 44,
+          "arrowWeight": 1.0,
+          "style": "Hidden"
+        },
+        "OV5647: DetectedTags": {
+          "arrows": false,
+          "color": [
+            0.30344101786613464,
+            0.9166666865348816,
+            0.19771240651607513,
+            255.0
+          ],
+          "length": 0.20000000298023224,
+          "width": 0.20000000298023224
+        },
+        "OV5647: EstimatedPosition": {
+          "arrows": false,
+          "color": [
+            0.009755892679095268,
+            0.32854312658309937,
+            0.9950980544090271,
+            255.0
+          ]
+        },
+        "OV5647: FilteredTags": {
+          "arrows": false,
+          "color": [
+            255.0,
+            247.50001525878906,
+            0.0,
+            255.0
+          ],
+          "length": 0.20000000298023224,
+          "weight": 1.0,
+          "width": 0.20000000298023224
+        },
+        "OldOdometry": {
+          "arrowColor": [
+            0.15542100369930267,
+            0.20588237047195435,
+            0.15542100369930267,
+            255.0
+          ],
+          "color": [
+            0.22549021244049072,
+            0.18901385366916656,
+            0.18901385366916656,
+            255.0
+          ]
+        },
+        "Trajectory": {
+          "arrowSize": 0,
+          "style": "Line",
+          "weight": 1.0
+        },
+        "TrajectoryTarget": {
+          "arrows": false,
+          "color": [
+            0.0,
+            255.0,
+            232.49998474121094,
+            255.0
+          ],
+          "length": 1.0,
+          "width": 1.0
+        },
+        "TrajectoryTargetPose": {
+          "arrows": false,
+          "color": [
+            0.21649417281150818,
+            0.9950980544090271,
+            0.014633809216320515,
+            255.0
+          ],
+          "length": 1.0,
+          "width": 1.0
         },
         "window": {
           "visible": true

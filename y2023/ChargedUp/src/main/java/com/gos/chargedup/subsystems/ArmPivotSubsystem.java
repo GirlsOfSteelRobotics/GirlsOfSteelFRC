@@ -3,11 +3,11 @@ package com.gos.chargedup.subsystems;
 import com.gos.chargedup.AutoPivotHeight;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GamePieceType;
-import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -34,33 +34,32 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    //SORTING: pivot motor stuff (motorized):
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
-
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
 
-    private static final double ARM_MOTOR_SPEED = 0.30;
-
+    private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
 
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
-    public static final double ARM_CUBE_MIDDLE_DEG = 0;
-    public static final double ARM_CUBE_HIGH_DEG = 15;
 
-    public static final double ARM_CONE_MIDDLE_DEG = 15;
-    public static final double ARM_CONE_HIGH_DEG = 30;
+    // Arm Setpoints
+    private static final double HUMAN_PLAYER_ANGLE = 12;
+    private static final double ARM_CUBE_MIDDLE_DEG = 0;
+    private static final double ARM_CUBE_HIGH_DEG = 12;
+    private static final double ARM_CONE_MIDDLE_DEG = 15;
+    private static final double ARM_CONE_HIGH_DEG = 30;
+    private static final double MIN_ANGLE_DEG = -61;
+    private static final double MAX_ANGLE_DEG = 50;
 
     public static final double ARM_HIT_INTAKE_ANGLE = 15;
 
+    // Sim Stuff
     private static final double GEARING =  252.0;
-
     private static final double J_KG_METERS_SQUARED = 1;
-
-    public static final double MIN_ANGLE_DEG = -61;
-    public static final double MAX_ANGLE_DEG = 50;
     private static final double MIN_ANGLE_RADS = Math.toRadians(MIN_ANGLE_DEG);
     private static final double MAX_ANGLE_RADS = Math.toRadians(MAX_ANGLE_DEG);
+
     private static final boolean SIMULATE_GRAVITY = true;
     private final SimableCANSparkMax m_pivotMotor;
     private final RelativeEncoder m_pivotMotorEncoder;
@@ -117,12 +116,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
 
         resetPivotEncoder();
-
-
-
     }
 
-    //SORTING: PIVOT STUFF (MOTORIZED)
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Arm", false, pidController, 0)
             .addP(0)
@@ -260,8 +255,14 @@ public class ArmPivotSubsystem extends SubsystemBase {
             .ignoringDisable(true).withName("Pivot to Coast");
     }
 
+    public CommandBase createResetPivotEncoder() {
+        return createResetPivotEncoder(MIN_ANGLE_DEG);
+    }
+
     public CommandBase createResetPivotEncoder(double angle) {
-        return this.run(() -> m_pivotMotorEncoder.setPosition(angle)).ignoringDisable(true).withName("Reset Pivot Encoder");
+        return this.run(() -> m_pivotMotorEncoder.setPosition(angle))
+            .ignoringDisable(true)
+            .withName("Reset Pivot Encoder (" + angle + ")");
     }
 
     public CommandBase tuneGravityOffsetPID() {
@@ -322,6 +323,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return commandPivotArmToAngleNonHold(angle).withName("Score [" + height + "," + gamePieceType + "]");
     }
 
+    public CommandBase commandGoHome() {
+        return commandPivotArmToAngleNonHold(MIN_ANGLE_DEG);
+    }
+
 
 
     ////////////////
@@ -330,6 +335,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public CommandBase createIsPivotMotorMoving() {
         return new SparkMaxMotorsMoveChecklist(this, m_pivotMotor, "Arm: Pivot motor", 1.0);
+    }
+
+    public CommandBase commandHpPickup() {
+        return commandPivotArmToAngleHold(HUMAN_PLAYER_ANGLE);
     }
 }
 

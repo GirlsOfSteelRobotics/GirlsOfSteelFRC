@@ -320,6 +320,22 @@
     }
   },
   {
+    "name": "/Preferences/ClawSpeed",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCurrentLimit",
+    "type": "double",
+    "value": 25.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/Turret Degree Offset",
     "type": "double",
     "value": 0.0,

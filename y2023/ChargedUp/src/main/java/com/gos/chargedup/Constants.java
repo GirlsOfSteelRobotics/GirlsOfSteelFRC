@@ -30,6 +30,7 @@ public final class Constants {
     public static final int TURRET_MOTOR = 7;
     public static final int INTAKE_MOTOR = 5;
     public static final int PIGEON_PORT = 20;
+    public static final int CLAW_MOTOR = 11; //todo check number
 
 
 
@@ -69,4 +70,9 @@ public final class Constants {
 
     public static final Pose2d ROBOT_RIGHT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(587), Units.inchesToMeters(229), new Rotation2d(0));
 
+    // Turn the compressor on if the PSI is lower than this
+    public static final double MIN_COMPRESSOR_PSI = 110;
+
+    // Turn the compressor off if the PSI is higher than this
+    public static final double MAX_COMPRESSOR_PSI = 120;
 }

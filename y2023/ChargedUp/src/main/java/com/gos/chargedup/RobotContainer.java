@@ -11,6 +11,7 @@ import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
+import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
 import com.gos.chargedup.commands.TeleopMediumArcadeDriveCommand;
@@ -32,16 +33,21 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.littletonrobotics.frc2023.FieldConstants;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 
@@ -78,7 +84,7 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer(DoubleSupplier pressureSupplier) {
+    public RobotContainer(PneumaticHub pneumaticHub) {
         // Configure the trigger bindings
         m_turret = new TurretSubsystem();
         m_chassisSubsystem = new ChassisSubsystem();
@@ -90,7 +96,8 @@ public class RobotContainer {
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_autonomousFactory); //NOPMD
 
-        m_pressureSupplier = pressureSupplier;
+        pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
+        m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
         configureBindings();
 
         if (RobotBase.isSimulation()) {
@@ -103,7 +110,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_intake, m_claw));
-        createTestCommands();
+        createTestCommands(pneumaticHub);
         automatedTurretCommands();
 
         if (RobotBase.isReal()) {
@@ -112,8 +119,10 @@ public class RobotContainer {
     }
 
     @SuppressWarnings("PMD.NcssCount")
-    private void createTestCommands() {
+    private void createTestCommands(PneumaticHub pneumaticHub) {
         ShuffleboardTab tab = Shuffleboard.getTab("TestCommands");
+
+        tab.add("Compressor: Disable", Commands.runEnd(pneumaticHub::disableCompressor, () -> pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI)));
 
         // auto trajectories
         tab.add("Trajectory: Test Line", new TestLineCommandGroup(m_chassisSubsystem));
@@ -156,7 +165,7 @@ public class RobotContainer {
         tab.add("Arm Pivot: Angle PID - 45 degrees", m_armPivot.commandPivotArmToAngleNonHold(45));
         tab.add("Arm Pivot: Angle PID - 90 degrees", m_armPivot.commandPivotArmToAngleNonHold(90));
 
-        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder(ArmPivotSubsystem.MIN_ANGLE_DEG));
+        tab.add("Arm Pivot: Reset Encoder", m_armPivot.createResetPivotEncoder());
         tab.add("Arm Pivot: Reset Encoder (0 deg)", m_armPivot.createResetPivotEncoder(0));
         tab.add("Arm Pivot: to Coast Mode", m_armPivot.createPivotToCoastMode());
 
@@ -174,8 +183,8 @@ public class RobotContainer {
 
 
         // claw
-        tab.add("Claw: Close", m_claw.createMoveClawIntakeCloseCommand());
-        tab.add("Claw: Open", m_claw.createMoveClawIntakeOpenCommand());
+        tab.add("Claw: Close", m_claw.createMoveClawIntakeInCommand());
+        tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
 
         // intake
         tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
@@ -211,11 +220,11 @@ public class RobotContainer {
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the
-     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+     * {@link Trigger#Trigger(BooleanSupplier)} constructor with an arbitrary
      * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * CommandXboxController}'s subclasses for {@link
+     * CommandXboxController Xbox}/{@link CommandPS4Controller
+     * PS4} controllers or {@link CommandJoystick Flight
      * joysticks}.
      */
     private void configureBindings() {
@@ -238,14 +247,16 @@ public class RobotContainer {
         leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeCloseCommand());
-        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeOpenCommand());
-        m_operatorController.b().whileTrue(m_intake.createIntakeInAndStopRollCommand());
-        m_operatorController.y().whileTrue(m_intake.createIntakeOutAndRollCommand());
+        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
+        m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
+        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
 
         m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
         m_operatorController.rightTrigger().whileTrue(m_armExtend.commandMiddleRetract());
+
+        m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
