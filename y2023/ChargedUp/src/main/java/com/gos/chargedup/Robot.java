@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        m_robotContainer = new RobotContainer(() -> m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
+        m_robotContainer = new RobotContainer(m_pneumaticHub);
     }
 
 
@@ -70,6 +70,7 @@ public class Robot extends TimedRobot {
 
         m_lowBatterVoltage.set(RobotController.getBatteryVoltage() < LOW_BATTERY_VOLTAGE);
         SmartDashboard.putNumber("Air Pressure", m_pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT));
+        SmartDashboard.putBoolean("Compressor On", m_pneumaticHub.getCompressor());
     }
 
 

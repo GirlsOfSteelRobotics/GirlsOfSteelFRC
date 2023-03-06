@@ -2,7 +2,7 @@ package com.gos.lib.properties;
 
 import edu.wpi.first.wpilibj.Preferences;
 
-public class GosDoubleProperty {
+public class GosDoubleProperty implements PropertyManager.IProperty<Double> {
     private final PropertyManager.IProperty<Double> m_impl;
 
     public GosDoubleProperty(boolean isConstant, String key, double defaultValue) {
@@ -13,10 +13,12 @@ public class GosDoubleProperty {
         }
     }
 
-    public double getValue() {
+    @Override
+    public Double getValue() {
         return m_impl.getValue();
     }
 
+    @Override
     public String getName() {
         return m_impl.getName();
     }

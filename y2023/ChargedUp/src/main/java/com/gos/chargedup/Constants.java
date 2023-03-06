@@ -6,6 +6,8 @@
 package com.gos.chargedup;
 
 import com.pathplanner.lib.PathConstraints;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -28,6 +30,7 @@ public final class Constants {
     public static final int TURRET_MOTOR = 7;
     public static final int INTAKE_MOTOR = 5;
     public static final int PIGEON_PORT = 20;
+    public static final int CLAW_MOTOR = 11; //todo check number
 
 
 
@@ -39,15 +42,15 @@ public final class Constants {
     public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
 
     //Pneumatics
-    public static final int ARM_TOP_PISTON_OUT = 11;
-    public static final int ARM_TOP_PISTON_IN = 8;
-    public static final int ARM_BOTTOM_PISTON_REVERSE = 13;
-    public static final int ARM_BOTTOM_PISTON_FORWARD = 12;
+    public static final int ARM_TOP_PISTON_OUT = 12;
+    public static final int ARM_TOP_PISTON_IN = 13;
+    public static final int ARM_BOTTOM_PISTON_REVERSE = 11;
+    public static final int ARM_BOTTOM_PISTON_FORWARD = 8;
 
     public static final int CLAW_PISTON_FORWARD = 9;
     public static final int CLAW_PISTON_REVERSE = 10;
-    public static final int INTAKE_LEFT_PISTON = 15;
-    public static final int INTAKE_RIGHT_PISTON = 14;
+    public static final int INTAKE_PISTON_FORWARD = 15;
+    public static final int INTAKE_PISTON_REVERSE = 14;
 
     //Controllers
     public static final int DRIVER_CONTROLLER_PORT = 0;
@@ -59,4 +62,18 @@ public final class Constants {
 
     // Pneumatics Module
     public static final int PRESSURE_SENSOR_PORT = 0;
+
+    // PWM
+    public static final int LED_PORT = 0;
+
+    //defined location the robot can pick up pieces from
+    public static final Pose2d ROBOT_LEFT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(597), Units.inchesToMeters(282), new Rotation2d(0));
+
+    public static final Pose2d ROBOT_RIGHT_BLUE_PICK_UP_POINT = new Pose2d(Units.inchesToMeters(587), Units.inchesToMeters(229), new Rotation2d(0));
+
+    // Turn the compressor on if the PSI is lower than this
+    public static final double MIN_COMPRESSOR_PSI = 110;
+
+    // Turn the compressor off if the PSI is higher than this
+    public static final double MAX_COMPRESSOR_PSI = 120;
 }

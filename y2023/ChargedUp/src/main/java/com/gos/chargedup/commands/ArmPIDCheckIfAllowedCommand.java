@@ -2,17 +2,17 @@ package com.gos.chargedup.commands;
 
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 
 
 public class ArmPIDCheckIfAllowedCommand extends CommandBase {
-    private final ArmSubsystem m_armSubsystem;
+    private final ArmPivotSubsystem m_armSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final TurretSubsystem m_turretSubsytem;
     private final double m_goalAngle;
 
-    public ArmPIDCheckIfAllowedCommand(ArmSubsystem armSubsystem, IntakeSubsystem intakeSubsystem, TurretSubsystem turretSubsystem, double goalAngle) {
+    public ArmPIDCheckIfAllowedCommand(ArmPivotSubsystem armSubsystem, IntakeSubsystem intakeSubsystem, TurretSubsystem turretSubsystem, double goalAngle) {
         this.m_armSubsystem = armSubsystem;
         this.m_intakeSubsystem = intakeSubsystem;
         this.m_turretSubsytem = turretSubsystem;
@@ -38,9 +38,9 @@ public class ArmPIDCheckIfAllowedCommand extends CommandBase {
         }
         else if (m_turretSubsytem.getTurretAngleDeg() > TurretSubsystem.TURRET_LEFT_OF_INTAKE && m_turretSubsytem.getTurretAngleDeg() < TurretSubsystem.TURRET_RIGHT_OF_INTAKE) {
             // check if intake is out
-            if (m_intakeSubsystem.getIntakeOut()) {
+            if (m_intakeSubsystem.isIntakeDown()) {
                 m_armSubsystem.pivotArmToAngle(m_goalAngle);
-            } else if (!m_intakeSubsystem.getIntakeOut()) {
+            } else if (!m_intakeSubsystem.isIntakeDown()) {
                 // check if intake is in and arm angle is less than contact w/ intake angle
                 if (m_armSubsystem.getArmAngleDeg() < m_armSubsystem.ARM_HIT_INTAKE_ANGLE) {
                     m_armSubsystem.pivotArmStop();

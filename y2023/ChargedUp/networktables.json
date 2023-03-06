@@ -302,5 +302,37 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/max velocity - chassis",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/max acceleration - chassis",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawSpeed",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCurrentLimit",
+    "type": "double",
+    "value": 25.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

@@ -1,5 +1,6 @@
 package com.gos.chargedup.commands;
 
+import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
@@ -10,10 +11,12 @@ public class TeleopDockingArcadeDriveCommand extends CommandBase {
     private static final GosDoubleProperty ARCADE_DRIVE_BRAKE_SPEED = new GosDoubleProperty(false, "Chassis speed for brake", 0.2);
     private final ChassisSubsystem m_chassisSubsystem;
     private final CommandXboxController m_joystick;
+    private final LEDManagerSubsystem m_led;
 
-    public TeleopDockingArcadeDriveCommand(ChassisSubsystem chassisSubsystem, CommandXboxController joystick) {
+    public TeleopDockingArcadeDriveCommand(ChassisSubsystem chassisSubsystem, CommandXboxController joystick, LEDManagerSubsystem led) {
         m_joystick = joystick;
         m_chassisSubsystem = chassisSubsystem;
+        m_led = led;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.m_chassisSubsystem);
@@ -28,6 +31,7 @@ public class TeleopDockingArcadeDriveCommand extends CommandBase {
     @Override
     public void execute() {
         m_chassisSubsystem.setArcadeDrive(ARCADE_DRIVE_BRAKE_SPEED.getValue() * -m_joystick.getLeftY(), ARCADE_DRIVE_BRAKE_SPEED.getValue() * -m_joystick.getRightX());
+        m_led.dockAndEngagePatterns();
     }
 
     @Override
