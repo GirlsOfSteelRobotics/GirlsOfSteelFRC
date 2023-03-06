@@ -2,6 +2,7 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
+import com.gos.chargedup.commands.CheckRumbleCommand;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.properties.HeavyIntegerProperty;
@@ -16,11 +17,13 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class ClawSubsystem extends SubsystemBase {
     private static final GosDoubleProperty CLAW_IN_SPEED = new GosDoubleProperty(false, "ClawSpeed", 0.5);
     private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(false, "ClawSpeed", 0.75);
     private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 10);
+    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPiece", 5);
 
     private final SimableCANSparkMax m_clawMotor;
     private final RelativeEncoder m_clawEncoder;
@@ -64,6 +67,11 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotor.set(0);
     }
 
+    public boolean hasGamePiece() {
+        System.out.println("Has game peice: " + m_clawMotor.getOutputCurrent() + " vs " + POSSESSION_OF_PIECE_CURRENT.getValue());
+        return m_clawMotor.getOutputCurrent() > POSSESSION_OF_PIECE_CURRENT.getValue();
+    }
+
     @Override
     public void periodic() {
         m_currentLimit.updateIfChanged();
@@ -83,6 +91,10 @@ public class ClawSubsystem extends SubsystemBase {
 
     public CommandBase createMoveClawIntakeOutCommand() {
         return this.runEnd(this::moveClawIntakeOut, this::stopIntake).withName("ClawIntakeOut");
+    }
+
+    public CommandBase createTeleopMoveClawIntakeInCommand(CommandXboxController joystick) {
+        return this.createMoveClawIntakeInCommand().alongWith(new CheckRumbleCommand(joystick, this::hasGamePiece));
     }
 
     //////////////
