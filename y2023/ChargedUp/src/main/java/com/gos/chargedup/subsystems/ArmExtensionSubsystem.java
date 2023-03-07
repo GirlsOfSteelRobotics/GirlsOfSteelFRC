@@ -35,30 +35,41 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     private final DoubleSolenoid m_topPiston;
     private final DoubleSolenoid m_bottomPiston;
 
+
+    public static boolean armExtendNoWork;
+
     private double m_currentArmLengthMeters;
 
     public ArmExtensionSubsystem() {
+        armExtendNoWork = false;
+
         m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
         m_bottomPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_BOTTOM_PISTON_FORWARD, Constants.ARM_BOTTOM_PISTON_REVERSE);
         fullRetract();
     }
 
     public final void fullRetract() {
-        m_topPiston.set(TOP_PISTON_EXTENDED);
-        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
-        m_currentArmLengthMeters = ARM_RETRACTED_LENGTH;
+        if (!armExtendNoWork) {
+            m_topPiston.set(TOP_PISTON_EXTENDED);
+            m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+            m_currentArmLengthMeters = ARM_RETRACTED_LENGTH;
+        }
     }
 
     public void middleRetract() {
-        m_topPiston.set(TOP_PISTON_RETRACTED);
-        m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
-        m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
+        if (!armExtendNoWork) {
+            m_topPiston.set(TOP_PISTON_RETRACTED);
+            m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
+            m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
+        }
     }
 
     public void out() {
-        m_topPiston.set(TOP_PISTON_RETRACTED);
-        m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
-        m_currentArmLengthMeters = ARM_EXTENDED_LENGTH;
+        if (!armExtendNoWork) {
+            m_topPiston.set(TOP_PISTON_RETRACTED);
+            m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
+            m_currentArmLengthMeters = ARM_EXTENDED_LENGTH;
+        }
     }
 
     public double getArmLengthMeters() {

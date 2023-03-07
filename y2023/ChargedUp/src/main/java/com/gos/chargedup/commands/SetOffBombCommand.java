@@ -1,6 +1,7 @@
 package com.gos.chargedup.commands;
 
-import com.gos.chargedup.subsystems.ArmSubsystem;
+import com.gos.chargedup.subsystems.ArmPivotSubsystem;
+import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
 import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
@@ -9,12 +10,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetOffBombCommand extends CommandBase {
 
-    private String bomb;
+    private final String m_bomb;
 
     public SetOffBombCommand(String command) {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        bomb = command;
+        m_bomb = command;
         addRequirements();
     }
 
@@ -26,28 +27,28 @@ public class SetOffBombCommand extends CommandBase {
     @Override
     //TODO: not really sure if this will actually set the variables back once the button is no longer being pushed???? idk figure it out
     public void execute() {
-        if(bomb.equals("armNoWork"))
-            ArmSubsystem.armNoWork = true;
-        else if(bomb.equals("armPivotNoWork"))
-            ArmSubsystem.armPivotNoWork = true;
-        else if(bomb.equals("armExtendNoWork"))
-            ArmSubsystem.armExtendNoWork = true;
-        else if(bomb.equals("turretNoWork"))
+        if(m_bomb.equals("armNoWork")) {
+            ArmPivotSubsystem.armPivotNoWork = true;
+            ArmExtensionSubsystem.armExtendNoWork = true;
+        } else if(m_bomb.equals("armPivotNoWork"))
+            ArmPivotSubsystem.armPivotNoWork = true;
+        else if(m_bomb.equals("armExtendNoWork"))
+            ArmExtensionSubsystem.armExtendNoWork = true;
+        else if(m_bomb.equals("turretNoWork"))
             TurretSubsystem.turretNoWork = true;
-        else if(bomb.equals("turretReverse"))
+        else if(m_bomb.equals("turretReverse"))
             TurretSubsystem.turretReverse = true;
-        else if(bomb.equals("clawNoWork"))
+        else if(m_bomb.equals("clawNoWork"))
             ClawSubsystem.clawNoWork = true;
-        else if(bomb.equals("clawReverse"))
+        else if(m_bomb.equals("clawReverse"))
             ClawSubsystem.clawReverse = true;
-        else if(bomb.equals("intakeNoWork"))
+        else if(m_bomb.equals("intakeNoWork"))
             IntakeSubsystem.intakeNoWork = true;
-        else if(bomb.equals("intakeReverse"))
+        else if(m_bomb.equals("intakeReverse"))
             IntakeSubsystem.intakeReverse = true;
         else {
-            ArmSubsystem.armNoWork = false;
-            ArmSubsystem.armPivotNoWork = false;
-            ArmSubsystem.armExtendNoWork = false;
+            ArmPivotSubsystem.armPivotNoWork = false;
+            ArmExtensionSubsystem.armExtendNoWork = false;
             TurretSubsystem.turretNoWork = false;
             TurretSubsystem.turretReverse = false;
             ClawSubsystem.clawNoWork = false;
@@ -65,21 +66,19 @@ public class SetOffBombCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        if(bomb.equals("armNoWork"))
-            ArmSubsystem.armNoWork = false;
-        else if(bomb.equals("armPivotNoWork"))
-            ArmSubsystem.armPivotNoWork = false;
-        else if(bomb.equals("armExtendNoWork"))
-            ArmSubsystem.armExtendNoWork = false;
-        else if(bomb.equals("turretNoWork"))
+        if(m_bomb.equals("armPivotNoWork"))
+            ArmPivotSubsystem.armPivotNoWork = false;
+        else if(m_bomb.equals("armExtendNoWork"))
+            ArmExtensionSubsystem.armExtendNoWork = false;
+        else if(m_bomb.equals("turretNoWork"))
             TurretSubsystem.turretNoWork = false;
-        else if(bomb.equals("turretReverse"))
+        else if(m_bomb.equals("turretReverse"))
             TurretSubsystem.turretReverse = false;
-        else if(bomb.equals("clawNoWork"))
+        else if(m_bomb.equals("clawNoWork"))
             ClawSubsystem.clawNoWork = false;
-        else if(bomb.equals("clawReverse"))
+        else if(m_bomb.equals("clawReverse"))
             ClawSubsystem.clawReverse = false;
-        else if(bomb.equals("intakeNoWork"))
+        else if(m_bomb.equals("intakeNoWork"))
             IntakeSubsystem.intakeNoWork = false;
         else
             IntakeSubsystem.intakeReverse = false;

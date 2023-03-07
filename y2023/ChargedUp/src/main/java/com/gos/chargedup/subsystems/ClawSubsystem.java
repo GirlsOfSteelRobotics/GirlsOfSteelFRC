@@ -45,8 +45,6 @@ public class ClawSubsystem extends SubsystemBase {
         clawNoWork = false;
         clawReverse = false;
 
-        m_claw = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.CLAW_PISTON_FORWARD, Constants.CLAW_PISTON_REVERSE);
-
         m_currentLimit = new HeavyIntegerProperty(m_clawMotor::setSmartCurrentLimit, CLAW_CURRENT_LIMIT);
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ClawSubsystem");
@@ -56,23 +54,19 @@ public class ClawSubsystem extends SubsystemBase {
     }
 
     //intake close
-    public void moveClawIntakeClose() {
-        if(!clawNoWork && !clawReverse)
-            m_claw.set(DoubleSolenoid.Value.kReverse);
-        else if(clawReverse)
-            m_claw.set(DoubleSolenoid.Value.kForward);
     public void moveClawIntakeIn() {
-        m_clawMotor.set(CLAW_SPEED.getValue());
+        if (!clawNoWork && !clawReverse)
+            m_clawMotor.set(CLAW_SPEED.getValue());
+        else if (clawReverse)
+            m_clawMotor.set(-CLAW_SPEED.getValue());
     }
 
     //intake open
-    public void moveClawIntakeOpen() {
-        if(!clawNoWork && !clawReverse)
-            m_claw.set(DoubleSolenoid.Value.kForward);
-        else if(clawReverse)
-            m_claw.set(DoubleSolenoid.Value.kReverse);
     public void moveClawIntakeOut() {
-        m_clawMotor.set(-1);
+        if (!clawNoWork && !clawReverse)
+            m_clawMotor.set(-1);
+        else if (clawReverse)
+            m_clawMotor.set(1);
     }
 
     public void stopIntake() {

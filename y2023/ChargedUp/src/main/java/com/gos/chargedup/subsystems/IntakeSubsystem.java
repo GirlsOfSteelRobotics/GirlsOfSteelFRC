@@ -31,7 +31,6 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeNoWork = false;
 
         m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_PISTON_FORWARD, Constants.INTAKE_PISTON_REVERSE);
-        m_hopperMotor = new SimableCANSparkMax(Constants.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         m_intakeMotor.restoreFactoryDefaults();
@@ -64,42 +63,34 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void retract() {
-        m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
-    }
-
     public boolean isIntakeDown() {
         return m_intakeSolenoid.get().equals(DoubleSolenoid.Value.kReverse);
     }
 
     public void intakeRollersIn() {
-        m_intakeMotor.set(INTAKE_SPEED);
         if(!intakeNoWork && !intakeReverse) {
-            m_intakeSolenoidRight.set(true);
-            m_intakeSolenoidLeft.set(true);
+            m_intakeSolenoid.set(DoubleSolenoid.Value.kForward);
             m_intakeMotor.set(INTAKE_SPEED);
         } else if(intakeReverse) {
-            m_intakeSolenoidRight.set(false);
-            m_intakeSolenoidLeft.set(false);
+            m_intakeSolenoid.set(DoubleSolenoid.Value.kForward);
             m_intakeMotor.set(0);
         }
     }
 
     public void intakeRollersOut() {
+
         m_intakeMotor.set(-INTAKE_SPEED);
     }
 
     public void retract() {
-        if(!intakeNoWork && !intakeReverse) {
-            m_intakeSolenoidRight.set(false);
-            m_intakeSolenoidLeft.set(false);
+        if (!intakeNoWork && !intakeReverse) {
+            m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
             m_intakeMotor.set(0);
-        } else if(intakeReverse)
-        {
-            m_intakeSolenoidRight.set(true);
-            m_intakeSolenoidLeft.set(true);
+        } else if (intakeReverse) {
+            m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
             m_intakeMotor.set(INTAKE_SPEED);
         }
+    }
     public void intakeRollersStop() {
         m_intakeMotor.set(0);
     }
