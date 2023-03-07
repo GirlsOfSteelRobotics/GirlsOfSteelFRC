@@ -247,7 +247,7 @@ public class RobotContainer {
         leftJoystickAsButtonLeft.whileTrue(m_turret.commandMoveTurretClockwise());
         leftJoystickAsButtonUp.whileTrue(m_armPivot.commandPivotArmUp());
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
-        m_operatorController.a().whileTrue(m_claw.createMoveClawIntakeInCommand());
+        m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
         m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
         m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
