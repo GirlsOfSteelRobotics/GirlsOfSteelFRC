@@ -59,7 +59,17 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double PITCH_UPPER_LIMIT = 3.0;
 
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
-    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+    private static final double GEAR_RATIO;
+
+    static {
+        //toDo: make these values work as expected
+        if (Constants.IS_ROBOT_REAL) {
+            GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+        } else {
+            GEAR_RATIO = 527.0 / 54.0;
+        }
+    }
+
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
@@ -254,14 +264,26 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(0) //this needs to be tuned!
-            .addI(0)
-            .addD(0)
-            .addFF(.22)
-            .addMaxVelocity((Units.inchesToMeters(2)))
-            .addMaxAcceleration((Units.inchesToMeters(0)))
-            .build();
+        if (Constants.IS_ROBOT_REAL) {
+            return new RevPidPropertyBuilder("Chassis Bubbles", false, pidController, 0)
+                .addP(0) //this needs to be tuned!
+                .addI(0)
+                .addD(0)
+                .addFF(.22)
+                .addMaxVelocity((Units.inchesToMeters(2)))
+                .addMaxAcceleration((Units.inchesToMeters(0)))
+                .build();
+        }
+        else {
+            return new RevPidPropertyBuilder("Chassis Blossom", false, pidController, 0)
+                .addP(0)
+                .addI(0)
+                .addD(0)
+                .addFF(.22)
+                .addMaxVelocity((Units.inchesToMeters(2)))
+                .addMaxAcceleration((Units.inchesToMeters(0)))
+                .build();
+        }
     }
 
     @Override
