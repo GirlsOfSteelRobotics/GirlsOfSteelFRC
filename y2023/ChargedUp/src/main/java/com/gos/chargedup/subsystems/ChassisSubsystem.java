@@ -54,7 +54,7 @@ import java.util.Optional;
 
 
 public class ChassisSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .02);
+    private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .03);
 
     private static final double PITCH_LOWER_LIMIT = -3.0;
     private static final double PITCH_UPPER_LIMIT = 3.0;
@@ -119,11 +119,8 @@ public class ChassisSubsystem extends SubsystemBase {
     private final SparkMaxAlerts m_followerRightMotorErrorAlert;
 
     private final RectangleInterface m_communityRectangle1;
-
     private final RectangleInterface m_communityRectangle2;
-
     private final RectangleInterface m_loadingRectangle1;
-
     private final RectangleInterface m_loadingRectangle2;
 
     @SuppressWarnings("PMD.NcssCount")
@@ -286,7 +283,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .addI(0)
             .addD(0)
             .addFF(.22)
-            .addMaxVelocity((Units.inchesToMeters(2)))
+            .addMaxVelocity(2)
             .addMaxAcceleration((Units.inchesToMeters(0)))
             .build();
     }
