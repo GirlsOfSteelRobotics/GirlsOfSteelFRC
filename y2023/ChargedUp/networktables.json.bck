@@ -286,5 +286,53 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Chassis auto engage kP",
+    "type": "double",
+    "value": 0.02,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Chassis speed medium",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/max velocity - chassis",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/max acceleration - chassis",
+    "type": "double",
+    "value": 48.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawSpeed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCurrentLimit",
+    "type": "double",
+    "value": 40.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

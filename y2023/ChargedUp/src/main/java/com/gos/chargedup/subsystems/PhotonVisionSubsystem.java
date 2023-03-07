@@ -1,8 +1,9 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.GosField;
+import com.gos.chargedup.Robot;
 import com.gos.lib.properties.GosDoubleProperty;
-import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -11,13 +12,12 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.SimVisionSystem;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -27,35 +27,32 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class PhotonVisionSubsystem implements Subsystem, Vision {
+public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
 
     // TODO get transform for real robot
     private static final Transform3d ROBOT_TO_CAMERA =
         new Transform3d(
-            new Translation3d(0.5, 0.0, Units.inchesToMeters(28.5)),
-            new Rotation3d(0, Units.degreesToRadians(29), Units.degreesToRadians(15)));
+            new Translation3d(Units.inchesToMeters(11), Units.inchesToMeters(0), Units.inchesToMeters(12)),
+            new Rotation3d(0, 0, 0));
 
     private static final String CAMERA_NAME = "OV5647";
 
     //get or tune this constant
     private static final GosDoubleProperty POSE_AMBIGUITY_THRESHOLD = new GosDoubleProperty(false, "Pose ambiguity threshold", 0.2);
-
     private static final GosDoubleProperty POSE_DISTANCE_THRESHOLD = new GosDoubleProperty(false, "Pose distance Threshold", 4.25);
-
     private static final GosDoubleProperty POSE_DISTANCE_ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pose distance allowable error", 0.2);
 
     private final PhotonCamera m_camera;
-
     private final AprilTagFieldLayout m_aprilTagFieldLayout;
-
     private final PhotonPoseEstimator m_photonPoseEstimator;
 
-    private final Field2d m_field;
+    private final GosField.CameraObject m_field;
 
-    public PhotonVisionSubsystem() {
+    private SimVisionSystem m_sim;
+
+    public PhotonVisionSubsystem(GosField field) {
         m_camera = new PhotonCamera(CAMERA_NAME);
-        m_field = new Field2d();
-        Shuffleboard.getTab("PhotonVision " + CAMERA_NAME).add(m_field);
+        this.m_field = new GosField.CameraObject(field, CAMERA_NAME);
 
         try {
             m_aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
@@ -64,19 +61,21 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
             throw new RuntimeException(e);
         }
 
-        List<Pose2d> tagPoses = new ArrayList<>();
-        for (AprilTag tag : m_aprilTagFieldLayout.getTags()) {
-            tagPoses.add(tag.pose.toPose2d());
+        if (Robot.isSimulation()) {
+            m_sim = new SimVisionSystem(
+                CAMERA_NAME,
+                45,
+                ROBOT_TO_CAMERA.inverse(),
+                27,
+                640,
+                320,
+                .5
+            );
         }
-        m_field.getObject("tags").setPoses(tagPoses);
     }
-
-
 
     @Override
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
-        m_field.setRobotPose(prevEstimatedRobotPose);
-
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
 
         PhotonPipelineResult cameraResult = m_camera.getLatestResult();
@@ -87,6 +86,8 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         List<Pose2d> altGuessPoses = new ArrayList<>();
 
         if (!cameraResult.hasTargets()) {
+            m_field.setBestGuesses(bestGuessPoses);
+            m_field.setAltGuesses(altGuessPoses);
             return Optional.empty();
         } else {
             for (PhotonTrackedTarget target: cameraResult.getTargets()) {
@@ -95,7 +96,6 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
 
                 Optional<Pose3d> targetPosition = m_aprilTagFieldLayout.getTagPose(target.getFiducialId());
                 if (targetPosition.isEmpty()) {
-                    System.out.println("Bad fiducial? " + target.getFiducialId());
                     continue;
                 }
                 Pose3d bestTransformPosition =
@@ -120,8 +120,8 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
             }
         }
 
-        m_field.getObject("Best Guess").setPoses(bestGuessPoses);
-        m_field.getObject("Alt Guess").setPoses(altGuessPoses);
+        m_field.setBestGuesses(bestGuessPoses);
+        m_field.setAltGuesses(altGuessPoses);
 
         PhotonPipelineResult goodCameraResults = new PhotonPipelineResult(cameraResult.getLatencyMillis(), goodTargets);
         goodCameraResults.setTimestampSeconds(cameraResult.getTimestampSeconds());
@@ -131,7 +131,14 @@ public class PhotonVisionSubsystem implements Subsystem, Vision {
         SmartDashboard.putNumber("Number of found targets (pre-filter): ", cameraResult.getTargets().size());
         SmartDashboard.putNumber("Number of good targets (post-filter): ", goodTargets.size());
 
-        return m_photonPoseEstimator.update(goodCameraResults);
+        Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update(goodCameraResults);
+        m_field.setEstimate(estimate);
+        return estimate;
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        m_sim.processFrame(m_photonPoseEstimator.getReferencePose());
     }
 }
 

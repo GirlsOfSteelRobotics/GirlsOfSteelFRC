@@ -2,11 +2,11 @@ package com.gos.chargedup.subsystems;
 
 
 import com.gos.chargedup.Constants;
-import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
 import com.gos.lib.rev.SparkMaxAlerts;
+import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
@@ -84,6 +84,8 @@ public class TurretSubsystem extends SubsystemBase {
         if (RobotBase.isSimulation()) {
             m_turretSimulator = new InstantaneousMotorSim(new RevMotorControllerSimWrapper(m_turretMotor), RevEncoderSimWrapper.create(m_turretMotor), 180);
         }
+
+        resetEncoder();
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
@@ -155,6 +157,16 @@ public class TurretSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
     }
 
+    public boolean atTurretAngle() {
+        double error = m_turretGoalAngle - getTurretAngleDegreesNeoEncoder();
+
+        return Math.abs(error) < ALLOWABLE_ERROR_DEG.getValue();
+    }
+
+    public double getTurretError() {
+        return m_turretGoalAngle - getTurretAngleDegreesNeoEncoder();
+    }
+
     public void tuneVelocity(double goalVelocity) {
         m_turretPidController.setReference(goalVelocity, CANSparkMax.ControlType.kVelocity, 0);
     }
@@ -189,7 +201,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public CommandBase createTuneVelocity() {
-        return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret);
+        return this.runEnd(() -> tuneVelocity(TUNING_VELOCITY.getValue()), this::stopTurret).withName("Tune Velocity");
     }
 
     public CommandBase createTurretToCoastMode() {
@@ -199,8 +211,18 @@ public class TurretSubsystem extends SubsystemBase {
             .ignoringDisable(true).withName("Turret to Coast");
     }
 
+    private void resetEncoder() {
+        m_turretEncoder.setPosition(0.0);
+    }
+
     public CommandBase createResetEncoder() {
-        return this.runOnce(() -> m_turretEncoder.setPosition(0.0)).ignoringDisable(true).withName("Reset Turret Encoder");
+        return this.runOnce(this::resetEncoder)
+            .ignoringDisable(true)
+            .withName("Reset Turret Encoder");
+    }
+
+    public CommandBase goHome() {
+        return commandTurretPID(0);
     }
 
     //////////////////
