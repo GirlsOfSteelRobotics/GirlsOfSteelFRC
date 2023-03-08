@@ -14,6 +14,9 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     }
   },
@@ -195,6 +198,23 @@
           "weight": 1.0,
           "width": 0.10000000149011612
         },
+        "BlueCharging": {
+          "arrowColor": [
+            0.4159945249557495,
+            0.6541532874107361,
+            0.9518518447875977,
+            255.0
+          ],
+          "arrows": false,
+          "color": [
+            0.3930315375328064,
+            0.6133399605751038,
+            0.914814829826355,
+            255.0
+          ],
+          "length": 0.20000000298023224,
+          "width": 0.20000000298023224
+        },
         "BlueCommunityLeft": {
           "arrows": false,
           "length": 0.10000000149011612,
@@ -339,7 +359,11 @@
       }
     }
   },
-  "NetworkTables View": {
-    "visible": false
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
+    }
   }
 }

@@ -126,6 +126,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final RectangleInterface m_loadingRectangle2;
 
+    private final RectangleInterface m_chargingRectangle1;
+
     @SuppressWarnings("PMD.NcssCount")
     private final PigeonAlerts m_pigeonAlerts;
 
@@ -142,7 +144,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_communityRectangle2 = new RectangleInterface(FieldConstants.Community.MID_X, FieldConstants.Community.MID_Y, FieldConstants.Community.OUTER_X, FieldConstants.Community.RIGHT_Y, m_field, "BlueCommunityLeft");
         m_loadingRectangle1 = new RectangleInterface(FieldConstants.LoadingZone.OUTER_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.MID_Y, m_field, "BlueLoadingRight");
         m_loadingRectangle2 = new RectangleInterface(FieldConstants.LoadingZone.MID_X, FieldConstants.LoadingZone.LEFT_Y, FieldConstants.LoadingZone.INNER_X, FieldConstants.LoadingZone.RIGHT_Y, m_field, "BlueLoadingLeft");
-
+        m_chargingRectangle1 = new RectangleInterface(FieldConstants.Community.CHARGING_STATION_INNER_X, FieldConstants.Community.CHARGING_STATION_LEFT_Y, FieldConstants.Community.CHARGING_STATION_OUTER_X, FieldConstants.Community.CHARGING_STATION_RIGHT_Y, m_field, "BlueCharging");
         m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -313,6 +315,7 @@ public class ChassisSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Chassis Pitch", getPitch());
         SmartDashboard.putBoolean("In Community", isInCommunityZone());
         SmartDashboard.putBoolean("In Loading", isInLoadingZone());
+        SmartDashboard.putBoolean("On Charging Station", isOnChargingStation());
 
         m_leaderLeftMotorErrorAlert.checkAlerts();
         m_followerLeftMotorErrorAlert.checkAlerts();
@@ -419,6 +422,10 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public boolean isInLoadingZone() {
         return m_loadingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY()) || m_loadingRectangle2.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
+    }
+
+    public boolean isOnChargingStation() {
+        return m_chargingRectangle1.pointIsInRect(m_poseEstimator.getEstimatedPosition().getX(), m_poseEstimator.getEstimatedPosition().getY());
     }
 
     public boolean canExtendArm() {
