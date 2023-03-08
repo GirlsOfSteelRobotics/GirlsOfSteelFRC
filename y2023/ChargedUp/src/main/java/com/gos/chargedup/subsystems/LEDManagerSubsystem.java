@@ -14,6 +14,7 @@ import com.gos.lib.led.mirrored.MirroredLEDSolidColor;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,6 +39,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armSubsystem;
     private final TurretSubsystem m_turretSubsystem;
+
+    private final ClawSubsystem m_claw;
 
     // Led core
     protected final AddressableLEDBuffer m_buffer;
@@ -72,12 +75,18 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_isInLoadingZoneSignal;
 
-    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, AutonomousFactory autonomousFactory) {
+    private final MirroredLEDFlash m_isHoldingPieceClaw;
+
+    private final Timer m_timer = new Timer();
+
+
+    public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
 
         m_chassisSubsystem = chassisSubsystem;
         m_armSubsystem = armSubsystem;
         m_turretSubsystem = turretSubsystem;
+        m_claw = claw;
 
         m_buffer = new AddressableLEDBuffer(MAX_INDEX_LED);
         m_led = new AddressableLED(Constants.LED_PORT);
@@ -137,6 +146,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
         //for Claw Aligned Check
         m_clawAlignedSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
 
+        //holding piece in claw
+        m_isHoldingPieceClaw = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kRed);
+
         // Set the data
         m_led.setData(m_buffer);
         m_led.start();
@@ -171,9 +183,20 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_chassisSubsystem.isInLoadingZone()) {
             loadingZonePatterns();
         }
+        else if (m_claw.hasGamePiece()) {
+            m_timer.reset();
+            m_timer.start();
+            if(m_timer.get() < 1) {
+                holdingPieceInClaw();
+            }
+            else {
+                m_notInCommunityZone.writeLeds();
+            }
+        }
         else if (m_optionDockLED) {
             dockAndEngagePatterns();
         }
+
         else {
             m_notInCommunityZone.writeLeds();
         }
@@ -214,6 +237,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
     public void dockAndEngagePatterns() {
         m_optionDockLED = true;
         m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
+    }
+
+    public void holdingPieceInClaw() {
+        m_isHoldingPieceClaw.writeLeds();
+
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
