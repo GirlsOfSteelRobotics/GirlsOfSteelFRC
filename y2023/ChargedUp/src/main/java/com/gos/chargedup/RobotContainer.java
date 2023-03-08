@@ -112,6 +112,7 @@ public class RobotContainer {
         SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_intake, m_claw));
         createTestCommands(pneumaticHub);
         automatedTurretCommands();
+        bombs();
 
         if (RobotBase.isReal()) {
             PropertyManager.printDynamicProperties();
@@ -215,6 +216,20 @@ public class RobotContainer {
         tab.add("Low Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.LOW_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.LOW, m_ledManagerSubsystem));
         tab.add("Mid Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.MID_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.MEDIUM, m_ledManagerSubsystem));
         tab.add("High Cone Right", new AimTurretCommand(m_armPivot, m_armExtend, m_chassisSubsystem, m_turret, FieldConstants.Grids.HIGH_TRANSLATIONS[2], "Right", GamePieceType.CONE, AutoPivotHeight.HIGH, m_ledManagerSubsystem));
+
+    }
+
+    public void bombs() {
+        ShuffleboardTab tab = Shuffleboard.getTab("b o o m");
+        tab.add("Arm go boom", m_armPivot.createArmPivotNoWorkBomb()); //add arm extend
+        tab.add("Arm Pivot go boom", m_armPivot.createArmPivotNoWorkBomb());
+        tab.add("Arm Extension go boom", m_armExtend.createArmExtendNoWorkBomb());
+        tab.add("Turret go boom", m_turret.createTurretNoWorkBomb());
+        tab.add("Turret go reverse (reverse)", m_turret.createTurretReverseBomb());
+        tab.add("Claw go boom", m_claw.createClawNoWorkBomb());
+        tab.add("Claw go reverse (reverse)", m_claw.createClawReverseBomb());
+        tab.add("Intake go boom", m_intake.createIntakeBomb());
+        tab.add("Intake go reverse (reverse)", m_intake.createIntakeReverseBomb());
 
     }
 

@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -103,6 +104,14 @@ public class ClawSubsystem extends SubsystemBase {
 
     public CommandBase createTeleopMoveClawIntakeInCommand(CommandXboxController joystick) {
         return this.createMoveClawIntakeInCommand().alongWith(new CheckRumbleCommand(joystick, this::hasGamePiece));
+    }
+
+    public CommandBase createClawNoWorkBomb() {
+        return Commands.runEnd(() -> clawNoWork = true, () -> clawNoWork = false).withName("claw ded :D");
+    }
+
+    public CommandBase createClawReverseBomb() {
+        return Commands.runEnd(() -> clawReverse = true, () -> clawReverse = false).withName("claw go reverse (reverse) :D");
     }
 
     //////////////

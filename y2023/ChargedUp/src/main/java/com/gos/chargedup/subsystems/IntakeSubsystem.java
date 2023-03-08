@@ -10,6 +10,7 @@ import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.function.DoubleSupplier;
@@ -78,8 +79,14 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void intakeRollersOut() {
+        if (!intakeNoWork && !intakeReverse) {
+            m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+            m_intakeMotor.set(-INTAKE_SPEED);
+        } else if (intakeReverse) {
+            m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+            m_intakeMotor.set(INTAKE_SPEED);
+        }
 
-        m_intakeMotor.set(-INTAKE_SPEED);
     }
 
     public void retract() {
@@ -124,6 +131,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public CommandBase createIntakeRetract() {
         return this.run(this::retract).withName("intakeRetract");
+    }
+
+    public CommandBase createIntakeBomb() {
+        return Commands.runEnd(() -> intakeNoWork = true, () -> intakeNoWork = false).withName("intake ded :D");
+    }
+
+    public CommandBase createIntakeReverseBomb() {
+        return Commands.runEnd(() -> intakeReverse = true, () -> intakeReverse = false).withName("intake go reverse (reverse) :D");
     }
 
     ///////////////

@@ -165,6 +165,15 @@
       "/Shuffleboard/TestCommands/Turret: To Coast Mode": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Position (-90 degrees)": "Command",
       "/Shuffleboard/TestCommands/Turret: Tune Velocity": "Command",
+      "/Shuffleboard/b o o m/Arm Extension go boom": "Command",
+      "/Shuffleboard/b o o m/Arm Pivot go boom": "Command",
+      "/Shuffleboard/b o o m/Arm go boom": "Command",
+      "/Shuffleboard/b o o m/Claw go boom": "Command",
+      "/Shuffleboard/b o o m/Claw go reverse (reverse)": "Command",
+      "/Shuffleboard/b o o m/Intake go boom": "Command",
+      "/Shuffleboard/b o o m/Intake go reverse (reverse)": "Command",
+      "/Shuffleboard/b o o m/Turret go boom": "Command",
+      "/Shuffleboard/b o o m/Turret go reverse (reverse)": "Command",
       "/SmartDashboard/Auto Mode Select": "String Chooser",
       "/SmartDashboard/Automated Turret - 2": "Command",
       "/SmartDashboard/Automated Turret - 6": "Command",
@@ -176,6 +185,26 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
+      "/Shuffleboard/TestCommands/Intake Roller: In": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/TestCommands/Intake Roller: Out": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/b o o m/Intake go boom": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/b o o m/Intake go reverse (reverse)": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true

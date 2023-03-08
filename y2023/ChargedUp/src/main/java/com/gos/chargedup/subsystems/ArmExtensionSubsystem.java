@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -171,6 +172,10 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         else {
             return commandFullRetract();
         }
+    }
+
+    public CommandBase createArmExtendNoWorkBomb() {
+        return Commands.runEnd(() -> armExtendNoWork = true, () -> armExtendNoWork = false).withName("arm extension ded :D");
     }
 
     ////////////////

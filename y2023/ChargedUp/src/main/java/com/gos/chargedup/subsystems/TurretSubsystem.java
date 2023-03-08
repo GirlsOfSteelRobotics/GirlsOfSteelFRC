@@ -19,6 +19,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -234,6 +235,14 @@ public class TurretSubsystem extends SubsystemBase {
 
     public CommandBase goHome() {
         return commandTurretPID(0);
+    }
+
+    public CommandBase createTurretNoWorkBomb() {
+        return Commands.runEnd(() -> turretNoWork = true, () -> turretNoWork = false).withName("turret ded :D");
+    }
+
+    public CommandBase createTurretReverseBomb() {
+        return Commands.runEnd(() -> turretReverse = true, () -> turretReverse = false).withName("turret go reverse (reverse) :D");
     }
 
     //////////////////
