@@ -74,7 +74,7 @@ public class IntakeSubsystem extends SubsystemBase {
             m_intakeMotor.set(INTAKE_SPEED);
         } else if(intakeReverse) {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kForward);
-            m_intakeMotor.set(0);
+            m_intakeMotor.set(-INTAKE_SPEED);
         }
     }
 
@@ -86,7 +86,6 @@ public class IntakeSubsystem extends SubsystemBase {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
             m_intakeMotor.set(INTAKE_SPEED);
         }
-
     }
 
     public void retract() {
