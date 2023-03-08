@@ -108,8 +108,9 @@ public class LimelightSensor {
         return m_area.getDouble(INVALID_VALUE);
     }
 
+    // in seconds
     public double getLatency() {
-        return m_latency.getDouble(INVALID_VALUE);
+        return Units.millisecondsToSeconds(m_latency.getDouble(INVALID_VALUE));
     }
 
     public Pose3d getRobotPose() {
