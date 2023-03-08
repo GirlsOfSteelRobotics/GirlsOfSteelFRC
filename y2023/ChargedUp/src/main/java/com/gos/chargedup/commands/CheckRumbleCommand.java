@@ -14,7 +14,6 @@ public class CheckRumbleCommand extends CommandBase {
     public CheckRumbleCommand(CommandXboxController joystick, BooleanSupplier checkValue) {
         m_joystick = joystick;
         m_checkValue = checkValue;
-        addRequirements();
     }
 
     @Override

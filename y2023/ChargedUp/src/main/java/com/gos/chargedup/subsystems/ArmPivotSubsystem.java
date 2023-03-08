@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -34,8 +35,8 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
-    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
+    private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 2);
+    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .27);
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
@@ -120,12 +121,12 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Arm", false, pidController, 0)
-            .addP(0)
+            .addP(0.0033) // 0.0058
             .addI(0)
-            .addD(0)
-            .addFF(0)
-            .addMaxVelocity(Units.inchesToMeters(0))
-            .addMaxAcceleration(Units.inchesToMeters(0))
+            .addD(0.035)
+            .addFF(0.0055) // 0.0065
+            .addMaxVelocity(100)
+            .addMaxAcceleration(200)
             .build();
     }
 
@@ -184,6 +185,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
 
+        SmartDashboard.putNumber("~effective gravity offset~", gravityOffset);
         if (!isLowerLimitSwitchedPressed() || !isUpperLimitSwitchedPressed()) {
             m_pivotPIDController.setReference(pivotAngleGoal, CANSparkMax.ControlType.kSmartMotion, 0, gravityOffset);
         } else {
@@ -266,7 +268,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public CommandBase tuneGravityOffsetPID() {
-        return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
+        return this.runEnd(this::tuneGravityOffset, this::pivotArmStop).withName("Tune Gravity Offset");
     }
 
     public CommandBase commandPivotArmUpPrevention(ChassisSubsystem cs, CommandXboxController x) {
