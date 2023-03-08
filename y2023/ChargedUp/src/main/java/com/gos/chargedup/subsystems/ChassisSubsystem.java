@@ -54,8 +54,8 @@ import java.util.Optional;
 
 
 public class ChassisSubsystem extends SubsystemBase {
-    public static boolean reverseDrive;
-    public static boolean odometryWack;
+    public boolean m_reverseDrive;
+    public boolean m_odometryWack;
 
     private static final GosDoubleProperty AUTO_ENGAGE_KP = new GosDoubleProperty(false, "Chassis auto engage kP", .02);
 

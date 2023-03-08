@@ -37,12 +37,12 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     private final DoubleSolenoid m_bottomPiston;
 
 
-    public static boolean armExtendNoWork;
+    public boolean m_armExtendNoWork;
 
     private double m_currentArmLengthMeters;
 
     public ArmExtensionSubsystem() {
-        armExtendNoWork = false;
+        m_armExtendNoWork = false;
 
         m_topPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_TOP_PISTON_OUT, Constants.ARM_TOP_PISTON_IN);
         m_bottomPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ARM_BOTTOM_PISTON_FORWARD, Constants.ARM_BOTTOM_PISTON_REVERSE);
@@ -50,7 +50,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public final void fullRetract() {
-        if (!armExtendNoWork) {
+        if (!m_armExtendNoWork) {
             m_topPiston.set(TOP_PISTON_EXTENDED);
             m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
             m_currentArmLengthMeters = ARM_RETRACTED_LENGTH;
@@ -58,7 +58,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public void middleRetract() {
-        if (!armExtendNoWork) {
+        if (!m_armExtendNoWork) {
             m_topPiston.set(TOP_PISTON_RETRACTED);
             m_bottomPiston.set(BOTTOM_PISTON_RETRACTED);
             m_currentArmLengthMeters = ARM_MIDDLE_LENGTH;
@@ -66,7 +66,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public void out() {
-        if (!armExtendNoWork) {
+        if (!m_armExtendNoWork) {
             m_topPiston.set(TOP_PISTON_RETRACTED);
             m_bottomPiston.set(BOTTOM_PISTON_EXTENDED);
             m_currentArmLengthMeters = ARM_EXTENDED_LENGTH;
@@ -175,7 +175,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public CommandBase createArmExtendNoWorkBomb() {
-        return Commands.runEnd(() -> armExtendNoWork = true, () -> armExtendNoWork = false).withName("arm extension ded :D");
+        return Commands.runEnd(() -> m_armExtendNoWork = true, () -> m_armExtendNoWork = false).withName("arm extension ded :D");
     }
 
     ////////////////

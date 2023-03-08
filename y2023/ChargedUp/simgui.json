@@ -14,6 +14,11 @@
         "header": {
           "open": true
         }
+      },
+      "SPARK MAX [6]": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -185,6 +190,11 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
+      "/Shuffleboard/TestCommands/Arm Pivot: Pivot Up": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/TestCommands/Intake Roller: In": {
         "window": {
           "visible": true
@@ -195,17 +205,17 @@
           "visible": true
         }
       },
+      "/Shuffleboard/b o o m/Arm Pivot go boom": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/b o o m/Intake go boom": {
         "window": {
           "visible": true
         }
       },
       "/Shuffleboard/b o o m/Intake go reverse (reverse)": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Auto Mode Select": {
         "window": {
           "visible": true
         }
@@ -357,11 +367,6 @@
           "length": 1.0,
           "width": 1.0
         },
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Height Options": {
         "window": {
           "visible": true
         }

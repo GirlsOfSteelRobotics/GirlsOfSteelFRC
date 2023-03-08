@@ -219,9 +219,9 @@ public class RobotContainer {
 
     }
 
-    public void bombs() {
+    public final void bombs() {
         ShuffleboardTab tab = Shuffleboard.getTab("b o o m");
-        tab.add("Arm go boom", m_armPivot.createArmPivotNoWorkBomb()); //add arm extend
+        tab.add("Arm go boom", m_armExtend.createArmExtendNoWorkBomb().alongWith(m_armPivot.createArmPivotNoWorkBomb()));
         tab.add("Arm Pivot go boom", m_armPivot.createArmPivotNoWorkBomb());
         tab.add("Arm Extension go boom", m_armExtend.createArmExtendNoWorkBomb());
         tab.add("Turret go boom", m_turret.createTurretNoWorkBomb());
@@ -230,7 +230,6 @@ public class RobotContainer {
         tab.add("Claw go reverse (reverse)", m_claw.createClawReverseBomb());
         tab.add("Intake go boom", m_intake.createIntakeBomb());
         tab.add("Intake go reverse (reverse)", m_intake.createIntakeReverseBomb());
-
     }
 
     /**

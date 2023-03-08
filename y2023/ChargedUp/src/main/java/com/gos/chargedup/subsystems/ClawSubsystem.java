@@ -21,8 +21,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class ClawSubsystem extends SubsystemBase {
-    public static boolean clawNoWork;
-    public static boolean clawReverse;
+    public boolean m_clawNoWork;
+    public boolean m_clawReverse;
     private static final GosDoubleProperty CLAW_SPEED = new GosDoubleProperty(false, "ClawSpeed", 0.5);
     private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 10);
     private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPiece", 5);
@@ -46,8 +46,8 @@ public class ClawSubsystem extends SubsystemBase {
         m_clawMotor.setSmartCurrentLimit(10);
         m_clawMotor.burnFlash();
         m_clawMotorErrorAlerts = new SparkMaxAlerts(m_clawMotor, "claw motor");
-        clawNoWork = false;
-        clawReverse = false;
+        m_clawNoWork = false;
+        m_clawReverse = false;
 
         m_currentLimit = new HeavyIntegerProperty(m_clawMotor::setSmartCurrentLimit, CLAW_CURRENT_LIMIT);
 
@@ -59,18 +59,20 @@ public class ClawSubsystem extends SubsystemBase {
 
     //intake close
     public void moveClawIntakeIn() {
-        if (!clawNoWork && !clawReverse)
+        if (!m_clawNoWork && !m_clawReverse) {
             m_clawMotor.set(CLAW_SPEED.getValue());
-        else if (clawReverse)
+        } else if (m_clawReverse) {
             m_clawMotor.set(-CLAW_SPEED.getValue());
+        }
     }
 
     //intake open
     public void moveClawIntakeOut() {
-        if (!clawNoWork && !clawReverse)
+        if (!m_clawNoWork && !m_clawReverse) {
             m_clawMotor.set(-1);
-        else if (clawReverse)
+        } else if (m_clawReverse) {
             m_clawMotor.set(1);
+        }
     }
 
     public void stopIntake() {
@@ -107,11 +109,11 @@ public class ClawSubsystem extends SubsystemBase {
     }
 
     public CommandBase createClawNoWorkBomb() {
-        return Commands.runEnd(() -> clawNoWork = true, () -> clawNoWork = false).withName("claw ded :D");
+        return Commands.runEnd(() -> m_clawNoWork = true, () -> m_clawNoWork = false).withName("claw ded :D");
     }
 
     public CommandBase createClawReverseBomb() {
-        return Commands.runEnd(() -> clawReverse = true, () -> clawReverse = false).withName("claw go reverse (reverse) :D");
+        return Commands.runEnd(() -> m_clawReverse = true, () -> m_clawReverse = false).withName("claw go reverse (reverse) :D");
     }
 
     //////////////

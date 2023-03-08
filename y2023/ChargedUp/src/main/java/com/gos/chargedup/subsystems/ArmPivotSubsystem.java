@@ -35,7 +35,7 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 @SuppressWarnings("PMD.GodClass")
 public class ArmPivotSubsystem extends SubsystemBase {
 
-    public static boolean armPivotNoWork;
+    public boolean m_armPivotNoWork;
 
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 0);
     private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .17);
@@ -85,7 +85,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     public ArmPivotSubsystem() {
-        armPivotNoWork = false;
+        m_armPivotNoWork = false;
         m_pivotMotor = new SimableCANSparkMax(Constants.PIVOT_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
 
@@ -122,7 +122,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         resetPivotEncoder();
     }
 
-    private PidProperty setupPidValues (SparkMaxPIDController pidController){
+    private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Arm", false, pidController, 0)
             .addP(0)
             .addI(0)
@@ -134,7 +134,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic () {
+    public void periodic() {
         m_pivotPID.updateIfChanged();
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
@@ -146,46 +146,48 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void simulationPeriodic () {
+    public void simulationPeriodic() {
         m_pivotSimulator.update();
     }
 
-    public void pivotArmUp () {
-        if (!armPivotNoWork)
+    public void pivotArmUp() {
+        if (!m_armPivotNoWork) {
             m_pivotMotor.set(ARM_MOTOR_SPEED);
+        }
     }
 
-    public void pivotArmDown () {
-        if (!armPivotNoWork)
+    public void pivotArmDown() {
+        if (!m_armPivotNoWork) {
             m_pivotMotor.set(-ARM_MOTOR_SPEED);
+        }
     }
 
-    public double getArmMotorSpeed () {
+    public double getArmMotorSpeed() {
         return m_pivotMotor.getAppliedOutput();
     }
 
-    public void pivotArmStop () {
+    public void pivotArmStop() {
         m_armAngleGoal = Double.MIN_VALUE;
         m_pivotMotor.set(0);
     }
 
-    public double getArmAngleDeg () {
+    public double getArmAngleDeg() {
         return m_pivotMotorEncoder.getPosition();
     }
 
-    public double getArmAngleGoal () {
+    public double getArmAngleGoal() {
         return m_armAngleGoal;
     }
 
-    public boolean isLowerLimitSwitchedPressed () {
+    public boolean isLowerLimitSwitchedPressed() {
         return !m_lowerLimitSwitch.get();
     }
 
-    public boolean isUpperLimitSwitchedPressed () {
+    public boolean isUpperLimitSwitchedPressed() {
         return !m_upperLimitSwitch.get();
     }
 
-    public void pivotArmToAngle ( double pivotAngleGoal){
+    public void pivotArmToAngle(double pivotAngleGoal) {
         m_armAngleGoal = pivotAngleGoal;
 
         double gravityOffset = Math.cos(Math.toRadians(getArmAngleDeg())) * GRAVITY_OFFSET.getValue();
@@ -197,21 +199,21 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
     }
 
-    public boolean isArmAtAngle () {
+    public boolean isArmAtAngle() {
         return isArmAtAngle(m_armAngleGoal);
     }
 
-    public boolean isArmAtAngle ( double pivotAngleGoal){
+    public boolean isArmAtAngle(double pivotAngleGoal) {
         double error = getArmAngleDeg() - pivotAngleGoal;
 
         return Math.abs(error) <= ALLOWABLE_ERROR.getValue();
     }
 
-    public final void resetPivotEncoder () {
+    public final void resetPivotEncoder() {
         m_pivotMotorEncoder.setPosition(MIN_ANGLE_DEG);
     }
 
-    public double getArmAngleForScoring (AutoPivotHeight pivotHeightType, GamePieceType gamePieceType){
+    public double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {
         double angle = 0.0;
 
         switch (pivotHeightType) {
@@ -244,7 +246,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return angle;
     }
 
-    public void tuneGravityOffset () {
+    public void tuneGravityOffset() {
         m_pivotMotor.setVoltage(GRAVITY_OFFSET.getValue());
     }
 
@@ -254,57 +256,56 @@ public class ArmPivotSubsystem extends SubsystemBase {
     ///////////////////////
 
     //SORTING: PIVOT STUFF (MOTORIZED)
-    public CommandBase createPivotToCoastMode () {
+    public CommandBase createPivotToCoastMode() {
         return this.runEnd(
                 () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kCoast),
                 () -> m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake))
             .ignoringDisable(true).withName("Pivot to Coast");
     }
 
-    public CommandBase createResetPivotEncoder () {
+    public CommandBase createResetPivotEncoder() {
         return createResetPivotEncoder(MIN_ANGLE_DEG);
     }
 
-    public CommandBase createResetPivotEncoder ( double angle){
+    public CommandBase createResetPivotEncoder(double angle) {
         return this.run(() -> m_pivotMotorEncoder.setPosition(angle))
             .ignoringDisable(true)
             .withName("Reset Pivot Encoder (" + angle + ")");
     }
 
-    public CommandBase tuneGravityOffsetPID () {
+    public CommandBase tuneGravityOffsetPID() {
         return this.runEnd(this::tuneGravityOffset, this::pivotArmStop);
     }
 
-    public CommandBase commandPivotArmUpPrevention (ChassisSubsystem cs, CommandXboxController x){
+    public CommandBase commandPivotArmUpPrevention(ChassisSubsystem cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("MoveArmUp"),
             this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
             cs::canExtendArm);
     }
 
-    public CommandBase commandPivotArmUp () {
+    public CommandBase commandPivotArmUp() {
         return this.runEnd(this::pivotArmUp, this::pivotArmStop).withName("Arm: Pivot Up");
     }
 
-    public CommandBase commandPivotArmDownPrevention (ChassisSubsystem cs, CommandXboxController x){
+    public CommandBase commandPivotArmDownPrevention(ChassisSubsystem cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("MoveArmDown"),
             this.run(() -> x.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 1)),
             cs::canExtendArm);
     }
 
-    public CommandBase commandPivotArmDown () {
+    public CommandBase commandPivotArmDown() {
         return this.runEnd(this::pivotArmDown, this::pivotArmStop).withName("Arm: Pivot Down");
     }
 
-    public CommandBase commandPivotArmToAngleHold ( double angle){
+    public CommandBase commandPivotArmToAngleHold(double angle) {
         return this.run(() -> pivotArmToAngle(angle))
             .until(() -> isArmAtAngle(angle))
             .withName("Arm to Angle And Hold" + angle);
     }
 
-    public CommandBase commandPivotArmToAnglePrevention ( double angle, ChassisSubsystem cs, CommandXboxController x)
-    {
+    public CommandBase commandPivotArmToAnglePrevention(double angle, ChassisSubsystem cs, CommandXboxController x) {
         return new ConditionalCommand(
             this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop).withName("Arm to Angle" + angle),
             this.run(() -> {
@@ -314,30 +315,28 @@ public class ArmPivotSubsystem extends SubsystemBase {
             cs::canExtendArm);
     }
 
-    public CommandBase commandPivotArmToAngleNonHold ( double angle){
+    public CommandBase commandPivotArmToAngleNonHold(double angle) {
         return this.runEnd(() -> pivotArmToAngle(angle), this::pivotArmStop)
             .until(() -> isArmAtAngle(angle))
             .withName("Arm to Angle" + angle);
     }
 
-    public CommandBase commandMoveArmToPieceScorePositionAndHold (AutoPivotHeight height, GamePieceType
-    gamePieceType){
+    public CommandBase commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight height, GamePieceType gamePieceType) {
         double angle = getArmAngleForScoring(height, gamePieceType);
         return commandPivotArmToAngleHold(angle).withName("Score [" + height + "," + gamePieceType + "] and Hold");
     }
 
-    public CommandBase commandMoveArmToPieceScorePositionDontHold (AutoPivotHeight height, GamePieceType
-    gamePieceType){
+    public CommandBase commandMoveArmToPieceScorePositionDontHold(AutoPivotHeight height, GamePieceType gamePieceType) {
         double angle = getArmAngleForScoring(height, gamePieceType);
         return commandPivotArmToAngleNonHold(angle).withName("Score [" + height + "," + gamePieceType + "]");
     }
 
-    public CommandBase commandGoHome () {
+    public CommandBase commandGoHome() {
         return commandPivotArmToAngleNonHold(MIN_ANGLE_DEG);
     }
 
     public CommandBase createArmPivotNoWorkBomb() {
-        return Commands.runEnd(() -> armPivotNoWork = true, () -> armPivotNoWork = false).withName("arm pivot ded :D");
+        return Commands.runEnd(() -> m_armPivotNoWork = true, () -> m_armPivotNoWork = false).withName("arm pivot ded :D");
     }
 
     ////////////////

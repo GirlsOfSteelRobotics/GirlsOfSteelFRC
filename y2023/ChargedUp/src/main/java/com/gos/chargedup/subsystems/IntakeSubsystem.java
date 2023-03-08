@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.function.DoubleSupplier;
 
 public class IntakeSubsystem extends SubsystemBase {
-    public static boolean intakeNoWork;
-    public static boolean intakeReverse;
+    public boolean m_intakeNoWork;
+    public boolean m_intakeReverse;
 
     private static final double INTAKE_SPEED = 0.5;
     private final DoubleSolenoid m_intakeSolenoid;
@@ -28,8 +28,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public IntakeSubsystem() {
-        intakeReverse = false;
-        intakeNoWork = false;
+        m_intakeReverse = false;
+        m_intakeNoWork = false;
 
         m_intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_PISTON_FORWARD, Constants.INTAKE_PISTON_REVERSE);
         m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -69,34 +69,35 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void intakeRollersIn() {
-        if(!intakeNoWork && !intakeReverse) {
+        if (!m_intakeNoWork && !m_intakeReverse) {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kForward);
             m_intakeMotor.set(INTAKE_SPEED);
-        } else if(intakeReverse) {
+        } else if (m_intakeReverse) {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kForward);
             m_intakeMotor.set(-INTAKE_SPEED);
         }
     }
 
     public void intakeRollersOut() {
-        if (!intakeNoWork && !intakeReverse) {
+        if (!m_intakeNoWork && !m_intakeReverse) {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
             m_intakeMotor.set(-INTAKE_SPEED);
-        } else if (intakeReverse) {
+        } else if (m_intakeReverse) {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
             m_intakeMotor.set(INTAKE_SPEED);
         }
     }
 
     public void retract() {
-        if (!intakeNoWork && !intakeReverse) {
+        if (!m_intakeNoWork && !m_intakeReverse) {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
             m_intakeMotor.set(0);
-        } else if (intakeReverse) {
+        } else if (m_intakeReverse) {
             m_intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
             m_intakeMotor.set(INTAKE_SPEED);
         }
     }
+
     public void intakeRollersStop() {
         m_intakeMotor.set(0);
     }
@@ -133,11 +134,11 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public CommandBase createIntakeBomb() {
-        return Commands.runEnd(() -> intakeNoWork = true, () -> intakeNoWork = false).withName("intake ded :D");
+        return Commands.runEnd(() -> m_intakeNoWork = true, () -> m_intakeNoWork = false).withName("intake ded :D");
     }
 
     public CommandBase createIntakeReverseBomb() {
-        return Commands.runEnd(() -> intakeReverse = true, () -> intakeReverse = false).withName("intake go reverse (reverse) :D");
+        return Commands.runEnd(() -> m_intakeReverse = true, () -> m_intakeReverse = false).withName("intake go reverse (reverse) :D");
     }
 
     ///////////////

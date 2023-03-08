@@ -26,8 +26,8 @@ import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.InstantaneousMotorSim;
 
 public class TurretSubsystem extends SubsystemBase {
-    public static boolean turretNoWork;
-    public static boolean turretReverse;
+    public boolean m_turretNoWork;
+    public boolean m_turretReverse;
 
     public static final double TURRET_LEFT_OF_INTAKE = -10;
     public static final double TURRET_RIGHT_OF_INTAKE = 10;
@@ -60,8 +60,8 @@ public class TurretSubsystem extends SubsystemBase {
 
 
     public TurretSubsystem() {
-        turretNoWork = false;
-        turretReverse = false;
+        m_turretNoWork = false;
+        m_turretReverse = false;
 
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_turretMotor.restoreFactoryDefaults();
@@ -126,17 +126,19 @@ public class TurretSubsystem extends SubsystemBase {
 
 
     public void moveTurretClockwise() {
-        if(!turretNoWork && !turretReverse)
+        if (!m_turretNoWork && !m_turretReverse) {
             m_turretMotor.set(TURRET_SPEED);
-        else if(turretReverse)
+        } else if (m_turretReverse) {
             m_turretMotor.set(-TURRET_SPEED);
+        }
     }
 
     public void moveTurretCounterClockwise() {
-        if(!turretNoWork && !turretReverse)
+        if (!m_turretNoWork && !m_turretReverse) {
             m_turretMotor.set(-TURRET_SPEED);
-        else if(turretReverse)
+        } else if (m_turretReverse) {
             m_turretMotor.set(TURRET_SPEED);
+        }
     }
 
     public void stopTurret() {
@@ -238,11 +240,11 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public CommandBase createTurretNoWorkBomb() {
-        return Commands.runEnd(() -> turretNoWork = true, () -> turretNoWork = false).withName("turret ded :D");
+        return Commands.runEnd(() -> m_turretNoWork = true, () -> m_turretNoWork = false).withName("turret ded :D");
     }
 
     public CommandBase createTurretReverseBomb() {
-        return Commands.runEnd(() -> turretReverse = true, () -> turretReverse = false).withName("turret go reverse (reverse) :D");
+        return Commands.runEnd(() -> m_turretReverse = true, () -> m_turretReverse = false).withName("turret go reverse (reverse) :D");
     }
 
     //////////////////
