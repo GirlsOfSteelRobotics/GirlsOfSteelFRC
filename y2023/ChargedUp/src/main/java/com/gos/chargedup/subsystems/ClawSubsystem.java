@@ -23,9 +23,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class ClawSubsystem extends SubsystemBase {
     public boolean m_clawNoWork;
     public boolean m_clawReverse;
-    private static final GosDoubleProperty CLAW_SPEED = new GosDoubleProperty(false, "ClawSpeed", 0.5);
-    private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 10);
-    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPiece", 5);
+    private static final GosDoubleProperty CLAW_IN_SPEED = new GosDoubleProperty(false, "ClawInSpeed", 0.5);
+    private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(false, "ClawOutSpeed", 0.75);
+    private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 25);
+    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPiece", 12);
 
     private final SimableCANSparkMax m_clawMotor;
     private final RelativeEncoder m_clawEncoder;
@@ -60,18 +61,18 @@ public class ClawSubsystem extends SubsystemBase {
     //intake close
     public void moveClawIntakeIn() {
         if (!m_clawNoWork && !m_clawReverse) {
-            m_clawMotor.set(CLAW_SPEED.getValue());
+            m_clawMotor.set(CLAW_IN_SPEED.getValue());
         } else if (m_clawReverse) {
-            m_clawMotor.set(-CLAW_SPEED.getValue());
+            m_clawMotor.set(-CLAW_IN_SPEED.getValue());
         }
     }
 
     //intake open
     public void moveClawIntakeOut() {
         if (!m_clawNoWork && !m_clawReverse) {
-            m_clawMotor.set(-1);
+            m_clawMotor.set(-CLAW_OUT_SPEED.getValue());
         } else if (m_clawReverse) {
-            m_clawMotor.set(1);
+            m_clawMotor.set(CLAW_OUT_SPEED.getValue());
         }
     }
 
