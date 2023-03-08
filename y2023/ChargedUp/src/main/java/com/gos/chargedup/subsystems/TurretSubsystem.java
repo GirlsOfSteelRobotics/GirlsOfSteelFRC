@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -95,8 +94,8 @@ public class TurretSubsystem extends SubsystemBase {
             .addI(0)
             .addD(0.04)
             .addFF(0.00675)
-            .addMaxVelocity(Units.inchesToMeters(80))
-            .addMaxAcceleration(Units.inchesToMeters(160))
+            .addMaxVelocity(80)
+            .addMaxAcceleration(160)
             .build();
     }
 
