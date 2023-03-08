@@ -3,7 +3,6 @@ package com.gos.chargedup.subsystems;
 import com.gos.chargedup.Constants;
 import com.gos.lib.checklists.DoubleSolenoidMovesChecklist;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
-import com.gos.lib.rev.SparkMaxAlerts;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
@@ -20,7 +19,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final DoubleSolenoid m_intakeSolenoid;
     private final SimableCANSparkMax m_intakeMotor;
 
-    private final SparkMaxAlerts m_intakeMotorErrorAlert;
+    // private final SparkMaxAlerts m_intakeMotorErrorAlert;
 
 
 
@@ -36,12 +35,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
         m_intakeMotor.burnFlash();
 
-        m_intakeMotorErrorAlert = new SparkMaxAlerts(m_intakeMotor, "intake motor ");
+        // m_intakeMotorErrorAlert = new SparkMaxAlerts(m_intakeMotor, "intake motor ");
     }
 
     @Override
     public void periodic() {
-        m_intakeMotorErrorAlert.checkAlerts();
+        // m_intakeMotorErrorAlert.checkAlerts();
     }
 
     public void extendAndRoll() {

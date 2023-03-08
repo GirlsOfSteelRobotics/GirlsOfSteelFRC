@@ -7,10 +7,8 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AimTurretCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
-import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
 import com.gos.chargedup.commands.CurvatureDriveCommand;
 import com.gos.chargedup.commands.TeleopDockingArcadeDriveCommand;
@@ -22,7 +20,6 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.ArmPivotSubsystem;
 import com.gos.chargedup.subsystems.ChassisSubsystem;
 import com.gos.chargedup.subsystems.ClawSubsystem;
-import com.gos.chargedup.subsystems.IntakeSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import com.gos.chargedup.subsystems.TurretSubsystem;
 import com.gos.lib.properties.PropertyManager;
@@ -48,21 +45,19 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import org.littletonrobotics.frc2023.FieldConstants;
 
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
+
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     private final TurretSubsystem m_turret;
 
-    private final IntakeSubsystem m_intake;
+    // private final IntakeSubsystem m_intake;
     private final ChassisSubsystem m_chassisSubsystem;
     private final ArmPivotSubsystem m_armPivot;
 
@@ -79,7 +74,7 @@ public class RobotContainer {
         new CommandXboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
     private final LEDManagerSubsystem m_ledManagerSubsystem;
-    private final DoubleSupplier m_pressureSupplier;
+    // private final DoubleSupplier m_pressureSupplier;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -91,13 +86,13 @@ public class RobotContainer {
         m_claw = new ClawSubsystem();
         m_armPivot = new ArmPivotSubsystem();
         m_armExtend = new ArmExtensionSubsystem();
-        m_intake = new IntakeSubsystem();
+        // m_intake = new IntakeSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_armPivot, m_armExtend, m_claw);
 
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_autonomousFactory); //NOPMD
 
         pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
-        m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
+        // m_pressureSupplier = () -> pneumaticHub.getPressure(Constants.PRESSURE_SENSOR_PORT);
         configureBindings();
 
         if (RobotBase.isSimulation()) {
@@ -109,7 +104,7 @@ public class RobotContainer {
         PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
         SmartDashboard.putData("superStructure", new SuperstructureSendable());
-        SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_intake, m_claw));
+        // SmartDashboard.putData("Run checklist", new ChecklistTestAll(m_pressureSupplier, m_chassisSubsystem, m_armPivot, m_armExtend, m_turret, m_intake, m_claw));
         createTestCommands(pneumaticHub);
         automatedTurretCommands();
 
@@ -187,19 +182,23 @@ public class RobotContainer {
         tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
 
         // intake
+        /*
         tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
         tab.add("Intake Piston: In", m_intake.createIntakeRetract());
 
         tab.add("Intake Roller: In", m_intake.createIntakeIn());
         tab.add("Intake Roller: Out", m_intake.createIntakeOut());
-
+        */
 
         // Smart arm movement
+        /*
         tab.add("Smart Arm: 45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 45));
         tab.add("Smart Arm: 90 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 90));
         tab.add("Smart Arm: 0 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, 0));
         tab.add("Smart Arm: -45 deg", new ArmPIDCheckIfAllowedCommand(m_armPivot, m_intake, m_turret, -45));
+        */
         tab.add("Arm to Angle PreventionXXXXXX", m_armPivot.commandPivotArmToAnglePrevention(45.0, m_chassisSubsystem, m_operatorController));
+        
     }
 
     private void automatedTurretCommands() {
@@ -295,10 +294,10 @@ public class RobotContainer {
                 SmartDashboardNames.ARM_EXTENSION2, m_armExtend::isTopPistonIn, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.ARM_SPEED, m_armPivot::getArmMotorSpeed, null);
-            builder.addDoubleProperty(
-                SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
-            builder.addBooleanProperty(
-                SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
+            // builder.addDoubleProperty(
+            //     SmartDashboardNames.INTAKE_SPEED, m_intake::getIntakeRollerSpeed, null);
+            // builder.addBooleanProperty(
+            //     SmartDashboardNames.INTAKE_DOWN, m_intake::isIntakeDown, null);
             builder.addDoubleProperty(
                 SmartDashboardNames.TURRET_SPEED, m_turret::getTurretSpeed, null);
             builder.addDoubleProperty(
