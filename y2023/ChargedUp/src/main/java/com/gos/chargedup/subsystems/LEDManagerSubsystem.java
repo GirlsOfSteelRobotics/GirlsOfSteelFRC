@@ -171,27 +171,21 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     private void enabledPatterns() {
+
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
         }
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
+        else if (m_claw.hasGamePiece()) {
+
+        }
         else if (m_chassisSubsystem.isInCommunityZone()) {
             communityZonePatterns();
         }
         else if (m_chassisSubsystem.isInLoadingZone()) {
             loadingZonePatterns();
-        }
-        else if (m_claw.hasGamePiece()) {
-            m_timer.reset();
-            m_timer.start();
-            if(m_timer.get() < 1) {
-                holdingPieceInClaw();
-            }
-            else {
-                m_notInCommunityZone.writeLeds();
-            }
         }
         else if (m_optionDockLED) {
             dockAndEngagePatterns();
@@ -211,6 +205,31 @@ public class LEDManagerSubsystem extends SubsystemBase {
             communityZonePatterns();
         }
         */
+    }
+
+//    boolean m_clawhasPiece = false;
+//    public boolean shouldTrip() {
+//        boolean clawHadPiece = m_clawhasPiece;
+//        m_clawhasPiece =  true;
+//        if(m_timer.get() < 1 && clawHadPiece != m_clawhasPiece) {
+//            m_timer.reset();
+//            m_timer.start();
+//        }
+//        else {
+//            m_notInCommunityZone.writeLeds();
+//            m_clawhasPiece = false;
+//        }
+//    }
+
+    public boolean shouldTrip(){
+        if (m_timer.get() < 1) {
+            //write LEDS
+        }
+        else {
+            //unwrite LEDs
+            //stop timer
+        }
+        return true;//todo: this is just for checkstyle purposes
     }
 
     @Override
@@ -240,7 +259,9 @@ public class LEDManagerSubsystem extends SubsystemBase {
     }
 
     public void holdingPieceInClaw() {
-        m_isHoldingPieceClaw.writeLeds();
+        if (m_claw.hasGamePiece()) {
+            m_isHoldingPieceClaw.writeLeds();
+        }
 
     }
 

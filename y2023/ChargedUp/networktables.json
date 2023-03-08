@@ -334,5 +334,29 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/ClawInSpeed",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawOutSpeed",
+    "type": "double",
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ClawCheckHasPiece",
+    "type": "double",
+    "value": 12.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
