@@ -284,7 +284,7 @@ public class ChassisSubsystem extends SubsystemBase {
             .addD(0)
             .addFF(.22)
             .addMaxVelocity(2)
-            .addMaxAcceleration((Units.inchesToMeters(0)))
+            .addMaxAcceleration(0)
             .build();
     }
 

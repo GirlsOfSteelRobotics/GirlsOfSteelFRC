@@ -24,13 +24,10 @@ public class CheckRumbleCommand extends CommandBase {
     @Override
     public void execute() {
         if (m_checkValue.getAsBoolean()) {
-            System.out.println("  Rumbling");
-            m_joystick.getHID().setRumble(GenericHID.RumbleType.kLeftRumble, 0.5);
+            m_joystick.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.5);
         }
         else {
-            System.out.println("  No rumbling");
-//            m_joystick.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
-            m_joystick.getHID().setRumble(GenericHID.RumbleType.kRightRumble, 0.5);
+            m_joystick.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
         }
     }
 

@@ -7,8 +7,8 @@ package com.gos.chargedup;
 
 
 import com.gos.chargedup.autonomous.AutonomousFactory;
-import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AimTurretCommand;
+import com.gos.chargedup.commands.ArmPIDCheckIfAllowedCommand;
 import com.gos.chargedup.commands.AutomatedTurretToSelectedPegCommand;
 import com.gos.chargedup.commands.ChecklistTestAll;
 import com.gos.chargedup.commands.CombinedCommandsUtil;
@@ -249,13 +249,8 @@ public class RobotContainer {
         leftJoystickAsButtonDown.whileTrue(m_armPivot.commandPivotArmDown());
         m_operatorController.a().whileTrue(m_claw.createTeleopMoveClawIntakeInCommand(m_operatorController));
         m_operatorController.x().whileTrue(m_claw.createMoveClawIntakeOutCommand());
-//        m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
-//        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
-
-        //TEST
-        m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
-        m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickup());
-        m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
+        m_operatorController.povUp().whileTrue(CombinedCommandsUtil.armToHpPickup(m_armPivot, m_armExtend));
+        m_operatorController.povDown().whileTrue(CombinedCommandsUtil.goHome(m_armPivot, m_armExtend, m_turret));
 
         m_operatorController.leftBumper().whileTrue(m_armExtend.commandFullExtend());
         m_operatorController.rightBumper().whileTrue(m_armExtend.commandFullRetract());
@@ -264,6 +259,10 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
+        // m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        // m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickup());
+        // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
+
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());
         // m_operatorController.rightBumper().whileTrue(m_arm.commandBottomPistonRetracted());
         // m_operatorController.rightTrigger().whileTrue(m_arm.commandTopPistonExtended());
