@@ -1,6 +1,7 @@
 package com.gos.chargedup.subsystems;
 
 
+import com.gos.chargedup.GosField;
 import com.gos.lib.sensors.LimelightSensor;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,8 +15,12 @@ public class LimelightVisionSubsystem extends SubsystemBase implements Vision {
 
     private static final String LIMELIGHT_NAME = "limelight";
 
-    public LimelightVisionSubsystem() {
+    private final GosField.CameraObject m_field;
+
+    public LimelightVisionSubsystem(GosField field) {
         m_limelight = new LimelightSensor(LIMELIGHT_NAME);
+
+        m_field = new GosField.CameraObject(field, LIMELIGHT_NAME);
     }
 
     @Override
@@ -24,6 +29,8 @@ public class LimelightVisionSubsystem extends SubsystemBase implements Vision {
             return Optional.empty();
         }
         EstimatedRobotPose estimatedRobotPose = new EstimatedRobotPose(m_limelight.getRobotPose(), Timer.getFPGATimestamp() - m_limelight.getLatency(), null);
+
+        m_field.setEstimate(estimatedRobotPose.estimatedPose);
 
         return Optional.of(estimatedRobotPose);
     }

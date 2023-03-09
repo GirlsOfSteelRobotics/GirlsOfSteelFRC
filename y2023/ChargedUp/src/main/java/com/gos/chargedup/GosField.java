@@ -4,6 +4,7 @@ import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.util.sendable.Sendable;
@@ -51,10 +52,14 @@ public class GosField {
 
         public void setEstimate(Optional<EstimatedRobotPose> maybeEstimate) {
             if (maybeEstimate.isPresent()) {
-                m_estimatedPosition.setPose(maybeEstimate.get().estimatedPose.toPose2d());
+                setEstimate(maybeEstimate.get().estimatedPose);
             } else {
                 m_estimatedPosition.setPoses();
             }
+        }
+
+        public void setEstimate(Pose3d estimate) {
+            m_estimatedPosition.setPose(estimate.toPose2d());
         }
 
         public void setDetectedTags(List<Pose2d> detectedTags) {
