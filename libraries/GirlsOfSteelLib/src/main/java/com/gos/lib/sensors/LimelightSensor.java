@@ -108,7 +108,10 @@ public class LimelightSensor {
         return m_area.getDouble(INVALID_VALUE);
     }
 
-    // in seconds
+    /**
+     * Gets the latency from the camera, in seconds.
+     * @return The latency
+     */
     public double getLatency() {
         return Units.millisecondsToSeconds(m_latency.getDouble(INVALID_VALUE));
     }
