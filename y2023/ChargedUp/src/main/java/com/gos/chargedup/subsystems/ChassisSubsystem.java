@@ -197,7 +197,7 @@ public class ChassisSubsystem extends SubsystemBase {
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
         m_cameras = new ArrayList<>();
-        // m_cameras.add(new PhotonVisionSubsystem(m_field));
+        m_cameras.add(new PhotonVisionSubsystem(m_field));
         m_cameras.add(new LimelightVisionSubsystem(m_field));
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");

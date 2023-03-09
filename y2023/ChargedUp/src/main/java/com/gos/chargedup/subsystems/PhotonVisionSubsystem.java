@@ -88,6 +88,7 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
         if (!cameraResult.hasTargets()) {
             m_field.setBestGuesses(bestGuessPoses);
             m_field.setAltGuesses(altGuessPoses);
+            m_field.setEstimate(Optional.empty());
             return Optional.empty();
         } else {
             for (PhotonTrackedTarget target: cameraResult.getTargets()) {
