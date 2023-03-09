@@ -79,6 +79,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final Timer m_timer = new Timer();
 
+    private boolean m_clawWasTripped = false;
+
 
     public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
         m_autoModeFactory = autonomousFactory;
@@ -169,16 +171,16 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_autoModeColor.writeLeds();
         }
     }
-
     private void enabledPatterns() {
-
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
         }
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
-        else if (m_claw.hasGamePiece()) {
+        else if (m_claw.hasGamePiece() && m_timer.get() < 1) {
+            System.out.println("claw has piece");
+            m_isHoldingPieceClaw.writeLeds();
 
         }
         else if (m_chassisSubsystem.isInCommunityZone()) {
@@ -207,41 +209,31 @@ public class LEDManagerSubsystem extends SubsystemBase {
         */
     }
 
-//    boolean m_clawhasPiece = false;
-//    public boolean shouldTrip() {
-//        boolean clawHadPiece = m_clawhasPiece;
-//        m_clawhasPiece =  true;
-//        if(m_timer.get() < 1 && clawHadPiece != m_clawhasPiece) {
-//            m_timer.reset();
-//            m_timer.start();
-//        }
-//        else {
-//            m_notInCommunityZone.writeLeds();
-//            m_clawhasPiece = false;
-//        }
-//    }
+    public void shouldTrip(){
+        if (!m_clawWasTripped && m_claw.hasGamePiece()) {
+            m_timer.reset();
+            m_timer.start();
+            System.out.println("Claw Timer has reset");
+        }
 
-    public boolean shouldTrip(){
-        if (m_timer.get() < 1) {
-            //write LEDS
-        }
-        else {
-            //unwrite LEDs
-            //stop timer
-        }
-        return true;//todo: this is just for checkstyle purposes
+        //m_clawWasTripped = m_claw.hasGamePiece();
+        //m_clawWasTripped == false and m_claw.hasGamePiece() == true, start timer
+            //if timer < 1, LEDs
+        //m_clawWasTripped == true and m_claw.hasGamePiece() == false, reset timer
     }
 
     @Override
     public void periodic() {
         clear();
-
         if (DriverStation.isDisabled()) {
             disabledPatterns();
         }
         else {
             enabledPatterns();
         }
+        shouldTrip();
+        m_clawWasTripped = m_claw.hasGamePiece();
+
 
         // driverPracticePatterns();
         m_led.setData(m_buffer);
@@ -256,13 +248,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
     public void dockAndEngagePatterns() {
         m_optionDockLED = true;
         m_dockAngle.distanceToTarget(m_chassisSubsystem.getPitch());
-    }
-
-    public void holdingPieceInClaw() {
-        if (m_claw.hasGamePiece()) {
-            m_isHoldingPieceClaw.writeLeds();
-        }
-
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")

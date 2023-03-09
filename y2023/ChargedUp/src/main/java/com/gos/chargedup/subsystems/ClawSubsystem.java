@@ -68,9 +68,6 @@ public class ClawSubsystem extends SubsystemBase {
     }
 
     public boolean hasGamePiece() {
-        if (m_clawMotor.getOutputCurrent() > POSSESSION_OF_PIECE_CURRENT.getValue()) {
-            System.out.println("has game piece");
-        }
         return m_clawMotor.getOutputCurrent() > POSSESSION_OF_PIECE_CURRENT.getValue();
 
     }
