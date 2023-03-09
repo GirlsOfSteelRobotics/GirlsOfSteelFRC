@@ -79,7 +79,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final Timer m_timer = new Timer();
 
-    private boolean m_clawWasTripped = false;
+    private boolean m_clawWasTripped;
 
 
     public LEDManagerSubsystem(ChassisSubsystem chassisSubsystem, ArmPivotSubsystem armSubsystem, TurretSubsystem turretSubsystem, ClawSubsystem claw, AutonomousFactory autonomousFactory) {
@@ -150,6 +150,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
         //holding piece in claw
         m_isHoldingPieceClaw = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kRed);
+        m_clawWasTripped = false;
 
         // Set the data
         m_led.setData(m_buffer);
@@ -171,6 +172,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
             m_autoModeColor.writeLeds();
         }
     }
+
     private void enabledPatterns() {
         if (m_optionConeLED) {
             m_coneGamePieceSignal.writeLeds();
@@ -209,17 +211,13 @@ public class LEDManagerSubsystem extends SubsystemBase {
         */
     }
 
-    public void shouldTrip(){
+    public void shouldTrip() {
         if (!m_clawWasTripped && m_claw.hasGamePiece()) {
             m_timer.reset();
             m_timer.start();
             System.out.println("Claw Timer has reset");
         }
 
-        //m_clawWasTripped = m_claw.hasGamePiece();
-        //m_clawWasTripped == false and m_claw.hasGamePiece() == true, start timer
-            //if timer < 1, LEDs
-        //m_clawWasTripped == true and m_claw.hasGamePiece() == false, reset timer
     }
 
     @Override
