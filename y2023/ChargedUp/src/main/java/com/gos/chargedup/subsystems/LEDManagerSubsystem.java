@@ -33,6 +33,8 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private static final int AUTO_MODE_COUNT = MAX_INDEX_LED / 4;
 
+    private static final int CLAW_HOLD_WAIT_TIME = 1;
+
 
     // subsystems
     //private final CommandXboxController m_joystick;
@@ -77,7 +79,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     private final MirroredLEDFlash m_isHoldingPieceClaw;
 
-    private final Timer m_timer = new Timer();
+    private final Timer m_clawLEDsTimer = new Timer();
 
     private boolean m_clawWasTripped;
 
@@ -149,7 +151,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         m_clawAlignedSignal = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kOrange);
 
         //holding piece in claw
-        m_isHoldingPieceClaw = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.5, Color.kRed);
+        m_isHoldingPieceClaw = new MirroredLEDFlash(m_buffer, 0, MAX_INDEX_LED, 0.05, Color.kRed);
         m_clawWasTripped = false;
 
         // Set the data
@@ -180,8 +182,7 @@ public class LEDManagerSubsystem extends SubsystemBase {
         else if (m_optionCubeLED) {
             m_cubeGamePieceSignal.writeLeds();
         }
-        else if (m_claw.hasGamePiece() && m_timer.get() < 1) {
-            System.out.println("claw has piece");
+        else if (m_claw.hasGamePiece() && m_clawLEDsTimer.get() < CLAW_HOLD_WAIT_TIME) {
             m_isHoldingPieceClaw.writeLeds();
 
         }
@@ -213,10 +214,11 @@ public class LEDManagerSubsystem extends SubsystemBase {
 
     public void shouldTrip() {
         if (!m_clawWasTripped && m_claw.hasGamePiece()) {
-            m_timer.reset();
-            m_timer.start();
-            System.out.println("Claw Timer has reset");
+            m_clawLEDsTimer.reset();
+            m_clawLEDsTimer.start();
         }
+        m_clawWasTripped = m_claw.hasGamePiece();
+
 
     }
 
@@ -230,7 +232,6 @@ public class LEDManagerSubsystem extends SubsystemBase {
             enabledPatterns();
         }
         shouldTrip();
-        m_clawWasTripped = m_claw.hasGamePiece();
 
 
         // driverPracticePatterns();
