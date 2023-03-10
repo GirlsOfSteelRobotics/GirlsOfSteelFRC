@@ -358,5 +358,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

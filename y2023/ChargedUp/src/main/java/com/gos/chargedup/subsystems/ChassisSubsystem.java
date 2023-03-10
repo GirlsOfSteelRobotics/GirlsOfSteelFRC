@@ -4,8 +4,8 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.gos.chargedup.AllianceFlipper;
 import com.gos.chargedup.Constants;
 import com.gos.chargedup.GosField;
-import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.chargedup.RectangleInterface;
+import com.gos.lib.ctre.PigeonAlerts;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.PidProperty;
 import com.gos.lib.rev.RevPidPropertyBuilder;
@@ -49,6 +49,8 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -87,7 +89,7 @@ public class ChassisSubsystem extends SubsystemBase {
     //SIM
     private DifferentialDrivetrainSimWrapper m_simulator;
 
-    private final Vision m_vision;
+    private final List<Vision> m_cameras;
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
@@ -194,7 +196,9 @@ public class ChassisSubsystem extends SubsystemBase {
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
 
-        m_vision = new PhotonVisionSubsystem(m_field);
+        m_cameras = new ArrayList<>();
+        m_cameras.add(new PhotonVisionSubsystem(m_field));
+        m_cameras.add(new LimelightVisionSubsystem(m_field));
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("ChassisSubsystem");
         m_gyroAngleDegEntry = loggingTable.getEntry("Gyro Angle (deg)");
@@ -392,11 +396,17 @@ public class ChassisSubsystem extends SubsystemBase {
         //OLD ODOMETRY
         m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
+        for (Vision vision : m_cameras) {
+            updateCameraEstimate(vision);
+        }
+    }
+
+    private void updateCameraEstimate(Vision vision) {
         //NEW ODOMETRY
         m_poseEstimator.update(
                     m_gyro.getRotation2d(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
         Optional<EstimatedRobotPose> result =
-            m_vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
+            vision.getEstimatedGlobalPose(m_poseEstimator.getEstimatedPosition());
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();
             Pose2d pose2d = camPose.estimatedPose.toPose2d();

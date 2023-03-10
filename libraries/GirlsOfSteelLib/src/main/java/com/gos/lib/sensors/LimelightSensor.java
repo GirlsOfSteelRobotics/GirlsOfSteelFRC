@@ -108,8 +108,12 @@ public class LimelightSensor {
         return m_area.getDouble(INVALID_VALUE);
     }
 
+    /**
+     * Gets the latency from the camera, in seconds.
+     * @return The latency
+     */
     public double getLatency() {
-        return m_latency.getDouble(INVALID_VALUE);
+        return Units.millisecondsToSeconds(m_latency.getDouble(INVALID_VALUE));
     }
 
     public Pose3d getRobotPose() {
