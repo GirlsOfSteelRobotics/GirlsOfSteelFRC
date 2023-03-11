@@ -41,6 +41,7 @@ public final class Constants {
     public static final int LEFT_TURRET_LIMIT_SWITCH = 5;
     public static final int INTAKE_TURRET_LIMIT_SWITCH = 4;
     public static final int RIGHT_TURRET_LIMIT_SWITCH = 3;
+    public static final int IS_BLOSSOM_DIO = 0;
 
     //Pneumatics
     public static final int ARM_TOP_PISTON_OUT = 12;
@@ -75,7 +76,6 @@ public final class Constants {
     // Turn the compressor off if the PSI is higher than this
     public static final double MAX_COMPRESSOR_PSI = 120;
 
-    public static final DigitalInput ROBOT_NAME = new DigitalInput(4); //todo: get actual port number
-
+    public static final DigitalInput ROBOT_NAME = new DigitalInput(IS_BLOSSOM_DIO);
     public static final boolean IS_ROBOT_BLOSSOM = ROBOT_NAME.get(); // false is bubbles, true is blossom
 }
