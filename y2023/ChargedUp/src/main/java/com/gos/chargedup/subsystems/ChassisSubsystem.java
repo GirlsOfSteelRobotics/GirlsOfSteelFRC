@@ -63,7 +63,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     static {
         //toDo: make these values work as expected
-        if (Constants.IS_ROBOT_BLOSSOM) {
+        if (!Constants.IS_ROBOT_BLOSSOM) {
             GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
         } else {
             GEAR_RATIO = 527.0 / 54.0;
