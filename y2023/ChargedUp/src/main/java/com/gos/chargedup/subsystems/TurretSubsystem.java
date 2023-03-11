@@ -30,8 +30,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     private static final double TURRET_SPEED = 0.4;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
-    public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 0);
-    public static final GosDoubleProperty TUNING_PIVOT_DEG_OFFSET = new GosDoubleProperty(false, "Turret Degree Offset", 0);
+    public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 150);
     private final SimableCANSparkMax m_turretMotor;
     private final RelativeEncoder m_turretEncoder;
     private final PidProperty m_turretPID;

@@ -336,25 +336,33 @@
     }
   },
   {
-    "name": "/Preferences/max velocity - chassis",
+    "name": "/Preferences/ClawInSpeed",
     "type": "double",
-    "value": 48.0,
+    "value": 0.5,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/max acceleration - chassis",
+    "name": "/Preferences/ClawOutSpeed",
     "type": "double",
-    "value": 48.0,
+    "value": 0.75,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Turret Degree Offset",
+    "name": "/Preferences/ClawCheckHasPiece",
     "type": "double",
-    "value": 0.0,
+    "value": 12.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm Allowable Velocity Error",
+    "type": "double",
+    "value": 2.0,
     "properties": {
       "persistent": true
     }

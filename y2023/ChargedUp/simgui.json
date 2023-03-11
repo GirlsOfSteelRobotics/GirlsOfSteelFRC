@@ -181,12 +181,33 @@
           "visible": true
         }
       },
+      "/Shuffleboard/AutomatedTurret/Low Cone Left": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/AutomatedTurret/Low Cone Right": {
         "window": {
           "visible": true
         }
       },
       "/Shuffleboard/AutomatedTurret/Mid Cone Left": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Debug/Field": {
+        "TurretRotationPoint": {
+          "arrows": false,
+          "color": [
+            0.0,
+            19.36710548400879,
+            255.0,
+            255.0
+          ],
+          "length": 0.8199999928474426,
+          "width": 0.6859999895095825
+        },
         "window": {
           "visible": true
         }
