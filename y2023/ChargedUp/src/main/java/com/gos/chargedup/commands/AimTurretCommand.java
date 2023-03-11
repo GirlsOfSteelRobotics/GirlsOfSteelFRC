@@ -8,7 +8,9 @@ import com.gos.chargedup.subsystems.ArmExtensionSubsystem;
 import com.gos.chargedup.subsystems.LEDManagerSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -19,6 +21,11 @@ import com.gos.chargedup.subsystems.TurretSubsystem;
 
 public class AimTurretCommand extends CommandBase {
     private static final Field2d DEBUG_FIELD = new Field2d();
+
+    // TODO get values
+    private static final double SHIFT_Y_CHASSIS_POS = Units.inchesToMeters(.5);
+    private static final double SHIFT_X_CHASSIS_POS = Units.inchesToMeters(-6);
+    private static final Transform2d TURRET_TRANSFORM = new Transform2d(new Translation2d(SHIFT_X_CHASSIS_POS, SHIFT_Y_CHASSIS_POS), Rotation2d.fromDegrees(0));
 
     static {
         Shuffleboard.getTab("Debug").add(DEBUG_FIELD);
@@ -36,11 +43,9 @@ public class AimTurretCommand extends CommandBase {
 
     private final ClawAlignedCheck m_clawAlignedCheck;
 
-
     private final LEDManagerSubsystem m_ledManagerSubsystem;
 
     private final ArmExtensionSubsystem m_armExtension;
-
 
 
     public AimTurretCommand(ArmPivotSubsystem armSubsystem, ArmExtensionSubsystem armExtension, ChassisSubsystem chassisSubsystem, TurretSubsystem turretSubsystem, Translation2d targetPos, String position, GamePieceType gamePiece, AutoPivotHeight height, LEDManagerSubsystem ledManagerSubsystem) {
@@ -72,9 +77,10 @@ public class AimTurretCommand extends CommandBase {
 
         Translation2d correctedTarget = AllianceFlipper.maybeFlip(m_baseTargetLocation);
 
+        Pose2d turretRotationPoint = m_chassisSubsystem.getPose().transformBy(TURRET_TRANSFORM);
 
-        m_currentX = m_chassisSubsystem.getPose().getX();
-        m_currentY = m_chassisSubsystem.getPose().getY();
+        m_currentX = turretRotationPoint.getX();
+        m_currentY = turretRotationPoint.getY();
 
         double closestYvalue = m_chassisSubsystem.findingClosestNodeY(correctedTarget.getY());
         Translation2d nodePosAbs = new Translation2d(correctedTarget.getX(), closestYvalue);
@@ -87,6 +93,7 @@ public class AimTurretCommand extends CommandBase {
 
         DEBUG_FIELD.setRobotPose(m_chassisSubsystem.getPose());
         DEBUG_FIELD.getObject("AimGoal").setPose(new Pose2d(correctedTarget.getX(), closestYvalue, Rotation2d.fromDegrees(0)));
+        DEBUG_FIELD.getObject("TurretRotationPoint").setPose(turretRotationPoint);
 
         if (turretAngle > 180) {
             turretAngle -= 360;
