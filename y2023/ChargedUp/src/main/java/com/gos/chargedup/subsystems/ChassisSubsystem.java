@@ -65,11 +65,10 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double GEAR_RATIO;
 
     static {
-        //toDo: make these values work as expected
-        if (!Constants.IS_ROBOT_BLOSSOM) {
-            GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
-        } else {
+        if (Constants.IS_ROBOT_BLOSSOM) {
             GEAR_RATIO = 527.0 / 54.0;
+        } else {
+            GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
         }
     }
 
@@ -185,18 +184,22 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerRight.follow(m_leaderRight, false);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
+
         m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
         m_rightPIDcontroller = m_leaderRight.getPIDController();
+
         m_leftPIDProperties = setupPidValues(m_leftPIDcontroller);
         m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
+
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
@@ -231,6 +234,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
+
         m_pigeonAlerts = new PigeonAlerts(m_gyro);
 
         PPRamseteCommand.setLoggingCallbacks(

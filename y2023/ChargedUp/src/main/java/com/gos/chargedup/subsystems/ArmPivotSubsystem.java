@@ -109,7 +109,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_velocityEntry;
     private final NetworkTableEntry m_effectiveGravityOffsetEntry;
     private final NetworkTableEntry m_pidArbitraryFeedForwardEntry;
-
     private final NetworkTableEntry m_absoluteEncoderEntry;
 
     private final SparkMaxAlerts m_pivotErrorAlert;
@@ -162,7 +161,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
             resetPivotEncoder();
         }
     }
-
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
         return new RevPidPropertyBuilder("Arm", false, pidController, 0)
