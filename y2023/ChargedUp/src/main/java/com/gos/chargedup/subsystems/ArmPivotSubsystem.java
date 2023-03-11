@@ -36,14 +36,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     private static final GosDoubleProperty ALLOWABLE_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Error", 2);
     private static final GosDoubleProperty ALLOWABLE_VELOCITY_ERROR = new GosDoubleProperty(false, "Pivot Arm Allowable Velocity Error", 2);
-    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .27);
+    private static final GosDoubleProperty GRAVITY_OFFSET = new GosDoubleProperty(false, "Gravity Offset", .42103);
 
     private static final double ARM_MOTOR_SPEED = 0.20;
     private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
 
     // From SysID
-    private static final double KS = 0.13773;
-
+    private static final double KS = 0.1375;
 
     private static final double GEAR_RATIO = 45.0 * 4.0;
 
@@ -127,6 +126,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
+        ///
+        // Full retract:
+        // kp=0.000400
+        // kf=0.005000
+        // kd=0.005000
         return new RevPidPropertyBuilder("Arm", false, pidController, 0)
             .addP(0.0033) // 0.0058
             .addI(0)
@@ -343,10 +347,13 @@ public class ArmPivotSubsystem extends SubsystemBase {
         return commandPivotArmToAngleNonHold(MIN_ANGLE_DEG);
     }
 
-    public CommandBase commandHpPickup() {
+    public CommandBase commandHpPickupNoHold() {
         return commandPivotArmToAngleNonHold(HUMAN_PLAYER_ANGLE);
     }
 
+    public CommandBase commandHpPickupHold() {
+        return commandPivotArmToAngleHold(HUMAN_PLAYER_ANGLE);
+    }
 
     ////////////////
     // Checklists

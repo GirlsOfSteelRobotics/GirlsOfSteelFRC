@@ -23,7 +23,8 @@ public class ClawSubsystem extends SubsystemBase {
     private static final GosDoubleProperty CLAW_IN_SPEED = new GosDoubleProperty(false, "ClawInSpeed", 0.5);
     private static final GosDoubleProperty CLAW_OUT_SPEED = new GosDoubleProperty(false, "ClawOutSpeed", 0.75);
     private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 25);
-    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPiece", 12);
+    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT = new GosDoubleProperty(false, "ClawCheckHasPieceCurrent", 5);
+    private static final GosDoubleProperty POSSESSION_OF_PIECE_CURRENT_VELOCITY = new GosDoubleProperty(false, "ClawCheckHasPieceVelocity", 1);
 
     private final SimableCANSparkMax m_clawMotor;
     private final RelativeEncoder m_clawEncoder;
@@ -68,7 +69,8 @@ public class ClawSubsystem extends SubsystemBase {
     }
 
     public boolean hasGamePiece() {
-        return m_clawMotor.getOutputCurrent() > POSSESSION_OF_PIECE_CURRENT.getValue();
+        return (m_clawMotor.getOutputCurrent() > POSSESSION_OF_PIECE_CURRENT.getValue()
+            && (Math.abs(m_clawEncoder.getVelocity()) < POSSESSION_OF_PIECE_CURRENT_VELOCITY.getValue()));
 
     }
 

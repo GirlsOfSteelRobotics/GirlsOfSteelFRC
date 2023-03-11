@@ -22,7 +22,7 @@ public final class CombinedCommandsUtil {
     }
 
     public static CommandBase armToHpPickup(ArmPivotSubsystem pivot, ArmExtensionSubsystem extension) {
-        return pivot.commandHpPickup()
+        return pivot.commandHpPickupNoHold()
             .alongWith(extension.commandMiddleRetract())
             .withName("HP Pickup");
     }

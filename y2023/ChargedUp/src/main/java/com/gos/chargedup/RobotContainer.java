@@ -256,8 +256,8 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_armPivot.commandMoveArmToPieceScorePositionAndHold(AutoPivotHeight.MEDIUM, GamePieceType.CONE));
 
         // Backup manual controls for debugging
-        // m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
-        // m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickup());
+        m_operatorController.povRight().whileTrue(m_armPivot.commandPivotArmToAngleNonHold(0));
+        m_operatorController.povLeft().whileTrue(m_armPivot.commandHpPickupHold());
         // m_operatorController.povUp().whileTrue(m_armPivot.tuneGravityOffsetPID());
 
         // m_operatorController.leftBumper().whileTrue(m_arm.commandBottomPistonExtended());

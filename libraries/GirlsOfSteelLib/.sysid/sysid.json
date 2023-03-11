@@ -1,6 +1,11 @@
 {
   "SysId": {
     "Analysis Type": "General Mechanism",
+    "Analyzer": {
+      "window": {
+        "visible": false
+      }
+    },
     "NetworkTables Settings": {
       "serverTeam": "3504"
     },
