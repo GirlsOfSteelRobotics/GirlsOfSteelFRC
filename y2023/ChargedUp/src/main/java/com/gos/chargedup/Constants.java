@@ -73,5 +73,5 @@ public final class Constants {
 
     public static final DigitalInput ROBOT_NAME = new DigitalInput(4); //todo: get actual port number
 
-    public static final boolean IS_ROBOT_REAL = ROBOT_NAME.get();
+    public static final boolean IS_ROBOT_BLOSSOM = ROBOT_NAME.get(); // false is bubbles, true is blossom
 }

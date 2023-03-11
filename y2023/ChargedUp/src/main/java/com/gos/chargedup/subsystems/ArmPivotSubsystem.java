@@ -12,11 +12,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -33,6 +30,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
+
+import static com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle;
 
 
 @SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
@@ -57,7 +56,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     static {
         //toDo: make these values work as expected
-        if (Constants.IS_ROBOT_REAL) {
+        if (Constants.IS_ROBOT_BLOSSOM) {
             ARM_CUBE_MIDDLE_DEG = 0;
             ARM_CUBE_HIGH_DEG = 15;
             ARM_CONE_MIDDLE_DEG = 15;
@@ -87,6 +86,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final SparkMaxPIDController m_pivotPIDController;
     private final PidProperty m_pivotPID;
 
+    private final SparkMaxAbsoluteEncoder m_absoluteEncoder;
+
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
 
@@ -97,6 +98,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_encoderDegEntry;
     private final NetworkTableEntry m_goalAngleDegEntry;
     private final NetworkTableEntry m_velocityEntry;
+
+    private final NetworkTableEntry m_absoluteEncoderEntry;
 
     private final SparkMaxAlerts m_pivotErrorAlert;
 
@@ -128,6 +131,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_encoderDegEntry = loggingTable.getEntry("Arm Encoder (deg)");
         m_goalAngleDegEntry = loggingTable.getEntry("Arm Goal (deg)");
         m_velocityEntry = loggingTable.getEntry("Arm Velocity");
+        m_absoluteEncoderEntry = loggingTable.getEntry("Absolute Encoder Entry");
         m_pivotErrorAlert = new SparkMaxAlerts(m_pivotMotor, "arm pivot motor ");
         if (RobotBase.isSimulation()) {
             SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEARING, J_KG_METERS_SQUARED,
@@ -135,8 +139,16 @@ public class ArmPivotSubsystem extends SubsystemBase {
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
+        m_absoluteEncoder = m_pivotMotor.getAbsoluteEncoder(kDutyCycle);
+        m_absoluteEncoder.setPositionConversionFactor(360.0 / GEAR_RATIO);
+        m_absoluteEncoder.setVelocityConversionFactor(360.0 / GEAR_RATIO / 60.0);
 
-        resetPivotEncoder();
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_pivotMotorEncoder.setPosition(m_absoluteEncoder.getPosition());
+        }
+        else {
+            resetPivotEncoder();
+        }
     }
 
 
@@ -158,6 +170,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_lowerLimitSwitchEntry.setBoolean(isLowerLimitSwitchedPressed());
         m_upperLimitSwitchEntry.setBoolean(isUpperLimitSwitchedPressed());
         m_encoderDegEntry.setNumber(getArmAngleDeg());
+        m_absoluteEncoderEntry.setNumber(m_absoluteEncoder.getPosition());
         m_goalAngleDegEntry.setNumber(m_armAngleGoal);
         m_velocityEntry.setNumber(m_pivotMotorEncoder.getVelocity());
 

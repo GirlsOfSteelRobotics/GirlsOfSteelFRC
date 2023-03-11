@@ -63,7 +63,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     static {
         //toDo: make these values work as expected
-        if (Constants.IS_ROBOT_REAL) {
+        if (Constants.IS_ROBOT_BLOSSOM) {
             GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
         } else {
             GEAR_RATIO = 527.0 / 54.0;
@@ -166,29 +166,31 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_leaderLeft.setInverted(true);
+            m_leaderRight.setInverted(false);
+        }
+        else {
+            m_leaderLeft.setInverted(false);
+            m_leaderRight.setInverted(true);
+        }
 
         m_followerLeft.follow(m_leaderLeft, false);
         m_followerRight.follow(m_leaderRight, false);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
-
         m_gyro = new WPI_Pigeon2(Constants.PIGEON_PORT);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
         m_leftPIDcontroller = m_leaderLeft.getPIDController();
         m_rightPIDcontroller = m_leaderRight.getPIDController();
-
         m_leftPIDProperties = setupPidValues(m_leftPIDcontroller);
         m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
-
         m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
         m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
-
         m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
         m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
@@ -214,7 +216,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_followerLeftMotorErrorAlert = new SparkMaxAlerts(m_followerLeft, "left chassis motor ");
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
-
         m_pigeonAlerts = new PigeonAlerts(m_gyro);
 
         if (RobotBase.isSimulation()) {
@@ -232,7 +233,6 @@ public class ChassisSubsystem extends SubsystemBase {
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
         }
-
     }
 
     public void nodeCount(FieldConstants fieldConstants) {
@@ -264,8 +264,8 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        if (Constants.IS_ROBOT_REAL) {
-            return new RevPidPropertyBuilder("Chassis Bubbles", false, pidController, 0)
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
                 .addP(0) //this needs to be tuned!
                 .addI(0)
                 .addD(0)
@@ -275,7 +275,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 .build();
         }
         else {
-            return new RevPidPropertyBuilder("Chassis Blossom", false, pidController, 0)
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
                 .addP(0)
                 .addI(0)
                 .addD(0)
