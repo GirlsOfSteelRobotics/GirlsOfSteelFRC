@@ -24,7 +24,7 @@ public class AimTurretCommand extends CommandBase {
 
     // TODO get values
     private static final double SHIFT_Y_CHASSIS_POS = Units.inchesToMeters(.5);
-    private static final double SHIFT_X_CHASSIS_POS = Units.inchesToMeters(-6);
+    private static final double SHIFT_X_CHASSIS_POS = Units.inchesToMeters(-2);
     private static final Transform2d TURRET_TRANSFORM = new Transform2d(new Translation2d(SHIFT_X_CHASSIS_POS, SHIFT_Y_CHASSIS_POS), Rotation2d.fromDegrees(0));
 
     static {

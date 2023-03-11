@@ -366,5 +366,21 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Claw Aligned Acceptable Error",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Turret Angle Stop PID Error",
+    "type": "double",
+    "value": 0.21,
+    "properties": {
+      "persistent": true
+    }
   }
 ]
