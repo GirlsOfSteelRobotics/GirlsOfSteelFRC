@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -67,6 +68,8 @@ public class RobotContainer {
     private final ArmExtensionSubsystem m_armExtend;
     private final AutonomousFactory m_autonomousFactory;
 
+    private final PneumaticHub m_pneumaticHub;
+
     private final ClawSubsystem m_claw;
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -92,6 +95,7 @@ public class RobotContainer {
         // m_intake = new IntakeSubsystem();
         m_autonomousFactory = new AutonomousFactory(m_chassisSubsystem, m_turret, m_armPivot, m_armExtend, m_claw);
 
+        m_pneumaticHub = pneumaticHub;
         m_ledManagerSubsystem = new LEDManagerSubsystem(m_chassisSubsystem, m_armPivot, m_turret, m_claw, m_autonomousFactory); //NOPMD
 
         pneumaticHub.enableCompressorAnalog(Constants.MIN_COMPRESSOR_PSI, Constants.MAX_COMPRESSOR_PSI);
@@ -183,6 +187,8 @@ public class RobotContainer {
         // claw
         tab.add("Claw: Close", m_claw.createMoveClawIntakeInCommand());
         tab.add("Claw: Open", m_claw.createMoveClawIntakeOutCommand());
+
+        tab.add("Reset Pneumatics Sticky Faults",  createResetStickyFaults());
 
         // intake
         // tab.add("Intake Piston: Out", m_intake.createIntakeExtend());
@@ -279,6 +285,14 @@ public class RobotContainer {
         return m_autonomousFactory.getAutonomousCommand();
     }
 
+    public void resetStickyFaults() {
+        m_pneumaticHub.clearStickyFaults();
+    }
+
+    public CommandBase createResetStickyFaults() {
+        return Commands.run(this::resetStickyFaults);
+    }
+
 
     private class SuperstructureSendable implements Sendable {
 
@@ -312,3 +326,4 @@ public class RobotContainer {
         }
     }
 }
+
