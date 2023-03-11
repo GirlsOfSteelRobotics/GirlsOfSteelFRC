@@ -28,6 +28,8 @@ public class TurretSubsystem extends SubsystemBase {
     public static final double TURRET_LEFT_OF_INTAKE = -10;
     public static final double TURRET_RIGHT_OF_INTAKE = 10;
 
+    public static final double TURRET_MAX_ROTATION = 400;
+
     private static final double TURRET_SPEED = 0.4;
     public static final GosDoubleProperty ALLOWABLE_ERROR_DEG = new GosDoubleProperty(false, "Turret Angle Allowable Error", 1);
     public static final GosDoubleProperty TUNING_VELOCITY = new GosDoubleProperty(false, "Turret Goal Velocity", 150);
@@ -54,6 +56,11 @@ public class TurretSubsystem extends SubsystemBase {
 
     private InstantaneousMotorSim m_turretSimulator;
 
+    private TurretDirection m_turretDirection; //true for clockwise, false for counterclockwise
+
+    public enum TurretDirection {
+        CLOCKWISE, COUNTER_CLOCKWISE
+    }
 
     public TurretSubsystem() {
         m_turretMotor = new SimableCANSparkMax(Constants.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -120,10 +127,14 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void moveTurretClockwise() {
         m_turretMotor.set(TURRET_SPEED);
+        stopTurretAtLimit();
+        m_turretDirection = TurretDirection.CLOCKWISE;
     }
 
     public void moveTurretCounterClockwise() {
         m_turretMotor.set(-TURRET_SPEED);
+        stopTurretAtLimit();
+        m_turretDirection = TurretDirection.COUNTER_CLOCKWISE;
     }
 
     public void stopTurret() {
@@ -143,13 +154,23 @@ public class TurretSubsystem extends SubsystemBase {
         return !m_rightLimitSwitch.get();
     }
 
+    public void stopTurretAtLimit() {
+        //this uses the switch at 3
+        if ((leftLimitSwitchPressed() && m_turretEncoder.getPosition() >= TURRET_MAX_ROTATION) && m_turretDirection == TurretDirection.CLOCKWISE) {
+            stopTurret();
+        }
+        //this uses the switch at 5
+        if ((rightLimitSwitchPressed() && m_turretEncoder.getPosition() <= -TURRET_MAX_ROTATION) && m_turretDirection == TurretDirection.COUNTER_CLOCKWISE) {
+            stopTurret();
+        }
+    }
+
     public double getTurretAngleDegreesNeoEncoder() {
         return m_turretEncoder.getPosition();
     }
 
     public boolean moveTurretToAngleWithPID(double goalAngle) {
         m_turretGoalAngle = goalAngle;
-
         double error = goalAngle - getTurretAngleDegreesNeoEncoder();
 
         m_turretPidController.setReference(goalAngle, CANSparkMax.ControlType.kSmartMotion, 0);
