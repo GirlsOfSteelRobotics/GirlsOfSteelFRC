@@ -62,7 +62,16 @@ public class ChassisSubsystem extends SubsystemBase {
     private static final double PITCH_UPPER_LIMIT = 3.0;
 
     private static final double WHEEL_DIAMETER = Units.inchesToMeters(6.0);
-    private static final double GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+    private static final double GEAR_RATIO;
+
+    static {
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            GEAR_RATIO = 527.0 / 54.0;
+        } else {
+            GEAR_RATIO = 40.0 / 12.0 * 40.0 / 14.0;
+        }
+    }
+
     private static final double ENCODER_CONSTANT = (1.0 / GEAR_RATIO) * WHEEL_DIAMETER * Math.PI;
 
     private static final double TRACK_WIDTH = 0.381 * 2; //set this to the actual
@@ -162,8 +171,14 @@ public class ChassisSubsystem extends SubsystemBase {
         m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_leaderLeft.setInverted(false);
-        m_leaderRight.setInverted(true);
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            m_leaderLeft.setInverted(true);
+            m_leaderRight.setInverted(false);
+        }
+        else {
+            m_leaderLeft.setInverted(false);
+            m_leaderRight.setInverted(true);
+        }
 
         m_followerLeft.follow(m_leaderLeft, false);
         m_followerRight.follow(m_leaderRight, false);
@@ -244,7 +259,6 @@ public class ChassisSubsystem extends SubsystemBase {
                 new CtrePigeonImuWrapper(m_gyro));
             m_simulator.setRightInverted(false);
         }
-
     }
 
     private void logTrajectoryErrors(Translation2d translation2d, Rotation2d rotation2d) {
@@ -282,14 +296,26 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     private PidProperty setupPidValues(SparkMaxPIDController pidController) {
-        return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
-            .addP(0) //this needs to be tuned!
-            .addI(0)
-            .addD(0)
-            .addFF(.22)
-            .addMaxVelocity(2)
-            .addMaxAcceleration(0)
-            .build();
+        if (Constants.IS_ROBOT_BLOSSOM) {
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+                .addP(0) //this needs to be tuned!
+                .addI(0)
+                .addD(0)
+                .addFF(.22)
+                .addMaxVelocity(2)
+                .addMaxAcceleration(0)
+                .build();
+        }
+        else {
+            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+                .addP(0)
+                .addI(0)
+                .addD(0)
+                .addFF(.22)
+                .addMaxVelocity(2)
+                .addMaxAcceleration(0)
+                .build();
+        }
     }
 
     @Override
